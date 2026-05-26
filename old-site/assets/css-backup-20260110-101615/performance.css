@@ -1,0 +1,116 @@
+/* =========================================== */
+/* PERFORMANCE OPTIMIZATIONS */
+/* =========================================== */
+.results-section, .results-grid, #gallery, .artcards-grid, .artworks-grid { 
+  content-visibility: auto; 
+  contain-intrinsic-size: 1200px 2000px; 
+}
+
+/* Respect users who prefer less motion (also helps TBT) */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after,
+  .kb-anim, .plane-anim, [data-anim], .animate { 
+    animation: none !important; 
+    transition: none !important; 
+  }
+}
+
+/* =========================================== */
+/* MOBILE OPTIMIZATIONS */
+/* =========================================== */
+@media (max-width: 767.98px) {
+  .ken-burns-bg, .ken-burns-layer, .ken-burns-overlay { display: block !important; }
+  .full-page-airplanes { display: none !important; }
+  /* Show hero animation on mobile with fixed size */
+  .hero-animation { 
+    display: block !important; 
+    bottom: 50px !important;
+    left: 25px !important;
+    padding: 8px !important;
+  }
+  .hero-animation img {
+    width: 120px !important;
+    height: auto !important;
+    min-width: 120px !important;
+    max-width: 120px !important;
+  }
+  /* Show snowman on mobile with fixed size */
+  .hero-snowman { 
+    display: block !important; 
+    bottom: -15px !important;
+    left: 120px !important;
+  }
+  .hero-snowman img {
+    width: 100px !important;
+    height: auto !important;
+    min-width: 100px !important;
+    max-width: 100px !important;
+  }
+  /* Mobile starts with dark gradient background, images load via JavaScript */
+  .hero-section { background: linear-gradient(135deg, #000000 0%, #050508 25%, #000000 50%, #0a0510 75%, #0f0a0f 100%) !important; }
+  .scroll-indicator-text { font-size: 0.75rem !important; white-space: nowrap !important; letter-spacing: 0.5px !important; }
+}
+
+/* =========================================== */
+/* LAYOUT & CLS HARDENING */
+/* =========================================== */
+.hero-description-rotator { min-height: 110px; } /* pre-allocate text space */
+.hero-avatar img { display: block; } /* remove default inline-gap */
+
+/* Ensure images don't cause reflow if sizes are missing */
+img[width][height] { height: auto; }
+
+/* JFSN UX Patch - Ensure proper centering */
+.hero-content { 
+  transform: translate(-50%, -50%) !important; 
+  left: 50% !important; 
+  top: 50% !important;
+}
+
+/* Sticky spacing: navbar + filter */
+:root { 
+  --nav-h: 56px; 
+  --filter-h: 48px; 
+  --sticky-offset: 152px;
+}
+.filter-section { top: var(--nav-h) !important; }
+html { scroll-padding-top: 0 !important; /* FIXED: Removed sticky offset causing white space */ }
+[id] { scroll-margin-top: 0 !important; /* FIXED: Removed sticky offset causing white space */ }
+
+main, .hero-section { 
+  position: relative;
+}
+
+/* Mobile scroll perf on long pages */
+.section, .grid, .footer, .about-modal { content-visibility: auto; contain-intrinsic-size: 1000px; }
+
+/* =========================================== */
+/* NAVBAR STYLES */
+/* =========================================== */
+.navbar-logo {
+  /* transition: none !important; */ /* Animation ENABLED for butterfly effect */
+  filter: brightness(0.8);
+}
+
+.navbar-logo:hover {
+  filter: brightness(1);
+  /* transform: none !important; */ /* Transform ENABLED for butterfly effect */
+}
+
+[data-bs-theme="dark"] .navbar-logo {
+  filter: brightness(1.2);
+}
+
+[data-bs-theme="dark"] .navbar-logo:hover {
+  filter: brightness(1.4);
+}
+
+.navbar-brand {
+  text-decoration: none;
+}
+
+.navbar-brand:focus {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+

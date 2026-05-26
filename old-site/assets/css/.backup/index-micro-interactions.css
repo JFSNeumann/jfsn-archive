@@ -1,0 +1,238 @@
+/* ===========================================
+   INDEX.HTML MICRO-INTERACTIONS & ANIMATIONS
+   Button ripple effects, celebrations, scroll reveals
+   =========================================== */
+
+/* Button Ripple Effect */
+.btn-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-ripple::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn-ripple:active::after {
+  width: 300px;
+  height: 300px;
+}
+
+/* Success Celebration Animation */
+@keyframes celebrate {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(1.1) rotate(-5deg);
+  }
+  50% {
+    transform: scale(1.2) rotate(5deg);
+  }
+  75% {
+    transform: scale(1.1) rotate(-3deg);
+  }
+}
+
+.celebrate {
+  animation: celebrate 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Smooth Page Transitions */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-on-load {
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* Scroll Reveal Animations */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-on-scroll.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hover Micro-animations */
+.icon-hover-rotate:hover i,
+.icon-hover-rotate:hover svg {
+  transform: rotate(15deg);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.icon-hover-scale:hover i,
+.icon-hover-scale:hover svg {
+  transform: scale(1.2);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.icon-hover-glow:hover i,
+.icon-hover-glow:hover svg {
+  filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.8));
+  transition: filter 0.3s ease;
+}
+
+/* Loading Spinner */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(99, 102, 241, 0.3);
+  border-top-color: #6366f1;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* Particle Effect */
+@keyframes particleFloat {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.5);
+  }
+}
+
+.particle-effect::after {
+  content: '✨';
+  position: absolute;
+  animation: particleFloat 2s ease-out forwards;
+  pointer-events: none;
+}
+
+/* Random Artwork Button */
+.random-artwork-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 1rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4),
+              0 0 0 0 rgba(99, 102, 241, 0.5);
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.random-artwork-btn:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 12px 32px rgba(99, 102, 241, 0.5),
+              0 0 0 8px rgba(99, 102, 241, 0.1);
+}
+
+.random-artwork-btn:active {
+  transform: translateY(-2px) scale(1.02);
+}
+
+.random-artwork-btn i {
+  font-size: 1rem;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4),
+                0 0 0 0 rgba(99, 102, 241, 0.5);
+  }
+  50% {
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.6),
+                0 0 0 4px rgba(99, 102, 241, 0.2);
+  }
+}
+
+/* Random Highlight Animation */
+@keyframes randomHighlight {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 20px rgba(99, 102, 241, 0),
+                0 0 40px rgba(99, 102, 241, 0.5);
+    transform: scale(1.02);
+  }
+}
+
+.artwork-card.random-highlight {
+  animation: randomHighlight 2s ease-out;
+  z-index: 100;
+}
+
+/* Enhanced Gallery Reveal with Stagger */
+.artwork-card.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.artwork-card.reveal-on-scroll.revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+@media (max-width: 768px) {
+  .random-artwork-btn {
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.75rem;
+  }
+  
+  .random-artwork-btn span {
+    display: none;
+  }
+  
+  .random-artwork-btn i {
+    font-size: 1.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .random-artwork-btn {
+    animation: none;
+  }
+  
+  .artwork-card.reveal-on-scroll {
+    opacity: 1;
+    transform: none;
+  }
+}
+

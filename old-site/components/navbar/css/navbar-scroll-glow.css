@@ -1,0 +1,62 @@
+/* =========================================== */
+/* SCROLL-TRIGGERED GLOW */
+/* Navbar glows when scrolling past hero section */
+/* =========================================== */
+
+.editorial-navbar,
+.navbar-enhanced,
+.header.navbar {
+  transition: box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Glow effect when past hero */
+.editorial-navbar.scrolled-past-hero,
+.navbar-enhanced.scrolled-past-hero,
+.header.navbar.scrolled-past-hero {
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.15),
+              0 0 40px rgba(99, 102, 241, 0.1),
+              0 2px 8px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Enhanced glow on scroll */
+.editorial-navbar.scrolled-past-hero.scrolled,
+.navbar-enhanced.scrolled-past-hero.scrolled,
+.header.navbar.scrolled-past-hero.scrolled {
+  box-shadow: 0 6px 30px rgba(99, 102, 241, 0.2),
+              0 0 60px rgba(99, 102, 241, 0.15),
+              0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Animated glow pulse */
+@keyframes navbarGlowPulse {
+  0%, 100% {
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.15),
+                0 0 40px rgba(99, 102, 241, 0.1),
+                0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  50% {
+    box-shadow: 0 6px 30px rgba(99, 102, 241, 0.25),
+                0 0 60px rgba(99, 102, 241, 0.2),
+                0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.editorial-navbar.scrolled-past-hero:not(.scrolled),
+.navbar-enhanced.scrolled-past-hero:not(.scrolled),
+.header.navbar.scrolled-past-hero:not(.scrolled) {
+  animation: navbarGlowPulse 3s ease-in-out infinite;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .editorial-navbar,
+  .navbar-enhanced,
+  .header.navbar {
+    animation: none !important;
+  }
+}
+

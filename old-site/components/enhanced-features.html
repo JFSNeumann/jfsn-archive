@@ -1,0 +1,86 @@
+<!--
+  Enhanced Features Component
+  Include this file in secondary pages to add all enhanced features
+  
+  Usage:
+    <!-- Enhanced Features Component -->
+    <div id="enhanced-features-container"></div>
+    <script>
+      fetch('components/enhanced-features.html')
+        .then(r => r.text())
+        .then(html => {
+          document.getElementById('enhanced-features-container').innerHTML = html;
+          // Initialize features
+          if (typeof initTableOfContents === 'function') initTableOfContents();
+          if (typeof setupFABMenu === 'function') setupFABMenu();
+        });
+    </script>
+-->
+
+<!-- ARIA Live Regions for Screen Reader Announcements -->
+<div id="aria-live-region" aria-live="polite" aria-atomic="true" class="sr-only visually-hidden"></div>
+<div id="aria-live-region-assertive" aria-live="assertive" aria-atomic="true" class="sr-only visually-hidden"></div>
+<div id="aria-live-region-status" aria-live="status" aria-atomic="true" class="sr-only visually-hidden"></div>
+
+<!-- Keyboard Shortcuts Overlay -->
+<div class="keyboard-shortcuts-overlay" id="keyboardShortcutsOverlay" role="dialog" aria-modal="true" aria-labelledby="shortcuts-title" aria-hidden="true">
+  <div class="keyboard-shortcuts-modal">
+    <div class="keyboard-shortcuts-header">
+      <h3 id="shortcuts-title">Keyboard Shortcuts</h3>
+      <button class="keyboard-shortcuts-close" id="keyboardShortcutsClose" aria-label="Close shortcuts help">
+        <i class="bx bx-x"></i>
+      </button>
+    </div>
+    <div class="keyboard-shortcuts-list">
+      <div class="keyboard-shortcuts-section">
+        <h4>Navigation</h4>
+        <div class="keyboard-shortcut-item">
+          <kbd>/</kbd>
+          <span class="keyboard-shortcut-description">Focus search</span>
+        </div>
+        <div class="keyboard-shortcut-item">
+          <kbd>Esc</kbd>
+          <span class="keyboard-shortcut-description">Close overlay / Clear search</span>
+        </div>
+        <div class="keyboard-shortcut-item">
+          <kbd>Ctrl</kbd> + <kbd>K</kbd> / <kbd>Cmd</kbd> + <kbd>K</kbd>
+          <span class="keyboard-shortcut-description">Open quick search</span>
+        </div>
+      </div>
+      <div class="keyboard-shortcuts-section">
+        <h4>Actions</h4>
+        <div class="keyboard-shortcut-item">
+          <kbd>D</kbd>
+          <span class="keyboard-shortcut-description">Toggle dark mode</span>
+        </div>
+        <div class="keyboard-shortcut-item">
+          <kbd>?</kbd>
+          <span class="keyboard-shortcut-description">Show this help</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Quick Actions Menu (FAB) -->
+<div class="fab-backdrop" id="fabBackdrop"></div>
+<div class="fab-container">
+  <div class="fab-menu" id="fabMenu">
+    <button class="fab-menu-item" data-action="search" aria-label="Search" title="Search">
+      <i class="bx bx-search"></i>
+    </button>
+    <button class="fab-menu-item" data-action="filter" aria-label="Filter" title="Filter">
+      <i class="bx bx-filter"></i>
+    </button>
+    <button class="fab-menu-item" data-action="share" aria-label="Share" title="Share">
+      <i class="bx bx-share-alt"></i>
+    </button>
+    <button class="fab-menu-item" data-action="theme" aria-label="Toggle Dark Mode" title="Dark Mode">
+      <i class="bx bx-moon"></i>
+    </button>
+  </div>
+  <button class="fab-button" id="fabButton" aria-label="Quick Actions" aria-expanded="false">
+    <i class="bx bx-plus"></i>
+  </button>
+</div>
+

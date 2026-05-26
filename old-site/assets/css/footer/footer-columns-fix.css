@@ -1,0 +1,127 @@
+/* =========================================== */
+/* FOOTER COLUMNS VISIBILITY FIX */
+/* Ensures Quick Links & Collections are always visible */
+/* =========================================== */
+
+/* Force Quick Links column to be visible - ALL SELECTORS */
+footer .col-lg-4:nth-of-type(2),
+footer .col-md-6:nth-of-type(2),
+.footer-enhanced .col-lg-4:nth-of-type(2),
+.footer-enhanced .col-md-6:nth-of-type(2),
+.footer-enhanced .row .col-lg-4:nth-of-type(2),
+.footer-enhanced .row .col-md-6:nth-of-type(2) {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  left: 0 !important;
+  right: auto !important;
+  width: auto !important;
+  max-width: 100% !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+/* Force Collections column to be visible - ALL SELECTORS */
+footer .col-lg-4:nth-of-type(3),
+footer .col-md-6:nth-of-type(3),
+.footer-enhanced .col-lg-4:nth-of-type(3),
+.footer-enhanced .col-md-6:nth-of-type(3),
+.footer-enhanced .row .col-lg-4:nth-of-type(3),
+.footer-enhanced .row .col-md-6:nth-of-type(3) {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  left: 0 !important;
+  right: auto !important;
+  width: auto !important;
+  max-width: 100% !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+/* Ensure Quick Links heading is visible on desktop */
+.footer-enhanced .col-lg-4:nth-of-type(2) h4,
+.footer-enhanced .col-lg-4:nth-of-type(2) .text-uppercase {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Ensure Collections heading is visible on desktop */
+.footer-enhanced .col-lg-4:nth-of-type(3) h4,
+.footer-enhanced .col-lg-4:nth-of-type(3) .text-uppercase {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Ensure lists are visible */
+.footer-enhanced .col-lg-4:nth-of-type(2) ul,
+.footer-enhanced .col-lg-4:nth-of-type(3) ul {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Override Bootstrap responsive classes */
+.footer-enhanced .col-lg-4:nth-of-type(2) .d-none.d-md-block,
+.footer-enhanced .col-lg-4:nth-of-type(3) .d-none.d-md-block {
+  display: block !important;
+}
+
+/* Mobile: Hide Quick Links & Collections */
+@media (max-width: 767px) {
+  /* Hide Quick Links column on mobile */
+  footer .col-lg-4:nth-of-type(2),
+  footer .col-md-6:nth-of-type(2),
+  .footer-enhanced .col-lg-4:nth-of-type(2),
+  .footer-enhanced .col-md-6:nth-of-type(2),
+  .footer-enhanced .row .col-lg-4:nth-of-type(2),
+  .footer-enhanced .row .col-md-6:nth-of-type(2) {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  /* Hide Collections column on mobile */
+  footer .col-lg-4:nth-of-type(3),
+  footer .col-md-6:nth-of-type(3),
+  .footer-enhanced .col-lg-4:nth-of-type(3),
+  .footer-enhanced .col-md-6:nth-of-type(3),
+  .footer-enhanced .row .col-lg-4:nth-of-type(3),
+  .footer-enhanced .row .col-md-6:nth-of-type(3) {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
+
+/* Tablet and Desktop: Show desktop view */
+@media (min-width: 768px) {
+  .footer-enhanced .col-lg-4:nth-of-type(2),
+  .footer-enhanced .col-lg-4:nth-of-type(3) {
+    display: block !important;
+    visibility: visible !important;
+  }
+  
+  .footer-enhanced .col-lg-4:nth-of-type(2) .d-md-none,
+  .footer-enhanced .col-lg-4:nth-of-type(3) .d-md-none {
+    display: none !important;
+  }
+  
+  .footer-enhanced .col-lg-4:nth-of-type(2) .d-none.d-md-block,
+  .footer-enhanced .col-lg-4:nth-of-type(3) .d-none.d-md-block {
+    display: block !important;
+  }
+}
+

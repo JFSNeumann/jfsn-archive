@@ -1,0 +1,130 @@
+/* =========================================== */
+/* HIDE ALL NAVBAR BUTTONS AND ICONS */
+/* Maximum specificity to override all styles */
+/* =========================================== */
+
+/* Hide search toggle */
+.editorial-navbar .navbar-search-toggle,
+.editorial-navbar button.navbar-search-toggle,
+button.navbar-search-toggle,
+#navbarSearchToggle,
+.navbar-search-toggle {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  left: -9999px !important;
+}
+
+/* Hide copy URL button */
+.editorial-navbar .navbar-copy-url,
+.editorial-navbar button.navbar-copy-url,
+button.navbar-copy-url,
+#navbarCopyUrl,
+.navbar-copy-url {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  left: -9999px !important;
+}
+
+/* Hide quick actions */
+.editorial-navbar .navbar-quick-actions,
+.editorial-navbar .navbar-quick-action-btn,
+.navbar-quick-actions,
+.navbar-quick-action-btn,
+a.navbar-quick-action-btn {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  left: -9999px !important;
+}
+
+/* Hide breadcrumbs */
+.editorial-navbar .navbar-breadcrumbs,
+.navbar-breadcrumbs,
+#navbarBreadcrumbs,
+#overlayBreadcrumbs {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  left: -9999px !important;
+}
+
+/* Hide search overlay */
+.navbar-search-overlay,
+#navbarSearchOverlay {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Ensure quick actions and search toggle remain hidden */
+.editorial-navbar .navbar-quick-actions,
+.editorial-navbar .navbar-quick-action-btn,
+.navbar-quick-actions,
+.navbar-quick-action-btn,
+a.navbar-quick-action-btn,
+.editorial-nav-overlay-quick-actions,
+.editorial-nav-quick-action-btn {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Back to top button - REMOVED: Button should be visible */
+/* #backToTopBtn,
+.back-to-top {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+} */
+
+/* Hide navbar compact mode toggle buttons */
+.navbar-compact-toggle,
+button.navbar-compact-toggle,
+.editorial-navbar .navbar-compact-toggle,
+button[aria-label*="compact"],
+button[aria-label*="Toggle compact"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  left: -9999px !important;
+}

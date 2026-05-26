@@ -1,0 +1,137 @@
+/* =========================================== */
+/* ENHANCED FOCUS INDICATORS */
+/* WCAG AAA compliant focus visibility for keyboard navigation */
+/* =========================================== */
+
+/* Base focus styles - only show when keyboard navigating */
+*:focus-visible {
+  outline: 3px solid var(--brand-color, #6366f1);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px rgba(99, 102, 241, 0.2);
+  border-radius: 4px;
+}
+
+/* Remove default focus outline for mouse clicks */
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Enhanced focus for interactive elements */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--brand-color, #6366f1);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px rgba(99, 102, 241, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+/* Navbar specific focus styles */
+.editorial-navbar button:focus-visible,
+.editorial-navbar a:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.2);
+}
+
+/* Search toggle focus */
+.navbar-search-toggle:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Copy URL button focus */
+.navbar-copy-url:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Navigation toggle focus */
+.editorial-navbar-toggle:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.3);
+}
+
+/* Navbar brand focus */
+.editorial-navbar-brand:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 4px;
+  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+}
+
+/* Quick action buttons focus */
+.navbar-quick-action-btn:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.3);
+}
+
+/* Navigation overlay links focus */
+.editorial-nav-link:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 4px;
+  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+
+/* Search input focus */
+.navbar-search-input:focus-visible {
+  outline: 3px solid var(--brand-color, #6366f1);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px rgba(99, 102, 241, 0.2);
+}
+
+/* Search suggestions focus */
+.navbar-search-suggestion:focus-visible {
+  outline: 3px solid var(--brand-color, #6366f1);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+  background: rgba(99, 102, 241, 0.1);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  *:focus-visible {
+    outline: 4px solid;
+    outline-offset: 4px;
+    box-shadow: 0 0 0 8px rgba(0, 0, 0, 0.5);
+  }
+  
+  .editorial-navbar button:focus-visible,
+  .editorial-navbar a:focus-visible {
+    outline: 4px solid #ffffff;
+    outline-offset: 4px;
+    box-shadow: 0 0 0 8px rgba(0, 0, 0, 0.8);
+  }
+}
+
+/* Reduced motion - simpler focus */
+@media (prefers-reduced-motion: reduce) {
+  *:focus-visible {
+    transition: none;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.3);
+  }
+}
+
+/* Focus-visible polyfill support (for older browsers) */
+.js-focus-visible *:focus:not(.focus-visible) {
+  outline: none;
+}
+
+.js-focus-visible .focus-visible {
+  outline: 3px solid var(--brand-color, #6366f1);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px rgba(99, 102, 241, 0.2);
+}
+

@@ -1,0 +1,38 @@
+/* =========================================== */
+/* HIDE ELEMENTS ON MOBILE - INDEX PAGE ONLY */
+/* =========================================== */
+
+/* Hide Explore More section on mobile */
+@media (max-width: 767px) {
+  #explore-more-section {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  /* Hide Curated Collections section on mobile */
+  #curated-collections-section {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  /* Hide Featured Artwork section on mobile */
+  #featured-artwork-section {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}

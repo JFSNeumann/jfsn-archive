@@ -1,0 +1,93 @@
+/**
+ * Light Theme Fix
+ * Ensures light backgrounds display correctly when data-bs-theme="light"
+ */
+
+/* Force light backgrounds in light mode */
+[data-bs-theme="light"] body,
+html[data-bs-theme="light"] body {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  color: #1e293b !important;
+}
+
+[data-bs-theme="light"] main,
+html[data-bs-theme="light"] main,
+[data-bs-theme="light"] #main-content,
+html[data-bs-theme="light"] #main-content,
+[data-bs-theme="light"] .main-content-section {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  color: #1e293b !important;
+}
+
+[data-bs-theme="light"] section:not(.about-hero),
+html[data-bs-theme="light"] section:not(.about-hero) {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+[data-bs-theme="light"] .container,
+html[data-bs-theme="light"] .container,
+[data-bs-theme="light"] .container-fluid {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+/* Ensure cards have light backgrounds */
+[data-bs-theme="light"] .card,
+html[data-bs-theme="light"] .card {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  color: #1e293b !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Ensure text is dark in light mode */
+[data-bs-theme="light"] p,
+[data-bs-theme="light"] .text-muted,
+[data-bs-theme="light"] .lead,
+[data-bs-theme="light"] .text-lead {
+  color: #475569 !important;
+}
+
+[data-bs-theme="light"] h1,
+[data-bs-theme="light"] h2,
+[data-bs-theme="light"] h3,
+[data-bs-theme="light"] h4,
+[data-bs-theme="light"] h5,
+[data-bs-theme="light"] h6 {
+  color: #0f172a !important;
+}
+
+/* Override any dark background variables */
+[data-bs-theme="light"] {
+  --bg-primary: #ffffff !important;
+  --bg-secondary: #f8fafc !important;
+  --bg-card: #ffffff !important;
+  --text-primary: #1e293b !important;
+  --text-secondary: #475569 !important;
+  --text-heading: #0f172a !important;
+}
+
+/* Ensure breadcrumbs are visible */
+[data-bs-theme="light"] .breadcrumb,
+[data-bs-theme="light"] .breadcrumb-item a {
+  color: #475569 !important;
+}
+
+[data-bs-theme="light"] .breadcrumb-item.active {
+  color: #1e293b !important;
+}
+
+/* Ensure buttons are visible */
+[data-bs-theme="light"] .btn-outline-primary {
+  border-color: #6366f1 !important;
+  color: #6366f1 !important;
+}
+
+[data-bs-theme="light"] .btn-outline-primary:hover {
+  background-color: #6366f1 !important;
+  color: #ffffff !important;
+}
+

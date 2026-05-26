@@ -1,0 +1,444 @@
+/* =========================================== */
+/* UNIFIED DESIGN SYSTEM - BREAKPOINT SYSTEM */
+/* Single source of truth for all responsive breakpoints */
+/* Mobile-first approach, consistent across all pages */
+/* =========================================== */
+
+:root {
+  /* ===== STANDARD BREAKPOINTS ===== */
+  /* Based on Bootstrap 5 standard breakpoints */
+  --breakpoint-xs: 0px;        /* Extra small devices (phones) */
+  --breakpoint-sm: 576px;      /* Small devices (landscape phones) */
+  --breakpoint-md: 768px;      /* Medium devices (tablets) */
+  --breakpoint-lg: 992px;      /* Large devices (desktops) */
+  --breakpoint-xl: 1200px;    /* Extra large devices (large desktops) */
+  --breakpoint-2xl: 1400px;    /* XXL devices (extra large desktops) */
+  
+  /* ===== CONTAINER MAX-WIDTHS ===== */
+  --container-xs: 100%;
+  --container-sm: 540px;
+  --container-md: 720px;
+  --container-lg: 960px;
+  --container-xl: 1140px;
+  --container-2xl: 1320px;
+  --container-fluid: 1400px;
+  
+  /* ===== RESPONSIVE SPACING ===== */
+  /* These reference spacing system variables */
+  --section-padding-mobile: var(--spacing-lg);     /* 24px */
+  --section-padding-tablet: var(--spacing-xl);     /* 32px */
+  --section-padding-desktop: var(--spacing-2xl);   /* 48px */
+  
+  --container-padding-mobile: var(--spacing-md);   /* 16px */
+  --container-padding-tablet: var(--spacing-lg);   /* 24px */
+  --container-padding-desktop: var(--spacing-xl);   /* 32px */
+  
+  /* ===== DEVICE DETECTION ===== */
+  /* These will be set via media queries */
+  --is-mobile: 0;
+  --is-tablet: 0;
+  --is-desktop: 0;
+  --is-touch: 0;
+  --is-hover: 0;
+}
+
+/* ===== MOBILE STYLES (< 576px) ===== */
+/* Extra small devices - phones in portrait */
+@media (max-width: 575.98px) {
+  :root {
+    --is-mobile: 1;
+    --section-padding: var(--section-padding-mobile);
+    --container-padding: var(--container-padding-mobile);
+  }
+  
+  .container,
+  .container-fluid {
+    padding-left: var(--container-padding-mobile);
+    padding-right: var(--container-padding-mobile);
+  }
+  
+  /* Mobile-specific optimizations */
+  html {
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+  
+  /* Ensure touch targets are large enough */
+  button,
+  .btn,
+  a.btn,
+  input[type="submit"],
+  input[type="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* ===== SMALL DEVICES (576px - 767px) ===== */
+/* Small devices - phones in landscape, small tablets */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  :root {
+    --is-mobile: 1;
+    --section-padding: var(--section-padding-mobile);
+    --container-padding: var(--container-padding-mobile);
+  }
+  
+  .container {
+    max-width: var(--container-sm);
+  }
+  
+  .container-fluid {
+    padding-left: var(--container-padding-mobile);
+    padding-right: var(--container-padding-mobile);
+  }
+}
+
+/* ===== TABLET STYLES (768px - 991px) ===== */
+/* Medium devices - tablets in portrait */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  :root {
+    --is-tablet: 1;
+    --section-padding: var(--section-padding-tablet);
+    --container-padding: var(--container-padding-tablet);
+  }
+  
+  .container {
+    max-width: var(--container-md);
+  }
+  
+  .container-fluid {
+    padding-left: var(--container-padding-tablet);
+    padding-right: var(--container-padding-tablet);
+  }
+  
+  /* Tablet-specific optimizations */
+  .section {
+    padding-top: var(--section-padding-tablet);
+    padding-bottom: var(--section-padding-tablet);
+  }
+}
+
+/* ===== DESKTOP STYLES (992px - 1199px) ===== */
+/* Large devices - tablets in landscape, small desktops */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  :root {
+    --is-desktop: 1;
+    --section-padding: var(--section-padding-desktop);
+    --container-padding: var(--container-padding-desktop);
+  }
+  
+  .container {
+    max-width: var(--container-lg);
+  }
+  
+  .container-fluid {
+    padding-left: var(--container-padding-desktop);
+    padding-right: var(--container-padding-desktop);
+  }
+  
+  .section {
+    padding-top: var(--section-padding-desktop);
+    padding-bottom: var(--section-padding-desktop);
+  }
+}
+
+/* ===== LARGE DESKTOP (1200px - 1399px) ===== */
+/* Extra large devices - large desktops */
+@media (min-width: 1200px) and (max-width: 1399.98px) {
+  :root {
+    --is-desktop: 1;
+    --section-padding: var(--section-padding-desktop);
+    --container-padding: var(--container-padding-desktop);
+  }
+  
+  .container {
+    max-width: var(--container-xl);
+  }
+  
+  .container-fluid {
+    max-width: var(--container-fluid);
+    padding-left: var(--container-padding-desktop);
+    padding-right: var(--container-padding-desktop);
+  }
+}
+
+/* ===== EXTRA LARGE DESKTOP (1400px+) ===== */
+/* XXL devices - extra large desktops */
+@media (min-width: 1400px) {
+  :root {
+    --is-desktop: 1;
+    --section-padding: var(--section-padding-desktop);
+    --container-padding: var(--container-padding-desktop);
+  }
+  
+  .container {
+    max-width: var(--container-2xl);
+  }
+  
+  .container-fluid {
+    max-width: var(--container-fluid);
+    padding-left: var(--container-padding-desktop);
+    padding-right: var(--container-padding-desktop);
+  }
+}
+
+/* ===== TOUCH DEVICE DETECTION ===== */
+/* Devices with touch capability */
+@media (pointer: coarse) {
+  :root {
+    --is-touch: 1;
+  }
+  
+  /* Ensure all interactive elements meet touch target requirements */
+  button,
+  .btn,
+  a.btn,
+  input[type="submit"],
+  input[type="button"],
+  input[type="checkbox"],
+  input[type="radio"],
+  .navbar-toggle,
+  .navbar-link,
+  .footer-link,
+  .social-btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Better spacing for touch */
+  .btn-group .btn {
+    margin: 0;
+  }
+  
+  /* Larger tap targets for mobile navigation */
+  .navbar-link,
+  .nav-link {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+}
+
+/* ===== HOVER CAPABILITY DETECTION ===== */
+/* Devices that support hover (non-touch) */
+@media (hover: hover) and (pointer: fine) {
+  :root {
+    --is-hover: 1;
+  }
+  
+  /* Enable hover effects only on devices that support it */
+  .btn:hover,
+  a:hover,
+  .card:hover {
+    transition: var(--button-transition);
+  }
+}
+
+/* ===== LANDSCAPE ORIENTATION ===== */
+@media (orientation: landscape) and (max-height: 500px) {
+  /* Optimize for landscape mobile devices */
+  .section {
+    padding-top: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+  }
+  
+  /* Reduce vertical spacing in landscape */
+  h1, .h1, h2, .h2, h3, .h3 {
+    margin-bottom: var(--spacing-sm);
+  }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+  :root {
+    --section-padding: 0;
+    --container-padding: 0;
+  }
+  
+  .container,
+  .container-fluid {
+    max-width: 100%;
+    padding: 0;
+  }
+  
+  /* Hide non-essential elements */
+  .navbar,
+  .footer,
+  .btn,
+  button,
+  .no-print {
+    display: none !important;
+  }
+  
+  /* Optimize typography for print */
+  body {
+    font-size: 12pt;
+    line-height: 1.5;
+    color: #000;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+    color: #000;
+  }
+  
+  a {
+    color: #000;
+    text-decoration: underline;
+  }
+  
+  a[href]:after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666;
+  }
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ===== HIGH CONTRAST MODE ===== */
+@media (prefers-contrast: high) {
+  :root {
+    --brand-primary: #0000ff;
+    --text-primary: #000000;
+    --bg-primary: #ffffff;
+  }
+  
+  .btn,
+  button,
+  a.btn {
+    border: 2px solid currentColor;
+  }
+  
+  .form-control,
+  input,
+  textarea,
+  select {
+    border-width: 2px;
+  }
+}
+
+/* ===== DARK MODE PREFERENCE ===== */
+@media (prefers-color-scheme: dark) {
+  /* This is handled by [data-bs-theme="dark"] */
+  /* But we can add system preference support here if needed */
+}
+
+/* ===== UTILITY CLASSES FOR BREAKPOINTS ===== */
+/* Show/hide at specific breakpoints */
+.show-mobile {
+  display: block;
+}
+
+.show-tablet,
+.show-desktop {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .show-mobile {
+    display: none;
+  }
+  
+  .show-tablet {
+    display: block;
+  }
+}
+
+@media (min-width: 992px) {
+  .show-tablet {
+    display: none;
+  }
+  
+  .show-desktop {
+    display: block;
+  }
+}
+
+/* Hide at specific breakpoints */
+.hide-mobile {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .hide-mobile {
+    display: block;
+  }
+}
+
+.hide-tablet {
+  display: block;
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .hide-tablet {
+    display: none;
+  }
+}
+
+.hide-desktop {
+  display: block;
+}
+
+@media (min-width: 992px) {
+  .hide-desktop {
+    display: none;
+  }
+}
+
+/* ===== RESPONSIVE TEXT ALIGNMENT ===== */
+@media (max-width: 767.98px) {
+  .text-mobile-center {
+    text-align: center !important;
+  }
+  
+  .text-mobile-left {
+    text-align: left !important;
+  }
+  
+  .text-mobile-right {
+    text-align: right !important;
+  }
+}
+
+/* ===== RESPONSIVE FLEX DIRECTION ===== */
+@media (max-width: 767.98px) {
+  .flex-mobile-column {
+    flex-direction: column !important;
+  }
+  
+  .flex-mobile-row {
+    flex-direction: row !important;
+  }
+}
+
+/* ===== RESPONSIVE SPACING UTILITIES ===== */
+/* Mobile-specific spacing */
+@media (max-width: 767.98px) {
+  .mb-mobile-0 { margin-bottom: 0 !important; }
+  .mb-mobile-sm { margin-bottom: var(--spacing-sm) !important; }
+  .mb-mobile-md { margin-bottom: var(--spacing-md) !important; }
+  .mb-mobile-lg { margin-bottom: var(--spacing-lg) !important; }
+  
+  .mt-mobile-0 { margin-top: 0 !important; }
+  .mt-mobile-sm { margin-top: var(--spacing-sm) !important; }
+  .mt-mobile-md { margin-top: var(--spacing-md) !important; }
+  .mt-mobile-lg { margin-top: var(--spacing-lg) !important; }
+  
+  .p-mobile-0 { padding: 0 !important; }
+  .p-mobile-sm { padding: var(--spacing-sm) !important; }
+  .p-mobile-md { padding: var(--spacing-md) !important; }
+  .p-mobile-lg { padding: var(--spacing-lg) !important; }
+}
+
+/* =========================================== */
+/* END UNIFIED BREAKPOINT SYSTEM */
+/* =========================================== */
+

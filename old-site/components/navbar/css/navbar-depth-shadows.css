@@ -1,0 +1,168 @@
+/* =========================================== */
+/* DEPTH SHADOWS */
+/* Multi-layer shadows for 3D effect */
+/* =========================================== */
+
+.editorial-navbar,
+.navbar-enhanced,
+.header.navbar {
+  position: relative;
+  box-shadow: 
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    0 2px 4px rgba(0, 0, 0, 0.05),
+    0 4px 8px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced depth on scroll */
+.editorial-navbar.scrolled,
+.navbar-enhanced.scrolled,
+.header.navbar.scrolled {
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.08),
+    0 4px 8px rgba(0, 0, 0, 0.08),
+    0 8px 16px rgba(0, 0, 0, 0.08),
+    0 16px 32px rgba(0, 0, 0, 0.06);
+}
+
+/* Navbar brand depth */
+.editorial-navbar-brand {
+  position: relative;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  transition: filter 0.3s ease;
+}
+
+.editorial-navbar-brand:hover {
+  filter: drop-shadow(0 4px 8px rgba(99, 102, 241, 0.3)) 
+          drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+/* Quick action buttons depth */
+.navbar-quick-action-btn {
+  position: relative;
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    0 4px 8px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbar-quick-action-btn:hover {
+  box-shadow: 
+    0 4px 8px rgba(99, 102, 241, 0.2),
+    0 8px 16px rgba(99, 102, 241, 0.15),
+    0 2px 4px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.navbar-quick-action-btn:active {
+  box-shadow: 
+    0 1px 2px rgba(0, 0, 0, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.05);
+  transform: translateY(0);
+}
+
+/* Primary button enhanced depth */
+.navbar-quick-action-primary {
+  box-shadow: 
+    0 4px 12px rgba(99, 102, 241, 0.25),
+    0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-quick-action-primary:hover {
+  box-shadow: 
+    0 6px 20px rgba(99, 102, 241, 0.35),
+    0 8px 24px rgba(99, 102, 241, 0.25),
+    0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Toggle button depth */
+.editorial-navbar-toggle {
+  position: relative;
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    inset 0 1px 2px rgba(255, 255, 255, 0.1);
+}
+
+.editorial-navbar-toggle:hover {
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.15),
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    inset 0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+.editorial-navbar-toggle.active {
+  box-shadow: 
+    0 2px 4px rgba(99, 102, 241, 0.3),
+    0 4px 8px rgba(99, 102, 241, 0.2),
+    inset 0 1px 2px rgba(255, 255, 255, 0.1);
+}
+
+/* Overlay depth */
+.editorial-nav-overlay-content {
+  position: relative;
+  box-shadow: 
+    0 -4px 8px rgba(0, 0, 0, 0.2),
+    0 -8px 16px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Menu items depth */
+.editorial-nav-link {
+  position: relative;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.editorial-nav-link:hover {
+  text-shadow: 
+    0 2px 4px rgba(99, 102, 241, 0.3),
+    0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.editorial-nav-link.active {
+  text-shadow: 
+    0 2px 4px rgba(99, 102, 241, 0.4),
+    0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Quick action buttons in overlay */
+.editorial-nav-quick-action-btn {
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.2),
+    0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.editorial-nav-quick-action-btn:hover {
+  box-shadow: 
+    0 4px 8px rgba(255, 255, 255, 0.2),
+    0 8px 16px rgba(255, 255, 255, 0.15),
+    0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Search toggle depth */
+.navbar-search-toggle {
+  position: relative;
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    inset 0 1px 2px rgba(255, 255, 255, 0.1);
+}
+
+.navbar-search-toggle:hover {
+  box-shadow: 
+    0 4px 8px rgba(99, 102, 241, 0.2),
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    inset 0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .editorial-navbar,
+  .navbar-enhanced,
+  .header.navbar,
+  .navbar-quick-action-btn,
+  .editorial-navbar-toggle,
+  .navbar-search-toggle {
+    transition: none !important;
+  }
+}
+

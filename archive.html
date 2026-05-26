@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0b0b">
+  <title>Archive — Jeffrey F. S. Neumann</title>
+  <meta name="description" content="Archive of works by Jeffrey F. S. Neumann, 1974–present.">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="canonical" href="https://jfsn.com/archive.html">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap"></noscript>
+  <link rel="stylesheet" href="site.css">
+
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="Archive — Jeffrey F. S. Neumann">
+  <meta property="og:description" content="Browse 1,084 works spanning 1974 to the present. Filter by type, theme, and more.">
+  <meta property="og:image"       content="https://jfsn.com/og-card.jpg">
+  <meta property="og:url"         content="https://jfsn.com/archive.html">
+
+  <style>
+    /* -------- Filter Bar -------- */
+    .filter-bar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--bg);
+      border-bottom: 1px solid var(--dim);
+      padding: 0.75rem 0;
+    }
+
+    .filter-search {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.625rem;
+    }
+
+    .search-input {
+      appearance: none;
+      background: none;
+      border: none;
+      border-bottom: 1px solid var(--dim);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.875rem;
+      letter-spacing: 0.02em;
+      padding: 0.2rem 0;
+      width: 100%;
+      max-width: 280px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .search-input::placeholder { color: var(--muted); opacity: 0.6; }
+    .search-input:focus { border-bottom-color: rgba(243,240,234,0.45); }
+
+    .search-clear {
+      appearance: none;
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      margin-left: 0.75rem;
+      padding: 0;
+      text-transform: uppercase;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s, color 0.15s;
+    }
+    .search-clear.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .search-clear:hover { color: var(--text); }
+
+    .filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.375rem;
+    }
+    .filter-row + .filter-row,
+    .filter-row + .chip-scroll-wrap,
+    .chip-scroll-wrap + .chip-scroll-wrap { margin-top: 0.375rem; }
+
+    .filter-label {
+      font-size: 0.625rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0.5;
+      margin-right: 0.25rem;
+      white-space: nowrap;
+    }
+
+    .chip {
+      appearance: none;
+      background: none;
+      border: 1px solid var(--dim);
+      color: var(--muted);
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.7rem;
+      cursor: pointer;
+      transition: color 0.12s, border-color 0.12s, background 0.12s;
+      white-space: nowrap;
+    }
+    .chip:hover {
+      color: var(--text);
+      border-color: rgba(243,240,234,0.35);
+    }
+    .chip[aria-pressed="true"] {
+      color: #fff;
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    .chip-count {
+      margin-left: 0.45em;
+      opacity: 0.45;
+      font-size: 0.85em;
+      letter-spacing: 0;
+    }
+    .chip[aria-pressed="true"] .chip-count { opacity: 0.75; }
+
+    /* -------- Archive header -------- */
+    .archive-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 1.25rem 0 0.875rem;
+    }
+    .archive-title {
+      font-size: var(--cap);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .archive-controls {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+    }
+    .archive-count {
+      font-size: var(--cap);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .density-btn {
+      appearance: none;
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: var(--cap);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0;
+      transition: color 0.15s;
+    }
+    .density-btn:hover { color: var(--text); }
+
+    .sort-select {
+      appearance: none;
+      background: none;
+      border: none;
+      border-bottom: 1px solid var(--dim);
+      color: var(--muted);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: var(--cap);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0 0.1rem;
+      outline: none;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .sort-select:hover, .sort-select:focus { color: var(--text); border-bottom-color: rgba(243,240,234,0.4); }
+    .sort-select option { background: #1a1a1a; color: var(--text); text-transform: uppercase; }
+
+    /* -------- Dense grid -------- */
+    .grid.dense {
+      grid-template-columns: repeat(6, 1fr);
+    }
+
+    @media (max-width: 1024px) {
+      .grid.dense { grid-template-columns: repeat(4, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .grid.dense { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* -------- Skeleton -------- */
+    .skeleton {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      padding-bottom: clamp(4rem, 8vw, 8rem);
+    }
+    .skeleton__item {
+      aspect-ratio: 1;
+      background: rgba(243,240,234,0.05);
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+    .skeleton__item:nth-child(2) { animation-delay: 0.1s; }
+    .skeleton__item:nth-child(3) { animation-delay: 0.2s; }
+    .skeleton__item:nth-child(4) { animation-delay: 0.3s; }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0.8; }
+    }
+
+    /* -------- Grid (masonry) -------- */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 8px;
+      column-gap: 1rem;
+      row-gap: 0;
+      padding-bottom: clamp(4rem, 8vw, 8rem);
+    }
+
+    .thumb { margin: 0; transition: opacity 0.25s; }
+
+    .thumb__link {
+      display: block;
+      overflow: hidden;
+      background: #111;
+      position: relative;
+    }
+    .thumb__link img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s;
+    }
+    .thumb__link:hover img { transform: scale(1.05); }
+    .thumb__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(11,11,11,0.82) 0%, transparent 60%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0.75rem;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.22s, transform 0.22s;
+      pointer-events: none;
+    }
+    .thumb__link:hover .thumb__overlay { opacity: 1; transform: translateY(0); }
+    /* Sibling dim — spotlights the hovered card */
+    .grid:has(.thumb__link:hover) .thumb { opacity: 0.5; }
+    .grid:has(.thumb__link:hover) .thumb:hover { opacity: 1; }
+    .thumb__overlay-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.9375rem;
+      font-weight: 300;
+      color: #fff;
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 0.2rem;
+    }
+    .thumb__overlay-type {
+      font-size: 0.625rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+    }
+
+    .thumb__caption {
+      margin-top: 0.4rem;
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-align: center;
+      color: var(--text);
+      opacity: 0.65;
+    }
+
+    /* -------- Compact mode captions -------- */
+    .grid.dense .thumb__caption { display: none; }
+
+    /* -------- Active filter strip -------- */
+    .active-strip {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.5rem 0 0;
+    }
+    .active-strip:empty { display: none; }
+    .active-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 0.625rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem 0.2rem 0.6rem;
+      white-space: nowrap;
+    }
+    .active-tag__remove {
+      appearance: none;
+      background: none;
+      border: none;
+      color: inherit;
+      cursor: pointer;
+      font-size: 0.85em;
+      line-height: 1;
+      padding: 0;
+      opacity: 0.65;
+      transition: opacity 0.12s;
+    }
+    .active-tag__remove:hover { opacity: 1; }
+
+    /* -------- Empty state -------- */
+    .empty {
+      grid-column: 1 / -1;
+      padding: 5rem 0;
+      text-align: center;
+      font-size: var(--cap);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .empty-reset {
+      appearance: none;
+      background: none;
+      border: none;
+      border-bottom: 1px solid var(--dim);
+      color: var(--accent);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: var(--cap);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0 0 0.1rem;
+      margin-left: 0.5em;
+      transition: border-color 0.15s;
+    }
+    .empty-reset:hover { border-color: var(--accent); }
+
+    /* -------- Responsive -------- */
+    @media (max-width: 1024px) {
+      .grid, .skeleton { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .grid, .skeleton { grid-template-columns: repeat(2, 1fr); }
+      .filter-label { display: none; }
+    }
+
+    /* -------- Palette swatches -------- */
+    .swatch {
+      appearance: none;
+      width: 1.25rem;
+      height: 1.25rem;
+      border-radius: 50%;
+      border: 1.5px solid rgba(243,240,234,0.18);
+      cursor: pointer;
+      flex-shrink: 0;
+      padding: 0;
+      transition: transform 0.12s, box-shadow 0.12s;
+    }
+    .swatch:hover { transform: scale(1.2); }
+    .swatch[aria-pressed="true"] {
+      box-shadow: 0 0 0 2px var(--bg), 0 0 0 3.5px var(--accent);
+    }
+
+    /* -------- Scrollable chip rows -------- */
+    .chip-scroll-wrap { position: relative; }
+    .chip-scroll-wrap::after {
+      content: '';
+      position: absolute;
+      right: 0; top: 0; bottom: 0;
+      width: 3rem;
+      background: linear-gradient(to right, transparent, var(--bg));
+      pointer-events: none;
+      z-index: 1;
+    }
+    .chip-scroll-wrap .filter-row {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      padding-right: 3rem;
+    }
+    .chip-scroll-wrap .filter-row::-webkit-scrollbar { display: none; }
+
+    /* -------- Surprise Me -------- */
+    .archive-title-group {
+      display: flex;
+      align-items: baseline;
+      gap: 1.25rem;
+    }
+    .surprise-btn {
+      appearance: none;
+      background: none;
+      border: none;
+      color: var(--accent);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: var(--cap);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0;
+      opacity: 0.75;
+      transition: opacity 0.15s;
+    }
+    .surprise-btn:hover { opacity: 1; }
+    .surprise-btn:disabled { opacity: 0.25; cursor: default; pointer-events: none; }
+
+    /* -------- Series context block -------- */
+    .series-ctx {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem 3rem;
+      padding: 1rem 0 1.25rem;
+      border-bottom: 1px solid var(--dim);
+    }
+    .series-ctx__name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--text);
+      margin: 0 0 0.35rem;
+    }
+    .series-ctx__desc {
+      font-size: 0.8125rem;
+      line-height: 1.65;
+      color: var(--muted);
+      margin: 0;
+      max-width: 72ch;
+    }
+    .series-ctx__link {
+      font-size: var(--cap);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--dim);
+      padding-bottom: 0.1rem;
+      white-space: nowrap;
+      flex-shrink: 0;
+      align-self: center;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .series-ctx__link:hover { color: var(--accent); border-color: var(--accent); }
+    @media (max-width: 600px) {
+      .series-ctx { flex-direction: column; gap: 0.75rem; }
+    }
+
+    /* -------- Filter reset -------- */
+    .filter-reset {
+      appearance: none;
+      background: none;
+      border: none;
+      color: var(--accent);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: var(--cap);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0;
+      opacity: 0.85;
+      transition: opacity 0.15s;
+    }
+    .filter-reset:hover { opacity: 1; }
+
+    /* -------- Active chip clear indicator -------- */
+    .chip[aria-pressed="true"]:not([data-chip-id$="-all"])::after {
+      content: '\00a0\00d7'; /* nbsp + × */
+      opacity: 0.65;
+      font-size: 0.85em;
+    }
+
+    /* -------- Mobile: palette row collapse -------- */
+    .more-filters-btn {
+      display: none;
+      appearance: none;
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.625rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.25rem 0;
+      margin-top: 0.125rem;
+      transition: color 0.15s;
+    }
+    .more-filters-btn:hover { color: var(--text); }
+    @media (max-width: 600px) {
+      #palette-wrap { display: none; }
+      #palette-wrap.expanded { display: block; }
+      .more-filters-btn { display: block; }
+    }
+
+    /* -------- Reduced motion -------- */
+    @media (prefers-reduced-motion: reduce) {
+      .thumb,
+      .thumb__link img,
+      .thumb__overlay,
+      .chip,
+      .swatch,
+      .search-clear,
+      .more-filters-btn,
+      .brand-mark { transition: none; }
+      .thumb__link:hover img { transform: none; }
+      .thumb__overlay { transform: none; }
+      .swatch:hover { transform: none; }
+      .grid:has(.thumb__link:hover) .thumb { opacity: 1; }
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="scroll-progress" class="scroll-progress" aria-hidden="true"></div>
+<a href="#main" class="skip">Skip to content</a>
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="brand" href="index.html"><img src="jfsn-mark.png" class="brand-mark" alt="JFSN">Jeffrey F. S. Neumann</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="archive.html" aria-current="page">Archive</a>
+      <a href="series-index.html">Series</a>
+      <a href="timeline.html">Timeline</a>
+      <a href="constellation.html">Constellation</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="filter-bar" role="search" aria-label="Filter works">
+  <div class="container">
+    <div class="filter-search">
+      <label for="search" class="sr-only">Search works</label>
+      <input type="search" id="search" class="search-input"
+             placeholder="Search titles, themes, keywords…" autocomplete="off" spellcheck="false">
+      <button class="search-clear" id="search-clear" aria-label="Clear search">Clear</button>
+    </div>
+    <div class="filter-row" id="type-row">
+      <span class="filter-label">Type</span>
+    </div>
+    <div class="chip-scroll-wrap">
+      <div class="filter-row" id="theme-row">
+        <span class="filter-label">Theme</span>
+      </div>
+    </div>
+    <div class="chip-scroll-wrap" id="motif-wrap">
+      <div class="filter-row" id="motif-row">
+        <span class="filter-label">Motif</span>
+      </div>
+    </div>
+    <div class="filter-row" id="named-series-row">
+      <span class="filter-label">Series</span>
+    </div>
+    <div class="filter-row" id="decade-row">
+      <span class="filter-label">Decade</span>
+    </div>
+    <div class="chip-scroll-wrap" id="palette-wrap">
+      <div class="filter-row" id="palette-row">
+        <span class="filter-label">Palette</span>
+      </div>
+    </div>
+    <button class="more-filters-btn" id="more-filters-btn" aria-expanded="false">+ Color filters</button>
+  </div>
+</div>
+
+<main id="main">
+  <div class="container">
+    <div class="archive-header">
+      <div class="archive-title-group">
+        <span class="archive-title">Works</span>
+        <button class="surprise-btn" id="surprise-btn" disabled aria-label="Go to a random artwork">↝ Surprise me</button>
+      </div>
+      <div class="archive-controls">
+        <span class="archive-count" id="count" aria-live="polite"></span>
+        <button class="filter-reset" id="filter-reset" hidden aria-label="Clear all filters">Clear filters</button>
+        <button class="fav-filter-btn" id="fav-filter-btn" aria-pressed="false" aria-label="Show saved works">♡ Saved</button>
+        <select class="sort-select" id="sort-select" aria-label="Sort order">
+          <option value="default">Default</option>
+          <option value="newest">Newest</option>
+          <option value="oldest">Oldest</option>
+          <option value="az">A – Z</option>
+          <option value="za">Z – A</option>
+        </select>
+        <button class="density-btn" id="density-btn">Compact</button>
+      </div>
+    </div>
+    <div id="active-strip" class="active-strip" aria-label="Active filters" aria-live="polite"></div>
+    <div id="series-ctx-wrap" hidden>
+      <div class="series-ctx">
+        <div>
+          <p class="series-ctx__name" id="series-ctx-name"></p>
+          <p class="series-ctx__desc" id="series-ctx-desc"></p>
+        </div>
+        <a class="series-ctx__link" id="series-ctx-link" href="">Series page &#8594;</a>
+      </div>
+    </div>
+
+    <div id="grid-wrap">
+      <div class="skeleton" aria-hidden="true">
+        <div class="skeleton__item"></div>
+        <div class="skeleton__item"></div>
+        <div class="skeleton__item"></div>
+        <div class="skeleton__item"></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<button class="scroll-top" id="scroll-top" aria-label="Back to top">&#8593; Top</button>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <span>Jeffrey F. S. Neumann</span>
+    <nav class="footer-nav" aria-label="Site navigation">
+      <a href="archive.html">Archive</a>
+      <a href="series-index.html">Series</a>
+      <a href="timeline.html">Timeline</a>
+      <a href="constellation.html">Constellation</a>
+      <a href="about.html">About</a>
+    </nav>
+    <nav class="footer-social" aria-label="Social links">
+      <a href="https://www.linkedin.com/in/jeffreyneumann/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://dribbble.com/JFSN" target="_blank" rel="noopener">Dribbble</a>
+      <a href="https://www.youtube.com/@jfsneumann/videos" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://showspace.so/s/jeffrey-neumann-46" target="_blank" rel="noopener">Showspace</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function () {
+
+  const TYPE_LABELS = {
+    collage:           'Collage',
+    sculpture:         'Sculpture',
+    painting:          'Painting',
+    photograph:        'Photograph',
+    installation_view: 'Installation',
+  };
+
+  const PALETTE_COLORS = {
+    red: '#cc2800', vermilion: '#e03810', magenta: '#c41e78', pink: '#e87090',
+    orange: '#e85c10', yellow: '#e8c830', ochre: '#c8901c', gold: '#c89618',
+    silver: '#909090', iridescent: null,
+    white: '#e8e4dc', ivory: '#f5efdf', black: '#2a2a2a', grey: '#888888',
+    brown: '#7a4428', green: '#3a7838', turquoise: '#28aabc',
+    blue: '#2050aa', ultramarine: '#1830a0', purple: '#7832aa',
+  };
+  /* Colors light enough to need a contrasting border on the dark bg */
+  const LIGHT_PALETTE = new Set(['ivory','white','yellow','silver','gold','ochre']);
+
+  /* Series descriptions — mirrors series.html SERIES config */
+  const SERIES_META = {
+    'Mr. Snowmann':   { title: 'Mr. Snowmann',     description: 'A recurring figure — part totem, part pop effigy — assembled from the residue of consumer culture. Across more than a hundred works spanning five decades, the Snowmann shape-shifts and accumulates: a sustained riff on American iconography, assembly, and the act of making something from nothing.' },
+    'Guernica':       { title: 'Guernica Inspired', description: 'Works in direct dialogue with Picasso\'s 1937 masterpiece. The bull, the horse, the fragmenting figures — recombined through collage into new arrangements that hold the original\'s emotional charge while relocating it in the visual language of mid-century American commerce and popular imagery.' },
+    'Aviation':       { title: 'Aviation',          description: 'Warplanes and commercial aircraft extracted from print media — identification silhouettes, engine cross-sections, advertising copy. Flight rendered as formal object: the machine stripped to icon, hovering between technological sublime and cold precision, beauty and threat indistinguishable.' },
+    'Targets':        { title: 'Targets',           description: 'Concentric rings, bull\'s-eye forms, and range markers appear across dozens of works as compositional anchors and loaded symbols. Precision without declared purpose. The target as both invitation and warning — a form that compels attention before meaning is assigned.' },
+    'Reliquaries':    { title: 'Reliquaries',       description: 'Works structured around the logic of the container: sealed, weighted, and significant. Materials chosen for their prior lives as much as their surfaces. Vessels that imply a content they don\'t reveal — the relic absent, the shrine intact.' },
+    'Totems':         { title: 'Totems',            description: 'Vertical accretions of found and fabricated elements, drawing on the logic of accumulation and ritual while remaining grounded in the vocabularies of the workshop and the hardware store. Stacked significance; weight as meaning.' },
+    'Crosses':        { title: 'Crosses',           description: 'The cross reduced to its geometry — symmetry, perpendicular meeting, four directions held in tension. Form that carries cultural weight before any specific reading is applied, returned to pure structure and asked to hold whatever the viewer brings.' },
+    'Torsos & Faces': { title: 'Torsos & Faces',   description: 'Photographic fragments of the human body — cropped, magnified, repositioned — set against grounds that compete with and complement the figure. Presence through reduction; the body as found material, as much subject as surface.' },
+    'Gallery':        { title: 'Gallery Images',    description: 'Exhibition views and installation photographs from five decades of showing work. The archive of the archive: spaces, arrangements, and the accumulated evidence of a practice made public and encountered by other eyes.' },
+    'Framed':         { title: 'Framed Pieces',     description: 'Works conceived with framing as an integral compositional element — the frame not as neutral container but as collaborator. Edge and interior in negotiation; the boundary of the work as part of the work itself.' },
+    'Studio':         { title: 'Studio Images',     description: 'Works photographed in the context of the studio — process images, studies in available light, and the raw material of practice before it becomes exhibition. The space where everything starts, documented at various stages of arrival.' },
+    'Art School':     { title: 'Art School Work',   description: 'Work made during and around the BFA years at the Cleveland Institute of Art. The foundation built here — printmaking, industrial drawing, material thinking — runs under everything that came after. These pieces catch the practice at the moment of formation: uncertain in the best way, searching, not yet committed to what it would become.' },
+    'Tracings':       { title: 'Tracings',          description: 'Works built from the act of tracing — contour drawn over found imagery, line extracted from photograph or print. A method of close looking that is also a method of possession: the original image remains visible beneath the intervention, neither fully surrendered nor entirely replaced.' },
+  };
+
+  /* Named series — matched by r.series field, linked with ?series= param */
+  const NAMED_SERIES_META = {
+    'XXIII':    { title: 'XXIII',          description: 'Dense formations of compact discs — sometimes hundreds — arranged across the picture plane in undulating rows or tight grids. Works in this series frequently carry the label "XXIII" or "DBS." The CD as found object, mass-produced and reflective, becomes both building material and conceptual unit.', url: 'series.html?series=XXIII' },
+    'Squadron': { title: 'Squadron',       description: 'Multiple top-down warplane silhouettes arranged in deliberate formation as the primary compositional subject. The planes move together as a unit, their repetition transforming a military motif into something closer to choreography — or to a flock.', url: 'series.html?series=Squadron' },
+    'Guernica': { title: 'Guernica Series', description: 'Works where the title contains "Guernica" or the composition directly mirrors Picasso\'s 1937 painting. Distinct from works that share Guernica\'s emotional territory: these engage the source directly, reworking its specific iconography — the bull, the horse, the lamp — through collage.', url: 'series.html?series=Guernica' },
+  };
+
+  const PAGE_SIZE = 60;
+  const ROW_H     = 8;  /* px — must match grid-auto-rows */
+  const COL_GAP   = 16; /* px — 1rem, used as vertical separation between items */
+  const CAP_H     = 22; /* px — caption area: margin-top(6) + number line(14) + gap(2) */
+
+  const FAVS_KEY = 'jfsn-favorites';
+
+  let catalog        = [];
+  let masonryDims    = null; /* dims.json lookup: artId → [w, h] */
+  let masonryObs     = null; /* ResizeObserver for responsive span recalc */
+  let visibleRecords = [];
+  let renderedCount  = 0;
+  let loadObserver   = null;
+  let activeType     = null;
+  let activeThemes   = new Set();
+  let activeSeries   = null;
+  let activeDec      = null;   /* e.g. "1970s" */
+  let searchQuery    = '';
+  let sortBy          = 'default';
+  let activePalettes  = new Set();
+  let activeFavs      = false;
+  let scrollRestored  = false;
+  let activeMotifs    = new Set();
+
+  /* ---- scroll position + scroll-to-top + progress bar ---- */
+  const scrollTopBtn  = document.getElementById('scroll-top');
+  const progressBar   = document.getElementById('scroll-progress');
+  let scrollSaveTimer;
+  window.addEventListener('scroll', () => {
+    clearTimeout(scrollSaveTimer);
+    scrollSaveTimer = setTimeout(() => {
+      sessionStorage.setItem('archive-scroll', window.scrollY);
+      sessionStorage.setItem('archive-rendered', String(renderedCount));
+    }, 100);
+    scrollTopBtn.classList.toggle('visible', window.scrollY > 800);
+    if (progressBar) {
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.width = (total > 0 ? (window.scrollY / total) * 100 : 0).toFixed(1) + '%';
+    }
+  }, { passive: true });
+  scrollTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  /* ---- restore state from URL or localStorage ---- */
+  (function initFromURL() {
+    const p       = new URLSearchParams(location.search);
+    const hasURL  = p.toString().length > 0;
+    if (p.get('type'))    activeType = p.get('type');
+    if (p.get('theme'))   p.get('theme').split(',').filter(Boolean).forEach(t => activeThemes.add(t));
+    if (p.get('series'))  activeSeries = p.get('series');
+    if (p.get('dec'))     activeDec    = p.get('dec');
+    if (p.get('palette')) p.get('palette').split(',').filter(Boolean).forEach(c => activePalettes.add(c));
+    if (p.get('q'))       searchQuery = p.get('q');
+    if (p.get('sort'))    sortBy = p.get('sort');
+    if (p.get('favs') === '1') activeFavs = true;
+    if (p.get('motif')) p.get('motif').split(',').filter(Boolean).forEach(m => activeMotifs.add(m));
+
+    /* Fall back to localStorage only when there are no URL params */
+    if (!hasURL) {
+      try {
+        const saved = JSON.parse(localStorage.getItem('archive-filters') || 'null');
+        if (saved) {
+          if (saved.type)    activeType = saved.type;
+          if (saved.themes)  saved.themes.forEach(t => activeThemes.add(t));
+          if (saved.series)  activeSeries = saved.series;
+          if (saved.dec)     activeDec    = saved.dec;
+          if (saved.palettes) saved.palettes.forEach(c => activePalettes.add(c));
+          if (saved.sort)    sortBy = saved.sort;
+          if (saved.motifs)  saved.motifs.forEach(m => activeMotifs.add(m));
+        }
+      } catch (e) {}
+    }
+  })();
+
+  /* ---- density toggle ---- */
+  let dense = localStorage.getItem('archive-density') === 'compact';
+  const densityBtn = document.getElementById('density-btn');
+
+  function applyDensity() {
+    const grid = document.querySelector('.grid');
+    if (grid) grid.classList.toggle('dense', dense);
+    densityBtn.textContent = dense ? 'Normal' : 'Compact';
+    /* Column count changed — recalculate all masonry spans */
+    requestAnimationFrame(recalcAllSpans);
+  }
+
+  densityBtn.addEventListener('click', () => {
+    dense = !dense;
+    localStorage.setItem('archive-density', dense ? 'compact' : 'normal');
+    applyDensity();
+  });
+
+  document.getElementById('surprise-btn').addEventListener('click', () => {
+    if (!catalog.length) return;
+    const r = catalog[Math.floor(Math.random() * catalog.length)];
+    location.href = 'artwork.html?id=' + r.file.replace('.avif', '');
+  });
+
+  document.getElementById('filter-reset').addEventListener('click', () => {
+    activeType = null;
+    activeThemes.clear();
+    activeMotifs.clear();
+    activeSeries = null;
+    activeDec = null;
+    activePalettes.clear();
+    activeFavs = false;
+    searchQuery = '';
+    const inp = document.getElementById('search');
+    if (inp) { inp.value = ''; }
+    document.getElementById('search-clear').classList.remove('visible');
+    sortBy = 'default';
+    document.getElementById('sort-select').value = 'default';
+    syncTypeChips(); syncThemeChips(); syncMotifChips(); syncNamedSeriesChips(); syncDecadeChips(); syncPaletteSwatches(); syncFavBtn();
+    renderGrid(); pushURL();
+  });
+
+  /* ---- favorites filter ---- */
+  const favFilterBtn = document.getElementById('fav-filter-btn');
+  if (favFilterBtn) {
+    favFilterBtn.addEventListener('click', () => {
+      activeFavs = !activeFavs;
+      syncFavBtn();
+      renderGrid();
+      pushURL();
+    });
+  }
+
+  function syncFavBtn() {
+    const btn = document.getElementById('fav-filter-btn');
+    if (!btn) return;
+    const favs = activeFavs;
+    btn.setAttribute('aria-pressed', String(favs));
+    btn.textContent = favs ? '♥ Saved' : '♡ Saved';
+  }
+
+  /* ---- fetch catalog + image dimensions in parallel ---- */
+  Promise.all([
+    fetch('catalog-lite.json').then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }),
+    fetch('dims.json').then(r => r.json()).catch(() => null),
+  ])
+    .then(([data, dims]) => {
+      catalog     = data;
+      masonryDims = dims;
+      buildFilters();
+
+      /* ---- palette row toggle (mobile) ---- */
+      (function () {
+        const moreBtn     = document.getElementById('more-filters-btn');
+        const paletteWrap = document.getElementById('palette-wrap');
+        if (!moreBtn || !paletteWrap) return;
+        /* auto-expand when palette filters are active (e.g. from URL) */
+        if (activePalettes.size > 0) {
+          paletteWrap.classList.add('expanded');
+          moreBtn.textContent = '− Color filters';
+          moreBtn.setAttribute('aria-expanded', 'true');
+        }
+        moreBtn.addEventListener('click', () => {
+          const on = paletteWrap.classList.toggle('expanded');
+          moreBtn.textContent = (on ? '− ' : '+ ') + 'Color filters';
+          moreBtn.setAttribute('aria-expanded', String(on));
+        });
+      })();
+
+      initSearch();
+      initSort();
+      renderGrid();
+      const sb = document.getElementById('surprise-btn');
+      if (sb) sb.disabled = false;
+    })
+    .catch(() => {
+      document.getElementById('grid-wrap').innerHTML =
+        '<p style="padding:4rem 0;text-align:center;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)">Could not load catalog. Run build_catalog.py first.</p>';
+    });
+
+  /* ---- search ---- */
+  function initSearch() {
+    const input = document.getElementById('search');
+    const clear = document.getElementById('search-clear');
+
+    if (searchQuery) {
+      input.value = searchQuery;
+      clear.classList.add('visible');
+    }
+
+    let searchTimer;
+    input.addEventListener('input', () => {
+      searchQuery = input.value;
+      clear.classList.toggle('visible', searchQuery.length > 0);
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => { renderGrid(); pushURL(); }, 150);
+    });
+
+    clear.addEventListener('click', () => {
+      searchQuery = '';
+      input.value = '';
+      clear.classList.remove('visible');
+      input.focus();
+      clearTimeout(searchTimer);
+      renderGrid();
+      pushURL();
+    });
+  }
+
+  /* ---- sort select ---- */
+  function initSort() {
+    const sel = document.getElementById('sort-select');
+    sel.value = sortBy;
+    sel.addEventListener('change', () => {
+      sortBy = sel.value;
+      renderGrid();
+      pushURL();
+    });
+  }
+
+  /* ---- build filter chips ---- */
+  function buildFilters() {
+    const types  = [...new Set(catalog.map(r => r.work_type).filter(Boolean))].sort();
+    const themes = [...new Set(catalog.flatMap(r => r.themes || []))].sort();
+
+    /* Precompute counts for labels */
+    const typeCounts  = {};
+    const themeCounts = {};
+    catalog.forEach(r => {
+      if (r.work_type) typeCounts[r.work_type] = (typeCounts[r.work_type] || 0) + 1;
+      (r.themes || []).forEach(t => { themeCounts[t] = (themeCounts[t] || 0) + 1; });
+    });
+
+    const typeRow  = document.getElementById('type-row');
+    const themeRow = document.getElementById('theme-row');
+
+    typeRow.appendChild(makeChip('All', 'type-all', () => {
+      activeType = null; syncTypeChips(); renderGrid(); pushURL();
+    }));
+    types.forEach(t => {
+      typeRow.appendChild(makeChip(TYPE_LABELS[t] || t, 'type-' + t, () => {
+        activeType = (activeType === t) ? null : t;
+        syncTypeChips(); renderGrid(); pushURL();
+      }, null, typeCounts[t]));
+    });
+
+    themeRow.appendChild(makeChip('All Themes', 'theme-all', () => {
+      activeThemes.clear(); syncThemeChips(); renderGrid(); pushURL();
+    }));
+    themes.forEach(th => {
+      themeRow.appendChild(makeChip(th, 'theme-' + th.replace(/\W+/g, '-'), () => {
+        if (activeThemes.has(th)) activeThemes.delete(th); else activeThemes.add(th);
+        syncThemeChips(); renderGrid(); pushURL();
+      }, th, themeCounts[th]));
+    });
+
+    /* Named series chips (XXIII / Squadron / Guernica) */
+    const seriesRow = document.getElementById('named-series-row');
+    if (seriesRow) {
+      const seriesCounts = {};
+      catalog.forEach(r => { if (r.series) seriesCounts[r.series] = (seriesCounts[r.series] || 0) + 1; });
+      ['XXIII', 'Squadron', 'Guernica'].forEach(key => {
+        const title = (NAMED_SERIES_META[key] || {}).title || key;
+        seriesRow.appendChild(makeChip(title, 'named-series-' + key, () => {
+          activeSeries = activeSeries === key ? null : key;
+          syncNamedSeriesChips(); renderGrid(); pushURL();
+        }, null, seriesCounts[key]));
+      });
+    }
+
+    /* Decade chips */
+    const decadeRow = document.getElementById('decade-row');
+    if (decadeRow) {
+      const decadeCounts = {};
+      catalog.forEach(r => {
+        const d = decadeOf(r.year);
+        if (d) decadeCounts[d] = (decadeCounts[d] || 0) + 1;
+      });
+      const decades = Object.keys(decadeCounts).sort();
+      decadeRow.appendChild(makeChip('All', 'dec-all', () => {
+        activeDec = null; syncDecadeChips(); renderGrid(); pushURL();
+      }));
+      decades.forEach(d => {
+        decadeRow.appendChild(makeChip(d, 'dec-' + d, () => {
+          activeDec = activeDec === d ? null : d;
+          syncDecadeChips(); renderGrid(); pushURL();
+        }, null, decadeCounts[d]));
+      });
+      const undatedCount = catalog.filter(r => r.year === null || r.year === undefined).length;
+      if (undatedCount > 0) {
+        decadeRow.appendChild(makeChip('Undated', 'dec-undated', () => {
+          activeDec = activeDec === 'undated' ? null : 'undated';
+          syncDecadeChips(); renderGrid(); pushURL();
+        }, null, undatedCount));
+      }
+    }
+
+    /* Motif chips */
+    const motifRow = document.getElementById('motif-row');
+    if (motifRow) {
+      const motifCounts = {};
+      catalog.forEach(r => {
+        (r.motifs || []).forEach(m => { motifCounts[m] = (motifCounts[m] || 0) + 1; });
+      });
+      const motifs = Object.keys(motifCounts).sort();
+      motifRow.appendChild(makeChip('All Motifs', 'motif-all', () => {
+        activeMotifs.clear(); syncMotifChips(); renderGrid(); pushURL();
+      }));
+      motifs.forEach(m => {
+        motifRow.appendChild(makeChip(m.replace(/-/g, ' '), 'motif-' + m, () => {
+          if (activeMotifs.has(m)) activeMotifs.delete(m); else activeMotifs.add(m);
+          syncMotifChips(); renderGrid(); pushURL();
+        }, null, motifCounts[m]));
+      });
+    }
+
+    syncTypeChips();
+    syncThemeChips();
+    syncMotifChips();
+    syncNamedSeriesChips();
+    syncDecadeChips();
+    buildPaletteFilters();
+    syncFavBtn();
+  }
+
+  function buildPaletteFilters() {
+    const allColors = [...new Set(catalog.flatMap(r => r.palette || []))].sort();
+    const row = document.getElementById('palette-row');
+    if (!row || !allColors.length) return;
+
+    row.appendChild(makeChip('All', 'palette-all', () => {
+      activePalettes.clear(); syncPaletteSwatches(); renderGrid(); pushURL();
+    }));
+
+    allColors.forEach(name => {
+      const btn = document.createElement('button');
+      btn.className = 'swatch';
+      btn.dataset.chipId = 'palette-' + name;
+      btn.dataset.palette = name;
+      btn.setAttribute('aria-pressed', 'false');
+      btn.setAttribute('aria-label', name);
+      btn.title = name.charAt(0).toUpperCase() + name.slice(1);
+
+      if (name === 'iridescent') {
+        btn.style.background =
+          'conic-gradient(from 0deg,#ff4400,#ffcc00,#88dd00,#00aacc,#6644ff,#ff4400)';
+      } else {
+        btn.style.background = PALETTE_COLORS[name] || '#888';
+        if (LIGHT_PALETTE.has(name)) {
+          btn.style.borderColor = 'rgba(0,0,0,0.3)';
+        }
+      }
+
+      btn.addEventListener('click', () => {
+        if (activePalettes.has(name)) activePalettes.delete(name);
+        else activePalettes.add(name);
+        syncPaletteSwatches(); renderGrid(); pushURL();
+      });
+      row.appendChild(btn);
+    });
+
+    syncPaletteSwatches();
+  }
+
+  function syncPaletteSwatches() {
+    document.querySelectorAll('[data-chip-id^="palette-"]').forEach(btn => {
+      const isAll = btn.dataset.chipId === 'palette-all';
+      btn.setAttribute('aria-pressed',
+        String(isAll ? activePalettes.size === 0 : activePalettes.has(btn.dataset.palette)));
+    });
+  }
+
+  function syncMotifChips() {
+    document.querySelectorAll('[data-chip-id^="motif-"]').forEach(btn => {
+      const isAll = btn.dataset.chipId === 'motif-all';
+      const key   = btn.dataset.chipId.slice('motif-'.length);
+      btn.setAttribute('aria-pressed',
+        String(isAll ? activeMotifs.size === 0 : activeMotifs.has(key)));
+    });
+  }
+
+  function makeChip(label, id, onClick, themeValue, count) {
+    const btn = document.createElement('button');
+    btn.className = 'chip';
+    if (count !== undefined) {
+      btn.innerHTML = esc(label) + '<span class="chip-count">' + count + '</span>';
+    } else {
+      btn.textContent = label;
+    }
+    btn.setAttribute('aria-pressed', 'false');
+    btn.dataset.chipId = id;
+    if (themeValue) btn.dataset.theme = themeValue;
+    btn.addEventListener('click', onClick);
+    return btn;
+  }
+
+  function syncTypeChips() {
+    document.querySelectorAll('[data-chip-id^="type-"]').forEach(btn => {
+      const isAll = btn.dataset.chipId === 'type-all';
+      const key   = btn.dataset.chipId.replace('type-', '');
+      btn.setAttribute('aria-pressed',
+        String(isAll ? activeType === null : activeType === key));
+    });
+  }
+
+  function syncThemeChips() {
+    document.querySelectorAll('[data-chip-id^="theme-"]').forEach(btn => {
+      const isAll = btn.dataset.chipId === 'theme-all';
+      btn.setAttribute('aria-pressed',
+        String(isAll ? activeThemes.size === 0 : activeThemes.has(btn.dataset.theme)));
+    });
+  }
+
+  function syncNamedSeriesChips() {
+    document.querySelectorAll('[data-chip-id^="named-series-"]').forEach(btn => {
+      const key = btn.dataset.chipId.replace('named-series-', '');
+      btn.setAttribute('aria-pressed', String(activeSeries === key));
+    });
+  }
+
+  function syncDecadeChips() {
+    document.querySelectorAll('[data-chip-id^="dec-"]').forEach(btn => {
+      const isAll = btn.dataset.chipId === 'dec-all';
+      const key   = btn.dataset.chipId.replace('dec-', '');
+      btn.setAttribute('aria-pressed',
+        String(isAll ? activeDec === null : activeDec === key));
+    });
+  }
+
+  /* ---- URL state + localStorage persistence ---- */
+  function pushURL() {
+    const p = new URLSearchParams();
+    if (activeType)                     p.set('type',    activeType);
+    if (activeThemes.size)              p.set('theme',   [...activeThemes].join(','));
+    if (activeSeries)                   p.set('series',  activeSeries);
+    if (activeDec)                      p.set('dec',     activeDec);
+    if (activePalettes.size)            p.set('palette', [...activePalettes].join(','));
+    if (searchQuery.trim())             p.set('q',       searchQuery.trim());
+    if (sortBy && sortBy !== 'default') p.set('sort',    sortBy);
+    if (activeFavs)                     p.set('favs',    '1');
+    if (activeMotifs.size)              p.set('motif',   [...activeMotifs].join(','));
+    const qs = p.toString();
+    history.replaceState(null, '', qs ? '?' + qs : location.pathname);
+
+    /* Persist filter state (not search query) for next visit */
+    try {
+      const s = {};
+      if (activeType)           s.type     = activeType;
+      if (activeThemes.size)    s.themes   = [...activeThemes];
+      if (activeSeries)         s.series   = activeSeries;
+      if (activeDec)            s.dec      = activeDec;
+      if (activePalettes.size)  s.palettes = [...activePalettes];
+      if (sortBy !== 'default') s.sort     = sortBy;
+      if (activeMotifs.size)    s.motifs   = [...activeMotifs];
+      if (Object.keys(s).length) {
+        localStorage.setItem('archive-filters', JSON.stringify(s));
+      } else {
+        localStorage.removeItem('archive-filters');
+      }
+    } catch (e) {}
+  }
+
+  /* ---- artwork link includes filter context ---- */
+  function artworkURL(id) {
+    const p = new URLSearchParams({ id });
+    if (activeType)          p.set('type',    activeType);
+    if (activeThemes.size)   p.set('theme',   [...activeThemes].join(','));
+    if (activePalettes.size) p.set('palette', [...activePalettes].join(','));
+    if (searchQuery.trim())  p.set('q',       searchQuery.trim());
+    return 'artwork.html?' + p.toString();
+  }
+
+  /* ---- decade helper ---- */
+  function decadeOf(year) {
+    const y = parseInt(year, 10);
+    return isNaN(y) ? null : (Math.floor(y / 10) * 10) + 's';
+  }
+
+  /* ---- filter logic ---- */
+  function getFavSet() {
+    try { return new Set(JSON.parse(localStorage.getItem(FAVS_KEY) || '[]')); } catch(e) { return new Set(); }
+  }
+
+  function matches(record) {
+    if (activeType && record.work_type !== activeType) return false;
+    if (activeSeries && record.series !== activeSeries) return false;
+    if (activeDec) {
+      if (activeDec === 'undated') {
+        if (record.year !== null && record.year !== undefined) return false;
+      } else if (decadeOf(record.year) !== activeDec) {
+        return false;
+      }
+    }
+    if (activeThemes.size) {
+      if (!(record.themes || []).some(t => activeThemes.has(t))) return false;
+    }
+    if (activePalettes.size) {
+      if (!(record.palette || []).some(c => activePalettes.has(c))) return false;
+    }
+    if (activeMotifs.size) {
+      if (!(record.motifs || []).some(m => activeMotifs.has(m))) return false;
+    }
+    if (activeFavs) {
+      const id = record.file ? record.file.replace('.avif', '') : '';
+      if (!getFavSet().has(id)) return false;
+    }
+    if (searchQuery.trim()) {
+      const q = searchQuery.trim().toLowerCase();
+      const inTitle     = (record.title     || '').toLowerCase().includes(q);
+      const inThemes    = (record.themes    || []).some(t => t.toLowerCase().includes(q));
+      const inSeries    = (record.series    || '').toLowerCase().includes(q);
+      const inKeywords  = (record.keywords  || []).some(k => k.toLowerCase().includes(q));
+      const inMotifs    = (record.motifs    || []).some(m => m.toLowerCase().includes(q));
+      const inMaterials = (record.materials || []).some(m => m.toLowerCase().includes(q));
+      if (!inTitle && !inThemes && !inSeries && !inKeywords && !inMotifs && !inMaterials) return false;
+    }
+    return true;
+  }
+
+  /* ---- sort ---- */
+  function sortedVisible(records) {
+    if (sortBy === 'default') return records;
+    const copy = records.slice();
+    if (sortBy === 'newest') return copy.sort((a, b) => {
+      const diff = (parseInt(b.year, 10) || 0) - (parseInt(a.year, 10) || 0);
+      return diff || b.file.localeCompare(a.file);
+    });
+    if (sortBy === 'oldest') return copy.sort((a, b) => {
+      const diff = (parseInt(a.year, 10) || 0) - (parseInt(b.year, 10) || 0);
+      return diff || a.file.localeCompare(b.file);
+    });
+    if (sortBy === 'az') return copy.sort((a, b) => (a.title || '').localeCompare(b.title || ''));
+    if (sortBy === 'za') return copy.sort((a, b) => (b.title || '').localeCompare(a.title || ''));
+    return records;
+  }
+
+  /* ---- reset button visibility ---- */
+  function updateResetBtn() {
+    const btn = document.getElementById('filter-reset');
+    if (!btn) return;
+    const active = activeType || activeThemes.size || activeSeries || activeDec || activePalettes.size || activeMotifs.size || activeFavs || searchQuery.trim();
+    btn.hidden = !active;
+  }
+
+  /* ---- series context block ---- */
+  function updateSeriesContext() {
+    const wrap = document.getElementById('series-ctx-wrap');
+    if (!wrap) return;
+    /* Named series takes priority (?series= param) */
+    if (activeSeries && NAMED_SERIES_META[activeSeries]) {
+      const s = NAMED_SERIES_META[activeSeries];
+      document.getElementById('series-ctx-name').textContent = s.title;
+      document.getElementById('series-ctx-desc').textContent = s.description;
+      const link = document.getElementById('series-ctx-link');
+      link.href = s.url;
+      wrap.hidden = false;
+      return;
+    }
+    /* Show for single active theme with a SERIES_META entry */
+    if (activeThemes.size !== 1) { wrap.hidden = true; return; }
+    const theme = [...activeThemes][0];
+    const s = SERIES_META[theme];
+    if (!s) { wrap.hidden = true; return; }
+    document.getElementById('series-ctx-name').textContent = s.title;
+    document.getElementById('series-ctx-desc').textContent = s.description;
+    const link = document.getElementById('series-ctx-link');
+    link.href = 'series.html?theme=' + encodeURIComponent(theme);
+    wrap.hidden = false;
+  }
+
+  /* ---- active filter strip ---- */
+  function updateActiveStrip() {
+    var strip = document.getElementById('active-strip');
+    if (!strip) return;
+    strip.innerHTML = '';
+
+    function addTag(label, onRemove) {
+      var tag = document.createElement('span');
+      tag.className = 'active-tag';
+      var txt = document.createElement('span');
+      txt.textContent = label;
+      var btn = document.createElement('button');
+      btn.className = 'active-tag__remove';
+      btn.setAttribute('aria-label', 'Remove ' + label + ' filter');
+      btn.textContent = '\xd7';
+      btn.addEventListener('click', onRemove);
+      tag.appendChild(txt);
+      tag.appendChild(btn);
+      strip.appendChild(tag);
+    }
+
+    if (activeType) {
+      var typeLbl = TYPE_LABELS[activeType] || activeType;
+      addTag(typeLbl, function() { activeType = null; syncTypeChips(); renderGrid(); pushURL(); });
+    }
+    activeThemes.forEach(function(th) {
+      addTag(th, function() { activeThemes.delete(th); syncThemeChips(); renderGrid(); pushURL(); });
+    });
+    if (activeSeries) {
+      var serLbl = (NAMED_SERIES_META[activeSeries] || {}).title || activeSeries;
+      addTag(serLbl, function() { activeSeries = null; syncNamedSeriesChips(); renderGrid(); pushURL(); });
+    }
+    if (activeDec) {
+      addTag(activeDec, function() { activeDec = null; syncDecadeChips(); renderGrid(); pushURL(); });
+    }
+    activePalettes.forEach(function(c) {
+      addTag(c, function() { activePalettes.delete(c); syncPaletteSwatches(); renderGrid(); pushURL(); });
+    });
+    activeMotifs.forEach(function(m) {
+      addTag(m.replace(/-/g, ' '), function() { activeMotifs.delete(m); syncMotifChips(); renderGrid(); pushURL(); });
+    });
+    if (activeFavs) {
+      addTag('Saved', function() { activeFavs = false; syncFavBtn(); renderGrid(); pushURL(); });
+    }
+    if (searchQuery.trim()) {
+      var sq = searchQuery.trim();
+      addTag('"' + sq + '"', function() {
+        searchQuery = '';
+        var inp = document.getElementById('search');
+        var clr = document.getElementById('search-clear');
+        if (inp) inp.value = '';
+        if (clr) clr.classList.remove('visible');
+        renderGrid(); pushURL();
+      });
+    }
+  }
+
+  /* ---- render grid ---- */
+  function renderGrid() {
+    visibleRecords = sortedVisible(catalog.filter(matches));
+    renderedCount  = 0;
+    const total    = catalog.length;
+
+    document.getElementById('count').textContent =
+      visibleRecords.length === total
+        ? total + ' works'
+        : visibleRecords.length + ' of ' + total + ' works';
+
+    /* Update page title to reflect active filter */
+    if (activeSeries && NAMED_SERIES_META[activeSeries]) {
+      document.title = NAMED_SERIES_META[activeSeries].title + ' — Archive — Jeffrey F. S. Neumann';
+    } else if (activeThemes.size === 1) {
+      document.title = [...activeThemes][0] + ' — Archive — Jeffrey F. S. Neumann';
+    } else {
+      document.title = 'Archive — Jeffrey F. S. Neumann';
+    }
+
+    const wrap = document.getElementById('grid-wrap');
+    /* Remove the skeleton placeholder on first real render */
+    const skeleton = wrap.querySelector('.skeleton');
+    if (skeleton) skeleton.remove();
+    if (!wrap.querySelector('.grid')) {
+      const g = document.createElement('div');
+      g.className = 'grid'; g.id = 'grid';
+      wrap.appendChild(g);
+      const s = document.createElement('div');
+      s.id = 'load-sentinel';
+      wrap.appendChild(s);
+    }
+    const grid = document.getElementById('grid');
+    grid.replaceChildren();
+    observeMasonry(grid);
+
+    updateResetBtn();
+    updateSeriesContext();
+    updateActiveStrip();
+
+    if (visibleRecords.length === 0) {
+      grid.innerHTML = '<p class="empty">No works match the selected filters. <button class="empty-reset" onclick="document.getElementById(\'filter-reset\').click()">Clear filters</button></p>';
+      applyDensity();
+      return;
+    }
+
+    /* On first load restore prior scroll depth; after that just one page */
+    const savedCount  = !scrollRestored
+      ? (parseInt(sessionStorage.getItem('archive-rendered'), 10) || 0) : 0;
+    const initBatches = Math.max(1,
+      Math.ceil(Math.min(savedCount, visibleRecords.length) / PAGE_SIZE));
+    for (let i = 0; i < initBatches; i++) appendBatch(grid);
+
+    setupLoadMore();
+
+    if (!scrollRestored) {
+      scrollRestored = true;
+      const saved = sessionStorage.getItem('archive-scroll');
+      if (saved) requestAnimationFrame(() => window.scrollTo(0, parseInt(saved, 10)));
+    }
+  }
+
+  function appendBatch(grid) {
+    grid = grid || document.getElementById('grid');
+    if (!grid) return;
+    const slice = visibleRecords.slice(renderedCount, renderedCount + PAGE_SIZE);
+    if (!slice.length) return;
+
+    /* Pre-calculate column width so spans can be set BEFORE DOM insertion → no CLS */
+    const numCols = dense
+      ? (window.innerWidth <= 600 ? 3 : 6)
+      : (window.innerWidth <= 600 ? 2 : window.innerWidth <= 900 ? 3 : 4);
+    const colW = Math.floor((grid.offsetWidth - COL_GAP * (numCols - 1)) / numCols);
+
+    const frag    = document.createDocumentFragment();
+    const newFigs = [];
+    slice.forEach(r => {
+      const fig = buildFigure(r);
+      /* Set span inline before insertion — prevents the layout-shift rAF causes */
+      if (masonryDims && colW > 0) {
+        const id = fig.dataset.id;
+        if (id && masonryDims[id]) {
+          const [w, h] = masonryDims[id];
+          const imgH   = Math.round((colW / w) * h);
+          const capH   = dense ? 0 : CAP_H;
+          fig.style.gridRow = `span ${Math.ceil((imgH + capH + COL_GAP) / ROW_H)}`;
+        }
+      }
+      newFigs.push(fig);
+      frag.appendChild(fig);
+    });
+    grid.appendChild(frag);
+    renderedCount += slice.length;
+    applyDensity();
+    /* Fine-tune spans with actual offsetWidth after layout */
+    requestAnimationFrame(() => newFigs.forEach(setSpan));
+  }
+
+  function setupLoadMore() {
+    if (loadObserver) { loadObserver.disconnect(); loadObserver = null; }
+    const sentinel = document.getElementById('load-sentinel');
+    if (!sentinel || renderedCount >= visibleRecords.length) return;
+    loadObserver = new IntersectionObserver(entries => {
+      if (!entries[0].isIntersecting) return;
+      if (renderedCount >= visibleRecords.length) {
+        loadObserver.disconnect(); return;
+      }
+      appendBatch();
+    }, { rootMargin: '600px' });
+    loadObserver.observe(sentinel);
+  }
+
+  function buildFigure(record) {
+    const id          = record.file.replace('.avif', '');
+    const typeLabel   = TYPE_LABELS[record.work_type] || record.work_type || '';
+    const yearStr     = record.year ? String(record.year) : '';
+    const overlayMeta = [yearStr, typeLabel].filter(Boolean).join(' · ');
+    const [imgW, imgH] = (masonryDims && masonryDims[id]) || [400, 400];
+    const fig       = document.createElement('figure');
+    fig.className   = 'thumb';
+    fig.dataset.id  = id;
+    fig.innerHTML = `
+      <a class="thumb__link" href="${esc(artworkURL(id))}">
+        <img srcset="artworks/mini/${esc(id)}.avif 200w, artworks/thumbs/${esc(id)}.avif 400w"
+             sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)"
+             src="artworks/thumbs/${esc(id)}.avif"
+             alt="${esc(record.title || id)}"
+             loading="lazy" width="${imgW}" height="${imgH}">
+        <div class="thumb__overlay" aria-hidden="true">
+          <span class="thumb__overlay-title">${esc(record.title || id)}</span>
+          <span class="thumb__overlay-type">${esc(overlayMeta)}</span>
+        </div>
+      </a>
+      <figcaption class="thumb__caption">${esc(id.replace(/^art/, ''))}</figcaption>`;
+    return fig;
+  }
+
+  function esc(s) {
+    return String(s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  /* ---- masonry span calculation ---- */
+  function setSpan(fig) {
+    if (!masonryDims) return;
+    const id = fig.dataset.id;
+    if (!id || !masonryDims[id]) return;
+    const [w, h] = masonryDims[id];
+    /* fig.offsetWidth is the rendered column width — accurate after DOM layout */
+    const colW   = fig.offsetWidth || 280;
+    const imgH   = Math.round((colW / w) * h);
+    const capH   = dense ? 0 : CAP_H;
+    fig.style.gridRow = `span ${Math.ceil((imgH + capH + COL_GAP) / ROW_H)}`;
+  }
+
+  function recalcAllSpans() {
+    const grid = document.getElementById('grid');
+    if (!grid || !masonryDims) return;
+    grid.querySelectorAll('.thumb').forEach(setSpan);
+  }
+
+  function observeMasonry(grid) {
+    if (masonryObs) masonryObs.disconnect();
+    masonryObs = new ResizeObserver(() => recalcAllSpans());
+    masonryObs.observe(grid);
+  }
+
+  /* ---- full-res hover preload ---- */
+  (function () {
+    const wrap = document.getElementById('grid-wrap');
+    if (!wrap) return;
+    const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    wrap.addEventListener('mouseover', function (e) {
+      const link = e.target.closest('.thumb__link');
+      if (!link || link.dataset.fullLoaded) return;
+      link.dataset.fullLoaded = '1';
+      const img = link.querySelector('img');
+      const fig = link.closest('[data-id]');
+      if (!img || !fig) return;
+      const preload = new Image();
+      preload.onload = function () {
+        if (!link.matches(':hover')) return;
+        if (noMotion) { img.srcset = ''; img.src = preload.src; return; }
+        img.style.opacity = '0';
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          img.srcset = '';
+          img.src    = preload.src;
+          img.style.opacity = '1';
+        }));
+      };
+      preload.src = 'artworks/full/' + fig.dataset.id + '.avif';
+    });
+  })();
+
+})();
+</script>
+
+<script src="search.js" defer></script>
+<script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
+</body>
+</html>

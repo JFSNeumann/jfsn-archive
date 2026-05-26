@@ -1,0 +1,27 @@
+/* =========================================== */
+/* FIX KEYWORD TAG NEGATIVE MARGINS */
+/* Overrides negative margins on keyword tags */
+/* Must load LAST to override all other CSS */
+/* =========================================== */
+
+/* Maximum specificity to override negative margins */
+html body #artworkOfDayKeywords .keyword-tag,
+html body .artwork-of-day-keywords .keyword-tag,
+html body .artwork-of-day-keywords.show .keyword-tag,
+html body #artworkOfDayKeywords.show .keyword-tag {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Override inline styles */
+html body #artworkOfDayKeywords .keyword-tag[style*="margin"],
+html body .artwork-of-day-keywords .keyword-tag[style*="margin"],
+html body .artwork-of-day-keywords.show .keyword-tag[style*="margin"] {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+

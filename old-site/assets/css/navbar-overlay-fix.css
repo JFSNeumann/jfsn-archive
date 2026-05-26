@@ -1,0 +1,63 @@
+/**
+ * Navbar Overlay Fix
+ * Ensures hamburger menu overlay displays correctly
+ */
+
+/* Ensure overlay is visible when active */
+#editorialNavOverlay.editorial-nav-overlay.active,
+.editorial-nav-overlay.active {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  z-index: 999999 !important;
+}
+
+/* Ensure overlay is in correct position */
+#editorialNavOverlay.editorial-nav-overlay,
+.editorial-nav-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 999999 !important;
+}
+
+/* Ensure toggle button is clickable */
+#editorialNavToggle,
+.editorial-navbar-toggle {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  z-index: 10001 !important;
+  position: relative !important;
+}
+
+/* Ensure overlay content is visible */
+.editorial-nav-overlay-content {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Override navbar.css opaque background - make semi-transparent */
+/* NO BLUR - Removed per user request */
+#editorialNavOverlay.editorial-nav-overlay,
+.editorial-nav-overlay {
+  background: rgba(0, 0, 0, 0.3) !important; /* Semi-transparent - index page visible */
+  backdrop-filter: none !important; /* NO BLUR */
+  -webkit-backdrop-filter: none !important; /* NO BLUR */
+  filter: none !important; /* NO BLUR */
+  -webkit-filter: none !important; /* NO BLUR */
+}
+
+#editorialNavOverlay.editorial-nav-overlay.active,
+.editorial-nav-overlay.active {
+  background: rgba(0, 0, 0, 0.3) !important; /* Semi-transparent - index page visible */
+  backdrop-filter: none !important; /* NO BLUR */
+  -webkit-backdrop-filter: none !important; /* NO BLUR */
+  filter: none !important; /* NO BLUR */
+  -webkit-filter: none !important; /* NO BLUR */
+}

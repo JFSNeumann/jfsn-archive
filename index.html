@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0b0b">
+
+  <title>Jeffrey F. S. Neumann — Archive</title>
+  <meta name="description" content="Archive of works by Jeffrey F. S. Neumann, 1974–present.">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="canonical" href="https://jfsn.com/">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="catalog-home.json?v=20260526205109" as="fetch" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap"></noscript>
+  <link rel="stylesheet" href="site.css">
+
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="Jeffrey F. S. Neumann — Archive">
+  <meta property="og:description" content="1,084 works spanning 1974 to the present. Collage, sculpture, and photography by Jeffrey F. S. Neumann.">
+  <meta property="og:image"       content="https://jfsn.com/og-card.jpg">
+  <meta property="og:url"         content="https://jfsn.com/">
+
+  <style>
+    /* -------- Hero -------- */
+    .hero {
+      position: relative; /* ① anchor cycle button */
+    }
+    .hero__image {
+      width: 100%;
+      height: 72svh;      /* fixed height — prevents CLS; image contained inside */
+      object-fit: contain;
+      background: var(--bg);
+    }
+
+    .hero__caption {
+      display: flex;
+      gap: 2rem;
+      margin-top: 1.25rem;
+      font-size: var(--cap);
+      letter-spacing: var(--track);
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .hero__caption strong { font-weight: normal; color: var(--text); }
+    .hero__caption > a { margin-left: auto; }
+    .hero__caption > a:hover { color: var(--accent); }
+    .hero__caption span:empty { display: none; }
+    .hero__caption-title a,
+    .hero__caption strong a { color: inherit; transition: color 0.15s; }
+    .hero__caption-title a:hover,
+    .hero__caption strong a:hover { color: var(--accent); }
+    .hero__caption-title {
+      font-family: var(--font-display);
+      font-size: 0.9375rem;
+      font-weight: 300;
+      color: var(--text);
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    /* ① Hero cycle button */
+    .hero-cycle-btn {
+      position: absolute;
+      right: clamp(1rem, 2vw, 2rem);
+      bottom: 0;
+      translate: 0 -50%;
+      appearance: none;
+      background: rgba(11,11,11,0.72);
+      border: 1px solid var(--dim);
+      color: var(--muted);
+      font-size: 1.1rem;
+      line-height: 1;
+      padding: 0.55rem 0.85rem;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+      z-index: 10;
+    }
+    .hero-cycle-btn:hover {
+      color: var(--text);
+      border-color: rgba(243,240,234,0.3);
+      background: rgba(11,11,11,0.9);
+    }
+    .hero-cycle-btn:active { color: var(--accent); }
+
+    /* -------- Tagline ⑤ -------- */
+    .home-tagline {
+      margin: 0;
+      padding-top: clamp(1.5rem, 3vw, 2.5rem);
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 1.5vw, 1.25rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--text);
+      letter-spacing: 0;
+      line-height: 1.5;
+    }
+
+    /* -------- Context line -------- */
+    .home-context {
+      margin: 0;
+      padding-top: 0.875rem;
+      font-size: 0.8125rem;
+      letter-spacing: 0.02em;
+      line-height: 1.65;
+      color: var(--muted);
+    }
+    .home-context a {
+      color: var(--muted);
+      border-bottom: 1px solid var(--dim);
+      padding-bottom: 1px;
+      transition: color 0.15s, border-color 0.15s;
+      white-space: nowrap;
+    }
+    .home-context a:hover { color: var(--text); border-bottom-color: var(--muted); }
+
+    /* -------- Recently Added strip -------- */
+    .recent-section {
+      padding-top: clamp(3rem, 5vw, 4rem);
+      padding-bottom: clamp(3rem, 5vw, 4rem);
+      border-top: 1px solid var(--dim);
+    }
+    .recent-section .section-label { margin-bottom: 1.25rem; }
+    .recent-strip {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0.625rem;
+    }
+    @media (max-width: 768px) { .recent-strip { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 480px) { .recent-strip { grid-template-columns: repeat(3, 1fr); gap: 0.375rem; } }
+    .recent-thumb {
+      display: block;
+      aspect-ratio: 1;
+      overflow: hidden;
+      background: rgba(243,240,234,0.04);
+      position: relative;
+    }
+    .recent-thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      transition: transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.3s;
+    }
+    .recent-thumb:hover img { transform: scale(1.06); }
+    .recent-thumb__label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 0.4rem 0.5rem 0.375rem;
+      background: linear-gradient(to top, rgba(11,11,11,0.85) 0%, transparent 100%);
+      font-size: 0.5625rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(243,240,234,0.6);
+      opacity: 0;
+      transition: opacity 0.2s;
+      pointer-events: none;
+    }
+    .recent-thumb:hover .recent-thumb__label { opacity: 1; }
+    .recent-cta {
+      margin-top: 1.25rem;
+      font-size: var(--cap);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .recent-cta a {
+      color: var(--muted);
+      border-bottom: 1px solid var(--dim);
+      padding-bottom: 2px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .recent-cta a:hover { color: var(--text); border-bottom-color: var(--muted); }
+
+    /* -------- Grid -------- */
+    .grid-section {
+      margin-top: clamp(4rem, 8vw, 8rem);
+      padding-bottom: clamp(4rem, 8vw, 8rem);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      min-height: 52vw; /* reserve space before JS populates — prevents CLS from grid insert */
+    }
+    .thumb { margin: 0; }
+    .thumb__link {
+      display: block;
+      aspect-ratio: 1;
+      overflow: hidden;
+      background: var(--bg);
+      position: relative;
+    }
+
+    /* ④ Editorial first card */
+    .thumb--featured {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+    .thumb--featured .thumb__overlay-title { font-size: 1.1rem; }
+
+    .thumb { transition: opacity 0.25s; }
+    .thumb__link img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s;
+    }
+    .thumb__link:hover img { transform: scale(1.05); }
+    .thumb__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(11,11,11,0.82) 0%, transparent 60%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0.75rem;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.22s, transform 0.22s;
+      pointer-events: none;
+    }
+    .thumb__link:hover .thumb__overlay { opacity: 1; transform: translateY(0); }
+    .grid:has(.thumb__link:hover) .thumb { opacity: 0.5; }
+    .grid:has(.thumb__link:hover) .thumb:hover { opacity: 1; }
+    .thumb__overlay-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.9375rem;
+      font-weight: 300;
+      color: #fff;
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .thumb__overlay-type {
+      font-size: 0.625rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-top: 0.2rem;
+    }
+    .thumb__caption {
+      margin-top: 0.4rem;
+      font-family: var(--font-display);
+      font-size: 0.875rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .section-label {
+      margin: 0 0 0.5rem;
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--text);
+      letter-spacing: 0;
+    }
+    .archive-stat {
+      margin: 0 0 2rem;
+      font-size: var(--cap);
+      letter-spacing: var(--track);
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .archive-cta {
+      margin-top: 3rem;
+      text-align: center;
+      font-size: var(--cap);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .archive-cta a {
+      color: var(--muted);
+      border-bottom: 1px solid rgba(243,240,234,0.18);
+      padding-bottom: 2px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .archive-cta a:hover { color: var(--text); border-color: var(--muted); }
+
+    /* ⑦ Stagger-in animation */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .thumb--animate {
+      animation: fadeInUp 0.45s ease both;
+      animation-delay: calc(var(--i, 0) * 60ms);
+    }
+
+    /* -------- Series band -------- */
+    .home-series {
+      padding-top: clamp(2rem, 4vw, 3rem);
+      padding-bottom: clamp(4rem, 8vw, 8rem);
+      border-top: 1px solid var(--dim);
+    }
+    /* ⑨ Two groups */
+    .home-series-group { margin-top: 1.25rem; }
+    .home-series-group-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(243,240,234,0.28);
+      margin-bottom: 0.6rem;
+    }
+    .home-series-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .home-series-link {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.45rem;
+      font-size: var(--cap);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border: 1px solid var(--dim);
+      padding: 0.3rem 0.7rem;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .home-series-link:hover {
+      color: var(--accent);
+      border-color: rgba(255,102,0,0.4);
+    }
+    /* ③ Count badge */
+    .chip-count {
+      font-size: 0.6rem;
+      opacity: 0.45;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.04em;
+    }
+    .home-series-cta {
+      font-size: var(--cap);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--dim);
+      padding-bottom: 0.1rem;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .home-series-cta:hover { color: var(--text); border-color: var(--muted); }
+
+    /* -------- Responsive -------- */
+    @media (max-width: 780px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .thumb--featured { grid-column: span 2; grid-row: span 1; }
+      .hero__caption { flex-wrap: wrap; gap: 0.75rem 1.5rem; }
+      .hero__caption a { margin-left: 0; }
+    }
+
+    /* -------- Reduced motion -------- */
+    @media (prefers-reduced-motion: reduce) {
+      .thumb,
+      .thumb__link img,
+      .thumb__overlay,
+      .hero-cycle-btn,
+      .home-series-link,
+      .home-series-cta,
+      .brand-mark { transition: none; }
+      .thumb__link:hover img { transform: none; }
+      .thumb__overlay { transform: none; }
+      .grid:has(.thumb__link:hover) .thumb { opacity: 1; }
+      .thumb--animate { animation: none; }
+    }
+
+    /* Desktop: overlay handles title; hide static caption */
+    @media (hover: hover) {
+      .thumb__caption { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+<a href="#main" class="skip">Skip to content</a>
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="brand" href="/"><img src="jfsn-mark.png" class="brand-mark" alt="JFSN">Jeffrey F. S. Neumann</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="archive.html">Archive</a>
+      <a href="series-index.html">Series</a>
+      <a href="timeline.html">Timeline</a>
+      <a href="constellation.html">Constellation</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <h1 class="sr-only">Jeffrey F. S. Neumann — Archive of works, 1974–present</h1>
+
+  <section class="hero" aria-label="Featured work">
+    <a href="artwork.html" id="hero-link">
+      <img
+        class="hero__image"
+        src=""
+        alt="Featured work by Jeffrey F. S. Neumann"
+        fetchpriority="high"
+        style="opacity:0">
+    </a>
+    <!-- ① Cycle button -->
+    <button class="hero-cycle-btn" id="hero-cycle" aria-label="Next featured work" title="Next work">→</button>
+    <figcaption class="container hero__caption">
+      <strong id="hero-id"></strong>
+      <span id="hero-title" class="hero__caption-title"></span>
+      <span id="hero-meta"></span><!-- ⑥ combined year · type -->
+      <a href="archive.html">Archive →</a>
+    </figcaption>
+  </section>
+
+  <!-- ⑤ Tagline — larger, serif italic, full text color -->
+  <p class="home-tagline container">Five decades of collage, sculpture, and photography &mdash; one artist, one archive.</p>
+  <p class="home-context container">Compact discs, warplanes, photographic faces, lace, found materials &mdash; assembled into collages, sculptures, and photographs since 1974. Based in Cleveland. <a href="about.html">About the work &rarr;</a></p>
+
+  <section class="grid-section container" aria-label="Selected works">
+    <h2 class="section-label">Selected Works</h2>
+    <p class="archive-stat">1,084 works &middot; Collage, Sculpture, Photography &middot; 1974–present</p>
+    <div class="grid" id="home-grid"></div>
+    <!-- ⑧ Updated CTA -->
+    <p class="archive-cta"><a href="archive.html">Browse the full archive →</a></p>
+  </section>
+
+  <section class="home-series container" aria-label="Browse by series">
+    <h2 class="section-label">Browse by Series</h2>
+
+    <!-- ⑨ Themes group -->
+    <div class="home-series-group">
+      <p class="home-series-group-label">Themes</p>
+      <nav class="home-series-links" aria-label="Theme series">
+        <a class="home-series-link" href="series.html?theme=Mr.+Snowmann"      data-count-theme="Mr. Snowmann">Mr. Snowmann</a>
+        <a class="home-series-link" href="series.html?theme=Aviation"           data-count-theme="Aviation">Aviation</a>
+        <a class="home-series-link" href="series.html?theme=Targets"            data-count-theme="Targets">Targets</a>
+        <a class="home-series-link" href="series.html?theme=Crosses"            data-count-theme="Crosses">Crosses</a>
+        <a class="home-series-link" href="series.html?theme=Torsos+%26+Faces"  data-count-theme="Torsos &amp; Faces">Torsos &amp; Faces</a>
+        <a class="home-series-link" href="series.html?theme=Reliquaries"        data-count-theme="Reliquaries">Reliquaries</a>
+        <a class="home-series-link" href="series.html?theme=Totems"             data-count-theme="Totems">Totems</a>
+        <a class="home-series-link" href="series.html?theme=Framed"             data-count-theme="Framed">Framed</a>
+        <a class="home-series-link" href="series.html?theme=Gallery"            data-count-theme="Gallery">Gallery</a>
+        <a class="home-series-link" href="series.html?theme=Studio"             data-count-theme="Studio">Studio</a>
+        <a class="home-series-link" href="series.html?theme=Art+School"         data-count-theme="Art School">Art School</a>
+        <a class="home-series-link" href="series.html?theme=Tracings"           data-count-theme="Tracings">Tracings</a>
+        <a class="home-series-link" href="series.html?theme=Collaboration"      data-count-theme="Collaboration">Collaboration</a>
+        <a class="home-series-link" href="series.html?theme=Guernica"           data-count-theme="Guernica">Guernica Inspired</a>
+      </nav>
+    </div>
+
+    <!-- ⑨ Named series group -->
+    <div class="home-series-group">
+      <p class="home-series-group-label">Named Series</p>
+      <nav class="home-series-links" aria-label="Named series">
+        <a class="home-series-link" href="series.html?series=XXIII"    data-count-series="XXIII">XXIII</a>
+        <a class="home-series-link" href="series.html?series=Squadron" data-count-series="Squadron">Squadron</a>
+        <a class="home-series-link" href="series.html?series=Guernica" data-count-series="Guernica">Guernica Series</a>
+      </nav>
+    </div>
+
+    <a class="home-series-cta" href="series-index.html">All series &rarr;</a>
+  </section>
+
+  <section class="recent-section container" aria-label="Recently added" id="recent-section" hidden>
+    <h2 class="section-label">Recently Added</h2>
+    <div class="recent-strip" id="recent-strip"></div>
+    <p class="recent-cta"><a href="archive.html">All works →</a></p>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <span>Jeffrey F. S. Neumann</span>
+    <nav class="footer-nav" aria-label="Site navigation">
+      <a href="archive.html">Archive</a>
+      <a href="series-index.html">Series</a>
+      <a href="timeline.html">Timeline</a>
+      <a href="constellation.html">Constellation</a>
+      <a href="about.html">About</a>
+    </nav>
+    <nav class="footer-social" aria-label="Social links">
+      <a href="https://www.linkedin.com/in/jeffreyneumann/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://dribbble.com/JFSN" target="_blank" rel="noopener">Dribbble</a>
+      <a href="https://www.youtube.com/@jfsneumann/videos" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://showspace.so/s/jeffrey-neumann-46" target="_blank" rel="noopener">Showspace</a>
+    </nav>
+  </div>
+</footer>
+
+
+<script>
+(function () {
+  const TYPE_LABELS = {
+    collage:           'Collage',
+    sculpture:         'Sculpture',
+    painting:          'Painting',
+    photograph:        'Photograph',
+    installation_view: 'Installation',
+  };
+
+  let heroPool       = [];
+  let currentHeroIdx = -1;
+
+  // ── Load catalog ─────────────────────────────────────────────────────────
+  // ?v= is stamped by build_catalog.py — forces browser to fetch fresh after every build
+  fetch('catalog-home.json?v=20260526205109')
+    .then(r => r.ok ? r.json() : null)
+    .then(catalog => {
+      if (!catalog || !catalog.length) return;
+      initHero(catalog);
+      initGrid(catalog);
+
+      // Load full catalog lazily for series counts + recently added strip
+      fetch('catalog-lite.json')
+        .then(r => r.ok ? r.json() : null)
+        .then(full => {
+          if (!full) return;
+          injectSeriesCounts(full);
+          buildRecentStrip(full);
+        })
+        .catch(() => {});
+    })
+    .catch(() => {});
+
+  // ── Hero ─────────────────────────────────────────────────────────────────
+  function initHero(catalog) {
+    heroPool = catalog.filter(r => r.featured);
+    if (!heroPool.length) return;
+    currentHeroIdx = Math.floor(Math.random() * heroPool.length);
+    renderHero(heroPool[currentHeroIdx]);
+  }
+
+  function renderHero(rec) {
+    if (!rec) return;
+    const heroId   = rec.file.replace('.avif', '');
+    const heroLink = document.getElementById('hero-link');
+    const heroImg  = document.querySelector('.hero__image');
+
+    heroImg.style.transition = 'opacity 0.3s';
+    heroImg.style.opacity    = '0';
+
+    // ① Thumb loads instantly → fast LCP
+    heroImg.src = `artworks/thumbs/${heroId}.avif`;
+    heroImg.alt = rec.title || heroId;
+    heroImg.style.transition = 'opacity 0.6s';
+    heroImg.style.opacity    = '1';
+
+    // ② Upgrade to full-res silently — no layout shift (fixed-height container)
+    const full = new Image();
+    full.onload = () => { heroImg.src = `artworks/full/${heroId}.avif`; };
+    full.src = `artworks/full/${heroId}.avif`;
+
+    if (heroLink) heroLink.href = `artwork.html?id=${heroId}`;
+
+    const idEl    = document.getElementById('hero-id');
+    const titleEl = document.getElementById('hero-title');
+    const metaEl  = document.getElementById('hero-meta');
+
+    if (idEl) {
+      idEl.innerHTML = `<a href="artwork.html?id=${heroId}">${esc(heroId)}</a>`;
+      idEl.hidden = false;
+    }
+    if (titleEl) {
+      if (rec.title) {
+        titleEl.innerHTML = `<a href="artwork.html?id=${heroId}">${esc(rec.title)}</a>`;
+        if (idEl) idEl.hidden = true;
+      } else {
+        titleEl.innerHTML = '';
+      }
+    }
+    // ⑥ Year · Type combined
+    if (metaEl) {
+      const y = rec.year ? String(rec.year) : '';
+      const t = TYPE_LABELS[rec.work_type] || (rec.work_type || '').replace(/_/g, ' ');
+      metaEl.textContent = [y, t].filter(Boolean).join(' · ');
+    }
+  }
+
+  // ① Cycle button
+  document.getElementById('hero-cycle').addEventListener('click', () => {
+    if (!heroPool.length) return;
+    currentHeroIdx = (currentHeroIdx + 1) % heroPool.length;
+    renderHero(heroPool[currentHeroIdx]);
+  });
+
+  // ── Grid ─────────────────────────────────────────────────────────────────
+  function initGrid(catalog) {
+    const featured   = catalog.filter(r => r.featured);
+    const recentPool = catalog.slice().reverse();
+    const heroFile   = heroPool[currentHeroIdx]?.file;
+    const seen       = new Set(heroFile ? [heroFile] : []);
+
+    const candidates = [...featured, ...recentPool].filter(r => {
+      if (seen.has(r.file)) return false;
+      seen.add(r.file);
+      return true;
+    });
+
+    // ④ 9 works: first is featured (2×2), rest fill the grid
+    const works = candidates.slice(0, 9);
+    const grid  = document.getElementById('home-grid');
+    if (!grid) return;
+
+    grid.innerHTML = works.map((r, idx) => {
+      const id        = r.file.replace('.avif', '');
+      const title     = r.title || id;
+      const typeLabel = TYPE_LABELS[r.work_type] || (r.work_type || '').replace(/_/g, ' ');
+      const yearStr   = r.year ? String(r.year) : '';
+      // ⑥ Combined overlay meta
+      const meta      = [yearStr, typeLabel].filter(Boolean).join(' · ');
+      // ④ featured class on first card; ⑦ animate class on all with CSS --i delay
+      const cls = 'thumb thumb--animate' + (idx === 0 ? ' thumb--featured' : '');
+      return `<figure class="${cls}" data-id="${esc(id)}" style="--i:${idx}">
+        <a class="thumb__link" href="artwork.html?id=${id}">
+          <img srcset="artworks/mini/${id}.avif 200w, artworks/thumbs/${id}.avif 400w"
+               sizes="(max-width:780px) calc(50vw - 1rem), calc(25vw - 1rem)"
+               src="artworks/thumbs/${id}.avif" alt="${esc(title)}" loading="lazy">
+          <div class="thumb__overlay" aria-hidden="true">
+            <span class="thumb__overlay-title">${esc(title)}</span>
+            <span class="thumb__overlay-type">${esc(meta)}</span>
+          </div>
+        </a>
+        <figcaption class="thumb__caption">${esc(title)}</figcaption>
+      </figure>`;
+    }).join('');
+
+    // Full-res hover preload
+    const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    grid.addEventListener('mouseover', function (e) {
+      const link = e.target.closest('.thumb__link');
+      if (!link || link.dataset.fullLoaded) return;
+      link.dataset.fullLoaded = '1';
+      const img = link.querySelector('img');
+      const fig = link.closest('.thumb');
+      if (!img || !fig) return;
+      const id = fig.dataset.id || (link.href.match(/id=(art\d+)/) || [])[1];
+      if (!id) return;
+      const preload = new Image();
+      preload.onload = function () {
+        if (!link.matches(':hover')) return;
+        if (noMotion) { img.srcset = ''; img.src = preload.src; return; }
+        img.style.opacity = '0';
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          img.srcset = '';
+          img.src    = preload.src;
+          img.style.opacity = '1';
+        }));
+      };
+      preload.src = 'artworks/full/' + id + '.avif';
+    });
+  }
+
+  // ③ Recently added strip
+  function buildRecentStrip(catalog) {
+    const strip = document.getElementById('recent-strip');
+    const section = document.getElementById('recent-section');
+    if (!strip || !section) return;
+    const recent = [...catalog]
+      .sort((a, b) => b.file.localeCompare(a.file))
+      .slice(0, 6);
+    strip.innerHTML = recent.map(r => {
+      const id = r.file.replace('.avif', '');
+      const label = r.title || id;
+      return `<a class="recent-thumb" href="artwork.html?id=${esc(id)}" aria-label="${esc(label)}">
+        <img src="artworks/thumbs/${esc(r.file)}" alt="${esc(label)}" loading="lazy" width="200" height="200">
+        <span class="recent-thumb__label">${esc(id)}</span>
+      </a>`;
+    }).join('');
+    section.removeAttribute('hidden');
+  }
+
+  // ④ Inject counts into series chips
+  function injectSeriesCounts(catalog) {
+    const themes  = {};
+    const series  = {};
+    catalog.forEach(r => {
+      (r.themes || []).forEach(t => { themes[t]  = (themes[t]  || 0) + 1; });
+      if (r.series) series[r.series] = (series[r.series] || 0) + 1;
+    });
+
+    document.querySelectorAll('[data-count-theme]').forEach(a => {
+      const n = themes[a.dataset.countTheme];
+      if (n) addBadge(a, n);
+    });
+    document.querySelectorAll('[data-count-series]').forEach(a => {
+      const n = series[a.dataset.countSeries];
+      if (n) addBadge(a, n);
+    });
+  }
+
+  function addBadge(el, n) {
+    const s = document.createElement('span');
+    s.className   = 'chip-count';
+    s.textContent = n;
+    el.appendChild(s);
+  }
+
+  function esc(s) {
+    return String(s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+})();
+</script>
+
+<script src="search.js" defer></script>
+<script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
+</body>
+</html>

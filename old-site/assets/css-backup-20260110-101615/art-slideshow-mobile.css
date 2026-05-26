@@ -1,0 +1,197 @@
+/* =========================================== */
+/* ART SLIDESHOW MOBILE - HIDE ALL EXCEPT CONTROLS */
+/* On mobile: Keep only close, next, and back buttons */
+/* =========================================== */
+
+/* Hide back-to-top button on mobile only */
+@media (max-width: 767px) {
+  .back-to-top,
+  #backToTopBtn {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    position: absolute !important;
+    left: -9999px !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+  }
+}
+
+@media (max-width: 767px) {
+  /* Keep close button visible */
+  .lg-close,
+  .lg-container .lg-close,
+  .lg-show-in .lg-close {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    z-index: 10002 !important;
+  }
+  
+  /* Keep next button visible */
+  .lg-next,
+  .lg-container .lg-next,
+  .lg-show-in .lg-next {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    z-index: 1085 !important;
+  }
+  
+  /* Keep prev/back button visible */
+  .lg-prev,
+  .lg-container .lg-prev,
+  .lg-show-in .lg-prev {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    z-index: 1085 !important;
+  }
+  
+  /* Hide toolbar (contains other controls like zoom, download, etc.) */
+  .lg-toolbar,
+  .lg-container .lg-toolbar,
+  .lg-show-in .lg-toolbar,
+  .lg-toolbar .lg-icon:not(.lg-close) {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+  
+  /* Hide sub-html (captions, descriptions) */
+  .lg-sub-html,
+  .lg-item .lg-sub-html,
+  .lg-current .lg-sub-html,
+  .lg-show-in .lg-sub-html,
+  .lg-components .lg-sub-html {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  /* Hide thumbnails */
+  .lg-thumb,
+  .lg-thumb-outer,
+  .lg-thumb-item,
+  .lg-thumb-group {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+  }
+  
+  /* Hide counter */
+  .lg-counter,
+  .lg-current-time,
+  .lg-total-time {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+  
+  /* Hide zoom controls */
+  .lg-zoom-in,
+  .lg-zoom-out,
+  .lg-actual-size,
+  .lg-icon-zoom {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+  
+  /* Hide download button */
+  .lg-download,
+  .lg-icon-download {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+  
+  /* Hide share button */
+  .lg-share,
+  .lg-icon-share {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+  
+  /* Hide fullscreen button */
+  .lg-fullscreen,
+  .lg-icon-fullscreen {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+  
+  /* Hide any other toolbar icons except close */
+  .lg-toolbar .lg-icon:not(.lg-close),
+  .lg-toolbar button:not(.lg-close),
+  .lg-toolbar a:not(.lg-close) {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+  
+  /* Hide autoplay controls */
+  .lg-autoplay-button,
+  .lg-icon-autoplay {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+  
+  /* Hide slideshow controls */
+  .lg-slideshow-button,
+  .lg-icon-slideshow {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+  
+  /* Hide rotate controls */
+  .lg-rotate-left,
+  .lg-rotate-right,
+  .lg-icon-rotate {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+  
+  /* Hide flip controls */
+  .lg-flip-horizontal,
+  .lg-flip-vertical,
+  .lg-icon-flip {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+  
+  /* Hide any other icons/buttons in the gallery */
+  .lg-icon:not(.lg-close):not(.lg-next):not(.lg-prev),
+  .lg-button:not(.lg-close):not(.lg-next):not(.lg-prev) {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+}

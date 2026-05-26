@@ -1,0 +1,328 @@
+/* =========================================== */
+/* NAVBAR FIXES - Hamburger & View Gallery Link */
+/* =========================================== */
+
+/* Final navbar override - Maximum specificity to override ALL page-specific CSS */
+/* This ensures navbar consistency across all pages, even if async CSS loads after */
+/* Must override template-2026-bundle.css, template-components.css, about-page-bundle.css, AND CSS variables */
+/* LIGHT MODE - White navbar */
+html body .editorial-navbar,
+html body .navbar-enhanced,
+html body .header.navbar,
+html body[data-bs-theme="light"] .editorial-navbar,
+html[data-bs-theme="light"] body .editorial-navbar {
+  /* Override CSS variables first */
+  --navbar-bg: #ffffff !important;
+  --navbar-bg-scrolled: #ffffff !important;
+  --backdrop-blur: none !important;
+  
+  /* Then override computed styles */
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  height: 64px !important;
+}
+
+/* DARK MODE - Dark navbar */
+html body[data-bs-theme="dark"] .editorial-navbar,
+html[data-bs-theme="dark"] body .editorial-navbar,
+html body[data-bs-theme="dark"] .navbar-enhanced,
+html[data-bs-theme="dark"] body .navbar-enhanced,
+html body[data-bs-theme="dark"] .header.navbar,
+html[data-bs-theme="dark"] body .header.navbar {
+  /* Override CSS variables first */
+  --navbar-bg: #0f172a !important;
+  --navbar-bg-scrolled: #0f172a !important;
+  --backdrop-blur: none !important;
+  
+  /* Then override computed styles */
+  background: #0f172a !important;
+  background-color: #0f172a !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  height: 64px !important;
+  color: #f9fafb !important;
+}
+
+/* DARK MODE - Navbar brand text color */
+html body[data-bs-theme="dark"] .editorial-navbar .editorial-navbar-brand,
+html[data-bs-theme="dark"] body .editorial-navbar .editorial-navbar-brand,
+html body[data-bs-theme="dark"] .editorial-navbar-brand,
+html[data-bs-theme="dark"] body .editorial-navbar-brand {
+  color: #f9fafb !important;
+}
+
+
+html body[data-bs-theme="dark"] header.editorial-navbar .editorial-navbar-brand span,
+html body[data-bs-theme="dark"] .editorial-navbar .editorial-navbar-brand span,
+html body[data-bs-theme="dark"] .editorial-navbar-brand span,
+html[data-bs-theme="dark"] body header.editorial-navbar .editorial-navbar-brand span,
+html[data-bs-theme="dark"] body .editorial-navbar .editorial-navbar-brand span,
+html[data-bs-theme="dark"] body .editorial-navbar-brand span {
+  color: #f9fafb !important;
+  -webkit-text-fill-color: #f9fafb !important;
+  background: none !important;
+  background-clip: unset !important;
+  -webkit-background-clip: unset !important;
+}
+
+/* LIGHT MODE - Navbar brand text color */
+html body[data-bs-theme="light"] .editorial-navbar .editorial-navbar-brand,
+html[data-bs-theme="light"] body .editorial-navbar .editorial-navbar-brand,
+html body .editorial-navbar .editorial-navbar-brand,
+html body .editorial-navbar-brand {
+  color: #1f2937 !important;
+}
+
+html body[data-bs-theme="light"] .editorial-navbar .editorial-navbar-brand span,
+html[data-bs-theme="light"] body .editorial-navbar .editorial-navbar-brand span,
+html body .editorial-navbar .editorial-navbar-brand span,
+html body .editorial-navbar-brand span {
+  color: #1f2937 !important;
+  -webkit-text-fill-color: #1f2937 !important;
+  background: none !important;
+  background-clip: unset !important;
+  -webkit-background-clip: unset !important;
+}
+
+/* Navbar name (Jeffrey Francis Stanley Neumann) - Make readable */
+html body .editorial-navbar-brand .navbar-name,
+html body .editorial-navbar .editorial-navbar-brand .navbar-name,
+html body[data-bs-theme="light"] .editorial-navbar-brand .navbar-name,
+html[data-bs-theme="light"] body .editorial-navbar-brand .navbar-name {
+  color: #374151 !important;
+  -webkit-text-fill-color: #374151 !important;
+  background: none !important;
+  background-clip: unset !important;
+  -webkit-background-clip: unset !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: inline-block !important;
+  font-weight: 500 !important;
+  font-size: 0.9375rem !important;
+}
+
+/* Ensure navbar is visible */
+html body .editorial-navbar,
+html body header.editorial-navbar {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* DARK MODE - Navbar name (Jeffrey Francis Stanley Neumann) - Make readable */
+html body[data-bs-theme="dark"] header.editorial-navbar .editorial-navbar-brand .navbar-name,
+html body[data-bs-theme="dark"] .editorial-navbar .editorial-navbar-brand .navbar-name,
+html body[data-bs-theme="dark"] .editorial-navbar-brand .navbar-name,
+html[data-bs-theme="dark"] body header.editorial-navbar .editorial-navbar-brand .navbar-name,
+html[data-bs-theme="dark"] body .editorial-navbar .editorial-navbar-brand .navbar-name,
+html[data-bs-theme="dark"] body .editorial-navbar-brand .navbar-name {
+  color: #e5e7eb !important;
+  -webkit-text-fill-color: #e5e7eb !important;
+  background: none !important;
+  background-clip: unset !important;
+  -webkit-background-clip: unset !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: inline-block !important;
+  font-weight: 500 !important;
+  font-size: 0.9375rem !important;
+}
+
+html body .editorial-navbar.scrolled,
+html body .navbar-enhanced.scrolled,
+html body .header.navbar.scrolled,
+html body[data-bs-theme="light"] .editorial-navbar.scrolled,
+html[data-bs-theme="light"] body .editorial-navbar.scrolled {
+  /* Override CSS variables first */
+  --navbar-bg: #ffffff !important;
+  --navbar-bg-scrolled: #ffffff !important;
+  --backdrop-blur: none !important;
+  
+  /* Then override computed styles */
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  height: 60px !important;
+}
+
+/* DARK MODE - Scrolled state */
+html body[data-bs-theme="dark"] .editorial-navbar.scrolled,
+html[data-bs-theme="dark"] body .editorial-navbar.scrolled,
+html body[data-bs-theme="dark"] .navbar-enhanced.scrolled,
+html[data-bs-theme="dark"] body .navbar-enhanced.scrolled,
+html body[data-bs-theme="dark"] .header.navbar.scrolled,
+html[data-bs-theme="dark"] body .header.navbar.scrolled {
+  /* Override CSS variables first */
+  --navbar-bg: #0f172a !important;
+  --navbar-bg-scrolled: #0f172a !important;
+  --backdrop-blur: none !important;
+  
+  /* Then override computed styles */
+  background: #0f172a !important;
+  background-color: #0f172a !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  height: 60px !important;
+  color: #f9fafb !important;
+}
+
+/* ===== HAMBURGER MENU - Make Lines BLACK ===== */
+/* Ensure hamburger icon lines are always BLACK - Override navbar.css background: white */
+html body header.editorial-navbar .editorial-navbar-toggle .editorial-navbar-toggle-icon span,
+html body header.editorial-navbar .editorial-navbar-toggle-icon span,
+html body .editorial-navbar .editorial-navbar-toggle .editorial-navbar-toggle-icon span,
+html body .editorial-navbar .editorial-navbar-toggle-icon span,
+.editorial-navbar-toggle-icon span,
+#editorialNavToggle .editorial-navbar-toggle-icon span,
+.editorial-navbar .editorial-navbar-toggle-icon span,
+html body .editorial-navbar-toggle-icon span,
+html body #editorialNavToggle .editorial-navbar-toggle-icon span {
+  background: #000000 !important; /* BLACK lines - override white */
+  background-color: #000000 !important; /* Force black */
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  border-color: #000000 !important;
+}
+
+/* Light mode - BLACK hamburger icon */
+html body:not([data-bs-theme="dark"]) header.editorial-navbar .editorial-navbar-toggle .editorial-navbar-toggle-icon span,
+html body:not([data-bs-theme="dark"]) .editorial-navbar .editorial-navbar-toggle-icon span,
+body:not([data-bs-theme="dark"]) .editorial-navbar-toggle-icon span,
+body:not([data-bs-theme="dark"]) #editorialNavToggle .editorial-navbar-toggle-icon span,
+body:not([data-bs-theme="dark"]) .editorial-navbar .editorial-navbar-toggle-icon span {
+  background: #000000 !important; /* BLACK */
+  background-color: #000000 !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+/* Dark mode - BLACK hamburger icon (keep black even in dark mode) */
+html body[data-bs-theme="dark"] header.editorial-navbar .editorial-navbar-toggle .editorial-navbar-toggle-icon span,
+html body[data-bs-theme="dark"] .editorial-navbar .editorial-navbar-toggle-icon span,
+[data-bs-theme="dark"] .editorial-navbar-toggle-icon span,
+[data-bs-theme="dark"] #editorialNavToggle .editorial-navbar-toggle-icon span,
+[data-bs-theme="dark"] .editorial-navbar .editorial-navbar-toggle-icon span {
+  background: #000000 !important; /* BLACK - always black */
+  background-color: #000000 !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+/* Hover state - purple */
+.editorial-navbar-toggle:hover .editorial-navbar-toggle-icon span,
+#editorialNavToggle:hover .editorial-navbar-toggle-icon span,
+.editorial-navbar-toggle:hover #editorialNavToggle .editorial-navbar-toggle-icon span {
+  background: #6366f1 !important; /* Purple on hover */
+  color: #6366f1 !important;
+}
+
+/* Active state - purple */
+.editorial-navbar-toggle.active .editorial-navbar-toggle-icon span,
+#editorialNavToggle.active .editorial-navbar-toggle-icon span {
+  background: #6366f1 !important; /* Purple when active */
+  color: #6366f1 !important;
+}
+
+/* Dark mode hover/active */
+[data-bs-theme="dark"] .editorial-navbar-toggle:hover .editorial-navbar-toggle-icon span,
+[data-bs-theme="dark"] #editorialNavToggle:hover .editorial-navbar-toggle-icon span {
+  background: #ffffff !important; /* White on hover in dark mode */
+  color: #ffffff !important;
+}
+
+[data-bs-theme="dark"] .editorial-navbar-toggle.active .editorial-navbar-toggle-icon span,
+[data-bs-theme="dark"] #editorialNavToggle.active .editorial-navbar-toggle-icon span {
+  background: #ffffff !important; /* White when active in dark mode */
+  color: #ffffff !important;
+}
+
+/* ===== VIEW GALLERY LINK - Fix White Text ===== */
+/* Ensure "View Gallery" link is white in the purple announcement banner */
+.navbar-announcement-link,
+.navbar-announcement-text a,
+.navbar-announcement-text .navbar-announcement-link,
+.navbar-announcement .navbar-announcement-link {
+  color: #ffffff !important; /* WHITE text */
+  -webkit-text-fill-color: #ffffff !important;
+  text-decoration: underline !important;
+  font-weight: 700 !important;
+  transition: opacity 0.3s ease, color 0.3s ease !important;
+}
+
+/* All child elements within the link */
+.navbar-announcement-link *,
+.navbar-announcement-text a *,
+.navbar-announcement-text .navbar-announcement-link *,
+.navbar-announcement .navbar-announcement-link * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Hover state - slightly transparent white */
+.navbar-announcement-link:hover,
+.navbar-announcement-text a:hover,
+.navbar-announcement-text .navbar-announcement-link:hover,
+.navbar-announcement .navbar-announcement-link:hover {
+  color: #ffffff !important; /* Keep white */
+  -webkit-text-fill-color: #ffffff !important;
+  opacity: 0.9 !important; /* Slight transparency on hover */
+  text-decoration: underline !important;
+}
+
+/* All child elements on hover */
+.navbar-announcement-link:hover *,
+.navbar-announcement-text a:hover *,
+.navbar-announcement-text .navbar-announcement-link:hover *,
+.navbar-announcement .navbar-announcement-link:hover * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Focus state - white with outline */
+.navbar-announcement-link:focus,
+.navbar-announcement-text a:focus,
+.navbar-announcement-text .navbar-announcement-link:focus,
+.navbar-announcement .navbar-announcement-link:focus {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  outline: 2px solid #ffffff !important;
+  outline-offset: 2px !important;
+  text-decoration: underline !important;
+}
+
+/* Active/visited state - keep white */
+.navbar-announcement-link:active,
+.navbar-announcement-link:visited,
+.navbar-announcement-text a:active,
+.navbar-announcement-text a:visited,
+.navbar-announcement-text .navbar-announcement-link:active,
+.navbar-announcement-text .navbar-announcement-link:visited,
+.navbar-announcement .navbar-announcement-link:active,
+.navbar-announcement .navbar-announcement-link:visited {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  text-decoration: underline !important;
+}
+
+/* Override any global link styles that might affect this */
+.navbar-announcement a.navbar-announcement-link,
+.navbar-announcement-text a.navbar-announcement-link {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Ensure announcement text itself is white */
+.navbar-announcement-text {
+  color: #ffffff !important;
+}
+
+.navbar-announcement-text span {
+  color: #ffffff !important;
+}
+
+
+
+

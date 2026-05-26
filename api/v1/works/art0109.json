@@ -1,0 +1,48 @@
+{
+  "api_version": "1",
+  "id": "art0109",
+  "work": {
+    "file": "art0109.avif",
+    "title": "Squadron and Disc Crown",
+    "year": 2000,
+    "work_type": "collage",
+    "orientation": "portrait",
+    "description": "A maximalist field crammed with overlapping warplane drawings and gold compact discs. Five gold discs cluster across the upper half as a crown; below, smaller iridescent discs ring concentric targets and a base frieze of red, black and yellow blocks.",
+    "palette": [
+      "ivory",
+      "gold",
+      "red",
+      "black",
+      "yellow"
+    ],
+    "motifs": [
+      "compact-disc",
+      "warplane-topdown",
+      "target",
+      "concentric-rings",
+      "vertical-stripes"
+    ],
+    "materials": [
+      "paper",
+      "paint"
+    ],
+    "composition": "dense field with disc crown above, target frieze below",
+    "themes": [
+      "Aviation",
+      "Targets"
+    ],
+    "keywords": [
+      "maximalist",
+      "saturated"
+    ],
+    "featured": false,
+    "schema_version": "1",
+    "series": "Squadron"
+  },
+  "links": {
+    "image": "https://jfsn.com/artworks/full/art0109.avif",
+    "thumb": "https://jfsn.com/artworks/thumbs/art0109.avif",
+    "mini": "https://jfsn.com/artworks/mini/art0109.avif",
+    "page": "https://jfsn.com/artwork.html?id=art0109"
+  }
+}

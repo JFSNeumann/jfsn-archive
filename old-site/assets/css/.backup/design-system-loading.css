@@ -1,0 +1,376 @@
+/* =========================================== */
+/* UNIFIED DESIGN SYSTEM - LOADING STATES */
+/* Single source of truth for loading indicators */
+/* Consistent loading UX across the site */
+/* =========================================== */
+
+:root {
+  /* ===== SPINNER SIZES ===== */
+  --spinner-size-xs: 12px;
+  --spinner-size-sm: 16px;
+  --spinner-size-md: 24px;
+  --spinner-size-lg: 32px;
+  --spinner-size-xl: 48px;
+  
+  /* ===== SPINNER COLORS ===== */
+  --spinner-color: var(--brand-primary);
+  --spinner-color-light: rgba(99, 102, 241, 0.2);
+  --spinner-color-success: var(--color-success);
+  --spinner-color-error: var(--color-error);
+  --spinner-color-white: rgba(255, 255, 255, 0.3);
+  --spinner-color-white-active: #ffffff;
+  
+  /* ===== SPINNER SPEED ===== */
+  --spinner-speed-fast: 0.6s;
+  --spinner-speed-normal: 0.8s;
+  --spinner-speed-slow: 1.2s;
+  
+  /* ===== SKELETON COLORS ===== */
+  --skeleton-bg: var(--bg-secondary);
+  --skeleton-highlight: var(--bg-tertiary);
+  --skeleton-speed: 1.5s;
+}
+
+/* ===== SPINNER BASE ===== */
+.spinner {
+  display: inline-block;
+  width: var(--spinner-size-md);
+  height: var(--spinner-size-md);
+  border: 3px solid var(--spinner-color-light);
+  border-top-color: var(--spinner-color);
+  border-radius: 50%;
+  animation: spinner-spin var(--spinner-speed-normal) linear infinite;
+  vertical-align: middle;
+}
+
+/* ===== SPINNER SIZES ===== */
+.spinner-xs {
+  width: var(--spinner-size-xs);
+  height: var(--spinner-size-xs);
+  border-width: 2px;
+}
+
+.spinner-sm {
+  width: var(--spinner-size-sm);
+  height: var(--spinner-size-sm);
+  border-width: 2px;
+}
+
+.spinner-md {
+  width: var(--spinner-size-md);
+  height: var(--spinner-size-md);
+  border-width: 3px;
+}
+
+.spinner-lg {
+  width: var(--spinner-size-lg);
+  height: var(--spinner-size-lg);
+  border-width: 4px;
+}
+
+.spinner-xl {
+  width: var(--spinner-size-xl);
+  height: var(--spinner-size-xl);
+  border-width: 5px;
+}
+
+/* ===== SPINNER COLORS ===== */
+.spinner-primary {
+  border-color: var(--spinner-color-light);
+  border-top-color: var(--spinner-color);
+}
+
+.spinner-success {
+  border-color: rgba(16, 185, 129, 0.2);
+  border-top-color: var(--spinner-color-success);
+}
+
+.spinner-error {
+  border-color: rgba(239, 68, 68, 0.2);
+  border-top-color: var(--spinner-color-error);
+}
+
+.spinner-white {
+  border-color: var(--spinner-color-white);
+  border-top-color: var(--spinner-color-white-active);
+}
+
+/* ===== SPINNER SPEED ===== */
+.spinner-fast {
+  animation-duration: var(--spinner-speed-fast);
+}
+
+.spinner-normal {
+  animation-duration: var(--spinner-speed-normal);
+}
+
+.spinner-slow {
+  animation-duration: var(--spinner-speed-slow);
+}
+
+/* ===== SPINNER ANIMATION ===== */
+@keyframes spinner-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===== BUTTON LOADING STATE ===== */
+.btn.loading,
+button.loading {
+  position: relative;
+  color: transparent !important;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.btn.loading::after,
+button.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--spinner-size-sm);
+  height: var(--spinner-size-sm);
+  margin-left: calc(var(--spinner-size-sm) / -2);
+  margin-top: calc(var(--spinner-size-sm) / -2);
+  border: 2px solid var(--spinner-color-white);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spinner-spin var(--spinner-speed-normal) linear infinite;
+}
+
+.btn-primary.loading::after,
+button.btn-primary.loading::after {
+  border-color: var(--spinner-color-white);
+  border-top-color: transparent;
+}
+
+.btn-secondary.loading::after,
+button.btn-secondary.loading::after {
+  border-color: var(--spinner-color-light);
+  border-top-color: var(--spinner-color);
+}
+
+/* ===== SKELETON LOADING ===== */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--skeleton-bg) 25%,
+    var(--skeleton-highlight) 50%,
+    var(--skeleton-bg) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading var(--skeleton-speed) ease-in-out infinite;
+  border-radius: var(--radius-md);
+}
+
+.skeleton-text {
+  height: 1em;
+  margin-bottom: var(--spacing-sm);
+}
+
+.skeleton-text:last-child {
+  margin-bottom: 0;
+}
+
+.skeleton-title {
+  height: 1.5em;
+  width: 60%;
+  margin-bottom: var(--spacing-md);
+}
+
+.skeleton-subtitle {
+  height: 1.25em;
+  width: 40%;
+  margin-bottom: var(--spacing-md);
+}
+
+.skeleton-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+}
+
+.skeleton-image {
+  width: 100%;
+  height: 200px;
+  border-radius: var(--radius-lg);
+}
+
+.skeleton-button {
+  height: 44px;
+  width: 120px;
+  border-radius: var(--radius-button);
+}
+
+.skeleton-card {
+  padding: var(--card-padding-md);
+  border-radius: var(--card-border-radius);
+}
+
+/* ===== SKELETON ANIMATION ===== */
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ===== SKELETON VARIANTS ===== */
+.skeleton-pulse {
+  animation: skeleton-pulse var(--skeleton-speed) ease-in-out infinite;
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.skeleton-wave {
+  background: linear-gradient(
+    90deg,
+    var(--skeleton-bg) 0%,
+    var(--skeleton-highlight) 20%,
+    var(--skeleton-bg) 40%,
+    var(--skeleton-bg) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-wave var(--skeleton-speed) linear infinite;
+}
+
+@keyframes skeleton-wave {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ===== LOADING OVERLAY ===== */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: var(--z-modal);
+  border-radius: inherit;
+}
+
+[data-bs-theme="dark"] .loading-overlay {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.loading-overlay .spinner {
+  position: relative;
+}
+
+/* ===== PROGRESS BAR ===== */
+.progress {
+  width: 100%;
+  height: 8px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: var(--gradient-primary);
+  border-radius: var(--radius-full);
+  transition: width var(--duration-normal) var(--ease-standard);
+  animation: progress-shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes progress-shimmer {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.progress-sm {
+  height: 4px;
+}
+
+.progress-lg {
+  height: 12px;
+}
+
+/* ===== DOTS LOADER ===== */
+.dots-loader {
+  display: inline-flex;
+  gap: var(--spacing-xs);
+  align-items: center;
+}
+
+.dots-loader span {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--brand-primary);
+  animation: dots-bounce var(--duration-slower) ease-in-out infinite;
+}
+
+.dots-loader span:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.dots-loader span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dots-loader span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes dots-bounce {
+  0%, 80%, 100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  .spinner,
+  .skeleton,
+  .skeleton-pulse,
+  .skeleton-wave,
+  .progress-bar,
+  .dots-loader span {
+    animation: none !important;
+  }
+  
+  .skeleton {
+    background: var(--skeleton-bg);
+  }
+}
+
+/* =========================================== */
+/* END UNIFIED LOADING STATES SYSTEM */
+/* =========================================== */
+

@@ -1,0 +1,63 @@
+/* =========================================== */
+/* DYNAMIC COLOR SHIFT */
+/* Navbar color shifts based on page section */
+/* =========================================== */
+
+.editorial-navbar,
+.navbar-enhanced,
+.header.navbar {
+  transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Section-based color themes */
+.editorial-navbar[data-section="hero"] {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-bottom-color: rgba(99, 102, 241, 0.1);
+}
+
+.editorial-navbar[data-section="about"] {
+  background: rgba(255, 255, 255, 0.98) !important;
+  border-bottom-color: rgba(139, 92, 246, 0.15);
+}
+
+.editorial-navbar[data-section="portfolio"] {
+  background: rgba(255, 255, 255, 0.97) !important;
+  border-bottom-color: rgba(99, 102, 241, 0.2);
+}
+
+.editorial-navbar[data-section="art"] {
+  background: rgba(255, 255, 255, 0.99) !important;
+  border-bottom-color: rgba(236, 72, 153, 0.15);
+}
+
+.editorial-navbar[data-section="contact"] {
+  background: rgba(15, 23, 42, 0.95) !important;
+  color: #ffffff !important;
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.editorial-navbar[data-section="contact"] .editorial-navbar-brand,
+.editorial-navbar[data-section="contact"] .navbar-brand {
+  color: #ffffff !important;
+}
+
+.editorial-navbar[data-section="contact"] .editorial-navbar-brand img,
+.editorial-navbar[data-section="contact"] .navbar-brand img {
+  filter: brightness(0) invert(1) !important;
+}
+
+/* Scrolled state with section awareness */
+.editorial-navbar[data-section="contact"].scrolled {
+  background: rgba(15, 23, 42, 0.98) !important;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .editorial-navbar,
+  .navbar-enhanced,
+  .header.navbar {
+    transition: none !important;
+  }
+}
+

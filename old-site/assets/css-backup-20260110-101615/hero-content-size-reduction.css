@@ -1,0 +1,48 @@
+/**
+ * Hero Content Size Reduction
+ * Makes hero content (title, tagline, description) smaller
+ */
+
+/* Reduce hero title size */
+.hero-title {
+  font-size: clamp(2rem, 5vw, 4.5rem) !important;
+}
+
+/* Reduce hero tagline size */
+.hero-section .lead.fs-3.mb-2 {
+  font-size: clamp(1rem, 2.8vw, 1.5rem) !important;
+}
+
+/* Reduce hero description size */
+.hero-description {
+  font-size: clamp(0.85rem, 1.8vw, 1rem) !important;
+}
+
+/* Reduce rotating sentence size */
+.rotating-sentence {
+  font-size: clamp(0.9rem, 2.2vw, 1.25rem) !important;
+}
+
+/* Reduce hero subtitle if present */
+.hero-subtitle {
+  font-size: 1.1rem !important;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: clamp(1.3rem, 6vw, 2rem) !important;
+  }
+  
+  .hero-section .lead.fs-3.mb-2 {
+    font-size: clamp(0.85rem, 2.2vw, 1.1rem) !important;
+  }
+  
+  .hero-description {
+    font-size: clamp(0.75rem, 1.8vw, 0.9rem) !important;
+  }
+  
+  .rotating-sentence {
+    font-size: clamp(0.8rem, 2vw, 1rem) !important;
+  }
+}

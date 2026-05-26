@@ -1,0 +1,57 @@
+/* =========================================== */
+/* GRADIENT TEXT ANIMATION */
+/* Brand text uses animated gradient sweep */
+/* =========================================== */
+
+.editorial-navbar-brand span:not(.navbar-name) {
+  background: linear-gradient(
+    90deg,
+    #1a202c 0%,
+    #6366f1 25%,
+    #8b5cf6 50%,
+    #6366f1 75%,
+    #1a202c 100%
+  );
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientSweep 3s ease-in-out infinite;
+  display: inline-block;
+}
+
+@keyframes gradientSweep {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Hover effect - faster animation */
+.editorial-navbar-brand:hover span:not(.navbar-name) {
+  animation-duration: 1.5s;
+  background: linear-gradient(
+    90deg,
+    #6366f1 0%,
+    #8b5cf6 25%,
+    #ec4899 50%,
+    #8b5cf6 75%,
+    #6366f1 100%
+  );
+  background-size: 200% 100%;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .editorial-navbar-brand span:not(.navbar-name) {
+    animation: none;
+    background: #1a202c;
+    -webkit-text-fill-color: #1a202c;
+  }
+}
+

@@ -1,0 +1,245 @@
+/**
+ * Mobile Performance Optimizations
+ * Mobile-specific scripts for better performance
+ */
+
+(function() {
+  'use strict';
+  
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  const isLowEndDevice = navigator.hardwareConcurrency <= 2 || navigator.deviceMemory <= 2;
+  
+  // Initialize mobile optimizations
+  function initMobileOptimizations() {
+    if (!isMobile && !isTouchDevice) return;
+    
+    // Optimize images
+    optimizeImages();
+    
+    // Defer non-critical scripts
+    deferNonCriticalScripts();
+    
+    // Reduce animations
+    reduceAnimations();
+    
+    // Optimize scrolling
+    optimizeScrolling();
+    
+    // Lazy load resources
+    lazyLoadResources();
+    
+    // Reduce repaints
+    optimizeRepaints();
+    
+    // Monitor performance
+    monitorPerformance();
+  }
+  
+  // Optimize images
+  function optimizeImages() {
+    const images = document.querySelectorAll('img');
+    
+    images.forEach(img => {
+      // Add loading="lazy" if not present
+      if (!img.hasAttribute('loading')) {
+        img.setAttribute('loading', 'lazy');
+      }
+      
+      // Use lower quality on low-end devices
+      if (isLowEndDevice && img.src && !img.dataset.optimized) {
+        img.dataset.optimized = 'true';
+        
+        // Convert to WebP if supported
+        if (supportsWebP()) {
+          const webpSrc = img.src.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+          const webpImg = new Image();
+          webpImg.onload = () => {
+            img.src = webpSrc;
+          };
+          webpImg.src = webpSrc;
+        }
+      }
+    });
+  }
+  
+  // Check WebP support
+  function supportsWebP() {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1;
+    canvas.height = 1;
+    return canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0;
+  }
+  
+  // Defer non-critical scripts
+  function deferNonCriticalScripts() {
+    const scripts = document.querySelectorAll('script[data-defer-mobile]');
+    
+    scripts.forEach(script => {
+      if (isMobile) {
+        const newScript = document.createElement('script');
+        newScript.src = script.src;
+        newScript.defer = true;
+        script.parentNode.replaceChild(newScript, script);
+      }
+    });
+  }
+  
+  // Reduce animations
+  function reduceAnimations() {
+    if (isLowEndDevice || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.style.setProperty('--animation-duration', '0.01ms');
+      
+      // Disable expensive animations
+      const style = document.createElement('style');
+      style.textContent = `
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          transition-duration: 0.01ms !important;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  }
+  
+  // Optimize scrolling
+  function optimizeScrolling() {
+    let ticking = false;
+    
+    const optimizedScrollHandler = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          // Scroll handling code here
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    
+    window.addEventListener('scroll', optimizedScrollHandler, { passive: true });
+  }
+  
+  // Lazy load resources
+  function lazyLoadResources() {
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const element = entry.target;
+            
+            // Lazy load images
+            if (element.tagName === 'IMG' && element.dataset.src) {
+              element.src = element.dataset.src;
+              element.removeAttribute('data-src');
+            }
+            
+            // Lazy load iframes
+            if (element.tagName === 'IFRAME' && element.dataset.src) {
+              element.src = element.dataset.src;
+              element.removeAttribute('data-src');
+            }
+            
+            observer.unobserve(element);
+          }
+        });
+      }, {
+        rootMargin: '50px'
+      });
+      
+      // Observe lazy elements
+      document.querySelectorAll('[data-src]').forEach(el => {
+        observer.observe(el);
+      });
+    }
+  }
+  
+  // Optimize repaints
+  function optimizeRepaints() {
+    // Use will-change sparingly
+    const elements = document.querySelectorAll('.card, .collection-card, .btn');
+    
+    elements.forEach((el, index) => {
+      // Only apply to visible elements
+      if (index < 10) {
+        el.style.willChange = 'transform';
+        
+        // Remove after animation
+        setTimeout(() => {
+          el.style.willChange = 'auto';
+        }, 1000);
+      }
+    });
+  }
+  
+  // Monitor performance
+  function monitorPerformance() {
+    if ('PerformanceObserver' in window) {
+      try {
+        const observer = new PerformanceObserver((list) => {
+          for (const entry of list.getEntries()) {
+            // Log slow operations
+            if (entry.duration > 100) {
+              window.debugWarn ? window.debugWarn('Slow operation detected:', entry.name, entry.duration + 'ms');
+            }
+          }
+        });
+        
+        observer.observe({ entryTypes: ['measure', 'navigation'] });
+      } catch (e) {
+        // PerformanceObserver not supported
+      }
+    }
+  }
+  
+  // Preload critical resources
+  function preloadCriticalResources() {
+    if (isMobile) {
+      const criticalCSS = document.querySelector('link[rel="stylesheet"][href*="critical"]');
+      if (criticalCSS) {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = criticalCSS.href;
+        document.head.appendChild(link);
+      }
+    }
+  }
+  
+  // Optimize fonts
+  function optimizeFonts() {
+    if (isMobile) {
+      // Use font-display: swap for better performance
+      const style = document.createElement('style');
+      style.textContent = `
+        @font-face {
+          font-display: swap;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  }
+  
+  // Initialize on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      initMobileOptimizations();
+      preloadCriticalResources();
+      optimizeFonts();
+    });
+  } else {
+    initMobileOptimizations();
+    preloadCriticalResources();
+    optimizeFonts();
+  }
+  
+  // Export for global use
+  window.MobileOptimizations = {
+    isMobile,
+    isTouchDevice,
+    isLowEndDevice,
+    init: initMobileOptimizations
+  };
+})();
+

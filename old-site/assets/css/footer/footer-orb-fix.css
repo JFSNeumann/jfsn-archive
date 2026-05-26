@@ -1,0 +1,141 @@
+/* =========================================== */
+/* FOOTER ORB CIRCLE FADE FIX */
+/* Ensures orb-test circle fade is not cut off */
+/* =========================================== */
+
+/* Ensure all footer parent containers allow overflow - prevent horizontal scroll */
+footer,
+.footer-enhanced {
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+}
+
+footer .container-fluid,
+.footer-enhanced .container-fluid {
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+footer .row,
+.footer-enhanced .row {
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+footer .col-lg-4,
+footer .col-md-6,
+.footer-enhanced .col-lg-4,
+.footer-enhanced .col-md-6 {
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+}
+
+.footer-profile-header {
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+}
+
+.footer-character-container {
+  overflow: visible !important;
+  box-sizing: border-box !important;
+}
+
+/* Ensure orb-test has proper positioning and isn't clipped */
+.orb-test {
+  position: absolute !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+}
+
+/* Ensure character container has padding for orb */
+.footer-character-container {
+  padding: 60px !important;
+  overflow: visible !important;
+}
+
+/* =========================================== */
+/* QUICK LINKS TITLE COLOR FIX */
+/* =========================================== */
+
+.footer-enhanced .col-lg-4:nth-of-type(2) h4,
+.footer-enhanced .col-lg-4:nth-of-type(2) .text-uppercase,
+.footer-enhanced .accordion-button h4,
+.footer-enhanced .accordion-button .text-uppercase,
+.footer-enhanced .accordion-button h4.text-uppercase {
+  color: #ffffff !important;
+}
+
+/* =========================================== */
+/* COLLECTIONS TITLE COLOR FIX */
+/* =========================================== */
+
+.footer-enhanced .col-lg-4:nth-of-type(3) h4,
+.footer-enhanced .col-lg-4:nth-of-type(3) .text-uppercase,
+.footer-enhanced #collectionsAccordion .accordion-button h4,
+.footer-enhanced #collectionsAccordion .accordion-button .text-uppercase {
+  color: #ffffff !important;
+}
+
+/* =========================================== */
+/* TOOLTIP TEXT COLOR FIX */
+/* =========================================== */
+
+.tooltip .tooltiptext {
+  color: #ffffff !important;
+}
+
+/* =========================================== */
+/* TACO ANIMATION FIX */
+/* =========================================== */
+
+.taco-hover-image {
+  position: fixed !important;
+  z-index: 9999 !important;
+  display: block !important;
+}
+
+.taco-hover-image.visible {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+.taco-img {
+  animation: tacoBob 2s ease-in-out infinite !important;
+}
+
+.taco-hover-image.visible .taco-img {
+  animation: tacoBob 2s ease-in-out infinite, tacoEntrance 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+@keyframes tacoBob {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes tacoEntrance {
+  0% {
+    transform: translateY(-20px) scale(0.9) rotate(-5deg);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(5px) scale(1.05) rotate(2deg);
+    opacity: 0.9;
+  }
+  75% {
+    transform: translateY(-2px) scale(0.98) rotate(-1deg);
+  }
+  100% {
+    transform: translateY(0) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+

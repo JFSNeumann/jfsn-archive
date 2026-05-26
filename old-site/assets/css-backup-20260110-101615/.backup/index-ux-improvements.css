@@ -1,0 +1,1453 @@
+/* ===========================================
+   INDEX PAGE - UX/UI IMPROVEMENTS & CLEANUP
+   =========================================== */
+
+/* ===========================================
+   REMOVE UNDERLINES FROM ALL BUTTONS
+   =========================================== */
+.btn,
+a.btn,
+button.btn,
+.btn *,
+a.btn *,
+button.btn *,
+[class*="btn"] *,
+[class*="btn"],
+button[class*="btn"],
+a[class*="btn"] {
+  text-decoration: none !important;
+  -webkit-text-decoration: none !important;
+}
+
+.btn:hover,
+a.btn:hover,
+button.btn:hover,
+.btn:focus,
+a.btn:focus,
+button.btn:focus,
+.btn:active,
+a.btn:active,
+button.btn:active,
+.btn:visited,
+a.btn:visited,
+button.btn:visited,
+[class*="btn"]:hover,
+[class*="btn"]:focus,
+[class*="btn"]:active,
+[class*="btn"]:visited {
+  text-decoration: none !important;
+  -webkit-text-decoration: none !important;
+}
+
+/* Override Bootstrap link-underline classes on buttons */
+.btn.link-underline,
+a.btn.link-underline,
+button.btn.link-underline,
+.btn.text-decoration-underline,
+a.btn.text-decoration-underline,
+button.btn.text-decoration-underline {
+  text-decoration: none !important;
+  -webkit-text-decoration: none !important;
+}
+
+/* Override any text-decoration-color on buttons */
+.btn,
+a.btn,
+button.btn {
+  -webkit-text-decoration-color: transparent !important;
+  text-decoration-color: transparent !important;
+  text-underline-offset: 0 !important;
+}
+
+/* ===========================================
+   ENHANCED BUTTON IMPROVEMENTS
+   =========================================== */
+
+/* Base button improvements */
+.btn {
+  position: relative;
+  overflow: hidden;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em;
+  border-radius: 12px !important;
+  padding: 0.875rem 2rem !important;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Override general button border-radius for rounded-circle buttons */
+.btn.rounded-circle,
+a.btn.rounded-circle,
+.btn-outline-light.rounded-circle,
+.editorial-nav-overlay-menu .btn.rounded-circle,
+.editorial-nav-overlay-menu .social-btn {
+  border-radius: 50% !important;
+}
+
+/* Keep social buttons round - override border-radius and prevent general button styles */
+.btn.rounded-circle,
+.social-btn.rounded-circle,
+.btn-outline-light.rounded-circle,
+a.btn.rounded-circle {
+  border-radius: 50% !important;
+  padding: 0 !important;
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  max-width: 36px !important;
+  min-height: 36px !important;
+  max-height: 36px !important;
+  white-space: normal !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  aspect-ratio: 1 / 1 !important;
+}
+
+/* Social buttons should not have min-width or other general button constraints */
+/* Exclude footer social buttons - they have their own styling */
+/* REMOVED: Navbar social buttons now use unified styles from social-icons-unified.css */
+/* All social buttons (navbar and footer) are now consistent at 48px */
+
+/* Social buttons spacing - FORCE with margin */
+/* Exclude footer groups - they have their own spacing */
+.editorial-nav-overlay-menu ul li.d-flex > div[role="group"],
+.editorial-nav-overlay-menu ul li.d-flex > div[role="group"][style*="gap"],
+div[role="group"][aria-label="Social media links"]:not(.footer-enhanced div[role="group"]) {
+  gap: 1rem !important;
+}
+
+.editorial-nav-overlay-menu ul li.d-flex .social-btn:not(:first-child) {
+  margin-left: 1rem !important;
+}
+
+/* REMOVED: Navbar social button hover/active states now use unified styles */
+/* All social buttons (navbar and footer) now have consistent hover effects */
+
+/* Social button icons - unified */
+.social-btn i {
+  font-size: 1.4rem !important;
+  color: rgba(255, 255, 255, 0.9);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: block;
+}
+
+/* REMOVED: All navbar-specific hover effects - now using unified styles from social-icons-unified.css */
+/* All social buttons (navbar and footer) now use the same hover effects */
+
+/* Focus states for accessibility */
+.social-btn:focus-visible,
+a.social-btn:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.6) !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2), 0 8px 24px rgba(99, 102, 241, 0.3) !important;
+}
+
+/* Button hover state - enhanced */
+.btn:hover {
+  transform: translateY(-3px) scale(1.02) !important;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.25) !important;
+}
+
+/* Social button hover styles are defined below - don't apply general button hover */
+
+/* Don't make border transparent for outline buttons */
+.btn-outline-primary:hover,
+.btn-outline-secondary:hover,
+.btn-outline-light:hover {
+  border-color: #6366f1 !important;
+}
+
+.btn:active {
+  transform: translateY(-1px) scale(0.98) !important;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Primary button enhancements */
+.btn-primary {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%) !important;
+  border: none !important;
+  color: white !important;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35) !important;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #7c3aed 0%, #9333ea 50%, #a855f7 100%) !important;
+  box-shadow: 0 12px 32px rgba(99, 102, 241, 0.4) !important;
+  color: white !important;
+}
+
+.btn-primary:active {
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3) !important;
+}
+
+/* Outline secondary button - SIMPLIFIED */
+.btn-outline-secondary {
+  background: white !important;
+  border: 2px solid #6366f1 !important;
+  color: #6366f1 !important;
+  position: relative;
+  overflow: hidden;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 160px;
+  white-space: nowrap;
+}
+
+/* Default state - purple text */
+.btn-outline-secondary,
+.btn-outline-secondary * {
+  color: #6366f1 !important;
+}
+
+/* Gradient background on hover */
+.btn-outline-secondary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%) !important;
+  transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 0;
+  border-radius: inherit;
+}
+
+.btn-outline-secondary:hover::before {
+  left: 0;
+}
+
+/* Hover state - white text on gradient - FORCE override main.css */
+a.btn-outline-secondary:hover,
+button.btn-outline-secondary:hover,
+.btn-outline-secondary:hover {
+  background: transparent !important;
+  border-color: #6366f1 !important;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3) !important;
+  transform: translateY(-3px) scale(1.02) !important;
+  color: white !important;
+}
+
+/* Override main.css line 307 - var(--brand-primary) to white */
+.btn-outline-secondary:hover {
+  color: white !important;
+  background: transparent !important;
+}
+
+/* Force ALL text elements to be white on hover */
+a.btn-outline-secondary:hover,
+a.btn-outline-secondary:hover *,
+a.btn-outline-secondary:hover span,
+button.btn-outline-secondary:hover,
+button.btn-outline-secondary:hover *,
+button.btn-outline-secondary:hover span,
+.btn-outline-secondary:hover,
+.btn-outline-secondary:hover *,
+.btn-outline-secondary:hover span {
+  color: white !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Override button-enhancements.css - ensure gradient shows */
+.btn-outline-secondary::after {
+  display: none !important;
+}
+
+/* Text above gradient */
+.btn-outline-secondary > * {
+  position: relative;
+  z-index: 1;
+}
+
+.btn-outline-secondary:active {
+  transform: translateY(-1px) scale(0.98) !important;
+}
+
+/* About preview buttons spacing */
+.about-preview-buttons {
+  gap: 1.5rem !important;
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 576px) {
+  .about-preview-buttons {
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem !important;
+  }
+  
+  .about-preview-buttons .btn {
+    width: 100%;
+    max-width: 280px;
+  }
+}
+
+/* Outline primary button enhancements */
+.btn-outline-primary {
+  background: white !important;
+  border: 2px solid #6366f1 !important;
+  color: #6366f1 !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-outline-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+  transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 0;
+}
+
+.btn-outline-primary:hover::before {
+  left: 0;
+}
+
+/* CRITICAL FIX: Ensure ::before gradient covers the button properly */
+.btn-outline-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+  transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 0;
+  border-radius: inherit;
+}
+
+.btn-outline-primary:hover::before {
+  left: 0;
+}
+
+.btn-outline-primary:hover {
+  background: transparent !important;
+  color: white !important;
+  border-color: #6366f1 !important;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3) !important;
+  transform: translateY(-3px) scale(1.02) !important;
+}
+
+/* Ensure text is above gradient */
+.btn-outline-primary > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* CRITICAL FIX: Default hover state - white text for gradient background */
+/* But if gradient doesn't show, we need dark text - handled by stay-white-on-hover class */
+
+/* Override: If button explicitly has white background class, keep dark text */
+.btn-outline-primary.bg-white:hover,
+.bg-white.btn-outline-primary:hover,
+button.bg-white.btn-outline-primary:hover,
+.bg-white button.btn-outline-primary:hover {
+  color: #0f172a !important; /* Dark text on white background */
+  background: #ffffff !important; /* Keep white background */
+}
+
+.btn-outline-primary.bg-white:hover *,
+.bg-white.btn-outline-primary:hover *,
+button.bg-white.btn-outline-primary:hover *,
+.bg-white button.btn-outline-primary:hover * {
+  color: #0f172a !important; /* Dark text for all child elements */
+}
+
+/* ADDITIONAL FIX: For buttons that should NOT show gradient (stay white), add this class */
+.btn-outline-primary.stay-white-on-hover:hover,
+.btn-outline-primary[data-stay-white]:hover {
+  color: #0f172a !important; /* Dark text on white background */
+  background: #ffffff !important; /* Keep white background */
+  /* Prevent gradient from showing */
+}
+
+.btn-outline-primary.stay-white-on-hover:hover::before,
+.btn-outline-primary[data-stay-white]:hover::before {
+  display: none !important; /* Hide gradient */
+}
+
+.btn-outline-primary.stay-white-on-hover:hover *,
+.btn-outline-primary[data-stay-white]:hover * {
+  color: #0f172a !important; /* Dark text for all child elements */
+}
+
+/* Outline light button enhancements */
+.btn-outline-light {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 2px solid rgba(255, 255, 255, 0.3) !important;
+  color: white !important;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-outline-light::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 0;
+}
+
+.btn-outline-light:hover::before {
+  left: 0;
+}
+
+.btn-outline-light:hover {
+  color: white !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.2) !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+}
+
+.btn-outline-light > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Button icon animations */
+.btn i,
+.btn svg {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-block;
+}
+
+.btn:hover i.bx-arrow-right,
+.btn:hover i.bx-chevron-right {
+  transform: translateX(4px);
+}
+
+.btn:hover i.bx-chevron-left,
+.btn:hover i.bx-arrow-left {
+  transform: translateX(-4px);
+}
+
+.btn:hover i.bx-chevron-up {
+  transform: translateY(-2px);
+}
+
+.btn:hover i.bx-chevron-down {
+  transform: translateY(2px);
+}
+
+/* Focus states for accessibility */
+.btn:focus-visible {
+  outline: 3px solid rgba(99, 102, 241, 0.5) !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1), 0 8px 24px rgba(99, 102, 241, 0.25) !important;
+}
+
+/* Button sizes */
+.btn-sm {
+  padding: 0.625rem 1.5rem !important;
+  font-size: 0.875rem !important;
+  border-radius: 10px !important;
+}
+
+.btn-lg {
+  padding: 1.125rem 2.5rem !important;
+  font-size: 1.125rem !important;
+  border-radius: 14px !important;
+  font-weight: 700 !important;
+}
+
+/* Ripple effect on click */
+.btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+  pointer-events: none;
+}
+
+.btn:active::after {
+  width: 300px;
+  height: 300px;
+}
+
+/* Disabled state */
+.btn:disabled,
+.btn.disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.btn:disabled:hover,
+.btn.disabled:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Mobile touch targets */
+@media (max-width: 768px) {
+  .btn {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.75rem 1.5rem !important;
+  }
+  
+  .btn-sm {
+    min-height: 40px;
+    padding: 0.5rem 1.25rem !important;
+  }
+  
+  .btn-lg {
+    min-height: 48px;
+    padding: 1rem 2rem !important;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .btn::before,
+  .btn::after,
+  .btn i,
+  .btn svg {
+    transition: none !important;
+    animation: none !important;
+  }
+  
+  .btn:hover {
+    transform: none !important;
+  }
+}
+
+/* ===========================================
+   NAVIGATION OVERLAY BRAND NAME
+   =========================================== */
+.editorial-nav-overlay-brand-name-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+/* ===========================================
+   ARTWORK OF DAY - HIDDEN ELEMENTS
+   =========================================== */
+.artwork-of-day-extended,
+.artwork-of-day-process-note,
+.artwork-of-day-keywords,
+.artwork-of-day-category {
+  display: none;
+}
+
+.artwork-of-day-extended.show,
+.artwork-of-day-process-note.show {
+  display: block !important;
+}
+
+.artwork-of-day-keywords.show {
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.artwork-of-day-category.show {
+  display: block !important;
+}
+
+/* ===========================================
+   COLLECTION CARDS - REDUCED HEIGHT
+   =========================================== */
+.collection-card {
+  min-height: auto !important;
+}
+
+.collection-card .card-body {
+  padding: 1.5rem 1.25rem !important;
+  gap: 0.75rem !important;
+  min-height: auto !important;
+}
+
+.collection-card .collection-icon {
+  margin-bottom: 0.5rem !important;
+  font-size: 2.25rem !important;
+}
+
+.collection-card .collection-icon-large {
+  font-size: 2.25rem !important;
+}
+
+.collection-card .card-title {
+  margin-bottom: 0.5rem !important;
+  font-size: 1.125rem !important;
+  line-height: 1.3 !important;
+}
+
+.collection-card .card-text {
+  margin-bottom: 0.75rem !important;
+  font-size: 0.8125rem !important;
+  line-height: 1.4 !important;
+}
+
+.collection-card .btn {
+  padding: 0.5rem 1.25rem !important;
+  font-size: 0.8125rem !important;
+  margin-top: 0.5rem !important;
+  margin-bottom: 0 !important;
+}
+
+.collection-card .card-body {
+  padding-bottom: 0.75rem !important;
+}
+
+/* ===========================================
+   FEATURED PROJECTS CHARACTER
+   =========================================== */
+.featured-projects-character-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.featured-projects-image {
+  max-width: 200px;
+  height: auto;
+  display: inline-block;
+}
+
+/* ===========================================
+   PROJECT CARD IMAGES
+   =========================================== */
+.project-card-img {
+  height: 250px;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), filter 0.4s ease;
+}
+
+.project-card:hover .project-card-img {
+  transform: scale(1.05);
+  filter: brightness(1.05) contrast(1.05);
+}
+
+/* ===========================================
+   FEATURED PROJECTS CARDS - TEXT ALIGNMENT
+   =========================================== */
+/* On large screens: center-align text, cards centered */
+@media (min-width: 992px) {
+  #featured-projects .row.g-4 .card .card-body.text-center {
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  #featured-projects .row.g-4 .card .card-body.text-center * {
+    text-align: center !important;
+  }
+
+  #featured-projects .row.g-4 .card .card-body.text-center .badge {
+    display: inline-block !important;
+    margin: 0 auto 0.5rem auto !important;
+    text-align: center !important;
+  }
+
+  #featured-projects .row.g-4 .card .card-body.text-center .card-title {
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  #featured-projects .row.g-4 .card .card-body.text-center .card-text {
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  #featured-projects .row.g-4 .card .card-body.text-center .small.text-muted {
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  #featured-projects .row.g-4 .card .card-body.text-center .small.text-muted > div {
+    text-align: center !important;
+  }
+
+  #featured-projects .row.g-4 .card .card-body.text-center .btn {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: inline-block !important;
+  }
+}
+
+/* On mobile/tablet: keep centered */
+@media (max-width: 991px) {
+  #featured-projects .row.g-4 .card .card-body.text-center {
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  #featured-projects .row.g-4 .card .card-body.text-center * {
+    text-align: center !important;
+  }
+
+  #featured-projects .row.g-4 .card .card-body.text-center .badge {
+    display: inline-block !important;
+    margin: 0 auto 0.5rem auto !important;
+    text-align: center !important;
+  }
+
+  #featured-projects .row.g-4 .card .card-body.text-center .card-title {
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  #featured-projects .row.g-4 .card .card-body.text-center .card-text {
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  #featured-projects .row.g-4 .card .card-body.text-center .small.text-muted {
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  #featured-projects .row.g-4 .card .card-body.text-center .small.text-muted > div {
+    text-align: center !important;
+  }
+
+  #featured-projects .row.g-4 .card .card-body.text-center .btn {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: inline-block !important;
+  }
+}
+
+/* ===========================================
+   SEBASTIAN CTA SECTION
+   =========================================== */
+.sebastian-cta-section {
+  background: linear-gradient(135deg, #f3f4f6 0%, #e9ecef 100%);
+  padding: 5rem 0;
+}
+
+.sebastian-cta-card {
+  background: white;
+  border-radius: 16px;
+  padding: 3rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sebastian-cta-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.sebastian-cta-text {
+  color: #1a202c;
+  line-height: 1.8;
+  font-size: 1.125rem;
+}
+
+.sebastian-cta-btn {
+  background: #6366f1;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1.25rem;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: white;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.sebastian-cta-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.sebastian-cta-btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.sebastian-cta-btn:hover {
+  background: #7c3aed;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(99, 102, 241, 0.4);
+  color: white;
+}
+
+.sebastian-cta-btn:active {
+  transform: translateY(-1px);
+}
+
+.sebastian-cta-btn:focus-visible {
+  outline: 3px solid rgba(99, 102, 241, 0.5);
+  outline-offset: 3px;
+}
+
+.sebastian-cta-btn i {
+  font-size: 1.5rem;
+  vertical-align: middle;
+  transition: transform 0.3s ease;
+  margin-right: 0.5rem;
+}
+
+.sebastian-cta-btn:hover i {
+  transform: translateX(4px);
+}
+
+/* ===========================================
+   FOOTER INLINE STYLES
+   =========================================== */
+/* Footer styles moved to assets/css/footer/index-footer.css */
+/* Removed .footer-enhanced rule to prevent conflicts */
+
+.footer-hr-no-margin {
+  margin: 1rem 0 0 0;
+}
+
+.footer-bottom-row {
+  margin-bottom: 0;
+}
+
+.footer-bottom-col {
+  margin-bottom: 0;
+}
+
+/* ===========================================
+   ENHANCED INTERACTIONS
+   =========================================== */
+
+/* Improved Button Focus States */
+.btn:focus-visible,
+a.btn:focus-visible {
+  outline: 3px solid rgba(99, 102, 241, 0.5);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+/* Enhanced Card Hover Effects */
+.card {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* Improved Link Focus States */
+a:focus-visible {
+  outline: 2px solid rgba(99, 102, 241, 0.6);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Better Image Loading States */
+img {
+  transition: opacity 0.3s ease;
+}
+
+img[loading="lazy"] {
+  opacity: 0.7;
+}
+
+img[loading="lazy"]:not([data-loaded="true"]) {
+  filter: blur(4px);
+}
+
+img[data-loaded="true"] {
+  opacity: 1;
+  filter: none;
+}
+
+/* ===========================================
+   ACCESSIBILITY IMPROVEMENTS
+   =========================================== */
+
+/* Skip to main content link */
+.skip-to-main {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #6366f1;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  z-index: 10000;
+  border-radius: 0 0 8px 0;
+  font-weight: 600;
+  transition: top 0.3s ease;
+}
+
+.skip-to-main:focus {
+  top: 0;
+}
+
+/* Improved focus indicators */
+*:focus-visible {
+  outline: 2px solid rgba(99, 102, 241, 0.6);
+  outline-offset: 2px;
+}
+
+/* Better contrast for text */
+.text-muted {
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+
+[data-bs-theme="dark"] .text-muted {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* ===========================================
+   REDUCED MOTION SUPPORT
+   =========================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .card:hover,
+  .sebastian-cta-card:hover,
+  .sebastian-cta-btn:hover {
+    transform: none !important;
+  }
+}
+
+/* ===========================================
+   RESPONSIVE IMPROVEMENTS
+   =========================================== */
+@media (max-width: 768px) {
+  .sebastian-cta-section {
+    padding: 3rem 0;
+  }
+  
+  .sebastian-cta-card {
+    padding: 2rem;
+    border-radius: 12px;
+  }
+  
+  .sebastian-cta-text {
+    font-size: 1rem;
+  }
+  
+  .sebastian-cta-btn {
+    font-size: 1.125rem;
+    padding: 0.875rem 2rem;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .featured-projects-image {
+    max-width: 160px;
+  }
+  
+  .project-card-img {
+    height: 200px;
+  }
+}
+
+/* ===========================================
+   PERFORMANCE OPTIMIZATIONS
+   =========================================== */
+
+/* Use will-change sparingly for animated elements */
+.card:hover,
+.sebastian-cta-btn,
+.project-card-img {
+  will-change: transform;
+}
+
+.card:not(:hover),
+.sebastian-cta-btn:not(:hover),
+.project-card-img:not(:hover) {
+  will-change: auto;
+}
+
+/* GPU acceleration for smooth animations */
+.card,
+.sebastian-cta-card,
+.sebastian-cta-btn {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* ===========================================
+   SELECTED WORKS SECTION - ENHANCED UX/UI
+   =========================================== */
+
+/* Section Container */
+.selected-works-section {
+  position: relative;
+  padding: 5rem 0 !important;
+  margin-bottom: 0 !important;
+  overflow: hidden;
+}
+
+.selected-works-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(99, 102, 241, 0.2) 50%, 
+    transparent 100%);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.selected-works-section.reveal-on-scroll.revealed::before {
+  opacity: 1;
+}
+
+/* Header Section - Enhanced Typography & Spacing */
+.selected-works-header {
+  margin-bottom: 3.5rem !important;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  position: relative;
+}
+
+.selected-works-title-group {
+  flex: 1;
+  min-width: 280px;
+}
+
+.selected-works-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3rem) !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 0.75rem !important;
+  color: #0f172a;
+  position: relative;
+  display: inline-block;
+}
+
+.selected-works-title::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  border-radius: 2px;
+  opacity: 0;
+  transform: scaleX(0);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.selected-works-section.reveal-on-scroll.revealed .selected-works-title::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.selected-works-subtitle {
+  font-size: 1.125rem !important;
+  line-height: 1.6;
+  color: #64748b !important;
+  max-width: 600px;
+  margin-top: 0.5rem;
+}
+
+/* CTA Button - New Clean Version */
+.selected-works-cta-new,
+.selected-works-header .selected-works-cta-new,
+.selected-works-header a.selected-works-cta-new,
+.selected-works-header .btn.selected-works-cta-new,
+.selected-works-header .btn-outline-secondary.selected-works-cta-new {
+  margin-top: -30px !important;
+  white-space: nowrap;
+  font-weight: 600 !important;
+  letter-spacing: 0.01em;
+  height: 60px !important;
+  min-height: 60px !important;
+  max-height: 60px !important;
+  padding: 0 1.5rem !important;
+  line-height: 60px !important;
+  border-radius: 8px !important;
+  border: 2px solid #6366f1 !important;
+  color: #6366f1 !important;
+  background: white !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-decoration: none !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.selected-works-cta-new::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+  transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 0;
+  border-radius: inherit;
+}
+
+.selected-works-cta-new:hover::before {
+  left: 0;
+}
+
+.selected-works-cta-new:hover {
+  transform: translateY(-2px) !important;
+  border-color: #6366f1 !important;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.25) !important;
+  color: white !important;
+  background: transparent !important;
+}
+
+.selected-works-cta-new > * {
+  position: relative;
+  z-index: 1;
+  color: inherit !important;
+  transition: color 0.3s ease;
+}
+
+.selected-works-cta-new:hover > * {
+  color: white !important;
+}
+
+.selected-works-cta-new i {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-left: 0.5rem;
+}
+
+.selected-works-cta-new:hover i {
+  transform: translateX(4px);
+}
+
+.selected-works-cta-new:active {
+  transform: translateY(0) !important;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2) !important;
+}
+
+.selected-works-cta-new:focus-visible {
+  outline: 3px solid rgba(99, 102, 241, 0.5) !important;
+  outline-offset: 3px !important;
+  box-shadow: 
+    0 0 0 4px rgba(99, 102, 241, 0.1),
+    0 8px 24px rgba(99, 102, 241, 0.25) !important;
+}
+
+.selected-works-cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+  transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 0;
+  border-radius: inherit;
+}
+
+.selected-works-cta:hover::before {
+  left: 0;
+}
+
+.selected-works-cta:hover {
+  transform: translateY(-2px) !important;
+  border-color: #6366f1 !important;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.25) !important;
+  color: white !important;
+  background: transparent !important;
+}
+
+.selected-works-cta > * {
+  position: relative;
+  z-index: 1;
+  color: inherit !important;
+  transition: color 0.3s ease;
+}
+
+.selected-works-cta:hover > * {
+  color: white !important;
+}
+
+.selected-works-cta i {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-left: 0.5rem;
+}
+
+.selected-works-cta:hover i {
+  transform: translateX(4px);
+}
+
+.selected-works-cta:active {
+  transform: translateY(0) !important;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2) !important;
+}
+
+.selected-works-cta:focus-visible {
+  outline: 3px solid rgba(99, 102, 241, 0.5) !important;
+  outline-offset: 3px !important;
+  box-shadow: 
+    0 0 0 4px rgba(99, 102, 241, 0.1),
+    0 8px 24px rgba(99, 102, 241, 0.25) !important;
+}
+
+/* Grid Container */
+.selected-works-grid {
+  position: relative;
+}
+
+/* Art Cards - Enhanced Hover Effects */
+.selected-works-card {
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  will-change: transform, box-shadow;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.selected-works-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.selected-works-card:hover::before {
+  opacity: 1;
+}
+
+.selected-works-card:hover {
+  transform: translateY(-8px) scale(1.02) !important;
+  box-shadow: 
+    0 20px 60px rgba(99, 102, 241, 0.15),
+    0 8px 24px rgba(0, 0, 0, 0.12),
+    0 0 0 1px rgba(99, 102, 241, 0.1) !important;
+  z-index: 10;
+}
+
+/* Image Container - Enhanced */
+.selected-works-card .jfsn-artcard-img-wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px 12px 0 0;
+  background: #0f172a;
+}
+
+.selected-works-card .jfsn-artcard-img-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    transparent 60%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.selected-works-card:hover .jfsn-artcard-img-wrap::after {
+  opacity: 1;
+}
+
+.selected-works-card .jfsn-artcard-img-wrap img {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  will-change: transform;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+.selected-works-card:hover .jfsn-artcard-img-wrap img {
+  transform: scale(1.08) !important;
+}
+
+/* Overlay - Enhanced */
+/* Card Body - Enhanced Typography */
+.selected-works-card .jfsn-artcard-body {
+  padding: 1.25rem 1rem !important;
+  background: white;
+  border-radius: 0 0 12px 12px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 2;
+}
+
+.selected-works-card:hover .jfsn-artcard-body {
+  background: linear-gradient(to bottom, #ffffff, #fafbfc);
+  padding-bottom: 1.5rem !important;
+}
+
+.selected-works-card .jfsn-artcard-title {
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.25rem !important;
+  transition: color 0.3s ease;
+}
+
+.selected-works-card:hover .jfsn-artcard-title {
+  color: #6366f1;
+}
+
+.selected-works-card .jfsn-artcard-meta {
+  font-size: 0.875rem !important;
+  color: #64748b !important;
+  font-weight: 500;
+  line-height: 1.4;
+  transition: color 0.3s ease;
+}
+
+.selected-works-card:hover .jfsn-artcard-meta {
+  color: #475569;
+}
+
+/* Stagger Animation */
+.selected-works-card.stagger-reveal {
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.selected-works-card.stagger-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.selected-works-card.stagger-reveal:nth-child(1) { transition-delay: 0.1s; }
+.selected-works-card.stagger-reveal:nth-child(2) { transition-delay: 0.2s; }
+.selected-works-card.stagger-reveal:nth-child(3) { transition-delay: 0.3s; }
+.selected-works-card.stagger-reveal:nth-child(4) { transition-delay: 0.4s; }
+
+/* Focus States - Accessibility */
+.selected-works-card:focus-visible {
+  outline: 3px solid rgba(99, 102, 241, 0.5) !important;
+  outline-offset: 4px !important;
+  box-shadow: 
+    0 0 0 4px rgba(99, 102, 241, 0.1),
+    0 20px 60px rgba(99, 102, 241, 0.15) !important;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .selected-works-section {
+    padding: 3rem 0 !important;
+  }
+  
+  .selected-works-header {
+    margin-bottom: 2rem !important;
+    padding-bottom: 1.5rem;
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+  
+  .selected-works-title {
+    font-size: 2rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .selected-works-subtitle {
+    font-size: 1rem !important;
+    margin-bottom: 1rem;
+  }
+  
+  .selected-works-cta {
+    width: 100%;
+    justify-content: center;
+    margin-top: 1rem !important;
+    padding: 0.875rem 2rem !important;
+  }
+  
+  .selected-works-card:hover {
+    transform: translateY(-4px) scale(1.01) !important;
+  }
+  
+  .selected-works-card .jfsn-artcard-body {
+    padding: 1rem 0.875rem !important;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .selected-works-card,
+  .selected-works-card *,
+  .selected-works-title::after {
+    transition: none !important;
+    animation: none !important;
+  }
+  
+  .selected-works-card:hover {
+    transform: none !important;
+  }
+}
+

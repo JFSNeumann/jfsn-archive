@@ -1,0 +1,49 @@
+{
+  "api_version": "1",
+  "id": "art0100",
+  "work": {
+    "file": "art0100.avif",
+    "title": "XXIII Discs, Yellow",
+    "year": 2000,
+    "work_type": "collage",
+    "orientation": "portrait",
+    "description": "Variant of the XXIII series in yellow: four gold compact discs arrange diamond-formation across the centre over a layered field of warplane drawings, equipment fragments and red blocks. Black-and-white perforated borders frame the top and bottom; a pink scribbled column drops at lower left, with a target medallion at right.",
+    "palette": [
+      "ivory",
+      "yellow",
+      "gold",
+      "red",
+      "magenta"
+    ],
+    "motifs": [
+      "compact-disc",
+      "warplane-topdown",
+      "target",
+      "concentric-rings",
+      "perforated-dots",
+      "numerals"
+    ],
+    "materials": [
+      "paper",
+      "paint"
+    ],
+    "composition": "diamond disc cluster on layered yellow ground",
+    "themes": [
+      "Aviation",
+      "Targets"
+    ],
+    "keywords": [
+      "text",
+      "yellow-palette"
+    ],
+    "featured": false,
+    "schema_version": "1",
+    "series": "XXIII"
+  },
+  "links": {
+    "image": "https://jfsn.com/artworks/full/art0100.avif",
+    "thumb": "https://jfsn.com/artworks/thumbs/art0100.avif",
+    "mini": "https://jfsn.com/artworks/mini/art0100.avif",
+    "page": "https://jfsn.com/artwork.html?id=art0100"
+  }
+}

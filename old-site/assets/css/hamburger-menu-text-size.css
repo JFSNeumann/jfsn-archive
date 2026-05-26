@@ -1,0 +1,27 @@
+/**
+ * Hamburger Menu Text Size Override
+ * Sets font-size to 1rem and line-height to 1 for hamburger menu links
+ * Tightens vertical spacing for compact menu
+ */
+
+/* Override hamburger menu text size - Maximum specificity */
+#editorialNavOverlay.active .editorial-nav-link,
+html body #editorialNavOverlay.active .editorial-nav-link,
+html body #editorialNavOverlay.active a.editorial-nav-link,
+.editorial-nav-overlay.active .editorial-nav-link,
+.editorial-nav-overlay.active a.editorial-nav-link,
+#editorialNavOverlay .editorial-nav-link,
+.editorial-nav-overlay .editorial-nav-link {
+  font-size: 1rem !important;
+  line-height: 1 !important;
+  padding: 0.5rem 0 !important;
+  margin: 0 !important;
+}
+
+/* Tighten spacing between menu items */
+#editorialNavOverlay.active .editorial-nav-overlay-menu,
+.editorial-nav-overlay.active .editorial-nav-overlay-menu,
+#editorialNavOverlay .editorial-nav-overlay-menu,
+.editorial-nav-overlay .editorial-nav-overlay-menu {
+  gap: 0.5rem !important;
+}

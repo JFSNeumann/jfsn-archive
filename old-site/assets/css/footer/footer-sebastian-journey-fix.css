@@ -1,0 +1,256 @@
+/* =========================================== */
+/* FOOTER LINK NOWRAP + SEBASTIAN'S JOURNEY FIX */
+/* General: Prevents text wrapping for all footer links */
+/* Specific: Ensures "Sebastian's Journey" displays fully */
+/* MUST load absolutely last to override all other CSS */
+/* =========================================== */
+
+/* =========================================== */
+/* GENERAL FOOTER LINK NOWRAP PROTECTION */
+/* (merged from footer-link-nowrap-fix.css) */
+/* =========================================== */
+
+/* Prevent text wrapping in footer links */
+.footer-enhanced .footer-link span,
+.footer-enhanced .footer-links-list .footer-link span,
+.footer-link span {
+  white-space: nowrap !important;
+  display: inline-block !important;
+}
+
+/* Ensure links themselves don't wrap and stay flush left */
+.footer-enhanced .footer-link,
+.footer-enhanced .footer-links-list .footer-link {
+  white-space: nowrap !important;
+  flex-wrap: nowrap !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+}
+
+/* Ensure list items are flush left */
+.footer-enhanced .footer-links-list li,
+.footer-enhanced .footer-nav li {
+  text-align: left !important;
+  display: flex !important;
+  justify-content: flex-start !important;
+}
+
+/* Specifically target Sebastian's Journey and Studio Experiments */
+.footer-enhanced .footer-link[href*="sebastian"] span,
+.footer-enhanced .footer-link[href*="studio"] span {
+  white-space: nowrap !important;
+  display: inline-block !important;
+}
+
+/* Ensure d-inline-flex doesn't cause wrapping and stays left */
+.footer-enhanced .d-inline-flex.footer-link {
+  flex-wrap: nowrap !important;
+  white-space: nowrap !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+}
+
+/* Make sure gap doesn't cause wrapping issues */
+.footer-enhanced .footer-link.gap-2 {
+  gap: 0.5rem !important;
+}
+
+/* Ensure footer nav containers are left-aligned */
+.footer-enhanced .footer-nav {
+  text-align: left !important;
+}
+
+.footer-enhanced .footer-nav ul {
+  text-align: left !important;
+  align-items: flex-start !important;
+}
+
+/* =========================================== */
+/* SEBASTIAN'S JOURNEY SPECIFIC OVERRIDES */
+/* =========================================== */
+
+/* CRITICAL: Override ALL container constraints */
+html body .footer-enhanced .container-fluid,
+html body footer .container-fluid,
+.footer-enhanced .container-fluid,
+footer .container-fluid {
+  overflow-x: visible !important;
+  overflow-y: visible !important;
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+/* Override footer-fixes-bundle.css max-width:100% constraint */
+/* Set min-width wide enough for "Sebastian's Journey" (approximately 200px for the text) */
+html body .footer-enhanced .col-lg-4:nth-of-type(2),
+html body footer .col-lg-4:nth-of-type(2),
+html body .footer-enhanced .col-md-6:nth-of-type(2),
+html body footer .col-md-6:nth-of-type(2),
+html body .footer-enhanced .row .col-lg-4:nth-of-type(2),
+html body footer .row .col-lg-4:nth-of-type(2),
+.footer-enhanced .col-lg-4:nth-of-type(2),
+footer .col-lg-4:nth-of-type(2),
+.footer-enhanced .col-md-6:nth-of-type(2),
+footer .col-md-6:nth-of-type(2),
+.footer-enhanced .row .col-lg-4:nth-of-type(2),
+footer .row .col-lg-4:nth-of-type(2) {
+  overflow-x: visible !important;
+  overflow-y: visible !important;
+  min-width: 220px !important;
+  max-width: none !important;
+  width: auto !important;
+  flex: 0 0 auto !important;
+  flex-basis: auto !important;
+  flex-grow: 0 !important;
+  flex-shrink: 0 !important;
+}
+
+/* Desktop: Ensure column is wide enough */
+@media (min-width: 992px) {
+  html body .footer-enhanced .col-lg-4:nth-of-type(2),
+  html body footer .col-lg-4:nth-of-type(2),
+  .footer-enhanced .col-lg-4:nth-of-type(2),
+  footer .col-lg-4:nth-of-type(2) {
+    min-width: 220px !important;
+  }
+}
+
+/* Ensure row allows columns to expand */
+html body .footer-enhanced .row,
+html body footer .row,
+.footer-enhanced .row,
+footer .row {
+  overflow-x: visible !important;
+  overflow-y: visible !important;
+  flex-wrap: wrap !important;
+}
+
+/* Ensure the link container allows overflow */
+html body .footer-enhanced .footer-quick-links-column .footer-link,
+html body .footer-enhanced .col-lg-4:nth-of-type(2) .footer-link,
+html body footer .col-lg-4:nth-of-type(2) .footer-link,
+.footer-enhanced .footer-quick-links-column .footer-link,
+.footer-enhanced .col-lg-4:nth-of-type(2) .footer-link,
+footer .col-lg-4:nth-of-type(2) .footer-link {
+  overflow: visible !important;
+  overflow-x: visible !important;
+  overflow-y: visible !important;
+  max-width: none !important;
+  min-width: max-content !important;
+  width: auto !important;
+}
+
+/* Specifically target Sebastian's Journey link - Maximum specificity */
+html body .footer-enhanced .footer-link[href*="sebastian"],
+html body .footer-enhanced .footer-link[href*="sebastian"] span,
+html body footer .footer-link[href*="sebastian"],
+html body footer .footer-link[href*="sebastian"] span,
+.footer-enhanced .footer-link[href*="sebastian"],
+.footer-enhanced .footer-link[href*="sebastian"] span,
+footer .footer-link[href*="sebastian"],
+footer .footer-link[href*="sebastian"] span {
+  overflow: visible !important;
+  overflow-x: visible !important;
+  overflow-y: visible !important;
+  white-space: nowrap !important;
+  display: inline-block !important;
+  max-width: none !important;
+  min-width: max-content !important;
+  width: auto !important;
+  text-overflow: clip !important;
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;
+  contain: none !important;
+}
+
+/* CRITICAL: Override any width constraints on the link itself */
+html body .footer-enhanced .footer-link[href*="sebastian"],
+html body footer .footer-link[href*="sebastian"],
+.footer-enhanced .footer-link[href*="sebastian"],
+footer .footer-link[href*="sebastian"] {
+  width: auto !important;
+  min-width: max-content !important;
+  max-width: none !important;
+  flex: 0 0 auto !important;
+  flex-basis: auto !important;
+  flex-grow: 0 !important;
+  flex-shrink: 0 !important;
+}
+
+/* Ensure the list item doesn't constrain width */
+html body .footer-enhanced .footer-quick-links-column li,
+html body .footer-enhanced .footer-links-list li,
+html body .footer-enhanced .col-lg-4:nth-of-type(2) li,
+html body footer .col-lg-4:nth-of-type(2) li,
+.footer-enhanced .footer-quick-links-column li,
+.footer-enhanced .footer-links-list li,
+.footer-enhanced .col-lg-4:nth-of-type(2) li,
+footer .col-lg-4:nth-of-type(2) li {
+  overflow: visible !important;
+  overflow-x: visible !important;
+  overflow-y: visible !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  width: auto !important;
+}
+
+/* Ensure the nav container allows overflow */
+html body .footer-enhanced .footer-quick-links-column .footer-nav,
+html body .footer-enhanced .col-lg-4:nth-of-type(2) .footer-nav,
+html body footer .col-lg-4:nth-of-type(2) .footer-nav,
+.footer-enhanced .footer-quick-links-column .footer-nav,
+.footer-enhanced .col-lg-4:nth-of-type(2) .footer-nav,
+footer .col-lg-4:nth-of-type(2) .footer-nav {
+  overflow: visible !important;
+  overflow-x: visible !important;
+  overflow-y: visible !important;
+  max-width: none !important;
+}
+
+/* Ensure the ul container allows overflow */
+html body .footer-enhanced .footer-quick-links-column ul,
+html body .footer-enhanced .footer-links-list,
+html body .footer-enhanced .col-lg-4:nth-of-type(2) ul,
+html body footer .col-lg-4:nth-of-type(2) ul,
+.footer-enhanced .footer-quick-links-column ul,
+.footer-enhanced .footer-links-list,
+.footer-enhanced .col-lg-4:nth-of-type(2) ul,
+footer .col-lg-4:nth-of-type(2) ul {
+  overflow: visible !important;
+  overflow-x: visible !important;
+  overflow-y: visible !important;
+  max-width: none !important;
+  width: 100% !important;
+}
+
+/* Ensure d-inline-flex doesn't constrain width */
+html body .footer-enhanced .footer-link.d-inline-flex,
+html body footer .footer-link.d-inline-flex,
+.footer-enhanced .footer-link.d-inline-flex,
+footer .footer-link.d-inline-flex {
+  max-width: none !important;
+  min-width: max-content !important;
+  width: auto !important;
+  overflow: visible !important;
+}
+
+/* Ensure span inside link can display full text */
+html body .footer-enhanced .footer-link span,
+html body footer .footer-link span,
+.footer-enhanced .footer-link span,
+footer .footer-link span {
+  overflow: visible !important;
+  overflow-x: visible !important;
+  overflow-y: visible !important;
+  max-width: none !important;
+  min-width: max-content !important;
+  width: auto !important;
+  white-space: nowrap !important;
+  display: inline-block !important;
+  text-overflow: clip !important;
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;
+  contain: none !important;
+}

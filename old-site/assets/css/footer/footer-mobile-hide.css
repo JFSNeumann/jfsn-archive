@@ -1,0 +1,95 @@
+/* =========================================== */
+/* HIDE MOBILE FOOTER ELEMENTS - HIGH PRIORITY */
+/* Forces hiding of quick actions and footer bottom on mobile */
+/* =========================================== */
+
+/* Hide Quick Actions Buttons on Mobile */
+@media (max-width: 767px) {
+  body .footer-quick-actions,
+  body .footer-quick-action-btn,
+  body .footer-quick-action-main,
+  body .footer-quick-action-secondary,
+  html body .footer-quick-actions,
+  html body .footer-quick-action-btn {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    position: absolute !important;
+    left: -9999px !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    z-index: -9999 !important;
+  }
+  
+  /* Hide Footer Bottom Section on Mobile */
+  body footer .footer-bottom-row,
+  body .footer-enhanced .footer-bottom-row,
+  html body footer .footer-bottom-row,
+  html body .footer-enhanced .footer-bottom-row {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: absolute !important;
+    left: -9999px !important;
+  }
+  
+  body footer .footer-bottom-content,
+  body footer .footer-bottom-links,
+  body footer .footer-bottom-link,
+  body .footer-enhanced .footer-bottom-content,
+  body .footer-enhanced .footer-bottom-links,
+  body .footer-enhanced .footer-bottom-link {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  /* Hide Footer Divider on Mobile */
+  body footer .footer-divider,
+  body .footer-enhanced .footer-divider,
+  html body footer .footer-divider {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  /* Hide Mobile Bottom Nav */
+  body .mobile-bottom-nav,
+  body #mobileBottomNav,
+  html body .mobile-bottom-nav,
+  html body #mobileBottomNav {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    position: absolute !important;
+    left: -9999px !important;
+    width: 0 !important;
+    height: 0 !important;
+    z-index: -9999 !important;
+  }
+  
+  /* Hide Footer Toggle Button */
+  body .footer-toggle-btn,
+  html body .footer-toggle-btn {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+}

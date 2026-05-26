@@ -1,0 +1,113 @@
+/* =========================================== */
+/* BACK TO TOP BUTTON - FORCE VISIBLE */
+/* Maximum specificity override - loads LAST */
+/* =========================================== */
+
+/* Force button to be visible and override ALL hiding rules */
+html body .back-to-top,
+html body button.back-to-top,
+.back-to-top,
+button.back-to-top {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  position: fixed !important;
+  bottom: 2rem !important;
+  right: 2rem !important;
+  width: 56px !important;
+  height: 56px !important;
+  min-width: 56px !important;
+  min-height: 56px !important;
+  max-width: none !important;
+  max-height: none !important;
+  background: #6366f1 !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 50% !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  z-index: 999999 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  left: auto !important;
+  top: auto !important;
+  clip: auto !important;
+  clip-path: none !important;
+  transform: translateY(0) scale(1) !important;
+}
+
+html body .back-to-top.visible,
+html body button.back-to-top.visible,
+.back-to-top.visible,
+button.back-to-top.visible {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: flex !important;
+  pointer-events: auto !important;
+  transform: translateY(0) scale(1) !important;
+}
+
+html body .back-to-top:hover,
+html body button.back-to-top:hover,
+.back-to-top:hover,
+button.back-to-top:hover {
+  background: #4f46e5 !important;
+  transform: translateY(-4px) scale(1.05) !important;
+  box-shadow: 
+    0 8px 25px rgba(99, 102, 241, 0.4),
+    0 4px 10px rgba(0, 0, 0, 0.2) !important;
+}
+
+html body .back-to-top:active,
+html body button.back-to-top:active,
+.back-to-top:active,
+button.back-to-top:active {
+  transform: translateY(-2px) scale(1.02) !important;
+}
+
+html body .back-to-top svg,
+.back-to-top svg {
+  width: 24px !important;
+  height: 24px !important;
+  display: block !important;
+  visibility: visible !important;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  html body .back-to-top,
+  html body button.back-to-top,
+  .back-to-top,
+  button.back-to-top {
+    bottom: calc(2rem + env(safe-area-inset-bottom)) !important;
+    right: 1rem !important;
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+    font-size: 1.25rem !important;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Override any media query hiding rules */
+@media (max-width: 767px) {
+  html body .back-to-top,
+  html body button.back-to-top,
+  .back-to-top,
+  button.back-to-top {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: fixed !important;
+    left: auto !important;
+    top: auto !important;
+  }
+}

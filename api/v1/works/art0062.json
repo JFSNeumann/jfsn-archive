@@ -1,0 +1,41 @@
+{
+  "api_version": "1",
+  "id": "art0062",
+  "work": {
+    "file": "art0062.avif",
+    "title": "Guernica, Bomber Above",
+    "year": 1990,
+    "work_type": "collage",
+    "orientation": "portrait",
+    "description": "A two-color flag composition: a top-down four-engine bomber drawing crowns the cyan upper field above the painted word 'GUERNICA'; a red square below holds a black-and-white photograph of the bombed town under the green base inscribed with the same.",
+    "palette": [
+      "blue",
+      "green",
+      "red",
+      "ivory",
+      "black"
+    ],
+    "motifs": [
+      "warplane-topdown",
+      "photographic-face",
+      "vertical-stripes"
+    ],
+    "materials": [],
+    "composition": "two-register flag, bomber over destruction photograph",
+    "themes": [],
+    "keywords": [
+      "text",
+      "narrative",
+      "minimal-mixed-media"
+    ],
+    "featured": false,
+    "schema_version": "1",
+    "series": "Guernica"
+  },
+  "links": {
+    "image": "https://jfsn.com/artworks/full/art0062.avif",
+    "thumb": "https://jfsn.com/artworks/thumbs/art0062.avif",
+    "mini": "https://jfsn.com/artworks/mini/art0062.avif",
+    "page": "https://jfsn.com/artwork.html?id=art0062"
+  }
+}

@@ -1,0 +1,224 @@
+/* ===========================================
+   SOCIAL SHARING & ENGAGEMENT
+   One-click sharing, social preview cards, QR codes
+   =========================================== */
+
+/* Share menu */
+.share-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.share-menu.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.share-menu-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+}
+
+.share-menu-content {
+  position: relative;
+  background: white;
+  border-radius: 24px;
+  padding: 2rem;
+  max-width: 500px;
+  width: 90%;
+  transform: scale(0.9) translateY(20px);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.3);
+}
+
+.share-menu.active .share-menu-content {
+  transform: scale(1) translateY(0);
+}
+
+.share-menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.share-menu-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.share-menu-close {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.2s;
+  color: #666;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.share-menu-close:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #000;
+}
+
+.share-menu-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.share-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.5rem 1rem;
+  background: #f8fafc;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #334155;
+}
+
+.share-option:hover {
+  background: #f1f5f9;
+  border-color: #6366f1;
+  transform: translateY(-2px);
+}
+
+.share-option i {
+  font-size: 1.5rem;
+  color: #6366f1;
+}
+
+/* QR Code modal */
+.qr-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+}
+
+.qr-modal:not(:empty) {
+  opacity: 1;
+  visibility: visible;
+}
+
+.qr-modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(4px);
+}
+
+.qr-modal-content {
+  position: relative;
+  background: white;
+  border-radius: 24px;
+  padding: 2rem;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4);
+}
+
+.qr-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  color: #666;
+}
+
+.qr-modal-content h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.qr-modal-content img {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+/* Toast notification */
+.toast-notification {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: #1e293b;
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  z-index: 10002;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.toast-notification.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Dark mode */
+[data-bs-theme="dark"] .share-menu-content,
+[data-bs-theme="dark"] .qr-modal-content {
+  background: #1e293b;
+  color: white;
+}
+
+[data-bs-theme="dark"] .share-option {
+  background: #0f172a;
+  color: #e5e7eb;
+}
+
+[data-bs-theme="dark"] .share-option:hover {
+  background: #1e293b;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .share-menu-options {
+    grid-template-columns: 1fr;
+  }
+  
+  .share-option {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+}
+

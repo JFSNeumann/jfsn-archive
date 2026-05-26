@@ -1,0 +1,189 @@
+/* =========================================== */
+/* FOOTER HOVER TEXT COLOR FIX */
+/* Ensures ALL footer hover text is white */
+/* =========================================== */
+
+/* Footer Links - Force white on hover */
+.footer-link:hover,
+.footer-link:focus,
+.footer-link:focus-visible,
+.footer-enhanced .footer-link:hover,
+.footer-enhanced .footer-link:focus,
+.footer-enhanced .footer-link:focus-visible,
+.footer-enhanced a.footer-link:hover,
+.footer-enhanced a.footer-link:focus,
+footer a.footer-link:hover,
+footer a.footer-link:focus {
+  color: #ffffff !important;
+}
+
+/* Footer Link Icons - Force white/light on hover */
+.footer-link:hover i,
+.footer-link:focus i,
+.footer-enhanced .footer-link:hover i,
+.footer-enhanced .footer-link:focus i,
+footer a.footer-link:hover i,
+footer a.footer-link:focus i {
+  color: #ffffff !important;
+}
+
+/* Footer Bottom Links */
+.footer-bottom-link:hover,
+.footer-bottom-link:focus,
+.footer-enhanced .footer-bottom-link:hover,
+.footer-enhanced .footer-bottom-link:focus {
+  color: #ffffff !important;
+}
+
+/* Footer Section Headings on Hover */
+.footer-enhanced h4:hover,
+.footer-enhanced h4:focus,
+.footer-enhanced .accordion-button:hover h4,
+.footer-enhanced .accordion-button:focus h4 {
+  color: #ffffff !important;
+}
+
+/* Accordion Button Text */
+.footer-enhanced .accordion-button:hover,
+.footer-enhanced .accordion-button:focus,
+.footer-enhanced .accordion-button:hover .text-uppercase,
+.footer-enhanced .accordion-button:focus .text-uppercase {
+  color: #ffffff !important;
+}
+
+/* All footer text elements on hover */
+.footer-enhanced a:hover,
+.footer-enhanced a:focus,
+footer a:hover,
+footer a:focus {
+  color: #ffffff !important;
+}
+
+/* =========================================== */
+/* TACO ANIMATION FIX */
+/* =========================================== */
+
+/* Ensure TACO is visible and properly positioned */
+.taco-hover-image {
+  position: fixed !important;
+  right: 160px !important;
+  bottom: 135px !important;
+  z-index: 50 !important; /* Below purple blobs (z-index: 100) */
+  display: block !important;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-300px) scale(0.8);
+  pointer-events: none;
+  transition: opacity 0.6s ease-out, 
+              visibility 0.6s ease-out, 
+              transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+/* TACO visible state */
+.taco-hover-image.visible {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  transform: translateY(0) scale(1) !important;
+  z-index: 50 !important; /* Below purple blobs (z-index: 100) */
+}
+
+/* TACO exiting state */
+.taco-hover-image.exiting {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateY(-300px) scale(0.8) !important;
+  transition: opacity 0.4s ease-in, 
+              transform 0.5s cubic-bezier(0.55, 0.055, 0.675, 0.19) !important;
+}
+
+/* TACO Image */
+.taco-img {
+  width: 120px !important;
+  height: auto !important;
+  border-radius: 12px !important;
+  animation: tacoBob 2s ease-in-out infinite !important;
+  filter: none !important;
+  display: block !important;
+  transform-origin: center bottom !important;
+  /* Remove white background */
+  mix-blend-mode: multiply !important;
+  background: transparent !important;
+}
+
+/* TACO Image when visible */
+.taco-hover-image.visible .taco-img {
+  animation: tacoBob 2s ease-in-out infinite, tacoEntrance 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3)) !important;
+  /* Remove white background when visible */
+  mix-blend-mode: multiply !important;
+  background: transparent !important;
+}
+
+/* TACO colored state */
+.taco-img.taco-colored {
+  filter: hue-rotate(240deg) saturate(1.5) brightness(0.8) !important;
+}
+
+/* TACO Animations */
+@keyframes tacoBob {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes tacoEntrance {
+  0% {
+    transform: translateY(-20px) scale(0.9) rotate(-5deg);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(5px) scale(1.05) rotate(2deg);
+    opacity: 0.9;
+  }
+  75% {
+    transform: translateY(-2px) scale(0.98) rotate(-1deg);
+  }
+  100% {
+    transform: translateY(0) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 991px) {
+  .taco-hover-image {
+    right: 80px !important;
+    bottom: 80px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .taco-hover-image {
+    right: 20px !important;
+    bottom: 60px !important;
+  }
+  
+  .taco-img {
+    width: 100px !important;
+  }
+}
+
+/* =========================================== */
+/* HIDE FAB MENU */
+/* =========================================== */
+
+.fab-backdrop,
+.fab-container,
+.fab-menu,
+.fab-button,
+.fab-menu-item {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+

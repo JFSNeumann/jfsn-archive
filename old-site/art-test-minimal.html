@@ -1,0 +1,104 @@
+<!-- 
+  MINIMAL TEST VERSION OF art.html
+  Use this to test which scripts are causing the blank page issue
+  
+  INSTRUCTIONS:
+  1. Upload this file as art-test.html to live server
+  2. Visit jfsn.com/art-test.html
+  3. Check if page renders
+  4. If YES: Re-enable scripts one by one from art.html
+  5. If NO: Check critical scripts for errors
+-->
+
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+  <title>Art Gallery Test | JFSN</title>
+  
+  <!-- MINIMAL CSS (Keep only critical) -->
+  <link rel="stylesheet" href="assets/css/critical.css">
+  <link rel="stylesheet" href="assets/css/theme.min.css">
+  <link rel="stylesheet" href="assets/css/shared-components-bundle.css">
+  <link rel="stylesheet" href="assets/css/art-enhancements-bundle.css">
+  <link rel="stylesheet" href="assets/css/art-page-features-bundle.min.css">
+  
+  <!-- CRITICAL SCRIPTS ONLY -->
+  <script src="assets/js/page-config-loader.js"></script>
+  <script src="assets/js/debug-utils.js"></script>
+  <script src="assets/js/navbar-loader.js?v=2"></script>
+</head>
+<body class="jfsn-art">
+  
+  <!-- Navbar Container -->
+  <div id="navbar-section">
+    <div id="navbar-loading">Loading navigation...</div>
+  </div>
+
+  <!-- Hero Section -->
+  <section id="hero-section" class="hero-section art-gallery-hero py-5">
+    <div class="hero-image-container">
+      <img id="heroImage1" class="hero-image" src="artworks/art1008.avif" alt="Hero Artwork" loading="eager">
+    </div>
+    <div class="hero-content">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-10 mx-auto text-center">
+            <h1 class="hero-title-large mb-3">Art Gallery</h1>
+            <p class="lead fs-3 mb-2">1,084+ Artworks. 50 Years. Zero Compromises.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Main Content -->
+  <main id="main-content-section" class="main-content-section">
+    
+    <!-- Gallery Section -->
+    <section class="py-2">
+      <div class="container">
+        <div class="gallery-header-bar d-flex justify-content-between align-items-center mb-1">
+          <div class="gallery-header-inline d-flex align-items-center gap-3">
+            <h1 class="gallery-main-title mb-0">Art Gallery</h1>
+            <div class="artwork-counter mb-0" id="artworkCounter">
+              <i class="bx bx-grid-alt"></i> <span id="currentArtworkCount">48</span> of <span id="totalArtworkCount">1,084</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Loading State -->
+        <div id="loading" class="loading">
+          <p class="text-center text-muted mt-2" id="loadingText">Loading artworks...</p>
+        </div>
+        
+        <!-- Gallery Container -->
+        <div id="galleryContainer" class="gallery-grid display-none">
+          <!-- Artworks will be loaded here -->
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <!-- Footer Container -->
+  <div id="footer-section" role="contentinfo">
+    <footer class="footer-loading-skeleton">
+      <div class="container-fluid px-4 px-lg-5">
+        <p class="text-center py-4">Footer loading...</p>
+      </div>
+    </footer>
+  </div>
+  
+  <!-- CRITICAL SCRIPTS ONLY -->
+  <script src="assets/js/component-loader.js"></script>
+  <script src="assets/js/art-gallery-core.js"></script>
+  <script src="assets/vendor/lightgallery/lightgallery.min.js"></script>
+  <script src="assets/js/art-gallery.js" defer></script>
+  
+  <!-- TEST: All other scripts commented out -->
+  <!-- Uncomment scripts one by one to find the culprit -->
+  
+</body>
+</html>

@@ -1,0 +1,1072 @@
+/* JFSN Authority Overrides – loaded LAST */
+
+/* =========================================== */
+/* REMOVE TITLE TEXT BETWEEN ARTWORK NUMBER AND CATEGORY */
+/* Apply to all lightbox images globally */
+/* Must override hover/focus states too */
+/* =========================================== */
+html body .lg-artwork-title,
+html body .lg-sub-html .lg-artwork-title,
+html body .lg-item .lg-artwork-title,
+html body .lg-current .lg-artwork-title,
+html body .lg-outer .lg-artwork-title,
+html body .lg-container .lg-artwork-title,
+html body .lg-outer:hover .lg-artwork-title,
+html body .lg-outer:hover .lg-sub-html .lg-artwork-title,
+html body .lg-outer:focus-within .lg-artwork-title,
+html body .lg-outer:focus-within .lg-sub-html .lg-artwork-title,
+html body .lg-outer.lg-show .lg-artwork-title,
+html body .lg-outer.lg-show .lg-sub-html .lg-artwork-title,
+html body .lg-container.lg-show .lg-artwork-title,
+html body .lg-container.lg-show .lg-sub-html .lg-artwork-title {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
+}
+
+/* =========================================== */
+/* STEP 4: LIGHTGALLERY VIEWING-FIRST */
+/* Image leads, caption/info is optional */
+/* =========================================== */
+
+/* A) Default caption hidden - OVERRIDE conflicting CSS from lightgallery-overrides.css */
+/* Use maximum specificity to override lightgallery-overrides.css */
+html body .lg-sub-html,
+html body .lg-sub-html:not(.lg-info-hidden),
+html body .lg-item .lg-sub-html,
+html body .lg-item .lg-sub-html:not(.lg-info-hidden),
+html body .lg-current .lg-sub-html,
+html body .lg-current .lg-sub-html:not(.lg-info-hidden),
+html body .lg-show-in .lg-sub-html,
+html body .lg-show-in .lg-sub-html:not(.lg-info-hidden),
+html body .lg-components .lg-sub-html,
+html body .lg-components .lg-sub-html:not(.lg-info-hidden),
+html body .lg-outer .lg-sub-html,
+html body .lg-outer .lg-sub-html:not(.lg-info-hidden),
+html body .lg-container .lg-sub-html,
+html body .lg-container.lg-show .lg-sub-html,
+html body .lg-container.lg-show .lg-sub-html:not(.lg-info-hidden),
+html body .lg-outer .info-bar {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    display: block !important; /* Keep display:block but hide with opacity/visibility */
+    transition: opacity 200ms ease, visibility 200ms ease !important;
+}
+
+/* Also hide text elements inside - override lightgallery-overrides.css lines 612-624 */
+/* BUT keep title hidden always */
+html body .lg-sub-html h4:not(.lg-artwork-title),
+html body .lg-sub-html p,
+html body .lg-item .lg-sub-html h4:not(.lg-artwork-title),
+html body .lg-item .lg-sub-html p,
+html body .lg-current .lg-sub-html h4:not(.lg-artwork-title),
+html body .lg-current .lg-sub-html p {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    display: block !important;
+}
+
+/* Title is always hidden */
+html body .lg-sub-html .lg-artwork-title,
+html body .lg-item .lg-sub-html .lg-artwork-title,
+html body .lg-current .lg-sub-html .lg-artwork-title {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+}
+
+/* D) Ensure caption stays hidden across slide changes */
+.lg-outer.lg-show .lg-sub-html,
+.lg-outer.lg-show .lg-sub-html:not(.lg-info-hidden),
+.lg-container.lg-show .lg-sub-html,
+.lg-container.lg-show .lg-sub-html:not(.lg-info-hidden),
+.lg-show-in .lg-sub-html,
+.lg-show-in .lg-sub-html:not(.lg-info-hidden),
+.lg-current .lg-sub-html,
+.lg-current .lg-sub-html:not(.lg-info-hidden) {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+/* B) Reveal on hover (desktop) */
+@media (hover: hover) and (pointer: fine) {
+    html body .lg-outer:hover .lg-sub-html,
+    html body .lg-outer:hover .lg-sub-html:not(.lg-info-hidden),
+    html body .lg-outer:hover .info-bar {
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+    }
+    
+    /* Also ensure hover works on slide changes */
+    html body .lg-outer.lg-show:hover .lg-sub-html,
+    html body .lg-outer.lg-show:hover .lg-sub-html:not(.lg-info-hidden),
+    html body .lg-container.lg-show:hover .lg-sub-html,
+    html body .lg-container.lg-show:hover .lg-sub-html:not(.lg-info-hidden),
+    html body .lg-show-in:hover .lg-sub-html,
+    html body .lg-show-in:hover .lg-sub-html:not(.lg-info-hidden) {
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+    }
+    
+    /* Reveal text elements on hover - BUT NOT THE TITLE */
+    html body .lg-outer:hover .lg-sub-html h4:not(.lg-artwork-title),
+    html body .lg-outer:hover .lg-sub-html p {
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+    
+    /* Keep title hidden even on hover */
+    html body .lg-outer:hover .lg-artwork-title,
+    html body .lg-outer:hover .lg-sub-html .lg-artwork-title {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+    }
+}
+
+/* C) Reveal on focus-within (mobile/tap) */
+html body .lg-outer:focus-within .lg-sub-html,
+html body .lg-outer:focus-within .lg-sub-html:not(.lg-info-hidden),
+html body .lg-outer:focus-within .info-bar {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+}
+
+/* Also ensure focus works on slide changes */
+html body .lg-outer.lg-show:focus-within .lg-sub-html,
+html body .lg-outer.lg-show:focus-within .lg-sub-html:not(.lg-info-hidden),
+html body .lg-container.lg-show:focus-within .lg-sub-html,
+html body .lg-container.lg-show:focus-within .lg-sub-html:not(.lg-info-hidden),
+html body .lg-show-in:focus-within .lg-sub-html,
+html body .lg-show-in:focus-within .lg-sub-html:not(.lg-info-hidden) {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+}
+
+/* Reveal text elements on focus */
+html body .lg-outer:focus-within .lg-sub-html h4:not(.lg-artwork-title),
+html body .lg-outer:focus-within .lg-sub-html p {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Keep title hidden even on focus */
+html body .lg-outer:focus-within .lg-artwork-title,
+html body .lg-outer:focus-within .lg-sub-html .lg-artwork-title {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+/* E) Keep typography calm */
+.lg-sub-html {
+    max-width: 60ch !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: center !important;
+    font-size: 0.9375rem !important; /* Slightly smaller (15px) */
+    line-height: 1.5 !important;
+}
+
+.lg-sub-html h4:not(.lg-artwork-title) {
+    font-size: 1.125rem !important; /* Smaller heading */
+    font-weight: 500 !important;
+    margin-bottom: 0.5rem !important;
+}
+
+/* Title is always hidden */
+.lg-sub-html .lg-artwork-title {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
+}
+
+.lg-sub-html p {
+    font-size: 0.9375rem !important;
+    opacity: 0.9 !important;
+}
+
+/* =========================================== */
+/* STEP 3 FILTER TONE - Soften filter UI tone */
+/* Make filters feel optional/secondary to artwork */
+/* =========================================== */
+
+/* A) Reduce visual weight - Filter Section Container */
+.filter-section {
+    margin-top: 2rem !important; /* Increased spacing above filters */
+    opacity: 0.85 !important; /* Slightly reduced opacity by default */
+    transition: opacity 0.3s ease !important;
+}
+
+.filter-section:hover {
+    opacity: 1 !important; /* Full opacity on hover */
+}
+
+/* Filter title - reduce prominence */
+.filter-title {
+    font-size: 0.875rem !important; /* Smaller font */
+    font-weight: 500 !important; /* Lighter weight */
+    opacity: 0.7 !important;
+    transition: opacity 0.2s ease !important;
+}
+
+.filter-section:hover .filter-title {
+    opacity: 1 !important;
+}
+
+.filter-icon {
+    opacity: 0.6 !important;
+}
+
+/* Filter section labels - subtle */
+.filter-section-label {
+    font-size: 0.75rem !important; /* Smaller */
+    opacity: 0.6 !important;
+    font-weight: 400 !important;
+}
+
+/* B) Filter buttons - reduce visual weight */
+.filter-btn {
+    font-size: 0.8125rem !important; /* Slightly smaller (was 0.875rem) */
+    opacity: 0.75 !important; /* Lower opacity by default */
+    box-shadow: none !important; /* Remove heavy shadows */
+    filter: none !important; /* Remove glows */
+    transition: opacity 0.2s ease, transform 0.2s ease !important;
+}
+
+.filter-btn:hover,
+.filter-btn:focus {
+    opacity: 1 !important; /* Full opacity on hover/focus */
+    transform: translateY(-1px) !important; /* Subtle lift */
+}
+
+.filter-btn.active {
+    opacity: 0.9 !important; /* Slightly more visible when active */
+}
+
+.filter-btn.active:hover,
+.filter-btn.active:focus {
+    opacity: 1 !important;
+}
+
+/* Remove heavy pulse/glow effects */
+.filter-btn.btn-pulse-glow,
+.filter-btn.btn-magnetic-enhanced {
+    animation: none !important;
+    box-shadow: none !important;
+}
+
+/* Artwork count badges - subtle */
+.filter-btn .artwork-count-badge {
+    opacity: 0.7 !important;
+    font-size: 0.75rem !important;
+}
+
+.filter-btn:hover .artwork-count-badge,
+.filter-btn:focus .artwork-count-badge {
+    opacity: 1 !important;
+}
+
+/* C) Mobile tap comfort improvements */
+@media (max-width: 767.98px) {
+    .filter-section {
+        margin-top: 1.5rem !important;
+        padding-top: 1rem !important;
+    }
+    
+    .filter-btn {
+        padding: 0.5rem 0.875rem !important; /* Better tap target */
+        min-height: 2.5rem !important; /* Minimum tap size */
+        margin-bottom: 0.5rem !important; /* Better spacing */
+    }
+    
+    .filter-buttons-container {
+        gap: 0.5rem !important; /* Better wrap spacing */
+        flex-wrap: wrap !important;
+    }
+    
+    .show-filters-btn {
+        opacity: 0.8 !important;
+        font-size: 0.875rem !important;
+    }
+    
+    .show-filters-btn:hover,
+    .show-filters-btn:focus {
+        opacity: 1 !important;
+    }
+}
+
+/* Filter bar wrapper - subtle */
+.filter-bar-wrapper {
+    opacity: 0.9 !important;
+}
+
+.filter-bar {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important; /* Lighter shadow */
+}
+
+/* Filter help text - very subtle */
+.filter-help-text {
+    opacity: 0.5 !important;
+    font-size: 0.7rem !important;
+}
+
+/* Active filters badge - subtle */
+.active-filters-badge {
+    opacity: 0.7 !important;
+    font-size: 0.75rem !important;
+}
+
+/* Filter section dividers - subtle */
+.filter-section-divider {
+    opacity: 0.3 !important;
+}
+
+/* D) Accessibility - keep focus states clear */
+.filter-btn:focus-visible {
+    outline: 2px solid #6366f1 !important;
+    outline-offset: 2px !important;
+    opacity: 1 !important;
+}
+
+.show-filters-btn:focus-visible {
+    outline: 2px solid #6366f1 !important;
+    outline-offset: 2px !important;
+    opacity: 1 !important;
+}
+
+/* Reset button - subtle */
+.filter-section .btn-outline-primary {
+    opacity: 0.7 !important;
+    font-size: 0.75rem !important;
+}
+
+.filter-section .btn-outline-primary:hover,
+.filter-section .btn-outline-primary:focus {
+    opacity: 1 !important;
+}
+
+/* =========================================== */
+/* MIGRATED: hide-visible-captions.css */
+/* Hide artwork captions and ensure gallery/images are visible */
+/* =========================================== */
+
+/* Hide artwork info section by default (captions under images) */
+.artwork-card .artwork-info {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+}
+
+/* Ensure cards don't have extra space from hidden info */
+.artwork-card {
+    padding-bottom: 0 !important;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    outline: none !important;
+}
+
+/* CRITICAL: Override display-none class to show gallery */
+html body .display-none#galleryContainer,
+html body .display-none#gallery,
+html body .display-none.gallery-grid,
+html body #galleryContainer.display-none,
+html body #gallery.display-none,
+html body .gallery-grid.display-none {
+    display: grid !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+}
+
+/* Ensure artwork images are always visible */
+/* CRITICAL: Override enhanced-image-loading.css opacity: 0 */
+html body .artwork-card img,
+html body .artwork-card .artwork-image-container img {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    position: absolute !important;
+    inset: 0 !important;
+    object-fit: cover !important;
+    z-index: 2 !important;
+}
+
+/* Ensure image container is visible */
+.artwork-card .artwork-image-container {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 200px !important;
+    position: relative !important;
+    overflow: hidden !important;
+    aspect-ratio: 4 / 3 !important;
+}
+
+/* =========================================== */
+/* MIGRATED: remove-grey-backgrounds.css */
+/* Remove grey backgrounds from artwork images and containers */
+/* =========================================== */
+
+/* Hide favorites button - causing grey space */
+.favorites-btn,
+.artwork-card .favorites-btn,
+button.favorites-btn {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    position: absolute !important;
+    width: 0 !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    pointer-events: none !important;
+}
+
+/* Remove grey background from artwork card image wrapper */
+.artwork-card .artwork-card-image-wrapper,
+.gallery-grid .artwork-card .artwork-card-image-wrapper,
+.gallery-grid[data-layout="grid"] .artwork-card .artwork-card-image-wrapper,
+.gallery-grid[data-layout="masonry"] .artwork-card .artwork-card-image-wrapper {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+}
+
+/* Remove grey background from artwork images */
+.artwork-card img,
+.artwork-card .artwork-card-image-wrapper img,
+.artwork-card img:not(.loaded),
+.artwork-card img.loading,
+.artwork-card img.progressive-image {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+}
+
+/* Remove grey background from artwork image container */
+.artwork-image-container,
+.artwork-card .artwork-image-container {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+}
+
+/* Dark mode - also remove grey backgrounds */
+[data-bs-theme="dark"] .artwork-card .artwork-card-image-wrapper,
+[data-bs-theme="dark"] .artwork-card img,
+[data-bs-theme="dark"] .artwork-card img:not(.loaded),
+[data-bs-theme="dark"] .artwork-image-container {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+}
+
+/* Ensure no gradient backgrounds on pseudo-elements */
+.artwork-card .artwork-card-image-wrapper::before,
+.artwork-card .artwork-card-image-wrapper::after,
+.artwork-card img::before,
+.artwork-card img::after {
+    background: transparent !important;
+    background-image: none !important;
+}
+
+/* =========================================== */
+/* MIGRATED: artwork-overlay-hover.css */
+/* CSS-only overlay reveal on hover (desktop) and focus/tap (mobile) */
+/* =========================================== */
+
+/* Overlay layer - hidden by default */
+.artwork-overlay {
+    position: absolute !important;
+    inset: 0 !important;
+    display: flex !important;
+    align-items: flex-end !important;
+    pointer-events: none !important;
+    opacity: 0 !important;
+    transition: opacity 220ms ease !important;
+    z-index: 5 !important; /* Above image, below buttons */
+}
+
+/* Bottom gradient + text container */
+.artwork-overlay-inner {
+    width: 100% !important;
+    padding: 12px 12px 14px !important;
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.72) 0%,
+        rgba(0, 0, 0, 0.4) 50%,
+        rgba(0, 0, 0, 0.0) 100%
+    ) !important;
+}
+
+/* Typography */
+.artwork-overlay .artwork-title {
+    font-size: 0.98rem !important;
+    line-height: 1.15 !important;
+    color: #fff !important;
+    margin: 0 0 4px !important;
+    letter-spacing: 0.2px !important;
+    font-weight: 600 !important;
+}
+
+.artwork-overlay .artwork-meta {
+    font-size: 0.82rem !important;
+    line-height: 1.2 !important;
+    color: rgba(255, 255, 255, 0.85) !important;
+    margin: 0 !important;
+}
+
+.artwork-overlay .artwork-description,
+.artwork-overlay .artwork-notes {
+    font-size: 0.82rem !important;
+    line-height: 1.25 !important;
+    color: rgba(255, 255, 255, 0.78) !important;
+    margin-top: 6px !important;
+    max-width: 52ch !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+}
+
+/* Desktop: reveal on hover */
+@media (hover: hover) and (pointer: fine) {
+    .artwork-card:hover .artwork-overlay {
+        opacity: 1 !important;
+    }
+}
+
+/* Mobile (and keyboard): reveal on focus (tap) */
+.artwork-card:focus .artwork-overlay,
+.artwork-card:focus-within .artwork-overlay {
+    opacity: 1 !important;
+}
+
+/* Accessibility: subtle focus ring */
+.artwork-card:focus-visible {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.22) !important;
+    outline: none !important;
+}
+
+/* Ensure overlay doesn't interfere with existing buttons */
+.artwork-overlay ~ .favorites-btn,
+.artwork-overlay ~ .quick-view-btn {
+    z-index: 10 !important; /* Above overlay */
+}
+
+/* =========================================== */
+/* MIGRATED: art-page-overrides.css */
+/* Art page specific styling: IDs, badges, typography, LightGallery */
+/* =========================================== */
+
+/* Artwork ID - smaller styling */
+.artwork-id {
+    font-size: 1rem !important;
+    padding: 0.35rem 0.5rem !important;
+    top: 0.75rem !important;
+    left: 0.75rem !important;
+}
+
+.artwork-card:hover .artwork-id {
+    transform: scale(1.02) !important; /* Smaller scale on hover */
+}
+
+[data-bs-theme="dark"] .artwork-id {
+    font-size: 1rem !important;
+    padding: 0.35rem 0.5rem !important;
+}
+
+/* Category badge - move to top right corner */
+.artwork-card .artwork-image-container,
+.artwork-card .artwork-card-image-wrapper {
+    position: relative !important;
+}
+
+.artwork-card .artwork-category,
+.artwork-card .artwork-meta .artwork-category,
+.artwork-card .category-badge,
+.artwork-card .badge.category-badge,
+.artwork-card .artwork-category-badge,
+.artwork-card .card-category,
+.artwork-card .artwork-meta .category-badge,
+.artwork-card .artwork-meta .badge,
+.artwork-card .card-header-meta .card-category {
+    position: absolute !important;
+    top: 0.75rem !important;
+    right: 0.75rem !important;
+    left: auto !important;
+    bottom: auto !important;
+    margin: 0 !important;
+    z-index: 10 !important;
+    font-size: 0.75rem !important;
+    padding: 0.35rem 0.6rem !important;
+    white-space: nowrap !important;
+    display: inline-block !important;
+}
+
+.artwork-card .artwork-image-container .artwork-meta,
+.artwork-card .artwork-card-image-wrapper .artwork-meta {
+    position: absolute !important;
+    top: 0.75rem !important;
+    right: 0.75rem !important;
+}
+
+/* Artwork title - normalize styling */
+.artwork-card h3.artwork-title,
+.artwork-card .artwork-title,
+.artwork-card h4.artwork-title {
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Artwork description - smaller */
+.artwork-card .artwork-description,
+.artwork-card .card-description {
+    font-size: 0.75rem !important;
+    line-height: 1.4 !important;
+}
+
+/* Keywords - remove extra space */
+.artwork-card .card-keywords,
+.artwork-card .keyword-tags {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.artwork-card .keyword-tag {
+    margin-bottom: 0 !important;
+}
+
+/* LightGallery Navigation Arrows - final override */
+html body .lg-prev,
+html body .lg-next,
+html body .lg-show-in.lg-hide-items .lg-prev,
+html body .lg-show-in.lg-hide-items .lg-next,
+html body .lg-container.lg-show.lg-hide-items .lg-prev,
+html body .lg-container.lg-show.lg-hide-items .lg-next,
+html body .lg-outer.lg-hide-items .lg-prev,
+html body .lg-outer.lg-hide-items .lg-next,
+html body .lg-show-in .lg-prev,
+html body .lg-show-in .lg-next {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: #ffffff !important;
+    background-color: rgba(0, 0, 0, 0.75) !important;
+    transform: translateY(-50%) translate3d(0, 0, 0) !important;
+    -webkit-transform: translateY(-50%) translate3d(0, 0, 0) !important;
+    border-radius: 4px !important;
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    font-size: 22px !important;
+    padding: 8px 10px 9px !important;
+    margin-top: -10px !important;
+    z-index: 1084 !important;
+    position: absolute !important;
+    top: 50% !important;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+}
+
+html body .lg-prev {
+    left: 20px !important;
+}
+
+html body .lg-next {
+    right: 20px !important;
+}
+
+/* Style pseudo-elements for arrows */
+html body .lg-next:before,
+html body .lg-prev:after,
+html body .lg-show-in.lg-hide-items .lg-next:before,
+html body .lg-show-in.lg-hide-items .lg-prev:after,
+html body .lg-show-in .lg-next:before,
+html body .lg-show-in .lg-prev:after {
+    color: #ffffff !important;
+    opacity: 1 !important;
+    font-family: lg !important;
+    display: inline-block !important;
+}
+
+html body .lg-prev:hover,
+html body .lg-next:hover {
+    background-color: rgba(0, 0, 0, 0.9) !important;
+    color: #ffffff !important;
+}
+
+html body .lg-prev:hover:after,
+html body .lg-next:hover:before {
+    color: #ffffff !important;
+    opacity: 1 !important;
+}
+
+/* =========================================== */
+/* MIGRATED: remove-drone-searchlights.css */
+/* Additional searchlight removal rules (inline CSS in index.html already covers most) */
+/* =========================================== */
+
+/* Disable searchlight animation */
+@keyframes searchlightPulse {
+    0%, 100% {
+        opacity: 0 !important;
+        transform: scale(0) !important;
+    }
+    50% {
+        opacity: 0 !important;
+        transform: scale(0) !important;
+    }
+}
+
+/* =========================================== */
+/* MIGRATED: remove-button-purple-shadow.css */
+/* Remove purple shadows/glows while preserving accessibility */
+/* =========================================== */
+
+/* Override CSS variables for purple shadows */
+:root {
+    --button-shadow-primary: 0 1px 3px rgba(0, 0, 0, 0.12),
+                              0 1px 2px rgba(0, 0, 0, 0.08) !important;
+    --button-shadow-primary-hover: 0 1px 3px rgba(0, 0, 0, 0.12),
+                                    0 1px 2px rgba(0, 0, 0, 0.08) !important;
+    --button-shadow-outline: 0 1px 3px rgba(0, 0, 0, 0.12),
+                             0 1px 2px rgba(0, 0, 0, 0.08) !important;
+    --button-shadow-outline-hover: 0 1px 3px rgba(0, 0, 0, 0.12),
+                                    0 1px 2px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Remove purple drop shadows on all buttons */
+html body .btn,
+html body .btn:hover,
+html body button,
+html body button:hover,
+html body [role="button"],
+html body [role="button"]:hover,
+html body a.btn,
+html body a.btn:hover {
+    filter: none !important;
+    -webkit-filter: none !important;
+    transition: background-color 0.3s ease, transform 0.3s ease, border-color 0.3s ease !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
+                0 1px 2px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Remove purple box shadows on button hover - all variations */
+html body .btn-primary:hover:not(:disabled):not(.disabled),
+html body .btn-outline-primary:hover:not(:disabled):not(.disabled),
+html body .btn-secondary:hover:not(:disabled):not(.disabled),
+html body .btn-success:hover:not(:disabled):not(.disabled),
+html body .btn-outline-success:hover:not(:disabled):not(.disabled),
+html body .btn-info:hover:not(:disabled):not(.disabled),
+html body .btn-outline-info:hover:not(:disabled):not(.disabled),
+html body .btn-sm:hover:not(:disabled):not(.disabled),
+html body .btn-lg:hover:not(:disabled):not(.disabled),
+html body .btn.btn-glow:hover:not(:disabled):not(.disabled),
+html body .btn.btn-premium:hover:not(:disabled):not(.disabled),
+html body .btn.btn-magnetic:hover:not(:disabled):not(.disabled) {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
+                0 1px 2px rgba(0, 0, 0, 0.08) !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+}
+
+/* Remove purple drop shadows from button icons/text on hover */
+html body .btn:hover *,
+html body button:hover *,
+html body [role="button"]:hover *,
+html body a.btn:hover * {
+    filter: none !important;
+    -webkit-filter: none !important;
+}
+
+/* Remove animated purple shadows */
+@keyframes palettePaint {
+    0%, 100% {
+        filter: none !important;
+        -webkit-filter: none !important;
+    }
+    50% {
+        filter: none !important;
+        -webkit-filter: none !important;
+    }
+}
+
+/* Remove btn-glow class effects - complete removal */
+html body .btn-glow::before,
+html body .btn-glow:hover::before,
+html body .btn-glow:focus::before,
+html body .btn-glow:active::before {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    content: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    background: none !important;
+    background-image: none !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+    transform: none !important;
+    pointer-events: none !important;
+    z-index: -9999 !important;
+}
+
+/* Accessibility: Keep visible focus ring (neutral, subtle) */
+html body .btn:focus-visible,
+html body button:focus-visible,
+html body [role="button"]:focus-visible,
+html body a.btn:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.65) !important;
+    outline-offset: 2px !important;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.25),
+                0 1px 3px rgba(0, 0, 0, 0.12),
+                0 1px 2px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* =========================================== */
+/* MIGRATED: fix-keyword-tag-margins.css */
+/* Fix negative margins on keyword tags in artwork-of-day section */
+/* =========================================== */
+
+/* Maximum specificity to override negative margins */
+html body #artworkOfDayKeywords .keyword-tag,
+html body .artwork-of-day-keywords .keyword-tag,
+html body .artwork-of-day-keywords.show .keyword-tag,
+html body #artworkOfDayKeywords.show .keyword-tag {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+/* Override inline styles */
+html body #artworkOfDayKeywords .keyword-tag[style*="margin"],
+html body .artwork-of-day-keywords .keyword-tag[style*="margin"],
+html body .artwork-of-day-keywords.show .keyword-tag[style*="margin"] {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+/* =========================================== */
+/* STEP 5: HOMEPAGE CTA HIERARCHY */
+/* One primary action: Explore the Artwork */
+/* =========================================== */
+
+/* A) Make the primary CTA visually dominant */
+.hero-section .hero-primary-cta,
+.hero-section a[href="art.html"].btn-primary {
+    font-weight: 700 !important; /* Stronger weight */
+    border-radius: 50px !important; /* Consistent pill radius */
+    padding: 1rem 2rem !important; /* Generous padding */
+}
+
+/* B) Demote secondary CTAs */
+.hero-section .hero-secondary-cta,
+.hero-section a[href="portfolio.html"].btn-outline-light,
+.hero-section a[href="about.html"].btn-outline-light {
+    opacity: 0.75 !important; /* Lower opacity by default */
+    transition: opacity 0.2s ease !important;
+}
+
+.hero-section .hero-secondary-cta:hover,
+.hero-section .hero-secondary-cta:focus,
+.hero-section a[href="portfolio.html"].btn-outline-light:hover,
+.hero-section a[href="portfolio.html"].btn-outline-light:focus,
+.hero-section a[href="about.html"].btn-outline-light:hover,
+.hero-section a[href="about.html"].btn-outline-light:focus {
+    opacity: 1 !important; /* Full opacity on hover/focus */
+}
+
+/* C) Improve mobile tap comfort */
+@media (max-width: 767.98px) {
+    .hero-section .hero-primary-cta,
+    .hero-section a[href="art.html"].btn-primary,
+    .hero-section .hero-secondary-cta,
+    .hero-section a[href="portfolio.html"].btn-outline-light,
+    .hero-section a[href="about.html"].btn-outline-light {
+        padding: 0.875rem 1.5rem !important; /* Bigger padding for tap */
+        min-height: 48px !important; /* Minimum tap target size */
+        margin-bottom: 0.75rem !important; /* Better spacing between buttons */
+    }
+    
+    /* Ensure buttons wrap cleanly */
+    .hero-section .d-flex.gap-3 {
+        flex-wrap: wrap !important;
+        gap: 0.75rem !important;
+        justify-content: center !important;
+    }
+    
+    .hero-section .hero-primary-cta,
+    .hero-section a[href="art.html"].btn-primary {
+        width: 100% !important; /* Full width on mobile for primary */
+        max-width: 100% !important;
+    }
+    
+    .hero-section .hero-secondary-cta,
+    .hero-section a[href="portfolio.html"].btn-outline-light,
+    .hero-section a[href="about.html"].btn-outline-light {
+        flex: 1 1 calc(50% - 0.375rem) !important; /* Two buttons per row */
+        min-width: 140px !important;
+    }
+}
+
+/* =========================================== */
+/* MIGRATED: global-fixes-bundle.css (stable set 1) */
+/* Stable, page-safe rules migrated from bundle */
+/* =========================================== */
+
+/* Footer Copyright Text - Scoped to footer, safe */
+.footer-bottom-row .footer-copyright p,
+.footer-bottom-row .footer-copyright p.text-white-50,
+.footer-enhanced .footer-bottom-row .footer-copyright p,
+.footer-enhanced .footer-copyright .text-white-50,
+.footer-enhanced .footer-copyright p,
+.footer-enhanced .footer-copyright p.text-white-50,
+html body .footer-bottom-row .footer-copyright p,
+html body .footer-bottom-row .footer-copyright p.text-white-50,
+html body .footer-enhanced .footer-bottom-row .footer-copyright p,
+html body .footer-enhanced .footer-copyright .text-white-50,
+html body .footer-enhanced .footer-copyright p,
+html body .footer-enhanced .footer-copyright p.text-white-50,
+html body footer .footer-copyright .text-white-50,
+html body footer .footer-copyright p,
+html body footer .footer-copyright p.text-white-50 {
+    color: #fff !important;
+    font-weight: 400 !important;
+}
+
+/* Navbar Announcement Links - Scoped to announcement area */
+.navbar-announcement .navbar-announcement-link,
+.navbar-announcement-link,
+.navbar-announcement-text .navbar-announcement-link,
+.navbar-announcement-text a {
+    color: #fff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    text-decoration: underline !important;
+    font-weight: 700 !important;
+    transition: opacity 0.3s ease, color 0.3s ease !important;
+}
+
+.navbar-announcement .navbar-announcement-link *,
+.navbar-announcement-link *,
+.navbar-announcement-text .navbar-announcement-link *,
+.navbar-announcement-text a * {
+    color: #fff !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+.navbar-announcement .navbar-announcement-link:hover,
+.navbar-announcement-link:hover,
+.navbar-announcement-text .navbar-announcement-link:hover,
+.navbar-announcement-text a:hover {
+    color: #fff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    opacity: 0.9 !important;
+    text-decoration: underline !important;
+}
+
+.navbar-announcement .navbar-announcement-link:hover *,
+.navbar-announcement-link:hover *,
+.navbar-announcement-text .navbar-announcement-link:hover *,
+.navbar-announcement-text a:hover * {
+    color: #fff !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+.navbar-announcement .navbar-announcement-link:focus,
+.navbar-announcement-link:focus,
+.navbar-announcement-text .navbar-announcement-link:focus,
+.navbar-announcement-text a:focus {
+    color: #fff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    outline: 2px solid #ffffff !important;
+    outline-offset: 2px !important;
+    text-decoration: underline !important;
+}
+
+.navbar-announcement .navbar-announcement-link:active,
+.navbar-announcement .navbar-announcement-link:visited,
+.navbar-announcement-link:active,
+.navbar-announcement-link:visited,
+.navbar-announcement-text .navbar-announcement-link:active,
+.navbar-announcement-text .navbar-announcement-link:visited,
+.navbar-announcement-text a:active,
+.navbar-announcement-text a:visited {
+    color: #fff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    text-decoration: underline !important;
+}
+
+.navbar-announcement a.navbar-announcement-link,
+.navbar-announcement-text a.navbar-announcement-link {
+    color: #fff !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+.navbar-announcement-text {
+    color: #fff !important;
+}
+
+.navbar-announcement-text span {
+    color: #fff !important;
+}
+
+/* Contact Card Button Hover - Scoped to contact cards */
+.contact-card .bg-white.btn-outline-primary:hover,
+.contact-card .bg-white.btn-outline-secondary:hover,
+.contact-card .btn-outline-primary.bg-white:hover,
+.contact-card .btn-outline-secondary.bg-white:hover {
+    color: #0f172a !important;
+    background: #fff !important;
+}
+
+.contact-card .bg-white.btn-outline-primary:hover *,
+.contact-card .bg-white.btn-outline-secondary:hover *,
+.contact-card .btn-outline-primary.bg-white:hover *,
+.contact-card .btn-outline-secondary.bg-white:hover * {
+    color: #0f172a !important;
+}

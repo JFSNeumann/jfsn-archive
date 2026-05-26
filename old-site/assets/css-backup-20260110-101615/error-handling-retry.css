@@ -1,0 +1,263 @@
+/**
+ * Error Handling with Retry
+ * User-friendly error recovery
+ */
+
+/* ===== ERROR STATE CONTAINER ===== */
+.error-state-container {
+  display: none;
+  padding: 2rem;
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+  border: 2px solid #fca5a5;
+  border-radius: 16px;
+  text-align: center;
+  margin: 2rem 0;
+  animation: errorEntrance 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.error-state-container.visible {
+  display: block;
+}
+
+@keyframes errorEntrance {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.error-state-icon {
+  font-size: 3rem;
+  color: #ef4444;
+  margin-bottom: 1rem;
+  animation: errorPulse 2s ease-in-out infinite;
+}
+
+@keyframes errorPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.error-state-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #991b1b;
+  margin-bottom: 0.5rem;
+}
+
+.error-state-message {
+  font-size: 1rem;
+  color: #7f1d1d;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.error-state-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.error-retry-button {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.error-retry-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4);
+}
+
+.error-retry-button:active {
+  transform: translateY(0);
+}
+
+.error-retry-button:focus-visible {
+  outline: 3px solid rgba(239, 68, 68, 0.5);
+  outline-offset: 2px;
+}
+
+.error-retry-button.loading {
+  opacity: 0.7;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.error-retry-button.loading::after {
+  content: '';
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.error-dismiss-button {
+  background: transparent;
+  color: #991b1b;
+  border: 2px solid #fca5a5;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.error-dismiss-button:hover {
+  background: rgba(255, 255, 255, 0.5);
+  border-color: #ef4444;
+}
+
+.error-details {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  text-align: left;
+  font-size: 0.875rem;
+  color: #7f1d1d;
+  display: none;
+}
+
+.error-details.visible {
+  display: block;
+}
+
+.error-details-toggle {
+  background: transparent;
+  border: none;
+  color: #991b1b;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  padding: 0;
+}
+
+.error-details-toggle:hover {
+  color: #dc2626;
+}
+
+/* Network error specific */
+.error-state-container.network-error {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-color: #fbbf24;
+}
+
+.error-state-container.network-error .error-state-icon {
+  color: #f59e0b;
+}
+
+.error-state-container.network-error .error-state-title {
+  color: #92400e;
+}
+
+.error-state-container.network-error .error-state-message {
+  color: #78350f;
+}
+
+/* Timeout error specific */
+.error-state-container.timeout-error {
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+  border-color: #60a5fa;
+}
+
+.error-state-container.timeout-error .error-state-icon {
+  color: #3b82f6;
+}
+
+.error-state-container.timeout-error .error-state-title {
+  color: #1e40af;
+}
+
+.error-state-container.timeout-error .error-state-message {
+  color: #1e3a8a;
+}
+
+/* Dark mode support */
+[data-bs-theme="dark"] .error-state-container {
+  background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%);
+  border-color: #dc2626;
+}
+
+[data-bs-theme="dark"] .error-state-title {
+  color: #fecaca;
+}
+
+[data-bs-theme="dark"] .error-state-message {
+  color: #fee2e2;
+}
+
+[data-bs-theme="dark"] .error-details {
+  background: rgba(0, 0, 0, 0.3);
+  color: #fee2e2;
+}
+
+[data-bs-theme="dark"] .error-details-toggle {
+  color: #fecaca;
+}
+
+[data-bs-theme="dark"] .error-dismiss-button {
+  color: #fecaca;
+  border-color: #dc2626;
+}
+
+[data-bs-theme="dark"] .error-dismiss-button:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .error-state-container {
+    padding: 1.5rem;
+    margin: 1rem 0;
+  }
+  
+  .error-state-icon {
+    font-size: 2.5rem;
+  }
+  
+  .error-state-title {
+    font-size: 1.25rem;
+  }
+  
+  .error-state-message {
+    font-size: 0.9375rem;
+  }
+  
+  .error-state-actions {
+    flex-direction: column;
+  }
+  
+  .error-retry-button,
+  .error-dismiss-button {
+    width: 100%;
+  }
+}
+

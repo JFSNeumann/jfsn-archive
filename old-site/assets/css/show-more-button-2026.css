@@ -1,0 +1,132 @@
+/* =========================================== */
+/* SHOW MORE BUTTON 2026 - Above Footer */
+/* =========================================== */
+
+.show-more-section {
+  background: var(--bg-primary, #ffffff);
+  border-top: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
+  margin-top: 3rem;
+  padding-top: 3rem !important;
+  padding-bottom: 3rem !important;
+}
+
+.show-more-container {
+  display: block;
+}
+
+.show-more-container.display-none {
+  display: none !important;
+}
+
+.show-more-btn {
+  min-width: 280px;
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  border-radius: 50px;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.show-more-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}
+
+.show-more-btn:active {
+  transform: translateY(0);
+}
+
+.show-more-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.show-more-text {
+  font-weight: 600;
+}
+
+.show-more-count {
+  font-weight: 500;
+  opacity: 0.9;
+  margin-left: 0.5rem;
+}
+
+.show-more-count::before {
+  content: '(';
+}
+
+.show-more-count::after {
+  content: ' more)';
+}
+
+.show-more-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.show-more-loading.display-none {
+  display: none !important;
+}
+
+/* Loading Animation */
+.show-more-btn.loading .show-more-content {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.show-more-btn.loading .show-more-loading {
+  display: flex !important;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Pulse Animation */
+@keyframes showMorePulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+  }
+}
+
+.show-more-btn.pulse {
+  animation: showMorePulse 2s ease-in-out infinite;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .show-more-section {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+    margin-top: 2rem;
+  }
+  
+  .show-more-btn {
+    min-width: auto;
+    width: 100%;
+    max-width: 320px;
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .show-more-btn,
+  .show-more-content,
+  .show-more-loading {
+    transition: none;
+    animation: none;
+  }
+}
+

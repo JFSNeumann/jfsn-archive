@@ -1,0 +1,352 @@
+/* =========================================== */
+/* UNIFIED DESIGN SYSTEM - ICON SYSTEM */
+/* Single source of truth for all icons */
+/* Consistent icon sizing and usage */
+/* =========================================== */
+
+:root {
+  /* ===== ICON SIZES ===== */
+  --icon-xs: 12px;
+  --icon-sm: 16px;
+  --icon-md: 20px;
+  --icon-lg: 24px;
+  --icon-xl: 32px;
+  --icon-2xl: 48px;
+  --icon-3xl: 64px;
+  
+  /* ===== ICON SPACING ===== */
+  --icon-gap-xs: var(--spacing-xs);   /* 4px */
+  --icon-gap-sm: var(--spacing-sm);   /* 8px */
+  --icon-gap-md: var(--spacing-md);   /* 16px */
+  --icon-gap-lg: var(--spacing-lg);   /* 24px */
+  
+  /* ===== ICON COLORS ===== */
+  --icon-color: var(--text-primary);
+  --icon-color-secondary: var(--text-secondary);
+  --icon-color-muted: var(--text-muted);
+  --icon-color-brand: var(--brand-primary);
+  --icon-color-success: var(--color-success);
+  --icon-color-error: var(--color-error);
+  --icon-color-warning: var(--color-warning);
+  --icon-color-info: var(--color-info);
+  
+  /* ===== ICON TRANSITIONS ===== */
+  --icon-transition: var(--transition-transform);
+}
+
+/* ===== BASE ICON STYLES ===== */
+.icon,
+i[class^="bx"],
+i[class^="fas"],
+i[class^="far"],
+i[class^="fab"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+  vertical-align: middle;
+  transition: var(--icon-transition);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== ICON SIZES ===== */
+
+.icon-xs,
+.icon-xs i {
+  font-size: var(--icon-xs);
+  width: var(--icon-xs);
+  height: var(--icon-xs);
+}
+
+.icon-sm,
+.icon-sm i {
+  font-size: var(--icon-sm);
+  width: var(--icon-sm);
+  height: var(--icon-sm);
+}
+
+.icon-md,
+.icon-md i {
+  font-size: var(--icon-md);
+  width: var(--icon-md);
+  height: var(--icon-md);
+}
+
+.icon-lg,
+.icon-lg i {
+  font-size: var(--icon-lg);
+  width: var(--icon-lg);
+  height: var(--icon-lg);
+}
+
+.icon-xl,
+.icon-xl i {
+  font-size: var(--icon-xl);
+  width: var(--icon-xl);
+  height: var(--icon-xl);
+}
+
+.icon-2xl,
+.icon-2xl i {
+  font-size: var(--icon-2xl);
+  width: var(--icon-2xl);
+  height: var(--icon-2xl);
+}
+
+.icon-3xl,
+.icon-3xl i {
+  font-size: var(--icon-3xl);
+  width: var(--icon-3xl);
+  height: var(--icon-3xl);
+}
+
+/* ===== ICON COLORS ===== */
+
+.icon-primary {
+  color: var(--icon-color-brand);
+}
+
+.icon-secondary {
+  color: var(--icon-color-secondary);
+}
+
+.icon-muted {
+  color: var(--icon-color-muted);
+}
+
+.icon-success {
+  color: var(--icon-color-success);
+}
+
+.icon-error {
+  color: var(--icon-color-error);
+}
+
+.icon-warning {
+  color: var(--icon-color-warning);
+}
+
+.icon-info {
+  color: var(--icon-color-info);
+}
+
+.icon-white {
+  color: var(--text-inverse);
+}
+
+/* ===== ICON WITH TEXT ===== */
+
+.icon-text {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--icon-gap-sm);
+}
+
+.icon-text-lg {
+  gap: var(--icon-gap-md);
+}
+
+.icon-text-xl {
+  gap: var(--icon-gap-lg);
+}
+
+/* Icon before text */
+.icon-text .icon {
+  order: -1;
+}
+
+/* Icon after text */
+.icon-text-reverse {
+  flex-direction: row-reverse;
+}
+
+/* ===== ICON BUTTON ===== */
+
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px; /* WCAG AA touch target */
+  height: 44px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-md);
+  color: var(--icon-color);
+  cursor: pointer;
+  transition: var(--transition-normal);
+}
+
+.icon-button:hover {
+  background: var(--bg-secondary);
+  color: var(--icon-color-brand);
+  transform: scale(1.1);
+}
+
+.icon-button:active {
+  transform: scale(0.95);
+}
+
+.icon-button-sm {
+  width: 36px;
+  height: 36px;
+}
+
+.icon-button-lg {
+  width: 52px;
+  height: 52px;
+}
+
+/* ===== ICON ANIMATIONS ===== */
+
+.icon-rotate:hover {
+  animation: iconRotate var(--duration-normal) var(--ease-standard);
+}
+
+.icon-bounce:hover {
+  animation: iconBounce var(--duration-normal) var(--ease-bounce);
+}
+
+.icon-pulse {
+  animation: iconPulse var(--duration-slower) var(--ease-standard) infinite;
+}
+
+.icon-spin {
+  animation: var(--animation-spin);
+}
+
+@keyframes iconRotate {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes iconBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes iconPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+/* ===== ICON IN BUTTON ===== */
+
+.btn .icon,
+button .icon {
+  margin: 0;
+}
+
+.btn .icon:first-child {
+  margin-right: var(--icon-gap-sm);
+}
+
+.btn .icon:last-child {
+  margin-left: var(--icon-gap-sm);
+}
+
+.btn .icon:only-child {
+  margin: 0;
+}
+
+/* ===== ICON IN LINK ===== */
+
+a:hover .icon {
+  transform: scale(1.1);
+  color: var(--icon-color-brand);
+}
+
+a:active .icon {
+  transform: scale(0.95);
+}
+
+/* ===== ICON GROUP ===== */
+
+.icon-group {
+  display: inline-flex;
+  gap: var(--icon-gap-xs);
+  align-items: center;
+}
+
+.icon-group-sm {
+  gap: var(--icon-gap-xs);
+}
+
+.icon-group-md {
+  gap: var(--icon-gap-sm);
+}
+
+.icon-group-lg {
+  gap: var(--icon-gap-md);
+}
+
+/* ===== SOCIAL ICONS ===== */
+
+.social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+  transition: var(--transition-normal);
+  text-decoration: none;
+}
+
+.social-icon:hover {
+  background: var(--brand-primary);
+  color: var(--text-inverse);
+  transform: translateY(-2px) scale(1.1);
+}
+
+.social-icon-sm {
+  width: 32px;
+  height: 32px;
+  font-size: var(--icon-sm);
+}
+
+.social-icon-lg {
+  width: 48px;
+  height: 48px;
+  font-size: var(--icon-lg);
+}
+
+/* ===== DARK MODE ICON ADJUSTMENTS ===== */
+[data-bs-theme="dark"] .icon {
+  color: var(--text-primary);
+}
+
+[data-bs-theme="dark"] .social-icon {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}
+
+[data-bs-theme="dark"] .social-icon:hover {
+  background: var(--brand-primary);
+  color: var(--text-inverse);
+}
+
+/* =========================================== */
+/* END UNIFIED ICON SYSTEM */
+/* =========================================== */
+

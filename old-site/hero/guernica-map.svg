@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 1800 800" class="map-svg" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+  <!-- HISTORICAL VINTAGE MAP (1937) - Aged paper with sepia tones -->
+  <defs>
+    <!-- Aged paper background gradient (sepia/cream) -->
+    <radialGradient id="vintageBackground" cx="50%" cy="50%">
+      <stop offset="0%" style="stop-color:rgba(236, 218, 188, 0.95);stop-opacity:1" />
+      <stop offset="60%" style="stop-color:rgba(218, 190, 152, 0.9);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgba(189, 156, 115, 0.85);stop-opacity:1" />
+    </radialGradient>
+    <!-- Aged water stains and discoloration -->
+    <radialGradient id="paperStain1" cx="30%" cy="40%">
+      <stop offset="0%" style="stop-color:rgba(160, 120, 80, 0.3);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgba(160, 120, 80, 0);stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="paperStain2" cx="75%" cy="65%">
+      <stop offset="0%" style="stop-color:rgba(140, 100, 60, 0.25);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgba(140, 100, 60, 0);stop-opacity:0" />
+    </radialGradient>
+    <!-- Vintage ink colors -->
+    <linearGradient id="vintageInk" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:rgba(80, 50, 30, 0.8);stop-opacity:1" />
+      <stop offset="50%" style="stop-color:rgba(100, 60, 35, 0.85);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgba(80, 50, 30, 0.8);stop-opacity:1" />
+    </linearGradient>
+    <!-- Faded blue for water (hand-colored) -->
+    <linearGradient id="vintageWater" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:rgba(150, 180, 200, 0.5);stop-opacity:1" />
+      <stop offset="50%" style="stop-color:rgba(130, 160, 185, 0.6);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgba(150, 180, 200, 0.5);stop-opacity:1" />
+    </linearGradient>
+    <!-- Red marking zones (hand-drawn circles) -->
+    <radialGradient id="redCircle" cx="50%" cy="50%">
+      <stop offset="0%" style="stop-color:rgba(180, 50, 40, 0.4);stop-opacity:1" />
+      <stop offset="70%" style="stop-color:rgba(160, 40, 30, 0.5);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgba(180, 50, 40, 0);stop-opacity:0" />
+    </radialGradient>
+    <!-- Paper texture noise filter -->
+    <filter id="paperTexture">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" result="noise"/>
+      <feColorMatrix in="noise" type="saturate" values="0"/>
+      <feBlend in="SourceGraphic" in2="noise" mode="multiply" result="textured"/>
+    </filter>
+    <!-- Ink bleed effect -->
+    <filter id="inkBleed">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="0.3" result="blur"/>
+      <feMorphology in="blur" operator="dilate" radius="0.2" result="dilated"/>
+      <feBlend in="SourceGraphic" in2="dilated" mode="normal"/>
+    </filter>
+    <!-- Vintage text glow -->
+    <filter id="vintageTextGlow">
+      <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Aged paper background with stains -->
+  <rect x="0" y="0" width="1800" height="800" fill="url(#vintageBackground)" filter="url(#paperTexture)"/>
+  
+  <!-- Water stains and aging marks -->
+  <ellipse cx="650" cy="320" rx="180" ry="200" fill="url(#paperStain1)" opacity="0.6"/>
+  <ellipse cx="1200" cy="520" rx="220" ry="180" fill="url(#paperStain2)" opacity="0.5"/>
+  
+  <!-- Faded edge darkening (old paper edges) -->
+  <rect x="0" y="0" width="1800" height="800" fill="none" 
+        stroke="rgba(120, 80, 50, 0.4)" stroke-width="40" opacity="0.3"/>
+  
+  <!-- Fold line (map crease) -->
+  <line x1="900" y1="0" x2="900" y2="800" stroke="rgba(100, 60, 30, 0.15)" 
+        stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="0" y1="400" x2="1800" y2="400" stroke="rgba(100, 60, 30, 0.12)" 
+        stroke-width="1.5" stroke-dasharray="5,5"/>
+  
+  <!-- Hand-drawn cartographic grid (faint) -->
+  <g class="vintage-grid" stroke="rgba(100, 70, 40, 0.15)" stroke-width="0.5" fill="none" filter="url(#inkBleed)">
+    <!-- Horizontal lines (slightly wavy/hand-drawn) -->
+    <path d="M 50 150 Q 450 148, 900 150 T 1750 150"/>
+    <path d="M 50 300 Q 450 298, 900 300 T 1750 300"/>
+    <path d="M 50 450 Q 450 452, 900 450 T 1750 450"/>
+    <path d="M 50 600 Q 450 598, 900 600 T 1750 600"/>
+    <path d="M 50 750 Q 450 752, 900 750 T 1750 750"/>
+    <!-- Vertical lines (slightly wavy) -->
+    <path d="M 300 50 Q 298 200, 300 400 T 300 750"/>
+    <path d="M 600 50 Q 602 200, 600 400 T 600 750"/>
+    <path d="M 900 50 Q 898 200, 900 400 T 900 750"/>
+    <path d="M 1200 50 Q 1202 200, 1200 400 T 1200 750"/>
+    <path d="M 1500 50 Q 1498 200, 1500 400 T 1500 750"/>
+  </g>
+  
+  <!-- River Oka (hand-colored vintage blue) -->
+  <g filter="url(#inkBleed)">
+    <!-- River outline (hand-drawn) -->
+    <path d="M 0 455 Q 270 435, 525 448 Q 720 455, 900 452 Q 1080 449, 1275 458 Q 1530 468, 1800 455" 
+          stroke="url(#vintageInk)" stroke-width="1.5" fill="none" opacity="0.7"/>
+    <!-- River fill (faded watercolor) -->
+    <path d="M 0 455 Q 270 435, 525 448 Q 720 455, 900 452 Q 1080 449, 1275 458 Q 1530 468, 1800 455 
+             L 1800 465 Q 1530 478, 1275 468 Q 1080 459, 900 462 Q 720 465, 525 458 Q 270 445, 0 465 Z" 
+          fill="url(#vintageWater)" opacity="0.6"/>
+    <!-- Water label (hand-lettered) -->
+    <text x="620" y="465" fill="rgba(80, 100, 120, 0.7)" font-size="10" 
+          font-family="serif" font-style="italic" transform="rotate(-2 620 465)">
+      Rio Oka
+    </text>
+  </g>
+  
+  <!-- Main town content wrapper (centered in 1800px viewBox) -->
+  <g transform="translate(300, 0)">
+  
+  <!-- Hand-drawn streets (vintage ink) -->
+  <g class="vintage-streets" stroke="url(#vintageInk)" fill="none" filter="url(#inkBleed)">
+    <!-- Main roads (hand-drawn, slightly imperfect lines) -->
+    <path d="M 200 398 Q 300 402, 400 398 Q 500 395, 600 400 Q 700 403, 800 398 Q 900 395, 1000 400" 
+          stroke-width="2.5" opacity="0.8"/>
+    <path d="M 598 200 Q 602 280, 600 360 Q 598 400, 600 440 Q 602 520, 600 600" 
+          stroke-width="2.5" opacity="0.8"/>
+    
+    <!-- Radiating streets from center (hand-drawn) -->
+    <path d="M 600 400 Q 560 350, 520 310 Q 485 275, 450 240" 
+          stroke-width="1.8" opacity="0.7"/>
+    <path d="M 600 400 Q 640 350, 680 310 Q 715 275, 750 240" 
+          stroke-width="1.8" opacity="0.7"/>
+    <path d="M 600 400 Q 560 450, 520 490 Q 485 525, 450 560" 
+          stroke-width="1.8" opacity="0.7"/>
+    <path d="M 600 400 Q 640 450, 680 490 Q 715 525, 750 560" 
+          stroke-width="1.8" opacity="0.7"/>
+    
+    <!-- Secondary roads (finer ink) -->
+    <path d="M 350 350 Q 450 355, 550 350" stroke-width="1.2" opacity="0.6"/>
+    <path d="M 650 350 Q 750 355, 850 350" stroke-width="1.2" opacity="0.6"/>
+    <path d="M 350 450 Q 450 445, 550 450" stroke-width="1.2" opacity="0.6"/>
+    <path d="M 650 450 Q 750 445, 850 450" stroke-width="1.2" opacity="0.6"/>
+    <path d="M 450 300 Q 455 380, 450 400" stroke-width="1.2" opacity="0.6"/>
+    <path d="M 750 300 Q 745 380, 750 400" stroke-width="1.2" opacity="0.6"/>
+    <path d="M 450 400 Q 455 480, 450 500" stroke-width="1.2" opacity="0.6"/>
+    <path d="M 750 400 Q 745 480, 750 500" stroke-width="1.2" opacity="0.6"/>
+    
+    <!-- Small alleys (very fine, wobbly lines) -->
+    <path d="M 575 375 Q 585 380, 590 385" stroke-width="0.8" opacity="0.5"/>
+    <path d="M 610 375 Q 615 380, 620 385" stroke-width="0.8" opacity="0.5"/>
+    <path d="M 575 425 Q 585 420, 590 415" stroke-width="0.8" opacity="0.5"/>
+    <path d="M 610 425 Q 615 420, 620 415" stroke-width="0.8" opacity="0.5"/>
+  </g>
+  
+  <!-- Street name labels (hand-lettered) -->
+  <g class="street-labels" fill="rgba(70, 50, 30, 0.6)" font-family="serif" font-style="italic">
+    <text x="500" y="395" font-size="9" transform="rotate(-1 500 395)">Calle Mayor</text>
+    <text x="595" y="300" font-size="8" transform="rotate(88 595 300)">C. de la Estación</text>
+    <text x="530" y="340" font-size="7" transform="rotate(-25 530 340)">C. Artecalle</text>
+    <text x="670" y="340" font-size="7" transform="rotate(25 670 340)">C. San Juan</text>
+  </g>
+  
+  <!-- Vintage buildings (hand-drawn, sepia tones) -->
+  <g class="vintage-buildings" filter="url(#inkBleed)">
+    <!-- Church (Santa Maria) - Simple rectangle with cross -->
+    <rect x="585" y="385" width="30" height="35" fill="rgba(120, 90, 60, 0.3)" 
+          stroke="rgba(80, 50, 30, 0.8)" stroke-width="1.5"/>
+    <!-- Church cross -->
+    <line x1="600" y1="378" x2="600" y2="388" stroke="rgba(80, 50, 30, 0.9)" stroke-width="1.5"/>
+    <line x1="596" y1="381" x2="604" y2="381" stroke="rgba(80, 50, 30, 0.9)" stroke-width="1.5"/>
+    <!-- Church label (vintage typography) -->
+    <text x="600" y="375" text-anchor="middle" fill="rgba(80, 50, 30, 0.8)" 
+          font-size="9" font-family="serif" font-weight="normal" letter-spacing="1">S.MARÍA</text>
+    
+    <!-- Casa de Juntas (Assembly House) -->
+    <rect x="505" y="425" width="40" height="28" fill="rgba(140, 100, 70, 0.25)" 
+          stroke="rgba(80, 50, 30, 0.7)" stroke-width="1.3"/>
+    <text x="525" y="418" text-anchor="middle" fill="rgba(80, 50, 30, 0.75)" 
+          font-size="8" font-family="serif" font-style="italic" letter-spacing="0.5">Casa de Juntas</text>
+    
+    <!-- Tree of Gernika (Sacred Oak) - Map symbol -->
+    <circle cx="480" cy="420" r="8" fill="rgba(100, 140, 80, 0.4)" 
+            stroke="rgba(60, 80, 40, 0.7)" stroke-width="1.5"/>
+    <!-- Tree symbol (simplified) -->
+    <circle cx="480" cy="420" r="4" fill="none" stroke="rgba(60, 80, 40, 0.6)" stroke-width="0.8"/>
+    <text x="480" y="440" text-anchor="middle" fill="rgba(60, 80, 40, 0.8)" 
+          font-size="7" font-family="serif" font-style="italic">Arbola</text>
+    
+    <!-- Town square (Plaza) -->
+    <rect x="575" y="385" width="50" height="30" fill="rgba(180, 160, 130, 0.2)" 
+          stroke="rgba(100, 70, 40, 0.5)" stroke-width="1" stroke-dasharray="2,2"/>
+    <text x="600" y="402" text-anchor="middle" fill="rgba(80, 50, 30, 0.6)" 
+          font-size="7" font-family="serif" font-style="italic">Plaza</text>
+    
+    <!-- Residential blocks (simple squares, hand-drawn) -->
+    <rect x="420" y="320" width="12" height="15" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    <rect x="445" y="325" width="11" height="14" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    <rect x="465" y="322" width="13" height="16" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    <rect x="485" y="318" width="12" height="14" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    <rect x="505" y="321" width="13" height="15" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    
+    <rect x="720" y="340" width="14" height="15" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    <rect x="742" y="338" width="12" height="16" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    <rect x="762" y="342" width="13" height="14" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    <rect x="782" y="340" width="12" height="15" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    
+    <rect x="385" y="452" width="13" height="14" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    <rect x="405" y="456" width="12" height="15" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    <rect x="425" y="453" width="14" height="16" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    
+    <rect x="755" y="462" width="13" height="15" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    <rect x="775" y="460" width="12" height="14" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    <rect x="795" y="464" width="14" height="15" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    
+    <!-- Additional detailed buildings (2x more buildings) -->
+    
+    <!-- Market area buildings with more detail -->
+    <rect x="650" y="390" width="18" height="20" fill="rgba(120, 90, 60, 0.25)" stroke="rgba(80, 50, 30, 0.7)" stroke-width="0.9"/>
+    <rect x="650" y="390" width="18" height="4" fill="rgba(140, 70, 40, 0.4)" stroke="rgba(80, 50, 30, 0.7)" stroke-width="0.8"/>
+    <text x="659" y="385" text-anchor="middle" fill="rgba(80, 50, 30, 0.7)" font-size="6" font-family="serif" font-style="italic">Mercado</text>
+    
+    <!-- Tavern with chimney -->
+    <rect x="545" y="340" width="16" height="18" fill="rgba(130, 80, 50, 0.25)" stroke="rgba(80, 50, 30, 0.7)" stroke-width="0.9"/>
+    <rect x="550" y="332" width="4" height="8" fill="rgba(100, 60, 40, 0.4)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.7"/>
+    <line x1="552" y1="330" x2="552" y2="334" stroke="rgba(80, 50, 30, 0.5)" stroke-width="0.5"/>
+    
+    <!-- Bakery -->
+    <rect x="670" y="345" width="15" height="17" fill="rgba(150, 110, 70, 0.25)" stroke="rgba(80, 50, 30, 0.7)" stroke-width="0.9"/>
+    <circle cx="677.5" cy="337" r="2.5" fill="rgba(140, 100, 60, 0.3)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.6"/>
+    
+    <!-- Row of townhouses (north side) -->
+    <rect x="820" y="325" width="14" height="18" fill="rgba(120, 90, 60, 0.22)" stroke="rgba(80, 50, 30, 0.65)" stroke-width="0.8"/>
+    <rect x="838" y="323" width="13" height="19" fill="rgba(120, 90, 60, 0.23)" stroke="rgba(80, 50, 30, 0.65)" stroke-width="0.8"/>
+    <rect x="855" y="326" width="15" height="17" fill="rgba(120, 90, 60, 0.21)" stroke="rgba(80, 50, 30, 0.65)" stroke-width="0.8"/>
+    <rect x="874" y="324" width="14" height="18" fill="rgba(120, 90, 60, 0.24)" stroke="rgba(80, 50, 30, 0.65)" stroke-width="0.8"/>
+    <rect x="892" y="327" width="13" height="16" fill="rgba(120, 90, 60, 0.22)" stroke="rgba(80, 50, 30, 0.65)" stroke-width="0.8"/>
+    
+    <!-- Workshop cluster -->
+    <rect x="450" y="380" width="17" height="16" fill="rgba(110, 80, 55, 0.24)" stroke="rgba(80, 50, 30, 0.68)" stroke-width="0.9"/>
+    <rect x="471" y="378" width="16" height="18" fill="rgba(110, 80, 55, 0.25)" stroke="rgba(80, 50, 30, 0.68)" stroke-width="0.9"/>
+    <rect x="491" y="381" width="15" height="15" fill="rgba(110, 80, 55, 0.23)" stroke="rgba(80, 50, 30, 0.68)" stroke-width="0.9"/>
+    
+    <!-- Eastern residential expansion -->
+    <rect x="915" y="355" width="12" height="15" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    <rect x="932" y="358" width="13" height="14" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    <rect x="950" y="354" width="14" height="16" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    <rect x="970" y="356" width="12" height="15" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    <rect x="987" y="359" width="13" height="14" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    
+    <!-- Western residential blocks -->
+    <rect x="340" y="348" width="13" height="16" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    <rect x="358" y="345" width="14" height="15" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    <rect x="377" y="350" width="12" height="17" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    <rect x="394" y="347" width="13" height="15" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    
+    <!-- Southern expansion with chimneys -->
+    <rect x="440" y="480" width="15" height="17" fill="rgba(120, 90, 60, 0.23)" stroke="rgba(80, 50, 30, 0.65)" stroke-width="0.8"/>
+    <rect x="443" y="472" width="3" height="8" fill="rgba(100, 60, 40, 0.4)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.6"/>
+    <rect x="460" y="483" width="14" height="16" fill="rgba(120, 90, 60, 0.23)" stroke="rgba(80, 50, 30, 0.65)" stroke-width="0.8"/>
+    <rect x="479" y="481" width="16" height="18" fill="rgba(120, 90, 60, 0.23)" stroke="rgba(80, 50, 30, 0.65)" stroke-width="0.8"/>
+    <rect x="482" y="473" width="3" height="8" fill="rgba(100, 60, 40, 0.4)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.6"/>
+    
+    <!-- Eastern southern blocks -->
+    <rect x="820" y="475" width="13" height="15" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    <rect x="838" y="478" width="14" height="14" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    <rect x="857" y="473" width="12" height="16" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    <rect x="874" y="476" width="13" height="15" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    <rect x="892" y="479" width="14" height="14" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    
+    <!-- Far eastern expansion -->
+    <rect x="1010" y="365" width="12" height="14" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    <rect x="1027" y="368" width="13" height="15" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    <rect x="1045" y="363" width="14" height="16" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    <rect x="1064" y="366" width="12" height="15" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    <rect x="1081" y="369" width="13" height="14" fill="rgba(120, 90, 60, 0.2)" stroke="rgba(80, 50, 30, 0.6)" stroke-width="0.8"/>
+    
+    <!-- Red pencil circles marking bombing zones (spread apart) -->
+    <circle cx="600" cy="400" r="90" fill="url(#redCircle)" stroke="rgba(160, 40, 30, 0.6)" 
+            stroke-width="2" stroke-dasharray="4,3" opacity="0.7">
+      <animate attributeName="r" values="90;94;90" dur="6s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="480" cy="320" r="55" fill="url(#redCircle)" stroke="rgba(160, 40, 30, 0.5)" 
+            stroke-width="1.8" stroke-dasharray="4,3" opacity="0.6">
+      <animate attributeName="r" values="55;58;55" dur="7s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="720" cy="480" r="60" fill="url(#redCircle)" stroke="rgba(160, 40, 30, 0.5)" 
+            stroke-width="1.8" stroke-dasharray="4,3" opacity="0.6">
+      <animate attributeName="r" values="60;63;60" dur="8s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  </g>
+  <!-- End main town content wrapper -->
+  
+  <!-- Vintage map border (decorative frame) -->
+  <rect x="30" y="30" width="1740" height="740" fill="none" 
+        stroke="rgba(80, 50, 30, 0.5)" stroke-width="2"/>
+  <rect x="35" y="35" width="1730" height="730" fill="none" 
+        stroke="rgba(80, 50, 30, 0.3)" stroke-width="1"/>
+  
+  <!-- Vintage compass rose -->
+  <g class="compass" transform="translate(250, 650)" filter="url(#inkBleed)">
+    <circle cx="0" cy="0" r="35" fill="none" stroke="rgba(80, 50, 30, 0.6)" stroke-width="1.5"/>
+    <circle cx="0" cy="0" r="28" fill="none" stroke="rgba(80, 50, 30, 0.4)" stroke-width="1"/>
+    <!-- North pointer -->
+    <line x1="0" y1="-30" x2="0" y2="30" stroke="rgba(80, 50, 30, 0.7)" stroke-width="2"/>
+    <line x1="-30" y1="0" x2="30" y2="0" stroke="rgba(80, 50, 30, 0.6)" stroke-width="1.5"/>
+    <!-- Diagonal cross -->
+    <line x1="-21" y1="-21" x2="21" y2="21" stroke="rgba(80, 50, 30, 0.4)" stroke-width="1"/>
+    <line x1="-21" y1="21" x2="21" y2="-21" stroke="rgba(80, 50, 30, 0.4)" stroke-width="1"/>
+    <!-- North arrow -->
+    <polygon points="0,-30 -6,-18 6,-18" fill="rgba(80, 50, 30, 0.7)"/>
+    <!-- Cardinals -->
+    <text x="0" y="-42" text-anchor="middle" fill="rgba(80, 50, 30, 0.8)" 
+          font-size="14" font-family="serif" font-weight="bold">N</text>
+    <text x="38" y="5" text-anchor="middle" fill="rgba(80, 50, 30, 0.7)" 
+          font-size="12" font-family="serif">E</text>
+    <text x="0" y="46" text-anchor="middle" fill="rgba(80, 50, 30, 0.7)" 
+          font-size="12" font-family="serif">S</text>
+    <text x="-38" y="5" text-anchor="middle" fill="rgba(80, 50, 30, 0.7)" 
+          font-size="12" font-family="serif">O</text>
+  </g>
+  
+  <!-- Vintage map title and date -->
+  <text x="900" y="120" text-anchor="middle" fill="rgba(80, 50, 30, 0.9)" 
+        font-size="32" font-family="serif" font-weight="normal" letter-spacing="4"
+        filter="url(#vintageTextGlow)">
+    GERNIKA
+  </text>
+  <text x="900" y="150" text-anchor="middle" fill="rgba(80, 50, 30, 0.7)" 
+        font-size="18" font-family="serif" font-style="italic" letter-spacing="2">
+    País Vasco · España
+  </text>
+  
+  <!-- Historical date stamp (hand-stamped appearance) -->
+  <g transform="translate(1150, 80)">
+    <rect x="0" y="0" width="120" height="50" fill="rgba(160, 40, 30, 0.15)" 
+          stroke="rgba(160, 40, 30, 0.4)" stroke-width="2" rx="3" opacity="0.8"/>
+    <text x="60" y="22" text-anchor="middle" fill="rgba(160, 40, 30, 0.8)" 
+          font-size="14" font-family="serif" font-weight="bold" letter-spacing="1">
+      26 ABR 1937
+    </text>
+    <text x="60" y="40" text-anchor="middle" fill="rgba(160, 40, 30, 0.7)" 
+          font-size="10" font-family="serif">
+      16:30-19:30
+    </text>
+  </g>
+  
+  <!-- Coordinates (vintage style) -->
+  <text x="1200" y="200" text-anchor="end" fill="rgba(80, 50, 30, 0.6)" 
+        font-size="10" font-family="serif" font-style="italic">
+    43°18'54"N 2°40'32"O
+  </text>
+  
+  <!-- Vintage airplane symbols (simple silhouettes) -->
+  <g class="aircraft" opacity="0.5" filter="url(#inkBleed)">
+    <g transform="translate(580, 220)">
+      <path d="M -8,0 L 8,0 L 10,2 L -10,2 Z" fill="rgba(100, 70, 40, 0.6)"/>
+      <rect x="-1" y="-4" width="2" height="4" fill="rgba(100, 70, 40, 0.6)"/>
+      <text x="0" y="-10" text-anchor="middle" fill="rgba(100, 70, 40, 0.7)" 
+            font-size="8" font-family="serif" font-style="italic">Condor Legion</text>
+    </g>
+    <g transform="translate(950, 210)">
+      <path d="M -7,0 L 7,0 L 9,2 L -9,2 Z" fill="rgba(100, 70, 40, 0.5)"/>
+      <rect x="-1" y="-4" width="2" height="4" fill="rgba(100, 70, 40, 0.5)"/>
+    </g>
+    <g transform="translate(1150, 200)">
+      <path d="M -6,0 L 6,0 L 8,2 L -8,2 Z" fill="rgba(100, 70, 40, 0.5)"/>
+      <rect x="-1" y="-4" width="2" height="4" fill="rgba(100, 70, 40, 0.5)"/>
+    </g>
+  </g>
+  
+  <!-- Historical annotations (handwritten style) -->
+  <text x="550" y="680" text-anchor="start" fill="rgba(160, 40, 30, 0.75)" 
+        font-size="11" font-family="serif" font-style="italic">
+    ~1,650 víctimas civiles
+  </text>
+  <text x="550" y="700" text-anchor="start" fill="rgba(100, 70, 40, 0.6)" 
+        font-size="9" font-family="serif" font-style="italic">
+    75% destruido
+  </text>
+  
+  <!-- Map legend (vintage cartographer style) -->
+  <g class="vintage-legend" transform="translate(1050, 560)">
+    <rect x="0" y="0" width="210" height="160" fill="rgba(236, 218, 188, 0.6)" 
+          stroke="rgba(80, 50, 30, 0.6)" stroke-width="1.5" rx="2" filter="url(#paperTexture)"/>
+    <text x="105" y="20" text-anchor="middle" fill="rgba(80, 50, 30, 0.9)" 
+          font-size="12" font-family="serif" font-weight="normal" letter-spacing="2">LEYENDA</text>
+    
+    <!-- Legend items -->
+    <circle cx="20" cy="40" r="7" fill="none" stroke="rgba(160, 40, 30, 0.7)" 
+            stroke-width="1.5" stroke-dasharray="3,2"/>
+    <text x="35" y="45" fill="rgba(100, 70, 40, 0.8)" 
+          font-size="9" font-family="serif" font-style="italic">Zonas bombardeadas</text>
+    
+    <rect x="15" y="58" width="10" height="10" fill="rgba(120, 90, 60, 0.3)" 
+          stroke="rgba(80, 50, 30, 0.7)" stroke-width="1"/>
+    <text x="35" y="67" fill="rgba(100, 70, 40, 0.8)" 
+          font-size="9" font-family="serif" font-style="italic">Edificios históricos</text>
+    
+    <line x1="15" y1="85" x2="25" y2="85" stroke="rgba(80, 50, 30, 0.7)" stroke-width="1.8"/>
+    <text x="35" y="89" fill="rgba(100, 70, 40, 0.8)" 
+          font-size="9" font-family="serif" font-style="italic">Calles principales</text>
+    
+    <path d="M 15 105 Q 20 103, 25 105" stroke="rgba(130, 160, 185, 0.7)" 
+          stroke-width="2.5" fill="none"/>
+    <text x="35" y="109" fill="rgba(100, 70, 40, 0.8)" 
+          font-size="9" font-family="serif" font-style="italic">Rio Oka</text>
+    
+    <circle cx="20" cy="127" r="5" fill="rgba(100, 140, 80, 0.4)" 
+            stroke="rgba(60, 80, 40, 0.7)" stroke-width="1"/>
+    <text x="35" y="131" fill="rgba(100, 70, 40, 0.8)" 
+          font-size="9" font-family="serif" font-style="italic">Árbol Sagrado</text>
+  </g>
+  
+  <!-- Vintage scale bar -->
+  <g class="scale-bar" transform="translate(250, 80)" filter="url(#inkBleed)">
+    <line x1="0" y1="0" x2="0" y2="8" stroke="rgba(80, 50, 30, 0.7)" stroke-width="1.5"/>
+    <line x1="0" y1="4" x2="80" y2="4" stroke="rgba(80, 50, 30, 0.7)" stroke-width="2"/>
+    <line x1="80" y1="0" x2="80" y2="8" stroke="rgba(80, 50, 30, 0.7)" stroke-width="1.5"/>
+    <line x1="40" y1="2" x2="40" y2="6" stroke="rgba(80, 50, 30, 0.6)" stroke-width="1"/>
+    <text x="40" y="22" text-anchor="middle" fill="rgba(80, 50, 30, 0.7)" 
+          font-size="9" font-family="serif">500m</text>
+  </g>
+  
+  <!-- Cartographer's notes (bottom) -->
+  <text x="900" y="750" text-anchor="middle" fill="rgba(100, 70, 40, 0.5)" 
+        font-size="9" font-family="serif" font-style="italic">
+    Mapa histórico de la villa de Gernika-Lumo
+  </text>
+  
+  <!-- SVG filters for glows -->
+  <defs>
+    <filter id="textGlow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+</svg>
+

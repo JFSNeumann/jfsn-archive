@@ -1,0 +1,115 @@
+/* =========================================== */
+/* BACK TO TOP BUTTON - SHARED STYLES */
+/* Smart button that only appears when needed */
+/* =========================================== */
+
+.back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 56px;
+  height: 56px;
+  background: #6366f1;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 100000;
+  opacity: 0;
+  transform: translateY(20px) scale(0.8);
+  pointer-events: none;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.back-to-top:hover {
+  background: #4f46e5;
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 
+    0 8px 25px rgba(99, 102, 241, 0.4),
+    0 4px 10px rgba(0, 0, 0, 0.2);
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+.back-to-top:active {
+  transform: translateY(-2px) scale(1.02);
+  transition: all 0.1s ease;
+}
+
+.back-to-top:focus-visible {
+  outline: 3px solid #6366f1;
+  outline-offset: 4px;
+  box-shadow: 
+    0 0 0 4px rgba(99, 102, 241, 0.2),
+    0 8px 25px rgba(99, 102, 241, 0.4);
+}
+
+/* Pulse glow animation */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 
+      0 4px 12px rgba(99, 102, 241, 0.3),
+      0 0 0 0 rgba(99, 102, 241, 0.4);
+  }
+  50% {
+    box-shadow: 
+      0 4px 12px rgba(99, 102, 241, 0.3),
+      0 0 0 8px rgba(99, 102, 241, 0);
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .back-to-top {
+    bottom: calc(2rem + env(safe-area-inset-bottom));
+    right: 1rem;
+    width: 48px;
+    height: 48px;
+    font-size: 1.25rem;
+  }
+  
+  /* Hide when mobile bottom nav is visible */
+  .mobile-bottom-nav:not(.hidden) ~ .back-to-top {
+    bottom: calc(80px + env(safe-area-inset-bottom));
+  }
+}
+
+/* Dark mode support */
+[data-bs-theme="dark"] .back-to-top {
+  background: #6366f1;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.5);
+}
+
+[data-bs-theme="dark"] .back-to-top:hover {
+  background: #818cf8;
+  box-shadow: 
+    0 8px 25px rgba(99, 102, 241, 0.6),
+    0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .back-to-top {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  
+  @keyframes pulseGlow {
+    0%, 100% {
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+  }
+}
+

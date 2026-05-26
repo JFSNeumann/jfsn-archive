@@ -1,0 +1,53 @@
+/**
+ * Gallery Description Full Text Display
+ * Prevents text truncation on large screens where there's space
+ * Keeps text on one line
+ */
+
+/* Gallery description - show full text on large screens, one line */
+.gallery-main-description,
+#galleryMainDescription {
+  max-width: none !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+  min-width: 0 !important;
+}
+
+/* Gallery header inline container - allow flex items to grow */
+.gallery-header-inline,
+.gallery-header-inline-flex {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  overflow: visible !important;
+}
+
+/* Ensure description can use available space */
+.gallery-header-bar .gallery-header-inline {
+  gap: 1rem !important;
+}
+
+/* On large screens, allow description to expand on one line */
+@media (min-width: 992px) {
+  .gallery-main-description,
+  #galleryMainDescription {
+    max-width: none !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+  }
+  
+  .gallery-header-inline {
+    flex-wrap: nowrap !important;
+  }
+}
+
+/* On extra large screens, ensure full text is visible on one line */
+@media (min-width: 1200px) {
+  .gallery-main-description,
+  #galleryMainDescription {
+    max-width: none !important;
+    white-space: nowrap !important;
+  }
+}

@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0b0b">
+  <title>Series — Jeffrey F. S. Neumann</title>
+  <meta name="description" content="">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="canonical" href="https://jfsn.com/series.html">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap"></noscript>
+  <link rel="stylesheet" href="site.css">
+
+  <meta property="og:type"  content="website">
+  <meta property="og:title" content="">
+  <meta property="og:image" content="https://jfsn.com/og-card.jpg">
+  <meta property="og:url"   content="https://jfsn.com/series.html">
+
+  <style>
+    /* -------- Series hero -------- */
+    .series-hero {
+      padding: clamp(3rem, 6vw, 6rem) 0 clamp(1.5rem, 3vw, 2.5rem);
+    }
+    .series-label {
+      display: inline-block;
+      font-size: var(--cap);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 0.75rem;
+      transition: color 0.15s;
+    }
+    a.series-label:hover { color: var(--accent); }
+    .series-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 1rem 4rem;
+      margin-bottom: 1.5rem;
+    }
+    .series-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+      margin: 0;
+    }
+    .series-aside {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding-bottom: 0.2rem;
+      flex-shrink: 0;
+    }
+    .series-count {
+      font-size: var(--cap);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .series-archive-link {
+      font-size: var(--cap);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--dim);
+      padding-bottom: 0.1rem;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .series-archive-link:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+    .series-description {
+      font-size: clamp(0.9375rem, 1.25vw, 1.0625rem);
+      line-height: 1.78;
+      color: var(--muted);
+      max-width: 64ch;
+      margin: 0;
+    }
+    .series-divider {
+      border: none;
+      border-top: 1px solid var(--dim);
+      margin: clamp(1.5rem, 3vw, 2.5rem) 0 0;
+    }
+
+    /* -------- Grid bar -------- */
+    .grid-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 1.25rem 0 0.875rem;
+    }
+    .grid-count {
+      font-size: var(--cap);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .density-btn {
+      appearance: none;
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: var(--cap);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0;
+      transition: color 0.15s;
+    }
+    .density-btn:hover { color: var(--text); }
+
+    /* -------- Grid (masonry) -------- */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 8px;
+      column-gap: 1rem;
+      row-gap: 0;
+      padding-bottom: clamp(4rem, 8vw, 8rem);
+    }
+    .grid.dense { grid-template-columns: repeat(6, 1fr); }
+    .grid.dense .thumb__caption { display: none; }
+
+    .thumb { margin: 0; transition: opacity 0.25s; }
+    .thumb__link {
+      display: block;
+      overflow: hidden;
+      background: #111;
+      position: relative;
+    }
+    .thumb__link img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s;
+    }
+    .thumb__link:hover img { transform: scale(1.05); }
+    .thumb__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(11,11,11,0.82) 0%, transparent 60%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0.75rem;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.22s, transform 0.22s;
+      pointer-events: none;
+    }
+    .thumb__link:hover .thumb__overlay { opacity: 1; transform: translateY(0); }
+    /* Sibling dim — spotlights the hovered card */
+    .grid:has(.thumb__link:hover) .thumb { opacity: 0.5; }
+    .grid:has(.thumb__link:hover) .thumb:hover { opacity: 1; }
+    .thumb__overlay-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.9375rem;
+      font-weight: 300;
+      color: #fff;
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 0.2rem;
+    }
+    .thumb__overlay-type {
+      font-size: 0.625rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+    }
+    .thumb__caption {
+      margin-top: 0.5rem;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.875rem;
+      font-weight: 300;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .empty {
+      grid-column: 1 / -1;
+      padding: 5rem 0;
+      text-align: center;
+      font-size: var(--cap);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* -------- Skeleton -------- */
+    .skeleton {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      padding-bottom: clamp(4rem, 8vw, 8rem);
+    }
+    .skeleton__item {
+      aspect-ratio: 1;
+      background: rgba(243,240,234,0.05);
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+    .skeleton__item:nth-child(2) { animation-delay: 0.1s; }
+    .skeleton__item:nth-child(3) { animation-delay: 0.2s; }
+    .skeleton__item:nth-child(4) { animation-delay: 0.3s; }
+    @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.8; } }
+
+    /* -------- Error -------- */
+    .error {
+      padding: clamp(4rem, 10vw, 8rem) 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: var(--cap);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .error a { color: var(--text); }
+
+    /* -------- Responsive -------- */
+    @media (max-width: 1024px) {
+      .grid, .skeleton { grid-template-columns: repeat(3, 1fr); }
+      .grid.dense { grid-template-columns: repeat(4, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .grid, .skeleton { grid-template-columns: repeat(2, 1fr); }
+      .grid.dense { grid-template-columns: repeat(3, 1fr); }
+      .series-aside { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    }
+
+    /* -------- More series -------- */
+    .more-series {
+      padding: clamp(1.5rem, 3vw, 2.5rem) 0 clamp(3rem, 6vw, 5rem);
+      border-top: 1px solid var(--dim);
+    }
+    .more-series__label {
+      font-size: var(--cap);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 0.75rem;
+    }
+    .more-series__links {
+      display: flex;
+      flex-wrap: wrap;
+      column-gap: 1.5rem;
+      row-gap: 0.3rem;
+    }
+    .more-series__link {
+      font-size: var(--cap);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.15s;
+    }
+    .more-series__link:hover { color: var(--text); }
+
+    /* -------- Reduced motion -------- */
+    @media (prefers-reduced-motion: reduce) {
+      .thumb,
+      .thumb__link img,
+      .thumb__overlay,
+      .more-series__link { transition: none; }
+      .thumb__link:hover img { transform: none; }
+      .thumb__overlay { transform: none; }
+      .grid:has(.thumb__link:hover) .thumb { opacity: 1; }
+      .skeleton__item { animation: none; opacity: 0.4; }
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="scroll-progress" class="scroll-progress" aria-hidden="true"></div>
+<a href="#main" class="skip">Skip to content</a>
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="brand" href="index.html"><img src="jfsn-mark.png" class="brand-mark" alt="JFSN">Jeffrey F. S. Neumann</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="archive.html">Archive</a>
+      <a href="series-index.html" aria-current="page">Series</a>
+      <a href="timeline.html">Timeline</a>
+      <a href="constellation.html">Constellation</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="series-hero container" id="series-hero" aria-label="Series overview">
+    <!-- populated immediately by JS from SERIES config -->
+  </section>
+
+  <div class="container">
+    <div class="grid-bar">
+      <span class="grid-count" id="grid-count" aria-live="polite"></span>
+      <button class="density-btn" id="density-btn">Compact</button>
+    </div>
+    <div id="grid-wrap">
+      <div class="skeleton" aria-hidden="true">
+        <div class="skeleton__item"></div>
+        <div class="skeleton__item"></div>
+        <div class="skeleton__item"></div>
+        <div class="skeleton__item"></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<button class="scroll-top" id="scroll-top" aria-label="Back to top">&#8593; Top</button>
+
+<div class="more-series container" id="more-series" hidden>
+  <p class="more-series__label">More series</p>
+  <div class="more-series__links" id="more-series-links"></div>
+</div>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <span>Jeffrey F. S. Neumann</span>
+    <nav class="footer-nav" aria-label="Site navigation">
+      <a href="archive.html">Archive</a>
+      <a href="series-index.html">Series</a>
+      <a href="timeline.html">Timeline</a>
+      <a href="constellation.html">Constellation</a>
+      <a href="about.html">About</a>
+    </nav>
+    <nav class="footer-social" aria-label="Social links">
+      <a href="https://www.linkedin.com/in/jeffreyneumann/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://dribbble.com/JFSN" target="_blank" rel="noopener">Dribbble</a>
+      <a href="https://www.youtube.com/@jfsneumann/videos" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://showspace.so/s/jeffrey-neumann-46" target="_blank" rel="noopener">Showspace</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function () {
+
+  /* ---- series metadata: theme-based series (filter by r.themes[]) ---- */
+  const SERIES = {
+    'Mr. Snowmann': {
+      title:       'Mr. Snowmann',
+      description: 'A recurring figure — part totem, part pop effigy — assembled from the residue of consumer culture. Across more than a hundred works spanning five decades, the Snowmann shape-shifts and accumulates: a sustained riff on American iconography, assembly, and the act of making something from nothing.',
+    },
+    'Guernica': {
+      title:       'Guernica Inspired',
+      description: 'Works in direct dialogue with Picasso\'s 1937 masterpiece. The bull, the horse, the fragmenting figures — recombined through collage into new arrangements that hold the original\'s emotional charge while relocating it in the visual language of mid-century American commerce and popular imagery.',
+    },
+    'Aviation': {
+      title:       'Aviation',
+      description: 'Warplanes and commercial aircraft extracted from print media — identification silhouettes, engine cross-sections, advertising copy. Flight rendered as formal object: the machine stripped to icon, hovering between technological sublime and cold precision, beauty and threat indistinguishable.',
+    },
+    'Targets': {
+      title:       'Targets',
+      description: 'Concentric rings, bull\'s-eye forms, and range markers appear across dozens of works as compositional anchors and loaded symbols. Precision without declared purpose. The target as both invitation and warning — a form that compels attention before meaning is assigned.',
+    },
+    'Reliquaries': {
+      title:       'Reliquaries',
+      description: 'Works structured around the logic of the container: sealed, weighted, and significant. Materials chosen for their prior lives as much as their surfaces. Vessels that imply a content they don\'t reveal — the relic absent, the shrine intact.',
+    },
+    'Totems': {
+      title:       'Totems',
+      description: 'Vertical accretions of found and fabricated elements, drawing on the logic of accumulation and ritual while remaining grounded in the vocabularies of the workshop and the hardware store. Stacked significance; weight as meaning.',
+    },
+    'Crosses': {
+      title:       'Crosses',
+      description: 'The cross reduced to its geometry — symmetry, perpendicular meeting, four directions held in tension. Form that carries cultural weight before any specific reading is applied, returned to pure structure and asked to hold whatever the viewer brings.',
+    },
+    'Torsos & Faces': {
+      title:       'Torsos & Faces',
+      description: 'Photographic fragments of the human body — cropped, magnified, repositioned — set against grounds that compete with and complement the figure. Presence through reduction; the body as found material, as much subject as surface.',
+    },
+    'Gallery': {
+      title:       'Gallery Images',
+      description: 'Exhibition views and installation photographs from five decades of showing work. The archive of the archive: spaces, arrangements, and the accumulated evidence of a practice made public and encountered by other eyes.',
+    },
+    'Framed': {
+      title:       'Framed Pieces',
+      description: 'Works conceived with framing as an integral compositional element — the frame not as neutral container but as collaborator. Edge and interior in negotiation; the boundary of the work as part of the work itself.',
+    },
+    'Studio': {
+      title:       'Studio Images',
+      description: 'Works photographed in the context of the studio — process images, studies in available light, and the raw material of practice before it becomes exhibition. The space where everything starts, documented at various stages of arrival.',
+    },
+    'Art School': {
+      title:       'Art School Work',
+      description: 'Work made during and around the BFA years at the Cleveland Institute of Art. The foundation built here — printmaking, industrial drawing, material thinking — runs under everything that came after. These pieces catch the practice at the moment of formation: uncertain in the best way, searching, not yet committed to what it would become.',
+    },
+    'Tracings': {
+      title:       'Tracings',
+      description: 'Works built from the act of tracing — contour drawn over found imagery, line extracted from photograph or print. A method of close looking that is also a method of possession: the original image remains visible beneath the intervention, neither fully surrendered nor entirely replaced.',
+    },
+  };
+
+  /* Named series (filter by r.series field, linked with ?series= param) */
+  const NAMED_SERIES = {
+    'XXIII': {
+      title:       'XXIII',
+      description: 'Dense formations of compact discs — sometimes hundreds — arranged across the picture plane in undulating rows or tight grids. Works in this series frequently carry the label "XXIII" or "DBS." The CD as found object, mass-produced and reflective, becomes both building material and conceptual unit.',
+    },
+    'Squadron': {
+      title:       'Squadron',
+      description: 'Multiple top-down warplane silhouettes arranged in deliberate formation as the primary compositional subject. The planes move together as a unit, their repetition transforming a military motif into something closer to choreography — or to a flock.',
+    },
+    'Guernica': {
+      title:       'Guernica Series',
+      description: 'Works where the title contains "Guernica" or the composition directly mirrors Picasso\'s 1937 painting. Distinct from works that share Guernica\'s emotional territory: these engage the source directly, reworking its specific iconography — the bull, the horse, the lamp — through collage.',
+    },
+  };
+
+  const TYPE_LABELS = {
+    collage:           'Collage',
+    sculpture:         'Sculpture',
+    painting:          'Painting',
+    photograph:        'Photograph',
+    installation_view: 'Installation',
+  };
+
+  const PAGE_SIZE = 60;
+
+  const params      = new URLSearchParams(location.search);
+  const themeParam  = params.get('theme')  || '';
+  const seriesParam = params.get('series') || '';
+
+  /* ---- resolve series metadata and filter strategy ---- */
+  let series, filterFn, archiveParam, artworkParam, currentKey;
+  if (seriesParam && NAMED_SERIES[seriesParam]) {
+    series      = NAMED_SERIES[seriesParam];
+    filterFn    = r => r.series === seriesParam;
+    archiveParam = 'series=' + encodeURIComponent(seriesParam);
+    artworkParam = 'series=' + encodeURIComponent(seriesParam);
+    currentKey   = seriesParam;
+  } else if (themeParam && SERIES[themeParam]) {
+    series      = SERIES[themeParam];
+    filterFn    = r => (r.themes || []).includes(themeParam);
+    archiveParam = 'theme=' + encodeURIComponent(themeParam);
+    artworkParam = 'theme=' + encodeURIComponent(themeParam);
+    currentKey   = themeParam;
+  } else {
+    const label = themeParam || seriesParam;
+    document.getElementById('series-hero').innerHTML = `
+      <div class="error">
+        <p>${label ? `"${esc(label)}" series not found` : 'No series specified'}</p>
+        <p style="margin-top:1.5rem"><a href="archive.html">&#8592; Back to archive</a></p>
+      </div>`;
+    document.getElementById('grid-wrap').innerHTML = '';
+    document.getElementById('grid-count').textContent = '';
+    document.getElementById('density-btn').hidden = true;
+    document.title = 'Series not found — Jeffrey F. S. Neumann';
+    return;
+  }
+
+  /* ---- update page metadata ---- */
+  document.title = `${series.title} — Jeffrey F. S. Neumann`;
+  document.querySelector('meta[name="description"]')
+    .setAttribute('content', series.description.slice(0, 160));
+  document.querySelector('meta[property="og:title"]')
+    .setAttribute('content', `${series.title} — Jeffrey F. S. Neumann`);
+  const canonEl = document.querySelector('link[rel="canonical"]');
+  if (canonEl) canonEl.setAttribute('href', `https://jfsn.com/series.html?${archiveParam}`);
+
+  /* ---- more series (immediate — no network needed) ---- */
+  const moreSeriesLinks = document.getElementById('more-series-links');
+  const moreSeriesWrap  = document.getElementById('more-series');
+  if (moreSeriesLinks) {
+    const allLinks = [
+      ...Object.entries(SERIES).map(([k, s]) =>
+        ({ key: k, title: s.title, url: `series.html?theme=${encodeURIComponent(k)}` })),
+      ...Object.entries(NAMED_SERIES).map(([k, s]) =>
+        ({ key: k, title: s.title, url: `series.html?series=${encodeURIComponent(k)}` })),
+    ];
+    moreSeriesLinks.innerHTML = allLinks
+      .filter(s => s.key !== currentKey)
+      .map(s => `<a class="more-series__link" href="${esc(s.url)}">${esc(s.title)}</a>`)
+      .join('');
+    if (moreSeriesWrap) moreSeriesWrap.hidden = false;
+  }
+
+  /* ---- render hero immediately (no network) ---- */
+  const archiveURL = `archive.html?${archiveParam}`;
+  document.getElementById('series-hero').innerHTML = `
+    <a class="series-label" href="series-index.html">&#8592; All series</a>
+    <div class="series-head">
+      <h1 class="series-title">${esc(series.title)}</h1>
+      <div class="series-aside">
+        <span class="series-count" id="series-count"></span>
+        <a class="series-archive-link" href="${esc(archiveURL)}">View in archive &rarr;</a>
+      </div>
+    </div>
+    <p class="series-description">${esc(series.description)}</p>
+    <hr class="series-divider">
+  `;
+
+  /* ---- scroll-to-top + progress bar ---- */
+  const scrollTopBtn = document.getElementById('scroll-top');
+  const progressBar  = document.getElementById('scroll-progress');
+  window.addEventListener('scroll', () => {
+    scrollTopBtn.classList.toggle('visible', window.scrollY > 800);
+    if (progressBar) {
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.width = (total > 0 ? (window.scrollY / total) * 100 : 0).toFixed(1) + '%';
+    }
+  }, { passive: true });
+  scrollTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  /* ---- density ---- */
+  let dense = localStorage.getItem('archive-density') === 'compact';
+  const densityBtn = document.getElementById('density-btn');
+
+  function applyDensity() {
+    const grid = document.querySelector('.grid');
+    if (grid) grid.classList.toggle('dense', dense);
+    densityBtn.textContent = dense ? 'Normal' : 'Compact';
+    requestAnimationFrame(recalcAllSpans);
+  }
+
+  densityBtn.addEventListener('click', () => {
+    dense = !dense;
+    localStorage.setItem('archive-density', dense ? 'compact' : 'normal');
+    applyDensity();
+  });
+
+  /* ---- masonry constants + state ---- */
+  const ROW_H   = 8;  /* px — must match grid-auto-rows */
+  const COL_GAP = 16; /* px — 1rem, vertical separation between items */
+  const CAP_H   = 32; /* px — single-line caption (margin-top + text) */
+
+  let works        = [];
+  let masonryDims  = null;
+  let masonryObs   = null;
+  let renderedCount = 0;
+  let loadObserver  = null;
+
+  /* ---- fetch catalog + image dimensions in parallel ---- */
+  Promise.all([
+    fetch('catalog-lite.json').then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }),
+    fetch('dims.json').then(r => r.json()).catch(() => null),
+  ])
+    .then(([catalog, dims]) => {
+      masonryDims = dims;
+      works = catalog.filter(filterFn);
+      const countEl = document.getElementById('series-count');
+      if (countEl) countEl.textContent = `${works.length} work${works.length !== 1 ? 's' : ''}`;
+      renderGrid();
+    })
+    .catch(() => {
+      document.getElementById('grid-wrap').innerHTML =
+        '<p style="padding:4rem 0;text-align:center;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)">Could not load catalog.</p>';
+    });
+
+  /* ---- render grid ---- */
+  function renderGrid() {
+    renderedCount = 0;
+    const total   = works.length;
+
+    document.getElementById('grid-count').textContent =
+      total + ' work' + (total !== 1 ? 's' : '');
+
+    const wrap = document.getElementById('grid-wrap');
+    /* Remove the skeleton placeholder on first real render */
+    const skeleton = wrap.querySelector('.skeleton');
+    if (skeleton) skeleton.remove();
+    if (!wrap.querySelector('.grid')) {
+      const g = document.createElement('div'); g.className = 'grid'; g.id = 'grid';
+      wrap.appendChild(g);
+      const s = document.createElement('div'); s.id = 'load-sentinel';
+      wrap.appendChild(s);
+    }
+    const grid = document.getElementById('grid');
+    grid.replaceChildren();
+    observeMasonry(grid);
+
+    if (total === 0) {
+      grid.innerHTML = '<p class="empty">No works cataloged for this series yet.</p>';
+      applyDensity(); return;
+    }
+
+    appendBatch(grid);
+    setupLoadMore();
+  }
+
+  function appendBatch(grid) {
+    grid = grid || document.getElementById('grid');
+    if (!grid) return;
+    const slice = works.slice(renderedCount, renderedCount + PAGE_SIZE);
+    if (!slice.length) return;
+    const frag    = document.createDocumentFragment();
+    const newFigs = [];
+    slice.forEach(r => {
+      const fig = buildFigure(r);
+      newFigs.push(fig);
+      frag.appendChild(fig);
+    });
+    grid.appendChild(frag);
+    renderedCount += slice.length;
+    applyDensity();
+    requestAnimationFrame(() => newFigs.forEach(setSpan));
+  }
+
+  function setupLoadMore() {
+    if (loadObserver) { loadObserver.disconnect(); loadObserver = null; }
+    const sentinel = document.getElementById('load-sentinel');
+    if (!sentinel || renderedCount >= works.length) return;
+    loadObserver = new IntersectionObserver(entries => {
+      if (!entries[0].isIntersecting) return;
+      if (renderedCount >= works.length) { loadObserver.disconnect(); return; }
+      appendBatch();
+    }, { rootMargin: '600px' });
+    loadObserver.observe(sentinel);
+  }
+
+  /* ---- build figure ---- */
+  function buildFigure(record) {
+    const id          = record.file.replace('.avif', '');
+    const typeLabel   = TYPE_LABELS[record.work_type] || record.work_type || '';
+    const yearStr     = record.year ? String(record.year) : '';
+    const overlayMeta = [yearStr, typeLabel].filter(Boolean).join(' · ');
+    const title       = record.title || id;
+    const href = `artwork.html?id=${id}&${artworkParam}`;
+    const [imgW, imgH] = (masonryDims && masonryDims[id]) || [400, 400];
+    const fig = document.createElement('figure');
+    fig.className  = 'thumb';
+    fig.dataset.id = id;
+    fig.innerHTML = `
+      <a class="thumb__link" href="${esc(href)}">
+        <img srcset="artworks/mini/${esc(id)}.avif 200w, artworks/thumbs/${esc(id)}.avif 400w"
+             sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)"
+             src="artworks/thumbs/${esc(id)}.avif"
+             alt="${esc(title)}" loading="lazy" width="${imgW}" height="${imgH}">
+        <div class="thumb__overlay" aria-hidden="true">
+          <span class="thumb__overlay-title">${esc(title)}</span>
+          <span class="thumb__overlay-type">${esc(overlayMeta)}</span>
+        </div>
+      </a>
+      <figcaption class="thumb__caption">${esc(title)}</figcaption>`;
+    return fig;
+  }
+
+  function esc(s) {
+    return String(s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  /* ---- masonry span calculation ---- */
+  function setSpan(fig) {
+    if (!masonryDims) return;
+    const id = fig.dataset.id;
+    if (!id || !masonryDims[id]) return;
+    const [w, h] = masonryDims[id];
+    const colW   = fig.offsetWidth || 280;
+    const imgH   = Math.round((colW / w) * h);
+    const capH   = dense ? 0 : CAP_H;
+    fig.style.gridRow = `span ${Math.ceil((imgH + capH + COL_GAP) / ROW_H)}`;
+  }
+
+  function recalcAllSpans() {
+    const grid = document.getElementById('grid');
+    if (!grid || !masonryDims) return;
+    grid.querySelectorAll('.thumb').forEach(setSpan);
+  }
+
+  function observeMasonry(grid) {
+    if (masonryObs) masonryObs.disconnect();
+    masonryObs = new ResizeObserver(() => recalcAllSpans());
+    masonryObs.observe(grid);
+  }
+
+  /* ---- full-res hover preload ---- */
+  (function () {
+    const wrap = document.getElementById('grid-wrap');
+    if (!wrap) return;
+    const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    wrap.addEventListener('mouseover', function (e) {
+      const link = e.target.closest('.thumb__link');
+      if (!link || link.dataset.fullLoaded) return;
+      link.dataset.fullLoaded = '1';
+      const img = link.querySelector('img');
+      const fig = link.closest('[data-id]');
+      if (!img || !fig) return;
+      const preload = new Image();
+      preload.onload = function () {
+        if (!link.matches(':hover')) return;
+        if (noMotion) { img.srcset = ''; img.src = preload.src; return; }
+        img.style.opacity = '0';
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          img.srcset = '';
+          img.src    = preload.src;
+          img.style.opacity = '1';
+        }));
+      };
+      preload.src = 'artworks/full/' + fig.dataset.id + '.avif';
+    });
+  })();
+
+})();
+</script>
+
+<script src="search.js" defer></script>
+<script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
+</body>
+</html>

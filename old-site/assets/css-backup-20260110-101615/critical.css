@@ -1,0 +1,198 @@
+/* =========================================== */
+/* CRITICAL CSS - Above-the-fold styles */
+/* Prevents FOUC and improves FCP */
+/* =========================================== */
+
+/* Base Reset - Hide scrollbar but keep functionality */
+html { 
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100%;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+html::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+/* CSS Custom Properties - Available early for critical CSS */
+:root {
+  /* Navbar dimensions */
+  --navbar-height: 64px;
+  --navbar-height-compact: 60px;
+  --navbar-height-mobile: 56px;
+  
+  /* Z-Index Scale - Standardized layering system */
+  --z-base: 0;
+  --z-content: 5;
+  --z-hero-image: 1;
+  --z-hero-content: 10;
+  --z-hero-snowman: 15;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal-backdrop: 1000;
+  --z-modal: 1100;
+  --z-popover: 1200;
+  --z-tooltip: 1300;
+  --z-toast: 1400;
+  --z-overlay: 1500;
+  --z-navbar: 10000;
+  --z-navbar-overlay: 10001;
+  --z-max: 99999;
+  
+  /* Hero Section Custom Properties */
+  --hero-content-z-index: var(--z-hero-content);
+  --hero-content-padding: 2rem 2.5rem;
+  --hero-content-blur: blur(12px);
+  --hero-fade-width: clamp(800px, 96vw, 1600px);
+  --hero-fade-height: clamp(1200px, 128vh, 2400px);
+  --hero-fade-blur: blur(12px);
+}
+
+body { 
+  margin: 0; 
+  padding: 0;
+  padding-top: var(--navbar-height);
+  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+main {
+  flex: 1 0 auto;
+  min-height: 0;
+}
+
+/* Navbar - Critical for above-the-fold */
+.editorial-navbar { 
+  position: fixed !important; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  z-index: 10000;
+  background: #ffffff !important; /* Force solid white - override any other styles */
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+  height: var(--navbar-height) !important; /* Use CSS custom property */
+  pointer-events: auto;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.editorial-navbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem 0.5rem 2rem; /* Moved content up 10px by reducing top padding */
+  margin-top: -2px; /* Additional 2px to reach 10px total */
+  height: 100%;
+}
+
+.editorial-navbar .container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.editorial-navbar-brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #1a202c !important;
+  font-weight: 700;
+  font-size: 1rem;
+  gap: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.editorial-navbar-brand img {
+  filter: brightness(0) !important;
+  height: 28px !important;
+  transition: filter 0.3s ease;
+}
+
+.navbar-name {
+  color: #9ca3af !important; /* Light grey color */
+  font-weight: 600 !important;
+  font-size: 0.9375rem !important;
+  margin-left: 0.5rem;
+  white-space: nowrap;
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  display: inline-block !important; /* Force show on desktop */
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: none !important; /* Let parent handle hover */
+}
+
+/* Show name on hover - ensure it works - FORCE PURPLE, NOT WHITE */
+.editorial-navbar-brand:hover .navbar-name,
+.editorial-navbar-brand:focus .navbar-name {
+  color: #6366f1 !important; /* Purple on hover - MUST be visible */
+  -webkit-text-fill-color: #6366f1 !important; /* Override any gradient text fill */
+  background: none !important; /* Remove any background gradient */
+  background-clip: border-box !important; /* Prevent gradient clipping */
+  -webkit-background-clip: border-box !important;
+  transform: translateX(2px) !important;
+}
+
+/* Progressive enhancement: Show name on larger screens */
+/* Use consistent breakpoint: 768px (md breakpoint) - matches Bootstrap */
+@media (max-width: 767px) {
+  .navbar-name {
+    display: none !important;
+  }
+}
+
+.editorial-navbar-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 10001;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.editorial-navbar-toggle-icon {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 24px;
+  height: 18px;
+}
+
+.editorial-navbar-toggle-icon span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #1a202c !important;
+  transition: all 0.3s ease;
+}
+
+/* Container - Basic layout */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
+/* Prevent layout shift during font load */
+h1, .h1, h2, .h2, h3, .h3 {
+  font-display: optional;
+}
+
+/* Footer and back-to-top styles moved to assets/css/footer/index-footer.css */

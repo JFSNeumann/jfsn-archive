@@ -1,0 +1,22 @@
+{
+  "api_version": "1",
+  "schema_version": "1",
+  "generated": "2026-05-26T20:51:09Z",
+  "artist": "Jeffrey F. S. Neumann",
+  "archive_url": "https://jfsn.com",
+  "counts": {
+    "cataloged": 140,
+    "total_including_stubs": 1084
+  },
+  "endpoints": {
+    "meta": "https://jfsn.com/api/v1/meta.json",
+    "works": "https://jfsn.com/api/v1/works.json",
+    "themes": "https://jfsn.com/api/v1/themes.json",
+    "series": "https://jfsn.com/api/v1/series.json",
+    "motifs": "https://jfsn.com/api/v1/motifs.json",
+    "palette": "https://jfsn.com/api/v1/palette.json",
+    "work": "https://jfsn.com/api/v1/works/{id}.json"
+  },
+  "license": "CC BY 4.0 \u2014 https://creativecommons.org/licenses/by/4.0/",
+  "citation": "Jeffrey F. S. Neumann Archive. https://jfsn.com/api/v1/meta.json"
+}

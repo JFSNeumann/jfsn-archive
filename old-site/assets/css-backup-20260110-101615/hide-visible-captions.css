@@ -1,0 +1,88 @@
+/* =========================================== */
+/* HIDE VISIBLE CAPTIONS - Curator Guideline #4 */
+/* Remove constant visible captions/info bars */
+/* =========================================== */
+
+/* Hide artwork info section by default (captions under images) */
+/* Only targets the text section below images, not the entire card */
+.artwork-card .artwork-info {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Ensure cards don't have extra space from hidden info */
+.artwork-card {
+  padding-bottom: 0 !important;
+}
+
+/* CRITICAL: Override display-none class to show gallery */
+/* This ensures the gallery is visible even if JavaScript hasn't removed the class */
+/* Use maximum specificity to override any other CSS rules */
+html body .display-none#galleryContainer,
+html body .display-none#gallery,
+html body .display-none.gallery-grid,
+html body #galleryContainer.display-none,
+html body #gallery.display-none,
+html body .gallery-grid.display-none,
+body .display-none#galleryContainer,
+body .display-none#gallery,
+body .display-none.gallery-grid,
+body #galleryContainer.display-none,
+body #gallery.display-none,
+body .gallery-grid.display-none {
+  display: grid !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+/* Ensure artwork cards are always visible */
+.artwork-card {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Ensure artwork images are always visible */
+/* Use maximum specificity to override any other CSS rules */
+/* CRITICAL: Override enhanced-image-loading.css opacity: 0 */
+html body .artwork-card img,
+html body .artwork-card .artwork-image-container img,
+body .artwork-card img,
+body .artwork-card .artwork-image-container img,
+.artwork-card img,
+.artwork-card .artwork-image-container img {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  position: absolute !important;
+  inset: 0 !important;
+  object-fit: cover !important;
+  z-index: 2 !important;
+}
+
+/* Ensure image container is visible */
+.artwork-card .artwork-image-container {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 200px !important;
+  position: relative !important;
+  overflow: hidden !important;
+  aspect-ratio: 4 / 3 !important;
+}
+

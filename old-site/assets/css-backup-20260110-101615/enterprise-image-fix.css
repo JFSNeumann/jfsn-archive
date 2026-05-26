@@ -1,0 +1,43 @@
+/* =========================================== */
+/* ENTERPRISE IMAGE FIX - Ensure Image is Visible */
+/* Override any CSS that may hide the image */
+/* Match height with other project cards */
+/* =========================================== */
+
+/* Ensure enterprise card image is visible and matches other cards */
+.card .project-card-img {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100% !important;
+  aspect-ratio: 16 / 10 !important;
+  object-fit: cover !important;
+}
+
+/* Ensure all project card images have consistent height */
+.row.g-4 .card .project-card-img {
+  height: auto !important;
+  min-height: 250px !important;
+  max-height: 400px !important;
+  aspect-ratio: 16 / 10 !important;
+  object-fit: cover !important;
+}
+
+/* Remove any progressive loading overlays that might hide image */
+.progressive-image-wrapper,
+.progressive-image-container,
+.progressive-image-skeleton,
+.progressive-image-loading {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* Ensure card image container doesn't hide image */
+.card .card-img-top {
+  position: relative !important;
+  z-index: 1 !important;
+  overflow: hidden !important;
+}

@@ -1,0 +1,101 @@
+/**
+ * Mobile Scroll Performance Optimizer
+ * Uses RAF and passive listeners for smooth 60fps scrolling
+ */
+
+(function() {
+  'use strict';
+  
+  // Detect mobile
+  const isMobile = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  
+  if (!isMobile) return;
+  
+  // Scroll optimization using RAF
+  const scrollCallbacks = new Set();
+  let scrollTicking = false;
+  
+  // Main scroll handler
+  function handleScroll() {
+    if (!scrollTicking) {
+      requestAnimationFrame(() => {
+        scrollCallbacks.forEach(callback => {
+          try {
+            callback();
+          } catch (e) {
+            // Silently handle scroll callback errors in production
+            if (typeof window.DEBUG !== 'undefined' && window.DEBUG) {
+              window.debugWarn ? window.debugWarn('Scroll callback error:', e);
+            }
+          }
+        });
+        scrollTicking = false;
+      });
+      scrollTicking = true;
+    }
+  }
+  
+  // Register scroll listener with passive option
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  
+  // Public API to register scroll callbacks
+  window.registerScrollCallback = function(callback) {
+    scrollCallbacks.add(callback);
+  };
+  
+  // Remove callback
+  window.unregisterScrollCallback = function(callback) {
+    scrollCallbacks.delete(callback);
+  };
+  
+  // Optimize existing scroll listeners
+  function optimizeExistingListeners() {
+    // Find all elements with inline scroll handlers
+    const elements = document.querySelectorAll('[onscroll], [data-scroll]');
+    elements.forEach(el => {
+      const handler = el.getAttribute('onscroll');
+      if (handler) {
+        el.removeAttribute('onscroll');
+        const fn = new Function('event', handler);
+        registerScrollCallback(() => {
+          if (document.contains(el)) {
+            fn.call(el, { target: el });
+          }
+        });
+      }
+    });
+  }
+  
+  // Run optimization after DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', optimizeExistingListeners);
+  } else {
+    optimizeExistingListeners();
+  }
+  
+  // Debounce helper for expensive operations
+  window.mobileDebounce = function(func, wait = 16) {
+    let timeout;
+    return function(...args) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+  };
+  
+  // Throttle helper using RAF
+  window.mobileThrottle = function(func) {
+    let lastCall = 0;
+    return function(...args) {
+      const now = Date.now();
+      if (now - lastCall >= 16) { // ~60fps
+        lastCall = now;
+        requestAnimationFrame(() => func.apply(this, args));
+      }
+    };
+  };
+  
+  // Log only in debug mode
+  if (typeof window.DEBUG !== 'undefined' && window.DEBUG) {
+  }
+})();
+

@@ -1,0 +1,148 @@
+/* =========================================== */
+/* UNIFIED DESIGN SYSTEM - COLOR SYSTEM */
+/* Single source of truth for all colors */
+/* =========================================== */
+
+:root {
+  /* ===== PRIMARY BRAND COLOR (Purple/Indigo) ===== */
+  --brand-primary: #6366f1;              /* Main brand color - Indigo 500 */
+  --brand-primary-rgb: 99, 102, 241;     /* RGB values for alpha compositing */
+  
+  /* ===== BRAND COLOR SCALE ===== */
+  /* Light to Dark progression for various UI needs */
+  --brand-50: #f0f9ff;                   /* Lightest - backgrounds */
+  --brand-100: #e0f2fe;                  /* Very light - subtle backgrounds */
+  --brand-200: #bae6fd;                  /* Light - hover backgrounds */
+  --brand-300: #7dd3fc;                  /* Medium light - borders */
+  --brand-400: #8b5cf6;                  /* Medium - secondary elements */
+  --brand-500: #6366f1;                  /* Main - primary elements */
+  --brand-600: #7c3aed;                  /* Medium dark - hover states */
+  --brand-700: #5b21b6;                  /* Dark - active states */
+  --brand-800: #4c1d95;                  /* Darker - pressed states */
+  --brand-900: #3b0764;                  /* Darkest - deep contrast */
+  
+  /* ===== INTERACTIVE STATES ===== */
+  --brand-hover: #7c3aed;                /* Hover state color */
+  --brand-active: #5b21b6;               /* Active/pressed state */
+  --brand-focus: rgba(99, 102, 241, 0.25); /* Focus ring color */
+  
+  /* ===== ACCENT COLORS ===== */
+  --brand-accent-light: #a855f7;         /* Light purple for badges, tags */
+  --brand-accent: #9333ea;               /* Accent purple for highlights */
+  --brand-accent-dark: #6b21a8;          /* Dark accent for contrast */
+  
+  /* ===== GRADIENTS ===== */
+  /* Consistent gradients throughout the site */
+  --gradient-primary: linear-gradient(135deg, #6366f1, #8b5cf6);
+  --gradient-primary-hover: linear-gradient(135deg, #7c3aed, #9333ea);
+  --gradient-accent: linear-gradient(135deg, #9333ea, #a855f7);
+  --gradient-accent-reverse: linear-gradient(135deg, #a855f7, #6366f1);
+  --gradient-subtle: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+  
+  /* ===== SEMANTIC USE CASES ===== */
+  /* Named by purpose for clarity */
+  --color-button-primary: var(--brand-primary);
+  --color-button-primary-hover: var(--brand-hover);
+  --color-button-primary-active: var(--brand-active);
+  
+  --color-link: var(--brand-primary);
+  --color-link-hover: var(--brand-600);
+  --color-link-visited: var(--brand-700);
+  
+  --color-badge: var(--brand-accent-light);
+  --color-tag: var(--brand-400);
+  --color-highlight: var(--brand-200);
+  
+  --color-border-focus: var(--brand-primary);
+  --color-border-active: var(--brand-600);
+  
+  /* ===== OPACITY VARIANTS ===== */
+  /* For overlays, backgrounds, and transparency needs */
+  --brand-alpha-10: rgba(99, 102, 241, 0.1);
+  --brand-alpha-20: rgba(99, 102, 241, 0.2);
+  --brand-alpha-30: rgba(99, 102, 241, 0.3);
+  --brand-alpha-40: rgba(99, 102, 241, 0.4);
+  --brand-alpha-50: rgba(99, 102, 241, 0.5);
+  --brand-alpha-60: rgba(99, 102, 241, 0.6);
+  --brand-alpha-70: rgba(99, 102, 241, 0.7);
+  --brand-alpha-80: rgba(99, 102, 241, 0.8);
+  --brand-alpha-90: rgba(99, 102, 241, 0.9);
+  
+  /* ===== SEMANTIC COLORS (Success, Warning, Error, Info) ===== */
+  --color-success: #10b981;              /* Green - success states */
+  --color-success-light: #34d399;
+  --color-success-dark: #059669;
+  
+  --color-warning: #f59e0b;              /* Amber - warning states */
+  --color-warning-light: #fbbf24;
+  --color-warning-dark: #d97706;
+  
+  --color-error: #ef4444;                /* Red - error states */
+  --color-error-light: #f87171;
+  --color-error-dark: #dc2626;
+  
+  --color-info: #3b82f6;                 /* Blue - info states */
+  --color-info-light: #60a5fa;
+  --color-info-dark: #2563eb;
+  
+  /* ===== TEXT COLORS ===== */
+  --text-primary: #0f172a;               /* Primary text - Dark theme: #ffffff */
+  --text-secondary: #64748b;             /* Secondary text - Dark theme: #cbd5e1 */
+  --text-tertiary: #94a3b8;              /* Tertiary text */
+  --text-muted: #64748b;                 /* Muted text */
+  --text-inverse: #ffffff;               /* Inverse text (white) */
+  
+  /* ===== BACKGROUND COLORS ===== */
+  --bg-primary: #ffffff;                 /* Primary background - Dark theme: #0f172a */
+  --bg-secondary: #f8fafc;              /* Secondary background - Dark theme: #1e293b */
+  --bg-tertiary: #f1f5f9;                /* Tertiary background */
+  
+  /* ===== BORDER COLORS ===== */
+  --border-light: #e5e7eb;
+  --border-medium: #d1d5db;
+  --border-dark: #9ca3af;
+  
+  /* ===== BOOTSTRAP SILICON COMPATIBILITY ===== */
+  /* Map to Bootstrap Silicon theme variables for compatibility */
+  --si-primary: var(--brand-primary);
+  --si-primary-rgb: var(--brand-primary-rgb);
+  --si-secondary: #eff2fc;
+  --si-success: var(--color-success);
+  --si-info: var(--color-info);
+  --si-warning: var(--color-warning);
+  --si-danger: var(--color-error);
+  --si-light: #fff;
+  --si-dark: #0b0f19;
+}
+
+/* ===== DARK MODE ADJUSTMENTS ===== */
+[data-bs-theme="dark"] {
+  /* Slightly adjust purples for dark mode readability */
+  --brand-primary: #8b5cf6;              /* Lighter purple for dark backgrounds */
+  --brand-hover: #a855f7;                /* Even lighter for hover */
+  --brand-active: #9333ea;               /* Medium for active */
+  
+  /* Adjust opacity for dark mode */
+  --brand-alpha-10: rgba(139, 92, 246, 0.1);
+  --brand-alpha-20: rgba(139, 92, 246, 0.2);
+  --brand-alpha-30: rgba(139, 92, 246, 0.3);
+  
+  /* Text colors for dark mode */
+  --text-primary: #ffffff;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #94a3b8;
+  --text-muted: #94a3b8;
+  
+  /* Background colors for dark mode */
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  
+  /* Bootstrap Silicon compatibility */
+  --si-primary: #8b5cf6;
+}
+
+/* =========================================== */
+/* END UNIFIED COLOR SYSTEM */
+/* =========================================== */
+

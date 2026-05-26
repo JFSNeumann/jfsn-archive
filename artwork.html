@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0b0b">
+  <title>Artwork — Jeffrey F. S. Neumann</title>
+  <meta name="description" content="">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="canonical" href="https://jfsn.com/artwork.html">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap"></noscript>
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/viewerjs@1/dist/viewer.min.css">
+
+  <meta property="og:type"        content="article">
+  <meta property="og:title"       content="Jeffrey F. S. Neumann">
+  <meta property="og:description" content="Work from the archive of Jeffrey F. S. Neumann, 1974–present.">
+  <meta property="og:image"       content="https://jfsn.com/og-card.jpg">
+  <meta property="og:url"         content="https://jfsn.com/artwork.html">
+
+  <style>
+    /* -------- Image -------- */
+    .artwork-image {
+      width: 100%;
+      background: var(--bg);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    .artwork-image img {
+      max-height: 80svh;
+      max-width: 100%;
+      object-fit: contain;
+      cursor: zoom-in;
+    }
+    .artwork-image img.upgrading {
+      transition: opacity 0.35s;
+    }
+
+    /* -------- Back link (above fold) -------- */
+    .artwork-back {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      z-index: 2;
+      font-size: var(--cap);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: rgba(11, 11, 11, 0.78);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      padding: 0.35rem 0.75rem;
+      transition: color 0.15s;
+    }
+    .artwork-back:hover { color: var(--accent); }
+
+    /* -------- Viewer.js theme overrides -------- */
+    .viewer-backdrop { background: rgba(11,11,11,0.96); }
+    .viewer-toolbar { background: rgba(11,11,11,0.82); backdrop-filter: blur(8px); }
+    .viewer-toolbar > ul { padding: 0.5rem 0.75rem; gap: 0.25rem; display: flex; }
+    .viewer-toolbar > ul > li {
+      border-radius: 0;
+      background: none;
+      color: rgba(243,240,234,0.55);
+      transition: color 0.15s, background 0.15s;
+    }
+    .viewer-toolbar > ul > li:hover { background: rgba(255,102,0,0.15); color: #FF6600; }
+    .viewer-toolbar > ul > li:focus { outline: 1px solid rgba(255,102,0,0.5); }
+    .viewer-title {
+      font-family: Inter, sans-serif;
+      font-size: 0.6875rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(243,240,234,0.55);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .viewer-transition { transition: none !important; }
+    }
+
+    /* -------- Metadata -------- */
+    .meta {
+      margin-top: clamp(2rem, 4vw, 3rem);
+      padding-bottom: clamp(4rem, 8vw, 8rem);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem 5rem;
+    }
+
+    .meta__id {
+      font-size: var(--cap);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 0.5rem;
+    }
+    .meta__title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      font-weight: 300;
+      letter-spacing: 0;
+      line-height: 1.2;
+      margin: 0 0 0.4rem;
+    }
+    .meta__type {
+      font-size: var(--cap);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 0.5rem;
+    }
+    .meta__year {
+      font-size: var(--cap);
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      opacity: 0.6;
+      margin: 0 0 1.5rem;
+    }
+    .meta__description {
+      font-size: 0.9375rem;
+      line-height: 1.7;
+      color: var(--text);
+      margin: 0;
+      max-width: 56ch;
+    }
+
+    /* -------- Fields -------- */
+    .meta__fields {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .field__label {
+      font-size: var(--cap);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 0.4rem;
+    }
+    .field__text {
+      font-size: 0.875rem;
+      color: var(--text);
+      margin: 0;
+    }
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.375rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .tags li {
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.625rem;
+      border: 1px solid var(--dim);
+      color: var(--muted);
+    }
+    /* clickable tags — extend hit area to fill the pill */
+    .tags a {
+      display: block;
+      margin: -0.25rem -0.625rem;
+      padding: 0.25rem 0.625rem;
+      color: inherit;
+    }
+    .tags li:has(a) {
+      transition: border-color 0.15s, color 0.15s;
+      cursor: pointer;
+    }
+    .tags li:has(a):hover {
+      border-color: rgba(255, 102, 0, 0.5);
+      color: var(--accent);
+    }
+
+    /* -------- Navigation -------- */
+    .artwork-nav {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 2rem;
+      margin-top: 1rem;
+      border-top: 1px solid var(--dim);
+      font-size: var(--cap);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .artwork-nav a { transition: color 0.15s; }
+    .artwork-nav a:hover { color: var(--accent); }
+    .artwork-nav a[aria-disabled="true"] {
+      opacity: 0.2;
+      pointer-events: none;
+    }
+
+    /* keyboard hint */
+    .key-hint {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .key {
+      font-size: 0.625rem;
+      letter-spacing: 0.06em;
+      padding: 0.1rem 0.35rem;
+      border: 1px solid var(--dim);
+      color: var(--muted);
+      opacity: 0.5;
+    }
+    .nav-pos {
+      font-size: var(--cap);
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      opacity: 0.45;
+      margin-left: 0.5rem;
+    }
+
+    /* -------- Error -------- */
+    .error {
+      padding: clamp(4rem, 10vw, 8rem) 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: var(--cap);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .error a { color: var(--text); }
+
+    /* -------- Related works -------- */
+    .related {
+      grid-column: 1 / -1;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--dim);
+    }
+    .related__head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.5rem 2rem;
+      margin-bottom: 1.25rem;
+    }
+    .related__label {
+      font-size: var(--cap);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0;
+    }
+    .related__series-links {
+      display: flex;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .related__series-link {
+      font-size: var(--cap);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--dim);
+      padding-bottom: 0.1rem;
+      white-space: nowrap;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .related__series-link:hover { color: var(--accent); border-color: var(--accent); }
+    .related__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    .related__thumb {
+      display: block;
+      aspect-ratio: 1;
+      overflow: hidden;
+      background: #111;
+      position: relative;
+    }
+    .related__thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .related__thumb:hover img { transform: scale(1.05); }
+    .related__caption {
+      margin-top: 0.4rem;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.875rem;
+      font-weight: 300;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* -------- Share button -------- */
+    .share-btn {
+      appearance: none;
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-size: var(--cap);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 0;
+      transition: color 0.15s;
+    }
+    .share-btn:hover { color: var(--accent); }
+    .share-btn.copied { color: var(--accent); }
+
+    /* -------- Reduced motion -------- */
+    @media (prefers-reduced-motion: reduce) {
+      .artwork-image img, .brand-mark, .artwork-nav a, .tags li,
+      .related__thumb img, .share-btn, .artwork-back,
+      .related__series-link, .tags li:has(a) { transition: none; }
+      .related__thumb:hover img { transform: none; }
+    }
+
+    /* -------- Responsive -------- */
+    @media (max-width: 780px) {
+      .meta { grid-template-columns: 1fr; }
+      .key-hint { display: none; }
+      .related__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* -------- Palette swatches -------- */
+    .palette-dot {
+      display: inline-block;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      vertical-align: middle;
+      margin-right: 4px;
+      border: 1px solid rgba(255,255,255,0.18);
+      flex-shrink: 0;
+    }
+
+    /* -------- Recently viewed -------- */
+    .recents {
+      border-top: 1px solid var(--dim);
+      padding: clamp(2rem, 4vw, 3rem) 0;
+    }
+    .recents__label {
+      font-size: var(--cap);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 1.25rem;
+    }
+    .recents__grid {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 0.5rem;
+    }
+    .recents__thumb {
+      display: block;
+      aspect-ratio: 1;
+      overflow: hidden;
+      background: #111;
+      opacity: 0.65;
+      transition: opacity 0.2s, transform 0.35s;
+    }
+    .recents__thumb:hover { opacity: 1; transform: scale(1.04); }
+    .recents__thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+    @media (max-width: 780px) {
+      .recents__grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .recents__thumb { transition: none; }
+      .recents__thumb:hover { transform: none; }
+    }
+
+    /* -------- Print -------- */
+    @media print {
+      .header, .footer, .artwork-back, .artwork-nav, .key-hint,
+      .related, .scroll-top, .share-btn { display: none !important; }
+      body { background: #fff; color: #000; -webkit-print-color-adjust: exact; }
+      .artwork-image img { max-height: none; max-width: 100%; cursor: default; }
+      .meta { grid-template-columns: 1fr; gap: 1.5rem; }
+      .meta__title, .meta__id, .meta__type, .meta__year,
+      .meta__description, .field__label, .field__text { color: #000; }
+      .tags li { border-color: #ccc; color: #444; }
+    }
+  </style>
+</head>
+
+<body>
+
+<a href="#main" class="skip">Skip to content</a>
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="brand" href="index.html"><img src="jfsn-mark.png" class="brand-mark" alt="JFSN">Jeffrey F. S. Neumann</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="archive.html">Archive</a>
+      <a href="series-index.html">Series</a>
+      <a href="timeline.html">Timeline</a>
+      <a href="constellation.html">Constellation</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <noscript>
+    <div class="container" style="padding:4rem 0;text-align:center;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted)">
+      This page requires JavaScript. <a href="archive.html" style="color:var(--text)">View archive</a>.
+    </div>
+  </noscript>
+  <div id="content">
+    <div class="artwork-image" style="min-height:60svh"></div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <span>Jeffrey F. S. Neumann</span>
+    <nav class="footer-nav" aria-label="Site navigation">
+      <a href="archive.html">Archive</a>
+      <a href="series-index.html">Series</a>
+      <a href="timeline.html">Timeline</a>
+      <a href="constellation.html">Constellation</a>
+      <a href="about.html">About</a>
+    </nav>
+    <nav class="footer-social" aria-label="Social links">
+      <a href="https://www.linkedin.com/in/jeffreyneumann/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://dribbble.com/JFSN" target="_blank" rel="noopener">Dribbble</a>
+      <a href="https://www.youtube.com/@jfsneumann/videos" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://showspace.so/s/jeffrey-neumann-46" target="_blank" rel="noopener">Showspace</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/viewerjs@1/dist/viewer.min.js"></script>
+<script src="search.js" defer></script>
+<script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
+<script>
+(function () {
+
+  /* ---- palette color map (mirrors archive.html) ---- */
+  const PALETTE_COLORS = {
+    red: '#cc2800', vermilion: '#e03810', magenta: '#c41e78', pink: '#e87090',
+    orange: '#e85c10', yellow: '#e8c830', ochre: '#c8901c', gold: '#c89618',
+    silver: '#909090', iridescent: null,
+    white: '#e8e4dc', ivory: '#f5efdf', black: '#2a2a2a', grey: '#888888',
+    brown: '#7a4428', green: '#3a7838', turquoise: '#28aabc',
+    blue: '#2050aa', ultramarine: '#1830a0', purple: '#7832aa',
+  };
+
+  /* ---- recently viewed (localStorage) ---- */
+  const RECENT_KEY = 'jfsn-recently-viewed';
+  const RECENT_MAX = 10;
+
+  function saveRecentlyViewed(artId, title, year) {
+    try {
+      let recent = JSON.parse(localStorage.getItem(RECENT_KEY) || '[]');
+      recent = recent.filter(r => r.id !== artId);           // deduplicate
+      recent.unshift({ id: artId, title: title || artId, year: year || null });
+      recent = recent.slice(0, RECENT_MAX);
+      localStorage.setItem(RECENT_KEY, JSON.stringify(recent));
+    } catch (e) {}
+  }
+
+  function recentlyViewedHTML(currentId) {
+    try {
+      const recent = JSON.parse(localStorage.getItem(RECENT_KEY) || '[]');
+      const others = recent.filter(r => r.id !== currentId).slice(0, 8);
+      if (!others.length) return '';
+      const items = others.map(r =>
+        `<a class="recents__thumb" href="artwork.html?id=${r.id}" title="${escR(r.title || r.id)}">
+          <img src="artworks/thumbs/${r.id}.avif" alt="${escR(r.title || r.id)}" loading="lazy" width="200">
+        </a>`
+      ).join('');
+      return `<section class="recents container" aria-label="Recently viewed">
+        <p class="recents__label">Recently Viewed</p>
+        <div class="recents__grid">${items}</div>
+      </section>`;
+    } catch (e) { return ''; }
+  }
+
+  function escR(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  const params   = new URLSearchParams(location.search);
+  const id       = (params.get('id') || '').trim();
+  const num      = parseInt(id.replace(/\D/g, ''), 10);
+  const MIN = 1, MAX = 1084; /* total works in archive — update when new works are added */
+
+  /* ---- filter context from URL ---- */
+  const fType    = params.get('type')    || null;
+  const fThemes  = params.get('theme')   ? params.get('theme').split(',').filter(Boolean)   : [];
+  const fSeries  = params.get('series')  || null;
+  const fPalette = params.get('palette') ? params.get('palette').split(',').filter(Boolean) : [];
+  const fQ       = params.get('q')       || '';
+  const hasContext = fType || fThemes.length || fSeries || fPalette.length || fQ;
+
+  let prevId = null;
+  let nextId = null;
+
+  /* ---- filter logic (mirrors archive.html) ---- */
+  function matchesFilter(r) {
+    if (fType    && r.work_type !== fType) return false;
+    if (fSeries  && r.series !== fSeries) return false;
+    if (fThemes.length  && !(r.themes  || []).some(t => fThemes.includes(t)))  return false;
+    if (fPalette.length && !(r.palette || []).some(p => fPalette.includes(p))) return false;
+    if (fQ && !(r.title || '').toLowerCase().includes(fQ.toLowerCase())) return false;
+    return true;
+  }
+
+  /* ---- pad ID ---- */
+  function pad(n) { return 'art' + String(n).padStart(4, '0'); }
+
+  /* ---- back link URL ---- */
+  function backURL() {
+    const p = new URLSearchParams();
+    if (fType)           p.set('type',    fType);
+    if (fThemes.length)  p.set('theme',   fThemes.join(','));
+    if (fSeries)         p.set('series',  fSeries);
+    if (fPalette.length) p.set('palette', fPalette.join(','));
+    if (fQ)              p.set('q',       fQ);
+    const qs = p.toString();
+    return 'archive.html' + (qs ? '?' + qs : '');
+  }
+
+  /* ---- artwork link (preserves context) ---- */
+  function artURL(targetId) {
+    const p = new URLSearchParams({ id: targetId });
+    if (fType)           p.set('type',    fType);
+    if (fThemes.length)  p.set('theme',   fThemes.join(','));
+    if (fSeries)         p.set('series',  fSeries);
+    if (fPalette.length) p.set('palette', fPalette.join(','));
+    if (fQ)              p.set('q',       fQ);
+    return 'artwork.html?' + p.toString();
+  }
+
+  /* ---- tags helper ---- */
+  /* linkType: 'theme' → archive?theme=, 'palette' → archive?palette=, 'search' → archive?q= */
+  function tags(items, linkType) {
+    if (!items || !items.length) return '';
+    return '<ul class="tags">' + items.map(t => {
+      let href = '';
+      if (linkType === 'theme')   href = 'archive.html?theme='   + encodeURIComponent(t);
+      if (linkType === 'palette') href = 'archive.html?palette=' + encodeURIComponent(t);
+      if (linkType === 'search')  href = 'archive.html?q='       + encodeURIComponent(t);
+      if (linkType === 'series')  href = 'series.html?series='   + encodeURIComponent(t);
+
+      // ④ Palette: prefix with a colored dot swatch
+      let inner = esc(t);
+      if (linkType === 'palette') {
+        const tl  = t.toLowerCase();
+        let dotStyle = '';
+        if (tl === 'iridescent') {
+          dotStyle = 'background:conic-gradient(from 0deg,#ff4400,#ffcc00,#88dd00,#00aacc,#6644ff,#ff4400)';
+        } else if (PALETTE_COLORS[tl]) {
+          dotStyle = `background:${PALETTE_COLORS[tl]}`;
+        }
+        if (dotStyle) inner = `<span class="palette-dot" style="${dotStyle}" aria-hidden="true"></span>${esc(t)}`;
+      }
+
+      return href
+        ? `<li><a href="${esc(href)}">${inner}</a></li>`
+        : `<li>${inner}</li>`;
+    }).join('') + '</ul>';
+  }
+
+  function field(label, content) {
+    if (!content) return '';
+    return `<div><p class="field__label">${label}</p><div>${content}</div></div>`;
+  }
+
+  function esc(s) {
+    return String(s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  /* ---- related works ---- */
+  function buildRelated(catalog, data) {
+    if (!catalog) return '';
+    const themes      = data.themes || [];
+    const namedSeries = data.series || null;
+    const palette     = (data.palette || []).slice(0, 2);
+    const motifs      = data.motifs  || [];
+
+    if (!themes.length && !namedSeries && !palette.length && !motifs.length) return '';
+
+    const scored = catalog
+      .filter(r => (r.file || '').replace('.avif', '') !== id)
+      .map(r => {
+        let score = 0;
+        if (namedSeries && r.series === namedSeries)          score += 4;
+        const rThemes = r.themes || [];
+        themes.forEach(t  => { if (rThemes.includes(t))       score += 2;   });
+        const rPalette = r.palette || [];
+        palette.forEach(c => { if (rPalette.includes(c))      score += 1;   });
+        const rMotifs = r.motifs || [];
+        motifs.forEach(m  => { if (rMotifs.includes(m))       score += 0.5; });
+        return { r, score };
+      })
+      .filter(({ score }) => score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 4)
+      .map(({ r }) => r);
+
+    if (!scored.length) return '';
+
+    const seriesLinks = [
+      ...themes.map(t =>
+        `<a class="related__series-link" href="series.html?theme=${encodeURIComponent(t)}">All ${esc(t)} &rarr;</a>`
+      ),
+      ...(namedSeries
+        ? [`<a class="related__series-link" href="series.html?series=${encodeURIComponent(namedSeries)}">All ${esc(namedSeries)} &rarr;</a>`]
+        : []),
+    ].join('');
+
+    const items = scored.map(r => {
+      const rid    = r.file.replace('.avif', '');
+      const rtitle = r.title || rid;
+      return `<div>
+        <a class="related__thumb" href="${esc(artURL(rid))}">
+          <img src="artworks/thumbs/${esc(rid)}.avif" alt="${esc(rtitle)}" loading="lazy" width="400">
+        </a>
+        <p class="related__caption">${esc(rtitle)}</p>
+      </div>`;
+    }).join('');
+
+    return `
+      <section class="related" aria-label="Similar works">
+        <div class="related__head">
+          <p class="related__label">Similar Works</p>
+          <div class="related__series-links">${seriesLinks}</div>
+        </div>
+        <div class="related__grid">${items}</div>
+      </section>`;
+  }
+
+  /* ---- render ---- */
+  function render(data, catalog, navPos, navTotal) {
+    const title       = data.title || id;
+    const type        = (data.work_type || '').replace(/_/g, ' ');
+    const isCataloged = !!data.title;
+    const relatedHTML = buildRelated(catalog, data);
+
+    /* Build right-column fields separately to avoid nested template-literal escaping */
+    const fieldsHTML = !isCataloged
+      ? '<p class="field__text" style="color:var(--muted);opacity:0.45;font-size:0.8125rem;margin:0">Not yet cataloged.</p>'
+      : [
+          data.series ? field('Series',  tags([data.series], 'series')) : '',
+          field('Themes',    tags(data.themes,    'theme')),
+          field('Palette',   tags(data.palette,   'palette')),
+          field('Motifs',    tags(data.motifs,    'search')),
+          field('Materials', tags(data.materials, 'search')),
+          data.composition ? field('Composition', `<p class="field__text">${esc(data.composition)}</p>`) : '',
+          field('Keywords',  tags(data.keywords,  'search')),
+        ].join('');
+
+    // ⑦ Save to recently viewed before rendering
+    saveRecentlyViewed(id, data.title || '', data.year || null);
+    const recentHTML = recentlyViewedHTML(id);
+
+    document.getElementById('content').innerHTML = `
+      <div class="artwork-image">
+        <a class="artwork-back" href="${esc(backURL())}">&#8592; ${hasContext ? 'Back' : 'Archive'}</a>
+        <img id="artwork-img" src="artworks/thumbs/${esc(id)}.avif" alt="${esc(title)}" fetchpriority="high">
+      </div>
+      <div class="meta container">
+        <div class="meta__left">
+          <p class="meta__id">${esc(id)}</p>
+          <h1 class="meta__title">${esc(title)}</h1>
+          <p class="meta__type">${esc(type)}</p>
+          ${data.year ? `<p class="meta__year">${esc(String(data.year))}</p>` : ''}
+          <p class="meta__description">${esc(data.description || '')}</p>
+        </div>
+        <div class="meta__right meta__fields">
+          ${fieldsHTML}
+        </div>
+        <nav class="artwork-nav" aria-label="Browse works">
+          <a id="nav-prev"
+             href="${prevId ? esc(artURL(prevId)) : '#'}"
+             ${!prevId ? 'aria-disabled="true" tabindex="-1"' : ''}>&#8592; Previous</a>
+          <div class="key-hint">
+            <span class="key">&#8592;</span>
+            <span class="key">&#8594;</span>
+            ${navPos && navTotal ? `<span class="nav-pos">${navPos}&thinsp;/&thinsp;${navTotal}</span>` : ''}
+          </div>
+          <a href="${esc(backURL())}">${hasContext ? 'Back to filtered view' : 'Archive'}</a>
+          <button id="fav-btn" class="fav-btn" aria-pressed="false" aria-label="Save to favorites">♡</button>
+          <button id="share-btn" class="share-btn" aria-label="Share this artwork">Share</button>
+          <a id="nav-next"
+             href="${nextId ? esc(artURL(nextId)) : '#'}"
+             ${!nextId ? 'aria-disabled="true" tabindex="-1"' : ''}>Next &#8594;</a>
+        </nav>
+        ${relatedHTML}
+      </div>
+      ${recentHTML}
+    `;
+
+    document.title = `${title} — Jeffrey F. S. Neumann`;
+    document.querySelector('meta[name="description"]')
+      .setAttribute('content', (data.description || title).slice(0, 160));
+    document.querySelector('meta[property="og:title"]')
+      .setAttribute('content', `${title} — Jeffrey F. S. Neumann`);
+    document.querySelector('meta[property="og:image"]')
+      .setAttribute('content', `${location.origin}/artworks/thumbs/${id}.avif`);
+    document.querySelector('meta[property="og:url"]')
+      .setAttribute('content', location.href);
+
+    /* structured data — schema.org/VisualArtwork */
+    let ldEl = document.querySelector('script[type="application/ld+json"]');
+    if (!ldEl) {
+      ldEl = document.createElement('script');
+      ldEl.type = 'application/ld+json';
+      document.head.appendChild(ldEl);
+    }
+    const ldData = {
+      '@context': 'https://schema.org',
+      '@type':    'VisualArtwork',
+      'name':     title,
+      'url':      location.href,
+      'image':    `${location.origin}/artworks/full/${id}.avif`,
+      'creator':  { '@type': 'Person', 'name': 'Jeffrey F. S. Neumann', 'url': location.origin },
+      'isPartOf': { '@type': 'Collection', 'name': 'Archive of Jeffrey F. S. Neumann, 1974–present' },
+    };
+    if (data.description)                    ldData.description    = data.description;
+    if (data.work_type)                      ldData.artMedium      = data.work_type.replace(/_/g, ' ');
+    if (data.materials && data.materials.length) ldData.artworkSurface = data.materials.join(', ');
+    if (data.keywords  && data.keywords.length)  ldData.keywords   = data.keywords;
+    if (data.themes    && data.themes.length)    ldData.genre      = data.themes.join(', ');
+    if (data.year)                               ldData.dateCreated = String(data.year);
+    ldEl.textContent = JSON.stringify(ldData);
+
+    /* progressive image upgrade: thumb shown instantly, full loads behind */
+    const imgEl  = document.getElementById('artwork-img');
+    const fullSrc = `artworks/full/${id}.avif`;
+
+    function initViewer() {
+      if (imgEl._viewer) imgEl._viewer.destroy();
+      imgEl._viewer = new Viewer(imgEl, {
+        navbar:    false,
+        title:     true,
+        tooltip:   true,
+        movable:   true,
+        zoomable:  true,
+        rotatable: true,
+        scalable:  true,
+        fullscreen: true,
+        keyboard:  true,
+        toolbar: {
+          zoomIn:          1,
+          zoomOut:         1,
+          oneToOne:        1,
+          reset:           1,
+          prev:            0,
+          play:            0,
+          next:            0,
+          rotateLeft:      1,
+          rotateRight:     1,
+          flipHorizontal:  1,
+          flipVertical:    1,
+          fullscreen:      1,
+        },
+      });
+    }
+
+    /* init on thumb immediately so viewer is ready */
+    initViewer();
+
+    const fullImg = new Image();
+    fullImg.onload = () => {
+      imgEl.classList.add('upgrading');
+      imgEl.style.opacity = '0';
+      /* Two nested rAFs: first commits opacity:0 to a painted frame,
+         second starts the transition back to 1 with the new src */
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        imgEl.src = fullSrc;
+        imgEl.style.opacity = '1';
+        /* re-init viewer with the full-res image */
+        initViewer();
+        /* preload adjacent thumbs so prev/next navigation feels instant */
+        [prevId, nextId].filter(Boolean).forEach(adjId => {
+          const pre = new Image();
+          pre.src = 'artworks/thumbs/' + adjId + '.avif';
+        });
+      }));
+    };
+    fullImg.src = fullSrc;
+
+    /* keyboard navigation — skip when viewer overlay is open */
+    document.addEventListener('keydown', e => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (document.body.classList.contains('viewer-open')) return;
+      if (e.key === 'ArrowLeft'  && prevId) location.href = artURL(prevId);
+      if (e.key === 'ArrowRight' && nextId) location.href = artURL(nextId);
+    });
+
+    /* touch swipe — left = next, right = prev */
+    let txStart = 0, tyStart = 0;
+    document.addEventListener('touchstart', e => {
+      txStart = e.touches[0].clientX;
+      tyStart = e.touches[0].clientY;
+    }, { passive: true });
+    document.addEventListener('touchend', e => {
+      if (document.body.classList.contains('viewer-open')) return;
+      const dx = e.changedTouches[0].clientX - txStart;
+      const dy = e.changedTouches[0].clientY - tyStart;
+      if (Math.abs(dx) < 40 || Math.abs(dy) > Math.abs(dx)) return;
+      if (dx < 0 && nextId) location.href = artURL(nextId);
+      if (dx > 0 && prevId) location.href = artURL(prevId);
+    }, { passive: true });
+
+    /* share button */
+    const shareBtn = document.getElementById('share-btn');
+    if (shareBtn) {
+      shareBtn.addEventListener('click', () => {
+        const url = location.href;
+        if (navigator.share) {
+          navigator.share({ title: `${title} — Jeffrey F. S. Neumann`, url }).catch(() => {});
+        } else {
+          navigator.clipboard.writeText(url).then(() => {
+            shareBtn.textContent = 'Copied!';
+            shareBtn.classList.add('copied');
+            setTimeout(() => {
+              shareBtn.textContent = 'Share';
+              shareBtn.classList.remove('copied');
+            }, 2000);
+          }).catch(() => {});
+        }
+      });
+    }
+
+    /* favorites button */
+    const favBtn = document.getElementById('fav-btn');
+    if (favBtn) {
+      const isFav = () => {
+        try { return JSON.parse(localStorage.getItem('jfsn-favorites') || '[]').includes(id); }
+        catch(e) { return false; }
+      };
+      const updateFavBtn = () => {
+        const fav = isFav();
+        favBtn.setAttribute('aria-pressed', String(fav));
+        favBtn.textContent = fav ? '♥' : '♡';
+        favBtn.setAttribute('aria-label', fav ? 'Remove from saved' : 'Save to favorites');
+      };
+      updateFavBtn();
+      favBtn.addEventListener('click', () => {
+        /* Use jfsnFavs helper from search.js if available, else inline */
+        if (window.jfsnFavs) {
+          window.jfsnFavs.toggle(id);
+        } else {
+          try {
+            let favs = JSON.parse(localStorage.getItem('jfsn-favorites') || '[]');
+            const idx = favs.indexOf(id);
+            if (idx >= 0) favs.splice(idx, 1); else favs.unshift(id);
+            localStorage.setItem('jfsn-favorites', JSON.stringify(favs));
+          } catch(e) {}
+        }
+        updateFavBtn();
+      });
+    }
+
+    /* update canonical URL for this specific artwork */
+    let canonEl = document.querySelector('link[rel="canonical"]');
+    if (canonEl) canonEl.setAttribute('href', `https://jfsn.com/artwork.html?id=${id}`);
+  }
+
+  function showError() {
+    document.getElementById('content').innerHTML = `
+      <div class="error container">
+        <p>${id ? `"${esc(id)}" not found` : 'No artwork specified'}</p>
+        <p style="margin-top:1.5rem"><a href="archive.html">&#8592; Back to archive</a></p>
+      </div>
+    `;
+    document.title = 'Not found — Jeffrey F. S. Neumann';
+  }
+
+  if (!id || isNaN(num)) { showError(); return; }
+
+  /* ---- fetch work + catalog in parallel (catalog needed for related works) ---- */
+  /* Return {} for uncataloged works (no sidecar yet) so we can still show the image */
+  const workFetch    = fetch(`artworks/full/${id}.json`)
+    .then(r => r.ok ? r.json() : {})
+    .catch(() => ({}));
+
+  const catalogFetch = fetch('catalog-lite.json')
+    .then(r => r.json()).catch(() => null);
+
+  Promise.all([workFetch, catalogFetch])
+    .then(([data, catalog]) => {
+      const isCataloged = !!data.title;
+      let navPos = 0, navTotal = 0;
+      if (isCataloged && catalog && hasContext) {
+        const filtered = catalog.filter(matchesFilter);
+        const ids      = filtered.map(r => r.file.replace('.avif', ''));
+        const pos      = ids.indexOf(id);
+        prevId   = pos > 0              ? ids[pos - 1] : null;
+        nextId   = pos < ids.length - 1 ? ids[pos + 1] : null;
+        navPos   = pos >= 0 ? pos + 1 : 0;
+        navTotal = ids.length;
+      } else {
+        prevId   = num > MIN ? pad(num - 1) : null;
+        nextId   = num < MAX ? pad(num + 1) : null;
+        navPos   = num;
+        navTotal = MAX;
+      }
+      render(data, catalog, navPos, navTotal);
+    })
+    .catch(showError);
+
+})();
+</script>
+
+</body>
+</html>

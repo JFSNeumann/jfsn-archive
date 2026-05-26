@@ -1,0 +1,272 @@
+/* ===========================================
+   FOOTER MICRO-INTERACTIONS
+   Hover animations, magnetic buttons, icon rotations
+   =================================== */
+
+/* ===== MAGNETIC BUTTON EFFECT ===== */
+.social-btn {
+  position: relative;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.3s ease,
+              background-color 0.3s ease;
+  will-change: transform;
+}
+
+/* Magnetic effect on hover */
+.social-btn:hover {
+  transform: translateY(-4px) scale(1.1);
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4),
+              0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+.social-btn:active {
+  transform: translateY(-2px) scale(1.05);
+  transition: transform 0.1s ease;
+}
+
+/* Icon rotation on hover */
+.social-btn i {
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+              color 0.3s ease;
+  display: inline-block;
+  will-change: transform;
+}
+
+.social-btn:hover i {
+  transform: rotate(360deg) scale(1.2);
+}
+
+/* Platform-specific icon animations */
+.social-btn[data-platform="LinkedIn"]:hover i {
+  color: #0077b5;
+  transform: rotate(360deg) scale(1.2);
+}
+
+.social-btn[data-platform="Twitter"]:hover i {
+  color: #1da1f2;
+  transform: rotate(360deg) scale(1.2);
+}
+
+.social-btn[data-platform="Instagram"]:hover i {
+  color: #e4405f;
+  transform: rotate(360deg) scale(1.2);
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.social-btn[data-platform="Dribbble"]:hover i {
+  color: #ea4c89;
+  transform: rotate(360deg) scale(1.2);
+}
+
+.social-btn[data-platform="Behance"]:hover i {
+  color: #1769ff;
+  transform: rotate(360deg) scale(1.2);
+}
+
+/* ===== LINK HOVER ANIMATIONS ===== */
+.footer-link {
+  position: relative;
+  transition: color 0.3s ease,
+              transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-block;
+  will-change: transform, color;
+}
+
+/* Underline animation - draw from left to right */
+.footer-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: width;
+}
+
+.footer-link:hover {
+  color: #ffffff !important;
+  transform: translateX(4px);
+}
+
+.footer-link:hover::after {
+  width: 100%;
+}
+
+/* Icon animations on link hover */
+.footer-link i {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              color 0.3s ease;
+  display: inline-block;
+  will-change: transform;
+}
+
+.footer-link:hover i {
+  transform: translateX(4px) scale(1.15);
+  color: #a5b4fc;
+}
+
+/* ===== BADGE PULSE ANIMATION ===== */
+.footer-badge-link {
+  position: relative;
+  overflow: visible;
+}
+
+.footer-badge-link::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  background: rgba(16, 185, 129, 0.3);
+  opacity: 0;
+  transition: opacity 0.3s ease,
+              transform 0.3s ease;
+  z-index: -1;
+  will-change: opacity, transform;
+}
+
+.footer-badge-link:hover::before {
+  opacity: 1;
+  transform: scale(1.1);
+  animation: badgeRipple 1s ease-out infinite;
+}
+
+@keyframes badgeRipple {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
+}
+
+/* Spinner pulse on hover */
+.footer-badge-link:hover .spinner-grow {
+  animation: badgeSpinnerPulse 0.6s ease-in-out infinite;
+}
+
+@keyframes badgeSpinnerPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.8;
+  }
+}
+
+/* ===== PROFILE IMAGE INTERACTIONS ===== */
+.footer-character-container {
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform;
+}
+
+.footer-character-container:hover {
+  transform: translateY(-8px) scale(1.05);
+}
+
+.footer-character-container:active {
+  transform: translateY(-4px) scale(1.02);
+}
+
+/* Orb glow on hover */
+.orb-test {
+  transition: opacity 0.4s ease,
+              transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: opacity, transform;
+}
+
+.footer-character-container:hover .orb-test {
+  transform: scale(1.2);
+}
+
+/* ===== ACCORDION INTERACTIONS ===== */
+.accordion-button {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, color;
+}
+
+.accordion-button:not(.collapsed) {
+  transform: translateY(-2px);
+  color: #a5b4fc !important;
+}
+
+.accordion-button::after {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.accordion-button:not(.collapsed)::after {
+  transform: rotate(180deg) scale(1.2);
+}
+
+/* Accordion body slide animation */
+.accordion-collapse {
+  transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: height;
+}
+
+.accordion-body {
+  transition: opacity 0.3s ease 0.1s;
+  will-change: opacity;
+}
+
+.accordion-collapse:not(.show) .accordion-body {
+  opacity: 0;
+}
+
+.accordion-collapse.show .accordion-body {
+  opacity: 1;
+}
+
+/* ===== BOTTOM LINKS INTERACTIONS ===== */
+.footer-bottom-link {
+  position: relative;
+  transition: color 0.3s ease,
+              transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, color;
+}
+
+.footer-bottom-link:hover {
+  color: #ffffff !important;
+  transform: translateY(-2px);
+}
+
+.footer-bottom-link i {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: inline-block;
+  will-change: transform;
+}
+
+.footer-bottom-link:hover i {
+  transform: rotate(15deg) scale(1.2);
+}
+
+/* ===== PERFORMANCE OPTIMIZATIONS ===== */
+@media (prefers-reduced-motion: reduce) {
+  .social-btn,
+  .footer-link,
+  .footer-badge-link,
+  .footer-character-container,
+  .accordion-button,
+  .footer-bottom-link {
+    transition: none !important;
+    animation: none !important;
+  }
+  
+  .social-btn:hover i,
+  .footer-link:hover i,
+  .footer-bottom-link:hover i {
+    transform: none !important;
+  }
+}
+

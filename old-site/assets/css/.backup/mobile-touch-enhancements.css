@@ -1,0 +1,222 @@
+/* =========================================== */
+/* MOBILE TOUCH ENHANCEMENTS */
+/* Enhanced touch feedback, haptics, gestures */
+/* =========================================== */
+
+@media (max-width: 768px) {
+  /* ===== ENHANCED TOUCH FEEDBACK ===== */
+  .touch-target,
+  button,
+  .btn,
+  .nav-link,
+  .artwork-card,
+  .category-card,
+  a[role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(99, 102, 241, 0.2);
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+  }
+  
+  /* Active touch state */
+  .touch-target:active,
+  button:active,
+  .btn:active,
+  .nav-link:active,
+  .artwork-card:active,
+  .category-card:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+    background-color: rgba(99, 102, 241, 0.1);
+  }
+  
+  /* Touch active class (for JavaScript) */
+  .touch-active {
+    transform: scale(0.97) !important;
+    opacity: 0.85 !important;
+    background-color: rgba(99, 102, 241, 0.15) !important;
+    transition: all 0.1s ease-out !important;
+  }
+  
+  /* Ripple effect on touch */
+  .touch-target::after,
+  button::after,
+  .btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(99, 102, 241, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease-out, height 0.3s ease-out, opacity 0.3s ease-out;
+    pointer-events: none;
+    opacity: 0;
+  }
+  
+  .touch-target:active::after,
+  button:active::after,
+  .btn:active::after {
+    width: 200px;
+    height: 200px;
+    opacity: 1;
+  }
+  
+  /* ===== IMPROVED BUTTON STATES ===== */
+  .btn-primary:active {
+    background-color: #4f46e5 !important;
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4) !important;
+  }
+  
+  .btn-outline-primary:active {
+    background-color: rgba(99, 102, 241, 0.1) !important;
+    border-color: #6366f1 !important;
+  }
+  
+  /* ===== ARTWORK CARD TOUCH ===== */
+  .artwork-card:active {
+    transform: scale(0.98) translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  }
+  
+  /* ===== NAVIGATION TOUCH ===== */
+  .nav-link:active {
+    background-color: rgba(99, 102, 241, 0.1);
+    color: #6366f1;
+  }
+  
+  /* ===== LONG PRESS INDICATOR ===== */
+  .long-press-active {
+    transform: scale(0.95) !important;
+    opacity: 0.8 !important;
+    background-color: rgba(99, 102, 241, 0.2) !important;
+  }
+  
+  /* ===== SWIPE INDICATORS ===== */
+  .swipe-indicator {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 9999;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 16px;
+    border-radius: 50%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: #6366f1;
+  }
+  
+  .swipe-indicator.show {
+    opacity: 1;
+  }
+  
+  .swipe-indicator.left {
+    left: 20px;
+    right: auto;
+  }
+  
+  .swipe-indicator.right {
+    right: 20px;
+    left: auto;
+  }
+  
+  /* ===== PULL TO REFRESH ===== */
+  .pull-to-refresh-indicator {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100%);
+    z-index: 10000;
+    background: rgba(99, 102, 241, 0.95);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  
+  .pull-to-refresh-indicator.show {
+    transform: translateX(-50%) translateY(0);
+  }
+  
+  .pull-to-refresh-indicator .spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  /* ===== PREVENT TEXT SELECTION ON INTERACTIVE ELEMENTS ===== */
+  button,
+  .btn,
+  .nav-link,
+  .artwork-card,
+  .category-card,
+  .touch-target {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+  
+  /* Allow text selection for content */
+  p,
+  span:not(.btn),
+  h1, h2, h3, h4, h5, h6,
+  .artwork-title,
+  .artwork-description {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+  
+  /* ===== IMPROVED FOCUS STATES FOR KEYBOARD NAVIGATION ===== */
+  button:focus-visible,
+  .btn:focus-visible,
+  .nav-link:focus-visible,
+  a:focus-visible {
+    outline: 3px solid #6366f1;
+    outline-offset: 3px;
+    border-radius: 8px;
+  }
+}
+
+/* ===== REDUCED MOTION SUPPORT ===== */
+@media (prefers-reduced-motion: reduce) {
+  .touch-target:active,
+  button:active,
+  .btn:active {
+    transform: none !important;
+    transition: none !important;
+  }
+  
+  .swipe-indicator,
+  .pull-to-refresh-indicator {
+    transition: opacity 0.1s ease !important;
+  }
+}
+

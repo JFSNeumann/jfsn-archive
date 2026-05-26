@@ -1,0 +1,108 @@
+/* =========================================== */
+/* COPY URL TO CLIPBOARD */
+/* Button and toast notification styles */
+/* =========================================== */
+
+/* Copy URL Button */
+.navbar-copy-url {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all var(--transition-fast);
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.75rem;
+}
+
+.navbar-copy-url:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.navbar-copy-url:focus {
+  outline: 2px solid var(--brand-color);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+}
+
+.navbar-copy-url:active {
+  transform: scale(0.95);
+}
+
+/* Toast Notification */
+.navbar-toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  z-index: 100000;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+  max-width: 400px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.navbar-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.navbar-toast-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.navbar-toast-success .navbar-toast-icon {
+  color: #10b981;
+}
+
+.navbar-toast-error .navbar-toast-icon {
+  color: #ef4444;
+}
+
+.navbar-toast-message {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* Mobile adjustments */
+@media (max-width: 991px) {
+  .navbar-toast {
+    bottom: 1rem;
+    right: 1rem;
+    left: 1rem;
+    max-width: none;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .navbar-toast {
+    transition: opacity 0.1s ease;
+  }
+  
+  .navbar-copy-url {
+    transition: background 0.1s ease;
+  }
+}
+

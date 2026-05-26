@@ -1,0 +1,288 @@
+/**
+ * Table of Contents Navigation
+ * Auto-generated sticky sidebar navigation
+ */
+
+/* ===== TABLE OF CONTENTS CONTAINER ===== */
+.table-of-contents {
+  position: fixed;
+  top: 100px;
+  right: 2rem;
+  width: 280px;
+  max-height: calc(100vh - 140px);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  padding: 1.25rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12),
+              0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  z-index: 999; /* Lower than navbar (10000) and toggle button (10001) */
+  overflow-y: auto;
+  overflow-x: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(20px);
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: none; /* Hidden by default, shown by JS when sections exist */
+  pointer-events: none; /* Don't block clicks when hidden */
+}
+
+.table-of-contents.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+  pointer-events: auto; /* Allow clicks when visible */
+}
+
+.table-of-contents-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.08);
+}
+
+.table-of-contents-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.table-of-contents-toggle {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.table-of-contents-toggle:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #1e293b;
+}
+
+.table-of-contents-toggle:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
+}
+
+.table-of-contents-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              margin 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  max-height: 2000px;
+  opacity: 1;
+}
+
+.table-of-contents.collapsed .table-of-contents-list {
+  max-height: 0;
+  opacity: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+.table-of-contents-item {
+  margin: 0;
+}
+
+.table-of-contents-link {
+  display: block;
+  padding: 0.5rem 0.75rem;
+  color: #64748b;
+  text-decoration: none;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  border-radius: 8px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.table-of-contents-link::before {
+  content: '';
+  position: absolute;
+  left: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 4px;
+  background: #cbd5e1;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.table-of-contents-link:hover {
+  background: rgba(99, 102, 241, 0.08);
+  color: #6366f1;
+  padding-left: 1.75rem;
+}
+
+.table-of-contents-link:hover::before {
+  background: #6366f1;
+  width: 6px;
+  height: 6px;
+}
+
+.table-of-contents-link.active {
+  background: rgba(99, 102, 241, 0.12);
+  color: #6366f1;
+  font-weight: 600;
+  padding-left: 1.75rem;
+}
+
+.table-of-contents-link.active::before {
+  background: #6366f1;
+  width: 6px;
+  height: 6px;
+}
+
+/* Nested items (h3, h4) */
+.table-of-contents-item.level-2 .table-of-contents-link {
+  padding-left: 2rem;
+  font-size: 0.8125rem;
+}
+
+.table-of-contents-item.level-3 .table-of-contents-link {
+  padding-left: 2.5rem;
+  font-size: 0.75rem;
+}
+
+/* Dark mode support */
+[data-bs-theme="dark"] .table-of-contents {
+  background: rgba(30, 41, 59, 0.95);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+              0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+[data-bs-theme="dark"] .table-of-contents-header {
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-bs-theme="dark"] .table-of-contents-title {
+  color: #94a3b8;
+}
+
+[data-bs-theme="dark"] .table-of-contents-toggle {
+  color: #94a3b8;
+}
+
+[data-bs-theme="dark"] .table-of-contents-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+}
+
+[data-bs-theme="dark"] .table-of-contents-link {
+  color: #94a3b8;
+}
+
+[data-bs-theme="dark"] .table-of-contents-link::before {
+  background: #475569;
+}
+
+[data-bs-theme="dark"] .table-of-contents-link:hover {
+  background: rgba(99, 102, 241, 0.2);
+  color: #818cf8;
+}
+
+[data-bs-theme="dark"] .table-of-contents-link:hover::before {
+  background: #818cf8;
+}
+
+[data-bs-theme="dark"] .table-of-contents-link.active {
+  background: rgba(99, 102, 241, 0.25);
+  color: #818cf8;
+}
+
+[data-bs-theme="dark"] .table-of-contents-link.active::before {
+  background: #818cf8;
+}
+
+/* Hide TOC when navbar overlay is open to prevent interference */
+.editorial-nav-overlay.active ~ .table-of-contents,
+body:has(.editorial-nav-overlay.active) .table-of-contents {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transform: translateX(20px) !important;
+}
+
+/* Ensure TOC doesn't overlap navbar toggle button area */
+@media (max-width: 1200px) {
+  .table-of-contents {
+    width: 240px;
+    right: 1rem;
+    top: 120px; /* More space below navbar */
+  }
+}
+
+@media (max-width: 992px) {
+  .table-of-contents {
+    position: fixed;
+    top: auto;
+    bottom: 1rem;
+    right: 1rem;
+    width: calc(100% - 2rem);
+    max-width: 320px;
+    max-height: 50vh;
+    transform: translateY(100%);
+  }
+  
+  .table-of-contents.visible {
+    transform: translateY(0);
+  }
+  
+  .table-of-contents-toggle {
+    display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  .table-of-contents {
+    width: calc(100% - 1rem);
+    right: 0.5rem;
+    bottom: 0.5rem;
+    padding: 1rem;
+  }
+  
+  .table-of-contents-link {
+    font-size: 0.8125rem;
+    padding: 0.5rem 0.625rem;
+  }
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .table-of-contents,
+  .table-of-contents-link {
+    transition: none;
+  }
+  
+  html {
+    scroll-behavior: auto;
+  }
+}
+

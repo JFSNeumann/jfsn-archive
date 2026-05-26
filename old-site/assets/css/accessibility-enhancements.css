@@ -1,0 +1,265 @@
+/* ===========================================
+   ACCESSIBILITY ENHANCEMENTS
+   Skip links, keyboard shortcuts overlay, high contrast mode
+   =========================================== */
+
+/* Skip to content link */
+.skip-to-content {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  background: #6366f1;
+  color: white;
+  padding: 1rem 1.5rem;
+  text-decoration: none;
+  font-weight: 600;
+  z-index: 10000;
+  border-radius: 0 0 8px 0;
+  transition: top 0.3s;
+}
+
+.skip-to-content:focus {
+  top: 0;
+  outline: 3px solid #fff;
+  outline-offset: -3px;
+}
+
+/* Keyboard shortcuts overlay - HIDDEN (user doesn't want to see this) */
+.keyboard-shortcuts-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10003;
+  display: none !important; /* Hidden - user doesn't want to see this */
+  align-items: center;
+  justify-content: center;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none !important;
+}
+
+.keyboard-shortcuts-overlay.active {
+  display: none !important; /* Always hidden */
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+.keyboard-shortcuts-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(4px);
+}
+
+.keyboard-shortcuts-content {
+  position: relative;
+  background: white;
+  border-radius: 24px;
+  padding: 2rem;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  transform: scale(0.9) translateY(20px);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4);
+}
+
+.keyboard-shortcuts-overlay.active .keyboard-shortcuts-content {
+  transform: scale(1) translateY(0);
+}
+
+.keyboard-shortcuts-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.keyboard-shortcuts-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.keyboard-shortcuts-close {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  color: #666;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.keyboard-shortcuts-close:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #000;
+}
+
+.keyboard-shortcut-group {
+  margin-bottom: 2rem;
+}
+
+.keyboard-shortcut-group-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #1e293b;
+}
+
+.keyboard-shortcut-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.keyboard-shortcut-item:last-child {
+  border-bottom: none;
+}
+
+.keyboard-shortcut-label {
+  font-size: 0.875rem;
+  color: #475569;
+}
+
+.keyboard-shortcut-keys {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.keyboard-key {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #334155;
+  font-family: monospace;
+  min-width: 24px;
+  text-align: center;
+}
+
+/* High contrast mode toggle */
+.high-contrast-toggle {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 9999;
+  background: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.high-contrast-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 32px rgba(99, 102, 241, 0.5);
+}
+
+/* High contrast mode styles */
+body.high-contrast {
+  filter: contrast(1.2);
+}
+
+body.high-contrast * {
+  border-color: currentColor !important;
+}
+
+body.high-contrast .btn {
+  border-width: 2px !important;
+}
+
+body.high-contrast a {
+  text-decoration: underline !important;
+}
+
+/* Enhanced focus indicators */
+*:focus-visible {
+  outline: 3px solid #6366f1;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid #6366f1;
+  outline-offset: 2px;
+}
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .keyboard-shortcuts-overlay,
+  .keyboard-shortcuts-content,
+  .high-contrast-toggle {
+    transition: none;
+  }
+}
+
+/* Dark mode */
+[data-bs-theme="dark"] .keyboard-shortcuts-content {
+  background: #1e293b;
+  color: white;
+}
+
+[data-bs-theme="dark"] .keyboard-shortcut-group-title {
+  color: #f9fafb;
+}
+
+[data-bs-theme="dark"] .keyboard-shortcut-label {
+  color: #d1d5db;
+}
+
+[data-bs-theme="dark"] .keyboard-key {
+  background: #0f172a;
+  border-color: #334155;
+  color: #e5e7eb;
+}
+
+[data-bs-theme="dark"] .keyboard-shortcut-item {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .high-contrast-toggle {
+    bottom: 5rem; /* Above mobile nav */
+    width: 48px;
+    height: 48px;
+    font-size: 1.25rem;
+  }
+}
+

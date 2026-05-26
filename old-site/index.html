@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+
+<html data-bs-theme="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+
+<!-- LCP: Preload hero image first – highest priority for Performance -->
+<link as="image" href="artworks/thumbs/art1010.avif" media="(max-width: 991px)" rel="preload" type="image/avif"/>
+<link as="image" href="artworks/art1010.avif" media="(min-width: 992px)" rel="preload" type="image/avif"/>
+
+<!-- CLS: Reserve hero space before any CSS loads -->
+ <style>
+  .hero-section{position:relative;width:100%;height:100svh;overflow:hidden}
+  .hero-image-link{display:block;width:100%;height:100%}
+  .hero-image-link picture,.hero-image-link img{display:block;width:100%;height:100%;object-fit:cover}
+
+  /* Scoped to .jfsn-home — beats template-core-bundle selectors without !important */
+  .jfsn-home .hero-section .hero-content{
+    position:absolute;
+    bottom:0;left:0;right:0;
+    padding:2.5rem 2rem;
+    background:linear-gradient(transparent,rgba(0,0,0,.6));
+    backdrop-filter:none;
+    -webkit-backdrop-filter:none;
+    mask-image:none;
+    -webkit-mask-image:none;
+    border:none;
+    box-shadow:none;
+    border-radius:0;
+    color:#fff;
+    text-align:center
+  }
+  .jfsn-home .hero-section .hero-content::before{display:none}
+  .jfsn-home .hero-section .hero-content .hero-title-large{white-space:normal}
+
+  .archive-intro{padding:6rem 2rem;text-align:center}
+  .archive-intro p{max-width:34rem;margin:0 auto 2.5rem;color:#666;font-size:1.125rem;line-height:1.75}
+  .archive-intro a{font-size:.8125rem;letter-spacing:.12em;text-transform:uppercase;color:inherit;text-decoration:underline;text-underline-offset:.35em}
+</style>         
+
+<title>Jeffrey F. S. Neumann | Artist and Designer</title>
+
+<!-- SEO Meta Tags -->
+<meta content="An archive of 1,084 works spanning five decades — paintings, collage, photography, and digital work." name="description"/>
+<meta content="Jeffrey F. S. Neumann" name="author"/>
+<meta content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" name="robots"/>
+
+<!-- Open Graph / Facebook -->
+<meta content="Jeffrey F. S. Neumann | Artist and Designer" property="og:title"/>
+<meta content="An archive of 1,084 works spanning five decades — paintings, collage, photography, and digital work." property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="https://jfsn.com/artworks/art1005.avif" property="og:image"/>
+<meta content="image/avif" property="og:image:type"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="Jeffrey F. S. Neumann Artwork" property="og:image:alt"/>
+<meta content="https://jfsn.com/" property="og:url"/>
+<meta content="Jeffrey F. S. Neumann Portfolio" property="og:site_name"/>
+
+<!-- Twitter Card -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Jeffrey F. S. Neumann | Artist and Designer" name="twitter:title"/>
+<meta content="1,084 works spanning five decades — paintings, collage, photography, and digital work." name="twitter:description"/>
+<meta content="https://jfsn.com/artworks/art1005.avif" name="twitter:image"/>
+
+<!-- Favicons -->
+<link href="favicon.svg" rel="icon" type="image/svg+xml">
+<link href="favicon.ico" rel="icon" type="image/x-icon">
+<link href="favicon.png" rel="apple-touch-icon" sizes="180x180"/>
+<meta content="#6366f1" name="theme-color"/>
+
+<!-- PWA Manifest -->
+<link href="/manifest.webmanifest" rel="manifest"/>
+
+<!-- Canonical URL -->
+<link href="https://jfsn.com/" rel="canonical"/>
+
+<!-- Structured Data for SEO -->
+<script id="structured-data" type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Jeffrey F. S. Neumann Portfolio",
+    "description": "An archive of 1,084 works spanning five decades — paintings, collage, photography, and digital work.",
+    "url": "https://jfsn.com/",
+    "inLanguage": "en-US",
+    "author": {
+      "@type": "Person",
+      "name": "Jeffrey F. S. Neumann",
+      "alternateName": ["Jeff Neumann", "JFSN"],
+      "jobTitle": "Artist, Designer, Creative Technologist",
+      "url": "https://jfsn.com/about.html",
+      "sameAs": ["https://www.linkedin.com/in/jeffrey-neumann","https://twitter.com/jfsn","https://www.instagram.com/jfsneumann","https://dribbble.com/jfsn","https://www.behance.net/jfsn"]
+    },
+    "image": {
+      "@type": "ImageObject",
+      "contentUrl": "https://jfsn.com/artworks/art1010.avif",
+      "url": "https://jfsn.com/artworks/art1010.avif",
+      "description": "Featured Artwork from Jeffrey F. S. Neumann's Portfolio",
+      "creator": {
+        "@type": "Person",
+        "name": "Jeffrey F. S. Neumann",
+        "alternateName": ["Jeff Neumann", "JFSN"]
+      },
+      "copyrightHolder": {
+        "@type": "Person",
+        "name": "Jeffrey F. S. Neumann"
+      },
+      "license": "https://jfsn.com/",
+      "creditText": "© Jeffrey F. S. Neumann"
+    }
+  }
+</script>
+
+<!-- Performance: Resource Hints for Faster Loading -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+
+<!-- Preload Critical Font Files -->
+<link as="font" crossorigin="" href="https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="https://fonts.gstatic.com/s/playfairdisplay/v40/nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgEM86xQ.woff2" rel="preload" type="font/woff2"/>
+
+<!-- Font Face Overrides - font-display: swap for better text rendering -->
+<link href="assets/css/font-face-overrides.css" rel="stylesheet"/>
+
+<!-- Reduced Motion Support - Accessibility -->
+<link href="assets/css/reduced-motion.css" rel="stylesheet"/>
+
+<!-- Google Fonts - Load async to reduce render-blocking -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&amp;family=Inter:wght@300;400;500;600;700;800&amp;display=swap" media="print" onload="this.media='all'" rel="stylesheet"/>
+<noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&amp;family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/></noscript>
+
+<!-- ===== UNIFIED DESIGN SYSTEM BUNDLE ===== -->
+<link href="assets/css/design-system-bundle.css" rel="stylesheet"/>
+
+<!-- ===== UX/UI CONSISTENCY SYSTEM ===== -->
+<link href="assets/css/ux-ui-consistency.css" rel="stylesheet"/>
+
+<!-- ===== FOOTER CONSISTENCY SYSTEM ===== -->
+<link as="style" href="assets/css/footer/footer-fixes-bundle.css" onload="this.onload=null;this.rel='stylesheet'" rel="preload"/>
+<noscript><link href="assets/css/footer/footer-fixes-bundle.css" rel="stylesheet"/></noscript>
+
+<link as="style" href="assets/css/mobile-specific-bundle.css" onload="this.onload=null;this.rel='stylesheet'" rel="preload"/>
+<noscript><link href="assets/css/mobile-specific-bundle.css" rel="stylesheet"/></noscript>
+
+<!-- ===== CRITICAL CSS ===== -->
+<link href="assets/css/critical.css" rel="stylesheet"/>
+<link href="assets/css/theme-critical.css" rel="stylesheet"/>
+
+<!-- ===== CORE THEME ===== -->
+<link href="assets/css/theme.min.css" rel="stylesheet"/>
+
+<!-- ===== SHARED COMPONENTS BUNDLE ===== -->
+<link href="assets/css/shared-components-bundle.min.css" rel="stylesheet"/>
+
+<!-- ===== VENDOR STYLES ===== -->
+<link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet"/>
+
+<!-- ===== TEMPLATE-SPECIFIC STYLES ===== -->
+<link href="template/shared/css/template-core-bundle.css" rel="stylesheet"/>
+<link href="template/shared/css/template-2026-bundle.css" rel="stylesheet"/>
+
+<!-- ===== TEMPLATE OPTIONAL FEATURES ===== -->
+<link as="style" href="template/shared/css/template-enhancements-2026-bundle.css" onload="this.onload=null;this.rel='stylesheet'" rel="preload"/>
+<noscript><link href="template/shared/css/template-enhancements-2026-bundle.css" rel="stylesheet"/></noscript>
+
+<link as="style" href="template/shared/css/template-features-2026-mega-bundle.css" onload="this.onload=null;this.rel='stylesheet'" rel="preload"/>
+<noscript><link href="template/shared/css/template-features-2026-mega-bundle.css" rel="stylesheet"/></noscript>
+
+<!-- ===== UTILITY STYLES ===== -->
+<link href="assets/css/print.css" media="print" rel="stylesheet"/>
+
+<!-- Navbar Loader - unified source of truth -->
+<script defer="" src="assets/js/navbar-loader.js?v=20260411"></script>
+
+<!-- Final navbar override -->
+<link href="template/shared/css/template-navbar-overrides.css" rel="stylesheet"/>
+
+<!-- ===== NAVBAR UX/UI ENHANCEMENTS BUNDLE ===== -->
+<link href="components/navbar/css/navbar-enhancements-bundle.css" rel="stylesheet"/>
+
+<!-- ===== GLOBAL FIXES BUNDLE ===== -->
+<link href="assets/css/global-fixes-bundle.css" rel="stylesheet"/>
+
+<!-- ===== HIDE NAVBAR BUTTONS ===== -->
+<link href="assets/css/navbar-buttons-hide.css" rel="stylesheet"/>
+
+<!-- ===== HAMBURGER MENU RIGHT PANEL STYLES ===== -->
+<link href="assets/css/hamburger-menu-right-panel.css" rel="stylesheet"/>
+
+<!-- ===== NAVBAR OVERLAY FIX ===== -->
+<link href="assets/css/navbar-overlay-fix.css" rel="stylesheet"/>
+
+<!-- Footer Sebastian's Journey Fix -->
+<link href="assets/css/footer/footer-sebastian-journey-fix.css" rel="stylesheet"/>
+
+<link href="assets/css/jfsn-authority.css" rel="stylesheet"/>
+<link href="assets/css/hero-cleanup.css" rel="stylesheet"/>
+</head>
+
+<body class="jfsn-home">
+<!-- Skip to Main Content Link (Accessibility) -->
+<a aria-label="Skip to main content" class="skip-link" href="#main-content-section">
+  Skip to main content
+</a>
+
+<!-- Navbar Container - HTML Included Directly (No Fetch) -->
+<div id="navbar-section"></div>
+
+<!-- Load navbar JavaScript AFTER navbar HTML is in DOM -->
+<script defer src="assets/js/navbar-loader-inline.js"></script>
+
+<!-- Main Content -->
+<main class="main-content-section pull-to-refresh-container" id="main-content-section" role="main">
+
+<section class="hero-section" id="hero-section">
+
+  <a aria-label="Enter gallery" class="hero-image-link" href="art.html">
+    <picture>
+      <source media="(max-width: 991px)" srcset="artworks/thumbs/art1010.avif"/>
+      <img
+        alt="Featured artwork from Jeffrey F. S. Neumann's 50-year portfolio"
+        class="hero-image hero-image-active"
+        decoding="async"
+        fetchpriority="high"
+        height="2464"
+        loading="eager"
+        src="artworks/art1010.avif"
+        width="2800"
+      />
+    </picture>
+  </a>
+
+  <div class="hero-content">
+    <h1 class="hero-title-large">Jeffrey F. S. Neumann</h1>
+    <p class="lead">A five-decade archive of artwork and design</p>
+    <a class="btn btn-primary btn-lg hero-cta" href="art.html">Enter Gallery</a>
+  </div>
+
+</section>
+
+<section class="archive-intro">
+  <p>An archive of 1,084 works spanning five decades — paintings, collage, photography, and digital work.</p>
+  <a href="art.html">Browse the archive</a>
+</section>
+
+</main>
+<div aria-label="Site footer" id="footer-section" role="contentinfo">
+<!-- Loading Skeleton -->
+<footer aria-hidden="true" class="footer-loading-skeleton">
+<div class="container-fluid px-4 px-lg-5">
+<div class="row g-4">
+<div class="col-lg-4">
+<div class="skeleton-footer-brand">
+<div class="skeleton-avatar"></div>
+<div class="skeleton-text"></div>
+</div>
+</div>
+<div class="col-lg-4">
+<div class="skeleton-footer-links">
+<div class="skeleton-link"></div>
+<div class="skeleton-link"></div>
+<div class="skeleton-link"></div>
+</div>
+</div>
+<div class="col-lg-4">
+<div class="skeleton-footer-links">
+<div class="skeleton-link"></div>
+<div class="skeleton-link"></div>
+</div>
+</div>
+</div>
+</div>
+</footer>
+<!-- Error Fallback (hidden by default) -->
+<footer aria-live="assertive" class="footer-error-fallback visually-hidden" role="alert">
+<div class="container-fluid px-4 px-lg-5">
+<div class="alert alert-warning mb-0">
+<i aria-hidden="true" class="bx bx-error-circle"></i>
+<span>Footer component could not be loaded. Please refresh the page.</span>
+</div>
+</div>
+</footer>
+</div>
+
+<!-- Template Scripts Component (Loaded Dynamically) -->
+<div id="template-scripts-container"></div>
+<!-- Footer Loader -->
+<script defer="" src="assets/js/footer-loader.js?v=20250114"></script>
+<!-- Template Component Loader (Load After DOM Ready) -->
+<script defer="" src="components/template/template-loader.js"></script>
+<!-- ===== DELAY (post-load): TEMPLATE BUNDLES ===== -->
+<script data-late-src="template/shared/js/template-enhancements-2026-bundle.js"></script>
+<script data-late-src="template/shared/js/template-features-bundle.js"></script>
+<script data-late-src="template/shared/js/template-ux-ui-2026-js-bundle.js"></script>
+<script data-late-src="template/shared/js/template-core-features-2026-js-bundle.min.js"></script>
+<!-- Mobile Artwork Path Converter - keep early + non-defer -->
+<script defer="" src="assets/js/mobile-artwork-path-converter.js"></script>
+<!-- Hamburger Menu Fixes (make defer) -->
+<script defer="" src="assets/js/hamburger-menu-fix.js?v=20260112"></script>
+<script defer="" src="assets/js/hamburger-theme-toggle-fix.js"></script>
+<!-- ===== DELAY (post-load): UX/UI polish ===== -->
+<script data-late-src="template/shared/js/ux-ui-features-2026.js"></script>
+
+<!-- Post-load script loader -->
+<script>
+  window.addEventListener("load", function () {
+    var late = document.querySelectorAll("script[data-late-src]");
+    late.forEach(function (tag) {
+      var src = tag.getAttribute("data-late-src");
+      if (!src) return;
+      var s = document.createElement("script");
+      s.src = src;
+      s.defer = true;
+      document.body.appendChild(s);
+      tag.remove();
+    });
+  });
+</script>
+</body>
+</html>

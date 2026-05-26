@@ -1,0 +1,73 @@
+# ── Build ────────────────────────────────────────────────────────────────────
+# No build command — pure static site.
+[build]
+  publish = "."
+
+# ── Rewrites ──────────────────────────────────────────────────────────────────
+# Let the old site (in /old/) share artwork images from the root artworks/ folder.
+# Old site uses artworks/thumbs/* and artworks/art####.avif (flat).
+# New site uses artworks/thumbs/* (same) and artworks/full/art####.avif.
+# More-specific rule first — Netlify matches top-to-bottom, first match wins.
+
+# Thumbnails: paths are identical, just prefix changes
+[[redirects]]
+  from   = "/old-site/artworks/thumbs/*"
+  to     = "/artworks/thumbs/:splat"
+  status = 200
+
+# Full-res: old site used flat artworks/*.avif → map to new artworks/full/
+[[redirects]]
+  from   = "/old-site/artworks/*.avif"
+  to     = "/artworks/full/:splat"
+  status = 200
+
+# ── Cache headers ─────────────────────────────────────────────────────────────
+
+# AVIF images: filenames are stable IDs — safe to cache for a year
+[[headers]]
+  for = "/artworks/**/*.avif"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# HTML: always revalidate so content updates are immediate
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# CSS: 1-day TTL (no content hash in filenames)
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+# Catalog JSON: 1-hour TTL — regenerated after each catalog batch run
+[[headers]]
+  for = "/*.json"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+# Favicon and brand mark
+[[headers]]
+  for = "/*.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+# JPEG images (e.g. artist portrait, OG card)
+[[headers]]
+  for = "/*.jpg"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+# ── Security headers (all pages) ──────────────────────────────────────────────
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options  = "nosniff"
+    X-Frame-Options         = "SAMEORIGIN"
+    Referrer-Policy         = "strict-origin-when-cross-origin"

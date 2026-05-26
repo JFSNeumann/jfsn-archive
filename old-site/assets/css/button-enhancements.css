@@ -1,0 +1,588 @@
+/* =========================================== */
+/* COMPREHENSIVE BUTTON UX/UI ENHANCEMENTS */
+/* Applies to all buttons across the site */
+/* =========================================== */
+
+/* =========================================== */
+/* BASE BUTTON ENHANCEMENTS */
+/* =========================================== */
+
+/* Universal button improvements */
+.btn,
+button:not([type="submit"]):not([type="button"]):not([type="reset"]),
+[role="button"],
+a.btn {
+  /* Minimum touch target size (WCAG 2.1 AA) */
+  min-height: 44px;
+  min-width: 44px;
+  
+  /* Better typography */
+  font-weight: 600;
+  letter-spacing: 0.015em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  
+  /* Smooth transitions */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Performance optimizations */
+  will-change: transform, box-shadow;
+  backface-visibility: hidden;
+  
+  /* Better cursor */
+  cursor: pointer;
+  user-select: none;
+  
+  /* Remove default tap highlight on mobile */
+  -webkit-tap-highlight-color: transparent;
+  
+  /* Position for ripple effect */
+  position: relative;
+  overflow: hidden;
+  
+  /* Better border radius */
+  border-radius: 8px;
+}
+
+/* Small buttons exception */
+.btn-sm {
+  min-height: 36px;
+  min-width: 36px;
+  border-radius: 6px;
+}
+
+/* Large buttons */
+.btn-lg {
+  min-height: 52px;
+  min-width: 52px;
+  border-radius: 12px;
+  font-size: 1.125rem;
+  padding: 0.875rem 2rem;
+}
+
+/* =========================================== */
+/* RIPPLE EFFECT */
+/* =========================================== */
+
+.btn::before,
+button::before,
+[role="button"]::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease, opacity 0.6s ease;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.btn:active::before,
+button:active::before,
+[role="button"]:active::before {
+  width: 300px;
+  height: 300px;
+  opacity: 1;
+  transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+}
+
+/* Ensure button content is above ripple */
+.btn > *,
+button > *,
+[role="button"] > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================================== */
+/* PRIMARY BUTTON ENHANCEMENTS */
+/* =========================================== */
+
+.btn-primary {
+  /* Enhanced gradient */
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%) !important;
+  border: none !important;
+  color: white !important;
+  
+  /* Better shadow */
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3),
+              0 2px 4px rgba(99, 102, 241, 0.2) !important;
+}
+
+.btn-primary:hover {
+  /* Enhanced hover gradient */
+  background: linear-gradient(135deg, #7c3aed 0%, #9333ea 50%, #a855f7 100%) !important;
+  
+  /* Lift effect */
+  transform: translateY(-3px) scale(1.02) !important;
+  
+  /* Enhanced shadow */
+  box-shadow: 0 12px 28px rgba(99, 102, 241, 0.4),
+              0 4px 8px rgba(99, 102, 241, 0.3) !important;
+}
+
+.btn-primary:active {
+  transform: translateY(-1px) scale(0.98) !important;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3) !important;
+  transition: all 0.1s ease !important;
+}
+
+.btn-primary:focus-visible {
+  outline: 3px solid rgba(99, 102, 241, 0.5) !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 6px rgba(99, 102, 241, 0.1),
+              0 4px 12px rgba(99, 102, 241, 0.3) !important;
+}
+
+/* =========================================== */
+/* OUTLINE BUTTON ENHANCEMENTS */
+/* =========================================== */
+
+.btn-outline-primary,
+.btn-outline-secondary {
+  background: transparent !important;
+  border-width: 2px !important;
+  position: relative;
+  color: #6366f1 !important;
+}
+
+.btn-outline-primary::after,
+.btn-outline-secondary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+  border-radius: inherit;
+}
+
+.btn-outline-primary:hover::after,
+.btn-outline-secondary:hover::after {
+  opacity: 1;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-secondary:hover {
+  color: white !important;
+  border-color: transparent !important;
+  transform: translateY(-3px) scale(1.02) !important;
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3) !important;
+  /* Ensure text is readable on hover */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+  font-weight: 700 !important;
+}
+
+/* Force text color on hover for all child elements */
+.btn-outline-primary:hover *,
+.btn-outline-secondary:hover * {
+  color: white !important;
+}
+
+.btn-outline-primary:active,
+.btn-outline-secondary:active {
+  transform: translateY(-1px) scale(0.98) !important;
+  transition: all 0.1s ease !important;
+  color: white !important;
+}
+
+/* Ensure text content is above background */
+.btn-outline-primary > *,
+.btn-outline-secondary > * {
+  position: relative;
+  z-index: 1;
+  color: inherit;
+}
+
+/* Override outline-primary hover when button has white background */
+.btn-outline-primary.bg-white:hover,
+.bg-white.btn-outline-primary:hover,
+button.bg-white.btn-outline-primary:hover,
+.bg-white button.btn-outline-primary:hover {
+  color: #0f172a !important; /* Dark text on white background */
+  background: #ffffff !important; /* Keep white background */
+}
+
+.btn-outline-primary.bg-white:hover *,
+.bg-white.btn-outline-primary:hover *,
+button.bg-white.btn-outline-primary:hover *,
+.bg-white button.btn-outline-primary:hover * {
+  color: #0f172a !important; /* Dark text for all child elements */
+}
+
+/* Override outline-secondary hover when button has white background */
+.btn-outline-secondary.bg-white:hover,
+.bg-white.btn-outline-secondary:hover,
+button.bg-white.btn-outline-secondary:hover,
+.bg-white button.btn-outline-secondary:hover {
+  color: #0f172a !important; /* Dark text on white background */
+  background: #ffffff !important; /* Keep white background */
+}
+
+.btn-outline-secondary.bg-white:hover *,
+.bg-white.btn-outline-secondary:hover *,
+button.bg-white.btn-outline-secondary:hover *,
+.bg-white button.btn-outline-secondary:hover * {
+  color: #0f172a !important; /* Dark text for all child elements */
+}
+
+/* =========================================== */
+/* SECONDARY BUTTON ENHANCEMENTS */
+/* =========================================== */
+
+.btn-secondary {
+  background: linear-gradient(135deg, #64748b 0%, #475569 100%) !important;
+  border: none !important;
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3) !important;
+}
+
+.btn-secondary:hover {
+  background: linear-gradient(135deg, #475569 0%, #334155 100%) !important;
+  transform: translateY(-3px) scale(1.02) !important;
+  box-shadow: 0 12px 28px rgba(100, 116, 139, 0.4) !important;
+}
+
+.btn-secondary:active {
+  transform: translateY(-1px) scale(0.98) !important;
+  box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3) !important;
+}
+
+/* =========================================== */
+/* SUCCESS BUTTON ENHANCEMENTS */
+/* =========================================== */
+
+.btn-success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  border: none !important;
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
+}
+
+.btn-success:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  transform: translateY(-3px) scale(1.02) !important;
+  box-shadow: 0 12px 28px rgba(16, 185, 129, 0.4) !important;
+}
+
+/* =========================================== */
+/* DANGER BUTTON ENHANCEMENTS */
+/* =========================================== */
+
+.btn-danger {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+  border: none !important;
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3) !important;
+}
+
+.btn-danger:hover {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
+  transform: translateY(-3px) scale(1.02) !important;
+  box-shadow: 0 12px 28px rgba(239, 68, 68, 0.4) !important;
+}
+
+/* =========================================== */
+/* LOADING STATE */
+/* =========================================== */
+
+.btn.loading,
+button.loading {
+  position: relative;
+  color: transparent !important;
+  pointer-events: none;
+  cursor: wait;
+}
+
+.btn.loading::after,
+button.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-right-color: currentColor;
+  border-radius: 50%;
+  animation: buttonSpin 0.8s linear infinite;
+  z-index: 2;
+}
+
+.btn-primary.loading::after,
+.btn-success.loading::after,
+.btn-danger.loading::after {
+  border-top-color: white;
+  border-right-color: white;
+}
+
+.btn-outline-primary.loading::after,
+.btn-outline-secondary.loading::after {
+  border-top-color: #6366f1;
+  border-right-color: #6366f1;
+}
+
+@keyframes buttonSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* =========================================== */
+/* DISABLED STATE */
+/* =========================================== */
+
+.btn:disabled,
+button:disabled,
+.btn.disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.btn:disabled:hover,
+button:disabled:hover,
+.btn.disabled:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* =========================================== */
+/* ICON BUTTONS */
+/* =========================================== */
+
+.btn i,
+button i,
+[role="button"] i {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn:hover i,
+button:hover i,
+[role="button"]:hover i {
+  transform: scale(1.1);
+}
+
+/* Icon-only buttons */
+.btn-icon-only {
+  padding: 0.75rem !important;
+  min-width: 44px;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50% !important;
+}
+
+/* =========================================== */
+/* CIRCULAR BUTTONS */
+/* =========================================== */
+
+.btn-circle,
+.btn-rounded {
+  border-radius: 50% !important;
+  padding: 0.75rem !important;
+  width: 48px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-circle:hover,
+.btn-rounded:hover {
+  transform: translateY(-3px) rotate(5deg) scale(1.05) !important;
+}
+
+/* =========================================== */
+/* BUTTON GROUPS */
+/* =========================================== */
+
+.btn-group .btn,
+.btn-group-vertical .btn {
+  border-radius: 0 !important;
+}
+
+.btn-group .btn:first-child,
+.btn-group-vertical .btn:first-child {
+  border-top-left-radius: 8px !important;
+  border-bottom-left-radius: 8px !important;
+}
+
+.btn-group .btn:last-child,
+.btn-group-vertical .btn:last-child {
+  border-top-right-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+}
+
+.btn-group .btn:not(:first-child):not(:last-child),
+.btn-group-vertical .btn:not(:first-child):not(:last-child) {
+  border-radius: 0 !important;
+}
+
+/* =========================================== */
+/* SOCIAL BUTTONS */
+/* =========================================== */
+
+.social-btn,
+.btn-social {
+  width: 44px;
+  height: 44px;
+  border-radius: 50% !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.social-btn:hover,
+.btn-social:hover {
+  transform: translateY(-4px) scale(1.1) rotate(5deg) !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* =========================================== */
+/* COLLECTION CARD BUTTONS */
+/* =========================================== */
+
+.collection-card .btn,
+.project-card .btn {
+  margin-top: auto;
+  width: 100%;
+  justify-content: center;
+}
+
+/* =========================================== */
+/* MOBILE OPTIMIZATIONS */
+/* =========================================== */
+
+@media (max-width: 768px) {
+  .btn,
+  button,
+  [role="button"] {
+    /* Larger touch targets on mobile */
+    min-height: 48px;
+    min-width: 48px;
+    padding: 0.875rem 1.5rem;
+  }
+  
+  .btn-sm {
+    min-height: 40px;
+    min-width: 40px;
+  }
+  
+  .btn-lg {
+    min-height: 56px;
+    min-width: 56px;
+    padding: 1rem 2rem;
+  }
+  
+  /* Reduce hover effects on touch devices */
+  .btn:hover,
+  button:hover {
+    transform: none;
+  }
+  
+  /* Better active states for touch */
+  .btn:active,
+  button:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+  }
+}
+
+/* =========================================== */
+/* REDUCED MOTION */
+/* =========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  button,
+  [role="button"] {
+    transition: none !important;
+    animation: none !important;
+  }
+  
+  .btn:hover,
+  button:hover,
+  [role="button"]:hover {
+    transform: none !important;
+  }
+  
+  .btn::before,
+  button::before,
+  [role="button"]::before {
+    display: none !important;
+  }
+}
+
+/* =========================================== */
+/* DARK MODE SUPPORT */
+/* =========================================== */
+
+[data-bs-theme="dark"] .btn-outline-primary,
+[data-bs-theme="dark"] .btn-outline-secondary {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+[data-bs-theme="dark"] .btn-outline-primary:hover,
+[data-bs-theme="dark"] .btn-outline-secondary:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: white !important;
+}
+
+/* =========================================== */
+/* SPECIAL BUTTON VARIANTS */
+/* =========================================== */
+
+/* Hero CTA buttons */
+.btn-hero-cta {
+  padding: 1.125rem 3rem !important;
+  font-size: 1.125rem !important;
+  font-weight: 700 !important;
+  border-radius: 60px !important;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%) !important;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4),
+              0 4px 8px rgba(99, 102, 241, 0.3) !important;
+}
+
+.btn-hero-cta:hover {
+  transform: translateY(-4px) scale(1.03) !important;
+  box-shadow: 0 16px 40px rgba(99, 102, 241, 0.5),
+              0 8px 16px rgba(99, 102, 241, 0.4) !important;
+}
+
+/* Back to top button */
+.back-to-top {
+  width: 48px;
+  height: 48px;
+  border-radius: 50% !important;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3) !important;
+}
+
+.back-to-top:hover {
+  transform: translateY(-4px) scale(1.1) !important;
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4) !important;
+}
+
+/* =========================================== */
+/* END BUTTON ENHANCEMENTS */
+/* =========================================== */
+

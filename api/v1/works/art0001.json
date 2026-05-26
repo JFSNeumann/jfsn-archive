@@ -1,0 +1,42 @@
+{
+  "api_version": "1",
+  "id": "art0001",
+  "work": {
+    "file": "art0001.avif",
+    "title": "Effigy in Red",
+    "year": 1970,
+    "work_type": "collage",
+    "orientation": "portrait",
+    "description": "A vertical totem rises against a flat vermilion ground, crowned by a photographic face fragment over a Giacometti-thin line figure. Gold compact discs anchor the upper corners; numbered fabric letters punctuate the margins.",
+    "palette": [
+      "vermilion",
+      "gold",
+      "ivory",
+      "black"
+    ],
+    "motifs": [
+      "compact-disc",
+      "photographic-face",
+      "fabric-letters",
+      "numerals",
+      "beaded-thread"
+    ],
+    "materials": [],
+    "composition": "axial vertical totem on flat ground",
+    "themes": [],
+    "keywords": [
+      "assemblage",
+      "downtown-collage",
+      "high-contrast"
+    ],
+    "featured": false,
+    "schema_version": "1",
+    "series": null
+  },
+  "links": {
+    "image": "https://jfsn.com/artworks/full/art0001.avif",
+    "thumb": "https://jfsn.com/artworks/thumbs/art0001.avif",
+    "mini": "https://jfsn.com/artworks/mini/art0001.avif",
+    "page": "https://jfsn.com/artwork.html?id=art0001"
+  }
+}

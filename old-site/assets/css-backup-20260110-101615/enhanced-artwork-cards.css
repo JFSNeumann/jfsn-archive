@@ -1,0 +1,323 @@
+/* ===========================================
+   ENHANCED ARTWORK CARDS
+   Quick view modals, hover details, related artworks
+   =========================================== */
+
+/* Enhanced artwork card hover effects */
+.artwork-card {
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: visible;
+}
+
+.artwork-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 
+    0 20px 60px rgba(99, 102, 241, 0.25),
+    0 8px 24px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(99, 102, 241, 0.1);
+  z-index: 10;
+}
+
+/* Hover details overlay */
+.artwork-card .hover-details {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.7) 70%, transparent 100%);
+  color: white;
+  padding: 1.5rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.artwork-card:hover .hover-details {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.hover-details-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.hover-details-meta {
+  font-size: 0.875rem;
+  opacity: 0.9;
+  margin-bottom: 0.75rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.hover-details-description {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  opacity: 0.95;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Quick view modal */
+.quick-view-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(20px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.quick-view-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.quick-view-content {
+  position: relative;
+  max-width: 1200px;
+  max-height: 90vh;
+  width: 100%;
+  background: white;
+  border-radius: 24px;
+  overflow: hidden;
+  transform: scale(0.9) translateY(50px);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4);
+}
+
+.quick-view-modal.active .quick-view-content {
+  transform: scale(1) translateY(0);
+}
+
+.quick-view-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background: white;
+}
+
+.quick-view-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  flex: 1;
+}
+
+.quick-view-close {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.2s;
+  color: #666;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quick-view-close:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #000;
+}
+
+.quick-view-body {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 0;
+  max-height: calc(90vh - 80px);
+  overflow: hidden;
+}
+
+.quick-view-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #f8fafc;
+  padding: 2rem;
+}
+
+.quick-view-info {
+  padding: 2rem;
+  overflow-y: auto;
+  background: white;
+}
+
+.quick-view-meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.quick-view-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.quick-view-description {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.quick-view-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.keyword-tag {
+  display: inline-block;
+  padding: 0.375rem 0.75rem;
+  background: rgba(99, 102, 241, 0.1);
+  color: #6366f1;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.quick-view-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Related artworks section */
+.related-artworks {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.related-artworks-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.related-artworks-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.related-artwork-item {
+  aspect-ratio: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.related-artwork-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.related-artwork-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .quick-view-body {
+    grid-template-columns: 1fr;
+    max-height: calc(90vh - 60px);
+  }
+  
+  .quick-view-image {
+    max-height: 50vh;
+    padding: 1rem;
+  }
+  
+  .quick-view-info {
+    padding: 1.5rem;
+  }
+  
+  .related-artworks-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .artwork-card:hover {
+    transform: translateY(-4px) scale(1.01);
+  }
+}
+
+/* Dark mode */
+[data-bs-theme="dark"] .quick-view-content {
+  background: #1e293b;
+  color: white;
+}
+
+[data-bs-theme="dark"] .quick-view-header {
+  background: #1e293b;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-bs-theme="dark"] .quick-view-info {
+  background: #1e293b;
+}
+
+[data-bs-theme="dark"] .quick-view-image {
+  background: #0f172a;
+}
+
+[data-bs-theme="dark"] .quick-view-close {
+  color: #ccc;
+}
+
+[data-bs-theme="dark"] .quick-view-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+[data-bs-theme="dark"] .related-artworks {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .artwork-card,
+  .hover-details,
+  .quick-view-modal,
+  .quick-view-content {
+    transition: none;
+  }
+  
+  .artwork-card:hover {
+    transform: none;
+  }
+}
+

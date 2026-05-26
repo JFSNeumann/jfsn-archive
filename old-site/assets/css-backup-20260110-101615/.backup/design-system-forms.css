@@ -1,0 +1,467 @@
+/* =========================================== */
+/* UNIFIED DESIGN SYSTEM - FORM SYSTEM */
+/* Single source of truth for all form elements */
+/* Accessible, consistent, user-friendly */
+/* =========================================== */
+
+:root {
+  /* ===== FORM SPACING (from spacing system) ===== */
+  --form-field-gap: var(--spacing-md);               /* 16px */
+  --form-label-margin-bottom: var(--spacing-sm);      /* 8px */
+  --form-input-padding-x: var(--spacing-md);         /* 16px */
+  --form-input-padding-y: calc(var(--spacing-unit) * 1.5); /* 12px */
+  --form-group-margin-bottom: var(--spacing-lg);      /* 24px */
+  
+  /* ===== FORM VISUAL PROPERTIES ===== */
+  --form-input-border-radius: 8px;
+  --form-input-border-width: 2px;
+  --form-input-border-color: var(--border-medium);
+  --form-input-border-color-hover: rgba(99, 102, 241, 0.5);
+  --form-input-border-color-focus: var(--brand-primary);
+  --form-input-bg: #ffffff;
+  --form-input-text: var(--text-primary);
+  --form-input-placeholder: var(--text-muted);
+  
+  /* ===== FORM FOCUS STATES ===== */
+  --form-input-focus-ring: 0 0 0 3px var(--brand-alpha-20);
+  --form-input-focus-shadow: 0 2px 8px rgba(99, 102, 241, 0.1);
+  
+  /* ===== FORM VALIDATION COLORS ===== */
+  --form-input-success-border: var(--color-success);
+  --form-input-success-ring: 0 0 0 3px rgba(16, 185, 129, 0.1);
+  --form-input-error-border: var(--color-error);
+  --form-input-error-ring: 0 0 0 3px rgba(239, 68, 68, 0.1);
+  --form-input-warning-border: var(--color-warning);
+  --form-input-warning-ring: 0 0 0 3px rgba(245, 158, 11, 0.1);
+  
+  /* ===== FORM TRANSITIONS ===== */
+  --form-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* ===== FORM LABEL ===== */
+  --form-label-font-weight: var(--font-weight-semibold);
+  --form-label-font-size: var(--font-size-sm);
+  --form-label-color: var(--text-primary);
+  
+  /* ===== FORM HELP TEXT ===== */
+  --form-help-font-size: var(--font-size-xs);
+  --form-help-color: var(--text-muted);
+  
+  /* ===== FORM ERROR TEXT ===== */
+  --form-error-font-size: var(--font-size-xs);
+  --form-error-color: var(--color-error);
+}
+
+/* ===== BASE FORM CONTROL ===== */
+.form-control,
+input:not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]):not([type="reset"]),
+textarea,
+select {
+  /* Typography */
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+  color: var(--form-input-text) !important;
+  
+  /* Spacing */
+  padding: var(--form-input-padding-y) var(--form-input-padding-x);
+  
+  /* Visual */
+  background-color: var(--form-input-bg);
+  border: var(--form-input-border-width) solid var(--form-input-border-color);
+  border-radius: var(--form-input-border-radius);
+  
+  /* Interaction */
+  transition: var(--form-transition);
+  width: 100%;
+  
+  /* Performance */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  /* Layout */
+  display: block;
+  box-sizing: border-box;
+}
+
+/* ===== FORM CONTROL PLACEHOLDER ===== */
+.form-control::placeholder,
+input::placeholder,
+textarea::placeholder {
+  color: var(--form-input-placeholder) !important;
+  opacity: 1;
+}
+
+/* ===== FORM CONTROL HOVER STATE ===== */
+.form-control:hover:not(:focus):not(:disabled),
+input:hover:not(:focus):not(:disabled),
+textarea:hover:not(:focus):not(:disabled),
+select:hover:not(:focus):not(:disabled) {
+  border-color: var(--form-input-border-color-hover);
+  box-shadow: var(--form-input-focus-shadow);
+  transform: translateY(-1px);
+}
+
+/* ===== FORM CONTROL FOCUS STATE ===== */
+.form-control:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--form-input-border-color-focus);
+  box-shadow: var(--form-input-focus-ring), var(--form-input-focus-shadow);
+}
+
+.form-control:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid var(--brand-focus);
+  outline-offset: 2px;
+}
+
+/* ===== FORM CONTROL DISABLED STATE ===== */
+.form-control:disabled,
+input:disabled,
+textarea:disabled,
+select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: var(--bg-secondary);
+  border-color: var(--border-light);
+}
+
+/* ===== FORM LABEL ===== */
+.form-label,
+label {
+  display: block;
+  font-weight: var(--form-label-font-weight);
+  font-size: var(--form-label-font-size);
+  color: var(--form-label-color);
+  margin-bottom: var(--form-label-margin-bottom);
+  line-height: var(--line-height-normal);
+}
+
+.form-label.required::after {
+  content: ' *';
+  color: var(--color-error);
+}
+
+/* ===== FORM GROUP ===== */
+.form-group,
+.mb-3 {
+  margin-bottom: var(--form-group-margin-bottom);
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+/* ===== FORM HELP TEXT ===== */
+.form-text,
+.help-text {
+  display: block;
+  margin-top: var(--spacing-xs);
+  font-size: var(--form-help-font-size);
+  color: var(--form-help-color);
+  line-height: var(--line-height-normal);
+}
+
+/* ===== FORM VALIDATION STATES ===== */
+/* Success State */
+.form-control.is-valid,
+.form-control:valid:not(:focus):not(:placeholder-shown),
+input:valid:not(:focus):not(:placeholder-shown),
+textarea:valid:not(:focus):not(:placeholder-shown) {
+  border-color: var(--form-input-success-border);
+  box-shadow: var(--form-input-success-ring);
+}
+
+.form-control.is-valid:focus,
+.form-control:valid:focus {
+  border-color: var(--form-input-success-border);
+  box-shadow: var(--form-input-success-ring), var(--form-input-focus-shadow);
+}
+
+/* Error State */
+.form-control.is-invalid,
+.form-control:invalid:not(:focus):not(:placeholder-shown),
+input:invalid:not(:focus):not(:placeholder-shown),
+textarea:invalid:not(:focus):not(:placeholder-shown) {
+  border-color: var(--form-input-error-border);
+  box-shadow: var(--form-input-error-ring);
+}
+
+.form-control.is-invalid:focus,
+.form-control:invalid:focus {
+  border-color: var(--form-input-error-border);
+  box-shadow: var(--form-input-error-ring), var(--form-input-focus-shadow);
+}
+
+/* Warning State */
+.form-control.is-warning {
+  border-color: var(--form-input-warning-border);
+  box-shadow: var(--form-input-warning-ring);
+}
+
+.form-control.is-warning:focus {
+  border-color: var(--form-input-warning-border);
+  box-shadow: var(--form-input-warning-ring), var(--form-input-focus-shadow);
+}
+
+/* ===== FORM FEEDBACK MESSAGES ===== */
+.invalid-feedback,
+.error-message {
+  display: block;
+  width: 100%;
+  margin-top: var(--spacing-xs);
+  font-size: var(--form-error-font-size);
+  color: var(--form-error-color);
+  line-height: var(--line-height-normal);
+}
+
+.valid-feedback,
+.success-message {
+  display: block;
+  width: 100%;
+  margin-top: var(--spacing-xs);
+  font-size: var(--form-help-font-size);
+  color: var(--color-success);
+  line-height: var(--line-height-normal);
+}
+
+/* ===== TEXTAREA SPECIFIC ===== */
+textarea.form-control,
+textarea {
+  min-height: 120px;
+  resize: vertical;
+  font-family: var(--font-body);
+}
+
+textarea.form-control-sm {
+  min-height: 80px;
+}
+
+textarea.form-control-lg {
+  min-height: 160px;
+}
+
+/* ===== SELECT SPECIFIC ===== */
+select.form-control,
+select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236366f1' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--spacing-md) center;
+  background-size: 12px;
+  padding-right: calc(var(--form-input-padding-x) * 2 + 12px);
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+select.form-control:focus,
+select:focus {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%237c3aed' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+}
+
+/* ===== CHECKBOX & RADIO ===== */
+.form-check-input {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 0.125rem;
+  margin-right: var(--spacing-sm);
+  cursor: pointer;
+  border: var(--form-input-border-width) solid var(--form-input-border-color);
+  transition: var(--form-transition);
+}
+
+.form-check-input:checked {
+  background-color: var(--brand-primary);
+  border-color: var(--brand-primary);
+}
+
+.form-check-input:focus {
+  box-shadow: var(--form-input-focus-ring);
+  border-color: var(--form-input-border-color-focus);
+}
+
+.form-check-label {
+  cursor: pointer;
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  line-height: var(--line-height-normal);
+}
+
+.form-check {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-md);
+}
+
+.form-check:last-child {
+  margin-bottom: 0;
+}
+
+/* ===== FLOATING LABELS ===== */
+.form-floating {
+  position: relative;
+}
+
+.form-floating > .form-control,
+.form-floating > .form-select {
+  height: calc(3.5rem + var(--form-input-border-width) * 2);
+  padding: 1rem var(--form-input-padding-x);
+}
+
+.form-floating > label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  padding: 1rem var(--form-input-padding-x);
+  pointer-events: none;
+  border: var(--form-input-border-width) solid transparent;
+  transform-origin: 0 0;
+  transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
+  color: var(--form-input-placeholder);
+}
+
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label,
+.form-floating > .form-select ~ label {
+  opacity: 0.65;
+  transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+  color: var(--brand-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* ===== INPUT GROUPS ===== */
+.input-group {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  width: 100%;
+}
+
+.input-group > .form-control,
+.input-group > .form-select {
+  position: relative;
+  flex: 1 1 auto;
+  width: 1%;
+  min-width: 0;
+}
+
+.input-group-text {
+  display: flex;
+  align-items: center;
+  padding: var(--form-input-padding-y) var(--form-input-padding-x);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+  color: var(--text-primary);
+  text-align: center;
+  white-space: nowrap;
+  background-color: var(--bg-secondary);
+  border: var(--form-input-border-width) solid var(--form-input-border-color);
+  border-radius: var(--form-input-border-radius);
+}
+
+/* ===== DARK MODE FORM ADJUSTMENTS ===== */
+[data-bs-theme="dark"] .form-control,
+[data-bs-theme="dark"] input:not([type="checkbox"]):not([type="radio"]),
+[data-bs-theme="dark"] textarea,
+[data-bs-theme="dark"] select {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--text-primary);
+}
+
+[data-bs-theme="dark"] .form-control:focus,
+[data-bs-theme="dark"] input:focus,
+[data-bs-theme="dark"] textarea:focus,
+[data-bs-theme="dark"] select:focus {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: var(--brand-primary);
+}
+
+[data-bs-theme="dark"] .form-control:disabled,
+[data-bs-theme="dark"] input:disabled,
+[data-bs-theme="dark"] textarea:disabled,
+[data-bs-theme="dark"] select:disabled {
+  background-color: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-bs-theme="dark"] .input-group-text {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--text-primary);
+}
+
+/* ===== MOBILE OPTIMIZATIONS ===== */
+@media (max-width: 768px) {
+  .form-control,
+  input,
+  textarea,
+  select {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+  
+  button[type="submit"],
+  input[type="submit"] {
+    min-height: 48px; /* Larger touch target for mobile */
+    font-size: 16px;
+    width: 100%;
+  }
+  
+  .form-label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .form-group,
+  .mb-3 {
+    margin-bottom: var(--spacing-lg);
+  }
+}
+
+/* ===== ACCESSIBILITY ===== */
+/* Ensure all form elements are keyboard accessible */
+.form-control:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid var(--brand-focus);
+  outline-offset: 2px;
+}
+
+/* Remove default browser focus styles */
+.form-control:focus:not(:focus-visible),
+input:focus:not(:focus-visible),
+textarea:focus:not(:focus-visible),
+select:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  .form-control,
+  input,
+  textarea,
+  select,
+  .form-label {
+    transition: none !important;
+  }
+  
+  .form-control:hover {
+    transform: none !important;
+  }
+}
+
+/* =========================================== */
+/* END UNIFIED FORM SYSTEM */
+/* =========================================== */
+

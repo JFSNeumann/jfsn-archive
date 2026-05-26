@@ -1,0 +1,18 @@
+# ── Images (too large for git — already on server) ───────────────────────────
+artworks/full/*.avif
+artworks/thumbs/*.avif
+artworks/mini/*.avif
+
+# ── FTP credentials (never commit) ───────────────────────────────────────────
+.ftp.env
+
+# ── Local-only / generated ───────────────────────────────────────────────────
+__pycache__/
+artworks/__pycache__/
+artworks/logs/
+*.pyc
+.DS_Store
+
+# ── Private tool folders ──────────────────────────────────────────────────────
+.claude/
+.netlify/

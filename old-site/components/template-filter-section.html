@@ -1,0 +1,95 @@
+<!-- Template Filter Section Component -->
+<!-- Can be loaded dynamically into #template-filter-section -->
+
+<!-- Filter Section - Enhanced Design -->
+<section class="py-3 filter-section template-filter-section" id="template-filter-section-content">
+  <div class="container">
+    <!-- Show Filters Floating Button (Mobile) -->
+    <button class="show-filters-btn btn-pulse-glow btn-magnetic-enhanced btn-ripple spring-hover d-md-none" id="showFiltersBtn" aria-label="Show filters" aria-expanded="false">
+      <i class="bx bx-filter-alt"></i>
+      <span>Show Filters</span>
+    </button>
+    
+    <!-- Filter Bar Wrapper for Sticky Positioning -->
+    <div class="filter-bar-wrapper" id="filterBarWrapper">
+      <div class="filter-bar" id="filterBar">
+        <div class="row mb-2">
+          <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div class="flex-grow-1">
+                <h2 class="mb-0 fw-bold filter-title">
+                  <i class="bx bx-filter-alt filter-icon"></i> Filters
+                </h2>
+                <small class="text-muted d-md-none filter-help-text">Tap to filter, swipe to see more</small>
+              </div>
+              <button class="btn btn-sm btn-outline-primary d-md-none me-2 border-radius-20 padding-05-1 font-size-08 white-space-nowrap" data-action="show-all-filters">
+                <i class="bx bx-refresh"></i> Reset
+              </button>
+              <button class="btn btn-sm btn-link text-decoration-none p-2 toggle-filters-btn" id="toggleFiltersBtn" aria-label="Toggle filters" aria-expanded="true">
+                <i class="bx bx-chevron-up" id="toggleFiltersIcon"></i>
+              </button>
+            </div>
+            
+            <!-- Search Bar -->
+            <div class="search-container position-relative">
+              <input type="search" 
+                     id="templateSearch" 
+                     class="form-control form-control-lg search-input-enhanced" 
+                     placeholder="Search content..." 
+                     aria-label="Search content"
+                     aria-describedby="search-help"
+                     autocomplete="off">
+              <i class="bx bx-search position-absolute search-icon-position search-icon-left transform-center-y font-size-125 color-primary"></i>
+              <button class="btn btn-link search-clear-btn display-none position-absolute transform-center-y search-clear-position" id="searchClearBtn" aria-label="Clear search">
+                <i class="bx bx-x font-size-125"></i>
+              </button>
+              <small id="search-help" class="form-text text-muted mt-1 d-none d-md-block">Press <kbd>/</kbd> to focus search <span class="search-result-count ms-2 display-none" id="searchResultCount"></span></small>
+            </div>
+            
+            <!-- Advanced Filtering UI Container -->
+            <div id="advancedFiltersContainer" class="mt-3"></div>
+          </div>
+        </div>
+        
+        <div class="row" id="filtersRow">
+          <div class="col-12">
+            <div class="filter-buttons-container position-relative expanded" id="filterButtonsContainer">
+              <!-- Active Filters Badge -->
+              <span class="active-filters-badge display-none" id="activeFiltersBadge">
+                <i class="bx bx-filter-alt"></i>
+                <span id="activeFiltersCount">0</span> filter<span id="activeFiltersPlural">s</span> active
+              </span>
+              
+              <!-- All Content Button -->
+              <button class="filter-btn filter-btn-all active btn-pulse-glow btn-magnetic-enhanced btn-ripple spring-hover" data-filter="all" aria-pressed="true" aria-label="Show all content" title="Show all content">
+                <i class="bx bx-grid-alt"></i> All
+                <span class="content-count-badge badge-animated" id="count-all">0</span>
+              </button>
+              
+              <!-- Filter buttons will be dynamically generated here -->
+              <!-- Use data-filter attribute for filtering -->
+              <!-- Example: <button class="filter-btn" data-filter="category="category-name">Category</button> -->
+            </div>
+            <!-- Scroll Fade Indicators -->
+            <div class="filter-scroll-fade filter-scroll-fade-left"></div>
+            <div class="filter-scroll-fade filter-scroll-fade-right"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Active Filters Chips & Clear All -->
+    <div class="active-filters-container display-none" id="activeFiltersContainer">
+      <div class="container">
+        <div class="d-flex flex-wrap align-items-center gap-2 mb-0">
+          <span class="text-muted small">Active filters:</span>
+          <div id="activeFiltersChips" class="d-flex flex-wrap gap-2"></div>
+          <button class="btn btn-sm btn-outline-secondary clear-all-filters-btn btn-magnetic-enhanced btn-ripple spring-hover" id="clearAllFiltersBtn" aria-label="Clear all filters">
+            <i class="bx bx-x"></i> Clear all
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

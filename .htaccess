@@ -1,0 +1,162 @@
+# ============================================
+# JFSN Archive — Apache Configuration
+# ============================================
+
+# Enable Rewrite Engine
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # ------------------------------------------
+  # Share artwork images with /old/ subfolder
+  # Requests from the old site for images are
+  # silently served from the shared artworks/
+  # folder at root — no duplicate files needed.
+  # More-specific rule first.
+  # ------------------------------------------
+
+  # artworks/full/ maps to the existing flat artworks/*.avif on the server.
+  # The old site stored full-res as artworks/art####.avif (no subfolder).
+  # This means NO re-upload of full-res images is needed.
+  RewriteRule ^artworks/full/(.+\.avif)$ /artworks/$1 [L]
+
+  # Thumbnails: path is identical in both old and new sites
+  RewriteRule ^old-site/artworks/thumbs/(.+)$ /artworks/thumbs/$1 [L]
+
+  # old-site full-res: already handled above via artworks/full/ → artworks/
+  RewriteRule ^old-site/artworks/([^/]+\.avif)$ /artworks/$1 [L]
+
+  # ------------------------------------------
+  # old-site uses absolute paths for components and templates
+  # (e.g. /components/navbar-unified.html, /template/footer/images/*)
+  # Route those root-level requests to old-site/ since the new site
+  # has no /components/ or /template/ folders.
+  # ------------------------------------------
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^components/(.*)$ /old-site/components/$1 [L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^template/(.*)$ /old-site/template/$1 [L]
+
+  # ------------------------------------------
+  # General rules
+  # ------------------------------------------
+
+  # Remove trailing slashes
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_URI} (.+)/$
+  RewriteRule ^ %1 [R=301,L]
+
+  # Custom error pages
+  ErrorDocument 404 /404.html
+  ErrorDocument 500 /404.html
+
+</IfModule>
+
+# ============================================
+# SECURITY HEADERS
+# ============================================
+<IfModule mod_headers.c>
+
+  # Content Security Policy
+  # Allows: self, Google Fonts, jsDelivr CDN (Viewer.js), Google Analytics
+  Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://fonts.gstatic.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://cdn.jsdelivr.net https://fonts.googleapis.com https://fonts.gstatic.com https://www.googletagmanager.com https://www.google-analytics.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self';"
+
+  # Prevent MIME type sniffing
+  Header set X-Content-Type-Options "nosniff"
+
+  # Prevent clickjacking
+  Header set X-Frame-Options "SAMEORIGIN"
+
+  # Referrer policy
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+
+  # Permissions policy
+  Header set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()"
+
+  # HSTS — uncomment once SSL is confirmed active
+  # Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+  # Remove server fingerprinting
+  Header unset Server
+  Header unset X-Powered-By
+
+</IfModule>
+
+# ============================================
+# FILE PROTECTION
+# ============================================
+
+# Block access to sensitive files
+<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|sql|env|git|gitignore|gitattributes)$">
+  Order Allow,Deny
+  Deny from all
+</FilesMatch>
+
+# Disable directory listing
+Options -Indexes
+
+# ============================================
+# PERFORMANCE — CACHE EXPIRY
+# ============================================
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  # Artwork images — long cache (filenames are stable IDs)
+  ExpiresByType image/avif    "access plus 1 year"
+  ExpiresByType image/jpeg    "access plus 1 year"
+  ExpiresByType image/png     "access plus 1 year"
+  ExpiresByType image/gif     "access plus 1 year"
+  ExpiresByType image/webp    "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/x-icon  "access plus 1 year"
+
+  # Fonts
+  ExpiresByType font/woff                  "access plus 1 year"
+  ExpiresByType font/woff2                 "access plus 1 year"
+  ExpiresByType font/ttf                   "access plus 1 year"
+  ExpiresByType font/otf                   "access plus 1 year"
+  ExpiresByType application/font-woff      "access plus 1 year"
+  ExpiresByType application/font-woff2     "access plus 1 year"
+
+  # CSS and JS — 1 month
+  ExpiresByType text/css                   "access plus 1 month"
+  ExpiresByType text/javascript            "access plus 1 month"
+  ExpiresByType application/javascript     "access plus 1 month"
+
+  # JSON catalog — 1 hour (updated after each catalog batch)
+  ExpiresByType application/json           "access plus 1 hour"
+
+  # HTML — always revalidate
+  ExpiresByType text/html                  "access plus 0 seconds"
+
+  ExpiresDefault "access plus 1 month"
+</IfModule>
+
+# Compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json application/xml application/xhtml+xml image/svg+xml
+</IfModule>
+
+# ============================================
+# MIME TYPES
+# ============================================
+<IfModule mod_mime.c>
+  AddType image/avif             .avif
+  AddType image/webp             .webp
+  AddType font/woff              .woff
+  AddType font/woff2             .woff2
+  AddType application/javascript .js
+  AddType application/json       .json
+  AddType application/manifest+json .webmanifest
+</IfModule>
+
+# ============================================
+# CHARACTER ENCODING
+# ============================================
+AddDefaultCharset UTF-8
+<IfModule mod_mime.c>
+  AddCharset UTF-8 .html .css .js .xml .json .rss .atom
+</IfModule>

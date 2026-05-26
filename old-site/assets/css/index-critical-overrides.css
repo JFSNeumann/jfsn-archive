@@ -1,0 +1,134 @@
+/* ===========================================
+   INDEX.HTML CRITICAL OVERRIDES
+   Critical styles that must override other CSS
+   Loaded after main bundles for maximum specificity
+   =========================================== */
+
+/* CRITICAL: Force ALL badges with purple/gradient backgrounds to have white text */
+/* Consolidated selectors - better specificity instead of duplicate rules */
+.badge.bg-primary,
+.badge.bg-primary *,
+span.badge.bg-primary,
+span.badge.bg-primary *,
+.badge[class*="primary"],
+.badge[class*="primary"] *,
+.row.g-4 .card .badge.bg-primary,
+.row.g-4 .card .badge.bg-primary *,
+.card .badge.bg-primary,
+.card .badge.bg-primary * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+}
+
+/* CRITICAL: Fix hero section layout - Override hero styles */
+.editorial-hero-section {
+  align-items: flex-start !important;
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
+}
+
+.editorial-hero-content {
+  padding-top: 0.5rem !important;
+  padding-bottom: 1rem !important;
+}
+
+.editorial-hero-content-wrapper {
+  max-width: 95% !important;
+  padding: 0.5rem 0 !important;
+  padding-top: 0.5rem !important;
+}
+
+.hero-content-optimized {
+  gap: 1.5rem !important;
+  padding-top: 0 !important;
+}
+
+.hero-title-optimized {
+  margin-bottom: 1rem !important;
+}
+
+.hero-subtitle-optimized {
+  margin-bottom: 0.75rem !important;
+  line-height: 1.6 !important;
+}
+
+.hero-description-optimized {
+  line-height: 1.6 !important;
+  margin-bottom: 1rem !important;
+}
+
+.hero-cta-optimized {
+  margin-top: 1.5rem !important;
+  gap: 1rem !important;
+}
+
+@media (min-width: 992px) {
+  .hero-content-optimized {
+    gap: 3rem !important;
+    padding-top: 1rem !important;
+  }
+  
+  .hero-primary-content {
+    flex: 1.5 !important;
+    max-width: 60% !important;
+    padding-top: 0.5rem !important;
+  }
+  
+  .hero-cards-container {
+    flex: 1 !important;
+    max-width: 40% !important;
+  }
+  
+  .hero-title-optimized {
+    margin-bottom: 1rem !important;
+  }
+  
+  .hero-subtitle-optimized {
+    margin-bottom: 0.75rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .editorial-hero-section {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+  
+  .editorial-hero-content {
+    padding-top: 0.5rem !important;
+    padding-bottom: 1rem !important;
+  }
+  
+  .hero-content-optimized {
+    gap: 1.5rem !important;
+  }
+}
+
+/* Fix Selected Works button position - move it up and make it visible */
+.selected-works-header {
+  align-items: flex-start !important;
+}
+
+.selected-works-cta-new {
+  margin-top: 0 !important;
+  align-self: flex-start !important;
+}
+
+/* Force ALL buttons with purple backgrounds to have white text */
+/* Consolidated selectors - reduced from 2 rules to 1 with :is() */
+:is(.btn-primary, a.btn-primary, button.btn-primary, span.btn-primary),
+:is(.btn-primary, a.btn-primary, button.btn-primary, span.btn-primary) * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+}
+
+:is(.btn-primary, a.btn-primary, button.btn-primary, span.btn-primary):hover,
+:is(.btn-primary, a.btn-primary, button.btn-primary, span.btn-primary):hover * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: linear-gradient(135deg, #7c3aed, #a78bfa) !important;
+}
+

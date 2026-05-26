@@ -1,0 +1,414 @@
+/* =========================================== */
+/* MOBILE HERO OPTIMIZATION */
+/* Improved first impression on mobile devices */
+/* =========================================== */
+
+@media (max-width: 991.98px) {
+  
+  /* ===== HERO HEIGHT OPTIMIZATION ===== */
+  /* Reduce from 100vh to 70vh to show content below */
+  .hero-section {
+    min-height: 70vh !important;
+    max-height: 70vh !important;
+    overflow: hidden;
+  }
+  
+  /* ===== HERO CONTENT POSITIONING - ABSOLUTE ZERO SPACING ===== */
+  .hero-content {
+    padding: 0 !important;
+    gap: 0 !important;
+  }
+  
+  /* ===== TYPOGRAPHY OPTIMIZATION ===== */
+  .hero-title {
+    font-size: clamp(2rem, 8vw, 3rem) !important;
+    line-height: 1.2 !important;
+    margin-bottom: 1rem !important;
+    text-align: center !important;
+  }
+  
+  .hero-tagline,
+  .hero-subtitle {
+    font-size: clamp(1rem, 3.5vw, 1.25rem) !important;
+    margin-bottom: 1rem !important;
+    text-align: center !important;
+  }
+  
+  .hero-description,
+  .rotating-sentence {
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem) !important;
+    line-height: 1.5 !important;
+    max-width: 90% !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+  }
+  
+  /* ===== HIDE COMPLEX ANIMATIONS ON MOBILE ===== */
+  /* Remove drone to reduce distraction and improve performance */
+  .hero-drone {
+    display: none !important;
+  }
+  
+  /* Simplify background animations */
+  .hero-bg-elements,
+  .hero-particles,
+  .hero-glow,
+  .hero-shape {
+    opacity: 0.3 !important;
+    animation: none !important;
+  }
+  
+  /* ===== DISABLE KEN BURNS ON MOBILE ===== */
+  /* Prevents vibration/jitter during scroll */
+  .ken-burns-bg {
+    animation: none !important;
+  }
+  
+  .ken-burns-layer {
+    transition: opacity 3s ease-in-out !important;
+    animation: none !important;
+    transform: none !important;
+    will-change: opacity !important;
+  }
+  
+  .ken-burns-layer img {
+    transform: none !important;
+    animation: none !important;
+  }
+  
+  .ken-burns-animation {
+    animation: none !important;
+    transform: none !important;
+  }
+  
+  /* Faster image transitions on mobile */
+  .ken-burns-layer.active {
+    transition-duration: 2s !important;
+  }
+  
+  /* ===== SOCIAL LINKS OPTIMIZATION ===== */
+  .hero-social {
+    margin-top: 1.5rem;
+  }
+  
+  .hero-social-links {
+    gap: 1rem;
+    justify-content: center;
+  }
+  
+  .hero-social-link {
+    width: 48px;
+    height: 48px;
+    font-size: 1.2rem;
+  }
+  
+  /* ===== SCROLL DOWN INDICATOR ===== */
+  .scroll-down-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: fadeInScrollIndicator 1s ease 2s forwards,
+               scrollBounce 2s ease-in-out 3s infinite;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  
+  .scroll-down-text {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  
+  .scroll-down-arrow {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(99, 102, 241, 0.2);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .scroll-down-arrow i {
+    color: white;
+    font-size: 1rem;
+    animation: arrowBounce 1.5s ease-in-out infinite;
+  }
+  
+  @keyframes fadeInScrollIndicator {
+    from {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+  
+  @keyframes scrollBounce {
+    0%, 100% {
+      transform: translateX(-50%) translateY(0);
+    }
+    50% {
+      transform: translateX(-50%) translateY(8px);
+    }
+  }
+  
+  @keyframes arrowBounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(4px);
+    }
+  }
+  
+  /* Tap effect */
+  .scroll-down-indicator:active {
+    transform: translateX(-50%) scale(0.95);
+  }
+  
+  .scroll-down-indicator:active .scroll-down-arrow {
+    background: rgba(99, 102, 241, 0.4);
+    transform: scale(0.9);
+  }
+  
+  /* Hide when scrolled */
+  .scroll-down-indicator.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  /* ===== HERO OVERLAY OPTIMIZATION ===== */
+  .ken-burns-overlay {
+    opacity: 0.6 !important;
+  }
+  
+  .hero-bottom-fade {
+    height: 20vh !important;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 50%, transparent 100%) !important;
+  }
+  
+  /* ===== PERFORMANCE OPTIMIZATIONS ===== */
+  /* Disable expensive effects on mobile */
+  .parallax-bg,
+  .parallax-shapes,
+  .parallax-shape {
+    display: none !important;
+  }
+  
+  /* Reduce blur effects */
+  .ken-burns-blur {
+    backdrop-filter: blur(0.5px) !important;
+  }
+  
+  /* ===== TOUCH OPTIMIZATIONS ===== */
+  .hero-section {
+    touch-action: pan-y pinch-zoom;
+    -webkit-overflow-scrolling: touch;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    perspective: 1000;
+  }
+  
+  .ken-burns-bg,
+  .ken-burns-layer,
+  .ken-burns-layer img {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform-style: flat;
+    transform-style: flat;
+  }
+  
+  /* Prevent text selection on hero */
+  .hero-content * {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  
+  /* Allow selection for description text */
+  .hero-description,
+  .rotating-sentence {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+}
+
+/* ===== EXTRA SMALL MOBILE (< 576px) ===== */
+@media (max-width: 575.98px) {
+  .hero-section {
+    min-height: 65vh !important;
+    max-height: 65vh !important;
+  }
+  
+  .hero-title {
+    font-size: clamp(1.75rem, 7vw, 2.5rem) !important;
+  }
+  
+  .hero-social-link {
+    width: 44px;
+    height: 44px;
+  }
+  
+  .scroll-down-indicator {
+    bottom: 1.5rem;
+  }
+  
+  .scroll-down-text {
+    font-size: 0.65rem;
+  }
+}
+
+/* ===== LANDSCAPE MODE OPTIMIZATION ===== */
+@media (max-width: 991.98px) and (orientation: landscape) {
+  .hero-section {
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+  }
+  
+  .hero-content {
+    padding: 0 !important;
+    gap: 0 !important;
+  }
+  
+  .hero-title {
+    font-size: clamp(1.5rem, 6vw, 2.5rem) !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .hero-social {
+    margin-top: 1rem;
+  }
+  
+  .scroll-down-indicator {
+    bottom: 1rem;
+    font-size: 0.7rem;
+  }
+  
+  .scroll-down-arrow {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+/* ===== VERY SMALL SCREENS ===== */
+@media (max-width: 380px) {
+  .hero-section {
+    min-height: 60vh !important;
+    max-height: 60vh !important;
+  }
+  
+  .hero-title {
+    font-size: 1.5rem !important;
+  }
+  
+  .hero-description,
+  .rotating-sentence {
+    font-size: 0.85rem !important;
+  }
+  
+  .hero-social-links {
+    gap: 0.75rem;
+  }
+  
+  .hero-social-link {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+}
+
+/* ===== LOADING STATE OPTIMIZATION ===== */
+@media (max-width: 991.98px) {
+  /* Faster loading on mobile */
+  .hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #000000 0%, #1a1a2e 100%);
+    z-index: 0;
+  }
+  
+  /* Placeholder while images load */
+  .ken-burns-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #000000 0%, #0f0a0f 100%);
+    z-index: 0;
+  }
+}
+
+/* ===== ACCESSIBILITY ===== */
+@media (max-width: 991.98px) {
+  .scroll-down-indicator:focus-visible {
+    outline: 2px solid rgba(99, 102, 241, 0.8);
+    outline-offset: 4px;
+  }
+  
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .hero-title,
+    .hero-description,
+    .scroll-down-text {
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9) !important;
+    }
+    
+    .scroll-down-arrow {
+      background: rgba(99, 102, 241, 0.5);
+      border-width: 3px;
+    }
+  }
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  @media (max-width: 991.98px) {
+    .scroll-down-indicator,
+    .scroll-down-arrow i {
+      animation: none !important;
+    }
+    
+    .ken-burns-layer {
+      transition: none !important;
+    }
+    
+    .hero-social-link {
+      animation: none !important;
+    }
+  }
+}
+
+/* ===== DARK MODE ADJUSTMENTS ===== */
+@media (max-width: 991.98px) {
+  [data-bs-theme="dark"] .scroll-down-arrow {
+    background: rgba(99, 102, 241, 0.3);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+  
+  [data-bs-theme="dark"] .hero-bottom-fade {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%) !important;
+  }
+}
+

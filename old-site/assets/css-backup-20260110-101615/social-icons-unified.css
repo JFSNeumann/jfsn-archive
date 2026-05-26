@@ -1,0 +1,290 @@
+/* =========================================== */
+/* UNIFIED SOCIAL ICONS - NAVBAR & FOOTER */
+/* Consistent styling across all pages */
+/* =========================================== */
+
+/* ===== BASE SOCIAL BUTTON STYLES ===== */
+.social-btn {
+  width: 48px !important;
+  height: 48px !important;
+  min-width: 48px !important;
+  max-width: 48px !important;
+  min-height: 48px !important;
+  max-height: 48px !important;
+  border-radius: 50% !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 2px solid rgba(255, 255, 255, 0.3) !important;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  text-decoration: none !important;
+  position: relative !important;
+  overflow: hidden !important;
+  will-change: transform !important;
+  backdrop-filter: blur(10px) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  color: #ffffff !important;
+}
+
+/* ===== SOCIAL ICON ICONS ===== */
+.social-btn i {
+  font-size: 1.4rem !important;
+  color: #ffffff !important;
+  line-height: 1 !important;
+  display: block !important;
+  position: relative !important;
+  z-index: 2 !important;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  filter: brightness(0) invert(1) !important; /* Force pure white */
+}
+
+/* ===== HOVER STATES ===== */
+.social-btn:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  transform: translateY(-6px) scale(1.15) !important;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.6), 0 4px 12px rgba(139, 92, 246, 0.4) !important;
+  color: #ffffff !important;
+}
+
+.social-btn:hover i {
+  color: #ffffff !important;
+  transform: scale(1.2) rotate(-5deg) !important;
+  filter: brightness(0) invert(1) !important; /* Force pure white on hover */
+}
+
+.social-btn:active {
+  transform: translateY(-3px) scale(1.05) !important;
+  transition: all 0.15s ease !important;
+}
+
+/* ===== ANIMATED BACKGROUND EFFECT ===== */
+/* Apply to ALL social buttons - navbar and footer (identical behavior) */
+.social-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1), height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 0;
+}
+
+.social-btn:hover::before {
+  width: 120px;
+  height: 120px;
+}
+
+/* ===== GRADIENT BORDER EFFECT ===== */
+/* Apply to ALL social buttons - navbar and footer (no tooltips) */
+.social-btn::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  padding: 2px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.5), rgba(139, 92, 246, 0.5));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 1;
+}
+
+.social-btn:hover::after {
+  opacity: 1;
+}
+
+/* ===== INDIVIDUAL PLATFORM COLORS ON HOVER ===== */
+/* LinkedIn */
+.social-btn[aria-label="LinkedIn"]:hover,
+.social-btn[data-platform="LinkedIn"]:hover {
+  background: linear-gradient(135deg, rgba(0, 119, 181, 0.3), rgba(0, 119, 181, 0.2)) !important;
+  border-color: rgba(0, 119, 181, 0.7) !important;
+  box-shadow: 0 8px 24px rgba(0, 119, 181, 0.5), 0 4px 12px rgba(0, 119, 181, 0.3) !important;
+}
+
+/* Twitter */
+.social-btn[aria-label="Twitter"]:hover,
+.social-btn[data-platform="Twitter"]:hover {
+  background: linear-gradient(135deg, rgba(29, 161, 242, 0.3), rgba(29, 161, 242, 0.2)) !important;
+  border-color: rgba(29, 161, 242, 0.7) !important;
+  box-shadow: 0 8px 24px rgba(29, 161, 242, 0.5), 0 4px 12px rgba(29, 161, 242, 0.3) !important;
+}
+
+/* Instagram */
+.social-btn[aria-label="Instagram"]:hover,
+.social-btn[data-platform="Instagram"]:hover {
+  background: linear-gradient(135deg, rgba(225, 48, 108, 0.3), rgba(225, 48, 108, 0.2)) !important;
+  border-color: rgba(225, 48, 108, 0.7) !important;
+  box-shadow: 0 8px 24px rgba(225, 48, 108, 0.5), 0 4px 12px rgba(225, 48, 108, 0.3) !important;
+}
+
+/* Dribbble */
+.social-btn[aria-label="Dribbble"]:hover,
+.social-btn[data-platform="Dribbble"]:hover {
+  background: linear-gradient(135deg, rgba(234, 76, 137, 0.3), rgba(234, 76, 137, 0.2)) !important;
+  border-color: rgba(234, 76, 137, 0.7) !important;
+  box-shadow: 0 8px 24px rgba(234, 76, 137, 0.5), 0 4px 12px rgba(234, 76, 137, 0.3) !important;
+}
+
+/* Behance */
+.social-btn[aria-label="Behance"]:hover,
+.social-btn[data-platform="Behance"]:hover {
+  background: linear-gradient(135deg, rgba(0, 105, 255, 0.3), rgba(0, 105, 255, 0.2)) !important;
+  border-color: rgba(0, 105, 255, 0.7) !important;
+  box-shadow: 0 8px 24px rgba(0, 105, 255, 0.5), 0 4px 12px rgba(0, 105, 255, 0.3) !important;
+}
+
+/* ===== REMOVE TOOLTIPS - Make footer icons identical to navbar ===== */
+/* Footer icons with data-platform should behave EXACTLY like navbar icons */
+/* Override any tooltip styles and use same gradient border and animated background */
+.footer-enhanced .social-btn[data-platform]::after,
+.footer-enhanced .social-btn::after {
+  /* Force gradient border - same as navbar, no tooltips */
+  content: '' !important;
+  position: absolute !important;
+  inset: -2px !important;
+  border-radius: 50% !important;
+  padding: 2px !important;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.5), rgba(139, 92, 246, 0.5)) !important;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0) !important;
+  -webkit-mask-composite: xor !important;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0) !important;
+  mask-composite: exclude !important;
+  opacity: 0 !important;
+  transition: opacity 0.4s ease !important;
+  z-index: 1 !important;
+  /* Disable all tooltip properties */
+  bottom: auto !important;
+  left: auto !important;
+  transform: none !important;
+  color: transparent !important;
+  font-size: 0 !important;
+  font-weight: normal !important;
+  white-space: normal !important;
+  visibility: visible !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  pointer-events: none !important;
+}
+
+.footer-enhanced .social-btn[data-platform]:hover::after,
+.footer-enhanced .social-btn:hover::after {
+  opacity: 1 !important;
+  transform: none !important;
+  visibility: visible !important;
+}
+
+/* Use animated background for footer icons - same as navbar, no tooltip arrow */
+.footer-enhanced .social-btn[data-platform]::before,
+.footer-enhanced .social-btn::before {
+  /* Force animated background - same as navbar, no tooltip arrow */
+  content: '' !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  width: 0 !important;
+  height: 0 !important;
+  border-radius: 50% !important;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%) !important;
+  transform: translate(-50%, -50%) !important;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1), height 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  z-index: 0 !important;
+  /* Disable all tooltip arrow properties */
+  bottom: auto !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-top: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: none !important;
+}
+
+.footer-enhanced .social-btn[data-platform]:hover::before,
+.footer-enhanced .social-btn:hover::before {
+  width: 120px !important;
+  height: 120px !important;
+  transform: translate(-50%, -50%) !important;
+}
+
+/* ===== CONSISTENT STYLING FOR ALL SOCIAL BUTTONS ===== */
+/* Navbar and footer icons are now identical - no differences */
+/* All social buttons use the same base styles defined above */
+.editorial-nav-overlay-menu .social-btn,
+.navbar-quick-actions .social-btn,
+.footer-enhanced .social-btn,
+.social-btn {
+  /* All use base styles - 48px, same background, same border, same effects */
+  width: 48px !important;
+  height: 48px !important;
+  min-width: 48px !important;
+  max-width: 48px !important;
+  min-height: 48px !important;
+  max-height: 48px !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 2px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.editorial-nav-overlay-menu .social-btn i,
+.navbar-quick-actions .social-btn i,
+.footer-enhanced .social-btn i,
+.social-btn i {
+  font-size: 1.4rem !important;
+  color: #ffffff !important;
+  filter: brightness(0) invert(1) !important; /* Pure white */
+}
+
+/* ===== CONTAINER SPACING ===== */
+[role="group"][aria-label="Social media links"] {
+  display: flex !important;
+  gap: 0.75rem !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .social-btn {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    max-width: 40px !important;
+    min-height: 40px !important;
+    max-height: 40px !important;
+  }
+  
+  .social-btn i {
+    font-size: 1.1rem !important;
+  }
+  
+  [role="group"][aria-label="Social media links"] {
+    gap: 0.5rem !important;
+  }
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  .social-btn,
+  .social-btn::before,
+  .social-btn::after,
+  .social-btn i {
+    transition: none !important;
+    animation: none !important;
+  }
+  
+  .social-btn:hover {
+    transform: none !important;
+  }
+}
+

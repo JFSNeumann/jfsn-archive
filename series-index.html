@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0b0b">
+  <title>Series — Jeffrey F. S. Neumann</title>
+  <meta name="description" content="16 editorial series spanning five decades of collage, sculpture, and photography by Jeffrey F. S. Neumann.">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="canonical" href="https://jfsn.com/series-index.html">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap"></noscript>
+  <link rel="stylesheet" href="site.css">
+
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="Series — Jeffrey F. S. Neumann">
+  <meta property="og:description" content="16 editorial series spanning five decades of collage, sculpture, and photography.">
+  <meta property="og:image"       content="https://jfsn.com/og-card.jpg">
+  <meta property="og:url"         content="https://jfsn.com/series-index.html">
+
+  <style>
+    /* -------- Page layout -------- */
+    .series-index {
+      padding-top: clamp(3rem, 6vw, 6rem);
+      padding-bottom: clamp(4rem, 10vw, 10rem);
+    }
+
+    /* -------- Head -------- */
+    .series-index__head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 1rem;
+      flex-wrap: wrap;
+      padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
+      border-bottom: 1px solid var(--dim);
+    }
+    .series-index__title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+      margin: 0;
+    }
+    .series-index__meta {
+      font-size: var(--cap);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0;
+      padding-bottom: 0.25rem;
+    }
+
+    /* -------- List -------- */
+    .series-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .series-entry {
+      display: grid;
+      grid-template-columns: 88px 1fr auto;
+      gap: 1rem 2.5rem;
+      align-items: center;
+      padding: clamp(1.25rem, 2.5vw, 2rem) 0;
+      border-bottom: 1px solid var(--dim);
+    }
+
+    /* -------- Thumbnail -------- */
+    .series-entry__thumb {
+      display: block;
+      width: 88px;
+      height: 88px;
+      overflow: hidden;
+      background: rgba(243,240,234,0.05);
+      flex-shrink: 0;
+    }
+    .series-entry__thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    .series-entry__thumb:hover img { transform: scale(1.07); }
+    .series-entry__name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1.25rem, 2.25vw, 1.875rem);
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      margin: 0 0 0.75rem;
+    }
+    .series-entry__desc {
+      font-size: 0.9375rem;
+      line-height: 1.78;
+      color: var(--muted);
+      margin: 0;
+      max-width: 72ch;
+    }
+    .series-entry__aside {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.6rem;
+      padding-top: 0.25rem;
+      flex-shrink: 0;
+    }
+    .series-entry__count {
+      font-size: var(--cap);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      min-height: 1em; /* reserves space while count loads */
+    }
+    .series-entry__link {
+      font-size: var(--cap);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--dim);
+      padding-bottom: 0.1rem;
+      white-space: nowrap;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .series-entry__link:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* -------- Responsive -------- */
+    @media (max-width: 600px) {
+      .series-entry {
+        grid-template-columns: 64px 1fr;
+        gap: 0.75rem 1rem;
+      }
+      .series-entry__aside {
+        grid-column: 1 / -1;
+        flex-direction: row;
+        align-items: center;
+        gap: 1.5rem;
+      }
+    }
+
+    /* -------- Reduced motion -------- */
+    @media (prefers-reduced-motion: reduce) {
+      .series-entry__thumb img { transition: none; }
+    }
+
+    /* -------- Named-series section divider -------- */
+    .series-entry--section {
+      padding: clamp(1.5rem, 3vw, 2rem) 0 0.25rem;
+      border-bottom: none;
+    }
+    .series-entry__section-label {
+      font-size: var(--cap);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0.5;
+      margin: 0;
+    }
+
+    /* -------- Reduced motion -------- */
+    @media (prefers-reduced-motion: reduce) {
+      .series-entry__link { transition: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+<a href="#main" class="skip">Skip to content</a>
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="brand" href="index.html"><img src="jfsn-mark.png" class="brand-mark" alt="JFSN">Jeffrey F. S. Neumann</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="archive.html">Archive</a>
+      <a href="series-index.html" aria-current="page">Series</a>
+      <a href="timeline.html">Timeline</a>
+      <a href="constellation.html">Constellation</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="container series-index">
+    <div class="series-index__head">
+      <h1 class="series-index__title">Series</h1>
+      <p class="series-index__meta" id="series-meta">16 series</p>
+    </div>
+    <ul class="series-list" id="series-list" aria-label="All series">
+      <!-- populated by JS immediately; no network wait for layout -->
+    </ul>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <span>Jeffrey F. S. Neumann</span>
+    <nav class="footer-nav" aria-label="Site navigation">
+      <a href="archive.html">Archive</a>
+      <a href="series-index.html">Series</a>
+      <a href="timeline.html">Timeline</a>
+      <a href="constellation.html">Constellation</a>
+      <a href="about.html">About</a>
+    </nav>
+    <nav class="footer-social" aria-label="Social links">
+      <a href="https://www.linkedin.com/in/jeffreyneumann/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://dribbble.com/JFSN" target="_blank" rel="noopener">Dribbble</a>
+      <a href="https://www.youtube.com/@jfsneumann/videos" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://showspace.so/s/jeffrey-neumann-46" target="_blank" rel="noopener">Showspace</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function () {
+
+  /* same theme-series config as series.html — keep in sync when series are added */
+  const SERIES = {
+    'Mr. Snowmann':   { title: 'Mr. Snowmann',     description: 'A recurring figure — part totem, part pop effigy — assembled from the residue of consumer culture. Across more than a hundred works spanning five decades, the Snowmann shape-shifts and accumulates: a sustained riff on American iconography, assembly, and the act of making something from nothing.' },
+    'Guernica':       { title: 'Guernica Inspired', description: 'Works in direct dialogue with Picasso\'s 1937 masterpiece. The bull, the horse, the fragmenting figures — recombined through collage into new arrangements that hold the original\'s emotional charge while relocating it in the visual language of mid-century American commerce and popular imagery.' },
+    'Studio':         { title: 'Studio Images',     description: 'Works photographed in the context of the studio — process images, studies in available light, and the raw material of practice before it becomes exhibition. The space where everything starts, documented at various stages of arrival.' },
+    'Framed':         { title: 'Framed Pieces',     description: 'Works conceived with framing as an integral compositional element — the frame not as neutral container but as collaborator. Edge and interior in negotiation; the boundary of the work as part of the work itself.' },
+    'Art School':     { title: 'Art School Work',   description: 'Work made during and around the BFA years at the Cleveland Institute of Art. The foundation built here — printmaking, industrial drawing, material thinking — runs under everything that came after. These pieces catch the practice at the moment of formation: uncertain in the best way, searching, not yet committed to what it would become.' },
+    'Torsos & Faces': { title: 'Torsos & Faces',   description: 'Photographic fragments of the human body — cropped, magnified, repositioned — set against grounds that compete with and complement the figure. Presence through reduction; the body as found material, as much subject as surface.' },
+    'Tracings':       { title: 'Tracings',          description: 'Works built from the act of tracing — contour drawn over found imagery, line extracted from photograph or print. A method of close looking that is also a method of possession: the original image remains visible beneath the intervention, neither fully surrendered nor entirely replaced.' },
+    'Aviation':       { title: 'Aviation',          description: 'Warplanes and commercial aircraft extracted from print media — identification silhouettes, engine cross-sections, advertising copy. Flight rendered as formal object: the machine stripped to icon, hovering between technological sublime and cold precision, beauty and threat indistinguishable.' },
+    'Targets':        { title: 'Targets',           description: 'Concentric rings, bull\'s-eye forms, and range markers appear across dozens of works as compositional anchors and loaded symbols. Precision without declared purpose. The target as both invitation and warning — a form that compels attention before meaning is assigned.' },
+    'Gallery':        { title: 'Gallery Images',    description: 'Exhibition views and installation photographs from five decades of showing work. The archive of the archive: spaces, arrangements, and the accumulated evidence of a practice made public and encountered by other eyes.' },
+    'Reliquaries':    { title: 'Reliquaries',       description: 'Works structured around the logic of the container: sealed, weighted, and significant. Materials chosen for their prior lives as much as their surfaces. Vessels that imply a content they don\'t reveal — the relic absent, the shrine intact.' },
+    'Totems':         { title: 'Totems',            description: 'Vertical accretions of found and fabricated elements, drawing on the logic of accumulation and ritual while remaining grounded in the vocabularies of the workshop and the hardware store. Stacked significance; weight as meaning.' },
+    'Crosses':        { title: 'Crosses',           description: 'The cross reduced to its geometry — symmetry, perpendicular meeting, four directions held in tension. Form that carries cultural weight before any specific reading is applied, returned to pure structure and asked to hold whatever the viewer brings.' },
+  };
+
+  /* Named series — filtered by r.series field, linked with ?series= param */
+  const NAMED_SERIES = {
+    'XXIII':    { title: 'XXIII',          description: 'Dense formations of compact discs — sometimes hundreds — arranged across the picture plane in undulating rows or tight grids. Works in this series frequently carry the label "XXIII" or "DBS." The CD as found object, mass-produced and reflective, becomes both building material and conceptual unit.' },
+    'Squadron': { title: 'Squadron',       description: 'Multiple top-down warplane silhouettes arranged in deliberate formation as the primary compositional subject. The planes move together as a unit, their repetition transforming a military motif into something closer to choreography — or to a flock.' },
+    'Guernica': { title: 'Guernica Series', description: 'Works where the title contains "Guernica" or the composition directly mirrors Picasso\'s 1937 painting. Distinct from works that share Guernica\'s emotional territory: these engage the source directly, reworking its specific iconography — the bull, the horse, the lamp — through collage.' },
+  };
+
+  function esc(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  /* render list immediately — no network wait */
+  const themeItems = Object.entries(SERIES).map(([key, s]) => ({
+    key, title: s.title, description: s.description,
+    url: `series.html?theme=${encodeURIComponent(key)}`,
+    countAttr: 'data-theme-count',
+  }));
+  const namedItems = Object.entries(NAMED_SERIES).map(([key, s]) => ({
+    key, title: s.title, description: s.description,
+    url: `series.html?series=${encodeURIComponent(key)}`,
+    countAttr: 'data-series-count',
+  }));
+  const allItems = [...themeItems, ...namedItems];
+
+  function renderItem(item) {
+    return `<li class="series-entry">
+      <a class="series-entry__thumb" href="${esc(item.url)}" tabindex="-1" aria-hidden="true">
+        <img data-series-key="${esc(item.key)}"
+             data-series-type="${esc(item.countAttr)}"
+             src="" alt="" loading="lazy" width="88" height="88">
+      </a>
+      <div>
+        <h2 class="series-entry__name">${esc(item.title)}</h2>
+        <p class="series-entry__desc">${esc(item.description)}</p>
+      </div>
+      <div class="series-entry__aside">
+        <span class="series-entry__count" ${item.countAttr}="${esc(item.key)}"></span>
+        <a class="series-entry__link" href="${esc(item.url)}">Browse &rarr;</a>
+      </div>
+    </li>`;
+  }
+
+  const list = document.getElementById('series-list');
+  document.getElementById('series-meta').textContent = allItems.length + ' series';
+  list.innerHTML =
+    themeItems.map(renderItem).join('') +
+    `<li class="series-entry--section" aria-hidden="true">
+      <p class="series-entry__section-label">Named Bodies of Work</p>
+    </li>` +
+    namedItems.map(renderItem).join('');
+
+  /* update counts from catalog */
+  fetch('catalog-lite.json')
+    .then(r => r.ok ? r.json() : null).catch(() => null)
+    .then(catalog => {
+      if (!catalog) return;
+      const themeCounts  = {};
+      const seriesCounts = {};
+      catalog.forEach(r => {
+        (r.themes || []).forEach(t => { themeCounts[t]  = (themeCounts[t]  || 0) + 1; });
+        if (r.series) seriesCounts[r.series] = (seriesCounts[r.series] || 0) + 1;
+      });
+      document.querySelectorAll('[data-theme-count]').forEach(el => {
+        const n = themeCounts[el.dataset.themeCount];
+        if (n != null) el.textContent = n.toLocaleString() + ' ' + (n === 1 ? 'work' : 'works');
+      });
+      document.querySelectorAll('[data-series-count]').forEach(el => {
+        const n = seriesCounts[el.dataset.seriesCount];
+        if (n != null) el.textContent = n.toLocaleString() + ' ' + (n === 1 ? 'work' : 'works');
+      });
+
+      /* Fallback thumbnails for themes with no cataloged works yet */
+      const FALLBACK_THUMBS = {
+        'Mr. Snowmann':   'art0112',
+        'Art School':     'art1031',
+        'Aviation':       'art0003',
+        'Targets':        'art0008',
+        'Reliquaries':    'art0002',
+        'Totems':         'art0001',
+        'Crosses':        'art0137',
+        'Torsos & Faces': 'art0021',
+        'Gallery':        'art0957',
+        'Framed':         'art0683',
+        'Studio':         'art0134',
+        'Tracings':       'art0408',
+        'Collaboration':  'art0520',
+        'XXIII':          'art0016',
+        'Squadron':       'art0006',
+        'Guernica':       'art0003',
+      };
+
+      /* Fill representative thumbnails */
+      document.querySelectorAll('.series-entry__thumb img').forEach(img => {
+        const key  = img.dataset.seriesKey;
+        const type = img.dataset.seriesType;
+        const rec  = type === 'data-theme-count'
+          ? catalog.find(r => (r.themes || []).includes(key))
+          : catalog.find(r => r.series === key);
+        const thumbId = rec
+          ? rec.file.replace('.avif', '')
+          : FALLBACK_THUMBS[key];
+        if (thumbId) img.src = 'artworks/thumbs/' + thumbId + '.avif';
+      });
+    });
+
+})();
+</script>
+
+<script src="search.js" defer></script>
+<script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
+</body>
+</html>

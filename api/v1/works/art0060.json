@@ -1,0 +1,46 @@
+{
+  "api_version": "1",
+  "id": "art0060",
+  "work": {
+    "file": "art0060.avif",
+    "title": "Guernica, Tall",
+    "year": null,
+    "work_type": "collage",
+    "orientation": "portrait",
+    "description": "A vertical totem composition titled 'GUERNICA' across the top: warplanes scatter from the upper edge over a central panel of fragmented faces and ruins, descending to a base of four black-and-white photographic strips and silver compact discs. Red ink dominates the upper register.",
+    "palette": [
+      "red",
+      "ivory",
+      "black",
+      "blue",
+      "silver"
+    ],
+    "motifs": [
+      "compact-disc",
+      "warplane-topdown",
+      "warplane-side",
+      "photographic-face",
+      "vertical-stripes",
+      "numerals"
+    ],
+    "materials": [],
+    "composition": "axial vertical totem with text crown",
+    "themes": [
+      "Torsos & Faces"
+    ],
+    "keywords": [
+      "text",
+      "manifesto",
+      "narrative"
+    ],
+    "featured": false,
+    "schema_version": "1",
+    "series": "Guernica"
+  },
+  "links": {
+    "image": "https://jfsn.com/artworks/full/art0060.avif",
+    "thumb": "https://jfsn.com/artworks/thumbs/art0060.avif",
+    "mini": "https://jfsn.com/artworks/mini/art0060.avif",
+    "page": "https://jfsn.com/artwork.html?id=art0060"
+  }
+}

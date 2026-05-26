@@ -1,0 +1,287 @@
+/* ===========================================
+   FOOTER ACCESSIBILITY ENHANCEMENTS
+   Focus indicators, ARIA labels, keyboard navigation
+   =================================== */
+
+/* ===== ENHANCED FOCUS INDICATORS ===== */
+.footer-link:focus-visible,
+.social-btn:focus-visible,
+.footer-badge-link:focus-visible,
+.accordion-button:focus-visible,
+.footer-bottom-link:focus-visible,
+.footer-character-container:focus-visible {
+  outline: 3px solid rgba(99, 102, 241, 0.9);
+  outline-offset: 4px;
+  border-radius: 6px;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2),
+              0 0 0 6px rgba(99, 102, 241, 0.3);
+  transition: outline 0.2s ease,
+              outline-offset 0.2s ease,
+              box-shadow 0.2s ease;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .footer-link:focus-visible,
+  .social-btn:focus-visible,
+  .footer-badge-link:focus-visible,
+  .accordion-button:focus-visible,
+  .footer-bottom-link:focus-visible {
+    outline: 4px solid #ffffff;
+    outline-offset: 4px;
+    box-shadow: 0 0 0 2px #000000;
+  }
+}
+
+/* Focus within containers */
+.footer-enhanced:focus-within {
+  outline: none;
+}
+
+/* ===== KEYBOARD NAVIGATION IMPROVEMENTS ===== */
+/* Ensure all interactive elements are keyboard accessible */
+.footer-link,
+.social-btn,
+.footer-badge-link,
+.accordion-button,
+.footer-bottom-link {
+  /* Make sure elements are focusable */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Skip link to footer */
+.skip-link-footer {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  background: #6366f1;
+  color: #ffffff;
+  padding: 1rem 2rem;
+  text-decoration: none;
+  font-weight: 600;
+  z-index: 10000;
+  border-radius: 0 0 8px 0;
+  transition: top 0.3s ease;
+}
+
+.skip-link-footer:focus {
+  top: 0;
+  outline: 3px solid #ffffff;
+  outline-offset: 2px;
+}
+
+/* ===== ARIA LABEL ENHANCEMENTS ===== */
+/* Ensure all interactive elements have proper labels */
+.footer-link[aria-label]:empty::before {
+  content: attr(aria-label);
+}
+
+/* Screen reader only text */
+.sr-only-footer {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.sr-only-footer:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0.5rem 1rem;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  background: #6366f1;
+  color: #ffffff;
+  border-radius: 4px;
+}
+
+/* ===== KEYBOARD SHORTCUTS ===== */
+/* Visual indicator for keyboard shortcuts */
+.footer-link[data-shortcut]::after {
+  content: attr(data-shortcut);
+  position: absolute;
+  right: -2rem;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.footer-link[data-shortcut]:hover::after,
+.footer-link[data-shortcut]:focus::after {
+  opacity: 1;
+}
+
+/* ===== FOCUS TRAP FOR MODALS/ACCORDIONS ===== */
+.accordion-collapse.show {
+  /* Ensure focus stays within when open */
+  contain: layout style paint;
+}
+
+.accordion-collapse.show:focus-within {
+  outline: 2px solid rgba(99, 102, 241, 0.5);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+/* ===== REDUCED MOTION SUPPORT ===== */
+@media (prefers-reduced-motion: reduce) {
+  .footer-enhanced *,
+  .footer-enhanced *::before,
+  .footer-enhanced *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  /* Keep essential transitions for accessibility */
+  .footer-link:focus-visible,
+  .social-btn:focus-visible {
+    transition: outline 0.2s ease !important;
+  }
+}
+
+/* ===== COLOR CONTRAST ENFORCEMENT ===== */
+/* Ensure all text meets WCAG AAA standards */
+.footer-enhanced {
+  /* Minimum contrast ratio 7:1 for normal text */
+  /* Minimum contrast ratio 4.5:1 for large text */
+}
+
+.footer-enhanced .text-white-50 {
+  /* Improved contrast */
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.footer-enhanced .text-muted {
+  /* Improved contrast */
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* ===== TOUCH TARGET SIZES ===== */
+/* Minimum 44x44px for touch targets */
+.footer-link,
+.social-btn,
+.footer-badge-link,
+.accordion-button,
+.footer-bottom-link {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+}
+
+/* ===== LIVE REGION ANNOUNCEMENTS ===== */
+.footer-announcement {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.footer-announcement[aria-live="polite"],
+.footer-announcement[aria-live="assertive"] {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* ===== SEMANTIC HTML ENHANCEMENTS ===== */
+/* Ensure proper heading hierarchy */
+.footer-enhanced h3 {
+  /* Main heading */
+}
+
+.footer-enhanced h4 {
+  /* Section headings */
+  font-size: 0.875rem;
+}
+
+/* Proper list semantics */
+.footer-enhanced nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-enhanced nav li {
+  display: block;
+}
+
+/* ===== LANDMARK REGIONS ===== */
+footer[role="contentinfo"] {
+  /* Main footer landmark */
+}
+
+footer nav[aria-label] {
+  /* Navigation landmark */
+}
+
+/* ===== ERROR STATES ===== */
+.footer-link[aria-invalid="true"] {
+  border-left: 3px solid #ef4444;
+  padding-left: 0.5rem;
+}
+
+.footer-link[aria-invalid="true"]:focus {
+  outline-color: #ef4444;
+}
+
+/* ===== LOADING STATES ===== */
+.footer-link[aria-busy="true"]::after {
+  content: '';
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: footerSpin 0.6s linear infinite;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
+
+@keyframes footerSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===== DISABLED STATES ===== */
+.footer-link[aria-disabled="true"],
+.social-btn[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.footer-link[aria-disabled="true"]:focus,
+.social-btn[aria-disabled="true"]:focus {
+  outline: 2px dashed rgba(255, 255, 255, 0.5);
+}
+

@@ -1,0 +1,184 @@
+<!-- Announcement Bar (dismissible) -->
+  
+    
+    <!-- Navigation - Editorial Minimal Style -->
+    <header class="editorial-navbar">
+      <div class="container-fluid">
+        <div class="editorial-navbar-content">
+          <a class="editorial-navbar-brand" href="/">
+            <img src="components/navbar/images/jfsn-butterfly-1.png" alt="JFSN" height="32" loading="eager" fetchpriority="high">
+            <span>JFSN</span>
+            <span class="navbar-name d-none d-md-inline">Jeffrey Francis Stanley Neumann</span>
+          </a>
+          
+          <button class="editorial-navbar-toggle" type="button" id="editorialNavToggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span class="editorial-navbar-toggle-icon">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+        </div>
+      </div>
+    </header>
+    
+    <!-- Search Overlay (Hidden - Search button removed) -->
+    <div class="navbar-search-overlay" id="navbarSearchOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="search-overlay-title" style="display: none !important;">
+      <div class="navbar-search-overlay-content">
+        <div class="navbar-search-overlay-header">
+          <h2 id="search-overlay-title" class="navbar-search-overlay-title">Search</h2>
+          <button class="navbar-search-overlay-close" id="navbarSearchClose" aria-label="Close search">
+            <i class="bx bx-x"></i>
+          </button>
+        </div>
+        <div class="navbar-search-form">
+          <div class="navbar-search-input-wrapper">
+            <i class="bx bx-search navbar-search-icon"></i>
+            <input 
+              type="search" 
+              id="navbarSearchInput" 
+              class="navbar-search-input" 
+              placeholder="Search artworks, pages, content..." 
+              aria-label="Search"
+              autocomplete="off"
+              autofocus>
+            <button class="navbar-search-clear" id="navbarSearchClear" aria-label="Clear search">
+              <i class="bx bx-x"></i>
+            </button>
+          </div>
+          <div class="navbar-search-results" id="navbarSearchResults" role="region" aria-live="polite">
+            <div class="navbar-search-suggestions">
+              <p class="navbar-search-suggestions-title">Quick Links</p>
+              <div class="navbar-search-suggestions-list">
+                <a href="art.html" class="navbar-search-suggestion art-gallery-featured-search">
+                  <i class="bx bx-palette art-gallery-icon"></i>
+                  <span>Art Gallery</span>
+                  <span class="art-count-badge-small">1,084+</span>
+                </a>
+                <a href="portfolio.html" class="navbar-search-suggestion">
+                  <i class="bx bx-briefcase"></i>
+                  <span>Portfolio</span>
+                </a>
+                <a href="about.html" class="navbar-search-suggestion">
+                  <i class="bx bx-user"></i>
+                  <span>About</span>
+                </a>
+                <a href="contact.html" class="navbar-search-suggestion">
+                  <i class="bx bx-envelope"></i>
+                  <span>Contact</span>
+                </a>
+                <a href="timeline.html" class="navbar-search-suggestion">
+                  <i class="bx bx-time timeline-icon"></i>
+                  <span>50-Year Timeline</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Full-Screen Navigation Overlay -->
+    <div class="editorial-nav-overlay" id="editorialNavOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="nav-overlay-title">
+      <div class="editorial-nav-overlay-content">
+        <div class="editorial-nav-overlay-header">
+          <div class="editorial-nav-overlay-header-top">
+            <a class="editorial-nav-overlay-brand" href="/" id="nav-overlay-title">
+              <!-- Butterfly Logo -->
+              <div class="editorial-nav-overlay-brand-header">
+                <img src="components/navbar/images/jfsn-butterfly-1.png" alt="JFSN" height="48" loading="lazy">
+                <span class="editorial-nav-overlay-brand-name">JFSN</span>
+              </div>
+              <div class="editorial-nav-overlay-brand-info">
+                <div class="editorial-nav-overlay-brand-name-text">Jeffrey F. S. Neumann</div>
+                <div class="editorial-nav-overlay-brand-description">Artist & Designer | 50 Years of Creative Innovation</div>
+              </div>
+            </a>
+            <button class="editorial-nav-overlay-close" id="editorialNavClose" aria-label="Close navigation">
+              <i class="bx bx-x" aria-hidden="true"></i>
+              <span class="close-icon-fallback" aria-hidden="true">×</span>
+              <span class="sr-only">Close</span>
+            </button>
+          </div>
+        </div>
+        <nav class="editorial-nav-overlay-menu" aria-label="Main navigation">
+          <ul>
+            <li><a href="/" class="editorial-nav-link active">Home</a></li>
+            <!-- Art Gallery - Featured & Most Important -->
+            <li><a href="art.html" class="editorial-nav-link art-gallery-featured">
+              <i class="bx bx-palette art-gallery-icon"></i>
+              <span>Art Gallery</span>
+              <span class="art-count-badge">1,084+</span>
+            </a></li>
+            <li><a href="about.html" class="editorial-nav-link">About</a></li>
+            <li class="d-flex align-items-center gap-3">
+              <a href="portfolio.html" class="editorial-nav-link">Portfolio</a>
+              <div class="d-flex social-links-group" role="group" aria-label="Social media links">
+                <a href="https://www.linkedin.com/in/jeffrey-neumann" target="_blank" rel="noopener noreferrer" class="btn btn-outline-light btn-sm social-btn btn-glow" aria-label="LinkedIn" data-platform="LinkedIn">
+                  <i class="bx bxl-linkedin"></i>
+                </a>
+                <a href="https://twitter.com/jfsn" target="_blank" rel="noopener noreferrer" class="btn btn-outline-light btn-sm social-btn btn-glow" aria-label="Twitter" data-platform="Twitter">
+                  <i class="bx bxl-twitter"></i>
+                </a>
+                <a href="https://www.instagram.com/jfsneumann" target="_blank" rel="noopener noreferrer" class="btn btn-outline-light btn-sm social-btn btn-glow" aria-label="Instagram" data-platform="Instagram">
+                  <i class="bx bxl-instagram"></i>
+                </a>
+                <a href="https://dribbble.com/jfsn" target="_blank" rel="noopener noreferrer" class="btn btn-outline-light btn-sm social-btn btn-glow" aria-label="Dribbble" data-platform="Dribbble">
+                  <i class="bx bxl-dribbble"></i>
+                </a>
+                <a href="https://www.behance.net/jfsn" target="_blank" rel="noopener noreferrer" class="btn btn-outline-light btn-sm social-btn btn-glow" aria-label="Behance" data-platform="Behance">
+                  <i class="bx bxl-behance"></i>
+                </a>
+              </div>
+            </li>
+            <li><a href="miscellaneous.html" class="editorial-nav-link">Miscellaneous</a></li>
+            <li><a href="timeline.html" class="editorial-nav-link">
+              <i class="bx bx-time timeline-icon"></i>
+              <span>50-Year Timeline</span>
+            </a></li>
+            <li><a href="contact.html" class="editorial-nav-link">Contact</a></li>
+            <li><a href="template.html" class="editorial-nav-link">
+              <i class="bx bx-file-blank"></i>
+              <span>Template</span>
+            </a></li>
+          </ul>
+          
+          <!-- Secondary Links / Explore More (Default - shown on most pages) -->
+          <div class="editorial-nav-overlay-secondary-links" id="exploreMoreSection">
+            <h4 class="editorial-nav-secondary-title">Explore More</h4>
+            <div class="editorial-nav-secondary-grid">
+              <a href="art.html" class="editorial-nav-secondary-link">
+                <i class="bx bx-palette"></i>
+                <span>View Art Gallery</span>
+              </a>
+              <a href="portfolio.html" class="editorial-nav-secondary-link">
+                <i class="bx bx-briefcase"></i>
+                <span>View Portfolio</span>
+              </a>
+              <a href="website.html" class="editorial-nav-secondary-link">
+                <i class="bx bx-globe"></i>
+                <span>Design Archives</span>
+              </a>
+              <a href="automobile-designs.html" class="editorial-nav-secondary-link">
+                <i class="bx bx-car"></i>
+                <span>Automobile Designs</span>
+              </a>
+              <a href="sebastian-3.html" class="editorial-nav-secondary-link">
+                <i class="bx bx-book-open"></i>
+                <span>Sebastian's Journey</span>
+              </a>
+              <a href="art-companions.html" class="editorial-nav-secondary-link">
+                <i class="bx bx-palette"></i>
+                <span>Art Companions</span>
+              </a>
+            </div>
+          </div>
+        </nav>
+        <div class="editorial-nav-overlay-footer">
+          <button class="btn btn-link text-white" type="button" id="themeToggle" aria-label="Toggle dark mode">
+            <i class="bx bx-moon"></i>
+            <span>Dark Mode</span>
+          </button>
+        </div>
+      </div>
+    </div>

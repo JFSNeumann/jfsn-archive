@@ -1,0 +1,227 @@
+/**
+ * HERO PARALLAX - GPU ACCELERATED
+ * Optimized hero section animations with hardware acceleration
+ * Created: 2025-11-06
+ */
+
+(function() {
+  'use strict';
+
+  // ===== CONFIG =====
+  const config = {
+    bgParallaxSpeed: 0.3,
+    contentParallaxSpeed: 0.1,
+    fadeSpeed: 0.8,
+    scaleAmount: 0.05,
+    useGPUAcceleration: true,
+    respectReducedMotion: true
+  };
+
+  // ===== CHECK FOR REDUCED MOTION =====
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (config.respectReducedMotion && prefersReducedMotion) {
+    return;
+  }
+
+  // ===== DOM ELEMENTS =====
+  const heroSection = document.querySelector('.hero-section');
+  const heroBg = document.querySelector('.hero-bg-static');
+  const heroContent = document.querySelector('.hero-content');
+
+  if (!heroSection || !heroBg || !heroContent) {
+    window.debugWarn ? window.debugWarn('Hero elements not found - parallax disabled');
+    return;
+  }
+
+  // ===== ENABLE GPU ACCELERATION =====
+  if (config.useGPUAcceleration) {
+    // Force GPU acceleration by using 3D transforms
+    heroBg.style.willChange = 'transform';
+    heroContent.style.willChange = 'transform, opacity';
+    heroBg.style.transformStyle = 'preserve-3d';
+    heroContent.style.transformStyle = 'preserve-3d';
+    heroBg.style.backfaceVisibility = 'hidden';
+    heroContent.style.backfaceVisibility = 'hidden';
+  }
+
+  // ===== PERFORMANCE VARIABLES =====
+  let ticking = false;
+  let heroHeight = heroSection.offsetHeight;
+  let lastScrollY = 0;
+
+  // Cache heroHeight on resize (throttled)
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      heroHeight = heroSection.offsetHeight;
+    }, 250);
+  }, { passive: true });
+
+  // ===== OPTIMIZED PARALLAX UPDATE (GPU ACCELERATED) =====
+  function updateParallax() {
+    const scrollY = window.scrollY;
+    
+    // Skip if no scroll change
+    if (scrollY === lastScrollY) {
+      ticking = false;
+      return;
+    }
+    lastScrollY = scrollY;
+
+    // Only run in hero viewport
+    if (scrollY < heroHeight) {
+      // Calculate values once
+      const scrollPercent = scrollY / heroHeight;
+      
+      // Background parallax - GPU accelerated with translate3d
+      const bgTranslate = scrollY * config.bgParallaxSpeed;
+      if (config.useGPUAcceleration) {
+        heroBg.style.transform = `translate3d(0, ${bgTranslate}px, 0)`;
+      } else {
+        heroBg.style.transform = `translateY(${bgTranslate}px)`;
+      }
+      
+      // Content fade + scale - GPU accelerated
+      const opacity = Math.max(0, 1 - (scrollPercent * config.fadeSpeed));
+      const scale = Math.max(0.95, 1 - (scrollPercent * config.scaleAmount));
+      
+      heroContent.style.opacity = opacity;
+      if (config.useGPUAcceleration) {
+        heroContent.style.transform = `translate3d(-50%, -50%, 0) scale3d(${scale}, ${scale}, 1)`;
+      } else {
+        heroContent.style.transform = `translate(-50%, -50%) scale(${scale})`;
+      }
+
+      // Hide hero completely when scrolled past
+      if (scrollY >= heroHeight * 0.9) {
+        heroSection.style.pointerEvents = 'none';
+      } else {
+        heroSection.style.pointerEvents = 'auto';
+      }
+    } else {
+      // Fully scrolled past - hide completely
+      if (heroContent.style.opacity !== '0') {
+        heroContent.style.opacity = '0';
+        heroSection.style.pointerEvents = 'none';
+      }
+    }
+
+    ticking = false;
+  }
+
+  // ===== REQUEST ANIMATION FRAME THROTTLING =====
+  function requestTick() {
+    if (!ticking) {
+      requestAnimationFrame(updateParallax);
+      ticking = true;
+    }
+  }
+
+  // ===== PASSIVE SCROLL LISTENER =====
+  window.addEventListener('scroll', requestTick, { passive: true });
+
+  // ===== LOW-POWER MODE DETECTION =====
+  (async function checkBattery() {
+    try {
+      if ('getBattery' in navigator) {
+        const battery = await navigator.getBattery();
+        
+        function adjustForPowerMode() {
+          // Disable parallax if battery is critically low
+          if ((battery.level < 0.10) || (battery.level < 0.20 && !battery.charging)) {
+            config.bgParallaxSpeed = 0;
+            config.contentParallaxSpeed = 0;
+            config.fadeSpeed = 0;
+            heroBg.style.willChange = 'auto';
+            heroContent.style.willChange = 'auto';
+          } else {
+            // Re-enable if charging
+            config.bgParallaxSpeed = 0.3;
+            config.contentParallaxSpeed = 0.1;
+            config.fadeSpeed = 0.8;
+            if (config.useGPUAcceleration) {
+              heroBg.style.willChange = 'transform';
+              heroContent.style.willChange = 'transform, opacity';
+            }
+          }
+        }
+        
+        battery.addEventListener('levelchange', adjustForPowerMode);
+        battery.addEventListener('chargingchange', adjustForPowerMode);
+        adjustForPowerMode();
+      }
+    } catch(e) {
+      // Battery API not supported
+    }
+  })();
+
+  // ===== PERFORMANCE MONITORING =====
+  if (window.performance && window.performance.memory) {
+    const checkPerformance = () => {
+      const memory = window.performance.memory;
+      const usedPercent = (memory.usedJSHeapSize / memory.jsHeapSizeLimit) * 100;
+      
+      // If memory usage is high, disable GPU acceleration
+      if (usedPercent > 90) {
+        window.debugWarn ? window.debugWarn('⚠️ High memory usage - disabling GPU acceleration');
+        config.useGPUAcceleration = false;
+        heroBg.style.willChange = 'auto';
+        heroContent.style.willChange = 'auto';
+      }
+    };
+
+    // Check every 30 seconds
+    setInterval(checkPerformance, 30000);
+  }
+
+  // ===== VISIBILITY API - PAUSE WHEN TAB HIDDEN =====
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      // Remove will-change when tab hidden
+      heroBg.style.willChange = 'auto';
+      heroContent.style.willChange = 'auto';
+    } else {
+      // Re-enable when tab visible
+      if (config.useGPUAcceleration) {
+        heroBg.style.willChange = 'transform';
+        heroContent.style.willChange = 'transform, opacity';
+      }
+    }
+  });
+
+  // ===== INITIAL UPDATE =====
+  updateParallax();
+
+
+})();
+
+// ===== ANIMATIONS ACTIVATION ON INTERACTION =====
+(function() {
+  'use strict';
+
+  let animationsStarted = false;
+
+  function startAnimations() {
+    if (animationsStarted) return;
+    animationsStarted = true;
+    document.documentElement.classList.add('hero-ready');
+    document.documentElement.classList.add('animations-active');
+  }
+
+  // Start on first scroll or mouse move
+  const startOnInteraction = () => {
+    startAnimations();
+    window.removeEventListener('scroll', startOnInteraction);
+    window.removeEventListener('mousemove', startOnInteraction);
+    window.removeEventListener('touchstart', startOnInteraction);
+  };
+
+  window.addEventListener('scroll', startOnInteraction, { passive: true, once: true });
+  window.addEventListener('mousemove', startOnInteraction, { passive: true, once: true });
+  window.addEventListener('touchstart', startOnInteraction, { passive: true, once: true });
+
+  // Fallback: start after 2s if no interaction
+  setTimeout(startAnimations, 2000);
+})();
+

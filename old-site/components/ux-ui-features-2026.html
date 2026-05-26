@@ -1,0 +1,42 @@
+<!-- =========================================== -->
+<!-- AWARD-WINNING UX/UI FEATURES 2026 - HTML COMPONENTS -->
+<!-- =========================================== -->
+
+<!-- Reading Mode Toggle Button -->
+<button id="readingModeToggle" 
+        type="button"
+        class="reading-mode-toggle"
+        aria-label="Toggle reading mode"
+        title="Reading mode"
+        aria-pressed="false">
+  <i class="bx bx-book-reader"></i>
+</button>
+
+<!-- Contextual Help Button -->
+<div class="contextual-help" aria-live="polite" aria-atomic="true">
+  <button class="help-trigger" 
+          id="helpTrigger"
+          aria-label="Show help" 
+          aria-expanded="false"
+          aria-controls="helpContent">
+    <i class="bx bx-help-circle"></i>
+  </button>
+  <div class="help-content" 
+       id="helpContent" 
+       role="tooltip" 
+       aria-hidden="true">
+    <p style="margin: 0 0 0.5rem 0; font-size: 0.875rem; line-height: 1.5;">
+      <strong>Quick Tips:</strong>
+    </p>
+    <ul style="margin: 0; padding-left: 1.25rem; font-size: 0.875rem; line-height: 1.6;">
+      <li>Press <kbd>?</kbd> for keyboard shortcuts</li>
+      <li>Press <kbd>D</kbd> to toggle dark mode</li>
+      <li>Use <kbd>Tab</kbd> to navigate</li>
+      <li>Click reading mode icon for better reading</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Celebration Animation Container -->
+<div id="celebrationContainer" class="celebration-animation" aria-hidden="true"></div>
+
