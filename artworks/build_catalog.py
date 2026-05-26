@@ -167,12 +167,23 @@ print(f"sitemap.xml       — {len(entries)} URLs")
 
 # ── Stamp build timestamp into index.html catalog fetch URL ──────────────────
 # Replaces ?v=BUILD_TS so browsers always fetch fresh catalog-home.json after deploy.
-INDEX = Path(__file__).parent.parent / "index.html"
+INDEX  = Path(__file__).parent.parent / "index.html"
+SW     = Path(__file__).parent.parent / "sw.js"
+build_ts = datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%d%H%M%S')
+
 if INDEX.exists():
-    build_ts = datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%d%H%M%S')
     stamped = re.sub(r'\?v=(?:BUILD_TS|\d{14})', f'?v={build_ts}', INDEX.read_text())
     INDEX.write_text(stamped)
     print(f"index.html        — cache stamp updated (?v={build_ts})")
+
+# ── Auto-bump sw.js CACHE_V so returning visitors always get fresh assets ────
+if SW.exists():
+    sw_text  = SW.read_text()
+    new_cache_v = f"jfsn-{build_ts}"
+    stamped_sw  = re.sub(r"CACHE_V\s*=\s*'jfsn-[^']+'", f"CACHE_V  = '{new_cache_v}'", sw_text)
+    if stamped_sw != sw_text:
+        SW.write_text(stamped_sw)
+        print(f"sw.js             — CACHE_V bumped to '{new_cache_v}'")
 
 # ── Open Archive API — static JSON endpoints ─────────────────────────────────
 # Generates api/v1/ at the site root so every build stays in sync.
