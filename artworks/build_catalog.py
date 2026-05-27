@@ -320,6 +320,15 @@ palette_data = _facet_index("palette", "color")
 
 # .htaccess — CORS + content-type for Apache (cPanel compatible)
 htaccess = """\
+# Disable mod_security for API endpoints (cPanel shared hosting)
+<IfModule mod_security.c>
+  SecFilterEngine Off
+  SecFilterScanPOST Off
+</IfModule>
+<IfModule mod_security2.c>
+  SecRuleEngine Off
+</IfModule>
+
 <IfModule mod_headers.c>
   <FilesMatch "\\.json$">
     Header set Access-Control-Allow-Origin "*"
