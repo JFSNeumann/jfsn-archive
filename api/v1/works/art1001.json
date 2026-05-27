@@ -1,0 +1,55 @@
+{
+  "api_version": "1",
+  "id": "art1001",
+  "work": {
+    "file": "art1001.avif",
+    "title": "XXXIII Days Guernica",
+    "year": null,
+    "work_type": "collage",
+    "description": "Mixed-media collage incorporating compact discs, concentric target rings, and warplane silhouettes across a predominantly white ground. Picasso's Guernica imagery is referenced through a bull figure and horse fragment at left, with handwritten text reading 'XXXIII days' at center-right.",
+    "palette": [
+      "black",
+      "white",
+      "gold",
+      "blue",
+      "iridescent"
+    ],
+    "motifs": [
+      "compact-disc",
+      "warplane-side",
+      "target",
+      "bullseye",
+      "concentric-rings",
+      "roundel",
+      "star",
+      "numerals"
+    ],
+    "materials": [
+      "paper",
+      "paint",
+      "ink",
+      "tape",
+      "ribbon"
+    ],
+    "composition": "horizontal panoramic with layered vertical bands",
+    "themes": [
+      "Mr. Snowmann",
+      "Targets"
+    ],
+    "series": "Guernica",
+    "keywords": [
+      "Guernica-reference bull and horse collage",
+      "XXXIII days mixed-media",
+      "compact disc warplane composition",
+      "Picasso Guernica appropriation collage"
+    ],
+    "featured": false,
+    "schema_version": "1"
+  },
+  "links": {
+    "image": "https://jfsn.com/artworks/full/art1001.avif",
+    "thumb": "https://jfsn.com/artworks/thumbs/art1001.avif",
+    "mini": "https://jfsn.com/artworks/mini/art1001.avif",
+    "page": "https://jfsn.com/artwork.html?id=art1001"
+  }
+}

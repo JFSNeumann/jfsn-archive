@@ -1,0 +1,47 @@
+{
+  "api_version": "1",
+  "id": "art0902",
+  "work": {
+    "file": "art0902.avif",
+    "title": "Untitled (Gallery Diptych View)",
+    "year": null,
+    "work_type": "photograph",
+    "description": "Gallery installation photograph showing two framed collage works hung side by side on a neutral beige wall. Left work features targets, concentric rings, and warplane motifs on a white ground; right work presents a grid of red and black rectangular blocks with a purple soccer ball.",
+    "palette": [
+      "white",
+      "red",
+      "black",
+      "ochre",
+      "purple"
+    ],
+    "motifs": [
+      "target",
+      "bullseye",
+      "concentric-rings",
+      "warplane-topdown",
+      "grid",
+      "soccer-ball"
+    ],
+    "materials": [],
+    "composition": "two framed works side by side",
+    "themes": [
+      "Gallery",
+      "Mr. Snowmann"
+    ],
+    "series": null,
+    "keywords": [
+      "gallery installation diptych view",
+      "mixed-media collage pair exhibition",
+      "target motif warplane collage",
+      "red grid soccer ball collage"
+    ],
+    "featured": false,
+    "schema_version": "1"
+  },
+  "links": {
+    "image": "https://jfsn.com/artworks/full/art0902.avif",
+    "thumb": "https://jfsn.com/artworks/thumbs/art0902.avif",
+    "mini": "https://jfsn.com/artworks/mini/art0902.avif",
+    "page": "https://jfsn.com/artwork.html?id=art0902"
+  }
+}

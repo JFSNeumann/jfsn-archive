@@ -1,0 +1,55 @@
+{
+  "api_version": "1",
+  "id": "art0849",
+  "work": {
+    "file": "art0849.avif",
+    "title": "Untitled (Warplane Formation)",
+    "year": null,
+    "work_type": "collage",
+    "description": "Large-scale collage on crumpled paper features multiple warplane silhouettes in top-down and side views descending a composition divided by vertical yellow stripes. Scattered motifs include concentric target rings, an American football, fabric lettering reading 'INDIANS' and 'BROWNS', and a row of compact discs along the lower edge.",
+    "palette": [
+      "ivory",
+      "yellow",
+      "black",
+      "grey",
+      "ochre"
+    ],
+    "motifs": [
+      "warplane-topdown",
+      "warplane-side",
+      "concentric-rings",
+      "target",
+      "american-football",
+      "compact-disc",
+      "vertical-stripes",
+      "numerals",
+      "fabric-letters"
+    ],
+    "materials": [
+      "paper",
+      "paint",
+      "ink",
+      "tape"
+    ],
+    "composition": "vertical stripes anchor descending warplane sequence",
+    "themes": [
+      "Mr. Snowmann",
+      "Targets"
+    ],
+    "series": "Guernica",
+    "keywords": [
+      "warplane formation collage large-scale",
+      "INDIANS BROWNS sports text mixed-media",
+      "compact disc row bottom border",
+      "crumpled paper yellow stripe composition"
+    ],
+    "featured": false,
+    "schema_version": "1"
+  },
+  "links": {
+    "image": "https://jfsn.com/artworks/full/art0849.avif",
+    "thumb": "https://jfsn.com/artworks/thumbs/art0849.avif",
+    "mini": "https://jfsn.com/artworks/mini/art0849.avif",
+    "page": "https://jfsn.com/artwork.html?id=art0849"
+  }
+}

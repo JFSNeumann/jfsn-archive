@@ -1,0 +1,52 @@
+{
+  "api_version": "1",
+  "id": "art1011",
+  "work": {
+    "file": "art1011.avif",
+    "title": "Untitled (Assembled Machines)",
+    "year": null,
+    "work_type": "collage",
+    "description": "Dense assemblage of found objects and printed ephemera layered across a white ground, incorporating compact discs, circular grilles, vintage camera components, and colored tubing. Vertical yellow, teal, and ochre painted strips divide the composition into irregular columns.",
+    "palette": [
+      "white",
+      "yellow",
+      "turquoise",
+      "red",
+      "ochre"
+    ],
+    "motifs": [
+      "compact-disc",
+      "bullseye",
+      "concentric-rings",
+      "cross",
+      "grid"
+    ],
+    "materials": [
+      "paper",
+      "paint",
+      "plastic",
+      "cardboard",
+      "tape",
+      "ribbon"
+    ],
+    "composition": "vertical striped columns with layered found objects",
+    "themes": [
+      "Mr. Snowmann"
+    ],
+    "series": null,
+    "keywords": [
+      "found-object assemblage with camera parts",
+      "compact-disc and circular-grille collage",
+      "vertical painted stripe division",
+      "mixed-media machine component collage"
+    ],
+    "featured": false,
+    "schema_version": "1"
+  },
+  "links": {
+    "image": "https://jfsn.com/artworks/full/art1011.avif",
+    "thumb": "https://jfsn.com/artworks/thumbs/art1011.avif",
+    "mini": "https://jfsn.com/artworks/mini/art1011.avif",
+    "page": "https://jfsn.com/artwork.html?id=art1011"
+  }
+}

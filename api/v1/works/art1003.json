@@ -1,0 +1,56 @@
+{
+  "api_version": "1",
+  "id": "art1003",
+  "work": {
+    "file": "art1003.avif",
+    "title": "XXXIII Days Guernica",
+    "year": null,
+    "work_type": "collage",
+    "description": "Mixed-media collage featuring top-down and side-view warplane silhouettes arranged across a white ground, interspersed with compact discs, concentric-ring targets, and iridescent ribbon stripes. Paper clips, star cutouts, and checkerboard tape border layered elements; handwritten text 'XXXIIIdias' appears at lower center.",
+    "palette": [
+      "white",
+      "orange",
+      "gold",
+      "turquoise",
+      "black"
+    ],
+    "motifs": [
+      "warplane-topdown",
+      "warplane-side",
+      "compact-disc",
+      "concentric-rings",
+      "target",
+      "roundel",
+      "star",
+      "numerals",
+      "ribbon-stripe"
+    ],
+    "materials": [
+      "paper",
+      "tape",
+      "ribbon",
+      "silver-foil",
+      "plastic"
+    ],
+    "composition": "scattered warplanes and discs across white ground",
+    "themes": [
+      "Mr. Snowmann",
+      "Targets"
+    ],
+    "series": "Guernica",
+    "keywords": [
+      "XXXIIIdias Guernica collage",
+      "warplane formation paper-clip collage",
+      "Imation CD mixed-media",
+      "concentric-ring target warplane"
+    ],
+    "featured": false,
+    "schema_version": "1"
+  },
+  "links": {
+    "image": "https://jfsn.com/artworks/full/art1003.avif",
+    "thumb": "https://jfsn.com/artworks/thumbs/art1003.avif",
+    "mini": "https://jfsn.com/artworks/mini/art1003.avif",
+    "page": "https://jfsn.com/artwork.html?id=art1003"
+  }
+}

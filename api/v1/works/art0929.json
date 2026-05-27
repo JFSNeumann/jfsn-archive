@@ -1,0 +1,47 @@
+{
+  "api_version": "1",
+  "id": "art0929",
+  "work": {
+    "file": "art0929.avif",
+    "title": "Guernica Triptych Installation",
+    "year": null,
+    "work_type": "photograph",
+    "description": "Gallery installation view of three large-format works mounted on a tan wall above a low dark plinth. Each panel features top-down warplane silhouettes, technical diagrams, and collaged imagery including a bullseye, chess piece, and the word 'Guernica' rendered in red and black on white grounds.",
+    "palette": [
+      "white",
+      "red",
+      "black",
+      "ochre",
+      "brown"
+    ],
+    "motifs": [
+      "warplane-topdown",
+      "warplane-side",
+      "target",
+      "bullseye",
+      "chess-piece",
+      "numerals"
+    ],
+    "materials": [],
+    "composition": "triptych of three vertical panels, gallery wall",
+    "themes": [
+      "Gallery",
+      "Mr. Snowmann"
+    ],
+    "series": "Guernica",
+    "keywords": [
+      "Guernica triptych installation view",
+      "warplane collage three-panel",
+      "chess piece bullseye collage",
+      "gallery exhibition three large-format works"
+    ],
+    "featured": false,
+    "schema_version": "1"
+  },
+  "links": {
+    "image": "https://jfsn.com/artworks/full/art0929.avif",
+    "thumb": "https://jfsn.com/artworks/thumbs/art0929.avif",
+    "mini": "https://jfsn.com/artworks/mini/art0929.avif",
+    "page": "https://jfsn.com/artwork.html?id=art0929"
+  }
+}
