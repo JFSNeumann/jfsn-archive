@@ -2,19 +2,15 @@
   "api_version": "1",
   "id": "art0033",
   "work": {
-    "file": "art0033.avif",
-    "title": "Untitled (Twin Discs in Targets)",
-    "year": null,
-    "work_type": "collage",
-    "orientation": "landscape",
+    "composition": "horizontal panorama, twin disc targets framing center",
     "description": "A wide horizontal composition with two large iridescent compact discs in concentric black-and-white target rings flanking a central plane fragment and football. Vertical yellow and red bands punctuate the field; small chess and figure cutouts populate the lower edge.",
-    "palette": [
-      "ivory",
-      "iridescent",
-      "yellow",
-      "red",
-      "black"
+    "featured": false,
+    "file": "art0033.avif",
+    "keywords": [
+      "twin-disc-target-pair",
+      "chess-figure-lower-edge"
     ],
+    "materials": [],
     "motifs": [
       "compact-disc",
       "warplane-topdown",
@@ -24,20 +20,23 @@
       "chess-piece",
       "vertical-stripes"
     ],
-    "materials": [],
-    "composition": "horizontal panorama, twin disc targets framing center",
+    "orientation": "landscape",
+    "palette": [
+      "ivory",
+      "iridescent",
+      "yellow",
+      "red",
+      "black"
+    ],
+    "schema_version": "1",
+    "series": null,
     "themes": [
-      "Aviation",
       "Targets",
       "Torsos & Faces"
     ],
-    "keywords": [
-      "twin-disc-target-pair",
-      "chess-figure-lower-edge"
-    ],
-    "featured": false,
-    "schema_version": "1",
-    "series": null
+    "title": "Untitled (Twin Discs in Targets)",
+    "work_type": "collage",
+    "year": null
   },
   "links": {
     "image": "https://jfsn.com/artworks/full/art0033.avif",

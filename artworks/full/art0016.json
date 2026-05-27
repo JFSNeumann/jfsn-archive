@@ -1,17 +1,14 @@
 {
-  "file": "art0016.avif",
-  "title": "Fuselage and Helmet",
-  "year": null,
-  "work_type": "collage",
-  "orientation": "portrait",
+  "composition": "central plane on light field, dense base frieze",
   "description": "A top-down warplane line drawing dominates the upper field, with three silver compact discs anchoring the corners and lower edge. A central engine-or-target form glows with yellow rays; an American football and a football helmet sit in the lower base alongside a clipped color frieze.",
-  "palette": [
-    "ivory",
-    "silver",
-    "yellow",
-    "red",
-    "iridescent"
+  "featured": false,
+  "file": "art0016.avif",
+  "keywords": [
+    "layered",
+    "pop",
+    "sport"
   ],
+  "materials": [],
   "motifs": [
     "compact-disc",
     "warplane-topdown",
@@ -19,17 +16,18 @@
     "target",
     "concentric-rings"
   ],
-  "materials": [],
-  "composition": "central plane on light field, dense base frieze",
-  "themes": [
-    "Aviation"
+  "orientation": "portrait",
+  "palette": [
+    "ivory",
+    "silver",
+    "yellow",
+    "red",
+    "iridescent"
   ],
-  "keywords": [
-    "layered",
-    "pop",
-    "sport"
-  ],
-  "featured": false,
   "schema_version": "1",
-  "series": null
+  "series": null,
+  "themes": [],
+  "title": "Fuselage and Helmet",
+  "work_type": "collage",
+  "year": null
 }

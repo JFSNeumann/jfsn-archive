@@ -2,18 +2,17 @@
   "api_version": "1",
   "id": "art0094",
   "work": {
-    "file": "art0094.avif",
-    "title": "Black Box, Iridescent Discs",
-    "year": 2000,
-    "work_type": "collage",
-    "orientation": "portrait",
+    "composition": "central black panel with disc-corner anchors",
     "description": "A central black panel hosts a maroon football and a chess king sketch, framed by iridescent compact discs in the corners. Pink and lavender drip columns fall through the centre; a base frieze of small CDs and printed perforation marks closes the bottom.",
-    "palette": [
-      "black",
-      "iridescent",
-      "pink",
-      "ivory",
-      "silver"
+    "featured": false,
+    "file": "art0094.avif",
+    "keywords": [
+      "dark-palette",
+      "iridescent"
+    ],
+    "materials": [
+      "paper",
+      "paint"
     ],
     "motifs": [
       "compact-disc",
@@ -21,21 +20,20 @@
       "chess-piece",
       "vertical-stripes"
     ],
-    "materials": [
-      "paper",
-      "paint"
+    "orientation": "portrait",
+    "palette": [
+      "black",
+      "iridescent",
+      "pink",
+      "ivory",
+      "silver"
     ],
-    "composition": "central black panel with disc-corner anchors",
-    "themes": [
-      "Aviation"
-    ],
-    "keywords": [
-      "dark-palette",
-      "iridescent"
-    ],
-    "featured": false,
     "schema_version": "1",
-    "series": null
+    "series": null,
+    "themes": [],
+    "title": "Black Box, Iridescent Discs",
+    "work_type": "collage",
+    "year": 2000
   },
   "links": {
     "image": "https://jfsn.com/artworks/full/art0094.avif",

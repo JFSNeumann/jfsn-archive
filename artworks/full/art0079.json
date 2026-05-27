@@ -1,14 +1,16 @@
 {
-  "file": "art0079.avif",
-  "title": "Negative Squadron",
-  "year": null,
-  "work_type": "collage",
-  "orientation": "portrait",
+  "composition": "axial squadron on black ground, target base",
   "description": "Negative-image variant: a black-ground panel hosts white-line top-down warplanes stacked vertically, framed by perforated borders and a base frieze of black-and-white concentric targets. Two silver compact discs sit in the lower margin.",
-  "palette": [
-    "black",
-    "ivory",
-    "silver"
+  "featured": false,
+  "file": "art0079.avif",
+  "keywords": [
+    "negative",
+    "monochrome",
+    "dark-palette"
+  ],
+  "materials": [
+    "paper",
+    "ink"
   ],
   "motifs": [
     "compact-disc",
@@ -17,20 +19,18 @@
     "concentric-rings",
     "perforated-dots"
   ],
-  "materials": [
-    "paper",
-    "ink"
+  "orientation": "portrait",
+  "palette": [
+    "black",
+    "ivory",
+    "silver"
   ],
-  "composition": "axial squadron on black ground, target base",
+  "schema_version": "1",
+  "series": "Guernica",
   "themes": [
     "Targets"
   ],
-  "keywords": [
-    "negative",
-    "monochrome",
-    "dark-palette"
-  ],
-  "featured": false,
-  "schema_version": "1",
-  "series": "Squadron"
+  "title": "Negative Squadron",
+  "work_type": "collage",
+  "year": null
 }

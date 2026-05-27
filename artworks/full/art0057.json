@@ -1,10 +1,20 @@
 {
-  "file": "art0057.avif",
-  "title": "Untitled (Three Planes, Yellow)",
-  "year": null,
-  "work_type": "collage",
-  "orientation": "landscape",
+  "composition": "horizontal trio of planes on muted ground",
   "description": "A muted yellow ground hosts three top-down warplane drawings arranged across the horizontal field. Concentric target rings ring the outer edges; small black-and-white photo strips and pale color washes thread between the planes.",
+  "featured": false,
+  "file": "art0057.avif",
+  "keywords": [
+    "panoramic",
+    "trio"
+  ],
+  "materials": [],
+  "motifs": [
+    "compact-disc",
+    "warplane-topdown",
+    "target",
+    "concentric-rings"
+  ],
+  "orientation": "landscape",
   "palette": [
     "ivory",
     "yellow",
@@ -12,22 +22,10 @@
     "black",
     "blue"
   ],
-  "motifs": [
-    "compact-disc",
-    "warplane-topdown",
-    "target",
-    "concentric-rings"
-  ],
-  "materials": [],
-  "composition": "horizontal trio of planes on muted ground",
-  "themes": [
-    "Aviation"
-  ],
-  "keywords": [
-    "panoramic",
-    "trio"
-  ],
-  "featured": false,
   "schema_version": "1",
-  "series": null
+  "series": null,
+  "themes": [],
+  "title": "Untitled (Three Planes, Yellow)",
+  "work_type": "collage",
+  "year": null
 }

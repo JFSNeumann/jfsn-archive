@@ -2,18 +2,17 @@
   "api_version": "1",
   "id": "art0095",
   "work": {
-    "file": "art0095.avif",
-    "title": "Squadron Above Targets",
-    "year": 2000,
-    "work_type": "collage",
-    "orientation": "landscape",
+    "composition": "wide horizontal squadron above target frieze",
     "description": "A wide horizontal squadron of top-down warplanes crosses the upper field on yellow vertical drips. Below, a saturated frieze of red-and-black bullseye targets and concentric circles runs along the base; a lower bomber drawing punctuates the lower right.",
-    "palette": [
-      "ivory",
-      "yellow",
-      "red",
-      "black",
-      "blue"
+    "featured": false,
+    "file": "art0095.avif",
+    "keywords": [
+      "panoramic",
+      "squadron"
+    ],
+    "materials": [
+      "paper",
+      "paint"
     ],
     "motifs": [
       "compact-disc",
@@ -23,22 +22,22 @@
       "concentric-rings",
       "vertical-stripes"
     ],
-    "materials": [
-      "paper",
-      "paint"
+    "orientation": "landscape",
+    "palette": [
+      "ivory",
+      "yellow",
+      "red",
+      "black",
+      "blue"
     ],
-    "composition": "wide horizontal squadron above target frieze",
+    "schema_version": "1",
+    "series": "Guernica",
     "themes": [
-      "Aviation",
       "Targets"
     ],
-    "keywords": [
-      "panoramic",
-      "squadron"
-    ],
-    "featured": false,
-    "schema_version": "1",
-    "series": "Squadron"
+    "title": "Squadron Above Targets",
+    "work_type": "collage",
+    "year": 2000
   },
   "links": {
     "image": "https://jfsn.com/artworks/full/art0095.avif",

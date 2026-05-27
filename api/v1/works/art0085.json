@@ -2,17 +2,18 @@
   "api_version": "1",
   "id": "art0085",
   "work": {
-    "file": "art0085.avif",
-    "title": "Merry Christmas 2013, Black",
-    "year": null,
-    "work_type": "collage",
-    "orientation": "portrait",
+    "composition": "spare narrative drawing on black ground",
     "description": "Companion to the white-ground Christmas piece, recast on a black ground: a small green-and-white fighter at the upper centre approaches a four-engine bomber at the base. Two gold compact discs hang in the upper field; a circular ghost trace centres the composition.",
-    "palette": [
-      "black",
-      "gold",
-      "green",
-      "ivory"
+    "featured": false,
+    "file": "art0085.avif",
+    "keywords": [
+      "narrative",
+      "dark-palette",
+      "minimal"
+    ],
+    "materials": [
+      "paper",
+      "ink"
     ],
     "motifs": [
       "compact-disc",
@@ -21,22 +22,19 @@
       "target",
       "concentric-rings"
     ],
-    "materials": [
-      "paper",
-      "ink"
+    "orientation": "portrait",
+    "palette": [
+      "black",
+      "gold",
+      "green",
+      "ivory"
     ],
-    "composition": "spare narrative drawing on black ground",
-    "themes": [
-      "Aviation"
-    ],
-    "keywords": [
-      "narrative",
-      "dark-palette",
-      "minimal"
-    ],
-    "featured": false,
     "schema_version": "1",
-    "series": null
+    "series": null,
+    "themes": [],
+    "title": "Merry Christmas 2013, Black",
+    "work_type": "collage",
+    "year": null
   },
   "links": {
     "image": "https://jfsn.com/artworks/full/art0085.avif",

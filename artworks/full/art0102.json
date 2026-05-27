@@ -1,10 +1,25 @@
 {
-  "file": "art0102.avif",
-  "title": "Squadron and Cassettes",
-  "year": 2000,
-  "work_type": "collage",
-  "orientation": "portrait",
+  "composition": "receding squadron above cassette base",
   "description": "Five top-down warplane silhouettes stack in receding scale on a white field, the upper plane in solid colour, the lower in line drawing. Below, three blue cassette tapes carry compact discs as reels along the base.",
+  "featured": false,
+  "file": "art0102.avif",
+  "keywords": [
+    "cassette",
+    "music",
+    "spare",
+    "white-ground"
+  ],
+  "materials": [
+    "paper",
+    "ink",
+    "cassette"
+  ],
+  "motifs": [
+    "compact-disc",
+    "warplane-topdown",
+    "vinyl-record"
+  ],
+  "orientation": "portrait",
   "palette": [
     "ivory",
     "blue",
@@ -12,27 +27,10 @@
     "ochre",
     "black"
   ],
-  "motifs": [
-    "compact-disc",
-    "warplane-topdown",
-    "vinyl-record"
-  ],
-  "materials": [
-    "paper",
-    "ink",
-    "cassette"
-  ],
-  "composition": "receding squadron above cassette base",
-  "themes": [
-    "Aviation"
-  ],
-  "keywords": [
-    "cassette",
-    "music",
-    "spare",
-    "white-ground"
-  ],
-  "featured": false,
   "schema_version": "1",
-  "series": "Squadron"
+  "series": "Guernica",
+  "themes": [],
+  "title": "Squadron and Cassettes",
+  "work_type": "collage",
+  "year": 2000
 }

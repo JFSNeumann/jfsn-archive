@@ -1,17 +1,15 @@
 {
-  "file": "art0032.avif",
-  "title": "Long Frieze",
-  "year": null,
-  "work_type": "collage",
-  "orientation": "landscape",
+  "composition": "wide horizontal frieze, dense uniform pattern",
   "description": "A wide horizontal frieze packed with the artist's recurring vocabulary: yellow vertical bands, repeating bullseye targets, footballs, fragments of warplanes and dripping black ink. Reads as a stretched-out manifesto strip across the white ground.",
-  "palette": [
-    "ivory",
-    "yellow",
-    "red",
-    "black",
-    "orange"
+  "featured": false,
+  "file": "art0032.avif",
+  "keywords": [
+    "frieze",
+    "manifesto",
+    "maximalist",
+    "panoramic"
   ],
+  "materials": [],
   "motifs": [
     "compact-disc",
     "warplane-topdown",
@@ -21,19 +19,20 @@
     "ink-drip",
     "american-football"
   ],
-  "materials": [],
-  "composition": "wide horizontal frieze, dense uniform pattern",
+  "orientation": "landscape",
+  "palette": [
+    "ivory",
+    "yellow",
+    "red",
+    "black",
+    "orange"
+  ],
+  "schema_version": "1",
+  "series": null,
   "themes": [
-    "Aviation",
     "Targets"
   ],
-  "keywords": [
-    "frieze",
-    "manifesto",
-    "maximalist",
-    "panoramic"
-  ],
-  "featured": false,
-  "schema_version": "1",
-  "series": null
+  "title": "Long Frieze",
+  "work_type": "collage",
+  "year": null
 }

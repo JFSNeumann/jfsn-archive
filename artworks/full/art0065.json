@@ -1,17 +1,13 @@
 {
-  "file": "art0065.avif",
-  "title": "Cassette",
-  "year": 2000,
-  "work_type": "collage",
-  "orientation": "portrait",
+  "composition": "cassette-shaped panel with disc reels",
   "description": "A cassette-tape composition: yellow vertical bands occupy the upper rectangle, framed by black sides studded with cassette-spool icons; below, two large gold compact discs sit as cassette reels, with smaller discs spilling onto the lower edge.",
-  "palette": [
-    "ivory",
-    "yellow",
-    "gold",
-    "black",
-    "red"
+  "featured": false,
+  "file": "art0065.avif",
+  "keywords": [
+    "cassette",
+    "music"
   ],
+  "materials": [],
   "motifs": [
     "compact-disc",
     "vinyl-record",
@@ -19,16 +15,18 @@
     "concentric-rings",
     "warplane-topdown"
   ],
-  "materials": [],
-  "composition": "cassette-shaped panel with disc reels",
-  "themes": [
-    "Aviation"
+  "orientation": "portrait",
+  "palette": [
+    "ivory",
+    "yellow",
+    "gold",
+    "black",
+    "red"
   ],
-  "keywords": [
-    "cassette",
-    "music"
-  ],
-  "featured": false,
   "schema_version": "1",
-  "series": null
+  "series": null,
+  "themes": [],
+  "title": "Cassette",
+  "work_type": "collage",
+  "year": 2000
 }

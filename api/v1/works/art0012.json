@@ -2,19 +2,15 @@
   "api_version": "1",
   "id": "art0012",
   "work": {
-    "file": "art0012.avif",
-    "title": "Untitled (Iridescent Squadron)",
-    "year": 1990,
-    "work_type": "collage",
-    "orientation": "portrait",
+    "composition": "central plane with disc constellation, target frieze base",
     "description": "A top-down warplane drawing presides over a dense field crossed by three iridescent compact discs and orange vertical bands. A frieze of numbered targets and small painted icons lines the lower register; red and black accents punctuate throughout.",
-    "palette": [
+    "featured": false,
+    "file": "art0012.avif",
+    "keywords": [
       "iridescent",
-      "red",
-      "orange",
-      "black",
-      "ivory"
+      "maximalist"
     ],
+    "materials": [],
     "motifs": [
       "compact-disc",
       "warplane-topdown",
@@ -23,18 +19,20 @@
       "vertical-stripes",
       "concentric-rings"
     ],
-    "materials": [],
-    "composition": "central plane with disc constellation, target frieze base",
-    "themes": [
-      "Aviation"
-    ],
-    "keywords": [
+    "orientation": "portrait",
+    "palette": [
       "iridescent",
-      "maximalist"
+      "red",
+      "orange",
+      "black",
+      "ivory"
     ],
-    "featured": false,
     "schema_version": "1",
-    "series": "Squadron"
+    "series": "Guernica",
+    "themes": [],
+    "title": "Untitled (Iridescent Squadron)",
+    "work_type": "collage",
+    "year": 1990
   },
   "links": {
     "image": "https://jfsn.com/artworks/full/art0012.avif",

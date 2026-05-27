@@ -1,0 +1,47 @@
+{
+  "api_version": "1",
+  "id": "art0710",
+  "work": {
+    "file": "art0710.avif",
+    "title": "Triptych Installation View",
+    "year": null,
+    "work_type": "photograph",
+    "description": "Gallery installation photograph showing three framed collages hung in a row against a grey wall. Each work features targets, compact discs, yellow vertical stripes, and warplane motifs on white grounds, presented in matching black frames with ivory mats.",
+    "palette": [
+      "black",
+      "white",
+      "yellow",
+      "grey",
+      "blue"
+    ],
+    "motifs": [
+      "target",
+      "bullseye",
+      "compact-disc",
+      "warplane-topdown",
+      "vertical-stripes"
+    ],
+    "materials": [],
+    "composition": "three framed works evenly spaced on wall",
+    "themes": [
+      "Gallery",
+      "Mr. Snowmann",
+      "Targets"
+    ],
+    "series": "Guernica",
+    "keywords": [
+      "triptych gallery installation collage",
+      "framed collage trio warplane targets",
+      "JFSN three-panel exhibition view",
+      "compact-disc target triptych wall display"
+    ],
+    "featured": false,
+    "schema_version": "1"
+  },
+  "links": {
+    "image": "https://jfsn.com/artworks/full/art0710.avif",
+    "thumb": "https://jfsn.com/artworks/thumbs/art0710.avif",
+    "mini": "https://jfsn.com/artworks/mini/art0710.avif",
+    "page": "https://jfsn.com/artwork.html?id=art0710"
+  }
+}

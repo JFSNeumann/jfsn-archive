@@ -169,6 +169,8 @@
   .fbtn.active { background: #1e3a5f; border-color: #2a5080; color: #7eb8f7; }
   .fbtn.active.untagged { background: #2a1e1e; border-color: #5a2a2a; color: #f7a0a0; }
   .fbtn.active.selected { background: #1a2e1a; border-color: #2d4d2d; color: #7ec87e; }
+  .fbtn.active.bare    { background: #2a2020; border-color: #6a3a2a; color: #f0c090; }
+  .fbtn.active.inverse { background: #1e2a2a; border-color: #2a5a5a; color: #80d8d8; }
 
   /* ── KEYBOARD FOCUS RING ── */
   .card.kfocus { outline: 2px solid #fff; outline-offset: -2px; }
@@ -389,9 +391,9 @@
   .mode-tab:hover { color: #aaa; }
   .mode-tab.active { color: #fff; border-bottom-color: #7eb8f7; }
 
-  /* ── DECADE LIST ── */
-  #decade-list { flex: 1; overflow-y: auto; padding: 8px 0; display: none; }
-  #decade-list.visible { display: block; }
+  /* ── DECADE / SERIES LIST ── */
+  #decade-list, #series-list { flex: 1; overflow-y: auto; padding: 8px 0; display: none; }
+  #decade-list.visible, #series-list.visible { display: block; }
   #theme-list.hidden { display: none; }
 
   .decade-btn {
@@ -449,9 +451,11 @@
   <div class="mode-tabs">
     <button class="mode-tab active" id="tab-themes">Themes</button>
     <button class="mode-tab" id="tab-years">Years</button>
+    <button class="mode-tab" id="tab-series">Series</button>
   </div>
   <div id="theme-list"></div>
   <div id="decade-list"></div>
+  <div id="series-list"></div>
   <div id="selected-panel">
     <h2 id="panel-label">Selected for <span id="active-theme-name">—</span></h2>
     <div id="selected-list"></div>
@@ -469,6 +473,8 @@
       <button class="fbtn active" data-f="all">All</button>
       <button class="fbtn untagged" data-f="untagged" id="fbtn-untagged">Untagged</button>
       <button class="fbtn selected" data-f="selected" id="fbtn-selected">Selected</button>
+      <button class="fbtn bare" data-f="bare" id="fbtn-bare">Nothing</button>
+      <button class="fbtn inverse" data-f="inverse" id="fbtn-inverse">Not this</button>
     </div>
     <input id="search" type="text" placeholder="Filter by ID…">
   </div>
@@ -485,10 +491,7 @@ const IDS = ["art0001","art0002","art0003","art0004","art0005","art0006","art000
 const THEMES = [
   { name: "Mr. Snowmann",  color: "#a8d8ea" },
   { name: "Art School",    color: "#f6d860" },
-  { name: "Aviation",      color: "#7fcdbb" },
   { name: "Targets",       color: "#fc8d59" },
-  { name: "Reliquaries",   color: "#c994c7" },
-  { name: "Totems",        color: "#d4b896" },
   { name: "Crosses",       color: "#e0e0e0" },
   { name: "Torsos & Faces",color: "#f4a0a0" },
   { name: "Gallery",       color: "#80c9a4" },
@@ -496,6 +499,10 @@ const THEMES = [
   { name: "Studio",        color: "#f0b87a" },
   { name: "Tracings",      color: "#a0c8f0" },
   { name: "Collaboration", color: "#e0c870" },
+];
+
+const SERIES_LIST = [
+  { name: 'XXXIII · Guernica', key: 'Guernica', color: '#e8a060' },
 ];
 
 const DECADES = [
@@ -509,12 +516,14 @@ const DECADES = [
 
 const STORAGE_KEY = 'jfsn_curate_v1';
 
-// state: { [theme]: Set of IDs }, years: { artId: decadeYear }
+// state: { [theme]: Set of IDs }, years: { artId: decadeYear }, seriesAssign: { artId: seriesKey }
 let state = {};
-let years  = {};           // artId → decade start year (e.g. 1980)
+let years        = {};           // artId → decade start year (e.g. 1980)
+let seriesAssign = {};           // artId → series key (e.g. 'Guernica')
 let activeTheme  = THEMES[0].name;
 let activeDecade = DECADES[0].year;
-let mode = 'themes';       // 'themes' | 'years'
+let activeSeries = SERIES_LIST[0].key;
+let mode = 'themes';       // 'themes' | 'years' | 'series'
 let filterMode   = 'all';  // 'all' | 'untagged' | 'selected'
 let visibleIds   = [];     // current rendered IDs — for keyboard nav + range select
 let focusedIdx   = -1;     // keyboard-focused card index into visibleIds
@@ -526,9 +535,9 @@ function loadState() {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
-      // themes
       for (const [k, v] of Object.entries(parsed)) {
-        if (k === '__years__') { years = v; continue; }
+        if (k === '__years__')  { years = v;        continue; }
+        if (k === '__series__') { seriesAssign = v; continue; }
         state[k] = new Set(v);
       }
     }
@@ -539,7 +548,7 @@ function loadState() {
 }
 
 function saveState() {
-  const out = { __years__: years };
+  const out = { __years__: years, __series__: seriesAssign };
   for (const [k, v] of Object.entries(state)) out[k] = [...v];
   localStorage.setItem(STORAGE_KEY, JSON.stringify(out));
 }
@@ -550,15 +559,15 @@ function themeColor(name) {
 
 // ── BUILD SIDEBAR ──
 function buildSidebar() {
-  if (mode === 'themes') {
-    document.getElementById('theme-list').classList.remove('hidden');
-    document.getElementById('decade-list').classList.remove('visible');
-    buildThemeList();
-  } else {
-    document.getElementById('theme-list').classList.add('hidden');
-    document.getElementById('decade-list').classList.add('visible');
-    buildDecadeList();
-  }
+  const tl = document.getElementById('theme-list');
+  const dl = document.getElementById('decade-list');
+  const sl = document.getElementById('series-list');
+  tl.classList.toggle('hidden',  mode !== 'themes');
+  dl.classList.toggle('visible', mode === 'years');
+  sl.classList.toggle('visible', mode === 'series');
+  if (mode === 'themes')  buildThemeList();
+  else if (mode === 'years')   buildDecadeList();
+  else                         buildSeriesList();
 }
 
 function buildThemeList() {
@@ -596,6 +605,26 @@ function buildDecadeList() {
   }
 }
 
+function buildSeriesList() {
+  const list = document.getElementById('series-list');
+  list.innerHTML = '';
+  for (const s of SERIES_LIST) {
+    const count = Object.values(seriesAssign).filter(v => v === s.key).length;
+    const btn = document.createElement('button');
+    btn.className = 'decade-btn' + (s.key === activeSeries ? ' active' : '');
+    btn.dataset.series = s.key;
+    btn.style.color = s.key === activeSeries ? s.color : '';
+    btn.innerHTML = `
+      <span style="display:flex;align-items:center;flex:1">
+        <span class="decade-swatch" style="background:${s.color}"></span>
+        ${s.name}
+      </span>
+      <span class="theme-count" style="${s.key === activeSeries ? `background:#2a2a2a;color:${s.color}` : ''}">${count}</span>`;
+    btn.onclick = () => { activeSeries = s.key; refresh(); };
+    list.appendChild(btn);
+  }
+}
+
 // ── BUILD GRID ──
 function decadeColor(yr) {
   return DECADES.find(d => d.year === yr)?.color || '#888';
@@ -606,11 +635,12 @@ function decadeLabel(yr) {
 
 // ── FILTER LOGIC ──
 function isTagged(id) {
-  // has any theme OR any year
-  return THEMES.some(t => state[t.name]?.has(id)) || years[id] != null;
+  return THEMES.some(t => state[t.name]?.has(id)) || years[id] != null || seriesAssign[id] != null;
 }
 function isActiveSelected(id) {
-  return mode === 'themes' ? state[activeTheme]?.has(id) : years[id] === activeDecade;
+  if (mode === 'themes') return state[activeTheme]?.has(id);
+  if (mode === 'years')  return years[id] === activeDecade;
+  return seriesAssign[id] === activeSeries;
 }
 
 function getVisible(searchFilt) {
@@ -620,6 +650,16 @@ function getVisible(searchFilt) {
     ids = ids.filter(id => !isTagged(id));
   } else if (filterMode === 'selected') {
     ids = ids.filter(id => isActiveSelected(id));
+  } else if (filterMode === 'bare') {
+    // nothing across all three: no themes, no year, no series
+    ids = ids.filter(id =>
+      !THEMES.some(t => state[t.name]?.has(id)) &&
+      years[id] == null &&
+      seriesAssign[id] == null
+    );
+  } else if (filterMode === 'inverse') {
+    // not assigned to the current active theme / decade / series
+    ids = ids.filter(id => !isActiveSelected(id));
   }
   return ids;
 }
@@ -634,18 +674,22 @@ function buildGrid(filter = '') {
     const assignedYear = years[id];
     const dc = assignedYear ? decadeColor(assignedYear) : null;
 
-    const isThemeSelected = mode === 'themes' && state[activeTheme]?.has(id);
-    const isYearSelected  = mode === 'years'  && assignedYear === activeDecade;
+    const assignedSeries  = seriesAssign[id];
+    const sc = assignedSeries ? (SERIES_LIST.find(s => s.key === assignedSeries)?.color || '#888') : null;
+    const isThemeSelected  = mode === 'themes'  && state[activeTheme]?.has(id);
+    const isYearSelected   = mode === 'years'   && assignedYear === activeDecade;
+    const isSeriesSelected = mode === 'series'  && assignedSeries === activeSeries;
 
     const card = document.createElement('div');
     card.dataset.id  = id;
     card.dataset.idx = idx;
     let cls = 'card';
     if (isThemeSelected)  cls += ' selected';
-    if (isYearSelected)   cls += ' year-selected';
+    if (isYearSelected || isSeriesSelected) cls += ' year-selected';
     if (idx === focusedIdx) cls += ' kfocus';
     card.className = cls;
-    if (dc) card.style.setProperty('--dc', dc);
+    const activeDc = dc || (isSeriesSelected ? sc : null);
+    if (activeDc) card.style.setProperty('--dc', activeDc);
 
     // All themes this artwork belongs to
     const assignedThemes = THEMES.filter(t => state[t.name]?.has(id));
@@ -700,7 +744,9 @@ function handleCardClick(id, idx, card, shiftKey) {
     // Single click — determine action and set anchor
     const willAdd = mode === 'themes'
       ? !state[activeTheme]?.has(id)
-      : years[id] !== activeDecade;
+      : mode === 'years'
+        ? years[id] !== activeDecade
+        : seriesAssign[id] !== activeSeries;
     lastAction   = willAdd ? 'add' : 'remove';
     lastClickIdx = idx;
     applyAction(id, card, lastAction);
@@ -718,7 +764,7 @@ function applyAction(id, card, action) {
     if (action === 'add') sel.add(id);
     else sel.delete(id);
     card.classList.toggle('selected', sel.has(id));
-  } else {
+  } else if (mode === 'years') {
     if (action === 'add') {
       years[id] = activeDecade;
       const dc = decadeColor(activeDecade);
@@ -738,6 +784,27 @@ function applyAction(id, card, action) {
       card.style.removeProperty('--dc');
       card.querySelector('.year-badge')?.remove();
     }
+  } else {
+    // series mode
+    if (action === 'add') {
+      seriesAssign[id] = activeSeries;
+      const sc = SERIES_LIST.find(s => s.key === activeSeries)?.color || '#888';
+      card.style.setProperty('--dc', sc);
+      card.classList.add('year-selected');
+      let badge = card.querySelector('.year-badge');
+      if (!badge) {
+        badge = document.createElement('span');
+        badge.className = 'year-badge';
+        card.insertBefore(badge, card.querySelector('img'));
+      }
+      badge.style.background = sc;
+      badge.textContent = SERIES_LIST.find(s => s.key === activeSeries)?.name || activeSeries;
+    } else {
+      delete seriesAssign[id];
+      card.classList.remove('year-selected');
+      card.style.removeProperty('--dc');
+      card.querySelector('.year-badge')?.remove();
+    }
   }
 }
 
@@ -746,13 +813,18 @@ function updateTopbar(count) {
     const total = state[activeTheme]?.size || 0;
     document.getElementById('topbar-title').textContent = activeTheme;
     document.getElementById('topbar-count').textContent = `${count} shown · ${total} tagged`;
-  } else {
+  } else if (mode === 'years') {
     const dl = decadeLabel(activeDecade);
     const total = Object.values(years).filter(y => y === activeDecade).length;
     const grandTotal = Object.keys(years).length;
     document.getElementById('topbar-title').textContent = dl;
     document.getElementById('topbar-count').textContent =
       `${count} shown · ${total} in ${dl} · ${grandTotal} total dated`;
+  } else {
+    const s = SERIES_LIST.find(s => s.key === activeSeries);
+    const total = Object.values(seriesAssign).filter(v => v === activeSeries).length;
+    document.getElementById('topbar-title').textContent = s?.name || activeSeries;
+    document.getElementById('topbar-count').textContent = `${count} shown · ${total} in series`;
   }
 }
 
@@ -762,14 +834,21 @@ function updateSelectedPanel() {
     document.getElementById('panel-label').innerHTML =
       `Selected for <span id="active-theme-name">${activeTheme}</span>`;
     document.getElementById('selected-list').textContent = ids.join('\n');
-  } else {
+  } else if (mode === 'years') {
     const dl = decadeLabel(activeDecade);
     const ids = Object.entries(years)
       .filter(([, y]) => y === activeDecade)
-      .map(([id]) => id)
-      .sort();
+      .map(([id]) => id).sort();
     document.getElementById('panel-label').innerHTML =
       `Dated <span id="active-theme-name" style="color:${decadeColor(activeDecade)}">${dl}</span>`;
+    document.getElementById('selected-list').textContent = ids.join('\n');
+  } else {
+    const s = SERIES_LIST.find(s => s.key === activeSeries);
+    const ids = Object.entries(seriesAssign)
+      .filter(([, v]) => v === activeSeries)
+      .map(([id]) => id).sort();
+    document.getElementById('panel-label').innerHTML =
+      `Series: <span id="active-theme-name" style="color:${s?.color}">${s?.name || activeSeries}</span>`;
     document.getElementById('selected-list').textContent = ids.join('\n');
   }
 }
@@ -782,6 +861,11 @@ function updateSidebarCount() {
   document.querySelectorAll('.decade-btn').forEach(btn => {
     const yr = +btn.dataset.decade;
     const count = Object.values(years).filter(y => y === yr).length;
+    btn.querySelector('.theme-count').textContent = count;
+  });
+  document.querySelectorAll('#series-list .decade-btn').forEach(btn => {
+    const key = btn.dataset.series;
+    const count = Object.values(seriesAssign).filter(v => v === key).length;
     btn.querySelector('.theme-count').textContent = count;
   });
 }
@@ -797,14 +881,20 @@ function refresh() {
 // ── TABS ──
 document.getElementById('tab-themes').onclick = () => {
   mode = 'themes';
-  document.getElementById('tab-themes').classList.add('active');
-  document.getElementById('tab-years').classList.remove('active');
+  ['tab-themes','tab-years','tab-series'].forEach(id =>
+    document.getElementById(id).classList.toggle('active', id === 'tab-themes'));
   refresh();
 };
 document.getElementById('tab-years').onclick = () => {
   mode = 'years';
-  document.getElementById('tab-years').classList.add('active');
-  document.getElementById('tab-themes').classList.remove('active');
+  ['tab-themes','tab-years','tab-series'].forEach(id =>
+    document.getElementById(id).classList.toggle('active', id === 'tab-years'));
+  refresh();
+};
+document.getElementById('tab-series').onclick = () => {
+  mode = 'series';
+  ['tab-themes','tab-years','tab-series'].forEach(id =>
+    document.getElementById(id).classList.toggle('active', id === 'tab-series'));
   refresh();
 };
 
@@ -833,12 +923,19 @@ document.getElementById('btn-clear').onclick = () => {
     const n = state[activeTheme]?.size || 0;
     if (!n || !confirm(`Clear all ${n} selections for "${activeTheme}"?`)) return;
     state[activeTheme] = new Set();
-  } else {
+  } else if (mode === 'years') {
     const dl = decadeLabel(activeDecade);
     const n = Object.values(years).filter(y => y === activeDecade).length;
     if (!n || !confirm(`Clear all ${n} dates for "${dl}"?`)) return;
     for (const id of Object.keys(years)) {
       if (years[id] === activeDecade) delete years[id];
+    }
+  } else {
+    const s = SERIES_LIST.find(s => s.key === activeSeries);
+    const n = Object.values(seriesAssign).filter(v => v === activeSeries).length;
+    if (!n || !confirm(`Clear all ${n} assignments for "${s?.name}"?`)) return;
+    for (const id of Object.keys(seriesAssign)) {
+      if (seriesAssign[id] === activeSeries) delete seriesAssign[id];
     }
   }
   saveState();
@@ -850,7 +947,7 @@ document.getElementById('btn-save').onclick = async () => {
   const btn = document.getElementById('btn-save');
   btn.classList.add('saving');
   btn.textContent = 'Saving…';
-  const payload = { __years__: years };
+  const payload = { __years__: years, __series__: seriesAssign };
   for (const [k, v] of Object.entries(state)) payload[k] = [...v];
   try {
     const res = await fetch('/save-session', {
@@ -880,9 +977,12 @@ function updateFilterBtns() {
   });
   // update label context
   document.getElementById('fbtn-untagged').textContent =
-    mode === 'years' ? 'Undated' : 'Untagged';
+    mode === 'years' ? 'Undated' : mode === 'series' ? 'No series' : 'Untagged';
   document.getElementById('fbtn-selected').textContent =
-    mode === 'years' ? 'This decade' : 'Selected';
+    mode === 'years' ? 'This decade' : mode === 'series' ? 'This series' : 'Selected';
+  // "Nothing" is always global — label stays, but show count in topbar when active
+  document.getElementById('fbtn-inverse').textContent =
+    mode === 'years' ? 'Not this decade' : mode === 'series' ? 'Not in series' : 'Not this theme';
 }
 document.querySelectorAll('.fbtn').forEach(btn => {
   btn.onclick = () => {

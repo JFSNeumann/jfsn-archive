@@ -1,17 +1,14 @@
 {
-  "file": "art0052.avif",
-  "title": "Guernica",
-  "year": null,
-  "work_type": "collage",
-  "orientation": "square",
+  "composition": "square dense field with text base",
   "description": "Densely packed square composition: top-down warplane drawings rise from a base inscribed 'GUERNICA', surrounded by footballs, target rings and silver compact discs. The signature war narrative compacted into a single saturated panel.",
-  "palette": [
-    "ivory",
-    "red",
-    "black",
-    "yellow",
-    "blue"
+  "featured": false,
+  "file": "art0052.avif",
+  "keywords": [
+    "text",
+    "manifesto",
+    "saturated"
   ],
+  "materials": [],
   "motifs": [
     "compact-disc",
     "warplane-topdown",
@@ -20,17 +17,18 @@
     "american-football",
     "vertical-stripes"
   ],
-  "materials": [],
-  "composition": "square dense field with text base",
-  "themes": [
-    "Aviation"
+  "orientation": "square",
+  "palette": [
+    "ivory",
+    "red",
+    "black",
+    "yellow",
+    "blue"
   ],
-  "keywords": [
-    "text",
-    "manifesto",
-    "saturated"
-  ],
-  "featured": false,
   "schema_version": "1",
-  "series": "Guernica"
+  "series": "Guernica",
+  "themes": [],
+  "title": "Guernica",
+  "work_type": "collage",
+  "year": null
 }

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b0b0b">
   <title>Series — Jeffrey F. S. Neumann</title>
-  <meta name="description" content="16 editorial series spanning five decades of collage, sculpture, and photography by Jeffrey F. S. Neumann.">
+  <meta name="description" content="10 editorial series spanning five decades of collage, sculpture, and photography by Jeffrey F. S. Neumann.">
 
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="canonical" href="https://jfsn.com/series-index.html">
@@ -172,6 +172,7 @@
       .series-entry__link { transition: none; }
     }
   </style>
+  <script src="artist-config.js"></script>
 </head>
 
 <body>
@@ -232,28 +233,14 @@
 (function () {
 
   /* same theme-series config as series.html — keep in sync when series are added */
-  const SERIES = {
-    'Mr. Snowmann':   { title: 'Mr. Snowmann',     description: 'A recurring figure — part totem, part pop effigy — assembled from the residue of consumer culture. Across more than a hundred works spanning five decades, the Snowmann shape-shifts and accumulates: a sustained riff on American iconography, assembly, and the act of making something from nothing.' },
-    'Guernica':       { title: 'Guernica Inspired', description: 'Works in direct dialogue with Picasso\'s 1937 masterpiece. The bull, the horse, the fragmenting figures — recombined through collage into new arrangements that hold the original\'s emotional charge while relocating it in the visual language of mid-century American commerce and popular imagery.' },
-    'Studio':         { title: 'Studio Images',     description: 'Works photographed in the context of the studio — process images, studies in available light, and the raw material of practice before it becomes exhibition. The space where everything starts, documented at various stages of arrival.' },
-    'Framed':         { title: 'Framed Pieces',     description: 'Works conceived with framing as an integral compositional element — the frame not as neutral container but as collaborator. Edge and interior in negotiation; the boundary of the work as part of the work itself.' },
-    'Art School':     { title: 'Art School Work',   description: 'Work made during and around the BFA years at the Cleveland Institute of Art. The foundation built here — printmaking, industrial drawing, material thinking — runs under everything that came after. These pieces catch the practice at the moment of formation: uncertain in the best way, searching, not yet committed to what it would become.' },
-    'Torsos & Faces': { title: 'Torsos & Faces',   description: 'Photographic fragments of the human body — cropped, magnified, repositioned — set against grounds that compete with and complement the figure. Presence through reduction; the body as found material, as much subject as surface.' },
-    'Tracings':       { title: 'Tracings',          description: 'Works built from the act of tracing — contour drawn over found imagery, line extracted from photograph or print. A method of close looking that is also a method of possession: the original image remains visible beneath the intervention, neither fully surrendered nor entirely replaced.' },
-    'Aviation':       { title: 'Aviation',          description: 'Warplanes and commercial aircraft extracted from print media — identification silhouettes, engine cross-sections, advertising copy. Flight rendered as formal object: the machine stripped to icon, hovering between technological sublime and cold precision, beauty and threat indistinguishable.' },
-    'Targets':        { title: 'Targets',           description: 'Concentric rings, bull\'s-eye forms, and range markers appear across dozens of works as compositional anchors and loaded symbols. Precision without declared purpose. The target as both invitation and warning — a form that compels attention before meaning is assigned.' },
-    'Gallery':        { title: 'Gallery Images',    description: 'Exhibition views and installation photographs from five decades of showing work. The archive of the archive: spaces, arrangements, and the accumulated evidence of a practice made public and encountered by other eyes.' },
-    'Reliquaries':    { title: 'Reliquaries',       description: 'Works structured around the logic of the container: sealed, weighted, and significant. Materials chosen for their prior lives as much as their surfaces. Vessels that imply a content they don\'t reveal — the relic absent, the shrine intact.' },
-    'Totems':         { title: 'Totems',            description: 'Vertical accretions of found and fabricated elements, drawing on the logic of accumulation and ritual while remaining grounded in the vocabularies of the workshop and the hardware store. Stacked significance; weight as meaning.' },
-    'Crosses':        { title: 'Crosses',           description: 'The cross reduced to its geometry — symmetry, perpendicular meeting, four directions held in tension. Form that carries cultural weight before any specific reading is applied, returned to pure structure and asked to hold whatever the viewer brings.' },
-  };
-
-  /* Named series — filtered by r.series field, linked with ?series= param */
-  const NAMED_SERIES = {
-    'XXIII':    { title: 'XXIII',          description: 'Dense formations of compact discs — sometimes hundreds — arranged across the picture plane in undulating rows or tight grids. Works in this series frequently carry the label "XXIII" or "DBS." The CD as found object, mass-produced and reflective, becomes both building material and conceptual unit.' },
-    'Squadron': { title: 'Squadron',       description: 'Multiple top-down warplane silhouettes arranged in deliberate formation as the primary compositional subject. The planes move together as a unit, their repetition transforming a military motif into something closer to choreography — or to a flock.' },
-    'Guernica': { title: 'Guernica Series', description: 'Works where the title contains "Guernica" or the composition directly mirrors Picasso\'s 1937 painting. Distinct from works that share Guernica\'s emotional territory: these engage the source directly, reworking its specific iconography — the bull, the horse, the lamp — through collage.' },
-  };
+  /* Theme + named-series data — from artist-config.js (generated by build_catalog.py). */
+  const _C = window.ARCHIVE_CONFIG || {};
+  const SERIES = Object.fromEntries(
+    (_C.themes || []).map(t => [t.name, { title: t.displayTitle, description: t.description }])
+  );
+  const NAMED_SERIES = Object.fromEntries(
+    (_C.namedSeries || []).map(s => [s.key, { title: s.displayTitle, description: s.description }])
+  );
 
   function esc(s) {
     return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
@@ -293,11 +280,11 @@
   const list = document.getElementById('series-list');
   document.getElementById('series-meta').textContent = allItems.length + ' series';
   list.innerHTML =
-    themeItems.map(renderItem).join('') +
     `<li class="series-entry--section" aria-hidden="true">
       <p class="series-entry__section-label">Named Bodies of Work</p>
     </li>` +
-    namedItems.map(renderItem).join('');
+    namedItems.map(renderItem).join('') +
+    themeItems.map(renderItem).join('');
 
   /* update counts from catalog */
   fetch('catalog-lite.json')
@@ -323,10 +310,7 @@
       const FALLBACK_THUMBS = {
         'Mr. Snowmann':   'art0112',
         'Art School':     'art1031',
-        'Aviation':       'art0003',
         'Targets':        'art0008',
-        'Reliquaries':    'art0002',
-        'Totems':         'art0001',
         'Crosses':        'art0137',
         'Torsos & Faces': 'art0021',
         'Gallery':        'art0957',
@@ -334,8 +318,6 @@
         'Studio':         'art0134',
         'Tracings':       'art0408',
         'Collaboration':  'art0520',
-        'XXIII':          'art0016',
-        'Squadron':       'art0006',
         'Guernica':       'art0003',
       };
 

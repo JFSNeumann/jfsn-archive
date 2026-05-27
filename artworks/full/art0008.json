@@ -1,17 +1,14 @@
 {
-  "file": "art0008.avif",
-  "title": "Drafting Table",
-  "year": 2010,
-  "work_type": "collage",
-  "orientation": "portrait",
+  "composition": "open upper field, dense lower frieze",
   "description": "A large top-down warplane line drawing fills the upper field on open white paper, flanked by yellow vertical bands. Below, a tight frieze of small objects \u2014 perforated dot rows, a gold honeycomb panel with a turquoise star, a football, two silver discs and a target.",
-  "palette": [
-    "ivory",
-    "yellow",
-    "silver",
-    "red",
-    "ochre"
+  "featured": false,
+  "file": "art0008.avif",
+  "keywords": [
+    "drafting",
+    "frieze",
+    "negative-space"
   ],
+  "materials": [],
   "motifs": [
     "warplane-topdown",
     "compact-disc",
@@ -22,17 +19,18 @@
     "vertical-stripes",
     "target"
   ],
-  "materials": [],
-  "composition": "open upper field, dense lower frieze",
-  "themes": [
-    "Aviation"
+  "orientation": "portrait",
+  "palette": [
+    "ivory",
+    "yellow",
+    "silver",
+    "red",
+    "ochre"
   ],
-  "keywords": [
-    "drafting",
-    "frieze",
-    "negative-space"
-  ],
-  "featured": false,
   "schema_version": "1",
-  "series": null
+  "series": null,
+  "themes": [],
+  "title": "Drafting Table",
+  "work_type": "collage",
+  "year": 2010
 }

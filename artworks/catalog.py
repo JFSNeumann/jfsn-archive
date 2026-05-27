@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 """
-JFSN Artwork Catalog Generator
-================================
+Artist Archive Catalog Generator
+==================================
 
 Generates JSON sidecars for every AVIF in /full/ using the Anthropic API.
 Resumable: skips any file that already has a .json sidecar.
+
+Vocabulary and artist info are read from artist-config.json at the project root.
+Edit that file to customize themes, series, and other settings for your archive.
 
 Setup
 -----
@@ -51,14 +54,63 @@ REQUIRED_FIELDS_ALL  = {"file", "title", "year", "work_type",
                         "featured", "schema_version"}
 REQUIRED_FIELDS_FULL = {"motifs", "materials", "composition"} | REQUIRED_FIELDS_ALL
 
-SYSTEM_PROMPT = r"""You are cataloging an art archive of mixed-media collages, sculptures, photographs, and installation views by the artist JFSN (active 1974–present).
+# ── Load artist-config.json ─────────────────────────────────────────────────
+_CFG_PATH = Path(__file__).parent.parent / "artist-config.json"
+_cfg: dict = {}
+if _CFG_PATH.exists():
+    try:
+        _cfg = json.loads(_CFG_PATH.read_text())
+    except Exception as e:
+        print(f"Warning: could not parse artist-config.json: {e}", file=sys.stderr)
+
+def _build_system_prompt() -> str:
+    artist_name  = _cfg.get("artist_short") or _cfg.get("artist_name", "the artist")
+    active       = _cfg.get("artist_active", "active")
+    themes       = _cfg.get("themes", [])
+    named_series = _cfg.get("named_series", [])
+    palette      = _cfg.get("palette", [])
+    motifs       = _cfg.get("motifs", [])
+    materials    = _cfg.get("materials", [])
+
+    # ── Controlled Themes block ──────────────────────────────────────────────
+    theme_lines = []
+    for i, t in enumerate(themes):
+        name = t["name"]
+        note = t.get("ai_note", "")
+        if i == 0:
+            theme_lines.append(f"{name:<16}— {note}")
+        else:
+            theme_lines.append(f"{name:<16}— {note}")
+    themes_block = "\n".join(theme_lines)
+
+    # ── Series block ─────────────────────────────────────────────────────────
+    series_keys   = [s["key"]   for s in named_series]
+    series_values = []
+    for s in named_series:
+        series_values.append(
+            f'  "{s["key"]}"  — {s["ai_rule"]}'
+        )
+    null_note = '  null        — All other works. Use null, not "" or "None".'
+    series_values.append(null_note)
+    series_block = "\n".join(series_values)
+
+    # ── Named-series note in Themes block ────────────────────────────────────
+    series_theme_note = ""
+    if named_series:
+        series_key_list = ", ".join(f'"{s["key"]}"' for s in named_series)
+        series_theme_note = (
+            f'\nNOTE: Do NOT add {series_key_list} as a theme — that content belongs in the\n'
+            f'      series field only, never in themes.'
+        )
+
+    return f"""You are cataloging an art archive of mixed-media collages, sculptures, photographs, and installation views by the artist {artist_name} ({active}).
 
 Return ONLY a JSON object. No prose, no code fences, no markdown.
 
 ════════════════════════════════════════════════
 SCHEMA
 ════════════════════════════════════════════════
-{
+{{
   "file": "art0XXX.avif",
   "title": "...",
   "year": <4-digit integer or null>,
@@ -73,7 +125,7 @@ SCHEMA
   "keywords": [2–4 specific long-tail search terms],
   "featured": false,
   "schema_version": "1"
-}
+}}
 
 For photograph records (studio shots, gallery views, installation images): motifs,
 materials, and composition are optional — include them only when clearly identifiable.
@@ -90,19 +142,14 @@ Do not infer from style, aging, or context. Use null when uncertain.
 ════════════════════════════════════════════════
 CONTROLLED PALETTE
 ════════════════════════════════════════════════
-red, vermilion, magenta, pink, orange, yellow, ochre, gold, silver, iridescent,
-white, ivory, black, grey, brown, green, turquoise, blue, ultramarine, purple
+{", ".join(palette)}
 
 Use 3–5 terms. List most dominant colors first.
 
 ════════════════════════════════════════════════
 CONTROLLED MOTIFS
 ════════════════════════════════════════════════
-compact-disc, vinyl-record, warplane-topdown, warplane-side, chess-piece,
-target, bullseye, concentric-rings, roundel, perforated-dots, lace-doily,
-crown, cross, numerals, fabric-letters, photographic-face, american-football,
-soccer-ball, lips, honeycomb, gold-leaf, beaded-thread, sequins, ribbon-stripe,
-polka-dot, grid, vertical-stripes, star, ink-drip, map-fragment
+{", ".join(motifs)}
 
 Only list motifs that are clearly and unambiguously present. If uncertain, omit.
 Use [] if none apply.
@@ -110,8 +157,7 @@ Use [] if none apply.
 ════════════════════════════════════════════════
 CONTROLLED MATERIALS
 ════════════════════════════════════════════════
-paper, paint, ink, silver-foil, gold-leaf, cardboard, plastic, lace, resin,
-cassette, ribbon, keyboard, sequins, tape, canvas
+{", ".join(materials)}
 
 Only list materials that are clearly identifiable from the image.
 Use [] if none can be determined.
@@ -119,24 +165,7 @@ Use [] if none can be determined.
 ════════════════════════════════════════════════
 CONTROLLED THEMES  (max 4, apply in priority order shown)
 ════════════════════════════════════════════════
-Mr. Snowmann    — Apply to ALL collages, paintings, and sculptures as the artist's
-                  universal signature. For photographs: apply ONLY when the snowman
-                  figure is the primary subject (a dedicated mural or paste-up).
-                  DO NOT apply when the snowman is a small tag added over another
-                  artist's street art — use keyword "tag-on-other-work" instead.
-Guernica        — war, destruction, or bombing narrative is dominant.
-Aviation        — warplane is a prominent compositional subject.
-Reliquaries     — shrine, altar, or devotional construction.
-Crosses         — cross-as-subject (motif "cross" present, or title references cross/crucifix).
-Targets         — target rings dominate the composition.
-Torsos & Faces  — figural form or face is the central subject.
-Totems          — strongly axial vertical composition.
-Framed          — the central work is presented as a framed inset.
-Studio          — studio context photograph.
-Gallery         — gallery or installation view.
-Collaboration   — collaborative piece.
-Tracings        — tracing technique is central to the work.
-Art School      — work made in an art school context.
+{themes_block}{series_theme_note}
 
 ════════════════════════════════════════════════
 SERIES RULE
@@ -144,13 +173,7 @@ SERIES RULE
 series identifies membership in a named body of work. Use one of these values
 or null — do not invent new series names:
 
-  "XXIII"     — Works from the XXIII series: large flock of compact discs arranged
-                in a dense field, often with the label "XXIII" or "DBS" visible.
-  "Squadron"  — Works where multiple top-down warplanes fly in deliberate formation
-                as the primary compositional subject.
-  "Guernica"  — Works explicitly referencing Picasso's Guernica: title includes
-                the word "GUERNICA" or the composition directly mirrors it.
-  null        — All other works. Use null, not "" or "None".
+{series_block}
 
 ════════════════════════════════════════════════
 TITLE RULE
@@ -185,6 +208,9 @@ FIELD RULES
 • Use [] for any array field with no applicable values — never omit the field.
 • Do not invent terms outside the controlled lists.
 • Return only the JSON object — no explanation, no wrapper."""
+
+SYSTEM_PROMPT = _build_system_prompt()
+
 
 def encode_image(avif_path: Path) -> str:
     img = Image.open(avif_path).convert("RGB")
@@ -224,7 +250,7 @@ def validate_record(rec: dict) -> str | None:
     if "series" in rec:
         s = rec.get("series")
         if s not in VALID_SERIES:
-            return f"invalid series: {s!r} — must be 'XXIII', 'Squadron', 'Guernica', or null"
+            return f"invalid series: {s!r} — must be 'Guernica' or null"
 
     # Palette must have at least 1 item
     pal = rec.get("palette", [])

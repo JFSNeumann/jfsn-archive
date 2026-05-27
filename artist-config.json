@@ -1,0 +1,105 @@
+{
+  "_comment": "Single source of truth for this archive. Edit this file — Python scripts and the browser JS both read from it. Run 'python3 artworks/build_catalog.py' after any change to regenerate catalogs and artist-config.js.",
+
+  "artist_name": "Jeffrey F. S. Neumann",
+  "artist_short": "JFSN",
+  "artist_active": "1974–present",
+  "site_url": "https://jfsn.com",
+  "site_title": "JFSN Archive",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+
+  "themes": [
+    {
+      "name": "Mr. Snowmann",
+      "display_title": "Mr. SNOWmann",
+      "description": "A recurring figure — part totem, part pop effigy — assembled from the residue of consumer culture. Across more than a hundred works spanning five decades, the Snowmann shape-shifts and accumulates: a sustained riff on American iconography, assembly, and the act of making something from nothing.",
+      "ai_note": "Apply to ALL collages, paintings, and sculptures as the artist's universal signature. For photographs: apply ONLY when the snowman figure is the primary subject (a dedicated mural or paste-up). DO NOT apply when the snowman is a small tag added over another artist's street art — use keyword \"tag-on-other-work\" instead."
+    },
+    {
+      "name": "Crosses",
+      "display_title": "Crosses",
+      "description": "The cross reduced to its geometry — symmetry, perpendicular meeting, four directions held in tension. Form that carries cultural weight before any specific reading is applied, returned to pure structure and asked to hold whatever the viewer brings.",
+      "ai_note": "cross-as-subject (motif \"cross\" present, or title references cross/crucifix)."
+    },
+    {
+      "name": "Targets",
+      "display_title": "Targets",
+      "description": "Concentric rings, bull's-eye forms, and range markers appear across dozens of works as compositional anchors and loaded symbols. Precision without declared purpose. The target as both invitation and warning — a form that compels attention before meaning is assigned.",
+      "ai_note": "target rings dominate the composition."
+    },
+    {
+      "name": "Torsos & Faces",
+      "display_title": "Torsos & Faces",
+      "description": "Photographic fragments of the human body — cropped, magnified, repositioned — set against grounds that compete with and complement the figure. Presence through reduction; the body as found material, as much subject as surface.",
+      "ai_note": "figural form or face is the central subject."
+    },
+    {
+      "name": "Framed",
+      "display_title": "Framed Pieces",
+      "description": "Works conceived with framing as an integral compositional element — the frame not as neutral container but as collaborator. Edge and interior in negotiation; the boundary of the work as part of the work itself.",
+      "ai_note": "the central work is presented as a framed inset."
+    },
+    {
+      "name": "Studio",
+      "display_title": "Studio Images",
+      "description": "Works photographed in the context of the studio — process images, studies in available light, and the raw material of practice before it becomes exhibition. The space where everything starts, documented at various stages of arrival.",
+      "ai_note": "studio context photograph."
+    },
+    {
+      "name": "Gallery",
+      "display_title": "Gallery Images",
+      "description": "Exhibition views and installation photographs from five decades of showing work. The archive of the archive: spaces, arrangements, and the accumulated evidence of a practice made public and encountered by other eyes.",
+      "ai_note": "gallery or installation view."
+    },
+    {
+      "name": "Collaboration",
+      "display_title": "Collaboration",
+      "description": "Works made in collaboration with other artists — shared process, dual authorship, two practices finding common ground.",
+      "ai_note": "collaborative piece."
+    },
+    {
+      "name": "Tracings",
+      "display_title": "Tracings",
+      "description": "Works built from the act of tracing — contour drawn over found imagery, line extracted from photograph or print. A method of close looking that is also a method of possession: the original image remains visible beneath the intervention, neither fully surrendered nor entirely replaced.",
+      "ai_note": "tracing technique is central to the work."
+    },
+    {
+      "name": "Art School",
+      "display_title": "Art School Work",
+      "description": "Work made during and around the BFA years at the Cleveland Institute of Art. The foundation built here — printmaking, industrial drawing, material thinking — runs under everything that came after. These pieces catch the practice at the moment of formation: uncertain in the best way, searching, not yet committed to what it would become.",
+      "ai_note": "work made in an art school context."
+    }
+  ],
+
+  "named_series": [
+    {
+      "key": "Guernica",
+      "display_title": "XXXIII · Guernica",
+      "description": "Works in direct engagement with Picasso's 1937 masterpiece — numbered for the thirty-three days he spent painting it. Warplanes extracted from print media and dense formations of compact discs share the picture plane: military silhouettes and mass-produced discs as parallel found objects, the bull, the horse, the lamp recombined through collage and accumulation. Works frequently carry the label \"XXXIII\" or \"DBS.\"",
+      "ai_rule": "Works belonging to the XXXIII · Guernica named series. Apply when ANY of these are true: (1) dense formation of compact discs fills the picture plane, often labeled \"XXXIII\", \"XXIII\", or \"DBS\"; (2) multiple top-down warplane silhouettes fly in deliberate formation as the primary compositional subject; (3) title includes \"GUERNICA\" or composition directly mirrors Picasso's 1937 painting (bull, horse, lamp, fragmenting figures)."
+    }
+  ],
+
+  "palette": [
+    "red", "vermilion", "magenta", "pink", "orange", "yellow", "ochre", "gold",
+    "silver", "iridescent", "white", "ivory", "black", "grey", "brown", "green",
+    "turquoise", "blue", "ultramarine", "purple"
+  ],
+
+  "motifs": [
+    "compact-disc", "vinyl-record", "cassette", "warplane-topdown", "warplane-side", "chess-piece",
+    "target", "bullseye", "concentric-rings", "roundel", "perforated-dots", "lace-doily",
+    "crown", "cross", "numerals", "fabric-letters", "photographic-face", "torso", "american-football",
+    "soccer-ball", "lips", "honeycomb", "gold-leaf", "beaded-thread", "sequins",
+    "ribbon-stripe", "polka-dot", "grid", "vertical-stripes", "star", "ink-drip", "map-fragment",
+    "keyboard", "tape"
+  ],
+
+  "materials": [
+    "paper", "paint", "ink", "silver-foil", "gold-leaf", "cardboard", "plastic", "lace",
+    "resin", "cassette", "ribbon", "keyboard", "sequins", "tape", "canvas"
+  ],
+
+  "work_types": ["collage", "sculpture", "painting", "photograph"]
+}

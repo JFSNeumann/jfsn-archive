@@ -2,19 +2,16 @@
   "api_version": "1",
   "id": "art0058",
   "work": {
-    "file": "art0058.avif",
-    "title": "Untitled (Plane Grid, OTHER)",
-    "year": null,
-    "work_type": "collage",
-    "orientation": "portrait",
+    "composition": "grid of panels with repeated text",
     "description": "A grid of stacked panels, each carrying a top-down warplane drawing or target rings. The painted word 'OTHER' appears repeatedly across the columns; footballs and concentric circles fill the gaps between panels.",
-    "palette": [
-      "ivory",
-      "red",
-      "yellow",
-      "black",
-      "blue"
+    "featured": false,
+    "file": "art0058.avif",
+    "keywords": [
+      "text",
+      "grid",
+      "repetition"
     ],
+    "materials": [],
     "motifs": [
       "compact-disc",
       "warplane-topdown",
@@ -24,19 +21,20 @@
       "grid",
       "numerals"
     ],
-    "materials": [],
-    "composition": "grid of panels with repeated text",
-    "themes": [
-      "Aviation"
+    "orientation": "portrait",
+    "palette": [
+      "ivory",
+      "red",
+      "yellow",
+      "black",
+      "blue"
     ],
-    "keywords": [
-      "text",
-      "grid",
-      "repetition"
-    ],
-    "featured": false,
     "schema_version": "1",
-    "series": null
+    "series": null,
+    "themes": [],
+    "title": "Untitled (Plane Grid, OTHER)",
+    "work_type": "collage",
+    "year": null
   },
   "links": {
     "image": "https://jfsn.com/artworks/full/art0058.avif",

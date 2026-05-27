@@ -2,18 +2,18 @@
   "api_version": "1",
   "id": "art0071",
   "work": {
-    "file": "art0071.avif",
-    "title": "Untitled (White Frame, Crowded Margins)",
-    "year": 2000,
-    "work_type": "collage",
-    "orientation": "landscape",
+    "composition": "empty centre with crowded perimeter",
     "description": "Crowded margins frame a near-empty central white panel: silver and gold compact discs, footballs, target rings, chess pieces and a soccer ball cluster densely along the four edges. The empty center reads as a pause within a busy field.",
-    "palette": [
-      "ivory",
-      "red",
-      "black",
-      "silver",
-      "gold"
+    "featured": false,
+    "file": "art0071.avif",
+    "keywords": [
+      "negative-space",
+      "border",
+      "panoramic"
+    ],
+    "materials": [
+      "paper",
+      "paint"
     ],
     "motifs": [
       "compact-disc",
@@ -23,22 +23,20 @@
       "american-football",
       "soccer-ball"
     ],
-    "materials": [
-      "paper",
-      "paint"
+    "orientation": "landscape",
+    "palette": [
+      "ivory",
+      "red",
+      "black",
+      "silver",
+      "gold"
     ],
-    "composition": "empty centre with crowded perimeter",
-    "themes": [
-      "Aviation"
-    ],
-    "keywords": [
-      "negative-space",
-      "border",
-      "panoramic"
-    ],
-    "featured": false,
     "schema_version": "1",
-    "series": null
+    "series": null,
+    "themes": [],
+    "title": "Untitled (White Frame, Crowded Margins)",
+    "work_type": "collage",
+    "year": 2000
   },
   "links": {
     "image": "https://jfsn.com/artworks/full/art0071.avif",

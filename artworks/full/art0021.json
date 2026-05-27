@@ -1,17 +1,14 @@
 {
-  "file": "art0021.avif",
-  "title": "Wide Score",
-  "year": null,
-  "work_type": "collage",
-  "orientation": "landscape",
+  "composition": "horizontal panorama with twin disc anchors",
   "description": "A horizontal panorama: an iridescent compact disc inside a red bullseye anchors the left, an iridescent disc with a black-and-white photographic head anchors the right. Between them, a graffitied middle ground with planes, a soccer ball and clipped color blocks.",
-  "palette": [
-    "red",
-    "iridescent",
-    "ivory",
-    "blue",
-    "yellow"
+  "featured": false,
+  "file": "art0021.avif",
+  "keywords": [
+    "panoramic",
+    "pop",
+    "sport"
   ],
+  "materials": [],
   "motifs": [
     "compact-disc",
     "warplane-topdown",
@@ -20,19 +17,21 @@
     "concentric-rings",
     "photographic-face"
   ],
-  "materials": [],
-  "composition": "horizontal panorama with twin disc anchors",
+  "orientation": "landscape",
+  "palette": [
+    "red",
+    "iridescent",
+    "ivory",
+    "blue",
+    "yellow"
+  ],
+  "schema_version": "1",
+  "series": null,
   "themes": [
-    "Aviation",
     "Targets",
     "Torsos & Faces"
   ],
-  "keywords": [
-    "panoramic",
-    "pop",
-    "sport"
-  ],
-  "featured": false,
-  "schema_version": "1",
-  "series": null
+  "title": "Wide Score",
+  "work_type": "collage",
+  "year": null
 }

@@ -2,19 +2,15 @@
   "api_version": "1",
   "id": "art0010",
   "work": {
-    "file": "art0010.avif",
-    "title": "Float",
-    "year": 2010,
-    "work_type": "collage",
-    "orientation": "portrait",
+    "composition": "axial totem on dotted ground, dense base pile",
     "description": "A central top-down warplane carries iridescent discs as wheels and propellers on a perforated pegboard ground. A dense pile of additional discs, target rings, ink splashes and torn map fragments crowds the base, framed above by yellow vertical ribbons.",
-    "palette": [
-      "ivory",
+    "featured": true,
+    "file": "art0010.avif",
+    "keywords": [
       "iridescent",
-      "yellow",
-      "green",
-      "magenta"
+      "maximalist"
     ],
+    "materials": [],
     "motifs": [
       "compact-disc",
       "warplane-topdown",
@@ -25,18 +21,20 @@
       "map-fragment",
       "polka-dot"
     ],
-    "materials": [],
-    "composition": "axial totem on dotted ground, dense base pile",
-    "themes": [
-      "Aviation"
-    ],
-    "keywords": [
+    "orientation": "portrait",
+    "palette": [
+      "ivory",
       "iridescent",
-      "maximalist"
+      "yellow",
+      "green",
+      "magenta"
     ],
-    "featured": true,
     "schema_version": "1",
-    "series": null
+    "series": null,
+    "themes": [],
+    "title": "Float",
+    "work_type": "collage",
+    "year": 2010
   },
   "links": {
     "image": "https://jfsn.com/artworks/full/art0010.avif",

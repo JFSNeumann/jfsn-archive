@@ -1,17 +1,14 @@
 {
-  "file": "art0024.avif",
-  "title": "Tongue and Plane",
-  "year": null,
-  "work_type": "collage",
-  "orientation": "landscape",
+  "composition": "horizontal panorama, twin disc anchors with central target",
   "description": "A horizontal panorama: a top-down warplane drifts across a yellow-and-red striped field flanked by silver compact discs. Two Rolling Stones tongue logos appear at right above a small football; a concentric red bullseye sits at center.",
-  "palette": [
-    "yellow",
-    "red",
-    "silver",
-    "ivory",
-    "gold"
+  "featured": false,
+  "file": "art0024.avif",
+  "keywords": [
+    "panoramic",
+    "pop",
+    "rock"
   ],
+  "materials": [],
   "motifs": [
     "compact-disc",
     "warplane-topdown",
@@ -20,18 +17,20 @@
     "target",
     "vertical-stripes"
   ],
-  "materials": [],
-  "composition": "horizontal panorama, twin disc anchors with central target",
+  "orientation": "landscape",
+  "palette": [
+    "yellow",
+    "red",
+    "silver",
+    "ivory",
+    "gold"
+  ],
+  "schema_version": "1",
+  "series": null,
   "themes": [
-    "Aviation",
     "Targets"
   ],
-  "keywords": [
-    "panoramic",
-    "pop",
-    "rock"
-  ],
-  "featured": false,
-  "schema_version": "1",
-  "series": null
+  "title": "Tongue and Plane",
+  "work_type": "collage",
+  "year": null
 }

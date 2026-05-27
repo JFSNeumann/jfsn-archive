@@ -1,16 +1,16 @@
 {
-  "file": "art0097.avif",
-  "title": "Stereo Squadron",
-  "year": 2000,
-  "work_type": "collage",
-  "orientation": "landscape",
+  "composition": "speaker frieze above plane row, dark ground",
   "description": "On a black ground a row of stereo speakers and components stretches across the upper register; below, three top-down warplane line drawings advance with concentric target rings flanking. A small ladder element climbs the left side; saturated cobalt and turquoise accents punctuate the dark field.",
-  "palette": [
-    "black",
-    "blue",
-    "ivory",
-    "turquoise",
-    "silver"
+  "featured": false,
+  "file": "art0097.avif",
+  "keywords": [
+    "dark-palette",
+    "panoramic",
+    "music"
+  ],
+  "materials": [
+    "paper",
+    "paint"
   ],
   "motifs": [
     "compact-disc",
@@ -18,20 +18,18 @@
     "target",
     "concentric-rings"
   ],
-  "materials": [
-    "paper",
-    "paint"
+  "orientation": "landscape",
+  "palette": [
+    "black",
+    "blue",
+    "ivory",
+    "turquoise",
+    "silver"
   ],
-  "composition": "speaker frieze above plane row, dark ground",
-  "themes": [
-    "Aviation"
-  ],
-  "keywords": [
-    "dark-palette",
-    "panoramic",
-    "music"
-  ],
-  "featured": false,
   "schema_version": "1",
-  "series": "Squadron"
+  "series": "Guernica",
+  "themes": [],
+  "title": "Stereo Squadron",
+  "work_type": "collage",
+  "year": 2000
 }

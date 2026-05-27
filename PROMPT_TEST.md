@@ -1,6 +1,10 @@
 # Prompt Test Protocol — Run Before Full Batch
 
-Run this before triggering the 944-record batch. Takes ~5 minutes.
+> **Status as of 2026-05-27:** The 939-image batch ran and produced 744 cataloged works.
+> Migration 002 cleaned up 35 sidecars. Run `validate_catalog.py --legacy-ok` to confirm 0 errors.
+> Remaining 107 warnings are description openers (A/An/The) — fix with `repass_descriptions.py`.
+
+Run this before triggering any new batch. Takes ~5 minutes.
 
 ---
 
@@ -54,7 +58,7 @@ Open each new JSON and check:
       `description`, `palette`, `themes`, `series`, `keywords`, `featured`, `schema_version`
 - [ ] `year` is present as a key (even if null)
 - [ ] `schema_version` is `"1"`
-- [ ] `series` is one of `"XXIII"`, `"Squadron"`, `"Guernica"`, or `null`
+- [ ] `series` is `"Guernica"` or `null` (XXIII and Squadron are retired — all go to Guernica or null)
 - [ ] `featured` is `false`
 
 ### Description
@@ -68,7 +72,7 @@ Open each new JSON and check:
 - [ ] All palette terms are from the 20-term list
 - [ ] All motif terms are from the 30-term list
 - [ ] All material terms are from the 15-term list
-- [ ] All theme terms are from the 14-term list
+- [ ] All theme terms are from the 10-term list (Mr. SNOWmann, Targets, Crosses, Torsos & Faces, Gallery, Framed, Studio, Tracings, Art School, Collaboration)
 - [ ] No invented series values
 
 ### Judgment calls
@@ -106,9 +110,8 @@ The three rules that are NEW since the original 140 records — verify each work
    The validator catches this and forces a retry, but confirm at least 3 of 5
    descriptions open with something distinctive.
 
-2. **Series field** — if any of the 5 test images are clearly XXIII or Squadron works,
-   confirm the model identifies them correctly. If none are, test manually by looking
-   at the catalog for an XXIII image and verifying its series value.
+2. **Series field** — if any of the 5 test images are clearly CD-formation or warplane/Guernica works,
+   confirm the model assigns `series: "Guernica"`. All others should be `null`.
 
 3. **Keyword specificity** — the biggest ongoing risk. Read the 5 keyword arrays.
    Are they terms you'd use to find ONLY this work, or terms you'd find everywhere?

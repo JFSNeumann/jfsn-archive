@@ -2,19 +2,15 @@
   "api_version": "1",
   "id": "art0020",
   "work": {
-    "file": "art0020.avif",
-    "title": "Untitled (Plane and Disc, Wide)",
-    "year": null,
-    "work_type": "collage",
-    "orientation": "landscape",
+    "composition": "wide horizontal panorama, asymmetric weighting right",
     "description": "A horizontal panorama: a top-down warplane glides left of center over vertical color bands, while a single oversized gold compact disc anchors the far right. Polaroid snapshots, target rings and ladder forms cluster in the middle band.",
-    "palette": [
-      "ivory",
-      "gold",
-      "red",
-      "blue",
-      "yellow"
+    "featured": false,
+    "file": "art0020.avif",
+    "keywords": [
+      "panoramic",
+      "snapshot"
     ],
+    "materials": [],
     "motifs": [
       "compact-disc",
       "warplane-topdown",
@@ -22,18 +18,20 @@
       "target",
       "vertical-stripes"
     ],
-    "materials": [],
-    "composition": "wide horizontal panorama, asymmetric weighting right",
-    "themes": [
-      "Aviation"
+    "orientation": "landscape",
+    "palette": [
+      "ivory",
+      "gold",
+      "red",
+      "blue",
+      "yellow"
     ],
-    "keywords": [
-      "panoramic",
-      "snapshot"
-    ],
-    "featured": false,
     "schema_version": "1",
-    "series": null
+    "series": null,
+    "themes": [],
+    "title": "Untitled (Plane and Disc, Wide)",
+    "work_type": "collage",
+    "year": null
   },
   "links": {
     "image": "https://jfsn.com/artworks/full/art0020.avif",

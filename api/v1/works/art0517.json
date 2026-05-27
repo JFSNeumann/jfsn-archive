@@ -1,0 +1,45 @@
+{
+  "api_version": "1",
+  "id": "art0517",
+  "work": {
+    "file": "art0517.avif",
+    "title": "Untitled (Turquoise Field)",
+    "year": null,
+    "work_type": "painting",
+    "description": "Turquoise dominates the picture plane, overlaid with gestural black ink marks, looping lines, and bird-like glyphs. Yellow and green passages break the upper zone, while a faint warplane silhouette appears lower right alongside swirling ribbon-like strokes.",
+    "palette": [
+      "turquoise",
+      "black",
+      "yellow",
+      "green",
+      "blue"
+    ],
+    "motifs": [
+      "warplane-side",
+      "ink-drip"
+    ],
+    "materials": [
+      "paint",
+      "ink"
+    ],
+    "composition": "expansive turquoise ground with gestural overlay",
+    "themes": [
+      "Mr. Snowmann"
+    ],
+    "series": null,
+    "keywords": [
+      "turquoise gestural painting",
+      "bird-glyph mark-making",
+      "faint warplane silhouette",
+      "looping ribbon brushwork"
+    ],
+    "featured": false,
+    "schema_version": "1"
+  },
+  "links": {
+    "image": "https://jfsn.com/artworks/full/art0517.avif",
+    "thumb": "https://jfsn.com/artworks/thumbs/art0517.avif",
+    "mini": "https://jfsn.com/artworks/mini/art0517.avif",
+    "page": "https://jfsn.com/artwork.html?id=art0517"
+  }
+}

@@ -1,16 +1,15 @@
 {
-  "file": "art0086.avif",
-  "title": "Yellow Frame, Blank Page",
-  "year": 2000,
-  "work_type": "collage",
-  "orientation": "portrait",
+  "composition": "yellow frame around blank centre, target columns",
   "description": "A yellow vertical frame holds a near-empty central white panel, ringed by columns of bullseye targets and gold compact discs. A line-drawn warplane crowns the upper edge; a wooden chess king at lower left, with a black-and-white photograph and small text strip at the base.",
-  "palette": [
-    "yellow",
-    "ivory",
-    "gold",
-    "red",
-    "black"
+  "featured": false,
+  "file": "art0086.avif",
+  "keywords": [
+    "framed-work",
+    "negative-space"
+  ],
+  "materials": [
+    "paper",
+    "paint"
   ],
   "motifs": [
     "compact-disc",
@@ -20,20 +19,20 @@
     "chess-piece",
     "photographic-face"
   ],
-  "materials": [
-    "paper",
-    "paint"
+  "orientation": "portrait",
+  "palette": [
+    "yellow",
+    "ivory",
+    "gold",
+    "red",
+    "black"
   ],
-  "composition": "yellow frame around blank centre, target columns",
+  "schema_version": "1",
+  "series": null,
   "themes": [
-    "Aviation",
     "Targets"
   ],
-  "keywords": [
-    "framed-work",
-    "negative-space"
-  ],
-  "featured": false,
-  "schema_version": "1",
-  "series": null
+  "title": "Yellow Frame, Blank Page",
+  "work_type": "collage",
+  "year": 2000
 }

@@ -2,19 +2,15 @@
   "api_version": "1",
   "id": "art0035",
   "work": {
-    "file": "art0035.avif",
-    "title": "Untitled (Plane Diptych)",
-    "year": null,
-    "work_type": "collage",
-    "orientation": "landscape",
+    "composition": "horizontal diptych, twin plane-and-disc panels",
     "description": "A horizontal diptych: each panel centered on a top-down warplane drawing surrounded by gold compact discs and concentric target rings. Vertical color bands and small figural cutouts thread between the planes; black-and-white photo strips line the upper margins.",
-    "palette": [
-      "ivory",
-      "gold",
-      "red",
-      "black",
-      "blue"
+    "featured": false,
+    "file": "art0035.avif",
+    "keywords": [
+      "diptych",
+      "panoramic"
     ],
+    "materials": [],
     "motifs": [
       "compact-disc",
       "warplane-topdown",
@@ -23,19 +19,22 @@
       "vertical-stripes",
       "photographic-face"
     ],
-    "materials": [],
-    "composition": "horizontal diptych, twin plane-and-disc panels",
+    "orientation": "landscape",
+    "palette": [
+      "ivory",
+      "gold",
+      "red",
+      "black",
+      "blue"
+    ],
+    "schema_version": "1",
+    "series": null,
     "themes": [
-      "Aviation",
       "Targets"
     ],
-    "keywords": [
-      "diptych",
-      "panoramic"
-    ],
-    "featured": false,
-    "schema_version": "1",
-    "series": null
+    "title": "Untitled (Plane Diptych)",
+    "work_type": "collage",
+    "year": null
   },
   "links": {
     "image": "https://jfsn.com/artworks/full/art0035.avif",

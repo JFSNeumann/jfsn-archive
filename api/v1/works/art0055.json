@@ -2,12 +2,23 @@
   "api_version": "1",
   "id": "art0055",
   "work": {
-    "file": "art0055.avif",
-    "title": "Untitled (Skateboards on Target Field)",
-    "year": null,
-    "work_type": "collage",
-    "orientation": "landscape",
+    "composition": "wide horizontal panorama, all-over target field",
     "description": "A wide horizontal field saturated with concentric target rings of varying scale. Two black skateboards anchor the lower edge; a red-bordered grid of game-board lines and small color icons crosses the upper field.",
+    "featured": false,
+    "file": "art0055.avif",
+    "keywords": [
+      "skateboard",
+      "panoramic",
+      "all-over"
+    ],
+    "materials": [],
+    "motifs": [
+      "compact-disc",
+      "target",
+      "concentric-rings",
+      "grid"
+    ],
+    "orientation": "landscape",
     "palette": [
       "ivory",
       "red",
@@ -15,25 +26,12 @@
       "yellow",
       "blue"
     ],
-    "motifs": [
-      "compact-disc",
-      "target",
-      "concentric-rings",
-      "grid"
-    ],
-    "materials": [],
-    "composition": "wide horizontal panorama, all-over target field",
-    "themes": [
-      "Aviation"
-    ],
-    "keywords": [
-      "skateboard",
-      "panoramic",
-      "all-over"
-    ],
-    "featured": false,
     "schema_version": "1",
-    "series": null
+    "series": null,
+    "themes": [],
+    "title": "Untitled (Skateboards on Target Field)",
+    "work_type": "collage",
+    "year": null
   },
   "links": {
     "image": "https://jfsn.com/artworks/full/art0055.avif",

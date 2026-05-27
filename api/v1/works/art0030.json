@@ -2,36 +2,34 @@
   "api_version": "1",
   "id": "art0030",
   "work": {
-    "file": "art0030.avif",
-    "title": "Untitled (Diving Plane)",
-    "year": null,
-    "work_type": "collage",
-    "orientation": "portrait",
+    "composition": "diving plane upper, horizontal disc row lower",
     "description": "A blue-tinted top-down warplane drawing dives across the upper field, fragmenting as it descends. Three gold compact discs sit in a horizontal row across a pale grid below; small numbered icons and a fourth disc cluster at the lower edge.",
-    "palette": [
-      "blue",
-      "gold",
-      "ivory",
-      "orange"
+    "featured": false,
+    "file": "art0030.avif",
+    "keywords": [
+      "blueprint",
+      "minimal-mixed-media"
     ],
+    "materials": [],
     "motifs": [
       "compact-disc",
       "warplane-topdown",
       "grid",
       "numerals"
     ],
-    "materials": [],
-    "composition": "diving plane upper, horizontal disc row lower",
-    "themes": [
-      "Aviation"
+    "orientation": "portrait",
+    "palette": [
+      "blue",
+      "gold",
+      "ivory",
+      "orange"
     ],
-    "keywords": [
-      "blueprint",
-      "minimal-mixed-media"
-    ],
-    "featured": false,
     "schema_version": "1",
-    "series": null
+    "series": null,
+    "themes": [],
+    "title": "Untitled (Diving Plane)",
+    "work_type": "collage",
+    "year": null
   },
   "links": {
     "image": "https://jfsn.com/artworks/full/art0030.avif",

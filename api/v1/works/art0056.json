@@ -2,19 +2,16 @@
   "api_version": "1",
   "id": "art0056",
   "work": {
-    "file": "art0056.avif",
-    "title": "XXIII Bus",
-    "year": 1990,
-    "work_type": "collage",
-    "orientation": "landscape",
+    "composition": "wide horizontal panorama, twin disc center",
     "description": "A wide horizontal collage with two large silver compact discs at center anchoring a yellow base panel inscribed 'XXIIIBUS'. Concentric target rings, scribbled diagrams and red and green vertical bands surround the central pair.",
-    "palette": [
-      "ivory",
-      "yellow",
-      "red",
-      "silver",
-      "black"
+    "featured": false,
+    "file": "art0056.avif",
+    "keywords": [
+      "panoramic",
+      "text",
+      "diagram"
     ],
+    "materials": [],
     "motifs": [
       "compact-disc",
       "target",
@@ -22,17 +19,20 @@
       "vertical-stripes",
       "numerals"
     ],
-    "materials": [],
-    "composition": "wide horizontal panorama, twin disc center",
-    "themes": [],
-    "keywords": [
-      "panoramic",
-      "text",
-      "diagram"
+    "orientation": "landscape",
+    "palette": [
+      "ivory",
+      "yellow",
+      "red",
+      "silver",
+      "black"
     ],
-    "featured": false,
     "schema_version": "1",
-    "series": "XXIII"
+    "series": "Guernica",
+    "themes": [],
+    "title": "XXIII Bus",
+    "work_type": "collage",
+    "year": 1990
   },
   "links": {
     "image": "https://jfsn.com/artworks/full/art0056.avif",

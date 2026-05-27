@@ -2,19 +2,16 @@
   "api_version": "1",
   "id": "art0006",
   "work": {
-    "file": "art0006.avif",
-    "title": "Squadron with Pink Vinyl",
-    "year": 1990,
-    "work_type": "collage",
-    "orientation": "portrait",
+    "composition": "diagonal plane axis with chess weight right",
     "description": "A pink vinyl record and a gold compact disc anchor a metallic field crossed by two top-down line-drawn warplanes set at angles. A wooden chess king stands at right; small target stickers, beaded threads and gold-foil scraps drift across the surface.",
-    "palette": [
-      "silver",
-      "gold",
-      "pink",
-      "black",
-      "ivory"
+    "featured": false,
+    "file": "art0006.avif",
+    "keywords": [
+      "chess",
+      "palimpsest",
+      "vinyl"
     ],
+    "materials": [],
     "motifs": [
       "compact-disc",
       "vinyl-record",
@@ -23,19 +20,20 @@
       "target",
       "beaded-thread"
     ],
-    "materials": [],
-    "composition": "diagonal plane axis with chess weight right",
-    "themes": [
-      "Aviation"
+    "orientation": "portrait",
+    "palette": [
+      "silver",
+      "gold",
+      "pink",
+      "black",
+      "ivory"
     ],
-    "keywords": [
-      "chess",
-      "palimpsest",
-      "vinyl"
-    ],
-    "featured": false,
     "schema_version": "1",
-    "series": "Squadron"
+    "series": "Guernica",
+    "themes": [],
+    "title": "Squadron with Pink Vinyl",
+    "work_type": "collage",
+    "year": 1990
   },
   "links": {
     "image": "https://jfsn.com/artworks/full/art0006.avif",

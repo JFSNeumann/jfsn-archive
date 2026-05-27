@@ -1,33 +1,31 @@
 {
-  "file": "art0105.avif",
-  "title": "Plane in the Branches",
-  "year": 2000,
-  "work_type": "collage",
-  "orientation": "portrait",
-  "description": "A close-up black-and-white photograph of tree branches against a sky, with a single top-down warplane line drawing perched among the leaves. A red wash bleeds through the lower trunk; the photograph reads as both leaf canopy and bombsight.",
-  "palette": [
-    "ivory",
-    "black",
-    "red"
-  ],
-  "motifs": [
-    "warplane-topdown"
-  ],
-  "materials": [
-    "paper",
-    "ink"
-  ],
   "composition": "single plane on tree-branch photograph",
-  "themes": [
-    "Aviation"
-  ],
+  "description": "A close-up black-and-white photograph of tree branches against a sky, with a single top-down warplane line drawing perched among the leaves. A red wash bleeds through the lower trunk; the photograph reads as both leaf canopy and bombsight.",
+  "featured": false,
+  "file": "art0105.avif",
   "keywords": [
     "tree",
     "monochrome",
     "ruin",
     "minimal"
   ],
-  "featured": false,
+  "materials": [
+    "paper",
+    "ink"
+  ],
+  "motifs": [
+    "warplane-topdown"
+  ],
+  "orientation": "portrait",
+  "palette": [
+    "ivory",
+    "black",
+    "red"
+  ],
   "schema_version": "1",
-  "series": null
+  "series": null,
+  "themes": [],
+  "title": "Plane in the Branches",
+  "work_type": "collage",
+  "year": 2000
 }

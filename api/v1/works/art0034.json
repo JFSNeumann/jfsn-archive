@@ -2,19 +2,16 @@
   "api_version": "1",
   "id": "art0034",
   "work": {
-    "file": "art0034.avif",
-    "title": "Hangar",
-    "year": null,
-    "work_type": "collage",
-    "orientation": "landscape",
+    "composition": "horizontal triptych, framed central panel",
     "description": "A horizontal triptych of densely packed aviation collage: planes, targets, fragmented blueprints and color blocks. A central yellow panel frames a stenciled figure between two dense outer panels of warplanes and ink splashes.",
-    "palette": [
-      "ivory",
-      "yellow",
-      "red",
-      "blue",
-      "black"
+    "featured": false,
+    "file": "art0034.avif",
+    "keywords": [
+      "blueprint",
+      "panoramic",
+      "triptych"
     ],
+    "materials": [],
     "motifs": [
       "compact-disc",
       "warplane-topdown",
@@ -24,19 +21,20 @@
       "ink-drip",
       "vertical-stripes"
     ],
-    "materials": [],
-    "composition": "horizontal triptych, framed central panel",
-    "themes": [
-      "Aviation"
+    "orientation": "landscape",
+    "palette": [
+      "ivory",
+      "yellow",
+      "red",
+      "blue",
+      "black"
     ],
-    "keywords": [
-      "blueprint",
-      "panoramic",
-      "triptych"
-    ],
-    "featured": false,
     "schema_version": "1",
-    "series": null
+    "series": null,
+    "themes": [],
+    "title": "Hangar",
+    "work_type": "collage",
+    "year": null
   },
   "links": {
     "image": "https://jfsn.com/artworks/full/art0034.avif",

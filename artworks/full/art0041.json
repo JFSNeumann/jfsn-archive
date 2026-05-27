@@ -1,17 +1,13 @@
 {
-  "file": "art0041.avif",
-  "title": "Untitled (Sketch, Pink Ball)",
-  "year": null,
-  "work_type": "collage",
-  "orientation": "landscape",
+  "composition": "asymmetric horizontal with framed inset left",
   "description": "A loosely composed horizontal field with a framed inset at left containing a top-down warplane and a pink football. Concentric roundels and small CDs scatter across the upper edge; a vertical right-side strip of stacked discs and stripes acts as a counterweight.",
-  "palette": [
-    "ivory",
-    "pink",
-    "yellow",
-    "blue",
-    "green"
+  "featured": false,
+  "file": "art0041.avif",
+  "keywords": [
+    "sketch",
+    "framed-inset"
   ],
+  "materials": [],
   "motifs": [
     "compact-disc",
     "warplane-topdown",
@@ -20,16 +16,18 @@
     "concentric-rings",
     "vertical-stripes"
   ],
-  "materials": [],
-  "composition": "asymmetric horizontal with framed inset left",
-  "themes": [
-    "Aviation"
+  "orientation": "landscape",
+  "palette": [
+    "ivory",
+    "pink",
+    "yellow",
+    "blue",
+    "green"
   ],
-  "keywords": [
-    "sketch",
-    "framed-inset"
-  ],
-  "featured": false,
   "schema_version": "1",
-  "series": null
+  "series": null,
+  "themes": [],
+  "title": "Untitled (Sketch, Pink Ball)",
+  "work_type": "collage",
+  "year": null
 }

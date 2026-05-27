@@ -1,16 +1,15 @@
 {
-  "file": "art0072.avif",
-  "title": "London, Liverpool",
-  "year": 2000,
-  "work_type": "collage",
-  "orientation": "landscape",
+  "composition": "central inset with text tabs",
   "description": "Three gold compact discs anchor an inset white square at center, tagged with the painted words 'london' below and 'LIVERPOOL' on a yellow tab. A small line-drawn warplane, target rings and a black-and-white photographic strip frame the inset.",
-  "palette": [
-    "ivory",
-    "gold",
-    "yellow",
-    "red",
-    "black"
+  "featured": false,
+  "file": "art0072.avif",
+  "keywords": [
+    "text",
+    "place-names"
+  ],
+  "materials": [
+    "paper",
+    "paint"
   ],
   "motifs": [
     "compact-disc",
@@ -19,20 +18,20 @@
     "concentric-rings",
     "photographic-face"
   ],
-  "materials": [
-    "paper",
-    "paint"
+  "orientation": "landscape",
+  "palette": [
+    "ivory",
+    "gold",
+    "yellow",
+    "red",
+    "black"
   ],
-  "composition": "central inset with text tabs",
+  "schema_version": "1",
+  "series": null,
   "themes": [
-    "Aviation",
     "Targets"
   ],
-  "keywords": [
-    "text",
-    "place-names"
-  ],
-  "featured": false,
-  "schema_version": "1",
-  "series": null
+  "title": "London, Liverpool",
+  "work_type": "collage",
+  "year": 2000
 }

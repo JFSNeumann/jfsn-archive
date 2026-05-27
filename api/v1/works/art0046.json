@@ -2,19 +2,15 @@
   "api_version": "1",
   "id": "art0046",
   "work": {
-    "file": "art0046.avif",
-    "title": "Untitled (Plane Totem with Text)",
-    "year": null,
-    "work_type": "collage",
-    "orientation": "portrait",
+    "composition": "axial vertical totem with text band",
     "description": "A vertical totem composition: a small football-and-helmet panel above a top-down warplane drawing, framed by red-and-black target rings and the painted word 'WHAT'. A chess piece anchors the lower left; vertical color bands and a target frieze close the bottom.",
-    "palette": [
-      "ivory",
-      "red",
-      "black",
-      "yellow",
-      "blue"
+    "featured": false,
+    "file": "art0046.avif",
+    "keywords": [
+      "word-painting-WHAT",
+      "football-helmet-panel"
     ],
+    "materials": [],
     "motifs": [
       "compact-disc",
       "warplane-topdown",
@@ -25,19 +21,22 @@
       "chess-piece",
       "numerals"
     ],
-    "materials": [],
-    "composition": "axial vertical totem with text band",
+    "orientation": "portrait",
+    "palette": [
+      "ivory",
+      "red",
+      "black",
+      "yellow",
+      "blue"
+    ],
+    "schema_version": "1",
+    "series": null,
     "themes": [
-      "Aviation",
       "Targets"
     ],
-    "keywords": [
-      "word-painting-WHAT",
-      "football-helmet-panel"
-    ],
-    "featured": false,
-    "schema_version": "1",
-    "series": null
+    "title": "Untitled (Plane Totem with Text)",
+    "work_type": "collage",
+    "year": null
   },
   "links": {
     "image": "https://jfsn.com/artworks/full/art0046.avif",

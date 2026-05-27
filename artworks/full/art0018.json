@@ -1,17 +1,13 @@
 {
-  "file": "art0018.avif",
-  "title": "Formation",
-  "year": 1990,
-  "work_type": "collage",
-  "orientation": "portrait",
+  "composition": "vertical squadron with disc and target field",
   "description": "Multiple top-down warplane line drawings stack in a vertical formation against a field crowded with gold compact discs, red rocket-fin shapes and concentric target rings. Vertical orange and black bands divide the composition; printed numerals and tags pile at the base.",
-  "palette": [
-    "gold",
-    "red",
-    "orange",
-    "black",
-    "ivory"
+  "featured": false,
+  "file": "art0018.avif",
+  "keywords": [
+    "vertical-squadron-formation",
+    "dense-accumulation"
   ],
+  "materials": [],
   "motifs": [
     "compact-disc",
     "warplane-topdown",
@@ -20,16 +16,18 @@
     "vertical-stripes",
     "numerals"
   ],
-  "materials": [],
-  "composition": "vertical squadron with disc and target field",
-  "themes": [
-    "Aviation"
+  "orientation": "portrait",
+  "palette": [
+    "gold",
+    "red",
+    "orange",
+    "black",
+    "ivory"
   ],
-  "keywords": [
-    "vertical-squadron-formation",
-    "dense-accumulation"
-  ],
-  "featured": false,
   "schema_version": "1",
-  "series": null
+  "series": null,
+  "themes": [],
+  "title": "Formation",
+  "work_type": "collage",
+  "year": 1990
 }

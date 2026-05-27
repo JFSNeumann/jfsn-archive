@@ -1,16 +1,15 @@
 {
-  "file": "art0080.avif",
-  "title": "XXIII Discs, Blue",
-  "year": null,
-  "work_type": "collage",
-  "orientation": "portrait",
+  "composition": "axial squadron on blue striped ground",
   "description": "Companion to the red-bordered XXIII piece, recast in cobalt blue: vertical blue stripes carry a flock of warplanes; iridescent and silver compact discs scatter across the upper field. Black-and-white target rings cluster at the base; inscribed 'XXIII DBS' lower right.",
-  "palette": [
-    "black",
-    "blue",
-    "silver",
-    "iridescent",
-    "ivory"
+  "featured": false,
+  "file": "art0080.avif",
+  "keywords": [
+    "text",
+    "blue-palette"
+  ],
+  "materials": [
+    "paper",
+    "paint"
   ],
   "motifs": [
     "compact-disc",
@@ -20,19 +19,20 @@
     "vertical-stripes",
     "numerals"
   ],
-  "materials": [
-    "paper",
-    "paint"
+  "orientation": "portrait",
+  "palette": [
+    "black",
+    "blue",
+    "silver",
+    "iridescent",
+    "ivory"
   ],
-  "composition": "axial squadron on blue striped ground",
+  "schema_version": "1",
+  "series": "Guernica",
   "themes": [
     "Targets"
   ],
-  "keywords": [
-    "text",
-    "blue-palette"
-  ],
-  "featured": false,
-  "schema_version": "1",
-  "series": "XXIII"
+  "title": "XXIII Discs, Blue",
+  "work_type": "collage",
+  "year": null
 }

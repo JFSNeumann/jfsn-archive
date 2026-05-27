@@ -2,19 +2,15 @@
   "api_version": "1",
   "id": "art0005",
   "work": {
-    "file": "art0005.avif",
-    "title": "Endgame",
-    "year": 1990,
-    "work_type": "collage",
-    "orientation": "portrait",
+    "composition": "diagonal pair on metallic ground",
     "description": "Two top-down warplane line drawings drift across a silver foil ground, partially overlapping. A wooden chess king stands as a counterweight at lower left; silver compact discs anchor the upper corners and beaded fringes hang at the base.",
-    "palette": [
-      "silver",
-      "magenta",
-      "yellow",
-      "ochre",
-      "black"
+    "featured": false,
+    "file": "art0005.avif",
+    "keywords": [
+      "chess",
+      "gameboard"
     ],
+    "materials": [],
     "motifs": [
       "compact-disc",
       "warplane-topdown",
@@ -23,18 +19,20 @@
       "ribbon-stripe",
       "target"
     ],
-    "materials": [],
-    "composition": "diagonal pair on metallic ground",
-    "themes": [
-      "Aviation"
+    "orientation": "portrait",
+    "palette": [
+      "silver",
+      "magenta",
+      "yellow",
+      "ochre",
+      "black"
     ],
-    "keywords": [
-      "chess",
-      "gameboard"
-    ],
-    "featured": false,
     "schema_version": "1",
-    "series": null
+    "series": null,
+    "themes": [],
+    "title": "Endgame",
+    "work_type": "collage",
+    "year": 1990
   },
   "links": {
     "image": "https://jfsn.com/artworks/full/art0005.avif",

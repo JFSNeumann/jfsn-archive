@@ -1,17 +1,13 @@
 {
-  "file": "art0023.avif",
-  "title": "Bombsight",
-  "year": null,
-  "work_type": "collage",
-  "orientation": "portrait",
+  "composition": "central plane on stacked targets, axial symmetry",
   "description": "A large top-down warplane sits centered on stacked concentric target rings, framed above by a row of bullseye-circle eyes and patterned panels. Three gold discs anchor the corners; vertical red and orange bands frame the field, with snapshots and stickers in the lower margin.",
-  "palette": [
-    "ivory",
-    "gold",
-    "red",
-    "orange",
-    "black"
+  "featured": false,
+  "file": "art0023.avif",
+  "keywords": [
+    "bombsight-alignment",
+    "plane-on-concentric-target"
   ],
+  "materials": [],
   "motifs": [
     "compact-disc",
     "warplane-topdown",
@@ -20,17 +16,20 @@
     "vertical-stripes",
     "photographic-face"
   ],
-  "materials": [],
-  "composition": "central plane on stacked targets, axial symmetry",
+  "orientation": "portrait",
+  "palette": [
+    "ivory",
+    "gold",
+    "red",
+    "orange",
+    "black"
+  ],
+  "schema_version": "1",
+  "series": null,
   "themes": [
-    "Aviation",
     "Targets"
   ],
-  "keywords": [
-    "bombsight-alignment",
-    "plane-on-concentric-target"
-  ],
-  "featured": false,
-  "schema_version": "1",
-  "series": null
+  "title": "Bombsight",
+  "work_type": "collage",
+  "year": null
 }

@@ -1,16 +1,16 @@
 {
-  "file": "art0089.avif",
-  "title": "Night Mission",
-  "year": 2000,
-  "work_type": "collage",
-  "orientation": "portrait",
+  "composition": "axial vertical with target columns flanking ruin inset",
   "description": "A dark-ground composition: a fighter at the upper centre and a four-engine bomber at the base flank a black inset of a ruined city skyline. Iridescent and pink target rings descend in vertical columns; a chess king at lower left.",
-  "palette": [
-    "black",
-    "ivory",
-    "iridescent",
-    "pink",
-    "blue"
+  "featured": false,
+  "file": "art0089.avif",
+  "keywords": [
+    "dark-palette",
+    "narrative",
+    "ruin"
+  ],
+  "materials": [
+    "paper",
+    "paint"
   ],
   "motifs": [
     "compact-disc",
@@ -20,21 +20,20 @@
     "concentric-rings",
     "chess-piece"
   ],
-  "materials": [
-    "paper",
-    "paint"
+  "orientation": "portrait",
+  "palette": [
+    "black",
+    "ivory",
+    "iridescent",
+    "pink",
+    "blue"
   ],
-  "composition": "axial vertical with target columns flanking ruin inset",
+  "schema_version": "1",
+  "series": null,
   "themes": [
-    "Aviation",
     "Targets"
   ],
-  "keywords": [
-    "dark-palette",
-    "narrative",
-    "ruin"
-  ],
-  "featured": false,
-  "schema_version": "1",
-  "series": null
+  "title": "Night Mission",
+  "work_type": "collage",
+  "year": 2000
 }

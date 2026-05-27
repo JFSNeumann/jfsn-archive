@@ -32,7 +32,11 @@ cd my-archive
 
 ### 2. Configure
 
-Edit `artworks/build_catalog.py` — change `SITE_URL` to your domain. Edit `artworks/vocab.py` to set your themes, series, and motif vocabulary.
+```bash
+./init.sh   # wizard: name, URL, themes, series → writes artist-config.json
+```
+
+Or edit `artist-config.json` directly. All scripts and browser JS read from it — no need to touch `vocab.py` or `build_catalog.py`.
 
 ### 3. Add your artwork
 
@@ -97,22 +101,65 @@ This auto-assigns sequential IDs (`art0001`, `art0002`, …), converts to AVIF, 
 
 ---
 
+## Fork for your own archive
+
+Everything artist-specific lives in one file: **`artist-config.json`** at the project root.
+
+```bash
+git clone https://github.com/jfsneumann/jfsn-archive.git my-archive
+cd my-archive
+./init.sh      # wizard: name, URL, themes, series → writes artist-config.json
+```
+
+The wizard creates your config. Then fill in descriptions and run:
+
+```bash
+python3 artworks/build_catalog.py   # generates artist-config.js for browser pages
+```
+
+That's it. All HTML pages, the AI cataloging prompt, and the API endpoints pull from
+`artist-config.json` automatically.
+
+### What artist-config.json controls
+
+| Section | What it affects |
+|---------|----------------|
+| `artist_name`, `site_url` | API endpoints, meta.json, HTML page titles |
+| `themes` | AI prompt, filter chips, series pages, constellation view |
+| `named_series` | AI prompt, series pages, series index, filter chips |
+| `palette` / `motifs` / `materials` | AI prompt controlled vocabulary |
+
+### Vocabulary migrations
+
+When you change or rename a theme/series after cataloging has run, existing sidecar
+JSON files need updating. Add a numbered script to `vocab-migrations/`:
+
+```bash
+python3 vocab-migrations/001_remove_old_theme.py          # dry-run
+python3 vocab-migrations/001_remove_old_theme.py --run    # apply
+```
+
+See `vocab-migrations/README.md` for the naming convention and history.
+
+---
+
 ## Configuration
 
 Key files to edit when setting up as your own archive:
 
 | File | What to change |
 |------|---------------|
+| **`artist-config.json`** | **Everything** — artist name, site URL, themes, series, palette, motifs |
 | `about.html` | Your bio, name, contact |
-| `artworks/vocab.py` | Your themes, motifs, materials, palette terms |
-| `artworks/build_catalog.py` | `SITE_URL` — change to your deployed domain |
 | `featured.txt` | Which works appear on the homepage |
 | `.ftp.env` | FTP host/user/pass (never commit — already in .gitignore) |
 | `site.css` (`:root` tokens) | Colors, fonts, spacing |
 
-### Themes
+### Themes and series
 
-Edit `artworks/vocab.py` to define your own themes, series, and motif vocabulary. The AI cataloging prompt reads from `vocab.py` automatically — no prompt editing needed.
+Edit `artist-config.json` to define your themes and series. The AI cataloging prompt,
+browser filter chips, constellation view, and all series pages read from it automatically
+after running `python3 artworks/build_catalog.py`.
 
 ---
 

@@ -2,18 +2,17 @@
   "api_version": "1",
   "id": "art0096",
   "work": {
-    "file": "art0096.avif",
-    "title": "Yellow Inset, How to Create",
-    "year": 2000,
-    "work_type": "collage",
-    "orientation": "portrait",
+    "composition": "framed yellow inset on light field with disc anchors",
     "description": "A central inset frames a top-down warplane drawing on a yellow ground, with photographic snapshots and red panels around the edges. Three gold compact discs anchor the upper field; below the inset, two iridescent discs and a chess piece sit on the white margin. Inscribed 'how to create' along the right edge.",
-    "palette": [
-      "ivory",
-      "yellow",
-      "gold",
-      "iridescent",
-      "red"
+    "featured": false,
+    "file": "art0096.avif",
+    "keywords": [
+      "text",
+      "framed-inset"
+    ],
+    "materials": [
+      "paper",
+      "paint"
     ],
     "motifs": [
       "compact-disc",
@@ -23,21 +22,20 @@
       "chess-piece",
       "photographic-face"
     ],
-    "materials": [
-      "paper",
-      "paint"
+    "orientation": "portrait",
+    "palette": [
+      "ivory",
+      "yellow",
+      "gold",
+      "iridescent",
+      "red"
     ],
-    "composition": "framed yellow inset on light field with disc anchors",
-    "themes": [
-      "Aviation"
-    ],
-    "keywords": [
-      "text",
-      "framed-inset"
-    ],
-    "featured": false,
     "schema_version": "1",
-    "series": null
+    "series": null,
+    "themes": [],
+    "title": "Yellow Inset, How to Create",
+    "work_type": "collage",
+    "year": 2000
   },
   "links": {
     "image": "https://jfsn.com/artworks/full/art0096.avif",

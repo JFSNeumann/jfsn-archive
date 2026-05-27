@@ -2,19 +2,15 @@
   "api_version": "1",
   "id": "art0043",
   "work": {
-    "file": "art0043.avif",
-    "title": "Untitled (Helicopter on Targets)",
-    "year": null,
-    "work_type": "collage",
-    "orientation": "portrait",
+    "composition": "central helicopter on dense target field",
     "description": "A central helicopter line drawing crosses a field thick with concentric red-and-black target rings and yellow vertical bands. A wooden chess king stands at upper right; small color cutouts and pink ribbon accents dot the lower margin.",
-    "palette": [
-      "ivory",
-      "red",
-      "yellow",
-      "black",
-      "pink"
+    "featured": false,
+    "file": "art0043.avif",
+    "keywords": [
+      "helicopter",
+      "chess"
     ],
+    "materials": [],
     "motifs": [
       "target",
       "concentric-rings",
@@ -22,18 +18,20 @@
       "chess-piece",
       "ribbon-stripe"
     ],
-    "materials": [],
-    "composition": "central helicopter on dense target field",
-    "themes": [
-      "Aviation"
+    "orientation": "portrait",
+    "palette": [
+      "ivory",
+      "red",
+      "yellow",
+      "black",
+      "pink"
     ],
-    "keywords": [
-      "helicopter",
-      "chess"
-    ],
-    "featured": false,
     "schema_version": "1",
-    "series": null
+    "series": null,
+    "themes": [],
+    "title": "Untitled (Helicopter on Targets)",
+    "work_type": "collage",
+    "year": null
   },
   "links": {
     "image": "https://jfsn.com/artworks/full/art0043.avif",

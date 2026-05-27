@@ -2,19 +2,16 @@
   "api_version": "1",
   "id": "art0009",
   "work": {
-    "file": "art0009.avif",
-    "title": "Treasury",
-    "year": 1990,
-    "work_type": "collage",
-    "orientation": "portrait",
+    "composition": "diagonal plane crossover on metallic ground",
     "description": "Two top-down warplanes overlap diagonally on a textured gold-leaf and silver-foil ground, one ghosted with bullseye eyes. A wooden chess king holds the lower-left corner; gold and iridescent discs cluster in the corners over a faint scoring sheet.",
-    "palette": [
-      "gold",
-      "silver",
-      "ivory",
-      "ultramarine",
-      "iridescent"
+    "featured": false,
+    "file": "art0009.avif",
+    "keywords": [
+      "chess",
+      "metallic",
+      "opulent"
     ],
+    "materials": [],
     "motifs": [
       "compact-disc",
       "warplane-topdown",
@@ -23,19 +20,20 @@
       "bullseye",
       "beaded-thread"
     ],
-    "materials": [],
-    "composition": "diagonal plane crossover on metallic ground",
-    "themes": [
-      "Aviation"
+    "orientation": "portrait",
+    "palette": [
+      "gold",
+      "silver",
+      "ivory",
+      "ultramarine",
+      "iridescent"
     ],
-    "keywords": [
-      "chess",
-      "metallic",
-      "opulent"
-    ],
-    "featured": false,
     "schema_version": "1",
-    "series": null
+    "series": null,
+    "themes": [],
+    "title": "Treasury",
+    "work_type": "collage",
+    "year": 1990
   },
   "links": {
     "image": "https://jfsn.com/artworks/full/art0009.avif",

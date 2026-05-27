@@ -1,16 +1,16 @@
 {
-  "file": "art0088.avif",
-  "title": "Yellow Frame with Two Kings",
-  "year": 2000,
-  "work_type": "collage",
-  "orientation": "portrait",
+  "composition": "yellow frame with twin chess anchors",
   "description": "Variant of the yellow-frame composition with twin chess kings \u2014 one black at lower left, one white at lower right \u2014 flanking a central blank panel. Silver and red bullseye target rings line the columns; a top-down warplane drawing crowns the top edge.",
-  "palette": [
-    "yellow",
-    "ivory",
-    "silver",
-    "red",
-    "black"
+  "featured": false,
+  "file": "art0088.avif",
+  "keywords": [
+    "framed-work",
+    "chess",
+    "negative-space"
+  ],
+  "materials": [
+    "paper",
+    "paint"
   ],
   "motifs": [
     "compact-disc",
@@ -19,21 +19,20 @@
     "concentric-rings",
     "chess-piece"
   ],
-  "materials": [
-    "paper",
-    "paint"
+  "orientation": "portrait",
+  "palette": [
+    "yellow",
+    "ivory",
+    "silver",
+    "red",
+    "black"
   ],
-  "composition": "yellow frame with twin chess anchors",
+  "schema_version": "1",
+  "series": null,
   "themes": [
-    "Aviation",
     "Targets"
   ],
-  "keywords": [
-    "framed-work",
-    "chess",
-    "negative-space"
-  ],
-  "featured": false,
-  "schema_version": "1",
-  "series": null
+  "title": "Yellow Frame with Two Kings",
+  "work_type": "collage",
+  "year": 2000
 }

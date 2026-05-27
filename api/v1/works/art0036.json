@@ -2,19 +2,16 @@
   "api_version": "1",
   "id": "art0036",
   "work": {
-    "file": "art0036.avif",
-    "title": "Roundel Field",
-    "year": null,
-    "work_type": "collage",
-    "orientation": "landscape",
+    "composition": "horizontal panorama, all-over roundel field",
     "description": "A horizontal panorama: dense rows of red-white-and-blue concentric roundels carpet the field, with two top-down warplane drawings emerging at center and right. Silver compact discs and small clipped fragments scatter throughout.",
-    "palette": [
-      "red",
-      "blue",
-      "ivory",
-      "silver",
-      "yellow"
+    "featured": false,
+    "file": "art0036.avif",
+    "keywords": [
+      "all-over",
+      "panoramic",
+      "patriotic"
     ],
+    "materials": [],
     "motifs": [
       "compact-disc",
       "warplane-topdown",
@@ -22,19 +19,20 @@
       "concentric-rings",
       "roundel"
     ],
-    "materials": [],
-    "composition": "horizontal panorama, all-over roundel field",
-    "themes": [
-      "Aviation"
+    "orientation": "landscape",
+    "palette": [
+      "red",
+      "blue",
+      "ivory",
+      "silver",
+      "yellow"
     ],
-    "keywords": [
-      "all-over",
-      "panoramic",
-      "patriotic"
-    ],
-    "featured": false,
     "schema_version": "1",
-    "series": null
+    "series": null,
+    "themes": [],
+    "title": "Roundel Field",
+    "work_type": "collage",
+    "year": null
   },
   "links": {
     "image": "https://jfsn.com/artworks/full/art0036.avif",

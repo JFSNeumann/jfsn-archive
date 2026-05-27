@@ -1,16 +1,17 @@
 {
-  "file": "art0083.avif",
-  "title": "Merry Christmas 2013",
-  "year": null,
-  "work_type": "collage",
-  "orientation": "portrait",
+  "composition": "spare narrative drawing with text base",
   "description": "A spare drawing-as-greeting on white paper: a small fighter plane at upper centre approaches a large four-engine bomber at the base, with a circular trace and a target between them. Inscribed 'Merry Christmas 2013' along the lower margin.",
-  "palette": [
-    "ivory",
-    "gold",
-    "orange",
-    "red",
-    "black"
+  "featured": false,
+  "file": "art0083.avif",
+  "keywords": [
+    "text",
+    "narrative",
+    "greeting",
+    "minimal"
+  ],
+  "materials": [
+    "paper",
+    "ink"
   ],
   "motifs": [
     "compact-disc",
@@ -20,21 +21,18 @@
     "concentric-rings",
     "numerals"
   ],
-  "materials": [
-    "paper",
-    "ink"
+  "orientation": "portrait",
+  "palette": [
+    "ivory",
+    "gold",
+    "orange",
+    "red",
+    "black"
   ],
-  "composition": "spare narrative drawing with text base",
-  "themes": [
-    "Aviation"
-  ],
-  "keywords": [
-    "text",
-    "narrative",
-    "greeting",
-    "minimal"
-  ],
-  "featured": false,
   "schema_version": "1",
-  "series": null
+  "series": null,
+  "themes": [],
+  "title": "Merry Christmas 2013",
+  "work_type": "collage",
+  "year": null
 }

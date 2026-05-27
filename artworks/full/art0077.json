@@ -1,16 +1,15 @@
 {
-  "file": "art0077.avif",
-  "title": "Untitled (Plane on Empty Page)",
-  "year": 2000,
-  "work_type": "collage",
-  "orientation": "portrait",
+  "composition": "central blank panel within bordered frame",
   "description": "A central blank white panel hosts a single top-down warplane drawing, framed in orange and ringed by the artist's vocabulary: target rings, additional planes, two gold compact discs at the lower edge, and pale yellow vertical drips down the surrounding margin.",
-  "palette": [
-    "ivory",
-    "orange",
-    "gold",
-    "red",
-    "black"
+  "featured": false,
+  "file": "art0077.avif",
+  "keywords": [
+    "framed-work",
+    "negative-space"
+  ],
+  "materials": [
+    "paper",
+    "paint"
   ],
   "motifs": [
     "compact-disc",
@@ -19,20 +18,20 @@
     "concentric-rings",
     "vertical-stripes"
   ],
-  "materials": [
-    "paper",
-    "paint"
+  "orientation": "portrait",
+  "palette": [
+    "ivory",
+    "orange",
+    "gold",
+    "red",
+    "black"
   ],
-  "composition": "central blank panel within bordered frame",
+  "schema_version": "1",
+  "series": null,
   "themes": [
-    "Aviation",
     "Targets"
   ],
-  "keywords": [
-    "framed-work",
-    "negative-space"
-  ],
-  "featured": false,
-  "schema_version": "1",
-  "series": null
+  "title": "Untitled (Plane on Empty Page)",
+  "work_type": "collage",
+  "year": 2000
 }

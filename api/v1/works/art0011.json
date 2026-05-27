@@ -2,19 +2,16 @@
   "api_version": "1",
   "id": "art0011",
   "work": {
-    "file": "art0011.avif",
-    "title": "Untitled (Three Discs Descending)",
-    "year": 1990,
-    "work_type": "collage",
-    "orientation": "portrait",
+    "composition": "diagonal cascade of discs over central plane",
     "description": "Three silver compact discs cascade down a gold-foil ground over a top-down line drawing of a single-engine warplane. Strips of red lettering and small game-target stickers line the upper edge; the surface is densely worked, with overlapping foils and crease marks.",
-    "palette": [
-      "gold",
-      "silver",
-      "red",
-      "ivory",
-      "black"
+    "featured": true,
+    "file": "art0011.avif",
+    "keywords": [
+      "layered",
+      "metallic",
+      "palimpsest"
     ],
+    "materials": [],
     "motifs": [
       "compact-disc",
       "warplane-topdown",
@@ -22,19 +19,20 @@
       "numerals",
       "concentric-rings"
     ],
-    "materials": [],
-    "composition": "diagonal cascade of discs over central plane",
-    "themes": [
-      "Aviation"
+    "orientation": "portrait",
+    "palette": [
+      "gold",
+      "silver",
+      "red",
+      "ivory",
+      "black"
     ],
-    "keywords": [
-      "layered",
-      "metallic",
-      "palimpsest"
-    ],
-    "featured": true,
     "schema_version": "1",
-    "series": null
+    "series": null,
+    "themes": [],
+    "title": "Untitled (Three Discs Descending)",
+    "work_type": "collage",
+    "year": 1990
   },
   "links": {
     "image": "https://jfsn.com/artworks/full/art0011.avif",

@@ -1,16 +1,15 @@
 {
-  "file": "art0082.avif",
-  "title": "Football Drift",
-  "year": null,
-  "work_type": "collage",
-  "orientation": "portrait",
+  "composition": "central football on near-empty field",
   "description": "A near-empty white field hosts a top-down warplane drawing at the upper centre and a large pasted American football mid-field. Concentric target rings cluster at the corners over black-and-white photographic strips and small icons.",
-  "palette": [
-    "ivory",
-    "red",
-    "purple",
-    "black",
-    "blue"
+  "featured": false,
+  "file": "art0082.avif",
+  "keywords": [
+    "sparse-negative-space",
+    "football-plane-pair"
+  ],
+  "materials": [
+    "paper",
+    "paint"
   ],
   "motifs": [
     "compact-disc",
@@ -20,19 +19,18 @@
     "concentric-rings",
     "photographic-face"
   ],
-  "materials": [
-    "paper",
-    "paint"
+  "orientation": "portrait",
+  "palette": [
+    "ivory",
+    "red",
+    "purple",
+    "black",
+    "blue"
   ],
-  "composition": "central football on near-empty field",
-  "themes": [
-    "Aviation"
-  ],
-  "keywords": [
-    "sparse-negative-space",
-    "football-plane-pair"
-  ],
-  "featured": false,
   "schema_version": "1",
-  "series": null
+  "series": null,
+  "themes": [],
+  "title": "Football Drift",
+  "work_type": "collage",
+  "year": null
 }

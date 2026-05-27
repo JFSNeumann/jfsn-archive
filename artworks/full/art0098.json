@@ -1,16 +1,15 @@
 {
-  "file": "art0098.avif",
-  "title": "Bomber, Disc Frame",
-  "year": 2000,
-  "work_type": "collage",
-  "orientation": "portrait",
+  "composition": "central plane on white panel, disc-studded borders",
   "description": "Black borders studded with mounted compact discs run down both sides; the central white panel hosts a four-engine bomber line drawing with rivet-perforations descending below it. A maroon football and orange ribbon strip flank the lower edge; two gold discs sit at the base.",
-  "palette": [
-    "ivory",
-    "black",
-    "gold",
-    "silver",
-    "red"
+  "featured": false,
+  "file": "art0098.avif",
+  "keywords": [
+    "framed-work",
+    "drafting"
+  ],
+  "materials": [
+    "paper",
+    "paint"
   ],
   "motifs": [
     "compact-disc",
@@ -19,19 +18,18 @@
     "perforated-dots",
     "ribbon-stripe"
   ],
-  "materials": [
-    "paper",
-    "paint"
+  "orientation": "portrait",
+  "palette": [
+    "ivory",
+    "black",
+    "gold",
+    "silver",
+    "red"
   ],
-  "composition": "central plane on white panel, disc-studded borders",
-  "themes": [
-    "Aviation"
-  ],
-  "keywords": [
-    "framed-work",
-    "drafting"
-  ],
-  "featured": false,
   "schema_version": "1",
-  "series": null
+  "series": null,
+  "themes": [],
+  "title": "Bomber, Disc Frame",
+  "work_type": "collage",
+  "year": 2000
 }
