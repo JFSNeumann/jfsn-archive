@@ -43,8 +43,8 @@
     .hero__text {
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      padding: clamp(5rem, 8vw, 8rem) var(--gutter) clamp(3rem, 5vw, 5rem);
+      justify-content: flex-start;
+      padding: clamp(2rem, 3vw, 3rem) var(--gutter) clamp(3rem, 5vw, 5rem);
       position: relative;
       z-index: 2;
     }
@@ -157,7 +157,7 @@
       aspect-ratio: 1;
       overflow: hidden;
       position: relative;
-      background: var(--dim);
+      background: rgba(243,240,234,0.06);
       cursor: pointer;
     }
     .mosaic-thumb img {
@@ -644,7 +644,13 @@
 
     <div class="hero__mosaic" id="mosaic" aria-hidden="true">
       <div class="hero__mosaic-edge"></div>
-      <div class="mosaic-track" id="mosaic-track"></div>
+      <!-- placeholder tiles so mosaic has height before JS loads -->
+      <div class="mosaic-track" id="mosaic-track">
+        <div class="mosaic-thumb"></div><div class="mosaic-thumb"></div><div class="mosaic-thumb"></div>
+        <div class="mosaic-thumb"></div><div class="mosaic-thumb"></div><div class="mosaic-thumb"></div>
+        <div class="mosaic-thumb"></div><div class="mosaic-thumb"></div><div class="mosaic-thumb"></div>
+        <div class="mosaic-thumb"></div><div class="mosaic-thumb"></div><div class="mosaic-thumb"></div>
+      </div>
     </div>
 
   </section>
@@ -924,17 +930,19 @@
 (function () {
 
   // ── Animated thumbnail mosaic ─────────────────────────────────
-  fetch('catalog-lite.json')
+  // Use catalog-home (22KB) for fast load, then top up from catalog-lite if available
+  fetch('catalog-home.json')
     .then(r => r.ok ? r.json() : null)
     .then(catalog => {
       if (!catalog) return;
 
-      // Shuffle and pick 36 works for the mosaic (will be doubled for seamless loop)
-      const shuffled = [...catalog].sort(() => Math.random() - 0.5).slice(0, 36);
+      // Use all 30 home works, shuffle, double for seamless loop
+      const shuffled = [...catalog].sort(() => Math.random() - 0.5).slice(0, 30);
       const doubled  = [...shuffled, ...shuffled]; // double for infinite scroll
 
       const track = document.getElementById('mosaic-track');
       if (!track) return;
+      track.innerHTML = ''; // clear placeholders
 
       doubled.forEach(r => {
         const id    = r.file.replace('.avif', '');
