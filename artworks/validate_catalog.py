@@ -150,16 +150,16 @@ def validate(name: str, rec: dict, legacy_ok: bool = False) -> tuple[list[str], 
     if "series" in rec:
         s = rec.get("series")
         if s not in VALID_SERIES:
-            errors.append(f"invalid series: {s!r} — must be 'XXIII', 'Squadron', 'Guernica', or null")
+            errors.append(f"invalid series: {s!r} — must be 'Guernica' or null")
 
     return errors, warnings
 
 
 def _detect_series(title: str) -> str | None:
     t = title.lower()
-    if "xxiii" in t:             return "XXIII"
-    if "squadron" in t:          return "Squadron"
-    if t.startswith("guernica"): return "Guernica"
+    if "xxiii" in t or "xxxiii" in t: return "Guernica"
+    if "squadron" in t:               return "Guernica"
+    if t.startswith("guernica"):      return "Guernica"
     return None
 
 

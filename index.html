@@ -14,7 +14,7 @@
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="catalog-home.json?v=20260527174631" as="fetch" crossorigin>
+  <link rel="preload" href="catalog-home.json?v=20260527190947" as="fetch" crossorigin>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap"></noscript>
   <link rel="stylesheet" href="site.css">
@@ -520,9 +520,11 @@
   let heroPool       = [];
   let currentHeroIdx = -1;
 
-  // ── Load catalog ─────────────────────────────────────────────────────────
+  // ── Load catalog + dominant colors ───────────────────────────────────────
   // ?v= is stamped by build_catalog.py — forces browser to fetch fresh after every build
-  fetch('catalog-home.json?v=20260527174631')
+  let dominantColors = {};
+  fetch('colors.json').then(r => r.ok ? r.json() : null).then(c => { if (c) dominantColors = c; }).catch(() => {});
+  fetch('catalog-home.json?v=20260527190947')
     .then(r => r.ok ? r.json() : null)
     .then(catalog => {
       if (!catalog || !catalog.length) return;
@@ -628,9 +630,10 @@
       // ⑥ Combined overlay meta
       const meta      = [yearStr, typeLabel].filter(Boolean).join(' · ');
       // ④ featured class on first card; ⑦ animate class on all with CSS --i delay
-      const cls = 'thumb thumb--animate' + (idx === 0 ? ' thumb--featured' : '');
+      const cls   = 'thumb thumb--animate' + (idx === 0 ? ' thumb--featured' : '');
+      const bgCol = dominantColors[id] ? `background-color:${dominantColors[id]};` : '';
       return `<figure class="${cls}" data-id="${esc(id)}" style="--i:${idx}">
-        <a class="thumb__link" href="artwork.html?id=${id}">
+        <a class="thumb__link" href="artwork.html?id=${id}" style="${bgCol}">
           <img srcset="artworks/mini/${id}.avif 200w, artworks/thumbs/${id}.avif 400w"
                sizes="(max-width:780px) calc(50vw - 1rem), calc(25vw - 1rem)"
                src="artworks/thumbs/${id}.avif" alt="${esc(title)}" loading="lazy">
