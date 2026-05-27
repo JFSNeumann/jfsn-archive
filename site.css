@@ -111,6 +111,9 @@ body {
 .footer-nav a:hover  { color: var(--text); }
 .footer-social { display: flex; gap: 1.25rem; }
 .footer-social a:hover { color: var(--text); }
+.footer-earlier { display: flex; gap: 1.25rem; }
+.footer-earlier a { opacity: 0.55; }
+.footer-earlier a:hover { color: var(--text); opacity: 1; }
 
 /* -------- Focus styles -------- */
 :focus-visible {

@@ -14,7 +14,7 @@
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="catalog-home.json?v=20260526211050" as="fetch" crossorigin>
+  <link rel="preload" href="catalog-home.json?v=20260527010526" as="fetch" crossorigin>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap"></noscript>
   <link rel="stylesheet" href="site.css">
@@ -443,7 +443,7 @@
     <div class="home-series-group">
       <p class="home-series-group-label">Themes</p>
       <nav class="home-series-links" aria-label="Theme series">
-        <a class="home-series-link" href="series.html?theme=Mr.+Snowmann"      data-count-theme="Mr. Snowmann">Mr. Snowmann</a>
+        <a class="home-series-link" href="series.html?theme=Mr.+Snowmann"      data-count-theme="Mr. Snowmann">Mr. SNOWmann</a>
         <a class="home-series-link" href="series.html?theme=Aviation"           data-count-theme="Aviation">Aviation</a>
         <a class="home-series-link" href="series.html?theme=Targets"            data-count-theme="Targets">Targets</a>
         <a class="home-series-link" href="series.html?theme=Crosses"            data-count-theme="Crosses">Crosses</a>
@@ -497,6 +497,12 @@
       <a href="https://www.youtube.com/@jfsneumann/videos" target="_blank" rel="noopener">YouTube</a>
       <a href="https://showspace.so/s/jeffrey-neumann-46" target="_blank" rel="noopener">Showspace</a>
     </nav>
+    <nav class="footer-earlier" aria-label="Earlier sites">
+      <a href="/old-site/old/Mr_SNOWmann/" target="_blank" rel="noopener">Mr. SNOWmann</a>
+      <a href="/old-site/old/fine-art-2000/" target="_blank" rel="noopener">Fine Art 2000</a>
+      <a href="/old-site/old/2023/" target="_blank" rel="noopener">jfsn 2023</a>
+      <a href="/old-site/old/2014/" target="_blank" rel="noopener">jfsn 2014</a>
+    </nav>
   </div>
 </footer>
 
@@ -516,7 +522,7 @@
 
   // ── Load catalog ─────────────────────────────────────────────────────────
   // ?v= is stamped by build_catalog.py — forces browser to fetch fresh after every build
-  fetch('catalog-home.json?v=20260526211050')
+  fetch('catalog-home.json?v=20260527010526')
     .then(r => r.ok ? r.json() : null)
     .then(catalog => {
       if (!catalog || !catalog.length) return;
