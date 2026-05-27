@@ -397,6 +397,7 @@
       .tags li { border-color: #ccc; color: #444; }
     }
   </style>
+  <script src="artist-config.js"></script>
 </head>
 
 <body>
@@ -566,8 +567,11 @@
       if (linkType === 'search')  href = 'archive.html?q='       + encodeURIComponent(t);
       if (linkType === 'series')  href = 'series.html?series='   + encodeURIComponent(t);
 
-      // ④ Palette: prefix with a colored dot swatch
-      let inner = esc(t);
+      // Series: use display title from config if available
+      const _C2 = window.ARCHIVE_CONFIG || {};
+      let inner = linkType === 'series'
+        ? esc((_C2.namedSeries || []).find(s => s.key === t)?.displayTitle || t)
+        : esc(t);
       if (linkType === 'palette') {
         const tl  = t.toLowerCase();
         let dotStyle = '';
@@ -601,6 +605,10 @@
     if (!catalog) return '';
     const themes      = data.themes || [];
     const namedSeries = data.series || null;
+    const _C = window.ARCHIVE_CONFIG || {};
+    const seriesDisplayTitle = namedSeries
+      ? ((_C.namedSeries || []).find(s => s.key === namedSeries)?.displayTitle || namedSeries)
+      : null;
     const palette     = (data.palette || []).slice(0, 2);
     const motifs      = data.motifs  || [];
 
@@ -631,7 +639,7 @@
         `<a class="related__series-link" href="series.html?theme=${encodeURIComponent(t)}">All ${esc(t)} &rarr;</a>`
       ),
       ...(namedSeries
-        ? [`<a class="related__series-link" href="series.html?series=${encodeURIComponent(namedSeries)}">All ${esc(namedSeries)} &rarr;</a>`]
+        ? [`<a class="related__series-link" href="series.html?series=${encodeURIComponent(namedSeries)}">All ${esc(seriesDisplayTitle)} &rarr;</a>`]
         : []),
     ].join('');
 

@@ -490,13 +490,16 @@
   let renderedCount = 0;
   let loadObserver  = null;
 
-  /* ---- fetch catalog + image dimensions in parallel ---- */
+  /* ---- fetch catalog + image dimensions + dominant colors in parallel ---- */
+  let dominantColors = {};
   Promise.all([
     fetch('catalog-lite.json').then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }),
     fetch('dims.json').then(r => r.json()).catch(() => null),
+    fetch('colors.json').then(r => r.json()).catch(() => null),
   ])
-    .then(([catalog, dims]) => {
+    .then(([catalog, dims, colors]) => {
       masonryDims = dims;
+      if (colors) dominantColors = colors;
       works = catalog.filter(filterFn);
       const countEl = document.getElementById('series-count');
       if (countEl) countEl.textContent = `${works.length} work${works.length !== 1 ? 's' : ''}`;
@@ -580,8 +583,9 @@
     const fig = document.createElement('figure');
     fig.className  = 'thumb';
     fig.dataset.id = id;
+    const bgColor = dominantColors[id] ? `background-color:${dominantColors[id]};` : '';
     fig.innerHTML = `
-      <a class="thumb__link" href="${esc(href)}">
+      <a class="thumb__link" href="${esc(href)}" style="${bgColor}">
         <img srcset="artworks/mini/${esc(id)}.avif 200w, artworks/thumbs/${esc(id)}.avif 400w"
              sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)"
              src="artworks/thumbs/${esc(id)}.avif"
