@@ -16,3 +16,6 @@ artworks/logs/
 # ── Private tool folders ──────────────────────────────────────────────────────
 .claude/
 .netlify/
+
+# ── Old site (197MB — deployed via FTP, not via git) ─────────────────────────
+old-site/
