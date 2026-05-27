@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0b0b">
+  <title>Archive Your Life's Work — Jeffrey F. S. Neumann</title>
+  <meta name="description" content="A professional archive website for visual artists. AI-generated catalog, full-text search, open API. Starting at $500.">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="canonical" href="https://jfsn.com/for-artists.html">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap"></noscript>
+  <link rel="stylesheet" href="site.css">
+
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="Archive Your Life's Work">
+  <meta property="og:description" content="A professional archive website for visual artists. AI-generated catalog, full-text search, open API. Starting at $500.">
+  <meta property="og:image"       content="https://jfsn.com/og-card.jpg">
+  <meta property="og:url"         content="https://jfsn.com/for-artists.html">
+
+  <style>
+
+    /* -------- Hero -------- */
+    .service-hero {
+      padding-top: clamp(4rem, 8vw, 8rem);
+      padding-bottom: clamp(3rem, 6vw, 6rem);
+      border-bottom: 1px solid var(--dim);
+    }
+    .service-hero__eyebrow {
+      font-size: var(--cap);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 1.25rem;
+    }
+    .service-hero__title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.08;
+      margin: 0 0 1.75rem;
+      max-width: 16ch;
+    }
+    .service-hero__body {
+      font-size: clamp(1rem, 1.5vw, 1.125rem);
+      line-height: 1.7;
+      color: var(--muted);
+      max-width: 54ch;
+      margin: 0 0 2.5rem;
+    }
+    .service-hero__cta {
+      display: inline-block;
+      background: var(--accent);
+      color: #0b0b0b;
+      font-size: var(--cap);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.875rem 2rem;
+      transition: opacity 0.15s;
+    }
+    .service-hero__cta:hover { opacity: 0.85; color: #0b0b0b; }
+    .service-hero__sub {
+      display: block;
+      margin-top: 0.875rem;
+      font-size: 0.8125rem;
+      color: var(--muted);
+    }
+
+    /* -------- What you get -------- */
+    .section {
+      padding-top: clamp(3.5rem, 7vw, 7rem);
+      padding-bottom: clamp(3.5rem, 7vw, 7rem);
+      border-bottom: 1px solid var(--dim);
+    }
+    .section__label {
+      font-size: var(--cap);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 2.5rem;
+    }
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem 3rem;
+    }
+    @media (max-width: 900px) { .features { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .features { grid-template-columns: 1fr; } }
+
+    .feature__title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 300;
+      margin: 0 0 0.625rem;
+      color: var(--text);
+    }
+    .feature__body {
+      font-size: 0.875rem;
+      line-height: 1.7;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    /* -------- How it works -------- */
+    .steps {
+      counter-reset: step;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem 2rem;
+    }
+    @media (max-width: 900px) { .steps { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .steps { grid-template-columns: 1fr; } }
+
+    .step {
+      counter-increment: step;
+      position: relative;
+      padding-left: 2.5rem;
+    }
+    .step::before {
+      content: counter(step, decimal-leading-zero);
+      position: absolute;
+      left: 0;
+      top: 0.1em;
+      font-size: var(--cap);
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+    }
+    .step__title {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      margin: 0 0 0.4rem;
+      color: var(--text);
+    }
+    .step__body {
+      font-size: 0.8125rem;
+      line-height: 1.65;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    /* -------- Pricing -------- */
+    .pricing {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      align-items: start;
+    }
+    @media (max-width: 860px) { .pricing { grid-template-columns: 1fr; max-width: 400px; } }
+
+    .plan {
+      border: 1px solid var(--dim);
+      padding: 2rem;
+    }
+    .plan--featured {
+      border-color: var(--accent);
+    }
+    .plan__badge {
+      display: inline-block;
+      font-size: 0.625rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 0.2em 0.6em;
+      margin-bottom: 1.25rem;
+    }
+    .plan__name {
+      font-size: var(--cap);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 0.5rem;
+    }
+    .plan__price {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.5vw, 2.75rem);
+      font-weight: 300;
+      margin: 0 0 0.25rem;
+      line-height: 1;
+    }
+    .plan__sub {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      margin: 0 0 1.5rem;
+    }
+    .plan__divider {
+      border: none;
+      border-top: 1px solid var(--dim);
+      margin: 1.5rem 0;
+    }
+    .plan__features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+    }
+    .plan__features li {
+      font-size: 0.875rem;
+      color: var(--muted);
+      padding-left: 1.25rem;
+      position: relative;
+    }
+    .plan__features li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--dim);
+    }
+    .plan__features li strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+    .plan__cta {
+      display: block;
+      text-align: center;
+      border: 1px solid var(--dim);
+      padding: 0.75rem 1rem;
+      font-size: var(--cap);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .plan__cta:hover { border-color: var(--text); color: var(--text); }
+    .plan--featured .plan__cta {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #0b0b0b;
+      font-weight: 600;
+    }
+    .plan--featured .plan__cta:hover { opacity: 0.85; color: #0b0b0b; }
+
+    /* -------- Live example -------- */
+    .example-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      color: var(--muted);
+      border-bottom: 1px solid var(--dim);
+      padding-bottom: 1px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .example-link:hover { color: var(--text); border-color: var(--muted); }
+
+    /* -------- FAQ -------- */
+    .faq {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem 4rem;
+    }
+    @media (max-width: 700px) { .faq { grid-template-columns: 1fr; } }
+
+    .faq__q {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      margin: 0 0 0.5rem;
+      color: var(--text);
+    }
+    .faq__a {
+      font-size: 0.875rem;
+      line-height: 1.7;
+      color: var(--muted);
+      margin: 0;
+    }
+    .faq__a a { color: var(--muted); border-bottom: 1px solid var(--dim); }
+    .faq__a a:hover { color: var(--text); }
+
+    /* -------- Bottom CTA -------- */
+    .bottom-cta {
+      padding-top: clamp(4rem, 8vw, 8rem);
+      padding-bottom: clamp(5rem, 10vw, 10rem);
+      text-align: center;
+    }
+    .bottom-cta__title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 300;
+      font-style: italic;
+      margin: 0 0 1.5rem;
+    }
+    .bottom-cta__body {
+      font-size: 0.9375rem;
+      color: var(--muted);
+      max-width: 44ch;
+      margin: 0 auto 2rem;
+      line-height: 1.7;
+    }
+    .bottom-cta__email {
+      display: inline-block;
+      font-size: 1.125rem;
+      color: var(--accent);
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 2px;
+      transition: opacity 0.15s;
+    }
+    .bottom-cta__email:hover { opacity: 0.75; color: var(--accent); }
+
+  </style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="brand" href="index.html">
+      <img src="jfsn-mark.png" class="brand-mark" alt="JFSN">Jeffrey F. S. Neumann
+    </a>
+    <nav class="nav" aria-label="Site navigation">
+      <a href="archive.html">Archive</a>
+      <a href="series-index.html">Series</a>
+      <a href="timeline.html">Timeline</a>
+      <a href="constellation.html">Constellation</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="container">
+
+    <!-- ── Hero ─────────────────────────────────────────────────── -->
+    <section class="service-hero">
+      <p class="service-hero__eyebrow">For Artists</p>
+      <h1 class="service-hero__title">Archive your life's work.</h1>
+      <p class="service-hero__body">
+        A professional, searchable archive website for visual artists —
+        with AI-generated catalog descriptions, full-text search, timeline view,
+        and an open API for curators and researchers.
+        Built on the same system behind this site's 1,084-work archive.
+      </p>
+      <a class="service-hero__cta" href="mailto:jfsneumann@gmail.com?subject=Archive inquiry">
+        Get in touch
+      </a>
+      <span class="service-hero__sub">Starting at $500 · Reply within 48 hours</span>
+    </section>
+
+    <!-- ── Live example ──────────────────────────────────────────── -->
+    <section class="section">
+      <p class="section__label">Live example</p>
+      <p style="font-family:var(--font-display);font-size:clamp(1.25rem,2.5vw,1.875rem);font-weight:300;margin:0 0 1.25rem;max-width:50ch;line-height:1.4;">
+        This site — jfsn.com — is the archive. Every page, every feature, every tool is what you get.
+      </p>
+      <p style="font-size:0.9375rem;color:var(--muted);max-width:54ch;line-height:1.7;margin:0 0 1.75rem;">
+        Browse 1,084 works spanning 50 years. Search by keyword, filter by decade or medium,
+        explore the constellation view, follow a named series.
+        That is your archive.
+      </p>
+      <div style="display:flex;gap:1.5rem;flex-wrap:wrap;">
+        <a class="example-link" href="archive.html">Browse the archive →</a>
+        <a class="example-link" href="constellation.html">Constellation view →</a>
+        <a class="example-link" href="api.html">Open API →</a>
+      </div>
+    </section>
+
+    <!-- ── Features ──────────────────────────────────────────────── -->
+    <section class="section">
+      <p class="section__label">What you get</p>
+      <div class="features">
+        <div class="feature">
+          <h3 class="feature__title">AI-Generated Catalog</h3>
+          <p class="feature__body">Every work gets a precise, two-sentence description written by Claude — covering composition, palette, materials, and motifs. No writing required from you.</p>
+        </div>
+        <div class="feature">
+          <h3 class="feature__title">Full-Text Search</h3>
+          <p class="feature__body">Visitors search by keyword, theme, decade, medium, or palette color. Results update instantly. Works on mobile.</p>
+        </div>
+        <div class="feature">
+          <h3 class="feature__title">Series &amp; Themes</h3>
+          <p class="feature__body">Group your work into recurring themes and named series. Each gets its own page, description, and work count — curated by you.</p>
+        </div>
+        <div class="feature">
+          <h3 class="feature__title">Timeline View</h3>
+          <p class="feature__body">Works arranged by decade — 1970s through 2020s — in a horizontal strip. A visual biography of your practice.</p>
+        </div>
+        <div class="feature">
+          <h3 class="feature__title">Constellation</h3>
+          <p class="feature__body">A force-directed galaxy of all your works, clustered by theme. An unusual way to see the shape of a practice.</p>
+        </div>
+        <div class="feature">
+          <h3 class="feature__title">Open API</h3>
+          <p class="feature__body">A public JSON API exposes your full catalog under CC BY 4.0. Curators, researchers, and collectors can query your archive directly.</p>
+        </div>
+        <div class="feature">
+          <h3 class="feature__title">Works Offline</h3>
+          <p class="feature__body">Service worker caches the archive for offline use. Visitors at a gallery opening with no signal can still browse your full catalog.</p>
+        </div>
+        <div class="feature">
+          <h3 class="feature__title">Your Domain</h3>
+          <p class="feature__body">Deployed to your own domain — yourname.com or archive.yourname.com. Free hosting on Netlify or GitHub Pages, or your existing host.</p>
+        </div>
+        <div class="feature">
+          <h3 class="feature__title">You Own Everything</h3>
+          <p class="feature__body">The site is yours — plain HTML, CSS, and JSON files. No platform lock-in, no monthly fees to me, no login required to view your work.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── How it works ──────────────────────────────────────────── -->
+    <section class="section">
+      <p class="section__label">How it works</p>
+      <div class="steps">
+        <div class="step">
+          <h3 class="step__title">You send your images</h3>
+          <p class="step__body">JPG, HEIC, or PNG — whatever you have. A shared folder (Dropbox, WeTransfer, Google Drive) works fine. No special preparation needed.</p>
+        </div>
+        <div class="step">
+          <h3 class="step__title">We define your vocabulary</h3>
+          <p class="step__body">A short conversation about your recurring themes, named series, and how you think about your work. This shapes how the AI catalogs everything.</p>
+        </div>
+        <div class="step">
+          <h3 class="step__title">AI catalogs every work</h3>
+          <p class="step__body">Each image is read by Claude. It writes a precise description, assigns themes, identifies palette and materials, and flags recurring motifs.</p>
+        </div>
+        <div class="step">
+          <h3 class="step__title">You review, I deploy</h3>
+          <p class="step__body">I send you a preview to review. You request any changes. Once approved, it goes live on your domain — usually within a week of receiving your images.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Pricing ───────────────────────────────────────────────── -->
+    <section class="section">
+      <p class="section__label">Pricing</p>
+      <div class="pricing">
+
+        <div class="plan">
+          <p class="plan__name">Starter</p>
+          <p class="plan__price">$500</p>
+          <p class="plan__sub">One-time setup fee</p>
+          <hr class="plan__divider">
+          <ul class="plan__features">
+            <li><strong>Up to 200 works</strong></li>
+            <li>AI catalog descriptions</li>
+            <li>Archive, search, timeline</li>
+            <li>Up to 5 themes</li>
+            <li>1 named series</li>
+            <li>Deployed to your domain</li>
+            <li>Source files handed off</li>
+          </ul>
+          <a class="plan__cta" href="mailto:jfsneumann@gmail.com?subject=Starter archive inquiry">Inquire</a>
+        </div>
+
+        <div class="plan plan--featured">
+          <p class="plan__badge">Most common</p>
+          <p class="plan__name">Standard</p>
+          <p class="plan__price">$800</p>
+          <p class="plan__sub">One-time setup fee</p>
+          <hr class="plan__divider">
+          <ul class="plan__features">
+            <li><strong>Up to 500 works</strong></li>
+            <li>AI catalog descriptions</li>
+            <li>All pages including Constellation</li>
+            <li>Up to 10 themes</li>
+            <li>Up to 3 named series</li>
+            <li>Custom palette vocabulary</li>
+            <li>Deployed to your domain</li>
+            <li>Source files + GitHub repo</li>
+          </ul>
+          <a class="plan__cta" href="mailto:jfsneumann@gmail.com?subject=Standard archive inquiry">Inquire</a>
+        </div>
+
+        <div class="plan">
+          <p class="plan__name">Full Archive</p>
+          <p class="plan__price">$1,500</p>
+          <p class="plan__sub">One-time setup fee</p>
+          <hr class="plan__divider">
+          <ul class="plan__features">
+            <li><strong>Unlimited works</strong></li>
+            <li>AI catalog descriptions</li>
+            <li>All pages + Open API</li>
+            <li>Unlimited themes &amp; series</li>
+            <li>1-hour curation consultation</li>
+            <li>Custom about page</li>
+            <li>Deployed to your domain</li>
+            <li>Source files + GitHub repo</li>
+            <li>30 days of revisions</li>
+          </ul>
+          <a class="plan__cta" href="mailto:jfsneumann@gmail.com?subject=Full archive inquiry">Inquire</a>
+        </div>
+
+      </div>
+      <p style="margin-top:1.5rem;font-size:0.8125rem;color:var(--muted);">
+        All plans include the complete source code. Hosting is free on Netlify or GitHub Pages — or I can deploy to your existing cPanel host. AI cataloging costs (~$5–15 for 500 works) are included.
+      </p>
+    </section>
+
+    <!-- ── FAQ ───────────────────────────────────────────────────── -->
+    <section class="section">
+      <p class="section__label">Questions</p>
+      <div class="faq">
+
+        <div>
+          <p class="faq__q">What image formats do you accept?</p>
+          <p class="faq__a">JPG, HEIC (iPhone), and PNG. Any resolution — the system resizes to three sizes automatically (full, thumbnail, mini).</p>
+        </div>
+
+        <div>
+          <p class="faq__q">What if I have works without photographs?</p>
+          <p class="faq__a">That's fine. I can catalog only what you have photographed. The archive can be expanded later as you shoot more work.</p>
+        </div>
+
+        <div>
+          <p class="faq__q">Do I need a developer to maintain it?</p>
+          <p class="faq__a">No. Adding new works is a single shell command (<code style="font-size:0.8125rem;opacity:0.75">./add-works.sh</code>) that I'll walk you through. Everything else is static — there's nothing to maintain.</p>
+        </div>
+
+        <div>
+          <p class="faq__q">How accurate are the AI descriptions?</p>
+          <p class="faq__a">Very good for visual description — palette, materials, composition. Thematic interpretation is guided by the vocabulary we define together. You review everything before it goes live.</p>
+        </div>
+
+        <div>
+          <p class="faq__q">Is this open source?</p>
+          <p class="faq__a">Yes. The code is MIT licensed on <a href="https://github.com/JFSNeumann/jfsn-archive" target="_blank" rel="noopener">GitHub</a>. A technically inclined artist could fork it for free — the service is for artists who'd rather not deal with the terminal.</p>
+        </div>
+
+        <div>
+          <p class="faq__q">How long does it take?</p>
+          <p class="faq__a">Typically one week from receiving your images to a live preview. Final deployment within a day of your approval.</p>
+        </div>
+
+        <div>
+          <p class="faq__q">What about ongoing costs?</p>
+          <p class="faq__a">Nothing owed to me after setup. Hosting is free (Netlify) or ~$5/month (cPanel). Adding future works costs a few cents each in AI API fees.</p>
+        </div>
+
+        <div>
+          <p class="faq__q">What if I have thousands of works?</p>
+          <p class="faq__a">The system has been tested at 1,084 works with full performance. Contact me to discuss large archives — pricing is negotiable for significant collections.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── Bottom CTA ─────────────────────────────────────────────── -->
+    <section class="bottom-cta">
+      <h2 class="bottom-cta__title">Your work deserves a permanent address.</h2>
+      <p class="bottom-cta__body">Send me a note. Tell me roughly how many works you have and what kind of art you make. I'll let you know if it's a good fit.</p>
+      <a class="bottom-cta__email" href="mailto:jfsneumann@gmail.com?subject=Archive inquiry">jfsneumann@gmail.com</a>
+    </section>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <span>Jeffrey F. S. Neumann</span>
+    <nav class="footer-nav" aria-label="Site navigation">
+      <a href="archive.html">Archive</a>
+      <a href="series-index.html">Series</a>
+      <a href="timeline.html">Timeline</a>
+      <a href="constellation.html">Constellation</a>
+      <a href="about.html">About</a>
+    </nav>
+    <nav class="footer-social" aria-label="Social links">
+      <a href="https://www.linkedin.com/in/jeffreyneumann/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://dribbble.com/JFSN" target="_blank" rel="noopener">Dribbble</a>
+      <a href="https://www.youtube.com/@jfsneumann/videos" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://showspace.so/s/jeffrey-neumann-46" target="_blank" rel="noopener">Showspace</a>
+    </nav>
+    <nav class="footer-earlier" aria-label="Earlier sites">
+      <a href="/old-site/old/Mr_SNOWmann/portfolio.html" target="_blank" rel="noopener">Mr. SNOWmann</a>
+      <a href="/old-site/old/fine-art-2000/index.htm" target="_blank" rel="noopener">Fine Art 2000</a>
+      <a href="/old-site/" target="_blank" rel="noopener">jfsn 2023</a>
+      <a href="/old-site/old/2014/index.html" target="_blank" rel="noopener">jfsn 2014</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="search.js" defer></script>
+<script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
+</body>
+</html>
