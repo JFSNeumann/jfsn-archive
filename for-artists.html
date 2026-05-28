@@ -790,6 +790,173 @@
     .form-thanks strong { color: var(--accent); }
 
     /* ═══════════════════════════════════════════════════════════
+       DEMO — drop-and-preview
+    ═══════════════════════════════════════════════════════════ */
+    .demo {
+      padding: clamp(4rem, 8vw, 8rem) 0;
+      border-bottom: 1px solid var(--dim);
+    }
+    .demo__head {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 2rem 4rem;
+      align-items: start;
+      margin-bottom: 3rem;
+    }
+    @media (max-width: 700px) { .demo__head { grid-template-columns: 1fr; } }
+
+    .demo__label {
+      font-size: var(--cap);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0;
+      padding-top: 0.2em;
+    }
+    .demo__title {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 300;
+      line-height: 1.2;
+      margin: 0;
+    }
+    .demo__title em { font-style: italic; color: var(--muted); }
+
+    .demo__drop {
+      border: 1px dashed var(--dim);
+      min-height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+      user-select: none;
+    }
+    .demo__drop:hover,
+    .demo__drop.drag-over { border-color: var(--accent); background: rgba(243,240,234,0.02); }
+    .demo__drop input {
+      position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+    }
+    .demo__drop-inner {
+      display: flex; flex-direction: column; align-items: center; gap: 0.75rem;
+      padding: 2rem; text-align: center; pointer-events: none;
+    }
+    .demo__drop-plus {
+      font-size: 2.5rem; font-weight: 300; color: var(--muted); line-height: 1;
+      transition: color 0.2s;
+    }
+    .demo__drop:hover .demo__drop-plus,
+    .demo__drop.drag-over .demo__drop-plus { color: var(--accent); }
+    .demo__drop-text {
+      font-size: 0.875rem; color: var(--muted); margin: 0; line-height: 1.6;
+    }
+    .demo__drop-text small {
+      display: block; font-size: 0.6875rem; letter-spacing: 0.1em;
+      text-transform: uppercase; opacity: 0.55; margin-top: 0.25rem;
+    }
+
+    .demo__drop.has-files {
+      min-height: 0; border-style: solid; padding: 0.875rem 1.25rem; justify-content: flex-start;
+    }
+    .demo__drop.has-files .demo__drop-inner {
+      flex-direction: row; gap: 0.75rem; padding: 0; align-items: center;
+    }
+    .demo__drop.has-files .demo__drop-plus { font-size: 1.25rem; }
+    .demo__drop.has-files .demo__drop-text { font-size: 0.8125rem; }
+    .demo__drop[aria-disabled="true"] { cursor: default; opacity: 0.5; }
+    .demo__drop[aria-disabled="true"]:hover { border-color: var(--dim); background: none; }
+    .demo__drop[aria-disabled="true"] input { pointer-events: none; }
+
+    .demo__result { margin-top: 2rem; }
+    .demo__result-head {
+      display: flex; align-items: baseline; justify-content: space-between;
+      flex-wrap: wrap; gap: 0.5rem;
+      border-bottom: 1px solid var(--dim); margin-bottom: 1.5rem; padding-bottom: 0.75rem;
+    }
+    .demo__result-name {
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 2vw, 1.25rem); font-weight: 300; letter-spacing: 0.03em;
+    }
+    .demo__result-count {
+      font-size: var(--cap); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+    }
+
+    .demo__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 8px;
+      column-gap: 1rem;
+      row-gap: 0;
+    }
+    @media (max-width: 900px) { .demo__grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 560px) { .demo__grid { grid-template-columns: repeat(2, 1fr); } }
+
+    .demo__thumb { margin: 0; }
+    .demo__thumb-inner {
+      display: block; overflow: hidden; background: #111; position: relative;
+    }
+    .demo__thumb-inner img {
+      width: 100%; height: auto; display: block;
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .demo__thumb-inner:hover img { transform: scale(1.04); }
+    .demo__thumb-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(11,11,11,0.82) 0%, transparent 60%);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 0.75rem;
+      opacity: 0; transform: translateY(6px);
+      transition: opacity 0.22s, transform 0.22s;
+      pointer-events: none;
+    }
+    .demo__thumb-inner:hover .demo__thumb-overlay,
+    .demo__thumb-inner.overlay-on .demo__thumb-overlay { opacity: 1; transform: translateY(0); }
+    .demo__thumb-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.9375rem; font-weight: 300; color: #fff;
+      line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      margin-bottom: 0.2rem; outline: none;
+    }
+    .demo__thumb-title[contenteditable="true"] {
+      pointer-events: all; cursor: text;
+      border-bottom: 1px solid rgba(255,255,255,0.25);
+    }
+    .demo__thumb-title[contenteditable="true"]:focus {
+      border-bottom-color: var(--accent);
+    }
+    .demo__thumb-meta {
+      font-size: 0.625rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+    }
+
+    .demo__nudge {
+      margin-top: 2rem; padding: 1.5rem 2rem;
+      border: 1px solid var(--dim);
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1.5rem; flex-wrap: wrap;
+    }
+    .demo__nudge p { margin: 0; font-size: 0.9375rem; line-height: 1.6; color: var(--muted); }
+    .demo__nudge strong { color: var(--text); }
+    .demo__nudge-cta {
+      display: inline-block; flex-shrink: 0;
+      background: var(--accent); color: #0b0b0b;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.75rem 1.75rem; text-decoration: none;
+      transition: opacity 0.15s;
+      white-space: nowrap;
+    }
+    .demo__nudge-cta:hover { opacity: 0.88; color: #0b0b0b; }
+
+    /* Ghost link for hero */
+    .hero__cta-ghost {
+      font-size: 0.8125rem; color: var(--muted);
+      border-bottom: 1px solid var(--dim); padding-bottom: 1px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .hero__cta-ghost:hover { color: var(--text); border-color: var(--muted); }
+
+    /* ═══════════════════════════════════════════════════════════
        ENTRANCE ANIMATIONS
     ═══════════════════════════════════════════════════════════ */
     @media (prefers-reduced-motion: no-preference) {
@@ -847,8 +1014,9 @@
       </p>
       <div class="hero__cta-row">
         <a class="btn-primary" href="mailto:jfsneumann@gmail.com?subject=Archive inquiry">Get in touch</a>
-        <span class="hero__cta-note">Starting at $500 · Reply within 48 hours</span>
+        <a class="hero__cta-ghost" href="#demo">Try it with your photos →</a>
       </div>
+      <p class="hero__cta-note" style="margin-top:0.75rem">Starting at $500 · Reply within 48 hours</p>
     </div>
 
     <div class="hero__mosaic" id="mosaic" aria-hidden="true">
@@ -898,6 +1066,42 @@
         is exactly what gets built for you. Hover a work above to see its title and year.
         <a href="archive.html" style="color:var(--muted);border-bottom:1px solid var(--dim)">Browse the full archive →</a>
       </p>
+    </section>
+
+    <!-- ── Demo ───────────────────────────────────────────────── -->
+    <section class="demo" id="demo">
+      <div class="demo__head">
+        <p class="demo__label">Try it with your work</p>
+        <h2 class="demo__title">Drop ten photos.<br><em>See your archive.</em></h2>
+      </div>
+
+      <div class="demo__drop" id="demo-drop" role="button" tabindex="0"
+           aria-label="Drop up to 10 photos here, or click to browse">
+        <input type="file" id="demo-input" accept="image/*" multiple>
+        <div class="demo__drop-inner" id="demo-drop-inner">
+          <span class="demo__drop-plus" aria-hidden="true">+</span>
+          <p class="demo__drop-text">
+            Drop up to 10 photos here
+            <small>jpg &middot; png &middot; webp &middot; heic</small>
+          </p>
+        </div>
+      </div>
+
+      <div class="demo__result" id="demo-result" hidden>
+        <div class="demo__result-head">
+          <span class="demo__result-name">Your Archive</span>
+          <span class="demo__result-count" id="demo-result-count">0 works</span>
+        </div>
+        <div class="demo__grid" id="demo-grid"></div>
+        <div class="demo__nudge">
+          <p>
+            This is <strong id="demo-nudge-n">0</strong> of your works.
+            Imagine hundreds &mdash; cataloged by AI, searchable by title,
+            theme, decade, and palette. Yours forever.
+          </p>
+          <a href="#inquire" class="demo__nudge-cta">Get yours built &rarr;</a>
+        </div>
+      </div>
     </section>
 
     <!-- ── Testimonials ────────────────────────────────────────
@@ -1396,6 +1600,151 @@
     if (window.goatcounter && window.goatcounter.count) fire();
     else window.addEventListener('load', fire);
   }
+
+  // ── Drop-and-preview demo ─────────────────────────────────────
+  (function () {
+    const ROW_H   = 8;   // must match .demo__grid grid-auto-rows
+    const COL_GAP = 16;  // 1rem
+    const MAX     = 10;
+
+    const dropEl   = document.getElementById('demo-drop');
+    const inputEl  = document.getElementById('demo-input');
+    const resultEl = document.getElementById('demo-result');
+    const gridEl   = document.getElementById('demo-grid');
+    const countEl  = document.getElementById('demo-result-count');
+    const nudgeN   = document.getElementById('demo-nudge-n');
+
+    if (!dropEl) return;
+
+    let works = [];
+
+    dropEl.addEventListener('click', e => {
+      if (dropEl.getAttribute('aria-disabled') === 'true') return;
+      if (e.target === inputEl) return;
+      inputEl.click();
+    });
+    dropEl.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); inputEl.click(); }
+    });
+    dropEl.addEventListener('dragover', e => {
+      e.preventDefault();
+      dropEl.classList.add('drag-over');
+    });
+    dropEl.addEventListener('dragleave', e => {
+      if (!dropEl.contains(e.relatedTarget)) dropEl.classList.remove('drag-over');
+    });
+    dropEl.addEventListener('drop', e => {
+      e.preventDefault();
+      dropEl.classList.remove('drag-over');
+      addFiles([...e.dataTransfer.files]);
+    });
+    inputEl.addEventListener('change', () => {
+      addFiles([...inputEl.files]);
+      inputEl.value = '';
+    });
+
+    function addFiles(files) {
+      const images    = files.filter(f => f.type.startsWith('image/'));
+      const remaining = MAX - works.length;
+      images.slice(0, remaining).forEach(loadFile);
+    }
+
+    function loadFile(file) {
+      const src = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => {
+        const idx  = works.length;
+        const work = { src, w: img.naturalWidth, h: img.naturalHeight, title: 'Untitled' };
+        works.push(work);
+        renderCard(work, idx);
+        syncUI();
+      };
+      img.src = src;
+    }
+
+    function renderCard(work, idx) {
+      const numCols = window.innerWidth <= 560 ? 2 : window.innerWidth <= 900 ? 3 : 4;
+      const colW    = Math.floor((gridEl.offsetWidth - COL_GAP * (numCols - 1)) / numCols) || 240;
+      const imgH    = Math.round((colW / work.w) * work.h);
+      const span    = Math.ceil((imgH + COL_GAP) / ROW_H);
+
+      const fig = document.createElement('figure');
+      fig.className = 'demo__thumb';
+      fig.style.gridRow = `span ${span}`;
+      fig.dataset.idx = idx;
+
+      const inner = document.createElement('div');
+      inner.className = 'demo__thumb-inner';
+
+      const imgEl = document.createElement('img');
+      imgEl.src     = work.src;
+      imgEl.alt     = work.title;
+      imgEl.width   = work.w;
+      imgEl.height  = work.h;
+      imgEl.loading = 'eager';
+
+      const overlay = document.createElement('div');
+      overlay.className   = 'demo__thumb-overlay';
+      overlay.setAttribute('aria-hidden', 'true');
+
+      const titleEl = document.createElement('span');
+      titleEl.className       = 'demo__thumb-title';
+      titleEl.contentEditable = 'true';
+      titleEl.spellcheck      = false;
+      titleEl.textContent     = work.title;
+      titleEl.addEventListener('input', () => {
+        work.title = titleEl.textContent.trim() || 'Untitled';
+        imgEl.alt  = work.title;
+      });
+      titleEl.addEventListener('keydown', e => {
+        if (e.key === 'Enter') { e.preventDefault(); titleEl.blur(); }
+      });
+
+      const metaEl = document.createElement('span');
+      metaEl.className   = 'demo__thumb-meta';
+      metaEl.textContent = 'your work — click title to rename';
+
+      overlay.appendChild(titleEl);
+      overlay.appendChild(metaEl);
+      inner.appendChild(imgEl);
+      inner.appendChild(overlay);
+      fig.appendChild(inner);
+      gridEl.appendChild(fig);
+
+      // Toggle overlay on tap (mobile)
+      inner.addEventListener('click', e => {
+        if (e.target === titleEl) return;
+        inner.classList.toggle('overlay-on');
+      });
+
+      // Fine-tune span after layout
+      requestAnimationFrame(() => {
+        const actual = fig.offsetWidth || colW;
+        const h      = Math.round((actual / work.w) * work.h);
+        fig.style.gridRow = `span ${Math.ceil((h + COL_GAP) / ROW_H)}`;
+      });
+    }
+
+    function syncUI() {
+      const n = works.length;
+      resultEl.hidden        = false;
+      countEl.textContent    = `${n} work${n === 1 ? '' : 's'}`;
+      nudgeN.textContent     = n;
+      dropEl.classList.add('has-files');
+
+      const innerEl = document.getElementById('demo-drop-inner');
+      if (innerEl) {
+        const textEl = innerEl.querySelector('.demo__drop-text');
+        if (n >= MAX) {
+          textEl.innerHTML = '<span style="color:var(--muted)">10 photos &mdash; maximum reached</span>';
+          dropEl.setAttribute('aria-disabled', 'true');
+          inputEl.disabled = true;
+        } else {
+          textEl.innerHTML = `Add more photos <small>${MAX - n} remaining</small>`;
+        }
+      }
+    }
+  })();
 
 })();
 </script>
