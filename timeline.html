@@ -47,6 +47,102 @@
       margin: 0;
     }
 
+    /* -------- Time-machine: single 50-year strip -------- */
+    .tl-machine {
+      border-bottom: 1px solid var(--dim);
+      padding: clamp(2rem, 4vw, 3rem) 0 clamp(1.5rem, 3vw, 2rem);
+    }
+    .tl-machine__head {
+      display: flex;
+      align-items: baseline;
+      gap: 1.25rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .tl-machine__title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1.4rem, 2.6vw, 2rem);
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      line-height: 1.05;
+      margin: 0;
+    }
+    .tl-machine__hint {
+      font-size: var(--cap);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .tl-machine__decades {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--dim);
+      margin-bottom: 0.5rem;
+    }
+    .tl-machine__decade {
+      flex: 1;
+      padding: 0.55rem 0;
+      background: none;
+      border: none;
+      border-right: 1px solid var(--dim);
+      color: var(--muted);
+      font-family: inherit;
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: color 0.15s, background 0.15s;
+    }
+    .tl-machine__decade:last-child { border-right: none; }
+    .tl-machine__decade:hover { color: var(--text); background: rgba(243,240,234,0.04); }
+    .tl-machine__decade.active { color: var(--accent); }
+    .tl-machine__strip {
+      display: flex;
+      gap: 2px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding-bottom: 0.25rem;
+      scrollbar-width: none;
+      cursor: grab;
+      user-select: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .tl-machine__strip::-webkit-scrollbar { display: none; }
+    .tl-machine__strip.dragging { cursor: grabbing; scroll-behavior: auto; }
+    .tl-machine__thumb {
+      flex-shrink: 0;
+      width: clamp(48px, 5.5vw, 68px);
+      height: clamp(48px, 5.5vw, 68px);
+      display: block;
+      background: rgba(243,240,234,0.05);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.15s ease-out;
+    }
+    .tl-machine__thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      pointer-events: none;
+    }
+    .tl-machine__thumb:hover {
+      transform: scale(1.4);
+      z-index: 2;
+    }
+    .tl-machine__thumb:hover::after {
+      content: attr(data-year);
+      position: absolute;
+      bottom: 2px;
+      left: 4px;
+      font-size: 9px;
+      font-weight: 600;
+      color: #fff;
+      text-shadow: 0 1px 2px #000, 0 0 4px #000;
+      letter-spacing: 0.04em;
+    }
+
     /* -------- Decade section -------- */
     .tl-decade {
       border-bottom: 1px solid var(--dim);
@@ -223,6 +319,9 @@
       .tl-thumb:hover .tl-thumb__overlay { opacity: 1; }
       .tl-skeleton__block { animation: none; opacity: 0.4; }
       .tl-decade__link { transition: none; }
+      .tl-machine__thumb { transition: none; }
+      .tl-machine__thumb:hover { transform: none; }
+      .tl-machine__strip { scroll-behavior: auto; }
     }
 
     /* -------- Bottom padding -------- */
@@ -377,7 +476,35 @@
       const wrap = document.getElementById('tl-main');
       if (!wrap) return;
 
-      const sections = presentDecades.map(decade => {
+      /* ── Time-machine: ALL dated works, one continuous strip ── */
+      const allDated = presentDecades.flatMap(d => byDecade[d]).slice().sort((a, b) => {
+        const ya = parseInt(a.year, 10) || 0;
+        const yb = parseInt(b.year, 10) || 0;
+        return ya !== yb ? ya - yb : a.file.localeCompare(b.file);
+      });
+
+      const machineThumbs = allDated.map(r => {
+        const id = r.file.replace('.avif', '');
+        const title = r.title || id;
+        const year = r.year ? String(r.year) : '';
+        return `<a class="tl-machine__thumb" href="artwork.html?id=${esc(id)}" title="${esc(title)} · ${year}" data-year="${esc(year)}" data-decade="${Math.floor(parseInt(year,10)/10)*10}"><img src="artworks/thumbs/${esc(id)}.avif" alt="${esc(title)}" loading="eager" width="200" height="200"></a>`;
+      }).join('');
+
+      const decadeButtons = presentDecades.map(d =>
+        `<button class="tl-machine__decade" data-decade-year="${DECADE_MAP[d]}" type="button">${d}</button>`
+      ).join('');
+
+      const machineHTML = `
+        <section class="tl-machine" aria-label="Fifty-year scrubber">
+          <div class="tl-machine__head">
+            <h2 class="tl-machine__title">Fifty years, one strip</h2>
+            <span class="tl-machine__hint">${allDated.length.toLocaleString()} dated · click a decade · drag or scroll</span>
+          </div>
+          <div class="tl-machine__decades" role="tablist">${decadeButtons}</div>
+          <div class="tl-machine__strip" id="tl-machine-strip" role="list" aria-label="All dated works, chronological">${machineThumbs}</div>
+        </section>`;
+
+      const sections = [machineHTML, ...presentDecades.map(decade => {
         const works = byDecade[decade];
         const { marksHTML, thumbsHTML, count } = buildStrip(works);
         return `
@@ -392,7 +519,7 @@
               <div class="tl-strip" role="list" aria-label="${decade} works">${thumbsHTML}</div>
             </div>
           </section>`;
-      });
+      })];
 
       /* Undated section */
       if (undated.length) {
@@ -407,6 +534,70 @@
       }
 
       wrap.innerHTML = sections.join('');
+
+      /* ── Wire up the time-machine ── */
+      const strip = document.getElementById('tl-machine-strip');
+      if (strip) {
+        /* Click a decade marker → scroll strip to first thumb of that decade */
+        wrap.querySelectorAll('.tl-machine__decade').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const yr = btn.dataset.decadeYear;
+            const target = strip.querySelector(`.tl-machine__thumb[data-decade="${yr}"]`);
+            if (target) {
+              const left = target.offsetLeft - 8;
+              strip.scrollTo({ left, behavior: 'smooth' });
+            }
+          });
+        });
+
+        /* Click-and-drag to scrub (film-reel feel on desktop) */
+        let dragging = false, startX = 0, startScroll = 0, moved = false;
+        strip.addEventListener('pointerdown', (e) => {
+          if (e.pointerType === 'touch') return; /* let native touch handle */
+          dragging = true; moved = false;
+          startX = e.clientX;
+          startScroll = strip.scrollLeft;
+          strip.classList.add('dragging');
+          strip.setPointerCapture(e.pointerId);
+        });
+        strip.addEventListener('pointermove', (e) => {
+          if (!dragging) return;
+          const dx = e.clientX - startX;
+          if (Math.abs(dx) > 4) moved = true;
+          strip.scrollLeft = startScroll - dx;
+        });
+        const endDrag = (e) => {
+          if (!dragging) return;
+          dragging = false;
+          strip.classList.remove('dragging');
+          try { strip.releasePointerCapture(e.pointerId); } catch (_) {}
+        };
+        strip.addEventListener('pointerup', endDrag);
+        strip.addEventListener('pointercancel', endDrag);
+        /* Suppress click after a drag (so dragging doesn't open the artwork) */
+        strip.addEventListener('click', (e) => {
+          if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; }
+        }, true);
+
+        /* Highlight current decade as user scrolls */
+        const decadeBtns = wrap.querySelectorAll('.tl-machine__decade');
+        const updateActive = () => {
+          const scrollMid = strip.scrollLeft + strip.clientWidth / 2;
+          const thumbs = strip.children;
+          if (!thumbs.length) return;
+          /* Find thumb closest to viewport center */
+          let nearest = thumbs[0];
+          for (const t of thumbs) {
+            if (t.offsetLeft <= scrollMid) nearest = t; else break;
+          }
+          const dec = nearest.dataset.decade;
+          decadeBtns.forEach(b => b.classList.toggle('active', b.dataset.decadeYear === dec));
+        };
+        strip.addEventListener('scroll', updateActive, { passive: true });
+        /* Defeat any browser scroll-restoration / focus-on-load behavior */
+        strip.scrollLeft = 0;
+        requestAnimationFrame(() => { strip.scrollLeft = 0; updateActive(); });
+      }
     })
     .catch(() => {
       const wrap = document.getElementById('tl-main');
