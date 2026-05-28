@@ -3,6 +3,11 @@
 [build]
   publish = "."
 
+# ── Functions ─────────────────────────────────────────────────────────────────
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
 # ── Rewrites ──────────────────────────────────────────────────────────────────
 # Let the old site (in /old/) share artwork images from the root artworks/ folder.
 # Old site uses artworks/thumbs/* and artworks/art####.avif (flat).

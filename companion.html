@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0b0b">
+  <title>The Companion — JFSN Archive</title>
+  <meta name="description" content="Describe a feeling, a word, a memory. The archive finds a work that fits.">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="canonical" href="https://jfsn.com/companion.html">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap"></noscript>
+  <link rel="stylesheet" href="site.css?v=20260527-nav">
+
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="The Companion — JFSN Archive">
+  <meta property="og:description" content="Describe a feeling, a word, a memory. The archive finds a work that fits.">
+  <meta property="og:image"       content="https://jfsn.com/og-card.jpg">
+  <meta property="og:url"         content="https://jfsn.com/companion.html">
+
+  <style>
+
+    /* ═══════════════════════════════════════════════════════════
+       PAGE LAYOUT
+    ═══════════════════════════════════════════════════════════ */
+    .companion-wrap {
+      min-height: calc(100vh - var(--nav-h, 56px));
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: clamp(4rem, 8vw, 8rem) var(--gutter) clamp(4rem, 8vw, 8rem);
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       HEADER
+    ═══════════════════════════════════════════════════════════ */
+    .c-eyebrow {
+      font-size: var(--cap);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 1.25rem;
+    }
+    .c-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 300;
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      margin: 0 0 1rem;
+    }
+    .c-title em { font-style: italic; color: var(--muted); }
+    .c-sub {
+      font-size: clamp(0.9rem, 1.5vw, 1rem);
+      color: var(--muted);
+      line-height: 1.65;
+      margin: 0 0 3rem;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       FORM
+    ═══════════════════════════════════════════════════════════ */
+    .c-form { width: 100%; margin-bottom: 1.25rem; }
+    .c-input-wrap { display: flex; flex-direction: column; gap: 0.875rem; }
+
+    .c-textarea {
+      width: 100%;
+      background: transparent;
+      border: 1px solid var(--dim);
+      color: var(--text);
+      font-family: var(--font-display);
+      font-size: clamp(1.125rem, 2vw, 1.375rem);
+      font-weight: 300;
+      line-height: 1.5;
+      padding: 1rem 1.25rem;
+      resize: none;
+      outline: none;
+      transition: border-color 0.2s;
+      min-height: 4.5rem;
+      box-sizing: border-box;
+    }
+    .c-textarea::placeholder { color: var(--dim); opacity: 1; }
+    .c-textarea:focus { border-color: var(--muted); }
+    .c-textarea:focus::placeholder { opacity: 0.4; }
+
+    .c-submit {
+      appearance: none;
+      background: transparent;
+      border: 1px solid var(--muted);
+      color: var(--text);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.875rem 2rem;
+      cursor: pointer;
+      align-self: flex-start;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .c-submit:hover:not(:disabled) {
+      background: var(--text); color: var(--bg); border-color: var(--text);
+    }
+    .c-submit:disabled { opacity: 0.4; cursor: default; }
+
+    /* ═══════════════════════════════════════════════════════════
+       EXAMPLE CHIPS
+    ═══════════════════════════════════════════════════════════ */
+    .c-examples {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 3.5rem;
+    }
+    .c-example {
+      appearance: none;
+      background: transparent;
+      border: 1px solid var(--dim);
+      color: var(--muted);
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      padding: 0.35rem 0.75rem;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .c-example:hover { border-color: var(--muted); color: var(--text); }
+
+    /* ═══════════════════════════════════════════════════════════
+       STATUS
+    ═══════════════════════════════════════════════════════════ */
+    .c-status {
+      width: 100%;
+      font-size: 0.8125rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+    .c-status[hidden] { display: none; }
+    @keyframes pulse-opacity {
+      0%, 100% { opacity: 0.35; }
+      50%       { opacity: 1; }
+    }
+    .c-status.loading { animation: pulse-opacity 1.6s ease-in-out infinite; }
+
+    /* ═══════════════════════════════════════════════════════════
+       RESULTS
+    ═══════════════════════════════════════════════════════════ */
+    .c-divider {
+      width: 100%;
+      border: none;
+      border-top: 1px solid var(--dim);
+      margin: 0 0 2.5rem;
+    }
+    .c-divider[hidden] { display: none; }
+
+    .c-results {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+    .c-results[hidden] { display: none; }
+
+    .c-card {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 1.5rem;
+      align-items: start;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .c-card.visible { opacity: 1; transform: none; }
+    @media (max-width: 480px) { .c-card { grid-template-columns: 1fr; } }
+
+    .c-card__img {
+      display: block;
+      aspect-ratio: 1;
+      overflow: hidden;
+      background: rgba(243,240,234,0.04);
+      text-decoration: none;
+    }
+    .c-card__img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .c-card__img:hover img { transform: scale(1.05); }
+
+    .c-card__body {
+      display: flex; flex-direction: column; gap: 0.45rem; padding-top: 0.2rem;
+    }
+    .c-card__meta {
+      font-size: var(--cap);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .c-card__title {
+      font-family: var(--font-display);
+      font-size: clamp(1.125rem, 2vw, 1.375rem);
+      font-weight: 300;
+      line-height: 1.2;
+      color: var(--text);
+    }
+    .c-card__reason {
+      font-family: var(--font-display);
+      font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.55;
+      margin-top: 0.2rem;
+    }
+    .c-card__link {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--dim);
+      padding-bottom: 1px;
+      align-self: flex-start;
+      margin-top: 0.4rem;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .c-card__link:hover { color: var(--text); border-color: var(--muted); }
+
+    /* ═══════════════════════════════════════════════════════════
+       AGAIN
+    ═══════════════════════════════════════════════════════════ */
+    .c-again {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      padding-top: 1rem;
+      border-top: 1px solid var(--dim);
+      margin-top: 1rem;
+    }
+    .c-again[hidden] { display: none; }
+    .c-again-btn {
+      appearance: none; background: transparent;
+      border: 1px solid var(--dim); color: var(--muted);
+      font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.75rem 1.5rem; cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .c-again-btn:hover { border-color: var(--muted); color: var(--text); }
+    .c-browse-link {
+      font-size: 0.8125rem; color: var(--muted);
+      border-bottom: 1px solid var(--dim); padding-bottom: 1px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .c-browse-link:hover { color: var(--text); border-color: var(--muted); }
+
+  </style>
+</head>
+<body>
+
+  <header class="nav-bar" role="banner">
+    <a class="nav__logo" href="index.html" aria-label="JFSN home">
+      <img src="favicon.svg" alt="" width="28" height="28" aria-hidden="true">
+      <span>Jeffrey F. S. Neumann</span>
+    </a>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="archive.html">Archive</a>
+      <a href="series-index.html">Series</a>
+      <a href="timeline.html">Timeline</a>
+      <a href="constellation.html" title="Force-directed map of all works, clustered by theme">Constellation</a>
+      <a href="about.html">About</a>
+      <a href="for-artists.html" style="color:var(--accent)">For Artists</a>
+    </nav>
+    <button class="nav__search-btn" aria-label="Search" onclick="window.jfsnSearch?.open()">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.25"/>
+        <line x1="10" y1="10" x2="14.5" y2="14.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <div class="companion-wrap">
+
+      <p class="c-eyebrow">The Companion</p>
+      <h1 class="c-title">Describe<br><em>anything.</em></h1>
+      <p class="c-sub">
+        A feeling. A color. A decade. A single word.<br>
+        Something in 1,084 works may be waiting for you.
+      </p>
+
+      <form class="c-form" id="c-form" autocomplete="off">
+        <div class="c-input-wrap">
+          <textarea
+            class="c-textarea"
+            id="c-input"
+            rows="2"
+            placeholder="quiet, obsessive, midwest winter&hellip;"
+            maxlength="300"
+            aria-label="Describe a feeling, color, or memory"
+          ></textarea>
+          <button class="c-submit" type="submit" id="c-submit">Find a work &rarr;</button>
+        </div>
+      </form>
+
+      <div class="c-examples" id="c-examples">
+        <button class="c-example" type="button">something blue and melancholy</button>
+        <button class="c-example" type="button">chaos under control</button>
+        <button class="c-example" type="button">found objects and memory</button>
+        <button class="c-example" type="button">human figure, faded</button>
+        <button class="c-example" type="button">black and white, minimal</button>
+        <button class="c-example" type="button">midwest winter</button>
+        <button class="c-example" type="button">obsessive detail</button>
+        <button class="c-example" type="button">something joyful</button>
+      </div>
+
+      <p class="c-status" id="c-status" hidden></p>
+
+      <hr class="c-divider" id="c-divider" hidden>
+      <div class="c-results" id="c-results" hidden></div>
+
+      <div class="c-again" id="c-again" hidden>
+        <button class="c-again-btn" id="c-again-btn" type="button">Try another &rarr;</button>
+        <a class="c-browse-link" href="archive.html">Browse all 1,084 works &rarr;</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <span>Jeffrey F. S. Neumann</span>
+      <nav class="footer-nav" aria-label="Site navigation">
+        <a href="archive.html">Archive</a>
+        <a href="series-index.html">Series</a>
+        <a href="timeline.html">Timeline</a>
+        <a href="constellation.html" title="Force-directed map of all works, clustered by theme">Constellation</a>
+        <a href="about.html">About</a>
+        <a href="for-artists.html" style="color:var(--accent)">For Artists</a>
+        <a href="companion.html" aria-current="page">Companion</a>
+        <a href="changes.html">Changes</a>
+        <a href="privacy.html">Privacy</a>
+      </nav>
+    </div>
+    <nav class="container footer-earlier" aria-label="Earlier sites">
+      <a href="/old-site/old/Mr_SNOWmann/portfolio.html" target="_blank" rel="noopener">Mr. SNOWmann</a>
+      <a href="/old-site/old/fine-art-2000/index.htm"    target="_blank" rel="noopener">Fine Art 2000</a>
+      <a href="/old-site/art.html"                       target="_blank" rel="noopener">jfsn 2023</a>
+      <a href="/old-site/"                               target="_blank" rel="noopener">jfsn 2014</a>
+    </nav>
+  </footer>
+
+  <script src="search.js" defer></script>
+  <script data-goatcounter="https://jfsn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  <script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
+
+  <script>
+  (function () {
+
+    // ── Endpoint ─────────────────────────────────────────────────
+    // Relative path works on Netlify (jfsn-archive.netlify.app or jfsn.com
+    // after DNS switch). Absolute URL works on cPanel-hosted jfsn.com
+    // in the interim — CORS is open so cross-origin fetch is fine.
+    const FUNCTION_URL = (location.hostname.includes('netlify.app') || location.hostname === 'jfsn.com')
+      ? '/.netlify/functions/companion'
+      : 'https://jfsn-archive.netlify.app/.netlify/functions/companion';
+
+    const SAMPLE_SIZE = 200;
+    let catalog = null;
+
+    fetch('catalog-lite.json')
+      .then(r => r.ok ? r.json() : null)
+      .then(d => { catalog = d; })
+      .catch(() => {});
+
+    const form      = document.getElementById('c-form');
+    const input     = document.getElementById('c-input');
+    const submitBtn = document.getElementById('c-submit');
+    const statusEl  = document.getElementById('c-status');
+    const divider   = document.getElementById('c-divider');
+    const resultsEl = document.getElementById('c-results');
+    const againWrap = document.getElementById('c-again');
+    const againBtn  = document.getElementById('c-again-btn');
+    const examplesEl = document.getElementById('c-examples');
+
+    // Example chips fill the input
+    document.querySelectorAll('.c-example').forEach(btn =>
+      btn.addEventListener('click', () => { input.value = btn.textContent.trim(); input.focus(); })
+    );
+
+    // Auto-grow textarea
+    input.addEventListener('input', () => {
+      input.style.height = 'auto';
+      input.style.height = input.scrollHeight + 'px';
+    });
+
+    // Reset to initial state
+    againBtn.addEventListener('click', reset);
+    function reset() {
+      statusEl.hidden   = true;
+      statusEl.classList.remove('loading');
+      divider.hidden    = true;
+      resultsEl.hidden  = true;
+      resultsEl.innerHTML = '';
+      againWrap.hidden  = true;
+      examplesEl.hidden = false;
+      submitBtn.disabled = false;
+      input.value = '';
+      input.style.height = 'auto';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      input.focus();
+    }
+
+    // Submit
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const prompt = input.value.trim();
+      if (!prompt) { input.focus(); return; }
+
+      submitBtn.disabled  = true;
+      examplesEl.hidden   = true;
+      setStatus('Looking through the archive…', true);
+
+      try {
+        const works = buildSample();
+        if (!works.length) throw new Error('Catalog is still loading — try again in a moment.');
+
+        const res = await fetch(FUNCTION_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt, works }),
+        });
+        if (!res.ok) throw new Error('Server returned ' + res.status);
+
+        const { matches } = await res.json();
+        if (!matches?.length) throw new Error('Nothing matched — try a different prompt.');
+
+        setStatus(null);
+        renderResults(matches);
+
+      } catch (err) {
+        setStatus(err.message, false);
+        submitBtn.disabled  = false;
+        examplesEl.hidden   = false;
+      }
+    });
+
+    function buildSample() {
+      if (!catalog) return [];
+      const shuffled = [...catalog].sort(() => Math.random() - 0.5);
+      return shuffled.slice(0, SAMPLE_SIZE).map(w => ({
+        id:          w.file.replace('.avif', ''),
+        title:       w.title       || 'Untitled',
+        year:        w.year        || null,
+        themes:      w.themes      || [],
+        description: w.description || '',
+        keywords:    w.keywords    || [],
+      }));
+    }
+
+    function renderResults(matches) {
+      const map = {};
+      if (catalog) catalog.forEach(w => { map[w.file.replace('.avif', '')] = w; });
+
+      divider.hidden   = false;
+      resultsEl.hidden = false;
+
+      matches.forEach((m, i) => {
+        const w      = map[m.id] || {};
+        const title  = w.title || m.id;
+        const decade = w.year  ? (Math.floor(w.year / 10) * 10) + 's' : null;
+        const type   = w.work_type ? w.work_type.replace(/_/g, ' ') : null;
+        const meta   = [decade, type].filter(Boolean).join(' · ');
+
+        const card = document.createElement('div');
+        card.className = 'c-card';
+        card.innerHTML = `
+          <a class="c-card__img" href="artwork.html?id=${esc(m.id)}">
+            <img src="artworks/thumbs/${esc(m.id)}.avif"
+                 alt="${esc(title)}" loading="${i === 0 ? 'eager' : 'lazy'}">
+          </a>
+          <div class="c-card__body">
+            ${meta ? `<p class="c-card__meta">${esc(meta)}</p>` : ''}
+            <p class="c-card__title">${esc(title)}</p>
+            <p class="c-card__reason">${esc(m.reason)}</p>
+            <a class="c-card__link" href="artwork.html?id=${esc(m.id)}">View this work &rarr;</a>
+          </div>`;
+        resultsEl.appendChild(card);
+        requestAnimationFrame(() =>
+          setTimeout(() => card.classList.add('visible'), i * 200)
+        );
+      });
+
+      againWrap.hidden = false;
+    }
+
+    function setStatus(msg, loading) {
+      if (!msg) { statusEl.hidden = true; statusEl.classList.remove('loading'); return; }
+      statusEl.textContent = msg;
+      statusEl.hidden = false;
+      statusEl.classList.toggle('loading', !!loading);
+    }
+
+    function esc(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+  })();
+  </script>
+
+</body>
+</html>
