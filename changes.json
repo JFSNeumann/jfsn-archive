@@ -1,0 +1,98 @@
+[
+  {
+    "sha": "4f14554",
+    "date": "2026-05-28",
+    "title": "Add time-machine scrubber to timeline.html",
+    "body": "A single chronological strip of all 765 dated works at the top of\ntimeline.html — the payoff for the dating pass earlier this session.\nThe natural density of the strip itself tells the fifty-year story:\nsparse 1980s, dense 1990s and 2020s.\n\nMechanics:\n- Decade marker buttons (1970s through 2020s) — click to jump-scroll\n  the strip to the first thumb of that decade.\n- Click-and-drag scrubbing on desktop (pointer events, with drag-vs-click\n  distinction so dragging never opens an artwork).\n- Native touch scroll on mobile.\n- Active decade auto-highlights based on the thumb nearest the viewport\n  center as the user scrolls.\n- Defeats browser scroll-restoration so the strip always starts at 1970.\n- Existing per-decade strips preserved below for focused browsing."
+  },
+  {
+    "sha": "f04b680",
+    "date": "2026-05-28",
+    "title": "Dating pass: 653 newly dated works (10% → 70% coverage) + cold backup infra",
+    "body": "Adds apply_dates.py to push __years__ decisions from curate.html back to\nsidecars and pending-themes.json (default preserves existing more-specific\nyear values; --overwrite required to replace). Adds backup.sh for incremental\ncold backup of the full project to JEFFS-4TB via rsync, with write-probe\nand file-count verification. Catalogs and api/v1/ rebuilt; all 6 decades\nnow populated (1970s:57, 1980s:11, 1990s:190, 2000s:131, 2010s:158, 2020s:218),\nunblocking the time-machine scrubber for timeline.html.\n\nAlso commits accumulated post-launch work from prior sessions that was\ndeployed but never staged:\n- lost.html: memorial page for the 500-1,000 works lost to water and bed bugs;\n  linked from about.html.\n- privacy.html: 8-section privacy notice (GoatCounter + Netlify Forms\n  disclosure); linked from footer-nav across all public pages.\n- for-artists.html funnel: Netlify inquiry form, tier-aware Inquire buttons,\n  founding-artist 30% callout, Service JSON-LD with AggregateOffer × 3,\n  8 FAQ entries, commented-in Testimonials section.\n- XXXIII · Guernica series: 232 works curated.\n- artist-config.json + artist-config.js: single source of truth for vocab.\n- colors.json: dominant color per thumbnail.\n- Site-wide: current-page nav indicator (aria-current orange underline),\n  black-on-orange text contrast standardized, For Artists in header/footer\n  nav on all pages, robots.txt sitemap URL typo fixed, sitemap.xml entries\n  completed, sw.js cache key bumped."
+  },
+  {
+    "sha": "6db1f84",
+    "date": "2026-05-27",
+    "title": "Add For Artists nav link to all pages (header + footer, orange accent)",
+    "body": "- Visible on every page in both header and footer nav\n- Orange color so it stands out from other nav items\n- Fixed for-artists.html: text top-aligned, mosaic uses catalog-home.json (fast load)"
+  },
+  {
+    "sha": "1794ac9",
+    "date": "2026-05-27",
+    "title": "Redesign for-artists.html with animated mosaic hero + WOW factor",
+    "body": "- Full-viewport split hero: text left, animated infinite-scroll thumbnail mosaic right\n- Live thumbnail mosaic: 36 random works from catalog, doubled for seamless loop, click opens artwork\n- Proof section: 8 real artworks from catalog-home with hover overlays\n- Stat bar with count-up animations: 1,084 works / 50 years / 10 themes / $0 hosting\n- Feature section with entrance fade-up animations\n- Process: large numbered steps with clean grid layout\n- Pricing: flush border grid, featured plan highlighted with accent border\n- FAQ: 8 questions in 2-column grid\n- Open source callout with GitHub link\n- Bottom CTA with oversized italic display type\n- All content pulled live from catalog-lite.json / catalog-home.json"
+  },
+  {
+    "sha": "ba04a93",
+    "date": "2026-05-27",
+    "title": "Add for-artists.html service page with pricing; link from about.html",
+    "body": "- New page at jfsn.com/for-artists.html\n- 3 tiers: Starter $500 / Standard $800 / Full Archive $1500\n- Features, how-it-works, FAQ, bottom CTA\n- about.html 'Now' section links to it"
+  },
+  {
+    "sha": "8dfe042",
+    "date": "2026-05-27",
+    "title": "Fix stale '16 series' text, add color placeholders to series.html, show XXXIII·Guernica display title in artwork detail",
+    "body": "- series-index.html: fix OG description + static count (16 → 10)\n- about.html: fix 'View all 16 series' → 10\n- series.html: wire colors.json as loading placeholders\n- artwork.html: load artist-config.js; show 'XXXIII · Guernica' display title in Series field and related-works link"
+  },
+  {
+    "sha": "f6fd4c3",
+    "date": "2026-05-27",
+    "title": "Curate XXXIII·Guernica series (232 works), add colors.json placeholders, fix old-site links",
+    "body": "- Apply curate-session: 146 added to Guernica, 156 removed → 232 total Guernica works\n- Generate colors.json (dominant color per artwork, 1084 entries)\n- Wire colors.json into archive.html + index.html as loading placeholders\n- Fix about.html old-site footer links (all 5 now point to correct server paths)\n- repass_descriptions.py: 101 banned-opener descriptions fixed (0 validation errors)"
+  },
+  {
+    "sha": "957189d",
+    "date": "2026-05-27",
+    "title": "Catalog complete: all 1,084 works cataloged, 0 errors",
+    "body": "- Final 78 images processed successfully (0 errors this pass)\n- Migration 002 applied: 5 Guernica theme→series, 11 torso motif removals\n- All 1,084 works have full sidecars\n- 107 description opener warnings remain (fix with repass_descriptions.py)"
+  },
+  {
+    "sha": "f10381c",
+    "date": "2026-05-27",
+    "title": "Catalog: 1,006 works cataloged (93% complete); 0 errors",
+    "body": "- Second mop-up pass: 861 more sidecars from final batch\n- Migration 002 applied to new sidecars: 11 Guernica theme→series fixes\n- art0932: trimmed description from 64→48 words\n- 78 remaining images failed (rate limit); re-run after key rotation"
+  },
+  {
+    "sha": "c13b280",
+    "date": "2026-05-27",
+    "title": "Reusability: artist-config.json + 744-work catalog batch complete",
+    "body": "- Add artist-config.json — single source of truth for all vocab/artist info\n- Add artist-config.js (generated) — browser-side config for HTML pages\n- Update vocab.py — reads from artist-config.json, no more hardcoded lists\n- Update catalog.py — builds AI prompt dynamically from artist-config.json\n- Update build_catalog.py — reads SITE_URL/artist from config, generates artist-config.js\n- Update archive.html, series.html, series-index.html, constellation.html — use window.ARCHIVE_CONFIG from artist-config.js instead of hardcoded theme/series arrays\n- Add init.sh — setup wizard for new archive forks (prompts name/URL/themes/series)\n- Add vocab-migrations/ — versioned migration scripts with README\n  - 001_remove_aviation_reliquaries.py (already run 2026-05-27)\n  - 002_fix_catalog_batch_results.py — fixed 35 sidecars post-batch\n- Add cassette, keyboard, tape, torso to motifs vocabulary\n- README: new 'Fork for your own archive' section, updated quick start\n- PROMPT_TEST.md: updated with batch completion status\n- Catalog: 744 cataloged works (up from 140); 0 validation errors; 107 opener warnings"
+  },
+  {
+    "sha": "25da38e",
+    "date": "2026-05-26",
+    "title": "Fix broken footer links to old sites",
+    "body": "2023 → /old-site/ (confirmed present on server)\nMr. SNOWmann, Fine Art 2000, 2014 → # (not yet on server)"
+  },
+  {
+    "sha": "0385617",
+    "date": "2026-05-26",
+    "title": "Add ingest.py, add-works.sh; fix verify_deploy.py; fix api .htaccess",
+    "body": "- artworks/ingest.py — iPhone/HEIC → AVIF pipeline (full/thumb/mini)\n  Requires pillow + pillow-avif-plugin + pillow-heif\n  Next IDs auto-detected from artworks/full/art*.avif\n  Originals moved to artworks/inbox/done/ after processing\n  Updates dims.json with new entries\n\n- add-works.sh — one-command wrapper: ingest → build → deploy\n  --no-deploy: skip FTP upload\n  --dry-run: preview without writing\n\n- artworks/verify_deploy.py — two fixes:\n  (1) urllib now sends browser User-Agent + Accept header (was getting 406)\n  (2) sw.js check updated from stale 'jfsn-v2' to 'jfsn-' prefix\n  (3) API endpoint failures downgraded to warnings — new dirs take ~1-2h\n      to propagate on this cPanel shared host (confirmed via testing)\n\n- artworks/build_catalog.py — api/.htaccess now includes mod_security\n  disable directives for cPanel compatibility"
+  },
+  {
+    "sha": "15e7f9c",
+    "date": "2026-05-26",
+    "title": "Remove old-site from git tracking; add to .gitignore",
+    "body": "old-site/ is 197MB — deployed to server via FTP (not git).\nNot needed in the repo; no personal portfolio assets in version control."
+  },
+  {
+    "sha": "23c4cab",
+    "date": "2026-05-26",
+    "title": "Add README, LICENSE; footer earlier-sites nav; Mr. SNOWmann fixes; about.html earlier sites sections",
+    "body": "- README.md — full setup guide for artists using this as a template\n- LICENSE — MIT (code); artwork rights note\n- All 9 pages: footer-earlier nav with Mr. SNOWmann, Fine Art 2000, jfsn 2023, jfsn 2014\n- about.html: Earlier Art Sites + Earlier Design Work sections with links\n- site.css: .footer-earlier styles (opacity 0.55 rest, full on hover)\n- Mr. SNOWmann: fixed capitalization across all pages (was 'Snowmann')\n- bio: water damage note (~500–1K works lost)\n- Earlier Design Work: jfsn.com since ~1990 / 30th version note\n- sw.js CACHE_V bumped to jfsn-20260527010526\n- api/v1/ regenerated"
+  },
+  {
+    "sha": "375f79e",
+    "date": "2026-05-26",
+    "title": "Add deploy toolchain + auto-bump CACHE_V on every build",
+    "body": "- deploy.sh: one command uploads all changed files via lftp\n- verify_deploy.py: post-deploy health checks (16 assertions)\n- build_catalog.py: now auto-bumps sw.js CACHE_V each build\n- .gitignore: excludes avif images, credentials, private folders"
+  },
+  {
+    "sha": "c3e39ce",
+    "date": "2026-05-26",
+    "title": "Initial commit — JFSN archive site",
+    "body": "10 pages, 140/1084 cataloged, Constellation + API features."
+  }
+]

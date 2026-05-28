@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0b0b">
+  <title>Changes &mdash; Jeffrey F. S. Neumann</title>
+  <meta name="description" content="Every revision to the archive. A living changelog of the work behind the work.">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="canonical" href="https://jfsn.com/changes.html">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap"></noscript>
+  <link rel="stylesheet" href="site.css?v=20260527-nav">
+
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="Changes &mdash; Jeffrey F. S. Neumann">
+  <meta property="og:description" content="Every revision to the archive. A living changelog.">
+  <meta property="og:image"       content="https://jfsn.com/og-card.jpg">
+  <meta property="og:url"         content="https://jfsn.com/changes.html">
+
+  <style>
+    .ch {
+      max-width: 64ch;
+      padding-top: clamp(3rem, 6vw, 5rem);
+      padding-bottom: clamp(4rem, 10vw, 8rem);
+    }
+    .ch__eyebrow {
+      font-size: var(--cap);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 0.875rem;
+    }
+    .ch__title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+      margin: 0 0 1.25rem;
+    }
+    .ch__intro {
+      font-family: var(--font-display);
+      font-size: clamp(1.125rem, 1.75vw, 1.375rem);
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.5;
+      color: var(--text);
+      margin: 0 0 1rem;
+    }
+    .ch__meta {
+      font-size: var(--cap);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 3rem;
+    }
+
+    .ch-feed { list-style: none; padding: 0; margin: 0; }
+    .ch-entry {
+      padding: 1.75rem 0;
+      border-top: 1px solid var(--dim);
+    }
+    .ch-entry:last-child { border-bottom: 1px solid var(--dim); }
+    .ch-entry__head {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.6rem;
+    }
+    .ch-entry__date {
+      font-size: var(--cap);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+    .ch-entry__sha {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.04em;
+      color: rgba(243, 240, 234, 0.32);
+      margin-left: auto;
+    }
+    .ch-entry__title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--text);
+      margin: 0 0 0.875rem;
+      line-height: 1.3;
+    }
+    .ch-entry__body {
+      font-size: 0.9375rem;
+      line-height: 1.75;
+      color: var(--text);
+      white-space: pre-wrap;
+      margin: 0;
+    }
+    .ch-entry__body:empty { display: none; }
+
+    .ch-loading,
+    .ch-error {
+      text-align: center;
+      font-size: var(--cap);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 4rem 0;
+    }
+  </style>
+</head>
+
+<body>
+
+<a href="#main" class="skip">Skip to content</a>
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="brand" href="/"><img src="jfsn-mark.png" class="brand-mark" alt="JFSN">Jeffrey F. S. Neumann</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="archive.html">Archive</a>
+      <a href="series-index.html">Series</a>
+      <a href="timeline.html">Timeline</a>
+      <a href="constellation.html" title="Force-directed map of all works, clustered by theme">Constellation</a>
+      <a href="about.html">About</a>
+      <a href="for-artists.html" style="color:var(--accent)">For Artists</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="container">
+    <article class="ch">
+      <p class="ch__eyebrow">Changes</p>
+      <h1 class="ch__title">A living record of the record.</h1>
+      <p class="ch__intro">
+        The archive is not a snapshot. Every revision &mdash; new work added,
+        dates filled in, pages rewritten &mdash; is logged below.
+      </p>
+      <p class="ch__meta" id="ch-meta">Loading&hellip;</p>
+
+      <ol class="ch-feed" id="ch-feed" aria-label="Revisions, newest first">
+        <li class="ch-loading">Loading the changelog&hellip;</li>
+      </ol>
+    </article>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <span>Jeffrey F. S. Neumann</span>
+    <nav class="footer-nav" aria-label="Site navigation">
+      <a href="archive.html">Archive</a>
+      <a href="series-index.html">Series</a>
+      <a href="timeline.html">Timeline</a>
+      <a href="constellation.html" title="Force-directed map of all works, clustered by theme">Constellation</a>
+      <a href="about.html">About</a>
+      <a href="for-artists.html" style="color:var(--accent)">For Artists</a>
+      <a href="changes.html" aria-current="page">Changes</a>
+      <a href="privacy.html">Privacy</a>
+    </nav>
+    <nav class="footer-social" aria-label="Social links">
+      <a href="https://www.linkedin.com/in/jeffreyneumann/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://dribbble.com/JFSN" target="_blank" rel="noopener">Dribbble</a>
+      <a href="https://www.youtube.com/@jfsneumann/videos" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://showspace.so/s/jeffrey-neumann-46" target="_blank" rel="noopener">Showspace</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function () {
+  function esc(s) {
+    return String(s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  /* Pretty date: "27 May 2026" — keeps tabular spacing for nice column feel */
+  function fmtDate(iso) {
+    if (!iso) return '';
+    const [y, m, d] = iso.split('-').map(Number);
+    if (!y || !m || !d) return iso;
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return `${String(d).padStart(2,'0')} ${months[m-1]} ${y}`;
+  }
+
+  fetch('changes.json?t=' + Date.now())
+    .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(entries => {
+      const feed = document.getElementById('ch-feed');
+      const meta = document.getElementById('ch-meta');
+      if (!entries.length) {
+        feed.innerHTML = `<li class="ch-loading">No commits yet.</li>`;
+        meta.textContent = '0 revisions';
+        return;
+      }
+      const dates = entries.map(e => e.date).filter(Boolean).sort();
+      const oldest = dates[0];
+      const newest = dates[dates.length - 1];
+      meta.textContent = `${entries.length} revisions · ${fmtDate(oldest)} → ${fmtDate(newest)}`;
+
+      feed.innerHTML = entries.map(e => `
+        <li class="ch-entry">
+          <div class="ch-entry__head">
+            <span class="ch-entry__date">${fmtDate(e.date)}</span>
+            <span class="ch-entry__sha">${esc(e.sha)}</span>
+          </div>
+          <h2 class="ch-entry__title">${esc(e.title)}</h2>
+          <p class="ch-entry__body">${esc(e.body)}</p>
+        </li>
+      `).join('');
+    })
+    .catch(() => {
+      const feed = document.getElementById('ch-feed');
+      const meta = document.getElementById('ch-meta');
+      if (meta) meta.textContent = '';
+      if (feed) feed.innerHTML = `<li class="ch-error">Could not load changes.json. The changelog regenerates each build.</li>`;
+    });
+})();
+</script>
+
+<script src="search.js" defer></script>
+<script data-goatcounter="https://jfsn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
+</body>
+</html>

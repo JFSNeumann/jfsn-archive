@@ -151,6 +151,7 @@ entries = [
     (SITE_URL + '/constellation.html',  '0.8', 'monthly'),
     (SITE_URL + '/api.html',            '0.7', 'monthly'),
     (SITE_URL + '/about.html',          '0.7', 'monthly'),
+    (SITE_URL + '/changes.html',        '0.4', 'weekly'),
     (SITE_URL + '/privacy.html',        '0.3', 'yearly'),
 ]
 # Theme-based series pages
@@ -410,3 +411,13 @@ print(f"api/v1/works.json — {n_works} cataloged works")
 print(f"api/v1/works/     — {n_works} per-work files")
 print(f"api/v1/themes.json, series.json, motifs.json, palette.json")
 print(f"api/.htaccess     — CORS headers (Apache/cPanel)")
+
+# ── Living changelog ─────────────────────────────────────────────────────────
+# Parses git log into changes.json for the /changes.html page.
+try:
+    import sys
+    sys.path.insert(0, str(Path(__file__).parent))
+    import build_changes
+    build_changes.main()
+except Exception as e:
+    print(f"changes.json      — skipped ({e})")
