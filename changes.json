@@ -1,5 +1,47 @@
 [
   {
+    "sha": "e70d92c",
+    "date": "2026-05-28",
+    "title": "Fix theme rules + add repass_themes.py",
+    "body": "artist-config.json: tightened ai_note for all 10 themes — Mr. SNOWmann\nwas 'apply to ALL collages' (→ 791 wrongly tagged); Gallery was applying\nto outdoor murals; Framed was matching rectangular packaging. Each rule\nnow requires the theme to be clearly visible and primary.\n\nrepass_themes.py: re-evaluates theme assignments for all 1,084 works\nusing Haiku. Sends thumbnail + metadata, writes fresh themes to sidecars.\n--dry-run confirmed working. ~$1-2 total to run full batch."
+  },
+  {
+    "sha": "6a76cbd",
+    "date": "2026-05-28",
+    "title": "Add client onboarding workflow + setup-client.sh",
+    "body": "WORKFLOW-CLIENT.md: full guide from first inquiry email through\ndelivery — intake checklist, email template, every command in order,\ncuration guide, quality checklist, deploy steps, adding works later,\npricing table, common problems.\n\nsetup-client.sh: one command to scaffold a clean client project from\nthe JFSN template. Copies code + scripts, excludes artwork images and\nall Jeff-specific data, creates empty artworks/ dirs, inits fresh git.\nUsage: bash setup-client.sh sarah-jones"
+  },
+  {
+    "sha": "ff19f2b",
+    "date": "2026-05-28",
+    "title": "Add The Companion — text prompt → matched archive works (#4 from wow backlog)",
+    "body": "New page companion.html: type a feeling, word, or memory → Claude Haiku\npicks 1–3 real works from the catalog that resonate, with a sentence\nabout why each fits. Oracle-style UI, staggered fade-in results,\nexample chips, \"Try another\" reset.\n\nNetlify function netlify/functions/companion.mjs keeps the API key\nserver-side. CORS-open so it works from jfsn.com (cPanel) in the\ninterim and from jfsn-archive.netlify.app natively. Samples 200 works\nper query from catalog-lite for speed. Uses claude-haiku-4-5-20251001.\n\nAlso: \"Companion\" added to footer nav on all 12 pages; companion.html\nadded to sitemap in build_catalog.py."
+  },
+  {
+    "sha": "0ae0efc",
+    "date": "2026-05-28",
+    "title": "Fix hero mosaic: 4 rows visible, no gap before stat bar",
+    "body": "- Reduce mosaic from 30 → 12 tiles (4 rows × 3 col), doubled to 24\n  for a seamless infinite scroll — repeat seam can't land in frame\n- Cap mosaic height at 66.67vw (= 4 × tile-height in half-width column)\n- Remove hero min-height so mosaic height drives the section naturally"
+  },
+  {
+    "sha": "b161559",
+    "date": "2026-05-28",
+    "title": "Reduce hero min-height 100svh → 75svh to close gap above stat bar",
+    "body": ""
+  },
+  {
+    "sha": "94b0e3b",
+    "date": "2026-05-28",
+    "title": "Add drop-and-preview demo to for-artists.html (#3 from wow backlog)",
+    "body": "Drop up to 10 photos onto the new demo section; they render immediately\nin a masonry grid using the same CSS/span formula as archive.html.\nTitles are editable inline (click the hover overlay). After all 10 are\nplaced, the drop zone collapses to a compact \"add more\" bar and locks\nat the limit. A nudge block below links directly to #inquire.\n\nHero CTA row gains a \"Try it with your photos →\" ghost link pointing to\n#demo so visitors can discover the feature without scrolling."
+  },
+  {
+    "sha": "0af5ddb",
+    "date": "2026-05-28",
+    "title": "Dating pass complete: 100% coverage (1,084/1,084) + fix curate.html \"Undated\" filter",
+    "body": "The remaining 319 undated works have been assigned years through curate.html's\nYears tab. Archive coverage is now 100%. The real fifty-year shape is finally\nvisible — including a confirmed lean period in the 1980s (only 11 works).\n\nFinal distribution by decade:\n  1970s:  58   formative\n  1980s:  11   sparse (real lean period)\n  1990s: 193   productive\n  2000s: 274   peak\n  2010s: 307   peak\n  2020s: 241   recent\n\n11 same-or-different-decade conflicts preserved per apply_dates.py default\n(existing sidecar year wins). Resolve case-by-case later if desired.\n\nAlso: curate.html \"Undated\" filter bug fix. The filter was using a broader\n\"untagged across all dimensions\" predicate (no theme AND no year AND no\nseries), which showed 0 results because every work has at least one theme.\nNow mode-aware: in years mode it filters works by `years[id] == null`; in\nseries mode by `seriesAssign[id] == null`; only themes mode keeps the\noriginal \"fully untagged\" semantics."
+  },
+  {
     "sha": "75fa252",
     "date": "2026-05-28",
     "title": "Add /changes.html — a living changelog of the archive",

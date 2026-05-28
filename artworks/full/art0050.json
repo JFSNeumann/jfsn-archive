@@ -22,7 +22,10 @@
   ],
   "materials": [],
   "composition": "framed inset center, target satellites",
-  "themes": [],
+  "themes": [
+    "Targets",
+    "Torsos & Faces"
+  ],
   "keywords": [
     "text",
     "framed-inset",

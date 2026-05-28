@@ -1,6 +1,6 @@
 {
   "composition": "spare narrative drawing with text base",
-  "description": "Two warplane silhouettes—a small single-engine fighter at center and a large four-engine bomber at the lower edge—occupy a white paper ground marked with dotted runway lines, a circular pencil arc, target roundels, and two compact discs near the upper margin. Handwritten inscription reading 'Merry Christmas 2013 Allison' runs along the bottom edge.",
+  "description": "Two warplane silhouettes\u2014a small single-engine fighter at center and a large four-engine bomber at the lower edge\u2014occupy a white paper ground marked with dotted runway lines, a circular pencil arc, target roundels, and two compact discs near the upper margin. Handwritten inscription reading 'Merry Christmas 2013 Allison' runs along the bottom edge.",
   "featured": false,
   "file": "art0083.avif",
   "keywords": [
@@ -31,7 +31,9 @@
   ],
   "schema_version": "1",
   "series": "Guernica",
-  "themes": [],
+  "themes": [
+    "Targets"
+  ],
   "title": "Merry Christmas 2013",
   "work_type": "collage",
   "year": 2000
