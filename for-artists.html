@@ -65,7 +65,6 @@
        HERO — split layout with animated thumbnail mosaic
     ═══════════════════════════════════════════════════════════ */
     .hero {
-      min-height: 75svh;
       display: grid;
       grid-template-columns: 1fr 1fr;
       position: relative;
@@ -133,14 +132,16 @@
       color: var(--muted);
     }
 
-    /* Right: animated mosaic */
+    /* Right: animated mosaic — capped at ~4 rows of tiles */
     .hero__mosaic {
       position: relative;
       overflow: hidden;
+      max-height: 66.67vw; /* 4 × (50vw ÷ 3): 4 rows of 3-col square tiles in half-width column */
     }
     @media (max-width: 860px) {
       .hero__mosaic {
         height: 50svh;
+        max-height: 50svh;
         order: -1;
       }
     }
@@ -1459,9 +1460,9 @@
     .then(catalog => {
       if (!catalog) return;
 
-      // Use all 30 home works, shuffle, double for seamless loop
-      const shuffled = [...catalog].sort(() => Math.random() - 0.5).slice(0, 30);
-      const doubled  = [...shuffled, ...shuffled]; // double for infinite scroll
+      // 12 works = 4 rows × 3 cols; doubled to 24 = 8 rows so seam never lands in frame
+      const shuffled = [...catalog].sort(() => Math.random() - 0.5).slice(0, 12);
+      const doubled  = [...shuffled, ...shuffled];
 
       const track = document.getElementById('mosaic-track');
       if (!track) return;
