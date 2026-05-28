@@ -647,7 +647,15 @@ function getVisible(searchFilt) {
   const filt = searchFilt.trim().toLowerCase();
   let ids = filt ? IDS.filter(id => id.includes(filt)) : IDS;
   if (filterMode === 'untagged') {
-    ids = ids.filter(id => !isTagged(id));
+    /* Mode-aware: "Undated" in years mode means no year specifically,
+       "No series" in series mode means no series — not "no anything." */
+    if (mode === 'years') {
+      ids = ids.filter(id => years[id] == null);
+    } else if (mode === 'series') {
+      ids = ids.filter(id => seriesAssign[id] == null);
+    } else {
+      ids = ids.filter(id => !isTagged(id));
+    }
   } else if (filterMode === 'selected') {
     ids = ids.filter(id => isActiveSelected(id));
   } else if (filterMode === 'bare') {

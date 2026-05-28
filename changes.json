@@ -1,5 +1,11 @@
 [
   {
+    "sha": "75fa252",
+    "date": "2026-05-28",
+    "title": "Add /changes.html — a living changelog of the archive",
+    "body": "Parses git log at build time into changes.json and renders a newest-first\ntypographic feed. The archive is a living personal record, not a snapshot;\nthis page makes the ongoing work visible.\n\n- artworks/build_changes.py: parses git log into changes.json. Strips\n  Co-Authored-By trailers for a cleaner public feed. Invoked from\n  build_catalog.py so every build refreshes the changelog.\n- changes.html: feed page modeled on privacy.html typography. Dates\n  rendered as \"27 May 2026\", short SHA shown, commit body preserved\n  with pre-wrap formatting.\n- Footer-nav: Changes link added across 12 pages (between For Artists\n  and Privacy). Header nav kept lean.\n- Sitemap: changes.html added."
+  },
+  {
     "sha": "4f14554",
     "date": "2026-05-28",
     "title": "Add time-machine scrubber to timeline.html",
