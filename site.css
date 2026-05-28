@@ -72,6 +72,11 @@ body {
 }
 .nav { display: flex; gap: 1.5rem; }
 .nav a:hover, .brand:hover { color: var(--accent); }
+.nav a[aria-current="page"] {
+  color: var(--text);
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 2px;
+}
 .brand { display: flex; align-items: center; gap: 0.5rem; }
 .brand-mark {
   height: 20px; width: auto;
@@ -380,7 +385,7 @@ body {
   border-color: rgba(243,240,234,0.35);
 }
 .fav-filter-btn[aria-pressed="true"] {
-  color: #fff;
+  color: #0b0b0b;
   background: var(--accent);
   border-color: var(--accent);
 }

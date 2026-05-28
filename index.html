@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b0b0b">
 
-  <title>Jeffrey F. S. Neumann — Archive</title>
-  <meta name="description" content="Archive of works by Jeffrey F. S. Neumann, 1974–present.">
+  <title>Jeffrey F. S. Neumann — 50 Years of Collage, Sculpture &amp; Photography</title>
+  <meta name="description" content="1,084 works spanning 1974 to the present. Collage, sculpture, and photography by Jeffrey F. S. Neumann, Cleveland.">
 
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="canonical" href="https://jfsn.com/">
@@ -14,13 +14,13 @@
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="catalog-home.json?v=20260527190947" as="fetch" crossorigin>
+  <link rel="preload" href="catalog-home.json?v=20260528132611" as="fetch" crossorigin>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap"></noscript>
-  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="site.css?v=20260527-nav">
 
   <meta property="og:type"        content="website">
-  <meta property="og:title"       content="Jeffrey F. S. Neumann — Archive">
+  <meta property="og:title"       content="Jeffrey F. S. Neumann — 50 Years of Collage, Sculpture &amp; Photography">
   <meta property="og:description" content="1,084 works spanning 1974 to the present. Collage, sculpture, and photography by Jeffrey F. S. Neumann.">
   <meta property="og:image"       content="https://jfsn.com/og-card.jpg">
   <meta property="og:url"         content="https://jfsn.com/">
@@ -395,7 +395,7 @@
       <a href="archive.html">Archive</a>
       <a href="series-index.html">Series</a>
       <a href="timeline.html">Timeline</a>
-      <a href="constellation.html">Constellation</a>
+      <a href="constellation.html" title="Force-directed map of all works, clustered by theme">Constellation</a>
       <a href="about.html">About</a>
       <a href="for-artists.html" style="color:var(--accent)">For Artists</a>
     </nav>
@@ -427,7 +427,7 @@
 
   <!-- ⑤ Tagline — larger, serif italic, full text color -->
   <p class="home-tagline container">Five decades of collage, sculpture, and photography &mdash; one artist, one archive.</p>
-  <p class="home-context container">Compact discs, warplanes, photographic faces, lace, found materials &mdash; assembled into collages, sculptures, and photographs since 1974. Based in Cleveland. <a href="about.html">About the work &rarr;</a></p>
+  <p class="home-context container">Compact discs, warplanes, photographic faces, lace, found materials &mdash; assembled into collages, sculptures, and photographs since 1974. Based in Cleveland. <a href="about.html">About the work &rarr;</a> &nbsp;&middot;&nbsp; <a href="for-artists.html" style="color:var(--accent);border-bottom-color:rgba(255,102,0,0.35)">I build archives like this for other artists &mdash; from $500 &rarr;</a></p>
 
   <section class="grid-section container" aria-label="Selected works">
     <h2 class="section-label">Selected Works</h2>
@@ -489,9 +489,10 @@
       <a href="archive.html">Archive</a>
       <a href="series-index.html">Series</a>
       <a href="timeline.html">Timeline</a>
-      <a href="constellation.html">Constellation</a>
+      <a href="constellation.html" title="Force-directed map of all works, clustered by theme">Constellation</a>
       <a href="about.html">About</a>
       <a href="for-artists.html" style="color:var(--accent)">For Artists</a>
+      <a href="privacy.html">Privacy</a>
     </nav>
     <nav class="footer-social" aria-label="Social links">
       <a href="https://www.linkedin.com/in/jeffreyneumann/" target="_blank" rel="noopener">LinkedIn</a>
@@ -526,7 +527,7 @@
   // ?v= is stamped by build_catalog.py — forces browser to fetch fresh after every build
   let dominantColors = {};
   fetch('colors.json').then(r => r.ok ? r.json() : null).then(c => { if (c) dominantColors = c; }).catch(() => {});
-  fetch('catalog-home.json?v=20260527190947')
+  fetch('catalog-home.json?v=20260528132611')
     .then(r => r.ok ? r.json() : null)
     .then(catalog => {
       if (!catalog || !catalog.length) return;
@@ -728,6 +729,9 @@
 </script>
 
 <script src="search.js" defer></script>
+<!-- GoatCounter &mdash; privacy-first analytics. Replace subdomain after sign-up at https://www.goatcounter.com -->
+<script data-goatcounter="https://jfsn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
 <script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
 </body>
 </html>

@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap"></noscript>
-  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="site.css?v=20260527-nav">
 
   <meta property="og:type"        content="website">
   <meta property="og:title"       content="Archive — Jeffrey F. S. Neumann">
@@ -117,7 +117,7 @@
       border-color: rgba(243,240,234,0.35);
     }
     .chip[aria-pressed="true"] {
-      color: #fff;
+      color: #0b0b0b;
       background: var(--accent);
       border-color: var(--accent);
     }
@@ -485,9 +485,9 @@
       font-size: 0.85em;
     }
 
-    /* -------- Mobile: palette row collapse -------- */
+    /* -------- Progressive disclosure: motif + palette -------- */
     .more-filters-btn {
-      display: none;
+      display: block;
       appearance: none;
       background: none;
       border: none;
@@ -498,15 +498,14 @@
       letter-spacing: 0.14em;
       text-transform: uppercase;
       padding: 0.25rem 0;
-      margin-top: 0.125rem;
+      margin-top: 0.25rem;
       transition: color 0.15s;
     }
     .more-filters-btn:hover { color: var(--text); }
-    @media (max-width: 600px) {
-      #palette-wrap { display: none; }
-      #palette-wrap.expanded { display: block; }
-      .more-filters-btn { display: block; }
-    }
+    #motif-wrap,
+    #palette-wrap { display: none; }
+    #motif-wrap.expanded,
+    #palette-wrap.expanded { display: block; }
 
     /* -------- Reduced motion -------- */
     @media (prefers-reduced-motion: reduce) {
@@ -539,7 +538,7 @@
       <a href="archive.html" aria-current="page">Archive</a>
       <a href="series-index.html">Series</a>
       <a href="timeline.html">Timeline</a>
-      <a href="constellation.html">Constellation</a>
+      <a href="constellation.html" title="Force-directed map of all works, clustered by theme">Constellation</a>
       <a href="about.html">About</a>
       <a href="for-artists.html" style="color:var(--accent)">For Artists</a>
     </nav>
@@ -578,7 +577,7 @@
         <span class="filter-label">Palette</span>
       </div>
     </div>
-    <button class="more-filters-btn" id="more-filters-btn" aria-expanded="false">+ Color filters</button>
+    <button class="more-filters-btn" id="more-filters-btn" aria-expanded="false">+ More filters (motif &amp; palette)</button>
   </div>
 </div>
 
@@ -634,9 +633,10 @@
       <a href="archive.html">Archive</a>
       <a href="series-index.html">Series</a>
       <a href="timeline.html">Timeline</a>
-      <a href="constellation.html">Constellation</a>
+      <a href="constellation.html" title="Force-directed map of all works, clustered by theme">Constellation</a>
       <a href="about.html">About</a>
       <a href="for-artists.html" style="color:var(--accent)">For Artists</a>
+      <a href="privacy.html">Privacy</a>
     </nav>
     <nav class="footer-social" aria-label="Social links">
       <a href="https://www.linkedin.com/in/jeffreyneumann/" target="_blank" rel="noopener">LinkedIn</a>
@@ -838,21 +838,27 @@
       if (colors) dominantColors = colors;
       buildFilters();
 
-      /* ---- palette row toggle (mobile) ---- */
+      /* ---- progressive disclosure: motif + palette ---- */
       (function () {
         const moreBtn     = document.getElementById('more-filters-btn');
+        const motifWrap   = document.getElementById('motif-wrap');
         const paletteWrap = document.getElementById('palette-wrap');
-        if (!moreBtn || !paletteWrap) return;
-        /* auto-expand when palette filters are active (e.g. from URL) */
-        if (activePalettes.size > 0) {
+        if (!moreBtn || !paletteWrap || !motifWrap) return;
+        const setLabel = on => {
+          moreBtn.textContent = (on ? '− ' : '+ ') + 'More filters (motif & palette)';
+          moreBtn.setAttribute('aria-expanded', String(on));
+        };
+        /* auto-expand when motif OR palette filters are active (e.g. from URL) */
+        if (activePalettes.size > 0 || activeMotifs.size > 0) {
+          motifWrap.classList.add('expanded');
           paletteWrap.classList.add('expanded');
-          moreBtn.textContent = '− Color filters';
-          moreBtn.setAttribute('aria-expanded', 'true');
+          setLabel(true);
         }
         moreBtn.addEventListener('click', () => {
-          const on = paletteWrap.classList.toggle('expanded');
-          moreBtn.textContent = (on ? '− ' : '+ ') + 'Color filters';
-          moreBtn.setAttribute('aria-expanded', String(on));
+          const on = !motifWrap.classList.contains('expanded');
+          motifWrap.classList.toggle('expanded', on);
+          paletteWrap.classList.toggle('expanded', on);
+          setLabel(on);
         });
       })();
 
@@ -1514,6 +1520,9 @@
 </script>
 
 <script src="search.js" defer></script>
+<!-- GoatCounter &mdash; privacy-first analytics. Replace subdomain after sign-up at https://www.goatcounter.com -->
+<script data-goatcounter="https://jfsn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
 <script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
 </body>
 </html>

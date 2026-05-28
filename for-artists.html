@@ -15,13 +15,49 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap"></noscript>
-  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="site.css?v=20260527-nav">
 
   <meta property="og:type"        content="website">
   <meta property="og:title"       content="Archive Your Life's Work — JFSN">
   <meta property="og:description" content="A professional archive website for visual artists. AI-generated catalog, full-text search, open API. Starting at $500.">
   <meta property="og:image"       content="https://jfsn.com/og-card.jpg">
   <meta property="og:url"         content="https://jfsn.com/for-artists.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Artist Archive Website Creation",
+    "description": "A professional, searchable archive website for visual artists. AI-generated catalog descriptions, full-text search, timeline, constellation view, and an open API. One-time setup, no ongoing fees.",
+    "serviceType": "Website creation for visual artists",
+    "areaServed": "Worldwide",
+    "url": "https://jfsn.com/for-artists.html",
+    "provider": {
+      "@type": "Person",
+      "name": "Jeffrey F. S. Neumann",
+      "url": "https://jfsn.com/",
+      "email": "jfsneumann@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Cleveland",
+        "addressRegion": "OH",
+        "addressCountry": "US"
+      }
+    },
+    "offers": {
+      "@type": "AggregateOffer",
+      "priceCurrency": "USD",
+      "lowPrice": "500",
+      "highPrice": "1500",
+      "offerCount": "3",
+      "offers": [
+        { "@type": "Offer", "name": "Starter",  "price": "500",  "priceCurrency": "USD", "description": "Up to 200 works, AI cataloged. Archive, search, timeline. Deployed to your domain." },
+        { "@type": "Offer", "name": "Standard", "price": "800",  "priceCurrency": "USD", "description": "Up to 500 works. All pages plus Constellation view. Custom palette vocabulary. Source files + GitHub repo." },
+        { "@type": "Offer", "name": "Full",     "price": "1500", "priceCurrency": "USD", "description": "Unlimited works. All pages plus open API. Curation consultation. 30 days of revisions." }
+      ]
+    }
+  }
+  </script>
 
   <style>
 
@@ -477,6 +513,19 @@
     }
     .plan__features li::before { content: '—'; color: var(--dim); flex-shrink: 0; }
     .plan__features li strong { color: var(--text); font-weight: 500; }
+    .plan__example {
+      display: block;
+      margin: 0 0 0.625rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      border-bottom: 1px solid var(--dim);
+      padding-bottom: 0.4rem;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .plan__example:hover { color: var(--text); border-color: var(--muted); }
+    .plan--featured .plan__example { color: var(--accent); border-color: rgba(255,102,0,0.35); }
+    .plan--featured .plan__example:hover { color: var(--accent); opacity: 0.8; }
     .plan__cta {
       display: block;
       text-align: center;
@@ -550,10 +599,84 @@
     .btn-ghost:hover { border-color: var(--text); color: var(--text); }
 
     /* ═══════════════════════════════════════════════════════════
-       BOTTOM CTA
+       FOUNDING ARTIST CALLOUT
+    ═══════════════════════════════════════════════════════════ */
+    .founding {
+      margin-top: 2.5rem;
+      padding: clamp(1.75rem, 3vw, 2.5rem);
+      border: 1px solid var(--accent);
+      background: rgba(255, 102, 0, 0.04);
+      max-width: 70ch;
+    }
+    .founding__eyebrow {
+      font-size: var(--cap);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 0.625rem;
+    }
+    .founding__title {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      font-weight: 300;
+      line-height: 1.2;
+      margin: 0 0 1rem;
+      color: var(--text);
+    }
+    .founding__discount { color: var(--accent); font-style: italic; }
+    .founding__body {
+      font-size: 0.9375rem;
+      line-height: 1.7;
+      color: var(--muted);
+      margin: 0 0 1rem;
+      max-width: 60ch;
+    }
+    .founding__body strong { color: var(--text); font-weight: 500; }
+    .founding__cta {
+      font-size: 0.875rem;
+      color: var(--muted);
+      margin: 0;
+    }
+    .founding__cta em { color: var(--text); font-style: italic; }
+    .founding__cta a {
+      color: var(--accent);
+      border-bottom: 1px solid rgba(255, 102, 0, 0.35);
+      padding-bottom: 1px;
+      transition: opacity 0.15s;
+    }
+    .founding__cta a:hover { opacity: 0.8; color: var(--accent); }
+
+    /* ═══════════════════════════════════════════════════════════
+       TESTIMONIALS  (rendered when the section is uncommented)
+    ═══════════════════════════════════════════════════════════ */
+    .testimonials {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem 4rem;
+    }
+    @media (max-width: 700px) { .testimonials { grid-template-columns: 1fr; } }
+    .testimonial { margin: 0; }
+    .testimonial__quote {
+      font-family: var(--font-display);
+      font-size: clamp(1.125rem, 1.75vw, 1.375rem);
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.55;
+      color: var(--text);
+      margin: 0 0 1rem;
+    }
+    .testimonial__source {
+      font-size: var(--cap);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       INQUIRY FORM
     ═══════════════════════════════════════════════════════════ */
     .bottom-cta {
-      padding: clamp(5rem, 10vw, 10rem) 0;
+      padding: clamp(5rem, 10vw, 10rem) 0 clamp(3rem, 5vw, 5rem);
       text-align: center;
     }
     .bottom-cta__title {
@@ -571,15 +694,100 @@
       margin: 0 auto 2.5rem;
       line-height: 1.75;
     }
-    .bottom-cta__email {
-      font-family: var(--font-display);
-      font-size: clamp(1.25rem, 2.5vw, 2rem);
-      color: var(--accent);
-      border-bottom: 1px solid var(--accent);
-      padding-bottom: 2px;
-      transition: opacity 0.15s;
+    .inquiry-form {
+      max-width: 32rem;
+      margin: 0 auto;
+      text-align: left;
+      display: grid;
+      gap: 1.25rem;
     }
-    .bottom-cta__email:hover { opacity: 0.72; color: var(--accent); }
+    .inquiry-field { display: grid; gap: 0.4rem; }
+    .inquiry-field label {
+      font-size: var(--cap);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .inquiry-field input,
+    .inquiry-field select,
+    .inquiry-field textarea {
+      appearance: none;
+      background: none;
+      border: 1px solid var(--dim);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.9375rem;
+      line-height: 1.5;
+      padding: 0.7rem 0.85rem;
+      outline: none;
+      transition: border-color 0.15s;
+      width: 100%;
+    }
+    .inquiry-field select {
+      cursor: pointer;
+      background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%),
+                        linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+      background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%;
+      background-size: 5px 5px, 5px 5px;
+      background-repeat: no-repeat;
+      padding-right: 2.25rem;
+    }
+    .inquiry-field select option { background: #1a1a1a; color: var(--text); }
+    .inquiry-field textarea { min-height: 6rem; resize: vertical; }
+    .inquiry-field input:focus,
+    .inquiry-field select:focus,
+    .inquiry-field textarea:focus { border-color: rgba(243,240,234,0.45); }
+    .inquiry-submit {
+      appearance: none;
+      background: var(--accent);
+      color: #0b0b0b;
+      border: none;
+      font-family: inherit;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 1rem 2.25rem;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.15s;
+      justify-self: start;
+    }
+    .inquiry-submit:hover { opacity: 0.88; transform: translateY(-1px); }
+    /* Honeypot — invisible to humans */
+    .inquiry-honeypot { position: absolute; left: -9999px; }
+    .inquiry-fallback {
+      margin-top: 2rem;
+      font-size: 0.8125rem;
+      color: var(--muted);
+      text-align: center;
+    }
+    .inquiry-fallback a {
+      color: var(--accent);
+      border-bottom: 1px solid rgba(255,102,0,0.35);
+      padding-bottom: 1px;
+    }
+    .inquiry-fallback a:hover { color: var(--accent); opacity: 0.8; }
+    .inquiry-privacy {
+      margin: 0.75rem auto 0;
+      max-width: 36rem;
+      font-size: 0.6875rem;
+      letter-spacing: 0.02em;
+      color: var(--muted);
+      opacity: 0.7;
+      text-align: center;
+      line-height: 1.5;
+    }
+    .form-thanks {
+      max-width: 32rem;
+      margin: 0 auto;
+      padding: 2rem;
+      border: 1px solid var(--accent);
+      color: var(--text);
+      text-align: center;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    .form-thanks strong { color: var(--accent); }
 
     /* ═══════════════════════════════════════════════════════════
        ENTRANCE ANIMATIONS
@@ -616,8 +824,9 @@
       <a href="archive.html">Archive</a>
       <a href="series-index.html">Series</a>
       <a href="timeline.html">Timeline</a>
-      <a href="constellation.html">Constellation</a>
+      <a href="constellation.html" title="Force-directed map of all works, clustered by theme">Constellation</a>
       <a href="about.html">About</a>
+      <a href="for-artists.html" style="color:var(--accent)" aria-current="page">For Artists</a>
     </nav>
   </div>
 </header>
@@ -690,6 +899,27 @@
         <a href="archive.html" style="color:var(--muted);border-bottom:1px solid var(--dim)">Browse the full archive →</a>
       </p>
     </section>
+
+    <!-- ── Testimonials ────────────────────────────────────────
+         TODO: replace the {placeholders} with real quotes before publishing.
+         Delete the wrapping <!-- and --\> markers below to enable the section.
+    <section class="section">
+      <div class="section__head">
+        <p class="section__label">What artists say</p>
+        <h2 class="section__title">From the people <em>who&rsquo;ve seen it work.</em></h2>
+      </div>
+      <div class="testimonials">
+        <figure class="testimonial">
+          <blockquote class="testimonial__quote">{Replace with a 1&ndash;2 sentence quote from an artist who has used or reviewed the archive.}</blockquote>
+          <figcaption class="testimonial__source">&mdash; {Name}, {medium / role}</figcaption>
+        </figure>
+        <figure class="testimonial">
+          <blockquote class="testimonial__quote">{Second quote.}</blockquote>
+          <figcaption class="testimonial__source">&mdash; {Name}, {medium / role}</figcaption>
+        </figure>
+      </div>
+    </section>
+    -->
 
     <!-- ── Features ──────────────────────────────────────────── -->
     <section class="section">
@@ -795,7 +1025,8 @@
             <li>Deployed to your domain</li>
             <li>Source files handed off</li>
           </ul>
-          <a class="plan__cta" href="mailto:jfsneumann@gmail.com?subject=Starter archive — inquiry">Inquire</a>
+          <a class="plan__example" href="archive.html?dec=2020s" target="_blank" rel="noopener">See a 200-work example &rarr;</a>
+          <a class="plan__cta" href="#inquire" data-tier="Starter">Inquire</a>
         </div>
 
         <div class="plan plan--featured">
@@ -811,7 +1042,8 @@
             <li>Deployed to your domain</li>
             <li>Source files + GitHub repo</li>
           </ul>
-          <a class="plan__cta" href="mailto:jfsneumann@gmail.com?subject=Standard archive — inquiry">Inquire</a>
+          <a class="plan__example" href="constellation.html" target="_blank" rel="noopener">See the constellation view &rarr;</a>
+          <a class="plan__cta" href="#inquire" data-tier="Standard">Inquire</a>
         </div>
 
         <div class="plan">
@@ -827,12 +1059,27 @@
             <li>30 days of revisions</li>
             <li>Source files + GitHub repo</li>
           </ul>
-          <a class="plan__cta" href="mailto:jfsneumann@gmail.com?subject=Full archive — inquiry">Inquire</a>
+          <a class="plan__example" href="api.html" target="_blank" rel="noopener">See the public API &rarr;</a>
+          <a class="plan__cta" href="#inquire" data-tier="Full">Inquire</a>
         </div>
 
       </div>
+
+      <aside class="founding" aria-labelledby="founding-title">
+        <p class="founding__eyebrow">Founding artists &middot; 3 slots</p>
+        <h3 class="founding__title" id="founding-title">
+          <span class="founding__discount">30% off</span> for the first three
+        </h3>
+        <p class="founding__body">
+          The first three artists receive 30% off any tier in exchange for a short testimonial and permission to feature their archive as a case study. That makes the Standard tier <strong>$560</strong> instead of $800, and the Full Archive <strong>$1,050</strong> instead of $1,500. Once the three slots are filled, pricing returns to standard.
+        </p>
+        <p class="founding__cta">
+          Mention <em>founding</em> in your inquiry below. <a href="#inquire">Start an inquiry &rarr;</a>
+        </p>
+      </aside>
+
       <p style="margin-top:1.25rem;font-size:0.8125rem;color:var(--muted);max-width:60ch;">
-        All plans include complete source code. Hosting is free (Netlify/GitHub Pages) or ~$5/month (cPanel shared). AI cataloging costs (~$5–15 for 500 works) are included.
+        All plans include complete source code. Hosting is free (Netlify/GitHub Pages) or ~$5/month (cPanel shared). AI cataloging costs (~$5&ndash;15 for 500 works) are included.
       </p>
     </section>
 
@@ -875,6 +1122,14 @@
           <p class="faq__q">I have thousands of works. Can this handle it?</p>
           <p class="faq__a">The system has been tested at 1,084 works with full performance. Reach out to discuss large collections — pricing is negotiable for significant archives.</p>
         </div>
+        <div>
+          <p class="faq__q">What if I&rsquo;m not technical?</p>
+          <p class="faq__a">You don&rsquo;t need to be. I handle the deployment, the cataloging, and the configuration. You provide images and answer a short questionnaire about your themes. Adding new works later is one command I&rsquo;ll walk you through &mdash; or I can do it for you.</p>
+        </div>
+        <div>
+          <p class="faq__q">What happens to the site if you disappear?</p>
+          <p class="faq__a">You own every file. The whole codebase is <a href="https://github.com/JFSNeumann/jfsn-archive" target="_blank" rel="noopener">open source on GitHub</a> &mdash; any developer can pick it up. There is no proprietary service to shut down, no database to migrate, no login that depends on me. Static HTML, JSON, and images. It will keep running.</p>
+        </div>
       </div>
     </section>
 
@@ -889,11 +1144,69 @@
       </div>
     </section>
 
-    <!-- ── Bottom CTA ─────────────────────────────────────────── -->
-    <section class="bottom-cta">
+    <!-- ── Inquiry form ───────────────────────────────────────── -->
+    <section class="bottom-cta" id="inquire">
       <h2 class="bottom-cta__title">Your work deserves<br>a permanent address.</h2>
-      <p class="bottom-cta__body">Send me a note. Tell me roughly how many works you have and what kind of art you make. I'll let you know if it's a good fit and what to expect.</p>
-      <a class="bottom-cta__email" href="mailto:jfsneumann@gmail.com?subject=Archive inquiry">jfsneumann@gmail.com</a>
+      <p class="bottom-cta__body">Tell me roughly how many works you have and what kind of art you make. I&rsquo;ll reply within 48 hours with whether it&rsquo;s a good fit and what to expect.</p>
+
+      <div id="form-success" class="form-thanks" hidden>
+        <strong>Thanks &mdash; got it.</strong><br>
+        I&rsquo;ll reply within 48 hours from <a href="mailto:jfsneumann@gmail.com" style="color:var(--muted);border-bottom:1px solid var(--dim)">jfsneumann@gmail.com</a>.
+      </div>
+
+      <form
+        id="inquiry-form"
+        class="inquiry-form"
+        name="archive-inquiry"
+        method="POST"
+        data-netlify="true"
+        data-netlify-honeypot="bot-field"
+        action="/for-artists.html?sent=1#inquire">
+        <input type="hidden" name="form-name" value="archive-inquiry">
+        <input type="hidden" name="tier" id="inq-tier" value="">
+        <p class="inquiry-honeypot"><label>Don&rsquo;t fill this out: <input name="bot-field"></label></p>
+
+        <div class="inquiry-field">
+          <label for="inq-name">Your name</label>
+          <input type="text" id="inq-name" name="name" required autocomplete="name">
+        </div>
+
+        <div class="inquiry-field">
+          <label for="inq-email">Email</label>
+          <input type="email" id="inq-email" name="email" required autocomplete="email">
+        </div>
+
+        <div class="inquiry-field">
+          <label for="inq-works"># of works to archive</label>
+          <select id="inq-works" name="works_count" required>
+            <option value="">Choose a range&hellip;</option>
+            <option value="under-200">Under 200 (Starter)</option>
+            <option value="200-500">200&ndash;500 (Standard)</option>
+            <option value="500-1500">500&ndash;1,500 (Full)</option>
+            <option value="1500-plus">More than 1,500</option>
+            <option value="unsure">Not sure yet</option>
+          </select>
+        </div>
+
+        <div class="inquiry-field">
+          <label for="inq-medium">Medium / kind of work</label>
+          <input type="text" id="inq-medium" name="medium" placeholder="e.g. oil painting, mixed-media, ceramics" autocomplete="off">
+        </div>
+
+        <div class="inquiry-field">
+          <label for="inq-message">Anything else? (optional)</label>
+          <textarea id="inq-message" name="message" placeholder="Timeline, where work currently lives, questions&hellip;"></textarea>
+        </div>
+
+        <button type="submit" class="inquiry-submit">Send inquiry</button>
+      </form>
+
+      <p class="inquiry-fallback">
+        Prefer email? <a href="mailto:jfsneumann@gmail.com?subject=Archive inquiry">jfsneumann@gmail.com</a>
+      </p>
+      <p class="inquiry-privacy">
+        Your details are used only to reply to your inquiry. Never shared, never added to a list.
+      </p>
     </section>
 
   </div>
@@ -906,8 +1219,10 @@
       <a href="archive.html">Archive</a>
       <a href="series-index.html">Series</a>
       <a href="timeline.html">Timeline</a>
-      <a href="constellation.html">Constellation</a>
+      <a href="constellation.html" title="Force-directed map of all works, clustered by theme">Constellation</a>
       <a href="about.html">About</a>
+      <a href="for-artists.html" style="color:var(--accent)">For Artists</a>
+      <a href="privacy.html">Privacy</a>
     </nav>
     <nav class="footer-social" aria-label="Social links">
       <a href="https://www.linkedin.com/in/jeffreyneumann/" target="_blank" rel="noopener">LinkedIn</a>
@@ -925,6 +1240,9 @@
 </footer>
 
 <script src="search.js" defer></script>
+<!-- GoatCounter &mdash; privacy-first analytics. Replace subdomain after sign-up at https://www.goatcounter.com -->
+<script data-goatcounter="https://jfsn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
 <script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
 <script>
 (function () {
@@ -1035,6 +1353,47 @@
     document.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
   } else {
     document.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible'));
+  }
+
+  // ── Inquiry form wiring ───────────────────────────────────────
+  const tierToWorks = {
+    Starter:  'under-200',
+    Standard: '200-500',
+    Full:     '500-1500',
+  };
+  document.querySelectorAll('.plan__cta[data-tier]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      const tier = btn.dataset.tier;
+      const tierInput  = document.getElementById('inq-tier');
+      const worksField = document.getElementById('inq-works');
+      if (tierInput)  tierInput.value  = tier;
+      if (worksField && tierToWorks[tier]) worksField.value = tierToWorks[tier];
+      // smooth scroll to form, then focus the first empty field
+      requestAnimationFrame(() => {
+        const nameField = document.getElementById('inq-name');
+        if (nameField) setTimeout(() => nameField.focus({ preventScroll: true }), 400);
+      });
+    });
+  });
+
+  // Show success state when returning from Netlify form post
+  if (new URLSearchParams(location.search).get('sent') === '1') {
+    const ok   = document.getElementById('form-success');
+    const form = document.getElementById('inquiry-form');
+    if (ok)   ok.hidden  = false;
+    if (form) form.hidden = true;
+    // Track inquiry-submit conversion goal in GoatCounter (no PII)
+    const fire = () => {
+      if (window.goatcounter && typeof window.goatcounter.count === 'function') {
+        window.goatcounter.count({
+          path:  '/goal/inquiry-submitted',
+          title: 'Inquiry submitted',
+          event: true,
+        });
+      }
+    };
+    if (window.goatcounter && window.goatcounter.count) fire();
+    else window.addEventListener('load', fire);
   }
 
 })();
