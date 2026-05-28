@@ -1,5 +1,11 @@
 [
   {
+    "sha": "1f4acd0",
+    "date": "2026-05-28",
+    "title": "Theme repass complete: Mr. SNOWmann 791→72, Gallery 211→149",
+    "body": "Two full repasses using claude-haiku-4-5-20251001 with tightened\nai_notes. Key changes:\n- Mr. SNOWmann: was 'apply to ALL collages' → now only when snowman\n  figure is clearly visible. 791→72 works.\n- Targets: CD/circular forms explicitly excluded. 306→403 (still high\n  but more accurate; target motif is genuinely frequent in the work).\n- Gallery: outdoor/street art excluded. 211→149.\n- Framed: 99→230 (many installation views legitimately show frames).\n- Art School + Collaboration dropped to 0 — contextual, not visually\n  detectable; re-add manually in curate.html (~22 works total)."
+  },
+  {
     "sha": "e70d92c",
     "date": "2026-05-28",
     "title": "Fix theme rules + add repass_themes.py",
