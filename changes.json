@@ -1,5 +1,23 @@
 [
   {
+    "sha": "12c5dfa",
+    "date": "2026-05-29",
+    "title": ".htaccess: www→non-www redirect + legacy 404 fixes",
+    "body": "- 301 redirect www.jfsn.com → jfsn.com (fixes www/non-www canonical split in Google)\n- 301 timeline-fixed.html → timeline.html\n- 301 services.html → for-artists.html\n- 301 websites.html → for-artists.html"
+  },
+  {
+    "sha": "c7ed0c3",
+    "date": "2026-05-29",
+    "title": "Build artifacts and about.html cleanup (pre-session 14)",
+    "body": ""
+  },
+  {
+    "sha": "08b338d",
+    "date": "2026-05-29",
+    "title": "artwork.html UX overhaul: hierarchy, viewer hint, dimensions field",
+    "body": "- Art ID whispered (tiny, 30% opacity — infrastructure, not content)\n- Year promoted to Cormorant serif directly under title\n- Description muted to supporting register\n- Viewer hint: \"Click/Tap to zoom & rotate\" (adapts to touch device)\n- 3-tier tag hierarchy: Series+Themes as plain links (Tier 1),\n  Palette+Dimensions+Composition as pills/text (Tier 2),\n  Motifs+Materials+Keywords muted behind rule (Tier 3)\n- \"Similar Works\" → \"Related Works\"\n- Save + Share moved below description (were buried in prev/next nav)\n- Empty description no longer renders blank <p>\n- Duplicate back link removed from nav bar\n- Year shown in related works captions\n- Position counter only shown when filter is active\n- art0053.json: pilot dimensions_estimated + dimensions_source fields"
+  },
+  {
     "sha": "0e4b898",
     "date": "2026-05-28",
     "title": "Add session workflow tools: end-session.sh, Deploy JFSN.command, CURRENT_STATE.md",
