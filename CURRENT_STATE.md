@@ -1,19 +1,20 @@
 # Current State
-**Updated:** 2026-05-28 (end of session 13)
+**Updated:** 2026-05-29 (end of session 17)
 
 ## Last commit
-13a2c98 — Title dedupe pass: ~300 works renamed + dedupe tool
+TBD — run end-session.sh to commit
 
 ## What was done today
-- Drop-and-preview demo on for-artists.html (wow #3) ✅
-- The Companion — text prompt → matched works (wow #4) ✅
-- Hero mosaic fixed: 4 rows, no gap
-- Full theme repass: Mr. SNOWmann 791→72, Gallery 211→149
-- Art School (52) + Collaboration (31) restored from curate-session.json
-- Title dedupe: 0 duplicate titles remaining
-- dedupe.html tool + /rename-works server endpoint
-- WORKFLOW-CLIENT.md + setup-client.sh for onboarding clients
-- Two full audit/critique reports written
+- mosaic.html: flagship photomosaic page built from scratch
+  - All 1,084 mini works color-matched to Jeff's portrait (about-portrait.jpg)
+  - Canvas rendering with ghost portrait overlay at 28% opacity
+  - Portrait comparison thumbnail in header black space (upper right)
+  - Hover tooltip: title + year per tile
+  - Click any tile → artwork.html?id=artXXXX
+  - Mouse wheel + pinch zoom, click-drag pan, +/− Reset buttons
+  - Loads in batches of 80 with progress bar
+- Mosaic added to primary nav (after Constellation) on all 16 pages
+- Mosaic added to footer nav on all 16 pages
 
 ## Do next session (in order)
 - [ ] Fix CSP in .htaccess — add gc.zgo.at + jfsn-archive.netlify.app to connect-src
@@ -43,7 +44,7 @@
 ## Site locations
 - jfsn.com — primary (cPanel FTP, DNS via friend)
 - jfsn-archive.netlify.app — secondary (auto-deploys from GitHub)
-- github.com/JFSNeumann/jfsn-archive — public repo (29 commits)
+- github.com/JFSNeumann/jfsn-archive — public repo
 
 ## Key files to know
 - end-session.sh — run when done working

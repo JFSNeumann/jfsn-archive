@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0b0b">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Studio — JFSN</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap">
+  <link rel="stylesheet" href="site.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0b0b0b;
+      color: #f3f0ea;
+      font-family: Inter, -apple-system, sans-serif;
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    /* ── Header ── */
+    .studio-header {
+      border-bottom: 1px solid rgba(243,240,234,0.08);
+      padding: 2.5rem clamp(1.5rem, 5vw, 4rem) 2rem;
+    }
+    .studio-header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-end;
+      gap: 1.5rem;
+    }
+    .studio-wordmark {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      line-height: 1;
+      color: #f3f0ea;
+    }
+    .studio-wordmark span {
+      color: #FF6600;
+    }
+    .studio-subtitle {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: 1rem;
+      color: rgba(243,240,234,0.45);
+      padding-bottom: 0.15rem;
+    }
+    .studio-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      background: #FF6600;
+      border-radius: 50%;
+      margin-left: 5px;
+      position: relative;
+      top: -2px;
+    }
+
+    /* ── Main grid ── */
+    .studio-main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2.5rem clamp(1.5rem, 5vw, 4rem) 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 800px) {
+      .studio-main { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 500px) {
+      .studio-main { grid-template-columns: 1fr; }
+    }
+
+    /* ── Section label ── */
+    .section-label {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+      margin-bottom: 0.25rem;
+    }
+    .section-label:first-child { margin-top: 0; }
+    .section-label span {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(243,240,234,0.35);
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(243,240,234,0.08);
+    }
+
+    /* ── Cards ── */
+    .card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      padding: 1.25rem 1.35rem 1.2rem;
+      border: 1px solid rgba(243,240,234,0.08);
+      border-radius: 6px;
+      text-decoration: none;
+      color: #f3f0ea;
+      background: rgba(243,240,234,0.025);
+      transition: border-color 0.15s, background 0.15s, transform 0.15s;
+      cursor: pointer;
+    }
+    .card:hover {
+      border-color: #FF6600;
+      background: rgba(255,102,0,0.06);
+      transform: translateY(-1px);
+    }
+    .card.wide {
+      grid-column: span 2;
+    }
+    .card-icon {
+      font-size: 1.1rem;
+      margin-bottom: 0.2rem;
+      opacity: 0.7;
+    }
+    .card-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      color: #f3f0ea;
+    }
+    .card-desc {
+      font-size: 0.78rem;
+      color: rgba(243,240,234,0.45);
+      line-height: 1.5;
+    }
+    .card-tag {
+      display: inline-block;
+      margin-top: 0.4rem;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #FF6600;
+      opacity: 0.8;
+    }
+
+    /* ── Credentials block ── */
+    .creds-card {
+      grid-column: 1 / -1;
+      border: 1px solid rgba(243,240,234,0.08);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .cred-row {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      border-bottom: 1px solid rgba(243,240,234,0.06);
+      font-size: 0.82rem;
+    }
+    .cred-row:last-child { border-bottom: none; }
+    .cred-key {
+      padding: 0.7rem 1rem;
+      color: rgba(243,240,234,0.4);
+      background: rgba(243,240,234,0.02);
+      border-right: 1px solid rgba(243,240,234,0.06);
+    }
+    .cred-val {
+      padding: 0.7rem 1rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: #f3f0ea;
+      word-break: break-all;
+    }
+    .cred-val a {
+      color: #FF6600;
+      text-decoration: none;
+    }
+    .cred-val a:hover { text-decoration: underline; }
+
+    /* ── Footer ── */
+    .studio-footer {
+      border-top: 1px solid rgba(243,240,234,0.08);
+      padding: 1.25rem clamp(1.5rem, 5vw, 4rem);
+      font-size: 0.72rem;
+      color: rgba(243,240,234,0.2);
+      text-align: center;
+      font-style: italic;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="studio-header">
+    <div class="studio-header-inner">
+      <div class="studio-wordmark">JFSN<span>.</span></div>
+      <div class="studio-subtitle">Studio &amp; Tools</div>
+    </div>
+  </header>
+
+  <main class="studio-main">
+
+    <!-- ── Public Site ── -->
+    <div class="section-label"><span>Public Site</span></div>
+
+    <a class="card" href="index.html" target="_blank">
+      <div class="card-icon">🏠</div>
+      <div class="card-title">Home</div>
+      <div class="card-desc">Public archive homepage — what visitors see</div>
+    </a>
+    <a class="card" href="archive.html" target="_blank">
+      <div class="card-icon">🗂</div>
+      <div class="card-title">Archive</div>
+      <div class="card-desc">Full grid of all 1,084 works</div>
+    </a>
+    <a class="card" href="about.html" target="_blank">
+      <div class="card-icon">👤</div>
+      <div class="card-title">About</div>
+      <div class="card-desc">Artist bio page</div>
+    </a>
+    <a class="card" href="timeline.html" target="_blank">
+      <div class="card-icon">📅</div>
+      <div class="card-title">Timeline</div>
+      <div class="card-desc">Works arranged chronologically</div>
+    </a>
+    <a class="card" href="constellation.html" target="_blank">
+      <div class="card-icon">✦</div>
+      <div class="card-title">Constellation</div>
+      <div class="card-desc">Visual theme map</div>
+    </a>
+    <a class="card" href="series-index.html" target="_blank">
+      <div class="card-icon">📚</div>
+      <div class="card-title">Series Index</div>
+      <div class="card-desc">Named series overview</div>
+    </a>
+
+    <!-- ── Studio Tools ── -->
+    <div class="section-label"><span>Studio Tools</span></div>
+
+    <a class="card" href="curate.html" target="_blank">
+      <div class="card-icon">✏️</div>
+      <div class="card-title">Curate</div>
+      <div class="card-desc">Edit titles, themes, metadata — primary working tool</div>
+      <div class="card-tag">Local only</div>
+    </a>
+    <a class="card" href="dedupe.html" target="_blank">
+      <div class="card-icon">🔍</div>
+      <div class="card-title">Dedupe</div>
+      <div class="card-desc">Find and resolve duplicate titles</div>
+      <div class="card-tag">Local only</div>
+    </a>
+    <a class="card" href="qa.html" target="_blank">
+      <div class="card-icon">✅</div>
+      <div class="card-title">QA</div>
+      <div class="card-desc">Archive health check and error report</div>
+      <div class="card-tag">Local only</div>
+    </a>
+    <a class="card" href="changes.html" target="_blank">
+      <div class="card-icon">📝</div>
+      <div class="card-title">Changes</div>
+      <div class="card-desc">Log of recent edits and additions</div>
+    </a>
+    <a class="card" href="companion.html" target="_blank">
+      <div class="card-icon">🤖</div>
+      <div class="card-title">Companion</div>
+      <div class="card-desc">AI assistant for the archive</div>
+      <div class="card-tag">Local only</div>
+    </a>
+    <a class="card" href="api.html" target="_blank">
+      <div class="card-icon">⚙️</div>
+      <div class="card-title">API Docs</div>
+      <div class="card-desc">Archive data API reference</div>
+    </a>
+
+    <!-- ── Other Pages ── -->
+    <div class="section-label"><span>Other Pages</span></div>
+
+    <a class="card" href="lost.html" target="_blank">
+      <div class="card-icon">🌊</div>
+      <div class="card-title">Lost Works</div>
+      <div class="card-desc">Works lost to water damage</div>
+    </a>
+    <a class="card" href="for-artists.html" target="_blank">
+      <div class="card-icon">🎨</div>
+      <div class="card-title">For Artists</div>
+      <div class="card-desc">Open source archive info</div>
+    </a>
+    <a class="card" href="404.html" target="_blank">
+      <div class="card-icon">🚫</div>
+      <div class="card-title">404</div>
+      <div class="card-desc">Not found page</div>
+    </a>
+
+    <!-- ── Key Credentials ── -->
+    <div class="section-label"><span>Key Credentials</span></div>
+
+    <div class="creds-card">
+      <div class="cred-row">
+        <div class="cred-key">Live site</div>
+        <div class="cred-val"><a href="https://jfsn.com" target="_blank">jfsn.com</a></div>
+      </div>
+      <div class="cred-row">
+        <div class="cred-key">Hosting</div>
+        <div class="cred-val">HostGator — 1-866-96-GATOR</div>
+      </div>
+      <div class="cred-row">
+        <div class="cred-key">FTP username</div>
+        <div class="cred-val">jeffery@jfsn.com</div>
+      </div>
+      <div class="cred-row">
+        <div class="cred-key">FTP password</div>
+        <div class="cred-val">1q2w3e4r!!</div>
+      </div>
+      <div class="cred-row">
+        <div class="cred-key">GitHub</div>
+        <div class="cred-val"><a href="https://github.com/JFSNeumann/jfsn-archive" target="_blank">github.com/JFSNeumann/jfsn-archive</a></div>
+      </div>
+      <div class="cred-row">
+        <div class="cred-key">Passwords</div>
+        <div class="cred-val"><a href="https://vault.bitwarden.com" target="_blank">vault.bitwarden.com</a></div>
+      </div>
+      <div class="cred-row">
+        <div class="cred-key">Allison handoff PDF</div>
+        <div class="cred-val">/Users/jeffreyneumann/Documents/JFSN/JFSN-Archive-Handoff-Allison.pdf</div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="studio-footer">
+    jeff.html — private, not linked from the public site — jfsn.com
+  </footer>
+
+</body>
+</html>

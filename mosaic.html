@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0b0b">
+
+  <title>All 1,084 Works — JFSN</title>
+  <meta name="description" content="Every work in the JFSN archive assembled into a single image — 50 years of collage, sculpture, and photography by Jeffrey F. S. Neumann.">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="canonical" href="https://jfsn.com/mosaic.html">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap"></noscript>
+  <link rel="stylesheet" href="site.css?v=20260529">
+
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="All 1,084 Works — JFSN">
+  <meta property="og:description" content="Every work in the JFSN archive assembled into a single image — 50 years of collage, sculpture, and photography.">
+  <meta property="og:image"       content="https://jfsn.com/og-card.jpg">
+  <meta property="og:url"         content="https://jfsn.com/mosaic.html">
+
+  <style>
+    /* ---- Page layout ---- */
+    .mosaic-header {
+      text-align: center;
+      padding: clamp(2.5rem, 5vw, 4.5rem) var(--gutter) clamp(1rem, 2vw, 1.5rem);
+    }
+    .mosaic-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 300;
+      margin: 0 0 0.5rem;
+      letter-spacing: -0.01em;
+    }
+    .mosaic-header .sub {
+      font-size: var(--cap);
+      letter-spacing: var(--track);
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    /* ---- Progress ---- */
+    .mosaic-progress-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      padding: clamp(1rem, 3vw, 2rem) var(--gutter);
+    }
+    .mosaic-progress-bar {
+      width: min(420px, 80vw);
+      height: 2px;
+      background: var(--dim);
+      border-radius: 1px;
+      overflow: hidden;
+    }
+    .mosaic-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--accent);
+      border-radius: 1px;
+      transition: width 0.1s linear;
+    }
+    .mosaic-progress-label {
+      font-size: var(--cap);
+      letter-spacing: var(--track);
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ---- Canvas stage ---- */
+    .mosaic-stage {
+      width: 100%;
+      overflow: hidden;
+      touch-action: none;
+      position: relative;
+      background: var(--bg);
+      cursor: crosshair;
+    }
+    .mosaic-stage.panning { cursor: grabbing; }
+
+    #mosaic-canvas {
+      display: block;
+      /* CSS transform for zoom/pan — no redraw needed */
+      transform-origin: 0 0;
+      image-rendering: pixelated;
+    }
+
+    /* ---- Portrait compare ---- */
+    .mosaic-header { position: relative; }
+    #portrait-compare {
+      position: absolute;
+      top: 50%;
+      right: clamp(1rem, 3vw, 2.5rem);
+      transform: translateY(-50%);
+      width: clamp(70px, 10vw, 140px);
+      border: 1px solid var(--dim);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.6);
+      opacity: 0.82;
+      transition: opacity 0.2s, transform 0.2s;
+      cursor: default;
+      z-index: 10;
+      display: block;
+    }
+    #portrait-compare:hover { opacity: 1; transform: translateY(-50%) scale(1.04); }
+
+    /* ---- Tooltip ---- */
+    #mosaic-tooltip {
+      position: fixed;
+      pointer-events: none;
+      background: rgba(11,11,11,0.88);
+      border: 1px solid var(--dim);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 0.4rem 0.75rem;
+      font-size: 0.8125rem;
+      color: var(--text);
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.12s;
+      z-index: 100;
+    }
+    #mosaic-tooltip.visible { opacity: 1; }
+    #mosaic-tooltip .tt-title { font-family: var(--font-display); font-size: 0.9375rem; font-weight: 300; }
+    #mosaic-tooltip .tt-year  { color: var(--muted); font-size: 0.75rem; }
+
+    /* ---- Footer hint ---- */
+    .mosaic-hint {
+      text-align: center;
+      padding: clamp(1rem, 2vw, 1.75rem) var(--gutter) clamp(2rem, 4vw, 3.5rem);
+      font-size: var(--cap);
+      letter-spacing: var(--track);
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ---- Zoom controls ---- */
+    .mosaic-controls {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0 var(--gutter) 1rem;
+    }
+    .mosaic-btn {
+      appearance: none;
+      background: transparent;
+      border: 1px solid var(--dim);
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1;
+      padding: 0.4rem 0.85rem;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+      font-family: inherit;
+    }
+    .mosaic-btn:hover { color: var(--text); border-color: rgba(243,240,234,0.3); }
+    .mosaic-btn:active { color: var(--accent); }
+  </style>
+</head>
+
+<body>
+
+<a href="#main" class="skip">Skip to content</a>
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="brand" href="/"><img src="jfsn-mark.png" class="brand-mark" alt="JFSN">Jeffrey F. S. Neumann</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="archive.html">Archive</a>
+      <a href="series-index.html">Series</a>
+      <a href="timeline.html">Timeline</a>
+      <a href="constellation.html" title="Force-directed map of all works, clustered by theme">Constellation</a>
+      <a href="about.html">About</a>
+      <a href="for-artists.html" style="color:var(--accent)">For Artists</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <div class="mosaic-header" style="position:relative">
+    <h1>Every work, at once.</h1>
+    <p class="sub">1,084 works &middot; 1974–present &middot; hover any tile</p>
+    <img id="portrait-compare" src="about-portrait.jpg" alt="Portrait of Jeffrey F. S. Neumann — the source image for this mosaic" title="Source portrait">
+  </div>
+
+  <div class="mosaic-progress-wrap" id="progress-wrap">
+    <div class="mosaic-progress-bar"><div class="mosaic-progress-fill" id="progress-fill"></div></div>
+    <p class="mosaic-progress-label" id="progress-label">Loading works…</p>
+  </div>
+
+  <div class="mosaic-stage" id="mosaic-stage" style="display:none">
+    <canvas id="mosaic-canvas"></canvas>
+  </div>
+
+  <div class="mosaic-controls" id="mosaic-controls" style="display:none">
+    <button class="mosaic-btn" id="btn-zoom-in"  aria-label="Zoom in">+</button>
+    <button class="mosaic-btn" id="btn-zoom-out" aria-label="Zoom out">−</button>
+    <button class="mosaic-btn" id="btn-reset"    aria-label="Reset view">Reset</button>
+  </div>
+
+  <div id="mosaic-tooltip" aria-hidden="true">
+    <div class="tt-title" id="tt-title"></div>
+    <div class="tt-year"  id="tt-year"></div>
+  </div>
+
+  <p class="mosaic-hint" id="mosaic-hint" style="display:none">
+    Each tile links to a work &middot; scroll or pinch to zoom &middot; drag to pan
+  </p>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <span>Jeffrey F. S. Neumann</span>
+    <nav class="footer-nav" aria-label="Site navigation">
+      <a href="archive.html">Archive</a>
+      <a href="series-index.html">Series</a>
+      <a href="timeline.html">Timeline</a>
+      <a href="constellation.html" title="Force-directed map of all works, clustered by theme">Constellation</a>
+      <a href="about.html">About</a>
+      <a href="for-artists.html" style="color:var(--accent)">For Artists</a>
+      <a href="companion.html">Companion</a>
+      <a href="changes.html">Changes</a>
+      <a href="privacy.html">Privacy</a>
+    </nav>
+    <nav class="footer-social" aria-label="Social links">
+      <a href="https://www.linkedin.com/in/jeffreyneumann/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://dribbble.com/JFSN" target="_blank" rel="noopener">Dribbble</a>
+      <a href="https://www.youtube.com/@jfsneumann/videos" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://showspace.so/s/jeffrey-neumann-46" target="_blank" rel="noopener">Showspace</a>
+    </nav>
+    <nav class="footer-earlier" aria-label="Earlier sites">
+      <a href="#" target="_blank" rel="noopener">Mr. SNOWmann</a>
+      <a href="#" target="_blank" rel="noopener">Fine Art 2000</a>
+      <a href="/old-site/" target="_blank" rel="noopener">jfsn 2023</a>
+      <a href="#" target="_blank" rel="noopener">jfsn 2014</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(() => {
+  'use strict';
+
+  // ── Color name → approximate RGB ──────────────────────────────────────────
+  const COLOR_MAP = {
+    black:       [20,  20,  20 ],
+    white:       [245, 245, 240],
+    red:         [200, 40,  40 ],
+    yellow:      [230, 200, 40 ],
+    blue:        [50,  100, 200],
+    grey:        [140, 140, 140],
+    green:       [60,  140, 60 ],
+    orange:      [220, 110, 30 ],
+    gold:        [200, 165, 60 ],
+    silver:      [180, 180, 195],
+    ivory:       [240, 235, 210],
+    ochre:       [190, 145, 50 ],
+    iridescent:  [160, 200, 220],
+    brown:       [120, 80,  50 ],
+    turquoise:   [60,  180, 170],
+    pink:        [230, 140, 160],
+    magenta:     [200, 40,  140],
+    purple:      [110, 50,  160],
+    ultramarine: [30,  50,  180],
+    vermilion:   [220, 50,  30 ],
+  };
+
+  function paletteToRGB(palette) {
+    if (!palette || !palette.length) return [128, 128, 128];
+    let r = 0, g = 0, b = 0, n = 0;
+    for (const name of palette) {
+      const rgb = COLOR_MAP[name.toLowerCase()];
+      if (rgb) { r += rgb[0]; g += rgb[1]; b += rgb[2]; n++; }
+    }
+    if (!n) return [128, 128, 128];
+    return [Math.round(r/n), Math.round(g/n), Math.round(b/n)];
+  }
+
+  function colorDist(a, b) {
+    const dr = a[0]-b[0], dg = a[1]-b[1], db = a[2]-b[2];
+    return dr*dr + dg*dg + db*db;
+  }
+
+  // ── Grid config ───────────────────────────────────────────────────────────
+  // Mini images are 100×200px (1:2 portrait). We target ~60 columns.
+  const COLS = 60;
+  // Cell dimensions at native 1× zoom (will be scaled to fill stage width)
+  const CELL_W_NATIVE = 100;
+  const CELL_H_NATIVE = 200;
+  // Portrait overlay opacity (0–1)
+  const PORTRAIT_OPACITY = 0.28;
+
+  // ── State ─────────────────────────────────────────────────────────────────
+  let works = [];          // [{file, title, year, palette, r, g, b}]
+  let cellMap = [];        // [{workIdx, col, row}] — one per grid cell
+  let cols = COLS, rows = 0;
+  let cellW = 0, cellH = 0; // actual rendered px per cell on canvas
+  let scale = 1;
+  let panX = 0, panY = 0;
+  let isPanning = false, panStartX = 0, panStartY = 0, panOriginX = 0, panOriginY = 0;
+  let lastTileIdx = -1;    // for tooltip hit-test debounce
+
+  const stage   = document.getElementById('mosaic-stage');
+  const canvas  = document.getElementById('mosaic-canvas');
+  const ctx     = canvas.getContext('2d');
+  const tooltip = document.getElementById('mosaic-tooltip');
+  const ttTitle = document.getElementById('tt-title');
+  const ttYear  = document.getElementById('tt-year');
+  const fillEl  = document.getElementById('progress-fill');
+  const labelEl = document.getElementById('progress-label');
+  const progressWrap = document.getElementById('progress-wrap');
+  const controls = document.getElementById('mosaic-controls');
+  const hint    = document.getElementById('mosaic-hint');
+
+  // ── 1. Load catalog ───────────────────────────────────────────────────────
+  async function init() {
+    let catalog;
+    try {
+      const res = await fetch('catalog.json');
+      const data = await res.json();
+      catalog = Array.isArray(data) ? data : (data.works || []);
+    } catch(e) {
+      labelEl.textContent = 'Failed to load catalog.';
+      return;
+    }
+
+    works = catalog.map(w => {
+      const [r, g, b] = paletteToRGB(w.palette);
+      return { file: w.file, title: w.title || 'Untitled', year: w.year || '', r, g, b };
+    });
+
+    buildMosaic();
+  }
+
+  // ── 2. Sample portrait & assign tiles ────────────────────────────────────
+  async function buildMosaic() {
+    labelEl.textContent = 'Sampling portrait…';
+
+    // Load portrait into offscreen canvas to sample colors
+    const portrait = await loadImage('about-portrait.jpg');
+    const aspect = portrait.naturalHeight / portrait.naturalWidth;
+    rows = Math.round(COLS * aspect / 2); // /2 because cells are 1:2 tall
+
+    // Sample at grid resolution
+    const sampleCanvas = document.createElement('canvas');
+    sampleCanvas.width  = COLS;
+    sampleCanvas.height = rows;
+    const sCtx = sampleCanvas.getContext('2d');
+    sCtx.drawImage(portrait, 0, 0, COLS, rows);
+    const imgData = sCtx.getImageData(0, 0, COLS, rows).data;
+
+    // For each cell find best-matching work by color
+    cellMap = [];
+    for (let row = 0; row < rows; row++) {
+      for (let col = 0; col < cols; col++) {
+        const px = (row * cols + col) * 4;
+        const targetColor = [imgData[px], imgData[px+1], imgData[px+2]];
+        let bestIdx = 0, bestDist = Infinity;
+        for (let i = 0; i < works.length; i++) {
+          const d = colorDist(targetColor, [works[i].r, works[i].g, works[i].b]);
+          if (d < bestDist) { bestDist = d; bestIdx = i; }
+        }
+        cellMap.push({ workIdx: bestIdx, col, row });
+      }
+    }
+
+    await renderMosaic(portrait);
+  }
+
+  // ── 3. Render all tiles onto canvas ──────────────────────────────────────
+  async function renderMosaic(portrait) {
+    // Compute cell size to fill stage width
+    const stageW = stage.parentElement.clientWidth || window.innerWidth;
+    cellW = Math.floor(stageW / COLS);
+    cellH = cellW * 2; // 1:2 ratio
+
+    canvas.width  = cellW * COLS;
+    canvas.height = cellH * rows;
+
+    stage.style.height = canvas.height + 'px';
+
+    // Load mini images in batches
+    const total = works.length;
+    const imgs = new Array(total);
+    const BATCH = 80;
+    let loaded = 0;
+
+    for (let start = 0; start < total; start += BATCH) {
+      const end = Math.min(start + BATCH, total);
+      const batch = [];
+      for (let i = start; i < end; i++) {
+        batch.push(
+          loadImage('artworks/mini/' + works[i].file)
+            .then(img => { imgs[i] = img; })
+            .catch(() => { imgs[i] = null; })
+        );
+      }
+      await Promise.all(batch);
+      loaded = Math.min(end, total);
+      const pct = Math.round((loaded / total) * 100);
+      fillEl.style.width = pct + '%';
+      labelEl.textContent = `Loading works — ${loaded} of ${total}`;
+    }
+
+    labelEl.textContent = 'Drawing…';
+
+    // Draw tiles
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (const cell of cellMap) {
+      const img = imgs[cell.workIdx];
+      const x = cell.col * cellW;
+      const y = cell.row * cellH;
+      if (img) {
+        ctx.drawImage(img, x, y, cellW, cellH);
+      } else {
+        // Fallback: fill with work's representative color
+        const w = works[cell.workIdx];
+        ctx.fillStyle = `rgb(${w.r},${w.g},${w.b})`;
+        ctx.fillRect(x, y, cellW, cellH);
+      }
+    }
+
+    // Overlay portrait at reduced opacity for ghost effect
+    ctx.globalAlpha = PORTRAIT_OPACITY;
+    ctx.drawImage(portrait, 0, 0, canvas.width, canvas.height);
+    ctx.globalAlpha = 1;
+
+    // Show canvas, hide progress
+    progressWrap.style.display = 'none';
+    stage.style.display = 'block';
+    controls.style.display = 'flex';
+    hint.style.display = 'block';
+
+    attachInteraction();
+  }
+
+  // ── 4. Interaction ────────────────────────────────────────────────────────
+  function applyTransform() {
+    canvas.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
+  }
+
+  function clampPan() {
+    const w = canvas.width  * scale;
+    const h = canvas.height * scale;
+    const sw = stage.clientWidth;
+    const sh = stage.clientHeight;
+    panX = Math.min(0, Math.max(sw - w, panX));
+    panY = Math.min(0, Math.max(sh - h, panY));
+  }
+
+  function zoomAround(factor, pivotX, pivotY) {
+    const newScale = Math.min(8, Math.max(0.3, scale * factor));
+    const ratio = newScale / scale;
+    panX = pivotX - ratio * (pivotX - panX);
+    panY = pivotY - ratio * (pivotY - panY);
+    scale = newScale;
+    clampPan();
+    applyTransform();
+  }
+
+  function resetView() {
+    scale = 1; panX = 0; panY = 0;
+    applyTransform();
+  }
+
+  function hitTestCell(clientX, clientY) {
+    const rect = canvas.getBoundingClientRect();
+    const cx = (clientX - rect.left) / scale;
+    const cy = (clientY - rect.top)  / scale;
+    const col = Math.floor(cx / cellW);
+    const row = Math.floor(cy / cellH);
+    if (col < 0 || col >= cols || row < 0 || row >= rows) return -1;
+    return row * cols + col;
+  }
+
+  function showTooltip(clientX, clientY, tileIdx) {
+    if (tileIdx < 0 || tileIdx >= cellMap.length) { hideTooltip(); return; }
+    const cell = cellMap[tileIdx];
+    const work = works[cell.workIdx];
+    ttTitle.textContent = work.title;
+    ttYear.textContent  = work.year;
+    const tx = clientX + 14;
+    const ty = clientY - 36;
+    tooltip.style.left = tx + 'px';
+    tooltip.style.top  = ty + 'px';
+    tooltip.classList.add('visible');
+    stage.style.cursor = 'pointer';
+  }
+
+  function hideTooltip() {
+    tooltip.classList.remove('visible');
+    stage.style.cursor = 'crosshair';
+  }
+
+  function attachInteraction() {
+    // ── Wheel zoom ──
+    stage.addEventListener('wheel', e => {
+      e.preventDefault();
+      const rect = stage.getBoundingClientRect();
+      const px = e.clientX - rect.left;
+      const py = e.clientY - rect.top;
+      const factor = e.deltaY < 0 ? 1.12 : 1 / 1.12;
+      zoomAround(factor, px, py);
+    }, { passive: false });
+
+    // ── Mouse pan ──
+    stage.addEventListener('mousedown', e => {
+      if (e.button !== 0) return;
+      isPanning = true;
+      panStartX  = e.clientX;
+      panStartY  = e.clientY;
+      panOriginX = panX;
+      panOriginY = panY;
+      stage.classList.add('panning');
+    });
+    window.addEventListener('mousemove', e => {
+      if (!isPanning) {
+        const tileIdx = hitTestCell(e.clientX, e.clientY);
+        if (tileIdx !== lastTileIdx) {
+          lastTileIdx = tileIdx;
+          showTooltip(e.clientX, e.clientY, tileIdx);
+        }
+        return;
+      }
+      panX = panOriginX + (e.clientX - panStartX);
+      panY = panOriginY + (e.clientY - panStartY);
+      clampPan();
+      applyTransform();
+    });
+    window.addEventListener('mouseup', e => {
+      if (!isPanning) return;
+      const dx = Math.abs(e.clientX - panStartX);
+      const dy = Math.abs(e.clientY - panStartY);
+      isPanning = false;
+      stage.classList.remove('panning');
+      // Click (not drag) → navigate to artwork
+      if (dx < 4 && dy < 4) {
+        const tileIdx = hitTestCell(e.clientX, e.clientY);
+        if (tileIdx >= 0 && tileIdx < cellMap.length) {
+          const work = works[cellMap[tileIdx].workIdx];
+          const id = work.file.replace('.avif', '');
+          window.location.href = 'artwork.html?id=' + id;
+        }
+      }
+    });
+
+    stage.addEventListener('mouseleave', hideTooltip);
+
+    // ── Touch pan + pinch zoom ──
+    let lastTouches = null;
+    stage.addEventListener('touchstart', e => {
+      lastTouches = e.touches;
+      if (e.touches.length === 1) {
+        isPanning = true;
+        panStartX  = e.touches[0].clientX;
+        panStartY  = e.touches[0].clientY;
+        panOriginX = panX;
+        panOriginY = panY;
+      }
+    }, { passive: true });
+
+    stage.addEventListener('touchmove', e => {
+      e.preventDefault();
+      if (e.touches.length === 2) {
+        isPanning = false;
+        const t0 = e.touches[0], t1 = e.touches[1];
+        const prev0 = lastTouches[0], prev1 = lastTouches[1] || lastTouches[0];
+        const prevDist = Math.hypot(prev1.clientX - prev0.clientX, prev1.clientY - prev0.clientY);
+        const currDist = Math.hypot(t1.clientX - t0.clientX, t1.clientY - t0.clientY);
+        const factor = currDist / (prevDist || 1);
+        const midX = (t0.clientX + t1.clientX) / 2 - stage.getBoundingClientRect().left;
+        const midY = (t0.clientY + t1.clientY) / 2 - stage.getBoundingClientRect().top;
+        zoomAround(factor, midX, midY);
+      } else if (e.touches.length === 1 && isPanning) {
+        panX = panOriginX + (e.touches[0].clientX - panStartX);
+        panY = panOriginY + (e.touches[0].clientY - panStartY);
+        clampPan();
+        applyTransform();
+      }
+      lastTouches = e.touches;
+    }, { passive: false });
+
+    stage.addEventListener('touchend', e => {
+      isPanning = false;
+      lastTouches = e.touches;
+    });
+
+    // ── Zoom buttons ──
+    document.getElementById('btn-zoom-in') .addEventListener('click', () => zoomAround(1.5, stage.clientWidth/2, stage.clientHeight/2));
+    document.getElementById('btn-zoom-out').addEventListener('click', () => zoomAround(1/1.5, stage.clientWidth/2, stage.clientHeight/2));
+    document.getElementById('btn-reset')   .addEventListener('click', resetView);
+  }
+
+  // ── Helper: load image ────────────────────────────────────────────────────
+  function loadImage(src) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload  = () => resolve(img);
+      img.onerror = reject;
+      img.src = src;
+    });
+  }
+
+  // ── Stage height: match canvas after resize ───────────────────────────────
+  // (simple: just let the canvas set its own height; stage wraps it)
+
+  init();
+})();
+</script>
+
+</body>
+</html>
