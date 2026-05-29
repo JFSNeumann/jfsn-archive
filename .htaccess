@@ -8,6 +8,17 @@
   RewriteBase /
 
   # ------------------------------------------
+  # Canonical: redirect www → non-www (keeps Google from splitting the site)
+  RewriteCond %{HTTP_HOST} ^www\.jfsn\.com$ [NC]
+  RewriteRule ^ https://jfsn.com%{REQUEST_URI} [R=301,L]
+
+  # ------------------------------------------
+  # Legacy URL redirects — old pages that moved
+  RewriteRule ^timeline-fixed\.html$ /timeline.html [R=301,L]
+  RewriteRule ^services\.html$ /for-artists.html [R=301,L]
+  RewriteRule ^websites\.html$ /for-artists.html [R=301,L]
+
+  # ------------------------------------------
   # Share artwork images with /old/ subfolder
   # Requests from the old site for images are
   # silently served from the shared artworks/
