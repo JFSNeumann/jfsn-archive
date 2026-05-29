@@ -100,7 +100,7 @@
     }
     .bio__portrait img {
       width: 100%;
-      max-width: 130px;
+      max-width: 280px;
       height: auto;
       display: block;
     }
@@ -259,20 +259,19 @@
 
       <div class="bio">
         <h1 class="bio__name">Jeffrey<br>F. S. Neumann</h1>
-        <p class="bio__quote">Art doesn't ask for approval&nbsp;&#8212; it demands attention.</p>
-        <div id="bio-featured" class="bio__featured" aria-hidden="true"></div>
         <div class="bio__text">
-          <p>Five decades refusing to play safe. The practice spans collage, sculpture, and photography &#8212; drawing on found imagery, industrial material, and the accumulated visual language of popular culture, assembled into compositions that hold tension between documentation and invention, memory and surface.</p>
-          <p>This archive is both personal museum and working studio: <span id="bio-count">1,084</span> works spanning 1974 to the present. It exists in part because an estimated <a href="lost.html" style="color:inherit;border-bottom:1px solid var(--dim);transition:color 0.15s,border-color 0.15s;" onmouseover="this.style.color='var(--accent)';this.style.borderColor='var(--accent)'" onmouseout="this.style.color='inherit';this.style.borderColor='var(--dim)'">500&#8211;1,000 earlier pieces were lost</a> to water damage in storage &#8212; undocumented, unrecovered. I don&rsquo;t want any artist to repeat that.</p>
-          <p>Based in Cleveland, Ohio. BFA in Industrial Design, Cleveland Institute of Art.</p>
+          <p>Started making work in 1974. At the Cleveland Institute of Art, prism paper &#8212; holographic, iridescent, surface that shifts with the light &#8212; became an early obsession, alongside vacuum-formed plastic, old fluorescent and CFL tubes, sheets of glass. Rauschenberg was on the walls: combines built from anything, the idea that found material was as valid as paint. That permission never left. Collage, photography, three-dimensional pieces built from whatever&rsquo;s at hand. Cleveland has always been part of it: the light, the industrial texture, a particular American vernacular that keeps showing up in the work whether I invite it or not.</p>
+          <p>An estimated <a href="lost.html" style="color:inherit;border-bottom:1px solid var(--dim);transition:color 0.15s,border-color 0.15s;" onmouseover="this.style.color='var(--accent)';this.style.borderColor='var(--accent)'" onmouseout="this.style.color='inherit';this.style.borderColor='var(--dim)'">500&#8211;1,000 early pieces are gone</a> &#8212; lost to water damage in storage, undocumented, unrecoverable. This archive exists because of that. <span id="bio-count">1,084</span> works documented from 1974 to now. I don&rsquo;t want any other artist to lose fifty years the same way.</p>
+          <p>BFA in Industrial Design, Cleveland Institute of Art. Still making. Still here.</p>
         </div>
+        <div id="bio-featured" class="bio__featured" aria-hidden="true"></div>
         <a class="bio__archive" href="archive.html">View archive &rarr;</a>
       </div>
 
       <div class="details">
 
         <div class="bio__portrait">
-          <img src="about-portrait.jpg" alt="Jeffrey F. S. Neumann" width="290" height="393" loading="lazy">
+          <img src="about-portrait.jpg" alt="Jeffrey F. S. Neumann" width="600" height="787" loading="lazy">
         </div>
 
         <div class="detail-group">
@@ -280,7 +279,6 @@
           <p class="detail-group__body">
             <a href="mailto:jeff@jfsn.com">jeff@jfsn.com</a><br>
             <a href="https://jfsn.com" target="_blank" rel="noopener">jfsn.com</a><br>
-            <span style="font-size:0.8em;color:var(--muted)">Exhibitions, acquisitions, press</span>
           </p>
         </div>
 
@@ -338,7 +336,7 @@
         <div class="detail-group">
           <p class="detail-group__label">Now</p>
           <div class="detail-group__body">
-            <p>Archiving and digitizing fifty years of studio work — 1,084 pieces documented and counting. Surfacing patterns across decades that weren't visible until everything was in one place.</p>
+            <p>Archiving and digitizing fifty years of studio work. Putting everything in one place turns out to reveal things you couldn&rsquo;t see when the work was scattered &#8212; patterns, obsessions, threads that were running all along.</p>
             <p style="margin-top:0.75em">Still making new work. Still Cleveland.</p>
             <p style="margin-top:0.75em"><a href="for-artists.html" style="color:var(--muted);border-bottom:1px solid var(--dim);padding-bottom:1px;transition:color 0.15s,border-color 0.15s;" onmouseover="this.style.color='var(--text)';this.style.borderColor='var(--muted)'" onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--dim)'">I also build these archives for other artists →</a></p>
           </div>
@@ -514,7 +512,8 @@
     wrap.removeAttribute('aria-hidden');
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const img = document.createElement('img');
-    img.src = 'artworks/thumbs/' + id + '.avif';
+    const isMobile = window.innerWidth < 780;
+    img.src = (isMobile ? 'artworks/thumbs/' : 'artworks/full/') + id + '.avif';
     img.alt = esc(rec.title || id);
     img.width = imgW;
     img.height = imgH;

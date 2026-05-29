@@ -1,5 +1,17 @@
 [
   {
+    "sha": "0e4b898",
+    "date": "2026-05-28",
+    "title": "Add session workflow tools: end-session.sh, Deploy JFSN.command, CURRENT_STATE.md",
+    "body": "- end-session.sh: end-of-session ritual — checks uncommitted files,\n  prompts for commit message, pushes, runs backup, reminds to update memory\n- \"Deploy JFSN.command\": double-clickable Mac file, opens Terminal and\n  runs end-session.sh. Put on Desktop or Dock.\n- CURRENT_STATE.md: current project state, pending todos, known issues.\n  Updated by end-session.sh on every run."
+  },
+  {
+    "sha": "13a2c98",
+    "date": "2026-05-28",
+    "title": "Title dedupe pass: ~300 works renamed + dedupe tool",
+    "body": "- Ran dedupe.html on all 66 duplicate title groups (155 works affected)\n- Numbered sequential variants: 'Untitled (Diptych Collage) 1/2/3...' etc.\n- dedupe.html: added 'Number all' topbar button + per-group '1, 2, 3…'\n  button so auto-numbering is one click per group or one click for all\n- server.py: added /rename-works endpoint — writes new titles to sidecars\n  and rebuilds catalog in one POST\n- Catalog, API, and sitemap rebuilt from updated sidecars"
+  },
+  {
     "sha": "657dda8",
     "date": "2026-05-28",
     "title": "Add dedupe.html title deduplication tool + /rename-works endpoint",
