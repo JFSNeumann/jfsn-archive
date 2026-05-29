@@ -1,5 +1,17 @@
 [
   {
+    "sha": "657dda8",
+    "date": "2026-05-28",
+    "title": "Add dedupe.html title deduplication tool + /rename-works endpoint",
+    "body": "dedupe.html: groups all works by title, shows duplicate groups with\nthumbnails sorted by count. Click any title to rename inline. Save &\nRebuild button POSTs all changes to /rename-works then rebuilds catalog.\nToggle between duplicates-only and all-works views.\n\nserver.py: new POST /rename-works endpoint — writes new titles to\nsidecar JSON files then runs build_catalog.py automatically."
+  },
+  {
+    "sha": "2d19918",
+    "date": "2026-05-28",
+    "title": "Fix 6 deprecated installation_view work_type → photograph; 0 warnings",
+    "body": ""
+  },
+  {
     "sha": "f667ac4",
     "date": "2026-05-28",
     "title": "Restore Art School (52) + Collaboration (31) from curate-session.json",

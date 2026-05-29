@@ -124,6 +124,15 @@
     .work-title:focus   { outline: none; border-color: var(--accent); }
     .work-title.changed { border-color: var(--accent); color: var(--accent); }
 
+    /* ── Number button ── */
+    .btn-num {
+      appearance: none; border: 1px solid var(--dim); background: transparent;
+      color: var(--muted); font-size: 0.625rem; letter-spacing: 0.08em;
+      padding: 0.2rem 0.6rem; cursor: pointer; margin-left: 0.5rem;
+      transition: border-color 0.12s, color 0.12s;
+    }
+    .btn-num:hover { border-color: var(--accent); color: var(--accent); }
+
     /* ── Empty state ── */
     .empty { padding: 4rem; text-align: center; color: var(--muted); font-size: 0.9375rem; }
   </style>
@@ -138,6 +147,7 @@
     <button class="toggle-btn active" id="btn-dupes" onclick="setMode('dupes')">Duplicates only</button>
     <button class="toggle-btn"        id="btn-all"   onclick="setMode('all')">All works</button>
   </div>
+  <button class="btn" id="number-all-btn" disabled onclick="autoNumberAll()">Number all</button>
   <button class="btn btn-save" id="save-btn" disabled onclick="saveChanges()">Save &amp; Rebuild</button>
   <a href="curate.html" class="btn">← Curate</a>
 </div>
@@ -189,6 +199,7 @@
       `${dupGroups.length} duplicate titles · ${totalDupes} works affected` +
       (pendingCount ? ` · ${pendingCount} unsaved change${pendingCount > 1 ? 's' : ''}` : '');
     document.getElementById('save-btn').disabled = pendingCount === 0;
+    document.getElementById('number-all-btn').disabled = dupGroups.length === 0;
 
     const visible = mode === 'dupes' ? dupGroups : groups;
 
@@ -205,7 +216,8 @@
       header.className = 'group-header';
       header.innerHTML = `
         <span class="group-title">${esc(title)}</span>
-        ${works.length > 1 ? `<span class="group-count">${works.length}×</span>` : ''}`;
+        ${works.length > 1 ? `<span class="group-count">${works.length}×</span>` : ''}
+        ${works.length > 1 ? `<button class="btn btn-num" onclick="autoNumberGroup(this)">1, 2, 3…</button>` : ''}`;
       group.appendChild(header);
 
       const row = document.createElement('div');
@@ -301,6 +313,36 @@
       btn.disabled = false;
     }
   }
+
+  // ── Auto-number a single group ────────────────────────────────
+  window.autoNumberGroup = function(btn) {
+    const group = btn.closest('.group');
+    const cards = group.querySelectorAll('.work-card');
+    cards.forEach((card, i) => {
+      const ta   = card.querySelector('.work-title');
+      const orig = ta.dataset.orig;
+      // Strip any trailing number already applied
+      const base = orig.replace(/\s+\d+$/, '').trim();
+      const next = base + ' ' + (i + 1);
+      ta.value = next;
+      const w = { _id: card.dataset.id, title: ta.dataset.orig };
+      onTitleChange(ta, w);
+    });
+  };
+
+  // ── Auto-number all duplicate groups ─────────────────────────
+  window.autoNumberAll = function() {
+    document.querySelectorAll('.group').forEach(group => {
+      const cards = group.querySelectorAll('.work-card');
+      if (cards.length < 2) return;
+      cards.forEach((card, i) => {
+        const ta   = card.querySelector('.work-title');
+        const base = ta.dataset.orig.replace(/\s+\d+$/, '').trim();
+        ta.value = base + ' ' + (i + 1);
+        onTitleChange(ta, { _id: card.dataset.id, title: ta.dataset.orig });
+      });
+    });
+  };
 
   // ── Mode toggle ───────────────────────────────────────────────
   window.setMode = function(m) {
