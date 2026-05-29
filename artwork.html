@@ -44,6 +44,29 @@
       transition: opacity 0.35s;
     }
 
+    /* -------- Viewer hint -------- */
+    .viewer-hint {
+      position: absolute;
+      bottom: 0.85rem;
+      right: 1rem;
+      z-index: 2;
+      font-size: 0.625rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0.45;
+      background: rgba(11, 11, 11, 0.72);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      padding: 0.3rem 0.65rem;
+      pointer-events: none;
+      transition: opacity 0.25s;
+    }
+    .artwork-image:hover .viewer-hint { opacity: 0; }
+    @media (prefers-reduced-motion: reduce) {
+      .viewer-hint { transition: none; }
+    }
+
     /* -------- Back link (above fold) -------- */
     .artwork-back {
       position: absolute;
@@ -95,11 +118,12 @@
     }
 
     .meta__id {
-      font-size: var(--cap);
-      letter-spacing: 0.18em;
+      font-size: 0.625rem;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--muted);
-      margin: 0 0 0.5rem;
+      opacity: 0.3;
+      margin: 0 0 0.75rem;
     }
     .meta__title {
       font-family: 'Cormorant Garamond', Georgia, serif;
@@ -109,24 +133,26 @@
       line-height: 1.2;
       margin: 0 0 0.4rem;
     }
+    .meta__year {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1rem, 1.5vw, 1.25rem);
+      font-weight: 300;
+      color: var(--muted);
+      margin: 0 0 0.35rem;
+    }
     .meta__type {
       font-size: var(--cap);
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--muted);
-      margin: 0 0 0.5rem;
-    }
-    .meta__year {
-      font-size: var(--cap);
-      letter-spacing: 0.14em;
-      color: var(--muted);
-      opacity: 0.6;
+      opacity: 0.55;
       margin: 0 0 1.5rem;
     }
     .meta__description {
-      font-size: 0.9375rem;
-      line-height: 1.7;
-      color: var(--text);
+      font-size: 0.8125rem;
+      line-height: 1.75;
+      color: var(--muted);
+      opacity: 0.65;
       margin: 0;
       max-width: 56ch;
     }
@@ -149,6 +175,37 @@
       color: var(--text);
       margin: 0;
     }
+
+    /* --- Tier 1: Series + Themes — plain link text, no pill --- */
+    .tags--primary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem 1rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .tags--primary li {
+      font-size: 0.8125rem;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      border: none;
+      padding: 0;
+    }
+    .tags--primary a {
+      display: inline;
+      margin: 0;
+      padding: 0;
+      color: inherit;
+      border-bottom: 1px solid var(--dim);
+      padding-bottom: 0.05rem;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .tags--primary a:hover { color: var(--accent); border-color: var(--accent); }
+    .tags--primary li:has(a) { border: none; cursor: default; }
+    .tags--primary li:has(a):hover { border: none; color: inherit; }
+
+    /* --- Tier 2: Palette — pill with color dot --- */
     .tags {
       display: flex;
       flex-wrap: wrap;
@@ -165,7 +222,6 @@
       border: 1px solid var(--dim);
       color: var(--muted);
     }
-    /* clickable tags — extend hit area to fill the pill */
     .tags a {
       display: block;
       margin: -0.25rem -0.625rem;
@@ -179,6 +235,27 @@
     .tags li:has(a):hover {
       border-color: rgba(255, 102, 0, 0.5);
       color: var(--accent);
+    }
+
+    /* --- Tier 3: Motifs / Materials / Keywords — metadata register --- */
+    .field--meta {
+      border-top: 1px solid var(--dim);
+      padding-top: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .field--meta .field__label { opacity: 0.5; }
+    .tags--meta li {
+      font-size: 0.625rem;
+      opacity: 0.6;
+      border-color: transparent;
+      padding: 0.2rem 0.5rem;
+    }
+    .tags--meta li:has(a) { border-color: transparent; }
+    .tags--meta li:has(a):hover {
+      border-color: rgba(255,102,0,0.35);
+      opacity: 1;
     }
 
     /* -------- Navigation -------- */
@@ -303,8 +380,15 @@
       text-overflow: ellipsis;
     }
 
-    /* -------- Share button -------- */
-    .share-btn {
+    /* -------- Work actions (Save + Share) -------- */
+    .artwork-actions {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      margin-top: 1.5rem;
+    }
+    .share-btn,
+    .fav-btn {
       appearance: none;
       background: none;
       border: none;
@@ -319,6 +403,8 @@
     }
     .share-btn:hover { color: var(--accent); }
     .share-btn.copied { color: var(--accent); }
+    .fav-btn:hover { color: var(--accent); }
+    .fav-btn[aria-pressed="true"] { color: var(--accent); }
 
     /* -------- Reduced motion -------- */
     @media (prefers-reduced-motion: reduce) {
@@ -566,9 +652,10 @@
 
   /* ---- tags helper ---- */
   /* linkType: 'theme' → archive?theme=, 'palette' → archive?palette=, 'search' → archive?q= */
-  function tags(items, linkType) {
+  function tags(items, linkType, extraClass) {
     if (!items || !items.length) return '';
-    return '<ul class="tags">' + items.map(t => {
+    const cls = extraClass ? `tags ${extraClass}` : 'tags';
+    return `<ul class="${cls}">` + items.map(t => {
       let href = '';
       if (linkType === 'theme')   href = 'archive.html?theme='   + encodeURIComponent(t);
       if (linkType === 'palette') href = 'archive.html?palette=' + encodeURIComponent(t);
@@ -597,9 +684,10 @@
     }).join('') + '</ul>';
   }
 
-  function field(label, content) {
+  function field(label, content, extraClass) {
     if (!content) return '';
-    return `<div><p class="field__label">${label}</p><div>${content}</div></div>`;
+    const cls = extraClass ? ` class="${extraClass}"` : '';
+    return `<div${cls}><p class="field__label">${label}</p><div>${content}</div></div>`;
   }
 
   function esc(s) {
@@ -658,14 +746,14 @@
         <a class="related__thumb" href="${esc(artURL(rid))}">
           <img src="artworks/thumbs/${esc(rid)}.avif" alt="${esc(rtitle)}" loading="lazy" width="400">
         </a>
-        <p class="related__caption">${esc(rtitle)}</p>
+        <p class="related__caption">${esc(rtitle)}${r.year ? `<span style="opacity:0.45;margin-left:0.4em">${esc(String(r.year))}</span>` : ''}</p>
       </div>`;
     }).join('');
 
     return `
       <section class="related" aria-label="Similar works">
         <div class="related__head">
-          <p class="related__label">Similar Works</p>
+          <p class="related__label">Related Works</p>
           <div class="related__series-links">${seriesLinks}</div>
         </div>
         <div class="related__grid">${items}</div>
@@ -683,13 +771,24 @@
     const fieldsHTML = !isCataloged
       ? '<p class="field__text" style="color:var(--muted);opacity:0.45;font-size:0.8125rem;margin:0">Not yet cataloged.</p>'
       : [
-          data.series ? field('Series',  tags([data.series], 'series')) : '',
-          field('Themes',    tags(data.themes,    'theme')),
-          field('Palette',   tags(data.palette,   'palette')),
-          field('Motifs',    tags(data.motifs,    'search')),
-          field('Materials', tags(data.materials, 'search')),
+          /* Tier 1 — curatorial: plain link text, most prominent */
+          data.series ? field('Series', tags([data.series], 'series', 'tags--primary')) : '',
+          field('Themes',  tags(data.themes, 'theme', 'tags--primary')),
+          /* Tier 2 — visual: palette dots + pill border */
+          field('Palette',     tags(data.palette, 'palette')),
+          data.dimensions_estimated ? field('Dimensions', `<p class="field__text">${esc(data.dimensions_estimated)}${data.dimensions_source === 'cd-reference' ? '<span style="opacity:0.4;font-size:0.75em;margin-left:0.5em">est.</span>' : ''}</p>`) : '',
           data.composition ? field('Composition', `<p class="field__text">${esc(data.composition)}</p>`) : '',
-          field('Keywords',  tags(data.keywords,  'search')),
+          /* Tier 3 — metadata: smaller, muted, separated by rule */
+          (() => {
+            const metaFields = [
+              field('Motifs',    tags(data.motifs,    'search', 'tags--meta')),
+              field('Materials', tags(data.materials, 'search', 'tags--meta')),
+              field('Keywords',  tags(data.keywords,  'search', 'tags--meta')),
+            ].join('');
+            return metaFields
+              ? `<div class="field--meta">${metaFields}</div>`
+              : '';
+          })(),
         ].join('');
 
     // ⑦ Save to recently viewed before rendering
@@ -700,14 +799,19 @@
       <div class="artwork-image">
         <a class="artwork-back" href="${esc(backURL())}">&#8592; ${hasContext ? 'Back' : 'Archive'}</a>
         <img id="artwork-img" src="artworks/thumbs/${esc(id)}.avif" alt="${esc(title)}" fetchpriority="high">
+        <span class="viewer-hint" aria-hidden="true">${('ontouchstart' in window || navigator.maxTouchPoints > 0) ? 'Tap' : 'Click'} to zoom &amp; rotate</span>
       </div>
       <div class="meta container">
         <div class="meta__left">
           <p class="meta__id">${esc(id)}</p>
           <h1 class="meta__title">${esc(title)}</h1>
-          <p class="meta__type">${esc(type)}</p>
           ${data.year ? `<p class="meta__year">${esc(String(data.year))}</p>` : ''}
-          <p class="meta__description">${esc(data.description || '')}</p>
+          <p class="meta__type">${esc(type)}</p>
+          ${data.description ? `<p class="meta__description">${esc(data.description)}</p>` : ''}
+          <div class="artwork-actions">
+            <button id="fav-btn" class="fav-btn" aria-pressed="false" aria-label="Save to favorites">♡ Save</button>
+            <button id="share-btn" class="share-btn" aria-label="Share this artwork">Share</button>
+          </div>
         </div>
         <div class="meta__right meta__fields">
           ${fieldsHTML}
@@ -719,11 +823,8 @@
           <div class="key-hint">
             <span class="key">&#8592;</span>
             <span class="key">&#8594;</span>
-            ${navPos && navTotal ? `<span class="nav-pos">${navPos}&thinsp;/&thinsp;${navTotal}</span>` : ''}
+            ${navPos && navTotal && hasContext ? `<span class="nav-pos">${navPos}&thinsp;/&thinsp;${navTotal}</span>` : ''}
           </div>
-          <a href="${esc(backURL())}">${hasContext ? 'Back to filtered view' : 'Archive'}</a>
-          <button id="fav-btn" class="fav-btn" aria-pressed="false" aria-label="Save to favorites">♡</button>
-          <button id="share-btn" class="share-btn" aria-label="Share this artwork">Share</button>
           <a id="nav-next"
              href="${nextId ? esc(artURL(nextId)) : '#'}"
              ${!nextId ? 'aria-disabled="true" tabindex="-1"' : ''}>Next &#8594;</a>
@@ -876,7 +977,7 @@
       const updateFavBtn = () => {
         const fav = isFav();
         favBtn.setAttribute('aria-pressed', String(fav));
-        favBtn.textContent = fav ? '♥' : '♡';
+        favBtn.textContent = fav ? '♥ Saved' : '♡ Save';
         favBtn.setAttribute('aria-label', fav ? 'Remove from saved' : 'Save to favorites');
       };
       updateFavBtn();
