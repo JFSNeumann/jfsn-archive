@@ -227,7 +227,11 @@
       padding-bottom: clamp(4rem, 8vw, 8rem);
     }
 
-    .thumb { margin: 0; transition: opacity 0.25s; }
+    .thumb { margin: 0; opacity: 0; transform: translateY(10px); transition: opacity 0.4s ease, transform 0.4s ease; }
+    .thumb.revealed { opacity: 1; transform: none; }
+    /* Keep hover-dim working on revealed thumbs */
+    .grid:has(.thumb__link:hover) .thumb.revealed { opacity: 0.5; }
+    .grid:has(.thumb__link:hover) .thumb.revealed:hover { opacity: 1; }
 
     .thumb__link {
       display: block;
@@ -704,6 +708,42 @@
   let visibleRecords = [];
   let renderedCount  = 0;
   let loadObserver   = null;
+  let prevVisible    = 0;  /* ⑥ track previous count for animation */
+
+  /* ⑥ Animate the works count from old → new */
+  function animateCount(toVal, total) {
+    const el = document.getElementById('count');
+    if (!el) return;
+    const fromVal  = prevVisible;
+    prevVisible    = toVal;
+    const isAll    = toVal === total;
+    const suffix   = isAll ? ' works' : ' of ' + total + ' works';
+    if (fromVal === toVal) { el.textContent = toVal + suffix; return; }
+    const duration = Math.min(500, Math.abs(toVal - fromVal) * 0.8 + 180);
+    const startTs  = performance.now();
+    el.style.transition = 'opacity 0.15s, transform 0.15s';
+    el.style.opacity    = '0.4';
+    el.style.transform  = 'scale(0.92)';
+    requestAnimationFrame(function step(now) {
+      const t    = Math.min((now - startTs) / duration, 1);
+      const ease = 1 - Math.pow(1 - t, 3);
+      const val  = Math.round(fromVal + (toVal - fromVal) * ease);
+      el.textContent  = val + suffix;
+      el.style.opacity   = String(0.4 + ease * 0.6);
+      el.style.transform = `scale(${0.92 + ease * 0.08})`;
+      if (t < 1) requestAnimationFrame(step);
+      else { el.style.opacity = '1'; el.style.transform = 'none'; }
+    });
+  }
+
+  /* ③ Scroll-reveal observer — fires once per thumb, then unobserves */
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('revealed');
+      revealObserver.unobserve(e.target);
+    });
+  }, { rootMargin: '0px 0px -40px 0px', threshold: 0.05 });
   let activeType     = null;
   let activeThemes   = new Set();
   let activeSeries   = null;
@@ -1328,10 +1368,7 @@
     renderedCount  = 0;
     const total    = catalog.length;
 
-    document.getElementById('count').textContent =
-      visibleRecords.length === total
-        ? total + ' works'
-        : visibleRecords.length + ' of ' + total + ' works';
+    animateCount(visibleRecords.length, total);  /* ⑥ animated */
 
     /* Update page title to reflect active filter */
     if (activeSeries && NAMED_SERIES_META[activeSeries]) {
@@ -1417,7 +1454,10 @@
     renderedCount += slice.length;
     applyDensity();
     /* Fine-tune spans with actual offsetWidth after layout */
-    requestAnimationFrame(() => newFigs.forEach(setSpan));
+    requestAnimationFrame(() => {
+      newFigs.forEach(setSpan);
+      newFigs.forEach(f => revealObserver.observe(f));  /* ③ scroll-reveal */
+    });
   }
 
   function setupLoadMore() {
