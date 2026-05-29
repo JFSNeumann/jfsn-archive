@@ -14,7 +14,7 @@
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="catalog-home.json?v=20260529163219" as="fetch" crossorigin>
+  <link rel="preload" href="catalog-home.json?v=20260529171533" as="fetch" crossorigin>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap"></noscript>
   <link rel="stylesheet" href="site.css?v=20260527-nav">
@@ -29,18 +29,38 @@
     /* -------- Hero -------- */
     .hero {
       position: relative; /* ① anchor cycle button */
+      overflow: hidden;
+    }
+    .hero > a { display: block; line-height: 0; }
+    /* Blurred backdrop — same image scaled up & darkened behind the main image */
+    .hero__backdrop {
+      position: absolute;
+      inset: -5%;          /* overhang so blur edges never show */
+      width: 110%;
+      height: 110%;
+      object-fit: cover;
+      filter: blur(12px) brightness(0.58) saturate(1.3);
+      transform: scale(1.05);
+      z-index: 0;
+      pointer-events: none;
+      transition: opacity 0.6s;
     }
     .hero__image {
+      position: relative;
+      z-index: 1;
+      display: block;
       width: 100%;
-      height: 72svh;      /* fixed height — prevents CLS; image contained inside */
+      max-height: 72svh;  /* caps height without leaving empty space below */
+      height: auto;
       object-fit: contain;
-      background: var(--bg);
+      object-position: top center;
+      background: transparent;
     }
 
     .hero__caption {
       display: flex;
       gap: 2rem;
-      margin-top: 1.25rem;
+      margin-top: 0.75rem;
       font-size: var(--cap);
       letter-spacing: var(--track);
       text-transform: uppercase;
@@ -407,6 +427,8 @@
   <h1 class="sr-only">Jeffrey F. S. Neumann — Archive of works, 1974–present</h1>
 
   <section class="hero" aria-label="Featured work">
+    <!-- Blurred ambient backdrop — same image, behind the main view -->
+    <img class="hero__backdrop" src="" alt="" aria-hidden="true" style="opacity:0">
     <a href="artwork.html" id="hero-link">
       <img
         class="hero__image"
@@ -417,13 +439,14 @@
     </a>
     <!-- ① Cycle button -->
     <button class="hero-cycle-btn" id="hero-cycle" aria-label="Next featured work" title="Next work">→</button>
-    <figcaption class="container hero__caption">
-      <strong id="hero-id"></strong>
-      <span id="hero-title" class="hero__caption-title"></span>
-      <span id="hero-meta"></span><!-- ⑥ combined year · type -->
-      <a href="archive.html">Archive →</a>
-    </figcaption>
   </section>
+  <!-- Caption lives outside .hero so backdrop doesn't bleed into it -->
+  <figcaption class="container hero__caption">
+    <strong id="hero-id"></strong>
+    <span id="hero-title" class="hero__caption-title"></span>
+    <span id="hero-meta"></span><!-- ⑥ combined year · type -->
+    <a href="archive.html">Archive →</a>
+  </figcaption>
 
   <!-- ⑤ Tagline — larger, serif italic, full text color -->
   <p class="home-tagline container">Five decades of collage, sculpture, and photography &mdash; one artist, one archive.</p>
@@ -529,7 +552,7 @@
   // ?v= is stamped by build_catalog.py — forces browser to fetch fresh after every build
   let dominantColors = {};
   fetch('colors.json').then(r => r.ok ? r.json() : null).then(c => { if (c) dominantColors = c; }).catch(() => {});
-  fetch('catalog-home.json?v=20260529163219')
+  fetch('catalog-home.json?v=20260529171533')
     .then(r => r.ok ? r.json() : null)
     .then(catalog => {
       if (!catalog || !catalog.length) return;
@@ -558,12 +581,14 @@
 
   function renderHero(rec) {
     if (!rec) return;
-    const heroId   = rec.file.replace('.avif', '');
-    const heroLink = document.getElementById('hero-link');
-    const heroImg  = document.querySelector('.hero__image');
+    const heroId     = rec.file.replace('.avif', '');
+    const heroLink   = document.getElementById('hero-link');
+    const heroImg    = document.querySelector('.hero__image');
+    const heroBack   = document.querySelector('.hero__backdrop');
 
-    heroImg.style.transition = 'opacity 0.3s';
-    heroImg.style.opacity    = '0';
+    heroImg.style.transition  = 'opacity 0.3s';
+    heroImg.style.opacity     = '0';
+    if (heroBack) { heroBack.style.transition = 'opacity 0.3s'; heroBack.style.opacity = '0'; }
 
     // ① Thumb loads instantly → fast LCP
     heroImg.src = `artworks/thumbs/${heroId}.avif`;
@@ -571,9 +596,19 @@
     heroImg.style.transition = 'opacity 0.6s';
     heroImg.style.opacity    = '1';
 
+    // Backdrop: use thumb immediately, upgrade to full when ready
+    if (heroBack) {
+      heroBack.src = `artworks/thumbs/${heroId}.avif`;
+      heroBack.style.transition = 'opacity 0.6s';
+      heroBack.style.opacity    = '1';
+    }
+
     // ② Upgrade to full-res silently — no layout shift (fixed-height container)
     const full = new Image();
-    full.onload = () => { heroImg.src = `artworks/full/${heroId}.avif`; };
+    full.onload = () => {
+      heroImg.src = `artworks/full/${heroId}.avif`;
+      if (heroBack) heroBack.src = `artworks/full/${heroId}.avif`;
+    };
     full.src = `artworks/full/${heroId}.avif`;
 
     if (heroLink) heroLink.href = `artwork.html?id=${heroId}`;
