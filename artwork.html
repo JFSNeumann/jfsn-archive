@@ -922,6 +922,8 @@
       .setAttribute('content', (data.description || title).slice(0, 160));
     document.querySelector('meta[property="og:title"]')
       .setAttribute('content', `${title} — Jeffrey F. S. Neumann`);
+    document.querySelector('meta[property="og:description"]')
+      .setAttribute('content', (data.description || `${title}, ${data.year || 'undated'}. From the archive of Jeffrey F. S. Neumann.`).slice(0, 200));
     document.querySelector('meta[property="og:image"]')
       .setAttribute('content', `${location.origin}/artworks/thumbs/${id}.avif`);
     document.querySelector('meta[property="og:url"]')
