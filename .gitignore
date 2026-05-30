@@ -19,3 +19,8 @@ artworks/logs/
 
 # ── Old site (197MB — deployed via FTP, not via git) ─────────────────────────
 old-site/
+*.bak
+*.bak2
+*.bak3
+*.bak4
+*.backup.json
