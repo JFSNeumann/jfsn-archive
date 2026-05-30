@@ -1,5 +1,23 @@
 [
   {
+    "sha": "cfa5340",
+    "date": "2026-05-30",
+    "title": "Session 19: reduce primary nav from 7 to 4 items",
+    "body": "- Primary nav: Archive · Series · About · Inquiry (→ about.html#contact)\n- Removed Timeline, Constellation, Mosaic, For Artists from primary nav\n- Added id='contact' anchor to about.html contact section\n- Added contextual Timeline/Constellation/Mosaic tools to archive.html and series-index.html\n- CSS version bumped to 20260530-nav4"
+  },
+  {
+    "sha": "bd3cd4e",
+    "date": "2026-05-30",
+    "title": "Session 19: replace README og-card placeholder with real archive grid screenshot",
+    "body": ""
+  },
+  {
+    "sha": "438fb03",
+    "date": "2026-05-30",
+    "title": "Session 19: Batch API for catalog, Companion tool use + deep mode",
+    "body": ""
+  },
+  {
     "sha": "2978fb9",
     "date": "2026-05-29",
     "title": "Session 18: update CURRENT_STATE + rebuild artifacts",

@@ -1,12 +1,24 @@
 # Current State
-**Updated:** 2026-05-29 20:33
+**Updated:** 2026-05-30 (session 19)
 
 ## Last commit
 2978fb9 — Session 18: update CURRENT_STATE + rebuild artifacts
 
 ## To do next session
-<!-- Edit this section before closing -->
-- [ ] (add what you want to do next time)
+- [ ] Copy catalog-lite.json from outputs → JFSN folder, then commit
+- [ ] Clean up backup files: catalog-lite.json.bak, .bak2, .bak3, .bak4 (keep only most recent)
+- [ ] Delete fix_catalog.py from JFSN root
+
+## Catalog audit — completed 2026-05-30
+55 metadata fixes across 1,084 works:
+- 7 misapplied Crosses/Targets themes removed
+- 10 Gallery/Studio theme confusions corrected
+- 11 Guernica series tags removed from wrong works
+- 27 unthemed Guernica collages given "Targets" theme
+catalog-lite.json updated on disk and synced to Claude project knowledge.
+
+## Remaining audit work
+- None. All 1,084 works are themed. ✅
 
 ## To do (outside code)
 - [x] GoatCounter: account created at jfsn.goatcounter.com — live ✅
@@ -24,4 +36,5 @@
 - jfsn-archive.netlify.app  (secondary — Netlify, has Companion function)
 
 ## Archive stats
-- 1084 works cataloged, 0 errors
+- 1084 works cataloged, all themed ✅
+- Theme distribution: Targets 562, Framed 230, Torsos & Faces 201, Gallery 153, Studio 104, Mr. Snowmann 72, Crosses 69, Art School 52, Collaboration 31, Tracings 12

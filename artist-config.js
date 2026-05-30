@@ -64,7 +64,7 @@ window.ARCHIVE_CONFIG = {
     {
       "key": "Guernica",
       "displayTitle": "XXXIII · Guernica",
-      "description": "Works in direct engagement with Picasso's 1937 masterpiece — numbered for the thirty-three days he spent painting it. Warplanes extracted from print media and dense formations of compact discs share the picture plane: military silhouettes and mass-produced discs as parallel found objects, the bull, the horse, the lamp recombined through collage and accumulation. Works frequently carry the label \"XXXIII\" or \"DBS.\""
+      "description": "232 works, 1990–2020. Collage, primarily. The recurring elements are compact discs, targets, and warplanes — concentric rings laid against black, red, white, yellow. The planes are drawn from above or from the side, reduced to diagrams. The discs function as bullseyes, as roundels, as shields. American footballs appear. Chess pieces. The compositions tend toward the panoramic: figures scattered across a wide ground, or arranged in friezes. The work is not anti-war. It doesn't illustrate anything. It uses the vocabulary of conflict — ordnance, insignia, game pieces, sport — and holds them flat, side by side, in the grammar of collage."
     }
   ],
   "palette": [
