@@ -20,12 +20,15 @@ Run
     python3 catalog.py --limit 10   # test on 10 first
     python3 catalog.py --workers 8  # faster if your API tier allows
 
-Cost: roughly $0.01–0.02 per image. Full run ~$10–20.
+Cost: roughly $0.01–0.02 per image on first run. Prompt caching cuts ~80% off the
+system-prompt tokens on every image after the first, so repeat runs (or large batches)
+cost significantly less.
 """
 
 import os, json, base64, io, sys, argparse, time, random
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from typing import Any
 
 try:
     from PIL import Image
@@ -211,6 +214,16 @@ FIELD RULES
 
 SYSTEM_PROMPT = _build_system_prompt()
 
+# Wrapped for prompt caching — the system prompt is identical for every image,
+# so after the first API call it's served from cache at ~10% of normal token cost.
+SYSTEM_PROMPT_CACHED = [
+    {
+        "type": "text",
+        "text": SYSTEM_PROMPT,
+        "cache_control": {"type": "ephemeral"},
+    }
+]
+
 
 def encode_image(avif_path: Path) -> str:
     img = Image.open(avif_path).convert("RGB")
@@ -278,11 +291,11 @@ def log_error(fname: str, reason: str) -> None:
     with ERROR_LOG.open("a") as f:
         f.write(json.dumps(entry) + "\n")
 
-def process_one(client: Anthropic, avif_path: Path) -> tuple[str, str]:
+def process_one(client: Anthropic, avif_path: Path) -> tuple[str, str, dict]:
     fname = avif_path.name
     sidecar = avif_path.with_suffix(".json")
     if sidecar.exists():
-        return fname, "skip"
+        return fname, "skip", {}
 
     img_b64 = encode_image(avif_path)
     last_err = ""
@@ -292,7 +305,7 @@ def process_one(client: Anthropic, avif_path: Path) -> tuple[str, str]:
             msg = client.messages.create(
                 model=MODEL,
                 max_tokens=1500,
-                system=SYSTEM_PROMPT,
+                system=SYSTEM_PROMPT_CACHED,
                 messages=[{
                     "role": "user",
                     "content": [
@@ -316,7 +329,13 @@ def process_one(client: Anthropic, avif_path: Path) -> tuple[str, str]:
                 continue
 
             sidecar.write_text(json.dumps(rec, indent=2))
-            return fname, "ok"
+            usage = {
+                "input":          getattr(msg.usage, "input_tokens", 0),
+                "output":         getattr(msg.usage, "output_tokens", 0),
+                "cache_created":  getattr(msg.usage, "cache_creation_input_tokens", 0),
+                "cache_read":     getattr(msg.usage, "cache_read_input_tokens", 0),
+            }
+            return fname, "ok", usage
 
         except Exception as e:
             last_err = repr(e)
@@ -324,12 +343,81 @@ def process_one(client: Anthropic, avif_path: Path) -> tuple[str, str]:
                 time.sleep(2 ** attempt + random.random())
 
     log_error(fname, last_err)
-    return fname, f"err: {last_err}"
+    return fname, f"err: {last_err}", {}
+
+def _make_request_params(avif_path: Path) -> dict[str, Any]:
+    img_b64 = encode_image(avif_path)
+    return {
+        "model":      MODEL,
+        "max_tokens": 1500,
+        "system":     SYSTEM_PROMPT_CACHED,
+        "messages": [{
+            "role": "user",
+            "content": [
+                {"type": "image", "source": {"type": "base64",
+                                             "media_type": "image/jpeg",
+                                             "data": img_b64}},
+                {"type": "text", "text": f"Catalog this image. file = {avif_path.name}"}
+            ]
+        }]
+    }
+
+
+def run_batch(client: Anthropic, todo: list[Path]) -> None:
+    """Submit todo as a single Batch API job (50% cheaper, async)."""
+    print(f"Encoding {len(todo)} images…")
+    requests = [
+        {"custom_id": p.name, "params": _make_request_params(p)}
+        for p in todo
+    ]
+
+    batch = client.messages.batches.create(requests=requests)
+    print(f"Batch submitted: {batch.id}  ({len(todo)} requests)")
+    print("Polling every 30s…")
+
+    while batch.processing_status == "in_progress":
+        time.sleep(30)
+        batch = client.messages.batches.retrieve(batch.id)
+        rc = batch.request_counts
+        print(f"  {batch.processing_status} — processing:{rc.processing} "
+              f"succeeded:{rc.succeeded} errored:{rc.errored}")
+
+    print(f"Batch complete: {batch.processing_status}")
+    ok = err = 0
+    for result in client.messages.batches.results(batch.id):
+        fname = result.custom_id
+        avif_path = FULL_DIR / fname
+        if result.result.type == "errored":
+            log_error(fname, repr(result.result.error))
+            err += 1
+            continue
+        try:
+            rec = parse_json_response(result.result.message.content[0].text)
+            rec["file"] = fname
+            rec.setdefault("featured", False)
+            rec.setdefault("schema_version", "1")
+            if "series" not in rec:
+                rec["series"] = None
+            validation_err = validate_record(rec)
+            if validation_err:
+                log_error(fname, f"validation: {validation_err}")
+                err += 1
+                continue
+            avif_path.with_suffix(".json").write_text(json.dumps(rec, indent=2))
+            ok += 1
+        except Exception as e:
+            log_error(fname, repr(e))
+            err += 1
+
+    print(f"\nDone. {ok} written, {err} errors.")
+
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--limit", type=int, default=None)
-    ap.add_argument("--workers", type=int, default=4)
+    ap.add_argument("--limit",   type=int,  default=None)
+    ap.add_argument("--workers", type=int,  default=4)
+    ap.add_argument("--batch",   action="store_true",
+                    help="Use Batch API (async, 50%% cheaper) instead of streaming")
     args = ap.parse_args()
 
     if not os.environ.get("ANTHROPIC_API_KEY"):
@@ -346,16 +434,26 @@ def main():
         print("Nothing to do.")
         return
 
+    if args.batch:
+        run_batch(client, todo)
+        return
+
     print(f"Processing {len(todo)} with {args.workers} parallel workers.")
     print(f"Errors logged to: {ERROR_LOG} (JSONL format)")
     start = time.time()
     ok = err = 0
+    total_input = total_output = total_cache_created = total_cache_read = 0
+
     with ThreadPoolExecutor(max_workers=args.workers) as ex:
         futures = {ex.submit(process_one, client, p): p for p in todo}
         for i, fut in enumerate(as_completed(futures), 1):
-            fname, status = fut.result()
+            fname, status, usage = fut.result()
             if status == "ok":
                 ok += 1
+                total_input        += usage.get("input", 0)
+                total_output       += usage.get("output", 0)
+                total_cache_created += usage.get("cache_created", 0)
+                total_cache_read   += usage.get("cache_read", 0)
             elif status.startswith("err"):
                 err += 1
                 print(f"  [{i}/{len(todo)}] {fname}: {status}")
@@ -365,7 +463,17 @@ def main():
                 eta = (len(todo) - i) / rate if rate else 0
                 print(f"  [{i}/{len(todo)}] {ok} ok / {err} err / {rate:.1f}/s / ETA {eta/60:.0f}m")
 
-    print(f"\nDone. {ok} written, {err} errors. {time.time()-start:.0f}s elapsed.")
+    elapsed = time.time() - start
+    print(f"\nDone. {ok} written, {err} errors. {elapsed:.0f}s elapsed.")
+    if total_input or total_cache_read:
+        print(f"\nToken usage:")
+        print(f"  Input (uncached):  {total_input:,}")
+        print(f"  Cache writes:      {total_cache_created:,}")
+        print(f"  Cache reads:       {total_cache_read:,}  ← billed at ~10% of normal")
+        print(f"  Output:            {total_output:,}")
+        if total_cache_read + total_input > 0:
+            hit_pct = 100 * total_cache_read / (total_cache_read + total_input)
+            print(f"  Cache hit rate:    {hit_pct:.0f}%")
 
 if __name__ == "__main__":
     main()

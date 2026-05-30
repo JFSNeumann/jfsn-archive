@@ -24,6 +24,7 @@ OUT         = ROOT / "catalog.json"
 OUT_LITE    = ROOT / "catalog-lite.json"
 OUT_HOME    = ROOT / "catalog-home.json"
 OUT_SITEMAP = ROOT / "sitemap.xml"
+OUT_FEED    = ROOT / "feed.xml"
 OUT_JS_CFG  = ROOT / "artist-config.js"
 
 HOME_LIMIT  = 30   # max records served to the homepage
@@ -185,6 +186,47 @@ for loc, prio, freq in entries:
 lines.append('</urlset>')
 OUT_SITEMAP.write_text('\n'.join(lines) + '\n')
 print(f"sitemap.xml       — {len(entries)} URLs")
+
+# ── RSS feed — 20 most recently added works ───────────────────────────────────
+def _xml(s):
+    return str(s).replace('&','&amp;').replace('<','&lt;').replace('>','&gt;').replace('"','&quot;')
+
+recent_20 = sorted(records, key=lambda r: r['file'], reverse=True)[:20]
+pub_date  = datetime.datetime.now(datetime.timezone.utc).strftime('%a, %d %b %Y %H:%M:%S +0000')
+feed_lines = [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">',
+    '  <channel>',
+    f'    <title>{_xml(ARTIST_NAME)} — Archive</title>',
+    f'    <link>{_xml(SITE_URL)}/</link>',
+    f'    <description>New works added to the archive of {_xml(ARTIST_NAME)}</description>',
+    f'    <atom:link href="{_xml(SITE_URL)}/feed.xml" rel="self" type="application/rss+xml"/>',
+    f'    <lastBuildDate>{pub_date}</lastBuildDate>',
+    '    <language>en-us</language>',
+    '    <ttl>1440</ttl>',
+]
+for r in recent_20:
+    art_id    = r['file'].replace('.avif', '')
+    title     = r.get('title') or art_id
+    url       = f"{SITE_URL}/artwork.html?id={art_id}"
+    img_url   = f"{SITE_URL}/artworks/thumbs/{r['file']}"
+    year      = r.get('year', '')
+    work_type = (r.get('work_type') or '').replace('_', ' ').title()
+    desc      = r.get('description', '')
+    meta      = ', '.join(filter(None, [str(year) if year else '', work_type]))
+    full_desc = f"{desc} {meta}".strip() if desc else meta
+    feed_lines += [
+        '    <item>',
+        f'      <title>{_xml(title)}</title>',
+        f'      <link>{_xml(url)}</link>',
+        f'      <guid isPermaLink="true">{_xml(url)}</guid>',
+        f'      <description>{_xml(full_desc)}&lt;br&gt;&lt;img src="{_xml(img_url)}" alt="{_xml(title)}"&gt;</description>',
+        f'      <pubDate>{pub_date}</pubDate>',
+        '    </item>',
+    ]
+feed_lines += ['  </channel>', '</rss>']
+OUT_FEED.write_text('\n'.join(feed_lines) + '\n')
+print(f"feed.xml          — {len(recent_20)} recent works")
 
 # ── Stamp build timestamp into index.html catalog fetch URL ──────────────────
 # Replaces ?v=BUILD_TS so browsers always fetch fresh catalog-home.json after deploy.

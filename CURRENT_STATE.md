@@ -1,26 +1,23 @@
 # Current State
-**Updated:** 2026-05-29 19:52
+**Updated:** 2026-05-29 20:33
 
 ## Last commit
-01e1403 — Session 18: lost.html revision — earn the weight
-
-## Session 18 continued (2026-05-30) — five UX improvements
-- companion.html: FUNCTION_URL fix — now works on jfsn.com (test live to confirm)
-- .htaccess: CSP updated — jfsn-archive.netlify.app + gc.zgo.at added to connect-src
-- timeline.html: 2000s note — "Surviving work only" + link to lost.html
-- constellation.html: onboarding hint card — dismissible, localStorage
-- index.html: "Begin here" section — 3 works, 3 one-liners
+2978fb9 — Session 18: update CURRENT_STATE + rebuild artifacts
 
 ## To do next session
 <!-- Edit this section before closing -->
-- [ ] Test Companion on jfsn.com — first time it should work on main domain
-- [ ] Series introductions — descriptions exist in config, consider surfacing them better on series-index.html too
+- [ ] (add what you want to do next time)
+
+## To do (outside code)
+- [x] GoatCounter: account created at jfsn.goatcounter.com — live ✅
+- [ ] GitHub Sponsors: Stripe Connect + identity verification pending — finish at github.com/sponsors/accounts
+- [ ] README screenshot: swap og-card.jpg placeholder with a real archive grid screenshot
+- [ ] Netlify Forms: email notification — configure after first inquiry submission arrives (Forms → archive-inquiry → Form notifications)
 
 ## Known issues
-- companion.html URL / CSP bug on jfsn.com (until DNS switches to Netlify)
-- GoatCounter signup pending
-- Netlify Forms email notification not configured
-- artwork.html needs static title/description for SEO
+- companion.html: FIXED session 18 — test live at jfsn.com/companion.html to confirm
+- artwork.html SEO: FIXED — edge function injects per-work meta tags server-side
+- about.html exhibitions: LIVE — update table rows with real show history when ready (~line 375)
 
 ## Site is live at
 - jfsn.com  (primary — cPanel)

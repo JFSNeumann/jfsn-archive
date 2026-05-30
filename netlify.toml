@@ -8,6 +8,10 @@
   directory = "netlify/functions"
   node_bundler = "esbuild"
 
+# ── Edge Functions ─────────────────────────────────────────────────────────────
+[edge_functions]
+  directory = "netlify/edge-functions"
+
 # ── Rewrites ──────────────────────────────────────────────────────────────────
 # Let the old site (in /old/) share artwork images from the root artworks/ folder.
 # Old site uses artworks/thumbs/* and artworks/art####.avif (flat).
@@ -51,6 +55,13 @@
   for = "/*.json"
   [headers.values]
     Cache-Control = "public, max-age=3600"
+
+# RSS feed: 1-day TTL — regenerated with each catalog build
+[[headers]]
+  for = "/feed.xml"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+    Content-Type  = "application/rss+xml; charset=utf-8"
 
 # Favicon and brand mark
 [[headers]]

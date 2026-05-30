@@ -1,23 +1,40 @@
-# JFSN Archive — Artist/Designer Portfolio Template
+# JFSN Archive — AI-Cataloged Artist Archive Website
 
-A static, open-source archive site for artists and designers. Built for [jfsn.com](https://jfsn.com) — a 1,000+ work archive spanning 50 years of practice. No CMS, no database. Pure static files that deploy anywhere.
+A static, open-source archive site for visual artists. No CMS, no database, no monthly fees. Built for [jfsn.com](https://jfsn.com) — 1,084 works spanning 50 years, live on a $5/month shared host.
+
+**Don't want to set it up yourself?** I build these for other artists, starting at $500. Reply within 48 hours. → [jfsn.com/for-artists](https://jfsn.com/for-artists.html)
 
 ---
 
-## What this is
+## What you get
 
-A fully-featured personal archive with:
+![Archive grid, timeline, and constellation view](https://jfsn.com/og-card.jpg)
 
-- **Archive** — masonry grid, search, filters by decade/theme/series, infinite scroll, palette swatches, favorites
-- **Series** — groupings with scroll progress
+- **Archive** — masonry grid, full-text search, filters by decade/theme/series/palette, favorites
+- **Series** — theme and named-series pages with work counts
 - **Timeline** — decade strips from 1970s–2020s
-- **Constellation** — d3-force galaxy view, 14 theme clusters, pan/zoom, search
-- **Artwork detail** — lightbox, keyboard/swipe nav, related works, JSON-LD
+- **Constellation** — d3-force galaxy view, theme clusters, pan/zoom, search
+- **Mosaic** — photomosaic of all works forming a portrait
+- **Artwork detail** — lightbox, keyboard/swipe nav, related works, color palette, JSON-LD structured data
+- **Companion** — AI assistant with full knowledge of the archive (Netlify Function + Claude API)
 - **Open Archive API** — auto-generated `api/v1/` endpoints (works, themes, motifs, palette, series)
+- **RSS feed** — `feed.xml` of the 20 most recently added works, autodiscovery on every page
 - **Service worker** — offline-first, auto-cache-busted on every build
-- **AI auto-cataloging** — Anthropic API reads your images and writes titles, descriptions, themes, palette, motifs
+- **AI auto-cataloging** — Claude reads your images and writes titles, descriptions, themes, palette, motifs
 
-Works on Netlify (free tier), cPanel shared hosting, GitHub Pages, or any static host.
+Works on Netlify (free), GitHub Pages (free), or cPanel shared hosting (~$5/month).
+
+---
+
+## Want one built for you?
+
+I built this for my own 50-year archive and now build them for other artists. You send photos, I deploy a live archive to your domain — usually within a week.
+
+→ **[See the service and pricing at jfsn.com/for-artists](https://jfsn.com/for-artists.html)**
+
+Starting at $500 · One-time fee · No ongoing costs · Full source code handed off
+
+---
 
 ---
 
@@ -54,12 +71,12 @@ python3 artworks/catalog.py --limit 5  # test on 5 first
 python3 artworks/catalog.py            # process all
 ```
 
-Cost: ~$0.01–0.02 per image.
+Uses `claude-sonnet-4-6`. Cost: ~$0.01–0.02 per image.
 
 ### 5. Build & preview
 
 ```bash
-python3 artworks/build_catalog.py   # outputs catalog.json + api/v1/
+python3 artworks/build_catalog.py   # outputs catalog.json, sitemap.xml, feed.xml, api/v1/
 python3 server.py                   # http://localhost:3900
 ```
 
@@ -93,7 +110,7 @@ This auto-assigns sequential IDs (`art0001`, `art0002`, …), converts to AVIF, 
 | `artworks/ingest.py` | iPhone/HEIC → AVIF pipeline |
 | `artworks/catalog.py` | AI cataloging via Anthropic API |
 | `artworks/validate_catalog.py` | Schema QA — run before building |
-| `artworks/build_catalog.py` | Publishes catalog.json + api/v1/ + stamps cache busters |
+| `artworks/build_catalog.py` | Publishes catalog.json + sitemap.xml + feed.xml + api/v1/ + stamps cache busters |
 | `artworks/build_dims.py` | Rebuilds dims.json for masonry layout |
 | `artworks/make_colors.py` | Extracts dominant colors → colors.json |
 | `deploy.sh` | One-command: build → upload → verify |
@@ -150,7 +167,7 @@ Key files to edit when setting up as your own archive:
 | File | What to change |
 |------|---------------|
 | **`artist-config.json`** | **Everything** — artist name, site URL, themes, series, palette, motifs |
-| `about.html` | Your bio, name, contact |
+| `about.html` | Your bio, name, exhibitions, contact |
 | `featured.txt` | Which works appear on the homepage |
 | `.ftp.env` | FTP host/user/pass (never commit — already in .gitignore) |
 | `site.css` (`:root` tokens) | Colors, fonts, spacing |
@@ -167,11 +184,17 @@ after running `python3 artworks/build_catalog.py`.
 
 | Host | Cost | Notes |
 |------|------|-------|
-| **Netlify** | Free | Drag-drop or CLI. Auto-deploys from GitHub. |
-| **GitHub Pages** | Free | Push `main` → live. |
-| **cPanel shared hosting** | ~$5/mo | Use `deploy.sh` with FTP credentials. |
+| **Netlify** | Free | Drag-drop or CLI. Auto-deploys from GitHub. Companion AI function requires Netlify. |
+| **GitHub Pages** | Free | Push `main` → live. No server-side functions. |
+| **cPanel shared hosting** | ~$5/mo | Use `deploy.sh` with FTP credentials. Images stay on server, not in git. |
 
-For large image libraries (1,000+ works), Netlify free tier handles static files well. Images aren't deployed via git — they stay on your server.
+---
+
+## Companion (AI assistant)
+
+The Companion is a Claude-powered chat interface with full knowledge of the archive — every work, theme, series, and year. It lives at `/companion.html` and requires a Netlify Function (`netlify/functions/companion.js`) with an `ANTHROPIC_API_KEY` environment variable set in your Netlify dashboard.
+
+It does not work on GitHub Pages or cPanel (no server-side function support).
 
 ---
 
@@ -220,6 +243,12 @@ CC BY 4.0 by default (metadata only — you control your image rights).
 
 ---
 
+## RSS feed
+
+`feed.xml` is auto-generated by `build_catalog.py` — the 20 most recently added works, with title, description, and thumbnail. Subscribe in any RSS reader. Autodiscovery `<link>` tag is present on every page.
+
+---
+
 ## License
 
 Code: [MIT](LICENSE)  
@@ -229,5 +258,7 @@ Artwork and content: belongs to the artist using this template. This repo includ
 
 ## Credits
 
-Built by [Jeff Neumann](https://jfsn.com) for jfsn.com — 50 years of art and design, 1,000+ works.  
-Open-sourced so other artists and designers can build their own archive without starting from scratch.
+Built by [Jeff Neumann](https://jfsn.com) — artist, product designer, Cleveland.  
+Open-sourced so other artists can build their own archive without starting from scratch.
+
+If this saved you time, [buy me a coffee](https://github.com/sponsors/JFSNeumann) or [hire me to build yours](https://jfsn.com/for-artists.html).

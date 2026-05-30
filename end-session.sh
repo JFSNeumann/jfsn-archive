@@ -70,6 +70,13 @@ echo ""
 DATE=$(date "+%Y-%m-%d %H:%M")
 LAST_COMMIT=$(git log -1 --pretty="%h — %s")
 
+# Preserve the Known issues section from the current CURRENT_STATE.md
+KNOWN_ISSUES=$(awk '/^## Known issues/{found=1} found && /^## / && !/^## Known issues/{found=0} found{print}' CURRENT_STATE.md 2>/dev/null)
+if [ -z "$KNOWN_ISSUES" ]; then
+  KNOWN_ISSUES="## Known issues
+- (none)"
+fi
+
 cat > CURRENT_STATE.md << EOF
 # Current State
 **Updated:** $DATE
@@ -81,11 +88,7 @@ $LAST_COMMIT
 <!-- Edit this section before closing -->
 - [ ] (add what you want to do next time)
 
-## Known issues
-- companion.html URL / CSP bug on jfsn.com (until DNS switches to Netlify)
-- GoatCounter signup pending
-- Netlify Forms email notification not configured
-- artwork.html needs static title/description for SEO
+$KNOWN_ISSUES
 
 ## Site is live at
 - jfsn.com  (primary — cPanel)

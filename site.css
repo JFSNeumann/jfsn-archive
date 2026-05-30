@@ -72,6 +72,23 @@ body {
 }
 .nav { display: flex; gap: 1.5rem; }
 .nav a:hover, .brand:hover { color: var(--accent); }
+
+/* -------- Mosaic nav link — each letter its own color -------- */
+.nav-mosaic { transition: opacity 0.15s; }
+.nav-mosaic:hover { opacity: 0.85; }
+.nav-mosaic .m { color: #e07040; }
+.nav-mosaic .o { color: #d4a843; }
+.nav-mosaic .s { color: #7aaa6e; }
+.nav-mosaic .a { color: #5b9fc4; }
+.nav-mosaic .i { color: #9b7ec8; }
+.nav-mosaic .c { color: #d45f8a; }
+/* Override the default hover color since each letter has its own */
+.nav-mosaic:hover .m,
+.nav-mosaic:hover .o,
+.nav-mosaic:hover .s,
+.nav-mosaic:hover .a,
+.nav-mosaic:hover .i,
+.nav-mosaic:hover .c { color: inherit; }
 .nav a[aria-current="page"] {
   color: var(--text);
   border-bottom: 1px solid var(--accent);

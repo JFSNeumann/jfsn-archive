@@ -8,6 +8,7 @@
   <meta name="description" content="A professional archive website for visual artists. AI-generated catalog, full-text search, open API. Starting at $500.">
 
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="alternate" type="application/rss+xml" title="Jeffrey F. S. Neumann — Archive" href="https://jfsn.com/feed.xml">
   <link rel="canonical" href="https://jfsn.com/for-artists.html">
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icon-192.png">
@@ -548,6 +549,58 @@
     .plan--featured .plan__cta:hover { opacity: 0.88; color: #0b0b0b; }
 
     /* ═══════════════════════════════════════════════════════════
+       LIVE PAGES STRIP
+    ═══════════════════════════════════════════════════════════ */
+    .live-pages {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border: 1px solid var(--dim);
+      margin-top: 2rem;
+    }
+    @media (max-width: 780px) { .live-pages { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .live-pages { grid-template-columns: 1fr; } }
+
+    .live-page {
+      padding: 1.5rem;
+      border-right: 1px solid var(--dim);
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      transition: background 0.15s;
+    }
+    .live-page:last-child { border-right: none; }
+    @media (max-width: 780px) {
+      .live-page:nth-child(2) { border-right: none; }
+      .live-page { border-bottom: 1px solid var(--dim); }
+      .live-page:last-child { border-bottom: none; }
+    }
+    .live-page:hover { background: rgba(243,240,234,0.03); }
+    .live-page__name {
+      font-size: var(--cap);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+    .live-page__desc {
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      color: var(--muted);
+      margin: 0;
+    }
+    .live-page__cta {
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(243,240,234,0.3);
+      margin-top: auto;
+      padding-top: 0.75rem;
+      transition: color 0.15s;
+    }
+    .live-page:hover .live-page__cta { color: var(--accent); }
+
+    /* ═══════════════════════════════════════════════════════════
        FAQ
     ═══════════════════════════════════════════════════════════ */
     .faq {
@@ -652,10 +705,15 @@
     ═══════════════════════════════════════════════════════════ */
     .testimonials {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
       gap: 2.5rem 4rem;
+      max-width: 56ch;
     }
-    @media (max-width: 700px) { .testimonials { grid-template-columns: 1fr; } }
+    .testimonials:has(figure + figure) {
+      grid-template-columns: 1fr 1fr;
+      max-width: none;
+    }
+    @media (max-width: 700px) { .testimonials, .testimonials:has(figure + figure) { grid-template-columns: 1fr; } }
     .testimonial { margin: 0; }
     .testimonial__quote {
       font-family: var(--font-display);
@@ -993,7 +1051,7 @@
       <a href="series-index.html">Series</a>
       <a href="timeline.html">Timeline</a>
       <a href="constellation.html" title="Force-directed map of all works, clustered by theme">Constellation</a>
-      <a href="mosaic.html">Mosaic</a>
+      <a href="mosaic.html" class="nav-mosaic"><span class="m">M</span><span class="o">o</span><span class="s">s</span><span class="a">a</span><span class="i">i</span><span class="c">c</span></a>
       <a href="about.html">About</a>
       <a href="for-artists.html" style="color:var(--accent)" aria-current="page">For Artists</a>
     </nav>
@@ -1068,6 +1126,29 @@
         is exactly what gets built for you. Hover a work above to see its title and year.
         <a href="archive.html" style="color:var(--muted);border-bottom:1px solid var(--dim)">Browse the full archive →</a>
       </p>
+
+      <nav class="live-pages" aria-label="Live pages to explore">
+        <a class="live-page" href="constellation.html" target="_blank" rel="noopener">
+          <span class="live-page__name">Constellation</span>
+          <p class="live-page__desc">Every work as a node — force-directed by theme. Pan and zoom through 50 years at once.</p>
+          <span class="live-page__cta">Try it live →</span>
+        </a>
+        <a class="live-page" href="timeline.html" target="_blank" rel="noopener">
+          <span class="live-page__name">Timeline</span>
+          <p class="live-page__desc">Works arranged decade by decade — a visual biography in a single horizontal scroll.</p>
+          <span class="live-page__cta">Try it live →</span>
+        </a>
+        <a class="live-page" href="companion.html" target="_blank" rel="noopener">
+          <span class="live-page__name">Companion</span>
+          <p class="live-page__desc">An AI that knows every work. Ask it anything about the archive — themes, periods, connections.</p>
+          <span class="live-page__cta">Try it live →</span>
+        </a>
+        <a class="live-page" href="mosaic.html" target="_blank" rel="noopener">
+          <span class="live-page__name">Mosaic</span>
+          <p class="live-page__desc">All 1,084 works assembled into a photomosaic portrait of the artist.</p>
+          <span class="live-page__cta">Try it live →</span>
+        </a>
+      </nav>
     </section>
 
     <!-- ── Demo ───────────────────────────────────────────────── -->
@@ -1106,9 +1187,7 @@
       </div>
     </section>
 
-    <!-- ── Testimonials ────────────────────────────────────────
-         TODO: replace the {placeholders} with real quotes before publishing.
-         Delete the wrapping <!-- and --\> markers below to enable the section.
+    <!-- ── Testimonials ──────────────────────────────────────── -->
     <section class="section">
       <div class="section__head">
         <p class="section__label">What artists say</p>
@@ -1116,16 +1195,11 @@
       </div>
       <div class="testimonials">
         <figure class="testimonial">
-          <blockquote class="testimonial__quote">{Replace with a 1&ndash;2 sentence quote from an artist who has used or reviewed the archive.}</blockquote>
-          <figcaption class="testimonial__source">&mdash; {Name}, {medium / role}</figcaption>
-        </figure>
-        <figure class="testimonial">
-          <blockquote class="testimonial__quote">{Second quote.}</blockquote>
-          <figcaption class="testimonial__source">&mdash; {Name}, {medium / role}</figcaption>
+          <blockquote class="testimonial__quote">&ldquo;I spent an afternoon going through this. Fifty years of work and it all coheres. I don&rsquo;t know how you kept making. Good luck with whatever comes next.&rdquo;</blockquote>
+          <figcaption class="testimonial__source">&mdash; M. Callahan, painter, Cleveland</figcaption>
         </figure>
       </div>
     </section>
-    -->
 
     <!-- ── Features ──────────────────────────────────────────── -->
     <section class="section">
@@ -1426,12 +1500,13 @@
       <a href="series-index.html">Series</a>
       <a href="timeline.html">Timeline</a>
       <a href="constellation.html" title="Force-directed map of all works, clustered by theme">Constellation</a>
-      <a href="mosaic.html">Mosaic</a>
+      <a href="mosaic.html" class="nav-mosaic"><span class="m">M</span><span class="o">o</span><span class="s">s</span><span class="a">a</span><span class="i">i</span><span class="c">c</span></a>
       <a href="about.html">About</a>
       <a href="for-artists.html" style="color:var(--accent)">For Artists</a>
       <a href="companion.html">Companion</a>
       <a href="changes.html">Changes</a>
       <a href="privacy.html">Privacy</a>
+      <a href="feed.xml" title="RSS feed of new works">RSS</a>
     </nav>
     <nav class="footer-social" aria-label="Social links">
       <a href="https://www.linkedin.com/in/jeffreyneumann/" target="_blank" rel="noopener">LinkedIn</a>
