@@ -1,5 +1,71 @@
 [
   {
+    "sha": "b1c2d4f",
+    "date": "2026-05-30",
+    "title": "SEO landing pages, decade pages, UX fixes, design brief",
+    "body": "- guernica.html: 232-work static crawlable series page\n- 1970s–2020s.html: 6 decade landing pages, each with static grid + era intro\n- about.html: bio expanded 3→5 paragraphs, keywords in page body\n- timeline.html: \"View all\" per decade now links to static decade pages\n- about.html: decade links added below bar chart\n- archive.html: touch targets (44px chips), sort/density opacity hierarchy, mobile explore tools stack\n- CLAUDE.md: design brief — tokens, anti-patterns, architecture conventions\n- sitemap.xml: 11 new pages added"
+  },
+  {
+    "sha": "8d8a0ac",
+    "date": "2026-05-30",
+    "title": "Update CURRENT_STATE.md",
+    "body": ""
+  },
+  {
+    "sha": "836ec12",
+    "date": "2026-05-30",
+    "title": "Accent color consistency: replace hardcoded hex, fix static text, reduce nav competition",
+    "body": "- about.html: bio__quote color var(--accent) → var(--text) (static text, not interactive)\n- artwork.html: viewer-toolbar hover #FF6600 → var(--accent)\n- jeff.html: add --accent CSS var; replace 5× hardcoded #FF6600 with var(--accent)\n- dedupe.html: normalize --accent: #e8600a → #FF6600 (was 8% dimmer variant)\n- for-artists.html: remove accent color from Inquiry nav link (hero CTA already handles it)"
+  },
+  {
+    "sha": "8bf7dd6",
+    "date": "2026-05-30",
+    "title": "Update CURRENT_STATE.md",
+    "body": ""
+  },
+  {
+    "sha": "30de113",
+    "date": "2026-05-30",
+    "title": "UI/UX Pro Max: lightbox, scroll entrances, typography, form UX, minimalism",
+    "body": "archive.html:\n- Lightbox: click thumbnail → full-res overlay, no page nav\n- ←→ arrows, keyboard, swipe, backdrop close, adjacent preload\n- Prev/next respects active filters; prefers-reduced-motion safe\n\nseries-index.html:\n- Poiret One / Didact Gothic typography (art deco pairing)\n- Title bumped to clamp(3rem, 7vw, 6rem) with open tracking\n- More top padding for breathing room\n\nabout.html:\n- Bio name: clamp(3rem, 7vw, 5.5rem) + tracking +0.03em (was 3.5rem max)\n- Quote bumped proportionally; more top padding\n- Scroll entrance animations on detail-group sections\n\nfor-artists.html:\n- Form reduced to 3 primary fields; medium+message in collapsible details\n- Trust line \"Reply within 48h · No commitment\" next to submit\n- Full-width submit on mobile; process steps + pricing cards get fade-up"
+  },
+  {
+    "sha": "79635c7",
+    "date": "2026-05-30",
+    "title": "Update CURRENT_STATE.md",
+    "body": ""
+  },
+  {
+    "sha": "4068187",
+    "date": "2026-05-30",
+    "title": "Code cleanup: remove console.log, fix aria-current, replace inline handlers",
+    "body": "- Remove console.log debug statement from api.html\n- Add aria-current=\"page\" to for-artists, privacy, mosaic footer nav self-links\n- Add missing Mosaic self-link to mosaic.html footer nav\n- Replace onmouseover/onmouseout with CSS classes in about.html\n- Add CSS hover rule for constellation hint-dismiss button\n- Clean up GoatCounter placeholder comment in index.html\n- Delete one-time fix_catalog.py (already ran, logic preserved in git history)"
+  },
+  {
+    "sha": "1d33bea",
+    "date": "2026-05-30",
+    "title": "Add fix_catalog.py utility script",
+    "body": ""
+  },
+  {
+    "sha": "99df67c",
+    "date": "2026-05-30",
+    "title": "Ignore backup and bak files",
+    "body": ""
+  },
+  {
+    "sha": "c2c00a1",
+    "date": "2026-05-30",
+    "title": "Rebuild artifacts and CURRENT_STATE update from prior session",
+    "body": ""
+  },
+  {
+    "sha": "8e5c52f",
+    "date": "2026-05-30",
+    "title": "UX/accessibility pass: contrast fixes, touch overlays, reduced-motion, skip links",
+    "body": "- Fix 4 contrast failures: --dim text → --muted (companion, for-artists); #777 → #999 (qa)\n- Scope hover overlays to pointer devices; always-visible on touch (5 pages)\n- Scope img scale transforms to hover:hover media query\n- Add prefers-reduced-motion blocks to 9 pages missing them\n- Add skip links to companion.html and jeff.html; add id=\"main\" to jeff.html"
+  },
+  {
     "sha": "cfa5340",
     "date": "2026-05-30",
     "title": "Session 19: reduce primary nav from 7 to 4 items",

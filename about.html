@@ -138,6 +138,7 @@
 
     .detail-group__label {
       font-size: var(--cap);
+      font-weight: 400;
       letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--muted);
@@ -251,11 +252,11 @@
 
     /* -------- Reduced motion -------- */
     .bio__inline-link {
-      color: inherit;
-      border-bottom: 1px solid var(--dim);
+      color: var(--accent);
+      border-bottom: 1px solid rgba(255,102,0,0.35);
       transition: color 0.15s, border-color 0.15s;
     }
-    .bio__inline-link:hover { color: var(--accent); border-color: var(--accent); }
+    .bio__inline-link:hover { border-bottom-color: var(--accent); }
     .bio__muted-link {
       color: var(--muted);
       border-bottom: 1px solid var(--dim);
@@ -324,7 +325,7 @@
         </div>
 
         <div class="detail-group" id="contact">
-          <p class="detail-group__label">Contact</p>
+          <h2 class="detail-group__label">Contact</h2>
           <p class="detail-group__body">
             <a href="mailto:jeff@jfsn.com">jeff@jfsn.com</a><br>
             <a href="https://jfsn.com" target="_blank" rel="noopener">jfsn.com</a><br>
@@ -334,7 +335,7 @@
         <hr class="detail-divider">
 
         <div class="detail-group">
-          <p class="detail-group__label">Archive</p>
+          <h2 class="detail-group__label">Archive</h2>
           <p class="detail-group__body">
             1,084 works<br>
             1974 &ndash; present
@@ -344,7 +345,7 @@
         <hr class="detail-divider">
 
         <div class="detail-group">
-          <p class="detail-group__label">Series</p>
+          <h2 class="detail-group__label">Series</h2>
           <table class="series-table">
             <thead>
               <tr>
@@ -374,7 +375,7 @@
         <hr class="detail-divider">
 
         <div class="detail-group">
-          <p class="detail-group__label">By Decade</p>
+          <h2 class="detail-group__label">By Decade</h2>
           <div class="decade-chart" id="decade-chart" aria-label="Works by decade">
             <!-- populated by JS -->
           </div>
@@ -391,7 +392,7 @@
         <hr class="detail-divider">
 
         <div class="detail-group">
-          <p class="detail-group__label">Now</p>
+          <h2 class="detail-group__label">Now</h2>
           <div class="detail-group__body">
             <p>Archiving and digitizing fifty years of studio work. Putting everything in one place turns out to reveal things you couldn&rsquo;t see when the work was scattered &#8212; patterns, obsessions, threads that were running all along.</p>
             <p style="margin-top:0.75em">Still making new work. Still Cleveland.</p>
@@ -402,7 +403,7 @@
         <hr class="detail-divider">
 
         <div class="detail-group">
-          <p class="detail-group__label">Earlier Art Sites</p>
+          <h2 class="detail-group__label">Earlier Art Sites</h2>
           <p class="detail-group__body">
             <a href="/old-site/old/Mr_SNOWmann/portfolio.html" target="_blank" rel="noopener">Mr. SNOWmann</a> — dedicated site, 2015<br>
             <a href="/old-site/old/fine-art-2000/index.htm" target="_blank" rel="noopener">Fine Art 2000</a> — packages, CDs, targets &amp; lights<br>
@@ -413,7 +414,7 @@
         <hr class="detail-divider">
 
         <div class="detail-group">
-          <p class="detail-group__label">Earlier Design Work</p>
+          <h2 class="detail-group__label">Earlier Design Work</h2>
           <p class="detail-group__body">
             <a href="/old-site/" target="_blank" rel="noopener">jfsn.com 2023</a> — UX/UI design portfolio<br>
             <a href="/old-site/old/2014/index.html" target="_blank" rel="noopener">jfsn.com 2014</a> — product design portfolio<br>
@@ -424,7 +425,7 @@
         <hr class="detail-divider">
 
         <div class="detail-group">
-          <p class="detail-group__label">Education</p>
+          <h2 class="detail-group__label">Education</h2>
           <table class="series-table exhibitions-table">
             <tr><td>BFA Industrial Design, Cleveland Institute of Art</td><td></td></tr>
           </table>
@@ -433,7 +434,7 @@
         <hr class="detail-divider">
 
         <div class="detail-group">
-          <p class="detail-group__label">Selected Exhibitions</p>
+          <h2 class="detail-group__label">Selected Exhibitions</h2>
           <table class="series-table exhibitions-table">
             <tr><td>CIA Alumni Exhibition, Cleveland Institute of Art</td><td>2022</td></tr>
             <tr><td>Group exhibition, 78th Street Studios, Cleveland</td><td>2019</td></tr>
@@ -447,7 +448,7 @@
         <!-- JEFF: uncomment and fill in press mentions when ready
         <hr class="detail-divider">
         <div class="detail-group">
-          <p class="detail-group__label">Press</p>
+          <h2 class="detail-group__label">Press</h2>
           <table class="series-table press-table">
             <tr><td>Feature, <em>Publication name</em></td><td>Year</td></tr>
           </table>
@@ -473,6 +474,7 @@
       <a href="for-artists.html" style="color:var(--accent)">For Artists</a>
       <a href="companion.html">Companion</a>
       <a href="changes.html">Changes</a>
+      <a href="lost.html">Lost</a>
       <a href="privacy.html">Privacy</a>
       <a href="feed.xml" title="RSS feed of new works">RSS</a>
     </nav>

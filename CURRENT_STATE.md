@@ -1,13 +1,13 @@
 # Current State
-**Updated:** 2026-05-30 16:45
+**Updated:** 2026-05-30 17:11
 
 ## Last commit
-8d8a0ac — Update CURRENT_STATE.md
+b1c2d4f — SEO landing pages, decade pages, UX fixes, design brief
 
 ## To do next session
 <!-- Edit this section before closing -->
-- [ ] Optional: heading hierarchy audit (screen reader nav)
-- [ ] Optional: line length cap on about.html / for-artists.html prose (65–75 chars)
+- [ ] Optional: line length cap on about.html / for-artists.html prose (65-75 chars)
+- [ ] Optional: floating navbar breathing room (rounded corners, slight top offset)
 
 ## Known issues
 - companion.html: FIXED session 18 — test live at jfsn.com/companion.html to confirm
