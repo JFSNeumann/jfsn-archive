@@ -250,8 +250,23 @@
     }
 
     /* -------- Reduced motion -------- */
+    .bio__inline-link {
+      color: inherit;
+      border-bottom: 1px solid var(--dim);
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .bio__inline-link:hover { color: var(--accent); border-color: var(--accent); }
+    .bio__muted-link {
+      color: var(--muted);
+      border-bottom: 1px solid var(--dim);
+      padding-bottom: 1px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .bio__muted-link:hover { color: var(--text); border-color: var(--muted); }
     @media (prefers-reduced-motion: reduce) {
       .bio__archive,
+      .bio__inline-link,
+      .bio__muted-link,
       .detail-group__body a,
       .series-table a { transition: none; }
     }
@@ -282,7 +297,7 @@
         <h1 class="bio__name">Jeffrey<br>F. S. Neumann</h1>
         <div class="bio__text">
           <p>Started making work in 1974. At the Cleveland Institute of Art, prism paper &#8212; holographic, iridescent, surface that shifts with the light &#8212; became an early obsession, alongside vacuum-formed plastic, old fluorescent and CFL tubes, sheets of glass. Rauschenberg was on the walls: combines built from anything, the idea that found material was as valid as paint. That permission never left. Collage, photography, three-dimensional pieces built from whatever&rsquo;s at hand. Cleveland has always been part of it: the light, the industrial texture, a particular American vernacular that keeps showing up in the work whether I invite it or not.</p>
-          <p>An estimated <a href="lost.html" style="color:inherit;border-bottom:1px solid var(--dim);transition:color 0.15s,border-color 0.15s;" onmouseover="this.style.color='var(--accent)';this.style.borderColor='var(--accent)'" onmouseout="this.style.color='inherit';this.style.borderColor='var(--dim)'">500&#8211;1,000 early pieces are gone</a> &#8212; lost to water damage in storage, undocumented, unrecoverable. This archive exists because of that. <span id="bio-count">1,084</span> works documented from 1974 to now. I don&rsquo;t want any other artist to lose fifty years the same way.</p>
+          <p>An estimated <a href="lost.html" class="bio__inline-link">500&#8211;1,000 early pieces are gone</a> &#8212; lost to water damage in storage, undocumented, unrecoverable. This archive exists because of that. <span id="bio-count">1,084</span> works documented from 1974 to now. I don&rsquo;t want any other artist to lose fifty years the same way.</p>
           <p>BFA in Industrial Design, Cleveland Institute of Art. Still making. Still here.</p>
         </div>
         <div id="bio-featured" class="bio__featured" aria-hidden="true"></div>
@@ -359,7 +374,7 @@
           <div class="detail-group__body">
             <p>Archiving and digitizing fifty years of studio work. Putting everything in one place turns out to reveal things you couldn&rsquo;t see when the work was scattered &#8212; patterns, obsessions, threads that were running all along.</p>
             <p style="margin-top:0.75em">Still making new work. Still Cleveland.</p>
-            <p style="margin-top:0.75em"><a href="for-artists.html" style="color:var(--muted);border-bottom:1px solid var(--dim);padding-bottom:1px;transition:color 0.15s,border-color 0.15s;" onmouseover="this.style.color='var(--text)';this.style.borderColor='var(--muted)'" onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--dim)'">I also build these archives for other artists →</a></p>
+            <p style="margin-top:0.75em"><a href="for-artists.html" class="bio__muted-link">I also build these archives for other artists →</a></p>
           </div>
         </div>
 

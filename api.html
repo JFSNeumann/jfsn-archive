@@ -539,7 +539,6 @@ const res = await fetch(
   'https://jfsn.com/api/v1/works/art0005.json'
 );
 const { work, links } = await res.json();
-console.log(work.title, links.image);
 
 // All Aviation works
 const t = await fetch(
