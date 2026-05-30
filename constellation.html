@@ -236,6 +236,42 @@
 
 </div>
 
+<div id="constellation-hint" role="dialog" aria-label="How to read this" style="
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  max-width: 22rem;
+  background: rgba(11,11,11,0.92);
+  border: 1px solid rgba(243,240,234,0.12);
+  border-radius: 6px;
+  padding: 1.1rem 1.25rem 1rem;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+">
+  <p style="font-size:0.65rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(243,240,234,0.4);margin:0 0 0.6rem">How to read this</p>
+  <p style="font-size:0.8125rem;line-height:1.6;color:rgba(243,240,234,0.75);margin:0 0 0.5rem">Each dot is one work. Clusters are themes — Targets, Crosses, Torsos &amp; Faces, and seven more. Drag to pan, scroll to zoom, click any dot to open the work.</p>
+  <p style="font-size:0.8125rem;line-height:1.6;color:rgba(243,240,234,0.75);margin:0 0 0.9rem">Use the sidebar to highlight a theme or search by title.</p>
+  <button id="hint-dismiss" style="
+    font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;
+    color:rgba(243,240,234,0.4);background:none;border:none;
+    cursor:pointer;padding:0;transition:color 0.15s;
+  " onmouseover="this.style.color='rgba(243,240,234,0.85)'" onmouseout="this.style.color='rgba(243,240,234,0.4)'">Got it — dismiss</button>
+</div>
+<script>
+(function(){
+  const hint = document.getElementById('constellation-hint');
+  const btn  = document.getElementById('hint-dismiss');
+  if (localStorage.getItem('constellation-hint-dismissed')) { hint.style.display = 'none'; return; }
+  btn.addEventListener('click', function() {
+    hint.style.opacity = '0';
+    hint.style.transition = 'opacity 0.3s';
+    setTimeout(function(){ hint.style.display = 'none'; }, 300);
+    localStorage.setItem('constellation-hint-dismissed', '1');
+  });
+})();
+</script>
+
 <div id="tip" role="tooltip" aria-hidden="true">
   <img id="tip-img" src="" alt="" loading="lazy">
   <div id="tip-body">

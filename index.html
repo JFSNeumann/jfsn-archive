@@ -14,7 +14,7 @@
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="catalog-home.json?v=20260529171533" as="fetch" crossorigin>
+  <link rel="preload" href="catalog-home.json?v=20260530002846" as="fetch" crossorigin>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap"></noscript>
   <link rel="stylesheet" href="site.css?v=20260527-nav">
@@ -139,6 +139,51 @@
       white-space: nowrap;
     }
     .home-context a:hover { color: var(--text); border-bottom-color: var(--muted); }
+
+    /* -------- Begin here -------- */
+    .home-begin {
+      padding-top: clamp(2rem, 4vw, 3rem);
+      padding-bottom: clamp(1rem, 2vw, 1.5rem);
+    }
+    .home-begin__label {
+      font-size: var(--cap);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 1.25rem;
+    }
+    .home-begin__works {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--dim);
+    }
+    @media (max-width: 600px) { .home-begin__works { grid-template-columns: 1fr; } }
+    .home-begin__work {
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+      text-decoration: none;
+      color: var(--text);
+      transition: background 0.15s;
+    }
+    .home-begin__work:hover { background: rgba(243,240,234,0.03); }
+    .home-begin__img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(15%);
+      transition: filter 0.2s;
+    }
+    .home-begin__work:hover .home-begin__img { filter: grayscale(0%); }
+    .home-begin__caption {
+      padding: 0.85rem 1rem 0.9rem;
+      font-size: 0.8125rem;
+      line-height: 1.55;
+      color: var(--muted);
+      border-top: 1px solid var(--dim);
+    }
 
     /* -------- Recently Added strip -------- */
     .recent-section {
@@ -453,6 +498,24 @@
   <p class="home-tagline container">Five decades of collage, sculpture, and photography &mdash; one artist, one archive.</p>
   <p class="home-context container">Compact discs, warplanes, photographic faces, lace, found materials &mdash; assembled into collages, sculptures, and photographs since 1974. Based in Cleveland. <a href="about.html">About the work &rarr;</a> &nbsp;&middot;&nbsp; <a href="for-artists.html" style="color:var(--accent);border-bottom-color:rgba(255,102,0,0.35)">I build archives like this for other artists &mdash; from $500 &rarr;</a></p>
 
+  <section class="home-begin container" aria-label="Begin here">
+    <p class="home-begin__label">Begin here</p>
+    <div class="home-begin__works">
+      <a class="home-begin__work" href="artwork.html?id=art0483">
+        <img class="home-begin__img" src="artworks/thumbs/art0483.avif" alt="Untitled (CD Formation) 2" loading="eager">
+        <p class="home-begin__caption">Multiple discs, one formation. The beginning of something.</p>
+      </a>
+      <a class="home-begin__work" href="artwork.html?id=art0953">
+        <img class="home-begin__img" src="artworks/thumbs/art0953.avif" alt="XXXIII Días Installation View" loading="eager">
+        <p class="home-begin__caption">The whole wall. Fifty years of it.</p>
+      </a>
+      <a class="home-begin__work" href="artwork.html?id=art1020">
+        <img class="home-begin__img" src="artworks/thumbs/art1020.avif" alt="Clockwork Targets Formation" loading="eager">
+        <p class="home-begin__caption">Every circle a target. Every target a clock.</p>
+      </a>
+    </div>
+  </section>
+
   <section class="grid-section container" aria-label="Selected works">
     <h2 class="section-label">Selected Works</h2>
     <p class="archive-stat">1,084 works &middot; Collage, Sculpture, Photography &middot; 1974–present</p>
@@ -554,7 +617,7 @@
   // ?v= is stamped by build_catalog.py — forces browser to fetch fresh after every build
   let dominantColors = {};
   fetch('colors.json').then(r => r.ok ? r.json() : null).then(c => { if (c) dominantColors = c; }).catch(() => {});
-  fetch('catalog-home.json?v=20260529171533')
+  fetch('catalog-home.json?v=20260530002846')
     .then(r => r.ok ? r.json() : null)
     .then(catalog => {
       if (!catalog || !catalog.length) return;

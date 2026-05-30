@@ -372,7 +372,7 @@
     // Relative path works on Netlify (jfsn-archive.netlify.app or jfsn.com
     // after DNS switch). Absolute URL works on cPanel-hosted jfsn.com
     // in the interim — CORS is open so cross-origin fetch is fine.
-    const FUNCTION_URL = (location.hostname.includes('netlify.app') || location.hostname === 'jfsn.com')
+    const FUNCTION_URL = location.hostname.includes('netlify.app')
       ? '/.netlify/functions/companion'
       : 'https://jfsn-archive.netlify.app/.netlify/functions/companion';
 
