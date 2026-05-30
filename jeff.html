@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap">
   <link rel="stylesheet" href="site.css">
   <style>
+    :root { --accent: var(--accent); }
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
@@ -43,7 +44,7 @@
       color: #f3f0ea;
     }
     .studio-wordmark span {
-      color: #FF6600;
+      color: var(--accent);
     }
     .studio-subtitle {
       font-family: 'Cormorant Garamond', Georgia, serif;
@@ -56,7 +57,7 @@
       display: inline-block;
       width: 7px;
       height: 7px;
-      background: #FF6600;
+      background: var(--accent);
       border-radius: 50%;
       margin-left: 5px;
       position: relative;
@@ -119,7 +120,7 @@
       cursor: pointer;
     }
     .card:hover {
-      border-color: #FF6600;
+      border-color: var(--accent);
       background: rgba(255,102,0,0.06);
       transform: translateY(-1px);
     }
@@ -150,7 +151,7 @@
       font-weight: 600;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: #FF6600;
+      color: var(--accent);
       opacity: 0.8;
     }
 
@@ -182,7 +183,7 @@
       word-break: break-all;
     }
     .cred-val a {
-      color: #FF6600;
+      color: var(--accent);
       text-decoration: none;
     }
     .cred-val a:hover { text-decoration: underline; }
