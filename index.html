@@ -15,10 +15,10 @@
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="catalog-home.json?v=20260530150019" as="fetch" crossorigin>
+  <link rel="preload" href="catalog-home.json?v=20260530170302" as="fetch" crossorigin>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap"></noscript>
-  <link rel="stylesheet" href="site.css?v=20260527-nav">
+  <link rel="stylesheet" href="site.css?v=20260530-nav4">
 
   <meta property="og:type"        content="website">
   <meta property="og:title"       content="Jeffrey F. S. Neumann — 50 Years of Collage, Sculpture &amp; Photography">
@@ -552,11 +552,8 @@
     <nav class="nav" aria-label="Primary">
       <a href="archive.html">Archive</a>
       <a href="series-index.html">Series</a>
-      <a href="timeline.html">Timeline</a>
-      <a href="constellation.html" title="Force-directed map of all works, clustered by theme">Constellation</a>
-      <a href="mosaic.html" class="nav-mosaic"><span class="m">M</span><span class="o">o</span><span class="s">s</span><span class="a">a</span><span class="i">i</span><span class="c">c</span></a>
       <a href="about.html">About</a>
-      <a href="for-artists.html" style="color:var(--accent)">For Artists</a>
+      <a href="about.html#contact" style="color:var(--accent)">Inquiry</a>
     </nav>
   </div>
 </header>
@@ -741,7 +738,7 @@
   // ?v= is stamped by build_catalog.py — forces browser to fetch fresh after every build
   let dominantColors = {};
   fetch('colors.json').then(r => r.ok ? r.json() : null).then(c => { if (c) dominantColors = c; }).catch(() => {});
-  fetch('catalog-home.json?v=20260530150019')
+  fetch('catalog-home.json?v=20260530170302')
     .then(r => r.ok ? r.json() : null)
     .then(catalog => {
       if (!catalog || !catalog.length) return;
