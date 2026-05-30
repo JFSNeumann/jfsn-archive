@@ -1,12 +1,13 @@
 # Current State
-**Updated:** 2026-05-30 16:31
+**Updated:** 2026-05-30 16:45
 
 ## Last commit
-8bf7dd6 — Update CURRENT_STATE.md
+8d8a0ac — Update CURRENT_STATE.md
 
 ## To do next session
 <!-- Edit this section before closing -->
-- [ ] (add what you want to do next time)
+- [ ] Optional: heading hierarchy audit (screen reader nav)
+- [ ] Optional: line length cap on about.html / for-artists.html prose (65–75 chars)
 
 ## Known issues
 - companion.html: FIXED session 18 — test live at jfsn.com/companion.html to confirm

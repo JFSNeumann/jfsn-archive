@@ -531,7 +531,7 @@
             <div class="tl-decade__head">
               <h2 class="tl-decade__name">${decade}</h2>
               <span class="tl-decade__count">${count} work${count !== 1 ? 's' : ''}</span>
-              <a class="tl-decade__link" href="archive.html?dec=${encodeURIComponent(decade)}">View all &rarr;</a>
+              <a class="tl-decade__link" href="${decade.toLowerCase()}.html">View all &rarr;</a>
             </div>
             ${decade === '2000s' ? '<p class="tl-decade__note">Surviving work only. An estimated 500&ndash;1,000 pieces from this era were lost to water damage in storage &mdash; undocumented, unrecovered. <a href="lost.html">What was lost &rarr;</a></p>' : ''}
             <div class="tl-strip-wrap">
