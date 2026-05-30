@@ -560,6 +560,63 @@
     #motif-wrap.expanded,
     #palette-wrap.expanded { display: block; }
 
+    /* -------- Lightbox -------- */
+    #lb {
+      display: none;
+      position: fixed; inset: 0; z-index: 200;
+      background: rgba(11,11,11,0.96);
+      align-items: center; justify-content: center;
+      flex-direction: column;
+    }
+    #lb.open { display: flex; }
+    #lb-img-wrap {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      width: 100%; min-height: 0; padding: 1rem 4rem;
+      box-sizing: border-box;
+    }
+    #lb-img {
+      max-width: 100%; max-height: 100%;
+      object-fit: contain;
+      opacity: 0; transition: opacity 0.2s;
+    }
+    #lb-img.loaded { opacity: 1; }
+    #lb-bar {
+      width: 100%; padding: 0.875rem 1.25rem;
+      display: flex; align-items: baseline; gap: 0.75rem; flex-wrap: wrap;
+      border-top: 1px solid var(--dim); box-sizing: border-box;
+      background: rgba(11,11,11,0.6);
+    }
+    #lb-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1rem; font-weight: 300; color: var(--text); }
+    #lb-meta  { font-size: 0.625rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+    #lb-link  { margin-left: auto; font-size: 0.625rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--dim); transition: color 0.15s, border-color 0.15s; }
+    #lb-link:hover { color: var(--text); border-color: var(--muted); }
+    .lb-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer;
+      color: rgba(243,240,234,0.3); font-size: 1.5rem; padding: 1.5rem 1rem;
+      transition: color 0.15s; line-height: 1; user-select: none;
+    }
+    .lb-arrow:hover { color: var(--text); }
+    #lb-prev { left: 0; }
+    #lb-next { right: 0; }
+    #lb-close {
+      position: absolute; top: 0.75rem; right: 0.75rem;
+      background: none; border: none; cursor: pointer;
+      color: rgba(243,240,234,0.35); font-size: 1.25rem; padding: 0.5rem; line-height: 1;
+      transition: color 0.15s;
+    }
+    #lb-close:hover { color: var(--text); }
+    #lb-spinner {
+      position: absolute; color: var(--muted);
+      font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+      opacity: 0; transition: opacity 0.3s 0.3s;
+    }
+    #lb-spinner.visible { opacity: 1; }
+    @media (max-width: 600px) {
+      #lb-img-wrap { padding: 0.5rem 2.5rem; }
+      .lb-arrow { padding: 1rem 0.5rem; font-size: 1.25rem; }
+    }
+
     /* -------- Reduced motion -------- */
     @media (prefers-reduced-motion: reduce) {
       .thumb,
@@ -574,6 +631,7 @@
       .thumb__overlay { transform: none; }
       .swatch:hover { transform: none; }
       .grid:has(.thumb__link:hover) .thumb { opacity: 1; }
+      #lb-img { transition: none; }
     }
   </style>
   <script src="artist-config.js"></script>
@@ -679,6 +737,22 @@
     </div>
   </div>
 </main>
+
+<!-- Lightbox -->
+<div id="lb" role="dialog" aria-modal="true" aria-label="Artwork viewer">
+  <button id="lb-close" aria-label="Close">&#215;</button>
+  <button class="lb-arrow" id="lb-prev" aria-label="Previous artwork">&#8592;</button>
+  <div id="lb-img-wrap">
+    <div id="lb-spinner">Loading&hellip;</div>
+    <img id="lb-img" alt="" src="">
+  </div>
+  <button class="lb-arrow" id="lb-next" aria-label="Next artwork">&#8594;</button>
+  <div id="lb-bar">
+    <span id="lb-title"></span>
+    <span id="lb-meta"></span>
+    <a id="lb-link" href="#">View full details &rarr;</a>
+  </div>
+</div>
 
 <button class="scroll-top" id="scroll-top" aria-label="Back to top">&#8593; Top</button>
 
@@ -1610,6 +1684,112 @@
       };
       preload.src = 'artworks/full/' + fig.dataset.id + '.avif';
     });
+  })();
+
+  /* -------- Lightbox -------- */
+  (function () {
+    const lb       = document.getElementById('lb');
+    const lbImg    = document.getElementById('lb-img');
+    const lbTitle  = document.getElementById('lb-title');
+    const lbMeta   = document.getElementById('lb-meta');
+    const lbLink   = document.getElementById('lb-link');
+    const lbSpinner= document.getElementById('lb-spinner');
+    const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (noMotion) lbImg.style.transition = 'none';
+
+    let lbIndex = 0;
+
+    function openLb(id) {
+      lbIndex = visibleRecords.findIndex(r => r.file.replace('.avif','') === id);
+      if (lbIndex < 0) return;
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      lb.focus();
+      showLb(lbIndex);
+    }
+
+    function showLb(i) {
+      const r  = visibleRecords[i];
+      if (!r) return;
+      const id = r.file.replace('.avif','');
+      const src = 'artworks/full/' + id + '.avif';
+
+      lbImg.classList.remove('loaded');
+      lbSpinner.classList.add('visible');
+
+      const img = new Image();
+      img.onload = () => {
+        lbImg.src = src;
+        lbImg.alt = r.title || id;
+        lbImg.classList.add('loaded');
+        lbSpinner.classList.remove('visible');
+      };
+      img.onerror = () => lbSpinner.classList.remove('visible');
+      img.src = src;
+
+      const typeLabel = TYPE_LABELS[r.work_type] || r.work_type || '';
+      const year = r.year ? String(r.year) : '';
+      lbTitle.textContent = r.title || id;
+      lbMeta.textContent  = [year, typeLabel].filter(Boolean).join(' · ');
+      lbLink.href = artworkURL(id);
+
+      // preload neighbours
+      [i - 1, i + 1].forEach(j => {
+        if (j >= 0 && j < visibleRecords.length) {
+          const pre = new Image();
+          pre.src = 'artworks/full/' + visibleRecords[j].file.replace('.avif','') + '.avif';
+        }
+      });
+    }
+
+    function closeLb() {
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function navigate(dir) {
+      const next = lbIndex + dir;
+      if (next < 0 || next >= visibleRecords.length) return;
+      lbIndex = next;
+      showLb(lbIndex);
+    }
+
+    // Intercept thumb clicks
+    document.getElementById('grid-wrap').addEventListener('click', function (e) {
+      const link = e.target.closest('.thumb__link');
+      if (!link) return;
+      e.preventDefault();
+      const fig = link.closest('[data-id]');
+      if (fig) openLb(fig.dataset.id);
+    });
+
+    document.getElementById('lb-close').addEventListener('click', closeLb);
+    document.getElementById('lb-prev').addEventListener('click', () => navigate(-1));
+    document.getElementById('lb-next').addEventListener('click', () => navigate(1));
+
+    // Close on backdrop click
+    lb.addEventListener('click', function (e) {
+      if (e.target === lb || e.target === document.getElementById('lb-img-wrap')) closeLb();
+    });
+
+    // Keyboard
+    document.addEventListener('keydown', function (e) {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape')      closeLb();
+      if (e.key === 'ArrowLeft')   navigate(-1);
+      if (e.key === 'ArrowRight')  navigate(1);
+    });
+
+    // Touch swipe
+    let touchX = null;
+    lb.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+    lb.addEventListener('touchend', e => {
+      if (touchX === null) return;
+      const dx = e.changedTouches[0].clientX - touchX;
+      touchX = null;
+      if (Math.abs(dx) < 40) return;
+      navigate(dx < 0 ? 1 : -1);
+    }, { passive: true });
   })();
 
 })();

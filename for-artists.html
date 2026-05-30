@@ -813,6 +813,30 @@
       justify-self: start;
     }
     .inquiry-submit:hover { opacity: 0.88; transform: translateY(-1px); }
+    .inquiry-submit-row {
+      display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+    }
+    .inquiry-reassurance {
+      font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--muted); opacity: 0.7;
+    }
+    @media (max-width: 480px) {
+      .inquiry-submit { width: 100%; text-align: center; justify-self: stretch; }
+      .inquiry-submit-row { flex-direction: column; align-items: flex-start; }
+    }
+    .inquiry-optional {
+      margin-top: 0.25rem;
+    }
+    .inquiry-optional summary {
+      font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--muted); cursor: pointer; user-select: none;
+      padding: 0.5rem 0; list-style: none;
+    }
+    .inquiry-optional summary::-webkit-details-marker { display: none; }
+    .inquiry-optional summary::before { content: '+ '; }
+    details[open].inquiry-optional summary::before { content: '− '; }
+    .inquiry-optional__hint { opacity: 0.55; }
+    .inquiry-optional__fields { padding-top: 0.75rem; display: flex; flex-direction: column; gap: 1.25rem; }
     /* Honeypot — invisible to humans */
     .inquiry-honeypot { position: absolute; left: -9999px; }
     .inquiry-fallback {
@@ -1029,11 +1053,14 @@
         opacity: 1;
         transform: none;
       }
-      .fade-up:nth-child(2) { transition-delay: 0.1s; }
-      .fade-up:nth-child(3) { transition-delay: 0.2s; }
-      .fade-up:nth-child(4) { transition-delay: 0.3s; }
-      .fade-up:nth-child(5) { transition-delay: 0.35s; }
-      .fade-up:nth-child(6) { transition-delay: 0.4s; }
+      .fade-up:nth-child(2) { transition-delay: 0.08s; }
+      .fade-up:nth-child(3) { transition-delay: 0.16s; }
+      .fade-up:nth-child(4) { transition-delay: 0.24s; }
+      .fade-up:nth-child(5) { transition-delay: 0.30s; }
+      .fade-up:nth-child(6) { transition-delay: 0.36s; }
+      .fade-up:nth-child(7) { transition-delay: 0.40s; }
+      .fade-up:nth-child(8) { transition-delay: 0.44s; }
+      .fade-up:nth-child(9) { transition-delay: 0.48s; }
     }
 
   </style>
@@ -1261,22 +1288,22 @@
         <h2 class="section__title">From a folder of images <em>to a live archive</em> in one week.</h2>
       </div>
       <div class="process">
-        <div class="process-step">
+        <div class="process-step fade-up">
           <p class="process-step__num">01</p>
           <h3 class="process-step__title">You send your images</h3>
           <p class="process-step__body">JPG, HEIC, or PNG — whatever you have. A shared Dropbox or WeTransfer link works fine. No special preparation needed.</p>
         </div>
-        <div class="process-step">
+        <div class="process-step fade-up">
           <p class="process-step__num">02</p>
           <h3 class="process-step__title">We define your vocabulary</h3>
           <p class="process-step__body">A short conversation about your recurring themes, named series, and how you think about your work. This shapes how the AI catalogs everything.</p>
         </div>
-        <div class="process-step">
+        <div class="process-step fade-up">
           <p class="process-step__num">03</p>
           <h3 class="process-step__title">AI catalogs every work</h3>
           <p class="process-step__body">Each image is read by Claude. It writes a precise description, assigns themes, identifies palette and materials, and flags recurring motifs.</p>
         </div>
-        <div class="process-step">
+        <div class="process-step fade-up">
           <p class="process-step__num">04</p>
           <h3 class="process-step__title">You review, I deploy</h3>
           <p class="process-step__body">I send a preview. You request any changes. Once approved, it goes live on your domain — usually within a week of receiving your images.</p>
@@ -1292,7 +1319,7 @@
       </div>
       <div class="pricing">
 
-        <div class="plan">
+        <div class="plan fade-up">
           <p class="plan__name">Starter</p>
           <p class="plan__price">$500</p>
           <p class="plan__sub">One-time · up to 200 works</p>
@@ -1307,7 +1334,7 @@
           <a class="plan__cta" href="#inquire" data-tier="Starter">Inquire</a>
         </div>
 
-        <div class="plan plan--featured">
+        <div class="plan plan--featured fade-up">
           <span class="plan__badge">Most common</span>
           <p class="plan__name">Standard</p>
           <p class="plan__price">$800</p>
@@ -1324,7 +1351,7 @@
           <a class="plan__cta" href="#inquire" data-tier="Standard">Inquire</a>
         </div>
 
-        <div class="plan">
+        <div class="plan fade-up">
           <p class="plan__name">Full Archive</p>
           <p class="plan__price">$1,500</p>
           <p class="plan__sub">One-time · unlimited works</p>
@@ -1466,17 +1493,24 @@
           </select>
         </div>
 
-        <div class="inquiry-field">
-          <label for="inq-medium">Medium / kind of work</label>
-          <input type="text" id="inq-medium" name="medium" placeholder="e.g. oil painting, mixed-media, ceramics" autocomplete="off">
-        </div>
+        <details class="inquiry-optional">
+          <summary>Add more detail <span class="inquiry-optional__hint">(optional)</span></summary>
+          <div class="inquiry-optional__fields">
+            <div class="inquiry-field">
+              <label for="inq-medium">Medium / kind of work</label>
+              <input type="text" id="inq-medium" name="medium" placeholder="e.g. oil painting, mixed-media, ceramics" autocomplete="off">
+            </div>
+            <div class="inquiry-field">
+              <label for="inq-message">Anything else?</label>
+              <textarea id="inq-message" name="message" placeholder="Timeline, where work currently lives, questions&hellip;"></textarea>
+            </div>
+          </div>
+        </details>
 
-        <div class="inquiry-field">
-          <label for="inq-message">Anything else? (optional)</label>
-          <textarea id="inq-message" name="message" placeholder="Timeline, where work currently lives, questions&hellip;"></textarea>
+        <div class="inquiry-submit-row">
+          <button type="submit" class="inquiry-submit">Send inquiry</button>
+          <span class="inquiry-reassurance">Reply within 48h &middot; No commitment</span>
         </div>
-
-        <button type="submit" class="inquiry-submit">Send inquiry</button>
       </form>
 
       <p class="inquiry-fallback">

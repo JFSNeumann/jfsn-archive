@@ -49,7 +49,7 @@
   <style>
     /* -------- About layout -------- */
     .about {
-      padding-top: clamp(3rem, 6vw, 6rem);
+      padding-top: clamp(4rem, 9vw, 9rem);
       padding-bottom: clamp(4rem, 10vw, 10rem);
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -60,21 +60,21 @@
     /* -------- Bio -------- */
     .bio__name {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      font-size: clamp(3rem, 7vw, 5.5rem);
       font-weight: 300;
-      letter-spacing: -0.01em;
-      line-height: 1.1;
-      margin: 0 0 2rem;
+      letter-spacing: 0.03em;
+      line-height: 1.05;
+      margin: 0 0 2.75rem;
     }
 
     .bio__quote {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(1.375rem, 2.25vw, 1.875rem);
+      font-size: clamp(1.5rem, 2.5vw, 2.125rem);
       font-style: italic;
       font-weight: 300;
-      line-height: 1.45;
+      line-height: 1.4;
       color: var(--accent);
-      margin: 0 0 2rem;
+      margin: 0 0 2.25rem;
     }
 
     .bio__text {
@@ -269,6 +269,17 @@
       .bio__muted-link,
       .detail-group__body a,
       .series-table a { transition: none; }
+    }
+
+    /* -------- Scroll entrances -------- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
     }
   </style>
 </head>
@@ -573,6 +584,23 @@
     link.href = 'artwork.html?id=' + id;
     link.appendChild(img);
     wrap.appendChild(link);
+  });
+})();
+</script>
+
+<script>
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const targets = document.querySelectorAll('.detail-group, .bio__archive, .bio__featured');
+  const obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  targets.forEach(function (el, i) {
+    el.classList.add('reveal');
+    el.style.transitionDelay = (i * 0.04) + 's';
+    obs.observe(el);
   });
 })();
 </script>
