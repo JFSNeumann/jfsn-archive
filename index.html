@@ -14,7 +14,7 @@
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="catalog-home.json?v=20260530002846" as="fetch" crossorigin>
+  <link rel="preload" href="catalog-home.json?v=20260530002901" as="fetch" crossorigin>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap"></noscript>
   <link rel="stylesheet" href="site.css?v=20260527-nav">
@@ -617,7 +617,7 @@
   // ?v= is stamped by build_catalog.py — forces browser to fetch fresh after every build
   let dominantColors = {};
   fetch('colors.json').then(r => r.ok ? r.json() : null).then(c => { if (c) dominantColors = c; }).catch(() => {});
-  fetch('catalog-home.json?v=20260530002846')
+  fetch('catalog-home.json?v=20260530002901')
     .then(r => r.ok ? r.json() : null)
     .then(catalog => {
       if (!catalog || !catalog.length) return;

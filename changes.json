@@ -1,5 +1,41 @@
 [
   {
+    "sha": "43f388c",
+    "date": "2026-05-29",
+    "title": "Session 18: five UX improvements",
+    "body": "- companion.html: fix FUNCTION_URL — jfsn.com now routes to Netlify function correctly\n- .htaccess: add jfsn-archive.netlify.app + gc.zgo.at to CSP connect-src\n- timeline.html: 2000s decade note — surviving work only, link to lost.html\n- constellation.html: onboarding hint card — clusters, interactions, dismissible\n- index.html: \"Begin here\" section — 3 works, 3 one-liners, quiet entry path"
+  },
+  {
+    "sha": "84687c6",
+    "date": "2026-05-29",
+    "title": "Session 18: dashboard copy, for-artists mailto fix, artwork og:description",
+    "body": "- jeff.html: all 15 card descriptions rewritten — functional → evocative\n- jeff.html: Mosaic card added (was missing from dashboard)\n- for-artists.html: hero \"Get in touch\" CTA fixed mailto: → #inquire\n- artwork.html: og:description now updates per-artwork via JS (was static fallback)"
+  },
+  {
+    "sha": "01e1403",
+    "date": "2026-05-29",
+    "title": "Session 18: lost.html revision — earn the weight",
+    "body": "- Eyebrow: \"A note on what is not in this archive\" → \"What is not here\"\n- Count text: orange → muted (no marketing energy on the loss number)\n- Media list: added \"painted constructions\" to the discarded works\n- CTA: stripped all promotional language, 3 quiet links only\n- Removed dead CSS: .lost__cta-label, .lost__cta-body\n- CTA border-top removed — clean margin-top only"
+  },
+  {
+    "sha": "793a0e7",
+    "date": "2026-05-29",
+    "title": "Session 17: mosaic.html — 1,084-work photomosaic + Mosaic in nav/footer all pages",
+    "body": ""
+  },
+  {
+    "sha": "1818c7a",
+    "date": "2026-05-29",
+    "title": "Session 16: 6 UX improvements across index, archive, artwork",
+    "body": "index.html\n- Mobile swipe left/right on hero cycles featured works\n\narchive.html\n- Scroll-reveal: thumbs fade+slide up on viewport entry (IntersectionObserver)\n- Animated works counter: tweens from old→new count on filter change\n\nartwork.html\n- Page crossfade on prev/next navigation (fade out → fade in)\n- Palette swatches: clickable color dots in left column → archive filter\n- Ambient color tint: dominant color from colors.json washes page bg\n- In-place navigation: loadArtwork() swaps content without page reload,\n  history.pushState updates URL, popstate handles back/forward\n- By Color strip: 10 closest-color works as 80px scrollable filmstrip"
+  },
+  {
+    "sha": "8515025",
+    "date": "2026-05-29",
+    "title": "Session 15: blurred ambient backdrop on hero + featured.txt update",
+    "body": "- Hero backdrop: same image blurred/darkened fills full section behind artwork\n  (blur 12px, brightness 0.58, saturate 1.3; transitions with each cycle)\n- Caption moved outside <section.hero> so backdrop stays within image bounds\n- Image sizing: width 100% / height auto / max-height 72svh — no dead space\n  below portrait or landscape images\n- featured.txt revised; catalog rebuilt"
+  },
+  {
     "sha": "ee4daa9",
     "date": "2026-05-29",
     "title": "Build artifacts: catalog rebuild after art0053 dimensions field",

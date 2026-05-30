@@ -1,20 +1,20 @@
 # Current State
-**Updated:** 2026-05-29 19:35
+**Updated:** 2026-05-29 19:52
 
 ## Last commit
-793a0e7 — Session 17: mosaic.html — 1,084-work photomosaic + Mosaic in nav/footer all pages
+01e1403 — Session 18: lost.html revision — earn the weight
 
-## Session 18 changes (2026-05-29) — lost.html revision
-- Eyebrow: "A note on what is not in this archive" → "What is not here"
-- Count text: orange (`--accent`) → muted (`--muted`)
-- Media list: added "painted constructions"
-- CTA: stripped all promotional language; now 3 quiet links only (For Artists / Open Source / View the Archive)
-- Dead CSS removed: `.lost__cta-label`, `.lost__cta-body`
-- CTA `border-top` removed — replaced with clean `margin-top`
+## Session 18 continued (2026-05-30) — five UX improvements
+- companion.html: FUNCTION_URL fix — now works on jfsn.com (test live to confirm)
+- .htaccess: CSP updated — jfsn-archive.netlify.app + gc.zgo.at added to connect-src
+- timeline.html: 2000s note — "Surviving work only" + link to lost.html
+- constellation.html: onboarding hint card — dismissible, localStorage
+- index.html: "Begin here" section — 3 works, 3 one-liners
 
 ## To do next session
 <!-- Edit this section before closing -->
-- [ ] (add what you want to do next time)
+- [ ] Test Companion on jfsn.com — first time it should work on main domain
+- [ ] Series introductions — descriptions exist in config, consider surfacing them better on series-index.html too
 
 ## Known issues
 - companion.html URL / CSP bug on jfsn.com (until DNS switches to Netlify)
