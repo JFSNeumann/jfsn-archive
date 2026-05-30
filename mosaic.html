@@ -162,6 +162,9 @@
     }
     .mosaic-btn:hover { color: var(--text); border-color: rgba(243,240,234,0.3); }
     .mosaic-btn:active { color: var(--accent); }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+    }
   </style>
 </head>
 

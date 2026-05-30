@@ -15,7 +15,7 @@
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="catalog-home.json?v=20260530170302" as="fetch" crossorigin>
+  <link rel="preload" href="catalog-home.json?v=20260530175024" as="fetch" crossorigin>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap"></noscript>
   <link rel="stylesheet" href="site.css?v=20260530-nav4">
@@ -305,7 +305,7 @@
       object-position: center top;
       transition: transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.3s;
     }
-    .recent-thumb:hover img { transform: scale(1.06); }
+    @media (hover: hover) { .recent-thumb:hover img { transform: scale(1.06); } }
     .recent-thumb__label {
       position: absolute;
       bottom: 0; left: 0; right: 0;
@@ -370,7 +370,7 @@
       object-position: center top;
       transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s;
     }
-    .thumb__link:hover img { transform: scale(1.05); }
+    @media (hover: hover) { .thumb__link:hover img { transform: scale(1.05); } }
     .thumb__overlay {
       position: absolute;
       inset: 0;
@@ -384,9 +384,14 @@
       transition: opacity 0.22s, transform 0.22s;
       pointer-events: none;
     }
-    .thumb__link:hover .thumb__overlay { opacity: 1; transform: translateY(0); }
-    .grid:has(.thumb__link:hover) .thumb { opacity: 0.5; }
-    .grid:has(.thumb__link:hover) .thumb:hover { opacity: 1; }
+    @media (hover: hover) {
+      .thumb__link:hover .thumb__overlay { opacity: 1; transform: translateY(0); }
+      .grid:has(.thumb__link:hover) .thumb { opacity: 0.5; }
+      .grid:has(.thumb__link:hover) .thumb:hover { opacity: 1; }
+    }
+    @media (hover: none) {
+      .thumb__overlay { opacity: 1; transform: translateY(0); }
+    }
     .thumb__overlay-title {
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-size: 0.9375rem;
@@ -738,7 +743,7 @@
   // ?v= is stamped by build_catalog.py — forces browser to fetch fresh after every build
   let dominantColors = {};
   fetch('colors.json').then(r => r.ok ? r.json() : null).then(c => { if (c) dominantColors = c; }).catch(() => {});
-  fetch('catalog-home.json?v=20260530170302')
+  fetch('catalog-home.json?v=20260530175024')
     .then(r => r.ok ? r.json() : null)
     .then(catalog => {
       if (!catalog || !catalog.length) return;

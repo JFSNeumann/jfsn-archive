@@ -184,6 +184,9 @@
       .sb-body, .sb-head { display: none; }
       .sb-foot { border-top: none; padding: 0.5rem var(--gutter); }
     }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+    }
   </style>
   <script src="artist-config.js"></script>
 </head>

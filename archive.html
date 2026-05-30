@@ -24,6 +24,26 @@
   <meta property="og:image"       content="https://jfsn.com/og-card.jpg">
   <meta property="og:url"         content="https://jfsn.com/archive.html">
 
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Archive — Jeffrey F. S. Neumann",
+    "description": "1,084 works spanning 1974 to the present. Collage, sculpture, and photography by Jeffrey F. S. Neumann, Cleveland.",
+    "url": "https://jfsn.com/archive.html",
+    "creator": {
+      "@type": "Person",
+      "name": "Jeffrey F. S. Neumann",
+      "url": "https://jfsn.com"
+    },
+    "about": {
+      "@type": "Collection",
+      "name": "Archive of Jeffrey F. S. Neumann, 1974–present",
+      "numberOfItems": 1084
+    }
+  }
+  </script>
+
   <style>
     /* -------- Filter Bar -------- */
     .filter-bar {
@@ -252,8 +272,10 @@
     .thumb { margin: 0; opacity: 0; transform: translateY(10px); transition: opacity 0.4s ease, transform 0.4s ease; }
     .thumb.revealed { opacity: 1; transform: none; }
     /* Keep hover-dim working on revealed thumbs */
-    .grid:has(.thumb__link:hover) .thumb.revealed { opacity: 0.5; }
-    .grid:has(.thumb__link:hover) .thumb.revealed:hover { opacity: 1; }
+    @media (hover: hover) {
+      .grid:has(.thumb__link:hover) .thumb.revealed { opacity: 0.5; }
+      .grid:has(.thumb__link:hover) .thumb.revealed:hover { opacity: 1; }
+    }
 
     .thumb__link {
       display: block;
@@ -267,7 +289,7 @@
       display: block;
       transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s;
     }
-    .thumb__link:hover img { transform: scale(1.05); }
+    @media (hover: hover) { .thumb__link:hover img { transform: scale(1.05); } }
     .thumb__overlay {
       position: absolute;
       inset: 0;
@@ -281,10 +303,15 @@
       transition: opacity 0.22s, transform 0.22s;
       pointer-events: none;
     }
-    .thumb__link:hover .thumb__overlay { opacity: 1; transform: translateY(0); }
-    /* Sibling dim — spotlights the hovered card */
-    .grid:has(.thumb__link:hover) .thumb { opacity: 0.5; }
-    .grid:has(.thumb__link:hover) .thumb:hover { opacity: 1; }
+    @media (hover: hover) {
+      .thumb__link:hover .thumb__overlay { opacity: 1; transform: translateY(0); }
+      /* Sibling dim — spotlights the hovered card */
+      .grid:has(.thumb__link:hover) .thumb { opacity: 0.5; }
+      .grid:has(.thumb__link:hover) .thumb:hover { opacity: 1; }
+    }
+    @media (hover: none) {
+      .thumb__overlay { opacity: 1; transform: translateY(0); }
+    }
     .thumb__overlay-title {
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-size: 0.9375rem;

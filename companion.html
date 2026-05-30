@@ -110,7 +110,7 @@
     }
     .c-submit:disabled { opacity: 0.4; cursor: default; }
     .c-submit-row { display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; }
-    .c-deep-label { font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); cursor: pointer; display: flex; align-items: center; gap: 0.4rem; user-select: none; }
+    .c-deep-label { font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); cursor: pointer; display: flex; align-items: center; gap: 0.4rem; user-select: none; }
     .c-deep-label input { accent-color: var(--text); cursor: pointer; }
 
     /* ═══════════════════════════════════════════════════════════
@@ -267,11 +267,13 @@
       transition: color 0.15s, border-color 0.15s;
     }
     .c-browse-link:hover { color: var(--text); border-color: var(--muted); }
-
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+    }
   </style>
 </head>
 <body>
-
+<a href="#main" class="skip">Skip to content</a>
   <header class="nav-bar" role="banner">
     <a class="nav__logo" href="index.html" aria-label="JFSN home">
       <img src="favicon.svg" alt="" width="28" height="28" aria-hidden="true">

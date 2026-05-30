@@ -197,10 +197,13 @@
       font-style: italic;
       font-family: 'Cormorant Garamond', Georgia, serif;
     }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+    }
   </style>
 </head>
 <body>
-
+<a href="#main" class="skip">Skip to content</a>
   <header class="studio-header">
     <div class="studio-header-inner">
       <div class="studio-wordmark">JFSN<span>.</span></div>
@@ -208,7 +211,7 @@
     </div>
   </header>
 
-  <main class="studio-main">
+  <main id="main" class="studio-main">
 
     <!-- ── Public Site ── -->
     <div class="section-label"><span>Public Site</span></div>

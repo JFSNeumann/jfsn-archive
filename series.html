@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b0b0b">
   <title>Series — Jeffrey F. S. Neumann</title>
-  <meta name="description" content="">
+  <meta name="description" content="Named and themed series from the archive of Jeffrey F. S. Neumann — collage, sculpture, and photography spanning 1974 to the present.">
 
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="alternate" type="application/rss+xml" title="Jeffrey F. S. Neumann — Archive" href="https://jfsn.com/feed.xml">
@@ -145,7 +145,7 @@
       display: block;
       transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s;
     }
-    .thumb__link:hover img { transform: scale(1.05); }
+    @media (hover: hover) { .thumb__link:hover img { transform: scale(1.05); } }
     .thumb__overlay {
       position: absolute;
       inset: 0;
@@ -159,10 +159,15 @@
       transition: opacity 0.22s, transform 0.22s;
       pointer-events: none;
     }
-    .thumb__link:hover .thumb__overlay { opacity: 1; transform: translateY(0); }
-    /* Sibling dim — spotlights the hovered card */
-    .grid:has(.thumb__link:hover) .thumb { opacity: 0.5; }
-    .grid:has(.thumb__link:hover) .thumb:hover { opacity: 1; }
+    @media (hover: hover) {
+      .thumb__link:hover .thumb__overlay { opacity: 1; transform: translateY(0); }
+      /* Sibling dim — spotlights the hovered card */
+      .grid:has(.thumb__link:hover) .thumb { opacity: 0.5; }
+      .grid:has(.thumb__link:hover) .thumb:hover { opacity: 1; }
+    }
+    @media (hover: none) {
+      .thumb__overlay { opacity: 1; transform: translateY(0); }
+    }
     .thumb__overlay-title {
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-size: 0.9375rem;

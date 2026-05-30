@@ -321,7 +321,8 @@
       justify-content: flex-end;
       padding: 0.75rem;
     }
-    .proof-thumb:hover .proof-thumb__overlay { opacity: 1; }
+    @media (hover: hover) { .proof-thumb:hover .proof-thumb__overlay { opacity: 1; } }
+    @media (hover: none) { .proof-thumb__overlay { opacity: 1; } }
     .proof-thumb__title {
       font-size: 0.75rem;
       color: var(--text);
@@ -428,7 +429,7 @@
       font-family: var(--font-display);
       font-size: 3rem;
       font-weight: 300;
-      color: var(--dim);
+      color: var(--muted);
       line-height: 1;
       margin: 0 0 1rem;
     }
@@ -513,7 +514,7 @@
       align-items: baseline;
       gap: 0.5rem;
     }
-    .plan__features li::before { content: '—'; color: var(--dim); flex-shrink: 0; }
+    .plan__features li::before { content: '—'; color: var(--muted); flex-shrink: 0; }
     .plan__features li strong { color: var(--text); font-weight: 500; }
     .plan__example {
       display: block;

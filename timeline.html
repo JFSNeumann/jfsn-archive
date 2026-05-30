@@ -261,7 +261,8 @@
       transition: opacity 0.2s;
       pointer-events: none;
     }
-    .tl-thumb:hover .tl-thumb__overlay { opacity: 1; }
+    @media (hover: hover) { .tl-thumb:hover .tl-thumb__overlay { opacity: 1; } }
+    @media (hover: none) { .tl-thumb__overlay { opacity: 1; } }
     .tl-thumb__title {
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-size: 0.75rem;
