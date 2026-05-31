@@ -83,11 +83,16 @@
         }
         .grayscale-filter {
             filter: grayscale(100%);
-            transition: filter 0.5s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: filter 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .grayscale-filter:hover {
             filter: grayscale(0%);
-            transform: scale(1.05);
+            transform: scale(1.04);
+        }
+        /* Orange border lift on card hover */
+        a.group:hover > div.border {
+            border-color: #e05900;
+            transition: border-color 0.25s ease;
         }
         .custom-checkbox {
             appearance: none;

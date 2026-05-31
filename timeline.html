@@ -62,9 +62,9 @@
         }
         .grayscale-img {
             filter: grayscale(100%);
-            transition: filter 0.5s ease, transform 0.5s ease;
+            transition: filter 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .grayscale-img:hover { filter: grayscale(0%); transform: scale(1.05); }
+        .grayscale-img:hover { filter: grayscale(0%); transform: scale(1.04); }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         .timeline-strip { cursor: grab; user-select: none; }
@@ -227,11 +227,12 @@ function buildTimeline(works) {
 
     // Decade label
     const labelDiv = document.createElement('div');
-    labelDiv.className = 'flex flex-col gap-xs mr-lg flex-shrink-0';
+    labelDiv.className = 'relative flex flex-col justify-center mr-lg flex-shrink-0 w-[220px]';
     labelDiv.innerHTML = `
-      <span class="decade-label font-display-lg text-display-lg leading-none text-primary opacity-20 transition-all duration-500" data-decade="${dec.key}">${dec.label}</span>
-      <span class="font-label-md text-label-md tracking-widest text-secondary">${dec.sub}</span>
-      <span class="font-label-md text-label-md tracking-widest text-secondary opacity-60">${pool.length} WORKS</span>`;
+      <span class="decade-bg pointer-events-none select-none absolute left-0 top-1/2 -translate-y-1/2 font-display-lg leading-none text-primary opacity-[0.04] transition-opacity duration-500 whitespace-nowrap" data-decade-bg="${dec.key}" style="font-size:clamp(100px,14vw,180px);font-family:'Playfair Display',serif;font-weight:700;letter-spacing:-0.03em;">${dec.label}</span>
+      <span class="decade-label relative font-display-lg text-display-lg leading-none text-primary opacity-20 transition-all duration-500" style="font-size:clamp(36px,4vw,64px)" data-decade="${dec.key}">${dec.label}</span>
+      <span class="relative font-label-md text-label-md tracking-widest text-secondary mt-sm">${dec.sub}</span>
+      <span class="relative font-label-md text-label-md tracking-widest text-secondary opacity-60">${pool.length} WORKS</span>`;
     block.appendChild(labelDiv);
 
     // Works row
@@ -329,8 +330,9 @@ function updateProgress() {
   scrollIndicator.style.transform = `translateX(${(pct / 100) * (barWidth - indicatorWidth)}px)`;
   percentText.textContent = Math.floor(pct);
 
-  // Highlight active decade label
+  // Highlight active decade label + background ghost text
   const labels = container.querySelectorAll('.decade-label');
+  const bgs = container.querySelectorAll('.decade-bg');
   const center = window.innerWidth / 2;
   labels.forEach(el => {
     const rect = el.getBoundingClientRect();
@@ -339,6 +341,11 @@ function updateProgress() {
     el.classList.toggle('text-primary', !isActive);
     el.classList.toggle('text-on-tertiary-container', isActive);
     if (isActive) activeDecadeEl.textContent = el.dataset.decade;
+  });
+  bgs.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    const isActive = rect.left < center + 200 && rect.right > center - 400;
+    el.style.opacity = isActive ? '0.06' : '0.04';
   });
 }
 

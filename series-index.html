@@ -87,11 +87,14 @@
         }
         .series-image {
             filter: grayscale(100%);
-            transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: filter 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .series-card:hover .series-image {
             filter: grayscale(0%);
-            transform: scale(1.05);
+            transform: scale(1.04);
+        }
+        .series-card {
+            transition: border-color 0.25s ease;
         }
         body { -webkit-font-smoothing: antialiased; }
     </style>
