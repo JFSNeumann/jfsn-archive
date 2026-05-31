@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0b0b0b">
+  
   <title>The 1970s — Jeffrey F. S. Neumann Archive</title>
   <meta name="description" content="58 works from the 1970s by Jeffrey F. S. Neumann, Cleveland mixed-media artist. Collage, assemblage, photography, and sculpture spanning 1970–1977.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -11,11 +11,15 @@
   <link rel="canonical" href="https://jfsn.com/1970s.html">
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icon-192.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap"></noscript>
-  <link rel="stylesheet" href="site.css?v=20260530-nav4">
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+  tailwind.config={darkMode:"class",theme:{extend:{colors:{"archive-gray":"#575757","bone-white":"#F3F0EA","international-orange":"#FF6600","deep-ink":"#0B0B0B","outline-variant":"#c4c7c7","surface-container-high":"#ebe8e2","background":"#fcf9f3"},spacing:{"margin-desktop":"64px","margin-mobile":"20px","container-max":"1440px"},fontFamily:{"display":["Playfair Display"],"headline-md":["Playfair Display"],"label-caps":["Inter"],"body-md":["Inter"],"nav-link":["Inter"]},fontSize:{"headline-md":["32px",{"lineHeight":"40px","fontWeight":"500"}],"label-caps":["12px",{"lineHeight":"16px","letterSpacing":"0.1em","fontWeight":"600"}],"nav-link":["14px",{"lineHeight":"20px","letterSpacing":"0.05em","fontWeight":"500"}]}}}}
+  </script>
+  <meta name="theme-color" content="#fcf9f3"/>
   <meta property="og:type"        content="website">
   <meta property="og:title"       content="Works from the 1970s — Jeffrey F. S. Neumann">
   <meta property="og:description" content="58 works from the 1970s by Jeffrey F. S. Neumann, Cleveland mixed-media artist. Collage, assemblage, photography, and sculpture spanning 1970–1977.">
@@ -58,6 +62,10 @@
 }
   </script>
   <style>
+    .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;}
+    .nav-underline-active{position:relative;}
+    .nav-underline-active::after{content:'';position:absolute;bottom:-4px;left:0;width:100%;height:2px;background-color:#FF6600;}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;}}
     .medium-page {
       padding-top: clamp(3rem, 6vw, 6rem);
       padding-bottom: clamp(4rem, 10vw, 10rem);
@@ -69,11 +77,11 @@
       gap: 1rem;
       flex-wrap: wrap;
       padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
-      border-bottom: 1px solid var(--dim);
+      border-bottom: 1px solid rgba(11,11,11,0.12);
       margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
     }
     .medium-page__title {
-      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-family: 'Playfair Display', Georgia, serif;
       font-size: clamp(2.5rem, 5.5vw, 4.5rem);
       font-weight: 300;
       letter-spacing: -0.01em;
@@ -81,27 +89,27 @@
       margin: 0;
     }
     .medium-page__meta {
-      font-size: var(--cap);
+      font-size: 0.75rem;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: #575757;
       margin: 0;
       padding-bottom: 0.25rem;
     }
     .medium-page__intro {
       max-width: 52ch;
       line-height: 1.7;
-      color: var(--muted);
+      color: #575757;
       margin-bottom: clamp(2rem, 4vw, 3.5rem);
     }
     .medium-page__intro a {
-      color: var(--text);
-      border-bottom: 1px solid var(--dim);
+      color: #0B0B0B;
+      border-bottom: 1px solid rgba(11,11,11,0.12);
       transition: color 0.15s, border-color 0.15s;
     }
     .medium-page__intro a:hover {
-      color: var(--accent);
-      border-color: var(--accent);
+      color: #FF6600;
+      border-color: #FF6600;
     }
     .medium-grid {
       column-count: 4;
@@ -116,7 +124,7 @@
     .thumb__link {
       display: block;
       overflow: hidden;
-      background: var(--bg-raised);
+      background: #ebe8e2;
       text-decoration: none;
     }
     .thumb__link img {
@@ -128,14 +136,14 @@
     .thumb__link:hover img { transform: scale(1.05); }
     .thumb__caption {
       padding: 0.35rem 0 0;
-      font-size: var(--cap);
+      font-size: 0.75rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: #575757;
       line-height: 1.35;
     }
     .thumb__caption a { color: inherit; text-decoration: none; }
-    .thumb__caption a:hover { color: var(--text); }
+    .thumb__caption a:hover { color: #0B0B0B; }
     .thumb__caption span { display: block; }
     @media (prefers-reduced-motion: reduce) {
       .thumb__link img { transition: none; }
@@ -144,21 +152,28 @@
   </style>
 </head>
 
-<body>
-<a href="#main" class="skip">Skip to content</a>
-<header class="header">
-  <div class="container header__inner">
-    <a class="brand" href="index.html"><img src="jfsn-mark.png" class="brand-mark" alt="JFSN">Jeffrey F. S. Neumann</a>
-    <nav class="nav" aria-label="Primary">
-      <a href="archive.html">Archive</a>
-      <a href="series-index.html">Series</a>
-      <a href="about.html">About</a>
-      <a href="about.html#contact" style="color:var(--accent)">Inquiry</a>
+<body class="bg-background text-deep-ink overflow-x-hidden">
+<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-deep-ink focus:text-bone-white">Skip to content</a>
+<!-- NAV:START -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-background border-b border-outline-variant">
+  <div class="flex items-center gap-8">
+    <a href="index.html" class="font-headline-md text-headline-md tracking-tighter text-deep-ink">JFSN</a>
+    <nav class="hidden md:flex gap-6" aria-label="Primary">
+      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="archive.html">Archive</a>
+      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="series-index.html">Series</a>
+      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="timeline.html">Timeline</a>
+      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="companion.html">Companion</a>
+      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="about.html">About</a>
     </nav>
   </div>
+  <div class="flex items-center gap-4">
+    <button class="material-symbols-outlined text-deep-ink hover:text-international-orange transition-colors" aria-label="Search">search</button>
+    <button class="md:hidden material-symbols-outlined text-deep-ink" aria-label="Menu">menu</button>
+  </div>
 </header>
+<!-- NAV:END -->
 
-<main id="main">
+<main id="main" class="pt-16">
   <div class="container medium-page">
     <div class="medium-page__head">
       <h1 class="medium-page__title">The 1970s</h1>
@@ -228,20 +243,56 @@
   </div>
 </main>
 
-<footer class="footer">
-  <div class="container footer__inner">
-    <nav class="footer-nav" aria-label="Footer">
-      <a href="index.html">Home</a>
-      <a href="archive.html">Archive</a>
-      <a href="series-index.html">Series</a>
-      <a href="about.html">About</a>
-      <a href="lost.html">Lost</a>
-      <a href="companion.html">Companion</a>
-      <a href="wall.html">Wall</a>
-      <a href="mosaic.html">Mosaic</a>
-    </nav>
-    <span style="color:var(--muted);font-size:var(--cap);letter-spacing:0.1em;">&copy; Jeffrey F. S. Neumann</span>
+<!-- FOOTER:START -->
+<footer class="bg-surface-container-high py-16 px-margin-desktop border-t border-outline-variant">
+  <div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+    <div>
+      <h3 class="font-headline-md text-headline-md tracking-tighter mb-6">JFSN</h3>
+      <p class="font-body-md text-archive-gray text-sm leading-relaxed">The personal archive of Jeffrey F. S. Neumann — 1,084 works spanning five decades. Collage, sculpture, photography.</p>
+    </div>
+    <div>
+      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">EXPLORE</h4>
+      <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
+        <li><a class="hover:text-international-orange transition-colors" href="archive.html">Complete Archive</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="timeline.html">Interactive Timeline</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="series-index.html">Series Index</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">RESOURCES</h4>
+      <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
+        <li><a class="hover:text-international-orange transition-colors" href="mosaic.html">Portrait Mosaic</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="companion.html">AI Companion</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="about.html">About</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">CONTACT</h4>
+      <a class="font-nav-link text-nav-link text-deep-ink block mb-4 border-b border-deep-ink inline-block pb-1 hover:text-international-orange hover:border-international-orange transition-all" href="mailto:jfsneumann@gmail.com">jfsneumann@gmail.com</a>
+    </div>
+  </div>
+  <div class="mt-16 pt-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
+    <p class="font-label-caps text-[10px] text-archive-gray">© 2026 JEFFREY F. S. NEUMANN. ALL RIGHTS RESERVED.</p>
+    <div class="flex gap-8"><a class="font-label-caps text-[10px] text-archive-gray hover:text-deep-ink" href="privacy.html">PRIVACY</a></div>
   </div>
 </footer>
+<!-- FOOTER:END -->
+
+<!-- Mobile bottom nav -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 px-4 bg-bone-white border-t border-outline-variant h-16" style="padding-bottom: env(safe-area-inset-bottom, 8px)" aria-label="Mobile navigation">
+  <a href="index.html" class="flex flex-col items-center justify-center text-archive-gray hover:text-international-orange transition-colors">
+    <span class="material-symbols-outlined">inventory_2</span><span class="font-label-caps text-[10px]">Archive</span>
+  </a>
+  <a href="series-index.html" class="flex flex-col items-center justify-center text-archive-gray hover:text-international-orange transition-colors">
+    <span class="material-symbols-outlined">auto_awesome_motion</span><span class="font-label-caps text-[10px]">Series</span>
+  </a>
+  <a href="timeline.html" class="flex flex-col items-center justify-center text-archive-gray hover:text-international-orange transition-colors">
+    <span class="material-symbols-outlined">history_toggle_off</span><span class="font-label-caps text-[10px]">Timeline</span>
+  </a>
+  <a href="companion.html" class="flex flex-col items-center justify-center text-archive-gray hover:text-international-orange transition-colors">
+    <span class="material-symbols-outlined">chat_bubble</span><span class="font-label-caps text-[10px]">Companion</span>
+  </a>
+</nav>
+<script src="_shared/nav-active.js" defer></script>
 </body>
 </html>
