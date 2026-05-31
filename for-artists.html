@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0b0b0b">
+  
   <title>Archive Your Life's Work — Jeffrey F. S. Neumann</title>
   <meta name="description" content="A professional archive website for visual artists. AI-generated catalog, full-text search, open API. Starting at $500.">
 
@@ -12,11 +12,23 @@
   <link rel="canonical" href="https://jfsn.com/for-artists.html">
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icon-192.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap"></noscript>
-  <link rel="stylesheet" href="site.css?v=20260530-nav4">
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+  tailwind.config = {
+      darkMode: "class",
+      theme: { extend: {
+          colors: { "archive-gray":"#575757","bone-white":"#F3F0EA","international-orange":"#FF6600","deep-ink":"#0B0B0B","outline-variant":"#c4c7c7","surface-container-high":"#ebe8e2","background":"#fcf9f3" },
+          spacing: { "margin-desktop":"64px","margin-mobile":"20px" },
+          fontFamily: { "display":["Playfair Display"],"headline-md":["Playfair Display"],"label-caps":["Inter"],"body-md":["Inter"],"nav-link":["Inter"] },
+          fontSize: { "headline-md":["32px",{"lineHeight":"40px","fontWeight":"500"}],"label-caps":["12px",{"lineHeight":"16px","letterSpacing":"0.1em","fontWeight":"600"}],"nav-link":["14px",{"lineHeight":"20px","letterSpacing":"0.05em","fontWeight":"500"}] }
+      }}
+  }
+  </script>
+  <meta name="theme-color" content="#fcf9f3"/>
 
   <meta property="og:type"        content="website">
   <meta property="og:title"       content="Archive Your Life's Work — JFSN">
@@ -61,6 +73,8 @@
   </script>
 
   <style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
 
     /* ═══════════════════════════════════════════════════════════
        HERO — split layout with animated thumbnail mosaic
@@ -80,19 +94,19 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      padding: clamp(2rem, 3vw, 3rem) var(--gutter) clamp(3rem, 5vw, 5rem);
+      padding: clamp(2rem, 3vw, 3rem) 24px clamp(3rem, 5vw, 5rem);
       position: relative;
       z-index: 2;
     }
     .hero__eyebrow {
-      font-size: var(--cap);
+      font-size: 0.75rem;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--accent);
+      color: #FF6600;
       margin: 0 0 1.5rem;
     }
     .hero__title {
-      font-family: var(--font-display);
+      font-family: 'Playfair Display', Georgia, serif;
       font-size: clamp(3rem, 6vw, 5.5rem);
       font-weight: 300;
       letter-spacing: -0.02em;
@@ -101,12 +115,12 @@
     }
     .hero__title em {
       font-style: italic;
-      color: var(--muted);
+      color: #575757;
     }
     .hero__body {
       font-size: clamp(0.9375rem, 1.4vw, 1.0625rem);
       line-height: 1.75;
-      color: var(--muted);
+      color: #575757;
       max-width: 44ch;
       margin: 0 0 2.5rem;
     }
@@ -118,7 +132,7 @@
     }
     .btn-primary {
       display: inline-block;
-      background: var(--accent);
+      background: #FF6600;
       color: #0b0b0b;
       font-size: 0.75rem;
       font-weight: 700;
@@ -130,7 +144,7 @@
     .btn-primary:hover { opacity: 0.88; color: #0b0b0b; transform: translateY(-1px); }
     .hero__cta-note {
       font-size: 0.8125rem;
-      color: var(--muted);
+      color: #575757;
     }
 
     /* Right: animated mosaic — capped at ~4 rows of tiles */
@@ -159,11 +173,11 @@
     }
     .hero__mosaic::before {
       top: 0;
-      background: linear-gradient(to bottom, var(--bg) 0%, transparent 100%);
+      background: linear-gradient(to bottom, #fcf9f3 0%, transparent 100%);
     }
     .hero__mosaic::after {
       bottom: 0;
-      background: linear-gradient(to top, var(--bg) 0%, transparent 100%);
+      background: linear-gradient(to top, #fcf9f3 0%, transparent 100%);
     }
 
     /* left-edge fade to blend with text */
@@ -171,7 +185,7 @@
       position: absolute;
       left: 0; top: 0; bottom: 0;
       width: 5rem;
-      background: linear-gradient(to right, var(--bg) 0%, transparent 100%);
+      background: linear-gradient(to right, #fcf9f3 0%, transparent 100%);
       z-index: 3;
       pointer-events: none;
     }
@@ -195,7 +209,7 @@
       aspect-ratio: 1;
       overflow: hidden;
       position: relative;
-      background: rgba(243,240,234,0.06);
+      background: rgba(11,11,11,0.06);
       cursor: pointer;
     }
     .mosaic-thumb img {
@@ -214,7 +228,7 @@
       font-size: 0.5625rem;
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: rgba(243,240,234,0.75);
+      color: rgba(11,11,11,0.75);
       opacity: 0;
       transition: opacity 0.2s;
     }
@@ -224,34 +238,34 @@
        STAT BAR
     ═══════════════════════════════════════════════════════════ */
     .stat-bar {
-      border-top: 1px solid var(--dim);
-      border-bottom: 1px solid var(--dim);
+      border-top: 1px solid rgba(11,11,11,0.12);
+      border-bottom: 1px solid rgba(11,11,11,0.12);
       display: grid;
       grid-template-columns: repeat(4, 1fr);
     }
     @media (max-width: 640px) { .stat-bar { grid-template-columns: repeat(2, 1fr); } }
 
     .stat {
-      padding: 2rem var(--gutter);
-      border-right: 1px solid var(--dim);
+      padding: 2rem 24px;
+      border-right: 1px solid rgba(11,11,11,0.12);
       text-align: center;
     }
     .stat:last-child { border-right: none; }
     @media (max-width: 640px) { .stat:nth-child(2) { border-right: none; } }
 
     .stat__number {
-      font-family: var(--font-display);
+      font-family: 'Playfair Display', Georgia, serif;
       font-size: clamp(2rem, 4vw, 3rem);
       font-weight: 300;
       line-height: 1;
       margin: 0 0 0.35rem;
-      color: var(--text);
+      color: #0B0B0B;
     }
     .stat__label {
-      font-size: var(--cap);
+      font-size: 0.75rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: #575757;
       margin: 0;
     }
 
@@ -260,7 +274,7 @@
     ═══════════════════════════════════════════════════════════ */
     .proof {
       padding: clamp(4rem, 8vw, 8rem) 0;
-      border-bottom: 1px solid var(--dim);
+      border-bottom: 1px solid rgba(11,11,11,0.12);
     }
     .proof__head {
       display: flex;
@@ -271,21 +285,21 @@
       flex-wrap: wrap;
     }
     .proof__label {
-      font-size: var(--cap);
+      font-size: 0.75rem;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: #575757;
       margin: 0;
     }
     .proof__link {
       font-size: 0.8125rem;
-      color: var(--muted);
-      border-bottom: 1px solid var(--dim);
+      color: #575757;
+      border-bottom: 1px solid rgba(11,11,11,0.12);
       padding-bottom: 1px;
       transition: color 0.15s, border-color 0.15s;
       white-space: nowrap;
     }
-    .proof__link:hover { color: var(--text); border-color: var(--muted); }
+    .proof__link:hover { color: #0B0B0B; border-color: #575757; }
 
     .proof-grid {
       display: grid;
@@ -299,7 +313,7 @@
       display: block;
       aspect-ratio: 1;
       overflow: hidden;
-      background: rgba(243,240,234,0.04);
+      background: rgba(11,11,11,0.04);
       position: relative;
       text-decoration: none;
     }
@@ -325,7 +339,7 @@
     @media (hover: none) { .proof-thumb__overlay { opacity: 1; } }
     .proof-thumb__title {
       font-size: 0.75rem;
-      color: var(--text);
+      color: #0B0B0B;
       line-height: 1.3;
       margin: 0 0 0.2rem;
     }
@@ -333,23 +347,23 @@
       font-size: 0.625rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: #575757;
       margin: 0;
     }
     .proof__caption {
       margin-top: 1.5rem;
       font-size: 0.875rem;
-      color: var(--muted);
+      color: #575757;
       line-height: 1.6;
     }
-    .proof__caption strong { color: var(--text); font-weight: 500; }
+    .proof__caption strong { color: #0B0B0B; font-weight: 500; }
 
     /* ═══════════════════════════════════════════════════════════
        FEATURES
     ═══════════════════════════════════════════════════════════ */
     .section {
       padding: clamp(4rem, 8vw, 8rem) 0;
-      border-bottom: 1px solid var(--dim);
+      border-bottom: 1px solid rgba(11,11,11,0.12);
     }
     .section__head {
       display: grid;
@@ -361,21 +375,21 @@
     @media (max-width: 700px) { .section__head { grid-template-columns: 1fr; } }
 
     .section__label {
-      font-size: var(--cap);
+      font-size: 0.75rem;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: #575757;
       margin: 0;
       padding-top: 0.2em;
     }
     .section__title {
-      font-family: var(--font-display);
+      font-family: 'Playfair Display', Georgia, serif;
       font-size: clamp(1.75rem, 3vw, 2.5rem);
       font-weight: 300;
       line-height: 1.2;
       margin: 0;
     }
-    .section__title em { font-style: italic; color: var(--muted); }
+    .section__title em { font-style: italic; color: #575757; }
 
     .features {
       display: grid;
@@ -398,7 +412,7 @@
     .feature__body {
       font-size: 0.875rem;
       line-height: 1.7;
-      color: var(--muted);
+      color: #575757;
       margin: 0;
     }
 
@@ -415,21 +429,21 @@
 
     .process-step {
       padding: 2rem 2rem 2rem 0;
-      border-right: 1px solid var(--dim);
+      border-right: 1px solid rgba(11,11,11,0.12);
       padding-right: 2rem;
     }
     .process-step:last-child { border-right: none; }
     @media (max-width: 800px) {
       .process-step:nth-child(2) { border-right: none; }
-      .process-step { border-bottom: 1px solid var(--dim); padding: 1.5rem 0; }
+      .process-step { border-bottom: 1px solid rgba(11,11,11,0.12); padding: 1.5rem 0; }
       .process-step:last-child { border-bottom: none; }
     }
 
     .process-step__num {
-      font-family: var(--font-display);
+      font-family: 'Playfair Display', Georgia, serif;
       font-size: 3rem;
       font-weight: 300;
-      color: var(--muted);
+      color: #575757;
       line-height: 1;
       margin: 0 0 1rem;
     }
@@ -437,12 +451,12 @@
       font-size: 0.9375rem;
       font-weight: 500;
       margin: 0 0 0.5rem;
-      color: var(--text);
+      color: #0B0B0B;
     }
     .process-step__body {
       font-size: 0.8125rem;
       line-height: 1.7;
-      color: var(--muted);
+      color: #575757;
       margin: 0;
     }
 
@@ -458,12 +472,12 @@
 
     .plan {
       padding: 2.5rem;
-      border: 1px solid var(--dim);
+      border: 1px solid rgba(11,11,11,0.12);
       margin-left: -1px;
       position: relative;
     }
     .plan--featured {
-      border-color: var(--accent);
+      border-color: #FF6600;
       z-index: 1;
     }
     .plan__badge {
@@ -473,20 +487,20 @@
       font-size: 0.5625rem;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      background: var(--accent);
+      background: #FF6600;
       color: #0b0b0b;
       font-weight: 700;
       padding: 0.3em 0.8em;
     }
     .plan__name {
-      font-size: var(--cap);
+      font-size: 0.75rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: #575757;
       margin: 0 0 0.625rem;
     }
     .plan__price {
-      font-family: var(--font-display);
+      font-family: 'Playfair Display', Georgia, serif;
       font-size: clamp(2.5rem, 4vw, 3.5rem);
       font-weight: 300;
       line-height: 1;
@@ -494,7 +508,7 @@
     }
     .plan__sub {
       font-size: 0.8125rem;
-      color: var(--muted);
+      color: #575757;
       margin: 0 0 1.75rem;
     }
     .plan__features {
@@ -504,46 +518,46 @@
       display: flex;
       flex-direction: column;
       gap: 0.625rem;
-      border-top: 1px solid var(--dim);
+      border-top: 1px solid rgba(11,11,11,0.12);
       padding-top: 1.5rem;
     }
     .plan__features li {
       font-size: 0.875rem;
-      color: var(--muted);
+      color: #575757;
       display: flex;
       align-items: baseline;
       gap: 0.5rem;
     }
-    .plan__features li::before { content: '—'; color: var(--muted); flex-shrink: 0; }
-    .plan__features li strong { color: var(--text); font-weight: 500; }
+    .plan__features li::before { content: '—'; color: #575757; flex-shrink: 0; }
+    .plan__features li strong { color: #0B0B0B; font-weight: 500; }
     .plan__example {
       display: block;
       margin: 0 0 0.625rem;
       font-size: 0.75rem;
       letter-spacing: 0.04em;
-      color: var(--muted);
-      border-bottom: 1px solid var(--dim);
+      color: #575757;
+      border-bottom: 1px solid rgba(11,11,11,0.12);
       padding-bottom: 0.4rem;
       transition: color 0.15s, border-color 0.15s;
     }
-    .plan__example:hover { color: var(--text); border-color: var(--muted); }
-    .plan--featured .plan__example { color: var(--accent); border-color: rgba(255,102,0,0.35); }
-    .plan--featured .plan__example:hover { color: var(--accent); opacity: 0.8; }
+    .plan__example:hover { color: #0B0B0B; border-color: #575757; }
+    .plan--featured .plan__example { color: #FF6600; border-color: rgba(255,102,0,0.35); }
+    .plan--featured .plan__example:hover { color: #FF6600; opacity: 0.8; }
     .plan__cta {
       display: block;
       text-align: center;
-      border: 1px solid var(--dim);
+      border: 1px solid rgba(11,11,11,0.12);
       padding: 0.875rem 1rem;
-      font-size: var(--cap);
+      font-size: 0.75rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: #575757;
       transition: border-color 0.15s, color 0.15s, background 0.15s;
     }
-    .plan__cta:hover { border-color: var(--text); color: var(--text); }
+    .plan__cta:hover { border-color: #0B0B0B; color: #0B0B0B; }
     .plan--featured .plan__cta {
-      background: var(--accent);
-      border-color: var(--accent);
+      background: #FF6600;
+      border-color: #FF6600;
       color: #0b0b0b;
       font-weight: 700;
     }
@@ -556,7 +570,7 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 0;
-      border: 1px solid var(--dim);
+      border: 1px solid rgba(11,11,11,0.12);
       margin-top: 2rem;
     }
     @media (max-width: 780px) { .live-pages { grid-template-columns: repeat(2, 1fr); } }
@@ -564,7 +578,7 @@
 
     .live-page {
       padding: 1.5rem;
-      border-right: 1px solid var(--dim);
+      border-right: 1px solid rgba(11,11,11,0.12);
       text-decoration: none;
       display: flex;
       flex-direction: column;
@@ -574,32 +588,32 @@
     .live-page:last-child { border-right: none; }
     @media (max-width: 780px) {
       .live-page:nth-child(2) { border-right: none; }
-      .live-page { border-bottom: 1px solid var(--dim); }
+      .live-page { border-bottom: 1px solid rgba(11,11,11,0.12); }
       .live-page:last-child { border-bottom: none; }
     }
-    .live-page:hover { background: rgba(243,240,234,0.03); }
+    .live-page:hover { background: rgba(11,11,11,0.03); }
     .live-page__name {
-      font-size: var(--cap);
+      font-size: 0.75rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--text);
+      color: #0B0B0B;
     }
     .live-page__desc {
       font-size: 0.8125rem;
       line-height: 1.5;
-      color: var(--muted);
+      color: #575757;
       margin: 0;
     }
     .live-page__cta {
       font-size: 0.6875rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: rgba(243,240,234,0.3);
+      color: rgba(11,11,11,0.35);
       margin-top: auto;
       padding-top: 0.75rem;
       transition: color 0.15s;
     }
-    .live-page:hover .live-page__cta { color: var(--accent); }
+    .live-page:hover .live-page__cta { color: #FF6600; }
 
     /* ═══════════════════════════════════════════════════════════
        FAQ
@@ -611,16 +625,16 @@
     }
     @media (max-width: 700px) { .faq { grid-template-columns: 1fr; } }
     .faq__q { font-size: 0.9375rem; font-weight: 500; margin: 0 0 0.5rem; }
-    .faq__a { font-size: 0.875rem; line-height: 1.7; color: var(--muted); margin: 0; }
-    .faq__a a { color: var(--muted); border-bottom: 1px solid var(--dim); }
-    .faq__a a:hover { color: var(--text); }
+    .faq__a { font-size: 0.875rem; line-height: 1.7; color: #575757; margin: 0; }
+    .faq__a a { color: #575757; border-bottom: 1px solid rgba(11,11,11,0.12); }
+    .faq__a a:hover { color: #0B0B0B; }
 
     /* ═══════════════════════════════════════════════════════════
        OPEN SOURCE CALLOUT
     ═══════════════════════════════════════════════════════════ */
     .oss {
       padding: clamp(3rem, 6vw, 5rem) clamp(2rem, 5vw, 4rem);
-      border: 1px solid var(--dim);
+      border: 1px solid rgba(11,11,11,0.12);
       display: grid;
       grid-template-columns: 1fr auto;
       gap: 1.5rem 3rem;
@@ -628,7 +642,7 @@
     }
     @media (max-width: 600px) { .oss { grid-template-columns: 1fr; } }
     .oss__title {
-      font-family: var(--font-display);
+      font-family: 'Playfair Display', Georgia, serif;
       font-size: clamp(1.5rem, 2.5vw, 2rem);
       font-weight: 300;
       margin: 0 0 0.625rem;
@@ -636,22 +650,22 @@
     .oss__body {
       font-size: 0.875rem;
       line-height: 1.7;
-      color: var(--muted);
+      color: #575757;
       margin: 0;
       max-width: 56ch;
     }
     .btn-ghost {
       display: inline-block;
-      border: 1px solid var(--dim);
+      border: 1px solid rgba(11,11,11,0.12);
       padding: 0.875rem 1.75rem;
-      font-size: var(--cap);
+      font-size: 0.75rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: #575757;
       white-space: nowrap;
       transition: border-color 0.15s, color 0.15s;
     }
-    .btn-ghost:hover { border-color: var(--text); color: var(--text); }
+    .btn-ghost:hover { border-color: #0B0B0B; color: #0B0B0B; }
 
     /* ═══════════════════════════════════════════════════════════
        FOUNDING ARTIST CALLOUT
@@ -659,47 +673,47 @@
     .founding {
       margin-top: 2.5rem;
       padding: clamp(1.75rem, 3vw, 2.5rem);
-      border: 1px solid var(--accent);
+      border: 1px solid #FF6600;
       background: rgba(255, 102, 0, 0.04);
       max-width: 70ch;
     }
     .founding__eyebrow {
-      font-size: var(--cap);
+      font-size: 0.75rem;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--accent);
+      color: #FF6600;
       margin: 0 0 0.625rem;
     }
     .founding__title {
-      font-family: var(--font-display);
+      font-family: 'Playfair Display', Georgia, serif;
       font-size: clamp(1.5rem, 2.5vw, 2rem);
       font-weight: 300;
       line-height: 1.2;
       margin: 0 0 1rem;
-      color: var(--text);
+      color: #0B0B0B;
     }
-    .founding__discount { color: var(--accent); font-style: italic; }
+    .founding__discount { color: #FF6600; font-style: italic; }
     .founding__body {
       font-size: 0.9375rem;
       line-height: 1.7;
-      color: var(--muted);
+      color: #575757;
       margin: 0 0 1rem;
       max-width: 60ch;
     }
-    .founding__body strong { color: var(--text); font-weight: 500; }
+    .founding__body strong { color: #0B0B0B; font-weight: 500; }
     .founding__cta {
       font-size: 0.875rem;
-      color: var(--muted);
+      color: #575757;
       margin: 0;
     }
-    .founding__cta em { color: var(--text); font-style: italic; }
+    .founding__cta em { color: #0B0B0B; font-style: italic; }
     .founding__cta a {
-      color: var(--accent);
+      color: #FF6600;
       border-bottom: 1px solid rgba(255, 102, 0, 0.35);
       padding-bottom: 1px;
       transition: opacity 0.15s;
     }
-    .founding__cta a:hover { opacity: 0.8; color: var(--accent); }
+    .founding__cta a:hover { opacity: 0.8; color: #FF6600; }
 
     /* ═══════════════════════════════════════════════════════════
        TESTIMONIALS  (rendered when the section is uncommented)
@@ -717,19 +731,19 @@
     @media (max-width: 700px) { .testimonials, .testimonials:has(figure + figure) { grid-template-columns: 1fr; } }
     .testimonial { margin: 0; }
     .testimonial__quote {
-      font-family: var(--font-display);
+      font-family: 'Playfair Display', Georgia, serif;
       font-size: clamp(1.125rem, 1.75vw, 1.375rem);
       font-style: italic;
       font-weight: 300;
       line-height: 1.55;
-      color: var(--text);
+      color: #0B0B0B;
       margin: 0 0 1rem;
     }
     .testimonial__source {
-      font-size: var(--cap);
+      font-size: 0.75rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: #575757;
     }
 
     /* ═══════════════════════════════════════════════════════════
@@ -740,7 +754,7 @@
       text-align: center;
     }
     .bottom-cta__title {
-      font-family: var(--font-display);
+      font-family: 'Playfair Display', Georgia, serif;
       font-size: clamp(2.5rem, 5vw, 4.5rem);
       font-weight: 300;
       font-style: italic;
@@ -749,7 +763,7 @@
     }
     .bottom-cta__body {
       font-size: clamp(0.9375rem, 1.3vw, 1.0625rem);
-      color: var(--muted);
+      color: #575757;
       max-width: 46ch;
       margin: 0 auto 2.5rem;
       line-height: 1.75;
@@ -763,18 +777,18 @@
     }
     .inquiry-field { display: grid; gap: 0.4rem; }
     .inquiry-field label {
-      font-size: var(--cap);
+      font-size: 0.75rem;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: #575757;
     }
     .inquiry-field input,
     .inquiry-field select,
     .inquiry-field textarea {
       appearance: none;
       background: none;
-      border: 1px solid var(--dim);
-      color: var(--text);
+      border: 1px solid rgba(11,11,11,0.12);
+      color: #0B0B0B;
       font-family: inherit;
       font-size: 0.9375rem;
       line-height: 1.5;
@@ -785,21 +799,21 @@
     }
     .inquiry-field select {
       cursor: pointer;
-      background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%),
-                        linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+      background-image: linear-gradient(45deg, transparent 50%, #575757 50%),
+                        linear-gradient(135deg, #575757 50%, transparent 50%);
       background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%;
       background-size: 5px 5px, 5px 5px;
       background-repeat: no-repeat;
       padding-right: 2.25rem;
     }
-    .inquiry-field select option { background: #1a1a1a; color: var(--text); }
+    .inquiry-field select option { background: #fff; color: #0B0B0B; }
     .inquiry-field textarea { min-height: 6rem; resize: vertical; }
     .inquiry-field input:focus,
     .inquiry-field select:focus,
-    .inquiry-field textarea:focus { border-color: rgba(243,240,234,0.45); }
+    .inquiry-field textarea:focus { border-color: rgba(11,11,11,0.4); }
     .inquiry-submit {
       appearance: none;
-      background: var(--accent);
+      background: #FF6600;
       color: #0b0b0b;
       border: none;
       font-family: inherit;
@@ -818,7 +832,7 @@
     }
     .inquiry-reassurance {
       font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--muted); opacity: 0.7;
+      color: #575757; opacity: 0.7;
     }
     @media (max-width: 480px) {
       .inquiry-submit { width: 100%; text-align: center; justify-self: stretch; }
@@ -829,7 +843,7 @@
     }
     .inquiry-optional summary {
       font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--muted); cursor: pointer; user-select: none;
+      color: #575757; cursor: pointer; user-select: none;
       padding: 0.5rem 0; list-style: none;
     }
     .inquiry-optional summary::-webkit-details-marker { display: none; }
@@ -842,21 +856,21 @@
     .inquiry-fallback {
       margin-top: 2rem;
       font-size: 0.8125rem;
-      color: var(--muted);
+      color: #575757;
       text-align: center;
     }
     .inquiry-fallback a {
-      color: var(--accent);
+      color: #FF6600;
       border-bottom: 1px solid rgba(255,102,0,0.35);
       padding-bottom: 1px;
     }
-    .inquiry-fallback a:hover { color: var(--accent); opacity: 0.8; }
+    .inquiry-fallback a:hover { color: #FF6600; opacity: 0.8; }
     .inquiry-privacy {
       margin: 0.75rem auto 0;
       max-width: 36rem;
       font-size: 0.6875rem;
       letter-spacing: 0.02em;
-      color: var(--muted);
+      color: #575757;
       opacity: 0.7;
       text-align: center;
       line-height: 1.5;
@@ -865,20 +879,20 @@
       max-width: 32rem;
       margin: 0 auto;
       padding: 2rem;
-      border: 1px solid var(--accent);
-      color: var(--text);
+      border: 1px solid #FF6600;
+      color: #0B0B0B;
       text-align: center;
       font-size: 1rem;
       line-height: 1.6;
     }
-    .form-thanks strong { color: var(--accent); }
+    .form-thanks strong { color: #FF6600; }
 
     /* ═══════════════════════════════════════════════════════════
        DEMO — drop-and-preview
     ═══════════════════════════════════════════════════════════ */
     .demo {
       padding: clamp(4rem, 8vw, 8rem) 0;
-      border-bottom: 1px solid var(--dim);
+      border-bottom: 1px solid rgba(11,11,11,0.12);
     }
     .demo__head {
       display: grid;
@@ -890,24 +904,24 @@
     @media (max-width: 700px) { .demo__head { grid-template-columns: 1fr; } }
 
     .demo__label {
-      font-size: var(--cap);
+      font-size: 0.75rem;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: #575757;
       margin: 0;
       padding-top: 0.2em;
     }
     .demo__title {
-      font-family: var(--font-display);
+      font-family: 'Playfair Display', Georgia, serif;
       font-size: clamp(1.75rem, 3vw, 2.5rem);
       font-weight: 300;
       line-height: 1.2;
       margin: 0;
     }
-    .demo__title em { font-style: italic; color: var(--muted); }
+    .demo__title em { font-style: italic; color: #575757; }
 
     .demo__drop {
-      border: 1px dashed var(--dim);
+      border: 1px dashed rgba(11,11,11,0.12);
       min-height: 160px;
       display: flex;
       align-items: center;
@@ -918,7 +932,7 @@
       user-select: none;
     }
     .demo__drop:hover,
-    .demo__drop.drag-over { border-color: var(--accent); background: rgba(243,240,234,0.02); }
+    .demo__drop.drag-over { border-color: #FF6600; background: rgba(11,11,11,0.02); }
     .demo__drop input {
       position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
     }
@@ -927,13 +941,13 @@
       padding: 2rem; text-align: center; pointer-events: none;
     }
     .demo__drop-plus {
-      font-size: 2.5rem; font-weight: 300; color: var(--muted); line-height: 1;
+      font-size: 2.5rem; font-weight: 300; color: #575757; line-height: 1;
       transition: color 0.2s;
     }
     .demo__drop:hover .demo__drop-plus,
-    .demo__drop.drag-over .demo__drop-plus { color: var(--accent); }
+    .demo__drop.drag-over .demo__drop-plus { color: #FF6600; }
     .demo__drop-text {
-      font-size: 0.875rem; color: var(--muted); margin: 0; line-height: 1.6;
+      font-size: 0.875rem; color: #575757; margin: 0; line-height: 1.6;
     }
     .demo__drop-text small {
       display: block; font-size: 0.6875rem; letter-spacing: 0.1em;
@@ -949,21 +963,21 @@
     .demo__drop.has-files .demo__drop-plus { font-size: 1.25rem; }
     .demo__drop.has-files .demo__drop-text { font-size: 0.8125rem; }
     .demo__drop[aria-disabled="true"] { cursor: default; opacity: 0.5; }
-    .demo__drop[aria-disabled="true"]:hover { border-color: var(--dim); background: none; }
+    .demo__drop[aria-disabled="true"]:hover { border-color: rgba(11,11,11,0.12); background: none; }
     .demo__drop[aria-disabled="true"] input { pointer-events: none; }
 
     .demo__result { margin-top: 2rem; }
     .demo__result-head {
       display: flex; align-items: baseline; justify-content: space-between;
       flex-wrap: wrap; gap: 0.5rem;
-      border-bottom: 1px solid var(--dim); margin-bottom: 1.5rem; padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(11,11,11,0.12); margin-bottom: 1.5rem; padding-bottom: 0.75rem;
     }
     .demo__result-name {
-      font-family: var(--font-display);
+      font-family: 'Playfair Display', Georgia, serif;
       font-size: clamp(1rem, 2vw, 1.25rem); font-weight: 300; letter-spacing: 0.03em;
     }
     .demo__result-count {
-      font-size: var(--cap); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+      font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: #575757;
     }
 
     .demo__grid {
@@ -997,7 +1011,7 @@
     .demo__thumb-inner:hover .demo__thumb-overlay,
     .demo__thumb-inner.overlay-on .demo__thumb-overlay { opacity: 1; transform: translateY(0); }
     .demo__thumb-title {
-      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-family: 'Playfair Display', Georgia, serif;
       font-size: 0.9375rem; font-weight: 300; color: #fff;
       line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
       margin-bottom: 0.2rem; outline: none;
@@ -1007,7 +1021,7 @@
       border-bottom: 1px solid rgba(255,255,255,0.25);
     }
     .demo__thumb-title[contenteditable="true"]:focus {
-      border-bottom-color: var(--accent);
+      border-bottom-color: #FF6600;
     }
     .demo__thumb-meta {
       font-size: 0.625rem; letter-spacing: 0.12em; text-transform: uppercase;
@@ -1016,15 +1030,15 @@
 
     .demo__nudge {
       margin-top: 2rem; padding: 1.5rem 2rem;
-      border: 1px solid var(--dim);
+      border: 1px solid rgba(11,11,11,0.12);
       display: flex; align-items: center; justify-content: space-between;
       gap: 1.5rem; flex-wrap: wrap;
     }
-    .demo__nudge p { margin: 0; font-size: 0.9375rem; line-height: 1.6; color: var(--muted); }
-    .demo__nudge strong { color: var(--text); }
+    .demo__nudge p { margin: 0; font-size: 0.9375rem; line-height: 1.6; color: #575757; }
+    .demo__nudge strong { color: #0B0B0B; }
     .demo__nudge-cta {
       display: inline-block; flex-shrink: 0;
-      background: var(--accent); color: #0b0b0b;
+      background: #FF6600; color: #0b0b0b;
       font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
       padding: 0.75rem 1.75rem; text-decoration: none;
       transition: opacity 0.15s;
@@ -1034,11 +1048,11 @@
 
     /* Ghost link for hero */
     .hero__cta-ghost {
-      font-size: 0.8125rem; color: var(--muted);
-      border-bottom: 1px solid var(--dim); padding-bottom: 1px;
+      font-size: 0.8125rem; color: #575757;
+      border-bottom: 1px solid rgba(11,11,11,0.12); padding-bottom: 1px;
       transition: color 0.15s, border-color 0.15s;
     }
-    .hero__cta-ghost:hover { color: var(--text); border-color: var(--muted); }
+    .hero__cta-ghost:hover { color: #0B0B0B; border-color: #575757; }
 
     /* ═══════════════════════════════════════════════════════════
        ENTRANCE ANIMATIONS
@@ -1065,25 +1079,30 @@
 
   </style>
 </head>
-<body>
+<body class="bg-background text-deep-ink overflow-x-hidden">
 
-<a class="skip" href="#main">Skip to content</a>
+<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-deep-ink focus:text-bone-white">Skip to content</a>
 
-<header class="header">
-  <div class="container header__inner">
-    <a class="brand" href="index.html">
-      <img src="jfsn-mark.png" class="brand-mark" alt="JFSN">Jeffrey F. S. Neumann
-    </a>
-    <nav class="nav" aria-label="Site navigation">
-      <a href="archive.html">Archive</a>
-      <a href="series-index.html">Series</a>
-      <a href="about.html">About</a>
-      <a href="about.html#contact">Inquiry</a>
+<!-- NAV:START -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-background border-b border-outline-variant">
+  <div class="flex items-center gap-8">
+    <a href="index.html" class="font-headline-md text-headline-md tracking-tighter text-deep-ink">JFSN</a>
+    <nav class="hidden md:flex gap-6" aria-label="Primary">
+      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="archive.html">Archive</a>
+      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="series-index.html">Series</a>
+      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="timeline.html">Timeline</a>
+      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="companion.html">Companion</a>
+      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="about.html">About</a>
     </nav>
   </div>
+  <div class="flex items-center gap-4">
+    <button class="material-symbols-outlined text-deep-ink hover:text-international-orange transition-colors" aria-label="Search">search</button>
+    <button class="md:hidden material-symbols-outlined text-deep-ink" aria-label="Menu">menu</button>
+  </div>
 </header>
+<!-- NAV:END -->
 
-<main id="main">
+<main id="main" class="pt-16">
 
   <!-- ── Hero ───────────────────────────────────────────────── -->
   <section class="hero">
@@ -1149,7 +1168,7 @@
       <p class="proof__caption">
         <strong>The site you're looking at</strong> — jfsn.com — is the archive. Every page, every feature, every tool shown here
         is exactly what gets built for you. Hover a work above to see its title and year.
-        <a href="archive.html" style="color:var(--muted);border-bottom:1px solid var(--dim)">Browse the full archive →</a>
+        <a href="archive.html" style="color:#575757;border-bottom:1px solid rgba(11,11,11,0.12)">Browse the full archive →</a>
       </p>
 
       <nav class="live-pages" aria-label="Live pages to explore">
@@ -1383,7 +1402,7 @@
         </p>
       </aside>
 
-      <p style="margin-top:1.25rem;font-size:0.8125rem;color:var(--muted);max-width:60ch;">
+      <p style="margin-top:1.25rem;font-size:0.8125rem;color:#575757;max-width:60ch;">
         All plans include complete source code. Hosting is free (Netlify/GitHub Pages) or ~$5/month (cPanel shared). AI cataloging costs (~$5&ndash;15 for 500 works) are included.
       </p>
     </section>
@@ -1456,7 +1475,7 @@
 
       <div id="form-success" class="form-thanks" hidden>
         <strong>Thanks &mdash; got it.</strong><br>
-        I&rsquo;ll reply within 48 hours from <a href="mailto:jfsneumann@gmail.com" style="color:var(--muted);border-bottom:1px solid var(--dim)">jfsneumann@gmail.com</a>.
+        I&rsquo;ll reply within 48 hours from <a href="mailto:jfsneumann@gmail.com" style="color:#575757;border-bottom:1px solid rgba(11,11,11,0.12)">jfsneumann@gmail.com</a>.
       </div>
 
       <form
@@ -1524,38 +1543,64 @@
   </div>
 </main>
 
-<footer class="footer">
-  <div class="container footer__inner">
-    <span>Jeffrey F. S. Neumann</span>
-    <nav class="footer-nav" aria-label="Site navigation">
-      <a href="archive.html">Archive</a>
-      <a href="series-index.html">Series</a>
-      <a href="timeline.html">Timeline</a>
-      <a href="constellation.html" title="Force-directed map of all works, clustered by theme">Constellation</a>
-      <a href="wall.html">Wall</a>
-      <a href="mosaic.html" class="nav-mosaic"><span class="m">M</span><span class="o">o</span><span class="s">s</span><span class="a">a</span><span class="i">i</span><span class="c">c</span></a>
-      <a href="about.html">About</a>
-      <a href="for-artists.html" style="color:var(--accent)" aria-current="page">For Artists</a>
-      <a href="companion.html">Companion</a>
-      <a href="changes.html">Changes</a>
-      <a href="lost.html">Lost</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="feed.xml" title="RSS feed of new works">RSS</a>
-    </nav>
-    <nav class="footer-social" aria-label="Social links">
-      <a href="https://www.linkedin.com/in/jeffreyneumann/" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="https://dribbble.com/JFSN" target="_blank" rel="noopener">Dribbble</a>
-      <a href="https://www.youtube.com/@jfsneumann/videos" target="_blank" rel="noopener">YouTube</a>
-      <a href="https://showspace.so/s/jeffrey-neumann-46" target="_blank" rel="noopener">Showspace</a>
-    </nav>
-    <nav class="footer-earlier" aria-label="Earlier sites">
-      <a href="/old-site/old/Mr_SNOWmann/portfolio.html" target="_blank" rel="noopener">Mr. SNOWmann</a>
-      <a href="/old-site/old/fine-art-2000/index.htm" target="_blank" rel="noopener">Fine Art 2000</a>
-      <a href="/old-site/" target="_blank" rel="noopener">jfsn 2023</a>
-      <a href="/old-site/old/2014/index.html" target="_blank" rel="noopener">jfsn 2014</a>
-    </nav>
+<!-- FOOTER:START -->
+<footer class="bg-surface-container-high py-16 px-margin-desktop border-t border-outline-variant">
+  <div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+    <div>
+      <h3 class="font-headline-md text-headline-md tracking-tighter mb-6">JFSN</h3>
+      <p class="font-body-md text-archive-gray text-sm leading-relaxed">
+        The personal archive of Jeffrey F. S. Neumann — 1,084 works spanning five decades. Collage, sculpture, photography.
+      </p>
+    </div>
+    <div>
+      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">EXPLORE</h4>
+      <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
+        <li><a class="hover:text-international-orange transition-colors" href="archive.html">Complete Archive</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="timeline.html">Interactive Timeline</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="series-index.html">Series Index</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">RESOURCES</h4>
+      <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
+        <li><a class="hover:text-international-orange transition-colors" href="mosaic.html">Portrait Mosaic</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="companion.html">AI Companion</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="about.html">About</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">CONTACT</h4>
+      <a class="font-nav-link text-nav-link text-deep-ink block mb-4 border-b border-deep-ink inline-block pb-1 hover:text-international-orange hover:border-international-orange transition-all" href="mailto:jfsneumann@gmail.com">jfsneumann@gmail.com</a>
+    </div>
+  </div>
+  <div class="mt-16 pt-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
+    <p class="font-label-caps text-[10px] text-archive-gray">© 2026 JEFFREY F. S. NEUMANN. ALL RIGHTS RESERVED.</p>
+    <div class="flex gap-8">
+      <a class="font-label-caps text-[10px] text-archive-gray hover:text-deep-ink" href="privacy.html">PRIVACY</a>
+    </div>
   </div>
 </footer>
+<!-- FOOTER:END -->
+
+<!-- Mobile bottom nav -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 px-4 bg-bone-white border-t border-outline-variant h-16" style="padding-bottom: env(safe-area-inset-bottom, 8px)" aria-label="Mobile navigation">
+  <a href="index.html" class="flex flex-col items-center justify-center text-archive-gray hover:text-international-orange transition-colors">
+    <span class="material-symbols-outlined">inventory_2</span>
+    <span class="font-label-caps text-[10px]">Archive</span>
+  </a>
+  <a href="series-index.html" class="flex flex-col items-center justify-center text-archive-gray hover:text-international-orange transition-colors">
+    <span class="material-symbols-outlined">auto_awesome_motion</span>
+    <span class="font-label-caps text-[10px]">Series</span>
+  </a>
+  <a href="timeline.html" class="flex flex-col items-center justify-center text-archive-gray hover:text-international-orange transition-colors">
+    <span class="material-symbols-outlined">history_toggle_off</span>
+    <span class="font-label-caps text-[10px]">Timeline</span>
+  </a>
+  <a href="companion.html" class="flex flex-col items-center justify-center text-archive-gray hover:text-international-orange transition-colors">
+    <span class="material-symbols-outlined">chat_bubble</span>
+    <span class="font-label-caps text-[10px]">Companion</span>
+  </a>
+</nav>
 
 <script src="search.js" defer></script>
 <!-- GoatCounter &mdash; privacy-first analytics. Replace subdomain after sign-up at https://www.goatcounter.com -->
@@ -1849,7 +1894,7 @@
       if (innerEl) {
         const textEl = innerEl.querySelector('.demo__drop-text');
         if (n >= MAX) {
-          textEl.innerHTML = '<span style="color:var(--muted)">10 photos &mdash; maximum reached</span>';
+          textEl.innerHTML = '<span style="color:#575757">10 photos &mdash; maximum reached</span>';
           dropEl.setAttribute('aria-disabled', 'true');
           inputEl.disabled = true;
         } else {

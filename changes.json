@@ -1,5 +1,29 @@
 [
   {
+    "sha": "add5a2e",
+    "date": "2026-05-31",
+    "title": "Allow cdn.tailwindcss.com in Content-Security-Policy",
+    "body": "New Stitch pages load Tailwind via CDN — was blocked by CSP.\nAdded cdn.tailwindcss.com to script-src, style-src, connect-src."
+  },
+  {
+    "sha": "1b86f6b",
+    "date": "2026-05-31",
+    "title": "Refine hover transitions and timeline decade markers",
+    "body": "- Slow color reveal to 0.6s with proper ease curve across all pages\n- Scale on hover dialed to 1.04 (less jumpy)\n- Archive cards: orange border flash on hover\n- Timeline: oversized ghost decade label behind tiles (clamp 100-180px,\n  4% opacity, brightens when active) for cinematic depth"
+  },
+  {
+    "sha": "40b57c5",
+    "date": "2026-05-31",
+    "title": "Session 20: API + feed auto-updates",
+    "body": ""
+  },
+  {
+    "sha": "9edfebb",
+    "date": "2026-05-31",
+    "title": "Session 20: Complete Stitch redesign — all 7 pages wired",
+    "body": "Full site redesign using Google Stitch light design system.\nAll placeholder images, fake names, and href=\"#\" replaced with\nreal data. All pages use Tailwind CDN + new nav/footer shell.\n\nPages wired: index, archive, artwork, series-index, timeline,\ncompanion, about."
+  },
+  {
     "sha": "db435fd",
     "date": "2026-05-31",
     "title": "Session 19: Stitch redesign direction set, deploy workflow clarified",
