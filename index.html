@@ -1,1087 +1,384 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="scroll-smooth" lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0b0b0b">
-
-  <title>Jeffrey F. S. Neumann — 50 Years of Collage, Sculpture &amp; Photography</title>
-  <meta name="description" content="1,084 works spanning 1974 to the present. Collage, sculpture, and photography by Jeffrey F. S. Neumann, Cleveland.">
-
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="alternate" type="application/rss+xml" title="Jeffrey F. S. Neumann — Archive" href="https://jfsn.com/feed.xml">
-  <link rel="canonical" href="https://jfsn.com/">
-  <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="icon-192.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="catalog-home.json?v=20260531125506" as="fetch" crossorigin>
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap"></noscript>
-  <link rel="stylesheet" href="site.css?v=20260530-nav4">
-
-  <meta property="og:type"        content="website">
-  <meta property="og:title"       content="Jeffrey F. S. Neumann — 50 Years of Collage, Sculpture &amp; Photography">
-  <meta property="og:description" content="1,084 works spanning 1974 to the present. Collage, sculpture, and photography by Jeffrey F. S. Neumann.">
-  <meta property="og:image"       content="https://jfsn.com/og-card.jpg">
-  <meta property="og:url"         content="https://jfsn.com/">
-
-  <style>
-    /* -------- Hero -------- */
-    .hero {
-      position: relative; /* ① anchor cycle button */
-      overflow: hidden;
-    }
-    .hero > a { display: block; line-height: 0; }
-    /* Blurred backdrop — same image scaled up & darkened behind the main image */
-    .hero__backdrop {
-      position: absolute;
-      inset: -5%;          /* overhang so blur edges never show */
-      width: 110%;
-      height: 110%;
-      object-fit: cover;
-      filter: blur(12px) brightness(0.58) saturate(1.3);
-      transform: scale(1.05);
-      z-index: 0;
-      pointer-events: none;
-      transition: opacity 0.6s;
-    }
-    .hero__image {
-      position: relative;
-      z-index: 1;
-      display: block;
-      width: 100%;
-      max-height: 72svh;  /* caps height without leaving empty space below */
-      height: auto;
-      object-fit: contain;
-      object-position: top center;
-      background: transparent;
-    }
-
-    .hero__caption {
-      display: flex;
-      gap: 2rem;
-      margin-top: 0.75rem;
-      font-size: var(--cap);
-      letter-spacing: var(--track);
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .hero__caption strong { font-weight: normal; color: var(--text); }
-    .hero__caption > a { margin-left: auto; }
-    .hero__caption > a:hover { color: var(--accent); }
-    .hero__caption span:empty { display: none; }
-    .hero__caption-title a,
-    .hero__caption strong a { color: inherit; transition: color 0.15s; }
-    .hero__caption-title a:hover,
-    .hero__caption strong a:hover { color: var(--accent); }
-    .hero__caption-title {
-      font-family: var(--font-display);
-      font-size: 0.9375rem;
-      font-weight: 300;
-      color: var(--text);
-      text-transform: none;
-      letter-spacing: 0;
-    }
-
-    /* ① Hero cycle button */
-    .hero-cycle-btn {
-      position: absolute;
-      right: clamp(1rem, 2vw, 2rem);
-      bottom: 0;
-      translate: 0 -50%;
-      appearance: none;
-      background: rgba(11,11,11,0.72);
-      border: 1px solid var(--dim);
-      color: var(--muted);
-      font-size: 1.1rem;
-      line-height: 1;
-      padding: 0.55rem 0.85rem;
-      cursor: pointer;
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      transition: color 0.15s, border-color 0.15s, background 0.15s;
-      z-index: 10;
-    }
-    .hero-cycle-btn:hover {
-      color: var(--text);
-      border-color: rgba(243,240,234,0.3);
-      background: rgba(11,11,11,0.9);
-    }
-    .hero-cycle-btn:active { color: var(--accent); }
-
-    /* -------- Tagline ⑤ -------- */
-    .home-tagline {
-      margin: 0;
-      padding-top: clamp(1.5rem, 3vw, 2.5rem);
-      font-family: var(--font-display);
-      font-size: clamp(1rem, 1.5vw, 1.25rem);
-      font-weight: 300;
-      font-style: italic;
-      color: var(--text);
-      letter-spacing: 0;
-      line-height: 1.5;
-    }
-
-    /* -------- Context line -------- */
-    .home-context {
-      margin: 0;
-      padding-top: 0.875rem;
-      font-size: 0.8125rem;
-      letter-spacing: 0.02em;
-      line-height: 1.65;
-      color: var(--muted);
-    }
-    .home-context a {
-      color: var(--muted);
-      border-bottom: 1px solid var(--dim);
-      padding-bottom: 1px;
-      transition: color 0.15s, border-color 0.15s;
-      white-space: nowrap;
-    }
-    .home-context a:hover { color: var(--text); border-bottom-color: var(--muted); }
-
-    /* -------- Start here path -------- */
-    .home-start-path {
-      margin-top: clamp(1.75rem, 3vw, 2.5rem);
-      padding: clamp(1rem, 2vw, 1.25rem) clamp(1rem, 2vw, 1.5rem);
-      border: 1px solid var(--dim);
-      display: flex;
-      align-items: flex-start;
-      gap: clamp(0.75rem, 2vw, 1.5rem);
-      flex-wrap: wrap;
-    }
-    .home-start-path__label {
-      font-size: var(--cap);
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(243,240,234,0.3);
-      white-space: nowrap;
-      padding-top: 0.1em;
-      flex-shrink: 0;
-    }
-    .home-start-path__steps {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.35rem 0;
-    }
-    .home-start-path__step {
-      display: inline-flex;
-      flex-direction: column;
-      gap: 0.2rem;
-      text-decoration: none;
-      padding: 0.1rem 0.6rem 0.1rem 0;
-    }
-    .home-start-path__step-num {
-      font-size: 0.5625rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: rgba(243,240,234,0.22);
-    }
-    .home-start-path__step-name {
-      font-size: var(--cap);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-      border-bottom: 1px solid var(--dim);
-      padding-bottom: 1px;
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .home-start-path__step:hover .home-start-path__step-name {
-      color: var(--text);
-      border-bottom-color: var(--muted);
-    }
-    .home-start-path__arrow {
-      font-size: 0.625rem;
-      color: rgba(243,240,234,0.18);
-      padding: 0 0.4rem;
-      margin-top: 1.1rem;
-      align-self: flex-end;
-    }
-    @media (max-width: 520px) {
-      .home-start-path { flex-direction: column; gap: 0.75rem; }
-    }
-
-    /* -------- Companion callout -------- */
-    .home-companion {
-      padding: clamp(1.25rem, 2.5vw, 1.75rem) clamp(1rem, 2vw, 1.5rem);
-      border: 1px solid var(--dim);
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-    .home-companion__text {
-      font-size: 0.8125rem;
-      line-height: 1.6;
-      color: var(--muted);
-      margin: 0;
-    }
-    .home-companion__text strong { color: var(--text); font-weight: normal; }
-    .home-companion__link {
-      font-size: var(--cap);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-      border-bottom: 1px solid var(--dim);
-      padding-bottom: 1px;
-      white-space: nowrap;
-      transition: color 0.15s, border-color 0.15s;
-      flex-shrink: 0;
-    }
-    .home-companion__link:hover { color: var(--text); border-bottom-color: var(--muted); }
-
-    /* -------- Oversized stat -------- */
-    .home-stat {
-      display: flex;
-      align-items: baseline;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-      padding: clamp(3rem, 6vw, 5rem) 0 0;
-    }
-    .home-stat__num {
-      font-family: var(--font-display);
-      font-size: clamp(5rem, 18vw, 14rem);
-      font-weight: 300;
-      letter-spacing: -0.03em;
-      line-height: 0.85;
-      color: var(--text);
-    }
-    .home-stat__label {
-      font-size: var(--cap);
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--muted);
-      max-width: 14ch;
-      line-height: 1.8;
-    }
-
-    /* -------- Begin here (bento) -------- */
-    .home-begin {
-      padding-top: clamp(2.5rem, 5vw, 4rem);
-      padding-bottom: clamp(1rem, 2vw, 1.5rem);
-    }
-    .home-begin__label {
-      font-size: var(--cap);
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin: 0 0 1.25rem;
-    }
-    .home-begin__works {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      grid-template-rows: 1fr 1fr;
-      gap: 2px;
-      background: var(--dim);
-    }
-    .home-begin__work:first-child { grid-row: 1 / 3; }
-    @media (max-width: 600px) {
-      .home-begin__works {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto;
-      }
-      .home-begin__work:first-child { grid-row: auto; }
-    }
-    .home-begin__work {
-      display: flex;
-      flex-direction: column;
-      background: var(--bg);
-      text-decoration: none;
-      color: var(--text);
-      transition: background 0.15s;
-    }
-    .home-begin__work:hover { background: rgba(243,240,234,0.03); }
-    .home-begin__img {
-      width: 100%;
-      height: 100%;
-      min-height: 200px;
-      object-fit: cover;
-      display: block;
-      filter: grayscale(15%);
-      transition: filter 0.2s;
-      flex: 1;
-    }
-    .home-begin__work:hover .home-begin__img { filter: grayscale(0%); }
-    .home-begin__caption {
-      padding: 0.85rem 1rem 0.9rem;
-      font-size: 0.8125rem;
-      line-height: 1.55;
-      color: var(--muted);
-      border-top: 1px solid var(--dim);
-      flex-shrink: 0;
-    }
-
-    /* -------- Recently Added strip -------- */
-    .recent-section {
-      padding-top: clamp(3rem, 5vw, 4rem);
-      padding-bottom: clamp(3rem, 5vw, 4rem);
-      border-top: 1px solid var(--dim);
-    }
-    .recent-section .section-label { margin-bottom: 1.25rem; }
-    .recent-strip {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 0.625rem;
-    }
-    @media (max-width: 768px) { .recent-strip { grid-template-columns: repeat(3, 1fr); } }
-    @media (max-width: 480px) { .recent-strip { grid-template-columns: repeat(3, 1fr); gap: 0.375rem; } }
-    .recent-thumb {
-      display: block;
-      aspect-ratio: 1;
-      overflow: hidden;
-      background: rgba(243,240,234,0.04);
-      position: relative;
-    }
-    .recent-thumb img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      object-position: center top;
-      transition: transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.3s;
-    }
-    @media (hover: hover) { .recent-thumb:hover img { transform: scale(1.06); } }
-    .recent-thumb__label {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      padding: 0.4rem 0.5rem 0.375rem;
-      background: linear-gradient(to top, rgba(11,11,11,0.85) 0%, transparent 100%);
-      font-size: 0.5625rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(243,240,234,0.6);
-      opacity: 0;
-      transition: opacity 0.2s;
-      pointer-events: none;
-    }
-    .recent-thumb:hover .recent-thumb__label { opacity: 1; }
-    .recent-cta {
-      margin-top: 1.25rem;
-      font-size: var(--cap);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .recent-cta a {
-      color: var(--muted);
-      border-bottom: 1px solid var(--dim);
-      padding-bottom: 2px;
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .recent-cta a:hover { color: var(--text); border-bottom-color: var(--muted); }
-
-    /* -------- Grid -------- */
-    .grid-section {
-      margin-top: clamp(4rem, 8vw, 8rem);
-      padding-bottom: clamp(4rem, 8vw, 8rem);
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
-      min-height: 52vw; /* reserve space before JS populates — prevents CLS from grid insert */
-    }
-    .thumb { margin: 0; }
-    .thumb__link {
-      display: block;
-      aspect-ratio: 1;
-      overflow: hidden;
-      background: var(--bg);
-      position: relative;
-    }
-
-    /* ④ Editorial first card */
-    .thumb--featured {
-      grid-column: span 2;
-      grid-row: span 2;
-    }
-    .thumb--featured .thumb__overlay-title { font-size: 1.1rem; }
-
-    .thumb { transition: opacity 0.25s; }
-    .thumb__link img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center top;
-      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s;
-    }
-    @media (hover: hover) { .thumb__link:hover img { transform: scale(1.05); } }
-    .thumb__overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(11,11,11,0.82) 0%, transparent 60%);
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 0.75rem;
-      opacity: 0;
-      transform: translateY(6px);
-      transition: opacity 0.22s, transform 0.22s;
-      pointer-events: none;
-    }
-    @media (hover: hover) {
-      .thumb__link:hover .thumb__overlay { opacity: 1; transform: translateY(0); }
-      .grid:has(.thumb__link:hover) .thumb { opacity: 0.5; }
-      .grid:has(.thumb__link:hover) .thumb:hover { opacity: 1; }
-    }
-    @media (hover: none) {
-      .thumb__overlay { opacity: 1; transform: translateY(0); }
-    }
-    .thumb__overlay-title {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 0.9375rem;
-      font-weight: 300;
-      color: #fff;
-      line-height: 1.3;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .thumb__overlay-type {
-      font-size: 0.625rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.55);
-      margin-top: 0.2rem;
-    }
-    .thumb__caption {
-      margin-top: 0.4rem;
-      font-family: var(--font-display);
-      font-size: 0.875rem;
-      font-weight: 300;
-      color: var(--muted);
-      line-height: 1.3;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .section-label {
-      margin: 0 0 0.5rem;
-      font-family: var(--font-display);
-      font-size: 1.125rem;
-      font-weight: 300;
-      font-style: italic;
-      color: var(--text);
-      letter-spacing: 0;
-    }
-    .archive-stat {
-      margin: 0 0 2rem;
-      font-size: var(--cap);
-      letter-spacing: var(--track);
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .archive-cta {
-      margin-top: 3rem;
-      text-align: center;
-      font-size: var(--cap);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-    .archive-cta a {
-      color: var(--muted);
-      border-bottom: 1px solid rgba(243,240,234,0.18);
-      padding-bottom: 2px;
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .archive-cta a:hover { color: var(--text); border-color: var(--muted); }
-
-    /* ⑦ Stagger-in animation */
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(14px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .thumb--animate {
-      animation: fadeInUp 0.45s ease both;
-      animation-delay: calc(var(--i, 0) * 60ms);
-    }
-
-    /* -------- Series band -------- */
-    .home-series {
-      padding-top: clamp(2rem, 4vw, 3rem);
-      padding-bottom: clamp(4rem, 8vw, 8rem);
-      border-top: 1px solid var(--dim);
-    }
-    /* ⑨ Two groups */
-    .home-series-group { margin-top: 1.25rem; }
-    .home-series-group-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: rgba(243,240,234,0.28);
-      margin-bottom: 0.6rem;
-    }
-    .home-series-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1.5rem;
-    }
-    .home-series-link {
-      display: inline-flex;
-      align-items: baseline;
-      gap: 0.45rem;
-      font-size: var(--cap);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      border: 1px solid var(--dim);
-      padding: 0.3rem 0.7rem;
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .home-series-link:hover {
-      color: var(--accent);
-      border-color: rgba(255,102,0,0.4);
-    }
-    /* ③ Count badge */
-    .chip-count {
-      font-size: 0.6rem;
-      opacity: 0.45;
-      font-variant-numeric: tabular-nums;
-      letter-spacing: 0.04em;
-    }
-    .home-series-cta {
-      font-size: var(--cap);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-      border-bottom: 1px solid var(--dim);
-      padding-bottom: 0.1rem;
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .home-series-cta:hover { color: var(--text); border-color: var(--muted); }
-
-    /* -------- Responsive -------- */
-    @media (max-width: 780px) {
-      .grid { grid-template-columns: repeat(2, 1fr); }
-      .thumb--featured { grid-column: span 2; grid-row: span 1; }
-      .hero__caption { flex-wrap: wrap; gap: 0.75rem 1.5rem; }
-      .hero__caption a { margin-left: 0; }
-    }
-
-    /* -------- Reduced motion -------- */
-    @media (prefers-reduced-motion: reduce) {
-      .thumb,
-      .thumb__link img,
-      .thumb__overlay,
-      .hero-cycle-btn,
-      .home-series-link,
-      .home-series-cta,
-      .brand-mark { transition: none; }
-      .thumb__link:hover img { transform: none; }
-      .thumb__overlay { transform: none; }
-      .grid:has(.thumb__link:hover) .thumb { opacity: 1; }
-      .thumb--animate { animation: none; }
-    }
-
-    /* Desktop: overlay handles title; hide static caption */
-    @media (hover: hover) {
-      .thumb__caption { display: none; }
-    }
-  </style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="theme-color" content="#fcf9f3"/>
+<title>Jeffrey F. S. Neumann — 50 Years of Collage, Sculpture &amp; Photography</title>
+<meta name="description" content="1,084 works spanning 1974 to the present. Collage, sculpture, and photography by Jeffrey F. S. Neumann, Cleveland."/>
+<link rel="canonical" href="https://jfsn.com/"/>
+<link rel="icon" href="favicon.svg" type="image/svg+xml"/>
+<link rel="alternate" type="application/rss+xml" title="Jeffrey F. S. Neumann — Archive" href="https://jfsn.com/feed.xml"/>
+<link rel="manifest" href="manifest.json"/>
+<link rel="apple-touch-icon" href="icon-192.png"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Jeffrey F. S. Neumann — 50 Years of Collage, Sculpture &amp; Photography"/>
+<meta property="og:description" content="1,084 works spanning 1974 to the present. Collage, sculpture, and photography by Jeffrey F. S. Neumann."/>
+<meta property="og:image" content="https://jfsn.com/og-card.jpg"/>
+<meta property="og:url" content="https://jfsn.com/"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#000000",
+                        "tertiary-fixed-dim": "#d0c5b3",
+                        "outline": "#747878",
+                        "on-tertiary-fixed-variant": "#4d4638",
+                        "primary-container": "#1c1b1b",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#1c1b1b",
+                        "on-secondary-fixed-variant": "#7c2e00",
+                        "archive-gray": "#575757",
+                        "bone-white": "#F3F0EA",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#f0eee8",
+                        "international-orange": "#FF6600",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#8c8373",
+                        "on-background": "#1c1c18",
+                        "primary-fixed": "#e5e2e1",
+                        "inverse-on-surface": "#f3f0ea",
+                        "tertiary-container": "#201b0f",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#541d00",
+                        "surface-bright": "#fcf9f3",
+                        "error": "#ba1a1a",
+                        "secondary-fixed": "#ffdbcd",
+                        "on-tertiary-fixed": "#201b0f",
+                        "on-error": "#ffffff",
+                        "deep-ink": "#0B0B0B",
+                        "surface-dim": "#dcdad4",
+                        "on-tertiary": "#ffffff",
+                        "outline-variant": "#c4c7c7",
+                        "inverse-surface": "#31312d",
+                        "surface-tint": "#5f5e5e",
+                        "inverse-primary": "#c9c6c5",
+                        "surface-container-highest": "#e5e2dc",
+                        "surface": "#fcf9f3",
+                        "secondary-container": "#fe6500",
+                        "on-secondary-fixed": "#360f00",
+                        "on-surface-variant": "#444748",
+                        "surface-container-high": "#ebe8e2",
+                        "surface-container-low": "#f6f3ed",
+                        "on-secondary": "#ffffff",
+                        "background": "#fcf9f3",
+                        "on-primary-fixed-variant": "#474646",
+                        "on-surface": "#1c1c18",
+                        "tertiary-fixed": "#ede1ce",
+                        "surface-variant": "#e5e2dc",
+                        "secondary-fixed-dim": "#ffb596",
+                        "primary-fixed-dim": "#c9c6c5",
+                        "tertiary": "#000000",
+                        "on-primary-container": "#858383",
+                        "secondary": "#a33e00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "20px",
+                        "margin-desktop": "64px",
+                        "gutter": "24px",
+                        "container-max": "1440px",
+                        "unit": "8px",
+                        "margin-tablet": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Playfair Display"],
+                        "headline-lg": ["Playfair Display"],
+                        "label-caps": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Playfair Display"],
+                        "body-md": ["Inter"],
+                        "nav-link": ["Inter"],
+                        "headline-md": ["Playfair Display"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                        "headline-lg": ["48px", {"lineHeight": "56px", "fontWeight": "600"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "display-lg": ["72px", {"lineHeight": "80px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "nav-link": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .nav-underline-active {
+            position: relative;
+        }
+        .nav-underline-active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #FF6600;
+        }
+        .archive-card:hover .card-border {
+            border-color: #FF6600;
+        }
+        .btn-transition {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
 </head>
+<body class="bg-bone-white text-deep-ink font-body-md overflow-x-hidden">
 
-<body>
-
-<a href="#main" class="skip">Skip to content</a>
-
-<header class="header">
-  <div class="container header__inner">
-    <a class="brand" href="/"><img src="jfsn-mark.png" class="brand-mark" alt="JFSN">Jeffrey F. S. Neumann</a>
-    <nav class="nav" aria-label="Primary">
-      <a href="archive.html">Archive</a>
-      <a href="series-index.html">Series</a>
-      <a href="about.html">About</a>
-      <a href="about.html#contact" style="color:var(--accent)">Inquiry</a>
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-background border-b border-outline-variant">
+  <div class="flex items-center gap-8">
+    <a href="index.html" class="font-headline-md text-headline-md tracking-tighter text-deep-ink">JFSN</a>
+    <nav class="hidden md:flex gap-6">
+      <a class="font-nav-link text-nav-link text-international-orange nav-underline-active" href="index.html">Archive</a>
+      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="series-index.html">Series</a>
+      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="timeline.html">Timeline</a>
+      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="companion.html">Companion</a>
+      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="about.html">About</a>
     </nav>
+  </div>
+  <div class="flex items-center gap-4">
+    <button class="material-symbols-outlined text-deep-ink hover:text-international-orange transition-colors" aria-label="Search">search</button>
+    <button class="md:hidden material-symbols-outlined text-deep-ink" aria-label="Menu">menu</button>
   </div>
 </header>
 
-<main id="main">
+<main class="pt-16">
 
-  <h1 class="sr-only">Jeffrey F. S. Neumann — Archive of works, 1974–present</h1>
-
-  <section class="hero" aria-label="Featured work">
-    <!-- Blurred ambient backdrop — same image, behind the main view -->
-    <img class="hero__backdrop" src="" alt="" aria-hidden="true" style="opacity:0">
-    <a href="artwork.html" id="hero-link">
-      <img
-        class="hero__image"
-        src=""
-        alt="Featured work by Jeffrey F. S. Neumann"
-        fetchpriority="high"
-        style="opacity:0">
-    </a>
-    <!-- ① Cycle button -->
-    <button class="hero-cycle-btn" id="hero-cycle" aria-label="Next featured work" title="Next work">→</button>
-  </section>
-  <!-- Caption lives outside .hero so backdrop doesn't bleed into it -->
-  <figcaption class="container hero__caption">
-    <strong id="hero-id"></strong>
-    <span id="hero-title" class="hero__caption-title"></span>
-    <span id="hero-meta"></span><!-- ⑥ combined year · type -->
-    <a href="archive.html">Archive →</a>
-  </figcaption>
-
-  <!-- ⑤ Tagline — larger, serif italic, full text color -->
-  <p class="home-tagline container">Five decades of making, recorded. The visual archive of Jeffrey F. S. Neumann.</p>
-  <p class="home-context container">Compact discs, warplanes, photographic faces, lace, found materials &mdash; assembled into collages, sculptures, and photographs since 1974. Based in Cleveland. <a href="about.html">About the work &rarr;</a> &nbsp;&middot;&nbsp; <a href="for-artists.html" style="color:var(--accent);border-bottom-color:rgba(255,102,0,0.35)">I build archives like this for other artists &mdash; from $500 &rarr;</a></p>
-
-  <nav class="home-start-path container" aria-label="Start here" id="start-path" hidden>
-    <span class="home-start-path__label">New here?</span>
-    <div class="home-start-path__steps">
-      <a class="home-start-path__step" href="about.html">
-        <span class="home-start-path__step-num">01</span>
-        <span class="home-start-path__step-name">About the work</span>
-      </a>
-      <span class="home-start-path__arrow" aria-hidden="true">→</span>
-      <a class="home-start-path__step" href="timeline.html">
-        <span class="home-start-path__step-num">02</span>
-        <span class="home-start-path__step-name">Fifty years, one timeline</span>
-      </a>
-      <span class="home-start-path__arrow" aria-hidden="true">→</span>
-      <a class="home-start-path__step" href="archive.html">
-        <span class="home-start-path__step-num">03</span>
-        <span class="home-start-path__step-name">Browse <span data-work-count>1,084</span> works</span>
-      </a>
-      <span class="home-start-path__arrow" aria-hidden="true">→</span>
-      <a class="home-start-path__step" href="companion.html">
-        <span class="home-start-path__step-num">04</span>
-        <span class="home-start-path__step-name">Ask the Companion</span>
-      </a>
+  <!-- Hero Section -->
+  <section class="relative h-[90vh] w-full overflow-hidden flex items-center justify-center">
+    <div class="absolute inset-0 bg-deep-ink/20 z-10"></div>
+    <img
+      src="artworks/full/art0953.avif"
+      alt="XXXIII Días Installation View — Jeffrey F. S. Neumann"
+      class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 hover:scale-105"
+      width="2800" height="1288" loading="eager"
+    />
+    <div class="relative z-20 text-center text-bone-white max-w-4xl px-margin-mobile">
+      <h1 class="font-display-lg text-display-lg mb-4 tracking-tight drop-shadow-lg">Five Decades of Archival Kineticism</h1>
+      <p class="font-headline-md text-headline-md font-light opacity-90 italic">The Art of Jeffrey F. S. Neumann</p>
+      <div class="mt-12 flex justify-center gap-6">
+        <a href="archive.html" class="px-8 py-3 bg-deep-ink text-bone-white font-label-caps text-label-caps btn-transition hover:bg-international-orange">EXPLORE ARCHIVE</a>
+        <a href="series-index.html" class="px-8 py-3 border border-bone-white text-bone-white font-label-caps text-label-caps btn-transition hover:bg-bone-white hover:text-deep-ink">VIEW SERIES</a>
+      </div>
     </div>
-  </nav>
-
-  <div class="home-stat container" aria-hidden="true">
-    <span class="home-stat__num" data-work-count>1,084</span>
-    <span class="home-stat__label">works<br>1974–present</span>
-  </div>
-
-  <section class="home-begin container" aria-label="Begin here">
-    <p class="home-begin__label">Begin here</p>
-    <div class="home-begin__works">
-      <a class="home-begin__work" href="artwork.html?id=art0483">
-        <img class="home-begin__img" src="artworks/thumbs/art0483.avif" alt="Untitled (CD Formation) 2" loading="eager">
-        <p class="home-begin__caption">Multiple discs, one formation. The beginning of something.</p>
-      </a>
-      <a class="home-begin__work" href="artwork.html?id=art1008">
-        <img class="home-begin__img" src="artworks/thumbs/art1008.avif" alt="Pubiern Robodt 365" loading="eager">
-        <p class="home-begin__caption">Assembled gears, lenses, circuit boards. A robot-like figure in triptych.</p>
-      </a>
-      <a class="home-begin__work" href="artwork.html?id=art1009">
-        <img class="home-begin__img" src="artworks/thumbs/art1009.avif" alt="Untitled (Machine Assemblage)" loading="eager">
-        <p class="home-begin__caption">Cassette decks, fan units, disc mechanisms — stacked on painted fabric.</p>
-      </a>
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 animate-bounce">
+      <span class="material-symbols-outlined text-bone-white text-4xl">expand_more</span>
     </div>
   </section>
 
-  <section class="grid-section container" aria-label="Selected works">
-    <h2 class="section-label">Selected Works</h2>
-    <p class="archive-stat"><span data-work-count>1,084</span> works &middot; Collage, Sculpture, Photography &middot; 1974–present</p>
-    <div class="grid" id="home-grid"></div>
-    <!-- ⑧ Updated CTA -->
-    <p class="archive-cta"><a href="archive.html">Browse the full archive →</a></p>
+  <!-- Featured Works Section -->
+  <section class="py-24 px-margin-desktop max-w-container-max mx-auto">
+    <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+      <div class="max-w-2xl">
+        <span class="font-label-caps text-label-caps text-international-orange mb-2 block">CURATED SELECTION</span>
+        <h2 class="font-headline-lg text-headline-lg">Featured Works</h2>
+        <p class="mt-4 font-body-lg text-body-lg text-archive-gray">A cross-section of Neumann's fifty-year practice — collage, sculpture, and photography spanning 1974 to the present.</p>
+      </div>
+      <a href="archive.html" class="group flex items-center gap-2 font-label-caps text-label-caps text-deep-ink hover:text-international-orange transition-colors">
+        VIEW ALL 1,084 WORKS <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+      </a>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter" id="featured-grid">
+      <!-- populated by JS from catalog-home.json -->
+    </div>
   </section>
 
-  <section class="home-series container" aria-label="Browse by series">
-    <h2 class="section-label">Browse by Series</h2>
-
-    <!-- ⑨ Themes group -->
-    <div class="home-series-group">
-      <p class="home-series-group-label">Themes</p>
-      <nav class="home-series-links" aria-label="Theme series">
-        <a class="home-series-link" href="series.html?theme=Mr.+Snowmann"      data-count-theme="Mr. Snowmann">Mr. SNOWmann</a>
-        <a class="home-series-link" href="series.html?theme=Aviation"           data-count-theme="Aviation">Aviation</a>
-        <a class="home-series-link" href="series.html?theme=Targets"            data-count-theme="Targets">Targets</a>
-        <a class="home-series-link" href="series.html?theme=Crosses"            data-count-theme="Crosses">Crosses</a>
-        <a class="home-series-link" href="series.html?theme=Torsos+%26+Faces"  data-count-theme="Torsos &amp; Faces">Torsos &amp; Faces</a>
-        <a class="home-series-link" href="series.html?theme=Reliquaries"        data-count-theme="Reliquaries">Reliquaries</a>
-        <a class="home-series-link" href="series.html?theme=Totems"             data-count-theme="Totems">Totems</a>
-        <a class="home-series-link" href="series.html?theme=Framed"             data-count-theme="Framed">Framed</a>
-        <a class="home-series-link" href="series.html?theme=Gallery"            data-count-theme="Gallery">Gallery</a>
-        <a class="home-series-link" href="series.html?theme=Studio"             data-count-theme="Studio">Studio</a>
-        <a class="home-series-link" href="series.html?theme=Art+School"         data-count-theme="Art School">Art School</a>
-        <a class="home-series-link" href="series.html?theme=Tracings"           data-count-theme="Tracings">Tracings</a>
-        <a class="home-series-link" href="series.html?theme=Collaboration"      data-count-theme="Collaboration">Collaboration</a>
-        <a class="home-series-link" href="series.html?theme=Guernica"           data-count-theme="Guernica">Guernica Inspired</a>
-      </nav>
+  <!-- Ask the Archive Section -->
+  <section class="bg-deep-ink py-24 px-margin-desktop overflow-hidden relative">
+    <div class="absolute top-0 left-0 w-full h-1 bg-international-orange"></div>
+    <div class="max-w-4xl mx-auto relative z-10">
+      <div class="text-center mb-16">
+        <span class="font-label-caps text-label-caps text-international-orange mb-4 block">THE COMPANION (AI)</span>
+        <h2 class="font-headline-lg text-headline-lg text-bone-white">Ask the Archive</h2>
+        <p class="mt-4 font-body-lg text-body-lg text-archive-gray max-w-2xl mx-auto">Interrogate the history, materials, and themes of Neumann's work through the archival intelligence.</p>
+      </div>
+      <div class="relative group">
+        <input
+          id="companion-input"
+          class="w-full bg-transparent border-b border-archive-gray py-6 px-4 text-bone-white font-headline-md text-2xl focus:outline-none focus:border-international-orange transition-colors placeholder:text-archive-gray/50"
+          placeholder="Ask about a series, material, or theme…"
+          type="text"
+          aria-label="Ask the archive"
+        />
+        <button
+          id="companion-submit"
+          class="absolute right-4 top-1/2 -translate-y-1/2 text-bone-white hover:text-international-orange transition-colors"
+          aria-label="Submit question"
+        >
+          <span class="material-symbols-outlined text-4xl">psychology</span>
+        </button>
+      </div>
+      <div class="mt-10 flex flex-wrap justify-center gap-4">
+        <button class="suggestion-chip px-4 py-2 border border-archive-gray text-bone-white font-label-caps text-[10px] hover:border-international-orange hover:text-international-orange transition-all">"WHAT IS KINETICISM?"</button>
+        <button class="suggestion-chip px-4 py-2 border border-archive-gray text-bone-white font-label-caps text-[10px] hover:border-international-orange hover:text-international-orange transition-all">"1980S PRODUCTION METHODS"</button>
+        <button class="suggestion-chip px-4 py-2 border border-archive-gray text-bone-white font-label-caps text-[10px] hover:border-international-orange hover:text-international-orange transition-all">"THE BUTTERFLY MOTIF"</button>
+      </div>
     </div>
-
-    <!-- ⑨ Named series group -->
-    <div class="home-series-group">
-      <p class="home-series-group-label">Named Series</p>
-      <nav class="home-series-links" aria-label="Named series">
-        <a class="home-series-link" href="series.html?series=XXIII"    data-count-series="XXIII">XXIII</a>
-        <a class="home-series-link" href="series.html?series=Squadron" data-count-series="Squadron">Squadron</a>
-        <a class="home-series-link" href="series.html?series=Guernica" data-count-series="Guernica">Guernica Series</a>
-      </nav>
+    <div class="absolute -right-20 -bottom-20 opacity-5 pointer-events-none select-none">
+      <span class="text-[300px] font-bold text-bone-white">JFSN</span>
     </div>
-
-    <a class="home-series-cta" href="series-index.html">All series &rarr;</a>
   </section>
 
-  <aside class="home-companion container" aria-label="Companion">
-    <p class="home-companion__text"><strong>Ask the archive anything.</strong> The Companion knows every work — themes, materials, connections across 50 years. Try: <em>"What changed between the 80s and 90s?"</em></p>
-    <a class="home-companion__link" href="companion.html">Open Companion →</a>
-  </aside>
-
-  <section class="recent-section container" aria-label="Recently added" id="recent-section" hidden>
-    <h2 class="section-label">Recently Added</h2>
-    <div class="recent-strip" id="recent-strip"></div>
-    <p class="recent-cta"><a href="archive.html">All works →</a></p>
+  <!-- Artist Statement -->
+  <section class="py-24 px-margin-desktop max-w-4xl mx-auto text-center">
+    <span class="material-symbols-outlined text-international-orange text-5xl mb-8">format_quote</span>
+    <p class="font-headline-md text-headline-md italic leading-relaxed">
+      "Art is the record of the momentum we lose as we attempt to capture the absolute. My archive is not a collection of static works, but a measurement of that friction."
+    </p>
+    <div class="mt-10">
+      <p class="font-label-caps text-label-caps text-deep-ink">JEFFREY F. S. NEUMANN</p>
+      <p class="font-label-caps text-[10px] text-archive-gray tracking-[0.3em]">ARTIST STATEMENT, 2026</p>
+    </div>
   </section>
 
 </main>
 
-<footer class="footer">
-  <div class="container footer__inner">
-    <span>Jeffrey F. S. Neumann</span>
-    <nav class="footer-nav" aria-label="Site navigation">
-      <a href="archive.html">Archive</a>
-      <a href="series-index.html">Series</a>
-      <a href="timeline.html">Timeline</a>
-      <a href="constellation.html" title="Force-directed map of all works, clustered by theme">Constellation</a>
-      <a href="wall.html">Wall</a>
-      <a href="mosaic.html" class="nav-mosaic"><span class="m">M</span><span class="o">o</span><span class="s">s</span><span class="a">a</span><span class="i">i</span><span class="c">c</span></a>
-      <a href="about.html">About</a>
-      <a href="for-artists.html" style="color:var(--accent)">For Artists</a>
-      <a href="companion.html">Companion</a>
-      <a href="changes.html">Changes</a>
-      <a href="lost.html">Lost</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="feed.xml" title="RSS feed of new works">RSS</a>
-    </nav>
-    <nav class="footer-social" aria-label="Social links">
-      <a href="https://www.linkedin.com/in/jeffreyneumann/" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="https://dribbble.com/JFSN" target="_blank" rel="noopener">Dribbble</a>
-      <a href="https://www.youtube.com/@jfsneumann/videos" target="_blank" rel="noopener">YouTube</a>
-      <a href="https://showspace.so/s/jeffrey-neumann-46" target="_blank" rel="noopener">Showspace</a>
-    </nav>
-    <nav class="footer-earlier" aria-label="Earlier sites">
-      <a href="#" target="_blank" rel="noopener">Mr. SNOWmann</a>
-      <a href="#" target="_blank" rel="noopener">Fine Art 2000</a>
-      <a href="/old-site/" target="_blank" rel="noopener">jfsn 2023</a>
-      <a href="#" target="_blank" rel="noopener">jfsn 2014</a>
-    </nav>
+<!-- Footer -->
+<footer class="bg-surface-container-high py-16 px-margin-desktop border-t border-outline-variant">
+  <div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+    <div class="col-span-1">
+      <h3 class="font-headline-md text-headline-md tracking-tighter mb-6">JFSN</h3>
+      <p class="font-body-md text-archive-gray text-sm leading-relaxed">
+        The personal archive of Jeffrey F. S. Neumann — 1,084 works spanning five decades. Collage, sculpture, photography.
+      </p>
+    </div>
+    <div class="col-span-1">
+      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">EXPLORE</h4>
+      <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
+        <li><a class="hover:text-international-orange transition-colors" href="archive.html">Complete Archive</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="timeline.html">Interactive Timeline</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="series-index.html">Series Index</a></li>
+      </ul>
+    </div>
+    <div class="col-span-1">
+      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">RESOURCES</h4>
+      <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
+        <li><a class="hover:text-international-orange transition-colors" href="mosaic.html">Portrait Mosaic</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="companion.html">AI Companion</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="about.html">About</a></li>
+      </ul>
+    </div>
+    <div class="col-span-1">
+      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">CONTACT</h4>
+      <a class="font-nav-link text-nav-link text-deep-ink block mb-4 border-b border-deep-ink inline-block pb-1 hover:text-international-orange hover:border-international-orange transition-all" href="mailto:jfsneumann@gmail.com">jfsneumann@gmail.com</a>
+    </div>
+  </div>
+  <div class="mt-16 pt-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
+    <p class="font-label-caps text-[10px] text-archive-gray">© 2026 JEFFREY F. S. NEUMANN. ALL RIGHTS RESERVED.</p>
+    <div class="flex gap-8">
+      <a class="font-label-caps text-[10px] text-archive-gray hover:text-deep-ink" href="#">PRIVACY</a>
+      <a class="font-label-caps text-[10px] text-archive-gray hover:text-deep-ink" href="#">TERMS</a>
+    </div>
   </div>
 </footer>
 
+<!-- Mobile bottom nav -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 px-4 bg-bone-white border-t border-outline-variant h-16" style="padding-bottom: env(safe-area-inset-bottom, 8px)" aria-label="Mobile navigation">
+  <a href="index.html" class="flex flex-col items-center justify-center text-international-orange font-bold scale-95">
+    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+    <span class="font-label-caps text-[10px]">Archive</span>
+  </a>
+  <a href="series-index.html" class="flex flex-col items-center justify-center text-archive-gray hover:text-international-orange transition-colors">
+    <span class="material-symbols-outlined">auto_awesome_motion</span>
+    <span class="font-label-caps text-[10px]">Series</span>
+  </a>
+  <a href="timeline.html" class="flex flex-col items-center justify-center text-archive-gray hover:text-international-orange transition-colors">
+    <span class="material-symbols-outlined">history_toggle_off</span>
+    <span class="font-label-caps text-[10px]">Timeline</span>
+  </a>
+  <a href="companion.html" class="flex flex-col items-center justify-center text-archive-gray hover:text-international-orange transition-colors">
+    <span class="material-symbols-outlined">chat_bubble</span>
+    <span class="font-label-caps text-[10px]">Companion</span>
+  </a>
+</nav>
 
 <script>
-(function () {
-  const TYPE_LABELS = {
-    collage:           'Collage',
-    sculpture:         'Sculpture',
-    painting:          'Painting',
-    photograph:        'Photograph',
-    installation_view: 'Installation',
-  };
-
-  let heroPool       = [];
-  let currentHeroIdx = -1;
-
-  // ── Load catalog + dominant colors ───────────────────────────────────────
-  // ?v= is stamped by build_catalog.py — forces browser to fetch fresh after every build
-  let dominantColors = {};
-  fetch('colors.json').then(r => r.ok ? r.json() : null).then(c => { if (c) dominantColors = c; }).catch(() => {});
-  fetch('catalog-home.json?v=20260531125506')
-    .then(r => r.ok ? r.json() : null)
-    .then(catalog => {
-      if (!catalog || !catalog.length) return;
-      initHero(catalog);
-      initGrid(catalog);
-
-      // Load full catalog lazily for series counts + recently added strip
-      fetch('catalog-lite.json')
-        .then(r => r.ok ? r.json() : null)
-        .then(full => {
-          if (!full) return;
-          injectSeriesCounts(full);
-          buildRecentStrip(full);
-          updateWorkCount(full.length);
-        })
-        .catch(() => {});
-    })
-    .catch(() => {});
-
-  // ── Hero ─────────────────────────────────────────────────────────────────
-  function initHero(catalog) {
-    heroPool = catalog.filter(r => r.featured);
-    if (!heroPool.length) return;
-    const pinned = heroPool.findIndex(r => r.file === 'art1010.avif');
-    currentHeroIdx = pinned >= 0 ? pinned : Math.floor(Math.random() * heroPool.length);
-    renderHero(heroPool[currentHeroIdx]);
-  }
-
-  function renderHero(rec) {
-    if (!rec) return;
-    const heroId     = rec.file.replace('.avif', '');
-    const heroLink   = document.getElementById('hero-link');
-    const heroImg    = document.querySelector('.hero__image');
-    const heroBack   = document.querySelector('.hero__backdrop');
-
-    heroImg.style.transition  = 'opacity 0.3s';
-    heroImg.style.opacity     = '0';
-    if (heroBack) { heroBack.style.transition = 'opacity 0.3s'; heroBack.style.opacity = '0'; }
-
-    // ① Thumb loads instantly → fast LCP
-    heroImg.src = `artworks/thumbs/${heroId}.avif`;
-    heroImg.alt = rec.title || heroId;
-    heroImg.style.transition = 'opacity 0.6s';
-    heroImg.style.opacity    = '1';
-
-    // Backdrop: use thumb immediately, upgrade to full when ready
-    if (heroBack) {
-      heroBack.src = `artworks/thumbs/${heroId}.avif`;
-      heroBack.style.transition = 'opacity 0.6s';
-      heroBack.style.opacity    = '1';
+  // Populate featured grid from catalog-home.json
+  (async () => {
+    const grid = document.getElementById('featured-grid');
+    try {
+      const res = await fetch('catalog-home.json');
+      const works = await res.json();
+      const featured = works.filter(w => w.featured).slice(0, 3);
+      const cols = ['md:col-span-4', 'md:col-span-4 md:mt-12', 'md:col-span-4'];
+      featured.forEach((w, i) => {
+        const medium = (w.work_type || '').toUpperCase().replace(/_/g, ' ');
+        grid.innerHTML += `
+          <a href="artwork.html?id=${w.file.replace('.avif','')}" class="${cols[i]} archive-card group cursor-pointer no-underline">
+            <div class="aspect-[3/4] bg-surface-container-high relative overflow-hidden card-border border border-transparent transition-all duration-300">
+              <img
+                alt="${w.title}"
+                class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-110"
+                src="artworks/thumbs/${w.file}"
+                loading="lazy" width="400" height="533"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-deep-ink/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+            <div class="mt-4">
+              <h3 class="font-headline-md text-headline-md text-2xl text-deep-ink">${w.title}</h3>
+              <p class="font-label-caps text-label-caps text-archive-gray mt-1">${w.year} — ${medium}</p>
+            </div>
+          </a>`;
+      });
+    } catch(e) {
+      console.error('catalog-home load failed', e);
     }
-
-    // ② Upgrade to full-res silently — no layout shift (fixed-height container)
-    const full = new Image();
-    full.onload = () => {
-      heroImg.src = `artworks/full/${heroId}.avif`;
-      if (heroBack) heroBack.src = `artworks/full/${heroId}.avif`;
-    };
-    full.src = `artworks/full/${heroId}.avif`;
-
-    if (heroLink) heroLink.href = `artwork.html?id=${heroId}`;
-
-    const idEl    = document.getElementById('hero-id');
-    const titleEl = document.getElementById('hero-title');
-    const metaEl  = document.getElementById('hero-meta');
-
-    if (idEl) {
-      idEl.innerHTML = `<a href="artwork.html?id=${heroId}">${esc(heroId)}</a>`;
-      idEl.hidden = false;
-    }
-    if (titleEl) {
-      if (rec.title) {
-        titleEl.innerHTML = `<a href="artwork.html?id=${heroId}">${esc(rec.title)}</a>`;
-        if (idEl) idEl.hidden = true;
-      } else {
-        titleEl.innerHTML = '';
-      }
-    }
-    // ⑥ Year · Type combined
-    if (metaEl) {
-      const y = rec.year ? String(rec.year) : '';
-      const t = TYPE_LABELS[rec.work_type] || (rec.work_type || '').replace(/_/g, ' ');
-      metaEl.textContent = [y, t].filter(Boolean).join(' · ');
-    }
-  }
-
-  // ① Cycle button
-  document.getElementById('hero-cycle').addEventListener('click', () => {
-    if (!heroPool.length) return;
-    currentHeroIdx = (currentHeroIdx + 1) % heroPool.length;
-    renderHero(heroPool[currentHeroIdx]);
-  });
-
-  // ④ Hero swipe — left = next, right = prev (wraps)
-  (function() {
-    const heroEl = document.querySelector('.hero');
-    if (!heroEl) return;
-    let txStart = 0, tyStart = 0;
-    heroEl.addEventListener('touchstart', e => {
-      txStart = e.touches[0].clientX;
-      tyStart = e.touches[0].clientY;
-    }, { passive: true });
-    heroEl.addEventListener('touchend', e => {
-      if (!heroPool.length) return;
-      const dx = e.changedTouches[0].clientX - txStart;
-      const dy = e.changedTouches[0].clientY - tyStart;
-      if (Math.abs(dx) < 40 || Math.abs(dy) > Math.abs(dx)) return;
-      currentHeroIdx = dx < 0
-        ? (currentHeroIdx + 1) % heroPool.length                              // swipe left → next
-        : (currentHeroIdx - 1 + heroPool.length) % heroPool.length;          // swipe right → prev
-      renderHero(heroPool[currentHeroIdx]);
-    }, { passive: true });
   })();
 
-  // ── Grid ─────────────────────────────────────────────────────────────────
-  function initGrid(catalog) {
-    const featured   = catalog.filter(r => r.featured);
-    const recentPool = catalog.slice().reverse();
-    const heroFile   = heroPool[currentHeroIdx]?.file;
-    const seen       = new Set(heroFile ? [heroFile] : []);
-
-    const candidates = [...featured, ...recentPool].filter(r => {
-      if (seen.has(r.file)) return false;
-      seen.add(r.file);
-      return true;
+  // Companion input — forward to companion.html
+  const input = document.getElementById('companion-input');
+  const submit = document.getElementById('companion-submit');
+  function goToCompanion() {
+    const q = input.value.trim();
+    if (q) window.location.href = `companion.html?q=${encodeURIComponent(q)}`;
+    else window.location.href = 'companion.html';
+  }
+  submit.addEventListener('click', goToCompanion);
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') goToCompanion(); });
+  document.querySelectorAll('.suggestion-chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      input.value = btn.textContent.replace(/"/g, '').trim();
+      goToCompanion();
     });
-
-    // ④ 9 works: first is featured (2×2), rest fill the grid
-    const works = candidates.slice(0, 9);
-    const grid  = document.getElementById('home-grid');
-    if (!grid) return;
-
-    grid.innerHTML = works.map((r, idx) => {
-      const id        = r.file.replace('.avif', '');
-      const title     = r.title || id;
-      const typeLabel = TYPE_LABELS[r.work_type] || (r.work_type || '').replace(/_/g, ' ');
-      const yearStr   = r.year ? String(r.year) : '';
-      // ⑥ Combined overlay meta
-      const meta      = [yearStr, typeLabel].filter(Boolean).join(' · ');
-      // ④ featured class on first card; ⑦ animate class on all with CSS --i delay
-      const cls   = 'thumb thumb--animate' + (idx === 0 ? ' thumb--featured' : '');
-      const bgCol = dominantColors[id] ? `background-color:${dominantColors[id]};` : '';
-      return `<figure class="${cls}" data-id="${esc(id)}" style="--i:${idx}">
-        <a class="thumb__link" href="artwork.html?id=${id}" style="${bgCol}">
-          <img srcset="artworks/mini/${id}.avif 200w, artworks/thumbs/${id}.avif 400w"
-               sizes="(max-width:780px) calc(50vw - 1rem), calc(25vw - 1rem)"
-               src="artworks/thumbs/${id}.avif" alt="${esc(title)}" loading="lazy">
-          <div class="thumb__overlay" aria-hidden="true">
-            <span class="thumb__overlay-title">${esc(title)}</span>
-            <span class="thumb__overlay-type">${esc(meta)}</span>
-          </div>
-        </a>
-        <figcaption class="thumb__caption">${esc(title)}</figcaption>
-      </figure>`;
-    }).join('');
-
-    // Full-res hover preload
-    const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    grid.addEventListener('mouseover', function (e) {
-      const link = e.target.closest('.thumb__link');
-      if (!link || link.dataset.fullLoaded) return;
-      link.dataset.fullLoaded = '1';
-      const img = link.querySelector('img');
-      const fig = link.closest('.thumb');
-      if (!img || !fig) return;
-      const id = fig.dataset.id || (link.href.match(/id=(art\d+)/) || [])[1];
-      if (!id) return;
-      const preload = new Image();
-      preload.onload = function () {
-        if (!link.matches(':hover')) return;
-        if (noMotion) { img.srcset = ''; img.src = preload.src; return; }
-        img.style.opacity = '0';
-        requestAnimationFrame(() => requestAnimationFrame(() => {
-          img.srcset = '';
-          img.src    = preload.src;
-          img.style.opacity = '1';
-        }));
-      };
-      preload.src = 'artworks/full/' + id + '.avif';
-    });
-  }
-
-  // ③ Recently added strip
-  function buildRecentStrip(catalog) {
-    const strip = document.getElementById('recent-strip');
-    const section = document.getElementById('recent-section');
-    if (!strip || !section) return;
-    const recent = [...catalog]
-      .sort((a, b) => b.file.localeCompare(a.file))
-      .slice(0, 6);
-    strip.innerHTML = recent.map(r => {
-      const id = r.file.replace('.avif', '');
-      const label = r.title || id;
-      return `<a class="recent-thumb" href="artwork.html?id=${esc(id)}" aria-label="${esc(label)}">
-        <img src="artworks/thumbs/${esc(r.file)}" alt="${esc(label)}" loading="lazy" width="200" height="200">
-        <span class="recent-thumb__label">${esc(id)}</span>
-      </a>`;
-    }).join('');
-    section.removeAttribute('hidden');
-  }
-
-  // ④ Inject counts into series chips
-  function injectSeriesCounts(catalog) {
-    const themes  = {};
-    const series  = {};
-    catalog.forEach(r => {
-      (r.themes || []).forEach(t => { themes[t]  = (themes[t]  || 0) + 1; });
-      if (r.series) series[r.series] = (series[r.series] || 0) + 1;
-    });
-
-    document.querySelectorAll('[data-count-theme]').forEach(a => {
-      const n = themes[a.dataset.countTheme];
-      if (n) addBadge(a, n);
-    });
-    document.querySelectorAll('[data-count-series]').forEach(a => {
-      const n = series[a.dataset.countSeries];
-      if (n) addBadge(a, n);
-    });
-  }
-
-  function addBadge(el, n) {
-    const s = document.createElement('span');
-    s.className   = 'chip-count';
-    s.textContent = n;
-    el.appendChild(s);
-  }
-
-  function updateWorkCount(n) {
-    const fmt = n.toLocaleString();
-    document.querySelectorAll('[data-work-count]').forEach(el => {
-      el.textContent = fmt;
-      if (el.classList.contains('home-stat__num')) el.dataset.countTarget = n;
-    });
-  }
-
-  function esc(s) {
-    return String(s)
-      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
-})();
-</script>
-
-<script>
-  if (!localStorage.getItem('jfsn_visited')) {
-    document.getElementById('start-path').removeAttribute('hidden');
-    localStorage.setItem('jfsn_visited', '1');
-  }
-</script>
-<script src="search.js" defer></script>
-<!-- GoatCounter &mdash; privacy-first analytics (jfsn.goatcounter.com) -->
-<script data-goatcounter="https://jfsn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-
-<script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
-<script>
-/* Count-up animation on work-count stat */
-(function(){
-  const el = document.querySelector('.home-stat__num');
-  if (!el) return;
-  const duration = 1800;
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduced) return;
-  let started = false;
-  const obs = new IntersectionObserver(entries => {
-    if (!entries[0].isIntersecting || started) return;
-    started = true;
-    obs.disconnect();
-    const target = parseInt((el.dataset.countTarget || el.textContent).replace(/,/g, ''), 10) || 1084;
-    el.textContent = '0';
-    const start = performance.now();
-    function tick(now) {
-      const t = Math.min((now - start) / duration, 1);
-      const ease = 1 - Math.pow(1 - t, 3);
-      el.textContent = Math.round(ease * target).toLocaleString();
-      if (t < 1) requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
-  }, { threshold: 0.5 });
-  obs.observe(el);
-})();
-</script>
-<script>
-(function(){
-  if(!window.matchMedia('(hover:hover) and (pointer:fine)').matches)return;
-  const dot=document.createElement('div');
-  dot.className='cursor-dot';
-  document.body.appendChild(dot);
-  document.addEventListener('mousemove',e=>{dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px';});
-  document.addEventListener('mouseleave',()=>dot.classList.add('hidden'));
-  document.addEventListener('mouseenter',()=>dot.classList.remove('hidden'));
-  document.querySelectorAll('.thumb__link,.home-begin__work,.recent-thumb,.hero__image').forEach(el=>{
-    el.addEventListener('mouseenter',()=>dot.classList.add('expanded'));
-    el.addEventListener('mouseleave',()=>dot.classList.remove('expanded'));
   });
-})();
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('opacity-100', 'translate-y-0');
+        entry.target.classList.remove('opacity-0', 'translate-y-10');
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('section').forEach(section => {
+    section.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-10');
+    observer.observe(section);
+  });
 </script>
+
+<!-- GoatCounter — privacy-first analytics -->
+<script data-goatcounter="https://jfsn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
+
 </body>
 </html>

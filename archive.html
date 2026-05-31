@@ -1,1868 +1,393 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0b0b0b">
-  <title>Archive — Jeffrey F. S. Neumann</title>
-  <meta name="description" content="Archive of works by Jeffrey F. S. Neumann, 1974–present.">
-
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="alternate" type="application/rss+xml" title="Jeffrey F. S. Neumann — Archive" href="https://jfsn.com/feed.xml">
-  <link rel="canonical" href="https://jfsn.com/archive.html">
-  <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="icon-192.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap"></noscript>
-  <link rel="stylesheet" href="site.css?v=20260530-nav4">
-
-  <meta property="og:type"        content="website">
-  <meta property="og:title"       content="Archive — Jeffrey F. S. Neumann">
-  <meta property="og:description" content="Browse 1,084 works spanning 1974 to the present. Filter by type, theme, and more.">
-  <meta property="og:image"       content="https://jfsn.com/og-card.jpg">
-  <meta property="og:url"         content="https://jfsn.com/archive.html">
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "name": "Archive — Jeffrey F. S. Neumann",
-    "description": "1,084 works spanning 1974 to the present. Collage, sculpture, and photography by Jeffrey F. S. Neumann, Cleveland.",
-    "url": "https://jfsn.com/archive.html",
-    "creator": {
-      "@type": "Person",
-      "name": "Jeffrey F. S. Neumann",
-      "url": "https://jfsn.com"
-    },
-    "about": {
-      "@type": "Collection",
-      "name": "Archive of Jeffrey F. S. Neumann, 1974–present",
-      "numberOfItems": 1084
-    }
-  }
-  </script>
-
-  <style>
-    /* -------- Filter Bar -------- */
-    .filter-bar {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      background: var(--bg);
-      border-bottom: 1px solid var(--dim);
-      padding: 0.75rem 0;
-    }
-
-    .filter-search {
-      display: flex;
-      align-items: center;
-      margin-bottom: 0.625rem;
-    }
-
-    .search-input {
-      appearance: none;
-      background: none;
-      border: none;
-      border-bottom: 1px solid var(--dim);
-      color: var(--text);
-      font-family: inherit;
-      font-size: 0.875rem;
-      letter-spacing: 0.02em;
-      padding: 0.2rem 0;
-      width: 100%;
-      max-width: 280px;
-      outline: none;
-      transition: border-color 0.15s;
-    }
-    .search-input::placeholder { color: var(--muted); opacity: 0.6; }
-    .search-input:focus { border-bottom-color: rgba(243,240,234,0.45); }
-
-    .search-clear {
-      appearance: none;
-      background: none;
-      border: none;
-      color: var(--muted);
-      cursor: pointer;
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      margin-left: 0.75rem;
-      padding: 0;
-      text-transform: uppercase;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.15s, color 0.15s;
-    }
-    .search-clear.visible {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .search-clear:hover { color: var(--text); }
-
-    .filter-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.375rem;
-    }
-    .filter-row + .filter-row,
-    .filter-row + .chip-scroll-wrap,
-    .chip-scroll-wrap + .chip-scroll-wrap { margin-top: 0.375rem; }
-
-    .filter-label {
-      font-size: 0.625rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--muted);
-      opacity: 0.5;
-      margin-right: 0.25rem;
-      white-space: nowrap;
-    }
-
-    .chip {
-      appearance: none;
-      background: none;
-      border: 1px solid var(--dim);
-      color: var(--muted);
-      font-size: 0.6875rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.25rem 0.7rem;
-      cursor: pointer;
-      transition: color 0.12s, border-color 0.12s, background 0.12s;
-      white-space: nowrap;
-    }
-    .chip:hover {
-      color: var(--text);
-      border-color: rgba(243,240,234,0.35);
-    }
-    .chip[aria-pressed="true"] {
-      color: #0b0b0b;
-      background: var(--accent);
-      border-color: var(--accent);
-    }
-    .chip-count {
-      margin-left: 0.45em;
-      opacity: 0.45;
-      font-size: 0.85em;
-      letter-spacing: 0;
-    }
-    .chip[aria-pressed="true"] .chip-count { opacity: 0.75; }
-
-    /* -------- Archive header -------- */
-    .archive-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      padding: 1.25rem 0 0.875rem;
-    }
-    .archive-title {
-      font-size: var(--cap);
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .archive-controls {
-      display: flex;
-      align-items: baseline;
-      gap: 1.5rem;
-    }
-    .archive-count {
-      font-size: var(--cap);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .density-btn {
-      appearance: none;
-      background: none;
-      border: none;
-      color: var(--muted);
-      cursor: pointer;
-      font-size: var(--cap);
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      padding: 0;
-      opacity: 0.5;
-      transition: color 0.15s, opacity 0.15s;
-    }
-    .density-btn:hover { color: var(--text); opacity: 1; }
-
-    .archive-explore-tools {
-      display: flex;
-      align-items: baseline;
-      gap: 1rem;
-      margin-left: auto;
-      padding-left: 1.5rem;
-      border-left: 1px solid var(--dim);
-    }
-    .archive-explore-tools a {
-      font-size: var(--cap);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      border-bottom: 1px solid transparent;
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .archive-explore-tools a:hover {
-      color: var(--text);
-      border-bottom-color: var(--dim);
-    }
-
-    .sort-select {
-      appearance: none;
-      background: none;
-      border: none;
-      border-bottom: 1px solid var(--dim);
-      color: var(--muted);
-      cursor: pointer;
-      font-family: inherit;
-      font-size: var(--cap);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0 0.1rem;
-      outline: none;
-      opacity: 0.5;
-      transition: color 0.15s, border-color 0.15s, opacity 0.15s;
-    }
-    .sort-select:hover, .sort-select:focus { color: var(--text); border-bottom-color: rgba(243,240,234,0.4); opacity: 1; }
-    .sort-select option { background: #1a1a1a; color: var(--text); text-transform: uppercase; }
-
-    /* -------- Dense grid -------- */
-    .grid.dense {
-      grid-template-columns: repeat(6, 1fr);
-    }
-
-    @media (max-width: 1024px) {
-      .grid.dense { grid-template-columns: repeat(4, 1fr); }
-    }
-    @media (max-width: 600px) {
-      .grid.dense { grid-template-columns: repeat(3, 1fr); }
-    }
-
-    /* -------- Skeleton -------- */
-    .skeleton {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
-      padding-bottom: clamp(4rem, 8vw, 8rem);
-    }
-    .skeleton__item {
-      aspect-ratio: 1;
-      background: rgba(243,240,234,0.05);
-      animation: pulse 1.8s ease-in-out infinite;
-    }
-    .skeleton__item:nth-child(2) { animation-delay: 0.1s; }
-    .skeleton__item:nth-child(3) { animation-delay: 0.2s; }
-    .skeleton__item:nth-child(4) { animation-delay: 0.3s; }
-    @keyframes pulse {
-      0%, 100% { opacity: 0.4; }
-      50% { opacity: 0.8; }
-    }
-
-    /* -------- Grid (masonry) -------- */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-auto-rows: 8px;
-      column-gap: 1rem;
-      row-gap: 0;
-      padding-bottom: clamp(4rem, 8vw, 8rem);
-    }
-
-    .thumb { margin: 0; opacity: 0; transform: translateY(10px); transition: opacity 0.4s ease, transform 0.4s ease; }
-    .thumb.revealed { opacity: 1; transform: none; }
-    /* Keep hover-dim working on revealed thumbs */
-    @media (hover: hover) {
-      .grid:has(.thumb__link:hover) .thumb.revealed { opacity: 0.5; }
-      .grid:has(.thumb__link:hover) .thumb.revealed:hover { opacity: 1; }
-    }
-
-    .thumb__link {
-      display: block;
-      overflow: hidden;
-      background: #111;
-      position: relative;
-    }
-    .thumb__link img {
-      width: 100%;
-      height: auto;
-      display: block;
-      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s;
-    }
-    @media (hover: hover) { .thumb__link:hover img { transform: scale(1.05); } }
-    .thumb__overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(11,11,11,0.82) 0%, transparent 60%);
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 0.75rem;
-      opacity: 0;
-      transform: translateY(6px);
-      transition: opacity 0.22s, transform 0.22s;
-      pointer-events: none;
-    }
-    @media (hover: hover) {
-      .thumb__link:hover .thumb__overlay { opacity: 1; transform: translateY(0); }
-      /* Sibling dim — spotlights the hovered card */
-      .grid:has(.thumb__link:hover) .thumb { opacity: 0.5; }
-      .grid:has(.thumb__link:hover) .thumb:hover { opacity: 1; }
-    }
-    @media (hover: none) {
-      .thumb__overlay { opacity: 1; transform: translateY(0); }
-    }
-    .thumb__overlay-title {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 0.9375rem;
-      font-weight: 300;
-      color: #fff;
-      line-height: 1.3;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      margin-bottom: 0.2rem;
-    }
-    .thumb__overlay-type {
-      font-size: 0.625rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.55);
-    }
-
-    .thumb__caption {
-      margin-top: 0.4rem;
-      font-size: 0.6875rem;
-      letter-spacing: 0.1em;
-      text-align: center;
-      color: var(--text);
-      opacity: 0.65;
-    }
-
-    /* -------- Compact mode captions -------- */
-    .grid.dense .thumb__caption { display: none; }
-
-    /* -------- Active filter strip -------- */
-    .active-strip {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.375rem;
-      padding: 0.5rem 0 0;
-    }
-    .active-strip:empty { display: none; }
-    .active-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      border: 1px solid var(--accent);
-      color: var(--accent);
-      font-size: 0.625rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.2rem 0.5rem 0.2rem 0.6rem;
-      white-space: nowrap;
-    }
-    .active-tag__remove {
-      appearance: none;
-      background: none;
-      border: none;
-      color: inherit;
-      cursor: pointer;
-      font-size: 0.85em;
-      line-height: 1;
-      padding: 0;
-      opacity: 0.65;
-      transition: opacity 0.12s;
-    }
-    .active-tag__remove:hover { opacity: 1; }
-
-    /* -------- Empty state -------- */
-    .empty {
-      grid-column: 1 / -1;
-      padding: 5rem 0;
-      text-align: center;
-      font-size: var(--cap);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .empty-reset {
-      appearance: none;
-      background: none;
-      border: none;
-      border-bottom: 1px solid var(--dim);
-      color: var(--accent);
-      cursor: pointer;
-      font-family: inherit;
-      font-size: var(--cap);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 0 0 0.1rem;
-      margin-left: 0.5em;
-      transition: border-color 0.15s;
-    }
-    .empty-reset:hover { border-color: var(--accent); }
-
-    /* -------- Responsive -------- */
-    @media (max-width: 1024px) {
-      .grid, .skeleton { grid-template-columns: repeat(3, 1fr); }
-    }
-    @media (max-width: 600px) {
-      .grid, .skeleton { grid-template-columns: repeat(2, 1fr); }
-      .filter-label { display: none; }
-
-      /* Stack header vertically on mobile */
-      .archive-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
-        padding-bottom: 0.625rem;
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="theme-color" content="#fdf8f8"/>
+<title>The Archive — Jeffrey F. S. Neumann</title>
+<meta name="description" content="Browse all 1,084 works by Jeffrey F. S. Neumann — collage, sculpture, and photography spanning 1974 to the present."/>
+<link rel="canonical" href="https://jfsn.com/archive.html"/>
+<link rel="icon" href="favicon.svg" type="image/svg+xml"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="The Archive — Jeffrey F. S. Neumann"/>
+<meta property="og:description" content="1,084 works spanning 1974–present. Collage, sculpture, photography."/>
+<meta property="og:url" content="https://jfsn.com/archive.html"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "background": "#fdf8f8",
+                    "on-secondary": "#ffffff",
+                    "secondary": "#5e5e5e",
+                    "on-tertiary-container": "#e05900",
+                    "on-primary": "#ffffff",
+                    "outline": "#747878",
+                    "on-background": "#1c1b1b",
+                    "surface": "#fdf8f8",
+                    "surface-container-low": "#f7f3f2",
+                    "primary": "#000000",
+                    "outline-variant": "#c4c7c7",
+                    "on-surface": "#1c1c18",
+                    "surface-container-high": "#ebe7e6",
+                    "surface-container": "#f1edec"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0px",
+                    "lg": "0px",
+                    "xl": "0px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-desktop": "64px",
+                    "xs": "4px",
+                    "md": "24px",
+                    "margin-mobile": "16px",
+                    "xl": "80px",
+                    "base": "8px",
+                    "gutter": "24px",
+                    "lg": "48px",
+                    "sm": "12px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Playfair Display"],
+                    "label-lg": ["Inter"],
+                    "headline-md": ["Playfair Display"],
+                    "display-lg": ["Playfair Display"],
+                    "label-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg": ["40px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "label-lg": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-md": ["28px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                    "display-lg": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}]
+            }
+          },
+        },
       }
-
-      /* Explore tools: full-width row below count/sort */
-      .archive-controls {
-        width: 100%;
-        flex-wrap: wrap;
-        gap: 0.375rem 1rem;
-      }
-      .archive-explore-tools {
-        width: 100%;
-        border-left: none;
-        border-top: 1px solid var(--dim);
-        padding-left: 0;
-        padding-top: 0.5rem;
-        margin-left: 0;
-        gap: 1rem;
-      }
-    }
-
-    /* -------- Palette swatches -------- */
-    .swatch {
-      appearance: none;
-      width: 1.25rem;
-      height: 1.25rem;
-      border-radius: 50%;
-      border: 1.5px solid rgba(243,240,234,0.18);
-      cursor: pointer;
-      flex-shrink: 0;
-      padding: 0;
-      transition: transform 0.12s, box-shadow 0.12s;
-    }
-    .swatch:hover { transform: scale(1.2); }
-    .swatch[aria-pressed="true"] {
-      box-shadow: 0 0 0 2px var(--bg), 0 0 0 3.5px var(--accent);
-    }
-
-    /* -------- Scrollable chip rows -------- */
-    .chip-scroll-wrap { position: relative; }
-    .chip-scroll-wrap::after {
-      content: '';
-      position: absolute;
-      right: 0; top: 0; bottom: 0;
-      width: 3rem;
-      background: linear-gradient(to right, transparent, var(--bg));
-      pointer-events: none;
-      z-index: 1;
-    }
-    .chip-scroll-wrap .filter-row {
-      flex-wrap: nowrap;
-      overflow-x: auto;
-      scrollbar-width: none;
-      -webkit-overflow-scrolling: touch;
-      padding-right: 3rem;
-    }
-    .chip-scroll-wrap .filter-row::-webkit-scrollbar { display: none; }
-
-    /* -------- Surprise Me -------- */
-    .archive-title-group {
-      display: flex;
-      align-items: baseline;
-      gap: 1.25rem;
-    }
-    .surprise-btn {
-      appearance: none;
-      background: none;
-      border: none;
-      color: var(--accent);
-      cursor: pointer;
-      font-family: inherit;
-      font-size: var(--cap);
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      padding: 0;
-      opacity: 0.75;
-      transition: opacity 0.15s;
-    }
-    .surprise-btn:hover { opacity: 1; }
-    .surprise-btn:disabled { opacity: 0.25; cursor: default; pointer-events: none; }
-
-    /* -------- Series context block -------- */
-    .series-ctx {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 1rem 3rem;
-      padding: 1rem 0 1.25rem;
-      border-bottom: 1px solid var(--dim);
-    }
-    .series-ctx__name {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1rem;
-      font-style: italic;
-      font-weight: 300;
-      color: var(--text);
-      margin: 0 0 0.35rem;
-    }
-    .series-ctx__desc {
-      font-size: 0.8125rem;
-      line-height: 1.65;
-      color: var(--muted);
-      margin: 0;
-      max-width: 72ch;
-    }
-    .series-ctx__link {
-      font-size: var(--cap);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-      border-bottom: 1px solid var(--dim);
-      padding-bottom: 0.1rem;
-      white-space: nowrap;
-      flex-shrink: 0;
-      align-self: center;
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .series-ctx__link:hover { color: var(--accent); border-color: var(--accent); }
-    @media (max-width: 600px) {
-      .series-ctx { flex-direction: column; gap: 0.75rem; }
-    }
-
-    /* -------- Filter reset -------- */
-    .filter-reset {
-      appearance: none;
-      background: none;
-      border: none;
-      color: var(--accent);
-      cursor: pointer;
-      font-family: inherit;
-      font-size: var(--cap);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 0;
-      opacity: 0.85;
-      transition: opacity 0.15s;
-    }
-    .filter-reset:hover { opacity: 1; }
-
-    /* -------- Active chip clear indicator -------- */
-    .chip[aria-pressed="true"]:not([data-chip-id$="-all"])::after {
-      content: '\00a0\00d7'; /* nbsp + × */
-      opacity: 0.65;
-      font-size: 0.85em;
-    }
-
-    /* -------- Progressive disclosure: motif + palette -------- */
-    .more-filters-btn {
-      display: block;
-      appearance: none;
-      background: none;
-      border: none;
-      color: var(--muted);
-      cursor: pointer;
-      font-family: inherit;
-      font-size: 0.625rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      padding: 0.25rem 0;
-      margin-top: 0.25rem;
-      transition: color 0.15s;
-    }
-    .more-filters-btn:hover { color: var(--text); }
-    #motif-wrap,
-    #palette-wrap { display: none; }
-    #motif-wrap.expanded,
-    #palette-wrap.expanded { display: block; }
-
-    /* -------- Lightbox -------- */
-    #lb {
-      display: none;
-      position: fixed; inset: 0; z-index: 200;
-      background: rgba(11,11,11,0.96);
-      align-items: center; justify-content: center;
-      flex-direction: column;
-    }
-    #lb.open { display: flex; }
-    #lb-img-wrap {
-      flex: 1; display: flex; align-items: center; justify-content: center;
-      width: 100%; min-height: 0; padding: 1rem 4rem;
-      box-sizing: border-box;
-    }
-    #lb-img {
-      max-width: 100%; max-height: 100%;
-      object-fit: contain;
-      opacity: 0; transition: opacity 0.2s;
-    }
-    #lb-img.loaded { opacity: 1; }
-    #lb-bar {
-      width: 100%; padding: 0.875rem 1.25rem;
-      display: flex; align-items: baseline; gap: 0.75rem; flex-wrap: wrap;
-      border-top: 1px solid var(--dim); box-sizing: border-box;
-      background: rgba(11,11,11,0.6);
-    }
-    #lb-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1rem; font-weight: 300; color: var(--text); }
-    #lb-meta  { font-size: 0.625rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
-    #lb-link  { margin-left: auto; font-size: 0.625rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--dim); transition: color 0.15s, border-color 0.15s; }
-    #lb-link:hover { color: var(--text); border-color: var(--muted); }
-    .lb-arrow {
-      position: absolute; top: 50%; transform: translateY(-50%);
-      background: none; border: none; cursor: pointer;
-      color: rgba(243,240,234,0.3); font-size: 1.5rem; padding: 1.5rem 1rem;
-      transition: color 0.15s; line-height: 1; user-select: none;
-    }
-    .lb-arrow:hover { color: var(--text); }
-    #lb-prev { left: 0; }
-    #lb-next { right: 0; }
-    #lb-close {
-      position: absolute; top: 0.75rem; right: 0.75rem;
-      background: none; border: none; cursor: pointer;
-      color: rgba(243,240,234,0.35); font-size: 1.25rem; padding: 0.5rem; line-height: 1;
-      transition: color 0.15s;
-    }
-    #lb-close:hover { color: var(--text); }
-    #lb-spinner {
-      position: absolute; color: var(--muted);
-      font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
-      opacity: 0; transition: opacity 0.3s 0.3s;
-    }
-    #lb-spinner.visible { opacity: 1; }
-    @media (max-width: 600px) {
-      #lb-img-wrap { padding: 0.5rem 2.5rem; }
-      .lb-arrow { padding: 1rem 0.5rem; font-size: 1.25rem; }
-    }
-
-    /* -------- Touch: larger tap targets for chips + swatches -------- */
-    @media (hover: none) {
-      .chip {
-        min-height: 44px;
-        padding-block: 0.5rem;
-        display: inline-flex;
-        align-items: center;
-      }
-      .swatch {
-        width: 1.875rem;
-        height: 1.875rem;
-      }
-    }
-
-    /* -------- Reduced motion -------- */
-    @media (prefers-reduced-motion: reduce) {
-      .thumb,
-      .thumb__link img,
-      .thumb__overlay,
-      .chip,
-      .swatch,
-      .search-clear,
-      .more-filters-btn,
-      .brand-mark { transition: none; }
-      .thumb__link:hover img { transform: none; }
-      .thumb__overlay { transform: none; }
-      .swatch:hover { transform: none; }
-      .grid:has(.thumb__link:hover) .thumb { opacity: 1; }
-      #lb-img { transition: none; }
-    }
-  </style>
-  <script src="artist-config.js"></script>
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .grayscale-filter {
+            filter: grayscale(100%);
+            transition: filter 0.5s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .grayscale-filter:hover {
+            filter: grayscale(0%);
+            transform: scale(1.05);
+        }
+        .custom-checkbox {
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            border: 1px solid #c4c7c7;
+            display: inline-block;
+            position: relative;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .custom-checkbox:checked {
+            background-color: #000000;
+        }
+        .custom-checkbox:checked::after {
+            content: '';
+            position: absolute;
+            left: 3px;
+            top: 1px;
+            width: 6px;
+            height: 8px;
+            border: solid white;
+            border-width: 0 1px 1px 0;
+            transform: rotate(45deg);
+        }
+        .kinetic-hover { transition: color 0.2s ease; }
+        .kinetic-hover:hover { color: #e05900; }
+        #work-count { font-variant-numeric: tabular-nums; }
+    </style>
 </head>
+<body class="font-body-md text-body-md bg-background text-on-background">
 
-<body>
-
-<div id="scroll-progress" class="scroll-progress" aria-hidden="true"></div>
-<a href="#main" class="skip">Skip to content</a>
-
-<header class="header">
-  <div class="container header__inner">
-    <a class="brand" href="index.html"><img src="jfsn-mark.png" class="brand-mark" alt="JFSN">Jeffrey F. S. Neumann</a>
-    <nav class="nav" aria-label="Primary">
-      <a href="archive.html" aria-current="page">Archive</a>
-      <a href="series-index.html">Series</a>
-      <a href="about.html">About</a>
-      <a href="about.html#contact" style="color:var(--accent)">Inquiry</a>
-    </nav>
+<!-- Top Nav -->
+<nav class="fixed top-0 left-0 w-full z-50 bg-background border-b border-outline-variant">
+  <div class="flex justify-between items-center px-margin-desktop py-4 max-w-[1200px] mx-auto">
+    <a class="font-headline-md text-headline-md font-bold tracking-tighter text-primary" href="index.html">JFSN</a>
+    <div class="hidden md:flex items-center gap-8">
+      <a class="font-label-lg text-label-lg text-on-tertiary-container border-b-2 border-on-tertiary-container pb-1 uppercase" href="archive.html" aria-current="page">ARCHIVE</a>
+      <a class="font-label-lg text-label-lg text-primary opacity-80 hover:opacity-100 hover:text-on-tertiary-container transition-colors uppercase" href="series-index.html">SERIES</a>
+      <a class="font-label-lg text-label-lg text-primary opacity-80 hover:opacity-100 hover:text-on-tertiary-container transition-colors uppercase" href="timeline.html">TIMELINE</a>
+      <a class="font-label-lg text-label-lg text-primary opacity-80 hover:opacity-100 hover:text-on-tertiary-container transition-colors uppercase" href="companion.html">COMPANION</a>
+      <a class="font-label-lg text-label-lg text-primary opacity-80 hover:opacity-100 hover:text-on-tertiary-container transition-colors uppercase" href="about.html">ABOUT</a>
+    </div>
+    <div class="flex items-center gap-4">
+      <button class="p-2 text-primary hover:text-on-tertiary-container transition-colors" aria-label="Search">
+        <span class="material-symbols-outlined">search</span>
+      </button>
+      <button class="md:hidden p-2 text-primary" aria-label="Menu">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+    </div>
   </div>
-</header>
+</nav>
 
-<div class="filter-bar" role="search" aria-label="Filter works">
-  <div class="container">
-    <div class="filter-search">
-      <label for="search" class="sr-only">Search works</label>
-      <input type="search" id="search" class="search-input"
-             placeholder="Search titles, themes, keywords…" autocomplete="off" spellcheck="false">
-      <button class="search-clear" id="search-clear" aria-label="Clear search">Clear</button>
-    </div>
-    <div class="filter-row" id="type-row">
-      <span class="filter-label">Type</span>
-    </div>
-    <div class="chip-scroll-wrap">
-      <div class="filter-row" id="theme-row">
-        <span class="filter-label">Theme</span>
-      </div>
-    </div>
-    <div class="chip-scroll-wrap" id="motif-wrap">
-      <div class="filter-row" id="motif-row">
-        <span class="filter-label">Motif</span>
-      </div>
-    </div>
-    <div class="filter-row" id="named-series-row">
-      <span class="filter-label">Series</span>
-    </div>
-    <div class="filter-row" id="decade-row">
-      <span class="filter-label">Decade</span>
-    </div>
-    <div class="chip-scroll-wrap" id="palette-wrap">
-      <div class="filter-row" id="palette-row">
-        <span class="filter-label">Palette</span>
-      </div>
-    </div>
-    <button class="more-filters-btn" id="more-filters-btn" aria-expanded="false">+ More filters (motif &amp; palette)</button>
-  </div>
-</div>
+<main class="pt-[100px] pb-xl px-margin-mobile md:px-margin-desktop max-w-[1200px] mx-auto">
 
-<main id="main">
-  <div class="container">
-    <div class="archive-header">
-      <div class="archive-title-group">
-        <h1 class="archive-title">Works</h1>
-        <button class="surprise-btn" id="surprise-btn" disabled aria-label="Go to a random artwork">↝ Surprise me</button>
-      </div>
-      <div class="archive-controls">
-        <span class="archive-count" id="count" aria-live="polite"></span>
-        <button class="filter-reset" id="filter-reset" hidden aria-label="Clear all filters">Clear filters</button>
-        <button class="fav-filter-btn" id="fav-filter-btn" aria-pressed="false" aria-label="Show saved works">♡ Saved</button>
-        <span class="archive-explore-tools" aria-label="Other views">
-          <a href="timeline.html">Timeline</a>
-          <a href="constellation.html">Constellation</a>
-          <a href="mosaic.html">Mosaic</a>
-        </span>
-        <select class="sort-select" id="sort-select" aria-label="Sort order">
-          <option value="default">Default</option>
-          <option value="newest">Newest</option>
-          <option value="oldest">Oldest</option>
-          <option value="az">A – Z</option>
-          <option value="za">Z – A</option>
-        </select>
-        <button class="density-btn" id="density-btn">Compact</button>
-      </div>
+  <!-- Page Header -->
+  <header class="mb-lg border-b border-outline-variant pb-md flex justify-between items-end">
+    <div>
+      <h1 class="font-display-lg text-display-lg uppercase tracking-tighter mb-2">THE ARCHIVE</h1>
+      <p class="font-label-md text-label-md text-secondary tracking-widest uppercase">
+        <span id="work-count">1,084</span> CATALOGED WORKS
+      </p>
     </div>
-    <div id="active-strip" class="active-strip" aria-label="Active filters" aria-live="polite"></div>
-    <div id="series-ctx-wrap" hidden>
-      <div class="series-ctx">
-        <div>
-          <p class="series-ctx__name" id="series-ctx-name"></p>
-          <p class="series-ctx__desc" id="series-ctx-desc"></p>
+  </header>
+
+  <div class="flex flex-col md:flex-row gap-gutter">
+
+    <!-- Sidebar Filters -->
+    <aside class="w-full md:w-[240px] shrink-0">
+      <div class="sticky top-[100px] space-y-md">
+
+        <!-- Medium -->
+        <div class="border-b border-outline-variant pb-md">
+          <h3 class="font-label-lg text-label-lg uppercase mb-4 tracking-widest">MEDIUM</h3>
+          <div class="space-y-3" id="filter-medium">
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input class="custom-checkbox" type="checkbox" value="collage"/>
+              <span class="font-label-md text-label-md uppercase kinetic-hover">Collage <span class="text-outline">(638)</span></span>
+            </label>
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input class="custom-checkbox" type="checkbox" value="photograph"/>
+              <span class="font-label-md text-label-md uppercase kinetic-hover">Photography <span class="text-outline">(328)</span></span>
+            </label>
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input class="custom-checkbox" type="checkbox" value="sculpture"/>
+              <span class="font-label-md text-label-md uppercase kinetic-hover">Sculpture <span class="text-outline">(76)</span></span>
+            </label>
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input class="custom-checkbox" type="checkbox" value="painting"/>
+              <span class="font-label-md text-label-md uppercase kinetic-hover">Painting <span class="text-outline">(42)</span></span>
+            </label>
+          </div>
         </div>
-        <a class="series-ctx__link" id="series-ctx-link" href="">Series page &#8594;</a>
+
+        <!-- Decade -->
+        <div class="border-b border-outline-variant pb-md">
+          <h3 class="font-label-lg text-label-lg uppercase mb-4 tracking-widest">DECADE</h3>
+          <div class="space-y-3" id="filter-decade">
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input class="custom-checkbox" type="checkbox" value="1970s"/>
+              <span class="font-label-md text-label-md uppercase kinetic-hover">1970s <span class="text-outline">(58)</span></span>
+            </label>
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input class="custom-checkbox" type="checkbox" value="1980s"/>
+              <span class="font-label-md text-label-md uppercase kinetic-hover">1980s <span class="text-outline">(11)</span></span>
+            </label>
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input class="custom-checkbox" type="checkbox" value="1990s"/>
+              <span class="font-label-md text-label-md uppercase kinetic-hover">1990s <span class="text-outline">(193)</span></span>
+            </label>
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input class="custom-checkbox" type="checkbox" value="2000s"/>
+              <span class="font-label-md text-label-md uppercase kinetic-hover">2000s <span class="text-outline">(274)</span></span>
+            </label>
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input class="custom-checkbox" type="checkbox" value="2010s"/>
+              <span class="font-label-md text-label-md uppercase kinetic-hover">2010s <span class="text-outline">(307)</span></span>
+            </label>
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input class="custom-checkbox" type="checkbox" value="2020s"/>
+              <span class="font-label-md text-label-md uppercase kinetic-hover">2020s <span class="text-outline">(241)</span></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Series -->
+        <div>
+          <h3 class="font-label-lg text-label-lg uppercase mb-4 tracking-widest">SERIES</h3>
+          <div class="space-y-3" id="filter-series">
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input class="custom-checkbox" type="checkbox" value="Guernica"/>
+              <span class="font-label-md text-label-md uppercase kinetic-hover">Guernica <span class="text-outline">(232)</span></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Clear filters -->
+        <button id="clear-filters" class="hidden font-label-md text-label-md uppercase text-on-tertiary-container kinetic-hover tracking-widest pt-md">
+          CLEAR ALL FILTERS
+        </button>
+
+      </div>
+    </aside>
+
+    <!-- Grid -->
+    <div class="flex-grow min-w-0">
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-gutter gap-y-lg" id="works-grid"></div>
+
+      <p id="empty-state" class="hidden py-xl text-center font-label-lg text-label-lg text-secondary uppercase tracking-widest">
+        No works match the current filters.
+      </p>
+
+      <div class="mt-xl flex justify-center">
+        <button id="load-more" class="hidden px-xl py-md border border-outline-variant font-label-lg text-label-lg uppercase kinetic-hover bg-transparent tracking-widest hover:border-on-tertiary-container">
+          LOAD MORE
+        </button>
       </div>
     </div>
 
-    <div id="grid-wrap">
-      <div class="skeleton" aria-hidden="true">
-        <div class="skeleton__item"></div>
-        <div class="skeleton__item"></div>
-        <div class="skeleton__item"></div>
-        <div class="skeleton__item"></div>
-      </div>
-    </div>
   </div>
 </main>
 
-<!-- Lightbox -->
-<div id="lb" role="dialog" aria-modal="true" aria-label="Artwork viewer">
-  <button id="lb-close" aria-label="Close">&#215;</button>
-  <button class="lb-arrow" id="lb-prev" aria-label="Previous artwork">&#8592;</button>
-  <div id="lb-img-wrap">
-    <div id="lb-spinner">Loading&hellip;</div>
-    <img id="lb-img" alt="" src="">
-  </div>
-  <button class="lb-arrow" id="lb-next" aria-label="Next artwork">&#8594;</button>
-  <div id="lb-bar">
-    <span id="lb-title"></span>
-    <span id="lb-meta"></span>
-    <a id="lb-link" href="#">View full details &rarr;</a>
-  </div>
-</div>
-
-<button class="scroll-top" id="scroll-top" aria-label="Back to top">&#8593; Top</button>
-
-<footer class="footer">
-  <div class="container footer__inner">
-    <span>Jeffrey F. S. Neumann</span>
-    <nav class="footer-nav" aria-label="Site navigation">
-      <a href="archive.html">Archive</a>
-      <a href="series-index.html">Series</a>
-      <a href="timeline.html">Timeline</a>
-      <a href="constellation.html" title="Force-directed map of all works, clustered by theme">Constellation</a>
-      <a href="wall.html">Wall</a>
-      <a href="mosaic.html" class="nav-mosaic"><span class="m">M</span><span class="o">o</span><span class="s">s</span><span class="a">a</span><span class="i">i</span><span class="c">c</span></a>
-      <a href="about.html">About</a>
-      <a href="for-artists.html" style="color:var(--accent)">For Artists</a>
-      <a href="companion.html">Companion</a>
-      <a href="changes.html">Changes</a>
-      <a href="lost.html">Lost</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="feed.xml" title="RSS feed of new works">RSS</a>
-    </nav>
-    <nav class="footer-social" aria-label="Social links">
-      <a href="https://www.linkedin.com/in/jeffreyneumann/" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="https://dribbble.com/JFSN" target="_blank" rel="noopener">Dribbble</a>
-      <a href="https://www.youtube.com/@jfsneumann/videos" target="_blank" rel="noopener">YouTube</a>
-      <a href="https://showspace.so/s/jeffrey-neumann-46" target="_blank" rel="noopener">Showspace</a>
-    </nav>
-    <nav class="footer-earlier" aria-label="Earlier sites">
-      <a href="#" target="_blank" rel="noopener">Mr. SNOWmann</a>
-      <a href="#" target="_blank" rel="noopener">Fine Art 2000</a>
-      <a href="/old-site/" target="_blank" rel="noopener">jfsn 2023</a>
-      <a href="#" target="_blank" rel="noopener">jfsn 2014</a>
-    </nav>
+<!-- Footer -->
+<footer class="w-full border-t border-outline-variant bg-background">
+  <div class="flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop py-md max-w-[1200px] mx-auto gap-4">
+    <span class="font-label-lg text-label-lg font-bold">JFSN</span>
+    <div class="flex gap-8">
+      <a class="font-label-md text-label-md uppercase tracking-widest text-secondary hover:text-on-tertiary-container transition-colors" href="about.html">ABOUT</a>
+      <a class="font-label-md text-label-md uppercase tracking-widest text-secondary hover:text-on-tertiary-container transition-colors" href="companion.html">COMPANION</a>
+      <a class="font-label-md text-label-md uppercase tracking-widest text-secondary hover:text-on-tertiary-container transition-colors" href="mosaic.html">MOSAIC</a>
+    </div>
+    <p class="font-label-md text-label-md uppercase tracking-widest text-secondary">© 2026 JEFFREY F. S. NEUMANN.</p>
   </div>
 </footer>
 
+<!-- Mobile bottom nav -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 px-4 bg-background border-t border-outline-variant h-16" style="padding-bottom: env(safe-area-inset-bottom, 8px)" aria-label="Mobile navigation">
+  <a href="index.html" class="flex flex-col items-center justify-center text-secondary">
+    <span class="material-symbols-outlined">home</span>
+    <span class="font-label-md text-[10px] uppercase">Home</span>
+  </a>
+  <a href="archive.html" class="flex flex-col items-center justify-center text-on-tertiary-container" aria-current="page">
+    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+    <span class="font-label-md text-[10px] uppercase">Archive</span>
+  </a>
+  <a href="series-index.html" class="flex flex-col items-center justify-center text-secondary">
+    <span class="material-symbols-outlined">auto_awesome_motion</span>
+    <span class="font-label-md text-[10px] uppercase">Series</span>
+  </a>
+  <a href="timeline.html" class="flex flex-col items-center justify-center text-secondary">
+    <span class="material-symbols-outlined">history_toggle_off</span>
+    <span class="font-label-md text-[10px] uppercase">Timeline</span>
+  </a>
+  <a href="companion.html" class="flex flex-col items-center justify-center text-secondary">
+    <span class="material-symbols-outlined">chat_bubble</span>
+    <span class="font-label-md text-[10px] uppercase">Companion</span>
+  </a>
+</nav>
+
 <script>
-(function () {
+const PAGE_SIZE = 48;
+let allWorks = [];
+let filtered = [];
+let page = 0;
 
-  const TYPE_LABELS = {
-    collage:           'Collage',
-    sculpture:         'Sculpture',
-    painting:          'Painting',
-    photograph:        'Photograph',
-    installation_view: 'Installation',
-  };
+const grid = document.getElementById('works-grid');
+const loadMoreBtn = document.getElementById('load-more');
+const emptyState = document.getElementById('empty-state');
+const workCount = document.getElementById('work-count');
+const clearBtn = document.getElementById('clear-filters');
 
-  const PALETTE_COLORS = {
-    red: '#cc2800', vermilion: '#e03810', magenta: '#c41e78', pink: '#e87090',
-    orange: '#e85c10', yellow: '#e8c830', ochre: '#c8901c', gold: '#c89618',
-    silver: '#909090', iridescent: null,
-    white: '#e8e4dc', ivory: '#f5efdf', black: '#2a2a2a', grey: '#888888',
-    brown: '#7a4428', green: '#3a7838', turquoise: '#28aabc',
-    blue: '#2050aa', ultramarine: '#1830a0', purple: '#7832aa',
-  };
-  /* Colors light enough to need a contrasting border on the dark bg */
-  const LIGHT_PALETTE = new Set(['ivory','white','yellow','silver','gold','ochre']);
+function typeLabel(t) {
+  return { collage: 'Collage', photograph: 'Photography', sculpture: 'Sculpture', painting: 'Painting' }[t] || t;
+}
 
-  /* Series descriptions — mirrors series.html SERIES config */
-  /* Theme + named-series metadata — loaded from artist-config.js (generated by build_catalog.py).
-     Falls back to empty objects so filters still work even if config fails to load. */
-  const _C = window.ARCHIVE_CONFIG || {};
-  const SERIES_META = Object.fromEntries(
-    (_C.themes || []).map(t => [t.name, { title: t.displayTitle, description: t.description }])
-  );
-  const NAMED_SERIES_META = Object.fromEntries(
-    (_C.namedSeries || []).map(s => [
-      s.key,
-      { title: s.displayTitle, description: s.description, url: `series.html?series=${encodeURIComponent(s.key)}` }
-    ])
-  );
+function decade(year) {
+  if (!year) return null;
+  return Math.floor(year / 10) * 10 + 's';
+}
 
-  const PAGE_SIZE = 60;
-  const ROW_H     = 8;  /* px — must match grid-auto-rows */
-  const COL_GAP   = 16; /* px — 1rem, used as vertical separation between items */
-  const CAP_H     = 22; /* px — caption area: margin-top(6) + number line(14) + gap(2) */
+function renderCard(w) {
+  const id = w.file.replace('.avif', '');
+  const med = typeLabel(w.work_type).toUpperCase();
+  const title = w.title || 'Untitled';
+  return `
+    <a href="artwork.html?id=${id}" class="group block no-underline text-on-background">
+      <div class="overflow-hidden mb-md border border-outline-variant bg-surface-container-low">
+        <img
+          alt="${title}"
+          class="w-full aspect-[3/4] object-cover grayscale-filter"
+          src="artworks/thumbs/${w.file}"
+          loading="lazy" width="300" height="400"
+        />
+      </div>
+      <div class="space-y-1">
+        <h4 class="font-label-lg text-label-lg uppercase leading-snug">${title}</h4>
+        <span class="block font-label-md text-label-md uppercase text-secondary">${w.year || '—'} | ${med}</span>
+        ${w.series ? `<span class="block font-label-md text-label-md text-on-tertiary-container uppercase">${w.series}</span>` : ''}
+      </div>
+    </a>`;
+}
 
-  const FAVS_KEY = 'jfsn-favorites';
+function applyFilters() {
+  const mediums = [...document.querySelectorAll('#filter-medium input:checked')].map(i => i.value);
+  const decades = [...document.querySelectorAll('#filter-decade input:checked')].map(i => i.value);
+  const series  = [...document.querySelectorAll('#filter-series input:checked')].map(i => i.value);
 
-  let catalog        = [];
-  let masonryDims    = null; /* dims.json lookup: artId → [w, h] */
-  let masonryObs     = null; /* ResizeObserver for responsive span recalc */
-  let visibleRecords = [];
-  let renderedCount  = 0;
-  let loadObserver   = null;
-  let prevVisible    = 0;  /* ⑥ track previous count for animation */
+  const active = mediums.length || decades.length || series.length;
+  clearBtn.classList.toggle('hidden', !active);
 
-  /* ⑥ Animate the works count from old → new */
-  function animateCount(toVal, total) {
-    const el = document.getElementById('count');
-    if (!el) return;
-    const fromVal  = prevVisible;
-    prevVisible    = toVal;
-    const isAll    = toVal === total;
-    const suffix   = isAll ? ' works' : ' of ' + total + ' works';
-    if (fromVal === toVal) { el.textContent = toVal + suffix; return; }
-    const duration = Math.min(500, Math.abs(toVal - fromVal) * 0.8 + 180);
-    const startTs  = performance.now();
-    el.style.transition = 'opacity 0.15s, transform 0.15s';
-    el.style.opacity    = '0.4';
-    el.style.transform  = 'scale(0.92)';
-    requestAnimationFrame(function step(now) {
-      const t    = Math.min((now - startTs) / duration, 1);
-      const ease = 1 - Math.pow(1 - t, 3);
-      const val  = Math.round(fromVal + (toVal - fromVal) * ease);
-      el.textContent  = val + suffix;
-      el.style.opacity   = String(0.4 + ease * 0.6);
-      el.style.transform = `scale(${0.92 + ease * 0.08})`;
-      if (t < 1) requestAnimationFrame(step);
-      else { el.style.opacity = '1'; el.style.transform = 'none'; }
-    });
-  }
-
-  /* ③ Scroll-reveal observer — fires once per thumb, then unobserves */
-  const revealObserver = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (!e.isIntersecting) return;
-      e.target.classList.add('revealed');
-      revealObserver.unobserve(e.target);
-    });
-  }, { rootMargin: '0px 0px -40px 0px', threshold: 0.05 });
-  let activeType     = null;
-  let activeThemes   = new Set();
-  let activeSeries   = null;
-  let activeDec      = null;   /* e.g. "1970s" */
-  let searchQuery    = '';
-  let sortBy          = 'default';
-  let activePalettes  = new Set();
-  let activeFavs      = false;
-  let scrollRestored  = false;
-  let activeMotifs    = new Set();
-
-  /* ---- scroll position + scroll-to-top + progress bar ---- */
-  const scrollTopBtn  = document.getElementById('scroll-top');
-  const progressBar   = document.getElementById('scroll-progress');
-  let scrollSaveTimer;
-  window.addEventListener('scroll', () => {
-    clearTimeout(scrollSaveTimer);
-    scrollSaveTimer = setTimeout(() => {
-      sessionStorage.setItem('archive-scroll', window.scrollY);
-      sessionStorage.setItem('archive-rendered', String(renderedCount));
-    }, 100);
-    scrollTopBtn.classList.toggle('visible', window.scrollY > 800);
-    if (progressBar) {
-      const total = document.documentElement.scrollHeight - window.innerHeight;
-      progressBar.style.width = (total > 0 ? (window.scrollY / total) * 100 : 0).toFixed(1) + '%';
+  filtered = allWorks.filter(w => {
+    if (mediums.length && !mediums.includes(w.work_type)) return false;
+    if (decades.length) {
+      const d = decade(w.year);
+      if (!d || !decades.includes(d)) return false;
     }
-  }, { passive: true });
-  scrollTopBtn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
-  /* ---- restore state from URL or localStorage ---- */
-  (function initFromURL() {
-    const p       = new URLSearchParams(location.search);
-    const hasURL  = p.toString().length > 0;
-    if (p.get('type'))    activeType = p.get('type');
-    if (p.get('theme'))   p.get('theme').split(',').filter(Boolean).forEach(t => activeThemes.add(t));
-    if (p.get('series'))  activeSeries = p.get('series');
-    if (p.get('dec'))     activeDec    = p.get('dec');
-    if (p.get('palette')) p.get('palette').split(',').filter(Boolean).forEach(c => activePalettes.add(c));
-    if (p.get('q'))       searchQuery = p.get('q');
-    if (p.get('sort'))    sortBy = p.get('sort');
-    if (p.get('favs') === '1') activeFavs = true;
-    if (p.get('motif')) p.get('motif').split(',').filter(Boolean).forEach(m => activeMotifs.add(m));
-
-    /* Fall back to localStorage only when there are no URL params */
-    if (!hasURL) {
-      try {
-        const saved = JSON.parse(localStorage.getItem('archive-filters') || 'null');
-        if (saved) {
-          if (saved.type)    activeType = saved.type;
-          if (saved.themes)  saved.themes.forEach(t => activeThemes.add(t));
-          if (saved.series)  activeSeries = saved.series;
-          if (saved.dec)     activeDec    = saved.dec;
-          if (saved.palettes) saved.palettes.forEach(c => activePalettes.add(c));
-          if (saved.sort)    sortBy = saved.sort;
-          if (saved.motifs)  saved.motifs.forEach(m => activeMotifs.add(m));
-        }
-      } catch (e) {}
-    }
-  })();
-
-  /* ---- density toggle ---- */
-  let dense = localStorage.getItem('archive-density') === 'compact';
-  const densityBtn = document.getElementById('density-btn');
-
-  function applyDensity() {
-    const grid = document.querySelector('.grid');
-    if (grid) grid.classList.toggle('dense', dense);
-    densityBtn.textContent = dense ? 'Normal' : 'Compact';
-    /* Column count changed — recalculate all masonry spans */
-    requestAnimationFrame(recalcAllSpans);
-  }
-
-  densityBtn.addEventListener('click', () => {
-    dense = !dense;
-    localStorage.setItem('archive-density', dense ? 'compact' : 'normal');
-    applyDensity();
-  });
-
-  document.getElementById('surprise-btn').addEventListener('click', () => {
-    if (!catalog.length) return;
-    const r = catalog[Math.floor(Math.random() * catalog.length)];
-    location.href = 'artwork.html?id=' + r.file.replace('.avif', '');
-  });
-
-  document.getElementById('filter-reset').addEventListener('click', () => {
-    activeType = null;
-    activeThemes.clear();
-    activeMotifs.clear();
-    activeSeries = null;
-    activeDec = null;
-    activePalettes.clear();
-    activeFavs = false;
-    searchQuery = '';
-    const inp = document.getElementById('search');
-    if (inp) { inp.value = ''; }
-    document.getElementById('search-clear').classList.remove('visible');
-    sortBy = 'default';
-    document.getElementById('sort-select').value = 'default';
-    syncTypeChips(); syncThemeChips(); syncMotifChips(); syncNamedSeriesChips(); syncDecadeChips(); syncPaletteSwatches(); syncFavBtn();
-    renderGrid(); pushURL();
-  });
-
-  /* ---- favorites filter ---- */
-  const favFilterBtn = document.getElementById('fav-filter-btn');
-  if (favFilterBtn) {
-    favFilterBtn.addEventListener('click', () => {
-      activeFavs = !activeFavs;
-      syncFavBtn();
-      renderGrid();
-      pushURL();
-    });
-  }
-
-  function syncFavBtn() {
-    const btn = document.getElementById('fav-filter-btn');
-    if (!btn) return;
-    const favs = activeFavs;
-    btn.setAttribute('aria-pressed', String(favs));
-    btn.textContent = favs ? '♥ Saved' : '♡ Saved';
-  }
-
-  /* ---- fetch catalog + image dimensions + dominant colors in parallel ---- */
-  let dominantColors = {};
-  Promise.all([
-    fetch('catalog-lite.json').then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }),
-    fetch('dims.json').then(r => r.json()).catch(() => null),
-    fetch('colors.json').then(r => r.json()).catch(() => null),
-  ])
-    .then(([data, dims, colors]) => {
-      catalog        = data;
-      masonryDims    = dims;
-      if (colors) dominantColors = colors;
-      buildFilters();
-
-      /* ---- progressive disclosure: motif + palette ---- */
-      (function () {
-        const moreBtn     = document.getElementById('more-filters-btn');
-        const motifWrap   = document.getElementById('motif-wrap');
-        const paletteWrap = document.getElementById('palette-wrap');
-        if (!moreBtn || !paletteWrap || !motifWrap) return;
-        const setLabel = on => {
-          moreBtn.textContent = (on ? '− ' : '+ ') + 'More filters (motif & palette)';
-          moreBtn.setAttribute('aria-expanded', String(on));
-        };
-        /* auto-expand when motif OR palette filters are active (e.g. from URL) */
-        if (activePalettes.size > 0 || activeMotifs.size > 0) {
-          motifWrap.classList.add('expanded');
-          paletteWrap.classList.add('expanded');
-          setLabel(true);
-        }
-        moreBtn.addEventListener('click', () => {
-          const on = !motifWrap.classList.contains('expanded');
-          motifWrap.classList.toggle('expanded', on);
-          paletteWrap.classList.toggle('expanded', on);
-          setLabel(on);
-        });
-      })();
-
-      initSearch();
-      initSort();
-      renderGrid();
-      const sb = document.getElementById('surprise-btn');
-      if (sb) sb.disabled = false;
-    })
-    .catch(() => {
-      document.getElementById('grid-wrap').innerHTML =
-        '<p style="padding:4rem 0;text-align:center;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)">Could not load catalog. Run build_catalog.py first.</p>';
-    });
-
-  /* ---- search ---- */
-  function initSearch() {
-    const input = document.getElementById('search');
-    const clear = document.getElementById('search-clear');
-
-    if (searchQuery) {
-      input.value = searchQuery;
-      clear.classList.add('visible');
-    }
-
-    let searchTimer;
-    input.addEventListener('input', () => {
-      searchQuery = input.value;
-      clear.classList.toggle('visible', searchQuery.length > 0);
-      clearTimeout(searchTimer);
-      searchTimer = setTimeout(() => { renderGrid(); pushURL(); }, 150);
-    });
-
-    clear.addEventListener('click', () => {
-      searchQuery = '';
-      input.value = '';
-      clear.classList.remove('visible');
-      input.focus();
-      clearTimeout(searchTimer);
-      renderGrid();
-      pushURL();
-    });
-  }
-
-  /* ---- sort select ---- */
-  function initSort() {
-    const sel = document.getElementById('sort-select');
-    sel.value = sortBy;
-    sel.addEventListener('change', () => {
-      sortBy = sel.value;
-      renderGrid();
-      pushURL();
-    });
-  }
-
-  /* ---- build filter chips ---- */
-  function buildFilters() {
-    const types  = [...new Set(catalog.map(r => r.work_type).filter(Boolean))].sort();
-    const themes = [...new Set(catalog.flatMap(r => r.themes || []))].sort();
-
-    /* Precompute counts for labels */
-    const typeCounts  = {};
-    const themeCounts = {};
-    catalog.forEach(r => {
-      if (r.work_type) typeCounts[r.work_type] = (typeCounts[r.work_type] || 0) + 1;
-      (r.themes || []).forEach(t => { themeCounts[t] = (themeCounts[t] || 0) + 1; });
-    });
-
-    const typeRow  = document.getElementById('type-row');
-    const themeRow = document.getElementById('theme-row');
-
-    typeRow.appendChild(makeChip('All', 'type-all', () => {
-      activeType = null; syncTypeChips(); renderGrid(); pushURL();
-    }));
-    types.forEach(t => {
-      typeRow.appendChild(makeChip(TYPE_LABELS[t] || t, 'type-' + t, () => {
-        activeType = (activeType === t) ? null : t;
-        syncTypeChips(); renderGrid(); pushURL();
-      }, null, typeCounts[t]));
-    });
-
-    themeRow.appendChild(makeChip('All Themes', 'theme-all', () => {
-      activeThemes.clear(); syncThemeChips(); renderGrid(); pushURL();
-    }));
-    themes.forEach(th => {
-      themeRow.appendChild(makeChip(th, 'theme-' + th.replace(/\W+/g, '-'), () => {
-        if (activeThemes.has(th)) activeThemes.delete(th); else activeThemes.add(th);
-        syncThemeChips(); renderGrid(); pushURL();
-      }, th, themeCounts[th]));
-    });
-
-    /* Named series chips (XXIII / Squadron / Guernica) */
-    const seriesRow = document.getElementById('named-series-row');
-    if (seriesRow) {
-      const seriesCounts = {};
-      catalog.forEach(r => { if (r.series) seriesCounts[r.series] = (seriesCounts[r.series] || 0) + 1; });
-      (_C.namedSeries || [{ key: 'Guernica' }]).map(s => s.key).forEach(key => {
-        const title = (NAMED_SERIES_META[key] || {}).title || key;
-        seriesRow.appendChild(makeChip(title, 'named-series-' + key, () => {
-          activeSeries = activeSeries === key ? null : key;
-          syncNamedSeriesChips(); renderGrid(); pushURL();
-        }, null, seriesCounts[key]));
-      });
-    }
-
-    /* Decade chips */
-    const decadeRow = document.getElementById('decade-row');
-    if (decadeRow) {
-      const decadeCounts = {};
-      catalog.forEach(r => {
-        const d = decadeOf(r.year);
-        if (d) decadeCounts[d] = (decadeCounts[d] || 0) + 1;
-      });
-      const decades = Object.keys(decadeCounts).sort();
-      decadeRow.appendChild(makeChip('All', 'dec-all', () => {
-        activeDec = null; syncDecadeChips(); renderGrid(); pushURL();
-      }));
-      decades.forEach(d => {
-        decadeRow.appendChild(makeChip(d, 'dec-' + d, () => {
-          activeDec = activeDec === d ? null : d;
-          syncDecadeChips(); renderGrid(); pushURL();
-        }, null, decadeCounts[d]));
-      });
-      const undatedCount = catalog.filter(r => r.year === null || r.year === undefined).length;
-      if (undatedCount > 0) {
-        decadeRow.appendChild(makeChip('Undated', 'dec-undated', () => {
-          activeDec = activeDec === 'undated' ? null : 'undated';
-          syncDecadeChips(); renderGrid(); pushURL();
-        }, null, undatedCount));
-      }
-    }
-
-    /* Motif chips */
-    const motifRow = document.getElementById('motif-row');
-    if (motifRow) {
-      const motifCounts = {};
-      catalog.forEach(r => {
-        (r.motifs || []).forEach(m => { motifCounts[m] = (motifCounts[m] || 0) + 1; });
-      });
-      const motifs = Object.keys(motifCounts).sort();
-      motifRow.appendChild(makeChip('All Motifs', 'motif-all', () => {
-        activeMotifs.clear(); syncMotifChips(); renderGrid(); pushURL();
-      }));
-      motifs.forEach(m => {
-        motifRow.appendChild(makeChip(m.replace(/-/g, ' '), 'motif-' + m, () => {
-          if (activeMotifs.has(m)) activeMotifs.delete(m); else activeMotifs.add(m);
-          syncMotifChips(); renderGrid(); pushURL();
-        }, null, motifCounts[m]));
-      });
-    }
-
-    syncTypeChips();
-    syncThemeChips();
-    syncMotifChips();
-    syncNamedSeriesChips();
-    syncDecadeChips();
-    buildPaletteFilters();
-    syncFavBtn();
-  }
-
-  function buildPaletteFilters() {
-    const allColors = [...new Set(catalog.flatMap(r => r.palette || []))].sort();
-    const row = document.getElementById('palette-row');
-    if (!row || !allColors.length) return;
-
-    row.appendChild(makeChip('All', 'palette-all', () => {
-      activePalettes.clear(); syncPaletteSwatches(); renderGrid(); pushURL();
-    }));
-
-    allColors.forEach(name => {
-      const btn = document.createElement('button');
-      btn.className = 'swatch';
-      btn.dataset.chipId = 'palette-' + name;
-      btn.dataset.palette = name;
-      btn.setAttribute('aria-pressed', 'false');
-      btn.setAttribute('aria-label', name);
-      btn.title = name.charAt(0).toUpperCase() + name.slice(1);
-
-      if (name === 'iridescent') {
-        btn.style.background =
-          'conic-gradient(from 0deg,#ff4400,#ffcc00,#88dd00,#00aacc,#6644ff,#ff4400)';
-      } else {
-        btn.style.background = PALETTE_COLORS[name] || '#888';
-        if (LIGHT_PALETTE.has(name)) {
-          btn.style.borderColor = 'rgba(0,0,0,0.3)';
-        }
-      }
-
-      btn.addEventListener('click', () => {
-        if (activePalettes.has(name)) activePalettes.delete(name);
-        else activePalettes.add(name);
-        syncPaletteSwatches(); renderGrid(); pushURL();
-      });
-      row.appendChild(btn);
-    });
-
-    syncPaletteSwatches();
-  }
-
-  function syncPaletteSwatches() {
-    document.querySelectorAll('[data-chip-id^="palette-"]').forEach(btn => {
-      const isAll = btn.dataset.chipId === 'palette-all';
-      btn.setAttribute('aria-pressed',
-        String(isAll ? activePalettes.size === 0 : activePalettes.has(btn.dataset.palette)));
-    });
-  }
-
-  function syncMotifChips() {
-    document.querySelectorAll('[data-chip-id^="motif-"]').forEach(btn => {
-      const isAll = btn.dataset.chipId === 'motif-all';
-      const key   = btn.dataset.chipId.slice('motif-'.length);
-      btn.setAttribute('aria-pressed',
-        String(isAll ? activeMotifs.size === 0 : activeMotifs.has(key)));
-    });
-  }
-
-  function makeChip(label, id, onClick, themeValue, count) {
-    const btn = document.createElement('button');
-    btn.className = 'chip';
-    if (count !== undefined) {
-      btn.innerHTML = esc(label) + '<span class="chip-count">' + count + '</span>';
-    } else {
-      btn.textContent = label;
-    }
-    btn.setAttribute('aria-pressed', 'false');
-    btn.dataset.chipId = id;
-    if (themeValue) btn.dataset.theme = themeValue;
-    btn.addEventListener('click', onClick);
-    return btn;
-  }
-
-  function syncTypeChips() {
-    document.querySelectorAll('[data-chip-id^="type-"]').forEach(btn => {
-      const isAll = btn.dataset.chipId === 'type-all';
-      const key   = btn.dataset.chipId.replace('type-', '');
-      btn.setAttribute('aria-pressed',
-        String(isAll ? activeType === null : activeType === key));
-    });
-  }
-
-  function syncThemeChips() {
-    document.querySelectorAll('[data-chip-id^="theme-"]').forEach(btn => {
-      const isAll = btn.dataset.chipId === 'theme-all';
-      btn.setAttribute('aria-pressed',
-        String(isAll ? activeThemes.size === 0 : activeThemes.has(btn.dataset.theme)));
-    });
-  }
-
-  function syncNamedSeriesChips() {
-    document.querySelectorAll('[data-chip-id^="named-series-"]').forEach(btn => {
-      const key = btn.dataset.chipId.replace('named-series-', '');
-      btn.setAttribute('aria-pressed', String(activeSeries === key));
-    });
-  }
-
-  function syncDecadeChips() {
-    document.querySelectorAll('[data-chip-id^="dec-"]').forEach(btn => {
-      const isAll = btn.dataset.chipId === 'dec-all';
-      const key   = btn.dataset.chipId.replace('dec-', '');
-      btn.setAttribute('aria-pressed',
-        String(isAll ? activeDec === null : activeDec === key));
-    });
-  }
-
-  /* ---- URL state + localStorage persistence ---- */
-  function pushURL() {
-    const p = new URLSearchParams();
-    if (activeType)                     p.set('type',    activeType);
-    if (activeThemes.size)              p.set('theme',   [...activeThemes].join(','));
-    if (activeSeries)                   p.set('series',  activeSeries);
-    if (activeDec)                      p.set('dec',     activeDec);
-    if (activePalettes.size)            p.set('palette', [...activePalettes].join(','));
-    if (searchQuery.trim())             p.set('q',       searchQuery.trim());
-    if (sortBy && sortBy !== 'default') p.set('sort',    sortBy);
-    if (activeFavs)                     p.set('favs',    '1');
-    if (activeMotifs.size)              p.set('motif',   [...activeMotifs].join(','));
-    const qs = p.toString();
-    history.replaceState(null, '', qs ? '?' + qs : location.pathname);
-
-    /* Persist filter state (not search query) for next visit */
-    try {
-      const s = {};
-      if (activeType)           s.type     = activeType;
-      if (activeThemes.size)    s.themes   = [...activeThemes];
-      if (activeSeries)         s.series   = activeSeries;
-      if (activeDec)            s.dec      = activeDec;
-      if (activePalettes.size)  s.palettes = [...activePalettes];
-      if (sortBy !== 'default') s.sort     = sortBy;
-      if (activeMotifs.size)    s.motifs   = [...activeMotifs];
-      if (Object.keys(s).length) {
-        localStorage.setItem('archive-filters', JSON.stringify(s));
-      } else {
-        localStorage.removeItem('archive-filters');
-      }
-    } catch (e) {}
-  }
-
-  /* ---- artwork link includes filter context ---- */
-  function artworkURL(id) {
-    const p = new URLSearchParams({ id });
-    if (activeType)          p.set('type',    activeType);
-    if (activeThemes.size)   p.set('theme',   [...activeThemes].join(','));
-    if (activePalettes.size) p.set('palette', [...activePalettes].join(','));
-    if (searchQuery.trim())  p.set('q',       searchQuery.trim());
-    return 'artwork.html?' + p.toString();
-  }
-
-  /* ---- decade helper ---- */
-  function decadeOf(year) {
-    const y = parseInt(year, 10);
-    return isNaN(y) ? null : (Math.floor(y / 10) * 10) + 's';
-  }
-
-  /* ---- filter logic ---- */
-  function getFavSet() {
-    try { return new Set(JSON.parse(localStorage.getItem(FAVS_KEY) || '[]')); } catch(e) { return new Set(); }
-  }
-
-  function matches(record) {
-    if (activeType && record.work_type !== activeType) return false;
-    if (activeSeries && record.series !== activeSeries) return false;
-    if (activeDec) {
-      if (activeDec === 'undated') {
-        if (record.year !== null && record.year !== undefined) return false;
-      } else if (decadeOf(record.year) !== activeDec) {
-        return false;
-      }
-    }
-    if (activeThemes.size) {
-      if (!(record.themes || []).some(t => activeThemes.has(t))) return false;
-    }
-    if (activePalettes.size) {
-      if (!(record.palette || []).some(c => activePalettes.has(c))) return false;
-    }
-    if (activeMotifs.size) {
-      if (!(record.motifs || []).some(m => activeMotifs.has(m))) return false;
-    }
-    if (activeFavs) {
-      const id = record.file ? record.file.replace('.avif', '') : '';
-      if (!getFavSet().has(id)) return false;
-    }
-    if (searchQuery.trim()) {
-      const q = searchQuery.trim().toLowerCase();
-      const inTitle     = (record.title     || '').toLowerCase().includes(q);
-      const inThemes    = (record.themes    || []).some(t => t.toLowerCase().includes(q));
-      const inSeries    = (record.series    || '').toLowerCase().includes(q);
-      const inKeywords  = (record.keywords  || []).some(k => k.toLowerCase().includes(q));
-      const inMotifs    = (record.motifs    || []).some(m => m.toLowerCase().includes(q));
-      const inMaterials = (record.materials || []).some(m => m.toLowerCase().includes(q));
-      if (!inTitle && !inThemes && !inSeries && !inKeywords && !inMotifs && !inMaterials) return false;
-    }
+    if (series.length && !series.includes(w.series)) return false;
     return true;
-  }
+  });
 
-  /* ---- sort ---- */
-  function sortedVisible(records) {
-    if (sortBy === 'default') return records;
-    const copy = records.slice();
-    if (sortBy === 'newest') return copy.sort((a, b) => {
-      const diff = (parseInt(b.year, 10) || 0) - (parseInt(a.year, 10) || 0);
-      return diff || b.file.localeCompare(a.file);
-    });
-    if (sortBy === 'oldest') return copy.sort((a, b) => {
-      const diff = (parseInt(a.year, 10) || 0) - (parseInt(b.year, 10) || 0);
-      return diff || a.file.localeCompare(b.file);
-    });
-    if (sortBy === 'az') return copy.sort((a, b) => (a.title || '').localeCompare(b.title || ''));
-    if (sortBy === 'za') return copy.sort((a, b) => (b.title || '').localeCompare(a.title || ''));
-    return records;
-  }
+  page = 0;
+  grid.innerHTML = '';
+  renderPage();
+}
 
-  /* ---- reset button visibility ---- */
-  function updateResetBtn() {
-    const btn = document.getElementById('filter-reset');
-    if (!btn) return;
-    const active = activeType || activeThemes.size || activeSeries || activeDec || activePalettes.size || activeMotifs.size || activeFavs || searchQuery.trim();
-    btn.hidden = !active;
-  }
+function renderPage() {
+  const slice = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
+  slice.forEach(w => { grid.innerHTML += renderCard(w); });
+  page++;
 
-  /* ---- series context block ---- */
-  function updateSeriesContext() {
-    const wrap = document.getElementById('series-ctx-wrap');
-    if (!wrap) return;
-    /* Named series takes priority (?series= param) */
-    if (activeSeries && NAMED_SERIES_META[activeSeries]) {
-      const s = NAMED_SERIES_META[activeSeries];
-      document.getElementById('series-ctx-name').textContent = s.title;
-      document.getElementById('series-ctx-desc').textContent = s.description;
-      const link = document.getElementById('series-ctx-link');
-      link.href = s.url;
-      wrap.hidden = false;
-      return;
-    }
-    /* Show for single active theme with a SERIES_META entry */
-    if (activeThemes.size !== 1) { wrap.hidden = true; return; }
-    const theme = [...activeThemes][0];
-    const s = SERIES_META[theme];
-    if (!s) { wrap.hidden = true; return; }
-    document.getElementById('series-ctx-name').textContent = s.title;
-    document.getElementById('series-ctx-desc').textContent = s.description;
-    const link = document.getElementById('series-ctx-link');
-    link.href = 'series.html?theme=' + encodeURIComponent(theme);
-    wrap.hidden = false;
-  }
+  const total = filtered.length;
+  workCount.textContent = total.toLocaleString();
+  emptyState.classList.toggle('hidden', total > 0);
+  loadMoreBtn.classList.toggle('hidden', page * PAGE_SIZE >= total);
+}
 
-  /* ---- active filter strip ---- */
-  function updateActiveStrip() {
-    var strip = document.getElementById('active-strip');
-    if (!strip) return;
-    strip.innerHTML = '';
+fetch('catalog.json')
+  .then(r => r.json())
+  .then(data => {
+    allWorks = data;
+    filtered = data;
+    renderPage();
+  })
+  .catch(e => console.error('catalog load failed', e));
 
-    function addTag(label, onRemove) {
-      var tag = document.createElement('span');
-      tag.className = 'active-tag';
-      var txt = document.createElement('span');
-      txt.textContent = label;
-      var btn = document.createElement('button');
-      btn.className = 'active-tag__remove';
-      btn.setAttribute('aria-label', 'Remove ' + label + ' filter');
-      btn.textContent = '\xd7';
-      btn.addEventListener('click', onRemove);
-      tag.appendChild(txt);
-      tag.appendChild(btn);
-      strip.appendChild(tag);
-    }
+document.querySelectorAll('.custom-checkbox').forEach(cb => {
+  cb.addEventListener('change', applyFilters);
+});
 
-    if (activeType) {
-      var typeLbl = TYPE_LABELS[activeType] || activeType;
-      addTag(typeLbl, function() { activeType = null; syncTypeChips(); renderGrid(); pushURL(); });
-    }
-    activeThemes.forEach(function(th) {
-      addTag(th, function() { activeThemes.delete(th); syncThemeChips(); renderGrid(); pushURL(); });
-    });
-    if (activeSeries) {
-      var serLbl = (NAMED_SERIES_META[activeSeries] || {}).title || activeSeries;
-      addTag(serLbl, function() { activeSeries = null; syncNamedSeriesChips(); renderGrid(); pushURL(); });
-    }
-    if (activeDec) {
-      addTag(activeDec, function() { activeDec = null; syncDecadeChips(); renderGrid(); pushURL(); });
-    }
-    activePalettes.forEach(function(c) {
-      addTag(c, function() { activePalettes.delete(c); syncPaletteSwatches(); renderGrid(); pushURL(); });
-    });
-    activeMotifs.forEach(function(m) {
-      addTag(m.replace(/-/g, ' '), function() { activeMotifs.delete(m); syncMotifChips(); renderGrid(); pushURL(); });
-    });
-    if (activeFavs) {
-      addTag('Saved', function() { activeFavs = false; syncFavBtn(); renderGrid(); pushURL(); });
-    }
-    if (searchQuery.trim()) {
-      var sq = searchQuery.trim();
-      addTag('"' + sq + '"', function() {
-        searchQuery = '';
-        var inp = document.getElementById('search');
-        var clr = document.getElementById('search-clear');
-        if (inp) inp.value = '';
-        if (clr) clr.classList.remove('visible');
-        renderGrid(); pushURL();
-      });
-    }
-  }
+loadMoreBtn.addEventListener('click', renderPage);
 
-  /* ---- render grid ---- */
-  function renderGrid() {
-    visibleRecords = sortedVisible(catalog.filter(matches));
-    renderedCount  = 0;
-    const total    = catalog.length;
-
-    animateCount(visibleRecords.length, total);  /* ⑥ animated */
-
-    /* Update page title to reflect active filter */
-    if (activeSeries && NAMED_SERIES_META[activeSeries]) {
-      document.title = NAMED_SERIES_META[activeSeries].title + ' — Archive — Jeffrey F. S. Neumann';
-    } else if (activeThemes.size === 1) {
-      document.title = [...activeThemes][0] + ' — Archive — Jeffrey F. S. Neumann';
-    } else {
-      document.title = 'Archive — Jeffrey F. S. Neumann';
-    }
-
-    const wrap = document.getElementById('grid-wrap');
-    /* Remove the skeleton placeholder on first real render */
-    const skeleton = wrap.querySelector('.skeleton');
-    if (skeleton) skeleton.remove();
-    if (!wrap.querySelector('.grid')) {
-      const g = document.createElement('div');
-      g.className = 'grid'; g.id = 'grid';
-      wrap.appendChild(g);
-      const s = document.createElement('div');
-      s.id = 'load-sentinel';
-      wrap.appendChild(s);
-    }
-    const grid = document.getElementById('grid');
-    grid.replaceChildren();
-    observeMasonry(grid);
-
-    updateResetBtn();
-    updateSeriesContext();
-    updateActiveStrip();
-
-    if (visibleRecords.length === 0) {
-      grid.innerHTML = '<p class="empty">No works match the selected filters. <button class="empty-reset" onclick="document.getElementById(\'filter-reset\').click()">Clear filters</button></p>';
-      applyDensity();
-      return;
-    }
-
-    /* On first load restore prior scroll depth; after that just one page */
-    const savedCount  = !scrollRestored
-      ? (parseInt(sessionStorage.getItem('archive-rendered'), 10) || 0) : 0;
-    const initBatches = Math.max(1,
-      Math.ceil(Math.min(savedCount, visibleRecords.length) / PAGE_SIZE));
-    for (let i = 0; i < initBatches; i++) appendBatch(grid);
-
-    setupLoadMore();
-
-    if (!scrollRestored) {
-      scrollRestored = true;
-      const saved = sessionStorage.getItem('archive-scroll');
-      if (saved) requestAnimationFrame(() => window.scrollTo(0, parseInt(saved, 10)));
-    }
-  }
-
-  function appendBatch(grid) {
-    grid = grid || document.getElementById('grid');
-    if (!grid) return;
-    const slice = visibleRecords.slice(renderedCount, renderedCount + PAGE_SIZE);
-    if (!slice.length) return;
-
-    /* Pre-calculate column width so spans can be set BEFORE DOM insertion → no CLS */
-    const numCols = dense
-      ? (window.innerWidth <= 600 ? 3 : 6)
-      : (window.innerWidth <= 600 ? 2 : window.innerWidth <= 900 ? 3 : 4);
-    const colW = Math.floor((grid.offsetWidth - COL_GAP * (numCols - 1)) / numCols);
-
-    const frag    = document.createDocumentFragment();
-    const newFigs = [];
-    slice.forEach(r => {
-      const fig = buildFigure(r);
-      /* Set span inline before insertion — prevents the layout-shift rAF causes */
-      if (masonryDims && colW > 0) {
-        const id = fig.dataset.id;
-        if (id && masonryDims[id]) {
-          const [w, h] = masonryDims[id];
-          const imgH   = Math.round((colW / w) * h);
-          const capH   = dense ? 0 : CAP_H;
-          fig.style.gridRow = `span ${Math.ceil((imgH + capH + COL_GAP) / ROW_H)}`;
-        }
-      }
-      newFigs.push(fig);
-      frag.appendChild(fig);
-    });
-    grid.appendChild(frag);
-    renderedCount += slice.length;
-    applyDensity();
-    /* Fine-tune spans with actual offsetWidth after layout */
-    requestAnimationFrame(() => {
-      newFigs.forEach(setSpan);
-      newFigs.forEach(f => revealObserver.observe(f));  /* ③ scroll-reveal */
-    });
-  }
-
-  function setupLoadMore() {
-    if (loadObserver) { loadObserver.disconnect(); loadObserver = null; }
-    const sentinel = document.getElementById('load-sentinel');
-    if (!sentinel || renderedCount >= visibleRecords.length) return;
-    loadObserver = new IntersectionObserver(entries => {
-      if (!entries[0].isIntersecting) return;
-      if (renderedCount >= visibleRecords.length) {
-        loadObserver.disconnect(); return;
-      }
-      appendBatch();
-    }, { rootMargin: '600px' });
-    loadObserver.observe(sentinel);
-  }
-
-  function buildFigure(record) {
-    const id          = record.file.replace('.avif', '');
-    const typeLabel   = TYPE_LABELS[record.work_type] || record.work_type || '';
-    const yearStr     = record.year ? String(record.year) : '';
-    const overlayMeta = [yearStr, typeLabel].filter(Boolean).join(' · ');
-    const [imgW, imgH] = (masonryDims && masonryDims[id]) || [400, 400];
-    const fig       = document.createElement('figure');
-    fig.className   = 'thumb';
-    fig.dataset.id  = id;
-    const bgColor   = dominantColors[id] ? `background-color:${dominantColors[id]};` : '';
-    fig.innerHTML = `
-      <a class="thumb__link" href="${esc(artworkURL(id))}" style="${bgColor}">
-        <img srcset="artworks/mini/${esc(id)}.avif 200w, artworks/thumbs/${esc(id)}.avif 400w"
-             sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)"
-             src="artworks/thumbs/${esc(id)}.avif"
-             alt="${esc(record.title || id)}"
-             loading="lazy" width="${imgW}" height="${imgH}">
-        <div class="thumb__overlay" aria-hidden="true">
-          <span class="thumb__overlay-title">${esc(record.title || id)}</span>
-          <span class="thumb__overlay-type">${esc(overlayMeta)}</span>
-        </div>
-      </a>
-      <figcaption class="thumb__caption">${esc(id.replace(/^art/, ''))}</figcaption>`;
-    return fig;
-  }
-
-  function esc(s) {
-    return String(s)
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  }
-
-  /* ---- masonry span calculation ---- */
-  function setSpan(fig) {
-    if (!masonryDims) return;
-    const id = fig.dataset.id;
-    if (!id || !masonryDims[id]) return;
-    const [w, h] = masonryDims[id];
-    /* fig.offsetWidth is the rendered column width — accurate after DOM layout */
-    const colW   = fig.offsetWidth || 280;
-    const imgH   = Math.round((colW / w) * h);
-    const capH   = dense ? 0 : CAP_H;
-    fig.style.gridRow = `span ${Math.ceil((imgH + capH + COL_GAP) / ROW_H)}`;
-  }
-
-  function recalcAllSpans() {
-    const grid = document.getElementById('grid');
-    if (!grid || !masonryDims) return;
-    grid.querySelectorAll('.thumb').forEach(setSpan);
-  }
-
-  function observeMasonry(grid) {
-    if (masonryObs) masonryObs.disconnect();
-    masonryObs = new ResizeObserver(() => recalcAllSpans());
-    masonryObs.observe(grid);
-  }
-
-  /* ---- full-res hover preload ---- */
-  (function () {
-    const wrap = document.getElementById('grid-wrap');
-    if (!wrap) return;
-    const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    wrap.addEventListener('mouseover', function (e) {
-      const link = e.target.closest('.thumb__link');
-      if (!link || link.dataset.fullLoaded) return;
-      link.dataset.fullLoaded = '1';
-      const img = link.querySelector('img');
-      const fig = link.closest('[data-id]');
-      if (!img || !fig) return;
-      const preload = new Image();
-      preload.onload = function () {
-        if (!link.matches(':hover')) return;
-        if (noMotion) { img.srcset = ''; img.src = preload.src; return; }
-        img.style.opacity = '0';
-        requestAnimationFrame(() => requestAnimationFrame(() => {
-          img.srcset = '';
-          img.src    = preload.src;
-          img.style.opacity = '1';
-        }));
-      };
-      preload.src = 'artworks/full/' + fig.dataset.id + '.avif';
-    });
-  })();
-
-  /* -------- Lightbox -------- */
-  (function () {
-    const lb       = document.getElementById('lb');
-    const lbImg    = document.getElementById('lb-img');
-    const lbTitle  = document.getElementById('lb-title');
-    const lbMeta   = document.getElementById('lb-meta');
-    const lbLink   = document.getElementById('lb-link');
-    const lbSpinner= document.getElementById('lb-spinner');
-    const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (noMotion) lbImg.style.transition = 'none';
-
-    let lbIndex = 0;
-
-    function openLb(id) {
-      lbIndex = visibleRecords.findIndex(r => r.file.replace('.avif','') === id);
-      if (lbIndex < 0) return;
-      lb.classList.add('open');
-      document.body.style.overflow = 'hidden';
-      lb.focus();
-      showLb(lbIndex);
-    }
-
-    function showLb(i) {
-      const r  = visibleRecords[i];
-      if (!r) return;
-      const id = r.file.replace('.avif','');
-      const src = 'artworks/full/' + id + '.avif';
-
-      lbImg.classList.remove('loaded');
-      lbSpinner.classList.add('visible');
-
-      const img = new Image();
-      img.onload = () => {
-        lbImg.src = src;
-        lbImg.alt = r.title || id;
-        lbImg.classList.add('loaded');
-        lbSpinner.classList.remove('visible');
-      };
-      img.onerror = () => lbSpinner.classList.remove('visible');
-      img.src = src;
-
-      const typeLabel = TYPE_LABELS[r.work_type] || r.work_type || '';
-      const year = r.year ? String(r.year) : '';
-      lbTitle.textContent = r.title || id;
-      lbMeta.textContent  = [year, typeLabel].filter(Boolean).join(' · ');
-      lbLink.href = artworkURL(id);
-
-      // preload neighbours
-      [i - 1, i + 1].forEach(j => {
-        if (j >= 0 && j < visibleRecords.length) {
-          const pre = new Image();
-          pre.src = 'artworks/full/' + visibleRecords[j].file.replace('.avif','') + '.avif';
-        }
-      });
-    }
-
-    function closeLb() {
-      lb.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-
-    function navigate(dir) {
-      const next = lbIndex + dir;
-      if (next < 0 || next >= visibleRecords.length) return;
-      lbIndex = next;
-      showLb(lbIndex);
-    }
-
-    // Intercept thumb clicks
-    document.getElementById('grid-wrap').addEventListener('click', function (e) {
-      const link = e.target.closest('.thumb__link');
-      if (!link) return;
-      e.preventDefault();
-      const fig = link.closest('[data-id]');
-      if (fig) openLb(fig.dataset.id);
-    });
-
-    document.getElementById('lb-close').addEventListener('click', closeLb);
-    document.getElementById('lb-prev').addEventListener('click', () => navigate(-1));
-    document.getElementById('lb-next').addEventListener('click', () => navigate(1));
-
-    // Close on backdrop click
-    lb.addEventListener('click', function (e) {
-      if (e.target === lb || e.target === document.getElementById('lb-img-wrap')) closeLb();
-    });
-
-    // Keyboard
-    document.addEventListener('keydown', function (e) {
-      if (!lb.classList.contains('open')) return;
-      if (e.key === 'Escape')      closeLb();
-      if (e.key === 'ArrowLeft')   navigate(-1);
-      if (e.key === 'ArrowRight')  navigate(1);
-    });
-
-    // Touch swipe
-    let touchX = null;
-    lb.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
-    lb.addEventListener('touchend', e => {
-      if (touchX === null) return;
-      const dx = e.changedTouches[0].clientX - touchX;
-      touchX = null;
-      if (Math.abs(dx) < 40) return;
-      navigate(dx < 0 ? 1 : -1);
-    }, { passive: true });
-  })();
-
-})();
+clearBtn.addEventListener('click', () => {
+  document.querySelectorAll('.custom-checkbox').forEach(cb => cb.checked = false);
+  applyFilters();
+});
 </script>
 
-<script src="search.js" defer></script>
-<!-- GoatCounter &mdash; privacy-first analytics. Replace subdomain after sign-up at https://www.goatcounter.com -->
+<!-- GoatCounter analytics -->
 <script data-goatcounter="https://jfsn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 
-<script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
-<script>
-(function(){
-  if(!window.matchMedia('(hover:hover) and (pointer:fine)').matches)return;
-  const dot=document.createElement('div');
-  dot.className='cursor-dot';
-  document.body.appendChild(dot);
-  let rx=0,ry=0;
-  document.addEventListener('mousemove',e=>{dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px';});
-  document.addEventListener('mouseleave',()=>dot.classList.add('hidden'));
-  document.addEventListener('mouseenter',()=>dot.classList.remove('hidden'));
-  function wire(){
-    document.querySelectorAll('.thumb__link').forEach(el=>{
-      el.addEventListener('mouseenter',()=>dot.classList.add('expanded'));
-      el.addEventListener('mouseleave',()=>dot.classList.remove('expanded'));
-    });
-  }
-  wire();
-  const observer=new MutationObserver(wire);
-  const grid=document.getElementById('grid-wrap');
-  if(grid)observer.observe(grid,{childList:true,subtree:true});
-})();
-</script>
 </body>
 </html>

@@ -1,12 +1,13 @@
 # Current State
-**Updated:** 2026-05-30 21:04
+**Updated:** 2026-05-31 09:23
 
 ## Last commit
-b37149d — Homepage: pin art1010 hero, update tagline + Begin Here works, dynamic count
+db435fd — Session 19: Stitch redesign direction set, deploy workflow clarified
 
 ## To do next session
-<!-- Edit this section before closing -->
-- [ ] (add what you want to do next time)
+- [ ] Review all 7 Stitch pages live on jfsn.com — check mobile on iPhone 15 Pro
+- [ ] Extract shared Tailwind config + nav/footer into one file (so future changes don't require editing every page)
+- [ ] Stitch prompts saved in project_stitch_redesign.md if any page needs a redesign pass
 
 ## Known issues
 - companion.html: FIXED session 18 — test live at jfsn.com/companion.html to confirm

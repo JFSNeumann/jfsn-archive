@@ -1,520 +1,463 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0b0b0b">
-  <title>The Companion — JFSN Archive</title>
-  <meta name="description" content="Describe a feeling, a word, a memory. The archive finds a work that fits.">
-
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="alternate" type="application/rss+xml" title="Jeffrey F. S. Neumann — Archive" href="https://jfsn.com/feed.xml">
-  <link rel="canonical" href="https://jfsn.com/companion.html">
-  <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="icon-192.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap"></noscript>
-  <link rel="stylesheet" href="site.css?v=20260530-nav4">
-
-  <meta property="og:type"        content="website">
-  <meta property="og:title"       content="The Companion — JFSN Archive">
-  <meta property="og:description" content="Describe a feeling, a word, a memory. The archive finds a work that fits.">
-  <meta property="og:image"       content="https://jfsn.com/og-card.jpg">
-  <meta property="og:url"         content="https://jfsn.com/companion.html">
-
-  <style>
-
-    /* ═══════════════════════════════════════════════════════════
-       PAGE LAYOUT
-    ═══════════════════════════════════════════════════════════ */
-    .companion-wrap {
-      min-height: calc(100vh - var(--nav-h, 56px));
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      padding: clamp(4rem, 8vw, 8rem) var(--gutter) clamp(4rem, 8vw, 8rem);
-      max-width: 680px;
-      margin: 0 auto;
-    }
-
-    /* ═══════════════════════════════════════════════════════════
-       HEADER
-    ═══════════════════════════════════════════════════════════ */
-    .c-eyebrow {
-      font-size: var(--cap);
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin: 0 0 1.25rem;
-    }
-    .c-title {
-      font-family: var(--font-display);
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
-      font-weight: 300;
-      line-height: 1.08;
-      letter-spacing: -0.01em;
-      margin: 0 0 1rem;
-    }
-    .c-title em { font-style: italic; color: var(--muted); }
-    .c-sub {
-      font-size: clamp(0.9rem, 1.5vw, 1rem);
-      color: var(--muted);
-      line-height: 1.65;
-      margin: 0 0 3rem;
-    }
-
-    /* ═══════════════════════════════════════════════════════════
-       FORM
-    ═══════════════════════════════════════════════════════════ */
-    .c-form { width: 100%; margin-bottom: 1.25rem; }
-    .c-input-wrap { display: flex; flex-direction: column; gap: 0.875rem; }
-
-    .c-textarea {
-      width: 100%;
-      background: transparent;
-      border: 1px solid var(--dim);
-      color: var(--text);
-      font-family: var(--font-display);
-      font-size: clamp(1.125rem, 2vw, 1.375rem);
-      font-weight: 300;
-      line-height: 1.5;
-      padding: 1rem 1.25rem;
-      resize: none;
-      outline: none;
-      transition: border-color 0.2s;
-      min-height: 4.5rem;
-      box-sizing: border-box;
-    }
-    .c-textarea::placeholder { color: var(--dim); opacity: 1; }
-    .c-textarea:focus { border-color: var(--muted); }
-    .c-textarea:focus::placeholder { opacity: 0.4; }
-
-    .c-submit {
-      appearance: none;
-      background: transparent;
-      border: 1px solid var(--muted);
-      color: var(--text);
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      padding: 0.875rem 2rem;
-      cursor: pointer;
-      align-self: flex-start;
-      transition: background 0.15s, color 0.15s, border-color 0.15s;
-    }
-    .c-submit:hover:not(:disabled) {
-      background: var(--text); color: var(--bg); border-color: var(--text);
-    }
-    .c-submit:disabled { opacity: 0.4; cursor: default; }
-    .c-submit-row { display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; }
-    .c-deep-label { font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); cursor: pointer; display: flex; align-items: center; gap: 0.4rem; user-select: none; }
-    .c-deep-label input { accent-color: var(--text); cursor: pointer; }
-
-    /* ═══════════════════════════════════════════════════════════
-       EXAMPLE CHIPS
-    ═══════════════════════════════════════════════════════════ */
-    .c-examples {
-      width: 100%;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 3.5rem;
-    }
-    .c-example {
-      appearance: none;
-      background: transparent;
-      border: 1px solid var(--dim);
-      color: var(--muted);
-      font-size: 0.75rem;
-      letter-spacing: 0.06em;
-      padding: 0.35rem 0.75rem;
-      cursor: pointer;
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .c-example:hover { border-color: var(--muted); color: var(--text); }
-
-    /* ═══════════════════════════════════════════════════════════
-       STATUS
-    ═══════════════════════════════════════════════════════════ */
-    .c-status {
-      width: 100%;
-      font-size: 0.8125rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 2rem;
-    }
-    .c-status[hidden] { display: none; }
-    @keyframes pulse-opacity {
-      0%, 100% { opacity: 0.35; }
-      50%       { opacity: 1; }
-    }
-    .c-status.loading { animation: pulse-opacity 1.6s ease-in-out infinite; }
-
-    /* ═══════════════════════════════════════════════════════════
-       RESULTS
-    ═══════════════════════════════════════════════════════════ */
-    .c-divider {
-      width: 100%;
-      border: none;
-      border-top: 1px solid var(--dim);
-      margin: 0 0 2.5rem;
-    }
-    .c-divider[hidden] { display: none; }
-
-    .c-results {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 2.5rem;
-    }
-    .c-results[hidden] { display: none; }
-
-    .c-card {
-      display: grid;
-      grid-template-columns: 160px 1fr;
-      gap: 1.5rem;
-      align-items: start;
-      opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-    .c-card.visible { opacity: 1; transform: none; }
-    @media (max-width: 480px) { .c-card { grid-template-columns: 1fr; } }
-
-    .c-card__img {
-      display: block;
-      aspect-ratio: 1;
-      overflow: hidden;
-      background: rgba(243,240,234,0.04);
-      text-decoration: none;
-    }
-    .c-card__img img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      object-position: center top;
-      display: block;
-      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-    .c-card__img:hover img { transform: scale(1.05); }
-
-    .c-card__body {
-      display: flex; flex-direction: column; gap: 0.45rem; padding-top: 0.2rem;
-    }
-    .c-card__meta {
-      font-size: var(--cap);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .c-card__title {
-      font-family: var(--font-display);
-      font-size: clamp(1.125rem, 2vw, 1.375rem);
-      font-weight: 300;
-      line-height: 1.2;
-      color: var(--text);
-    }
-    .c-card__reason {
-      font-family: var(--font-display);
-      font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);
-      font-style: italic;
-      font-weight: 300;
-      color: var(--muted);
-      line-height: 1.55;
-      margin-top: 0.2rem;
-    }
-    .c-card__link {
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      border-bottom: 1px solid var(--dim);
-      padding-bottom: 1px;
-      align-self: flex-start;
-      margin-top: 0.4rem;
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .c-card__link:hover { color: var(--text); border-color: var(--muted); }
-
-    /* ═══════════════════════════════════════════════════════════
-       AGAIN
-    ═══════════════════════════════════════════════════════════ */
-    .c-again {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-      padding-top: 1rem;
-      border-top: 1px solid var(--dim);
-      margin-top: 1rem;
-    }
-    .c-again[hidden] { display: none; }
-    .c-again-btn {
-      appearance: none; background: transparent;
-      border: 1px solid var(--dim); color: var(--muted);
-      font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
-      padding: 0.75rem 1.5rem; cursor: pointer;
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .c-again-btn:hover { border-color: var(--muted); color: var(--text); }
-    .c-browse-link {
-      font-size: 0.8125rem; color: var(--muted);
-      border-bottom: 1px solid var(--dim); padding-bottom: 1px;
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .c-browse-link:hover { color: var(--text); border-color: var(--muted); }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { transition: none !important; animation: none !important; }
-    }
-  </style>
-</head>
-<body>
-<a href="#main" class="skip">Skip to content</a>
-  <header class="nav-bar" role="banner">
-    <a class="nav__logo" href="index.html" aria-label="JFSN home">
-      <img src="favicon.svg" alt="" width="28" height="28" aria-hidden="true">
-      <span>Jeffrey F. S. Neumann</span>
-    </a>
-    <nav class="nav" aria-label="Main navigation">
-      <a href="archive.html">Archive</a>
-      <a href="series-index.html">Series</a>
-      <a href="about.html">About</a>
-      <a href="about.html#contact" style="color:var(--accent)">Inquiry</a>
-    </nav>
-    <button class="nav__search-btn" aria-label="Search" onclick="window.jfsnSearch?.open()">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-        <circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.25"/>
-        <line x1="10" y1="10" x2="14.5" y2="14.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
-      </svg>
-    </button>
-  </header>
-
-  <main id="main" tabindex="-1">
-    <div class="companion-wrap">
-
-      <p class="c-eyebrow">The Companion</p>
-      <h1 class="c-title">Describe<br><em>anything.</em></h1>
-      <p class="c-sub">
-        A feeling. A color. A decade. A single word.<br>
-        Something in 1,084 works may be waiting for you.
-      </p>
-
-      <form class="c-form" id="c-form" autocomplete="off">
-        <div class="c-input-wrap">
-          <textarea
-            class="c-textarea"
-            id="c-input"
-            rows="2"
-            placeholder="quiet, obsessive, midwest winter&hellip;"
-            maxlength="300"
-            aria-label="Describe a feeling, color, or memory"
-          ></textarea>
-          <div class="c-submit-row">
-            <button class="c-submit" type="submit" id="c-submit">Find a work &rarr;</button>
-            <label class="c-deep-label">
-              <input type="checkbox" id="c-deep"> deeper search
-            </label>
-          </div>
-        </div>
-      </form>
-
-      <div class="c-examples" id="c-examples">
-        <button class="c-example" type="button">something blue and melancholy</button>
-        <button class="c-example" type="button">chaos under control</button>
-        <button class="c-example" type="button">found objects and memory</button>
-        <button class="c-example" type="button">human figure, faded</button>
-        <button class="c-example" type="button">black and white, minimal</button>
-        <button class="c-example" type="button">midwest winter</button>
-        <button class="c-example" type="button">obsessive detail</button>
-        <button class="c-example" type="button">something joyful</button>
-      </div>
-
-      <p class="c-status" id="c-status" hidden></p>
-
-      <hr class="c-divider" id="c-divider" hidden>
-      <div class="c-results" id="c-results" hidden></div>
-
-      <div class="c-again" id="c-again" hidden>
-        <button class="c-again-btn" id="c-again-btn" type="button">Try another &rarr;</button>
-        <a class="c-browse-link" href="archive.html">Browse all 1,084 works &rarr;</a>
-      </div>
-
-    </div>
-  </main>
-
-  <footer class="footer">
-    <div class="container footer__inner">
-      <span>Jeffrey F. S. Neumann</span>
-      <nav class="footer-nav" aria-label="Site navigation">
-        <a href="archive.html">Archive</a>
-        <a href="series-index.html">Series</a>
-        <a href="timeline.html">Timeline</a>
-        <a href="constellation.html" title="Force-directed map of all works, clustered by theme">Constellation</a>
-        <a href="wall.html">Wall</a>
-        <a href="mosaic.html" class="nav-mosaic"><span class="m">M</span><span class="o">o</span><span class="s">s</span><span class="a">a</span><span class="i">i</span><span class="c">c</span></a>
-        <a href="about.html">About</a>
-        <a href="for-artists.html" style="color:var(--accent)">For Artists</a>
-        <a href="companion.html" aria-current="page">Companion</a>
-        <a href="changes.html">Changes</a>
-      <a href="lost.html">Lost</a>
-        <a href="privacy.html">Privacy</a>
-      <a href="feed.xml" title="RSS feed of new works">RSS</a>
-      </nav>
-    </div>
-    <nav class="container footer-earlier" aria-label="Earlier sites">
-      <a href="/old-site/old/Mr_SNOWmann/portfolio.html" target="_blank" rel="noopener">Mr. SNOWmann</a>
-      <a href="/old-site/old/fine-art-2000/index.htm"    target="_blank" rel="noopener">Fine Art 2000</a>
-      <a href="/old-site/art.html"                       target="_blank" rel="noopener">jfsn 2023</a>
-      <a href="/old-site/"                               target="_blank" rel="noopener">jfsn 2014</a>
-    </nav>
-  </footer>
-
-  <script src="search.js" defer></script>
-  <script data-goatcounter="https://jfsn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-  <script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
-
-  <script>
-  (function () {
-
-    // ── Endpoint ─────────────────────────────────────────────────
-    // Relative path works on Netlify (jfsn-archive.netlify.app or jfsn.com
-    // after DNS switch). Absolute URL works on cPanel-hosted jfsn.com
-    // in the interim — CORS is open so cross-origin fetch is fine.
-    const FUNCTION_URL = location.hostname.includes('netlify.app')
-      ? '/.netlify/functions/companion'
-      : 'https://jfsn-archive.netlify.app/.netlify/functions/companion';
-
-    // catalog-lite is fetched only to enrich result cards (title, year, work_type).
-    // The companion function now searches the catalog server-side.
-    let catalog = null;
-    fetch('catalog-lite.json')
-      .then(r => r.ok ? r.json() : null)
-      .then(d => { catalog = d; })
-      .catch(() => {});
-
-    const form      = document.getElementById('c-form');
-    const input     = document.getElementById('c-input');
-    const submitBtn = document.getElementById('c-submit');
-    const statusEl  = document.getElementById('c-status');
-    const divider   = document.getElementById('c-divider');
-    const resultsEl = document.getElementById('c-results');
-    const againWrap = document.getElementById('c-again');
-    const againBtn  = document.getElementById('c-again-btn');
-    const examplesEl = document.getElementById('c-examples');
-
-    // Example chips fill the input
-    document.querySelectorAll('.c-example').forEach(btn =>
-      btn.addEventListener('click', () => { input.value = btn.textContent.trim(); input.focus(); })
-    );
-
-    // Auto-grow textarea
-    input.addEventListener('input', () => {
-      input.style.height = 'auto';
-      input.style.height = input.scrollHeight + 'px';
-    });
-
-    // Reset to initial state
-    againBtn.addEventListener('click', reset);
-    function reset() {
-      statusEl.hidden   = true;
-      statusEl.classList.remove('loading');
-      divider.hidden    = true;
-      resultsEl.hidden  = true;
-      resultsEl.innerHTML = '';
-      againWrap.hidden  = true;
-      examplesEl.hidden = false;
-      submitBtn.disabled = false;
-      input.value = '';
-      input.style.height = 'auto';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      input.focus();
-    }
-
-    // Submit
-    form.addEventListener('submit', async e => {
-      e.preventDefault();
-      const prompt = input.value.trim();
-      if (!prompt) { input.focus(); return; }
-
-      submitBtn.disabled  = true;
-      examplesEl.hidden   = true;
-      const deep = !!document.getElementById('c-deep')?.checked;
-      setStatus(deep ? 'Thinking deeply through the archive…' : 'Looking through the archive…', true);
-
-      try {
-        const res = await fetch(FUNCTION_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ prompt, deep }),
-        });
-        if (!res.ok) throw new Error('Server returned ' + res.status);
-
-        const { matches } = await res.json();
-        if (!matches?.length) throw new Error('Nothing matched — try a different prompt.');
-
-        setStatus(null);
-        renderResults(matches);
-
-      } catch (err) {
-        setStatus(err.message, false);
-        submitBtn.disabled  = false;
-        examplesEl.hidden   = false;
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="theme-color" content="#fdf8f8"/>
+<title>The Companion — Jeffrey F. S. Neumann</title>
+<meta name="description" content="Describe a feeling, a word, a memory. The archive finds a work that fits."/>
+<link rel="canonical" href="https://jfsn.com/companion.html"/>
+<link rel="icon" href="favicon.svg" type="image/svg+xml"/>
+<link rel="manifest" href="manifest.json"/>
+<link rel="apple-touch-icon" href="icon-192.png"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="The Companion — Jeffrey F. S. Neumann"/>
+<meta property="og:description" content="Describe a feeling, a word, a memory. The archive finds a work that fits."/>
+<meta property="og:image" content="https://jfsn.com/og-card.jpg"/>
+<meta property="og:url" content="https://jfsn.com/companion.html"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "secondary": "#5e5e5e",
+          "on-tertiary-container": "#e05900",
+          "outline": "#747878",
+          "on-primary": "#ffffff",
+          "surface": "#fdf8f8",
+          "on-surface": "#1c1b1b",
+          "on-background": "#1c1b1b",
+          "surface-container": "#f1edec",
+          "background": "#fdf8f8",
+          "outline-variant": "#c4c7c7",
+          "primary": "#000000"
+        },
+        borderRadius: { "DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px" },
+        spacing: {
+          "xl": "80px", "sm": "12px", "margin-desktop": "64px",
+          "md": "24px", "margin-mobile": "16px", "gutter": "24px",
+          "xs": "4px", "lg": "48px", "base": "8px"
+        },
+        fontFamily: {
+          "label-lg": ["Inter"], "headline-md": ["Playfair Display"],
+          "body-md": ["Inter"], "label-md": ["Inter"],
+          "display-lg": ["Playfair Display"], "headline-lg": ["Playfair Display"]
+        },
+        fontSize: {
+          "label-lg": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}],
+          "headline-md": ["28px", {"lineHeight": "1.3", "fontWeight": "500"}],
+          "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+          "label-md": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "500"}],
+          "headline-lg": ["40px", {"lineHeight": "1.2", "fontWeight": "600"}]
+        }
       }
+    }
+  }
+</script>
+<style>
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    vertical-align: middle;
+  }
+
+  /* ── Card / result styles (dark section) ── */
+  :root {
+    --c-bg:   #0B0B0B;
+    --c-text: #F3F0EA;
+    --c-muted: rgba(243,240,234,0.62);
+    --c-dim:   rgba(243,240,234,0.12);
+    --c-accent: #FF6600;
+    --c-font-display: 'Playfair Display', Georgia, serif;
+    --c-cap: 0.6875rem;
+  }
+
+  .c-wrap {
+    background: var(--c-bg);
+    color: var(--c-text);
+    border-top: 2px solid var(--c-accent);
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: clamp(3rem, 6vw, 5rem) clamp(1.25rem, 5vw, 4rem) clamp(3rem, 6vw, 5rem);
+    max-width: 700px;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+  }
+  .c-eyebrow {
+    font-size: var(--c-cap);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--c-accent);
+    margin: 0 0 1.25rem;
+  }
+  .c-title {
+    font-family: var(--c-font-display);
+    font-size: clamp(2.25rem, 5vw, 4rem);
+    font-weight: 300;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    color: var(--c-text);
+    margin: 0 0 0.875rem;
+  }
+  .c-title em { font-style: italic; color: var(--c-muted); }
+  .c-sub {
+    font-size: clamp(0.875rem, 1.5vw, 1rem);
+    color: var(--c-muted);
+    line-height: 1.65;
+    margin: 0 0 2.5rem;
+  }
+  .c-form { width: 100%; margin-bottom: 1.25rem; }
+  .c-input-wrap { display: flex; flex-direction: column; gap: 0.875rem; }
+  .c-textarea {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--c-dim);
+    color: var(--c-text);
+    font-family: var(--c-font-display);
+    font-size: clamp(1.125rem, 2vw, 1.375rem);
+    font-weight: 300;
+    line-height: 1.5;
+    padding: 1rem 1.25rem;
+    resize: none;
+    outline: none;
+    transition: border-color 0.2s;
+    min-height: 4.5rem;
+    box-sizing: border-box;
+  }
+  .c-textarea::placeholder { color: var(--c-dim); opacity: 1; }
+  .c-textarea:focus { border-color: var(--c-muted); }
+  .c-submit {
+    appearance: none;
+    background: transparent;
+    border: 1px solid var(--c-muted);
+    color: var(--c-text);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.875rem 2rem;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .c-submit:hover:not(:disabled) { background: var(--c-text); color: var(--c-bg); border-color: var(--c-text); }
+  .c-submit:disabled { opacity: 0.4; cursor: default; }
+  .c-submit-row { display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; }
+  .c-deep-label {
+    font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--c-muted); cursor: pointer; display: flex; align-items: center; gap: 0.4rem; user-select: none;
+  }
+  .c-deep-label input { accent-color: var(--c-text); cursor: pointer; }
+
+  .c-examples { width: 100%; display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 3.5rem; }
+  .c-example {
+    appearance: none; background: transparent;
+    border: 1px solid var(--c-dim); color: var(--c-muted);
+    font-size: 0.75rem; letter-spacing: 0.06em;
+    padding: 0.35rem 0.75rem; cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .c-example:hover { border-color: var(--c-muted); color: var(--c-text); }
+
+  .c-status {
+    width: 100%; font-size: 0.8125rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--c-muted); margin-bottom: 2rem;
+  }
+  .c-status[hidden] { display: none; }
+  @keyframes pulse-opacity { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+  .c-status.loading { animation: pulse-opacity 1.6s ease-in-out infinite; }
+
+  .c-divider { width: 100%; border: none; border-top: 1px solid var(--c-dim); margin: 0 0 2.5rem; }
+  .c-divider[hidden] { display: none; }
+
+  .c-results { width: 100%; display: flex; flex-direction: column; gap: 2.5rem; }
+  .c-results[hidden] { display: none; }
+
+  .c-card {
+    display: grid; grid-template-columns: 160px 1fr;
+    gap: 1.5rem; align-items: start;
+    opacity: 0; transform: translateY(12px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .c-card.visible { opacity: 1; transform: none; }
+  @media (max-width: 480px) { .c-card { grid-template-columns: 1fr; } }
+
+  .c-card__img { display: block; aspect-ratio: 1; overflow: hidden; background: rgba(243,240,234,0.04); text-decoration: none; }
+  .c-card__img img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+  .c-card__img:hover img { transform: scale(1.05); }
+  .c-card__body { display: flex; flex-direction: column; gap: 0.45rem; padding-top: 0.2rem; }
+  .c-card__meta { font-size: var(--c-cap); letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-muted); }
+  .c-card__title { font-family: var(--c-font-display); font-size: clamp(1.125rem, 2vw, 1.375rem); font-weight: 300; line-height: 1.2; color: var(--c-text); }
+  .c-card__reason { font-family: var(--c-font-display); font-size: clamp(0.9375rem, 1.5vw, 1.0625rem); font-style: italic; font-weight: 300; color: var(--c-muted); line-height: 1.55; margin-top: 0.2rem; }
+  .c-card__link { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-muted); border-bottom: 1px solid var(--c-dim); padding-bottom: 1px; align-self: flex-start; margin-top: 0.4rem; transition: color 0.15s, border-color 0.15s; }
+  .c-card__link:hover { color: var(--c-text); border-color: var(--c-muted); }
+
+  .c-again { width: 100%; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; padding-top: 1rem; border-top: 1px solid var(--c-dim); margin-top: 1rem; }
+  .c-again[hidden] { display: none; }
+  .c-again-btn { appearance: none; background: transparent; border: 1px solid var(--c-dim); color: var(--c-muted); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.75rem 1.5rem; cursor: pointer; transition: border-color 0.15s, color 0.15s; }
+  .c-again-btn:hover { border-color: var(--c-muted); color: var(--c-text); }
+  .c-browse-link { font-size: 0.8125rem; color: var(--c-muted); border-bottom: 1px solid var(--c-dim); padding-bottom: 1px; transition: color 0.15s, border-color 0.15s; text-decoration: none; }
+  .c-browse-link:hover { color: var(--c-text); border-color: var(--c-muted); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body class="font-body-md bg-background text-on-background flex flex-col min-h-screen">
+
+<!-- Top Nav -->
+<header class="fixed top-0 w-full z-50 bg-background border-b border-outline-variant">
+  <div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-md max-w-[1440px] mx-auto">
+    <a class="font-headline-md text-headline-md text-primary tracking-tighter" href="index.html">JFSN</a>
+    <nav class="hidden md:flex items-center gap-lg">
+      <a class="font-label-lg text-label-lg uppercase tracking-widest text-primary hover:text-on-tertiary-container transition-colors" href="archive.html">ARCHIVE</a>
+      <a class="font-label-lg text-label-lg uppercase tracking-widest text-primary hover:text-on-tertiary-container transition-colors" href="series-index.html">SERIES</a>
+      <a class="font-label-lg text-label-lg uppercase tracking-widest text-primary hover:text-on-tertiary-container transition-colors" href="timeline.html">TIMELINE</a>
+      <a class="font-label-lg text-label-lg uppercase tracking-widest text-on-tertiary-container border-b-2 border-on-tertiary-container pb-1" href="companion.html" aria-current="page">COMPANION</a>
+      <a class="font-label-lg text-label-lg uppercase tracking-widest text-primary hover:text-on-tertiary-container transition-colors" href="about.html">ABOUT</a>
+    </nav>
+    <button class="md:hidden" aria-label="Menu">
+      <span class="material-symbols-outlined text-primary">menu</span>
+    </button>
+  </div>
+</header>
+
+<!-- Dark companion section -->
+<main id="main" tabindex="-1" class="flex-grow bg-[#0B0B0B] pt-[72px] pb-[72px]">
+  <div class="c-wrap">
+    <p class="c-eyebrow">The Companion</p>
+    <h1 class="c-title">Describe<br><em>anything.</em></h1>
+    <p class="c-sub">
+      A feeling. A color. A decade. A single word.<br>
+      Something in 1,084 works may be waiting for you.
+    </p>
+
+    <form class="c-form" id="c-form" autocomplete="off">
+      <div class="c-input-wrap">
+        <textarea
+          class="c-textarea"
+          id="c-input"
+          rows="2"
+          placeholder="quiet, obsessive, midwest winter…"
+          maxlength="300"
+          aria-label="Describe a feeling, color, or memory"
+        ></textarea>
+        <div class="c-submit-row">
+          <button class="c-submit" type="submit" id="c-submit">Find a work →</button>
+          <label class="c-deep-label">
+            <input type="checkbox" id="c-deep"> deeper search
+          </label>
+        </div>
+      </div>
+    </form>
+
+    <div class="c-examples" id="c-examples">
+      <button class="c-example" type="button">something blue and melancholy</button>
+      <button class="c-example" type="button">chaos under control</button>
+      <button class="c-example" type="button">found objects and memory</button>
+      <button class="c-example" type="button">human figure, faded</button>
+      <button class="c-example" type="button">black and white, minimal</button>
+      <button class="c-example" type="button">midwest winter</button>
+      <button class="c-example" type="button">obsessive detail</button>
+      <button class="c-example" type="button">something joyful</button>
+    </div>
+
+    <p class="c-status" id="c-status" hidden></p>
+    <hr class="c-divider" id="c-divider" hidden/>
+    <div class="c-results" id="c-results" hidden></div>
+
+    <div class="c-again" id="c-again" hidden>
+      <button class="c-again-btn" id="c-again-btn" type="button">Try another →</button>
+      <a class="c-browse-link" href="archive.html">Browse all 1,084 works →</a>
+    </div>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="w-full border-t border-outline-variant bg-background">
+  <div class="flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop py-lg max-w-[1440px] mx-auto gap-md">
+    <a class="font-label-lg text-label-lg text-primary font-bold tracking-tighter" href="index.html">JFSN</a>
+    <nav class="flex flex-wrap gap-md justify-center">
+      <a class="font-label-md text-label-md uppercase tracking-wider text-secondary hover:text-on-tertiary-container transition-colors" href="archive.html">Archive</a>
+      <a class="font-label-md text-label-md uppercase tracking-wider text-secondary hover:text-on-tertiary-container transition-colors" href="series-index.html">Series</a>
+      <a class="font-label-md text-label-md uppercase tracking-wider text-secondary hover:text-on-tertiary-container transition-colors" href="timeline.html">Timeline</a>
+      <a class="font-label-md text-label-md uppercase tracking-wider text-secondary hover:text-on-tertiary-container transition-colors" href="about.html">About</a>
+      <a class="font-label-md text-label-md uppercase tracking-wider text-secondary hover:text-on-tertiary-container transition-colors" href="mosaic.html">Mosaic</a>
+    </nav>
+    <span class="font-label-md text-label-md uppercase text-secondary">© 2026 JEFFREY F. S. NEUMANN.</span>
+  </div>
+</footer>
+
+<!-- Mobile bottom nav -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 px-4 bg-background border-t border-outline-variant h-16" style="padding-bottom: env(safe-area-inset-bottom, 8px)" aria-label="Mobile navigation">
+  <a href="index.html" class="flex flex-col items-center justify-center text-secondary">
+    <span class="material-symbols-outlined">home</span>
+    <span class="font-label-md text-[10px] uppercase">Home</span>
+  </a>
+  <a href="archive.html" class="flex flex-col items-center justify-center text-secondary">
+    <span class="material-symbols-outlined">inventory_2</span>
+    <span class="font-label-md text-[10px] uppercase">Archive</span>
+  </a>
+  <a href="series-index.html" class="flex flex-col items-center justify-center text-secondary">
+    <span class="material-symbols-outlined">auto_awesome_motion</span>
+    <span class="font-label-md text-[10px] uppercase">Series</span>
+  </a>
+  <a href="timeline.html" class="flex flex-col items-center justify-center text-secondary">
+    <span class="material-symbols-outlined">history_toggle_off</span>
+    <span class="font-label-md text-[10px] uppercase">Timeline</span>
+  </a>
+  <a href="companion.html" class="flex flex-col items-center justify-center text-on-tertiary-container" aria-current="page">
+    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+    <span class="font-label-md text-[10px] uppercase">Companion</span>
+  </a>
+</nav>
+
+<script>
+(function () {
+  const FUNCTION_URL = location.hostname.includes('netlify.app')
+    ? '/.netlify/functions/companion'
+    : 'https://jfsn-archive.netlify.app/.netlify/functions/companion';
+
+  let catalog = null;
+  fetch('catalog-lite.json')
+    .then(r => r.ok ? r.json() : null)
+    .then(d => { catalog = d; })
+    .catch(() => {});
+
+  const form       = document.getElementById('c-form');
+  const input      = document.getElementById('c-input');
+  const submitBtn  = document.getElementById('c-submit');
+  const statusEl   = document.getElementById('c-status');
+  const divider    = document.getElementById('c-divider');
+  const resultsEl  = document.getElementById('c-results');
+  const againWrap  = document.getElementById('c-again');
+  const againBtn   = document.getElementById('c-again-btn');
+  const examplesEl = document.getElementById('c-examples');
+
+  // Pre-fill from ?q= param (set by artwork.html "Ask the Archive" links)
+  const q = new URLSearchParams(location.search).get('q');
+  if (q) {
+    input.value = q;
+    // Auto-submit after a short delay so the page paints first
+    setTimeout(() => form.dispatchEvent(new Event('submit', { cancelable: true })), 400);
+  }
+
+  document.querySelectorAll('.c-example').forEach(btn =>
+    btn.addEventListener('click', () => { input.value = btn.textContent.trim(); input.focus(); })
+  );
+
+  input.addEventListener('input', () => {
+    input.style.height = 'auto';
+    input.style.height = input.scrollHeight + 'px';
+  });
+
+  againBtn.addEventListener('click', reset);
+  function reset() {
+    statusEl.hidden  = true;
+    statusEl.classList.remove('loading');
+    divider.hidden   = true;
+    resultsEl.hidden = true;
+    resultsEl.innerHTML = '';
+    againWrap.hidden = true;
+    examplesEl.hidden = false;
+    submitBtn.disabled = false;
+    input.value = '';
+    input.style.height = 'auto';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    input.focus();
+  }
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const prompt = input.value.trim();
+    if (!prompt) { input.focus(); return; }
+
+    submitBtn.disabled = true;
+    examplesEl.hidden  = true;
+    const deep = !!document.getElementById('c-deep')?.checked;
+    setStatus(deep ? 'Thinking deeply through the archive…' : 'Looking through the archive…', true);
+
+    try {
+      const res = await fetch(FUNCTION_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt, deep }),
+      });
+      if (!res.ok) throw new Error('Server returned ' + res.status);
+
+      const { matches } = await res.json();
+      if (!matches?.length) throw new Error('Nothing matched — try a different prompt.');
+
+      setStatus(null);
+      renderResults(matches);
+
+    } catch (err) {
+      setStatus(err.message, false);
+      submitBtn.disabled = false;
+      examplesEl.hidden  = false;
+    }
+  });
+
+  function renderResults(matches) {
+    const map = {};
+    if (catalog) catalog.forEach(w => { map[w.file.replace('.avif', '')] = w; });
+
+    divider.hidden   = false;
+    resultsEl.hidden = false;
+
+    matches.forEach((m, i) => {
+      const w     = map[m.id] || {};
+      const title = w.title || m.id;
+      const decade = w.year ? (Math.floor(w.year / 10) * 10) + 's' : null;
+      const type   = w.work_type ? w.work_type.replace(/_/g, ' ') : null;
+      const meta   = [decade, type].filter(Boolean).join(' · ');
+
+      const card = document.createElement('div');
+      card.className = 'c-card';
+      card.innerHTML = `
+        <a class="c-card__img" href="artwork.html?id=${esc(m.id)}">
+          <img src="artworks/thumbs/${esc(m.id)}.avif" alt="${esc(title)}" loading="${i === 0 ? 'eager' : 'lazy'}">
+        </a>
+        <div class="c-card__body">
+          ${meta ? `<p class="c-card__meta">${esc(meta)}</p>` : ''}
+          <p class="c-card__title">${esc(title)}</p>
+          <p class="c-card__reason">${esc(m.reason)}</p>
+          <a class="c-card__link" href="artwork.html?id=${esc(m.id)}">View this work &rarr;</a>
+        </div>`;
+      resultsEl.appendChild(card);
+      requestAnimationFrame(() =>
+        setTimeout(() => card.classList.add('visible'), i * 200)
+      );
     });
 
-    function renderResults(matches) {
-      const map = {};
-      if (catalog) catalog.forEach(w => { map[w.file.replace('.avif', '')] = w; });
+    againWrap.hidden = false;
+  }
 
-      divider.hidden   = false;
-      resultsEl.hidden = false;
+  function setStatus(msg, loading) {
+    if (!msg) { statusEl.hidden = true; statusEl.classList.remove('loading'); return; }
+    statusEl.textContent = msg;
+    statusEl.hidden = false;
+    statusEl.classList.toggle('loading', !!loading);
+  }
 
-      matches.forEach((m, i) => {
-        const w      = map[m.id] || {};
-        const title  = w.title || m.id;
-        const decade = w.year  ? (Math.floor(w.year / 10) * 10) + 's' : null;
-        const type   = w.work_type ? w.work_type.replace(/_/g, ' ') : null;
-        const meta   = [decade, type].filter(Boolean).join(' · ');
+  function esc(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+})();
+</script>
 
-        const card = document.createElement('div');
-        card.className = 'c-card';
-        card.innerHTML = `
-          <a class="c-card__img" href="artwork.html?id=${esc(m.id)}">
-            <img src="artworks/thumbs/${esc(m.id)}.avif"
-                 alt="${esc(title)}" loading="${i === 0 ? 'eager' : 'lazy'}">
-          </a>
-          <div class="c-card__body">
-            ${meta ? `<p class="c-card__meta">${esc(meta)}</p>` : ''}
-            <p class="c-card__title">${esc(title)}</p>
-            <p class="c-card__reason">${esc(m.reason)}</p>
-            <a class="c-card__link" href="artwork.html?id=${esc(m.id)}">View this work &rarr;</a>
-          </div>`;
-        resultsEl.appendChild(card);
-        requestAnimationFrame(() =>
-          setTimeout(() => card.classList.add('visible'), i * 200)
-        );
-      });
-
-      againWrap.hidden = false;
-    }
-
-    function setStatus(msg, loading) {
-      if (!msg) { statusEl.hidden = true; statusEl.classList.remove('loading'); return; }
-      statusEl.textContent = msg;
-      statusEl.hidden = false;
-      statusEl.classList.toggle('loading', !!loading);
-    }
-
-    function esc(s) {
-      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-    }
-
-  })();
-  </script>
+<!-- GoatCounter analytics -->
+<script data-goatcounter="https://jfsn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
 
 </body>
 </html>

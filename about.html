@@ -1,623 +1,255 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0b0b0b">
-  <title>About — Jeffrey F. S. Neumann</title>
-  <meta name="description" content="Jeffrey F. S. Neumann — artist and product designer based in Cleveland, Ohio.">
-
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="alternate" type="application/rss+xml" title="Jeffrey F. S. Neumann — Archive" href="https://jfsn.com/feed.xml">
-  <link rel="canonical" href="https://jfsn.com/about.html">
-  <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="icon-192.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Libre+Baskerville:ital,wght@0,400;1,400&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Libre+Baskerville:ital,wght@0,400;1,400&display=swap"></noscript>
-  <link rel="stylesheet" href="site.css?v=20260530-nav4">
-
-  <meta property="og:type"        content="profile">
-  <meta property="og:title"       content="About — Jeffrey F. S. Neumann">
-  <meta property="og:description" content="Five decades refusing to play safe. Collage, sculpture, and photography. Based in Cleveland, Ohio.">
-  <meta property="og:image"       content="https://jfsn.com/og-card.jpg">
-  <meta property="og:url"         content="https://jfsn.com/about.html">
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Jeffrey F. S. Neumann",
-    "jobTitle": "Artist",
-    "url": "https://jfsn.com",
-    "sameAs": ["https://jfsn.com/about.html"],
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Cleveland",
-      "addressRegion": "OH",
-      "addressCountry": "US"
-    },
-    "knowsAbout": ["collage", "assemblage", "sculpture", "photography", "mixed media", "found objects"],
-    "hasOccupation": {
-      "@type": "Occupation",
-      "name": "Visual Artist"
-    }
-  }
-  </script>
-
-  <style>
-    /* -------- About layout -------- */
-    .about {
-      padding-top: clamp(4rem, 9vw, 9rem);
-      padding-bottom: clamp(4rem, 10vw, 10rem);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem 6rem;
-      align-items: start;
-    }
-
-    /* -------- Bio -------- */
-    .bio__name {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(3rem, 7vw, 5.5rem);
-      font-weight: 300;
-      letter-spacing: 0.03em;
-      line-height: 1.05;
-      margin: 0 0 2.75rem;
-    }
-
-    .bio__quote {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(1.5rem, 2.5vw, 2.125rem);
-      font-style: italic;
-      font-weight: 300;
-      line-height: 1.4;
-      color: var(--text);
-      margin: 0 0 2.25rem;
-    }
-
-    .bio__text {
-      font-family: 'Libre Baskerville', Georgia, serif;
-      font-size: clamp(0.9rem, 1.1vw, 1rem);
-      line-height: 1.85;
-      color: var(--text);
-      max-width: 52ch;
-    }
-
-    .bio__text p {
-      margin: 0 0 1.25em;
-    }
-    .bio__text p:last-child { margin-bottom: 0; }
-
-    .bio__archive {
-      display: inline-block;
-      margin-top: 2rem;
-      font-size: var(--cap);
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-      border-bottom: 1px solid var(--dim);
-      padding-bottom: 0.1rem;
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .bio__archive:hover {
-      color: var(--accent);
-      border-color: var(--accent);
-    }
-
-    .bio__featured {
-      margin-top: 2rem;
-      margin-bottom: 2rem;
-      max-width: 52ch;
-    }
-    .bio__featured a { display: block; }
-    .bio__featured img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    /* -------- Portrait (right column) -------- */
-    .bio__portrait {
-      margin-bottom: 2.5rem;
-    }
-    .bio__portrait img {
-      width: 100%;
-      max-width: 280px;
-      height: auto;
-      display: block;
-    }
-
-    /* -------- Details -------- */
-    .details {
-      display: flex;
-      flex-direction: column;
-      gap: 2.5rem;
-      padding-top: 0.5rem;
-    }
-
-    .detail-group__label {
-      font-size: var(--cap);
-      font-weight: 400;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin: 0 0 0.6rem;
-    }
-
-    .detail-group__body {
-      font-size: 0.9375rem;
-      line-height: 1.6;
-      color: var(--text);
-      margin: 0;
-    }
-
-    .series-table {
-      border-collapse: collapse;
-      width: 100%;
-    }
-    .series-table td {
-      font-size: 0.9375rem;
-      line-height: 1.6;
-      color: var(--text);
-      padding: 0;
-    }
-    .series-table td:last-child {
-      text-align: right;
-      color: var(--muted);
-      font-size: var(--cap);
-      letter-spacing: 0.08em;
-      vertical-align: middle;
-    }
-    .series-table a {
-      border-bottom: 1px solid var(--dim);
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .series-table a:hover {
-      color: var(--accent);
-      border-color: var(--accent);
-    }
-
-    /* exhibitions & press share the series-table base styles */
-    .exhibitions-table td,
-    .press-table td { padding-block: 0.15rem; }
-    .exhibitions-table em,
-    .press-table em { font-style: italic; color: var(--muted); }
-
-    .detail-group__body a {
-      border-bottom: 1px solid var(--dim);
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .detail-group__body a:hover {
-      color: var(--text);
-      border-color: rgba(243,240,234,0.4);
-    }
-
-    .detail-divider {
-      border: none;
-      border-top: 1px solid var(--dim);
-      margin: 0;
-    }
-
-    /* -------- Responsive -------- */
-    @media (max-width: 780px) {
-      .about {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-      }
-    }
-
-    /* -------- Decade bar chart -------- */
-    .decade-chart { margin: 0; }
-    .decade-bar-row {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 0.55rem;
-    }
-    .decade-bar-label {
-      font-size: var(--cap);
-      letter-spacing: 0.08em;
-      color: var(--muted);
-      width: 3.25rem;
-      flex-shrink: 0;
-    }
-    .decade-bar-track {
-      flex: 1;
-      height: 3px;
-      background: var(--dim);
-      position: relative;
-    }
-    .decade-bar-fill {
-      position: absolute;
-      top: 0; left: 0; bottom: 0;
-      background: var(--accent);
-      opacity: 0.55;
-      width: 0;
-      transition: width 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-    .decade-bar-count {
-      font-size: var(--cap);
-      letter-spacing: 0.06em;
-      color: var(--muted);
-      opacity: 0.45;
-      width: 2.5rem;
-      text-align: right;
-      flex-shrink: 0;
-      font-variant-numeric: tabular-nums;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .decade-bar-fill { transition: none; }
-    }
-
-    /* -------- Reduced motion -------- */
-    .bio__inline-link {
-      color: var(--accent);
-      border-bottom: 1px solid rgba(255,102,0,0.35);
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .bio__inline-link:hover { border-bottom-color: var(--accent); }
-    .bio__muted-link {
-      color: var(--muted);
-      border-bottom: 1px solid var(--dim);
-      padding-bottom: 1px;
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .bio__muted-link:hover { color: var(--text); border-color: var(--muted); }
-    @media (prefers-reduced-motion: reduce) {
-      .bio__archive,
-      .bio__inline-link,
-      .bio__muted-link,
-      .detail-group__body a,
-      .series-table a { transition: none; }
-    }
-
-    /* -------- Scroll entrances -------- */
-    .reveal {
-      opacity: 0;
-      transform: translateY(18px);
-      transition: opacity 0.55s ease, transform 0.55s ease;
-    }
-    .reveal.in { opacity: 1; transform: none; }
-    @media (prefers-reduced-motion: reduce) {
-      .reveal { opacity: 1; transform: none; transition: none; }
-    }
-  </style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="theme-color" content="#fdf8f8"/>
+<title>About — Jeffrey F. S. Neumann</title>
+<meta name="description" content="Jeffrey F. S. Neumann — artist and product designer based in Cleveland, Ohio. Five decades refusing to play safe. Collage, sculpture, and photography."/>
+<link rel="canonical" href="https://jfsn.com/about.html"/>
+<link rel="icon" href="favicon.svg" type="image/svg+xml"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="About — Jeffrey F. S. Neumann"/>
+<meta property="og:description" content="Five decades refusing to play safe. Collage, sculpture, and photography. Based in Cleveland, Ohio."/>
+<meta property="og:image" content="https://jfsn.com/og-card.jpg"/>
+<meta property="og:url" content="https://jfsn.com/about.html"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Jeffrey F. S. Neumann","jobTitle":"Artist","url":"https://jfsn.com","address":{"@type":"PostalAddress","addressLocality":"Cleveland","addressRegion":"OH","addressCountry":"US"}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#5e5e5e",
+                        "on-tertiary-container": "#e05900",
+                        "outline": "#747878",
+                        "on-primary": "#ffffff",
+                        "surface": "#fdf8f8",
+                        "on-surface": "#1c1b1b",
+                        "on-background": "#1c1b1b",
+                        "surface-container": "#f1edec",
+                        "surface-container-low": "#f7f3f2",
+                        "background": "#fdf8f8",
+                        "outline-variant": "#c4c7c7",
+                        "on-surface-variant": "#444748",
+                        "primary": "#000000"
+                    },
+                    "borderRadius": { "DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px" },
+                    "spacing": {
+                        "xs": "4px", "md": "24px", "gutter": "24px",
+                        "margin-desktop": "64px", "margin-mobile": "16px",
+                        "xl": "80px", "sm": "12px", "lg": "48px", "base": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Playfair Display"], "body-lg": ["Inter"],
+                        "label-md": ["Inter"], "label-lg": ["Inter"],
+                        "display-lg": ["Playfair Display"], "body-md": ["Inter"],
+                        "headline-md": ["Playfair Display"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["40px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-md": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "label-lg": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "display-lg": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "headline-md": ["28px", {"lineHeight": "1.3", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { -webkit-font-smoothing: antialiased; }
+        .grayscale-hover {
+            filter: grayscale(100%);
+            transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .grayscale-hover:hover { filter: grayscale(0%); transform: scale(1.02); }
+        .ledger-row { border-bottom: 1px solid #c4c7c7; }
+    </style>
 </head>
+<body class="bg-background text-on-background">
 
-<body>
-
-<a href="#main" class="skip">Skip to content</a>
-
-<header class="header">
-  <div class="container header__inner">
-    <a class="brand" href="index.html"><img src="jfsn-mark.png" class="brand-mark" alt="JFSN">Jeffrey F. S. Neumann</a>
-    <nav class="nav" aria-label="Primary">
-      <a href="archive.html">Archive</a>
-      <a href="series-index.html">Series</a>
-      <a href="about.html" aria-current="page">About</a>
-      <a href="about.html#contact" style="color:var(--accent)">Inquiry</a>
-    </nav>
-  </div>
+<!-- Top Nav -->
+<header class="fixed top-0 left-0 w-full z-50 bg-background border-b border-outline-variant">
+  <nav class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-md max-w-[1440px] mx-auto">
+    <a class="font-headline-lg text-headline-lg font-bold tracking-tighter text-primary" href="index.html">JFSN</a>
+    <div class="hidden md:flex items-center space-x-lg">
+      <a class="font-label-lg text-label-lg text-primary uppercase tracking-widest hover:text-on-tertiary-container transition-colors" href="archive.html">Archive</a>
+      <a class="font-label-lg text-label-lg text-primary uppercase tracking-widest hover:text-on-tertiary-container transition-colors" href="series-index.html">Series</a>
+      <a class="font-label-lg text-label-lg text-primary uppercase tracking-widest hover:text-on-tertiary-container transition-colors" href="timeline.html">Timeline</a>
+      <a class="font-label-lg text-label-lg text-primary uppercase tracking-widest hover:text-on-tertiary-container transition-colors" href="companion.html">Companion</a>
+      <a class="font-label-lg text-label-lg text-on-tertiary-container border-b-2 border-on-tertiary-container pb-1 uppercase tracking-widest" href="about.html" aria-current="page">About</a>
+    </div>
+    <div class="flex items-center gap-sm">
+      <button class="material-symbols-outlined text-primary p-xs hover:text-on-tertiary-container transition-colors" aria-label="Search">search</button>
+      <button class="md:hidden material-symbols-outlined text-primary" aria-label="Menu">menu</button>
+    </div>
+  </nav>
 </header>
 
-<main id="main">
-  <div class="container">
-    <div class="about">
+<main class="pt-[100px] pb-xl max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop">
 
-      <div class="bio">
-        <h1 class="bio__name">Jeffrey<br>F. S. Neumann</h1>
-        <div class="bio__text">
-          <p>Started making work in 1974. At the Cleveland Institute of Art, prism paper &#8212; holographic, iridescent, surface that shifts with the light &#8212; became an early obsession, alongside vacuum-formed plastic, old fluorescent and CFL tubes, sheets of glass. Rauschenberg was on the walls: combines built from anything, the idea that found material was as valid as paint. That permission never left.</p>
-          <p>The work is primarily <a href="collage.html">collage</a> and mixed-media assemblage, alongside <a href="photography.html">photography</a> and three-dimensional <a href="sculpture.html">sculpture</a> built from found objects. Compact discs, warplanes, targets, torsos, fragments of American vernacular &#8212; recurring forms that accumulate meaning across five decades of studio practice. The material logic is consistent: anything can be a mark, and juxtaposition is a kind of argument.</p>
-          <p>Cleveland has always been part of it. The industrial texture, the particular Midwestern light, a vernacular that keeps showing up in the work whether invited or not. Contemporary assemblage in an American city with a specific character &#8212; that context is inseparable from the practice.</p>
-          <p>An estimated <a href="lost.html" class="bio__inline-link">500&#8211;1,000 early pieces are gone</a> &#8212; lost to water damage in storage, undocumented, unrecoverable. This archive exists because of that. <span id="bio-count">1,084</span> works documented from 1974 to now. I don&rsquo;t want any other artist to lose fifty years the same way.</p>
-          <p>BFA in Industrial Design, Cleveland Institute of Art. Still making. Still here.</p>
-        </div>
-        <div id="bio-featured" class="bio__featured" aria-hidden="true"></div>
-        <a class="bio__archive" href="archive.html">View archive &rarr;</a>
+  <!-- Bio + Portrait -->
+  <section class="grid grid-cols-1 md:grid-cols-12 gap-lg mb-xl">
+    <div class="md:col-span-7 flex flex-col justify-center">
+      <span class="font-label-md text-label-md text-on-tertiary-container uppercase tracking-widest mb-md">Artist Biography</span>
+      <h1 class="font-display-lg text-display-lg text-primary mb-lg leading-none">Jeffrey<br>F. S. Neumann</h1>
+      <div class="space-y-md max-w-xl">
+        <p class="font-headline-md text-headline-md text-primary leading-relaxed">
+          Started making work in 1974. Still making. Still Cleveland.
+        </p>
+        <p class="font-body-lg text-body-lg text-secondary">
+          At the Cleveland Institute of Art, prism paper — holographic, iridescent, surface that shifts with the light — became an early obsession, alongside vacuum-formed plastic, old fluorescent and CFL tubes, sheets of glass. Rauschenberg was on the walls: combines built from anything, the idea that found material was as valid as paint. That permission never left.
+        </p>
+        <p class="font-body-lg text-body-lg text-secondary">
+          Cleveland has always been part of it. The industrial texture, the particular Midwestern light, a vernacular that keeps showing up in the work whether invited or not.
+        </p>
+        <p class="font-body-lg text-body-lg text-secondary">
+          An estimated <a href="lost.html" class="border-b border-secondary hover:text-on-tertiary-container hover:border-on-tertiary-container transition-colors">500–1,000 early pieces are gone</a> — lost to water damage in storage, undocumented, unrecoverable. This archive exists because of that. 1,084 works documented from 1974 to now.
+        </p>
+        <p class="font-body-md text-body-md text-secondary">
+          BFA in Industrial Design, Cleveland Institute of Art.
+        </p>
       </div>
-
-      <div class="details">
-
-        <div class="bio__portrait">
-          <img src="about-portrait.jpg" alt="Jeffrey F. S. Neumann" width="600" height="787" loading="lazy">
-        </div>
-
-        <div class="detail-group" id="contact">
-          <h2 class="detail-group__label">Contact</h2>
-          <p class="detail-group__body">
-            <a href="mailto:jeff@jfsn.com">jeff@jfsn.com</a><br>
-            <a href="https://jfsn.com" target="_blank" rel="noopener">jfsn.com</a><br>
-          </p>
-        </div>
-
-        <hr class="detail-divider">
-
-        <div class="detail-group">
-          <h2 class="detail-group__label">Archive</h2>
-          <p class="detail-group__body">
-            1,084 works<br>
-            1974 &ndash; present
-          </p>
-        </div>
-
-        <hr class="detail-divider">
-
-        <div class="detail-group">
-          <h2 class="detail-group__label">Series</h2>
-          <table class="series-table">
-            <thead>
-              <tr>
-                <th scope="col" class="sr-only">Series</th>
-                <th scope="col" class="sr-only">Count</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td><a href="series.html?theme=Studio">Studio Images</a></td><td data-theme-count="Studio">—</td></tr>
-              <tr><td><a href="series.html?theme=Guernica">Guernica Inspired</a></td><td data-theme-count="Guernica">—</td></tr>
-              <tr><td><a href="series.html?theme=Framed">Framed Pieces</a></td><td data-theme-count="Framed">—</td></tr>
-              <tr><td><a href="series.html?theme=Art+School">Art School Work</a></td><td data-theme-count="Art School">—</td></tr>
-              <tr><td><a href="series.html?theme=Mr.+Snowmann">Mr. SNOWmann</a></td><td data-theme-count="Mr. Snowmann">—</td></tr>
-              <tr><td><a href="series.html?theme=Torsos+%26+Faces">Torsos &amp; Faces</a></td><td data-theme-count="Torsos &amp; Faces">—</td></tr>
-              <tr><td><a href="series.html?theme=Tracings">Tracings</a></td><td data-theme-count="Tracings">—</td></tr>
-              <tr><td><a href="series.html?theme=Gallery">Gallery Images</a></td><td data-theme-count="Gallery">—</td></tr>
-              <tr><td><a href="series.html?series=XXIII">XXIII</a></td><td data-series-count="XXIII">—</td></tr>
-              <tr><td><a href="series.html?series=Squadron">Squadron</a></td><td data-series-count="Squadron">—</td></tr>
-              <tr><td><a href="series.html?series=Guernica">Guernica Series</a></td><td data-series-count="Guernica">—</td></tr>
-            </tbody>
-          </table>
-          <p class="detail-group__body" style="margin-top: 0.75rem;">
-            <a href="series-index.html">View all 10 series &rarr;</a>
-          </p>
-        </div>
-
-        <hr class="detail-divider">
-
-        <div class="detail-group">
-          <h2 class="detail-group__label">By Decade</h2>
-          <div class="decade-chart" id="decade-chart" aria-label="Works by decade">
-            <!-- populated by JS -->
-          </div>
-          <p class="detail-group__body" style="margin-top:0.75rem;line-height:1.9;">
-            <a href="1970s.html">1970s</a> &middot;
-            <a href="1980s.html">1980s</a> &middot;
-            <a href="1990s.html">1990s</a> &middot;
-            <a href="2000s.html">2000s</a> &middot;
-            <a href="2010s.html">2010s</a> &middot;
-            <a href="2020s.html">2020s</a>
-          </p>
-        </div>
-
-        <hr class="detail-divider">
-
-        <div class="detail-group">
-          <h2 class="detail-group__label">Now</h2>
-          <div class="detail-group__body">
-            <p>Archiving and digitizing fifty years of studio work. Putting everything in one place turns out to reveal things you couldn&rsquo;t see when the work was scattered &#8212; patterns, obsessions, threads that were running all along.</p>
-            <p style="margin-top:0.75em">Still making new work. Still Cleveland.</p>
-            <p style="margin-top:0.75em"><a href="for-artists.html" class="bio__muted-link">I also build these archives for other artists →</a></p>
-          </div>
-        </div>
-
-        <hr class="detail-divider">
-
-        <div class="detail-group">
-          <h2 class="detail-group__label">Earlier Art Sites</h2>
-          <p class="detail-group__body">
-            <a href="/old-site/old/Mr_SNOWmann/portfolio.html" target="_blank" rel="noopener">Mr. SNOWmann</a> — dedicated site, 2015<br>
-            <a href="/old-site/old/fine-art-2000/index.htm" target="_blank" rel="noopener">Fine Art 2000</a> — packages, CDs, targets &amp; lights<br>
-            <a href="/old-site/art.html" target="_blank" rel="noopener">jfsn.com 2023</a> — art section
-          </p>
-        </div>
-
-        <hr class="detail-divider">
-
-        <div class="detail-group">
-          <h2 class="detail-group__label">Earlier Design Work</h2>
-          <p class="detail-group__body">
-            <a href="/old-site/" target="_blank" rel="noopener">jfsn.com 2023</a> — UX/UI design portfolio<br>
-            <a href="/old-site/old/2014/index.html" target="_blank" rel="noopener">jfsn.com 2014</a> — product design portfolio<br>
-            <span style="color:var(--muted);font-size:0.875em;margin-top:0.4em;display:inline-block">jfsn.com has been running since ~1990 — this is approximately the 30th version of the site.</span>
-          </p>
-        </div>
-
-        <hr class="detail-divider">
-
-        <div class="detail-group">
-          <h2 class="detail-group__label">Education</h2>
-          <table class="series-table exhibitions-table">
-            <tr><td>BFA Industrial Design, Cleveland Institute of Art</td><td></td></tr>
-          </table>
-        </div>
-
-        <hr class="detail-divider">
-
-        <div class="detail-group">
-          <h2 class="detail-group__label">Selected Exhibitions</h2>
-          <table class="series-table exhibitions-table">
-            <tr><td>CIA Alumni Exhibition, Cleveland Institute of Art</td><td>2022</td></tr>
-            <tr><td>Group exhibition, 78th Street Studios, Cleveland</td><td>2019</td></tr>
-            <tr><td>Two-person exhibition, Waterloo Arts, Cleveland</td><td>2016</td></tr>
-            <tr><td>Group exhibition, Plain Arts Gallery, Cleveland</td><td>2012</td></tr>
-            <tr><td>Solo exhibition, Negative Space Gallery, Cleveland</td><td>2008</td></tr>
-            <tr><td>Group exhibition, CIA Alumni Show, Cleveland</td><td>2003</td></tr>
-          </table>
-        </div>
-
-        <!-- JEFF: uncomment and fill in press mentions when ready
-        <hr class="detail-divider">
-        <div class="detail-group">
-          <h2 class="detail-group__label">Press</h2>
-          <table class="series-table press-table">
-            <tr><td>Feature, <em>Publication name</em></td><td>Year</td></tr>
-          </table>
-        </div>
-        -->
-
-      </div>
-
     </div>
-  </div>
+    <div class="md:col-span-5">
+      <div class="border border-outline-variant aspect-[4/5] overflow-hidden bg-surface-container">
+        <img
+          alt="Jeffrey F. S. Neumann"
+          class="w-full h-full object-cover grayscale-hover"
+          src="about-portrait.jpg"
+          width="600" height="787" loading="lazy"
+        />
+      </div>
+      <div class="mt-xs text-right">
+        <span class="font-label-md text-label-md text-secondary uppercase tracking-tighter">Jeffrey F. S. Neumann — Cleveland</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Exhibition Record -->
+  <section class="mt-xl">
+    <div class="flex justify-between items-end border-b-2 border-primary pb-sm mb-lg">
+      <h2 class="font-headline-md text-headline-md text-primary uppercase tracking-tight">Exhibition Record</h2>
+      <span class="font-label-md text-label-md text-on-tertiary-container uppercase">Chronological</span>
+    </div>
+    <div>
+      <div class="hidden md:grid grid-cols-12 py-sm border-b border-outline font-label-md text-label-md text-secondary uppercase tracking-widest">
+        <div class="col-span-2">Year</div>
+        <div class="col-span-6">Exhibition</div>
+        <div class="col-span-4 text-right">Venue</div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-12 py-md md:py-lg ledger-row hover:bg-surface-container-low transition-colors">
+        <div class="col-span-2 font-label-lg text-label-lg text-on-tertiary-container mb-xs md:mb-0">2022</div>
+        <div class="col-span-6 font-headline-md text-headline-md text-primary mb-xs md:mb-0">CIA Alumni Exhibition</div>
+        <div class="col-span-4 text-right font-body-md text-body-md text-secondary self-center">Cleveland Institute of Art, Cleveland</div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-12 py-md md:py-lg ledger-row hover:bg-surface-container-low transition-colors">
+        <div class="col-span-2 font-label-lg text-label-lg text-on-tertiary-container mb-xs md:mb-0">2019</div>
+        <div class="col-span-6 font-headline-md text-headline-md text-primary mb-xs md:mb-0">Group Exhibition</div>
+        <div class="col-span-4 text-right font-body-md text-body-md text-secondary self-center">78th Street Studios, Cleveland</div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-12 py-md md:py-lg ledger-row hover:bg-surface-container-low transition-colors">
+        <div class="col-span-2 font-label-lg text-label-lg text-on-tertiary-container mb-xs md:mb-0">2016</div>
+        <div class="col-span-6 font-headline-md text-headline-md text-primary mb-xs md:mb-0">Two-Person Exhibition</div>
+        <div class="col-span-4 text-right font-body-md text-body-md text-secondary self-center">Waterloo Arts, Cleveland</div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-12 py-md md:py-lg ledger-row hover:bg-surface-container-low transition-colors">
+        <div class="col-span-2 font-label-lg text-label-lg text-on-tertiary-container mb-xs md:mb-0">2012</div>
+        <div class="col-span-6 font-headline-md text-headline-md text-primary mb-xs md:mb-0">Group Exhibition</div>
+        <div class="col-span-4 text-right font-body-md text-body-md text-secondary self-center">Plain Arts Gallery, Cleveland</div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-12 py-md md:py-lg ledger-row hover:bg-surface-container-low transition-colors">
+        <div class="col-span-2 font-label-lg text-label-lg text-on-tertiary-container mb-xs md:mb-0">2008</div>
+        <div class="col-span-6 font-headline-md text-headline-md text-primary mb-xs md:mb-0">Solo Exhibition</div>
+        <div class="col-span-4 text-right font-body-md text-body-md text-secondary self-center">Negative Space Gallery, Cleveland</div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-12 py-md md:py-lg ledger-row hover:bg-surface-container-low transition-colors">
+        <div class="col-span-2 font-label-lg text-label-lg text-on-tertiary-container mb-xs md:mb-0">2003</div>
+        <div class="col-span-6 font-headline-md text-headline-md text-primary mb-xs md:mb-0">CIA Alumni Show</div>
+        <div class="col-span-4 text-right font-body-md text-body-md text-secondary self-center">Cleveland Institute of Art, Cleveland</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Three columns: Contact / Archive / Now -->
+  <section id="contact" class="mt-xl grid grid-cols-1 md:grid-cols-3 gap-lg pt-lg border-t border-outline-variant">
+    <div>
+      <span class="font-label-md text-label-md text-on-tertiary-container uppercase tracking-widest block mb-md">Contact</span>
+      <p class="font-body-md text-body-md text-secondary leading-relaxed">
+        <a href="mailto:jfsneumann@gmail.com" class="border-b border-outline-variant hover:text-on-tertiary-container hover:border-on-tertiary-container transition-colors">jfsneumann@gmail.com</a><br/>
+        <a href="https://jfsn.com" class="border-b border-outline-variant hover:text-on-tertiary-container hover:border-on-tertiary-container transition-colors">jfsn.com</a>
+      </p>
+    </div>
+    <div>
+      <span class="font-label-md text-label-md text-on-tertiary-container uppercase tracking-widest block mb-md">The Archive</span>
+      <p class="font-body-md text-body-md text-secondary leading-relaxed">
+        1,084 works documented.<br/>
+        1974 – present.<br/>
+        Collage, sculpture, photography.<br/>
+        <a href="archive.html" class="border-b border-outline-variant hover:text-on-tertiary-container hover:border-on-tertiary-container transition-colors">Browse all works →</a>
+      </p>
+    </div>
+    <div>
+      <span class="font-label-md text-label-md text-on-tertiary-container uppercase tracking-widest block mb-md">Now</span>
+      <p class="font-body-md text-body-md text-secondary leading-relaxed">
+        Archiving and digitizing fifty years of studio work. Putting everything in one place turns out to reveal things you couldn't see when the work was scattered — patterns, obsessions, threads that were running all along.<br/><br/>
+        Still making new work. Still Cleveland.
+      </p>
+    </div>
+  </section>
+
 </main>
 
-<footer class="footer">
-  <div class="container footer__inner">
-    <span>Jeffrey F. S. Neumann</span>
-    <nav class="footer-nav" aria-label="Site navigation">
-      <a href="archive.html">Archive</a>
-      <a href="series-index.html">Series</a>
-      <a href="timeline.html">Timeline</a>
-      <a href="constellation.html" title="Force-directed map of all works, clustered by theme">Constellation</a>
-      <a href="wall.html">Wall</a>
-      <a href="mosaic.html" class="nav-mosaic"><span class="m">M</span><span class="o">o</span><span class="s">s</span><span class="a">a</span><span class="i">i</span><span class="c">c</span></a>
-      <a href="about.html">About</a>
-      <a href="for-artists.html" style="color:var(--accent)">For Artists</a>
-      <a href="companion.html">Companion</a>
-      <a href="changes.html">Changes</a>
-      <a href="lost.html">Lost</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="feed.xml" title="RSS feed of new works">RSS</a>
-    </nav>
-    <nav class="footer-social" aria-label="Social links">
-      <a href="https://www.linkedin.com/in/jeffreyneumann/" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="https://dribbble.com/JFSN" target="_blank" rel="noopener">Dribbble</a>
-      <a href="https://www.youtube.com/@jfsneumann/videos" target="_blank" rel="noopener">YouTube</a>
-      <a href="https://showspace.so/s/jeffrey-neumann-46" target="_blank" rel="noopener">Showspace</a>
-    </nav>
-    <nav class="footer-earlier" aria-label="Earlier sites">
-      <a href="/old-site/old/Mr_SNOWmann/portfolio.html" target="_blank" rel="noopener">Mr. SNOWmann</a>
-      <a href="/old-site/old/fine-art-2000/index.htm" target="_blank" rel="noopener">Fine Art 2000</a>
-      <a href="/old-site/" target="_blank" rel="noopener">jfsn 2023</a>
-      <a href="/old-site/old/2014/index.html" target="_blank" rel="noopener">jfsn 2014</a>
-    </nav>
+<!-- Footer -->
+<footer class="bg-surface-container border-t border-outline-variant mt-xl">
+  <div class="flex flex-col md:flex-row justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-lg max-w-[1440px] mx-auto gap-md">
+    <a class="font-headline-md text-headline-md text-primary font-bold tracking-tighter" href="index.html">JFSN</a>
+    <span class="font-body-md text-body-md text-secondary">© 2026 Jeffrey F. S. Neumann. All rights reserved.</span>
+    <div class="flex gap-lg">
+      <a class="font-label-md text-label-md text-secondary hover:text-on-tertiary-container transition-colors" href="archive.html">Archive</a>
+      <a class="font-label-md text-label-md text-secondary hover:text-on-tertiary-container transition-colors" href="companion.html">Companion</a>
+      <a class="font-label-md text-label-md text-secondary hover:text-on-tertiary-container transition-colors" href="mosaic.html">Mosaic</a>
+    </div>
   </div>
 </footer>
 
-<script src="search.js" defer></script>
-<!-- GoatCounter &mdash; privacy-first analytics. Replace subdomain after sign-up at https://www.goatcounter.com -->
+<!-- Mobile bottom nav -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 px-4 bg-background border-t border-outline-variant h-16" style="padding-bottom: env(safe-area-inset-bottom, 8px)" aria-label="Mobile navigation">
+  <a href="index.html" class="flex flex-col items-center justify-center text-secondary">
+    <span class="material-symbols-outlined">home</span>
+    <span class="font-label-md text-[10px] uppercase">Home</span>
+  </a>
+  <a href="archive.html" class="flex flex-col items-center justify-center text-secondary">
+    <span class="material-symbols-outlined">inventory_2</span>
+    <span class="font-label-md text-[10px] uppercase">Archive</span>
+  </a>
+  <a href="series-index.html" class="flex flex-col items-center justify-center text-secondary">
+    <span class="material-symbols-outlined">auto_awesome_motion</span>
+    <span class="font-label-md text-[10px] uppercase">Series</span>
+  </a>
+  <a href="companion.html" class="flex flex-col items-center justify-center text-secondary">
+    <span class="material-symbols-outlined">chat_bubble</span>
+    <span class="font-label-md text-[10px] uppercase">Companion</span>
+  </a>
+  <a href="about.html" class="flex flex-col items-center justify-center text-on-tertiary-container" aria-current="page">
+    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+    <span class="font-label-md text-[10px] uppercase">About</span>
+  </a>
+</nav>
+
+<!-- GoatCounter analytics -->
 <script data-goatcounter="https://jfsn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-
-<script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
-<script>
-(function () {
-  function esc(s) {
-    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
-  Promise.all([
-    fetch('catalog-lite.json').then(r => r.ok ? r.json() : null).catch(() => null),
-    fetch('catalog-home.json').then(r => r.ok ? r.json() : null).catch(() => null),
-    fetch('dims.json').then(r => r.ok ? r.json() : null).catch(() => null),
-  ]).then(([catalog, home, dims]) => {
-
-    /* ---- dynamic work count ---- */
-    if (catalog) {
-      const bioCount = document.getElementById('bio-count');
-      if (bioCount) bioCount.textContent = catalog.length.toLocaleString();
-    }
-
-    /* ---- dynamic series counts ---- */
-    if (catalog) {
-      const themeCounts  = {};
-      const seriesCounts = {};
-      catalog.forEach(r => {
-        (r.themes || []).forEach(t => { themeCounts[t]  = (themeCounts[t]  || 0) + 1; });
-        if (r.series) seriesCounts[r.series] = (seriesCounts[r.series] || 0) + 1;
-      });
-      document.querySelectorAll('[data-theme-count]').forEach(td => {
-        const n = themeCounts[td.dataset.themeCount];
-        if (n) td.textContent = n.toLocaleString();
-      });
-      document.querySelectorAll('[data-series-count]').forEach(td => {
-        const n = seriesCounts[td.dataset.seriesCount];
-        if (n) td.textContent = n.toLocaleString();
-      });
-    }
-
-    /* ---- decade bar chart ---- */
-    if (catalog) {
-      const DECADES = ['1970s','1980s','1990s','2000s','2010s','2020s'];
-      const decadeOf = y => {
-        if (!y) return null;
-        const d = Math.floor(y / 10) * 10;
-        return d >= 1970 && d <= 2020 ? d + 's' : null;
-      };
-      const counts = {};
-      catalog.forEach(r => {
-        const d = decadeOf(r.year);
-        if (d) counts[d] = (counts[d] || 0) + 1;
-      });
-      const maxVal = Math.max(...Object.values(counts), 1);
-      const chart  = document.getElementById('decade-chart');
-      if (chart && Object.keys(counts).length) {
-        chart.innerHTML = DECADES.filter(d => counts[d]).map(d =>
-          `<div class="decade-bar-row">
-            <span class="decade-bar-label">${d}</span>
-            <div class="decade-bar-track">
-              <div class="decade-bar-fill" data-pct="${Math.round((counts[d] / maxVal) * 100)}"></div>
-            </div>
-            <span class="decade-bar-count">${counts[d]}</span>
-          </div>`
-        ).join('');
-        /* Animate bars after a short delay (rAF ensures DOM is painted) */
-        requestAnimationFrame(() => requestAnimationFrame(() => {
-          chart.querySelectorAll('.decade-bar-fill').forEach(bar => {
-            bar.style.width = bar.dataset.pct + '%';
-          });
-        }));
-      }
-    }
-
-    /* ---- featured artwork image ---- */
-    const pool = home || catalog;
-    if (!pool || !pool.length) return;
-    const featured = pool.filter(r => r.featured);
-    const rec = featured.length
-      ? featured[Math.floor(Math.random() * featured.length)]
-      : pool[Math.floor(Math.random() * Math.min(pool.length, 8))];
-    const id = rec.file.replace('.avif', '');
-    const [imgW, imgH] = (dims && dims[id]) || [400, 400];
-    const wrap = document.getElementById('bio-featured');
-    if (!wrap) return;
-    wrap.removeAttribute('aria-hidden');
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const img = document.createElement('img');
-    const isMobile = window.innerWidth < 780;
-    img.src = (isMobile ? 'artworks/thumbs/' : 'artworks/full/') + id + '.avif';
-    img.alt = esc(rec.title || id);
-    img.width = imgW;
-    img.height = imgH;
-    if (!prefersReduced) {
-      img.style.opacity = '0';
-      img.style.transition = 'opacity 0.4s';
-      img.addEventListener('load', () => { img.style.opacity = '1'; });
-      if (img.complete) img.style.opacity = '1';
-    }
-    const link = document.createElement('a');
-    link.href = 'artwork.html?id=' + id;
-    link.appendChild(img);
-    wrap.appendChild(link);
-  });
-})();
-</script>
-
-<script>
-(function () {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const targets = document.querySelectorAll('.detail-group, .bio__archive, .bio__featured');
-  const obs = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
-    });
-  }, { threshold: 0.08 });
-  targets.forEach(function (el, i) {
-    el.classList.add('reveal');
-    el.style.transitionDelay = (i * 0.04) + 's';
-    obs.observe(el);
-  });
-})();
-</script>
 
 </body>
 </html>
