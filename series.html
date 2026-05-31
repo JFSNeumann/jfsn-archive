@@ -339,6 +339,7 @@
       <a href="series-index.html">Series</a>
       <a href="timeline.html">Timeline</a>
       <a href="constellation.html" title="Force-directed map of all works, clustered by theme">Constellation</a>
+      <a href="wall.html">Wall</a>
       <a href="mosaic.html" class="nav-mosaic"><span class="m">M</span><span class="o">o</span><span class="s">s</span><span class="a">a</span><span class="i">i</span><span class="c">c</span></a>
       <a href="about.html">About</a>
       <a href="for-artists.html" style="color:var(--accent)">For Artists</a>
@@ -676,5 +677,72 @@
 <script data-goatcounter="https://jfsn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 
 <script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
+<script>
+/* Series room entrance */
+(function(){
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const params = new URLSearchParams(location.search);
+  const key = params.get('theme') || params.get('series');
+  if (!key) return;
+  const overlay = document.createElement('div');
+  overlay.id = 'series-room';
+  overlay.setAttribute('aria-hidden', 'true');
+  overlay.innerHTML = '<div id="series-room-inner"><p id="series-room-name"></p><p id="series-room-hint">click or press any key to skip</p></div>';
+  document.body.appendChild(overlay);
+  const style = document.createElement('style');
+  style.textContent = `
+    #series-room {
+      position: fixed; inset: 0; z-index: 500;
+      background: #0b0b0b;
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.6s ease;
+    }
+    #series-room.fade { opacity: 0; pointer-events: none; }
+    #series-room-inner { text-align: center; }
+    #series-room-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(3rem, 9vw, 8rem);
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      color: #f3f0ea;
+      margin: 0;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    #series-room-name.visible { opacity: 1; transform: none; }
+    #series-room-hint {
+      font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase;
+      color: rgba(243,240,234,0.3); margin: 2rem 0 0;
+      opacity: 0; transition: opacity 0.4s 0.6s;
+    }
+    #series-room-hint.visible { opacity: 1; }
+  `;
+  document.head.appendChild(style);
+  function dismiss() {
+    overlay.classList.add('fade');
+    setTimeout(() => overlay.remove(), 700);
+    document.removeEventListener('keydown', dismiss);
+    overlay.removeEventListener('click', dismiss);
+  }
+  overlay.addEventListener('click', dismiss);
+  document.addEventListener('keydown', dismiss);
+  // Populate name once config loads
+  function tryPopulate() {
+    const C = window.ARCHIVE_CONFIG;
+    if (!C) { setTimeout(tryPopulate, 50); return; }
+    const themes = Object.fromEntries((C.themes||[]).map(t=>[t.name,t.displayTitle]));
+    const named  = Object.fromEntries((C.namedSeries||[]).map(s=>[s.key,s.displayTitle]));
+    const name   = themes[key] || named[key] || key;
+    document.getElementById('series-room-name').textContent = name;
+    setTimeout(() => {
+      document.getElementById('series-room-name').classList.add('visible');
+      document.getElementById('series-room-hint').classList.add('visible');
+    }, 80);
+    setTimeout(dismiss, 2200);
+  }
+  tryPopulate();
+})();
+</script>
 </body>
 </html>

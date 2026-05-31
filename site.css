@@ -348,6 +348,30 @@ body {
   font-size: 0.6rem;
 }
 
+/* -------- Custom cursor (desktop artwork browsing) -------- */
+@media (hover: hover) and (pointer: fine) {
+  .cursor-dot {
+    position: fixed;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.18s ease, height 0.18s ease, background 0.18s ease, border 0.18s ease;
+    will-change: left, top;
+  }
+  .cursor-dot.expanded {
+    width: 36px; height: 36px;
+    background: transparent;
+    border: 1px solid rgba(243,240,234,0.35);
+  }
+  .cursor-dot.hidden { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cursor-dot { transition: none; }
+}
+
 /* -------- Scroll progress bar (archive, series, timeline) -------- */
 .scroll-progress {
   position: fixed;

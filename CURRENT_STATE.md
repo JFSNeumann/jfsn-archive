@@ -1,12 +1,12 @@
 # Current State
-**Updated:** 2026-05-30 17:11
+**Updated:** 2026-05-30 17:27
 
 ## Last commit
-b1c2d4f — SEO landing pages, decade pages, UX fixes, design brief
+ad30e24 — lost.html: sitemap, Article schema, footer nav, contextual note on 2000s
 
 ## To do next session
 <!-- Edit this section before closing -->
-- [ ] Optional: line length cap on about.html / for-artists.html prose (65-75 chars)
+- [ ] Optional: line length cap on about.html/for-artists.html prose (65-75 chars)
 - [ ] Optional: floating navbar breathing room (rounded corners, slight top offset)
 
 ## Known issues

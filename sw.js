@@ -5,7 +5,7 @@
    - HTML/CSS/JS  → stale-while-revalidate
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-20260530211319';
+const CACHE_V  = 'jfsn-20260530220150';
 const PRECACHE = [
   '/',
   '/index.html',

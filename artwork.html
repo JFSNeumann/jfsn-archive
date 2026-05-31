@@ -594,6 +594,7 @@
       <a href="series-index.html">Series</a>
       <a href="timeline.html">Timeline</a>
       <a href="constellation.html" title="Force-directed map of all works, clustered by theme">Constellation</a>
+      <a href="wall.html">Wall</a>
       <a href="mosaic.html" class="nav-mosaic"><span class="m">M</span><span class="o">o</span><span class="s">s</span><span class="a">a</span><span class="i">i</span><span class="c">c</span></a>
       <a href="about.html">About</a>
       <a href="for-artists.html" style="color:var(--accent)">For Artists</a>
@@ -964,6 +965,19 @@
     const imgEl  = document.getElementById('artwork-img');
     const fullSrc = `artworks/full/${id}.avif`;
 
+    /* Viewer immersion — push ambient + backdrop when viewer opens */
+    const ambientEl = document.getElementById('art-ambient');
+    function setImmersive(on) {
+      if (ambientEl) {
+        const hex = ambientEl.style.background.match(/rgba\((\d+),(\d+),(\d+)/);
+        if (hex) ambientEl.style.background = on
+          ? `rgba(${hex[1]},${hex[2]},${hex[3]},0.28)`
+          : `rgba(${hex[1]},${hex[2]},${hex[3]},0.07)`;
+      }
+      document.querySelector('.header')?.style.setProperty('opacity', on ? '0.15' : '1');
+      document.querySelector('.header')?.style.setProperty('transition', 'opacity 0.4s');
+    }
+
     function initViewer() {
       if (imgEl._viewer) imgEl._viewer.destroy();
       imgEl._viewer = new Viewer(imgEl, {
@@ -995,6 +1009,8 @@
 
     /* init on thumb immediately so viewer is ready */
     initViewer();
+    imgEl.addEventListener('shown', () => setImmersive(true));
+    imgEl.addEventListener('hidden', () => setImmersive(false));
 
     const backdropEl = document.querySelector('.art-backdrop');
     const fullImg = new Image();

@@ -804,6 +804,7 @@
       <a href="series-index.html">Series</a>
       <a href="timeline.html">Timeline</a>
       <a href="constellation.html" title="Force-directed map of all works, clustered by theme">Constellation</a>
+      <a href="wall.html">Wall</a>
       <a href="mosaic.html" class="nav-mosaic"><span class="m">M</span><span class="o">o</span><span class="s">s</span><span class="a">a</span><span class="i">i</span><span class="c">c</span></a>
       <a href="about.html">About</a>
       <a href="for-artists.html" style="color:var(--accent)">For Artists</a>
@@ -1841,5 +1842,27 @@
 <script data-goatcounter="https://jfsn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 
 <script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
+<script>
+(function(){
+  if(!window.matchMedia('(hover:hover) and (pointer:fine)').matches)return;
+  const dot=document.createElement('div');
+  dot.className='cursor-dot';
+  document.body.appendChild(dot);
+  let rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px';});
+  document.addEventListener('mouseleave',()=>dot.classList.add('hidden'));
+  document.addEventListener('mouseenter',()=>dot.classList.remove('hidden'));
+  function wire(){
+    document.querySelectorAll('.thumb__link').forEach(el=>{
+      el.addEventListener('mouseenter',()=>dot.classList.add('expanded'));
+      el.addEventListener('mouseleave',()=>dot.classList.remove('expanded'));
+    });
+  }
+  wire();
+  const observer=new MutationObserver(wire);
+  const grid=document.getElementById('grid-wrap');
+  if(grid)observer.observe(grid,{childList:true,subtree:true});
+})();
+</script>
 </body>
 </html>

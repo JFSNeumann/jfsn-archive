@@ -15,7 +15,7 @@
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="catalog-home.json?v=20260530211319" as="fetch" crossorigin>
+  <link rel="preload" href="catalog-home.json?v=20260530220150" as="fetch" crossorigin>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap"></noscript>
   <link rel="stylesheet" href="site.css?v=20260530-nav4">
@@ -233,9 +233,34 @@
     }
     .home-companion__link:hover { color: var(--text); border-bottom-color: var(--muted); }
 
-    /* -------- Begin here -------- */
+    /* -------- Oversized stat -------- */
+    .home-stat {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      padding: clamp(3rem, 6vw, 5rem) 0 0;
+    }
+    .home-stat__num {
+      font-family: var(--font-display);
+      font-size: clamp(5rem, 18vw, 14rem);
+      font-weight: 300;
+      letter-spacing: -0.03em;
+      line-height: 0.85;
+      color: var(--text);
+    }
+    .home-stat__label {
+      font-size: var(--cap);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      max-width: 14ch;
+      line-height: 1.8;
+    }
+
+    /* -------- Begin here (bento) -------- */
     .home-begin {
-      padding-top: clamp(2rem, 4vw, 3rem);
+      padding-top: clamp(2.5rem, 5vw, 4rem);
       padding-bottom: clamp(1rem, 2vw, 1.5rem);
     }
     .home-begin__label {
@@ -247,11 +272,19 @@
     }
     .home-begin__works {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
+      grid-template-columns: 2fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 2px;
       background: var(--dim);
     }
-    @media (max-width: 600px) { .home-begin__works { grid-template-columns: 1fr; } }
+    .home-begin__work:first-child { grid-row: 1 / 3; }
+    @media (max-width: 600px) {
+      .home-begin__works {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+      }
+      .home-begin__work:first-child { grid-row: auto; }
+    }
     .home-begin__work {
       display: flex;
       flex-direction: column;
@@ -263,11 +296,13 @@
     .home-begin__work:hover { background: rgba(243,240,234,0.03); }
     .home-begin__img {
       width: 100%;
-      aspect-ratio: 1;
+      height: 100%;
+      min-height: 200px;
       object-fit: cover;
       display: block;
       filter: grayscale(15%);
       transition: filter 0.2s;
+      flex: 1;
     }
     .home-begin__work:hover .home-begin__img { filter: grayscale(0%); }
     .home-begin__caption {
@@ -276,6 +311,7 @@
       line-height: 1.55;
       color: var(--muted);
       border-top: 1px solid var(--dim);
+      flex-shrink: 0;
     }
 
     /* -------- Recently Added strip -------- */
@@ -618,6 +654,11 @@
     </div>
   </nav>
 
+  <div class="home-stat container" aria-hidden="true">
+    <span class="home-stat__num">1,084</span>
+    <span class="home-stat__label">works<br>1974–present</span>
+  </div>
+
   <section class="home-begin container" aria-label="Begin here">
     <p class="home-begin__label">Begin here</p>
     <div class="home-begin__works">
@@ -702,6 +743,7 @@
       <a href="series-index.html">Series</a>
       <a href="timeline.html">Timeline</a>
       <a href="constellation.html" title="Force-directed map of all works, clustered by theme">Constellation</a>
+      <a href="wall.html">Wall</a>
       <a href="mosaic.html" class="nav-mosaic"><span class="m">M</span><span class="o">o</span><span class="s">s</span><span class="a">a</span><span class="i">i</span><span class="c">c</span></a>
       <a href="about.html">About</a>
       <a href="for-artists.html" style="color:var(--accent)">For Artists</a>
@@ -744,7 +786,7 @@
   // ?v= is stamped by build_catalog.py — forces browser to fetch fresh after every build
   let dominantColors = {};
   fetch('colors.json').then(r => r.ok ? r.json() : null).then(c => { if (c) dominantColors = c; }).catch(() => {});
-  fetch('catalog-home.json?v=20260530211319')
+  fetch('catalog-home.json?v=20260530220150')
     .then(r => r.ok ? r.json() : null)
     .then(catalog => {
       if (!catalog || !catalog.length) return;
@@ -989,5 +1031,45 @@
 <script data-goatcounter="https://jfsn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 
 <script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
+<script>
+/* Count-up animation on 1,084 stat */
+(function(){
+  const el = document.querySelector('.home-stat__num');
+  if (!el) return;
+  const target = 1084;
+  const duration = 1800;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced) return;
+  el.textContent = '0';
+  const obs = new IntersectionObserver(entries => {
+    if (!entries[0].isIntersecting) return;
+    obs.disconnect();
+    const start = performance.now();
+    function tick(now) {
+      const t = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - t, 3);
+      el.textContent = Math.round(ease * target).toLocaleString();
+      if (t < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }, { threshold: 0.5 });
+  obs.observe(el);
+})();
+</script>
+<script>
+(function(){
+  if(!window.matchMedia('(hover:hover) and (pointer:fine)').matches)return;
+  const dot=document.createElement('div');
+  dot.className='cursor-dot';
+  document.body.appendChild(dot);
+  document.addEventListener('mousemove',e=>{dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px';});
+  document.addEventListener('mouseleave',()=>dot.classList.add('hidden'));
+  document.addEventListener('mouseenter',()=>dot.classList.remove('hidden'));
+  document.querySelectorAll('.thumb__link,.home-begin__work,.recent-thumb,.hero__image').forEach(el=>{
+    el.addEventListener('mouseenter',()=>dot.classList.add('expanded'));
+    el.addEventListener('mouseleave',()=>dot.classList.remove('expanded'));
+  });
+})();
+</script>
 </body>
 </html>

@@ -1,5 +1,11 @@
 [
   {
+    "sha": "ad30e24",
+    "date": "2026-05-30",
+    "title": "lost.html: sitemap, Article schema, footer nav, contextual note on 2000s",
+    "body": "- lost.html added to sitemap (was missing entirely)\n- Article JSON-LD added to lost.html (headline, datePublished, author, breadcrumb)\n- \"Lost\" added to footer nav on all 29 pages\n- 2000s.html: contextual note linking to lost.html\n- about.html: bio__inline-link now orange (was invisible)\n- about.html: section labels p→h2 for screen reader navigation\n- archive.html: span→h1 for page landmark\n- about.html: detail-group__label font-weight:400 reset"
+  },
+  {
     "sha": "b1c2d4f",
     "date": "2026-05-30",
     "title": "SEO landing pages, decade pages, UX fixes, design brief",
