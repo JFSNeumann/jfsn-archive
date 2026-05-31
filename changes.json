@@ -1,5 +1,17 @@
 [
   {
+    "sha": "b37149d",
+    "date": "2026-05-30",
+    "title": "Homepage: pin art1010 hero, update tagline + Begin Here works, dynamic count",
+    "body": "- Hero now opens on art1010 (Cassette Torso) instead of random featured work\n- Tagline updated: \"Five decades of making, recorded. The visual archive of Jeffrey F. S. Neumann.\"\n- Begin Here section: art0953→art1008 (Pubiern Robodt 365), art1020→art1009 (Machine Assemblage)\n- Work count now dynamic via catalog-lite.json length; [data-work-count] attribute\n  updates .home-stat__num, start-path step, and archive-stat paragraph\n- Count-up animation reads live target from data-count-target instead of hardcoded 1084"
+  },
+  {
+    "sha": "4ef352e",
+    "date": "2026-05-30",
+    "title": "Bold UI moves, wall.html, footer audit, series-index alignment",
+    "body": "- wall.html: all 1,084 works dense grid (~56px), hover spotlight, click to artwork\n- index.html: count-up animation on 1,084 stat (IntersectionObserver, 1.8s ease-out)\n- index.html: bento-style Begin Here grid (2fr 1fr, first card spans 2 rows)\n- series.html: full-screen room entrance overlay on load (2.2s, dismissible)\n- artwork.html: viewer immersion — ambient 7%→28%, header fades on lightbox open\n- site.css: custom cursor dot (6px orange, expands to ring on artwork hover)\n- about.html + lost.html: Libre Baskerville for prose body text\n- series-index.html: removed Poiret One + Didact Gothic, aligned to Cormorant Garamond\n- Footer audit: fixed duplicate Lost on 4 pages, added Companion+Lost to changes.html,\n  added Mosaic to companion.html, Wall added to all 29 pages\n- lost.html + about.html: heading hierarchy (h1/h2), orange inline link\n- sitemap.xml: wall.html added"
+  },
+  {
     "sha": "ad30e24",
     "date": "2026-05-30",
     "title": "lost.html: sitemap, Article schema, footer nav, contextual note on 2000s",

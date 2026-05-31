@@ -1,8 +1,8 @@
 # Current State
-**Updated:** 2026-05-30 20:31
+**Updated:** 2026-05-30 21:04
 
 ## Last commit
-4ef352e — Bold UI moves, wall.html, footer audit, series-index alignment
+b37149d — Homepage: pin art1010 hero, update tagline + Begin Here works, dynamic count
 
 ## To do next session
 <!-- Edit this section before closing -->
