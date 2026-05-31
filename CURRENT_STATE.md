@@ -1,13 +1,12 @@
 # Current State
-**Updated:** 2026-05-30 17:27
+**Updated:** 2026-05-30 20:31
 
 ## Last commit
-ad30e24 — lost.html: sitemap, Article schema, footer nav, contextual note on 2000s
+4ef352e — Bold UI moves, wall.html, footer audit, series-index alignment
 
 ## To do next session
 <!-- Edit this section before closing -->
-- [ ] Optional: line length cap on about.html/for-artists.html prose (65-75 chars)
-- [ ] Optional: floating navbar breathing room (rounded corners, slight top offset)
+- [ ] (add what you want to do next time)
 
 ## Known issues
 - companion.html: FIXED session 18 — test live at jfsn.com/companion.html to confirm

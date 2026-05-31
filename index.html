@@ -626,7 +626,7 @@
   </figcaption>
 
   <!-- ⑤ Tagline — larger, serif italic, full text color -->
-  <p class="home-tagline container">Five decades of collage, sculpture, and photography &mdash; one artist, one archive.</p>
+  <p class="home-tagline container">Five decades of making, recorded. The visual archive of Jeffrey F. S. Neumann.</p>
   <p class="home-context container">Compact discs, warplanes, photographic faces, lace, found materials &mdash; assembled into collages, sculptures, and photographs since 1974. Based in Cleveland. <a href="about.html">About the work &rarr;</a> &nbsp;&middot;&nbsp; <a href="for-artists.html" style="color:var(--accent);border-bottom-color:rgba(255,102,0,0.35)">I build archives like this for other artists &mdash; from $500 &rarr;</a></p>
 
   <nav class="home-start-path container" aria-label="Start here" id="start-path" hidden>
@@ -644,7 +644,7 @@
       <span class="home-start-path__arrow" aria-hidden="true">→</span>
       <a class="home-start-path__step" href="archive.html">
         <span class="home-start-path__step-num">03</span>
-        <span class="home-start-path__step-name">Browse 1,084 works</span>
+        <span class="home-start-path__step-name">Browse <span data-work-count>1,084</span> works</span>
       </a>
       <span class="home-start-path__arrow" aria-hidden="true">→</span>
       <a class="home-start-path__step" href="companion.html">
@@ -655,7 +655,7 @@
   </nav>
 
   <div class="home-stat container" aria-hidden="true">
-    <span class="home-stat__num">1,084</span>
+    <span class="home-stat__num" data-work-count>1,084</span>
     <span class="home-stat__label">works<br>1974–present</span>
   </div>
 
@@ -666,20 +666,20 @@
         <img class="home-begin__img" src="artworks/thumbs/art0483.avif" alt="Untitled (CD Formation) 2" loading="eager">
         <p class="home-begin__caption">Multiple discs, one formation. The beginning of something.</p>
       </a>
-      <a class="home-begin__work" href="artwork.html?id=art0953">
-        <img class="home-begin__img" src="artworks/thumbs/art0953.avif" alt="XXXIII Días Installation View" loading="eager">
-        <p class="home-begin__caption">The whole wall. Fifty years of it.</p>
+      <a class="home-begin__work" href="artwork.html?id=art1008">
+        <img class="home-begin__img" src="artworks/thumbs/art1008.avif" alt="Pubiern Robodt 365" loading="eager">
+        <p class="home-begin__caption">Assembled gears, lenses, circuit boards. A robot-like figure in triptych.</p>
       </a>
-      <a class="home-begin__work" href="artwork.html?id=art1020">
-        <img class="home-begin__img" src="artworks/thumbs/art1020.avif" alt="Clockwork Targets Formation" loading="eager">
-        <p class="home-begin__caption">Every circle a target. Every target a clock.</p>
+      <a class="home-begin__work" href="artwork.html?id=art1009">
+        <img class="home-begin__img" src="artworks/thumbs/art1009.avif" alt="Untitled (Machine Assemblage)" loading="eager">
+        <p class="home-begin__caption">Cassette decks, fan units, disc mechanisms — stacked on painted fabric.</p>
       </a>
     </div>
   </section>
 
   <section class="grid-section container" aria-label="Selected works">
     <h2 class="section-label">Selected Works</h2>
-    <p class="archive-stat">1,084 works &middot; Collage, Sculpture, Photography &middot; 1974–present</p>
+    <p class="archive-stat"><span data-work-count>1,084</span> works &middot; Collage, Sculpture, Photography &middot; 1974–present</p>
     <div class="grid" id="home-grid"></div>
     <!-- ⑧ Updated CTA -->
     <p class="archive-cta"><a href="archive.html">Browse the full archive →</a></p>
@@ -800,6 +800,7 @@
           if (!full) return;
           injectSeriesCounts(full);
           buildRecentStrip(full);
+          updateWorkCount(full.length);
         })
         .catch(() => {});
     })
@@ -809,7 +810,8 @@
   function initHero(catalog) {
     heroPool = catalog.filter(r => r.featured);
     if (!heroPool.length) return;
-    currentHeroIdx = Math.floor(Math.random() * heroPool.length);
+    const pinned = heroPool.findIndex(r => r.file === 'art1010.avif');
+    currentHeroIdx = pinned >= 0 ? pinned : Math.floor(Math.random() * heroPool.length);
     renderHero(heroPool[currentHeroIdx]);
   }
 
@@ -1012,6 +1014,14 @@
     el.appendChild(s);
   }
 
+  function updateWorkCount(n) {
+    const fmt = n.toLocaleString();
+    document.querySelectorAll('[data-work-count]').forEach(el => {
+      el.textContent = fmt;
+      if (el.classList.contains('home-stat__num')) el.dataset.countTarget = n;
+    });
+  }
+
   function esc(s) {
     return String(s)
       .replace(/&/g,'&amp;').replace(/</g,'&lt;')
@@ -1032,18 +1042,20 @@
 
 <script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
 <script>
-/* Count-up animation on 1,084 stat */
+/* Count-up animation on work-count stat */
 (function(){
   const el = document.querySelector('.home-stat__num');
   if (!el) return;
-  const target = 1084;
   const duration = 1800;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduced) return;
-  el.textContent = '0';
+  let started = false;
   const obs = new IntersectionObserver(entries => {
-    if (!entries[0].isIntersecting) return;
+    if (!entries[0].isIntersecting || started) return;
+    started = true;
     obs.disconnect();
+    const target = parseInt((el.dataset.countTarget || el.textContent).replace(/,/g, ''), 10) || 1084;
+    el.textContent = '0';
     const start = performance.now();
     function tick(now) {
       const t = Math.min((now - start) / duration, 1);
