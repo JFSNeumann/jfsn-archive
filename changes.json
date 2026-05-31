@@ -1,5 +1,11 @@
 [
   {
+    "sha": "db435fd",
+    "date": "2026-05-31",
+    "title": "Session 19: Stitch redesign direction set, deploy workflow clarified",
+    "body": "- Stitch redesign plan established: light design system (bone-white/deep-ink/orange)\n- Design system config + page briefs documented for all 7 pages\n- Stitch opening prompt written; deploy.sh clarified as separate from end-session.sh"
+  },
+  {
     "sha": "b37149d",
     "date": "2026-05-30",
     "title": "Homepage: pin art1010 hero, update tagline + Begin Here works, dynamic count",
