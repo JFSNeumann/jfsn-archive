@@ -1,31 +1,25 @@
 # Current State
 **Updated:** 2026-06-01
 
-## Last session
-Applied Stitch redesign exports to all remaining pages — token system, border, and mobile pattern fixes.
+## This session — Stitch redesign final 5 pages + polish
 
-## Completed this session
-- series-index.html ✅ — Stitch tokens, border-deep-ink, touch grayscale
-- about.html ✅ — Stitch tokens, border-deep-ink
-- collage.html ✅ — border-deep-ink, mobile medium filter bar
-- sculpture.html ✅ — same
-- painting.html ✅ — same
-- photography.html ✅ — same
-- timeline.html ✅ — Stitch tokens, #FF6600 CSS fixes, bg-bone-white
-- companion.html ✅ — Stitch tokens, border-deep-ink
-- mosaic.html ✅ — bg-bone-white, border-deep-ink
-- chromatic.html ✅ — bg-bone-white, border-deep-ink
-- 404.html ✅ — full redesign: clinical card + corner accents + dotted void + action cards + flicker JS
-- lost.html ✅ — bg-bone-white, border-deep-ink
-- artwork.html ✅ — Stitch tokens, border-deep-ink
-- guernica.html ✅ — bg-bone-white, border-deep-ink
-- for-artists.html ✅ — bg-bone-white, border-deep-ink
+### Completed
+- constellation.html ✅ — border-deep-ink nav/mobile nav, bg-background
+- wall.html ✅ — border-deep-ink, Playfair Display title, deep-ink grid gaps
+- changes.html ✅ — border-deep-ink nav/mobile nav, SHA hash color fixed
+- qa.html ✅ — full light system (CSS var flip), prefers-reduced-motion added
+- jeff.html ✅ — full rewrite: light system, clinical card grid, system clock, JetBrains Mono creds
+- make_handoff.py + Allison PDF ✅ — regenerated to match light system (bone-white bg)
+- series-index.html ✅ — nav font fixed (was font-body-md, now font-nav-link)
+- index.html hero ✅ — full-screen color (art0953), centered text+buttons, even veil, pulsing SCROLL indicator
+- Consistency pass ✅ — all 5 pages: border-deep-ink, no Cormorant Garamond, no site.css refs
 
-## Stitch redesign — COMPLETE
-All 22 public pages on light system. ✅
+### Stitch redesign — ALL 22 PAGES COMPLETE ✅
 
 ## To do next session
-- [ ] Run end-session.sh then deploy.sh
+- [ ] bash deploy.sh — push everything live to jfsn.com
+- [ ] Test companion.html live at jfsn.com/companion.html (AI still working?)
+- [ ] about.html exhibitions: add real show history when ready (~line 375)
 
 ## Known issues
 - companion.html: test live at jfsn.com/companion.html to confirm AI still works

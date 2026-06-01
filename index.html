@@ -352,27 +352,47 @@
 <main class="hidden md:block pt-16">
 
   <!-- Hero Section -->
-  <section class="relative w-full overflow-hidden flex items-center bg-surface-container-lowest h-[870px]" id="hero-section">
-    <canvas id="dust-motte-canvas"></canvas>
-    <div class="relative z-10 px-margin-desktop max-w-[800px] reveal-element" data-delay="0">
-      <span class="font-label-caps text-label-caps text-international-orange mb-4 block tracking-[0.2em]">PERSONAL ARCHIVE</span>
-      <h1 class="font-display-lg text-display-lg text-deep-ink mb-6 italic leading-tight">Five Decades of Making</h1>
-      <p class="font-body-lg text-body-lg text-archive-gray mb-10 max-w-[540px]">
-        1,084 works spanning 1974 to the present. Collage, sculpture, and photography by Jeffrey F. S. Neumann, Cleveland.
+  <section class="relative w-full overflow-hidden" style="height: 100dvh;" id="hero-section">
+    <canvas id="dust-motte-canvas" class="absolute inset-0 z-10 pointer-events-none"></canvas>
+    <!-- Full-bleed image -->
+    <img
+      src="artworks/full/art0953.avif"
+      alt="XXXIII Días Installation View — Jeffrey F. S. Neumann"
+      class="absolute inset-0 w-full h-full object-cover"
+      width="2800" height="1288" loading="eager"
+    />
+    <!-- Full overlay — light vignette so centered text is always readable -->
+    <div class="absolute inset-0" style="background: rgba(11,11,11,0.38);"></div>
+    <!-- Text overlay — vertically centered -->
+    <div class="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-margin-desktop reveal-element" data-delay="0">
+      <span class="font-label-caps text-label-caps text-international-orange mb-3 block tracking-[0.2em]">PERSONAL ARCHIVE</span>
+      <h1 class="font-display-lg text-display-lg text-bone-white mb-4 italic leading-tight">Five Decades of Making</h1>
+      <p class="font-body-md text-body-md text-bone-white/70 mb-8">
+        1,084 works · 1974–present · Collage, sculpture, photography · Cleveland
       </p>
-      <div class="flex flex-wrap gap-4">
-        <a href="archive.html" class="px-8 py-3 bg-deep-ink text-bone-white font-label-caps text-label-caps btn-transition hover:bg-international-orange">EXPLORE ARCHIVE</a>
-        <a href="series-index.html" class="px-8 py-3 border border-deep-ink text-deep-ink font-label-caps text-label-caps btn-transition hover:border-international-orange hover:text-international-orange">VIEW SERIES</a>
+      <div class="flex gap-4 justify-center">
+        <a href="archive.html" class="px-7 py-3 bg-international-orange text-white font-label-caps text-label-caps btn-transition hover:bg-bone-white hover:text-deep-ink">EXPLORE ARCHIVE</a>
+        <a href="series-index.html" class="px-7 py-3 border border-bone-white/50 text-bone-white font-label-caps text-label-caps btn-transition hover:border-bone-white hover:bg-bone-white/10">VIEW SERIES</a>
       </div>
     </div>
-    <div class="absolute right-0 top-0 w-1/2 h-full reveal-element" data-delay="200">
-      <img
-        src="artworks/full/art0953.avif"
-        alt="XXXIII Días Installation View — Jeffrey F. S. Neumann"
-        class="w-full h-full object-cover grayscale opacity-80 mix-blend-multiply"
-        width="2800" height="1288" loading="eager"
-      />
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-0 right-0 z-20 flex flex-col items-center gap-2 pointer-events-none" style="animation: fadeInUp 1s ease 1.2s both;">
+      <span class="font-label-caps text-[9px] tracking-[0.2em] text-bone-white/50">SCROLL</span>
+      <div style="width:1px; height:40px; background: linear-gradient(to bottom, rgba(243,240,234,0.5), transparent); animation: scrollPulse 2s ease-in-out infinite;"></div>
     </div>
+    <style>
+      @keyframes scrollPulse {
+        0%, 100% { opacity: 0.4; transform: scaleY(1); }
+        50% { opacity: 1; transform: scaleY(1.15); }
+      }
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(12px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .scroll-indicator { display: none; }
+      }
+    </style>
   </section>
 
   <!-- Featured Works Section -->
