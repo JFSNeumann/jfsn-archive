@@ -87,6 +87,45 @@
             transform: scale(1.02);
         }
         body { -webkit-font-smoothing: antialiased; }
+
+        /* Kinetic border on related works cards */
+        .related-card {
+            position: relative;
+        }
+        .related-card::before, .related-card::after {
+            content: '';
+            position: absolute;
+            width: 0; height: 0;
+            border: 1px solid transparent;
+            box-sizing: border-box;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .related-card::before { top: 0; left: 0; }
+        .related-card::after  { bottom: 0; right: 0; }
+        .related-card:hover::before {
+            width: 100%; height: 100%;
+            border-top-color: #e05900; border-right-color: #e05900;
+            transition: width 0.15s ease-out, height 0.15s ease-out 0.15s;
+        }
+        .related-card:hover::after {
+            width: 100%; height: 100%;
+            border-bottom-color: #e05900; border-left-color: #e05900;
+            transition: width 0.15s ease-out, height 0.15s ease-out 0.15s;
+        }
+
+        /* Scroll reveal */
+        .reveal-section {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-section.visible { opacity: 1; transform: translateY(0); }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal-section { opacity: 1; transform: none; transition: none; }
+            .related-card::before, .related-card::after { transition: none; }
+        }
     </style>
 </head>
 <body class="font-body-md text-body-md bg-background text-on-background">
@@ -184,7 +223,7 @@
     </nav>
 
     <!-- Related Works -->
-    <section class="mt-xl">
+    <section class="mt-xl reveal-section" id="related-section">
       <div class="flex justify-between items-end mb-lg border-b border-outline-variant pb-sm">
         <h2 class="font-headline-md text-headline-md uppercase tracking-tight">Related Works</h2>
         <a href="archive.html" class="font-label-md text-label-md text-on-tertiary-container hover:underline tracking-widest">VIEW ALL</a>
@@ -280,17 +319,24 @@ function renderRelated(works, currentFile) {
   picks.forEach(w => {
     const id = w.file.replace('.avif', '');
     grid.innerHTML += `
-      <a href="artwork.html?id=${id}" class="group flex flex-col gap-sm no-underline text-on-background">
+      <a href="artwork.html?id=${id}" class="related-card group flex flex-col gap-sm no-underline text-on-background">
         <div class="aspect-square border border-outline-variant overflow-hidden bg-surface-container">
           <img alt="${w.title || 'Untitled'}" class="w-full h-full object-cover grayscale-img"
             src="artworks/thumbs/${w.file}" loading="lazy" width="300" height="300"/>
         </div>
         <div>
-          <h3 class="font-label-lg text-label-lg uppercase">${w.title || 'Untitled'}</h3>
+          <h3 class="font-label-lg text-label-lg uppercase group-hover:text-on-tertiary-container transition-colors">${w.title || 'Untitled'}</h3>
           <p class="font-label-md text-label-md text-secondary">${w.year || '—'} · ${typeLabel(w.work_type)}</p>
         </div>
       </a>`;
   });
+
+  // Reveal related section
+  const section = document.getElementById('related-section');
+  if (section) {
+    const ro = new IntersectionObserver(([e]) => { if (e.isIntersecting) { section.classList.add('visible'); ro.disconnect(); } }, { threshold: 0.1 });
+    ro.observe(section);
+  }
 }
 
 fetch('catalog.json')

@@ -70,9 +70,96 @@
         .timeline-strip { cursor: grab; user-select: none; }
         .timeline-strip:active { cursor: grabbing; }
         body { -webkit-font-smoothing: antialiased; }
+
+        /* Top-bar loading indicator */
+        #timeline-loader {
+            position: fixed;
+            top: 0; left: 0;
+            width: 0%;
+            height: 3px;
+            background: #e05900;
+            z-index: 100;
+            transition: width 0.4s ease;
+            pointer-events: none;
+        }
+
+        /* Temporal breadcrumb rail — tracks horizontal scroll */
+        #temporal-rail {
+            position: fixed;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 2px;
+            height: 30vh;
+            background: #c4c7c7;
+            z-index: 40;
+            cursor: pointer;
+        }
+        #temporal-marker {
+            position: absolute;
+            left: -3px;
+            top: 0%;
+            width: 8px;
+            height: 8px;
+            background: #e05900;
+            border-radius: 50%;
+            transition: top 120ms ease-out;
+            pointer-events: none;
+        }
+        #temporal-rail .rail-start,
+        #temporal-rail .rail-end {
+            position: absolute;
+            left: 10px;
+            font-size: 10px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            color: #747878;
+            white-space: nowrap;
+            letter-spacing: 0.1em;
+        }
+        #temporal-rail .rail-start { top: 0; transform: translateY(-50%); }
+        #temporal-rail .rail-end   { bottom: 0; transform: translateY(50%); }
+
+        /* Scroll reveal for header */
+        .reveal-header {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-header.visible { opacity: 1; transform: translateY(0); }
+
+        /* Drawn border on card hover */
+        .timeline-card {
+            position: relative;
+        }
+        .timeline-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 1px solid transparent;
+            pointer-events: none;
+            transition: border-color 0.25s ease;
+        }
+        .timeline-card:hover::after { border-color: #e05900; }
+        .timeline-card:hover .grayscale-img { filter: grayscale(0%); transform: scale(1.04); }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal-header { opacity: 1; transform: none; transition: none; }
+            #timeline-loader { display: none; }
+        }
     </style>
 </head>
 <body class="bg-surface text-on-surface font-body-md text-body-md overflow-x-hidden selection:bg-on-tertiary-container selection:text-white">
+
+<!-- Loading indicator -->
+<div id="timeline-loader"></div>
+
+<!-- Temporal breadcrumb rail (desktop) -->
+<div class="hidden md:block" id="temporal-rail">
+  <div id="temporal-marker"></div>
+  <span class="rail-start">1974</span>
+  <span class="rail-end">Now</span>
+</div>
 
 <!-- Top Nav -->
 <!-- NAV:START -->
@@ -94,7 +181,7 @@
 <main class="pt-[88px] min-h-screen flex flex-col justify-center overflow-hidden">
 
   <!-- Header -->
-  <div class="px-margin-mobile md:px-margin-desktop mb-lg">
+  <div class="px-margin-mobile md:px-margin-desktop mb-lg reveal-header">
     <h1 class="font-headline-lg text-headline-lg mb-xs">Chronological Archive</h1>
     <p class="font-body-md text-body-md text-secondary max-w-xl">
       An interactive visual history spanning five decades. Drag horizontally or use the arrow keys to explore 1,084 works from 1974 to the present.
@@ -275,7 +362,7 @@ function buildTimeline(works) {
       // Stagger vertically for every other item
       const mt = wi % 2 === 1 ? 'mt-lg' : '';
       row.innerHTML += `
-        <a href="artwork.html?id=${id}" class="group flex flex-col gap-sm no-underline text-on-surface flex-shrink-0 ${mt}">
+        <a href="artwork.html?id=${id}" class="timeline-card group flex flex-col gap-sm no-underline text-on-surface flex-shrink-0 ${mt}">
           <div class="${wClass} ${hClass} border border-outline-variant overflow-hidden bg-surface-container">
             <img
               class="w-full h-full object-cover grayscale-img"
@@ -383,13 +470,45 @@ container.addEventListener('scroll', updateProgress);
 window.addEventListener('resize', updateProgress);
 
 // Load data
+const loader = document.getElementById('timeline-loader');
+loader.style.width = '40%';
+
 fetch('catalog.json')
   .then(r => r.json())
   .then(works => {
+    loader.style.width = '80%';
     buildTimeline(works);
     updateProgress();
+    loader.style.width = '100%';
+    setTimeout(() => { loader.style.transition = 'none'; loader.style.width = '0%'; setTimeout(() => { loader.style.transition = 'width 0.4s ease'; }, 50); }, 400);
   })
   .catch(e => console.error('catalog load failed', e));
+
+// Temporal breadcrumb rail — synced to horizontal scroll
+const temporalMarker = document.getElementById('temporal-marker');
+const temporalRail = document.getElementById('temporal-rail');
+function updateTemporalMarker() {
+  if (!temporalMarker) return;
+  const scrollWidth = container.scrollWidth - container.clientWidth;
+  const pct = scrollWidth > 0 ? Math.max(0, Math.min(100, (container.scrollLeft / scrollWidth) * 100)) : 0;
+  temporalMarker.style.top = pct + '%';
+}
+if (temporalRail) {
+  temporalRail.addEventListener('click', e => {
+    const rect = temporalRail.getBoundingClientRect();
+    const pct = (e.clientY - rect.top) / rect.height;
+    const scrollWidth = container.scrollWidth - container.clientWidth;
+    container.scrollTo({ left: pct * scrollWidth, behavior: 'smooth' });
+  });
+}
+container.addEventListener('scroll', updateTemporalMarker);
+
+// Scroll reveal for header
+const headerEl = document.querySelector('.reveal-header');
+if (headerEl) {
+  const ro = new IntersectionObserver(([e]) => { if (e.isIntersecting) { headerEl.classList.add('visible'); ro.disconnect(); } }, { threshold: 0.1 });
+  ro.observe(headerEl);
+}
 </script>
 
 <!-- GoatCounter analytics -->

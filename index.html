@@ -139,6 +139,43 @@
         .btn-transition {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        /* Kinetic border draw on hover */
+        .kinetic-border {
+            position: relative;
+            outline: 0px solid #FF6600;
+            transition: outline-width 0.2s ease;
+        }
+        .kinetic-border:hover {
+            outline: 1px solid #FF6600;
+            outline-offset: -1px;
+        }
+        /* Scroll reveal staggers */
+        .reveal-element {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s cubic-bezier(0.2, 0, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0, 0.2, 1);
+        }
+        .reveal-element.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Dust motte canvas */
+        #dust-motte-canvas {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 5;
+            mix-blend-mode: multiply;
+            opacity: 0.5;
+        }
+        /* Ghost trace parallax labels */
+        .parallax-label { will-change: transform; }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal-element { opacity: 1; transform: none; transition: none; }
+            #dust-motte-canvas { display: none; }
+            .parallax-label { will-change: auto; }
+        }
     </style>
 </head>
 <body class="bg-bone-white text-deep-ink font-body-md overflow-x-hidden">
@@ -165,25 +202,38 @@
 
 <main class="pt-16">
 
-  <!-- Hero Section -->
-  <section class="relative h-[90vh] w-full overflow-hidden flex items-center justify-center">
-    <div class="absolute inset-0 bg-deep-ink/20 z-10"></div>
-    <img
-      src="artworks/full/art0953.avif"
-      alt="XXXIII Días Installation View — Jeffrey F. S. Neumann"
-      class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 hover:scale-105"
-      width="2800" height="1288" loading="eager"
-    />
-    <div class="relative z-20 text-center text-bone-white max-w-4xl px-margin-mobile">
-      <h1 class="font-display-lg text-display-lg mb-4 tracking-tight drop-shadow-lg">Five Decades of Archival Kineticism</h1>
-      <p class="font-headline-md text-headline-md font-light opacity-90 italic">The Art of Jeffrey F. S. Neumann</p>
-      <div class="mt-12 flex justify-center gap-6">
+  <!-- Hero Section — split layout desktop, full-bleed mobile -->
+  <section class="relative w-full overflow-hidden flex items-center bg-surface-container-lowest h-[90vh] md:h-[870px]" id="hero-section">
+    <canvas id="dust-motte-canvas"></canvas>
+    <!-- Text — left half -->
+    <div class="relative z-10 px-margin-mobile md:px-margin-desktop max-w-[800px] reveal-element" data-delay="0">
+      <span class="font-label-caps text-label-caps text-international-orange mb-4 block tracking-[0.2em]">PERSONAL ARCHIVE</span>
+      <h1 class="font-display-lg text-display-lg text-deep-ink mb-6 italic leading-tight">Five Decades of Making</h1>
+      <p class="font-body-lg text-body-lg text-archive-gray mb-10 max-w-[540px]">
+        1,084 works spanning 1974 to the present. Collage, sculpture, and photography by Jeffrey F. S. Neumann, Cleveland.
+      </p>
+      <div class="flex flex-wrap gap-4">
         <a href="archive.html" class="px-8 py-3 bg-deep-ink text-bone-white font-label-caps text-label-caps btn-transition hover:bg-international-orange">EXPLORE ARCHIVE</a>
-        <a href="series-index.html" class="px-8 py-3 border border-bone-white text-bone-white font-label-caps text-label-caps btn-transition hover:bg-bone-white hover:text-deep-ink">VIEW SERIES</a>
+        <a href="series-index.html" class="px-8 py-3 border border-deep-ink text-deep-ink font-label-caps text-label-caps btn-transition hover:border-international-orange hover:text-international-orange">VIEW SERIES</a>
       </div>
     </div>
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 animate-bounce">
-      <span class="material-symbols-outlined text-bone-white text-4xl">expand_more</span>
+    <!-- Image — right half (desktop only) -->
+    <div class="hidden md:block absolute right-0 top-0 w-1/2 h-full reveal-element" data-delay="200">
+      <img
+        src="artworks/full/art0953.avif"
+        alt="XXXIII Días Installation View — Jeffrey F. S. Neumann"
+        class="w-full h-full object-cover grayscale opacity-80 mix-blend-multiply"
+        width="2800" height="1288" loading="eager"
+      />
+    </div>
+    <!-- Mobile: full-bleed image behind text -->
+    <div class="md:hidden absolute inset-0 z-0">
+      <img
+        src="artworks/full/art0953.avif"
+        alt="XXXIII Días Installation View — Jeffrey F. S. Neumann"
+        class="w-full h-full object-cover grayscale opacity-30"
+        width="2800" height="1288" loading="eager"
+      />
     </div>
   </section>
 
@@ -200,7 +250,7 @@
       </a>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter" id="featured-grid">
-      <!-- populated by JS from catalog-home.json -->
+      <!-- populated by JS from catalog-home.json — cards get kinetic-border class -->
     </div>
   </section>
 
@@ -325,22 +375,26 @@
       const cols = ['md:col-span-4', 'md:col-span-4 md:mt-12', 'md:col-span-4'];
       featured.forEach((w, i) => {
         const medium = (w.work_type || '').toUpperCase().replace(/_/g, ' ');
-        grid.innerHTML += `
-          <a href="artwork.html?id=${w.file.replace('.avif','')}" class="${cols[i]} archive-card group cursor-pointer no-underline">
-            <div class="aspect-[3/4] bg-surface-container-high relative overflow-hidden card-border border border-transparent transition-all duration-300">
-              <img
-                alt="${w.title}"
-                class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-110"
-                src="artworks/thumbs/${w.file}"
-                loading="lazy" width="400" height="533"
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-deep-ink/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </div>
-            <div class="mt-4">
-              <h3 class="font-headline-md text-headline-md text-2xl text-deep-ink">${w.title}</h3>
-              <p class="font-label-caps text-label-caps text-archive-gray mt-1">${w.year} — ${medium}</p>
-            </div>
-          </a>`;
+        const card = document.createElement('a');
+        card.href = `artwork.html?id=${w.file.replace('.avif','')}`;
+        card.className = `${cols[i]} archive-card kinetic-border group cursor-pointer no-underline reveal-element`;
+        card.dataset.delay = String(i * 100);
+        card.innerHTML = `
+          <div class="aspect-[3/4] bg-surface-container-high relative overflow-hidden">
+            <img
+              alt="${w.title}"
+              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105"
+              src="artworks/thumbs/${w.file}"
+              loading="lazy" width="400" height="533"
+            />
+          </div>
+          <div class="mt-4">
+            <span class="font-label-caps text-label-caps text-international-orange parallax-label block" data-speed="0.1">${w.year}</span>
+            <h3 class="font-headline-md text-headline-md text-deep-ink mt-1">${w.title}</h3>
+            <p class="font-label-caps text-label-caps text-archive-gray mt-1">${medium}</p>
+          </div>`;
+        grid.appendChild(card);
+        revealObserver.observe(card);
       });
     } catch(e) {
       console.error('catalog-home load failed', e);
@@ -364,19 +418,91 @@
     });
   });
 
-  // Scroll reveal
-  const observer = new IntersectionObserver((entries) => {
+  // Scroll reveal staggers
+  const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('opacity-100', 'translate-y-0');
-        entry.target.classList.remove('opacity-0', 'translate-y-10');
+        const delay = parseInt(entry.target.dataset.delay || '0');
+        setTimeout(() => entry.target.classList.add('visible'), delay);
+        revealObserver.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('section').forEach(section => {
-    section.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-10');
-    observer.observe(section);
-  });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  document.querySelectorAll('.reveal-element').forEach(el => revealObserver.observe(el));
+
+  // Ghost trace parallax on scroll
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    document.querySelectorAll('.parallax-label').forEach(el => {
+      const speed = parseFloat(el.dataset.speed) || 0.1;
+      const rect = el.getBoundingClientRect();
+      const elementTop = rect.top + scrollY;
+      const offset = (scrollY + window.innerHeight / 2 - elementTop) * speed;
+      el.style.transform = `translateY(${offset}px)`;
+    });
+  }, { passive: true });
+
+  // Dust motte kinetic effect
+  (function initDustMotte() {
+    const canvas = document.getElementById('dust-motte-canvas');
+    const hero = document.getElementById('hero-section');
+    if (!canvas || !hero) return;
+    const ctx = canvas.getContext('2d');
+    let particles = [], mouse = { x: null, y: null }, width, height;
+
+    const resize = () => {
+      width = canvas.width = hero.offsetWidth;
+      height = canvas.height = hero.offsetHeight;
+      initParticles();
+    };
+
+    class Particle {
+      reset() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.size = Math.random() * 1.5 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 0.2;
+        this.speedY = (Math.random() - 0.5) * 0.2;
+        this.opacity = Math.random() * 0.35;
+      }
+      constructor() { this.reset(); }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (mouse.x !== null) {
+          const dx = mouse.x - this.x, dy = mouse.y - this.y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < 200) { this.x += dx * 0.001; this.y += dy * 0.001; }
+        }
+        if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) this.reset();
+      }
+      draw() {
+        ctx.fillStyle = `rgba(0,0,0,${this.opacity})`;
+        ctx.fillRect(this.x, this.y, this.size, this.size);
+      }
+    }
+
+    function initParticles() {
+      particles = [];
+      const count = Math.floor((width * height) / 8000);
+      for (let i = 0; i < count; i++) particles.push(new Particle());
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      particles.forEach(p => { p.update(); p.draw(); });
+      requestAnimationFrame(animate);
+    }
+
+    hero.addEventListener('mousemove', e => {
+      const r = hero.getBoundingClientRect();
+      mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
+    });
+    hero.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
+    window.addEventListener('resize', resize, { passive: true });
+    resize();
+    animate();
+  })();
 </script>
 
 <!-- GoatCounter — privacy-first analytics -->

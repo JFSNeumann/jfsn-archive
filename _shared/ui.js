@@ -53,4 +53,21 @@
     }
   }
 
+  // ─── Scroll reveal for .thumb items (medium pages) ───────────────────────
+  const thumbs = document.querySelectorAll('.thumb');
+  if (thumbs.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const thumbObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), (i % 6) * 50);
+          thumbObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px -30px 0px' });
+    thumbs.forEach(t => thumbObserver.observe(t));
+  } else {
+    // Reduced motion: show immediately
+    thumbs.forEach(t => t.classList.add('visible'));
+  }
+
 })();

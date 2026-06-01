@@ -121,6 +121,73 @@
         .kinetic-hover { transition: color 0.2s ease; }
         .kinetic-hover:hover { color: #e05900; }
         #work-count { font-variant-numeric: tabular-nums; }
+
+        /* Animated border draw on hover — corner-to-corner */
+        .archive-card {
+            position: relative;
+            cursor: crosshair;
+        }
+        .archive-card::before, .archive-card::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border: 1px solid transparent;
+            box-sizing: border-box;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .archive-card::before { top: 0; left: 0; }
+        .archive-card::after  { bottom: 0; right: 0; }
+        .archive-card:hover::before {
+            width: 100%; height: 100%;
+            border-top-color: #e05900;
+            border-right-color: #e05900;
+            transition: width 0.15s ease-out, height 0.15s ease-out 0.15s;
+        }
+        .archive-card:hover::after {
+            width: 100%; height: 100%;
+            border-bottom-color: #e05900;
+            border-left-color: #e05900;
+            transition: width 0.15s ease-out, height 0.15s ease-out 0.15s;
+        }
+
+        /* Scroll reveal staggers */
+        .reveal-card {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-card.visible { opacity: 1; transform: translateY(0); }
+
+        /* Ghost trace parallax on metadata */
+        .parallax-meta { will-change: transform; }
+
+        /* Loading progress bar */
+        #loading-bar {
+            height: 2px;
+            width: 0%;
+            background: #e05900;
+            transition: width 0.4s ease;
+        }
+
+        /* Mobile sticky filter ledger */
+        #mobile-ledger {
+            transition: padding 0.3s ease, box-shadow 0.3s ease;
+        }
+        #mobile-ledger.stuck {
+            padding-top: 8px;
+            padding-bottom: 8px;
+            box-shadow: 0 4px 12px -4px rgba(0,0,0,0.1);
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal-card { opacity: 1; transform: none; transition: none; }
+            .archive-card::before, .archive-card::after { transition: none; }
+            .parallax-meta { will-change: auto; }
+        }
     </style>
 </head>
 <body class="font-body-md text-body-md bg-background text-on-background">
@@ -159,6 +226,21 @@
       </p>
     </div>
   </header>
+
+  <!-- Loading progress bar -->
+  <div class="h-[2px] w-full mb-4 bg-transparent"><div id="loading-bar"></div></div>
+
+  <!-- Mobile-only sticky horizontal filter ledger -->
+  <div class="md:hidden sticky top-[64px] z-40 bg-background border-y border-outline-variant py-3 -mx-margin-mobile px-margin-mobile mb-md" id="mobile-ledger">
+    <div class="flex items-center gap-3 overflow-x-auto hide-scrollbar">
+      <span class="font-label-md text-label-md text-secondary uppercase shrink-0">Medium:</span>
+      <button class="mobile-medium-btn font-label-lg text-label-lg uppercase px-2 py-1 whitespace-nowrap text-on-tertiary-container border-b-2 border-on-tertiary-container" data-val="">All</button>
+      <button class="mobile-medium-btn font-label-lg text-label-lg uppercase px-2 py-1 whitespace-nowrap border-b-2 border-transparent text-secondary" data-val="collage">Collage</button>
+      <button class="mobile-medium-btn font-label-lg text-label-lg uppercase px-2 py-1 whitespace-nowrap border-b-2 border-transparent text-secondary" data-val="photograph">Photo</button>
+      <button class="mobile-medium-btn font-label-lg text-label-lg uppercase px-2 py-1 whitespace-nowrap border-b-2 border-transparent text-secondary" data-val="sculpture">Sculpture</button>
+      <button class="mobile-medium-btn font-label-lg text-label-lg uppercase px-2 py-1 whitespace-nowrap border-b-2 border-transparent text-secondary" data-val="painting">Painting</button>
+    </div>
+  </div>
 
   <div class="flex flex-col md:flex-row gap-gutter">
 
@@ -347,7 +429,7 @@ function renderCard(w) {
   const med = typeLabel(w.work_type).toUpperCase();
   const title = w.title || 'Untitled';
   return `
-    <a href="artwork.html?id=${id}" class="group block no-underline text-on-background">
+    <a href="artwork.html?id=${id}" class="archive-card reveal-card group block no-underline text-on-background">
       <div class="overflow-hidden mb-md border border-outline-variant bg-surface-container-low">
         <img
           alt="${title}"
@@ -356,7 +438,7 @@ function renderCard(w) {
           loading="lazy" width="300" height="400"
         />
       </div>
-      <div class="space-y-1">
+      <div class="space-y-1 parallax-meta">
         <h4 class="font-label-lg text-label-lg uppercase leading-snug">${title}</h4>
         <span class="block font-label-md text-label-md uppercase text-secondary">${w.year || '—'} | ${med}</span>
         ${w.series ? `<span class="block font-label-md text-label-md text-on-tertiary-container uppercase">${w.series}</span>` : ''}
@@ -396,6 +478,10 @@ function renderPage() {
   workCount.textContent = total.toLocaleString();
   emptyState.classList.toggle('hidden', total > 0);
   loadMoreBtn.classList.toggle('hidden', page * PAGE_SIZE >= total);
+  // Observe newly added cards (observeNewCards defined below)
+  requestAnimationFrame(() => {
+    if (typeof observeNewCards === 'function') observeNewCards();
+  });
 }
 
 fetch('catalog.json')
@@ -411,11 +497,77 @@ document.querySelectorAll('.custom-checkbox').forEach(cb => {
   cb.addEventListener('change', applyFilters);
 });
 
-loadMoreBtn.addEventListener('click', renderPage);
+loadMoreBtn.addEventListener('click', () => {
+  // Progress bar animation
+  const bar = document.getElementById('loading-bar');
+  bar.style.width = '70%';
+  setTimeout(() => {
+    renderPage();
+    bar.style.width = '100%';
+    setTimeout(() => {
+      bar.style.transition = 'none';
+      bar.style.width = '0%';
+      setTimeout(() => { bar.style.transition = 'width 0.4s ease'; }, 50);
+    }, 400);
+  }, 300);
+});
 
 clearBtn.addEventListener('click', () => {
   document.querySelectorAll('.custom-checkbox').forEach(cb => cb.checked = false);
   applyFilters();
+});
+
+// Scroll reveal for dynamically added cards
+const cardObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), (i % 8) * 60);
+      cardObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+
+function observeNewCards() {
+  document.querySelectorAll('.reveal-card:not(.visible)').forEach(el => cardObserver.observe(el));
+}
+
+// Ghost trace parallax on scroll
+window.addEventListener('scroll', () => {
+  document.querySelectorAll('.parallax-meta').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * 0.04;
+      el.style.transform = `translateY(${offset}px)`;
+    }
+  });
+}, { passive: true });
+
+// Mobile ledger sticky shadow
+const mobileLedger = document.getElementById('mobile-ledger');
+if (mobileLedger) {
+  const stickyObserver = new IntersectionObserver(([e]) => {
+    mobileLedger.classList.toggle('stuck', e.intersectionRatio < 1);
+  }, { threshold: 1, rootMargin: '-65px 0px 0px 0px' });
+  stickyObserver.observe(mobileLedger);
+}
+
+// Mobile medium filter buttons
+document.querySelectorAll('.mobile-medium-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.mobile-medium-btn').forEach(b => {
+      b.classList.remove('text-on-tertiary-container', 'border-on-tertiary-container');
+      b.classList.add('text-secondary', 'border-transparent');
+    });
+    btn.classList.add('text-on-tertiary-container', 'border-on-tertiary-container');
+    btn.classList.remove('text-secondary', 'border-transparent');
+
+    const val = btn.dataset.val;
+    // Sync to desktop checkboxes and re-filter
+    document.querySelectorAll('#filter-medium input').forEach(cb => {
+      cb.checked = val ? cb.value === val : false;
+    });
+    applyFilters();
+  });
 });
 </script>
 

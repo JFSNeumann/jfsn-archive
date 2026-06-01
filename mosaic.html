@@ -78,6 +78,12 @@ tailwind.config = {
     @media (prefers-reduced-motion: reduce) {
         *, *::before, *::after { transition: none !important; animation: none !important; }
     }
+    .reveal-header {
+        opacity: 0;
+        transform: translateY(14px);
+        transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-header.visible { opacity: 1; transform: translateY(0); }
 
     /* ── Mosaic canvas stage (intentionally dark — art renders on black) ── */
     .mosaic-stage {
@@ -174,7 +180,7 @@ tailwind.config = {
 <main id="main" class="pt-16">
 
   <!-- Page header -->
-  <section class="border-b border-outline-variant py-12 px-margin-desktop" style="position:relative">
+  <section class="border-b border-outline-variant py-12 px-margin-desktop reveal-header" style="position:relative">
     <div>
       <span class="font-label-caps text-label-caps text-archive-gray mb-3 block">PORTRAIT MOSAIC</span>
       <h1 class="font-display text-4xl md:text-5xl font-semibold tracking-tight text-deep-ink mb-2">Every work, at once.</h1>
@@ -628,5 +634,12 @@ tailwind.config = {
 <script data-goatcounter="https://jfsn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
 <script src="_shared/nav-active.js" defer></script>
+<script>
+const _mh = document.querySelector('.reveal-header');
+if (_mh) {
+  const _mo = new IntersectionObserver(([e]) => { if (e.isIntersecting) { _mh.classList.add('visible'); _mo.disconnect(); } }, { threshold: 0.1 });
+  _mo.observe(_mh);
+}
+</script>
 </body>
 </html>

@@ -74,7 +74,43 @@
             transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .grayscale-hover:hover { filter: grayscale(0%); transform: scale(1.02); }
-        .ledger-row { border-bottom: 1px solid #c4c7c7; }
+
+        /* Ledger row — orange left-border draw on hover */
+        .ledger-row {
+            border-bottom: 1px solid #c4c7c7;
+            border-left: 0px solid #e05900;
+            transition: background-color 0.25s ease, border-left-width 0.2s ease, padding-left 0.2s ease;
+        }
+        .ledger-row:hover {
+            background-color: #f7f3f2;
+            border-left-width: 2px;
+            padding-left: 12px;
+        }
+
+        /* Scroll reveal staggers */
+        .reveal-row {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-row.visible { opacity: 1; transform: translateY(0); }
+
+        /* Dust motte canvas */
+        #about-dust-canvas {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            mix-blend-mode: multiply;
+            opacity: 0.35;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal-row { opacity: 1; transform: none; transition: none; }
+            #about-dust-canvas { display: none; }
+            .ledger-row { transition: background-color 0.25s ease; }
+        }
     </style>
 </head>
 <body class="bg-background text-on-background">
@@ -102,7 +138,8 @@
 <main class="pt-[100px] pb-xl max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop">
 
   <!-- Bio + Portrait -->
-  <section class="grid grid-cols-1 md:grid-cols-12 gap-lg mb-xl">
+  <section class="relative grid grid-cols-1 md:grid-cols-12 gap-lg mb-xl" id="about-hero">
+    <canvas id="about-dust-canvas"></canvas>
     <div class="md:col-span-7 flex flex-col justify-center">
       <span class="font-label-md text-label-md text-on-tertiary-container uppercase tracking-widest mb-md">Artist Biography</span>
       <h1 class="font-display-lg text-display-lg text-primary mb-lg leading-none">Jeffrey<br>F. S. Neumann</h1>
@@ -151,32 +188,32 @@
         <div class="col-span-6">Exhibition</div>
         <div class="col-span-4 text-right">Venue</div>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-12 py-md md:py-lg ledger-row hover:bg-surface-container-low transition-colors">
+      <div class="reveal-row grid grid-cols-1 md:grid-cols-12 py-md md:py-lg ledger-row" data-delay="0">
         <div class="col-span-2 font-label-lg text-label-lg text-on-tertiary-container mb-xs md:mb-0">2022</div>
         <div class="col-span-6 font-headline-md text-headline-md text-primary mb-xs md:mb-0">CIA Alumni Exhibition</div>
         <div class="col-span-4 text-right font-body-md text-body-md text-secondary self-center">Cleveland Institute of Art, Cleveland</div>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-12 py-md md:py-lg ledger-row hover:bg-surface-container-low transition-colors">
+      <div class="reveal-row grid grid-cols-1 md:grid-cols-12 py-md md:py-lg ledger-row" data-delay="80">
         <div class="col-span-2 font-label-lg text-label-lg text-on-tertiary-container mb-xs md:mb-0">2019</div>
         <div class="col-span-6 font-headline-md text-headline-md text-primary mb-xs md:mb-0">Group Exhibition</div>
         <div class="col-span-4 text-right font-body-md text-body-md text-secondary self-center">78th Street Studios, Cleveland</div>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-12 py-md md:py-lg ledger-row hover:bg-surface-container-low transition-colors">
+      <div class="reveal-row grid grid-cols-1 md:grid-cols-12 py-md md:py-lg ledger-row" data-delay="160">
         <div class="col-span-2 font-label-lg text-label-lg text-on-tertiary-container mb-xs md:mb-0">2016</div>
         <div class="col-span-6 font-headline-md text-headline-md text-primary mb-xs md:mb-0">Two-Person Exhibition</div>
         <div class="col-span-4 text-right font-body-md text-body-md text-secondary self-center">Waterloo Arts, Cleveland</div>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-12 py-md md:py-lg ledger-row hover:bg-surface-container-low transition-colors">
+      <div class="reveal-row grid grid-cols-1 md:grid-cols-12 py-md md:py-lg ledger-row" data-delay="240">
         <div class="col-span-2 font-label-lg text-label-lg text-on-tertiary-container mb-xs md:mb-0">2012</div>
         <div class="col-span-6 font-headline-md text-headline-md text-primary mb-xs md:mb-0">Group Exhibition</div>
         <div class="col-span-4 text-right font-body-md text-body-md text-secondary self-center">Plain Arts Gallery, Cleveland</div>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-12 py-md md:py-lg ledger-row hover:bg-surface-container-low transition-colors">
+      <div class="reveal-row grid grid-cols-1 md:grid-cols-12 py-md md:py-lg ledger-row" data-delay="320">
         <div class="col-span-2 font-label-lg text-label-lg text-on-tertiary-container mb-xs md:mb-0">2008</div>
         <div class="col-span-6 font-headline-md text-headline-md text-primary mb-xs md:mb-0">Solo Exhibition</div>
         <div class="col-span-4 text-right font-body-md text-body-md text-secondary self-center">Negative Space Gallery, Cleveland</div>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-12 py-md md:py-lg ledger-row hover:bg-surface-container-low transition-colors">
+      <div class="reveal-row grid grid-cols-1 md:grid-cols-12 py-md md:py-lg ledger-row" data-delay="400">
         <div class="col-span-2 font-label-lg text-label-lg text-on-tertiary-container mb-xs md:mb-0">2003</div>
         <div class="col-span-6 font-headline-md text-headline-md text-primary mb-xs md:mb-0">CIA Alumni Show</div>
         <div class="col-span-4 text-right font-body-md text-body-md text-secondary self-center">Cleveland Institute of Art, Cleveland</div>
@@ -276,6 +313,59 @@
     <span class="font-label-md text-[10px] uppercase">About</span>
   </a>
 </nav>
+
+<script>
+// Scroll reveal for ledger rows
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const delay = parseInt(entry.target.dataset.delay || 0);
+      setTimeout(() => entry.target.classList.add('visible'), delay);
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal-row').forEach(el => revealObserver.observe(el));
+
+// Dust motte on hero
+(function() {
+  const canvas = document.getElementById('about-dust-canvas');
+  const hero = document.getElementById('about-hero');
+  if (!canvas || !hero) return;
+  const ctx = canvas.getContext('2d');
+  let particles = [], mouse = { x: null, y: null }, width, height;
+  const resize = () => {
+    width = canvas.width = hero.offsetWidth;
+    height = canvas.height = hero.offsetHeight;
+    particles = [];
+    const count = Math.floor((width * height) / 9000);
+    for (let i = 0; i < count; i++) particles.push(new P());
+  };
+  class P {
+    reset() {
+      this.x = Math.random() * width; this.y = Math.random() * height;
+      this.size = Math.random() * 1.5 + 0.3;
+      this.vx = (Math.random() - 0.5) * 0.18; this.vy = (Math.random() - 0.5) * 0.18;
+      this.o = Math.random() * 0.35;
+    }
+    constructor() { this.reset(); }
+    update() {
+      this.x += this.vx; this.y += this.vy;
+      if (mouse.x !== null) {
+        const dx = mouse.x - this.x, dy = mouse.y - this.y;
+        if (Math.sqrt(dx*dx+dy*dy) < 200) { this.x += dx*0.001; this.y += dy*0.001; }
+      }
+      if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) this.reset();
+    }
+    draw() { ctx.fillStyle = `rgba(0,0,0,${this.o})`; ctx.fillRect(this.x, this.y, this.size, this.size); }
+  }
+  const animate = () => { ctx.clearRect(0,0,width,height); particles.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(animate); };
+  hero.addEventListener('mousemove', e => { const r = hero.getBoundingClientRect(); mouse.x = e.clientX-r.left; mouse.y = e.clientY-r.top; });
+  hero.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
+  window.addEventListener('resize', resize, { passive: true });
+  resize(); animate();
+})();
+</script>
 
 <!-- GoatCounter analytics -->
 <script data-goatcounter="https://jfsn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>

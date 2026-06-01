@@ -38,6 +38,26 @@
   clip-path: inset(0 0% 0 0);
 }
 
+/* Grayscale → color on hover (design system rule) */
+.thumb__link img {
+  filter: grayscale(100%);
+  transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s ease;
+}
+.thumb__link:hover img {
+  filter: grayscale(0%);
+}
+
+/* Scroll reveal for .thumb items */
+.thumb {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.thumb.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* ─── Vertical "you are here" label ─────────────────────────────────────── */
 
 .page-label-vert {
@@ -81,7 +101,7 @@
   .thumb__link:hover::after {
     opacity: 1;
   }
-  .decade-heading {
-    will-change: auto;
-  }
+  .decade-heading { will-change: auto; }
+  .thumb { opacity: 1; transform: none; transition: none; }
+  .thumb__link img { filter: grayscale(100%); transition: none; }
 }
