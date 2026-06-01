@@ -1,5 +1,17 @@
 [
   {
+    "sha": "7c07767",
+    "date": "2026-06-01",
+    "title": "Bump SW CACHE_V, remove stale site.css from precache",
+    "body": "Forces all clients to clear old dark-design cache and re-fetch\ncurrent Stitch/Tailwind pages from server."
+  },
+  {
+    "sha": "5aee406",
+    "date": "2026-05-31",
+    "title": "Session 25 close — CURRENT_STATE, auto-generated artifacts",
+    "body": ""
+  },
+  {
     "sha": "dd8c87c",
     "date": "2026-05-31",
     "title": "Session 25 — Ghost Grid + Chromatic River",

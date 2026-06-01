@@ -1,8 +1,8 @@
 # Current State
-**Updated:** 2026-05-31 20:53
+**Updated:** 2026-05-31 21:09
 
 ## Last commit
-dd8c87c — Session 25 — Ghost Grid + Chromatic River + 4 wow-factor interactions
+SW cache bust + CLAUDE.md rewrite (current design system)
 
 ## To do next session
 <!-- Edit this section before closing -->
