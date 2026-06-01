@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  
+
   <title>The 1970s — Jeffrey F. S. Neumann Archive</title>
   <meta name="description" content="58 works from the 1970s by Jeffrey F. S. Neumann, Cleveland mixed-media artist. Collage, assemblage, photography, and sculpture spanning 1970–1977.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -13,13 +13,75 @@
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="_shared/ui.css">
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <script id="tailwind-config">
-  tailwind.config={darkMode:"class",theme:{extend:{colors:{"archive-gray":"#575757","bone-white":"#F3F0EA","international-orange":"#FF6600","deep-ink":"#0B0B0B","outline-variant":"#c4c7c7","surface-container-high":"#ebe8e2","background":"#fcf9f3"},spacing:{"margin-desktop":"64px","margin-mobile":"20px","container-max":"1440px"},fontFamily:{"display":["Playfair Display"],"headline-md":["Playfair Display"],"label-caps":["Inter"],"body-md":["Inter"],"nav-link":["Inter"]},fontSize:{"headline-md":["32px",{"lineHeight":"40px","fontWeight":"500"}],"label-caps":["12px",{"lineHeight":"16px","letterSpacing":"0.1em","fontWeight":"600"}],"nav-link":["14px",{"lineHeight":"20px","letterSpacing":"0.05em","fontWeight":"500"}]}}}}
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-tint": "#5f5e5e",
+                    "on-error": "#ffffff",
+                    "surface-container": "#f1edec",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-container": "#e05900",
+                    "on-surface": "#1c1b1b",
+                    "primary": "#000000",
+                    "surface-container-low": "#f7f3f2",
+                    "secondary": "#5e5e5e",
+                    "outline-variant": "#c4c7c7",
+                    "outline": "#747878",
+                    "on-background": "#1c1b1b",
+                    "surface-container-high": "#ebe7e6",
+                    "on-surface-variant": "#444748",
+                    "surface-container-highest": "#e5e2e1",
+                    "primary-container": "#1c1b1b",
+                    "background": "#fdf8f8",
+                    "surface": "#fdf8f8"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0px",
+                    "lg": "0px",
+                    "xl": "0px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xl": "80px",
+                    "gutter": "24px",
+                    "md": "24px",
+                    "lg": "48px",
+                    "sm": "12px",
+                    "base": "8px",
+                    "margin-desktop": "64px",
+                    "margin-mobile": "16px",
+                    "xs": "4px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Playfair Display"],
+                    "headline-md": ["Playfair Display"],
+                    "headline-lg": ["Playfair Display"],
+                    "label-md": ["Inter"],
+                    "label-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "display-lg": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["28px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                    "label-md": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-lg": ["40px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "label-lg": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          }
+        }
+      }
   </script>
-  <meta name="theme-color" content="#fcf9f3"/>
+  <meta name="theme-color" content="#fdf8f8"/>
   <meta property="og:type"        content="website">
   <meta property="og:title"       content="Works from the 1970s — Jeffrey F. S. Neumann">
   <meta property="og:description" content="58 works from the 1970s by Jeffrey F. S. Neumann, Cleveland mixed-media artist. Collage, assemblage, photography, and sculpture spanning 1970–1977.">
@@ -63,236 +125,753 @@
   </script>
   <style>
     .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;}
-    .nav-underline-active{position:relative;}
-    .nav-underline-active::after{content:'';position:absolute;bottom:-4px;left:0;width:100%;height:2px;background-color:#FF6600;}
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;}}
-    .medium-page {
-      padding-top: clamp(3rem, 6vw, 6rem);
-      padding-bottom: clamp(4rem, 10vw, 10rem);
-    }
-    .medium-page__head {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: 1rem;
-      flex-wrap: wrap;
-      padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
-      border-bottom: 1px solid rgba(11,11,11,0.12);
-      margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
-    }
-    .medium-page__title {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(2.5rem, 5.5vw, 4.5rem);
-      font-weight: 300;
-      letter-spacing: -0.01em;
-      line-height: 1.1;
-      margin: 0;
-    }
-    .medium-page__meta {
-      font-size: 0.75rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: #575757;
-      margin: 0;
-      padding-bottom: 0.25rem;
-    }
-    .medium-page__intro {
-      max-width: 52ch;
-      line-height: 1.7;
-      color: #575757;
-      margin-bottom: clamp(2rem, 4vw, 3.5rem);
-    }
-    .medium-page__intro a {
-      color: #0B0B0B;
-      border-bottom: 1px solid rgba(11,11,11,0.12);
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .medium-page__intro a:hover {
-      color: #FF6600;
-      border-color: #FF6600;
-    }
-    .medium-grid {
-      column-count: 4;
-      column-gap: 0.75rem;
-    }
-    @media (max-width: 1024px) { .medium-grid { column-count: 3; } }
-    @media (max-width: 600px)  { .medium-grid { column-count: 2; } }
-    .thumb {
-      break-inside: avoid;
-      margin: 0 0 0.75rem;
-    }
-    .thumb__link {
-      display: block;
-      overflow: hidden;
-      background: #ebe8e2;
-      text-decoration: none;
-    }
-    .thumb__link img {
-      display: block;
-      width: 100%;
-      height: auto;
-      transition: transform 0.35s ease;
-    }
-    .thumb__link:hover img { transform: scale(1.05); }
-    .thumb__caption {
-      padding: 0.35rem 0 0;
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #575757;
-      line-height: 1.35;
-    }
-    .thumb__caption a { color: inherit; text-decoration: none; }
-    .thumb__caption a:hover { color: #0B0B0B; }
-    .thumb__caption span { display: block; }
-    @media (prefers-reduced-motion: reduce) {
-      .thumb__link img { transition: none; }
-      .thumb__link:hover img { transform: none; }
-    }
   </style>
 </head>
 
-<body class="bg-background text-deep-ink overflow-x-hidden">
-<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-deep-ink focus:text-bone-white">Skip to content</a>
+<body class="font-body-md text-body-md bg-background text-on-background overflow-x-hidden" data-page-label="1970s">
+<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-primary focus:text-on-primary">Skip to content</a>
+
 <!-- NAV:START -->
-<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-background border-b border-outline-variant">
-  <div class="flex items-center gap-8">
-    <a href="index.html" class="font-headline-md text-headline-md tracking-tighter text-deep-ink">JFSN</a>
-    <nav class="hidden md:flex gap-6" aria-label="Primary">
-      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="archive.html">Archive</a>
-      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="series-index.html">Series</a>
-      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="timeline.html">Timeline</a>
-      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="companion.html">Companion</a>
-      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="about.html">About</a>
-    </nav>
+<nav class="fixed top-0 left-0 w-full z-50 bg-background border-b border-outline-variant">
+  <div class="flex justify-between items-center px-margin-desktop py-4 max-w-[1200px] mx-auto">
+    <a class="font-headline-md text-headline-md font-bold tracking-tighter text-primary" href="index.html">JFSN</a>
+    <div class="hidden md:flex items-center gap-8">
+      <a class="font-label-lg text-label-lg text-primary opacity-80 hover:opacity-100 hover:text-on-tertiary-container transition-colors uppercase" href="archive.html">Archive</a>
+      <a class="font-label-lg text-label-lg text-primary opacity-80 hover:opacity-100 hover:text-on-tertiary-container transition-colors uppercase" href="series-index.html">Series</a>
+      <a class="font-label-lg text-label-lg text-primary opacity-80 hover:opacity-100 hover:text-on-tertiary-container transition-colors uppercase" href="timeline.html">Timeline</a>
+      <a class="font-label-lg text-label-lg text-primary opacity-80 hover:opacity-100 hover:text-on-tertiary-container transition-colors uppercase" href="companion.html">Companion</a>
+      <a class="font-label-lg text-label-lg text-primary opacity-80 hover:opacity-100 hover:text-on-tertiary-container transition-colors uppercase" href="about.html">About</a>
+    </div>
+    <div class="flex items-center gap-4">
+      <button class="p-2 text-primary hover:text-on-tertiary-container transition-colors" aria-label="Search">
+        <span class="material-symbols-outlined">search</span>
+      </button>
+      <button class="md:hidden p-2 text-primary" aria-label="Menu">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+    </div>
   </div>
-  <div class="flex items-center gap-4">
-    <button class="material-symbols-outlined text-deep-ink hover:text-international-orange transition-colors" aria-label="Search">search</button>
-    <button class="md:hidden material-symbols-outlined text-deep-ink" aria-label="Menu">menu</button>
-  </div>
-</header>
+</nav>
 <!-- NAV:END -->
 
-<main id="main" class="pt-16">
-  <div class="container medium-page">
-    <div class="medium-page__head">
-      <h1 class="medium-page__title">The 1970s</h1>
-      <p class="medium-page__meta">58 works &middot; 1970–1977</p>
+<main id="main" class="pt-[72px]">
+  <div class="max-w-[1200px] mx-auto px-margin-desktop">
+
+    <!-- Decade navigation -->
+    <div class="flex justify-between items-center py-lg border-b border-outline-variant">
+      <span></span>
+      <a data-next-decade href="1980s.html" class="flex items-center gap-xs font-label-lg text-label-lg uppercase tracking-widest text-primary hover:text-on-tertiary-container transition-colors" aria-label="Next decade: 1980s">1980s <span class="material-symbols-outlined text-[18px]">arrow_forward</span></a>
     </div>
-    <p class="medium-page__intro">The first works. Cleveland Institute of Art: prism paper, vacuum-formed plastic, fluorescent tubes, sheets of glass. Rauschenberg on the walls. An early education in permission — the idea that found material was as valid as paint, that anything could be a mark. 58&nbsp;works from a decade that set the terms for everything that followed. <a href="archive.html?decade=1970s">Browse with filters &rarr;</a></p>
-    <div class="medium-grid">
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art0001" style="background-color:#ff003c;"><img srcset="artworks/mini/art0001.avif 200w, artworks/thumbs/art0001.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art0001.avif" alt="Untitled (Figure, Blue Ground)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art0001">Untitled (Figure, Blue Ground)</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art0145" style="background-color:#dcd7d2;"><img srcset="artworks/mini/art0145.avif 200w, artworks/thumbs/art0145.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art0145.avif" alt="Felix Double Disc" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art0145">Felix Double Disc</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art0273" style="background-color:#bebebe;"><img srcset="artworks/mini/art0273.avif 200w, artworks/thumbs/art0273.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art0273.avif" alt="Cleveland Institute Group Portrait" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art0273">Cleveland Institute Group Portrait</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art0381" style="background-color:#4b4b46;"><img srcset="artworks/mini/art0381.avif 200w, artworks/thumbs/art0381.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art0381.avif" alt="Untitled (Stage Dive)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art0381">Untitled (Stage Dive)</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art0585" style="background-color:#2d000a;"><img srcset="artworks/mini/art0585.avif 200w, artworks/thumbs/art0585.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art0585.avif" alt="Untitled (Cube Grid)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art0585">Untitled (Cube Grid)</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1021" style="background-color:#afaa82;"><img srcset="artworks/mini/art1021.avif 200w, artworks/thumbs/art1021.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1021.avif" alt="Untitled (Jewelry Display Case)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1021">Untitled (Jewelry Display Case)</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1022" style="background-color:#91a0aa;"><img srcset="artworks/mini/art1022.avif 200w, artworks/thumbs/art1022.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1022.avif" alt="Untitled (Warplane Top-Down)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1022">Untitled (Warplane Top-Down)</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1023" style="background-color:#8ca000;"><img srcset="artworks/mini/art1023.avif 200w, artworks/thumbs/art1023.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1023.avif" alt="Big Wheel Tricycle" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1023">Big Wheel Tricycle</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1024" style="background-color:#00002d;"><img srcset="artworks/mini/art1024.avif 200w, artworks/thumbs/art1024.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1024.avif" alt="Untitled (Radio Dial Collage)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1024">Untitled (Radio Dial Collage)</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1025" style="background-color:#dcbe91;"><img srcset="artworks/mini/art1025.avif 200w, artworks/thumbs/art1025.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1025.avif" alt="Don Nelson Sign" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1025">Don Nelson Sign</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1026" style="background-color:#dcd2c8;"><img srcset="artworks/mini/art1026.avif 200w, artworks/thumbs/art1026.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1026.avif" alt="Silk Torpedo Intervention" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1026">Silk Torpedo Intervention</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1027" style="background-color:#828caa;"><img srcset="artworks/mini/art1027.avif 200w, artworks/thumbs/art1027.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1027.avif" alt="Untitled (Vehicle Blueprint Drawing)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1027">Untitled (Vehicle Blueprint Drawing)</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1028" style="background-color:#000032;"><img srcset="artworks/mini/art1028.avif 200w, artworks/thumbs/art1028.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1028.avif" alt="Untitled (Dark Chair Interior)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1028">Untitled (Dark Chair Interior)</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1029" style="background-color:#281919;"><img srcset="artworks/mini/art1029.avif 200w, artworks/thumbs/art1029.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1029.avif" alt="Untitled (Car Model with Can)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1029">Untitled (Car Model with Can)</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1030" style="background-color:#b9becd;"><img srcset="artworks/mini/art1030.avif 200w, artworks/thumbs/art1030.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1030.avif" alt="Electric Vehicle Blueprint" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1030">Electric Vehicle Blueprint</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1031" style="background-color:#d2d7fa;"><img srcset="artworks/mini/art1031.avif 200w, artworks/thumbs/art1031.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1031.avif" alt="Formula One Driver, Head-On" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1031">Formula One Driver, Head-On</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1032" style="background-color:#d7cdd7;"><img srcset="artworks/mini/art1032.avif 200w, artworks/thumbs/art1032.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1032.avif" alt="Interior Library Perspective" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1032">Interior Library Perspective</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1033" style="background-color:#fffad2;"><img srcset="artworks/mini/art1033.avif 200w, artworks/thumbs/art1033.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1033.avif" alt="Untitled (Dark Automobile)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1033">Untitled (Dark Automobile)</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1036" style="background-color:#371419;"><img srcset="artworks/mini/art1036.avif 200w, artworks/thumbs/art1036.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1036.avif" alt="Untitled (Black Car Sketch)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1036">Untitled (Black Car Sketch)</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1037" style="background-color:#fafad2;"><img srcset="artworks/mini/art1037.avif 200w, artworks/thumbs/art1037.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1037.avif" alt="Benefit Package" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1037">Benefit Package</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1038" style="background-color:#281e28;"><img srcset="artworks/mini/art1038.avif 200w, artworks/thumbs/art1038.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1038.avif" alt="Eames Chair Interior" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1038">Eames Chair Interior</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1040" style="background-color:#415555;"><img srcset="artworks/mini/art1040.avif 200w, artworks/thumbs/art1040.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1040.avif" alt="Painted Block Wall" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1040">Painted Block Wall</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1041" style="background-color:#5f1900;"><img srcset="artworks/mini/art1041.avif 200w, artworks/thumbs/art1041.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1041.avif" alt="Chromatic Block Grid" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1041">Chromatic Block Grid</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1042" style="background-color:#cdd2dc;"><img srcset="artworks/mini/art1042.avif 200w, artworks/thumbs/art1042.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1042.avif" alt="Untitled (Workshop Interior)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1042">Untitled (Workshop Interior)</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1043" style="background-color:#827869;"><img srcset="artworks/mini/art1043.avif 200w, artworks/thumbs/art1043.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1043.avif" alt="Painted Block Grid" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1043">Painted Block Grid</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1044" style="background-color:#fa4600;"><img srcset="artworks/mini/art1044.avif 200w, artworks/thumbs/art1044.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1044.avif" alt="Painted Block Pyramid" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1044">Painted Block Pyramid</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1045" style="background-color:#f0d7be;"><img srcset="artworks/mini/art1045.avif 200w, artworks/thumbs/art1045.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1045.avif" alt="Stacked Painted Blocks 1" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1045">Stacked Painted Blocks 1</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1046" style="background-color:#c8c3be;"><img srcset="artworks/mini/art1046.avif 200w, artworks/thumbs/art1046.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1046.avif" alt="Blocks Under Glass" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1046">Blocks Under Glass</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1047" style="background-color:#00a5eb;"><img srcset="artworks/mini/art1047.avif 200w, artworks/thumbs/art1047.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1047.avif" alt="Untitled (Coloured Block City)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1047">Untitled (Coloured Block City)</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1048" style="background-color:#787878;"><img srcset="artworks/mini/art1048.avif 200w, artworks/thumbs/art1048.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1048.avif" alt="Untitled (Painted Block Wall)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1048">Untitled (Painted Block Wall)</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1049" style="background-color:#c8d2cd;"><img srcset="artworks/mini/art1049.avif 200w, artworks/thumbs/art1049.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1049.avif" alt="Stacked Block Tower" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1049">Stacked Block Tower</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1050" style="background-color:#504646;"><img srcset="artworks/mini/art1050.avif 200w, artworks/thumbs/art1050.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1050.avif" alt="Stacked Cube Wall" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1050">Stacked Cube Wall</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1051" style="background-color:#2d2323;"><img srcset="artworks/mini/art1051.avif 200w, artworks/thumbs/art1051.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1051.avif" alt="Untitled (Coloured Block Grid)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1051">Untitled (Coloured Block Grid)</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1053" style="background-color:#f0b9c3;"><img srcset="artworks/mini/art1053.avif 200w, artworks/thumbs/art1053.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1053.avif" alt="Painted Block Assembly" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1053">Painted Block Assembly</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1054" style="background-color:#465f9b;"><img srcset="artworks/mini/art1054.avif 200w, artworks/thumbs/art1054.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1054.avif" alt="Grid of Painted Blocks" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1054">Grid of Painted Blocks</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1056" style="background-color:#d7d2c8;"><img srcset="artworks/mini/art1056.avif 200w, artworks/thumbs/art1056.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1056.avif" alt="Untitled (Bulbs and Radiator)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1056">Untitled (Bulbs and Radiator)</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1057" style="background-color:#dcdcd2;"><img srcset="artworks/mini/art1057.avif 200w, artworks/thumbs/art1057.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1057.avif" alt="Untitled (Oversized Light Bulb)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1057">Untitled (Oversized Light Bulb)</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1058" style="background-color:#507373;"><img srcset="artworks/mini/art1058.avif 200w, artworks/thumbs/art1058.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1058.avif" alt="Untitled (Layered Transparencies)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1058">Untitled (Layered Transparencies)</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1059" style="background-color:#5f5f5f;"><img srcset="artworks/mini/art1059.avif 200w, artworks/thumbs/art1059.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1059.avif" alt="Suspended Form with Pegs" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1059">Suspended Form with Pegs</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1060" style="background-color:#e6e614;"><img srcset="artworks/mini/art1060.avif 200w, artworks/thumbs/art1060.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1060.avif" alt="Untitled (Assembled Apparatus)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1060">Untitled (Assembled Apparatus)</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1061" style="background-color:#bec3d2;"><img srcset="artworks/mini/art1061.avif 200w, artworks/thumbs/art1061.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1061.avif" alt="Untitled (Cracked Resin Grid)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1061">Untitled (Cracked Resin Grid)</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1062" style="background-color:#becde6;"><img srcset="artworks/mini/art1062.avif 200w, artworks/thumbs/art1062.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1062.avif" alt="Untitled (Fabric on Frame)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1062">Untitled (Fabric on Frame)</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1063" style="background-color:#afb4b9;"><img srcset="artworks/mini/art1063.avif 200w, artworks/thumbs/art1063.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1063.avif" alt="House with Gold Foil" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1063">House with Gold Foil</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1065" style="background-color:#1e192d;"><img srcset="artworks/mini/art1065.avif 200w, artworks/thumbs/art1065.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1065.avif" alt="Projection onto Face" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1065">Projection onto Face</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1066" style="background-color:#d2cdc3;"><img srcset="artworks/mini/art1066.avif 200w, artworks/thumbs/art1066.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1066.avif" alt="Stacked Painted Blocks 2" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1066">Stacked Painted Blocks 2</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1068" style="background-color:#5f6469;"><img srcset="artworks/mini/art1068.avif 200w, artworks/thumbs/art1068.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1068.avif" alt="Untitled (Grid Over Architecture)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1068">Untitled (Grid Over Architecture)</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1071" style="background-color:#fff500;"><img srcset="artworks/mini/art1071.avif 200w, artworks/thumbs/art1071.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1071.avif" alt="Untitled (Interference Rings)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1071">Untitled (Interference Rings)</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1072" style="background-color:#d2f0fa;"><img srcset="artworks/mini/art1072.avif 200w, artworks/thumbs/art1072.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1072.avif" alt="Untitled (Boat Interior Plan)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1072">Untitled (Boat Interior Plan)</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1073" style="background-color:#69190f;"><img srcset="artworks/mini/art1073.avif 200w, artworks/thumbs/art1073.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1073.avif" alt="Untitled (Installation View) 3" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1073">Untitled (Installation View) 3</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1074" style="background-color:#7d736e;"><img srcset="artworks/mini/art1074.avif 200w, artworks/thumbs/art1074.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1074.avif" alt="Untitled (Studio Group Shot)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1074">Untitled (Studio Group Shot)</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1075" style="background-color:#000037;"><img srcset="artworks/mini/art1075.avif 200w, artworks/thumbs/art1075.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1075.avif" alt="Untitled (Foil and Light)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1075">Untitled (Foil and Light)</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1077" style="background-color:#5078aa;"><img srcset="artworks/mini/art1077.avif 200w, artworks/thumbs/art1077.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1077.avif" alt="Untitled (Portrait, Upward Gaze)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1077">Untitled (Portrait, Upward Gaze)</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1079" style="background-color:#2d1e28;"><img srcset="artworks/mini/art1079.avif 200w, artworks/thumbs/art1079.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1079.avif" alt="Masked Figure with Scarf" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1079">Masked Figure with Scarf</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1080" style="background-color:#ff140a;"><img srcset="artworks/mini/art1080.avif 200w, artworks/thumbs/art1080.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1080.avif" alt="Untitled (Installation View) 4" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1080">Untitled (Installation View) 4</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1081" style="background-color:#280a0a;"><img srcset="artworks/mini/art1081.avif 200w, artworks/thumbs/art1081.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1081.avif" alt="Untitled (Live Concert Stage)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1081">Untitled (Live Concert Stage)</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1083" style="background-color:#915f00;"><img srcset="artworks/mini/art1083.avif 200w, artworks/thumbs/art1083.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1083.avif" alt="Untitled (Studio Wall Collage)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1083">Untitled (Studio Wall Collage)</a><span>1970</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1078" style="background-color:#d2e6fa;"><img srcset="artworks/mini/art1078.avif 200w, artworks/thumbs/art1078.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1078.avif" alt="Design: Electrical Gulf Cart" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1078">Design: Electrical Gulf Cart</a><span>1976</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art0380" style="background-color:#696964;"><img srcset="artworks/mini/art0380.avif 200w, artworks/thumbs/art0380.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art0380.avif" alt="Devo at WHK Auditorium" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art0380">Devo at WHK Auditorium</a><span>1977</span></figcaption></a></figure>
-    </div>
+
+    <!-- Hero -->
+    <section class="decade-hero py-xl border-b border-outline-variant">
+      <div class="grid grid-cols-12 gap-gutter">
+        <div class="col-span-12 md:col-span-8">
+          <p class="font-label-lg text-label-lg uppercase tracking-[0.2em] mb-sm text-secondary">58 works &middot; 1970–1977</p>
+          <h1 class="decade-heading font-display-lg text-display-lg mb-lg">The 1970s</h1>
+          <p class="font-body-lg text-body-lg max-w-xl leading-relaxed text-on-surface-variant">The first works. Cleveland Institute of Art: prism paper, vacuum-formed plastic, fluorescent tubes, sheets of glass. Rauschenberg on the walls. An early education in permission — the idea that found material was as valid as paint, that anything could be a mark. 58&nbsp;works from a decade that set the terms for everything that followed. <a href="archive.html?decade=1970s">Browse with filters &rarr;</a></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Grid -->
+    <section class="py-xl pb-[120px] md:pb-xl">
+      <div class="columns-2 lg:columns-4 gap-md">
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art0001">
+          <div class="thumb-frame overflow-hidden" style="background-color:#ff003c">
+            <img srcset="artworks/mini/art0001.avif 200w, artworks/thumbs/art0001.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art0001.avif" alt="Untitled (Figure, Blue Ground)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Figure, Blue Ground)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art0145">
+          <div class="thumb-frame overflow-hidden" style="background-color:#dcd7d2">
+            <img srcset="artworks/mini/art0145.avif 200w, artworks/thumbs/art0145.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art0145.avif" alt="Felix Double Disc" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Felix Double Disc</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art0273">
+          <div class="thumb-frame overflow-hidden" style="background-color:#bebebe">
+            <img srcset="artworks/mini/art0273.avif 200w, artworks/thumbs/art0273.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art0273.avif" alt="Cleveland Institute Group Portrait" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Cleveland Institute Group Portrait</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art0381">
+          <div class="thumb-frame overflow-hidden" style="background-color:#4b4b46">
+            <img srcset="artworks/mini/art0381.avif 200w, artworks/thumbs/art0381.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art0381.avif" alt="Untitled (Stage Dive)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Stage Dive)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art0585">
+          <div class="thumb-frame overflow-hidden" style="background-color:#2d000a">
+            <img srcset="artworks/mini/art0585.avif 200w, artworks/thumbs/art0585.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art0585.avif" alt="Untitled (Cube Grid)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Cube Grid)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1021">
+          <div class="thumb-frame overflow-hidden" style="background-color:#afaa82">
+            <img srcset="artworks/mini/art1021.avif 200w, artworks/thumbs/art1021.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1021.avif" alt="Untitled (Jewelry Display Case)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Jewelry Display Case)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1022">
+          <div class="thumb-frame overflow-hidden" style="background-color:#91a0aa">
+            <img srcset="artworks/mini/art1022.avif 200w, artworks/thumbs/art1022.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1022.avif" alt="Untitled (Warplane Top-Down)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Warplane Top-Down)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1023">
+          <div class="thumb-frame overflow-hidden" style="background-color:#8ca000">
+            <img srcset="artworks/mini/art1023.avif 200w, artworks/thumbs/art1023.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1023.avif" alt="Big Wheel Tricycle" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Big Wheel Tricycle</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1024">
+          <div class="thumb-frame overflow-hidden" style="background-color:#00002d">
+            <img srcset="artworks/mini/art1024.avif 200w, artworks/thumbs/art1024.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1024.avif" alt="Untitled (Radio Dial Collage)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Radio Dial Collage)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1025">
+          <div class="thumb-frame overflow-hidden" style="background-color:#dcbe91">
+            <img srcset="artworks/mini/art1025.avif 200w, artworks/thumbs/art1025.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1025.avif" alt="Don Nelson Sign" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Don Nelson Sign</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1026">
+          <div class="thumb-frame overflow-hidden" style="background-color:#dcd2c8">
+            <img srcset="artworks/mini/art1026.avif 200w, artworks/thumbs/art1026.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1026.avif" alt="Silk Torpedo Intervention" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Silk Torpedo Intervention</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1027">
+          <div class="thumb-frame overflow-hidden" style="background-color:#828caa">
+            <img srcset="artworks/mini/art1027.avif 200w, artworks/thumbs/art1027.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1027.avif" alt="Untitled (Vehicle Blueprint Drawing)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Vehicle Blueprint Drawing)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1028">
+          <div class="thumb-frame overflow-hidden" style="background-color:#000032">
+            <img srcset="artworks/mini/art1028.avif 200w, artworks/thumbs/art1028.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1028.avif" alt="Untitled (Dark Chair Interior)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Dark Chair Interior)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1029">
+          <div class="thumb-frame overflow-hidden" style="background-color:#281919">
+            <img srcset="artworks/mini/art1029.avif 200w, artworks/thumbs/art1029.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1029.avif" alt="Untitled (Car Model with Can)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Car Model with Can)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1030">
+          <div class="thumb-frame overflow-hidden" style="background-color:#b9becd">
+            <img srcset="artworks/mini/art1030.avif 200w, artworks/thumbs/art1030.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1030.avif" alt="Electric Vehicle Blueprint" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Electric Vehicle Blueprint</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1031">
+          <div class="thumb-frame overflow-hidden" style="background-color:#d2d7fa">
+            <img srcset="artworks/mini/art1031.avif 200w, artworks/thumbs/art1031.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1031.avif" alt="Formula One Driver, Head-On" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Formula One Driver, Head-On</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1032">
+          <div class="thumb-frame overflow-hidden" style="background-color:#d7cdd7">
+            <img srcset="artworks/mini/art1032.avif 200w, artworks/thumbs/art1032.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1032.avif" alt="Interior Library Perspective" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Interior Library Perspective</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1033">
+          <div class="thumb-frame overflow-hidden" style="background-color:#fffad2">
+            <img srcset="artworks/mini/art1033.avif 200w, artworks/thumbs/art1033.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1033.avif" alt="Untitled (Dark Automobile)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Dark Automobile)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1036">
+          <div class="thumb-frame overflow-hidden" style="background-color:#371419">
+            <img srcset="artworks/mini/art1036.avif 200w, artworks/thumbs/art1036.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1036.avif" alt="Untitled (Black Car Sketch)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Black Car Sketch)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1037">
+          <div class="thumb-frame overflow-hidden" style="background-color:#fafad2">
+            <img srcset="artworks/mini/art1037.avif 200w, artworks/thumbs/art1037.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1037.avif" alt="Benefit Package" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Benefit Package</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1038">
+          <div class="thumb-frame overflow-hidden" style="background-color:#281e28">
+            <img srcset="artworks/mini/art1038.avif 200w, artworks/thumbs/art1038.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1038.avif" alt="Eames Chair Interior" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Eames Chair Interior</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1040">
+          <div class="thumb-frame overflow-hidden" style="background-color:#415555">
+            <img srcset="artworks/mini/art1040.avif 200w, artworks/thumbs/art1040.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1040.avif" alt="Painted Block Wall" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Painted Block Wall</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1041">
+          <div class="thumb-frame overflow-hidden" style="background-color:#5f1900">
+            <img srcset="artworks/mini/art1041.avif 200w, artworks/thumbs/art1041.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1041.avif" alt="Chromatic Block Grid" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Chromatic Block Grid</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1042">
+          <div class="thumb-frame overflow-hidden" style="background-color:#cdd2dc">
+            <img srcset="artworks/mini/art1042.avif 200w, artworks/thumbs/art1042.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1042.avif" alt="Untitled (Workshop Interior)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Workshop Interior)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1043">
+          <div class="thumb-frame overflow-hidden" style="background-color:#827869">
+            <img srcset="artworks/mini/art1043.avif 200w, artworks/thumbs/art1043.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1043.avif" alt="Painted Block Grid" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Painted Block Grid</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1044">
+          <div class="thumb-frame overflow-hidden" style="background-color:#fa4600">
+            <img srcset="artworks/mini/art1044.avif 200w, artworks/thumbs/art1044.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1044.avif" alt="Painted Block Pyramid" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Painted Block Pyramid</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1045">
+          <div class="thumb-frame overflow-hidden" style="background-color:#f0d7be">
+            <img srcset="artworks/mini/art1045.avif 200w, artworks/thumbs/art1045.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1045.avif" alt="Stacked Painted Blocks 1" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Stacked Painted Blocks 1</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1046">
+          <div class="thumb-frame overflow-hidden" style="background-color:#c8c3be">
+            <img srcset="artworks/mini/art1046.avif 200w, artworks/thumbs/art1046.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1046.avif" alt="Blocks Under Glass" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Blocks Under Glass</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1047">
+          <div class="thumb-frame overflow-hidden" style="background-color:#00a5eb">
+            <img srcset="artworks/mini/art1047.avif 200w, artworks/thumbs/art1047.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1047.avif" alt="Untitled (Coloured Block City)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Coloured Block City)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1048">
+          <div class="thumb-frame overflow-hidden" style="background-color:#787878">
+            <img srcset="artworks/mini/art1048.avif 200w, artworks/thumbs/art1048.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1048.avif" alt="Untitled (Painted Block Wall)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Painted Block Wall)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1049">
+          <div class="thumb-frame overflow-hidden" style="background-color:#c8d2cd">
+            <img srcset="artworks/mini/art1049.avif 200w, artworks/thumbs/art1049.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1049.avif" alt="Stacked Block Tower" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Stacked Block Tower</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1050">
+          <div class="thumb-frame overflow-hidden" style="background-color:#504646">
+            <img srcset="artworks/mini/art1050.avif 200w, artworks/thumbs/art1050.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1050.avif" alt="Stacked Cube Wall" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Stacked Cube Wall</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1051">
+          <div class="thumb-frame overflow-hidden" style="background-color:#2d2323">
+            <img srcset="artworks/mini/art1051.avif 200w, artworks/thumbs/art1051.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1051.avif" alt="Untitled (Coloured Block Grid)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Coloured Block Grid)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1053">
+          <div class="thumb-frame overflow-hidden" style="background-color:#f0b9c3">
+            <img srcset="artworks/mini/art1053.avif 200w, artworks/thumbs/art1053.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1053.avif" alt="Painted Block Assembly" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Painted Block Assembly</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1054">
+          <div class="thumb-frame overflow-hidden" style="background-color:#465f9b">
+            <img srcset="artworks/mini/art1054.avif 200w, artworks/thumbs/art1054.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1054.avif" alt="Grid of Painted Blocks" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Grid of Painted Blocks</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1056">
+          <div class="thumb-frame overflow-hidden" style="background-color:#d7d2c8">
+            <img srcset="artworks/mini/art1056.avif 200w, artworks/thumbs/art1056.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1056.avif" alt="Untitled (Bulbs and Radiator)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Bulbs and Radiator)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1057">
+          <div class="thumb-frame overflow-hidden" style="background-color:#dcdcd2">
+            <img srcset="artworks/mini/art1057.avif 200w, artworks/thumbs/art1057.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1057.avif" alt="Untitled (Oversized Light Bulb)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Oversized Light Bulb)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1058">
+          <div class="thumb-frame overflow-hidden" style="background-color:#507373">
+            <img srcset="artworks/mini/art1058.avif 200w, artworks/thumbs/art1058.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1058.avif" alt="Untitled (Layered Transparencies)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Layered Transparencies)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1059">
+          <div class="thumb-frame overflow-hidden" style="background-color:#5f5f5f">
+            <img srcset="artworks/mini/art1059.avif 200w, artworks/thumbs/art1059.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1059.avif" alt="Suspended Form with Pegs" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Suspended Form with Pegs</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1060">
+          <div class="thumb-frame overflow-hidden" style="background-color:#e6e614">
+            <img srcset="artworks/mini/art1060.avif 200w, artworks/thumbs/art1060.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1060.avif" alt="Untitled (Assembled Apparatus)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Assembled Apparatus)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1061">
+          <div class="thumb-frame overflow-hidden" style="background-color:#bec3d2">
+            <img srcset="artworks/mini/art1061.avif 200w, artworks/thumbs/art1061.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1061.avif" alt="Untitled (Cracked Resin Grid)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Cracked Resin Grid)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1062">
+          <div class="thumb-frame overflow-hidden" style="background-color:#becde6">
+            <img srcset="artworks/mini/art1062.avif 200w, artworks/thumbs/art1062.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1062.avif" alt="Untitled (Fabric on Frame)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Fabric on Frame)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1063">
+          <div class="thumb-frame overflow-hidden" style="background-color:#afb4b9">
+            <img srcset="artworks/mini/art1063.avif 200w, artworks/thumbs/art1063.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1063.avif" alt="House with Gold Foil" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">House with Gold Foil</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1065">
+          <div class="thumb-frame overflow-hidden" style="background-color:#1e192d">
+            <img srcset="artworks/mini/art1065.avif 200w, artworks/thumbs/art1065.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1065.avif" alt="Projection onto Face" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Projection onto Face</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1066">
+          <div class="thumb-frame overflow-hidden" style="background-color:#d2cdc3">
+            <img srcset="artworks/mini/art1066.avif 200w, artworks/thumbs/art1066.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1066.avif" alt="Stacked Painted Blocks 2" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Stacked Painted Blocks 2</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1068">
+          <div class="thumb-frame overflow-hidden" style="background-color:#5f6469">
+            <img srcset="artworks/mini/art1068.avif 200w, artworks/thumbs/art1068.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1068.avif" alt="Untitled (Grid Over Architecture)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Grid Over Architecture)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1071">
+          <div class="thumb-frame overflow-hidden" style="background-color:#fff500">
+            <img srcset="artworks/mini/art1071.avif 200w, artworks/thumbs/art1071.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1071.avif" alt="Untitled (Interference Rings)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Interference Rings)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1072">
+          <div class="thumb-frame overflow-hidden" style="background-color:#d2f0fa">
+            <img srcset="artworks/mini/art1072.avif 200w, artworks/thumbs/art1072.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1072.avif" alt="Untitled (Boat Interior Plan)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Boat Interior Plan)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1073">
+          <div class="thumb-frame overflow-hidden" style="background-color:#69190f">
+            <img srcset="artworks/mini/art1073.avif 200w, artworks/thumbs/art1073.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1073.avif" alt="Untitled (Installation View) 3" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Installation View) 3</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1074">
+          <div class="thumb-frame overflow-hidden" style="background-color:#7d736e">
+            <img srcset="artworks/mini/art1074.avif 200w, artworks/thumbs/art1074.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1074.avif" alt="Untitled (Studio Group Shot)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Studio Group Shot)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1075">
+          <div class="thumb-frame overflow-hidden" style="background-color:#000037">
+            <img srcset="artworks/mini/art1075.avif 200w, artworks/thumbs/art1075.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1075.avif" alt="Untitled (Foil and Light)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Foil and Light)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1077">
+          <div class="thumb-frame overflow-hidden" style="background-color:#5078aa">
+            <img srcset="artworks/mini/art1077.avif 200w, artworks/thumbs/art1077.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1077.avif" alt="Untitled (Portrait, Upward Gaze)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Portrait, Upward Gaze)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1079">
+          <div class="thumb-frame overflow-hidden" style="background-color:#2d1e28">
+            <img srcset="artworks/mini/art1079.avif 200w, artworks/thumbs/art1079.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1079.avif" alt="Masked Figure with Scarf" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Masked Figure with Scarf</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1080">
+          <div class="thumb-frame overflow-hidden" style="background-color:#ff140a">
+            <img srcset="artworks/mini/art1080.avif 200w, artworks/thumbs/art1080.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1080.avif" alt="Untitled (Installation View) 4" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Installation View) 4</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1081">
+          <div class="thumb-frame overflow-hidden" style="background-color:#280a0a">
+            <img srcset="artworks/mini/art1081.avif 200w, artworks/thumbs/art1081.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1081.avif" alt="Untitled (Live Concert Stage)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Live Concert Stage)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1083">
+          <div class="thumb-frame overflow-hidden" style="background-color:#915f00">
+            <img srcset="artworks/mini/art1083.avif 200w, artworks/thumbs/art1083.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1083.avif" alt="Untitled (Studio Wall Collage)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Studio Wall Collage)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1970</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1078">
+          <div class="thumb-frame overflow-hidden" style="background-color:#d2e6fa">
+            <img srcset="artworks/mini/art1078.avif 200w, artworks/thumbs/art1078.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1078.avif" alt="Design: Electrical Gulf Cart" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Design: Electrical Gulf Cart</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1976</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art0380">
+          <div class="thumb-frame overflow-hidden" style="background-color:#696964">
+            <img srcset="artworks/mini/art0380.avif 200w, artworks/thumbs/art0380.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art0380.avif" alt="Devo at WHK Auditorium" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Devo at WHK Auditorium</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1977</span>
+          </div>
+        </a>
+      </div>
+      </div>
+    </section>
+
   </div>
 </main>
 
 <!-- FOOTER:START -->
-<footer class="bg-surface-container-high py-16 px-margin-desktop border-t border-outline-variant">
-  <div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+<footer class="bg-surface-container-high border-t border-outline-variant">
+  <div class="max-w-[1200px] mx-auto px-margin-desktop py-xl grid grid-cols-1 md:grid-cols-4 gap-12">
     <div>
       <h3 class="font-headline-md text-headline-md tracking-tighter mb-6">JFSN</h3>
-      <p class="font-body-md text-archive-gray text-sm leading-relaxed">The personal archive of Jeffrey F. S. Neumann — 1,084 works spanning five decades. Collage, sculpture, photography.</p>
+      <p class="font-body-md text-body-md text-secondary leading-relaxed">The personal archive of Jeffrey F. S. Neumann — 1,084 works spanning five decades. Collage, sculpture, photography.</p>
     </div>
     <div>
-      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">EXPLORE</h4>
-      <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
-        <li><a class="hover:text-international-orange transition-colors" href="archive.html">Complete Archive</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="timeline.html">Interactive Timeline</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="series-index.html">Series Index</a></li>
+      <h4 class="font-label-lg text-label-lg mb-6 text-primary uppercase tracking-widest">Explore</h4>
+      <ul class="space-y-3 font-label-md text-label-md text-secondary">
+        <li><a class="hover:text-on-tertiary-container transition-colors uppercase tracking-widest" href="archive.html">Complete Archive</a></li>
+        <li><a class="hover:text-on-tertiary-container transition-colors uppercase tracking-widest" href="timeline.html">Interactive Timeline</a></li>
+        <li><a class="hover:text-on-tertiary-container transition-colors uppercase tracking-widest" href="series-index.html">Series Index</a></li>
       </ul>
     </div>
     <div>
-      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">RESOURCES</h4>
-      <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
-        <li><a class="hover:text-international-orange transition-colors" href="mosaic.html">Portrait Mosaic</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="companion.html">AI Companion</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="about.html">About</a></li>
+      <h4 class="font-label-lg text-label-lg mb-6 text-primary uppercase tracking-widest">Resources</h4>
+      <ul class="space-y-3 font-label-md text-label-md text-secondary">
+        <li><a class="hover:text-on-tertiary-container transition-colors uppercase tracking-widest" href="mosaic.html">Portrait Mosaic</a></li>
+        <li><a class="hover:text-on-tertiary-container transition-colors uppercase tracking-widest" href="companion.html">AI Companion</a></li>
+        <li><a class="hover:text-on-tertiary-container transition-colors uppercase tracking-widest" href="about.html">About</a></li>
       </ul>
     </div>
     <div>
-      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">CONTACT</h4>
-      <a class="font-nav-link text-nav-link text-deep-ink block mb-4 border-b border-deep-ink inline-block pb-1 hover:text-international-orange hover:border-international-orange transition-all" href="mailto:jfsneumann@gmail.com">jfsneumann@gmail.com</a>
+      <h4 class="font-label-lg text-label-lg mb-6 text-primary uppercase tracking-widest">Contact</h4>
+      <a class="font-label-md text-label-md text-primary block mb-4 border-b border-primary inline-block pb-1 hover:text-on-tertiary-container hover:border-on-tertiary-container transition-all uppercase tracking-widest" href="mailto:jfsneumann@gmail.com">jfsneumann@gmail.com</a>
     </div>
   </div>
-  <div class="mt-16 pt-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
-    <p class="font-label-caps text-[10px] text-archive-gray">© 2026 JEFFREY F. S. NEUMANN. ALL RIGHTS RESERVED.</p>
-    <div class="flex gap-8"><a class="font-label-caps text-[10px] text-archive-gray hover:text-deep-ink" href="privacy.html">PRIVACY</a><a class="font-label-caps text-[10px] text-archive-gray hover:text-deep-ink" href="#">TERMS</a></div>
+  <div class="max-w-[1200px] mx-auto px-margin-desktop pb-8 pt-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
+    <p class="font-label-md text-[10px] text-secondary uppercase tracking-widest">© 2026 Jeffrey F. S. Neumann. All rights reserved.</p>
+    <div class="flex gap-8"><a class="font-label-md text-[10px] text-secondary hover:text-primary uppercase tracking-widest" href="privacy.html">Privacy</a><a class="font-label-md text-[10px] text-secondary hover:text-primary uppercase tracking-widest" href="#">Terms</a></div>
   </div>
 </footer>
 <!-- FOOTER:END -->
 
-<!-- Mobile bottom nav -->
-<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 px-4 bg-bone-white border-t border-outline-variant h-16" style="padding-bottom: env(safe-area-inset-bottom, 8px)" aria-label="Mobile navigation">
-  <a href="index.html" class="flex flex-col items-center justify-center text-archive-gray hover:text-international-orange transition-colors">
-    <span class="material-symbols-outlined">inventory_2</span><span class="font-label-caps text-[10px]">Archive</span>
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 px-4 bg-background border-t border-outline-variant h-16" style="padding-bottom: env(safe-area-inset-bottom, 8px)" aria-label="Mobile navigation">
+  <a href="index.html" class="flex flex-col items-center justify-center text-secondary hover:text-on-tertiary-container transition-colors">
+    <span class="material-symbols-outlined">inventory_2</span><span class="font-label-md text-[10px] uppercase">Archive</span>
   </a>
-  <a href="series-index.html" class="flex flex-col items-center justify-center text-archive-gray hover:text-international-orange transition-colors">
-    <span class="material-symbols-outlined">auto_awesome_motion</span><span class="font-label-caps text-[10px]">Series</span>
+  <a href="series-index.html" class="flex flex-col items-center justify-center text-secondary hover:text-on-tertiary-container transition-colors">
+    <span class="material-symbols-outlined">auto_awesome_motion</span><span class="font-label-md text-[10px] uppercase">Series</span>
   </a>
-  <a href="timeline.html" class="flex flex-col items-center justify-center text-archive-gray hover:text-international-orange transition-colors">
-    <span class="material-symbols-outlined">history_toggle_off</span><span class="font-label-caps text-[10px]">Timeline</span>
+  <a href="timeline.html" class="flex flex-col items-center justify-center text-secondary hover:text-on-tertiary-container transition-colors">
+    <span class="material-symbols-outlined">history_toggle_off</span><span class="font-label-md text-[10px] uppercase">Timeline</span>
   </a>
-  <a href="companion.html" class="flex flex-col items-center justify-center text-archive-gray hover:text-international-orange transition-colors">
-    <span class="material-symbols-outlined">chat_bubble</span><span class="font-label-caps text-[10px]">Companion</span>
+  <a href="companion.html" class="flex flex-col items-center justify-center text-secondary hover:text-on-tertiary-container transition-colors">
+    <span class="material-symbols-outlined">chat_bubble</span><span class="font-label-md text-[10px] uppercase">Companion</span>
   </a>
 </nav>
 <script src="_shared/nav-active.js" defer></script>
+<script src="_shared/ui.js" defer></script>
 </body>
 </html>

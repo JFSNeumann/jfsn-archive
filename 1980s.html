@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  
+
   <title>The 1980s — Jeffrey F. S. Neumann Archive</title>
   <meta name="description" content="11 works from the 1980s by Jeffrey F. S. Neumann, Cleveland mixed-media artist. Collage, assemblage, photography, and sculpture spanning 1980–1980.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -13,13 +13,75 @@
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="_shared/ui.css">
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <script id="tailwind-config">
-  tailwind.config={darkMode:"class",theme:{extend:{colors:{"archive-gray":"#575757","bone-white":"#F3F0EA","international-orange":"#FF6600","deep-ink":"#0B0B0B","outline-variant":"#c4c7c7","surface-container-high":"#ebe8e2","background":"#fcf9f3"},spacing:{"margin-desktop":"64px","margin-mobile":"20px","container-max":"1440px"},fontFamily:{"display":["Playfair Display"],"headline-md":["Playfair Display"],"label-caps":["Inter"],"body-md":["Inter"],"nav-link":["Inter"]},fontSize:{"headline-md":["32px",{"lineHeight":"40px","fontWeight":"500"}],"label-caps":["12px",{"lineHeight":"16px","letterSpacing":"0.1em","fontWeight":"600"}],"nav-link":["14px",{"lineHeight":"20px","letterSpacing":"0.05em","fontWeight":"500"}]}}}}
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-tint": "#5f5e5e",
+                    "on-error": "#ffffff",
+                    "surface-container": "#f1edec",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-container": "#e05900",
+                    "on-surface": "#1c1b1b",
+                    "primary": "#000000",
+                    "surface-container-low": "#f7f3f2",
+                    "secondary": "#5e5e5e",
+                    "outline-variant": "#c4c7c7",
+                    "outline": "#747878",
+                    "on-background": "#1c1b1b",
+                    "surface-container-high": "#ebe7e6",
+                    "on-surface-variant": "#444748",
+                    "surface-container-highest": "#e5e2e1",
+                    "primary-container": "#1c1b1b",
+                    "background": "#fdf8f8",
+                    "surface": "#fdf8f8"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0px",
+                    "lg": "0px",
+                    "xl": "0px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xl": "80px",
+                    "gutter": "24px",
+                    "md": "24px",
+                    "lg": "48px",
+                    "sm": "12px",
+                    "base": "8px",
+                    "margin-desktop": "64px",
+                    "margin-mobile": "16px",
+                    "xs": "4px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Playfair Display"],
+                    "headline-md": ["Playfair Display"],
+                    "headline-lg": ["Playfair Display"],
+                    "label-md": ["Inter"],
+                    "label-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "display-lg": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["28px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                    "label-md": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-lg": ["40px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "label-lg": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          }
+        }
+      }
   </script>
-  <meta name="theme-color" content="#fcf9f3"/>
+  <meta name="theme-color" content="#fdf8f8"/>
   <meta property="og:type"        content="website">
   <meta property="og:title"       content="Works from the 1980s — Jeffrey F. S. Neumann">
   <meta property="og:description" content="11 works from the 1980s by Jeffrey F. S. Neumann, Cleveland mixed-media artist. Collage, assemblage, photography, and sculpture spanning 1980–1980.">
@@ -63,189 +125,236 @@
   </script>
   <style>
     .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;}
-    .nav-underline-active{position:relative;}
-    .nav-underline-active::after{content:'';position:absolute;bottom:-4px;left:0;width:100%;height:2px;background-color:#FF6600;}
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;}}
-    .medium-page {
-      padding-top: clamp(3rem, 6vw, 6rem);
-      padding-bottom: clamp(4rem, 10vw, 10rem);
-    }
-    .medium-page__head {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: 1rem;
-      flex-wrap: wrap;
-      padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
-      border-bottom: 1px solid rgba(11,11,11,0.12);
-      margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
-    }
-    .medium-page__title {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(2.5rem, 5.5vw, 4.5rem);
-      font-weight: 300;
-      letter-spacing: -0.01em;
-      line-height: 1.1;
-      margin: 0;
-    }
-    .medium-page__meta {
-      font-size: 0.75rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: #575757;
-      margin: 0;
-      padding-bottom: 0.25rem;
-    }
-    .medium-page__intro {
-      max-width: 52ch;
-      line-height: 1.7;
-      color: #575757;
-      margin-bottom: clamp(2rem, 4vw, 3.5rem);
-    }
-    .medium-page__intro a {
-      color: #0B0B0B;
-      border-bottom: 1px solid rgba(11,11,11,0.12);
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .medium-page__intro a:hover {
-      color: #FF6600;
-      border-color: #FF6600;
-    }
-    .medium-grid {
-      column-count: 4;
-      column-gap: 0.75rem;
-    }
-    @media (max-width: 1024px) { .medium-grid { column-count: 3; } }
-    @media (max-width: 600px)  { .medium-grid { column-count: 2; } }
-    .thumb {
-      break-inside: avoid;
-      margin: 0 0 0.75rem;
-    }
-    .thumb__link {
-      display: block;
-      overflow: hidden;
-      background: #ebe8e2;
-      text-decoration: none;
-    }
-    .thumb__link img {
-      display: block;
-      width: 100%;
-      height: auto;
-      transition: transform 0.35s ease;
-    }
-    .thumb__link:hover img { transform: scale(1.05); }
-    .thumb__caption {
-      padding: 0.35rem 0 0;
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #575757;
-      line-height: 1.35;
-    }
-    .thumb__caption a { color: inherit; text-decoration: none; }
-    .thumb__caption a:hover { color: #0B0B0B; }
-    .thumb__caption span { display: block; }
-    @media (prefers-reduced-motion: reduce) {
-      .thumb__link img { transition: none; }
-      .thumb__link:hover img { transform: none; }
-    }
   </style>
 </head>
 
-<body class="bg-background text-deep-ink overflow-x-hidden">
-<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-deep-ink focus:text-bone-white">Skip to content</a>
+<body class="font-body-md text-body-md bg-background text-on-background overflow-x-hidden" data-page-label="1980s">
+<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-primary focus:text-on-primary">Skip to content</a>
+
 <!-- NAV:START -->
-<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-background border-b border-outline-variant">
-  <div class="flex items-center gap-8">
-    <a href="index.html" class="font-headline-md text-headline-md tracking-tighter text-deep-ink">JFSN</a>
-    <nav class="hidden md:flex gap-6" aria-label="Primary">
-      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="archive.html">Archive</a>
-      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="series-index.html">Series</a>
-      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="timeline.html">Timeline</a>
-      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="companion.html">Companion</a>
-      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="about.html">About</a>
-    </nav>
+<nav class="fixed top-0 left-0 w-full z-50 bg-background border-b border-outline-variant">
+  <div class="flex justify-between items-center px-margin-desktop py-4 max-w-[1200px] mx-auto">
+    <a class="font-headline-md text-headline-md font-bold tracking-tighter text-primary" href="index.html">JFSN</a>
+    <div class="hidden md:flex items-center gap-8">
+      <a class="font-label-lg text-label-lg text-primary opacity-80 hover:opacity-100 hover:text-on-tertiary-container transition-colors uppercase" href="archive.html">Archive</a>
+      <a class="font-label-lg text-label-lg text-primary opacity-80 hover:opacity-100 hover:text-on-tertiary-container transition-colors uppercase" href="series-index.html">Series</a>
+      <a class="font-label-lg text-label-lg text-primary opacity-80 hover:opacity-100 hover:text-on-tertiary-container transition-colors uppercase" href="timeline.html">Timeline</a>
+      <a class="font-label-lg text-label-lg text-primary opacity-80 hover:opacity-100 hover:text-on-tertiary-container transition-colors uppercase" href="companion.html">Companion</a>
+      <a class="font-label-lg text-label-lg text-primary opacity-80 hover:opacity-100 hover:text-on-tertiary-container transition-colors uppercase" href="about.html">About</a>
+    </div>
+    <div class="flex items-center gap-4">
+      <button class="p-2 text-primary hover:text-on-tertiary-container transition-colors" aria-label="Search">
+        <span class="material-symbols-outlined">search</span>
+      </button>
+      <button class="md:hidden p-2 text-primary" aria-label="Menu">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+    </div>
   </div>
-  <div class="flex items-center gap-4">
-    <button class="material-symbols-outlined text-deep-ink hover:text-international-orange transition-colors" aria-label="Search">search</button>
-    <button class="md:hidden material-symbols-outlined text-deep-ink" aria-label="Menu">menu</button>
-  </div>
-</header>
+</nav>
 <!-- NAV:END -->
 
-<main id="main" class="pt-16">
-  <div class="container medium-page">
-    <div class="medium-page__head">
-      <h1 class="medium-page__title">The 1980s</h1>
-      <p class="medium-page__meta">11 works &middot; 1980–1980</p>
+<main id="main" class="pt-[72px]">
+  <div class="max-w-[1200px] mx-auto px-margin-desktop">
+
+    <!-- Decade navigation -->
+    <div class="flex justify-between items-center py-lg border-b border-outline-variant">
+      <a data-prev-decade href="1970s.html" class="flex items-center gap-xs font-label-lg text-label-lg uppercase tracking-widest text-primary hover:text-on-tertiary-container transition-colors" aria-label="Previous decade: 1970s"><span class="material-symbols-outlined text-[18px]">arrow_back</span> 1970s</a>
+      <a data-next-decade href="1990s.html" class="flex items-center gap-xs font-label-lg text-label-lg uppercase tracking-widest text-primary hover:text-on-tertiary-container transition-colors" aria-label="Next decade: 1990s">1990s <span class="material-symbols-outlined text-[18px]">arrow_forward</span></a>
     </div>
-    <p class="medium-page__intro">A quieter decade in the archive — 11&nbsp;works documented, though the practice was ongoing. The work continued to develop in the studio; this is a partial record. Found material, assemblage, the continuing influence of industrial Cleveland. <a href="archive.html?decade=1980s">Browse with filters &rarr;</a></p>
-    <div class="medium-grid">
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1034" style="background-color:#f0fad2;"><img srcset="artworks/mini/art1034.avif 200w, artworks/thumbs/art1034.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1034.avif" alt="Untitled (Studio Workspace) 2" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1034">Untitled (Studio Workspace) 2</a><span>1980</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1035" style="background-color:#23aae1;"><img srcset="artworks/mini/art1035.avif 200w, artworks/thumbs/art1035.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1035.avif" alt="Neon City Night Panorama" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1035">Neon City Night Panorama</a><span>1980</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1039" style="background-color:#28281e;"><img srcset="artworks/mini/art1039.avif 200w, artworks/thumbs/art1039.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1039.avif" alt="Untitled (Studio Desk View) 3" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1039">Untitled (Studio Desk View) 3</a><span>1980</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1052" style="background-color:#fadc87;"><img srcset="artworks/mini/art1052.avif 200w, artworks/thumbs/art1052.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1052.avif" alt="Repeated Doll Faces" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1052">Repeated Doll Faces</a><span>1980</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1055" style="background-color:#b96e00;"><img srcset="artworks/mini/art1055.avif 200w, artworks/thumbs/art1055.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1055.avif" alt="Untitled (Upward Face)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1055">Untitled (Upward Face)</a><span>1980</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1064" style="background-color:#ffff14;"><img srcset="artworks/mini/art1064.avif 200w, artworks/thumbs/art1064.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1064.avif" alt="Neon City Skyline" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1064">Neon City Skyline</a><span>1980</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1067" style="background-color:#be0f0f;"><img srcset="artworks/mini/art1067.avif 200w, artworks/thumbs/art1067.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1067.avif" alt="City Under Laser Sky" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1067">City Under Laser Sky</a><span>1980</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1069" style="background-color:#2d3232;"><img srcset="artworks/mini/art1069.avif 200w, artworks/thumbs/art1069.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1069.avif" alt="Neon City Nocturne" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1069">Neon City Nocturne</a><span>1980</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1070" style="background-color:#d24b14;"><img srcset="artworks/mini/art1070.avif 200w, artworks/thumbs/art1070.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1070.avif" alt="Polaroid Self-Portrait" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1070">Polaroid Self-Portrait</a><span>1980</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1082" style="background-color:#282828;"><img srcset="artworks/mini/art1082.avif 200w, artworks/thumbs/art1082.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1082.avif" alt="Untitled (Electric Typewriter)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1082">Untitled (Electric Typewriter)</a><span>1980</span></figcaption></a></figure>
-    <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art1084" style="background-color:#c3dcb9;"><img srcset="artworks/mini/art1084.avif 200w, artworks/thumbs/art1084.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1084.avif" alt="Untitled 7 (Studio Interior)" loading="lazy" width="400" height="400"><figcaption class="thumb__caption"><a href="artwork.html?id=art1084">Untitled 7 (Studio Interior)</a><span>1980</span></figcaption></a></figure>
-    </div>
+
+    <!-- Hero -->
+    <section class="decade-hero py-xl border-b border-outline-variant">
+      <div class="grid grid-cols-12 gap-gutter">
+        <div class="col-span-12 md:col-span-8">
+          <p class="font-label-lg text-label-lg uppercase tracking-[0.2em] mb-sm text-secondary">11 works &middot; 1980–1980</p>
+          <h1 class="decade-heading font-display-lg text-display-lg mb-lg">The 1980s</h1>
+          <p class="font-body-lg text-body-lg max-w-xl leading-relaxed text-on-surface-variant">A quieter decade in the archive — 11&nbsp;works documented, though the practice was ongoing. The work continued to develop in the studio; this is a partial record. Found material, assemblage, the continuing influence of industrial Cleveland. <a href="archive.html?decade=1980s">Browse with filters &rarr;</a></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Grid -->
+    <section class="py-xl pb-[120px] md:pb-xl">
+      <div class="columns-2 lg:columns-4 gap-md">
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1034">
+          <div class="thumb-frame overflow-hidden" style="background-color:#f0fad2">
+            <img srcset="artworks/mini/art1034.avif 200w, artworks/thumbs/art1034.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1034.avif" alt="Untitled (Studio Workspace) 2" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Studio Workspace) 2</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1980</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1035">
+          <div class="thumb-frame overflow-hidden" style="background-color:#23aae1">
+            <img srcset="artworks/mini/art1035.avif 200w, artworks/thumbs/art1035.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1035.avif" alt="Neon City Night Panorama" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Neon City Night Panorama</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1980</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1039">
+          <div class="thumb-frame overflow-hidden" style="background-color:#28281e">
+            <img srcset="artworks/mini/art1039.avif 200w, artworks/thumbs/art1039.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1039.avif" alt="Untitled (Studio Desk View) 3" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Studio Desk View) 3</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1980</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1052">
+          <div class="thumb-frame overflow-hidden" style="background-color:#fadc87">
+            <img srcset="artworks/mini/art1052.avif 200w, artworks/thumbs/art1052.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1052.avif" alt="Repeated Doll Faces" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Repeated Doll Faces</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1980</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1055">
+          <div class="thumb-frame overflow-hidden" style="background-color:#b96e00">
+            <img srcset="artworks/mini/art1055.avif 200w, artworks/thumbs/art1055.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1055.avif" alt="Untitled (Upward Face)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Upward Face)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1980</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1064">
+          <div class="thumb-frame overflow-hidden" style="background-color:#ffff14">
+            <img srcset="artworks/mini/art1064.avif 200w, artworks/thumbs/art1064.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1064.avif" alt="Neon City Skyline" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Neon City Skyline</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1980</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1067">
+          <div class="thumb-frame overflow-hidden" style="background-color:#be0f0f">
+            <img srcset="artworks/mini/art1067.avif 200w, artworks/thumbs/art1067.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1067.avif" alt="City Under Laser Sky" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">City Under Laser Sky</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1980</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1069">
+          <div class="thumb-frame overflow-hidden" style="background-color:#2d3232">
+            <img srcset="artworks/mini/art1069.avif 200w, artworks/thumbs/art1069.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1069.avif" alt="Neon City Nocturne" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Neon City Nocturne</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1980</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1070">
+          <div class="thumb-frame overflow-hidden" style="background-color:#d24b14">
+            <img srcset="artworks/mini/art1070.avif 200w, artworks/thumbs/art1070.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1070.avif" alt="Polaroid Self-Portrait" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Polaroid Self-Portrait</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1980</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1082">
+          <div class="thumb-frame overflow-hidden" style="background-color:#282828">
+            <img srcset="artworks/mini/art1082.avif 200w, artworks/thumbs/art1082.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1082.avif" alt="Untitled (Electric Typewriter)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Electric Typewriter)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1980</span>
+          </div>
+        </a>
+      </div>
+      <div class="break-inside-avoid mb-md">
+        <a class="group block" href="artwork.html?id=art1084">
+          <div class="thumb-frame overflow-hidden" style="background-color:#c3dcb9">
+            <img srcset="artworks/mini/art1084.avif 200w, artworks/thumbs/art1084.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1084.avif" alt="Untitled 7 (Studio Interior)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          </div>
+          <div class="mt-sm">
+            <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled 7 (Studio Interior)</p>
+            <span class="font-label-md text-label-md uppercase tracking-widest text-secondary opacity-70">1980</span>
+          </div>
+        </a>
+      </div>
+      </div>
+    </section>
+
   </div>
 </main>
 
 <!-- FOOTER:START -->
-<footer class="bg-surface-container-high py-16 px-margin-desktop border-t border-outline-variant">
-  <div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+<footer class="bg-surface-container-high border-t border-outline-variant">
+  <div class="max-w-[1200px] mx-auto px-margin-desktop py-xl grid grid-cols-1 md:grid-cols-4 gap-12">
     <div>
       <h3 class="font-headline-md text-headline-md tracking-tighter mb-6">JFSN</h3>
-      <p class="font-body-md text-archive-gray text-sm leading-relaxed">The personal archive of Jeffrey F. S. Neumann — 1,084 works spanning five decades. Collage, sculpture, photography.</p>
+      <p class="font-body-md text-body-md text-secondary leading-relaxed">The personal archive of Jeffrey F. S. Neumann — 1,084 works spanning five decades. Collage, sculpture, photography.</p>
     </div>
     <div>
-      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">EXPLORE</h4>
-      <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
-        <li><a class="hover:text-international-orange transition-colors" href="archive.html">Complete Archive</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="timeline.html">Interactive Timeline</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="series-index.html">Series Index</a></li>
+      <h4 class="font-label-lg text-label-lg mb-6 text-primary uppercase tracking-widest">Explore</h4>
+      <ul class="space-y-3 font-label-md text-label-md text-secondary">
+        <li><a class="hover:text-on-tertiary-container transition-colors uppercase tracking-widest" href="archive.html">Complete Archive</a></li>
+        <li><a class="hover:text-on-tertiary-container transition-colors uppercase tracking-widest" href="timeline.html">Interactive Timeline</a></li>
+        <li><a class="hover:text-on-tertiary-container transition-colors uppercase tracking-widest" href="series-index.html">Series Index</a></li>
       </ul>
     </div>
     <div>
-      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">RESOURCES</h4>
-      <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
-        <li><a class="hover:text-international-orange transition-colors" href="mosaic.html">Portrait Mosaic</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="companion.html">AI Companion</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="about.html">About</a></li>
+      <h4 class="font-label-lg text-label-lg mb-6 text-primary uppercase tracking-widest">Resources</h4>
+      <ul class="space-y-3 font-label-md text-label-md text-secondary">
+        <li><a class="hover:text-on-tertiary-container transition-colors uppercase tracking-widest" href="mosaic.html">Portrait Mosaic</a></li>
+        <li><a class="hover:text-on-tertiary-container transition-colors uppercase tracking-widest" href="companion.html">AI Companion</a></li>
+        <li><a class="hover:text-on-tertiary-container transition-colors uppercase tracking-widest" href="about.html">About</a></li>
       </ul>
     </div>
     <div>
-      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">CONTACT</h4>
-      <a class="font-nav-link text-nav-link text-deep-ink block mb-4 border-b border-deep-ink inline-block pb-1 hover:text-international-orange hover:border-international-orange transition-all" href="mailto:jfsneumann@gmail.com">jfsneumann@gmail.com</a>
+      <h4 class="font-label-lg text-label-lg mb-6 text-primary uppercase tracking-widest">Contact</h4>
+      <a class="font-label-md text-label-md text-primary block mb-4 border-b border-primary inline-block pb-1 hover:text-on-tertiary-container hover:border-on-tertiary-container transition-all uppercase tracking-widest" href="mailto:jfsneumann@gmail.com">jfsneumann@gmail.com</a>
     </div>
   </div>
-  <div class="mt-16 pt-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
-    <p class="font-label-caps text-[10px] text-archive-gray">© 2026 JEFFREY F. S. NEUMANN. ALL RIGHTS RESERVED.</p>
-    <div class="flex gap-8"><a class="font-label-caps text-[10px] text-archive-gray hover:text-deep-ink" href="privacy.html">PRIVACY</a><a class="font-label-caps text-[10px] text-archive-gray hover:text-deep-ink" href="#">TERMS</a></div>
+  <div class="max-w-[1200px] mx-auto px-margin-desktop pb-8 pt-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
+    <p class="font-label-md text-[10px] text-secondary uppercase tracking-widest">© 2026 Jeffrey F. S. Neumann. All rights reserved.</p>
+    <div class="flex gap-8"><a class="font-label-md text-[10px] text-secondary hover:text-primary uppercase tracking-widest" href="privacy.html">Privacy</a><a class="font-label-md text-[10px] text-secondary hover:text-primary uppercase tracking-widest" href="#">Terms</a></div>
   </div>
 </footer>
 <!-- FOOTER:END -->
 
-<!-- Mobile bottom nav -->
-<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 px-4 bg-bone-white border-t border-outline-variant h-16" style="padding-bottom: env(safe-area-inset-bottom, 8px)" aria-label="Mobile navigation">
-  <a href="index.html" class="flex flex-col items-center justify-center text-archive-gray hover:text-international-orange transition-colors">
-    <span class="material-symbols-outlined">inventory_2</span><span class="font-label-caps text-[10px]">Archive</span>
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 px-4 bg-background border-t border-outline-variant h-16" style="padding-bottom: env(safe-area-inset-bottom, 8px)" aria-label="Mobile navigation">
+  <a href="index.html" class="flex flex-col items-center justify-center text-secondary hover:text-on-tertiary-container transition-colors">
+    <span class="material-symbols-outlined">inventory_2</span><span class="font-label-md text-[10px] uppercase">Archive</span>
   </a>
-  <a href="series-index.html" class="flex flex-col items-center justify-center text-archive-gray hover:text-international-orange transition-colors">
-    <span class="material-symbols-outlined">auto_awesome_motion</span><span class="font-label-caps text-[10px]">Series</span>
+  <a href="series-index.html" class="flex flex-col items-center justify-center text-secondary hover:text-on-tertiary-container transition-colors">
+    <span class="material-symbols-outlined">auto_awesome_motion</span><span class="font-label-md text-[10px] uppercase">Series</span>
   </a>
-  <a href="timeline.html" class="flex flex-col items-center justify-center text-archive-gray hover:text-international-orange transition-colors">
-    <span class="material-symbols-outlined">history_toggle_off</span><span class="font-label-caps text-[10px]">Timeline</span>
+  <a href="timeline.html" class="flex flex-col items-center justify-center text-secondary hover:text-on-tertiary-container transition-colors">
+    <span class="material-symbols-outlined">history_toggle_off</span><span class="font-label-md text-[10px] uppercase">Timeline</span>
   </a>
-  <a href="companion.html" class="flex flex-col items-center justify-center text-archive-gray hover:text-international-orange transition-colors">
-    <span class="material-symbols-outlined">chat_bubble</span><span class="font-label-caps text-[10px]">Companion</span>
+  <a href="companion.html" class="flex flex-col items-center justify-center text-secondary hover:text-on-tertiary-container transition-colors">
+    <span class="material-symbols-outlined">chat_bubble</span><span class="font-label-md text-[10px] uppercase">Companion</span>
   </a>
 </nav>
 <script src="_shared/nav-active.js" defer></script>
+<script src="_shared/ui.js" defer></script>
 </body>
 </html>

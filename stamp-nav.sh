@@ -15,7 +15,10 @@ TARGETS=(
   index.html archive.html artwork.html series-index.html
   timeline.html companion.html about.html
   lost.html mosaic.html
+  collage.html sculpture.html photography.html painting.html
 )
+# Note: decade pages (1970s–2020s) use the fuller Material Design nav token system
+# and are maintained separately from this stamp script.
 
 STAMPED=0
 SKIPPED=0

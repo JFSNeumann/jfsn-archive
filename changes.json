@@ -1,5 +1,17 @@
 [
   {
+    "sha": "d5f1553",
+    "date": "2026-05-31",
+    "title": "Session 22 — Footer consistency + Stitch polish",
+    "body": "- 4-column footer propagated to about, archive, artwork, companion, series-index, timeline\n- PRIVACY link fixed to privacy.html on all pages including index\n- Decade pages (1970s–2020s): added TERMS link to footer bottom strip\n- Companion: 64px dark-to-footer gradient fade\n- Artwork: full-width PREV/NEXT nav strip with real titles from catalog\n- Series-index: archival note moved from grid tile to full-width dark section"
+  },
+  {
+    "sha": "e39bd9a",
+    "date": "2026-05-31",
+    "title": "Update CURRENT_STATE.md — Session 21 complete",
+    "body": ""
+  },
+  {
     "sha": "8f4eaee",
     "date": "2026-05-31",
     "title": "Session 21: port guernica, collage, sculpture, photography, painting, all 6 decade pages to new design system",
