@@ -19,26 +19,24 @@
         theme: {
           extend: {
             "colors": {
-                    "on-secondary-container": "#646464",
-                    "secondary-fixed-dim": "#c7c6c6",
-                    "outline": "#747878",
-                    "on-tertiary": "#ffffff",
-                    "on-tertiary-container": "#e05900",
-                    "surface-container-high": "#ebe7e6",
-                    "surface": "#fdf8f8",
-                    "on-primary": "#ffffff",
-                    "on-surface-variant": "#444748",
-                    "secondary": "#5e5e5e",
-                    "surface-dim": "#ddd9d8",
-                    "primary": "#000000",
-                    "outline-variant": "#c4c7c7",
-                    "on-surface": "#1c1b1b",
-                    "surface-container": "#f1edec",
-                    "on-background": "#1c1b1b",
-                    "background": "#fdf8f8",
-                    "surface-container-low": "#f7f3f2",
-                    "surface-container-highest": "#e5e2e1",
-                    "tertiary": "#000000"
+                    "bone-white":             "#FCF9F3",
+                    "deep-ink":               "#0B0B0B",
+                    "international-orange":   "#FF6600",
+                    "archive-gray":           "#575757",
+                    "background":             "#fcf9f3",
+                    "surface":                "#fcf9f3",
+                    "surface-container-low":  "#f6f3ed",
+                    "surface-container":      "#f0eee8",
+                    "surface-container-high": "#ebe8e2",
+                    "surface-dim":            "#dcdad4",
+                    "outline":                "#747878",
+                    "outline-variant":        "#c4c7c7",
+                    "on-surface":             "#1c1c18",
+                    "on-background":          "#1c1c18",
+                    "on-surface-variant":     "#444748",
+                    "primary":                "#000000",
+                    "secondary":              "#5e5e5e",
+                    "on-tertiary-container":  "#FF6600"
             },
             "borderRadius": {
                     "DEFAULT": "0px",
@@ -111,12 +109,12 @@
         .series-card::after  { bottom: 0; right: 0; }
         .series-card:hover::before {
             width: 100%; height: 100%;
-            border-top-color: #e05900; border-right-color: #e05900;
+            border-top-color: #FF6600; border-right-color: #FF6600;
             transition: width 0.15s ease-out, height 0.15s ease-out 0.15s;
         }
         .series-card:hover::after {
             width: 100%; height: 100%;
-            border-bottom-color: #e05900; border-left-color: #e05900;
+            border-bottom-color: #FF6600; border-left-color: #FF6600;
             transition: width 0.15s ease-out, height 0.15s ease-out 0.15s;
         }
 
@@ -135,22 +133,22 @@
         body { -webkit-font-smoothing: antialiased; }
     </style>
 </head>
-<body class="bg-background text-primary font-body-md selection:bg-on-tertiary-container selection:text-white">
+<body class="bg-bone-white text-deep-ink font-body-md selection:bg-international-orange selection:text-white">
 
 <!-- Top Nav -->
 <!-- NAV:START -->
-<header class="fixed top-0 w-full z-50 bg-background border-b border-outline-variant">
+<header class="fixed top-0 w-full z-50 bg-bone-white border-b border-deep-ink">
   <nav class="flex justify-between items-center h-20 px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto">
-    <a class="font-display-lg text-headline-md tracking-tighter text-primary" href="index.html">JFSN</a>
+    <a class="font-display-lg text-headline-md tracking-tighter text-deep-ink" href="index.html">JFSN</a>
     <div class="hidden md:flex items-center gap-lg">
-      <a class="font-body-md text-body-md uppercase tracking-widest text-primary hover:text-on-tertiary-container transition-colors" href="archive.html">Archive</a>
-      <a class="font-body-md text-body-md uppercase tracking-widest text-on-tertiary-container border-b border-on-tertiary-container" href="series-index.html" aria-current="page">Series</a>
-      <a class="font-body-md text-body-md uppercase tracking-widest text-primary hover:text-on-tertiary-container transition-colors" href="timeline.html">Timeline</a>
-      <a class="font-body-md text-body-md uppercase tracking-widest text-primary hover:text-on-tertiary-container transition-colors" href="companion.html">Companion</a>
-      <a class="font-body-md text-body-md uppercase tracking-widest text-primary hover:text-on-tertiary-container transition-colors" href="about.html">About</a>
+      <a class="font-body-md text-body-md uppercase tracking-widest text-deep-ink hover:text-international-orange transition-colors" href="archive.html">Archive</a>
+      <a class="font-body-md text-body-md uppercase tracking-widest text-international-orange border-b border-international-orange" href="series-index.html" aria-current="page">Series</a>
+      <a class="font-body-md text-body-md uppercase tracking-widest text-deep-ink hover:text-international-orange transition-colors" href="timeline.html">Timeline</a>
+      <a class="font-body-md text-body-md uppercase tracking-widest text-deep-ink hover:text-international-orange transition-colors" href="companion.html">Companion</a>
+      <a class="font-body-md text-body-md uppercase tracking-widest text-deep-ink hover:text-international-orange transition-colors" href="about.html">About</a>
     </div>
     <div class="flex items-center gap-sm">
-      <button class="p-base cursor-pointer hover:text-on-tertiary-container transition-colors" aria-label="Search">
+      <button class="p-base cursor-pointer hover:text-international-orange transition-colors" aria-label="Search">
         <span class="material-symbols-outlined">search</span>
       </button>
       <button class="md:hidden p-base" aria-label="Menu">
@@ -166,7 +164,7 @@
   <!-- Page Header -->
   <header class="mb-xl max-w-2xl">
     <h1 class="font-display-lg text-display-lg mb-md leading-none">Series &amp; Themes</h1>
-    <p class="font-body-lg text-body-lg text-secondary border-l-2 border-on-tertiary-container pl-md">
+    <p class="font-body-lg text-body-lg text-secondary border-l-2 border-international-orange pl-md">
       Recurring subjects, materials, and obsessions across five decades of work.
     </p>
   </header>
@@ -184,7 +182,7 @@
 <!-- Archival Note -->
 <section class="w-full py-32 bg-surface-container-high border-t border-outline-variant">
   <div class="max-w-4xl mx-auto px-margin-desktop flex flex-col items-center text-center">
-    <h4 class="font-label-lg text-label-lg uppercase tracking-widest mb-md text-on-tertiary-container">Archival Note</h4>
+    <h4 class="font-label-lg text-label-lg uppercase tracking-widest mb-md text-international-orange">Archival Note</h4>
     <p class="font-body-lg text-body-lg text-on-surface-variant mb-lg italic leading-relaxed max-w-2xl">
       "The series format allows for the exploration of a singular concept across multiple iterations, revealing the subtle evolution of form and intent."
     </p>
@@ -233,7 +231,7 @@
 </footer>
 
 <!-- Mobile bottom nav -->
-<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 px-4 bg-background border-t border-outline-variant h-16" style="padding-bottom: env(safe-area-inset-bottom, 8px)" aria-label="Mobile navigation">
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 px-4 bg-bone-white border-t border-deep-ink h-16" style="padding-bottom: env(safe-area-inset-bottom, 8px)" aria-label="Mobile navigation">
   <a href="index.html" class="flex flex-col items-center justify-center text-secondary">
     <span class="material-symbols-outlined">home</span>
     <span class="font-label-md text-[10px] uppercase">Home</span>
@@ -242,7 +240,7 @@
     <span class="material-symbols-outlined">inventory_2</span>
     <span class="font-label-md text-[10px] uppercase">Archive</span>
   </a>
-  <a href="series-index.html" class="flex flex-col items-center justify-center text-on-tertiary-container" aria-current="page">
+  <a href="series-index.html" class="flex flex-col items-center justify-center text-international-orange" aria-current="page">
     <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome_motion</span>
     <span class="font-label-md text-[10px] uppercase">Series</span>
   </a>
@@ -293,7 +291,7 @@ fetch('catalog.json')
         : `archive.html`;
 
       const tag = g.kind === 'series'
-        ? `<span class="inline-block font-label-md text-label-md uppercase tracking-widest text-on-tertiary-container border border-on-tertiary-container px-sm py-xs mb-sm">Named Series</span>`
+        ? `<span class="inline-block font-label-md text-label-md uppercase tracking-widest text-international-orange border border-international-orange px-sm py-xs mb-sm">Named Series</span>`
         : '';
 
       const aspect = isFeatured ? 'aspect-[4/5]' : 'aspect-square';
@@ -301,7 +299,7 @@ fetch('catalog.json')
       const titleSize = isFeatured ? 'font-headline-lg text-headline-lg' : 'font-headline-md text-headline-md';
 
       grid.innerHTML += `
-        <a href="${archiveLink}" class="series-card reveal-card group ${colSpan} border border-outline-variant flex flex-col overflow-hidden bg-surface-container-low transition-colors hover:border-on-tertiary-container no-underline text-primary">
+        <a href="${archiveLink}" class="series-card reveal-card group ${colSpan} border border-outline-variant flex flex-col overflow-hidden bg-surface-container-low transition-colors hover:border-international-orange no-underline text-primary">
           <div class="${aspect} overflow-hidden bg-surface-container-highest">
             <img
               alt="${g.name}"
@@ -313,10 +311,10 @@ fetch('catalog.json')
           </div>
           <div class="p-md flex flex-col justify-between flex-grow">
             ${tag}
-            <h3 class="${titleSize} group-hover:text-on-tertiary-container transition-colors">${g.name}</h3>
+            <h3 class="${titleSize} group-hover:text-international-orange transition-colors">${g.name}</h3>
             <div class="mt-base flex items-center justify-between">
               <span class="font-label-md text-label-md uppercase tracking-widest text-secondary">${counts[g.name]} WORKS</span>
-              <span class="material-symbols-outlined text-on-tertiary-container opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+              <span class="material-symbols-outlined text-international-orange opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
             </div>
           </div>
         </a>`;
@@ -346,6 +344,17 @@ document.addEventListener('mousemove', e => {
     img.style.transform = `scale(1.1) translate(${x}px, ${y}px)`;
   });
 });
+</script>
+
+<!-- Touch grayscale — tap to reveal color, auto-revert after 1s -->
+<script>
+document.addEventListener('touchstart', e => {
+  const img = e.target.closest('.series-card')?.querySelector('.series-image');
+  if (!img) return;
+  img.style.filter = 'grayscale(0%)';
+  clearTimeout(img._greyTimer);
+  img._greyTimer = setTimeout(() => { img.style.filter = ''; }, 1000);
+}, { passive: true });
 </script>
 
 <!-- GoatCounter analytics -->

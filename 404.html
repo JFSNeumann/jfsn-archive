@@ -97,12 +97,12 @@
     }
   </style>
 </head>
-<body class="bg-background text-deep-ink overflow-x-hidden">
+<body class="bg-bone-white text-deep-ink overflow-x-hidden">
 
 <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-deep-ink focus:text-bone-white">Skip to content</a>
 
 <!-- NAV:START -->
-<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-background border-b border-outline-variant">
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-bone-white border-b border-deep-ink">
   <div class="flex items-center gap-8">
     <a href="index.html" class="font-headline-md text-headline-md tracking-tighter text-deep-ink">JFSN</a>
     <nav class="hidden md:flex gap-6" aria-label="Primary">
@@ -120,30 +120,64 @@
 </header>
 <!-- NAV:END -->
 
-<main id="main" class="pt-16">
-  <div class="not-found">
-    <p class="not-found__code">404</p>
-    <p class="not-found__msg">Page not found</p>
-    <div class="not-found__links">
-      <a href="index.html">Home</a>
-      <a href="archive.html">Archive</a>
-      <a href="series-index.html">Series</a>
-      <a href="timeline.html">Timeline</a>
-      <a href="constellation.html" title="Force-directed map of all works, clustered by theme">Constellation</a>
-      <a href="wall.html">Wall</a>
-      <a href="mosaic.html" class="nav-mosaic"><span class="m">M</span><span class="o">o</span><span class="s">s</span><span class="a">a</span><span class="i">i</span><span class="c">c</span></a>
-      <a href="about.html">About</a>
-      <a href="for-artists.html" style="color:#FF6600">For Artists</a>
+<main id="main" class="pt-16 min-h-screen flex flex-col justify-center items-center px-margin-mobile md:px-margin-desktop py-16">
+  <div class="w-full max-w-4xl border border-deep-ink p-8 md:p-16 relative bg-bone-white">
+    <!-- Corner accents -->
+    <div class="absolute -top-px -left-px w-4 h-4 border-t-2 border-l-2 border-deep-ink"></div>
+    <div class="absolute -top-px -right-px w-4 h-4 border-t-2 border-r-2 border-deep-ink"></div>
+    <div class="absolute -bottom-px -left-px w-4 h-4 border-b-2 border-l-2 border-deep-ink"></div>
+    <div class="absolute -bottom-px -right-px w-4 h-4 border-b-2 border-r-2 border-deep-ink"></div>
+
+    <!-- Metadata header -->
+    <div class="flex justify-between items-start mb-12 border-b border-deep-ink pb-4">
+      <div class="flex flex-col gap-1">
+        <span class="font-label-caps text-label-caps text-archive-gray">REF // 404_NULL_POINTER</span>
+        <span class="font-label-caps text-label-caps text-international-orange" id="status-flicker">STATUS // UNVERIFIED</span>
+      </div>
+      <span class="font-label-caps text-label-caps text-archive-gray hidden md:block">JFSN ARCHIVE</span>
     </div>
-    <div class="not-found__explore" id="explore-wrap" hidden>
-      <p class="not-found__explore-label">Or explore some works</p>
-      <div class="not-found__grid" id="explore-grid"></div>
+
+    <!-- Heading -->
+    <h1 class="font-display text-[clamp(2.5rem,8vw,5rem)] tracking-tight leading-none uppercase mb-6">Entry<br>Not Found</h1>
+    <p class="font-body-md text-body-md text-archive-gray max-w-xl mb-12">
+      The requested document is not present in the current ledger. It may have been moved, deaccessioned, or never existed in the fifty-year record.
+    </p>
+
+    <!-- Void visualization -->
+    <div class="w-full aspect-video border border-dashed border-archive-gray flex items-center justify-center mb-12 overflow-hidden relative bg-surface-container-low">
+      <div class="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#0b0b0b_1px,transparent_1px)] [background-size:20px_20px]"></div>
+      <div class="text-center relative z-10">
+        <span class="material-symbols-outlined text-archive-gray" style="font-size:48px;">scan_delete</span>
+        <p class="font-label-caps text-label-caps text-archive-gray mt-2">NULL_REFERENCE_VOID</p>
+      </div>
     </div>
+
+    <!-- Action cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+      <a href="index.html" class="group block border border-deep-ink p-6 hover:bg-deep-ink transition-colors duration-300">
+        <span class="font-label-caps text-label-caps text-archive-gray block mb-2 group-hover:text-international-orange">RETURN TO</span>
+        <span class="font-label-caps text-label-caps text-deep-ink group-hover:text-bone-white">CENTRAL LEDGER</span>
+      </a>
+      <a href="timeline.html" class="group block border border-deep-ink p-6 hover:bg-deep-ink transition-colors duration-300">
+        <span class="font-label-caps text-label-caps text-archive-gray block mb-2 group-hover:text-international-orange">VIEW</span>
+        <span class="font-label-caps text-label-caps text-deep-ink group-hover:text-bone-white">CHRONOLOGY</span>
+      </a>
+      <a href="about.html#contact" class="group block border border-deep-ink p-6 hover:bg-deep-ink transition-colors duration-300">
+        <span class="font-label-caps text-label-caps text-archive-gray block mb-2 group-hover:text-international-orange">INQUIRY</span>
+        <span class="font-label-caps text-label-caps text-deep-ink group-hover:text-bone-white">CONTACT REGISTRAR</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Explore works section (populated by JS) -->
+  <div class="not-found__explore w-full max-w-4xl mt-16" id="explore-wrap" hidden>
+    <p class="not-found__explore-label font-label-caps text-label-caps text-archive-gray opacity-50 mb-4">Or explore some works</p>
+    <div class="not-found__grid" id="explore-grid"></div>
   </div>
 </main>
 
 <!-- FOOTER:START -->
-<footer class="bg-surface-container-high py-16 px-margin-desktop border-t border-outline-variant">
+<footer class="bg-bone-white py-16 px-margin-desktop border-t border-deep-ink">
   <div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
     <div>
       <h3 class="font-headline-md text-headline-md tracking-tighter mb-6">JFSN</h3>
@@ -171,7 +205,7 @@
       <a class="font-nav-link text-nav-link text-deep-ink block mb-4 border-b border-deep-ink inline-block pb-1 hover:text-international-orange hover:border-international-orange transition-all" href="mailto:jfsneumann@gmail.com">jfsneumann@gmail.com</a>
     </div>
   </div>
-  <div class="mt-16 pt-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
+  <div class="mt-16 pt-8 border-t border-deep-ink flex flex-col md:flex-row justify-between items-center gap-4">
     <p class="font-label-caps text-[10px] text-archive-gray">© 2026 JEFFREY F. S. NEUMANN. ALL RIGHTS RESERVED.</p>
     <div class="flex gap-8">
       <a class="font-label-caps text-[10px] text-archive-gray hover:text-deep-ink" href="privacy.html">PRIVACY</a>
@@ -181,7 +215,7 @@
 <!-- FOOTER:END -->
 
 <!-- Mobile bottom nav -->
-<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 px-4 bg-bone-white border-t border-outline-variant h-16" style="padding-bottom: env(safe-area-inset-bottom, 8px)" aria-label="Mobile navigation">
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 px-4 bg-bone-white border-t border-deep-ink h-16" style="padding-bottom: env(safe-area-inset-bottom, 8px)" aria-label="Mobile navigation">
   <a href="index.html" class="flex flex-col items-center justify-center text-archive-gray hover:text-international-orange transition-colors">
     <span class="material-symbols-outlined">inventory_2</span>
     <span class="font-label-caps text-[10px]">Archive</span>
@@ -200,6 +234,27 @@
   </a>
 </nav>
 <script src="_shared/nav-active.js" defer></script>
+<script>
+// Status flicker effect
+const fl = document.getElementById('status-flicker');
+if (fl) setInterval(() => { fl.style.opacity = Math.random() > 0.95 ? '0.3' : '1'; }, 150);
+// Explore works grid
+fetch('catalog.json').then(r=>r.json()).then(works=>{
+  const sample = works.sort(()=>Math.random()-0.5).slice(0,8);
+  const grid = document.getElementById('explore-grid');
+  const wrap = document.getElementById('explore-wrap');
+  if (!grid||!wrap) return;
+  sample.forEach(w=>{
+    const id = w.file.replace('.avif','');
+    const a = document.createElement('a');
+    a.href = `artwork.html?id=${id}`;
+    a.className = 'not-found__thumb';
+    a.innerHTML = `<img src="artworks/mini/${w.file}" alt="${w.title||'Untitled'}" loading="lazy">`;
+    grid.appendChild(a);
+  });
+  wrap.hidden = false;
+}).catch(()=>{});
+</script>
 
 <script src="search.js" defer></script>
 <!-- GoatCounter &mdash; privacy-first analytics. Replace subdomain after sign-up at https://www.goatcounter.com -->

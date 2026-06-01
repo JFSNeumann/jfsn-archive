@@ -26,17 +26,22 @@
     theme: {
       extend: {
         colors: {
-          "secondary": "#5e5e5e",
-          "on-tertiary-container": "#e05900",
-          "outline": "#747878",
-          "on-primary": "#ffffff",
-          "surface": "#fdf8f8",
-          "on-surface": "#1c1b1b",
-          "on-background": "#1c1b1b",
-          "surface-container": "#f1edec",
-          "background": "#fdf8f8",
-          "outline-variant": "#c4c7c7",
-          "primary": "#000000"
+          "bone-white":             "#FCF9F3",
+          "deep-ink":               "#0B0B0B",
+          "international-orange":   "#FF6600",
+          "archive-gray":           "#575757",
+          "background":             "#fcf9f3",
+          "surface":                "#fcf9f3",
+          "surface-container-low":  "#f6f3ed",
+          "surface-container":      "#f0eee8",
+          "surface-container-high": "#ebe8e2",
+          "outline":                "#747878",
+          "outline-variant":        "#c4c7c7",
+          "on-surface":             "#1c1c18",
+          "on-background":          "#1c1c18",
+          "primary":                "#000000",
+          "secondary":              "#5e5e5e",
+          "on-tertiary-container":  "#FF6600"
         },
         borderRadius: { "DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px" },
         spacing: {
@@ -247,19 +252,19 @@
   }
 </style>
 </head>
-<body class="font-body-md bg-background text-on-background flex flex-col min-h-screen">
+<body class="font-body-md bg-bone-white text-deep-ink flex flex-col min-h-screen">
 
 <!-- Top Nav -->
 <!-- NAV:START -->
-<header class="fixed top-0 w-full z-50 bg-background border-b border-outline-variant">
+<header class="fixed top-0 w-full z-50 bg-bone-white border-b border-deep-ink">
   <div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-md max-w-[1440px] mx-auto">
     <a class="font-headline-md text-headline-md text-primary tracking-tighter" href="index.html">JFSN</a>
     <nav class="hidden md:flex items-center gap-lg">
-      <a class="font-label-lg text-label-lg uppercase tracking-widest text-primary hover:text-on-tertiary-container transition-colors" href="archive.html">ARCHIVE</a>
-      <a class="font-label-lg text-label-lg uppercase tracking-widest text-primary hover:text-on-tertiary-container transition-colors" href="series-index.html">SERIES</a>
-      <a class="font-label-lg text-label-lg uppercase tracking-widest text-primary hover:text-on-tertiary-container transition-colors" href="timeline.html">TIMELINE</a>
-      <a class="font-label-lg text-label-lg uppercase tracking-widest text-on-tertiary-container border-b-2 border-on-tertiary-container pb-1" href="companion.html" aria-current="page">COMPANION</a>
-      <a class="font-label-lg text-label-lg uppercase tracking-widest text-primary hover:text-on-tertiary-container transition-colors" href="about.html">ABOUT</a>
+      <a class="font-label-lg text-label-lg uppercase tracking-widest text-primary hover:text-international-orange transition-colors" href="archive.html">ARCHIVE</a>
+      <a class="font-label-lg text-label-lg uppercase tracking-widest text-primary hover:text-international-orange transition-colors" href="series-index.html">SERIES</a>
+      <a class="font-label-lg text-label-lg uppercase tracking-widest text-primary hover:text-international-orange transition-colors" href="timeline.html">TIMELINE</a>
+      <a class="font-label-lg text-label-lg uppercase tracking-widest text-international-orange border-b-2 border-international-orange pb-1" href="companion.html" aria-current="page">COMPANION</a>
+      <a class="font-label-lg text-label-lg uppercase tracking-widest text-primary hover:text-international-orange transition-colors" href="about.html">ABOUT</a>
     </nav>
     <button class="md:hidden" aria-label="Menu">
       <span class="material-symbols-outlined text-primary">menu</span>
@@ -366,7 +371,7 @@
 </footer>
 
 <!-- Mobile bottom nav -->
-<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 px-4 bg-background border-t border-outline-variant h-16" style="padding-bottom: env(safe-area-inset-bottom, 8px)" aria-label="Mobile navigation">
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 px-4 bg-bone-white border-t border-deep-ink h-16" style="padding-bottom: env(safe-area-inset-bottom, 8px)" aria-label="Mobile navigation">
   <a href="index.html" class="flex flex-col items-center justify-center text-secondary">
     <span class="material-symbols-outlined">home</span>
     <span class="font-label-md text-[10px] uppercase">Home</span>
@@ -383,7 +388,7 @@
     <span class="material-symbols-outlined">history_toggle_off</span>
     <span class="font-label-md text-[10px] uppercase">Timeline</span>
   </a>
-  <a href="companion.html" class="flex flex-col items-center justify-center text-on-tertiary-container" aria-current="page">
+  <a href="companion.html" class="flex flex-col items-center justify-center text-international-orange" aria-current="page">
     <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
     <span class="font-label-md text-[10px] uppercase">Companion</span>
   </a>

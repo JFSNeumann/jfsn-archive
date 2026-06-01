@@ -163,7 +163,7 @@
 <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-deep-ink focus:text-bone-white">Skip to content</a>
 
 <!-- NAV:START -->
-<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-background border-b border-outline-variant">
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-background border-b border-deep-ink">
   <div class="flex items-center gap-8">
     <a href="index.html" class="font-headline-md text-headline-md tracking-tighter text-deep-ink">JFSN</a>
     <nav class="hidden md:flex gap-6" aria-label="Primary">
@@ -182,6 +182,17 @@
 <!-- NAV:END -->
 
 <main id="main" class="pt-16">
+
+  <!-- Mobile medium filter bar -->
+  <nav class="md:hidden sticky top-16 z-40 bg-background border-b border-deep-ink overflow-x-auto" aria-label="Medium filter" style="-ms-overflow-style:none;scrollbar-width:none;">
+    <div class="flex items-center gap-6 px-margin-mobile py-3 whitespace-nowrap">
+      <a class="font-label-caps text-label-caps text-archive-gray hover:text-international-orange transition-colors" href="collage.html">Collage</a>
+      <a class="font-label-caps text-label-caps text-archive-gray hover:text-international-orange transition-colors" href="sculpture.html">Sculpture</a>
+      <a class="font-label-caps text-label-caps text-international-orange underline underline-offset-4" href="painting.html" aria-current="page">Painting</a>
+      <a class="font-label-caps text-label-caps text-archive-gray hover:text-international-orange transition-colors" href="photography.html">Photography</a>
+    </div>
+  </nav>
+
   <div class="container medium-page">
 
     <div class="medium-page__head">
@@ -279,7 +290,7 @@
 <!-- FOOTER:END -->
 
 <!-- Mobile bottom nav -->
-<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 px-4 bg-bone-white border-t border-outline-variant h-16" style="padding-bottom: env(safe-area-inset-bottom, 8px)" aria-label="Mobile navigation">
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 px-4 bg-bone-white border-t border-deep-ink h-16" style="padding-bottom: env(safe-area-inset-bottom, 8px)" aria-label="Mobile navigation">
   <a href="index.html" class="flex flex-col items-center justify-center text-archive-gray hover:text-international-orange transition-colors">
     <span class="material-symbols-outlined">inventory_2</span><span class="font-label-caps text-[10px]">Archive</span>
   </a>
