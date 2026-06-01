@@ -234,7 +234,7 @@
 <!-- NAV:END -->
 
 <!-- Dark companion section -->
-<main id="main" tabindex="-1" class="flex-grow bg-[#0B0B0B] pt-[72px] pb-[72px]">
+<main id="main" tabindex="-1" class="flex-grow bg-[#0B0B0B] pt-[72px] pb-[72px] relative">
   <div class="c-wrap">
     <p class="c-eyebrow">The Companion</p>
     <h1 class="c-title">Describe<br><em>anything.</em></h1>
@@ -282,20 +282,46 @@
       <a class="c-browse-link" href="archive.html">Browse all 1,084 works →</a>
     </div>
   </div>
+  <!-- dark-to-footer fade -->
+  <div class="absolute bottom-0 left-0 right-0 h-16 pointer-events-none" style="background: linear-gradient(to bottom, transparent, #ebe8e2);"></div>
 </main>
 
 <!-- Footer -->
-<footer class="w-full border-t border-outline-variant bg-background">
-  <div class="flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop py-lg max-w-[1440px] mx-auto gap-md">
-    <a class="font-label-lg text-label-lg text-primary font-bold tracking-tighter" href="index.html">JFSN</a>
-    <nav class="flex flex-wrap gap-md justify-center">
-      <a class="font-label-md text-label-md uppercase tracking-wider text-secondary hover:text-on-tertiary-container transition-colors" href="archive.html">Archive</a>
-      <a class="font-label-md text-label-md uppercase tracking-wider text-secondary hover:text-on-tertiary-container transition-colors" href="series-index.html">Series</a>
-      <a class="font-label-md text-label-md uppercase tracking-wider text-secondary hover:text-on-tertiary-container transition-colors" href="timeline.html">Timeline</a>
-      <a class="font-label-md text-label-md uppercase tracking-wider text-secondary hover:text-on-tertiary-container transition-colors" href="about.html">About</a>
-      <a class="font-label-md text-label-md uppercase tracking-wider text-secondary hover:text-on-tertiary-container transition-colors" href="mosaic.html">Mosaic</a>
-    </nav>
-    <span class="font-label-md text-label-md uppercase text-secondary">© 2026 JEFFREY F. S. NEUMANN.</span>
+<footer class="bg-surface-container-high py-16 px-margin-desktop border-t border-outline-variant">
+  <div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+    <div class="col-span-1">
+      <h3 class="font-headline-md text-headline-md tracking-tighter mb-6">JFSN</h3>
+      <p class="font-body-md text-archive-gray text-sm leading-relaxed">
+        The personal archive of Jeffrey F. S. Neumann — 1,084 works spanning five decades. Collage, sculpture, photography.
+      </p>
+    </div>
+    <div class="col-span-1">
+      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">EXPLORE</h4>
+      <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
+        <li><a class="hover:text-international-orange transition-colors" href="archive.html">Complete Archive</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="timeline.html">Interactive Timeline</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="series-index.html">Series Index</a></li>
+      </ul>
+    </div>
+    <div class="col-span-1">
+      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">RESOURCES</h4>
+      <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
+        <li><a class="hover:text-international-orange transition-colors" href="mosaic.html">Portrait Mosaic</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="companion.html">AI Companion</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="about.html">About</a></li>
+      </ul>
+    </div>
+    <div class="col-span-1">
+      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">CONTACT</h4>
+      <a class="font-nav-link text-nav-link text-deep-ink block mb-4 border-b border-deep-ink inline-block pb-1 hover:text-international-orange hover:border-international-orange transition-all" href="mailto:jfsneumann@gmail.com">jfsneumann@gmail.com</a>
+    </div>
+  </div>
+  <div class="mt-16 pt-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
+    <p class="font-label-caps text-[10px] text-archive-gray">© 2026 JEFFREY F. S. NEUMANN. ALL RIGHTS RESERVED.</p>
+    <div class="flex gap-8">
+      <a class="font-label-caps text-[10px] text-archive-gray hover:text-deep-ink" href="privacy.html">PRIVACY</a>
+      <a class="font-label-caps text-[10px] text-archive-gray hover:text-deep-ink" href="#">TERMS</a>
+    </div>
   </div>
 </footer>
 

@@ -1,12 +1,13 @@
 # Current State
-**Updated:** 2026-05-31 10:22
+**Updated:** 2026-05-31 22:45
 
 ## Last commit
-40b57c5 — Session 20: API + feed auto-updates
+Session 22 — Footer consistency, Stitch polish
 
 ## To do next session
 <!-- Edit this section before closing -->
-- [ ] (add what you want to do next time)
+- [ ] GoatCounter signup
+- [ ] Netlify Forms email notification
 
 ## Known issues
 - companion.html: FIXED session 18 — test live at jfsn.com/companion.html to confirm

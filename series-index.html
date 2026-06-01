@@ -145,15 +145,52 @@
 
 </main>
 
+<!-- Archival Note -->
+<section class="w-full py-32" style="background:#0b0b0b">
+  <div class="max-w-4xl mx-auto px-margin-desktop flex flex-col items-center text-center">
+    <h4 class="font-label-lg text-label-lg uppercase tracking-widest mb-md text-on-tertiary-container">Archival Note</h4>
+    <p class="font-body-lg text-body-lg text-secondary-fixed-dim mb-lg italic leading-relaxed max-w-2xl">
+      "The series format allows for the exploration of a singular concept across multiple iterations, revealing the subtle evolution of form and intent."
+    </p>
+    <div class="w-12 h-px bg-on-tertiary-container"></div>
+  </div>
+</section>
+
 <!-- Footer -->
-<footer class="w-full mt-xl border-t border-outline-variant bg-background">
-  <div class="flex flex-col md:flex-row justify-between items-center py-lg px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto gap-base">
-    <div class="font-label-lg text-label-lg text-primary uppercase tracking-tighter">JFSN</div>
-    <div class="font-label-md text-label-md uppercase text-secondary">© 2026 JEFFREY F. S. NEUMANN. ALL RIGHTS RESERVED.</div>
-    <div class="flex gap-md">
-      <a class="font-label-md text-label-md uppercase text-secondary hover:text-on-tertiary-container transition-colors" href="archive.html">Archive</a>
-      <a class="font-label-md text-label-md uppercase text-secondary hover:text-on-tertiary-container transition-colors" href="companion.html">Companion</a>
-      <a class="font-label-md text-label-md uppercase text-secondary hover:text-on-tertiary-container transition-colors" href="about.html">About</a>
+<footer class="bg-surface-container-high py-16 px-margin-desktop border-t border-outline-variant">
+  <div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+    <div class="col-span-1">
+      <h3 class="font-headline-md text-headline-md tracking-tighter mb-6">JFSN</h3>
+      <p class="font-body-md text-archive-gray text-sm leading-relaxed">
+        The personal archive of Jeffrey F. S. Neumann — 1,084 works spanning five decades. Collage, sculpture, photography.
+      </p>
+    </div>
+    <div class="col-span-1">
+      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">EXPLORE</h4>
+      <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
+        <li><a class="hover:text-international-orange transition-colors" href="archive.html">Complete Archive</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="timeline.html">Interactive Timeline</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="series-index.html">Series Index</a></li>
+      </ul>
+    </div>
+    <div class="col-span-1">
+      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">RESOURCES</h4>
+      <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
+        <li><a class="hover:text-international-orange transition-colors" href="mosaic.html">Portrait Mosaic</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="companion.html">AI Companion</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="about.html">About</a></li>
+      </ul>
+    </div>
+    <div class="col-span-1">
+      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">CONTACT</h4>
+      <a class="font-nav-link text-nav-link text-deep-ink block mb-4 border-b border-deep-ink inline-block pb-1 hover:text-international-orange hover:border-international-orange transition-all" href="mailto:jfsneumann@gmail.com">jfsneumann@gmail.com</a>
+    </div>
+  </div>
+  <div class="mt-16 pt-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
+    <p class="font-label-caps text-[10px] text-archive-gray">© 2026 JEFFREY F. S. NEUMANN. ALL RIGHTS RESERVED.</p>
+    <div class="flex gap-8">
+      <a class="font-label-caps text-[10px] text-archive-gray hover:text-deep-ink" href="privacy.html">PRIVACY</a>
+      <a class="font-label-caps text-[10px] text-archive-gray hover:text-deep-ink" href="#">TERMS</a>
     </div>
   </div>
 </footer>
@@ -248,15 +285,6 @@ fetch('catalog.json')
         </a>`;
     });
 
-    // Archival note tile (desktop only)
-    grid.innerHTML += `
-      <div class="hidden lg:flex flex-col justify-center p-lg border border-outline-variant bg-primary text-on-primary">
-        <h4 class="font-label-lg text-label-lg uppercase tracking-widest mb-md text-on-tertiary-container">Archival Note</h4>
-        <p class="font-body-md text-body-md text-secondary-fixed-dim mb-lg italic leading-relaxed">
-          "The series format allows for the exploration of a singular concept across multiple iterations, revealing the subtle evolution of form and intent."
-        </p>
-        <div class="w-12 h-px bg-on-tertiary-container"></div>
-      </div>`;
   })
   .catch(e => console.error('catalog load failed', e));
 
