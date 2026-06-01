@@ -1,5 +1,11 @@
 [
   {
+    "sha": "0a91fae",
+    "date": "2026-05-31",
+    "title": "Session 24 — Footer consistency, Companion fade, series-index polish, decade TERMS fix",
+    "body": "- 4-column footer propagated to all public pages\n- PRIVACY + TERMS links fixed site-wide\n- Companion: dark-to-footer gradient fade\n- Series-index: archival note as full-width section\n- Decade pages: TERMS added to footer strip\n- _shared/ui.css + ui.js added to repo"
+  },
+  {
     "sha": "d5f1553",
     "date": "2026-05-31",
     "title": "Session 22 — Footer consistency + Stitch polish",
