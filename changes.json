@@ -1,5 +1,23 @@
 [
   {
+    "sha": "6cc8034",
+    "date": "2026-06-01",
+    "title": "Auto — api, feed, changes.json artifacts",
+    "body": ""
+  },
+  {
+    "sha": "a841231",
+    "date": "2026-06-01",
+    "title": "Docs — update CLAUDE.md: ui.css/ui.js descriptions, wow-factor list, make_handoff.py",
+    "body": ""
+  },
+  {
+    "sha": "8c8ac87",
+    "date": "2026-06-01",
+    "title": "Session — kinetic polish across remaining pages; Allison PDF updated June 2026",
+    "body": "guernica.html: added _shared/ui.css + ui.js (grayscale hover, scroll reveal on all 232 thumbs)\nfor-artists.html: grayscale on proof-thumb images, kinetic border draw on pricing plan cards\nseries.html: inline grayscale + scroll reveal CSS, added ui.js\nwall.html: grayscale on all 1,084 wall-tile images, color on hover\njeff.html: kinetic orange border draw on studio dashboard cards\nJFSN-Archive-Handoff-Allison.pdf: date updated May→June 2026, GitHub URL fixed (no line break)\nmake_handoff.py: generator script saved to repo (was in /tmp, now permanent)\nsw.js: cache bumped to jfsn-20260601b"
+  },
+  {
     "sha": "96df454",
     "date": "2026-06-01",
     "title": "Session — Stitch kinetic polish across all pages: scroll reveals, grayscale, kinetic borders, dust motte, parallax, loading bars, ghost tile stagger, temporal rail. sw.js cache bumped.",

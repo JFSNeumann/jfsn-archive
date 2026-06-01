@@ -323,7 +323,7 @@
 
     <!-- Grid -->
     <div class="flex-grow min-w-0">
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-gutter gap-y-lg" id="works-grid"></div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-px sm:gap-x-gutter sm:gap-y-lg bg-deep-ink sm:bg-transparent" id="works-grid"></div>
 
       <p id="empty-state" class="hidden py-xl text-center font-label-lg text-label-lg text-secondary uppercase tracking-widest">
         No works match the current filters.
@@ -380,7 +380,7 @@
 </footer>
 
 <!-- Mobile bottom nav -->
-<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 px-4 bg-background border-t border-outline-variant h-16" style="padding-bottom: env(safe-area-inset-bottom, 8px)" aria-label="Mobile navigation">
+<nav id="mobile-bottom-nav" class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 px-4 bg-background border-t border-outline-variant h-16 transition-transform duration-300" style="padding-bottom: env(safe-area-inset-bottom, 8px)" aria-label="Mobile navigation">
   <a href="index.html" class="flex flex-col items-center justify-center text-secondary">
     <span class="material-symbols-outlined">home</span>
     <span class="font-label-md text-[10px] uppercase">Home</span>
@@ -429,8 +429,8 @@ function renderCard(w) {
   const med = typeLabel(w.work_type).toUpperCase();
   const title = w.title || 'Untitled';
   return `
-    <a href="artwork.html?id=${id}" class="archive-card reveal-card group block no-underline text-on-background">
-      <div class="overflow-hidden mb-md border border-outline-variant bg-surface-container-low">
+    <a href="artwork.html?id=${id}" class="archive-card reveal-card group block no-underline text-on-background bg-background sm:bg-transparent">
+      <div class="overflow-hidden sm:mb-md sm:border sm:border-outline-variant bg-surface-container-low">
         <img
           alt="${title}"
           class="w-full aspect-[3/4] object-cover grayscale-filter"
@@ -438,7 +438,7 @@ function renderCard(w) {
           loading="lazy" width="300" height="400"
         />
       </div>
-      <div class="space-y-1 parallax-meta">
+      <div class="space-y-1 parallax-meta px-3 pt-2 pb-3 sm:px-0 sm:pt-0 sm:pb-0">
         <h4 class="font-label-lg text-label-lg uppercase leading-snug">${title}</h4>
         <span class="block font-label-md text-label-md uppercase text-secondary">${w.year || '—'} | ${med}</span>
         ${w.series ? `<span class="block font-label-md text-label-md text-on-tertiary-container uppercase">${w.series}</span>` : ''}
@@ -530,6 +530,28 @@ const cardObserver = new IntersectionObserver((entries) => {
 function observeNewCards() {
   document.querySelectorAll('.reveal-card:not(.visible)').forEach(el => cardObserver.observe(el));
 }
+
+// Mobile bottom nav — hide on scroll down, show on scroll up
+(function() {
+  const nav = document.getElementById('mobile-bottom-nav');
+  if (!nav) return;
+  let lastY = 0;
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (y > lastY && y > 200) nav.style.transform = 'translateY(110%)';
+    else nav.style.transform = '';
+    lastY = y;
+  }, { passive: true });
+})();
+
+// Touch grayscale — tap to reveal color, auto-revert after 1s
+document.addEventListener('touchstart', e => {
+  const img = e.target.closest('.archive-card')?.querySelector('img');
+  if (!img) return;
+  img.style.filter = 'grayscale(0%)';
+  clearTimeout(img._greyTimer);
+  img._greyTimer = setTimeout(() => { img.style.filter = ''; }, 1000);
+}, { passive: true });
 
 // Ghost trace parallax on scroll
 window.addEventListener('scroll', () => {

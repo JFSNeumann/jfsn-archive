@@ -1,12 +1,12 @@
 # Current State
-**Updated:** 2026-06-01 09:36
+**Updated:** 2026-06-01 10:07
 
 ## Last commit
-96df454 — Session — Stitch kinetic polish across all pages: scroll reveals, grayscale, kinetic borders, dust motte, parallax, loading bars, ghost tile stagger, temporal rail. sw.js cache bumped.
+6cc8034 — Auto — api, feed, changes.json artifacts
 
 ## To do next session
 <!-- Edit this section before closing -->
-- [ ] Send Allison PDF (jfsn.com/JFSN-Archive-Handoff-Allison.pdf) when ready — email allicatherine@gmail.com
+- [ ] (add what you want to do next time)
 
 ## Known issues
 - companion.html: FIXED session 18 — test live at jfsn.com/companion.html to confirm

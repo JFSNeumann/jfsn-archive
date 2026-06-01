@@ -139,7 +139,6 @@
         .btn-transition {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        /* Kinetic border draw on hover */
         .kinetic-border {
             position: relative;
             outline: 0px solid #FF6600;
@@ -149,7 +148,6 @@
             outline: 1px solid #FF6600;
             outline-offset: -1px;
         }
-        /* Scroll reveal staggers */
         .reveal-element {
             opacity: 0;
             transform: translateY(20px);
@@ -159,7 +157,6 @@
             opacity: 1;
             transform: translateY(0);
         }
-        /* Dust motte canvas */
         #dust-motte-canvas {
             position: absolute;
             top: 0; left: 0;
@@ -169,12 +166,40 @@
             mix-blend-mode: multiply;
             opacity: 0.5;
         }
-        /* Ghost trace parallax labels */
         .parallax-label { will-change: transform; }
+
+        /* Minimalist Folio — mobile snap scroll */
+        .folio-container {
+            scroll-snap-type: y mandatory;
+            height: calc(100vh - 4rem); /* subtract top nav */
+            overflow-y: scroll;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .folio-container::-webkit-scrollbar { display: none; }
+        .folio-section {
+            scroll-snap-align: start;
+            height: calc(100vh - 4rem);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 0 20px;
+        }
+        .folio-artwork-img {
+            filter: grayscale(100%);
+            transition: filter 0.6s ease;
+        }
+        .folio-artwork-img:hover,
+        .folio-artwork-img:active {
+            filter: grayscale(0%);
+        }
         @media (prefers-reduced-motion: reduce) {
             .reveal-element { opacity: 1; transform: none; transition: none; }
             #dust-motte-canvas { display: none; }
             .parallax-label { will-change: auto; }
+            .folio-artwork-img { transition: none; }
         }
     </style>
 </head>
@@ -200,13 +225,130 @@
 </header>
 <!-- NAV:END -->
 
-<main class="pt-16">
+<!-- ═══════════════════════════════════════════════
+     MOBILE — Minimalist Folio (snap scroll)
+     Hidden on md+ breakpoint
+     ═══════════════════════════════════════════════ -->
+<div class="md:hidden pt-16">
+  <div class="folio-container" id="folio-container">
 
-  <!-- Hero Section — split layout desktop, full-bleed mobile -->
-  <section class="relative w-full overflow-hidden flex items-center bg-surface-container-lowest h-[90vh] md:h-[870px]" id="hero-section">
+    <!-- Snap 1: Hero -->
+    <section class="folio-section text-center">
+      <span class="font-label-caps text-label-caps text-international-orange tracking-[0.2em] mb-4 block">PERSONAL ARCHIVE</span>
+      <h1 class="font-display-lg text-[40px] leading-[1.1] tracking-tight text-deep-ink italic mb-6">Five Decades<br>of Making</h1>
+      <p class="font-body-md text-body-md text-archive-gray max-w-xs mx-auto">
+        1,084 works spanning 1974 to the present. Collage, sculpture, and photography.
+      </p>
+      <div class="absolute bottom-8 flex flex-col items-center gap-1 text-archive-gray">
+        <span class="material-symbols-outlined text-sm">expand_more</span>
+      </div>
+    </section>
+
+    <!-- Snap 2: art0483 -->
+    <section class="folio-section">
+      <div class="w-full flex flex-col h-full justify-center py-4">
+        <div class="flex-grow flex items-center justify-center min-h-0">
+          <a href="artwork.html?id=art0483" class="block w-full h-full max-h-[60vh]">
+            <img
+              src="artworks/full/art0483.avif"
+              alt="Untitled (CD Formation) 2 — Jeffrey F. S. Neumann, 1990"
+              class="folio-artwork-img w-full h-full object-contain border border-outline-variant"
+              loading="eager"
+            />
+          </a>
+        </div>
+        <div class="mt-4 border-b border-deep-ink pb-3 flex justify-between items-end">
+          <div>
+            <span class="font-label-caps text-[10px] text-international-orange tracking-[0.15em] block mb-1">COLLAGE</span>
+            <p class="font-headline-md text-[18px] leading-snug text-deep-ink">Untitled (CD Formation) 2</p>
+          </div>
+          <span class="font-label-caps text-label-caps text-archive-gray">1990</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Snap 3: art1009 -->
+    <section class="folio-section">
+      <div class="w-full flex flex-col h-full justify-center py-4">
+        <div class="flex-grow flex items-center justify-center min-h-0">
+          <a href="artwork.html?id=art1009" class="block w-full h-full max-h-[60vh]">
+            <img
+              src="artworks/full/art1009.avif"
+              alt="Untitled (Machine Assemblage) — Jeffrey F. S. Neumann, 2020"
+              class="folio-artwork-img w-full h-full object-contain border border-outline-variant"
+              loading="lazy"
+            />
+          </a>
+        </div>
+        <div class="mt-4 border-b border-deep-ink pb-3 flex justify-between items-end">
+          <div>
+            <span class="font-label-caps text-[10px] text-international-orange tracking-[0.15em] block mb-1">SCULPTURE</span>
+            <p class="font-headline-md text-[18px] leading-snug text-deep-ink">Untitled (Machine Assemblage)</p>
+          </div>
+          <span class="font-label-caps text-label-caps text-archive-gray">2020</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Snap 4: art1010 -->
+    <section class="folio-section">
+      <div class="w-full flex flex-col h-full justify-center py-4">
+        <div class="flex-grow flex items-center justify-center min-h-0">
+          <a href="artwork.html?id=art1010" class="block w-full h-full max-h-[60vh]">
+            <img
+              src="artworks/full/art1010.avif"
+              alt="Untitled (Cassette Torso) — Jeffrey F. S. Neumann, 2020"
+              class="folio-artwork-img w-full h-full object-contain border border-outline-variant"
+              loading="lazy"
+            />
+          </a>
+        </div>
+        <div class="mt-4 border-b border-deep-ink pb-3 flex justify-between items-end">
+          <div>
+            <span class="font-label-caps text-[10px] text-international-orange tracking-[0.15em] block mb-1">COLLAGE</span>
+            <p class="font-headline-md text-[18px] leading-snug text-deep-ink">Untitled (Cassette Torso)</p>
+          </div>
+          <span class="font-label-caps text-label-caps text-archive-gray">2020</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Snap 5: Navigation grid -->
+    <section class="folio-section">
+      <div class="grid grid-cols-2 gap-4 w-full max-w-sm">
+        <a href="archive.html" class="aspect-square flex flex-col items-center justify-center border border-deep-ink group active:bg-deep-ink transition-colors duration-200">
+          <span class="material-symbols-outlined text-international-orange group-hover:scale-110 transition-transform">inventory_2</span>
+          <span class="mt-2 font-label-caps text-label-caps uppercase group-active:text-bone-white">Archive</span>
+        </a>
+        <a href="series-index.html" class="aspect-square flex flex-col items-center justify-center border border-deep-ink group active:bg-deep-ink transition-colors duration-200">
+          <span class="material-symbols-outlined text-international-orange group-hover:scale-110 transition-transform">auto_awesome_motion</span>
+          <span class="mt-2 font-label-caps text-label-caps uppercase group-active:text-bone-white">Series</span>
+        </a>
+        <a href="timeline.html" class="aspect-square flex flex-col items-center justify-center border border-deep-ink group active:bg-deep-ink transition-colors duration-200">
+          <span class="material-symbols-outlined text-international-orange group-hover:scale-110 transition-transform">history_toggle_off</span>
+          <span class="mt-2 font-label-caps text-label-caps uppercase group-active:text-bone-white">Timeline</span>
+        </a>
+        <a href="about.html" class="aspect-square flex flex-col items-center justify-center border border-deep-ink group active:bg-deep-ink transition-colors duration-200">
+          <span class="material-symbols-outlined text-international-orange group-hover:scale-110 transition-transform">person</span>
+          <span class="mt-2 font-label-caps text-label-caps uppercase group-active:text-bone-white">About</span>
+        </a>
+      </div>
+      <p class="mt-8 font-label-caps text-[10px] text-archive-gray tracking-[0.2em]">© 2026 JEFFREY F. S. NEUMANN</p>
+    </section>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     DESKTOP — existing layout
+     Hidden on mobile
+     ═══════════════════════════════════════════════ -->
+<main class="hidden md:block pt-16">
+
+  <!-- Hero Section -->
+  <section class="relative w-full overflow-hidden flex items-center bg-surface-container-lowest h-[870px]" id="hero-section">
     <canvas id="dust-motte-canvas"></canvas>
-    <!-- Text — left half -->
-    <div class="relative z-10 px-margin-mobile md:px-margin-desktop max-w-[800px] reveal-element" data-delay="0">
+    <div class="relative z-10 px-margin-desktop max-w-[800px] reveal-element" data-delay="0">
       <span class="font-label-caps text-label-caps text-international-orange mb-4 block tracking-[0.2em]">PERSONAL ARCHIVE</span>
       <h1 class="font-display-lg text-display-lg text-deep-ink mb-6 italic leading-tight">Five Decades of Making</h1>
       <p class="font-body-lg text-body-lg text-archive-gray mb-10 max-w-[540px]">
@@ -217,21 +359,11 @@
         <a href="series-index.html" class="px-8 py-3 border border-deep-ink text-deep-ink font-label-caps text-label-caps btn-transition hover:border-international-orange hover:text-international-orange">VIEW SERIES</a>
       </div>
     </div>
-    <!-- Image — right half (desktop only) -->
-    <div class="hidden md:block absolute right-0 top-0 w-1/2 h-full reveal-element" data-delay="200">
+    <div class="absolute right-0 top-0 w-1/2 h-full reveal-element" data-delay="200">
       <img
         src="artworks/full/art0953.avif"
         alt="XXXIII Días Installation View — Jeffrey F. S. Neumann"
         class="w-full h-full object-cover grayscale opacity-80 mix-blend-multiply"
-        width="2800" height="1288" loading="eager"
-      />
-    </div>
-    <!-- Mobile: full-bleed image behind text -->
-    <div class="md:hidden absolute inset-0 z-0">
-      <img
-        src="artworks/full/art0953.avif"
-        alt="XXXIII Días Installation View — Jeffrey F. S. Neumann"
-        class="w-full h-full object-cover grayscale opacity-30"
         width="2800" height="1288" loading="eager"
       />
     </div>
@@ -250,11 +382,11 @@
       </a>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter" id="featured-grid">
-      <!-- populated by JS from catalog-home.json — cards get kinetic-border class -->
+      <!-- populated by JS -->
     </div>
   </section>
 
-  <!-- Ask the Archive Section -->
+  <!-- Companion Section -->
   <section class="bg-deep-ink py-24 px-margin-desktop overflow-hidden relative">
     <div class="absolute top-0 left-0 w-full h-1 bg-international-orange"></div>
     <div class="max-w-4xl mx-auto relative z-10">
@@ -290,22 +422,10 @@
     </div>
   </section>
 
-  <!-- Artist Statement -->
-  <section class="py-24 px-margin-desktop max-w-4xl mx-auto text-center">
-    <span class="material-symbols-outlined text-international-orange text-5xl mb-8">format_quote</span>
-    <p class="font-headline-md text-headline-md italic leading-relaxed">
-      "Art is the record of the momentum we lose as we attempt to capture the absolute. My archive is not a collection of static works, but a measurement of that friction."
-    </p>
-    <div class="mt-10">
-      <p class="font-label-caps text-label-caps text-deep-ink">JEFFREY F. S. NEUMANN</p>
-      <p class="font-label-caps text-[10px] text-archive-gray tracking-[0.3em]">ARTIST STATEMENT, 2026</p>
-    </div>
-  </section>
-
 </main>
 
-<!-- Footer -->
-<footer class="bg-surface-container-high py-16 px-margin-desktop border-t border-outline-variant">
+<!-- Footer (desktop only) -->
+<footer class="hidden md:block bg-surface-container-high py-16 px-margin-desktop border-t border-outline-variant">
   <div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
     <div class="col-span-1">
       <h3 class="font-headline-md text-headline-md tracking-tighter mb-6">JFSN</h3>
@@ -339,7 +459,6 @@
     <p class="font-label-caps text-[10px] text-archive-gray">© 2026 JEFFREY F. S. NEUMANN. ALL RIGHTS RESERVED.</p>
     <div class="flex gap-8">
       <a class="font-label-caps text-[10px] text-archive-gray hover:text-deep-ink" href="privacy.html">PRIVACY</a>
-      <a class="font-label-caps text-[10px] text-archive-gray hover:text-deep-ink" href="#">TERMS</a>
     </div>
   </div>
 </footer>
@@ -365,18 +484,21 @@
 </nav>
 
 <script>
-  // Populate featured grid from catalog-home.json
+  // Desktop: populate featured grid with art0483, art1009, art1010
   (async () => {
     const grid = document.getElementById('featured-grid');
+    if (!grid) return;
+    const FEATURED_IDS = ['art0483.avif', 'art1009.avif', 'art1010.avif'];
     try {
       const res = await fetch('catalog-home.json');
       const works = await res.json();
-      const featured = works.filter(w => w.featured).slice(0, 3);
+      const featured = FEATURED_IDS.map(id => works.find(w => w.file === id)).filter(Boolean);
       const cols = ['md:col-span-4', 'md:col-span-4 md:mt-12', 'md:col-span-4'];
       featured.forEach((w, i) => {
         const medium = (w.work_type || '').toUpperCase().replace(/_/g, ' ');
+        const id = w.file.replace('.avif', '');
         const card = document.createElement('a');
-        card.href = `artwork.html?id=${w.file.replace('.avif','')}`;
+        card.href = `artwork.html?id=${id}`;
         card.className = `${cols[i]} archive-card kinetic-border group cursor-pointer no-underline reveal-element`;
         card.dataset.delay = String(i * 100);
         card.innerHTML = `
@@ -404,21 +526,23 @@
   // Companion input — forward to companion.html
   const input = document.getElementById('companion-input');
   const submit = document.getElementById('companion-submit');
-  function goToCompanion() {
-    const q = input.value.trim();
-    if (q) window.location.href = `companion.html?q=${encodeURIComponent(q)}`;
-    else window.location.href = 'companion.html';
-  }
-  submit.addEventListener('click', goToCompanion);
-  input.addEventListener('keydown', e => { if (e.key === 'Enter') goToCompanion(); });
-  document.querySelectorAll('.suggestion-chip').forEach(btn => {
-    btn.addEventListener('click', () => {
-      input.value = btn.textContent.replace(/"/g, '').trim();
-      goToCompanion();
+  if (input && submit) {
+    function goToCompanion() {
+      const q = input.value.trim();
+      if (q) window.location.href = `companion.html?q=${encodeURIComponent(q)}`;
+      else window.location.href = 'companion.html';
+    }
+    submit.addEventListener('click', goToCompanion);
+    input.addEventListener('keydown', e => { if (e.key === 'Enter') goToCompanion(); });
+    document.querySelectorAll('.suggestion-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        input.value = btn.textContent.replace(/"/g, '').trim();
+        goToCompanion();
+      });
     });
-  });
+  }
 
-  // Scroll reveal staggers
+  // Scroll reveal
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -442,7 +566,7 @@
     });
   }, { passive: true });
 
-  // Dust motte kinetic effect
+  // Dust motte (desktop hero only)
   (function initDustMotte() {
     const canvas = document.getElementById('dust-motte-canvas');
     const hero = document.getElementById('hero-section');
@@ -508,7 +632,6 @@
 <!-- GoatCounter — privacy-first analytics -->
 <script data-goatcounter="https://jfsn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
-
 <script src="_shared/nav-active.js" defer></script>
 </body>
 </html>
