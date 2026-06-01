@@ -1,5 +1,17 @@
 [
   {
+    "sha": "dd8c87c",
+    "date": "2026-05-31",
+    "title": "Session 25 — Ghost Grid + Chromatic River",
+    "body": "Ghost Grid (lost.html):\n- 750 empty dashed-border tiles in masonry columns after the essay\n- Varied portrait/square aspect ratios, deterministic sequence\n- Label: \"APPROXIMATELY 750 WORKS · NO RECORD EXISTS\"\n\nChromatic River (chromatic.html, new page):\n- 1,084 vertical color slices on an HiDPI canvas, sorted chronologically\n- Decade labels + subtle dividers at each decade boundary\n- Hover: crosshair cursor + floating tooltip (year + title)\n- Click: navigates directly to artwork.html?id=artNNNN\n- chromatic.json: source data (year/title/color/id per work)\n- \"Chromatic River\" added to RESOURCES footer on all 19 Stitch pages"
+  },
+  {
+    "sha": "af78630",
+    "date": "2026-05-31",
+    "title": "Session 25 — Decade page redesign, 4 wow-factor interactions",
+    "body": "- Decade pages (1970s–2020s): Material Design token system, grayscale-to-color\n  hover, decade prev/next nav, real artwork data restored from git history\n- _shared/ui.css: orange border draw on hover (clip-path), vertical page label,\n  decade heading zoom-out, reduced-motion overrides\n- _shared/ui.js: keyboard ← / → decade navigation, vertical label insertion,\n  hero scroll zoom listener\n- collage/sculpture/photography/painting: ui.css linked (border draw active)\n- stamp-nav.sh: decade pages excluded (use different nav token system)\n- Update auto-generated artifacts: api/, changes.json, feed.xml, sw.js"
+  },
+  {
     "sha": "0a91fae",
     "date": "2026-05-31",
     "title": "Session 24 — Footer consistency, Companion fade, series-index polish, decade TERMS fix",

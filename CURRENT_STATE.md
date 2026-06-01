@@ -2,11 +2,12 @@
 **Updated:** 2026-05-31 20:53
 
 ## Last commit
-0a91fae — Session 24 — Footer consistency, Companion fade, series-index polish, decade TERMS fix
+dd8c87c — Session 25 — Ghost Grid + Chromatic River + 4 wow-factor interactions
 
 ## To do next session
 <!-- Edit this section before closing -->
-- [ ] (add what you want to do next time)
+- [ ] GoatCounter signup
+- [ ] Netlify Forms email notification
 
 ## Known issues
 - companion.html: FIXED session 18 — test live at jfsn.com/companion.html to confirm
