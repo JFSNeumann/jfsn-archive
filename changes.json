@@ -1,5 +1,11 @@
 [
   {
+    "sha": "e6b685f",
+    "date": "2026-06-01",
+    "title": "Update CLAUDE.md + CURRENT_STATE, bump SW cache, auto-artifacts",
+    "body": "- CLAUDE.md: complete rewrite — current Stitch/Tailwind design system,\n  two-token-system explanation, full page inventory, all wow-factor\n  interactions, nav system notes, deployment workflow\n- CURRENT_STATE.md: updated\n- sw.js: CACHE_V bumped to force old dark-design cache bust on all clients\n- api/, changes.json, feed.xml, sitemap.xml, sw.js: auto-generated"
+  },
+  {
     "sha": "7c07767",
     "date": "2026-06-01",
     "title": "Bump SW CACHE_V, remove stale site.css from precache",

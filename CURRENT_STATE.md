@@ -1,13 +1,12 @@
 # Current State
-**Updated:** 2026-05-31 21:09
+**Updated:** 2026-06-01 08:30
 
 ## Last commit
-SW cache bust + CLAUDE.md rewrite (current design system)
+e6b685f — Update CLAUDE.md + CURRENT_STATE, bump SW cache, auto-artifacts
 
 ## To do next session
 <!-- Edit this section before closing -->
-- [ ] GoatCounter signup
-- [ ] Netlify Forms email notification
+- [ ] (add what you want to do next time)
 
 ## Known issues
 - companion.html: FIXED session 18 — test live at jfsn.com/companion.html to confirm
