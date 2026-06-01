@@ -3,435 +3,376 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0b0b0b">
+  <meta name="theme-color" content="#fcf9f3">
   <meta name="robots" content="noindex, nofollow">
   <title>Studio — JFSN</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap">
-  <link rel="stylesheet" href="site.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: { extend: {
+      colors: {
+        "background":             "#fcf9f3",
+        "deep-ink":               "#0B0B0B",
+        "archive-gray":           "#575757",
+        "international-orange":   "#FF6600",
+        "outline-variant":        "#c4c7c7",
+        "surface-container-high": "#ebe8e2",
+        "bone-white":             "#F3F0EA",
+      },
+      spacing: { "margin-desktop":"64px","margin-mobile":"20px" },
+      fontFamily: {
+        "display":  ["Playfair Display"],
+        "headline": ["Playfair Display"],
+        "label":    ["Inter"],
+        "body":     ["Inter"],
+        "mono":     ["JetBrains Mono"],
+      },
+    }}
+  }
+  </script>
   <style>
-    :root { --accent: var(--accent); }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
 
-    body {
-      background: #0b0b0b;
-      color: #f3f0ea;
-      font-family: Inter, -apple-system, sans-serif;
-      min-height: 100vh;
-      padding: 0;
-    }
-
-    /* ── Header ── */
-    .studio-header {
-      border-bottom: 1px solid rgba(243,240,234,0.08);
-      padding: 2.5rem clamp(1.5rem, 5vw, 4rem) 2rem;
-    }
-    .studio-header-inner {
-      max-width: 1100px;
-      margin: 0 auto;
+    /* Cards */
+    .tool-card {
       display: flex;
-      align-items: flex-end;
-      gap: 1.5rem;
-    }
-    .studio-wordmark {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(2.2rem, 5vw, 3.2rem);
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      line-height: 1;
-      color: #f3f0ea;
-    }
-    .studio-wordmark span {
-      color: var(--accent);
-    }
-    .studio-subtitle {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-style: italic;
-      font-size: 1rem;
-      color: rgba(243,240,234,0.45);
-      padding-bottom: 0.15rem;
-    }
-    .studio-dot {
-      display: inline-block;
-      width: 7px;
-      height: 7px;
-      background: var(--accent);
-      border-radius: 50%;
-      margin-left: 5px;
+      flex-direction: column;
+      gap: 0.3rem;
+      padding: 1.25rem 1.25rem 1.1rem;
+      border: 1px solid #0B0B0B;
+      text-decoration: none;
+      color: #0B0B0B;
+      background: #fcf9f3;
+      transition: background 0.15s, color 0.12s;
       position: relative;
-      top: -2px;
+    }
+    .tool-card:hover {
+      background: #0B0B0B;
+      color: #F3F0EA;
+    }
+    .tool-card:hover .card-desc { color: rgba(243,240,234,0.55); }
+    .tool-card:hover .card-tag  { color: #FF6600; }
+    .tool-card .card-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.05rem;
+      font-weight: 400;
+      line-height: 1.2;
+    }
+    .tool-card .card-desc {
+      font-size: 0.78rem;
+      color: #575757;
+      line-height: 1.45;
+    }
+    .tool-card .card-tag {
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #FF6600;
+      margin-top: 0.35rem;
     }
 
-    /* ── Main grid ── */
-    .studio-main {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 2.5rem clamp(1.5rem, 5vw, 4rem) 4rem;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 1.25rem;
-    }
-
-    @media (max-width: 800px) {
-      .studio-main { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 500px) {
-      .studio-main { grid-template-columns: 1fr; }
-    }
-
-    /* ── Section label ── */
-    .section-label {
+    /* Section divider */
+    .sec-label {
       grid-column: 1 / -1;
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      margin-top: 1.5rem;
-      margin-bottom: 0.25rem;
+      padding-top: 1.5rem;
+      margin-bottom: 0.1rem;
     }
-    .section-label:first-child { margin-top: 0; }
-    .section-label span {
-      font-size: 0.65rem;
+    .sec-label:first-child { padding-top: 0; }
+    .sec-label span {
+      font-size: 0.6rem;
       font-weight: 600;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: rgba(243,240,234,0.35);
+      color: #575757;
+      white-space: nowrap;
     }
-    .section-label::after {
+    .sec-label::after {
       content: '';
       flex: 1;
       height: 1px;
-      background: rgba(243,240,234,0.08);
+      background: rgba(11,11,11,0.15);
     }
 
-    /* ── Cards ── */
-    .card::before, .card::after {
-      content: '';
-      position: absolute;
-      width: 0; height: 0;
-      box-sizing: border-box;
-      pointer-events: none;
-      z-index: 1;
-    }
-    .card::before { top: 0; left: 0; }
-    .card::after  { bottom: 0; right: 0; }
-    .card:hover::before {
-      width: 100%; height: 100%;
-      border-top: 1px solid #FF6600; border-right: 1px solid #FF6600;
-      transition: width 0.15s ease-out, height 0.15s ease-out 0.15s;
-    }
-    .card:hover::after {
-      width: 100%; height: 100%;
-      border-bottom: 1px solid #FF6600; border-left: 1px solid #FF6600;
-      transition: width 0.15s ease-out, height 0.15s ease-out 0.15s;
-    }
-    .card {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-      padding: 1.25rem 1.35rem 1.2rem;
-      border: 1px solid rgba(243,240,234,0.08);
-      border-radius: 6px;
-      position: relative;
-      text-decoration: none;
-      color: #f3f0ea;
-      background: rgba(243,240,234,0.025);
-      transition: border-color 0.15s, background 0.15s, transform 0.15s;
-      cursor: pointer;
-    }
-    .card:hover {
-      border-color: var(--accent);
-      background: rgba(255,102,0,0.06);
-      transform: translateY(-1px);
-    }
-    .card.wide {
-      grid-column: span 2;
-    }
-    .card-icon {
-      font-size: 1.1rem;
-      margin-bottom: 0.2rem;
-      opacity: 0.7;
-    }
-    .card-title {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.15rem;
-      font-weight: 600;
-      letter-spacing: 0.01em;
-      color: #f3f0ea;
-    }
-    .card-desc {
-      font-size: 0.78rem;
-      color: rgba(243,240,234,0.45);
-      line-height: 1.5;
-    }
-    .card-tag {
-      display: inline-block;
-      margin-top: 0.4rem;
-      font-size: 0.62rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent);
-      opacity: 0.8;
-    }
-
-    /* ── Credentials block ── */
-    .creds-card {
-      grid-column: 1 / -1;
-      border: 1px solid rgba(243,240,234,0.08);
-      border-radius: 6px;
-      overflow: hidden;
-    }
+    /* Credentials table */
     .cred-row {
       display: grid;
-      grid-template-columns: 200px 1fr;
-      border-bottom: 1px solid rgba(243,240,234,0.06);
-      font-size: 0.82rem;
+      grid-template-columns: 180px 1fr;
+      border-bottom: 1px solid rgba(11,11,11,0.1);
     }
     .cred-row:last-child { border-bottom: none; }
     .cred-key {
-      padding: 0.7rem 1rem;
-      color: rgba(243,240,234,0.4);
-      background: rgba(243,240,234,0.02);
-      border-right: 1px solid rgba(243,240,234,0.06);
+      padding: 0.65rem 1rem;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #575757;
+      background: rgba(11,11,11,0.03);
+      border-right: 1px solid rgba(11,11,11,0.1);
     }
     .cred-val {
-      padding: 0.7rem 1rem;
-      font-family: 'Courier New', monospace;
-      font-size: 0.8rem;
-      color: #f3f0ea;
+      padding: 0.65rem 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: #0B0B0B;
       word-break: break-all;
+      line-height: 1.5;
     }
-    .cred-val a {
-      color: var(--accent);
-      text-decoration: none;
-    }
+    .cred-val a { color: #FF6600; text-decoration: none; }
     .cred-val a:hover { text-decoration: underline; }
 
-    /* ── Footer ── */
-    .studio-footer {
-      border-top: 1px solid rgba(243,240,234,0.08);
-      padding: 1.25rem clamp(1.5rem, 5vw, 4rem);
-      font-size: 0.72rem;
-      color: rgba(243,240,234,0.2);
-      text-align: center;
-      font-style: italic;
-      font-family: 'Cormorant Garamond', Georgia, serif;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { transition: none !important; animation: none !important; }
-    }
+    /* Wide card */
+    .col-span-full { grid-column: 1 / -1; }
+    @media (min-width: 768px) { .md-col-span-2 { grid-column: span 2; } }
   </style>
 </head>
-<body>
-<a href="#main" class="skip">Skip to content</a>
-  <header class="studio-header">
-    <div class="studio-header-inner">
-      <div class="studio-wordmark">JFSN<span>.</span></div>
-      <div class="studio-subtitle">Studio &amp; Tools</div>
+<body class="bg-background text-deep-ink font-body">
+
+<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-deep-ink focus:text-bone-white">Skip to content</a>
+
+<!-- Header -->
+<header class="border-b border-deep-ink bg-background px-margin-desktop py-4 flex justify-between items-center">
+  <div>
+    <span class="font-display text-2xl tracking-tight text-deep-ink">JFSN</span>
+    <span class="ml-3 font-label text-[11px] font-semibold uppercase tracking-widest text-archive-gray">Studio &amp; Tools</span>
+  </div>
+  <div class="text-right">
+    <span class="font-label text-[10px] font-semibold uppercase tracking-widest text-archive-gray block">System time</span>
+    <span class="font-mono text-[12px] text-international-orange" id="system-clock">--:--:-- UTC</span>
+  </div>
+</header>
+
+<!-- Status bar -->
+<div class="border-b border-deep-ink bg-background px-margin-desktop py-3 flex justify-between items-center">
+  <div class="flex items-center gap-2">
+    <span class="w-2 h-2 rounded-full bg-international-orange" id="status-dot"></span>
+    <span class="font-label text-[10px] font-semibold uppercase tracking-widest text-archive-gray">Private — not linked from public site — noindex</span>
+  </div>
+  <span class="font-label text-[10px] font-semibold uppercase tracking-widest text-archive-gray">jeff.html</span>
+</div>
+
+<!-- Main -->
+<main id="main" class="px-margin-desktop py-8 max-w-[1200px]">
+
+  <!-- ── Public Site ── -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-[1px] bg-deep-ink border border-deep-ink mb-6">
+
+    <div class="sec-label col-span-full bg-background px-4 pt-4 pb-1">
+      <span>Public Site</span>
     </div>
-  </header>
 
-  <main id="main" class="studio-main">
-
-    <!-- ── Public Site ── -->
-    <div class="section-label"><span>Public Site</span></div>
-
-    <a class="card" href="index.html" target="_blank">
-      <div class="card-icon">🏠</div>
+    <a class="tool-card" href="index.html" target="_blank">
       <div class="card-title">Home</div>
       <div class="card-desc">The front door — featured works, editorial grid</div>
     </a>
-    <a class="card" href="archive.html" target="_blank">
-      <div class="card-icon">🗂</div>
+    <a class="tool-card" href="archive.html" target="_blank">
       <div class="card-title">Archive</div>
       <div class="card-desc">All 1,084 works — filter, search, sort, explore</div>
     </a>
-    <a class="card" href="about.html" target="_blank">
-      <div class="card-icon">👤</div>
+    <a class="tool-card" href="about.html" target="_blank">
       <div class="card-title">About</div>
       <div class="card-desc">The person behind 50 years of making</div>
     </a>
-    <a class="card" href="timeline.html" target="_blank">
-      <div class="card-icon">📅</div>
+    <a class="tool-card" href="timeline.html" target="_blank">
       <div class="card-title">Timeline</div>
       <div class="card-desc">Fifty years in one scroll — scrub by decade</div>
     </a>
-    <a class="card" href="constellation.html" target="_blank">
-      <div class="card-icon">✦</div>
+    <a class="tool-card" href="constellation.html" target="_blank">
       <div class="card-title">Constellation</div>
       <div class="card-desc">All works mapped by theme — force-directed, zoomable</div>
     </a>
-    <a class="card" href="series-index.html" target="_blank">
-      <div class="card-icon">📚</div>
+    <a class="tool-card" href="series-index.html" target="_blank">
       <div class="card-title">Series Index</div>
       <div class="card-desc">Ten bodies of work, each with its own logic</div>
     </a>
-    <a class="card" href="mosaic.html" target="_blank">
-      <div class="card-icon">🪟</div>
+    <a class="tool-card" href="mosaic.html" target="_blank">
       <div class="card-title">Mosaic</div>
       <div class="card-desc">All 1,084 works tiled into a portrait — zoom, pan, click</div>
     </a>
-    <a class="card" href="wall.html" target="_blank">
-      <div class="card-icon">▦</div>
+    <a class="tool-card" href="wall.html" target="_blank">
       <div class="card-title">The Wall</div>
-      <div class="card-desc">All 1,084 at once — every piece, dense grid, click to open</div>
+      <div class="card-desc">All 1,084 at once — dense grid, click to open</div>
     </a>
 
-    <!-- ── Medium Pages ── -->
-    <div class="section-label"><span>By Medium</span></div>
+    <!-- By Medium -->
+    <div class="sec-label col-span-full bg-background px-4 pt-4 pb-1">
+      <span>By Medium</span>
+    </div>
 
-    <a class="card" href="collage.html" target="_blank">
-      <div class="card-icon">✂️</div>
+    <a class="tool-card" href="collage.html" target="_blank">
       <div class="card-title">Collage</div>
       <div class="card-desc">638 works — the primary practice, five decades</div>
     </a>
-    <a class="card" href="photography.html" target="_blank">
-      <div class="card-icon">📷</div>
+    <a class="tool-card" href="photography.html" target="_blank">
       <div class="card-title">Photography</div>
       <div class="card-desc">328 works — studio, street, documentary</div>
     </a>
-    <a class="card" href="sculpture.html" target="_blank">
-      <div class="card-icon">🗿</div>
+    <a class="tool-card" href="sculpture.html" target="_blank">
       <div class="card-title">Sculpture</div>
       <div class="card-desc">76 works — three-dimensional assemblage</div>
     </a>
-    <a class="card" href="painting.html" target="_blank">
-      <div class="card-icon">🖼</div>
+    <a class="tool-card" href="painting.html" target="_blank">
       <div class="card-title">Painting</div>
       <div class="card-desc">42 works</div>
     </a>
-    <a class="card" href="guernica.html" target="_blank">
-      <div class="card-icon">✈️</div>
+    <a class="tool-card" href="guernica.html" target="_blank">
       <div class="card-title">Guernica Series</div>
       <div class="card-desc">232 works in dialogue with Picasso's Guernica</div>
     </a>
+    <a class="tool-card" href="lost.html" target="_blank">
+      <div class="card-title">Lost Works</div>
+      <div class="card-desc">500–1,000 works gone. Why this archive exists.</div>
+    </a>
 
-    <!-- ── By Decade ── -->
-    <div class="section-label"><span>By Decade</span></div>
+    <!-- By Decade -->
+    <div class="sec-label col-span-full bg-background px-4 pt-4 pb-1">
+      <span>By Decade</span>
+    </div>
 
-    <a class="card" href="1970s.html" target="_blank">
+    <a class="tool-card" href="1970s.html" target="_blank">
       <div class="card-title">The 1970s</div>
       <div class="card-desc">58 works — the first pieces, Cleveland Institute of Art</div>
     </a>
-    <a class="card" href="1980s.html" target="_blank">
+    <a class="tool-card" href="1980s.html" target="_blank">
       <div class="card-title">The 1980s</div>
       <div class="card-desc">11 works documented</div>
     </a>
-    <a class="card" href="1990s.html" target="_blank">
+    <a class="tool-card" href="1990s.html" target="_blank">
       <div class="card-title">The 1990s</div>
       <div class="card-desc">193 works — Guernica series begins</div>
     </a>
-    <a class="card" href="2000s.html" target="_blank">
+    <a class="tool-card" href="2000s.html" target="_blank">
       <div class="card-title">The 2000s</div>
       <div class="card-desc">274 works — practice expands</div>
     </a>
-    <a class="card" href="2010s.html" target="_blank">
+    <a class="tool-card" href="2010s.html" target="_blank">
       <div class="card-title">The 2010s</div>
       <div class="card-desc">307 works — largest decade in the archive</div>
     </a>
-    <a class="card" href="2020s.html" target="_blank">
+    <a class="tool-card" href="2020s.html" target="_blank">
       <div class="card-title">The 2020s</div>
       <div class="card-desc">241 works — archive project + ongoing making</div>
     </a>
 
-    <!-- ── Studio Tools ── -->
-    <div class="section-label"><span>Studio Tools</span></div>
+  </div>
 
-    <a class="card" href="curate.html" target="_blank">
-      <div class="card-icon">✏️</div>
+  <!-- ── Studio Tools ── -->
+  <div class="mb-2">
+    <span class="font-label text-[10px] font-semibold uppercase tracking-widest text-archive-gray">Studio Tools</span>
+  </div>
+  <div class="grid grid-cols-2 md:grid-cols-3 gap-[1px] bg-deep-ink border border-deep-ink mb-6">
+    <a class="tool-card" href="curate.html" target="_blank">
       <div class="card-title">Curate</div>
       <div class="card-desc">Where curation happens — titles, themes, dates</div>
       <div class="card-tag">Local only</div>
     </a>
-    <a class="card" href="dedupe.html" target="_blank">
-      <div class="card-icon">🔍</div>
+    <a class="tool-card" href="dedupe.html" target="_blank">
       <div class="card-title">Dedupe</div>
       <div class="card-desc">Catches titles used more than once</div>
       <div class="card-tag">Local only</div>
     </a>
-    <a class="card" href="qa.html" target="_blank">
-      <div class="card-icon">✅</div>
+    <a class="tool-card" href="qa.html" target="_blank">
       <div class="card-title">QA</div>
       <div class="card-desc">Run before deploying — catches schema errors</div>
       <div class="card-tag">Local only</div>
     </a>
-    <a class="card" href="changes.html" target="_blank">
-      <div class="card-icon">📝</div>
+    <a class="tool-card" href="changes.html" target="_blank">
       <div class="card-title">Changes</div>
       <div class="card-desc">A living record of every commit</div>
     </a>
-    <a class="card" href="companion.html" target="_blank">
-      <div class="card-icon">🤖</div>
+    <a class="tool-card" href="companion.html" target="_blank">
       <div class="card-title">Companion</div>
       <div class="card-desc">Ask anything — get a real work back</div>
       <div class="card-tag">Local only</div>
     </a>
-    <a class="card" href="api.html" target="_blank">
-      <div class="card-icon">⚙️</div>
+    <a class="tool-card" href="api.html" target="_blank">
       <div class="card-title">API Docs</div>
       <div class="card-desc">All 1,084 works as open, structured data</div>
     </a>
+  </div>
 
-    <!-- ── Other Pages ── -->
-    <div class="section-label"><span>Other Pages</span></div>
-
-    <a class="card" href="lost.html" target="_blank">
-      <div class="card-icon">🌊</div>
-      <div class="card-title">Lost Works</div>
-      <div class="card-desc">500–1,000 works gone. Why this archive exists.</div>
-    </a>
-    <a class="card" href="for-artists.html" target="_blank">
-      <div class="card-icon">🎨</div>
+  <!-- ── Other Pages ── -->
+  <div class="mb-2">
+    <span class="font-label text-[10px] font-semibold uppercase tracking-widest text-archive-gray">Other Pages</span>
+  </div>
+  <div class="grid grid-cols-2 md:grid-cols-3 gap-[1px] bg-deep-ink border border-deep-ink mb-6">
+    <a class="tool-card" href="for-artists.html" target="_blank">
       <div class="card-title">For Artists</div>
       <div class="card-desc">Build your own — the service and the open-source fork</div>
     </a>
-    <a class="card" href="404.html" target="_blank">
-      <div class="card-icon">🚫</div>
+    <a class="tool-card" href="chromatic.html" target="_blank">
+      <div class="card-title">Chromatic</div>
+      <div class="card-desc">Color river — 1,084 works as dominant hue slices</div>
+    </a>
+    <a class="tool-card" href="404.html" target="_blank">
       <div class="card-title">404</div>
       <div class="card-desc">Dead ends — random works + a way back</div>
     </a>
+  </div>
 
-    <!-- ── Key Credentials ── -->
-    <div class="section-label"><span>Key Credentials</span></div>
-
-    <div class="creds-card">
-      <div class="cred-row">
-        <div class="cred-key">Live site</div>
-        <div class="cred-val"><a href="https://jfsn.com" target="_blank">jfsn.com</a></div>
-      </div>
-      <div class="cred-row">
-        <div class="cred-key">Hosting</div>
-        <div class="cred-val">HostGator — 1-866-96-GATOR</div>
-      </div>
-      <div class="cred-row">
-        <div class="cred-key">FTP username</div>
-        <div class="cred-val">jeffery@jfsn.com</div>
-      </div>
-      <div class="cred-row">
-        <div class="cred-key">FTP password</div>
-        <div class="cred-val">1q2w3e4r!!</div>
-      </div>
-      <div class="cred-row">
-        <div class="cred-key">GitHub</div>
-        <div class="cred-val"><a href="https://github.com/JFSNeumann/jfsn-archive" target="_blank">github.com/JFSNeumann/jfsn-archive</a></div>
-      </div>
-      <div class="cred-row">
-        <div class="cred-key">Passwords</div>
-        <div class="cred-val"><a href="https://vault.bitwarden.com" target="_blank">vault.bitwarden.com</a></div>
-      </div>
-      <div class="cred-row">
-        <div class="cred-key">Allison handoff PDF</div>
-        <div class="cred-val">/Users/jeffreyneumann/Documents/JFSN/JFSN-Archive-Handoff-Allison.pdf</div>
-      </div>
+  <!-- ── Key Credentials ── -->
+  <div class="mb-2">
+    <span class="font-label text-[10px] font-semibold uppercase tracking-widest text-archive-gray">Key Credentials</span>
+  </div>
+  <div class="border border-deep-ink mb-8">
+    <div class="cred-row">
+      <div class="cred-key">Live site</div>
+      <div class="cred-val"><a href="https://jfsn.com" target="_blank">jfsn.com</a></div>
     </div>
+    <div class="cred-row">
+      <div class="cred-key">Hosting</div>
+      <div class="cred-val">HostGator — 1-866-96-GATOR</div>
+    </div>
+    <div class="cred-row">
+      <div class="cred-key">FTP username</div>
+      <div class="cred-val">jeffery@jfsn.com</div>
+    </div>
+    <div class="cred-row">
+      <div class="cred-key">FTP password</div>
+      <div class="cred-val">1q2w3e4r!!</div>
+    </div>
+    <div class="cred-row">
+      <div class="cred-key">GitHub</div>
+      <div class="cred-val"><a href="https://github.com/JFSNeumann/jfsn-archive" target="_blank">github.com/JFSNeumann/jfsn-archive</a></div>
+    </div>
+    <div class="cred-row">
+      <div class="cred-key">Passwords</div>
+      <div class="cred-val"><a href="https://vault.bitwarden.com" target="_blank">vault.bitwarden.com</a></div>
+    </div>
+    <div class="cred-row">
+      <div class="cred-key">Allison handoff PDF</div>
+      <div class="cred-val">/Users/jeffreyneumann/Documents/JFSN/JFSN-Archive-Handoff-Allison.pdf</div>
+    </div>
+  </div>
 
-  </main>
+</main>
 
-  <footer class="studio-footer">
-    jeff.html — private, not linked from the public site — jfsn.com
-  </footer>
+<footer class="border-t border-deep-ink px-margin-desktop py-4">
+  <span class="font-label text-[10px] font-semibold uppercase tracking-widest text-archive-gray">jeff.html — private, not linked from the public site — jfsn.com</span>
+</footer>
 
+<script>
+function updateClock() {
+  const now = new Date();
+  document.getElementById('system-clock').textContent =
+    now.toISOString().split('T')[1].split('.')[0] + ' UTC';
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+const dot = document.getElementById('status-dot');
+setInterval(() => { dot.style.opacity = Math.random() > 0.95 ? '0.3' : '1'; }, 200);
+</script>
 </body>
 </html>

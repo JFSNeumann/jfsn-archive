@@ -32,9 +32,9 @@
       margin-bottom: 0;
     }
     .wall-head__title {
-      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-family: 'Playfair Display', Georgia, serif;
       font-size: clamp(2.5rem, 5.5vw, 4.5rem);
-      font-weight: 300;
+      font-weight: 400;
       letter-spacing: -0.01em;
       line-height: 1;
       margin: 0;
@@ -49,7 +49,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(56px, 1fr));
       gap: 1px;
-      background: rgba(243,240,234,0.06);
+      background: #0B0B0B;
       padding-bottom: clamp(4rem, 8vw, 8rem);
     }
     .wall-tile {
@@ -85,7 +85,7 @@
 <body class="bg-background text-deep-ink overflow-x-hidden">
 <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-deep-ink focus:text-bone-white">Skip to content</a>
 <!-- NAV:START -->
-<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-background border-b border-outline-variant">
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-background border-b border-deep-ink">
   <div class="flex items-center gap-8">
     <a href="index.html" class="font-headline-md text-headline-md tracking-tighter text-deep-ink">JFSN</a>
     <nav class="hidden md:flex gap-6" aria-label="Primary">
@@ -1235,7 +1235,7 @@
 <!-- FOOTER:END -->
 
 <!-- Mobile bottom nav -->
-<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 px-4 bg-bone-white border-t border-outline-variant h-16" style="padding-bottom: env(safe-area-inset-bottom, 8px)" aria-label="Mobile navigation">
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 px-4 bg-bone-white border-t border-deep-ink h-16" style="padding-bottom: env(safe-area-inset-bottom, 8px)" aria-label="Mobile navigation">
   <a href="index.html" class="flex flex-col items-center justify-center text-archive-gray hover:text-international-orange transition-colors">
     <span class="material-symbols-outlined">inventory_2</span>
     <span class="font-label-caps text-[10px]">Archive</span>

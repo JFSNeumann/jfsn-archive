@@ -21,12 +21,11 @@ Applied Stitch redesign exports to all remaining pages — token system, border,
 - guernica.html ✅ — bg-bone-white, border-deep-ink
 - for-artists.html ✅ — bg-bone-white, border-deep-ink
 
+## Stitch redesign — COMPLETE
+All 22 public pages on light system. ✅
+
 ## To do next session
-- [ ] constellation.html
-- [ ] wall.html
-- [ ] changes.html
-- [ ] qa.html
-- [ ] jeff.html
+- [ ] Run end-session.sh then deploy.sh
 
 ## Known issues
 - companion.html: test live at jfsn.com/companion.html to confirm AI still works

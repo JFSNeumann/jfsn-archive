@@ -1,5 +1,29 @@
 [
   {
+    "sha": "1bac2ac",
+    "date": "2026-06-01",
+    "title": "Stitch redesign: token + border fixes across 15 pages; 404 redesign",
+    "body": ""
+  },
+  {
+    "sha": "10386a9",
+    "date": "2026-06-01",
+    "title": "Fix mobile hero image: object-cover at 65vh, remove whitespace",
+    "body": ""
+  },
+  {
+    "sha": "2bbdbbd",
+    "date": "2026-06-01",
+    "title": "Fix mobile hero: add artwork image to first snap section, remove overflow-x-hidden",
+    "body": "overflow-x-hidden on body blocks nested scroll containers on iOS Chrome,\nbreaking snap scroll. First folio snap now shows art0953 as hero image."
+  },
+  {
+    "sha": "1f8e300",
+    "date": "2026-06-01",
+    "title": "Stitch redesign: homepage Minimalist Folio + archive mobile contact-sheet grid",
+    "body": "- index.html: mobile snap-scroll folio (art0483/1009/1010), desktop layout unchanged, fake artist statement removed\n- archive.html: mobile gap-px contact-sheet grid, nav hide-on-scroll, touch grayscale\n- series-index.html: fix dark bg on Archival Note section (light system compliance)"
+  },
+  {
     "sha": "6cc8034",
     "date": "2026-06-01",
     "title": "Auto — api, feed, changes.json artifacts",

@@ -12,11 +12,16 @@ from reportlab.lib.colors import HexColor
 
 W, H = letter  # 612 x 792
 
-BLACK   = HexColor('#0B0B0B')
-CREAM   = HexColor('#F3F0EA')
-ORANGE  = HexColor('#FF6600')
-GRAY    = HexColor('#888888')
-DIVIDER = HexColor('#333333')
+# Light system — matches jfsn.com redesign
+BG      = HexColor('#FCF9F3')   # bone-white
+INK     = HexColor('#0B0B0B')   # deep-ink
+ORANGE  = HexColor('#FF6600')   # international-orange
+GRAY    = HexColor('#575757')   # archive-gray
+DIVIDER = HexColor('#0B0B0B')   # 1px rule
+
+# Keep aliases for compatibility
+BLACK = INK
+CREAM = BG
 
 TITLE_FONT  = 'Times-Roman'
 TITLE_BOLD  = 'Times-Bold'
@@ -27,7 +32,7 @@ OUT = 'JFSN-Archive-Handoff-Allison.pdf'
 DATE = 'JUNE 2026'
 
 def bg(c):
-    c.setFillColor(BLACK)
+    c.setFillColor(BG)
     c.rect(0, 0, W, H, fill=1, stroke=0)
 
 def label(c, text, x, y, size=7, color=GRAY):
@@ -35,34 +40,34 @@ def label(c, text, x, y, size=7, color=GRAY):
     c.setFillColor(color)
     c.drawString(x, y, text.upper())
 
-def value(c, text, x, y, size=10, color=CREAM, font=LABEL_FONT):
+def value(c, text, x, y, size=10, color=INK, font=LABEL_FONT):
     c.setFont(font, size)
     c.setFillColor(color)
     c.drawString(x, y, text)
 
-def divider(c, x, y, w):
+def divider(c, x, y, w, weight=0.5):
     c.setStrokeColor(DIVIDER)
-    c.setLineWidth(0.5)
+    c.setLineWidth(weight)
     c.line(x, y, x + w, y)
 
 def cred_row(c, key, val, x, y, col_w=180):
     label(c, key, x, y, size=7, color=GRAY)
-    value(c, val, x + col_w, y, size=9.5)
+    value(c, val, x + col_w, y, size=9.5, color=INK)
 
 def section_head(c, num, title, x, y):
     c.setFont(LABEL_BOLD, 7)
     c.setFillColor(ORANGE)
     c.drawString(x, y, str(num))
     c.setFont(TITLE_BOLD, 13)
-    c.setFillColor(CREAM)
+    c.setFillColor(INK)
     c.drawString(x + 14, y, title)
 
 def done_badge(c, x, y):
     c.setFillColor(ORANGE)
     c.roundRect(x, y - 2, 42, 13, 2, fill=1, stroke=0)
     c.setFont(LABEL_BOLD, 6.5)
-    c.setFillColor(BLACK)
-    c.drawCentredString(x + 21, y + 2.5, 'DONE ✓')
+    c.setFillColor(BG)
+    c.drawCentredString(x + 21, y + 2.5, 'DONE')
 
 def note(c, text, x, y, width=460, size=8.5, color=GRAY):
     c.setFont(LABEL_FONT, size)
@@ -97,7 +102,7 @@ def page1(c):
 
     # ── JFSN wordmark ──
     c.setFont(TITLE_BOLD, 28)
-    c.setFillColor(CREAM)
+    c.setFillColor(INK)
     c.drawString(mx, H - 82, 'JFSN')
 
     c.setFont(TITLE_FONT, 11)
@@ -106,7 +111,7 @@ def page1(c):
 
     # ── "For Allison" dedication ──
     c.setFont(TITLE_FONT, 36)
-    c.setFillColor(CREAM)
+    c.setFillColor(INK)
     c.drawString(mx, H - 150, 'For Allison')
 
     # ── Sub-headline ──
@@ -151,7 +156,7 @@ def page1(c):
 
     y -= 18
     c.setFont(LABEL_BOLD, 7.5)
-    c.setFillColor(CREAM)
+    c.setFillColor(INK)
     c.drawString(mx, y, 'If the site goes down:')
     c.setFont(LABEL_FONT, 7.5)
     c.setFillColor(GRAY)
@@ -160,7 +165,7 @@ def page1(c):
 
     y -= 14
     c.setFont(LABEL_BOLD, 7.5)
-    c.setFillColor(CREAM)
+    c.setFillColor(INK)
     c.drawString(mx, y, 'To keep it running:')
     c.setFont(LABEL_FONT, 7.5)
     c.setFillColor(GRAY)
@@ -312,7 +317,7 @@ def page3(c):
     c.rect(mx, H - 44, W - mx*2, 2, fill=1, stroke=0)
 
     c.setFont(TITLE_BOLD, 18)
-    c.setFillColor(CREAM)
+    c.setFillColor(INK)
     c.drawString(mx, H - 80, 'GITHUB ARCHIVE')
 
     c.setFont(LABEL_FONT, 10)
@@ -320,7 +325,7 @@ def page3(c):
     c.drawString(mx, H - 106, 'jfsn.com')
 
     c.setFont(LABEL_FONT, 10)
-    c.setFillColor(CREAM)
+    c.setFillColor(INK)
     c.drawString(mx, H - 124, 'github.com/JFSNeumann/jfsn-archive')
 
     c.setFont(LABEL_FONT, 8)
