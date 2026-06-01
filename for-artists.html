@@ -321,9 +321,10 @@
       width: 100%; height: 100%;
       object-fit: cover;
       object-position: center top;
-      transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
+      filter: grayscale(100%);
+      transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .proof-thumb:hover img { transform: scale(1.06); }
+    .proof-thumb:hover img { transform: scale(1.06); filter: grayscale(0%); }
     .proof-thumb__overlay {
       position: absolute;
       inset: 0;
@@ -475,6 +476,29 @@
       border: 1px solid rgba(11,11,11,0.12);
       margin-left: -1px;
       position: relative;
+    }
+    .plan::before, .plan::after {
+      content: '';
+      position: absolute;
+      width: 0; height: 0;
+      box-sizing: border-box;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .plan::before { top: 0; left: 0; }
+    .plan::after  { bottom: 0; right: 0; }
+    .plan:hover::before {
+      width: 100%; height: 100%;
+      border-top: 1px solid #FF6600; border-right: 1px solid #FF6600;
+      transition: width 0.15s ease-out, height 0.15s ease-out 0.15s;
+    }
+    .plan:hover::after {
+      width: 100%; height: 100%;
+      border-bottom: 1px solid #FF6600; border-left: 1px solid #FF6600;
+      transition: width 0.15s ease-out, height 0.15s ease-out 0.15s;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .plan::before, .plan::after { transition: none; }
     }
     .plan--featured {
       border-color: #FF6600;

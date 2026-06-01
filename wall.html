@@ -64,12 +64,13 @@
       object-fit: cover;
       object-position: center top;
       display: block;
-      transition: transform 0.3s ease, opacity 0.2s;
+      filter: grayscale(100%);
+      transition: transform 0.3s ease, opacity 0.2s, filter 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
     @media (hover: hover) {
       .wall-grid:has(.wall-tile:hover) .wall-tile { opacity: 0.45; }
       .wall-grid:has(.wall-tile:hover) .wall-tile:hover { opacity: 1; }
-      .wall-tile:hover img { transform: scale(1.15); }
+      .wall-tile:hover img { transform: scale(1.15); filter: grayscale(0%); }
     }
     @media (max-width: 600px) {
       .wall-grid { grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); }
