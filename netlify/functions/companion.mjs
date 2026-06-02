@@ -8,7 +8,7 @@ const CORS = {
 
 const CATALOG_URL = 'https://jfsn.com/catalog-lite.json';
 const MODEL_FAST  = 'claude-haiku-4-5-20251001';
-const MODEL_DEEP  = 'claude-sonnet-4-6';
+const MODEL_DEEP  = 'claude-sonnet-4-6-20250514';
 
 // Module-level cache: survives across warm invocations of the same function instance.
 let catalogCache = null;
