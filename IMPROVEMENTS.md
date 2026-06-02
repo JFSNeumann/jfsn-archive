@@ -20,7 +20,8 @@ A living list. Add to it. Cross things off. This is the backlog.
 ### SEO
 - [ ] **Series page URLs** — `/series.html?theme=Targets` is JS-only. Generate static `targets.html`, `torsos.html` etc. from `catalog.json` for direct Google indexing.
 - [ ] **About page expansion** — more bio keywords in body text (Cleveland, mixed-media, assemblage) for Knowledge Panel signals.
-- [ ] **og:image per artwork** — currently uses the site-wide `og-card.jpg`. Each artwork page could use its own thumbnail as og:image for richer social shares.
+- [ ] **artwork.html JSON-LD in static shell** — JSON-LD is currently JS-injected per work. Static shell has no JSON-LD so server-side scrapers that don't execute JS see nothing. The 1,084 `artworks/pages/` redirect pages each have proper JSON-LD — this is the real fix path (generate full static pages instead of redirect stubs).
+- [ ] **index.html duplicate h1** — mobile and desktop sections each render an h1 ("Five Decades of Making"). Not a ranking penalty but worth cleaning: hide one with `aria-hidden` or consolidate to a single h1 visible in both contexts.
 
 ### Performance
 - [ ] **Preload first-row artwork thumbnails** — `collage.html`, `photography.html`, `sculpture.html`, `painting.html` should add `<link rel="preload">` for the first 4 visible thumbs.

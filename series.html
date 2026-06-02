@@ -20,10 +20,14 @@
   
   <meta name="theme-color" content="#fcf9f3"/>
 
-  <meta property="og:type"  content="website">
-  <meta property="og:title" content="">
-  <meta property="og:image" content="https://jfsn.com/og-card.jpg">
-  <meta property="og:url"   content="https://jfsn.com/series.html">
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="">
+  <meta property="og:description" content="A recurring series from the archive of Jeffrey F. S. Neumann — collage, sculpture, and photography, 1974–present.">
+  <meta property="og:image"       content="https://jfsn.com/og-card.jpg">
+  <meta property="og:url"         content="https://jfsn.com/series.html">
+  <script type="application/ld+json">
+{"@context":"https://schema.org","@type":"CollectionPage","name":"Series — Jeffrey F. S. Neumann","description":"A recurring series from the archive of Jeffrey F. S. Neumann — collage, sculpture, and photography, 1974–present.","url":"https://jfsn.com/series.html","creator":{"@type":"Person","name":"Jeffrey F. S. Neumann","url":"https://jfsn.com"}}
+  </script>
 
   <style>
     /* -------- Series hero -------- */
@@ -494,6 +498,8 @@
     .setAttribute('content', series.description.slice(0, 160));
   document.querySelector('meta[property="og:title"]')
     .setAttribute('content', `${series.title} — Jeffrey F. S. Neumann`);
+  document.querySelector('meta[property="og:description"]')
+    .setAttribute('content', series.description ? series.description.slice(0, 155) : `${series.title} — a recurring series from the archive of Jeffrey F. S. Neumann.`);
   const canonEl = document.querySelector('link[rel="canonical"]');
   if (canonEl) canonEl.setAttribute('href', `https://jfsn.com/series.html?${archiveParam}`);
 

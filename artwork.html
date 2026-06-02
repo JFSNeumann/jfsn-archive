@@ -4,9 +4,14 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta name="theme-color" content="#fdf8f8"/>
-<title id="page-title">Archive — Jeffrey F. S. Neumann</title>
+<title id="page-title">Work — Jeffrey F. S. Neumann</title>
 <meta name="description" id="page-desc" content="A work from the personal archive of Jeffrey F. S. Neumann — 1,084 works spanning collage, sculpture, and photography, 1974–present."/>
 <link rel="canonical" id="page-canonical" href="https://jfsn.com/artwork.html"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" id="og-title" content="Work — Jeffrey F. S. Neumann"/>
+<meta property="og:description" id="og-desc" content="From the personal archive of Jeffrey F. S. Neumann — 1,084 works spanning collage, sculpture, and photography, 1974–present."/>
+<meta property="og:image" id="og-image" content="https://jfsn.com/og-card.jpg"/>
+<meta property="og:url" id="og-url" content="https://jfsn.com/artwork.html"/>
 <link rel="icon" href="favicon.svg" type="image/svg+xml"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -406,6 +411,15 @@ fetch('catalog.json')
       ? `${w.description} — From the archive of Jeffrey F. S. Neumann.`
       : `${titleText}${w.year ? ', ' + w.year : ''} — ${w.work_type || 'Work'} by Jeffrey F. S. Neumann.`;
     document.getElementById('page-canonical').href = `https://jfsn.com/artwork.html?id=${workId}`;
+
+    // og: tags — update dynamically so social shares resolve per-work
+    const ogDesc = w.description
+      ? `${w.description} — From the archive of Jeffrey F. S. Neumann.`
+      : `${titleText}${w.year ? ', ' + w.year : ''} — ${w.work_type || 'Work'} by Jeffrey F. S. Neumann.`;
+    document.getElementById('og-title').content  = `${titleText} — Jeffrey F. S. Neumann`;
+    document.getElementById('og-desc').content   = ogDesc;
+    document.getElementById('og-image').content  = `https://jfsn.com/artworks/thumbs/${w.file}`;
+    document.getElementById('og-url').content    = `https://jfsn.com/artwork.html?id=${workId}`;
 
     // JSON-LD structured data
     const existingLd = document.getElementById('work-jsonld');
