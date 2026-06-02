@@ -58,6 +58,16 @@ colors: {
 
 ---
 
+## Stitch workflow
+
+When Jeff mentions Stitch, a new page, or a design export — read `STITCH.md` first.
+It contains the full prompt template, design system values to paste, and the post-export
+checklist. Never use a Stitch export directly; extract layout/interactions and apply to
+real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->` for
+`stamp-nav.sh`, and the Tailwind build must be run after adding new pages.
+
+---
+
 ## Architecture
 
 ### Key files
