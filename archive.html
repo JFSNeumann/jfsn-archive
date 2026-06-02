@@ -498,12 +498,29 @@ function renderPage() {
   });
 }
 
+// Pre-select filter from URL param, e.g. archive.html?decade=1990s or ?medium=collage
+function applyURLParams() {
+  const p = new URLSearchParams(location.search);
+  const decade = p.get('decade');
+  const medium = p.get('medium');
+  if (decade) {
+    const cb = document.querySelector(`#filter-decade input[value="${CSS.escape(decade)}"]`);
+    if (cb) { cb.checked = true; }
+  }
+  if (medium) {
+    const cb = document.querySelector(`#filter-medium input[value="${CSS.escape(medium)}"]`);
+    if (cb) { cb.checked = true; }
+  }
+  if (decade || medium) applyFilters();
+}
+
 fetch('catalog.json')
   .then(r => r.json())
   .then(data => {
     allWorks = data;
     filtered = data;
     renderPage();
+    applyURLParams();
   })
   .catch(e => console.error('catalog load failed', e));
 
