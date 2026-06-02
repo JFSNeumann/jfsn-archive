@@ -1,7 +1,58 @@
 /* search.js — site-wide search overlay (⌘K / Ctrl+K) + keyboard shortcuts (?)
-   Injects overlay + nav trigger. Lazy-loads catalog-lite.json on first open. */
+   Injects overlay + nav trigger. Lazy-loads catalog-lite.json on first open.
+   Self-contained: injects its own CSS so it works on any page. */
 (function () {
   'use strict';
+
+  // ── Inject search overlay CSS (self-contained, works on any page) ────────
+  if (!document.getElementById('sse-styles')) {
+    const s = document.createElement('style');
+    s.id = 'sse-styles';
+    s.textContent = `
+:root{--sse-text:#F3F0EA;--sse-muted:rgba(243,240,234,0.62);--sse-dim:rgba(243,240,234,0.12);--sse-accent:#FF6600}
+#sse-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:9000;display:flex;align-items:flex-start;justify-content:center;padding-top:clamp(4rem,12vh,10rem)}
+#sse-overlay[hidden]{display:none}
+#sse-panel{width:min(600px,92vw);background:#161616;border:1px solid var(--sse-dim);box-shadow:0 24px 64px rgba(0,0,0,.6);overflow:hidden}
+#sse-input-row{display:flex;align-items:center;gap:.75rem;padding:.875rem 1rem;border-bottom:1px solid var(--sse-dim)}
+#sse-icon{width:16px;height:16px;color:var(--sse-muted);flex-shrink:0;opacity:.5}
+#sse-input{flex:1;appearance:none;background:none;border:none;color:var(--sse-text);font-family:inherit;font-size:.9375rem;outline:none}
+#sse-input::placeholder{color:var(--sse-muted);opacity:.5}
+#sse-close{appearance:none;background:none;border:none;color:var(--sse-muted);cursor:pointer;font-size:.875rem;line-height:1;padding:.25rem;opacity:.5;transition:opacity .12s,color .12s;flex-shrink:0}
+#sse-close:hover{opacity:1;color:var(--sse-text)}
+#sse-results{max-height:min(60vh,420px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--sse-dim) transparent}
+.sse-item{display:flex;align-items:center;gap:.875rem;padding:.625rem 1rem;color:var(--sse-muted);transition:background .1s,color .1s;cursor:pointer}
+.sse-item:hover,.sse-item[aria-selected=true]{background:rgba(243,240,234,.06);color:var(--sse-text)}
+.sse-thumb{width:44px;height:44px;object-fit:cover;flex-shrink:0;background:#1e1e1e;display:block}
+.sse-info{display:flex;flex-direction:column;gap:.2rem;min-width:0}
+.sse-title{font-size:.875rem;color:var(--sse-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sse-meta{font-size:.625rem;letter-spacing:.1em;text-transform:uppercase;color:var(--sse-muted);opacity:.65}
+.sse-special{gap:.75rem}
+.sse-surprise-icon{font-size:1.25rem;width:44px;text-align:center;color:var(--sse-accent);flex-shrink:0}
+.sse-section-label{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(243,240,234,.3);padding:.75rem 1rem .25rem;border-top:1px solid var(--sse-dim)}
+.sse-msg{padding:1.5rem 1rem;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--sse-muted);opacity:.5}
+#sse-hint{padding:.5rem 1rem;border-top:1px solid var(--sse-dim);font-size:.625rem;letter-spacing:.08em;color:var(--sse-muted);opacity:.4}
+#sse-hint kbd{font-family:inherit;border:1px solid var(--sse-dim);padding:.05rem .3rem;font-size:.6rem}
+#sse-kb-modal{position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:9000;display:flex;align-items:center;justify-content:center;padding:24px}
+#sse-kb-modal[hidden]{display:none}
+#sse-kb-panel{width:min(480px,92vw);background:#161616;border:1px solid var(--sse-dim);box-shadow:0 24px 64px rgba(0,0,0,.6);overflow:hidden}
+#sse-kb-head{display:flex;justify-content:space-between;align-items:center;padding:.875rem 1rem;border-bottom:1px solid var(--sse-dim)}
+#sse-kb-title{font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--sse-muted)}
+#sse-kb-close{appearance:none;background:none;border:none;color:var(--sse-muted);cursor:pointer;font-size:.875rem;padding:.25rem;opacity:.5;transition:opacity .12s}
+#sse-kb-close:hover{opacity:1;color:var(--sse-text)}
+#sse-kb-body{padding:.5rem 0 .75rem}
+.sse-kb-section{padding:.5rem 0;border-bottom:1px solid var(--sse-dim)}
+.sse-kb-section:last-child{border-bottom:none}
+.sse-kb-section-label{font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(243,240,234,.3);padding:.25rem 1rem .5rem}
+.sse-kb-row{display:flex;justify-content:space-between;align-items:center;padding:.3rem 1rem;gap:1rem}
+.sse-kb-desc{font-size:.75rem;color:var(--sse-muted)}
+.sse-kb-keys{display:flex;align-items:center;gap:.3rem;flex-shrink:0}
+.sse-kb-keys kbd{font-family:inherit;border:1px solid var(--sse-dim);border-radius:3px;padding:.15rem .4rem;font-size:.625rem;color:var(--sse-muted)}
+.sse-kb-or{font-size:.625rem;color:rgba(243,240,234,.3)}
+.sse-kb-plain{font-size:.625rem;color:var(--sse-muted)}
+@media(prefers-reduced-motion:reduce){.sse-item,.sse-close,#sse-kb-close{transition:none}}
+    `;
+    document.head.appendChild(s);
+  }
 
   const FAVS_KEY   = 'jfsn-favorites';
   const RECENT_KEY = 'jfsn-recently-viewed';
@@ -74,9 +125,16 @@
     </div>`;
   document.body.appendChild(kbModal);
 
-  // ── Nav search button ────────────────────────────────────────────────────
+  // ── Nav search button — wire to existing Stitch nav button ─────────────
+  // New nav uses a <button aria-label="Search"> in the header; wire it directly.
+  const existingBtn = document.querySelector('button[aria-label="Search"]');
+  if (existingBtn) {
+    existingBtn.addEventListener('click', open);
+    existingBtn.title = 'Search (⌘K)';
+  }
+  // Legacy: old nav.nav pattern
   const nav = document.querySelector('nav.nav');
-  if (nav) {
+  if (nav && !existingBtn) {
     const btn = document.createElement('button');
     btn.className   = 'nav-search-btn';
     btn.title       = 'Search (⌘K)';

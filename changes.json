@@ -1,5 +1,11 @@
 [
   {
+    "sha": "84a14c7",
+    "date": "2026-06-01",
+    "title": "Three-part audit + mobile hero redesign",
+    "body": "- Nav borders: border-deep-ink on all 22 pages (top nav + mobile)\n- archive.html: Stitch tokens added, mobile filter touch targets fixed\n- Skip-to-content: added to top-nav.html, stamps to all pages; id=main added\n- Canvas a11y: tabindex, role, focus ring, Escape handler on constellation/chromatic/mosaic\n- Performance: preload + fetchpriority on index hero; LCP fix on all 6 decade pages\n- sw.js: PRECACHE expanded 8→21 URLs, CACHE_V bumped\n- artwork.html: improved static fallback title/desc + JS-injected VisualArtwork JSON-LD\n- Mobile hero snap 1: full-bleed redesign matching desktop (veil, overlay text, CTAs, SCROLL)\n- companion.html: sub-12px text fixed; archive.html dead TERMS link removed\n- constellation.html: footer added (was missing)"
+  },
+  {
     "sha": "068ea96",
     "date": "2026-06-01",
     "title": "index.html hero: full-screen color, centered, scroll indicator; series-index nav fix",

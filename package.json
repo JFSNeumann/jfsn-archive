@@ -1,0 +1,24 @@
+{
+  "name": "jfsn",
+  "version": "1.0.0",
+  "description": "A static, open-source archive site for visual artists. No CMS, no database, no monthly fees. Built for [jfsn.com](https://jfsn.com) — 1,084 works spanning 50 years, live on a $5/month shared host.",
+  "main": "artist-config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JFSNeumann/jfsn-archive.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/JFSNeumann/jfsn-archive/issues"
+  },
+  "homepage": "https://github.com/JFSNeumann/jfsn-archive#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.4.19"
+  }
+}
