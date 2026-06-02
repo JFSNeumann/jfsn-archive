@@ -1,5 +1,17 @@
 [
   {
+    "sha": "a0f2aab",
+    "date": "2026-06-01",
+    "title": "Sitemap +1084, Companion model fix, CSP cleanup",
+    "body": "- sitemap.xml: added 1,084 artworks/pages/ URLs → 2,190 total\n  Submit to Google Search Console to accelerate artwork indexing\n- companion.mjs: MODEL_DEEP claude-sonnet-4-6 → claude-sonnet-4-6-20250514\n- .htaccess CSP: removed stale cdn.tailwindcss.com from script-src, style-src, connect-src"
+  },
+  {
+    "sha": "2120be2",
+    "date": "2026-06-01",
+    "title": "Cleanup: gitignore node_modules, deploy excludes, CURRENT_STATE",
+    "body": "- .gitignore: node_modules/, package-lock.json, input.css\n- deploy.sh: exclude node_modules/, package-lock.json, input.css from FTP upload\n- Removed node_modules from git tracking\n- CURRENT_STATE.md updated with full session summary"
+  },
+  {
     "sha": "8d15278",
     "date": "2026-06-01",
     "title": "Major improvements: Tailwind build, search wired, SEO static pages",
