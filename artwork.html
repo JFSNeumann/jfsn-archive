@@ -66,6 +66,7 @@
         @media (prefers-reduced-motion: reduce) {
             .reveal-section { opacity: 1; transform: none; transition: none; }
             .related-card::before, .related-card::after { transition: none; }
+            #work-image { opacity: 1 !important; transition: none !important; }
         }
     </style>
 </head>
@@ -183,10 +184,10 @@
       <!-- Left: Image -->
       <section class="md:col-span-8 overflow-hidden border border-deep-ink">
         <div class="bg-surface-container overflow-hidden">
-          <img id="work-image" alt="" class="w-full h-auto object-contain grayscale-img" src="" width="1200" height="900" loading="eager"/>
+          <img id="work-image" alt="" class="w-full h-auto object-contain grayscale-img" src="" width="1200" height="900" loading="eager" style="opacity:0;transition:opacity 0.25s ease;"/>
         </div>
         <div class="p-sm flex justify-between items-center bg-surface border-t border-deep-ink">
-          <span class="font-label-md text-label-md uppercase tracking-widest text-secondary">Hover to reveal color</span>
+          <span id="hover-hint" class="font-label-md text-label-md uppercase tracking-widest text-secondary">Hover to reveal color</span>
           <a id="full-res-link" href="#" class="font-label-md text-label-md uppercase tracking-widest text-secondary hover:text-international-orange transition-colors flex items-center gap-xs">
             Full resolution <span class="material-symbols-outlined text-base">zoom_in</span>
           </a>
@@ -327,6 +328,26 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'ArrowRight' && _nextHref) { e.preventDefault(); location.href = _nextHref; }
 });
 
+// Swipe left/right to navigate between works (mobile)
+let _tx = 0, _ty = 0;
+document.addEventListener('touchstart', function(e) {
+  _tx = e.changedTouches[0].clientX;
+  _ty = e.changedTouches[0].clientY;
+}, { passive: true });
+document.addEventListener('touchend', function(e) {
+  const dx = e.changedTouches[0].clientX - _tx;
+  const dy = e.changedTouches[0].clientY - _ty;
+  if (Math.abs(dx) < 50 || Math.abs(dy) > Math.abs(dx) * 0.75) return;
+  if (dx < 0 && _nextHref) location.href = _nextHref;
+  if (dx > 0 && _prevHref) location.href = _prevHref;
+}, { passive: true });
+
+// "Hover to reveal" → "Tap to reveal" on touch devices
+if (window.matchMedia('(hover: none)').matches) {
+  const hint = document.getElementById('hover-hint');
+  if (hint) hint.textContent = 'Tap to reveal color';
+}
+
 function typeLabel(t) {
   return { collage: 'Collage', photograph: 'Photography', sculpture: 'Sculpture', painting: 'Painting' }[t] || t;
 }
@@ -415,10 +436,12 @@ fetch('catalog.json')
     });
     document.head.appendChild(ld);
 
-    // Image
+    // Image — fade in on load
     const img = document.getElementById('work-image');
+    img.onload = function() { img.style.opacity = '1'; };
     img.src = `artworks/full/${w.file}`;
     img.alt = titleText;
+    if (img.complete) img.style.opacity = '1';
     document.getElementById('full-res-link').href = `artworks/full/${w.file}`;
 
     // Title

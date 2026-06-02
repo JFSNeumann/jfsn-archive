@@ -60,7 +60,9 @@
         }
         .kinetic-hover { transition: color 0.2s ease; }
         .kinetic-hover:hover { color: #e05900; }
-        #work-count { font-variant-numeric: tabular-nums; }
+        #work-count { font-variant-numeric: tabular-nums; transition: color 0.15s ease; }
+        #work-count.count-flash { color: #e05900; }
+        @media (prefers-reduced-motion: reduce) { #work-count { transition: none; } }
 
         /* Animated border draw on hover — corner-to-corner */
         .archive-card {
@@ -485,6 +487,9 @@ function renderPage() {
 
   const total = filtered.length;
   workCount.textContent = total.toLocaleString();
+  workCount.classList.remove('count-flash');
+  requestAnimationFrame(() => workCount.classList.add('count-flash'));
+  setTimeout(() => workCount.classList.remove('count-flash'), 400);
   emptyState.classList.toggle('hidden', total > 0);
   loadMoreBtn.classList.toggle('hidden', page * PAGE_SIZE >= total);
   // Observe newly added cards (observeNewCards defined below)

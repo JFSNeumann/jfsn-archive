@@ -233,7 +233,7 @@
         </div>
       </div>
       <!-- Scroll indicator -->
-      <div class="absolute bottom-8 left-0 right-0 flex flex-col items-center gap-2 z-10 pointer-events-none" style="animation: fadeInUp 1s ease 1.2s both;">
+      <div id="scroll-indicator" class="absolute bottom-8 left-0 right-0 flex flex-col items-center gap-2 z-10 pointer-events-none" style="animation: fadeInUp 1s ease 1.2s both; transition: opacity 0.4s ease;">
         <span class="font-label-caps text-[9px] tracking-[0.2em] text-bone-white/50">SCROLL</span>
         <div style="width:1px; height:32px; background: linear-gradient(to bottom, rgba(243,240,234,0.5), transparent); animation: scrollPulse 2s ease-in-out infinite;"></div>
       </div>
@@ -568,6 +568,20 @@
     });
   }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
   document.querySelectorAll('.reveal-element').forEach(el => revealObserver.observe(el));
+
+  // SCROLL indicator — hide after first snap scroll
+  (function() {
+    const indicator = document.getElementById('scroll-indicator');
+    const folio = document.getElementById('folio-container');
+    if (!indicator || !folio) return;
+    function hideOnScroll() {
+      if (folio.scrollTop > 40) {
+        indicator.style.opacity = '0';
+        folio.removeEventListener('scroll', hideOnScroll);
+      }
+    }
+    folio.addEventListener('scroll', hideOnScroll, { passive: true });
+  })();
 
   // Ghost trace parallax on scroll
   window.addEventListener('scroll', () => {
