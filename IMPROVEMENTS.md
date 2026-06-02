@@ -8,6 +8,8 @@ A living list. Add to it. Cross things off. This is the backlog.
 ## 🔴 Do soon
 
 - [ ] **Test Companion live** — open jfsn.com/companion.html on iPhone, type something, confirm a work comes back. Known untested since the redesign.
+- [ ] **Test for-artists inquiry form** — go to `jfsn-archive.netlify.app/for-artists.html`, submit form, confirm redirect to `?sent=1#inquire` (form only works on Netlify, not HostGator)
+- [ ] **Test timeline scrub on mobile** — drag the strip left/right on iPhone, confirm it scrolls through years (no touch handler found in code — may be CSS scroll only)
 - [ ] **Google Search Console** — submit sitemap.xml if not done yet. sitemap now has 2,190 URLs including all 1,084 artwork pages.
 - [ ] **Ingest new work** — drop photos into `artworks/inbox/`, run `bash add-works.sh`. Pipeline is ready.
 
@@ -55,6 +57,10 @@ A living list. Add to it. Cross things off. This is the backlog.
 ---
 
 ## ✅ Done (recent)
+
+- [x] **Artwork page ← → keyboard nav** — added `_prevHref`/`_nextHref` vars + keydown handler; shortcut now works after catalog loads
+- [x] **Dead TERMS link** — `href="#"` on 11 pages (6 decade + about, artwork, companion, series-index, timeline) → now points to `privacy.html`
+- [x] **Search button dead on 11 pages** — `search.js` missing from decade pages, chromatic, wall, constellation, guernica, privacy (fixed prior session)
 
 - [x] Tailwind CDN (1.5MB) → built `site.min.css` (31KB)
 - [x] Search button wired on all 13 Stitch pages

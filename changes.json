@@ -1,5 +1,11 @@
 [
   {
+    "sha": "85bfb69",
+    "date": "2026-06-02",
+    "title": "Mobile menu + search fix",
+    "body": "- _shared/top-nav.html: build right-side drawer menu (slides in from right)\n  - bone-white bg, deep-ink border, Playfair Display JFSN header\n  - all nav links uppercase Inter + For Artists in orange\n  - search shortcut button at bottom\n  - backdrop click, × button, and Escape all close it\n  - smooth translateX(100%) → 0 transition, body scroll locked while open\n- search.js: catalog-lite.json now fetched with absolute URL (location.origin)\n  so it works from any page depth, not just root pages\n- stamp-nav.sh: re-stamped all 13 Stitch pages with updated nav\n- site.min.css rebuilt"
+  },
+  {
     "sha": "099e6c3",
     "date": "2026-06-01",
     "title": "README rewrite, IMPROVEMENTS.md living backlog",
