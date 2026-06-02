@@ -6,7 +6,6 @@
 (function () {
   const PAGE_NAV = {
     'archive.html':      'archive.html',
-    'index.html':        'archive.html',   // home counts as Archive
     'series-index.html': 'series-index.html',
     'timeline.html':     'timeline.html',
     'companion.html':    'companion.html',

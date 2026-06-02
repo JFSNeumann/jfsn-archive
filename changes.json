@@ -1,5 +1,17 @@
 [
   {
+    "sha": "d7d08ea",
+    "date": "2026-06-02",
+    "title": "Update api/v1, changes.json, feed.xml, sw.js",
+    "body": ""
+  },
+  {
+    "sha": "d2b3cbe",
+    "date": "2026-06-02",
+    "title": "index.html overhaul: butterfly, footer expansion, hero radial oval, chevron, color fade",
+    "body": "- Butterfly icon in header nav + footer JFSN lockup\n- Footer: 5 columns with Medium, Visualizations sections; Wall, Lost Works, Guernica, Constellation, Changes, all 4 medium pages, social links (Instagram/LinkedIn/Twitter/YouTube/Behance/Dribbble)\n- Hero: removed flat veil, added radial oval gradient behind text, image shifted to hide ceiling, bouncing chevron replaces SCROLL indicator (hides on scroll via IntersectionObserver)\n- Featured works renamed: My Favorite Early Cross / Kamikaze 101 / Kimono #3\n- Kamikaze 101 corrected to collage in catalog-home.json + catalog.json\n- Color fade sitewide: bottom 25% of greyscale thumbnails reveals original color (ui.css mask + ui.js + inline script on 4 medium pages)\n- Mobile/tablet hero: same fixes applied"
+  },
+  {
     "sha": "4ad2db6",
     "date": "2026-06-02",
     "title": "Update CURRENT_STATE.md",

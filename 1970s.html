@@ -63,6 +63,7 @@
   <style>
     .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;}
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;}}
+    .group:hover img.grayscale{filter:grayscale(0%)!important;transition:filter .5s ease-out;}
   </style>
 </head>
 
@@ -92,6 +93,50 @@
 </nav>
 <!-- NAV:END -->
 
+<!-- MOBILE DRAWER -->
+<div id="decade-mobile-menu" aria-hidden="true" style="display:none;position:fixed;inset:0;z-index:60;">
+  <div id="decade-menu-backdrop" style="position:absolute;inset:0;background:rgba(11,11,11,0.5);"></div>
+  <nav id="decade-menu-drawer" aria-label="Mobile menu"
+       style="position:absolute;top:0;right:0;bottom:0;width:280px;background:#fdf8f8;overflow-y:auto;display:flex;flex-direction:column;">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid #c4c7c7;">
+      <a href="index.html" style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#000;text-decoration:none;">JFSN</a>
+      <button id="decade-menu-close" aria-label="Close menu" style="background:none;border:none;cursor:pointer;padding:4px;color:#000;">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <div style="padding:24px;display:flex;flex-direction:column;gap:0;">
+      <a href="archive.html"     style="display:block;padding:16px 0;font-family:Inter,sans-serif;font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#000;text-decoration:none;border-bottom:1px solid #c4c7c7;">Archive</a>
+      <a href="series-index.html" style="display:block;padding:16px 0;font-family:Inter,sans-serif;font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#000;text-decoration:none;border-bottom:1px solid #c4c7c7;">Series</a>
+      <a href="timeline.html"    style="display:block;padding:16px 0;font-family:Inter,sans-serif;font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#000;text-decoration:none;border-bottom:1px solid #c4c7c7;">Timeline</a>
+      <a href="companion.html"   style="display:block;padding:16px 0;font-family:Inter,sans-serif;font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#000;text-decoration:none;border-bottom:1px solid #c4c7c7;">Companion</a>
+      <a href="about.html"       style="display:block;padding:16px 0;font-family:Inter,sans-serif;font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#000;text-decoration:none;border-bottom:1px solid #c4c7c7;">About</a>
+      <p style="margin-top:24px;font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#5e5e5e;">By Decade</p>
+      <a href="1970s.html" style="display:block;padding:12px 0;font-family:Inter,sans-serif;font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#5e5e5e;text-decoration:none;border-bottom:1px solid #c4c7c7;">1970s</a>
+      <a href="1980s.html" style="display:block;padding:12px 0;font-family:Inter,sans-serif;font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#5e5e5e;text-decoration:none;border-bottom:1px solid #c4c7c7;">1980s</a>
+      <a href="1990s.html" style="display:block;padding:12px 0;font-family:Inter,sans-serif;font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#5e5e5e;text-decoration:none;border-bottom:1px solid #c4c7c7;">1990s</a>
+      <a href="2000s.html" style="display:block;padding:12px 0;font-family:Inter,sans-serif;font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#5e5e5e;text-decoration:none;border-bottom:1px solid #c4c7c7;">2000s</a>
+      <a href="2010s.html" style="display:block;padding:12px 0;font-family:Inter,sans-serif;font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#5e5e5e;text-decoration:none;border-bottom:1px solid #c4c7c7;">2010s</a>
+      <a href="2020s.html" style="display:block;padding:12px 0;font-family:Inter,sans-serif;font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#5e5e5e;text-decoration:none;">2020s</a>
+    </div>
+  </nav>
+</div>
+<script>
+(function(){
+  var btn      = document.querySelector('[aria-label="Menu"]');
+  var menu     = document.getElementById('decade-mobile-menu');
+  var close    = document.getElementById('decade-menu-close');
+  var backdrop = document.getElementById('decade-menu-backdrop');
+  if (!btn || !menu) return;
+  function open() { menu.style.display='block'; menu.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; close.focus(); }
+  function shut() { menu.style.display='none';  menu.setAttribute('aria-hidden','true');  document.body.style.overflow=''; btn.focus(); }
+  btn.addEventListener('click', open);
+  close.addEventListener('click', shut);
+  backdrop.addEventListener('click', shut);
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') shut(); });
+})();
+</script>
+<!-- /MOBILE DRAWER -->
+
 <main id="main" class="pt-[72px]">
   <div class="max-w-[1200px] mx-auto px-margin-desktop">
 
@@ -117,8 +162,8 @@
       <div class="columns-2 lg:columns-4 gap-md">
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art0001">
-          <div class="thumb-frame overflow-hidden" style="background-color:#ff003c">
-            <img srcset="artworks/mini/art0001.avif 200w, artworks/thumbs/art0001.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art0001.avif" alt="Untitled (Figure, Blue Ground)" loading="eager" fetchpriority="high" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#ff003c;background-image:url(artworks/thumbs/art0001.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art0001.avif 200w, artworks/thumbs/art0001.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art0001.avif" alt="Untitled (Figure, Blue Ground)" loading="eager" fetchpriority="high" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Figure, Blue Ground)</p>
@@ -128,8 +173,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art0145">
-          <div class="thumb-frame overflow-hidden" style="background-color:#dcd7d2">
-            <img srcset="artworks/mini/art0145.avif 200w, artworks/thumbs/art0145.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art0145.avif" alt="Felix Double Disc" loading="eager" fetchpriority="high" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#dcd7d2;background-image:url(artworks/thumbs/art0145.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art0145.avif 200w, artworks/thumbs/art0145.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art0145.avif" alt="Felix Double Disc" loading="eager" fetchpriority="high" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Felix Double Disc</p>
@@ -139,8 +184,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art0273">
-          <div class="thumb-frame overflow-hidden" style="background-color:#bebebe">
-            <img srcset="artworks/mini/art0273.avif 200w, artworks/thumbs/art0273.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art0273.avif" alt="Cleveland Institute Group Portrait" loading="eager" fetchpriority="high" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#bebebe;background-image:url(artworks/thumbs/art0273.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art0273.avif 200w, artworks/thumbs/art0273.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art0273.avif" alt="Cleveland Institute Group Portrait" loading="eager" fetchpriority="high" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Cleveland Institute Group Portrait</p>
@@ -150,8 +195,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art0381">
-          <div class="thumb-frame overflow-hidden" style="background-color:#4b4b46">
-            <img srcset="artworks/mini/art0381.avif 200w, artworks/thumbs/art0381.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art0381.avif" alt="Untitled (Stage Dive)" loading="eager" fetchpriority="high" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#4b4b46;background-image:url(artworks/thumbs/art0381.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art0381.avif 200w, artworks/thumbs/art0381.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art0381.avif" alt="Untitled (Stage Dive)" loading="eager" fetchpriority="high" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Stage Dive)</p>
@@ -161,8 +206,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art0585">
-          <div class="thumb-frame overflow-hidden" style="background-color:#2d000a">
-            <img srcset="artworks/mini/art0585.avif 200w, artworks/thumbs/art0585.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art0585.avif" alt="Untitled (Cube Grid)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#2d000a;background-image:url(artworks/thumbs/art0585.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art0585.avif 200w, artworks/thumbs/art0585.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art0585.avif" alt="Untitled (Cube Grid)" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Cube Grid)</p>
@@ -172,8 +217,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1021">
-          <div class="thumb-frame overflow-hidden" style="background-color:#afaa82">
-            <img srcset="artworks/mini/art1021.avif 200w, artworks/thumbs/art1021.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1021.avif" alt="Untitled (Jewelry Display Case)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#afaa82;background-image:url(artworks/thumbs/art1021.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1021.avif 200w, artworks/thumbs/art1021.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1021.avif" alt="Untitled (Jewelry Display Case)" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Jewelry Display Case)</p>
@@ -183,8 +228,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1022">
-          <div class="thumb-frame overflow-hidden" style="background-color:#91a0aa">
-            <img srcset="artworks/mini/art1022.avif 200w, artworks/thumbs/art1022.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1022.avif" alt="Untitled (Warplane Top-Down)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#91a0aa;background-image:url(artworks/thumbs/art1022.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1022.avif 200w, artworks/thumbs/art1022.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1022.avif" alt="Untitled (Warplane Top-Down)" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Warplane Top-Down)</p>
@@ -194,8 +239,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1023">
-          <div class="thumb-frame overflow-hidden" style="background-color:#8ca000">
-            <img srcset="artworks/mini/art1023.avif 200w, artworks/thumbs/art1023.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1023.avif" alt="Big Wheel Tricycle" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#8ca000;background-image:url(artworks/thumbs/art1023.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1023.avif 200w, artworks/thumbs/art1023.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1023.avif" alt="Big Wheel Tricycle" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Big Wheel Tricycle</p>
@@ -205,8 +250,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1024">
-          <div class="thumb-frame overflow-hidden" style="background-color:#00002d">
-            <img srcset="artworks/mini/art1024.avif 200w, artworks/thumbs/art1024.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1024.avif" alt="Untitled (Radio Dial Collage)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#00002d;background-image:url(artworks/thumbs/art1024.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1024.avif 200w, artworks/thumbs/art1024.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1024.avif" alt="Untitled (Radio Dial Collage)" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Radio Dial Collage)</p>
@@ -216,8 +261,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1025">
-          <div class="thumb-frame overflow-hidden" style="background-color:#dcbe91">
-            <img srcset="artworks/mini/art1025.avif 200w, artworks/thumbs/art1025.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1025.avif" alt="Don Nelson Sign" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#dcbe91;background-image:url(artworks/thumbs/art1025.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1025.avif 200w, artworks/thumbs/art1025.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1025.avif" alt="Don Nelson Sign" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Don Nelson Sign</p>
@@ -227,8 +272,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1026">
-          <div class="thumb-frame overflow-hidden" style="background-color:#dcd2c8">
-            <img srcset="artworks/mini/art1026.avif 200w, artworks/thumbs/art1026.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1026.avif" alt="Silk Torpedo Intervention" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#dcd2c8;background-image:url(artworks/thumbs/art1026.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1026.avif 200w, artworks/thumbs/art1026.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1026.avif" alt="Silk Torpedo Intervention" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Silk Torpedo Intervention</p>
@@ -238,8 +283,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1027">
-          <div class="thumb-frame overflow-hidden" style="background-color:#828caa">
-            <img srcset="artworks/mini/art1027.avif 200w, artworks/thumbs/art1027.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1027.avif" alt="Untitled (Vehicle Blueprint Drawing)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#828caa;background-image:url(artworks/thumbs/art1027.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1027.avif 200w, artworks/thumbs/art1027.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1027.avif" alt="Untitled (Vehicle Blueprint Drawing)" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Vehicle Blueprint Drawing)</p>
@@ -249,8 +294,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1028">
-          <div class="thumb-frame overflow-hidden" style="background-color:#000032">
-            <img srcset="artworks/mini/art1028.avif 200w, artworks/thumbs/art1028.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1028.avif" alt="Untitled (Dark Chair Interior)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#000032;background-image:url(artworks/thumbs/art1028.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1028.avif 200w, artworks/thumbs/art1028.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1028.avif" alt="Untitled (Dark Chair Interior)" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Dark Chair Interior)</p>
@@ -260,8 +305,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1029">
-          <div class="thumb-frame overflow-hidden" style="background-color:#281919">
-            <img srcset="artworks/mini/art1029.avif 200w, artworks/thumbs/art1029.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1029.avif" alt="Untitled (Car Model with Can)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#281919;background-image:url(artworks/thumbs/art1029.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1029.avif 200w, artworks/thumbs/art1029.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1029.avif" alt="Untitled (Car Model with Can)" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Car Model with Can)</p>
@@ -271,8 +316,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1030">
-          <div class="thumb-frame overflow-hidden" style="background-color:#b9becd">
-            <img srcset="artworks/mini/art1030.avif 200w, artworks/thumbs/art1030.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1030.avif" alt="Electric Vehicle Blueprint" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#b9becd;background-image:url(artworks/thumbs/art1030.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1030.avif 200w, artworks/thumbs/art1030.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1030.avif" alt="Electric Vehicle Blueprint" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Electric Vehicle Blueprint</p>
@@ -282,8 +327,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1031">
-          <div class="thumb-frame overflow-hidden" style="background-color:#d2d7fa">
-            <img srcset="artworks/mini/art1031.avif 200w, artworks/thumbs/art1031.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1031.avif" alt="Formula One Driver, Head-On" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#d2d7fa;background-image:url(artworks/thumbs/art1031.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1031.avif 200w, artworks/thumbs/art1031.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1031.avif" alt="Formula One Driver, Head-On" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Formula One Driver, Head-On</p>
@@ -293,8 +338,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1032">
-          <div class="thumb-frame overflow-hidden" style="background-color:#d7cdd7">
-            <img srcset="artworks/mini/art1032.avif 200w, artworks/thumbs/art1032.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1032.avif" alt="Interior Library Perspective" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#d7cdd7;background-image:url(artworks/thumbs/art1032.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1032.avif 200w, artworks/thumbs/art1032.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1032.avif" alt="Interior Library Perspective" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Interior Library Perspective</p>
@@ -304,8 +349,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1033">
-          <div class="thumb-frame overflow-hidden" style="background-color:#fffad2">
-            <img srcset="artworks/mini/art1033.avif 200w, artworks/thumbs/art1033.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1033.avif" alt="Untitled (Dark Automobile)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#fffad2;background-image:url(artworks/thumbs/art1033.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1033.avif 200w, artworks/thumbs/art1033.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1033.avif" alt="Untitled (Dark Automobile)" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Dark Automobile)</p>
@@ -315,8 +360,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1036">
-          <div class="thumb-frame overflow-hidden" style="background-color:#371419">
-            <img srcset="artworks/mini/art1036.avif 200w, artworks/thumbs/art1036.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1036.avif" alt="Untitled (Black Car Sketch)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#371419;background-image:url(artworks/thumbs/art1036.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1036.avif 200w, artworks/thumbs/art1036.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1036.avif" alt="Untitled (Black Car Sketch)" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Black Car Sketch)</p>
@@ -326,8 +371,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1037">
-          <div class="thumb-frame overflow-hidden" style="background-color:#fafad2">
-            <img srcset="artworks/mini/art1037.avif 200w, artworks/thumbs/art1037.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1037.avif" alt="Benefit Package" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#fafad2;background-image:url(artworks/thumbs/art1037.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1037.avif 200w, artworks/thumbs/art1037.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1037.avif" alt="Benefit Package" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Benefit Package</p>
@@ -337,8 +382,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1038">
-          <div class="thumb-frame overflow-hidden" style="background-color:#281e28">
-            <img srcset="artworks/mini/art1038.avif 200w, artworks/thumbs/art1038.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1038.avif" alt="Eames Chair Interior" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#281e28;background-image:url(artworks/thumbs/art1038.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1038.avif 200w, artworks/thumbs/art1038.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1038.avif" alt="Eames Chair Interior" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Eames Chair Interior</p>
@@ -348,8 +393,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1040">
-          <div class="thumb-frame overflow-hidden" style="background-color:#415555">
-            <img srcset="artworks/mini/art1040.avif 200w, artworks/thumbs/art1040.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1040.avif" alt="Painted Block Wall" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#415555;background-image:url(artworks/thumbs/art1040.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1040.avif 200w, artworks/thumbs/art1040.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1040.avif" alt="Painted Block Wall" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Painted Block Wall</p>
@@ -359,8 +404,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1041">
-          <div class="thumb-frame overflow-hidden" style="background-color:#5f1900">
-            <img srcset="artworks/mini/art1041.avif 200w, artworks/thumbs/art1041.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1041.avif" alt="Chromatic Block Grid" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#5f1900;background-image:url(artworks/thumbs/art1041.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1041.avif 200w, artworks/thumbs/art1041.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1041.avif" alt="Chromatic Block Grid" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Chromatic Block Grid</p>
@@ -370,8 +415,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1042">
-          <div class="thumb-frame overflow-hidden" style="background-color:#cdd2dc">
-            <img srcset="artworks/mini/art1042.avif 200w, artworks/thumbs/art1042.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1042.avif" alt="Untitled (Workshop Interior)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#cdd2dc;background-image:url(artworks/thumbs/art1042.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1042.avif 200w, artworks/thumbs/art1042.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1042.avif" alt="Untitled (Workshop Interior)" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Workshop Interior)</p>
@@ -381,8 +426,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1043">
-          <div class="thumb-frame overflow-hidden" style="background-color:#827869">
-            <img srcset="artworks/mini/art1043.avif 200w, artworks/thumbs/art1043.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1043.avif" alt="Painted Block Grid" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#827869;background-image:url(artworks/thumbs/art1043.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1043.avif 200w, artworks/thumbs/art1043.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1043.avif" alt="Painted Block Grid" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Painted Block Grid</p>
@@ -392,8 +437,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1044">
-          <div class="thumb-frame overflow-hidden" style="background-color:#fa4600">
-            <img srcset="artworks/mini/art1044.avif 200w, artworks/thumbs/art1044.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1044.avif" alt="Painted Block Pyramid" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#fa4600;background-image:url(artworks/thumbs/art1044.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1044.avif 200w, artworks/thumbs/art1044.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1044.avif" alt="Painted Block Pyramid" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Painted Block Pyramid</p>
@@ -403,8 +448,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1045">
-          <div class="thumb-frame overflow-hidden" style="background-color:#f0d7be">
-            <img srcset="artworks/mini/art1045.avif 200w, artworks/thumbs/art1045.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1045.avif" alt="Stacked Painted Blocks 1" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#f0d7be;background-image:url(artworks/thumbs/art1045.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1045.avif 200w, artworks/thumbs/art1045.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1045.avif" alt="Stacked Painted Blocks 1" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Stacked Painted Blocks 1</p>
@@ -414,8 +459,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1046">
-          <div class="thumb-frame overflow-hidden" style="background-color:#c8c3be">
-            <img srcset="artworks/mini/art1046.avif 200w, artworks/thumbs/art1046.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1046.avif" alt="Blocks Under Glass" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#c8c3be;background-image:url(artworks/thumbs/art1046.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1046.avif 200w, artworks/thumbs/art1046.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1046.avif" alt="Blocks Under Glass" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Blocks Under Glass</p>
@@ -425,8 +470,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1047">
-          <div class="thumb-frame overflow-hidden" style="background-color:#00a5eb">
-            <img srcset="artworks/mini/art1047.avif 200w, artworks/thumbs/art1047.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1047.avif" alt="Untitled (Coloured Block City)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#00a5eb;background-image:url(artworks/thumbs/art1047.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1047.avif 200w, artworks/thumbs/art1047.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1047.avif" alt="Untitled (Coloured Block City)" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Coloured Block City)</p>
@@ -436,8 +481,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1048">
-          <div class="thumb-frame overflow-hidden" style="background-color:#787878">
-            <img srcset="artworks/mini/art1048.avif 200w, artworks/thumbs/art1048.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1048.avif" alt="Untitled (Painted Block Wall)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#787878;background-image:url(artworks/thumbs/art1048.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1048.avif 200w, artworks/thumbs/art1048.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1048.avif" alt="Untitled (Painted Block Wall)" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Painted Block Wall)</p>
@@ -447,8 +492,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1049">
-          <div class="thumb-frame overflow-hidden" style="background-color:#c8d2cd">
-            <img srcset="artworks/mini/art1049.avif 200w, artworks/thumbs/art1049.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1049.avif" alt="Stacked Block Tower" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#c8d2cd;background-image:url(artworks/thumbs/art1049.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1049.avif 200w, artworks/thumbs/art1049.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1049.avif" alt="Stacked Block Tower" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Stacked Block Tower</p>
@@ -458,8 +503,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1050">
-          <div class="thumb-frame overflow-hidden" style="background-color:#504646">
-            <img srcset="artworks/mini/art1050.avif 200w, artworks/thumbs/art1050.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1050.avif" alt="Stacked Cube Wall" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#504646;background-image:url(artworks/thumbs/art1050.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1050.avif 200w, artworks/thumbs/art1050.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1050.avif" alt="Stacked Cube Wall" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Stacked Cube Wall</p>
@@ -469,8 +514,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1051">
-          <div class="thumb-frame overflow-hidden" style="background-color:#2d2323">
-            <img srcset="artworks/mini/art1051.avif 200w, artworks/thumbs/art1051.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1051.avif" alt="Untitled (Coloured Block Grid)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#2d2323;background-image:url(artworks/thumbs/art1051.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1051.avif 200w, artworks/thumbs/art1051.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1051.avif" alt="Untitled (Coloured Block Grid)" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Coloured Block Grid)</p>
@@ -480,8 +525,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1053">
-          <div class="thumb-frame overflow-hidden" style="background-color:#f0b9c3">
-            <img srcset="artworks/mini/art1053.avif 200w, artworks/thumbs/art1053.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1053.avif" alt="Painted Block Assembly" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#f0b9c3;background-image:url(artworks/thumbs/art1053.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1053.avif 200w, artworks/thumbs/art1053.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1053.avif" alt="Painted Block Assembly" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Painted Block Assembly</p>
@@ -491,8 +536,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1054">
-          <div class="thumb-frame overflow-hidden" style="background-color:#465f9b">
-            <img srcset="artworks/mini/art1054.avif 200w, artworks/thumbs/art1054.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1054.avif" alt="Grid of Painted Blocks" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#465f9b;background-image:url(artworks/thumbs/art1054.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1054.avif 200w, artworks/thumbs/art1054.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1054.avif" alt="Grid of Painted Blocks" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Grid of Painted Blocks</p>
@@ -502,8 +547,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1056">
-          <div class="thumb-frame overflow-hidden" style="background-color:#d7d2c8">
-            <img srcset="artworks/mini/art1056.avif 200w, artworks/thumbs/art1056.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1056.avif" alt="Untitled (Bulbs and Radiator)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#d7d2c8;background-image:url(artworks/thumbs/art1056.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1056.avif 200w, artworks/thumbs/art1056.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1056.avif" alt="Untitled (Bulbs and Radiator)" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Bulbs and Radiator)</p>
@@ -513,8 +558,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1057">
-          <div class="thumb-frame overflow-hidden" style="background-color:#dcdcd2">
-            <img srcset="artworks/mini/art1057.avif 200w, artworks/thumbs/art1057.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1057.avif" alt="Untitled (Oversized Light Bulb)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#dcdcd2;background-image:url(artworks/thumbs/art1057.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1057.avif 200w, artworks/thumbs/art1057.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1057.avif" alt="Untitled (Oversized Light Bulb)" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Oversized Light Bulb)</p>
@@ -524,8 +569,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1058">
-          <div class="thumb-frame overflow-hidden" style="background-color:#507373">
-            <img srcset="artworks/mini/art1058.avif 200w, artworks/thumbs/art1058.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1058.avif" alt="Untitled (Layered Transparencies)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#507373;background-image:url(artworks/thumbs/art1058.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1058.avif 200w, artworks/thumbs/art1058.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1058.avif" alt="Untitled (Layered Transparencies)" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Layered Transparencies)</p>
@@ -535,8 +580,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1059">
-          <div class="thumb-frame overflow-hidden" style="background-color:#5f5f5f">
-            <img srcset="artworks/mini/art1059.avif 200w, artworks/thumbs/art1059.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1059.avif" alt="Suspended Form with Pegs" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#5f5f5f;background-image:url(artworks/thumbs/art1059.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1059.avif 200w, artworks/thumbs/art1059.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1059.avif" alt="Suspended Form with Pegs" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Suspended Form with Pegs</p>
@@ -546,8 +591,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1060">
-          <div class="thumb-frame overflow-hidden" style="background-color:#e6e614">
-            <img srcset="artworks/mini/art1060.avif 200w, artworks/thumbs/art1060.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1060.avif" alt="Untitled (Assembled Apparatus)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#e6e614;background-image:url(artworks/thumbs/art1060.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1060.avif 200w, artworks/thumbs/art1060.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1060.avif" alt="Untitled (Assembled Apparatus)" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Assembled Apparatus)</p>
@@ -557,8 +602,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1061">
-          <div class="thumb-frame overflow-hidden" style="background-color:#bec3d2">
-            <img srcset="artworks/mini/art1061.avif 200w, artworks/thumbs/art1061.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1061.avif" alt="Untitled (Cracked Resin Grid)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#bec3d2;background-image:url(artworks/thumbs/art1061.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1061.avif 200w, artworks/thumbs/art1061.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1061.avif" alt="Untitled (Cracked Resin Grid)" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Cracked Resin Grid)</p>
@@ -568,8 +613,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1062">
-          <div class="thumb-frame overflow-hidden" style="background-color:#becde6">
-            <img srcset="artworks/mini/art1062.avif 200w, artworks/thumbs/art1062.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1062.avif" alt="Untitled (Fabric on Frame)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#becde6;background-image:url(artworks/thumbs/art1062.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1062.avif 200w, artworks/thumbs/art1062.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1062.avif" alt="Untitled (Fabric on Frame)" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Fabric on Frame)</p>
@@ -579,8 +624,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1063">
-          <div class="thumb-frame overflow-hidden" style="background-color:#afb4b9">
-            <img srcset="artworks/mini/art1063.avif 200w, artworks/thumbs/art1063.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1063.avif" alt="House with Gold Foil" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#afb4b9;background-image:url(artworks/thumbs/art1063.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1063.avif 200w, artworks/thumbs/art1063.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1063.avif" alt="House with Gold Foil" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">House with Gold Foil</p>
@@ -590,8 +635,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1065">
-          <div class="thumb-frame overflow-hidden" style="background-color:#1e192d">
-            <img srcset="artworks/mini/art1065.avif 200w, artworks/thumbs/art1065.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1065.avif" alt="Projection onto Face" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#1e192d;background-image:url(artworks/thumbs/art1065.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1065.avif 200w, artworks/thumbs/art1065.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1065.avif" alt="Projection onto Face" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Projection onto Face</p>
@@ -601,8 +646,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1066">
-          <div class="thumb-frame overflow-hidden" style="background-color:#d2cdc3">
-            <img srcset="artworks/mini/art1066.avif 200w, artworks/thumbs/art1066.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1066.avif" alt="Stacked Painted Blocks 2" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#d2cdc3;background-image:url(artworks/thumbs/art1066.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1066.avif 200w, artworks/thumbs/art1066.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1066.avif" alt="Stacked Painted Blocks 2" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Stacked Painted Blocks 2</p>
@@ -612,8 +657,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1068">
-          <div class="thumb-frame overflow-hidden" style="background-color:#5f6469">
-            <img srcset="artworks/mini/art1068.avif 200w, artworks/thumbs/art1068.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1068.avif" alt="Untitled (Grid Over Architecture)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#5f6469;background-image:url(artworks/thumbs/art1068.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1068.avif 200w, artworks/thumbs/art1068.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1068.avif" alt="Untitled (Grid Over Architecture)" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Grid Over Architecture)</p>
@@ -623,8 +668,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1071">
-          <div class="thumb-frame overflow-hidden" style="background-color:#fff500">
-            <img srcset="artworks/mini/art1071.avif 200w, artworks/thumbs/art1071.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1071.avif" alt="Untitled (Interference Rings)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#fff500;background-image:url(artworks/thumbs/art1071.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1071.avif 200w, artworks/thumbs/art1071.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1071.avif" alt="Untitled (Interference Rings)" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Interference Rings)</p>
@@ -634,8 +679,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1072">
-          <div class="thumb-frame overflow-hidden" style="background-color:#d2f0fa">
-            <img srcset="artworks/mini/art1072.avif 200w, artworks/thumbs/art1072.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1072.avif" alt="Untitled (Boat Interior Plan)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#d2f0fa;background-image:url(artworks/thumbs/art1072.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1072.avif 200w, artworks/thumbs/art1072.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1072.avif" alt="Untitled (Boat Interior Plan)" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Boat Interior Plan)</p>
@@ -645,8 +690,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1073">
-          <div class="thumb-frame overflow-hidden" style="background-color:#69190f">
-            <img srcset="artworks/mini/art1073.avif 200w, artworks/thumbs/art1073.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1073.avif" alt="Untitled (Installation View) 3" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#69190f;background-image:url(artworks/thumbs/art1073.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1073.avif 200w, artworks/thumbs/art1073.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1073.avif" alt="Untitled (Installation View) 3" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Installation View) 3</p>
@@ -656,8 +701,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1074">
-          <div class="thumb-frame overflow-hidden" style="background-color:#7d736e">
-            <img srcset="artworks/mini/art1074.avif 200w, artworks/thumbs/art1074.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1074.avif" alt="Untitled (Studio Group Shot)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#7d736e;background-image:url(artworks/thumbs/art1074.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1074.avif 200w, artworks/thumbs/art1074.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1074.avif" alt="Untitled (Studio Group Shot)" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Studio Group Shot)</p>
@@ -667,8 +712,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1075">
-          <div class="thumb-frame overflow-hidden" style="background-color:#000037">
-            <img srcset="artworks/mini/art1075.avif 200w, artworks/thumbs/art1075.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1075.avif" alt="Untitled (Foil and Light)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#000037;background-image:url(artworks/thumbs/art1075.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1075.avif 200w, artworks/thumbs/art1075.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1075.avif" alt="Untitled (Foil and Light)" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Foil and Light)</p>
@@ -678,8 +723,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1077">
-          <div class="thumb-frame overflow-hidden" style="background-color:#5078aa">
-            <img srcset="artworks/mini/art1077.avif 200w, artworks/thumbs/art1077.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1077.avif" alt="Untitled (Portrait, Upward Gaze)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#5078aa;background-image:url(artworks/thumbs/art1077.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1077.avif 200w, artworks/thumbs/art1077.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1077.avif" alt="Untitled (Portrait, Upward Gaze)" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Portrait, Upward Gaze)</p>
@@ -689,8 +734,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1079">
-          <div class="thumb-frame overflow-hidden" style="background-color:#2d1e28">
-            <img srcset="artworks/mini/art1079.avif 200w, artworks/thumbs/art1079.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1079.avif" alt="Masked Figure with Scarf" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#2d1e28;background-image:url(artworks/thumbs/art1079.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1079.avif 200w, artworks/thumbs/art1079.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1079.avif" alt="Masked Figure with Scarf" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Masked Figure with Scarf</p>
@@ -700,8 +745,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1080">
-          <div class="thumb-frame overflow-hidden" style="background-color:#ff140a">
-            <img srcset="artworks/mini/art1080.avif 200w, artworks/thumbs/art1080.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1080.avif" alt="Untitled (Installation View) 4" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#ff140a;background-image:url(artworks/thumbs/art1080.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1080.avif 200w, artworks/thumbs/art1080.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1080.avif" alt="Untitled (Installation View) 4" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Installation View) 4</p>
@@ -711,8 +756,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1081">
-          <div class="thumb-frame overflow-hidden" style="background-color:#280a0a">
-            <img srcset="artworks/mini/art1081.avif 200w, artworks/thumbs/art1081.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1081.avif" alt="Untitled (Live Concert Stage)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#280a0a;background-image:url(artworks/thumbs/art1081.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1081.avif 200w, artworks/thumbs/art1081.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1081.avif" alt="Untitled (Live Concert Stage)" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Live Concert Stage)</p>
@@ -722,8 +767,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1083">
-          <div class="thumb-frame overflow-hidden" style="background-color:#915f00">
-            <img srcset="artworks/mini/art1083.avif 200w, artworks/thumbs/art1083.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1083.avif" alt="Untitled (Studio Wall Collage)" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#915f00;background-image:url(artworks/thumbs/art1083.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1083.avif 200w, artworks/thumbs/art1083.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1083.avif" alt="Untitled (Studio Wall Collage)" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Untitled (Studio Wall Collage)</p>
@@ -733,8 +778,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art1078">
-          <div class="thumb-frame overflow-hidden" style="background-color:#d2e6fa">
-            <img srcset="artworks/mini/art1078.avif 200w, artworks/thumbs/art1078.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1078.avif" alt="Design: Electrical Gulf Cart" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#d2e6fa;background-image:url(artworks/thumbs/art1078.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art1078.avif 200w, artworks/thumbs/art1078.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art1078.avif" alt="Design: Electrical Gulf Cart" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Design: Electrical Gulf Cart</p>
@@ -744,8 +789,8 @@
       </div>
       <div class="break-inside-avoid mb-md">
         <a class="group block" href="artwork.html?id=art0380">
-          <div class="thumb-frame overflow-hidden" style="background-color:#696964">
-            <img srcset="artworks/mini/art0380.avif 200w, artworks/thumbs/art0380.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art0380.avif" alt="Devo at WHK Auditorium" loading="lazy" width="400" height="400" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
+          <div class="thumb-frame overflow-hidden" style="background-color:#696964;background-image:url(artworks/thumbs/art0380.avif);background-size:cover;background-position:center">
+            <img srcset="artworks/mini/art0380.avif 200w, artworks/thumbs/art0380.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art0380.avif" alt="Devo at WHK Auditorium" loading="lazy" width="400" height="400" style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 60%,transparent 100%)" class="w-full h-auto transition-all duration-500 ease-out grayscale group-hover:grayscale-0 group-hover:scale-[1.03]">
           </div>
           <div class="mt-sm">
             <p class="font-label-md text-label-md uppercase tracking-widest text-on-surface leading-snug">Devo at WHK Auditorium</p>

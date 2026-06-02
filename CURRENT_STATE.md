@@ -1,34 +1,32 @@
 # Current State
-**Updated:** 2026-06-02
+**Updated:** 2026-06-02 (PM session)
 
 ## Last commit
-4ad2db6 — Update CURRENT_STATE.md (pre-session state)
-
-## Shipped this session
-- **index.html — major overhaul:**
-  - Butterfly icon added to header nav + footer JFSN lockup
-  - Footer expanded to 5 columns: Explore, Medium, Visualizations, Contact
-  - New footer links: Wall, Lost Works, Guernica Series, Collage, Sculpture, Photography, Painting, Constellation, Changes
-  - Social links in footer: Instagram, LinkedIn, Twitter/X, YouTube, Behance, Dribbble
-  - Hero: removed flat dark veil, added radial oval gradient behind text (center-dark, fades out)
-  - Hero image shifted up to hide ceiling (scale + translateY)
-  - Bouncing white chevron replaces SCROLL text+line; hides on scroll past hero (IntersectionObserver)
-  - Featured 3 works renamed: My Favorite Early Cross / Kamikaze 101 / Kimono #3
-  - Kamikaze 101 corrected to collage (was sculpture) in catalog-home.json + catalog.json
-  - Color fade effect on featured 3: greyscale top, full color at bottom 25%
-- **Butterfly image:** `jfsn-butterfly.png` copied from old-site to project root
-- **Color fade sitewide:** bottom 25% of all greyscale thumbnails fades to original color
-  - `_shared/ui.css` — mask-image gradient on `.thumb__link img`
-  - `_shared/ui.js` — sets background-image + mask via JS (inline style to beat page CSS)
-  - `collage.html`, `sculpture.html`, `photography.html`, `painting.html` — inline script added before `</body>` to apply mask directly (bypasses defer caching issue)
-- **Mobile/tablet hero:** same fixes applied (image shift, radial oval, chevron)
+d7d08ea — Update api/v1, changes.json, feed.xml, sw.js
 
 ## To do next session
-- [ ] Verify butterfly shows on all other pages (update `_shared/top-nav.html` + run `stamp-nav.sh`)
-- [ ] Deploy and test color fade on live site
+<!-- Edit this section before closing -->
+- [ ] Run `bash end-session.sh` then `bash deploy.sh` after this session
+- [ ] Test color fade effect in real browser after SW unregister (Application → Service Workers → Unregister, hard reload)
+
+## What shipped this session
+- **nav-active.js** — removed index.html→archive.html mapping; homepage no longer highlights Archive
+- **Hamburger menus fixed** on 9 pages that had broken/decorative buttons: changes, chromatic, constellation, for-artists, guernica, privacy, series, wall, 404
+- **stamp-nav.sh** now stamps both nav AND footer; _shared/footer.html is canonical footer source
+- **All footers unified** — 21 Stitch pages now identical footer; decade pages identical; index.html intentionally unique
+- **Mobile drawer added** to all 6 decade pages (1970s–2020s) with full nav + By Decade section
+- **Decade page links** — Timeline decade labels → clickable links to decade pages; Archive sidebar → ↗ links next to each decade filter
+- **Color fade at bottom of images** (mask-image + background-image) added to:
+  - All 6 decade pages (1970s–2020s)
+  - guernica.html, series.html (JS block added)
+  - archive.html (renderCard template updated)
+  - series-index.html (template + hover handlers)
+  - collage/sculpture/photography/painting — already had it
+- **Grayscale hover fix** — inline CSS rule added to all 6 decade pages so SW cache can't block it; rule also in site.min.css
+- **sw.js CACHE_V** bumped to `jfsn-20260602-b`
 
 ## Known issues
-- (none)
+- Service worker cache blocks new CSS/HTML until user unregisters SW in DevTools. Fix: deploy to HostGator (fresh files served without SW caching issues for new visitors).
 
 ## Site is live at
 - jfsn.com  (primary — cPanel)
@@ -36,9 +34,3 @@
 
 ## Archive stats
 - 1084 works cataloged, 0 errors
-
-## Deploy workflow
-```
-bash end-session.sh   # git commit + push + backup
-bash deploy.sh        # FTP upload to HostGator (run after)
-```

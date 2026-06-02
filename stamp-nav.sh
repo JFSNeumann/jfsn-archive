@@ -1,13 +1,18 @@
 #!/usr/bin/env bash
-# stamp-nav.sh — replace <!-- NAV:START --> ... <!-- NAV:END --> in all HTML files
+# stamp-nav.sh — replace NAV:START/END and FOOTER:START/END blocks in all HTML files
 # Usage: bash stamp-nav.sh
-# Run this whenever the nav changes (_shared/top-nav.html is the single source of truth)
+# Run this whenever the nav or footer changes (_shared/ is the single source of truth)
 set -e
 cd "$(dirname "$0")"
 
 NAV_FILE="_shared/top-nav.html"
+FOOTER_FILE="_shared/footer.html"
 if [ ! -f "$NAV_FILE" ]; then
   echo "ERROR: $NAV_FILE not found."
+  exit 1
+fi
+if [ ! -f "$FOOTER_FILE" ]; then
+  echo "ERROR: $FOOTER_FILE not found."
   exit 1
 fi
 
@@ -16,6 +21,8 @@ TARGETS=(
   timeline.html companion.html about.html
   lost.html mosaic.html
   collage.html sculpture.html photography.html painting.html
+  changes.html chromatic.html constellation.html for-artists.html
+  guernica.html privacy.html series.html wall.html 404.html
 )
 # Note: decade pages (1970s–2020s) use the fuller Material Design nav token system
 # and are maintained separately from this stamp script.
@@ -36,19 +43,27 @@ for f in "${TARGETS[@]}"; do
     continue
   fi
 
-  python3 - "$f" "$NAV_FILE" <<'PYEOF'
+  python3 - "$f" "$NAV_FILE" "$FOOTER_FILE" <<'PYEOF'
 import sys, re
 
-html_path = sys.argv[1]
-nav_path  = sys.argv[2]
+html_path    = sys.argv[1]
+nav_path     = sys.argv[2]
+footer_path  = sys.argv[3]
 
-content = open(html_path).read()
-nav_block = open(nav_path).read().strip()
+content      = open(html_path).read()
+nav_block    = open(nav_path).read().strip()
+footer_block = open(footer_path).read().strip()
 
 new_content = re.sub(
     r'<!-- NAV:START -->.*?<!-- NAV:END -->',
     nav_block,
     content,
+    flags=re.DOTALL
+)
+new_content = re.sub(
+    r'<!-- FOOTER:START -->.*?<!-- FOOTER:END -->',
+    footer_block,
+    new_content,
     flags=re.DOTALL
 )
 
@@ -65,3 +80,4 @@ done
 echo ""
 echo "Done. $STAMPED file(s) processed, $SKIPPED skipped."
 echo "Active page highlights (orange underline) must still be set per-page."
+echo "Footer source of truth: _shared/footer.html"
