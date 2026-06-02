@@ -114,7 +114,6 @@
           <p class="sse-kb-section-label">Artwork page</p>
           <div class="sse-kb-row"><span class="sse-kb-desc">Previous work</span><span class="sse-kb-keys"><kbd>←</kbd></span></div>
           <div class="sse-kb-row"><span class="sse-kb-desc">Next work</span><span class="sse-kb-keys"><kbd>→</kbd></span></div>
-          <div class="sse-kb-row"><span class="sse-kb-desc">Swipe left / right</span><span class="sse-kb-keys"><span class="sse-kb-plain">Touch nav</span></span></div>
         </div>
         <div class="sse-kb-section">
           <p class="sse-kb-section-label">Search overlay</p>
