@@ -118,7 +118,10 @@
 <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-deep-ink focus:text-bone-white focus:font-label-caps focus:text-label-caps">Skip to content</a>
 <header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-background border-b border-deep-ink">
   <div class="flex items-center gap-8">
-    <a href="index.html" class="font-headline-md text-headline-md tracking-tighter text-deep-ink">JFSN</a>
+    <a href="index.html" class="flex items-center gap-2 font-headline-md text-headline-md tracking-tighter text-deep-ink">
+      <img src="jfsn-butterfly.png" alt="" width="28" height="28" loading="eager" aria-hidden="true">
+      JFSN
+    </a>
     <nav class="hidden md:flex gap-6" aria-label="Primary">
       <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="archive.html">Archive</a>
       <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="series-index.html">Series</a>
@@ -220,13 +223,14 @@
         src="artworks/full/art0953.avif"
         alt="XXXIII Días Installation View — Jeffrey F. S. Neumann"
         class="absolute inset-0 w-full h-full object-cover"
+        style="transform: scale(1.25) translateY(-7%); transform-origin: center center;"
         loading="eager"
         fetchpriority="high"
       />
-      <!-- Dark veil -->
-      <div class="absolute inset-0" style="background: rgba(11,11,11,0.42);"></div>
       <!-- Text overlay -->
       <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-8 z-10">
+        <!-- Radial oval behind text -->
+        <div aria-hidden="true" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:420px;height:380px;background:radial-gradient(ellipse at center, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.38) 40%, transparent 70%);pointer-events:none;z-index:-1;"></div>
         <span class="font-label-caps text-label-caps text-international-orange tracking-[0.2em] block mb-3">PERSONAL ARCHIVE</span>
         <h1 class="font-display-lg text-[36px] leading-[1.1] tracking-tight text-bone-white italic mb-3">Five Decades<br>of Making</h1>
         <p class="font-body-md text-[13px] text-bone-white/70 mb-7">1,084 works · 1974 – present</p>
@@ -237,8 +241,9 @@
       </div>
       <!-- Scroll indicator -->
       <div id="scroll-indicator" class="absolute bottom-8 left-0 right-0 flex flex-col items-center gap-2 z-10 pointer-events-none" style="animation: fadeInUp 1s ease 1.2s both; transition: opacity 0.4s ease;">
-        <span class="font-label-caps text-[9px] tracking-[0.2em] text-bone-white/50">SCROLL</span>
-        <div style="width:1px; height:32px; background: linear-gradient(to bottom, rgba(243,240,234,0.5), transparent); animation: scrollPulse 2s ease-in-out infinite;"></div>
+        <svg width="38" height="22" viewBox="0 0 38 22" fill="none" xmlns="http://www.w3.org/2000/svg" style="animation: chevronBounce 1.8s ease-in-out infinite; filter: drop-shadow(0 2px 8px rgba(0,0,0,1));" aria-label="Scroll down">
+          <path d="M2 2L19 20L36 2" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
       </div>
     </section>
 
@@ -350,13 +355,13 @@
     <img
       src="artworks/full/art0953.avif"
       alt="XXXIII Días Installation View — Jeffrey F. S. Neumann"
-      class="absolute inset-0 w-full h-full object-cover"
+      class="absolute inset-0 w-full h-full object-cover" style="transform: scale(1.25) translateY(-7%); transform-origin: center center;"
       width="2800" height="1288" loading="eager" fetchpriority="high"
     />
-    <!-- Full overlay — light vignette so centered text is always readable -->
-    <div class="absolute inset-0" style="background: rgba(11,11,11,0.38);"></div>
     <!-- Text overlay — vertically centered -->
     <div class="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-margin-desktop reveal-element" data-delay="0">
+      <!-- Radial oval behind text -->
+      <div aria-hidden="true" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:1200px;height:580px;background:radial-gradient(ellipse at center, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.38) 40%, transparent 70%);pointer-events:none;z-index:-1;"></div>
       <span class="font-label-caps text-label-caps text-international-orange mb-3 block tracking-[0.2em]">PERSONAL ARCHIVE</span>
       <h1 class="font-display-lg text-display-lg text-bone-white mb-4 italic leading-tight">Five Decades of Making</h1>
       <p class="font-body-md text-body-md text-bone-white/70 mb-8">
@@ -367,11 +372,6 @@
         <a href="series-index.html" class="px-7 py-3 border border-bone-white/50 text-bone-white font-label-caps text-label-caps btn-transition hover:border-bone-white hover:bg-bone-white/10">VIEW SERIES</a>
       </div>
     </div>
-    <!-- Scroll indicator -->
-    <div class="absolute bottom-8 left-0 right-0 z-20 flex flex-col items-center gap-2 pointer-events-none" style="animation: fadeInUp 1s ease 1.2s both;">
-      <span class="font-label-caps text-[9px] tracking-[0.2em] text-bone-white/50">SCROLL</span>
-      <div style="width:1px; height:40px; background: linear-gradient(to bottom, rgba(243,240,234,0.5), transparent); animation: scrollPulse 2s ease-in-out infinite;"></div>
-    </div>
     <style>
       @keyframes scrollPulse {
         0%, 100% { opacity: 0.4; transform: scaleY(1); }
@@ -381,11 +381,34 @@
         from { opacity: 0; transform: translateY(12px); }
         to   { opacity: 1; transform: translateY(0); }
       }
+      @keyframes chevronBounce {
+        0%, 100% { transform: translateY(0); opacity: 0.9; }
+        50% { transform: translateY(5px); opacity: 1; }
+      }
       @media (prefers-reduced-motion: reduce) {
         .scroll-indicator { display: none; }
       }
     </style>
   </section>
+  <!-- Scroll indicator — outside overflow-hidden section so it's not clipped -->
+  <div id="desktop-scroll-indicator" class="hidden md:flex fixed flex-col items-center gap-2 pointer-events-none" style="bottom:2rem;left:50%;transform:translateX(-50%);z-index:30;transition:opacity 0.4s ease;opacity:0;">
+    <svg width="38" height="22" viewBox="0 0 38 22" fill="none" xmlns="http://www.w3.org/2000/svg" style="animation: chevronBounce 1.8s ease-in-out infinite; filter: drop-shadow(0 2px 8px rgba(0,0,0,1));" aria-label="Scroll down">
+      <path d="M2 2L19 20L36 2" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <script>
+    (function(){
+      var ind = document.getElementById('desktop-scroll-indicator');
+      var hero = document.getElementById('hero-section');
+      if (!ind || !hero) return;
+      // Fade in after 1.2s on page load
+      setTimeout(function(){ if(window.scrollY < hero.offsetHeight * 0.5) ind.style.opacity = '1'; }, 1200);
+      var obs = new IntersectionObserver(function(entries){
+        ind.style.opacity = entries[0].isIntersecting ? '1' : '0';
+      }, { threshold: 0.5 });
+      obs.observe(hero);
+    })();
+  </script>
 
   <!-- Featured Works Section -->
   <section class="py-24 px-margin-desktop max-w-container-max mx-auto">
@@ -444,10 +467,13 @@
 
 <!-- Footer (desktop only) -->
 <footer class="hidden md:block bg-surface-container-high py-16 px-margin-desktop border-t border-outline-variant">
-  <div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+  <div class="max-w-container-max mx-auto grid grid-cols-1 gap-10" style="grid-template-columns: repeat(5, minmax(0, 1fr))">
     <div class="col-span-1">
-      <h3 class="font-headline-md text-headline-md tracking-tighter mb-6">JFSN</h3>
-      <p class="font-body-md text-archive-gray text-sm leading-relaxed">
+      <h3 class="font-headline-md text-headline-md tracking-tighter mb-6 flex items-center gap-2">
+        <img src="jfsn-butterfly.png" alt="" width="24" height="24" loading="lazy" aria-hidden="true">
+        JFSN
+      </h3>
+      <p class="font-body-md text-archive-gray text-sm leading-relaxed" style="padding-right: 2rem">
         The personal archive of Jeffrey F. S. Neumann — 1,084 works spanning five decades. Collage, sculpture, photography.
       </p>
     </div>
@@ -457,20 +483,42 @@
         <li><a class="hover:text-international-orange transition-colors" href="archive.html">Complete Archive</a></li>
         <li><a class="hover:text-international-orange transition-colors" href="timeline.html">Interactive Timeline</a></li>
         <li><a class="hover:text-international-orange transition-colors" href="series-index.html">Series Index</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="guernica.html">Guernica Series</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="wall.html">The Wall</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="lost.html">Lost Works</a></li>
       </ul>
     </div>
     <div class="col-span-1">
-      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">RESOURCES</h4>
+      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">MEDIUM</h4>
+      <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
+        <li><a class="hover:text-international-orange transition-colors" href="collage.html">Collage</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="sculpture.html">Sculpture</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="photography.html">Photography</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="painting.html">Painting</a></li>
+      </ul>
+    </div>
+    <div class="col-span-1">
+      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">VISUALIZATIONS</h4>
       <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
         <li><a class="hover:text-international-orange transition-colors" href="mosaic.html">Portrait Mosaic</a></li>
         <li><a class="hover:text-international-orange transition-colors" href="chromatic.html">Chromatic River</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="constellation.html">Constellation</a></li>
         <li><a class="hover:text-international-orange transition-colors" href="companion.html">AI Companion</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="changes.html">Changes</a></li>
         <li><a class="hover:text-international-orange transition-colors" href="about.html">About</a></li>
       </ul>
     </div>
     <div class="col-span-1">
       <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">CONTACT</h4>
       <a class="font-nav-link text-nav-link text-deep-ink block mb-4 border-b border-deep-ink inline-block pb-1 hover:text-international-orange hover:border-international-orange transition-all" href="mailto:jfsneumann@gmail.com">jfsneumann@gmail.com</a>
+      <div class="flex flex-wrap gap-3 mt-2">
+        <a class="font-label-caps text-[10px] text-archive-gray hover:text-international-orange transition-colors" href="https://www.instagram.com/jfsneumann" target="_blank" rel="noopener">Instagram</a>
+        <a class="font-label-caps text-[10px] text-archive-gray hover:text-international-orange transition-colors" href="https://www.linkedin.com/in/jeffreyneumann/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="font-label-caps text-[10px] text-archive-gray hover:text-international-orange transition-colors" href="https://twitter.com/jfsn" target="_blank" rel="noopener">Twitter/X</a>
+        <a class="font-label-caps text-[10px] text-archive-gray hover:text-international-orange transition-colors" href="https://www.youtube.com/@jfsneumann/videos" target="_blank" rel="noopener">YouTube</a>
+        <a class="font-label-caps text-[10px] text-archive-gray hover:text-international-orange transition-colors" href="https://www.behance.net/jfsn" target="_blank" rel="noopener">Behance</a>
+        <a class="font-label-caps text-[10px] text-archive-gray hover:text-international-orange transition-colors" href="https://dribbble.com/JFSN" target="_blank" rel="noopener">Dribbble</a>
+      </div>
     </div>
   </div>
   <div class="mt-16 pt-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
@@ -520,11 +568,12 @@
         card.className = `${cols[i]} archive-card kinetic-border group cursor-pointer no-underline reveal-element`;
         card.dataset.delay = String(i * 100);
         card.innerHTML = `
-          <div class="aspect-[3/4] bg-surface-container-high relative overflow-hidden">
+          <div class="aspect-[3/4] bg-surface-container-high relative overflow-hidden" style="background-image:url(artworks/thumbs/${w.file});background-size:cover;background-position:center;">
             <img
               alt="${w.title}"
-              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105"
+              class="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105"
               src="artworks/thumbs/${w.file}"
+              style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 65%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 65%,transparent 100%);transition:filter 0.7s ease,-webkit-mask-image 0.7s ease,mask-image 0.7s ease,transform 0.35s ease;"
               loading="lazy" width="400" height="533"
             />
           </div>

@@ -38,13 +38,28 @@
   clip-path: inset(0 0% 0 0);
 }
 
-/* Grayscale → color on hover (design system rule) */
+/* Grayscale → color on hover + color-fade reveal at bottom 25% */
+.thumb__link {
+  background-size: cover;
+  background-position: center;
+}
 .thumb__link img {
   filter: grayscale(100%);
-  transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s ease;
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 65%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 0%, black 65%, transparent 100%);
+  transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s ease,
+              -webkit-mask-image 0.5s ease, mask-image 0.5s ease;
 }
 .thumb__link:hover img {
   filter: grayscale(0%);
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+/* Featured cards on index.html — remove mask on group hover */
+.group:hover .grayscale {
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
 }
 
 /* Scroll reveal for .thumb items */
