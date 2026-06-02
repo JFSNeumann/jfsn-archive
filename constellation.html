@@ -232,12 +232,12 @@
 </header>
 <!-- NAV:END -->
 
-<div id="shell">
+<main id="shell">
 
   <aside class="sidebar" aria-label="Constellation controls">
     <div class="sb-head">
       <h1 class="sb-label">Constellation</h1>
-      <input id="search-c" type="search" placeholder="Search title…" autocomplete="off" spellcheck="false">
+      <input id="search-c" type="search" placeholder="Search title…" autocomplete="off" spellcheck="false" aria-label="Search works by title">
     </div>
     <div class="sb-body">
       <p class="sb-section">Highlight theme</p>
@@ -820,7 +820,7 @@ canvas.addEventListener('touchend', e => {
 resize();
 init();
 </script>
-
+</main>
 
 <!-- Mobile bottom nav -->
 <nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 px-4 bg-bone-white border-t border-deep-ink h-16" style="padding-bottom: env(safe-area-inset-bottom, 8px)" aria-label="Mobile navigation">
