@@ -1,5 +1,11 @@
 [
   {
+    "sha": "8d15278",
+    "date": "2026-06-01",
+    "title": "Major improvements: Tailwind build, search wired, SEO static pages",
+    "body": "- Tailwind CDN (1.5MB) replaced with built site.min.css (31KB) on all 29 pages\n  → ~200-400ms FCP improvement across entire site\n  → tailwind.config.js + input.css added for future rebuilds\n- search.js now loads on all 13 Stitch pages via stamp-nav.sh\n  → nav search button wired (was dead since redesign)\n  → search.js is now self-contained: injects its own CSS, works on any page\n  → ⌘K / Ctrl+K search overlay now works everywhere\n- 1,084 static artwork pages generated → artworks/pages/artNNNN.html\n  → each has unique <title>, <meta description>, JSON-LD VisualArtwork schema\n  → instant redirect to artwork.html?id= for real visitors\n  → Googlebot can index title/description without JS rendering\n- sw.js CACHE_V bumped to pick up all changes"
+  },
+  {
     "sha": "84a14c7",
     "date": "2026-06-01",
     "title": "Three-part audit + mobile hero redesign",

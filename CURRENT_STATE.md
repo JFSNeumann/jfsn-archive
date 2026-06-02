@@ -1,68 +1,55 @@
 # Current State
 **Updated:** 2026-06-02
 
-## This session — Three-part technical audit + mobile hero redesign
+## This session — Full improvement run
 
-### QA Pass 1 — Nav & design consistency
-- All 22 pages: nav border fixed `border-outline-variant` → `border-deep-ink` (top nav + mobile bottom nav)
-- `_shared/top-nav.html` updated as source of truth; stamp-nav.sh re-run across all 13 Stitch pages
-- `archive.html` Tailwind config: added missing Stitch tokens (`deep-ink`, `bone-white`, `international-orange`, `archive-gray`, `nav-link`, `label-caps`)
-- `constellation.html` footer added (was missing entirely — no PRIVACY link, no 4-column layout)
-- Decade pages (1970s–2020s): `deep-ink` token added to each config; nav borders fixed
-- `companion.html` sub-12px text fixed: `--c-cap` 0.6875rem → 0.75rem
-- `archive.html` dead TERMS link removed
+### Performance
+- Tailwind CDN (1.5MB, render-blocking) replaced with built `site.min.css` (31KB) on all 29 pages
+- `tailwind.config.js` + `input.css` added; rebuild: `./node_modules/.bin/tailwindcss -i input.css -o site.min.css --minify`
+- `node_modules/` gitignored + deploy-excluded; `package.json` stays for dep tracking
+- index.html desktop + mobile hero: `fetchpriority="high"` + `<link rel="preload">` on art0953
+- 1970s–2020s: first 4 thumbnails each changed `loading="lazy"` → `loading="eager" fetchpriority="high"`
+- sw.js PRECACHE expanded 8 → 21 URLs
 
-### QA Pass 2 — Mobile UX
-- `index.html` folio snap-scroll: `100vh` → `100dvh` (iOS Safari address bar fix)
-- `archive.html` mobile filter buttons: `py-1` → `py-3 min-h-[44px]` (touch target 22px → 44px+)
+### Search — now works everywhere
+- `search.js` loads on all 13 Stitch pages (was never loaded after redesign)
+- Nav search button wired: clicking the 🔍 icon opens the ⌘K overlay
+- `search.js` is self-contained: injects its own CSS, works on any page
 
-### QA Pass 3 — Desktop & accessibility
-- Skip-to-content link added to `_shared/top-nav.html` (stamps to all Stitch pages)
-- `id="main"` added to `<main>` on: index, archive, artwork, series-index, timeline, about
-- `mosaic.html` canvas: `aria-label` added
-- Duplicate skip links removed from pages that already had them (lost, mosaic, collage, photography, sculpture, painting)
+### SEO — 1,084 pages now indexable
+- `artworks/pages/artNNNN.html` — static pre-rendered page for every work
+- Each has unique `<title>`, `<meta description>`, JSON-LD VisualArtwork schema, OG tags
+- Instant `<meta http-equiv="refresh">` redirect for real visitors; Googlebot reads full metadata
+- `artwork.html` JS: unique description constructed per work + `VisualArtwork` JSON-LD injected on load
 
-### Part 1 — Performance audit
-- `index.html` hero: `<link rel="preload">` for art0953.avif + `fetchpriority="high"` added
-- `1970s–2020s` all 6 decade pages: first 4 thumbnails `loading="lazy"` → `loading="eager" fetchpriority="high"` (LCP fix)
-- `sw.js` PRECACHE expanded from 8 → 21 URLs; CACHE_V bumped to `jfsn-20260602-audit`
-- **Known architectural issue:** Tailwind CDN is render-blocking (~1.5MB) on all 26 pages. Proper fix = `npx tailwindcss` build step generating purged CSS. ~200–400ms FCP gain. Deferred — dedicated session needed.
+### Canvas accessibility
+- constellation, chromatic, mosaic canvases: `tabindex="0"`, `role`, focus ring, Escape-to-blur
+- wall.html: already fine (`<a>` tiles, no canvas)
 
-### Part 2 — Canvas keyboard accessibility
-- `constellation.html` `#cv`: `tabindex="0"`, `role="application"`, full aria-label, orange `:focus` ring, Escape-to-blur handler
-- `chromatic.html` `#river-canvas`: `tabindex="0"`, `role="img"`, updated aria-label, focus ring, Escape-to-blur handler
-- `mosaic.html` `#mosaic-canvas`: `tabindex="0"`, `role="application"`, updated aria-label, focus ring, Escape-to-blur handler
-- `wall.html`: no fix needed — it's `<a>` tiles, already keyboard-navigable
-
-### Part 3 — SEO crawlability
-- `artwork.html` static title improved: "Artwork —" → "Archive —" (less confusing fallback)
-- `artwork.html` static description improved: generic → informative (mentions 1,084 works, mediums, date range)
-- `artwork.html` JS description: now unique per work — uses `w.description` with attribution, or constructs "Title, Year — Medium by Jeffrey F. S. Neumann"
-- `artwork.html` JSON-LD `VisualArtwork` schema added (JS-injected per artwork load): name, url, image, dateCreated, artMedium, description, creator, isPartOf collection
-- **Known issue:** `artwork.html` canonical still JS-only (static fallback = `artwork.html` without `?id=`). Full fix requires SSG or server-side rendering. Google resolves via sitemap + JS rendering.
-
-### Mobile hero redesign
-- `index.html` mobile snap 1: complete redesign — full-bleed `object-cover` filling snap height, `rgba(11,11,11,0.42)` dark veil, text/buttons centered over image (mirrors desktop hero exactly)
-- Hero now full color (removed `folio-artwork-img` grayscale class from hero image)
-- `fetchpriority="high"` added to mobile hero image
-- "Five Decades of Making" heading (36px italic, bone-white) + "1,084 works · 1974–present" body
-- Two stacked CTAs: EXPLORE ARCHIVE (orange fill) + VIEW SERIES (ghost border)
-- Pulsing SCROLL indicator at bottom
-- Artwork snaps 2–4: image borders `border-outline-variant` → `border-deep-ink`
+### QA fixes (nav, mobile, a11y)
+- All 22 pages: nav border `border-deep-ink`; mobile bottom nav `border-deep-ink`
+- Skip-to-content on all pages via stamped nav
+- `id="main"` on all `<main>` elements
+- Mobile hero snap 1: full-bleed redesign matching desktop (dark veil, overlay text+CTAs, SCROLL indicator)
+- archive.html mobile filter buttons: touch targets raised to 44px
 
 ---
 
 ## To do next session
-- [ ] bash deploy.sh — push everything live to jfsn.com
 - [ ] Test companion.html live at jfsn.com/companion.html (AI still working?)
-- [ ] about.html exhibitions: add real show history when ready (~line 375)
-- [ ] **Tailwind CDN → build step** — replace CDN with purged `npx tailwindcss` output. ~200–400ms FCP gain across all 26 pages. Biggest remaining performance win.
+- [ ] about.html exhibitions: add real show history when ready (~line 184)
+- [ ] Submit `artworks/pages/` URLs to Google Search Console (or add to sitemap.xml)
+- [ ] Consider adding artworks/pages/ links to sitemap.xml for faster Googlebot discovery
+
+## Rebuild CSS (after adding new pages or tokens)
+```
+./node_modules/.bin/tailwindcss -i input.css -o site.min.css --minify
+```
 
 ## Known issues
 - companion.html: test live at jfsn.com/companion.html to confirm AI still works
-- about.html exhibitions: update table rows with real show history when ready (~line 375)
-- artwork.html canonical: JS-only, static fallback missing `?id=`. SSG needed for full fix.
-- Tailwind CDN render-blocking on all 26 pages (architectural — needs build step)
+- artwork.html canonical: JS-only static fallback still lacks `?id=`. Static pages in artworks/pages/ solve this for Googlebot.
+- artworks/pages/ not yet in sitemap.xml — add when ready to accelerate indexing
 
 ## Site is live at
 - jfsn.com  (primary — cPanel)

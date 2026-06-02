@@ -13,6 +13,11 @@ artworks/logs/
 *.pyc
 .DS_Store
 
+# ── Node / Tailwind build ─────────────────────────────────────────────────────
+node_modules/
+package-lock.json
+input.css
+
 # ── Private tool folders ──────────────────────────────────────────────────────
 .claude/
 .netlify/
