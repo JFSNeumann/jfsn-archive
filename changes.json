@@ -1,5 +1,29 @@
 [
   {
+    "sha": "099e6c3",
+    "date": "2026-06-01",
+    "title": "README rewrite, IMPROVEMENTS.md living backlog",
+    "body": "- README.md: full rewrite for current state — Tailwind build pipeline,\n  add-works.sh ingest, static artwork pages, new design system tokens,\n  SEO section, updated scripts table, removed old site.css references\n- IMPROVEMENTS.md: living prioritized backlog (🔴 do-soon, 🟡 high-value,\n  🟢 nice-to-have, ✅ done). Start each session: read CURRENT_STATE.md\n  and IMPROVEMENTS.md."
+  },
+  {
+    "sha": "bc23310",
+    "date": "2026-06-01",
+    "title": "Add STITCH.md prompt guide + CLAUDE.md reference",
+    "body": "- STITCH.md: full prompt template, design system tokens to paste,\n  content philosophy, nav marking, export instructions, post-export checklist\n- CLAUDE.md: Stitch workflow section pointing to STITCH.md\n- Memory: indexed so every future session knows it exists"
+  },
+  {
+    "sha": "04c8a4c",
+    "date": "2026-06-01",
+    "title": "CURRENT_STATE.md: session close",
+    "body": ""
+  },
+  {
+    "sha": "8856636",
+    "date": "2026-06-01",
+    "title": "Auto-generated: api/v1 rebuild from deploy",
+    "body": ""
+  },
+  {
     "sha": "a0f2aab",
     "date": "2026-06-01",
     "title": "Sitemap +1084, Companion model fix, CSP cleanup",

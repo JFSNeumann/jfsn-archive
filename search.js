@@ -374,7 +374,8 @@
   // ── Catalog loader ───────────────────────────────────────────────────────
   function loadCatalog() {
     loading = true;
-    fetch('catalog-lite.json')
+    var catalogPath = location.origin + '/catalog-lite.json';
+    fetch(catalogPath)
       .then(r => r.ok ? r.json() : null)
       .then(data => {
         catalog = data;
