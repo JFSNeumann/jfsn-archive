@@ -1,5 +1,71 @@
 [
   {
+    "sha": "4ad2db6",
+    "date": "2026-06-02",
+    "title": "Update CURRENT_STATE.md",
+    "body": ""
+  },
+  {
+    "sha": "b2aab27",
+    "date": "2026-06-02",
+    "title": "A11y: fix 4 WCAG AA structural issues",
+    "body": "- index.html: added aria-hidden=\"true\" to decorative #dust-motte-canvas\n- about.html: added aria-hidden=\"true\" to decorative #about-dust-canvas\n- constellation.html: changed <div id=\"shell\"> to <main id=\"shell\"> with\n  matching </main>; added aria-label=\"Search works by title\" to #search-c\n  input (was placeholder-only, not accessible)\n- for-artists.html: added aria-label to hidden file input #demo-input"
+  },
+  {
+    "sha": "7a6966f",
+    "date": "2026-06-02",
+    "title": "Update CURRENT_STATE.md",
+    "body": ""
+  },
+  {
+    "sha": "f8841d7",
+    "date": "2026-06-02",
+    "title": "SEO: og tags, JSON-LD, canonical, descriptions — 28-page audit",
+    "body": "23 pages now fully clean (was 9). Changes per page:\n\n- index.html: added WebSite JSON-LD\n- archive.html: added og:image, CollectionPage JSON-LD\n- artwork.html: fixed default title (was 'Archive'), added og:title/desc/image\n  fallbacks; JS now updates all 4 og tags per-work on load\n- collage/photography/sculpture/painting/guernica: trimmed descriptions to ≤155ch\n- series-index.html: added full og block + CollectionPage JSON-LD\n- series.html: added og:description (static + JS-updated); added JSON-LD\n- timeline.html: added full og block + CollectionPage JSON-LD\n- chromatic.html: added full og block + CollectionPage JSON-LD; updated title\n- wall.html: added full og block + CollectionPage JSON-LD; updated title\n- constellation.html: added canonical, full og block, JSON-LD, h1\n- mosaic.html: added ImageGallery JSON-LD\n- companion.html: added WebApplication JSON-LD\n- changes.html: added WebPage JSON-LD\n- privacy.html: added WebPage JSON-LD\n- 404.html: added og block + robots noindex"
+  },
+  {
+    "sha": "d5eed82",
+    "date": "2026-06-02",
+    "title": "Update CURRENT_STATE.md",
+    "body": ""
+  },
+  {
+    "sha": "a018745",
+    "date": "2026-06-02",
+    "title": "Fix: archive.html?decade= URL param silently ignored",
+    "body": "All 6 decade pages link to archive.html?decade=1970s etc. with the\nimplied promise of pre-filtering, but archive.html never read that\nparam. Added applyURLParams() that runs after catalog load, checks\nthe matching decade or medium checkbox, then calls applyFilters().\nAlso supports ?medium=collage for future use."
+  },
+  {
+    "sha": "d0dc54e",
+    "date": "2026-06-02",
+    "title": "Update CURRENT_STATE.md",
+    "body": ""
+  },
+  {
+    "sha": "ce24324",
+    "date": "2026-06-02",
+    "title": "UX: swipe nav, image fade-in, SCROLL hide, count flash",
+    "body": "artwork.html:\n- Swipe left/right navigates between works on mobile (50px threshold,\n  ignores vertical-dominant swipes and search-overlay state)\n- Full-res image fades in on load (opacity 0→1, 0.25s); instant if\n  cached; disabled under prefers-reduced-motion\n- \"Hover to reveal color\" swaps to \"Tap to reveal color\" on touch\n  devices (hover:none media query check)\n\nindex.html:\n- SCROLL indicator fades out (opacity→0, 0.4s) after first snap scroll\n  on the folio container; listener removed after first fire\n\narchive.html:\n- work-count flashes orange for 400ms whenever filters change,\n  drawing the eye to the updated number"
+  },
+  {
+    "sha": "20b59b1",
+    "date": "2026-06-02",
+    "title": "Update IMPROVEMENTS.md; sync generated files",
+    "body": ""
+  },
+  {
+    "sha": "dc89965",
+    "date": "2026-06-02",
+    "title": "Fix: artwork ← → keyboard nav; dead TERMS links on 11 pages",
+    "body": "artwork.html had no ArrowLeft/ArrowRight handler despite the\nkeyboard shortcuts modal advertising prev/next work navigation.\nAdded _prevHref/_nextHref vars populated on catalog load, with\na keydown listener that fires once the catalog resolves.\n\nAlso: TERMS footer link was href=\"#\" on 11 pages (6 decade pages\n+ about, artwork, companion, series-index, timeline). Now points\nto privacy.html."
+  },
+  {
+    "sha": "d1b3f3e",
+    "date": "2026-06-02",
+    "title": "Fix: search button dead on 11 pages; remove false swipe shortcut",
+    "body": "search.js was missing from all 6 decade pages, chromatic, wall,\nconstellation, guernica, and privacy — clicking the Search button\nin the nav did nothing on any of these pages.\n\nAlso removed the \"Swipe left / right: Touch nav\" entry from the\nkeyboard shortcuts modal; no swipe handler exists on artwork.html."
+  },
+  {
     "sha": "85bfb69",
     "date": "2026-06-02",
     "title": "Mobile menu + search fix",
