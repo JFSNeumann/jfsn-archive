@@ -101,6 +101,7 @@ tailwind.config = {
         transform-origin: 0 0;
         image-rendering: pixelated;
     }
+    #mosaic-canvas:focus { outline: 2px solid #FF6600; outline-offset: 2px; }
 
     /* ── Portrait compare thumbnail ── */
     #portrait-compare {
@@ -156,10 +157,9 @@ tailwind.config = {
 </head>
 <body class="bg-bone-white text-deep-ink font-body-md overflow-x-hidden">
 
-<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-deep-ink focus:text-bone-white focus:font-label-caps focus:text-label-caps">Skip to content</a>
-
 <!-- NAV:START -->
-<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-bone-white border-b border-deep-ink">
+<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-deep-ink focus:text-bone-white focus:font-label-caps focus:text-label-caps">Skip to content</a>
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-background border-b border-deep-ink">
   <div class="flex items-center gap-8">
     <a href="index.html" class="font-headline-md text-headline-md tracking-tighter text-deep-ink">JFSN</a>
     <nav class="hidden md:flex gap-6" aria-label="Primary">
@@ -199,7 +199,7 @@ tailwind.config = {
 
   <!-- Canvas stage (dark bg intentional — renders artwork pixels) -->
   <div class="mosaic-stage" id="mosaic-stage" style="display:none">
-    <canvas id="mosaic-canvas"></canvas>
+    <canvas id="mosaic-canvas" role="application" tabindex="0" aria-label="Portrait mosaic: all 1,084 works arranged to form a portrait of Jeffrey F. S. Neumann. Click a tile to open that work. Use the zoom buttons below. Press Escape to leave."></canvas>
   </div>
 
   <!-- Zoom controls -->
@@ -633,6 +633,12 @@ tailwind.config = {
 
 <script data-goatcounter="https://jfsn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
+<script>
+// Keyboard escape from canvas
+document.getElementById('mosaic-canvas').addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') { this.blur(); }
+});
+</script>
 <script src="_shared/nav-active.js" defer></script>
 <script>
 const _mh = document.querySelector('.reveal-header');

@@ -18,6 +18,7 @@
 <meta property="og:url" content="https://jfsn.com/"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="preload" href="artworks/full/art0953.avif" as="image" type="image/avif"/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -171,7 +172,7 @@
         /* Minimalist Folio — mobile snap scroll */
         .folio-container {
             scroll-snap-type: y mandatory;
-            height: calc(100vh - 4rem); /* subtract top nav */
+            height: calc(100dvh - 4rem); /* subtract top nav */
             overflow-y: scroll;
             -ms-overflow-style: none;
             scrollbar-width: none;
@@ -179,7 +180,7 @@
         .folio-container::-webkit-scrollbar { display: none; }
         .folio-section {
             scroll-snap-align: start;
-            height: calc(100vh - 4rem);
+            height: calc(100dvh - 4rem);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -207,11 +208,12 @@
 
 <!-- TopAppBar -->
 <!-- NAV:START -->
-<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-background border-b border-outline-variant">
+<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-deep-ink focus:text-bone-white focus:font-label-caps focus:text-label-caps">Skip to content</a>
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-background border-b border-deep-ink">
   <div class="flex items-center gap-8">
     <a href="index.html" class="font-headline-md text-headline-md tracking-tighter text-deep-ink">JFSN</a>
-    <nav class="hidden md:flex gap-6">
-      <a class="font-nav-link text-nav-link text-international-orange nav-underline-active" href="index.html">Archive</a>
+    <nav class="hidden md:flex gap-6" aria-label="Primary">
+      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="archive.html">Archive</a>
       <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="series-index.html">Series</a>
       <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="timeline.html">Timeline</a>
       <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="companion.html">Companion</a>
@@ -232,21 +234,31 @@
 <div class="md:hidden pt-16">
   <div class="folio-container" id="folio-container">
 
-    <!-- Snap 1: Hero -->
-    <section class="folio-section justify-start p-0">
-      <div class="w-full">
-        <img
-          src="artworks/full/art0953.avif"
-          alt="XXXIII Días Installation View — Jeffrey F. S. Neumann"
-          class="folio-artwork-img w-full object-cover border-b border-outline-variant"
-          style="height: 65vh;"
-          loading="eager"
-        />
-        <div class="px-5 pt-4 pb-2">
-          <span class="font-label-caps text-label-caps text-international-orange tracking-[0.2em] block mb-1">PERSONAL ARCHIVE</span>
-          <h1 class="font-display-lg text-[28px] leading-tight tracking-tight text-deep-ink italic">Jeffrey F. S. Neumann</h1>
-          <p class="font-body-md text-[13px] text-archive-gray mt-1">1,084 works · 1974 – present</p>
+    <!-- Snap 1: Full-bleed hero (mirrors desktop hero) -->
+    <section class="folio-section justify-start p-0 overflow-hidden">
+      <img
+        src="artworks/full/art0953.avif"
+        alt="XXXIII Días Installation View — Jeffrey F. S. Neumann"
+        class="absolute inset-0 w-full h-full object-cover"
+        loading="eager"
+        fetchpriority="high"
+      />
+      <!-- Dark veil -->
+      <div class="absolute inset-0" style="background: rgba(11,11,11,0.42);"></div>
+      <!-- Text overlay -->
+      <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-8 z-10">
+        <span class="font-label-caps text-label-caps text-international-orange tracking-[0.2em] block mb-3">PERSONAL ARCHIVE</span>
+        <h1 class="font-display-lg text-[36px] leading-[1.1] tracking-tight text-bone-white italic mb-3">Five Decades<br>of Making</h1>
+        <p class="font-body-md text-[13px] text-bone-white/70 mb-7">1,084 works · 1974 – present</p>
+        <div class="flex flex-col gap-3 w-full max-w-[220px]">
+          <a href="archive.html" class="py-3 bg-international-orange text-white font-label-caps text-label-caps text-center tracking-widest">EXPLORE ARCHIVE</a>
+          <a href="series-index.html" class="py-3 border border-bone-white/50 text-bone-white font-label-caps text-label-caps text-center tracking-widest hover:border-bone-white">VIEW SERIES</a>
         </div>
+      </div>
+      <!-- Scroll indicator -->
+      <div class="absolute bottom-8 left-0 right-0 flex flex-col items-center gap-2 z-10 pointer-events-none" style="animation: fadeInUp 1s ease 1.2s both;">
+        <span class="font-label-caps text-[9px] tracking-[0.2em] text-bone-white/50">SCROLL</span>
+        <div style="width:1px; height:32px; background: linear-gradient(to bottom, rgba(243,240,234,0.5), transparent); animation: scrollPulse 2s ease-in-out infinite;"></div>
       </div>
     </section>
 
@@ -258,7 +270,7 @@
             <img
               src="artworks/full/art0483.avif"
               alt="Untitled (CD Formation) 2 — Jeffrey F. S. Neumann, 1990"
-              class="folio-artwork-img w-full h-full object-contain border border-outline-variant"
+              class="folio-artwork-img w-full h-full object-contain border border-deep-ink"
               loading="eager"
             />
           </a>
@@ -281,7 +293,7 @@
             <img
               src="artworks/full/art1009.avif"
               alt="Untitled (Machine Assemblage) — Jeffrey F. S. Neumann, 2020"
-              class="folio-artwork-img w-full h-full object-contain border border-outline-variant"
+              class="folio-artwork-img w-full h-full object-contain border border-deep-ink"
               loading="lazy"
             />
           </a>
@@ -304,7 +316,7 @@
             <img
               src="artworks/full/art1010.avif"
               alt="Untitled (Cassette Torso) — Jeffrey F. S. Neumann, 2020"
-              class="folio-artwork-img w-full h-full object-contain border border-outline-variant"
+              class="folio-artwork-img w-full h-full object-contain border border-deep-ink"
               loading="lazy"
             />
           </a>
@@ -349,7 +361,7 @@
      DESKTOP — existing layout
      Hidden on mobile
      ═══════════════════════════════════════════════ -->
-<main class="hidden md:block pt-16">
+<main id="main" class="hidden md:block pt-16">
 
   <!-- Hero Section -->
   <section class="relative w-full overflow-hidden" style="height: 100dvh;" id="hero-section">
@@ -359,7 +371,7 @@
       src="artworks/full/art0953.avif"
       alt="XXXIII Días Installation View — Jeffrey F. S. Neumann"
       class="absolute inset-0 w-full h-full object-cover"
-      width="2800" height="1288" loading="eager"
+      width="2800" height="1288" loading="eager" fetchpriority="high"
     />
     <!-- Full overlay — light vignette so centered text is always readable -->
     <div class="absolute inset-0" style="background: rgba(11,11,11,0.38);"></div>
@@ -490,7 +502,7 @@
 </footer>
 
 <!-- Mobile bottom nav -->
-<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 px-4 bg-bone-white border-t border-outline-variant h-16" style="padding-bottom: env(safe-area-inset-bottom, 8px)" aria-label="Mobile navigation">
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 px-4 bg-bone-white border-t border-deep-ink h-16" style="padding-bottom: env(safe-area-inset-bottom, 8px)" aria-label="Mobile navigation">
   <a href="index.html" class="flex flex-col items-center justify-center text-international-orange font-bold scale-95">
     <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
     <span class="font-label-caps text-[10px]">Archive</span>

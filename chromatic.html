@@ -23,6 +23,7 @@
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;}}
     #river-wrap { position: relative; cursor: crosshair; }
     #river-canvas { display: block; width: 100%; }
+    #river-canvas:focus { outline: 2px solid #FF6600; outline-offset: 2px; }
     #river-cursor {
       position: absolute;
       top: 0;
@@ -126,7 +127,7 @@
     <div id="decade-labels" class="relative h-8 px-0" aria-hidden="true" style="background:#fcf9f3;border-bottom:1px solid #c4c7c7;"></div>
     <!-- Canvas -->
     <div id="river-wrap">
-      <canvas id="river-canvas" height="220" aria-label="Chromatic river: 1,084 works sorted by year, each shown as a vertical color slice"></canvas>
+      <canvas id="river-canvas" height="220" role="img" tabindex="0" aria-label="Chromatic river: 1,084 works sorted by year, each shown as a vertical color slice. Click a slice to open that work. Press Escape to leave."></canvas>
       <div id="river-cursor"></div>
     </div>
   </section>
@@ -207,6 +208,12 @@
 <div id="river-tooltip"></div>
 <img id="river-thumb" alt="">
 
+<script>
+// Keyboard escape from canvas
+document.getElementById('river-canvas').addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') { this.blur(); }
+});
+</script>
 <script src="_shared/nav-active.js" defer></script>
 <script>
 // Header reveal

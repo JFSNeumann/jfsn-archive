@@ -1,5 +1,17 @@
 [
   {
+    "sha": "068ea96",
+    "date": "2026-06-01",
+    "title": "index.html hero: full-screen color, centered, scroll indicator; series-index nav fix",
+    "body": "- index.html: full-bleed art0953 hero at 100dvh, full color, even rgba(11,11,11,0.38) veil,\n  text+buttons centered, pulsing SCROLL indicator at bottom\n- series-index.html: nav links fixed from font-body-md (16px) to font-nav-link (14px) — matches all other pages\n- CURRENT_STATE.md updated"
+  },
+  {
+    "sha": "1cb2642",
+    "date": "2026-06-01",
+    "title": "Stitch redesign complete: constellation, wall, changes, qa, jeff + Allison PDF",
+    "body": "- constellation.html: border-deep-ink on nav + mobile nav, bg-background body\n- wall.html: border-deep-ink nav/mobile nav, Playfair Display title, deep-ink grid gaps\n- changes.html: border-deep-ink nav/mobile nav, SHA hash color fixed for light bg\n- qa.html: full light system (bone-white bg, deep-ink text/borders), prefers-reduced-motion added\n- jeff.html: full rewrite — light Stitch system, clinical card grid, system clock, JetBrains Mono creds\n- make_handoff.py + JFSN-Archive-Handoff-Allison.pdf: light system to match site redesign\n- All 5 pages: border-deep-ink consistency pass, no Cormorant Garamond, no site.css refs"
+  },
+  {
     "sha": "1bac2ac",
     "date": "2026-06-01",
     "title": "Stitch redesign: token + border fixes across 15 pages; 404 redesign",

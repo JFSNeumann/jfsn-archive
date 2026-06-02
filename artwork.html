@@ -4,8 +4,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta name="theme-color" content="#fdf8f8"/>
-<title id="page-title">Artwork — Jeffrey F. S. Neumann</title>
-<meta name="description" id="page-desc" content="Work from the archive of Jeffrey F. S. Neumann."/>
+<title id="page-title">Archive — Jeffrey F. S. Neumann</title>
+<meta name="description" id="page-desc" content="A work from the personal archive of Jeffrey F. S. Neumann — 1,084 works spanning collage, sculpture, and photography, 1974–present."/>
 <link rel="canonical" id="page-canonical" href="https://jfsn.com/artwork.html"/>
 <link rel="icon" href="favicon.svg" type="image/svg+xml"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -132,24 +132,26 @@
 
 <!-- Top Nav -->
 <!-- NAV:START -->
-<header class="fixed top-0 left-0 w-full z-50 bg-bone-white border-b border-deep-ink">
-  <div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-md max-w-[1440px] mx-auto">
-    <a class="font-headline-md text-headline-md text-primary tracking-tighter" href="index.html">JFSN</a>
-    <nav class="hidden md:flex gap-lg items-center">
-      <a class="font-label-lg text-label-lg text-international-orange border-b border-international-orange" href="archive.html">ARCHIVE</a>
-      <a class="font-label-lg text-label-lg text-primary hover:text-international-orange transition-colors" href="series-index.html">SERIES</a>
-      <a class="font-label-lg text-label-lg text-primary hover:text-international-orange transition-colors" href="timeline.html">TIMELINE</a>
-      <a class="font-label-lg text-label-lg text-primary hover:text-international-orange transition-colors" href="companion.html">COMPANION</a>
-      <a class="font-label-lg text-label-lg text-primary hover:text-international-orange transition-colors" href="about.html">ABOUT</a>
+<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-deep-ink focus:text-bone-white focus:font-label-caps focus:text-label-caps">Skip to content</a>
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-background border-b border-deep-ink">
+  <div class="flex items-center gap-8">
+    <a href="index.html" class="font-headline-md text-headline-md tracking-tighter text-deep-ink">JFSN</a>
+    <nav class="hidden md:flex gap-6" aria-label="Primary">
+      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="archive.html">Archive</a>
+      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="series-index.html">Series</a>
+      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="timeline.html">Timeline</a>
+      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="companion.html">Companion</a>
+      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="about.html">About</a>
     </nav>
-    <button class="md:hidden" aria-label="Menu">
-      <span class="material-symbols-outlined">menu</span>
-    </button>
+  </div>
+  <div class="flex items-center gap-4">
+    <button class="material-symbols-outlined text-deep-ink hover:text-international-orange transition-colors" aria-label="Search">search</button>
+    <button class="md:hidden material-symbols-outlined text-deep-ink" aria-label="Menu">menu</button>
   </div>
 </header>
 <!-- NAV:END -->
 
-<main class="pt-[100px] pb-xl px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto">
+<main id="main" class="pt-[100px] pb-xl px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto">
 
   <!-- Back link -->
   <a href="archive.html" class="inline-flex items-center gap-xs font-label-md text-label-md text-secondary hover:text-international-orange transition-colors uppercase tracking-widest mb-lg">
@@ -356,8 +358,39 @@ fetch('catalog.json')
     // SEO
     const titleText = w.title || 'Untitled';
     document.getElementById('page-title').textContent = `${titleText} — Jeffrey F. S. Neumann`;
-    document.getElementById('page-desc').content = w.description || titleText;
+    document.getElementById('page-desc').content = w.description
+      ? `${w.description} — From the archive of Jeffrey F. S. Neumann.`
+      : `${titleText}${w.year ? ', ' + w.year : ''} — ${w.work_type || 'Work'} by Jeffrey F. S. Neumann.`;
     document.getElementById('page-canonical').href = `https://jfsn.com/artwork.html?id=${workId}`;
+
+    // JSON-LD structured data
+    const existingLd = document.getElementById('work-jsonld');
+    if (existingLd) existingLd.remove();
+    const ld = document.createElement('script');
+    ld.id = 'work-jsonld';
+    ld.type = 'application/ld+json';
+    ld.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "VisualArtwork",
+      "name": titleText,
+      "url": `https://jfsn.com/artwork.html?id=${workId}`,
+      "image": `https://jfsn.com/artworks/full/${w.file}`,
+      "dateCreated": w.year ? String(w.year) : undefined,
+      "artMedium": w.materials || w.work_type || undefined,
+      "artworkSurface": w.work_type || undefined,
+      "description": w.description || undefined,
+      "creator": {
+        "@type": "Person",
+        "name": "Jeffrey F. S. Neumann",
+        "url": "https://jfsn.com/about.html"
+      },
+      "isPartOf": {
+        "@type": "CollectionPage",
+        "name": "The Archive — Jeffrey F. S. Neumann",
+        "url": "https://jfsn.com/archive.html"
+      }
+    });
+    document.head.appendChild(ld);
 
     // Image
     const img = document.getElementById('work-image');

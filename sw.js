@@ -5,16 +5,29 @@
    - HTML/CSS/JS  → stale-while-revalidate
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-20260601205656';
+const CACHE_V  = 'jfsn-20260602-audit';
 const PRECACHE = [
   '/',
   '/index.html',
   '/archive.html',
+  '/artwork.html',
   '/about.html',
   '/series-index.html',
+  '/timeline.html',
+  '/companion.html',
+  '/lost.html',
+  '/collage.html',
+  '/photography.html',
+  '/sculpture.html',
+  '/painting.html',
   '/for-artists.html',
+  '/changes.html',
+  '/404.html',
   '/search.js',
   '/catalog-home.json',
+  '/_shared/ui.css',
+  '/_shared/ui.js',
+  '/_shared/nav-active.js',
 ];
 
 /* ── Install: precache core shell ─────────────────────────────────────────── */

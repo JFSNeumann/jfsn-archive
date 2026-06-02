@@ -36,7 +36,11 @@
                     "outline-variant": "#c4c7c7",
                     "on-surface": "#1c1c18",
                     "surface-container-high": "#ebe7e6",
-                    "surface-container": "#f1edec"
+                    "surface-container": "#f1edec",
+                    "deep-ink": "#0B0B0B",
+                    "bone-white": "#F3F0EA",
+                    "international-orange": "#FF6600",
+                    "archive-gray": "#575757"
             },
             "borderRadius": {
                     "DEFAULT": "0px",
@@ -62,7 +66,9 @@
                     "display-lg": ["Playfair Display"],
                     "label-md": ["Inter"],
                     "body-lg": ["Inter"],
-                    "body-md": ["Inter"]
+                    "body-md": ["Inter"],
+                    "nav-link": ["Inter"],
+                    "label-caps": ["Inter"]
             },
             "fontSize": {
                     "headline-lg": ["40px", {"lineHeight": "1.2", "fontWeight": "600"}],
@@ -71,7 +77,9 @@
                     "display-lg": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
                     "label-md": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "500"}],
                     "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
-                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}]
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "nav-link": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}]
             }
           },
         },
@@ -193,29 +201,26 @@
 <body class="font-body-md text-body-md bg-background text-on-background">
 
 <!-- NAV:START -->
-<nav class="fixed top-0 left-0 w-full z-50 bg-background border-b border-outline-variant">
-  <div class="flex justify-between items-center px-margin-desktop py-4 max-w-[1200px] mx-auto">
-    <a class="font-headline-md text-headline-md font-bold tracking-tighter text-primary" href="index.html">JFSN</a>
-    <div class="hidden md:flex items-center gap-8">
-      <a class="font-label-lg text-label-lg text-on-tertiary-container border-b-2 border-on-tertiary-container pb-1 uppercase" href="archive.html" aria-current="page">ARCHIVE</a>
-      <a class="font-label-lg text-label-lg text-primary opacity-80 hover:opacity-100 hover:text-on-tertiary-container transition-colors uppercase" href="series-index.html">SERIES</a>
-      <a class="font-label-lg text-label-lg text-primary opacity-80 hover:opacity-100 hover:text-on-tertiary-container transition-colors uppercase" href="timeline.html">TIMELINE</a>
-      <a class="font-label-lg text-label-lg text-primary opacity-80 hover:opacity-100 hover:text-on-tertiary-container transition-colors uppercase" href="companion.html">COMPANION</a>
-      <a class="font-label-lg text-label-lg text-primary opacity-80 hover:opacity-100 hover:text-on-tertiary-container transition-colors uppercase" href="about.html">ABOUT</a>
-    </div>
-    <div class="flex items-center gap-4">
-      <button class="p-2 text-primary hover:text-on-tertiary-container transition-colors" aria-label="Search">
-        <span class="material-symbols-outlined">search</span>
-      </button>
-      <button class="md:hidden p-2 text-primary" aria-label="Menu">
-        <span class="material-symbols-outlined">menu</span>
-      </button>
-    </div>
+<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-deep-ink focus:text-bone-white focus:font-label-caps focus:text-label-caps">Skip to content</a>
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-background border-b border-deep-ink">
+  <div class="flex items-center gap-8">
+    <a href="index.html" class="font-headline-md text-headline-md tracking-tighter text-deep-ink">JFSN</a>
+    <nav class="hidden md:flex gap-6" aria-label="Primary">
+      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="archive.html">Archive</a>
+      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="series-index.html">Series</a>
+      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="timeline.html">Timeline</a>
+      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="companion.html">Companion</a>
+      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="about.html">About</a>
+    </nav>
   </div>
-</nav>
+  <div class="flex items-center gap-4">
+    <button class="material-symbols-outlined text-deep-ink hover:text-international-orange transition-colors" aria-label="Search">search</button>
+    <button class="md:hidden material-symbols-outlined text-deep-ink" aria-label="Menu">menu</button>
+  </div>
+</header>
 <!-- NAV:END -->
 
-<main class="pt-[100px] pb-xl px-margin-mobile md:px-margin-desktop max-w-[1200px] mx-auto">
+<main id="main" class="pt-[100px] pb-xl px-margin-mobile md:px-margin-desktop max-w-[1200px] mx-auto">
 
   <!-- Page Header -->
   <header class="mb-lg border-b border-outline-variant pb-md flex justify-between items-end">
@@ -234,11 +239,11 @@
   <div class="md:hidden sticky top-[64px] z-40 bg-background border-y border-outline-variant py-3 -mx-margin-mobile px-margin-mobile mb-md" id="mobile-ledger">
     <div class="flex items-center gap-3 overflow-x-auto hide-scrollbar">
       <span class="font-label-md text-label-md text-secondary uppercase shrink-0">Medium:</span>
-      <button class="mobile-medium-btn font-label-lg text-label-lg uppercase px-2 py-1 whitespace-nowrap text-on-tertiary-container border-b-2 border-on-tertiary-container" data-val="">All</button>
-      <button class="mobile-medium-btn font-label-lg text-label-lg uppercase px-2 py-1 whitespace-nowrap border-b-2 border-transparent text-secondary" data-val="collage">Collage</button>
-      <button class="mobile-medium-btn font-label-lg text-label-lg uppercase px-2 py-1 whitespace-nowrap border-b-2 border-transparent text-secondary" data-val="photograph">Photo</button>
-      <button class="mobile-medium-btn font-label-lg text-label-lg uppercase px-2 py-1 whitespace-nowrap border-b-2 border-transparent text-secondary" data-val="sculpture">Sculpture</button>
-      <button class="mobile-medium-btn font-label-lg text-label-lg uppercase px-2 py-1 whitespace-nowrap border-b-2 border-transparent text-secondary" data-val="painting">Painting</button>
+      <button class="mobile-medium-btn font-label-lg text-label-lg uppercase px-3 py-3 whitespace-nowrap min-h-[44px] text-on-tertiary-container border-b-2 border-on-tertiary-container" data-val="">All</button>
+      <button class="mobile-medium-btn font-label-lg text-label-lg uppercase px-3 py-3 whitespace-nowrap min-h-[44px] border-b-2 border-transparent text-secondary" data-val="collage">Collage</button>
+      <button class="mobile-medium-btn font-label-lg text-label-lg uppercase px-3 py-3 whitespace-nowrap min-h-[44px] border-b-2 border-transparent text-secondary" data-val="photograph">Photo</button>
+      <button class="mobile-medium-btn font-label-lg text-label-lg uppercase px-3 py-3 whitespace-nowrap min-h-[44px] border-b-2 border-transparent text-secondary" data-val="sculpture">Sculpture</button>
+      <button class="mobile-medium-btn font-label-lg text-label-lg uppercase px-3 py-3 whitespace-nowrap min-h-[44px] border-b-2 border-transparent text-secondary" data-val="painting">Painting</button>
     </div>
   </div>
 
@@ -374,13 +379,12 @@
     <p class="font-label-caps text-[10px] text-archive-gray">© 2026 JEFFREY F. S. NEUMANN. ALL RIGHTS RESERVED.</p>
     <div class="flex gap-8">
       <a class="font-label-caps text-[10px] text-archive-gray hover:text-deep-ink" href="privacy.html">PRIVACY</a>
-      <a class="font-label-caps text-[10px] text-archive-gray hover:text-deep-ink" href="#">TERMS</a>
     </div>
   </div>
 </footer>
 
 <!-- Mobile bottom nav -->
-<nav id="mobile-bottom-nav" class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 px-4 bg-background border-t border-outline-variant h-16 transition-transform duration-300" style="padding-bottom: env(safe-area-inset-bottom, 8px)" aria-label="Mobile navigation">
+<nav id="mobile-bottom-nav" class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 px-4 bg-bone-white border-t border-deep-ink h-16 transition-transform duration-300" style="padding-bottom: env(safe-area-inset-bottom, 8px)" aria-label="Mobile navigation">
   <a href="index.html" class="flex flex-col items-center justify-center text-secondary">
     <span class="material-symbols-outlined">home</span>
     <span class="font-label-md text-[10px] uppercase">Home</span>
