@@ -1,59 +1,49 @@
 # Current State
 **Updated:** 2026-06-02
 
-## This session — Full improvement run
+## Site status — clean ✅
 
-### Performance
-- Tailwind CDN (1.5MB, render-blocking) replaced with built `site.min.css` (31KB) on all 29 pages
-- `tailwind.config.js` + `input.css` added; rebuild: `./node_modules/.bin/tailwindcss -i input.css -o site.min.css --minify`
-- `node_modules/` gitignored + deploy-excluded; `package.json` stays for dep tracking
-- index.html desktop + mobile hero: `fetchpriority="high"` + `<link rel="preload">` on art0953
-- 1970s–2020s: first 4 thumbnails each changed `loading="lazy"` → `loading="eager" fetchpriority="high"`
-- sw.js PRECACHE expanded 8 → 21 URLs
+Everything from this session is live on jfsn.com.
 
-### Search — now works everywhere
-- `search.js` loads on all 13 Stitch pages (was never loaded after redesign)
-- Nav search button wired: clicking the 🔍 icon opens the ⌘K overlay
-- `search.js` is self-contained: injects its own CSS, works on any page
+---
 
-### SEO — 1,084 pages now indexable
-- `artworks/pages/artNNNN.html` — static pre-rendered page for every work
-- Each has unique `<title>`, `<meta description>`, JSON-LD VisualArtwork schema, OG tags
-- Instant `<meta http-equiv="refresh">` redirect for real visitors; Googlebot reads full metadata
-- `artwork.html` JS: unique description constructed per work + `VisualArtwork` JSON-LD injected on load
+## What shipped this session
 
-### Canvas accessibility
-- constellation, chromatic, mosaic canvases: `tabindex="0"`, `role`, focus ring, Escape-to-blur
-- wall.html: already fine (`<a>` tiles, no canvas)
+| | What | Impact |
+|---|---|---|
+| ✅ | Tailwind CDN (1.5MB) → `site.min.css` (31KB) | ~300ms faster load on every page |
+| ✅ | Search button wired on all pages | Was dead since the May redesign |
+| ✅ | 1,084 static artwork pages (`artworks/pages/`) | Googlebot reads every work without JS |
+| ✅ | sitemap.xml: 1,106 → 2,190 URLs | All 1,084 artwork pages discoverable |
+| ✅ | Companion model: `claude-sonnet-4-6-20250514` | Fixed missing date suffix |
+| ✅ | CSP: stale cdn.tailwindcss.com removed | Tighter security |
+| ✅ | Canvas a11y: constellation, chromatic, mosaic | tabindex, role, focus ring, Escape |
+| ✅ | Mobile hero snap 1 redesign | Full-bleed, dark veil, CTAs, SCROLL indicator |
+| ✅ | All nav/mobile/desktop QA passes | Borders, skip links, touch targets |
 
-### QA fixes (nav, mobile, a11y)
-- All 22 pages: nav border `border-deep-ink`; mobile bottom nav `border-deep-ink`
-- Skip-to-content on all pages via stamped nav
-- `id="main"` on all `<main>` elements
-- Mobile hero snap 1: full-bleed redesign matching desktop (dark veil, overlay text+CTAs, SCROLL indicator)
-- archive.html mobile filter buttons: touch targets raised to 44px
+---
+
+## One manual step — do this now
+**Google Search Console → Sitemaps → submit `sitemap.xml`**
+jfsn.com already verified. Submitting tells Google to index the 2,190 URLs including all 1,084 artwork pages.
 
 ---
 
 ## To do next session
-- [ ] Test companion.html live at jfsn.com/companion.html (AI still working?)
-- [ ] about.html exhibitions: add real show history when ready (~line 184)
-- [ ] Submit `artworks/pages/` URLs to Google Search Console (or add to sitemap.xml)
-- [ ] Consider adding artworks/pages/ links to sitemap.xml for faster Googlebot discovery
+- [ ] Ingest new work when photos are ready (`bash add-works.sh` → catalog → deploy)
+- [ ] about.html: add real exhibition details when ready (~line 184)
+- [ ] Test companion.html live on iPhone: open jfsn.com/companion.html, type something, confirm a work comes back
 
-## Rebuild CSS (after adding new pages or tokens)
+## Rebuild CSS (if you add new pages or tokens)
 ```
+cd /Users/jeffreyneumann/Documents/JFSN
 ./node_modules/.bin/tailwindcss -i input.css -o site.min.css --minify
 ```
-
-## Known issues
-- companion.html: test live at jfsn.com/companion.html to confirm AI still works
-- artwork.html canonical: JS-only static fallback still lacks `?id=`. Static pages in artworks/pages/ solve this for Googlebot.
-- artworks/pages/ not yet in sitemap.xml — add when ready to accelerate indexing
+Then commit + deploy.
 
 ## Site is live at
-- jfsn.com  (primary — cPanel)
-- jfsn-archive.netlify.app  (secondary — Netlify, has Companion function)
+- jfsn.com (primary — cPanel/HostGator)
+- jfsn-archive.netlify.app (secondary — has Companion edge function)
 
 ## Archive stats
-- 1084 works cataloged, 0 errors
+- 1,084 works cataloged · 0 errors · 2,190 sitemap URLs
