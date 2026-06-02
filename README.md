@@ -2,7 +2,7 @@
 
 A static, open-source archive site for visual artists. No CMS, no database, no monthly fees. Built for [jfsn.com](https://jfsn.com) — 1,084 works spanning 50 years, live on a $5/month shared host.
 
-**Don't want to set it up yourself?** I build these for other artists, starting at $500. Reply within 48 hours. → [jfsn.com/for-artists](https://jfsn.com/for-artists.html)
+**Don't want to set it up yourself?** I build these for other artists, starting at $500. → [jfsn.com/for-artists](https://jfsn.com/for-artists.html)
 
 ---
 
@@ -10,15 +10,18 @@ A static, open-source archive site for visual artists. No CMS, no database, no m
 
 ![Archive grid, timeline, and constellation view](https://jfsn.com/og-card.jpg)
 
-- **Archive** — masonry grid, full-text search, filters by decade/theme/series/palette, favorites
+- **Archive** — masonry grid, full-text search (⌘K), filters by decade/theme/series/palette, favorites
 - **Series** — theme and named-series pages with work counts
-- **Timeline** — decade strips from 1970s–2020s
-- **Constellation** — d3-force galaxy view, theme clusters, pan/zoom, search
+- **Timeline** — horizontal scrub strip, all dated works 1974–present
+- **Constellation** — D3 force-directed galaxy, theme clusters, pan/zoom, search
+- **Chromatic River** — HiDPI canvas of all works as color slices by year
+- **Wall** — all 1,084 works as a dense mini grid
 - **Mosaic** — photomosaic of all works forming a portrait
 - **Artwork detail** — lightbox, keyboard/swipe nav, related works, color palette, JSON-LD structured data
+- **Static artwork pages** — 1,084 pre-rendered pages with unique title/description for Google indexing
 - **Companion** — AI assistant with full knowledge of the archive (Netlify Function + Claude API)
 - **Open Archive API** — auto-generated `api/v1/` endpoints (works, themes, motifs, palette, series)
-- **RSS feed** — `feed.xml` of the 20 most recently added works, autodiscovery on every page
+- **RSS feed** — `feed.xml` of the 20 most recently added works
 - **Service worker** — offline-first, auto-cache-busted on every build
 - **AI auto-cataloging** — Claude reads your images and writes titles, descriptions, themes, palette, motifs
 
@@ -28,13 +31,8 @@ Works on Netlify (free), GitHub Pages (free), or cPanel shared hosting (~$5/mont
 
 ## Want one built for you?
 
-I built this for my own 50-year archive and now build them for other artists. You send photos, I deploy a live archive to your domain — usually within a week.
-
-→ **[See the service and pricing at jfsn.com/for-artists](https://jfsn.com/for-artists.html)**
-
+→ **[jfsn.com/for-artists](https://jfsn.com/for-artists.html)**  
 Starting at $500 · One-time fee · No ongoing costs · Full source code handed off
-
----
 
 ---
 
@@ -53,14 +51,22 @@ cd my-archive
 ./init.sh   # wizard: name, URL, themes, series → writes artist-config.json
 ```
 
-Or edit `artist-config.json` directly. All scripts and browser JS read from it — no need to touch `vocab.py` or `build_catalog.py`.
+Or edit `artist-config.json` directly.
 
 ### 3. Add your artwork
 
-Drop photos into `artworks/inbox/`:
+Drop photos into `artworks/inbox/`, then:
 
 ```bash
-python3 artworks/ingest.py   # converts HEIC/JPG → AVIF, assigns IDs, builds thumbs
+bash add-works.sh              # ingest + catalog + build
+bash add-works.sh --no-deploy  # ingest + build only
+bash add-works.sh --dry-run    # preview what would happen
+```
+
+Or step by step:
+
+```bash
+python3 artworks/ingest.py     # HEIC/JPG → AVIF, assigns IDs, builds thumbs
 ```
 
 ### 4. Auto-catalog
@@ -71,7 +77,7 @@ python3 artworks/catalog.py --limit 5  # test on 5 first
 python3 artworks/catalog.py            # process all
 ```
 
-Uses `claude-sonnet-4-6`. Cost: ~$0.01–0.02 per image.
+Uses `claude-haiku-4-5` (fast + cheap). Cost: ~$0.01–0.02 per image.
 
 ### 5. Build & preview
 
@@ -80,26 +86,57 @@ python3 artworks/build_catalog.py   # outputs catalog.json, sitemap.xml, feed.xm
 python3 server.py                   # http://localhost:3900
 ```
 
-### 6. Deploy
+### 6. Build CSS
+
+After adding new pages or tokens:
 
 ```bash
-cp .ftp.env.example .ftp.env        # fill in your host/user/pass
-./deploy.sh                          # build → upload → verify
+./node_modules/.bin/tailwindcss -i input.css -o site.min.css --minify
+```
+
+Install once with `npm install` (Tailwind v3 is in `package.json`).
+
+### 7. Deploy
+
+```bash
+cp .ftp.env.example .ftp.env   # fill in your host/user/pass
+bash end-session.sh             # git commit + push + backup
+bash deploy.sh                  # FTP upload to server
 ```
 
 Or drag the folder into Netlify / GitHub Pages.
 
 ---
 
+## Design system
+
+The site uses a custom light design system built on Tailwind CSS:
+
+| Token | Value | Use |
+|-------|-------|-----|
+| `background` | `#fcf9f3` | Page background (bone-white) |
+| `deep-ink` | `#0B0B0B` | Primary text |
+| `international-orange` | `#FF6600` | Accent — hover, active links only |
+| `archive-gray` | `#575757` | Secondary text, labels |
+| `outline-variant` | `#c4c7c7` | Borders |
+| Headings | Playfair Display | 400–700 |
+| UI / labels | Inter ALL CAPS | 0.1em tracking |
+
+Rules: no rounded corners · no shadows · no gradients · artwork thumbnails grayscale by default, color on hover.
+
+CSS is pre-built to `site.min.css` (31KB). The Tailwind CDN is not used in production.
+
+---
+
 ## iPhone pipeline
 
-Shoot in HEIC (flat 2D works) or JPEG. Drop files into `artworks/inbox/`. Run:
+Shoot in HEIC or JPEG. Drop files into `artworks/inbox/`. Run:
 
 ```bash
-python3 artworks/ingest.py
+bash add-works.sh
 ```
 
-This auto-assigns sequential IDs (`art0001`, `art0002`, …), converts to AVIF, and creates full-res, thumbnail (400px), and mini (200px) sizes.
+Auto-assigns sequential IDs (`art0001`, `art0002`, …), converts to AVIF, creates full-res / thumbnail (400px) / mini (200px) sizes, AI-catalogs, builds, and deploys.
 
 ---
 
@@ -107,35 +144,28 @@ This auto-assigns sequential IDs (`art0001`, `art0002`, …), converts to AVIF, 
 
 | Script | Purpose |
 |--------|---------|
-| `artworks/ingest.py` | iPhone/HEIC → AVIF pipeline |
-| `artworks/catalog.py` | AI cataloging via Anthropic API |
+| `add-works.sh` | Full ingest pipeline: inbox → AVIF → catalog → build → deploy |
+| `artworks/ingest.py` | HEIC/JPG → AVIF conversion and ID assignment |
+| `artworks/catalog.py` | AI cataloging via Anthropic API (claude-haiku-4-5) |
 | `artworks/validate_catalog.py` | Schema QA — run before building |
-| `artworks/build_catalog.py` | Publishes catalog.json + sitemap.xml + feed.xml + api/v1/ + stamps cache busters |
-| `artworks/build_dims.py` | Rebuilds dims.json for masonry layout |
+| `artworks/build_catalog.py` | Publishes catalog.json + sitemap.xml + feed.xml + api/v1/ |
 | `artworks/make_colors.py` | Extracts dominant colors → colors.json |
-| `deploy.sh` | One-command: build → upload → verify |
-| `artworks/verify_deploy.py` | 16 live-site health checks |
+| `end-session.sh` | git commit + push + backup (does NOT deploy) |
+| `deploy.sh` | FTP mirror to HostGator + health check |
+| `backup.sh` | rsync to external drive (JEFFS-4TB) |
+| `stamp-nav.sh` | Propagates `_shared/top-nav.html` nav to all Stitch pages |
 
 ---
 
 ## Fork for your own archive
 
-Everything artist-specific lives in one file: **`artist-config.json`** at the project root.
+Everything artist-specific lives in one file: **`artist-config.json`**.
 
 ```bash
 git clone https://github.com/jfsneumann/jfsn-archive.git my-archive
 cd my-archive
-./init.sh      # wizard: name, URL, themes, series → writes artist-config.json
+./init.sh   # wizard → writes artist-config.json
 ```
-
-The wizard creates your config. Then fill in descriptions and run:
-
-```bash
-python3 artworks/build_catalog.py   # generates artist-config.js for browser pages
-```
-
-That's it. All HTML pages, the AI cataloging prompt, and the API endpoints pull from
-`artist-config.json` automatically.
 
 ### What artist-config.json controls
 
@@ -146,37 +176,17 @@ That's it. All HTML pages, the AI cataloging prompt, and the API endpoints pull 
 | `named_series` | AI prompt, series pages, series index, filter chips |
 | `palette` / `motifs` / `materials` | AI prompt controlled vocabulary |
 
-### Vocabulary migrations
-
-When you change or rename a theme/series after cataloging has run, existing sidecar
-JSON files need updating. Add a numbered script to `vocab-migrations/`:
-
-```bash
-python3 vocab-migrations/001_remove_old_theme.py          # dry-run
-python3 vocab-migrations/001_remove_old_theme.py --run    # apply
-```
-
-See `vocab-migrations/README.md` for the naming convention and history.
-
 ---
 
 ## Configuration
 
-Key files to edit when setting up as your own archive:
-
 | File | What to change |
 |------|---------------|
-| **`artist-config.json`** | **Everything** — artist name, site URL, themes, series, palette, motifs |
-| `about.html` | Your bio, name, exhibitions, contact |
-| `featured.txt` | Which works appear on the homepage |
-| `.ftp.env` | FTP host/user/pass (never commit — already in .gitignore) |
-| `site.css` (`:root` tokens) | Colors, fonts, spacing |
-
-### Themes and series
-
-Edit `artist-config.json` to define your themes and series. The AI cataloging prompt,
-browser filter chips, constellation view, and all series pages read from it automatically
-after running `python3 artworks/build_catalog.py`.
+| **`artist-config.json`** | Artist name, site URL, themes, series, palette, motifs |
+| `about.html` | Bio, exhibitions, contact |
+| `featured.txt` | Works shown on homepage (run `build_catalog.py` after) |
+| `.ftp.env` | FTP host/user/pass (gitignored) |
+| `tailwind.config.js` | Color tokens, fonts, spacing |
 
 ---
 
@@ -184,17 +194,28 @@ after running `python3 artworks/build_catalog.py`.
 
 | Host | Cost | Notes |
 |------|------|-------|
-| **Netlify** | Free | Drag-drop or CLI. Auto-deploys from GitHub. Companion AI function requires Netlify. |
+| **Netlify** | Free | Drag-drop or CLI. Companion AI requires Netlify. |
 | **GitHub Pages** | Free | Push `main` → live. No server-side functions. |
-| **cPanel shared hosting** | ~$5/mo | Use `deploy.sh` with FTP credentials. Images stay on server, not in git. |
+| **cPanel shared hosting** | ~$5/mo | Use `deploy.sh` with FTP credentials. |
 
 ---
 
 ## Companion (AI assistant)
 
-The Companion is a Claude-powered chat interface with full knowledge of the archive — every work, theme, series, and year. It lives at `/companion.html` and requires a Netlify Function (`netlify/functions/companion.js`) with an `ANTHROPIC_API_KEY` environment variable set in your Netlify dashboard.
+Claude-powered chat at `/companion.html`. Knows every work, theme, series, and year. Requires a Netlify Function (`netlify/functions/companion.mjs`) with `ANTHROPIC_API_KEY` set in your Netlify dashboard.
 
-It does not work on GitHub Pages or cPanel (no server-side function support).
+Uses `claude-haiku-4-5` for fast queries, `claude-sonnet-4-6` for deep search.
+
+Does not work on GitHub Pages or plain cPanel (no server-side function support).
+
+---
+
+## SEO
+
+- **Static artwork pages** — `artworks/pages/artNNNN.html` pre-renders title, description, and JSON-LD `VisualArtwork` schema for all 1,084 works. Googlebot can index without JS rendering.
+- **Sitemap** — `sitemap.xml` auto-generated with 2,190 URLs including all artwork pages.
+- **Structured data** — `CollectionPage` JSON-LD on archive pages, `VisualArtwork` on artwork pages, `Person` on about page.
+- **Canonical tags** — static on all pages, dynamic on artwork pages.
 
 ---
 
@@ -204,7 +225,7 @@ Each artwork gets a JSON sidecar in `artworks/full/`:
 
 ```json
 {
-  "file": "art0001.avif",
+  "file": "art0001",
   "title": "Effigy in Red",
   "year": 1987,
   "work_type": "collage",
@@ -213,9 +234,9 @@ Each artwork gets a JSON sidecar in `artworks/full/`:
   "motifs": ["compact-disc", "photographic-face"],
   "materials": ["paper", "paint"],
   "composition": "axial vertical totem on flat ground",
-  "themes": ["Totems", "Torsos & Faces"],
+  "themes": ["Targets", "Torsos & Faces"],
   "series": null,
-  "keywords": ["lace-cross-arrangement"],
+  "keywords": ["assemblage", "portrait"],
   "featured": false,
   "schema_version": "1"
 }
@@ -227,7 +248,7 @@ Each artwork gets a JSON sidecar in `artworks/full/`:
 
 ## Open Archive API
 
-Auto-generated on every build. No server required — pure static JSON.
+Auto-generated on every build. Pure static JSON — no server required.
 
 | Endpoint | Description |
 |----------|-------------|
@@ -243,22 +264,16 @@ CC BY 4.0 by default (metadata only — you control your image rights).
 
 ---
 
-## RSS feed
-
-`feed.xml` is auto-generated by `build_catalog.py` — the 20 most recently added works, with title, description, and thumbnail. Subscribe in any RSS reader. Autodiscovery `<link>` tag is present on every page.
-
----
-
 ## License
 
 Code: [MIT](LICENSE)  
-Artwork and content: belongs to the artist using this template. This repo includes placeholder/sample data only — replace with your own work.
+Artwork and content: belongs to the artist. This repo includes sample data only — replace with your own work.
 
 ---
 
 ## Credits
 
 Built by [Jeff Neumann](https://jfsn.com) — artist, product designer, Cleveland.  
-Open-sourced so other artists can build their own archive without starting from scratch.
+Open-sourced so other artists can build their own archive.
 
-If this saved you time, [buy me a coffee](https://github.com/sponsors/JFSNeumann) or [hire me to build yours](https://jfsn.com/for-artists.html).
+[Hire me to build yours](https://jfsn.com/for-artists.html) · [Buy me a coffee](https://github.com/sponsors/JFSNeumann)
