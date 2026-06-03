@@ -1,36 +1,30 @@
 # Current State
-**Updated:** 2026-06-02 (PM session)
+**Updated:** 2026-06-02 (evening)
 
 ## Last commit
-d7d08ea — Update api/v1, changes.json, feed.xml, sw.js
+7c714a9 — Nav/footer audit + color fade on all image grids
+*(uncommitted: SW hero-preload fix + Companion fixes + netlify.toml fix — run end-session.sh)*
 
 ## To do next session
-<!-- Edit this section before closing -->
-- [ ] Run `bash end-session.sh` then `bash deploy.sh` after this session
-- [ ] Test color fade effect in real browser after SW unregister (Application → Service Workers → Unregister, hard reload)
+- [ ] **Deploy** — run `bash end-session.sh && bash deploy.sh` if not done
+- [ ] **Test Companion live** — open jfsn.com/companion.html on iPhone, confirm a work comes back
+- [ ] **Test for-artists form** — `jfsn-archive.netlify.app/for-artists.html`, submit, confirm redirect
+- [ ] **Submit sitemap to Google Search Console** — 2,190 URLs ready
 
-## What shipped this session
-- **nav-active.js** — removed index.html→archive.html mapping; homepage no longer highlights Archive
-- **Hamburger menus fixed** on 9 pages that had broken/decorative buttons: changes, chromatic, constellation, for-artists, guernica, privacy, series, wall, 404
-- **stamp-nav.sh** now stamps both nav AND footer; _shared/footer.html is canonical footer source
-- **All footers unified** — 21 Stitch pages now identical footer; decade pages identical; index.html intentionally unique
-- **Mobile drawer added** to all 6 decade pages (1970s–2020s) with full nav + By Decade section
-- **Decade page links** — Timeline decade labels → clickable links to decade pages; Archive sidebar → ↗ links next to each decade filter
-- **Color fade at bottom of images** (mask-image + background-image) added to:
-  - All 6 decade pages (1970s–2020s)
-  - guernica.html, series.html (JS block added)
-  - archive.html (renderCard template updated)
-  - series-index.html (template + hover handlers)
-  - collage/sculpture/photography/painting — already had it
-- **Grayscale hover fix** — inline CSS rule added to all 6 decade pages so SW cache can't block it; rule also in site.min.css
-- **sw.js CACHE_V** bumped to `jfsn-20260602-b`
+## Cleanup pending (safe to do any time)
+- `old-site/` local — 197MB, `rm -rf /Users/jeffreyneumann/Documents/JFSN/old-site/`
+- `old-site/` on server — delete via FileZilla (contains previous-tenant HTML, not your work)
+- `site.css` — can go once `api.html` is migrated to light system (only remaining user)
+- Internal tools on server (`curate.html`, `dedupe.html`) — harmless but publicly reachable; consider excluding from `deploy.sh`
 
 ## Known issues
-- Service worker cache blocks new CSS/HTML until user unregisters SW in DevTools. Fix: deploy to HostGator (fresh files served without SW caching issues for new visitors).
+- ~~Service worker black screen on index.html first load~~ — **FIXED 2026-06-02**: hero AVIF added to SW precache; dark fallback bg added to hero section; CACHE_V bumped. Deploy required to take effect.
+- **Companion — WORKING** ✅ confirmed live 2026-06-02. Returns real artwork matches.
+- **for-artists form** — Netlify now up to date. Submit a test inquiry from the live site to confirm email notifications are enabled in Netlify dashboard (Forms → Notifications).
 
 ## Site is live at
 - jfsn.com  (primary — cPanel)
 - jfsn-archive.netlify.app  (secondary — Netlify, has Companion function)
 
 ## Archive stats
-- 1084 works cataloged, 0 errors
+- 1,084 works cataloged, 0 errors

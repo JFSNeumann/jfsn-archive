@@ -1,5 +1,11 @@
 [
   {
+    "sha": "7c714a9",
+    "date": "2026-06-02",
+    "title": "Nav/footer audit + color fade on all image grids",
+    "body": "- nav-active.js: remove index.html→archive.html mapping (homepage no longer highlights Archive)\n- Hamburger fixed on 9 Stitch pages (changes, chromatic, constellation, for-artists, guernica, privacy, series, wall, 404)\n- Mobile drawer added to all 6 decade pages (1970s–2020s) with full nav + By Decade section\n- stamp-nav.sh: now stamps both nav AND footer; _shared/footer.html is canonical footer source\n- All 21 Stitch page footers unified; decade pages unified separately\n- Timeline decade labels → clickable links to decade pages\n- Archive sidebar: ↗ links next to each decade filter\n- Color fade at bottom of images (mask-image + background-image) added to decade pages, guernica, series, archive, series-index\n- Grayscale hover fix: inline CSS in all 6 decade pages (SW-cache-proof) + site.min.css\n- sw.js CACHE_V bumped to jfsn-20260602-b"
+  },
+  {
     "sha": "d7d08ea",
     "date": "2026-06-02",
     "title": "Update api/v1, changes.json, feed.xml, sw.js",

@@ -9,8 +9,9 @@
   node_bundler = "esbuild"
 
 # ── Edge Functions ─────────────────────────────────────────────────────────────
-[edge_functions]
-  directory = "netlify/edge-functions"
+[[edge_functions]]
+  path     = "/artwork.html"
+  function = "artwork-meta"
 
 # ── Rewrites ──────────────────────────────────────────────────────────────────
 # Let the old site (in /old/) share artwork images from the root artworks/ folder.

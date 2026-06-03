@@ -7,6 +7,11 @@ A living list. Add to it. Cross things off. This is the backlog.
 
 ## 🔴 Do soon
 
+- [ ] **index.html duplicate h1** — mobile and desktop sections each render an `<h1>`. Add `aria-hidden="true"` to the mobile one (it's visually hidden on desktop anyway). One-liner.
+- [ ] **api.html — migrate off old dark system** — still loads `site.css` and uses dark CSS vars (`--muted`, `--dim`, `--accent`, `--font-display`). Last page on the old system. Once migrated, `site.css` can be deleted from both local and server. Medium effort — bespoke styles are mostly inline.
+- [ ] **Delete `old-site/` locally** — 197MB of the pre-redesign site. Not deployed. Trash it. (`rm -rf /Users/jeffreyneumann/Documents/JFSN/old-site/`)
+- [ ] **Delete `old-site/` on server** — leftover folder at jfsn.com/old-site/ with files like `ai-powered-solutions.html`, `automobile-designs.html` from previous tenant. Delete via FileZilla or cPanel File Manager.
+
 - [ ] **Test Companion live** — open jfsn.com/companion.html on iPhone, type something, confirm a work comes back. Known untested since the redesign.
 - [ ] **Test for-artists inquiry form** — go to `jfsn-archive.netlify.app/for-artists.html`, submit form, confirm redirect to `?sent=1#inquire` (form only works on Netlify, not HostGator)
 - [ ] **Test timeline scrub on mobile** — drag the strip left/right on iPhone, confirm it scrolls through years (no touch handler found in code — may be CSS scroll only)
@@ -21,7 +26,6 @@ A living list. Add to it. Cross things off. This is the backlog.
 - [ ] **Series page URLs** — `/series.html?theme=Targets` is JS-only. Generate static `targets.html`, `torsos.html` etc. from `catalog.json` for direct Google indexing.
 - [ ] **About page expansion** — more bio keywords in body text (Cleveland, mixed-media, assemblage) for Knowledge Panel signals.
 - [ ] **artwork.html JSON-LD in static shell** — JSON-LD is currently JS-injected per work. Static shell has no JSON-LD so server-side scrapers that don't execute JS see nothing. The 1,084 `artworks/pages/` redirect pages each have proper JSON-LD — this is the real fix path (generate full static pages instead of redirect stubs).
-- [ ] **index.html duplicate h1** — mobile and desktop sections each render an h1 ("Five Decades of Making"). Not a ranking penalty but worth cleaning: hide one with `aria-hidden` or consolidate to a single h1 visible in both contexts.
 
 ### Performance
 - [ ] **Preload first-row artwork thumbnails** — `collage.html`, `photography.html`, `sculpture.html`, `painting.html` should add `<link rel="preload">` for the first 4 visible thumbs.
@@ -59,6 +63,9 @@ A living list. Add to it. Cross things off. This is the backlog.
 
 ## ✅ Done (recent)
 
+- [x] **SW hero black screen on index.html** — `art0953.avif` added to SW precache; dark warm fallback bg (`#1a1814`) on both mobile + desktop hero sections; CACHE_V bumped. Deploy required.
+- [x] **Companion broken** — three fixes: model IDs updated to `claude-haiku-4-5` + `claude-sonnet-4-6` (was using wrong/dated strings); `budget_tokens` → `thinking: {type: 'adaptive'}` (was 400ing on Sonnet 4.6); `netlify.toml` syntax error fixed (`[edge_functions]` → `[[edge_functions]]` with path/function); `npm install` run in functions dir; Netlify redeployed. Confirmed working.
+- [x] **Netlify stale** — site hadn't deployed since before the redesign. Fixed `netlify.toml` TOML syntax error that was blocking all deploys. Full prod deploy complete 2026-06-02.
 - [x] **Artwork page ← → keyboard nav** — added `_prevHref`/`_nextHref` vars + keydown handler; shortcut now works after catalog loads
 - [x] **Dead TERMS link** — `href="#"` on 11 pages (6 decade + about, artwork, companion, series-index, timeline) → now points to `privacy.html`
 - [x] **Search button dead on 11 pages** — `search.js` missing from decade pages, chromatic, wall, constellation, guernica, privacy (fixed prior session)
