@@ -407,7 +407,7 @@ fetch('catalog.json')
     document.getElementById('page-desc').content = w.description
       ? `${w.description} — From the archive of Jeffrey F. S. Neumann.`
       : `${titleText}${w.year ? ', ' + w.year : ''} — ${w.work_type || 'Work'} by Jeffrey F. S. Neumann.`;
-    document.getElementById('page-canonical').href = `https://jfsn.com/artwork.html?id=${workId}`;
+    document.getElementById('page-canonical').href = `https://jfsn.com/artworks/pages/${workId}.html`;
 
     // og: tags — update dynamically so social shares resolve per-work
     const ogDesc = w.description

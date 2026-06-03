@@ -1,8 +1,8 @@
 # Current State
-**Updated:** 2026-06-02 20:25
+**Updated:** 2026-06-02 20:47
 
 ## Last commit
-f85319d — Add 8 static theme/series pages for SEO
+e66f128 — Rebuild 1,084 artwork pages as full static HTML
 
 ## To do next session
 <!-- Edit this section before closing -->

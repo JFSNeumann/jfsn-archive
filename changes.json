@@ -1,5 +1,11 @@
 [
   {
+    "sha": "e66f128",
+    "date": "2026-06-02",
+    "title": "Rebuild 1,084 artwork pages as full static HTML",
+    "body": "Replaces meta-refresh redirect stubs with complete artwork detail pages.\nEach page: image (grayscale→color hover), title, year, medium, description,\npalette swatches, motifs, composition, theme/series links, prev/next strip,\n4 related works, VisualArtwork + BreadcrumbList JSON-LD, canonical, OG tags.\n\nSitemap updated: artworks/pages/artNNNN.html replaces artwork.html?id=artNNNN\nso Googlebot hits full content on first crawl without JS rendering.\n\nGenerator: gen-artwork-pages.py"
+  },
+  {
     "sha": "f85319d",
     "date": "2026-06-02",
     "title": "Add 8 static theme/series pages for SEO",
