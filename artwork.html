@@ -26,10 +26,15 @@
         }
         .grayscale-img {
             filter: grayscale(100%);
-            transition: filter 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            -webkit-mask-image: linear-gradient(to bottom, black 0%, black 65%, transparent 100%);
+            mask-image: linear-gradient(to bottom, black 0%, black 65%, transparent 100%);
+            transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                        -webkit-mask-image 0.5s ease, mask-image 0.5s ease;
         }
-        .grayscale-img:hover {
+        .grayscale-img:hover, .grayscale-img.color-revealed {
             filter: grayscale(0%);
+            -webkit-mask-image: none;
+            mask-image: none;
             transform: scale(1.02);
         }
         body { -webkit-font-smoothing: antialiased; }
@@ -188,8 +193,8 @@
 
       <!-- Left: Image -->
       <section class="md:col-span-8 overflow-hidden border border-deep-ink">
-        <div class="bg-surface-container overflow-hidden">
-          <img id="work-image" alt="" class="w-full h-auto object-contain grayscale-img" src="" width="1200" height="900" loading="eager" style="opacity:0;transition:opacity 0.25s ease;"/>
+        <div id="work-image-wrap" class="bg-surface-container overflow-hidden relative" style="background-size:contain;background-position:center;background-repeat:no-repeat;">
+          <img id="work-image" alt="" class="w-full h-auto object-contain grayscale-img" src="" width="1200" height="900" loading="eager" style="opacity:0;transition:opacity 0.25s ease;position:relative;"/>
         </div>
         <div class="p-sm flex justify-between items-center bg-surface border-t border-deep-ink">
           <span id="hover-hint" class="font-label-md text-label-md uppercase tracking-widest text-secondary">Hover to reveal color</span>
@@ -352,6 +357,13 @@ document.addEventListener('touchend', function(e) {
 if (window.matchMedia('(hover: none)').matches) {
   const hint = document.getElementById('hover-hint');
   if (hint) hint.textContent = 'Tap to reveal color';
+  const workImg = document.getElementById('work-image');
+  let colorRevealed = false;
+  workImg.addEventListener('click', () => {
+    colorRevealed = !colorRevealed;
+    workImg.classList.toggle('color-revealed', colorRevealed);
+    if (hint) hint.textContent = colorRevealed ? 'Tap to hide color' : 'Tap to reveal color';
+  });
 }
 
 function typeLabel(t) {
@@ -372,7 +384,7 @@ function renderRelated(works, currentFile) {
     const id = w.file.replace('.avif', '');
     grid.innerHTML += `
       <a href="artwork.html?id=${id}" class="related-card group flex flex-col gap-sm no-underline text-on-background">
-        <div class="aspect-square border border-deep-ink overflow-hidden bg-surface-container">
+        <div class="aspect-square border border-deep-ink overflow-hidden bg-surface-container" style="background-image:url(artworks/thumbs/${w.file});background-size:cover;background-position:center;">
           <img alt="${w.title || 'Untitled'}" class="w-full h-full object-cover grayscale-img"
             src="artworks/thumbs/${w.file}" loading="lazy" width="300" height="300"/>
         </div>
@@ -451,12 +463,14 @@ fetch('catalog.json')
     });
     document.head.appendChild(ld);
 
-    // Image — fade in on load
+    // Image — fade in on load, set color bg layer for grayscale reveal
     const img = document.getElementById('work-image');
+    const imgWrap = document.getElementById('work-image-wrap');
     img.onload = function() { img.style.opacity = '1'; };
     img.src = `artworks/full/${w.file}`;
     img.alt = titleText;
     if (img.complete) img.style.opacity = '1';
+    if (imgWrap) imgWrap.style.backgroundImage = `url(artworks/full/${w.file})`;
     document.getElementById('full-res-link').href = `artworks/full/${w.file}`;
 
     // Title
@@ -477,6 +491,8 @@ fetch('catalog.json')
       meta.innerHTML += metaRow('Themes', w.themes.join(', '));
     }
     meta.innerHTML += metaRow('Archive No.', w.file.replace('.avif', '').toUpperCase());
+    const artId = w.file.replace('.avif', '');
+    meta.innerHTML += metaRow('View in', `<a href="chromatic.html#${artId}" class="text-international-orange hover:underline transition-colors">Chromatic River →</a>`);
 
     // Description
     if (w.description) {
@@ -525,6 +541,7 @@ fetch('catalog.json')
     document.getElementById('not-found').classList.remove('hidden');
     console.error(e);
   });
+
 
 // Button press micro-interaction
 document.querySelectorAll('button').forEach(btn => {

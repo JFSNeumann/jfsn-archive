@@ -165,7 +165,7 @@ Things to do once, in Netlify or by hand, before promoting `for-artists.html`. T
       Draft a 5–8 sentence reply you'll send within 48 hours of an inquiry. Save it in a notes app so you don't compose from scratch each time.
 - [ ] **Founding-artist slot counter (manual).**
       The For Artists page advertises 3 founding slots at 30% off. After each slot is claimed, edit `for-artists.html` to update the `.founding__eyebrow` text ("3 slots" → "2 slots remaining" → "1 slot remaining" → delete the whole `<aside class="founding">` once filled).
-- [ ] **GoatCounter analytics — sign up and confirm the subdomain.** *(Snippet already installed on all pages at `jfsn.goatcounter.com` — pending account creation.)*
+- [x] **GoatCounter analytics** ✅ — account live at `jfsn.goatcounter.com`, email verified 2026-06-03. Snippet already on all pages.
       The site already has the GoatCounter snippet installed on every public page. To activate it:
       1. Sign up at <https://www.goatcounter.com> (free for personal use).
       2. Pick a subdomain — the current snippet uses `jfsn.goatcounter.com`. If you choose differently, find/replace `jfsn.goatcounter.com` across all `.html` files.

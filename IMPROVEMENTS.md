@@ -1,5 +1,5 @@
 # JFSN — Improvement List
-**Updated:** 2026-06-03
+**Updated:** 2026-06-03 (session 2)
 
 A living list. Add to it. Cross things off. This is the backlog.
 
@@ -7,7 +7,7 @@ A living list. Add to it. Cross things off. This is the backlog.
 
 ## 🔴 Do soon
 
-- [ ] **index.html duplicate h1** — mobile and desktop sections each render an `<h1>`. Add `aria-hidden="true"` to the mobile one (it's visually hidden on desktop anyway). One-liner.
+- [x] **index.html duplicate h1** ✅ — added `aria-hidden="true"` to mobile h1 2026-06-03.
 - [x] **api.html — migrate off old dark system** ✅ — migrated to light Tailwind system; site.css deleted; SW cache bumped. Deploy to HostGator + delete site.css from server via FileZilla.
 - [x] **site.css deleted from server** ✅ — confirmed removed via FileZilla 2026-06-03.
 - [ ] ~~**Delete `old-site/` locally**~~ — keeping intentionally.
@@ -34,12 +34,12 @@ A living list. Add to it. Cross things off. This is the backlog.
 
 ### Features
 - [ ] **Decade page keyboard nav badge** — show "← 1980s | 1990s →" as a small floating badge on decade pages so keyboard nav is discoverable.
-- [ ] **Timeline touch-scrub indicator** — add a visible drag handle or "drag to explore" hint for mobile users.
+- [x] **Timeline touch-scrub indicator** ✅ — added mobile-only "Drag to explore" hint badge that fades out on first drag 2026-06-03.
 - [ ] **Chromatic River click feedback** — clicking a slice navigates to the artwork, but there's no visual tap feedback on mobile. Add a brief highlight.
 - [ ] **Companion suggestion chips** — update the 3 example prompts to reflect the actual archive themes and series.
 
 ### Content
-- [ ] **about.html exhibitions** — fill in real show details at ~line 184. Currently has 5 placeholder entries.
+- [x] **about.html exhibitions** ✅ — confirmed: generic names (Group Exhibition, Two-Person Exhibition, etc.) are accurate, not placeholders.
 - [ ] **lost.html SEO** — link from about.html with a sentence about the lost works. Currently not discoverable unless you know it exists.
 - [ ] **featured.txt** — review which works are on the homepage. Last reviewed early 2026.
 
@@ -56,9 +56,9 @@ A living list. Add to it. Cross things off. This is the backlog.
 - [x] **Static artwork pages** ✅ — all 1,084 `artworks/pages/artNNNN.html` are fully static (not redirect stubs): full image, metadata, JSON-LD, prev/next, related works. Generator: `gen-artwork-pages.py`.
 
 ### UX
-- [ ] **Search result thumbnails** — the ⌘K overlay shows titles/metadata but not the image thumbnail. Adding the thumb makes it much easier to recognize works.
+- [x] **Search result thumbnails** ✅ — already implemented in search.js (`.sse-thumb` img in every result row); backlog item was stale.
 - [ ] **Archive sort by "recently added"** — useful once new work is ingested. Currently sorts by ID (same as intake order) but could surface newest works explicitly.
-- [ ] **Artwork page: visible ← → navigation buttons** — keyboard shortcuts (← / →) already work, but there are no visible arrow buttons on desktop. Add them for discoverability.
+- [x] **Artwork page: visible ← → navigation buttons** — reverted; user preferred clean image with no overlay buttons. Prev/next strip at bottom remains.
 
 ---
 

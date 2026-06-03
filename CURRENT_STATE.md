@@ -1,5 +1,5 @@
 # Current State
-**Updated:** 2026-06-03
+**Updated:** 2026-06-03 (session 2)
 
 ## Last commit
 (pending end-session.sh)
@@ -12,7 +12,7 @@
 - [ ] (Optional) Dual-track timeline: map works alongside historical/art-world context
 
 ## Known issues
-- None currently open.
+- **SW cache / site.min.css** — was broken locally (wrong rebuild); now fixed. SW CACHE_V bumped. Deploy will resolve for all live visitors. Locally: unregister SW in DevTools + Cmd+Shift+R.
 
 ## Site is live at
 - jfsn.com  (primary — cPanel)

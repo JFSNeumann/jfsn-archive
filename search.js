@@ -289,7 +289,25 @@
   }
 
   function emptyStateHTML() {
-    return surpriseItemHTML() + favsHTML() + recentHTML();
+    return surpriseItemHTML() + browseHTML() + favsHTML() + recentHTML();
+  }
+
+  function browseHTML() {
+    const series = [
+      { label: 'Guernica Series',   href: 'guernica.html',     meta: '232 works' },
+      { label: 'Targets',           href: 'targets.html',      meta: '403 works' },
+      { label: 'Mr. SNOWmann',      href: 'mr-snowmann.html',  meta: '72 works'  },
+    ];
+    const items = series.map(s =>
+      `<a class="sse-item" role="option" aria-selected="false" data-href="${s.href}" href="${s.href}">
+        <span class="sse-surprise-icon" style="font-size:.9rem;" aria-hidden="true">→</span>
+        <div class="sse-info">
+          <span class="sse-title">${s.label}</span>
+          <span class="sse-meta">${s.meta}</span>
+        </div>
+      </a>`
+    ).join('');
+    return `<div class="sse-section-label">Browse by series</div>${items}`;
   }
 
   function surpriseItemHTML() {

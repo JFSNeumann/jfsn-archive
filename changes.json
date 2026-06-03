@@ -1,5 +1,11 @@
 [
   {
+    "sha": "98aae94",
+    "date": "2026-06-03",
+    "title": "Migrate api.html to light system, delete site.css, add Buy a Print link, update all docs",
+    "body": "- api.html fully rewritten on light Tailwind system (site.min.css, Playfair + Inter)\n- site.css deleted; removed from verify_deploy.py and sw.js precache\n- artwork.html: quiet 'Buy a Print' tertiary link to Fine Art America profile\n- sw.js: api.html added to PRECACHE; CACHE_V bumped\n- make_handoff.py: removed dead jeff.html link; PDF regenerated\n- CLAUDE.md, CURRENT_STATE.md, IMPROVEMENTS.md, STITCH.md: all updated\n- README.md, WORKFLOW.md, WORKFLOW-CLIENT.md: minor accuracy fixes"
+  },
+  {
     "sha": "ee045af",
     "date": "2026-06-03",
     "title": "Session 2026-06-03: SW network-first fix, FAA prep, memory updates",

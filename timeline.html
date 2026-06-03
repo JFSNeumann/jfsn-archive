@@ -108,6 +108,18 @@
         .timeline-card:hover::after { border-color: #FF6600; }
         .timeline-card:hover .grayscale-img { filter: grayscale(0%); transform: scale(1.04); }
 
+        /* Hover tooltip */
+        #tl-tooltip {
+            position: fixed; pointer-events: none; z-index: 200;
+            background: rgba(11,11,11,0.88); color: #F3F0EA;
+            padding: 6px 12px; max-width: 220px;
+            font-family: Inter, sans-serif; font-size: 11px;
+            letter-spacing: 0.06em; line-height: 1.5;
+            opacity: 0; transition: opacity 0.15s;
+        }
+        #tl-tooltip.visible { opacity: 1; }
+        #tl-tooltip .tl-tt-year { color: #FF6600; font-weight: 600; display: block; }
+
         @media (prefers-reduced-motion: reduce) {
             .reveal-header { opacity: 1; transform: none; transition: none; }
             #timeline-loader { display: none; }
@@ -232,6 +244,11 @@
 
   <!-- Timeline Strip -->
   <div class="relative w-full border-y border-outline-variant py-xl overflow-x-auto no-scrollbar timeline-strip" id="timelineContainer">
+    <!-- Mobile drag hint — fades out after first touch -->
+    <div class="md:hidden absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-deep-ink/70 text-bone-white px-3 py-1.5 pointer-events-none z-10 transition-opacity duration-500" id="drag-hint" aria-hidden="true">
+      <span class="material-symbols-outlined text-[16px]">swipe</span>
+      <span style="font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;">Drag to explore</span>
+    </div>
     <div class="flex items-center gap-xl px-margin-desktop w-max min-h-[500px]" id="timelineInner">
       <!-- populated by JS -->
       <div class="flex items-center gap-gutter">
@@ -462,11 +479,18 @@ container.addEventListener('wheel', e => {
 
 // Touch support
 let touchStartX;
+const dragHint = document.getElementById('drag-hint');
+let hintDismissed = false;
 container.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
 container.addEventListener('touchmove', e => {
   const dx = touchStartX - e.touches[0].clientX;
   container.scrollLeft += dx;
   touchStartX = e.touches[0].clientX;
+  if (dragHint && !hintDismissed) {
+    hintDismissed = true;
+    dragHint.style.opacity = '0';
+    setTimeout(() => dragHint.remove(), 500);
+  }
 }, { passive: true });
 
 document.getElementById('scrollLeft').addEventListener('click', () => container.scrollBy({ left: -400, behavior: 'smooth' }));
@@ -541,6 +565,32 @@ if (temporalRail) {
   });
 }
 container.addEventListener('scroll', updateTemporalMarker);
+
+// Hover tooltip (year + title) on timeline cards
+const tlTooltip = document.createElement('div');
+tlTooltip.id = 'tl-tooltip';
+document.body.appendChild(tlTooltip);
+let tlTooltipTimer;
+
+let _tlActiveCard = null;
+container.addEventListener('mouseover', e => {
+  const card = e.target.closest('.timeline-card');
+  if (!card || card === _tlActiveCard) return;
+  _tlActiveCard = card;
+  const year  = card.querySelector('.font-label-md')?.textContent || '';
+  const title = card.querySelector('.font-headline-md')?.textContent || '';
+  tlTooltip.innerHTML = `<span class="tl-tt-year">${year}</span>${title}`;
+  tlTooltip.classList.add('visible');
+  card.addEventListener('mouseleave', () => {
+    tlTooltip.classList.remove('visible');
+    _tlActiveCard = null;
+  }, { once: true });
+});
+container.addEventListener('mousemove', e => {
+  if (!_tlActiveCard) return;
+  tlTooltip.style.left = (e.clientX + 14) + 'px';
+  tlTooltip.style.top  = (e.clientY - 10) + 'px';
+});
 
 // Scroll reveal for header
 const headerEl = document.querySelector('.reveal-header');

@@ -319,12 +319,34 @@
       <span class="font-label-md text-label-md text-international-orange uppercase tracking-widest block mb-md">Now</span>
       <p class="font-body-md text-body-md text-secondary leading-relaxed">
         Archiving and digitizing fifty years of studio work. Putting everything in one place turns out to reveal things you couldn't see when the work was scattered — patterns, obsessions, threads that were running all along.<br/><br/>
-        Still making new work. Still Cleveland.
+        Still making new work. Still Cleveland.<br/><br/>
+        <span id="latest-work-line" style="display:none;">Latest work added: <a id="latest-work-link" href="archive.html" class="border-b border-outline-variant hover:text-international-orange hover:border-international-orange transition-colors"><span id="latest-work-label"></span></a>.</span>
       </p>
     </div>
   </section>
 
 </main>
+<script>
+(function(){
+  fetch('catalog-lite.json')
+    .then(r => r.ok ? r.json() : null)
+    .then(data => {
+      if (!data || !data.length) return;
+      const latest = data[data.length - 1];
+      if (!latest) return;
+      const id = latest.file ? latest.file.replace('.avif','') : null;
+      const label = [latest.title, latest.year].filter(Boolean).join(', ') || id;
+      if (!label) return;
+      const line = document.getElementById('latest-work-line');
+      const link = document.getElementById('latest-work-link');
+      const lbl  = document.getElementById('latest-work-label');
+      if (id) link.href = `artwork.html?id=${id}`;
+      lbl.textContent = label;
+      line.style.display = '';
+    })
+    .catch(() => {});
+})();
+</script>
 
 <!-- Footer -->
 <!-- FOOTER:START -->
