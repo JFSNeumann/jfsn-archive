@@ -5,7 +5,7 @@
    - HTML/CSS/JS  → stale-while-revalidate
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-20260602-fix-hero-preload';
+const CACHE_V  = 'jfsn-20260602-theme-pages';
 const PRECACHE = [
   '/',
   '/index.html',
@@ -23,6 +23,14 @@ const PRECACHE = [
   '/for-artists.html',
   '/changes.html',
   '/404.html',
+  '/guernica.html',
+  '/targets.html',
+  '/framed.html',
+  '/torsos-faces.html',
+  '/gallery-images.html',
+  '/mr-snowmann.html',
+  '/crosses.html',
+  '/collaboration.html',
   '/search.js',
   '/catalog-home.json',
   '/artworks/full/art0953.avif',

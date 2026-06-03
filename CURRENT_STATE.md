@@ -3,13 +3,13 @@
 
 ## Last commit
 7c714a9 — Nav/footer audit + color fade on all image grids
-*(uncommitted: SW hero-preload fix + Companion fixes + netlify.toml fix — run end-session.sh)*
+*(uncommitted: SW hero-preload fix + Companion fixes + netlify.toml fix + 8 static theme pages — run end-session.sh)*
 
 ## To do next session
 - [ ] **Deploy** — run `bash end-session.sh && bash deploy.sh` if not done
 - [ ] **Test Companion live** — open jfsn.com/companion.html on iPhone, confirm a work comes back
 - [ ] **Test for-artists form** — `jfsn-archive.netlify.app/for-artists.html`, submit, confirm redirect
-- [ ] **Submit sitemap to Google Search Console** — 2,190 URLs ready
+- [ ] **Submit sitemap to Google Search Console** — sitemap now has 8 static theme pages replacing JS-only series.html?theme= entries
 
 ## Cleanup pending (safe to do any time)
 - `old-site/` local — 197MB, `rm -rf /Users/jeffreyneumann/Documents/JFSN/old-site/`

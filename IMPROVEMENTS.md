@@ -23,7 +23,7 @@ A living list. Add to it. Cross things off. This is the backlog.
 ## 🟡 High value, no deadline
 
 ### SEO
-- [ ] **Series page URLs** — `/series.html?theme=Targets` is JS-only. Generate static `targets.html`, `torsos.html` etc. from `catalog.json` for direct Google indexing.
+- [x] **Static theme pages** — 8 fully crawlable pages: `guernica.html` (232), `targets.html` (403), `framed.html` (230), `torsos-faces.html` (172), `gallery-images.html` (149), `mr-snowmann.html` (72), `crosses.html` (69), `collaboration.html` (31). CollectionPage + BreadcrumbList JSON-LD, canonical, OG tags, full static figure grids. Wired from series-index.html, added to sitemap.xml, added to SW precache. Generator: `gen-theme-pages.py`.
 - [ ] **About page expansion** — more bio keywords in body text (Cleveland, mixed-media, assemblage) for Knowledge Panel signals.
 - [ ] **artwork.html JSON-LD in static shell** — JSON-LD is currently JS-injected per work. Static shell has no JSON-LD so server-side scrapers that don't execute JS see nothing. The 1,084 `artworks/pages/` redirect pages each have proper JSON-LD — this is the real fix path (generate full static pages instead of redirect stubs).
 
