@@ -1,5 +1,11 @@
 [
   {
+    "sha": "7963eff",
+    "date": "2026-06-02",
+    "title": "Prompts 4-6: internal link mesh, About schema, canonical fix",
+    "body": "Prompt 4: Re-link 7,055 figure hrefs across 20 pages from artwork.html?id=\nto artworks/pages/artNNNN.html — complete crawlable internal link graph.\n\nPrompt 5: Expand About page Person JSON-LD with description, alumniOf\n(Cleveland Institute of Art), knowsAbout, sameAs (GitHub), hasOccupation,\nmainEntityOfPage. Add bio paragraph naming key motifs and series for\nKnowledge Panel keyword coverage.\n\nPrompt 6: artwork.html canonical now points to artworks/pages/artNNNN.html\ninstead of artwork.html?id=artNNNN — deduplicates JS and static versions."
+  },
+  {
     "sha": "e66f128",
     "date": "2026-06-02",
     "title": "Rebuild 1,084 artwork pages as full static HTML",

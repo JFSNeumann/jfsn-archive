@@ -1,8 +1,8 @@
 # Current State
-**Updated:** 2026-06-02 20:47
+**Updated:** 2026-06-02 20:51
 
 ## Last commit
-e66f128 — Rebuild 1,084 artwork pages as full static HTML
+7963eff — Prompts 4-6: internal link mesh, About schema, canonical fix
 
 ## To do next session
 <!-- Edit this section before closing -->

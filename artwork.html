@@ -428,7 +428,7 @@ fetch('catalog.json')
       "@context": "https://schema.org",
       "@type": "VisualArtwork",
       "name": titleText,
-      "url": `https://jfsn.com/artwork.html?id=${workId}`,
+      "url": `https://jfsn.com/artworks/pages/${workId}.html`,
       "image": `https://jfsn.com/artworks/full/${w.file}`,
       "dateCreated": w.year ? String(w.year) : undefined,
       "artMedium": w.materials || w.work_type || undefined,
