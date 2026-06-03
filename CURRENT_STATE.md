@@ -1,8 +1,8 @@
 # Current State
-**Updated:** 2026-06-02 20:51
+**Updated:** 2026-06-03 09:37
 
 ## Last commit
-7963eff — Prompts 4-6: internal link mesh, About schema, canonical fix
+4a01b8b — Prompts 4–6: internal links, About schema, artwork.html canonical
 
 ## To do next session
 <!-- Edit this section before closing -->
