@@ -1,5 +1,17 @@
 [
   {
+    "sha": "f85319d",
+    "date": "2026-06-02",
+    "title": "Add 8 static theme/series pages for SEO",
+    "body": "Generates fully crawlable HTML pages for all 8 groups in series-index:\nguernica (232), targets (403), framed (230), torsos-faces (172),\ngallery-images (149), mr-snowmann (72), crosses (69), collaboration (31).\n\nEach page: keyword-dense intro, full static figure grid, CollectionPage +\nBreadcrumbList JSON-LD, canonical, OG tags. Generator: gen-theme-pages.py.\n\nWiring: series-index.html cards now link to static pages. Sitemap replaces\nJS-only series.html?theme= entries with static URLs at priority 0.9.\nSW PRECACHE bumped to jfsn-20260602-theme-pages with all 8 pages added."
+  },
+  {
+    "sha": "f9af1bb",
+    "date": "2026-06-02",
+    "title": "Fix: Companion models, thinking API, netlify.toml edge_functions syntax; SW hero preload + fallback bg; cleanup stale JSON backups",
+    "body": ""
+  },
+  {
     "sha": "7c714a9",
     "date": "2026-06-02",
     "title": "Nav/footer audit + color fade on all image grids",
