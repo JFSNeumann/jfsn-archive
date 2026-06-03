@@ -2,10 +2,10 @@
    Strategy:
    - AVIF images  → cache-first  (thumbnails/full/mini)
    - JSON files   → network-first (catalog updates propagate immediately)
-   - HTML/CSS/JS  → stale-while-revalidate
+   - HTML/CSS/JS  → network-first (always fresh; fall back to cache if offline)
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-20260603-v2';
+const CACHE_V  = 'jfsn-20260603151347';
 const PRECACHE = [
   '/',
   '/index.html',
@@ -98,17 +98,17 @@ self.addEventListener('fetch', e => {
     return;
   }
 
-  /* HTML / CSS / JS — stale-while-revalidate */
+  /* HTML / CSS / JS — network-first; cache as offline fallback */
   e.respondWith(
-    caches.match(e.request).then(cached => {
-      const net = fetch(e.request).then(res => {
+    fetch(e.request)
+      .then(res => {
         if (res.ok) {
           const clone = res.clone();
           caches.open(CACHE_V).then(c => c.put(e.request, clone));
         }
         return res;
-      }).catch(() => cached);
-      return cached || net;
-    })
+      })
+      .catch(() => caches.match(e.request)
+        .then(cached => cached || new Response('', { status: 503 })))
   );
 });
