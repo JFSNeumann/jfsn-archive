@@ -170,7 +170,7 @@ for s in series_pages:
     ))
 for r in records:
     art_id = r['file'].replace('.avif', '')
-    entries.append((f"{SITE_URL}/artwork.html?id={art_id}", '0.6', 'monthly'))
+    entries.append((f"{SITE_URL}/artworks/pages/{art_id}.html", '0.8', 'monthly'))
 
 lines = ['<?xml version="1.0" encoding="UTF-8"?>',
          '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
@@ -208,7 +208,7 @@ feed_lines = [
 for r in recent_20:
     art_id    = r['file'].replace('.avif', '')
     title     = r.get('title') or art_id
-    url       = f"{SITE_URL}/artwork.html?id={art_id}"
+    url       = f"{SITE_URL}/artworks/pages/{art_id}.html"
     img_url   = f"{SITE_URL}/artworks/thumbs/{r['file']}"
     year      = r.get('year', '')
     work_type = (r.get('work_type') or '').replace('_', ' ').title()
@@ -266,7 +266,7 @@ def _work_links(art_id: str) -> dict:
         "image": f"{SITE_URL}/artworks/full/{art_id}.avif",
         "thumb": f"{SITE_URL}/artworks/thumbs/{art_id}.avif",
         "mini":  f"{SITE_URL}/artworks/mini/{art_id}.avif",
-        "page":  f"{SITE_URL}/artwork.html?id={art_id}",
+        "page":  f"{SITE_URL}/artworks/pages/{art_id}.html",
     }
 
 # meta.json — discovery + counts
