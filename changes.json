@@ -1,5 +1,29 @@
 [
   {
+    "sha": "e474af2",
+    "date": "2026-06-03",
+    "title": "SW: switch HTML/CSS/JS to network-first to prevent stale dark-theme cache",
+    "body": ""
+  },
+  {
+    "sha": "71326ce",
+    "date": "2026-06-03",
+    "title": "Bump SW CACHE_V to force cache invalidation on HostGator",
+    "body": ""
+  },
+  {
+    "sha": "2c3d719",
+    "date": "2026-06-03",
+    "title": "Fix build_catalog.py to generate static artwork page URLs in sitemap",
+    "body": "Sitemap and feed.xml were regenerating artwork.html?id= URLs on every\ncatalog build, overwriting the static artworks/pages/ URLs. Fixed all\nthree occurrences in build_catalog.py (sitemap entries, feed.xml links,\napi/v1/works page field). Rebuilt sitemap — 1,106 URLs, all static."
+  },
+  {
+    "sha": "4a01b8b",
+    "date": "2026-06-03",
+    "title": "Prompts 4–6: internal links, About schema, artwork.html canonical",
+    "body": "Prompt 4: 7,055 figure hrefs across 20 pages updated from\nartwork.html?id=artNNNN → artworks/pages/artNNNN.html, completing\nthe crawlable internal link graph.\n\nPrompt 5: About page Person JSON-LD already fully built (prior session) —\nconfirmed description, alumniOf, knowsAbout, sameAs, hasOccupation,\nmainEntityOfPage, series/motifs bio paragraph all present.\n\nPrompt 6: artwork.html JSON-LD url field updated from artwork.html?id=\nto artworks/pages/artNNNN.html, matching the canonical tag."
+  },
+  {
     "sha": "7963eff",
     "date": "2026-06-02",
     "title": "Prompts 4-6: internal link mesh, About schema, canonical fix",

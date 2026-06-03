@@ -5,8 +5,10 @@
 4a01b8b — Prompts 4–6: internal links, About schema, artwork.html canonical
 
 ## To do next session
-<!-- Edit this section before closing -->
-- [ ] (add what you want to do next time)
+- [x] Sign up for Fine Art America — 22 works uploaded and live ✅
+- [ ] Add "Buy a Print" link to artwork.html — need FAA profile URL
+- [ ] Migrate api.html off old dark CSS → then delete site.css
+- [ ] (Optional) Dual-track timeline: map works alongside historical/art-world context
 
 ## Known issues
 - ~~Service worker black screen on index.html first load~~ — **FIXED 2026-06-02**: hero AVIF added to SW precache; dark fallback bg added to hero section; CACHE_V bumped. Deploy required to take effect.
