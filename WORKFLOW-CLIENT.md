@@ -137,6 +137,8 @@ Then go through manually:
 
 **About page** — update `about.html` with their bio, medium, contact info, and "Now" section.
 
+**Nav** — if any nav links were customized, run `bash stamp-nav.sh` to propagate the canonical nav to all Stitch pages.
+
 ---
 
 ## Stage 7 — Deploy to Netlify

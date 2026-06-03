@@ -1,327 +1,281 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0b0b0b">
-  <title>Open Archive API — Jeffrey F. S. Neumann</title>
-  <meta name="description" content="Machine-readable JSON endpoints for the JFSN archive. Free to use, stable URLs, CC BY 4.0.">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="theme-color" content="#fdf8f8"/>
+<title>Open Archive API — Jeffrey F. S. Neumann</title>
+<meta name="description" content="Machine-readable JSON endpoints for the JFSN archive. Free to use, stable URLs, CC BY 4.0."/>
+<link rel="canonical" href="https://jfsn.com/api.html"/>
+<link rel="icon" href="favicon.svg" type="image/svg+xml"/>
+<link rel="manifest" href="manifest.json"/>
+<link rel="apple-touch-icon" href="icon-192.png"/>
+<link rel="alternate" type="application/rss+xml" title="Jeffrey F. S. Neumann — Archive" href="https://jfsn.com/feed.xml"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Open Archive API — Jeffrey F. S. Neumann"/>
+<meta property="og:description" content="Machine-readable JSON endpoints for the JFSN archive. Free to use, stable URLs, CC BY 4.0."/>
+<meta property="og:image" content="https://jfsn.com/og-card.jpg"/>
+<meta property="og:url" content="https://jfsn.com/api.html"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="site.min.css"/>
+<style>
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  body { -webkit-font-smoothing: antialiased; }
 
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="icon-192.png">
-  <link rel="alternate" type="application/rss+xml" title="Jeffrey F. S. Neumann — Archive" href="https://jfsn.com/feed.xml">
-  <link rel="canonical" href="https://jfsn.com/api.html">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap"></noscript>
-  <link rel="stylesheet" href="site.css?v=20260530-nav4">
+  /* ── Code + pre ── */
+  code {
+    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', Menlo, monospace;
+    font-size: 0.8125rem;
+    background: #ebe8e2;
+    padding: 0.1em 0.35em;
+    border-radius: 1px;
+  }
+  pre {
+    background: #F3F0EA;
+    border: 1px solid #c4c7c7;
+    padding: 1rem;
+    overflow-x: auto;
+    margin: 0.625rem 0 0;
+    position: relative;
+  }
+  pre code {
+    background: none;
+    padding: 0;
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    color: #0B0B0B;
+  }
 
-  <style>
-    .api-wrap {
-      max-width: 820px;
-      margin-inline: auto;
-      padding-inline: var(--gutter);
-      padding-block: 3rem 5rem;
-    }
+  /* ── JSON syntax highlight (light) ── */
+  .k { color: #575757; }            /* key */
+  .s { color: #b45309; }            /* string value */
+  .n { color: #1d4ed8; }            /* number */
+  .b { color: #7c3aed; }            /* boolean / null */
+  .e { color: #9ca3af; }            /* ellipsis */
+  .ep-var { color: #FF6600; font-style: italic; }
 
-    /* ── Page title ── */
-    .api-hero { margin-bottom: 3rem; }
-    .api-eyebrow {
-      font-size: var(--cap);
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin: 0 0 0.5rem;
-    }
-    .api-title {
-      font-family: var(--font-display);
-      font-size: clamp(1.75rem, 4vw, 2.75rem);
-      font-weight: 300;
-      line-height: 1.15;
-      margin: 0 0 1.25rem;
-    }
-    .api-lead {
-      font-size: 1rem;
-      color: var(--muted);
-      line-height: 1.65;
-      max-width: 60ch;
-      margin: 0;
-    }
-    .api-lead a { color: var(--text); border-bottom: 1px solid var(--dim); }
-    .api-lead a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+  /* ── Copy button ── */
+  .copy-btn {
+    position: absolute;
+    top: 0.5rem; right: 0.5rem;
+    font-family: Inter, sans-serif;
+    font-size: 0.5625rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: #ebe8e2;
+    border: 1px solid #c4c7c7;
+    color: #575757;
+    cursor: pointer;
+    padding: 0.2rem 0.45rem;
+    transition: all 0.12s;
+  }
+  .copy-btn:hover { color: #0B0B0B; background: #ddd9d3; }
+  .copy-btn.copied { color: #15803d; border-color: #15803d; }
 
-    /* ── Section headings ── */
-    .api-section { margin-top: 3rem; }
-    .api-section-title {
-      font-size: var(--cap);
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin: 0 0 1.25rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid var(--dim);
-    }
+  /* ── Endpoint cards ── */
+  .endpoint {
+    border: 1px solid #c4c7c7;
+    margin-bottom: 1rem;
+  }
+  .endpoint-head {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.875rem 1rem;
+    cursor: pointer;
+    user-select: none;
+  }
+  .endpoint-head:hover { background: #ebe8e2; }
+  .endpoint-body {
+    display: none;
+    padding: 0 1rem 1rem;
+    border-top: 1px solid #c4c7c7;
+  }
+  .endpoint.open .endpoint-body { display: block; }
+  .ep-toggle { font-size: 0.6875rem; color: #575757; flex-shrink: 0; transition: transform 0.15s; }
+  .endpoint.open .ep-toggle { transform: rotate(180deg); }
 
-    /* ── Endpoint cards ── */
-    .endpoint {
-      border: 1px solid var(--dim);
-      border-radius: 2px;
-      margin-bottom: 1rem;
-    }
-    .endpoint-head {
-      display: flex;
-      align-items: baseline;
-      gap: 1rem;
-      padding: 0.875rem 1rem;
-      cursor: pointer;
-      user-select: none;
-    }
-    .endpoint-head:hover { background: rgba(243,240,234,0.03); }
-    .method {
-      font-size: 0.5625rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      background: rgba(243,240,234,0.1);
-      color: var(--muted);
-      padding: 0.2rem 0.45rem;
-      border-radius: 1px;
-      flex-shrink: 0;
-    }
-    .ep-url {
-      font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', Menlo, monospace;
-      font-size: 0.875rem;
-      color: var(--text);
-      flex: 1;
-      min-width: 0;
-      word-break: break-all;
-    }
-    .ep-url .ep-var {
-      color: var(--accent);
-      font-style: italic;
-    }
-    .ep-desc {
-      font-size: 0.75rem;
-      color: var(--muted);
-      letter-spacing: 0.02em;
-      flex-shrink: 0;
-    }
-    .ep-toggle {
-      font-size: 0.6875rem;
-      color: var(--muted);
-      flex-shrink: 0;
-      transition: transform 0.15s;
-    }
-    .endpoint.open .ep-toggle { transform: rotate(180deg); }
-    .endpoint-body {
-      display: none;
-      padding: 0 1rem 1rem;
-      border-top: 1px solid var(--dim);
-    }
-    .endpoint.open .endpoint-body { display: block; }
-    .ep-note {
-      font-size: 0.8125rem;
-      color: var(--muted);
-      line-height: 1.6;
-      margin: 0.875rem 0 0.75rem;
-    }
+  /* ── Stat values ── */
+  .stat-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.75rem;
+    font-weight: 400;
+    display: block;
+    color: #0B0B0B;
+  }
 
-    /* ── Code blocks ── */
-    pre {
-      background: rgba(243,240,234,0.04);
-      border: 1px solid var(--dim);
-      border-radius: 2px;
-      padding: 1rem;
-      overflow-x: auto;
-      margin: 0.625rem 0 0;
-      position: relative;
-    }
-    pre code {
-      font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', Menlo, monospace;
-      font-size: 0.8125rem;
-      line-height: 1.6;
-      color: var(--text);
-    }
-    .copy-btn {
-      position: absolute;
-      top: 0.5rem; right: 0.5rem;
-      font-size: 0.5625rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      background: rgba(243,240,234,0.08);
-      border: 1px solid var(--dim);
-      border-radius: 1px;
-      color: var(--muted);
-      cursor: pointer;
-      padding: 0.2rem 0.45rem;
-      transition: all 0.12s;
-    }
-    .copy-btn:hover { color: var(--text); background: rgba(243,240,234,0.14); }
-    .copy-btn.copied { color: #22c55e; border-color: #22c55e; }
+  /* ── Field table ── */
+  .field-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8125rem;
+    margin-top: 0.75rem;
+  }
+  .field-table th {
+    font-family: Inter, sans-serif;
+    font-size: 0.5625rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #575757;
+    text-align: left;
+    padding: 0.375rem 0.75rem 0.375rem 0;
+    border-bottom: 1px solid #c4c7c7;
+  }
+  .field-table td {
+    padding: 0.5rem 0.75rem 0.5rem 0;
+    border-bottom: 1px solid #ebe8e2;
+    vertical-align: top;
+    line-height: 1.5;
+    color: #575757;
+  }
+  .field-table td:first-child {
+    font-family: 'SF Mono', 'Fira Code', Menlo, monospace;
+    font-size: 0.75rem;
+    color: #0B0B0B;
+    white-space: nowrap;
+  }
+  .field-table td:last-child { color: #9ca3af; font-size: 0.75rem; }
 
-    /* JSON syntax highlight */
-    .k { color: rgba(243,240,234,0.55); }   /* key */
-    .s { color: #f5c842; }                  /* string value */
-    .n { color: #60a5fa; }                  /* number */
-    .b { color: #a78bfa; }                  /* boolean / null */
-    .e { color: var(--muted); }             /* ellipsis */
-
-    /* ── Usage examples ── */
-    .usage-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-    @media (max-width: 640px) { .usage-grid { grid-template-columns: 1fr; } }
-    .usage-label {
-      font-size: 0.625rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.375rem;
-    }
-
-    /* ── Info boxes ── */
-    .info-box {
-      border: 1px solid var(--dim);
-      border-left: 3px solid var(--accent);
-      padding: 0.875rem 1rem;
-      font-size: 0.8125rem;
-      line-height: 1.65;
-      color: var(--muted);
-      margin-bottom: 1rem;
-    }
-    .info-box strong { color: var(--text); font-weight: 500; }
-    .info-box code {
-      font-family: 'SF Mono', 'Fira Code', Menlo, monospace;
-      font-size: 0.75rem;
-      background: rgba(243,240,234,0.07);
-      padding: 0.1em 0.35em;
-      border-radius: 1px;
-    }
-    .info-box a { color: var(--text); }
-
-    /* ── Table ── */
-    .field-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.8125rem;
-      margin-top: 0.75rem;
-    }
-    .field-table th {
-      font-size: 0.5625rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-align: left;
-      padding: 0.375rem 0.75rem 0.375rem 0;
-      border-bottom: 1px solid var(--dim);
-    }
-    .field-table td {
-      padding: 0.5rem 0.75rem 0.5rem 0;
-      border-bottom: 1px solid rgba(243,240,234,0.06);
-      vertical-align: top;
-      line-height: 1.5;
-    }
-    .field-table td:first-child {
-      font-family: 'SF Mono', 'Fira Code', Menlo, monospace;
-      font-size: 0.75rem;
-      color: var(--text);
-      white-space: nowrap;
-    }
-    .field-table td:nth-child(2) { color: var(--muted); }
-    .field-table td:last-child { color: rgba(243,240,234,0.45); font-size: 0.75rem; }
-
-    /* ── Inline code ── */
-    code {
-      font-family: 'SF Mono', 'Fira Code', Menlo, monospace;
-      font-size: 0.8125rem;
-      background: rgba(243,240,234,0.07);
-      padding: 0.1em 0.35em;
-      border-radius: 1px;
-    }
-
-    /* ── Stats bar ── */
-    #api-stats {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      padding: 1rem 0;
-      border-top: 1px solid var(--dim);
-      border-bottom: 1px solid var(--dim);
-      margin-bottom: 2rem;
-    }
-    .stat-item { }
-    .stat-val {
-      font-family: var(--font-display);
-      font-size: 1.75rem;
-      font-weight: 300;
-      display: block;
-    }
-    .stat-lbl {
-      font-size: 0.625rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-  </style>
+  @media (max-width: 640px) { .usage-grid { grid-template-columns: 1fr !important; } }
+  @media (prefers-reduced-motion: reduce) { .ep-toggle { transition: none; } }
+</style>
 </head>
-<body>
+<body class="bg-background text-deep-ink">
 
-<a href="#main" class="skip">Skip to content</a>
-
-<header class="header">
-  <div class="container header__inner">
-    <a class="brand" href="/"><img src="jfsn-mark.png" class="brand-mark" alt="JFSN">Jeffrey F. S. Neumann</a>
-    <nav class="nav" aria-label="Primary">
-      <a href="archive.html">Archive</a>
-      <a href="series-index.html">Series</a>
-      <a href="about.html">About</a>
-      <a href="about.html#contact" style="color:var(--accent)">Inquiry</a>
+<!-- Top Nav -->
+<!-- NAV:START -->
+<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-deep-ink focus:text-bone-white focus:font-label-caps focus:text-label-caps">Skip to content</a>
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-background border-b border-deep-ink">
+  <div class="flex items-center gap-8">
+    <a href="index.html" class="font-headline-md text-headline-md tracking-tighter text-deep-ink">JFSN</a>
+    <nav class="hidden md:flex gap-6" aria-label="Primary">
+      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="archive.html">Archive</a>
+      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="series-index.html">Series</a>
+      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="timeline.html">Timeline</a>
+      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="companion.html">Companion</a>
+      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="about.html">About</a>
     </nav>
+  </div>
+  <div class="flex items-center gap-4">
+    <button class="material-symbols-outlined text-deep-ink hover:text-international-orange transition-colors" aria-label="Search" id="nav-search-btn">search</button>
+    <button class="md:hidden material-symbols-outlined text-deep-ink" aria-label="Open menu" id="nav-menu-btn">menu</button>
   </div>
 </header>
 
-<main id="main">
-<div class="api-wrap">
+<!-- Mobile menu overlay -->
+<div id="mobile-menu" aria-hidden="true" style="display:none;position:fixed;inset:0;z-index:40;">
+  <div id="mobile-menu-backdrop" style="position:absolute;inset:0;background:rgba(11,11,11,0.5);"></div>
+  <nav id="mobile-menu-drawer" aria-label="Mobile menu"
+    style="position:absolute;top:0;right:0;width:min(280px,85vw);height:100%;background:#fcf9f3;border-left:1px solid #0B0B0B;display:flex;flex-direction:column;transform:translateX(100%);transition:transform 0.25s ease;">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:0 20px;height:64px;border-bottom:1px solid #0B0B0B;">
+      <span style="font-family:'Playfair Display',serif;font-size:18px;font-weight:600;letter-spacing:-0.02em;color:#0B0B0B;">JFSN</span>
+      <button id="nav-menu-close" aria-label="Close menu"
+        style="background:none;border:none;cursor:pointer;color:#0B0B0B;font-size:24px;padding:8px;margin-right:-8px;line-height:1;">&times;</button>
+    </div>
+    <div style="flex:1;overflow-y:auto;padding:8px 0;">
+      <a href="archive.html"      style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Archive</a>
+      <a href="series-index.html" style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Series</a>
+      <a href="timeline.html"     style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Timeline</a>
+      <a href="companion.html"    style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Companion</a>
+      <a href="about.html"        style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">About</a>
+      <a href="for-artists.html"  style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#FF6600;text-decoration:none;">For Artists</a>
+    </div>
+    <div style="padding:16px 24px;border-top:1px solid #c4c7c7;">
+      <button id="mobile-menu-search"
+        style="width:100%;display:flex;align-items:center;gap:10px;background:none;border:1px solid #c4c7c7;padding:10px 14px;cursor:pointer;color:#575757;font-family:Inter,sans-serif;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;">
+        <span class="material-symbols-outlined" style="font-size:16px;">search</span>
+        Search archive
+      </button>
+    </div>
+  </nav>
+</div>
 
-  <div class="api-hero">
-    <p class="api-eyebrow">Developer</p>
-    <h1 class="api-title">Open Archive API</h1>
-    <p class="api-lead">Static JSON endpoints for every work in the archive. No key, no rate limit, no authentication — just plain files served over HTTPS. Stable URLs you can cite, link, and build on indefinitely.</p>
-  </div>
+<script>
+(function(){
+  var menu    = document.getElementById('mobile-menu');
+  var drawer  = document.getElementById('mobile-menu-drawer');
+  var openBtn = document.getElementById('nav-menu-btn');
+  var closeBtn= document.getElementById('nav-menu-close');
+  var backdrop= document.getElementById('mobile-menu-backdrop');
+  var menuSearchBtn = document.getElementById('mobile-menu-search');
 
-  <!-- Live stats loaded from meta.json -->
-  <div id="api-stats">
-    <div class="stat-item"><span class="stat-val" id="stat-cataloged">—</span><span class="stat-lbl">Cataloged works</span></div>
-    <div class="stat-item"><span class="stat-val" id="stat-total">—</span><span class="stat-lbl">Total archive</span></div>
-    <div class="stat-item"><span class="stat-val" id="stat-themes">—</span><span class="stat-lbl">Themes indexed</span></div>
-    <div class="stat-item"><span class="stat-val" id="stat-generated">—</span><span class="stat-lbl">Last built</span></div>
-  </div>
+  function openMenu(){
+    menu.style.display = 'block';
+    menu.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(function(){ drawer.style.transform = 'translateX(0)'; });
+    closeBtn.focus();
+  }
+  function closeMenu(){
+    drawer.style.transform = 'translateX(100%)';
+    document.body.style.overflow = '';
+    setTimeout(function(){ menu.style.display = 'none'; menu.setAttribute('aria-hidden','true'); }, 260);
+    openBtn.focus();
+  }
 
-  <!-- Base URL -->
-  <div class="info-box">
-    <strong>Base URL</strong> — <code>https://jfsn.com/api/v1/</code><br>
-    All responses are <code>Content-Type: application/json; charset=utf-8</code> with
-    <code>Access-Control-Allow-Origin: *</code>. Safe to call from any browser or script.
-  </div>
+  if(openBtn)  openBtn.addEventListener('click', openMenu);
+  if(closeBtn) closeBtn.addEventListener('click', closeMenu);
+  if(backdrop) backdrop.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && menu.style.display==='block') closeMenu(); });
 
-  <!-- ── Endpoints ─────────────────────────────────────────────────────────── -->
-  <section class="api-section" aria-label="Endpoints">
-    <p class="api-section-title">Endpoints</p>
+  if(menuSearchBtn) menuSearchBtn.addEventListener('click', function(){
+    closeMenu();
+    setTimeout(function(){ if(window.openSiteSearch) window.openSiteSearch(); }, 280);
+  });
+})();
+</script>
 
-    <!-- meta -->
-    <div class="endpoint open">
-      <div class="endpoint-head" onclick="toggle(this)">
-        <span class="method">GET</span>
-        <span class="ep-url">https://jfsn.com/api/v1/meta.json</span>
-        <span class="ep-desc">Discovery &amp; counts</span>
-        <span class="ep-toggle">▾</span>
-      </div>
-      <div class="endpoint-body">
-        <p class="ep-note">Start here. Returns catalog metadata, all endpoint URLs, license, and citation string. Rebuild date is updated every time <code>build_catalog.py</code> runs.</p>
-        <pre><button class="copy-btn" onclick="copyPre(this)">Copy</button><code>{
+<script src="search.js" defer></script>
+<!-- NAV:END -->
+
+<main id="main" class="pt-16">
+  <div style="max-width:820px;margin-inline:auto;padding-inline:clamp(1rem,4vw,2rem);padding-block:3rem 5rem;">
+
+    <!-- Hero -->
+    <div style="margin-bottom:3rem;">
+      <p class="font-label-caps text-label-caps text-archive-gray" style="margin:0 0 0.5rem;letter-spacing:0.18em;">Developer</p>
+      <h1 class="font-headline-lg text-headline-lg" style="margin:0 0 1.25rem;font-weight:400;line-height:1.15;">Open Archive API</h1>
+      <p class="font-body-md text-body-md text-archive-gray" style="max-width:60ch;margin:0;line-height:1.65;">
+        Static JSON endpoints for every work in the archive. No key, no rate limit, no authentication — just plain files served over HTTPS.
+        Stable URLs you can <a href="https://jfsn.com/api/v1/meta.json" class="text-deep-ink border-b border-outline-variant hover:text-international-orange hover:border-international-orange transition-colors">cite, link, and build on</a> indefinitely.
+      </p>
+    </div>
+
+    <!-- Live stats -->
+    <div id="api-stats" style="display:flex;flex-wrap:wrap;gap:1.5rem;padding:1rem 0;border-top:1px solid #c4c7c7;border-bottom:1px solid #c4c7c7;margin-bottom:2rem;">
+      <div><span class="stat-val" id="stat-cataloged">—</span><span class="font-label-caps text-label-caps text-archive-gray" style="font-size:0.625rem;letter-spacing:0.12em;">Cataloged works</span></div>
+      <div><span class="stat-val" id="stat-total">—</span><span class="font-label-caps text-label-caps text-archive-gray" style="font-size:0.625rem;letter-spacing:0.12em;">Total archive</span></div>
+      <div><span class="stat-val" id="stat-themes">—</span><span class="font-label-caps text-label-caps text-archive-gray" style="font-size:0.625rem;letter-spacing:0.12em;">Themes indexed</span></div>
+      <div><span class="stat-val" id="stat-generated">—</span><span class="font-label-caps text-label-caps text-archive-gray" style="font-size:0.625rem;letter-spacing:0.12em;">Last built</span></div>
+    </div>
+
+    <!-- Base URL info box -->
+    <div style="border:1px solid #c4c7c7;border-left:3px solid #FF6600;padding:0.875rem 1rem;font-size:0.8125rem;line-height:1.65;color:#575757;margin-bottom:1rem;">
+      <strong class="text-deep-ink" style="font-weight:500;">Base URL</strong> — <code>https://jfsn.com/api/v1/</code><br>
+      All responses are <code>Content-Type: application/json; charset=utf-8</code> with
+      <code>Access-Control-Allow-Origin: *</code>. Safe to call from any browser or script.
+    </div>
+
+    <!-- ── Endpoints ──────────────────────────────────────────────────── -->
+    <section style="margin-top:3rem;" aria-label="Endpoints">
+      <p class="font-label-caps text-label-caps text-archive-gray" style="letter-spacing:0.14em;margin:0 0 1.25rem;padding-bottom:0.5rem;border-bottom:1px solid #c4c7c7;">Endpoints</p>
+
+      <!-- meta -->
+      <div class="endpoint open">
+        <div class="endpoint-head" onclick="toggle(this)">
+          <span style="font-family:Inter,sans-serif;font-size:0.5625rem;letter-spacing:0.14em;text-transform:uppercase;background:#ebe8e2;color:#575757;padding:0.2rem 0.45rem;flex-shrink:0;">GET</span>
+          <span style="font-family:'SF Mono','Fira Code',Menlo,monospace;font-size:0.875rem;color:#0B0B0B;flex:1;min-width:0;word-break:break-all;">https://jfsn.com/api/v1/meta.json</span>
+          <span style="font-size:0.75rem;color:#575757;letter-spacing:0.02em;flex-shrink:0;">Discovery &amp; counts</span>
+          <span class="ep-toggle">▾</span>
+        </div>
+        <div class="endpoint-body">
+          <p style="font-size:0.8125rem;color:#575757;line-height:1.6;margin:0.875rem 0 0.75rem;">Start here. Returns catalog metadata, all endpoint URLs, license, and citation string. Rebuild date is updated every time <code>build_catalog.py</code> runs.</p>
+          <pre><button class="copy-btn" onclick="copyPre(this)">Copy</button><code>{
   <span class="k">"api_version"</span>: <span class="s">"1"</span>,
   <span class="k">"generated"</span>: <span class="s">"2026-05-26T14:36:01Z"</span>,
   <span class="k">"artist"</span>: <span class="s">"Jeffrey F. S. Neumann"</span>,
@@ -337,20 +291,20 @@
   <span class="k">"license"</span>: <span class="s">"CC BY 4.0 — https://creativecommons.org/licenses/by/4.0/"</span>,
   <span class="k">"citation"</span>: <span class="s">"Jeffrey F. S. Neumann Archive. https://jfsn.com/api/v1/meta.json"</span>
 }</code></pre>
+        </div>
       </div>
-    </div>
 
-    <!-- works -->
-    <div class="endpoint">
-      <div class="endpoint-head" onclick="toggle(this)">
-        <span class="method">GET</span>
-        <span class="ep-url">https://jfsn.com/api/v1/works.json</span>
-        <span class="ep-desc">All cataloged works</span>
-        <span class="ep-toggle">▾</span>
-      </div>
-      <div class="endpoint-body">
-        <p class="ep-note">Full catalog as a JSON array wrapped in an envelope. Only includes works with complete metadata — excludes uncataloged stubs. Sorted by artwork ID (stable across rebuilds).</p>
-        <pre><button class="copy-btn" onclick="copyPre(this)">Copy</button><code>{
+      <!-- works -->
+      <div class="endpoint">
+        <div class="endpoint-head" onclick="toggle(this)">
+          <span style="font-family:Inter,sans-serif;font-size:0.5625rem;letter-spacing:0.14em;text-transform:uppercase;background:#ebe8e2;color:#575757;padding:0.2rem 0.45rem;flex-shrink:0;">GET</span>
+          <span style="font-family:'SF Mono','Fira Code',Menlo,monospace;font-size:0.875rem;color:#0B0B0B;flex:1;min-width:0;word-break:break-all;">https://jfsn.com/api/v1/works.json</span>
+          <span style="font-size:0.75rem;color:#575757;letter-spacing:0.02em;flex-shrink:0;">All cataloged works</span>
+          <span class="ep-toggle">▾</span>
+        </div>
+        <div class="endpoint-body">
+          <p style="font-size:0.8125rem;color:#575757;line-height:1.6;margin:0.875rem 0 0.75rem;">Full catalog as a JSON array wrapped in an envelope. Only includes works with complete metadata — excludes uncataloged stubs. Sorted by artwork ID (stable across rebuilds).</p>
+          <pre><button class="copy-btn" onclick="copyPre(this)">Copy</button><code>{
   <span class="k">"api_version"</span>: <span class="s">"1"</span>,
   <span class="k">"generated"</span>: <span class="s">"2026-05-26T14:36:01Z"</span>,
   <span class="k">"count"</span>: <span class="n">140</span>,
@@ -367,20 +321,20 @@
     <span class="e">… 139 more works</span>
   ]
 }</code></pre>
+        </div>
       </div>
-    </div>
 
-    <!-- per-work -->
-    <div class="endpoint">
-      <div class="endpoint-head" onclick="toggle(this)">
-        <span class="method">GET</span>
-        <span class="ep-url">https://jfsn.com/api/v1/works/<span class="ep-var">{id}</span>.json</span>
-        <span class="ep-desc">Single work</span>
-        <span class="ep-toggle">▾</span>
-      </div>
-      <div class="endpoint-body">
-        <p class="ep-note">Full metadata for a single work, with direct links to image assets. <code>{id}</code> is the zero-padded artwork identifier, e.g. <code>art0001</code>. These are the URLs to cite in papers, Wikipedia, or external databases — they will not change.</p>
-        <pre><button class="copy-btn" onclick="copyPre(this)">Copy</button><code>{
+      <!-- per-work -->
+      <div class="endpoint">
+        <div class="endpoint-head" onclick="toggle(this)">
+          <span style="font-family:Inter,sans-serif;font-size:0.5625rem;letter-spacing:0.14em;text-transform:uppercase;background:#ebe8e2;color:#575757;padding:0.2rem 0.45rem;flex-shrink:0;">GET</span>
+          <span style="font-family:'SF Mono','Fira Code',Menlo,monospace;font-size:0.875rem;color:#0B0B0B;flex:1;min-width:0;word-break:break-all;">https://jfsn.com/api/v1/works/<span class="ep-var">{id}</span>.json</span>
+          <span style="font-size:0.75rem;color:#575757;letter-spacing:0.02em;flex-shrink:0;">Single work</span>
+          <span class="ep-toggle">▾</span>
+        </div>
+        <div class="endpoint-body">
+          <p style="font-size:0.8125rem;color:#575757;line-height:1.6;margin:0.875rem 0 0.75rem;">Full metadata for a single work, with direct links to image assets. <code>{id}</code> is the zero-padded artwork identifier, e.g. <code>art0001</code>. These are the URLs to cite in papers, Wikipedia, or external databases — they will not change.</p>
+          <pre><button class="copy-btn" onclick="copyPre(this)">Copy</button><code>{
   <span class="k">"api_version"</span>: <span class="s">"1"</span>,
   <span class="k">"id"</span>: <span class="s">"art0005"</span>,
   <span class="k">"work"</span>: {
@@ -404,20 +358,20 @@
     <span class="k">"page"</span>:  <span class="s">"https://jfsn.com/artwork.html?id=art0005"</span>
   }
 }</code></pre>
+        </div>
       </div>
-    </div>
 
-    <!-- themes -->
-    <div class="endpoint">
-      <div class="endpoint-head" onclick="toggle(this)">
-        <span class="method">GET</span>
-        <span class="ep-url">https://jfsn.com/api/v1/themes.json</span>
-        <span class="ep-desc">Theme index</span>
-        <span class="ep-toggle">▾</span>
-      </div>
-      <div class="endpoint-body">
-        <p class="ep-note">All 14 controlled themes with work counts and IDs. Sorted by frequency descending. Each entry includes the archive browse URL for that theme.</p>
-        <pre><button class="copy-btn" onclick="copyPre(this)">Copy</button><code>{
+      <!-- themes -->
+      <div class="endpoint">
+        <div class="endpoint-head" onclick="toggle(this)">
+          <span style="font-family:Inter,sans-serif;font-size:0.5625rem;letter-spacing:0.14em;text-transform:uppercase;background:#ebe8e2;color:#575757;padding:0.2rem 0.45rem;flex-shrink:0;">GET</span>
+          <span style="font-family:'SF Mono','Fira Code',Menlo,monospace;font-size:0.875rem;color:#0B0B0B;flex:1;min-width:0;word-break:break-all;">https://jfsn.com/api/v1/themes.json</span>
+          <span style="font-size:0.75rem;color:#575757;letter-spacing:0.02em;flex-shrink:0;">Theme index</span>
+          <span class="ep-toggle">▾</span>
+        </div>
+        <div class="endpoint-body">
+          <p style="font-size:0.8125rem;color:#575757;line-height:1.6;margin:0.875rem 0 0.75rem;">All 14 controlled themes with work counts and IDs. Sorted by frequency descending. Each entry includes the archive browse URL for that theme.</p>
+          <pre><button class="copy-btn" onclick="copyPre(this)">Copy</button><code>{
   <span class="k">"api_version"</span>: <span class="s">"1"</span>,
   <span class="k">"count"</span>: <span class="n">14</span>,
   <span class="k">"themes"</span>: [
@@ -431,20 +385,20 @@
     <span class="e">… 13 more themes</span>
   ]
 }</code></pre>
+        </div>
       </div>
-    </div>
 
-    <!-- series -->
-    <div class="endpoint">
-      <div class="endpoint-head" onclick="toggle(this)">
-        <span class="method">GET</span>
-        <span class="ep-url">https://jfsn.com/api/v1/series.json</span>
-        <span class="ep-desc">Named series</span>
-        <span class="ep-toggle">▾</span>
-      </div>
-      <div class="endpoint-body">
-        <p class="ep-note">The three named bodies of work: XXIII, Squadron, and Guernica. Includes all member work IDs.</p>
-        <pre><button class="copy-btn" onclick="copyPre(this)">Copy</button><code>{
+      <!-- series -->
+      <div class="endpoint">
+        <div class="endpoint-head" onclick="toggle(this)">
+          <span style="font-family:Inter,sans-serif;font-size:0.5625rem;letter-spacing:0.14em;text-transform:uppercase;background:#ebe8e2;color:#575757;padding:0.2rem 0.45rem;flex-shrink:0;">GET</span>
+          <span style="font-family:'SF Mono','Fira Code',Menlo,monospace;font-size:0.875rem;color:#0B0B0B;flex:1;min-width:0;word-break:break-all;">https://jfsn.com/api/v1/series.json</span>
+          <span style="font-size:0.75rem;color:#575757;letter-spacing:0.02em;flex-shrink:0;">Named series</span>
+          <span class="ep-toggle">▾</span>
+        </div>
+        <div class="endpoint-body">
+          <p style="font-size:0.8125rem;color:#575757;line-height:1.6;margin:0.875rem 0 0.75rem;">The three named bodies of work: XXIII, Squadron, and Guernica. Includes all member work IDs.</p>
+          <pre><button class="copy-btn" onclick="copyPre(this)">Copy</button><code>{
   <span class="k">"api_version"</span>: <span class="s">"1"</span>,
   <span class="k">"series"</span>: [
     {
@@ -455,20 +409,20 @@
     }
   ]
 }</code></pre>
+        </div>
       </div>
-    </div>
 
-    <!-- motifs + palette (compact) -->
-    <div class="endpoint">
-      <div class="endpoint-head" onclick="toggle(this)">
-        <span class="method">GET</span>
-        <span class="ep-url">https://jfsn.com/api/v1/motifs.json &nbsp;·&nbsp; palette.json</span>
-        <span class="ep-desc">Controlled vocabularies</span>
-        <span class="ep-toggle">▾</span>
-      </div>
-      <div class="endpoint-body">
-        <p class="ep-note">Same structure as <code>themes.json</code>. <code>motifs.json</code> covers 30 motifs (e.g. compact-disc, warplane-topdown). <code>palette.json</code> covers 20 controlled colors (e.g. vermilion, gold, ultramarine). Each entry lists all work IDs where that term appears.</p>
-        <pre><button class="copy-btn" onclick="copyPre(this)">Copy</button><code>{
+      <!-- motifs + palette -->
+      <div class="endpoint">
+        <div class="endpoint-head" onclick="toggle(this)">
+          <span style="font-family:Inter,sans-serif;font-size:0.5625rem;letter-spacing:0.14em;text-transform:uppercase;background:#ebe8e2;color:#575757;padding:0.2rem 0.45rem;flex-shrink:0;">GET</span>
+          <span style="font-family:'SF Mono','Fira Code',Menlo,monospace;font-size:0.875rem;color:#0B0B0B;flex:1;min-width:0;word-break:break-all;">https://jfsn.com/api/v1/motifs.json &nbsp;·&nbsp; palette.json</span>
+          <span style="font-size:0.75rem;color:#575757;letter-spacing:0.02em;flex-shrink:0;">Controlled vocabularies</span>
+          <span class="ep-toggle">▾</span>
+        </div>
+        <div class="endpoint-body">
+          <p style="font-size:0.8125rem;color:#575757;line-height:1.6;margin:0.875rem 0 0.75rem;">Same structure as <code>themes.json</code>. <code>motifs.json</code> covers 30 motifs (e.g. compact-disc, warplane-topdown). <code>palette.json</code> covers 20 controlled colors (e.g. vermilion, gold, ultramarine). Each entry lists all work IDs where that term appears.</p>
+          <pre><button class="copy-btn" onclick="copyPre(this)">Copy</button><code>{
   <span class="k">"api_version"</span>: <span class="s">"1"</span>,
   <span class="k">"count"</span>: <span class="n">30</span>,
   <span class="k">"motifs"</span>: [
@@ -481,48 +435,48 @@
     <span class="e">…</span>
   ]
 }</code></pre>
+        </div>
       </div>
-    </div>
 
-  </section>
+    </section>
 
-  <!-- ── Field reference ───────────────────────────────────────────────────── -->
-  <section class="api-section" aria-label="Field reference">
-    <p class="api-section-title">Work field reference</p>
-    <table class="field-table" aria-label="Work fields">
-      <thead>
-        <tr>
-          <th>Field</th>
-          <th>Description</th>
-          <th>Type / values</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>file</td><td>AVIF filename, used as the stable record key</td><td>string — <code>art{NNNN}.avif</code></td></tr>
-        <tr><td>title</td><td>Work title, max 4 words (evocative) or Untitled variant</td><td>string</td></tr>
-        <tr><td>year</td><td>Year extracted from visual evidence on the work; null if undated</td><td>integer 1900–2100 or null</td></tr>
-        <tr><td>work_type</td><td>Medium</td><td>collage · sculpture · painting · photograph</td></tr>
-        <tr><td>description</td><td>Two-sentence catalog prose, max 55 words, objective tone</td><td>string</td></tr>
-        <tr><td>palette</td><td>Dominant colors, most prominent first</td><td>array — 20-term controlled vocab, 3–5 items</td></tr>
-        <tr><td>motifs</td><td>Clearly identifiable recurring visual elements</td><td>array — 30-term controlled vocab</td></tr>
-        <tr><td>materials</td><td>Identifiable physical materials</td><td>array — 15-term controlled vocab</td></tr>
-        <tr><td>composition</td><td>Short compositional description, max 8 words</td><td>string</td></tr>
-        <tr><td>themes</td><td>Iconographic and contextual themes, max 4</td><td>array — 14-term controlled vocab</td></tr>
-        <tr><td>series</td><td>Named body of work membership</td><td>XXIII · Squadron · Guernica · null</td></tr>
-        <tr><td>keywords</td><td>Specific long-tail search terms unique to this work</td><td>array, 2–4 items</td></tr>
-        <tr><td>featured</td><td>Selected for homepage display; set manually</td><td>boolean</td></tr>
-        <tr><td>schema_version</td><td>Schema version for forward-compatibility</td><td>string — currently "1"</td></tr>
-      </tbody>
-    </table>
-  </section>
+    <!-- ── Field reference ──────────────────────────────────────────────── -->
+    <section style="margin-top:3rem;" aria-label="Field reference">
+      <p class="font-label-caps text-label-caps text-archive-gray" style="letter-spacing:0.14em;margin:0 0 1.25rem;padding-bottom:0.5rem;border-bottom:1px solid #c4c7c7;">Work field reference</p>
+      <table class="field-table" aria-label="Work fields">
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Description</th>
+            <th>Type / values</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>file</td><td>AVIF filename, used as the stable record key</td><td>string — <code>art{NNNN}.avif</code></td></tr>
+          <tr><td>title</td><td>Work title, max 4 words (evocative) or Untitled variant</td><td>string</td></tr>
+          <tr><td>year</td><td>Year extracted from visual evidence on the work; null if undated</td><td>integer 1900–2100 or null</td></tr>
+          <tr><td>work_type</td><td>Medium</td><td>collage · sculpture · painting · photograph</td></tr>
+          <tr><td>description</td><td>Two-sentence catalog prose, max 55 words, objective tone</td><td>string</td></tr>
+          <tr><td>palette</td><td>Dominant colors, most prominent first</td><td>array — 20-term controlled vocab, 3–5 items</td></tr>
+          <tr><td>motifs</td><td>Clearly identifiable recurring visual elements</td><td>array — 30-term controlled vocab</td></tr>
+          <tr><td>materials</td><td>Identifiable physical materials</td><td>array — 15-term controlled vocab</td></tr>
+          <tr><td>composition</td><td>Short compositional description, max 8 words</td><td>string</td></tr>
+          <tr><td>themes</td><td>Iconographic and contextual themes, max 4</td><td>array — 14-term controlled vocab</td></tr>
+          <tr><td>series</td><td>Named body of work membership</td><td>XXIII · Squadron · Guernica · null</td></tr>
+          <tr><td>keywords</td><td>Specific long-tail search terms unique to this work</td><td>array, 2–4 items</td></tr>
+          <tr><td>featured</td><td>Selected for homepage display; set manually</td><td>boolean</td></tr>
+          <tr><td>schema_version</td><td>Schema version for forward-compatibility</td><td>string — currently "1"</td></tr>
+        </tbody>
+      </table>
+    </section>
 
-  <!-- ── Usage examples ───────────────────────────────────────────────────── -->
-  <section class="api-section" aria-label="Usage examples">
-    <p class="api-section-title">Usage examples</p>
-    <div class="usage-grid">
-      <div>
-        <p class="usage-label">curl</p>
-        <pre><button class="copy-btn" onclick="copyPre(this)">Copy</button><code># All cataloged works
+    <!-- ── Usage examples ──────────────────────────────────────────────── -->
+    <section style="margin-top:3rem;" aria-label="Usage examples">
+      <p class="font-label-caps text-label-caps text-archive-gray" style="letter-spacing:0.14em;margin:0 0 1.25rem;padding-bottom:0.5rem;border-bottom:1px solid #c4c7c7;">Usage examples</p>
+      <div class="usage-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div>
+          <p class="font-label-caps text-label-caps text-archive-gray" style="font-size:0.625rem;letter-spacing:0.12em;margin-bottom:0.375rem;">curl</p>
+          <pre><button class="copy-btn" onclick="copyPre(this)">Copy</button><code># All cataloged works
 curl https://jfsn.com/api/v1/works.json
 
 # Single work
@@ -531,10 +485,10 @@ curl https://jfsn.com/api/v1/works/art0005.json
 # All Aviation works
 curl https://jfsn.com/api/v1/themes.json \
   | jq '.themes[] | select(.name=="Aviation") | .work_ids'</code></pre>
-      </div>
-      <div>
-        <p class="usage-label">JavaScript (fetch)</p>
-        <pre><button class="copy-btn" onclick="copyPre(this)">Copy</button><code>// Fetch a single work
+        </div>
+        <div>
+          <p class="font-label-caps text-label-caps text-archive-gray" style="font-size:0.625rem;letter-spacing:0.12em;margin-bottom:0.375rem;">JavaScript (fetch)</p>
+          <pre><button class="copy-btn" onclick="copyPre(this)">Copy</button><code>// Fetch a single work
 const res = await fetch(
   'https://jfsn.com/api/v1/works/art0005.json'
 );
@@ -547,11 +501,11 @@ const t = await fetch(
 const aviation = t.themes.find(
   x => x.name === 'Aviation'
 );</code></pre>
+        </div>
       </div>
-    </div>
 
-    <p class="usage-label" style="margin-top:1.25rem">Python</p>
-    <pre><button class="copy-btn" onclick="copyPre(this)">Copy</button><code>import requests, json
+      <p class="font-label-caps text-label-caps text-archive-gray" style="font-size:0.625rem;letter-spacing:0.12em;margin-top:1.25rem;margin-bottom:0.375rem;">Python</p>
+      <pre><button class="copy-btn" onclick="copyPre(this)">Copy</button><code>import requests, json
 
 # List all works with palette including 'gold'
 works = requests.get('https://jfsn.com/api/v1/works.json').json()['works']
@@ -561,77 +515,81 @@ print(f"{len(gold_works)} works featuring gold")
 # Download metadata for a specific work
 work = requests.get('https://jfsn.com/api/v1/works/art0001.json').json()
 print(work['work']['title'], '—', work['work']['description'])</code></pre>
-  </section>
+    </section>
 
-  <!-- ── Versioning ─────────────────────────────────────────────────────────── -->
-  <section class="api-section" aria-label="Versioning and stability">
-    <p class="api-section-title">Versioning &amp; stability</p>
-    <div class="info-box">
-      <strong>URL stability guarantee</strong> — the path <code>https://jfsn.com/api/v1/works/{id}.json</code> will exist for as long as this archive exists. Artwork IDs are never reassigned or deleted; new works get new IDs.
-    </div>
-    <div class="info-box">
-      <strong>Schema versioning</strong> — every response includes <code>"api_version": "1"</code>. If the schema changes incompatibly, a new <code>/api/v2/</code> path is introduced; v1 is kept frozen. The <code>schema_version</code> inside each work record tracks the AI cataloging schema independently.
-    </div>
-    <div class="info-box">
-      <strong>No rate limits</strong> — all endpoints are static files served from CDN edge nodes. There is no server-side processing; you cannot overload it. Cache-Control headers suggest 1-hour freshness.
-    </div>
-  </section>
+    <!-- ── Versioning ──────────────────────────────────────────────────── -->
+    <section style="margin-top:3rem;" aria-label="Versioning and stability">
+      <p class="font-label-caps text-label-caps text-archive-gray" style="letter-spacing:0.14em;margin:0 0 1.25rem;padding-bottom:0.5rem;border-bottom:1px solid #c4c7c7;">Versioning &amp; stability</p>
+      <div style="border:1px solid #c4c7c7;border-left:3px solid #FF6600;padding:0.875rem 1rem;font-size:0.8125rem;line-height:1.65;color:#575757;margin-bottom:1rem;">
+        <strong class="text-deep-ink" style="font-weight:500;">URL stability guarantee</strong> — the path <code>https://jfsn.com/api/v1/works/{id}.json</code> will exist for as long as this archive exists. Artwork IDs are never reassigned or deleted; new works get new IDs.
+      </div>
+      <div style="border:1px solid #c4c7c7;border-left:3px solid #FF6600;padding:0.875rem 1rem;font-size:0.8125rem;line-height:1.65;color:#575757;margin-bottom:1rem;">
+        <strong class="text-deep-ink" style="font-weight:500;">Schema versioning</strong> — every response includes <code>"api_version": "1"</code>. If the schema changes incompatibly, a new <code>/api/v2/</code> path is introduced; v1 is kept frozen. The <code>schema_version</code> inside each work record tracks the AI cataloging schema independently.
+      </div>
+      <div style="border:1px solid #c4c7c7;border-left:3px solid #FF6600;padding:0.875rem 1rem;font-size:0.8125rem;line-height:1.65;color:#575757;margin-bottom:1rem;">
+        <strong class="text-deep-ink" style="font-weight:500;">No rate limits</strong> — all endpoints are static files served from CDN edge nodes. There is no server-side processing; you cannot overload it. Cache-Control headers suggest 1-hour freshness.
+      </div>
+    </section>
 
-  <!-- ── License ───────────────────────────────────────────────────────────── -->
-  <section class="api-section" aria-label="License and citation">
-    <p class="api-section-title">License &amp; citation</p>
-    <p style="font-size:0.875rem;color:var(--muted);line-height:1.7;margin:0 0 1rem;">
-      Catalog metadata (titles, descriptions, themes, keywords, dates) is released under
-      <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener" style="color:var(--text);border-bottom:1px solid var(--dim);">CC BY 4.0</a>.
-      You may use, redistribute, and build upon it freely with attribution.
-      The artwork images themselves remain copyright Jeffrey F. S. Neumann — contact for licensing.
-    </p>
-    <p class="usage-label">Suggested citation</p>
-    <pre><code>Jeffrey F. S. Neumann Archive (jfsn.com). Catalog metadata, CC BY 4.0.
+    <!-- ── License ─────────────────────────────────────────────────────── -->
+    <section style="margin-top:3rem;" aria-label="License and citation">
+      <p class="font-label-caps text-label-caps text-archive-gray" style="letter-spacing:0.14em;margin:0 0 1.25rem;padding-bottom:0.5rem;border-bottom:1px solid #c4c7c7;">License &amp; citation</p>
+      <p style="font-size:0.875rem;color:#575757;line-height:1.7;margin:0 0 1rem;">
+        Catalog metadata (titles, descriptions, themes, keywords, dates) is released under
+        <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener" class="text-deep-ink border-b border-outline-variant hover:text-international-orange hover:border-international-orange transition-colors">CC BY 4.0</a>.
+        You may use, redistribute, and build upon it freely with attribution.
+        The artwork images themselves remain copyright Jeffrey F. S. Neumann — contact for licensing.
+      </p>
+      <p class="font-label-caps text-label-caps text-archive-gray" style="font-size:0.625rem;letter-spacing:0.12em;margin-bottom:0.375rem;">Suggested citation</p>
+      <pre><code>Jeffrey F. S. Neumann Archive (jfsn.com). Catalog metadata, CC BY 4.0.
 Retrieved from https://jfsn.com/api/v1/meta.json, [date accessed].</code></pre>
-  </section>
+    </section>
 
-</div>
+  </div>
 </main>
 
-<footer class="footer">
-  <div class="container footer__inner">
-    <span>Jeffrey F. S. Neumann</span>
-    <nav class="footer-nav" aria-label="Site navigation">
-      <a href="archive.html">Archive</a>
-      <a href="series-index.html">Series</a>
-      <a href="timeline.html">Timeline</a>
-      <a href="wall.html">Wall</a>
-      <a href="about.html">About</a>
-      <a href="for-artists.html" style="color:var(--accent)">For Artists</a>
-      <a href="companion.html">Companion</a>
-      <a href="changes.html">Changes</a>
-      <a href="lost.html">Lost</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="feed.xml" title="RSS feed of new works">RSS</a>
-    </nav>
-    <nav class="footer-social" aria-label="Social links">
-      <a href="https://www.linkedin.com/in/jeffreyneumann/" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="https://dribbble.com/JFSN" target="_blank" rel="noopener">Dribbble</a>
-      <a href="https://www.youtube.com/@jfsneumann/videos" target="_blank" rel="noopener">YouTube</a>
-      <a href="https://showspace.so/s/jeffrey-neumann-46" target="_blank" rel="noopener">Showspace</a>
-    </nav>
-    <nav class="footer-earlier" aria-label="Earlier sites">
-      <a href="#" target="_blank" rel="noopener">Mr. SNOWmann</a>
-      <a href="#" target="_blank" rel="noopener">Fine Art 2000</a>
-      <a href="/old-site/" target="_blank" rel="noopener">jfsn 2023</a>
-      <a href="#" target="_blank" rel="noopener">jfsn 2014</a>
-    </nav>
+<!-- Footer -->
+<!-- FOOTER:START -->
+<footer class="bg-surface-container-high py-16 px-margin-desktop border-t border-outline-variant">
+  <div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+    <div>
+      <h3 class="font-headline-md text-headline-md tracking-tighter mb-6">JFSN</h3>
+      <p class="font-body-md text-archive-gray text-sm leading-relaxed">The personal archive of Jeffrey F. S. Neumann — 1,084 works spanning five decades. Collage, sculpture, photography.</p>
+    </div>
+    <div>
+      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">EXPLORE</h4>
+      <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
+        <li><a class="hover:text-international-orange transition-colors" href="archive.html">Complete Archive</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="timeline.html">Interactive Timeline</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="series-index.html">Series Index</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">RESOURCES</h4>
+      <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
+        <li><a class="hover:text-international-orange transition-colors" href="mosaic.html">Portrait Mosaic</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="chromatic.html">Chromatic River</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="companion.html">AI Companion</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="about.html">About</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">CONTACT</h4>
+      <a class="font-nav-link text-nav-link text-deep-ink block mb-4 border-b border-deep-ink inline-block pb-1 hover:text-international-orange hover:border-international-orange transition-all" href="mailto:jfsneumann@gmail.com">jfsneumann@gmail.com</a>
+    </div>
+  </div>
+  <div class="mt-16 pt-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
+    <p class="font-label-caps text-[10px] text-archive-gray">© 2026 JEFFREY F. S. NEUMANN. ALL RIGHTS RESERVED.</p>
+    <div class="flex gap-8"><a class="font-label-caps text-[10px] text-archive-gray hover:text-deep-ink" href="privacy.html">PRIVACY</a></div>
   </div>
 </footer>
+<!-- FOOTER:END -->
 
 <script>
-// ── Toggle endpoint bodies ─────────────────────────────────────────────────
 function toggle(head) {
   head.closest('.endpoint').classList.toggle('open');
 }
 
-// ── Copy button ───────────────────────────────────────────────────────────
 function copyPre(btn) {
   const text = btn.nextElementSibling.textContent;
   navigator.clipboard.writeText(text).then(() => {
@@ -641,7 +599,6 @@ function copyPre(btn) {
   });
 }
 
-// ── Live stats from meta.json ─────────────────────────────────────────────
 fetch('api/v1/meta.json')
   .then(r => r.json())
   .then(m => {

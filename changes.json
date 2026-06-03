@@ -1,5 +1,11 @@
 [
   {
+    "sha": "ee045af",
+    "date": "2026-06-03",
+    "title": "Session 2026-06-03: SW network-first fix, FAA prep, memory updates",
+    "body": "- SW HTML/CSS/JS switched to network-first (eliminates stale dark cache)\n- CURRENT_STATE.md updated with FAA status and next steps\n- Memory files updated: monetization, stitch filter, user profile"
+  },
+  {
     "sha": "e474af2",
     "date": "2026-06-03",
     "title": "SW: switch HTML/CSS/JS to network-first to prevent stale dark-theme cache",

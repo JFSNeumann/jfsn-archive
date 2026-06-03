@@ -1,5 +1,5 @@
 # JFSN — Improvement List
-**Updated:** 2026-06-02
+**Updated:** 2026-06-03
 
 A living list. Add to it. Cross things off. This is the backlog.
 
@@ -8,14 +8,15 @@ A living list. Add to it. Cross things off. This is the backlog.
 ## 🔴 Do soon
 
 - [ ] **index.html duplicate h1** — mobile and desktop sections each render an `<h1>`. Add `aria-hidden="true"` to the mobile one (it's visually hidden on desktop anyway). One-liner.
-- [ ] **api.html — migrate off old dark system** — still loads `site.css` and uses dark CSS vars (`--muted`, `--dim`, `--accent`, `--font-display`). Last page on the old system. Once migrated, `site.css` can be deleted from both local and server. Medium effort — bespoke styles are mostly inline.
-- [ ] **Delete `old-site/` locally** — 197MB of the pre-redesign site. Not deployed. Trash it. (`rm -rf /Users/jeffreyneumann/Documents/JFSN/old-site/`)
-- [ ] **Delete `old-site/` on server** — leftover folder at jfsn.com/old-site/ with files like `ai-powered-solutions.html`, `automobile-designs.html` from previous tenant. Delete via FileZilla or cPanel File Manager.
+- [x] **api.html — migrate off old dark system** ✅ — migrated to light Tailwind system; site.css deleted; SW cache bumped. Deploy to HostGator + delete site.css from server via FileZilla.
+- [x] **site.css deleted from server** ✅ — confirmed removed via FileZilla 2026-06-03.
+- [ ] ~~**Delete `old-site/` locally**~~ — keeping intentionally.
+- [ ] ~~**Delete `old-site/` on server**~~ — keeping intentionally.
 
 - [ ] **Test Companion live** — open jfsn.com/companion.html on iPhone, type something, confirm a work comes back. Known untested since the redesign.
 - [ ] **Test for-artists inquiry form** — go to `jfsn-archive.netlify.app/for-artists.html`, submit form, confirm redirect to `?sent=1#inquire` (form only works on Netlify, not HostGator)
 - [ ] **Test timeline scrub on mobile** — drag the strip left/right on iPhone, confirm it scrolls through years (no touch handler found in code — may be CSS scroll only)
-- [ ] **Google Search Console** — submit sitemap.xml if not done yet. sitemap now has 2,190 URLs including all 1,084 artwork pages.
+- [x] **Google Search Console** ✅ — sitemap submitted 2026-06-03. 2,190 URLs including all 1,084 artwork pages.
 - [ ] **Ingest new work** — drop photos into `artworks/inbox/`, run `bash add-works.sh`. Pipeline is ready.
 
 ---
@@ -52,12 +53,12 @@ A living list. Add to it. Cross things off. This is the backlog.
 ### Architecture
 - [ ] **Offsite cloud backup** — all three current copies (MacBook, Time Machine, JEFFS-4TB) are in the same room. Add Backblaze B2 or iCloud Drive sync for the critical JSON files and HTML. Images are ~800MB — full cloud backup would cost ~$0.50/month on B2.
 - [ ] **Automated deploy after commit** — currently: `bash end-session.sh` (git) then `bash deploy.sh` (FTP) manually. Could hook deploy.sh into end-session.sh or Netlify auto-deploy.
-- [ ] **Static site generation for artwork pages** — `artworks/pages/artNNNN.html` currently does meta-refresh redirect. A proper SSG would render the full artwork page statically for Googlebot. Bigger project.
+- [x] **Static artwork pages** ✅ — all 1,084 `artworks/pages/artNNNN.html` are fully static (not redirect stubs): full image, metadata, JSON-LD, prev/next, related works. Generator: `gen-artwork-pages.py`.
 
 ### UX
 - [ ] **Search result thumbnails** — the ⌘K overlay shows titles/metadata but not the image thumbnail. Adding the thumb makes it much easier to recognize works.
 - [ ] **Archive sort by "recently added"** — useful once new work is ingested. Currently sorts by ID (same as intake order) but could surface newest works explicitly.
-- [ ] **Artwork page: adjacent work navigation** — ← / → arrows on desktop to move between works in the same series or decade.
+- [ ] **Artwork page: visible ← → navigation buttons** — keyboard shortcuts (← / →) already work, but there are no visible arrow buttons on desktop. Add them for discoverability.
 
 ---
 

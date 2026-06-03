@@ -165,7 +165,7 @@ Things to do once, in Netlify or by hand, before promoting `for-artists.html`. T
       Draft a 5–8 sentence reply you'll send within 48 hours of an inquiry. Save it in a notes app so you don't compose from scratch each time.
 - [ ] **Founding-artist slot counter (manual).**
       The For Artists page advertises 3 founding slots at 30% off. After each slot is claimed, edit `for-artists.html` to update the `.founding__eyebrow` text ("3 slots" → "2 slots remaining" → "1 slot remaining" → delete the whole `<aside class="founding">` once filled).
-- [ ] **GoatCounter analytics — sign up and confirm the subdomain.**
+- [ ] **GoatCounter analytics — sign up and confirm the subdomain.** *(Snippet already installed on all pages at `jfsn.goatcounter.com` — pending account creation.)*
       The site already has the GoatCounter snippet installed on every public page. To activate it:
       1. Sign up at <https://www.goatcounter.com> (free for personal use).
       2. Pick a subdomain — the current snippet uses `jfsn.goatcounter.com`. If you choose differently, find/replace `jfsn.goatcounter.com` across all `.html` files.
@@ -181,7 +181,7 @@ Things to do once, in Netlify or by hand, before promoting `for-artists.html`. T
 
 ### Per-deploy hygiene
 
-- [ ] After meaningful CSS/HTML changes that returning visitors should see immediately, bump `CACHE_V` in `sw.js`. The current convention is `jfsn-YYYYMMDD-<reason>` (e.g. `jfsn-20260527-nav-form`).
+- [ ] After meaningful CSS/HTML changes that returning visitors should see immediately, bump `CACHE_V` in `sw.js`. The current convention is `jfsn-YYYYMMDD-<reason>` (e.g. `jfsn-20260603-drop-site-css`).
 - [ ] When adding new top-level pages, add them to `entries[]` in `artworks/build_catalog.py` so they end up in `sitemap.xml`.
 
 ---

@@ -86,7 +86,6 @@ check("sw.js — CACHE_V",     "/sw.js",
       contains="jfsn-")
 
 # Assets
-check("site.css",            "/site.css")
 check("search.js",           "/search.js")
 check("icon-192.png",        "/icon-192.png")
 check("manifest.json",       "/manifest.json")

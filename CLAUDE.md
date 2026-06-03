@@ -11,7 +11,7 @@ Live: jfsn.com (cPanel/HostGator) and jfsn-archive.netlify.app (Netlify, has Com
 
 ## Design System (current — Stitch/Tailwind, light)
 
-The site was fully redesigned in May 2026 from a dark system (site.css) to a light system using Tailwind CDN. All 22 public pages are on the new system. **Do not reference site.css or the old dark tokens.**
+The site was fully redesigned in May 2026 from a dark system to a light system. All 22 public pages are on the light system. `site.css` has been deleted — do not reference it or the old dark tokens.
 
 ### Token reference (two configs in use)
 
@@ -101,11 +101,11 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 | `painting.html` | 42 works |
 | `1970s.html`–`2020s.html` | 6 decade pages, Material Design tokens, ← / → keyboard nav |
 | `series.html` | Single series deep-dive |
-| `guernica.html` | 232 Guernica works |
-| `for-artists.html` | Archive-as-a-service, drop demo |
+| `guernica.html` | 232 Guernica works, static theme page |
+| `for-artists.html` | Archive-as-a-service, inquiry form (Netlify only) |
 | `constellation.html` | D3 force graph |
-| `timeline.html` | Already listed above |
-| `wall.html` | 1,084 mini images |
+| `wall.html` | 1,084 mini images, sibling dim via `:has()` |
+| `api.html` | Developer API docs, light system |
 | `changes.html` | Git log feed |
 | `privacy.html` | Privacy page |
 | `404.html` | Error page |
@@ -131,7 +131,7 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 - Service worker: `sw.js` — bump `CACHE_V` whenever deploy may be cached by old SW
 
 ### Conventions
-- Vanilla HTML/CSS/JS + Tailwind CDN. No build step.
+- Vanilla HTML/CSS/JS. Production uses `site.min.css` (31KB compiled Tailwind — not CDN). Stitch exports start with Tailwind CDN and get swapped to `site.min.css` during post-export cleanup.
 - `loading="lazy"` on all artwork images
 - `prefers-reduced-motion` respected in all transitions (in `_shared/ui.css`)
 - `aria-current="page"` on active nav link (set by nav-active.js)

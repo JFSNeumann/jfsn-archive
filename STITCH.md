@@ -135,8 +135,10 @@ no external component libraries, loading="lazy" on artwork images.
 2. **Extract** any interaction/animation code worth keeping
 3. **Do NOT use the export directly** — it has placeholder content, wrong SEO, no analytics
 4. **Apply** the extracted structure to a new HTML file using the real design system
-5. Run `bash stamp-nav.sh` to stamp the canonical nav
-6. Test at 390px (iPhone 15 Pro) and 1440px
+5. **Swap Tailwind CDN** — replace `<script src="https://cdn.tailwindcss.com...">` with `<link rel="stylesheet" href="site.min.css"/>` and remove the inline `tailwind.config` script
+6. **Add nav-active.js** — `<script src="_shared/nav-active.js" defer></script>` so the orange active nav link sets correctly
+7. Run `bash stamp-nav.sh` to stamp the canonical nav
+8. Test at 390px (iPhone 15 Pro) and 1440px
 
 ---
 
@@ -152,3 +154,9 @@ no external component libraries, loading="lazy" on artwork images.
 | `lost.html` | Essay + ghost grid — sparse, no CTAs, memorial tone |
 | `series-index.html` | Card grid, 8 series, Playfair Display titles |
 | `constellation.html` | Dark canvas interface, light nav/footer surround |
+| `timeline.html` | Horizontal scrub strip, all dated works |
+| `for-artists.html` | Archive-as-a-service pitch + inquiry form (Netlify only) |
+| `companion.html` | AI Companion — chat UI, edge function on Netlify |
+| `wall.html` | 1,084 mini tiles, sibling dim via `:has()` |
+| `guernica.html` | Static theme page — 232 works, full static grid |
+| `api.html` | Developer docs — expandable endpoint cards, code blocks, light bg |

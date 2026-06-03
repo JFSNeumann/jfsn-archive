@@ -145,7 +145,6 @@ def page1(c):
         ('GitHub',           'github.com/JFSNeumann/jfsn-archive'),
         ('Code on Mac',      '/Users/jeffreyneumann/Documents/JFSN/'),
         ('HostGator support','1-866-96-GATOR'),
-        ('Studio & tools',   'jfsn.com/jeff.html'),
     ]
     for key, val in rows:
         divider(c, mx, y + 12, W - mx*2)

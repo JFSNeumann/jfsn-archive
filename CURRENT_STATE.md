@@ -1,19 +1,18 @@
 # Current State
-**Updated:** 2026-06-03 09:37
+**Updated:** 2026-06-03
 
 ## Last commit
-4a01b8b — Prompts 4–6: internal links, About schema, artwork.html canonical
+(pending end-session.sh)
+
+## Last deployed
+- HostGator: pending deploy.sh
+- Netlify: 2026-06-02
 
 ## To do next session
-- [x] Sign up for Fine Art America — 22 works uploaded and live ✅
-- [ ] Add "Buy a Print" link to artwork.html — need FAA profile URL
-- [ ] Migrate api.html off old dark CSS → then delete site.css
 - [ ] (Optional) Dual-track timeline: map works alongside historical/art-world context
 
 ## Known issues
-- ~~Service worker black screen on index.html first load~~ — **FIXED 2026-06-02**: hero AVIF added to SW precache; dark fallback bg added to hero section; CACHE_V bumped. Deploy required to take effect.
-- **Companion — WORKING** ✅ confirmed live 2026-06-02. Returns real artwork matches.
-- **for-artists form** — Netlify now up to date. Submit a test inquiry from the live site to confirm email notifications are enabled in Netlify dashboard (Forms → Notifications).
+- None currently open.
 
 ## Site is live at
 - jfsn.com  (primary — cPanel)

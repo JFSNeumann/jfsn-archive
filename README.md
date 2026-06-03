@@ -21,6 +21,7 @@ A static, open-source archive site for visual artists. No CMS, no database, no m
 - **Static artwork pages** — 1,084 pre-rendered pages with unique title/description for Google indexing
 - **Companion** — AI assistant with full knowledge of the archive (Netlify Function + Claude API)
 - **Open Archive API** — auto-generated `api/v1/` endpoints (works, themes, motifs, palette, series)
+- **Print on demand** — "Buy a Print" link on every artwork page, fulfilled via Fine Art America
 - **RSS feed** — `feed.xml` of the 20 most recently added works
 - **Service worker** — offline-first, auto-cache-busted on every build
 - **AI auto-cataloging** — Claude reads your images and writes titles, descriptions, themes, palette, motifs
