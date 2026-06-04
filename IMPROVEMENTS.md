@@ -13,8 +13,8 @@ A living list. Add to it. Cross things off. This is the backlog.
 - [ ] ~~**Delete `old-site/` locally**~~ — keeping intentionally.
 - [ ] ~~**Delete `old-site/` on server**~~ — keeping intentionally.
 
-- [ ] **Test Companion live** — open jfsn.com/companion.html on iPhone, type something, confirm a work comes back. Known untested since the redesign.
-- [ ] **Test for-artists inquiry form** — go to `jfsn-archive.netlify.app/for-artists.html`, submit form, confirm redirect to `?sent=1#inquire` (form only works on Netlify, not HostGator)
+- [x] **Test Companion live** ✅ — confirmed working on iPhone 2026-06-04.
+- [x] **Test for-artists inquiry form** ✅ — confirmed working 2026-06-04; 1 submission received in Netlify dashboard.
 - [ ] **Test timeline scrub on mobile** — drag the strip left/right on iPhone, confirm it scrolls through years (no touch handler found in code — may be CSS scroll only)
 - [x] **Google Search Console** ✅ — sitemap submitted 2026-06-03. 2,190 URLs including all 1,084 artwork pages.
 - [ ] **Ingest new work** — drop photos into `artworks/inbox/`, run `bash add-works.sh`. Pipeline is ready.

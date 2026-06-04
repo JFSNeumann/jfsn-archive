@@ -1,5 +1,23 @@
 [
   {
+    "sha": "bdb113d",
+    "date": "2026-06-04",
+    "title": "Mark cloud backup and Buy a Print fix as complete in IMPROVEMENTS.md",
+    "body": ""
+  },
+  {
+    "sha": "2d6f82b",
+    "date": "2026-06-04",
+    "title": "Fix Buy a Print button: deep-link to specific FAA work pages",
+    "body": "- Button now hidden by default on all 1,084 artwork pages\n- Shows only on the 22 works uploaded to FAA/Pixels\n- Each links directly to that work's purchase page\n- FAA URLs mapped via perceptual hash image matching"
+  },
+  {
+    "sha": "57267d2",
+    "date": "2026-06-03",
+    "title": "Rebalance homepage: 5 decades represented in featured works",
+    "body": "featured.txt expanded from 8 → 25 works spanning 1970s–2020s.\nHomepage now shows 4/2/5/5/4/10 across 70s/80s/90s/00s/10s/20s\ninstead of 22 of 30 being 2020 works."
+  },
+  {
     "sha": "e90708e",
     "date": "2026-06-03",
     "title": "Session 4: UX polish, performance, sort, deploy automation",

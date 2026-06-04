@@ -243,7 +243,7 @@
   </div>
 
   <!-- Timeline Strip -->
-  <div class="relative w-full border-y border-outline-variant py-xl overflow-x-auto no-scrollbar timeline-strip" id="timelineContainer">
+  <div class="relative w-full border-y border-outline-variant py-xl overflow-x-auto no-scrollbar timeline-strip" id="timelineContainer" style="-webkit-overflow-scrolling:touch;scroll-behavior:smooth;">
     <!-- Mobile drag hint — fades out after first touch -->
     <div class="md:hidden absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-deep-ink/70 text-bone-white px-3 py-1.5 pointer-events-none z-10 transition-opacity duration-500" id="drag-hint" aria-hidden="true">
       <span class="material-symbols-outlined text-[16px]">swipe</span>
@@ -481,14 +481,9 @@ container.addEventListener('wheel', e => {
 }, { passive: false });
 
 // Touch support
-let touchStartX;
 const dragHint = document.getElementById('drag-hint');
 let hintDismissed = false;
-container.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
-container.addEventListener('touchmove', e => {
-  const dx = touchStartX - e.touches[0].clientX;
-  container.scrollLeft += dx;
-  touchStartX = e.touches[0].clientX;
+container.addEventListener('touchstart', () => {
   if (dragHint && !hintDismissed) {
     hintDismissed = true;
     dragHint.style.opacity = '0';
