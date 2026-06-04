@@ -460,12 +460,16 @@
   const againBtn   = document.getElementById('c-again-btn');
   const examplesEl = document.getElementById('c-examples');
 
-  // Pre-fill from ?q= param (set by artwork.html "Ask the Archive" links)
+  // Pre-fill from ?q= param (set by homepage chips / artwork.html "Ask the Archive" links)
   const q = new URLSearchParams(location.search).get('q');
   if (q) {
     input.value = q;
-    // Auto-submit after a short delay so the page paints first
-    setTimeout(() => form.dispatchEvent(new Event('submit', { cancelable: true })), 400);
+    // Immediately hide form chrome so user never sees idle state on arrival
+    examplesEl.hidden = true;
+    submitBtn.disabled = true;
+    setStatus('Looking through the archive…', true);
+    // Short delay so the page paints the loading state before the fetch starts
+    setTimeout(() => form.dispatchEvent(new Event('submit', { cancelable: true })), 120);
   }
 
   document.querySelectorAll('.c-example').forEach(btn =>
