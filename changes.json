@@ -1,5 +1,59 @@
 [
   {
+    "sha": "04d29ba",
+    "date": "2026-06-04",
+    "title": "companion.html: fix search-again — re-enable button after results, clear results on new input",
+    "body": ""
+  },
+  {
+    "sha": "b9068bc",
+    "date": "2026-06-04",
+    "title": "companion.html: skip idle form state on ?q= arrival — show loading immediately",
+    "body": ""
+  },
+  {
+    "sha": "bdc2d80",
+    "date": "2026-06-04",
+    "title": "companion.html: tighten bottom padding, widen Find a Work button on desktop",
+    "body": ""
+  },
+  {
+    "sha": "337b366",
+    "date": "2026-06-04",
+    "title": "companion.html: reorder chips above button, add TRY label, explain deeper search inline",
+    "body": ""
+  },
+  {
+    "sha": "2a4070f",
+    "date": "2026-06-04",
+    "title": "Series pages: add horizontal padding to .thumb__caption (was top-only, text touching edges)",
+    "body": ""
+  },
+  {
+    "sha": "54760a1",
+    "date": "2026-06-04",
+    "title": "Series/theme pages: add missing ui.js — fixes invisible images (opacity:0 from ui.css never cleared)",
+    "body": ""
+  },
+  {
+    "sha": "54a1db3",
+    "date": "2026-06-04",
+    "title": "Series/theme pages: fix edge-to-edge padding on all medium-page and series templates (20px mobile, 48px desktop)",
+    "body": ""
+  },
+  {
+    "sha": "f4e42f9",
+    "date": "2026-06-04",
+    "title": "guernica.html: fix edge-to-edge padding (20px mobile, 48px desktop)",
+    "body": ""
+  },
+  {
+    "sha": "e538330",
+    "date": "2026-06-04",
+    "title": "Stitch homepage: asymmetric featured grid, mobile stats + companion snaps",
+    "body": ""
+  },
+  {
     "sha": "abc794b",
     "date": "2026-06-04",
     "title": "Update homepage companion chips; confirm FAA links live",
