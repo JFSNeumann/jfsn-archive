@@ -100,6 +100,18 @@ EOF
 
 echo "📄  CURRENT_STATE.md updated."
 echo ""
+
+# ── 5. Deploy to HostGator ────────────────────────────────────────────────────
+read -p "🚀  Deploy to HostGator now? (y/N): " DEPLOY
+if [[ "$DEPLOY" =~ ^[Yy]$ ]]; then
+  echo "   Deploying via FTP — this takes 2–5 minutes..."
+  bash "$(dirname "$0")/deploy.sh"
+  echo "   ✅  Deploy complete."
+else
+  echo "   Skipped. Run  bash deploy.sh  when ready."
+fi
+
+echo ""
 echo "═══════════════════════════════════════"
 echo "  Done. Good work today."
 echo "═══════════════════════════════════════"

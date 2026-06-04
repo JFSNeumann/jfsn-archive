@@ -394,12 +394,15 @@ const DECADES = {1970:0,1980:58,1990:69,2000:262,2010:536,2020:843};
   });
 
   canvas.addEventListener('click', function(e) {
-    // Navigate to the work based on position — need id
-    // We'll use a lookup by title match in catalog via artwork.html
     const idx = getIdx(e.clientX);
-    // WORKS entries don't have id; use archive search as fallback
     const w = WORKS[idx];
-    window.location.href = 'artwork.html?id=' + w[3];
+    const ctx = canvas.getContext('2d');
+    const sliceW = canvas.width / WORKS.length;
+    ctx.save();
+    ctx.fillStyle = 'rgba(255,255,255,0.55)';
+    ctx.fillRect(idx * sliceW, 0, sliceW, canvas.height);
+    ctx.restore();
+    setTimeout(function() { window.location.href = 'artwork.html?id=' + w[3]; }, 130);
   });
 })();
 </script>

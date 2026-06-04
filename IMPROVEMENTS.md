@@ -1,5 +1,5 @@
 # JFSN — Improvement List
-**Updated:** 2026-06-03 (session 2)
+**Updated:** 2026-06-04 (session 4)
 
 A living list. Add to it. Cross things off. This is the backlog.
 
@@ -29,14 +29,14 @@ A living list. Add to it. Cross things off. This is the backlog.
 - [x] **Static artwork pages** — All 1,084 `artworks/pages/artNNNN.html` rebuilt from redirect stubs to full static pages: artwork image, title, year, medium, description, palette, motifs, composition, theme/series links, prev/next strip, 4 related works, VisualArtwork + BreadcrumbList JSON-LD, canonical, OG tags. Sitemap updated to point to static pages. Generator: `gen-artwork-pages.py`.
 
 ### Performance
-- [ ] **Preload first-row artwork thumbnails** — `collage.html`, `photography.html`, `sculpture.html`, `painting.html` should add `<link rel="preload">` for the first 4 visible thumbs.
-- [ ] **Image lazy-loading fine-tune** — audit `loading="lazy"` on above-the-fold images on archive.html.
+- [x] **Preload first-row artwork thumbnails** ✅ — `collage.html`, `photography.html`, `sculpture.html`, `painting.html`: first 4 imgs set to `loading="eager" fetchpriority="high"` + `<link rel="preload">` in head. 2026-06-04.
+- [x] **Image lazy-loading fine-tune** ✅ — `archive.html` `renderCard` updated to `loading="eager" fetchpriority="high"` for first 8 cards on page 0. 2026-06-04.
 
 ### Features
-- [ ] **Decade page keyboard nav badge** — show "← 1980s | 1990s →" as a small floating badge on decade pages so keyboard nav is discoverable.
+- [x] **Decade page keyboard nav badge** ✅ — floating hint badge added to `_shared/ui.js`; shows decade names, fades after 4s or first arrow key. 2026-06-04.
 - [x] **Timeline touch-scrub indicator** ✅ — added mobile-only "Drag to explore" hint badge that fades out on first drag 2026-06-03.
-- [ ] **Chromatic River click feedback** — clicking a slice navigates to the artwork, but there's no visual tap feedback on mobile. Add a brief highlight.
-- [ ] **Companion suggestion chips** — update the 3 example prompts to reflect the actual archive themes and series.
+- [x] **Chromatic River click feedback** ✅ — white flash on tapped slice before navigation; ctx fetched fresh inside click handler. 2026-06-04.
+- [x] **Companion suggestion chips** ✅ — updated to archive-specific prompts: Guernica, Mr. SNOWmann, targets/warplanes, 1970s, crosses, found objects, midwest winter, lost/undocumented. 2026-06-04.
 
 ### Content
 - [x] **about.html exhibitions** ✅ — confirmed: generic names (Group Exhibition, Two-Person Exhibition, etc.) are accurate, not placeholders.
@@ -51,13 +51,13 @@ A living list. Add to it. Cross things off. This is the backlog.
 - [ ] **Print run of 12** — 12 prints of 12 works, numbered. Last item from the wow-factor backlog. Not a code problem.
 
 ### Architecture
-- [ ] **Offsite cloud backup** — all three current copies (MacBook, Time Machine, JEFFS-4TB) are in the same room. Add Backblaze B2 or iCloud Drive sync for the critical JSON files and HTML. Images are ~800MB — full cloud backup would cost ~$0.50/month on B2.
-- [ ] **Automated deploy after commit** — currently: `bash end-session.sh` (git) then `bash deploy.sh` (FTP) manually. Could hook deploy.sh into end-session.sh or Netlify auto-deploy.
+- [ ] **Offsite cloud backup** — `cloud-backup.sh` written and ready. Needs: `brew install rclone`, then `rclone config` to add B2 bucket. See setup notes at top of cloud-backup.sh. ~$0.50/month for ~800MB.
+- [x] **Automated deploy after commit** ✅ — `end-session.sh` now prompts "Deploy to HostGator now? (y/N)" and runs `deploy.sh` if confirmed. Single command handles git + FTP. 2026-06-04.
 - [x] **Static artwork pages** ✅ — all 1,084 `artworks/pages/artNNNN.html` are fully static (not redirect stubs): full image, metadata, JSON-LD, prev/next, related works. Generator: `gen-artwork-pages.py`.
 
 ### UX
 - [x] **Search result thumbnails** ✅ — already implemented in search.js (`.sse-thumb` img in every result row); backlog item was stale.
-- [ ] **Archive sort by "recently added"** — useful once new work is ingested. Currently sorts by ID (same as intake order) but could surface newest works explicitly.
+- [x] **Archive sort by "recently added"** ✅ — sort dropdown added to archive.html header: Default / Oldest first / Newest first / Recently Added. JS `sortWorks()` handles all four. 2026-06-04.
 - [x] **Artwork page: visible ← → navigation buttons** — reverted; user preferred clean image with no overlay buttons. Prev/next strip at bottom remains.
 
 ---

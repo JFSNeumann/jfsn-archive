@@ -1,5 +1,23 @@
 [
   {
+    "sha": "fdc523e",
+    "date": "2026-06-03",
+    "title": "Update CURRENT_STATE.md for session 3 close",
+    "body": ""
+  },
+  {
+    "sha": "9d2ee5f",
+    "date": "2026-06-03",
+    "title": "Regenerate API JSON, feed.xml, changes.json; bump SW CACHE_V post-session",
+    "body": ""
+  },
+  {
+    "sha": "856e3c4",
+    "date": "2026-06-03",
+    "title": "SESSION_PROMPT: fix 4 errors found by deep code audit",
+    "body": "- Companion: correct function path (functions/companion.mjs not edge-functions)\n  and model name (claude-sonnet-4-6 not claude-sonnet-4-6-20250514)\n- for-artists: form is correctly configured, remove wrong \"if broken\" guidance\n- Decade badge: use aria-label not textContent (textContent includes icon name)\n- Chromatic River ctx: get fresh ctx inside click handler (scoped inside draw())\n- Archive lazy-load: provide correct renderCard(w, idx) approach"
+  },
+  {
     "sha": "75e5f81",
     "date": "2026-06-03",
     "title": "Deep audit session 3: analytics, SW precache, sw.js bug fix, stamp coverage",

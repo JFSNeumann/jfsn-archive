@@ -241,6 +241,15 @@
         <span id="work-count">1,084</span> CATALOGED WORKS
       </p>
     </div>
+    <div class="flex items-center gap-2 pb-1">
+      <label for="sort-select" class="font-label-md text-label-md text-secondary uppercase tracking-widest whitespace-nowrap">Sort:</label>
+      <select id="sort-select" class="font-label-md text-label-md uppercase tracking-widest bg-background border border-outline-variant px-2 py-1 text-on-surface cursor-pointer" style="outline:none;">
+        <option value="id_asc">Default</option>
+        <option value="year_asc">Oldest first</option>
+        <option value="year_desc">Newest first</option>
+        <option value="id_desc">Recently added</option>
+      </select>
+    </div>
   </header>
 
   <!-- Loading progress bar -->
@@ -458,10 +467,11 @@ function decade(year) {
   return Math.floor(year / 10) * 10 + 's';
 }
 
-function renderCard(w) {
+function renderCard(w, idx) {
   const id = w.file.replace('.avif', '');
   const med = typeLabel(w.work_type).toUpperCase();
   const title = w.title || 'Untitled';
+  const loadAttr = (idx !== undefined && idx < 8) ? 'eager" fetchpriority="high' : 'lazy';
   return `
     <a href="artwork.html?id=${id}" class="archive-card reveal-card group block no-underline text-on-background bg-background sm:bg-transparent">
       <div class="overflow-hidden sm:mb-md sm:border sm:border-outline-variant bg-surface-container-low" style="background-image:url(artworks/thumbs/${w.file});background-size:cover;background-position:center;">
@@ -470,7 +480,7 @@ function renderCard(w) {
           class="w-full aspect-[3/4] object-cover grayscale-filter"
           src="artworks/thumbs/${w.file}"
           style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 65%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 65%,transparent 100%)"
-          loading="lazy" width="300" height="400"
+          loading="${loadAttr}" width="300" height="400"
         />
       </div>
       <div class="space-y-1 parallax-meta px-3 pt-2 pb-3 sm:px-0 sm:pt-0 sm:pb-0">
@@ -481,6 +491,15 @@ function renderCard(w) {
     </a>`;
 }
 
+function sortWorks(arr) {
+  const s = document.getElementById('sort-select').value;
+  const copy = arr.slice();
+  if (s === 'year_asc')  return copy.sort((a, b) => (a.year || 9999) - (b.year || 9999));
+  if (s === 'year_desc') return copy.sort((a, b) => (b.year || 0) - (a.year || 0));
+  if (s === 'id_desc')   return copy.sort((a, b) => parseInt(b.file) - parseInt(a.file));
+  return copy; // id_asc = default catalog order
+}
+
 function applyFilters() {
   const mediums = [...document.querySelectorAll('#filter-medium input:checked')].map(i => i.value);
   const decades = [...document.querySelectorAll('#filter-decade input:checked')].map(i => i.value);
@@ -489,7 +508,7 @@ function applyFilters() {
   const active = mediums.length || decades.length || series.length;
   clearBtn.classList.toggle('hidden', !active);
 
-  filtered = allWorks.filter(w => {
+  filtered = sortWorks(allWorks.filter(w => {
     if (mediums.length && !mediums.includes(w.work_type)) return false;
     if (decades.length) {
       const d = decade(w.year);
@@ -497,7 +516,7 @@ function applyFilters() {
     }
     if (series.length && !series.includes(w.series)) return false;
     return true;
-  });
+  }));
 
   page = 0;
   grid.innerHTML = '';
@@ -506,7 +525,7 @@ function applyFilters() {
 
 function renderPage() {
   const slice = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
-  slice.forEach(w => { grid.innerHTML += renderCard(w); });
+  slice.forEach((w, i) => { grid.innerHTML += renderCard(w, page * PAGE_SIZE + i); });
   page++;
 
   const total = filtered.length;
@@ -538,11 +557,18 @@ function applyURLParams() {
   if (decade || medium) applyFilters();
 }
 
+document.getElementById('sort-select').addEventListener('change', () => {
+  filtered = sortWorks(filtered);
+  page = 0;
+  grid.innerHTML = '';
+  renderPage();
+});
+
 fetch('catalog.json')
   .then(r => r.json())
   .then(data => {
     allWorks = data;
-    filtered = data;
+    filtered = sortWorks(data);
     renderPage();
     applyURLParams();
   })
