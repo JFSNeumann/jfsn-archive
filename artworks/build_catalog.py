@@ -240,13 +240,19 @@ if INDEX.exists():
     print(f"index.html        — cache stamp updated (?v={build_ts})")
 
 # ── Auto-bump sw.js CACHE_V so returning visitors always get fresh assets ────
+# Only write if new timestamp is strictly newer than the current value, so manual
+# bumps (committed mid-session) are never silently rolled back by a later catalog run.
 if SW.exists():
-    sw_text  = SW.read_text()
+    sw_text     = SW.read_text()
     new_cache_v = f"jfsn-{build_ts}"
-    stamped_sw  = re.sub(r"CACHE_V\s*=\s*'jfsn-[^']+'", f"CACHE_V  = '{new_cache_v}'", sw_text)
-    if stamped_sw != sw_text:
+    cur_match   = re.search(r"CACHE_V\s*=\s*'(jfsn-[^']+)'", sw_text)
+    cur_cache_v = cur_match.group(1) if cur_match else ""
+    if new_cache_v > cur_cache_v:
+        stamped_sw = re.sub(r"CACHE_V\s*=\s*'jfsn-[^']+'", f"CACHE_V  = '{new_cache_v}'", sw_text)
         SW.write_text(stamped_sw)
         print(f"sw.js             — CACHE_V bumped to '{new_cache_v}'")
+    else:
+        print(f"sw.js             — CACHE_V unchanged (current '{cur_cache_v}' is newer or equal)")
 
 # ── Open Archive API — static JSON endpoints ─────────────────────────────────
 # Generates api/v1/ at the site root so every build stays in sync.

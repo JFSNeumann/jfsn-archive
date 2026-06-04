@@ -1666,6 +1666,8 @@
     <div class="flex gap-8"><a class="font-label-caps text-[10px] text-archive-gray hover:text-deep-ink" href="privacy.html">PRIVACY</a></div>
   </div>
 </footer>
+<script data-goatcounter="https://jfsn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
 <!-- FOOTER:END -->
 
 <!-- Mobile bottom nav -->
@@ -1689,10 +1691,7 @@
 </nav>
 
 <script src="search.js" defer></script>
-<!-- GoatCounter &mdash; privacy-first analytics. Replace subdomain after sign-up at https://www.goatcounter.com -->
-<script data-goatcounter="https://jfsn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 
-<script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
 <script>
 (function () {
 
@@ -1833,15 +1832,12 @@
     if (form) form.hidden = true;
     // Track inquiry-submit conversion goal in GoatCounter (no PII)
     const fire = () => {
-      if (window.goatcounter && typeof window.goatcounter.count === 'function') {
-        window.goatcounter.count({
           path:  '/goal/inquiry-submitted',
           title: 'Inquiry submitted',
           event: true,
         });
       }
     };
-    if (window.goatcounter && window.goatcounter.count) fire();
     else window.addEventListener('load', fire);
   }
 

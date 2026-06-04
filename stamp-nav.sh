@@ -22,10 +22,12 @@ TARGETS=(
   lost.html mosaic.html
   collage.html sculpture.html photography.html painting.html
   changes.html chromatic.html constellation.html for-artists.html
-  guernica.html privacy.html series.html wall.html 404.html
+  guernica.html targets.html framed.html torsos-faces.html
+  gallery-images.html mr-snowmann.html crosses.html collaboration.html
+  privacy.html series.html wall.html 404.html api.html
 )
-# Note: decade pages (1970s–2020s) use the fuller Material Design nav token system
-# and are maintained separately from this stamp script.
+# Note: decade pages (1970s–2020s) use the Material Design nav token system
+# and are maintained separately — edit them directly, not via this stamp script.
 
 STAMPED=0
 SKIPPED=0
