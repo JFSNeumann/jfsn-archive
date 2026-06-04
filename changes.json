@@ -1,5 +1,11 @@
 [
   {
+    "sha": "e90708e",
+    "date": "2026-06-03",
+    "title": "Session 4: UX polish, performance, sort, deploy automation",
+    "body": "- Companion chips: 8 archive-specific prompts (Guernica, Mr. SNOWmann, etc.)\n- Decade pages: keyboard nav hint badge fades after 4s or first arrow key\n- Chromatic River: white flash tap feedback before navigation\n- collage/photography/sculpture/painting: first 4 thumbs preloaded + eager\n- archive.html: first 8 cards eager; sort dropdown (default/oldest/newest/recently added)\n- end-session.sh: prompts to deploy to HostGator — one command does git + FTP\n- cloud-backup.sh: rclone B2 script ready (needs brew install rclone + config)"
+  },
+  {
     "sha": "fdc523e",
     "date": "2026-06-03",
     "title": "Update CURRENT_STATE.md for session 3 close",
