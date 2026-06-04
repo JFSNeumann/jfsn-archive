@@ -225,3 +225,84 @@ for fname in files:
 if not issues_found:
     print('✅  Page weight: no oversized inline styles or CDN references.')
 PYEOF
+
+
+# ── Catalog integrity ─────────────────────────────────────────────────────────
+python3 << 'PYEOF'
+import json
+
+try:
+    with open('catalog.json') as f:
+        catalog = json.load(f)
+except json.JSONDecodeError as e:
+    print(f'❌  catalog.json: invalid JSON — {e}')
+    exit()
+
+REQUIRED = ['file', 'title', 'year', 'work_type']
+issues = []
+seen_ids = {}
+
+for w in catalog:
+    stem = w.get('file', '').replace('.avif', '')
+    # Duplicate check
+    if stem in seen_ids:
+        issues.append(f'Duplicate ID: {stem}')
+    seen_ids[stem] = True
+    # Required fields
+    for field in REQUIRED:
+        if not w.get(field):
+            issues.append(f'{stem}: missing {field}')
+
+if issues:
+    print(f'\ncatalog.json — {len(issues)} issue(s):')
+    for i in issues[:10]: print(f'  ⚠  {i}')
+    if len(issues) > 10: print(f'  ... and {len(issues)-10} more')
+else:
+    print(f'✅  Catalog: {len(catalog)} works, no duplicates, all required fields present.')
+PYEOF
+
+
+# ── JSON-LD validity ──────────────────────────────────────────────────────────
+python3 << 'PYEOF'
+import re, json, glob
+
+files = [f for f in glob.glob('*.html') if not any(x in f for x in ['old-site','curate','jeff.html','qa.html','dedupe','404'])]
+files.sort()
+
+issues_found = False
+for fname in files:
+    with open(fname) as f:
+        content = f.read()
+    blocks = re.findall(r'<script type="application/ld\+json">(.*?)</script>', content, re.DOTALL)
+    for block in blocks:
+        try:
+            json.loads(block)
+        except json.JSONDecodeError as e:
+            issues_found = True
+            print(f'\n{fname}: invalid JSON-LD — {e}')
+
+if not issues_found:
+    print('✅  JSON-LD: all structured data blocks are valid JSON.')
+PYEOF
+
+
+# ── OG image check ────────────────────────────────────────────────────────────
+python3 << 'PYEOF'
+import re, glob, os
+
+files = [f for f in glob.glob('*.html') if not any(x in f for x in ['old-site','curate','jeff.html','qa.html','dedupe'])]
+
+issues_found = False
+for fname in files:
+    with open(fname) as f:
+        content = f.read()
+    m = re.search(r'og:image.*?content="https://jfsn\.com/([^"]+)"', content)
+    if m:
+        path = m.group(1)
+        if not os.path.exists(path):
+            issues_found = True
+            print(f'\n{fname}: og:image points to missing file: {path}')
+
+if not issues_found:
+    print('✅  OG images: all og:image files exist.')
+PYEOF
