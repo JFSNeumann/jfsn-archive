@@ -1,5 +1,41 @@
 [
   {
+    "sha": "abc794b",
+    "date": "2026-06-04",
+    "title": "Update homepage companion chips; confirm FAA links live",
+    "body": ""
+  },
+  {
+    "sha": "fa9326d",
+    "date": "2026-06-04",
+    "title": "Add health.sh (10-check score); catalog/JSON-LD/OG audits; clean IMPROVEMENTS.md",
+    "body": ""
+  },
+  {
+    "sha": "df0b9d2",
+    "date": "2026-06-04",
+    "title": "Add sw.js freshness + page weight checks to audit-nav.sh; fix heredoc; whitelist D3 CDN",
+    "body": ""
+  },
+  {
+    "sha": "8741dd0",
+    "date": "2026-06-04",
+    "title": "Add start-session.sh; expand audit-nav.sh with sitemap, alt text, thumbnail checks; pre-commit hook",
+    "body": ""
+  },
+  {
+    "sha": "720b075",
+    "date": "2026-06-04",
+    "title": "Add nav-active.js + JSON-LD to api.html; expand audit-nav.sh with full SEO/asset/a11y checks",
+    "body": ""
+  },
+  {
+    "sha": "93a89b7",
+    "date": "2026-06-04",
+    "title": "Add audit-nav.sh; auto cloud backup + git summary in end-session.sh",
+    "body": ""
+  },
+  {
     "sha": "3f6ceb7",
     "date": "2026-06-04",
     "title": "Fix nav/footer across all pages: 5-item mobile nav, Wall+Constellation in footers, ghost grid, sitemap",

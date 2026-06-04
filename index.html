@@ -103,6 +103,14 @@
         .folio-artwork-img:active {
             filter: grayscale(0%);
         }
+        @media (min-width: 768px) {
+            #featured-grid { grid-auto-rows: 80px; }
+            #featured-grid > a:nth-child(1) { grid-column: span 7; grid-row: span 6; display: flex; flex-direction: column; }
+            #featured-grid > a:nth-child(2) { grid-column: span 5; grid-row: span 3; display: flex; flex-direction: column; }
+            #featured-grid > a:nth-child(3) { grid-column: span 5; grid-row: span 3; display: flex; flex-direction: column; }
+            #featured-grid > a > .card-img  { flex: 1; aspect-ratio: auto; }
+            #featured-grid > a > .card-meta { flex-shrink: 0; }
+        }
         @media (prefers-reduced-motion: reduce) {
             .reveal-element { opacity: 1; transform: none; transition: none; }
             #dust-motte-canvas { display: none; }
@@ -313,7 +321,59 @@
       </div>
     </section>
 
-    <!-- Snap 5: Navigation grid -->
+    <!-- Snap 5: Stats -->
+    <section class="folio-section" style="justify-content:flex-start;padding-top:15vh;">
+      <div class="w-full">
+        <span style="font-family:Inter,sans-serif;font-size:10px;font-weight:600;letter-spacing:0.2em;color:#FF6600;display:block;margin-bottom:2.5rem;">THE ARCHIVE</span>
+        <div class="grid grid-cols-2 gap-x-8 gap-y-10">
+          <div style="border-left:2px solid #FF6600;padding-left:1rem;padding-top:0.25rem;padding-bottom:0.25rem;">
+            <span style="font-family:'Playfair Display',serif;font-size:40px;font-weight:700;line-height:1;color:#0B0B0B;display:block;">1,084</span>
+            <span style="font-family:Inter,sans-serif;font-size:10px;font-weight:600;letter-spacing:0.15em;color:#575757;margin-top:8px;display:block;">WORKS</span>
+          </div>
+          <div style="border-left:2px solid #FF6600;padding-left:1rem;padding-top:0.25rem;padding-bottom:0.25rem;">
+            <span style="font-family:'Playfair Display',serif;font-size:40px;font-weight:700;line-height:1;color:#0B0B0B;display:block;">50</span>
+            <span style="font-family:Inter,sans-serif;font-size:10px;font-weight:600;letter-spacing:0.15em;color:#575757;margin-top:8px;display:block;">YEARS</span>
+          </div>
+          <div style="border-left:2px solid #FF6600;padding-left:1rem;padding-top:0.25rem;padding-bottom:0.25rem;">
+            <span style="font-family:'Playfair Display',serif;font-size:40px;font-weight:700;line-height:1;color:#0B0B0B;display:block;">14</span>
+            <span style="font-family:Inter,sans-serif;font-size:10px;font-weight:600;letter-spacing:0.15em;color:#575757;margin-top:8px;display:block;">SERIES</span>
+          </div>
+          <div style="border-left:2px solid #FF6600;padding-left:1rem;padding-top:0.25rem;padding-bottom:0.25rem;">
+            <span style="font-family:'Playfair Display',serif;font-size:40px;font-weight:700;line-height:1;color:#0B0B0B;display:block;">5</span>
+            <span style="font-family:Inter,sans-serif;font-size:10px;font-weight:600;letter-spacing:0.15em;color:#575757;margin-top:8px;display:block;">DECADES</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Snap 6: Companion -->
+    <section class="folio-section" style="background:#0B0B0B;justify-content:flex-start;padding-top:15vh;">
+      <div class="w-full">
+        <span style="font-family:Inter,sans-serif;font-size:10px;font-weight:600;letter-spacing:0.2em;color:#FF6600;display:block;margin-bottom:1.25rem;">THE COMPANION (AI)</span>
+        <h3 style="font-family:'Playfair Display',serif;font-size:24px;font-weight:600;color:#FCF9F3;font-style:italic;margin-bottom:0.75rem;line-height:1.3;">Ask the Archive</h3>
+        <p style="font-family:Inter,sans-serif;font-size:13px;color:#575757;margin-bottom:2rem;line-height:1.6;">Interrogate the history, materials, and themes of Neumann's work.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:2rem;">
+          <button class="suggestion-chip-mobile" style="padding:8px 12px;border:1px solid #575757;background:none;color:#FCF9F3;font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.1em;cursor:pointer;">the Guernica series</button>
+          <button class="suggestion-chip-mobile" style="padding:8px 12px;border:1px solid #575757;background:none;color:#FCF9F3;font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.1em;cursor:pointer;">targets and warplanes</button>
+          <button class="suggestion-chip-mobile" style="padding:8px 12px;border:1px solid #575757;background:none;color:#FCF9F3;font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.1em;cursor:pointer;">midwest winter</button>
+        </div>
+        <div style="position:relative;">
+          <input
+            id="folio-companion-input"
+            style="width:100%;background:transparent;border:none;border-bottom:1px solid #575757;padding:16px 40px 16px 0;color:#FCF9F3;font-family:Inter,sans-serif;font-size:16px;outline:none;"
+            placeholder="Ask about a series, material, or theme…"
+            type="text"
+            aria-label="Ask the archive"
+          />
+          <button id="folio-companion-submit" style="position:absolute;right:0;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#FCF9F3;padding:4px;" aria-label="Submit question">
+            <span class="material-symbols-outlined">arrow_forward</span>
+          </button>
+        </div>
+        <a href="companion.html" style="display:inline-block;margin-top:2rem;font-family:Inter,sans-serif;font-size:10px;font-weight:600;letter-spacing:0.15em;color:#575757;text-decoration:none;">OPEN COMPANION →</a>
+      </div>
+    </section>
+
+    <!-- Snap 7: Navigation grid -->
     <section class="folio-section">
       <div class="grid grid-cols-2 gap-4 w-full max-w-sm">
         <a href="archive.html" class="aspect-square flex flex-col items-center justify-center border border-deep-ink group active:bg-deep-ink transition-colors duration-200">
@@ -560,16 +620,15 @@
       const res = await fetch('catalog-home.json');
       const works = await res.json();
       const featured = FEATURED_IDS.map(id => works.find(w => w.file === id)).filter(Boolean);
-      const cols = ['md:col-span-4', 'md:col-span-4 md:mt-12', 'md:col-span-4'];
       featured.forEach((w, i) => {
         const medium = (w.work_type || '').toUpperCase().replace(/_/g, ' ');
         const id = w.file.replace('.avif', '');
         const card = document.createElement('a');
         card.href = `artwork.html?id=${id}`;
-        card.className = `${cols[i]} archive-card kinetic-border group cursor-pointer no-underline reveal-element`;
+        card.className = `archive-card kinetic-border group cursor-pointer no-underline reveal-element`;
         card.dataset.delay = String(i * 100);
         card.innerHTML = `
-          <div class="aspect-[3/4] bg-surface-container-high relative overflow-hidden" style="background-image:url(artworks/thumbs/${w.file});background-size:cover;background-position:center;">
+          <div class="card-img aspect-[3/4] bg-surface-container-high relative overflow-hidden" style="background-image:url(artworks/thumbs/${w.file});background-size:cover;background-position:center;">
             <img
               alt="${w.title}"
               class="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105"
@@ -578,7 +637,7 @@
               loading="lazy" width="400" height="533"
             />
           </div>
-          <div class="mt-4">
+          <div class="card-meta mt-4">
             <span class="font-label-caps text-label-caps text-international-orange parallax-label block" data-speed="0.1">${w.year}</span>
             <h3 class="font-headline-md text-headline-md text-deep-ink mt-1">${w.title}</h3>
             <p class="font-label-caps text-label-caps text-archive-gray mt-1">${medium}</p>
@@ -606,6 +665,24 @@
       btn.addEventListener('click', () => {
         input.value = btn.textContent.replace(/"/g, '').trim();
         goToCompanion();
+      });
+    });
+  }
+
+  // Mobile folio companion
+  const folioInput = document.getElementById('folio-companion-input');
+  const folioSubmit = document.getElementById('folio-companion-submit');
+  if (folioInput && folioSubmit) {
+    function goToCompanionMobile() {
+      const q = folioInput.value.trim();
+      window.location.href = q ? `companion.html?q=${encodeURIComponent(q)}` : 'companion.html';
+    }
+    folioSubmit.addEventListener('click', goToCompanionMobile);
+    folioInput.addEventListener('keydown', e => { if (e.key === 'Enter') goToCompanionMobile(); });
+    document.querySelectorAll('.suggestion-chip-mobile').forEach(btn => {
+      btn.addEventListener('click', () => {
+        folioInput.value = btn.textContent.trim();
+        goToCompanionMobile();
       });
     });
   }

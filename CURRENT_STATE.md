@@ -1,8 +1,8 @@
 # Current State
-**Updated:** 2026-06-04 10:55
+**Updated:** 2026-06-04 12:01
 
 ## Last commit
-3f6ceb7 — Fix nav/footer across all pages: 5-item mobile nav, Wall+Constellation in footers, ghost grid, sitemap
+abc794b — Update homepage companion chips; confirm FAA links live
 
 ## To do next session
 <!-- Edit this section before closing -->
