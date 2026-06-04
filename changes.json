@@ -1,5 +1,23 @@
 [
   {
+    "sha": "75e5f81",
+    "date": "2026-06-03",
+    "title": "Deep audit session 3: analytics, SW precache, sw.js bug fix, stamp coverage",
+    "body": "- Analytics (Goatcounter): was missing from 21 of 36 public pages. Now in\n  _shared/footer.html — all 36 pages have exactly 1 snippet via stamp-nav.sh.\n  Decade pages (6) and api.html added manually (not in stamp targets).\n- stamp-nav.sh TARGETS expanded: 22 → 30 pages, now includes all 7 static\n  theme pages (targets, framed, torsos-faces, gallery-images, mr-snowmann,\n  crosses, collaboration) + api.html.\n- SW PRECACHE: added site.min.css (was missing — offline first load would fail).\n- build_catalog.py sw.js rollback bug fixed: now only bumps CACHE_V if the\n  new timestamp is strictly newer than current, preventing mid-session rollbacks.\n- curate.html + dedupe.html: added noindex/nofollow (were crawlable dev tools).\n- SW CACHE_V bumped to reflect sw.js changes.\n- SESSION_PROMPT.md: fully rewritten with all 12 open items, exact file paths,\n  code snippets, done criteria, and audit findings."
+  },
+  {
+    "sha": "4fc4b5c",
+    "date": "2026-06-03",
+    "title": "Session 3 docs: update CURRENT_STATE, cross off done items, add SESSION_PROMPT.md",
+    "body": "SESSION_PROMPT.md is a ranked, self-contained handoff prompt covering all 12 open\nitems with exact file paths, implementation notes, and done criteria."
+  },
+  {
+    "sha": "e93fad8",
+    "date": "2026-06-03",
+    "title": "Regenerate API JSON and feed.xml post-session",
+    "body": ""
+  },
+  {
     "sha": "40b7135",
     "date": "2026-06-03",
     "title": "Footer: remove duplicate About, add Lost Works + For Artists",
