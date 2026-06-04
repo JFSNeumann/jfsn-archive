@@ -1,5 +1,11 @@
 [
   {
+    "sha": "0d27ca1",
+    "date": "2026-06-03",
+    "title": "Session 2026-06-03b: UX/UI improvements, link fixes, grayscale-to-color reveal, art school dates, SW cache fix",
+    "body": "- Grayscale→color fade with mask-image + bg color layer on artwork.html main image + related works\n- Tap-to-reveal color on mobile (artwork.html)\n- Search empty state: Browse by series section (Guernica, Targets, Mr. SNOWmann)\n- Chromatic River link in artwork metadata\n- Timeline: mobile drag-hint badge, hover tooltip on cards (mouseleave fix)\n- About page: latest work fetched live from catalog-lite.json\n- 7,055 thumbnail links corrected: artworks/pages/ → artwork.html?id= across 20 pages\n- Art school work dates redistributed 1975–1979 (were stuck at 1970/1980)\n- Lightbox controls removed (per user preference) — Full Resolution opens raw image\n- site.min.css rebuilt from correct input.css (was accidentally 2KB); SW CACHE_V bumped\n- catalog.json + static artwork pages regenerated"
+  },
+  {
     "sha": "98aae94",
     "date": "2026-06-03",
     "title": "Migrate api.html to light system, delete site.css, add Buy a Print link, update all docs",
