@@ -25,7 +25,7 @@ A living list. Add to it. Cross things off. This is the backlog.
 
 ### SEO
 - [x] **Static theme pages** — 8 fully crawlable pages: `guernica.html` (232), `targets.html` (403), `framed.html` (230), `torsos-faces.html` (172), `gallery-images.html` (149), `mr-snowmann.html` (72), `crosses.html` (69), `collaboration.html` (31). CollectionPage + BreadcrumbList JSON-LD, canonical, OG tags, full static figure grids. Wired from series-index.html, added to sitemap.xml, added to SW precache. Generator: `gen-theme-pages.py`.
-- [ ] **About page expansion** — more bio keywords in body text (Cleveland, mixed-media, assemblage) for Knowledge Panel signals.
+- [x] **About page expansion** ✅ — strengthened meta description + opening bio paragraph with Cleveland, collage, assemblage, mixed-media keywords for Knowledge Panel signals. 2026-06-03.
 - [x] **Static artwork pages** — All 1,084 `artworks/pages/artNNNN.html` rebuilt from redirect stubs to full static pages: artwork image, title, year, medium, description, palette, motifs, composition, theme/series links, prev/next strip, 4 related works, VisualArtwork + BreadcrumbList JSON-LD, canonical, OG tags. Sitemap updated to point to static pages. Generator: `gen-artwork-pages.py`.
 
 ### Performance
@@ -40,7 +40,7 @@ A living list. Add to it. Cross things off. This is the backlog.
 
 ### Content
 - [x] **about.html exhibitions** ✅ — confirmed: generic names (Group Exhibition, Two-Person Exhibition, etc.) are accurate, not placeholders.
-- [ ] **lost.html SEO** — link from about.html with a sentence about the lost works. Currently not discoverable unless you know it exists.
+- [x] **lost.html SEO** ✅ — link was already present in about.html bio (line 230): "500–1,000 early pieces are gone — lost to water damage…" with href to lost.html.
 - [ ] **featured.txt** — review which works are on the homepage. Last reviewed early 2026.
 
 ---
