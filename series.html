@@ -32,7 +32,11 @@
   <style>
     /* -------- Series hero -------- */
     .series-hero {
-      padding: clamp(3rem, 6vw, 6rem) 0 clamp(1.5rem, 3vw, 2.5rem);
+      padding: clamp(3rem, 6vw, 6rem) 20px clamp(1.5rem, 3vw, 2.5rem);
+    }
+    @media (min-width: 768px) {
+      .series-hero { padding-left: 48px; padding-right: 48px; }
+      .grid-bar { padding-left: 48px; padding-right: 48px; }
     }
     .series-label {
       display: inline-block;
@@ -104,7 +108,7 @@
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      padding: 1.25rem 0 0.875rem;
+      padding: 1.25rem 20px 0.875rem;
     }
     .grid-count {
       font-size: 0.75rem;
@@ -433,7 +437,7 @@
     <!-- populated immediately by JS from SERIES config -->
   </section>
 
-  <div class="container">
+  <div class="container" style="padding-left:20px;padding-right:20px;">
     <div class="grid-bar">
       <span class="grid-count" id="grid-count" aria-live="polite"></span>
       <button class="density-btn" id="density-btn">Compact</button>
