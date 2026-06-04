@@ -51,7 +51,7 @@ A living list. Add to it. Cross things off. This is the backlog.
 - [ ] **Print run of 12** — 12 prints of 12 works, numbered. Last item from the wow-factor backlog. Not a code problem.
 
 ### Architecture
-- [ ] **Offsite cloud backup** — `cloud-backup.sh` written and ready. Needs: `brew install rclone`, then `rclone config` to add B2 bucket. See setup notes at top of cloud-backup.sh. ~$0.50/month for ~800MB.
+- [x] **Offsite cloud backup** ✅ — rclone configured, B2 bucket `jfsn-archive` live. First sync complete: 6,664 files / 462MB. Run `bash cloud-backup.sh` each session. ~$0.50/month. 2026-06-04.
 - [x] **Automated deploy after commit** ✅ — `end-session.sh` now prompts "Deploy to HostGator now? (y/N)" and runs `deploy.sh` if confirmed. Single command handles git + FTP. 2026-06-04.
 - [x] **Static artwork pages** ✅ — all 1,084 `artworks/pages/artNNNN.html` are fully static (not redirect stubs): full image, metadata, JSON-LD, prev/next, related works. Generator: `gen-artwork-pages.py`.
 
