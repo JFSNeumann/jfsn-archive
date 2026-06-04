@@ -1,5 +1,11 @@
 [
   {
+    "sha": "40b7135",
+    "date": "2026-06-03",
+    "title": "Footer: remove duplicate About, add Lost Works + For Artists",
+    "body": "- EXPLORE: + Lost Works (lost.html) — was only discoverable via bio text\n- RESOURCES: About → For Artists (About is already in top nav; For Artists had no desktop/footer presence)\n- Stamped to all 22 pages via stamp-nav.sh"
+  },
+  {
     "sha": "219ed24",
     "date": "2026-06-03",
     "title": "about.html: strengthen meta description + bio opening with medium/location keywords",
