@@ -1,8 +1,8 @@
 # Current State
-**Updated:** 2026-06-04 09:54
+**Updated:** 2026-06-04 10:20
 
 ## Last commit
-bdb113d — Mark cloud backup and Buy a Print fix as complete in IMPROVEMENTS.md
+564ff98 — Fix timeline touch scroll jank — remove manual touchmove handler, add native momentum scrolling
 
 ## To do next session
 <!-- Edit this section before closing -->

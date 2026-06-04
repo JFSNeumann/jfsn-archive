@@ -1,5 +1,11 @@
 [
   {
+    "sha": "564ff98",
+    "date": "2026-06-04",
+    "title": "Fix timeline touch scroll jank — remove manual touchmove handler, add native momentum scrolling",
+    "body": ""
+  },
+  {
     "sha": "bdb113d",
     "date": "2026-06-04",
     "title": "Mark cloud backup and Buy a Print fix as complete in IMPROVEMENTS.md",

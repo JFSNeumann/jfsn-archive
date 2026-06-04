@@ -15,7 +15,7 @@ A living list. Add to it. Cross things off. This is the backlog.
 
 - [x] **Test Companion live** ✅ — confirmed working on iPhone 2026-06-04.
 - [x] **Test for-artists inquiry form** ✅ — confirmed working 2026-06-04; 1 submission received in Netlify dashboard.
-- [ ] **Test timeline scrub on mobile** — drag the strip left/right on iPhone, confirm it scrolls through years (no touch handler found in code — may be CSS scroll only)
+- [x] **Test timeline scrub on mobile** ✅ — fixed jank 2026-06-04: removed manual touchmove handler, added native momentum scrolling. Confirmed working on iPhone.
 - [x] **Google Search Console** ✅ — sitemap submitted 2026-06-03. 2,190 URLs including all 1,084 artwork pages.
 - [ ] **Ingest new work** — drop photos into `artworks/inbox/`, run `bash add-works.sh`. Pipeline is ready.
 
