@@ -144,6 +144,9 @@
   @media (max-width: 640px) { .usage-grid { grid-template-columns: 1fr !important; } }
   @media (prefers-reduced-motion: reduce) { .ep-toggle { transition: none; } }
 </style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"Open Archive API — Jeffrey F. S. Neumann","description":"Public JSON API for the JFSN archive — 1,084 works by Jeffrey F. S. Neumann. Access works, themes, motifs, palettes, and series data.","url":"https://jfsn.com/api.html","creator":{"@type":"Person","name":"Jeffrey F. S. Neumann","url":"https://jfsn.com"}}
+</script>
 </head>
 <body class="bg-background text-deep-ink">
 
@@ -633,5 +636,6 @@ fetch('api/v1/themes.json')
   .catch(() => {});
 </script>
 
+<script src="_shared/nav-active.js" defer></script>
 </body>
 </html>
