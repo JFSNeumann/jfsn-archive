@@ -21,7 +21,7 @@ TARGETS=(
   timeline.html companion.html about.html
   lost.html mosaic.html
   collage.html sculpture.html photography.html painting.html
-  changes.html chromatic.html constellation.html for-artists.html
+  changes.html chromatic.html constellation.html
   guernica.html targets.html framed.html torsos-faces.html
   gallery-images.html mr-snowmann.html crosses.html collaboration.html
   privacy.html series.html wall.html 404.html api.html

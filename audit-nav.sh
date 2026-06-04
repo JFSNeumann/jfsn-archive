@@ -20,8 +20,10 @@ for fname in files:
     if mob_nav_m:
         mob = mob_nav_m.group()
         links = re.findall(r'<a href="([^"]+)"', mob)
-        if len(links) < 5:
-            issues.append(f'mobile nav: {len(links)} items (need 5)')
+        # index.html intentionally has 3-item mobile nav (snap-scroll folio layout)
+        min_items = 3 if fname == 'index.html' else 5
+        if len(links) < min_items:
+            issues.append(f'mobile nav: {len(links)} items (need {min_items})')
         first = re.search(r'<a href="([^"]+)".*?(?=<a )', mob, re.DOTALL)
         if first:
             if 'index.html' not in first.group(): issues.append('first nav item not Home')

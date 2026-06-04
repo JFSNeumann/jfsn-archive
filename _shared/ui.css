@@ -1,85 +1,13 @@
-/* ui.css — shared interaction enhancements */
+/* ui.css — shared structural rules */
 
-/* ─── Border draw on hover ───────────────────────────────────────────────── */
-
-/* Decade pages: .thumb-frame on the overflow-hidden wrapper */
 .thumb-frame {
   position: relative;
 }
-.thumb-frame::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border: 1px solid #e05900;
-  clip-path: inset(0 100% 0 0);
-  transition: clip-path 300ms ease;
-  pointer-events: none;
-  z-index: 1;
-}
-.group:hover .thumb-frame::after {
-  clip-path: inset(0 0% 0 0);
-}
 
-/* Medium pages: .thumb__link already has position:relative + overflow:hidden */
 .thumb__link {
   position: relative;
-}
-.thumb__link::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border: 1px solid #e05900;
-  clip-path: inset(0 100% 0 0);
-  transition: clip-path 300ms ease;
-  pointer-events: none;
-  z-index: 1;
-}
-.thumb__link:hover::after {
-  clip-path: inset(0 0% 0 0);
-}
-
-/* Grayscale → color on hover + color-fade reveal at bottom 25% */
-.thumb__link {
   background-size: cover;
   background-position: center;
-}
-.thumb__link img {
-  filter: grayscale(100%);
-  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 65%, transparent 100%);
-  mask-image: linear-gradient(to bottom, black 0%, black 65%, transparent 100%);
-  transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s ease,
-              -webkit-mask-image 0.5s ease, mask-image 0.5s ease;
-}
-.thumb__link:hover img {
-  filter: grayscale(0%);
-  -webkit-mask-image: none;
-  mask-image: none;
-}
-
-/* Featured cards on index.html — remove mask on group hover */
-.group:hover .grayscale {
-  -webkit-mask-image: none !important;
-  mask-image: none !important;
-}
-
-/* Decade pages: group-hover:grayscale-0 not compiled into site.min.css */
-.group:hover img.grayscale {
-  filter: grayscale(0%) !important;
-}
-.group:hover img[class*="grayscale"] {
-  filter: grayscale(0%) !important;
-  transition: filter 0.5s ease-out;
-}
-
-/* Scroll reveal for .thumb items */
-.thumb {
-  opacity: 0;
-  transform: translateY(14px);
-  transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.thumb.visible {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 /* ─── Vertical "you are here" label ─────────────────────────────────────── */
@@ -103,29 +31,4 @@
 
 @media (min-width: 1100px) {
   .page-label-vert { display: block; }
-}
-
-/* ─── Decade hero heading zoom-out on scroll ─────────────────────────────── */
-
-.decade-heading {
-  transform-origin: left center;
-  will-change: transform, opacity;
-}
-
-/* ─── Reduced motion overrides ───────────────────────────────────────────── */
-
-@media (prefers-reduced-motion: reduce) {
-  .thumb-frame::after,
-  .thumb__link::after {
-    clip-path: inset(0 0% 0 0);
-    opacity: 0;
-    transition: opacity 0.15s;
-  }
-  .group:hover .thumb-frame::after,
-  .thumb__link:hover::after {
-    opacity: 1;
-  }
-  .decade-heading { will-change: auto; }
-  .thumb { opacity: 1; transform: none; transition: none; }
-  .thumb__link img { filter: grayscale(100%); transition: none; }
 }

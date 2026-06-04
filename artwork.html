@@ -15,74 +15,20 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Playfair+Display:wght@500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght@24,400&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="site.min.css"/>
 <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-            display: inline-block;
-            vertical-align: middle;
-        }
-        .grayscale-img {
-            filter: grayscale(100%);
-            -webkit-mask-image: linear-gradient(to bottom, black 0%, black 65%, transparent 100%);
-            mask-image: linear-gradient(to bottom, black 0%, black 65%, transparent 100%);
-            transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-                        -webkit-mask-image 0.5s ease, mask-image 0.5s ease;
-        }
-        .grayscale-img:hover, .grayscale-img.color-revealed {
-            filter: grayscale(0%);
-            -webkit-mask-image: none;
-            mask-image: none;
-            transform: scale(1.02);
-        }
-        body { -webkit-font-smoothing: antialiased; }
-
-        /* Kinetic border on related works cards */
-        .related-card {
-            position: relative;
-        }
-        .related-card::before, .related-card::after {
-            content: '';
-            position: absolute;
-            width: 0; height: 0;
-            border: 1px solid transparent;
-            box-sizing: border-box;
-            pointer-events: none;
-            z-index: 1;
-        }
-        .related-card::before { top: 0; left: 0; }
-        .related-card::after  { bottom: 0; right: 0; }
-        .related-card:hover::before {
-            width: 100%; height: 100%;
-            border-top-color: #e05900; border-right-color: #e05900;
-            transition: width 0.15s ease-out, height 0.15s ease-out 0.15s;
-        }
-        .related-card:hover::after {
-            width: 100%; height: 100%;
-            border-bottom-color: #e05900; border-left-color: #e05900;
-            transition: width 0.15s ease-out, height 0.15s ease-out 0.15s;
-        }
-
-        /* Scroll reveal */
-        .reveal-section {
-            opacity: 0;
-            transform: translateY(16px);
-            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .reveal-section.visible { opacity: 1; transform: translateY(0); }
-
-        @media (prefers-reduced-motion: reduce) {
-            .reveal-section { opacity: 1; transform: none; transition: none; }
-            .related-card::before, .related-card::after { transition: none; }
-            #work-image { opacity: 1 !important; transition: none !important; }
-        }
-    </style>
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  body { -webkit-font-smoothing: antialiased; }
+</style>
 </head>
 <body class="font-body-md text-body-md bg-bone-white text-deep-ink">
 
-<!-- Top Nav -->
 <!-- NAV:START -->
 <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-deep-ink focus:text-bone-white focus:font-label-caps focus:text-label-caps">Skip to content</a>
 <header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-background border-b border-deep-ink">
@@ -104,27 +50,21 @@
 
 <!-- Mobile menu overlay -->
 <div id="mobile-menu" aria-hidden="true" style="display:none;position:fixed;inset:0;z-index:40;">
-  <!-- Backdrop -->
   <div id="mobile-menu-backdrop" style="position:absolute;inset:0;background:rgba(11,11,11,0.5);"></div>
-  <!-- Drawer -->
   <nav id="mobile-menu-drawer" aria-label="Mobile menu"
     style="position:absolute;top:0;right:0;width:min(280px,85vw);height:100%;background:#fcf9f3;border-left:1px solid #0B0B0B;display:flex;flex-direction:column;transform:translateX(100%);transition:transform 0.25s ease;">
-    <!-- Header -->
     <div style="display:flex;justify-content:space-between;align-items:center;padding:0 20px;height:64px;border-bottom:1px solid #0B0B0B;">
-      <span style="font-family:'Playfair Display',serif;font-size:18px;font-weight:600;letter-spacing:-0.02em;color:#0B0B0B;">JFSN</span>
+      <span style="font-family:'Playfair Display',serif;font-size:18px;font-weight:500;letter-spacing:-0.02em;color:#0B0B0B;">JFSN</span>
       <button id="nav-menu-close" aria-label="Close menu"
         style="background:none;border:none;cursor:pointer;color:#0B0B0B;font-size:24px;padding:8px;margin-right:-8px;line-height:1;">&times;</button>
     </div>
-    <!-- Links -->
     <div style="flex:1;overflow-y:auto;padding:8px 0;">
-      <a href="archive.html"     style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Archive</a>
+      <a href="archive.html"      style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Archive</a>
       <a href="series-index.html" style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Series</a>
-      <a href="timeline.html"    style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Timeline</a>
-      <a href="companion.html"   style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Companion</a>
-      <a href="about.html"       style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">About</a>
-      <a href="for-artists.html" style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#FF6600;text-decoration:none;">For Artists</a>
+      <a href="timeline.html"     style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Timeline</a>
+      <a href="companion.html"    style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Companion</a>
+      <a href="about.html"        style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">About</a>
     </div>
-    <!-- Search shortcut -->
     <div style="padding:16px 24px;border-top:1px solid #c4c7c7;">
       <button id="mobile-menu-search"
         style="width:100%;display:flex;align-items:center;gap:10px;background:none;border:1px solid #c4c7c7;padding:10px 14px;cursor:pointer;color:#575757;font-family:Inter,sans-serif;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;">
@@ -148,9 +88,7 @@
     menu.style.display = 'block';
     menu.setAttribute('aria-hidden','false');
     document.body.style.overflow = 'hidden';
-    requestAnimationFrame(function(){
-      drawer.style.transform = 'translateX(0)';
-    });
+    requestAnimationFrame(function(){ drawer.style.transform = 'translateX(0)'; });
     closeBtn.focus();
   }
   function closeMenu(){
@@ -165,7 +103,6 @@
   if(backdrop) backdrop.addEventListener('click', closeMenu);
   document.addEventListener('keydown', function(e){ if(e.key==='Escape' && menu.style.display==='block') closeMenu(); });
 
-  // Wire search button in menu to open search overlay
   if(menuSearchBtn) menuSearchBtn.addEventListener('click', function(){
     closeMenu();
     setTimeout(function(){ if(window.openSiteSearch) window.openSiteSearch(); }, 280);
@@ -178,94 +115,63 @@
 
 <main id="main" class="pt-[100px] pb-xl px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto">
 
-  <!-- Back link -->
   <a href="archive.html" class="inline-flex items-center gap-xs font-label-md text-label-md text-secondary hover:text-international-orange transition-colors uppercase tracking-widest mb-lg">
     <span class="material-symbols-outlined text-base">arrow_back</span> Back to Archive
   </a>
 
-  <!-- Loading state -->
   <div id="loading" class="py-xl text-center font-label-lg text-label-lg text-secondary uppercase tracking-widest">Loading…</div>
   <div id="not-found" class="hidden py-xl text-center font-label-lg text-label-lg text-secondary uppercase tracking-widest">Work not found.</div>
 
-  <!-- Primary Content Grid -->
   <div id="work-content" class="hidden">
     <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-start mb-xl">
 
-      <!-- Left: Image -->
-      <section class="md:col-span-8 overflow-hidden border border-deep-ink">
-        <div id="work-image-wrap" class="bg-surface-container overflow-hidden relative" style="background-size:contain;background-position:center;background-repeat:no-repeat;">
-          <img id="work-image" alt="" class="w-full h-auto object-contain grayscale-img" src="" width="1200" height="900" loading="eager" style="opacity:0;transition:opacity 0.25s ease;position:relative;"/>
+      <!-- Image -->
+      <section class="md:col-span-8 border border-deep-ink">
+        <div id="work-image-wrap" class="bg-surface-container">
+          <img id="work-image" alt="" class="w-full h-auto object-contain" src="" width="1200" height="900" loading="eager"/>
         </div>
-        <div class="p-sm flex justify-between items-center bg-surface border-t border-deep-ink">
-          <span id="hover-hint" class="font-label-md text-label-md uppercase tracking-widest text-secondary">Hover to reveal color</span>
-          <a id="full-res-link" href="#" class="font-label-md text-label-md uppercase tracking-widest text-secondary hover:text-international-orange transition-colors flex items-center gap-xs">
-            Full resolution <span class="material-symbols-outlined text-base">zoom_in</span>
+        <div class="p-sm border-t border-deep-ink">
+          <a id="full-res-link" href="#" class="font-label-md text-label-md uppercase tracking-widest text-secondary hover:text-international-orange transition-colors">
+            Full resolution
           </a>
         </div>
       </section>
 
-      <!-- Right: Metadata -->
+      <!-- Metadata -->
       <aside class="md:col-span-4 flex flex-col gap-md sticky top-[100px]">
         <div class="border-b border-deep-ink pb-md">
           <h1 id="work-title" class="font-headline-md text-headline-md leading-tight mb-xs"></h1>
           <p class="font-label-md text-label-md text-international-orange uppercase tracking-widest">Jeffrey F. S. Neumann</p>
         </div>
-
         <div class="flex flex-col gap-sm" id="meta-rows">
           <!-- populated by JS -->
         </div>
-
-        <div id="work-description" class="mt-sm font-body-md text-body-md text-secondary leading-relaxed hidden"></div>
-
-        <div class="mt-md flex flex-col gap-sm">
-          <a id="companion-link" href="companion.html" class="w-full bg-primary text-on-primary py-md font-label-lg text-label-lg uppercase tracking-widest hover:bg-international-orange transition-colors flex items-center justify-center gap-sm">
-            Ask the Archive about this work
-            <span class="material-symbols-outlined text-[18px]">psychology</span>
-          </a>
-          <a href="archive.html" class="w-full border border-primary text-primary py-md font-label-lg text-label-lg uppercase tracking-widest hover:text-international-orange hover:border-international-orange transition-all flex items-center justify-center gap-sm">
-            Browse All Works
-            <span class="material-symbols-outlined text-[18px]">grid_view</span>
-          </a>
-          <a id="buy-print-btn" href="#" target="_blank" rel="noopener" class="hidden w-full flex items-center justify-center gap-xs font-label-md text-label-md uppercase tracking-widest text-archive-gray hover:text-international-orange transition-colors pt-xs">
-            <span class="material-symbols-outlined text-[15px]">print</span>
-            Buy a Print
-          </a>
-        </div>
-
       </aside>
+
     </div>
 
-    <!-- Prev / Next strip -->
-    <nav class="w-full bg-bone-white border-y border-deep-ink grid grid-cols-2 divide-x divide-outline-variant h-[56px] items-center mb-xl" id="prev-next">
-      <a id="prev-link" href="#" class="group flex items-center px-margin-mobile md:px-md h-full overflow-hidden hover:bg-surface-container-high transition-colors">
-        <span class="material-symbols-outlined text-deep-ink group-hover:text-international-orange transition-colors mr-sm shrink-0">arrow_back</span>
+    <!-- Prev / Next -->
+    <nav class="w-full bg-bone-white border-y border-deep-ink grid grid-cols-2 divide-x divide-outline-variant h-[56px] items-center" id="prev-next" aria-label="Adjacent works">
+      <a id="prev-link" href="#" class="group flex items-center px-margin-mobile md:px-md h-full overflow-hidden">
+        <span class="material-symbols-outlined text-deep-ink group-hover:text-international-orange mr-sm shrink-0">arrow_back</span>
         <div class="flex flex-col overflow-hidden">
-          <span class="font-label-caps text-[10px] text-archive-gray uppercase tracking-widest leading-none mb-[2px]">PREVIOUS WORK</span>
-          <span id="prev-title" class="font-label-caps text-[11px] text-deep-ink uppercase truncate group-hover:text-international-orange transition-colors"></span>
+          <span class="font-label-caps text-[10px] text-archive-gray uppercase tracking-widest leading-none mb-[2px]">PREVIOUS</span>
+          <span id="prev-title" class="font-label-caps text-[11px] text-deep-ink uppercase truncate group-hover:text-international-orange"></span>
         </div>
       </a>
-      <a id="next-link" href="#" class="group flex items-center justify-end px-margin-mobile md:px-md h-full overflow-hidden hover:bg-surface-container-high transition-colors">
+      <a id="next-link" href="#" class="group flex items-center justify-end px-margin-mobile md:px-md h-full overflow-hidden">
         <div class="flex flex-col overflow-hidden text-right">
-          <span class="font-label-caps text-[10px] text-archive-gray uppercase tracking-widest leading-none mb-[2px]">NEXT WORK</span>
-          <span id="next-title" class="font-label-caps text-[11px] text-deep-ink uppercase truncate group-hover:text-international-orange transition-colors"></span>
+          <span class="font-label-caps text-[10px] text-archive-gray uppercase tracking-widest leading-none mb-[2px]">NEXT</span>
+          <span id="next-title" class="font-label-caps text-[11px] text-deep-ink uppercase truncate group-hover:text-international-orange"></span>
         </div>
-        <span class="material-symbols-outlined text-deep-ink group-hover:text-international-orange transition-colors ml-sm shrink-0">arrow_forward</span>
+        <span class="material-symbols-outlined text-deep-ink group-hover:text-international-orange ml-sm shrink-0">arrow_forward</span>
       </a>
     </nav>
 
-    <!-- Related Works -->
-    <section class="mt-xl reveal-section" id="related-section">
-      <div class="flex justify-between items-end mb-lg border-b border-deep-ink pb-sm">
-        <h2 class="font-headline-md text-headline-md uppercase tracking-tight">Related Works</h2>
-        <a href="archive.html" class="font-label-md text-label-md text-international-orange hover:underline tracking-widest">VIEW ALL</a>
-      </div>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-gutter" id="related-grid"></div>
-    </section>
   </div>
 
 </main>
 
-<!-- Footer -->
 <!-- FOOTER:START -->
 <footer class="bg-surface-container-high py-16 px-margin-desktop border-t border-outline-variant">
   <div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
@@ -290,7 +196,6 @@
         <li><a class="hover:text-international-orange transition-colors" href="wall.html">The Wall</a></li>
         <li><a class="hover:text-international-orange transition-colors" href="constellation.html">Constellation</a></li>
         <li><a class="hover:text-international-orange transition-colors" href="companion.html">AI Companion</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="for-artists.html">For Artists</a></li>
       </ul>
     </div>
     <div>
@@ -333,9 +238,9 @@
 
 <script>
 const params = new URLSearchParams(location.search);
-const workId = params.get('id'); // e.g. "art0483"
+const workId = params.get('id');
 
-// ← / → keyboard navigation (populated once catalog loads)
+// Keyboard ← / → navigation
 let _prevHref = null, _nextHref = null;
 document.addEventListener('keydown', function(e) {
   if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
@@ -344,7 +249,7 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'ArrowRight' && _nextHref) { e.preventDefault(); location.href = _nextHref; }
 });
 
-// Swipe left/right to navigate between works (mobile)
+// Swipe left/right (mobile)
 let _tx = 0, _ty = 0;
 document.addEventListener('touchstart', function(e) {
   _tx = e.changedTouches[0].clientX;
@@ -358,19 +263,6 @@ document.addEventListener('touchend', function(e) {
   if (dx > 0 && _prevHref) location.href = _prevHref;
 }, { passive: true });
 
-// "Hover to reveal" → "Tap to reveal" on touch devices
-if (window.matchMedia('(hover: none)').matches) {
-  const hint = document.getElementById('hover-hint');
-  if (hint) hint.textContent = 'Tap to reveal color';
-  const workImg = document.getElementById('work-image');
-  let colorRevealed = false;
-  workImg.addEventListener('click', () => {
-    colorRevealed = !colorRevealed;
-    workImg.classList.toggle('color-revealed', colorRevealed);
-    if (hint) hint.textContent = colorRevealed ? 'Tap to hide color' : 'Tap to reveal color';
-  });
-}
-
 function typeLabel(t) {
   return { collage: 'Collage', photograph: 'Photography', sculpture: 'Sculpture', painting: 'Painting' }[t] || t;
 }
@@ -381,57 +273,6 @@ function metaRow(label, value) {
     <span class="col-span-2 font-body-md text-body-md">${value}</span>
   </div>`;
 }
-
-function renderRelated(works, currentFile) {
-  const grid = document.getElementById('related-grid');
-  const picks = works.filter(w => w.file !== currentFile).slice(0, 4);
-  picks.forEach(w => {
-    const id = w.file.replace('.avif', '');
-    grid.innerHTML += `
-      <a href="artwork.html?id=${id}" class="related-card group flex flex-col gap-sm no-underline text-on-background">
-        <div class="aspect-square border border-deep-ink overflow-hidden bg-surface-container" style="background-image:url(artworks/thumbs/${w.file});background-size:cover;background-position:center;">
-          <img alt="${w.title || 'Untitled'}" class="w-full h-full object-cover grayscale-img"
-            src="artworks/thumbs/${w.file}" loading="lazy" width="300" height="300"/>
-        </div>
-        <div>
-          <h3 class="font-label-lg text-label-lg uppercase group-hover:text-international-orange transition-colors">${w.title || 'Untitled'}</h3>
-          <p class="font-label-md text-label-md text-secondary">${w.year || '—'} · ${typeLabel(w.work_type)}</p>
-        </div>
-      </a>`;
-  });
-
-  // Reveal related section
-  const section = document.getElementById('related-section');
-  if (section) {
-    const ro = new IntersectionObserver(([e]) => { if (e.isIntersecting) { section.classList.add('visible'); ro.disconnect(); } }, { threshold: 0.1 });
-    ro.observe(section);
-  }
-}
-
-const FAA_URLS = {
-  "art0062": "https://1-jeffrey-neumann.pixels.com/featured/guernica-inspired-abstract-composition-jeffrey-neumann.html",
-  "art0086": "https://1-jeffrey-neumann.pixels.com/featured/vintage-aircraft-with-colorful-circles-jeffrey-neumann.html",
-  "art0104": "https://1-jeffrey-neumann.pixels.com/featured/mixed-media-aviation-collage-jeffrey-neumann.html",
-  "art0106": "https://1-jeffrey-neumann.pixels.com/featured/abstract-composition-with-plane-and-targets-jeffrey-neumann.html",
-  "art0190": "https://1-jeffrey-neumann.pixels.com/featured/colorful-plane-collage-jeffrey-neumann.html",
-  "art0479": "https://1-jeffrey-neumann.pixels.com/featured/abstract-military-aircraft-jeffrey-neumann.html",
-  "art0483": "https://1-jeffrey-neumann.pixels.com/featured/colorful-discs-in-abstract-composition-jeffrey-neumann.html",
-  "art0501": "https://1-jeffrey-neumann.pixels.com/featured/abstract-collage-on-blue-background-jeffrey-neumann.html",
-  "art0517": "https://1-jeffrey-neumann.pixels.com/featured/colorful-collage-of-people-and-objects-jeffrey-neumann.html",
-  "art0590": "https://1-jeffrey-neumann.pixels.com/featured/surreal-airplane-and-target-composition-jeffrey-neumann.html",
-  "art0594": "https://1-jeffrey-neumann.pixels.com/featured/plane-and-target-collage-jeffrey-neumann.html",
-  "art1008": "https://1-jeffrey-neumann.pixels.com/featured/intricate-mechanical-circuitry-jeffrey-neumann.html",
-  "art1009": "https://1-jeffrey-neumann.pixels.com/featured/intricate-mechanical-assembly-on-display-jeffrey-neumann.html",
-  "art1010": "https://1-jeffrey-neumann.pixels.com/featured/colorful-collage-on-dress-form-jeffrey-neumann.html",
-  "art1011": "https://1-jeffrey-neumann.pixels.com/featured/colorful-geometric-collage-jeffrey-neumann.html",
-  "art1012": "https://1-jeffrey-neumann.pixels.com/featured/abstract-airplanes-and-cds-jeffrey-neumann.html",
-  "art1013": "https://1-jeffrey-neumann.pixels.com/featured/vibrant-abstract-with-airplane-jeffrey-neumann.html",
-  "art1014": "https://1-jeffrey-neumann.pixels.com/featured/geometric-abstract-patterns-jeffrey-neumann.html",
-  "art1015": "https://1-jeffrey-neumann.pixels.com/featured/complex-architectural-collage-jeffrey-neumann.html",
-  "art1016": "https://1-jeffrey-neumann.pixels.com/featured/aviation-and-cd-abstract-composition-jeffrey-neumann.html",
-  "art1017": "https://1-jeffrey-neumann.pixels.com/featured/creative-composition-with-cds-and-electronics-jeffrey-neumann.html",
-  "art1020": "https://1-jeffrey-neumann.pixels.com/featured/mechanical-abstraction-with-circles-jeffrey-neumann.html",
-};
 
 fetch('catalog.json')
   .then(r => r.json())
@@ -450,21 +291,14 @@ fetch('catalog.json')
     // SEO
     const titleText = w.title || 'Untitled';
     document.getElementById('page-title').textContent = `${titleText} — Jeffrey F. S. Neumann`;
-    document.getElementById('page-desc').content = w.description
-      ? `${w.description} — From the archive of Jeffrey F. S. Neumann.`
-      : `${titleText}${w.year ? ', ' + w.year : ''} — ${w.work_type || 'Work'} by Jeffrey F. S. Neumann.`;
+    document.getElementById('page-desc').content = `${titleText}${w.year ? ', ' + w.year : ''} — ${typeLabel(w.work_type)} by Jeffrey F. S. Neumann.`;
     document.getElementById('page-canonical').href = `https://jfsn.com/artworks/pages/${workId}.html`;
-
-    // og: tags — update dynamically so social shares resolve per-work
-    const ogDesc = w.description
-      ? `${w.description} — From the archive of Jeffrey F. S. Neumann.`
-      : `${titleText}${w.year ? ', ' + w.year : ''} — ${w.work_type || 'Work'} by Jeffrey F. S. Neumann.`;
     document.getElementById('og-title').content  = `${titleText} — Jeffrey F. S. Neumann`;
-    document.getElementById('og-desc').content   = ogDesc;
+    document.getElementById('og-desc').content   = `${titleText}${w.year ? ', ' + w.year : ''} — ${typeLabel(w.work_type)} by Jeffrey F. S. Neumann.`;
     document.getElementById('og-image').content  = `https://jfsn.com/artworks/thumbs/${w.file}`;
     document.getElementById('og-url').content    = `https://jfsn.com/artwork.html?id=${workId}`;
 
-    // JSON-LD structured data
+    // JSON-LD
     const existingLd = document.getElementById('work-jsonld');
     if (existingLd) existingLd.remove();
     const ld = document.createElement('script');
@@ -478,8 +312,6 @@ fetch('catalog.json')
       "image": `https://jfsn.com/artworks/full/${w.file}`,
       "dateCreated": w.year ? String(w.year) : undefined,
       "artMedium": w.materials || w.work_type || undefined,
-      "artworkSurface": w.work_type || undefined,
-      "description": w.description || undefined,
       "creator": {
         "@type": "Person",
         "name": "Jeffrey F. S. Neumann",
@@ -493,50 +325,26 @@ fetch('catalog.json')
     });
     document.head.appendChild(ld);
 
-    // Image — fade in on load, set color bg layer for grayscale reveal
+    // Image
     const img = document.getElementById('work-image');
-    const imgWrap = document.getElementById('work-image-wrap');
-    img.onload = function() { img.style.opacity = '1'; };
     img.src = `artworks/full/${w.file}`;
     img.alt = titleText;
-    if (img.complete) img.style.opacity = '1';
-    if (imgWrap) imgWrap.style.backgroundImage = `url(artworks/full/${w.file})`;
     document.getElementById('full-res-link').href = `artworks/full/${w.file}`;
 
     // Title
     document.getElementById('work-title').textContent = titleText;
-
-    // Companion link
-    document.getElementById('companion-link').href =
-      `companion.html?q=${encodeURIComponent('Tell me about ' + titleText)}`;
 
     // Meta rows
     const meta = document.getElementById('meta-rows');
     meta.innerHTML = metaRow('Year', w.year || '—');
     meta.innerHTML += metaRow('Medium', typeLabel(w.work_type));
     if (w.series) {
-      meta.innerHTML += metaRow('Series', `<a href="series-index.html" class="underline underline-offset-4 hover:text-international-orange transition-colors">${w.series}</a>`);
+      meta.innerHTML += metaRow('Series', `<a href="series-index.html" class="underline underline-offset-4 hover:text-international-orange">${w.series}</a>`);
     }
     if (w.themes && w.themes.length) {
       meta.innerHTML += metaRow('Themes', w.themes.join(', '));
     }
     meta.innerHTML += metaRow('Archive No.', w.file.replace('.avif', '').toUpperCase());
-    const artId = w.file.replace('.avif', '');
-    meta.innerHTML += metaRow('View in', `<a href="chromatic.html#${artId}" class="text-international-orange hover:underline transition-colors">Chromatic River →</a>`);
-
-    // Buy a Print — only show if this work is on FAA
-    const buyBtn = document.getElementById('buy-print-btn');
-    if (FAA_URLS[artId]) {
-      buyBtn.href = FAA_URLS[artId];
-      buyBtn.classList.remove('hidden');
-    }
-
-    // Description
-    if (w.description) {
-      const desc = document.getElementById('work-description');
-      desc.textContent = w.description;
-      desc.classList.remove('hidden');
-    }
 
     // Prev / next
     const prevWork = idx > 0 ? works[idx - 1] : null;
@@ -557,38 +365,13 @@ fetch('catalog.json')
     } else {
       nextEl.classList.add('invisible');
     }
-
-    // Related works: same series first, then same type, shuffled
-    let related = works.filter(w2 => w2.file !== w.file);
-    if (w.series) {
-      const sameSeries = related.filter(w2 => w2.series === w.series);
-      const diff = related.filter(w2 => w2.series !== w.series);
-      related = [...sameSeries, ...diff];
-    } else {
-      const sameType = related.filter(w2 => w2.work_type === w.work_type);
-      const diff = related.filter(w2 => w2.work_type !== w.work_type);
-      // shuffle sameType lightly
-      sameType.sort(() => Math.random() - 0.5);
-      related = [...sameType, ...diff];
-    }
-    renderRelated(related, w.file);
   })
   .catch(e => {
     document.getElementById('loading').classList.add('hidden');
     document.getElementById('not-found').classList.remove('hidden');
     console.error(e);
   });
-
-
-// Button press micro-interaction
-document.querySelectorAll('button').forEach(btn => {
-  btn.addEventListener('mousedown', () => btn.style.transform = 'scale(0.98)');
-  btn.addEventListener('mouseup', () => btn.style.transform = '');
-  btn.addEventListener('mouseleave', () => btn.style.transform = '');
-});
 </script>
-
-<!-- GoatCounter analytics -->
 
 <script src="_shared/nav-active.js" defer></script>
 </body>

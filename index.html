@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta name="theme-color" content="#fcf9f3"/>
-<title>Jeffrey F. S. Neumann — 50 Years of Collage, Sculpture &amp; Photography</title>
+<title>Jeffrey F. S. Neumann — Archive</title>
 <meta name="description" content="1,084 works spanning 1974 to the present. Collage, sculpture, and photography by Jeffrey F. S. Neumann, Cleveland."/>
 <link rel="canonical" href="https://jfsn.com/"/>
 <link rel="icon" href="favicon.svg" type="image/svg+xml"/>
@@ -12,7 +12,7 @@
 <link rel="manifest" href="manifest.json"/>
 <link rel="apple-touch-icon" href="icon-192.png"/>
 <meta property="og:type" content="website"/>
-<meta property="og:title" content="Jeffrey F. S. Neumann — 50 Years of Collage, Sculpture &amp; Photography"/>
+<meta property="og:title" content="Jeffrey F. S. Neumann — Archive"/>
 <meta property="og:description" content="1,084 works spanning 1974 to the present. Collage, sculpture, and photography by Jeffrey F. S. Neumann."/>
 <meta property="og:image" content="https://jfsn.com/og-card.jpg"/>
 <meta property="og:url" content="https://jfsn.com/"/>
@@ -22,106 +22,57 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="preload" href="artworks/full/art0953.avif" as="image" type="image/avif"/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght@24,400&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="site.min.css"/>
 <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .nav-underline-active {
-            position: relative;
-        }
-        .nav-underline-active::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: #FF6600;
-        }
-        .archive-card:hover .card-border {
-            border-color: #FF6600;
-        }
-        .btn-transition {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .kinetic-border {
-            position: relative;
-            outline: 0px solid #FF6600;
-            transition: outline-width 0.2s ease;
-        }
-        .kinetic-border:hover {
-            outline: 1px solid #FF6600;
-            outline-offset: -1px;
-        }
-        .reveal-element {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s cubic-bezier(0.2, 0, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0, 0.2, 1);
-        }
-        .reveal-element.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        #dust-motte-canvas {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 5;
-            mix-blend-mode: multiply;
-            opacity: 0.5;
-        }
-        .parallax-label { will-change: transform; }
-
-        /* Minimalist Folio — mobile snap scroll */
-        .folio-container {
-            scroll-snap-type: y mandatory;
-            height: calc(100dvh - 4rem); /* subtract top nav */
-            overflow-y: scroll;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        .folio-container::-webkit-scrollbar { display: none; }
-        .folio-section {
-            scroll-snap-align: start;
-            height: calc(100dvh - 4rem);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            padding: 0 20px;
-        }
-        .folio-artwork-img {
-            filter: grayscale(100%);
-            transition: filter 0.6s ease;
-        }
-        .folio-artwork-img:hover,
-        .folio-artwork-img:active {
-            filter: grayscale(0%);
-        }
-        @media (min-width: 768px) {
-            #featured-grid { grid-auto-rows: 80px; }
-            #featured-grid > a:nth-child(1) { grid-column: span 7; grid-row: span 6; display: flex; flex-direction: column; }
-            #featured-grid > a:nth-child(2) { grid-column: span 5; grid-row: span 3; display: flex; flex-direction: column; }
-            #featured-grid > a:nth-child(3) { grid-column: span 5; grid-row: span 3; display: flex; flex-direction: column; }
-            #featured-grid > a > .card-img  { flex: 1; aspect-ratio: auto; }
-            #featured-grid > a > .card-meta { flex-shrink: 0; }
-        }
-        @media (prefers-reduced-motion: reduce) {
-            .reveal-element { opacity: 1; transform: none; transition: none; }
-            #dust-motte-canvas { display: none; }
-            .parallax-label { will-change: auto; }
-            .folio-artwork-img { transition: none; }
-        }
-    </style>
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  .nav-underline-active {
+    position: relative;
+  }
+  .nav-underline-active::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #FF6600;
+  }
+  /* Mobile folio snap scroll */
+  .folio-container {
+    scroll-snap-type: y mandatory;
+    height: calc(100dvh - 4rem);
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .folio-container::-webkit-scrollbar { display: none; }
+  .folio-section {
+    scroll-snap-align: start;
+    height: calc(100dvh - 4rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 0 20px;
+  }
+  /* Featured grid layout */
+  @media (min-width: 768px) {
+    #featured-grid { grid-auto-rows: 80px; }
+    #featured-grid > a:nth-child(1) { grid-column: span 7; grid-row: span 6; display: flex; flex-direction: column; }
+    #featured-grid > a:nth-child(2) { grid-column: span 5; grid-row: span 3; display: flex; flex-direction: column; }
+    #featured-grid > a:nth-child(3) { grid-column: span 5; grid-row: span 3; display: flex; flex-direction: column; }
+    #featured-grid > a > .card-img  { flex: 1; aspect-ratio: auto; }
+    #featured-grid > a > .card-meta { flex-shrink: 0; }
+  }
+</style>
 </head>
 <body class="bg-bone-white text-deep-ink font-body-md">
 
-<!-- TopAppBar -->
 <!-- NAV:START -->
 <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-deep-ink focus:text-bone-white focus:font-label-caps focus:text-label-caps">Skip to content</a>
 <header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-background border-b border-deep-ink">
@@ -161,7 +112,6 @@
       <a href="timeline.html"    style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Timeline</a>
       <a href="companion.html"   style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Companion</a>
       <a href="about.html"       style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">About</a>
-      <a href="for-artists.html" style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#FF6600;text-decoration:none;">For Artists</a>
     </div>
     <!-- Search shortcut -->
     <div style="padding:16px 24px;border-top:1px solid #c4c7c7;">
@@ -216,39 +166,23 @@
 <!-- NAV:END -->
 
 <!-- ═══════════════════════════════════════════════
-     MOBILE — Minimalist Folio (snap scroll)
+     MOBILE — Folio (snap scroll)
      Hidden on md+ breakpoint
      ═══════════════════════════════════════════════ -->
 <div class="md:hidden pt-16">
   <div class="folio-container" id="folio-container">
 
-    <!-- Snap 1: Full-bleed hero (mirrors desktop hero) -->
+    <!-- Snap 1: Hero -->
     <section class="folio-section justify-start p-0 overflow-hidden" style="background-color: #1a1814;">
       <img
         src="artworks/full/art0953.avif"
         alt="XXXIII Días Installation View — Jeffrey F. S. Neumann"
         class="absolute inset-0 w-full h-full object-cover"
-        style="transform: scale(1.25) translateY(-7%); transform-origin: center center;"
         loading="eager"
         fetchpriority="high"
       />
-      <!-- Text overlay -->
-      <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-8 z-10">
-        <!-- Radial oval behind text -->
-        <div aria-hidden="true" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:420px;height:380px;background:radial-gradient(ellipse at center, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.38) 40%, transparent 70%);pointer-events:none;z-index:-1;"></div>
-        <span class="font-label-caps text-label-caps text-international-orange tracking-[0.2em] block mb-3">PERSONAL ARCHIVE</span>
-        <h1 class="font-display-lg text-[36px] leading-[1.1] tracking-tight text-bone-white italic mb-3" aria-hidden="true">Five Decades<br>of Making</h1>
-        <p class="font-body-md text-[13px] text-bone-white/70 mb-7">1,084 works · 1974 – present</p>
-        <div class="flex flex-col gap-3 w-full max-w-[220px]">
-          <a href="archive.html" class="py-3 bg-international-orange text-white font-label-caps text-label-caps text-center tracking-widest">EXPLORE ARCHIVE</a>
-          <a href="series-index.html" class="py-3 border border-bone-white/50 text-bone-white font-label-caps text-label-caps text-center tracking-widest hover:border-bone-white">VIEW SERIES</a>
-        </div>
-      </div>
-      <!-- Scroll indicator -->
-      <div id="scroll-indicator" class="absolute bottom-8 left-0 right-0 flex flex-col items-center gap-2 z-10 pointer-events-none" style="animation: fadeInUp 1s ease 1.2s both; transition: opacity 0.4s ease;">
-        <svg width="38" height="22" viewBox="0 0 38 22" fill="none" xmlns="http://www.w3.org/2000/svg" style="animation: chevronBounce 1.8s ease-in-out infinite; filter: drop-shadow(0 2px 8px rgba(0,0,0,1));" aria-label="Scroll down">
-          <path d="M2 2L19 20L36 2" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+      <div class="absolute inset-0 flex flex-col items-end justify-end p-8 z-10">
+        <p class="font-label-caps text-label-caps text-bone-white/70">1,084 works · 1974–present</p>
       </div>
     </section>
 
@@ -260,7 +194,7 @@
             <img
               src="artworks/full/art0483.avif"
               alt="Untitled (CD Formation) 2 — Jeffrey F. S. Neumann, 1990"
-              class="folio-artwork-img w-full h-full object-contain border border-deep-ink"
+              class="w-full h-full object-contain border border-deep-ink"
               loading="eager"
             />
           </a>
@@ -283,7 +217,7 @@
             <img
               src="artworks/full/art1009.avif"
               alt="Untitled (Machine Assemblage) — Jeffrey F. S. Neumann, 2020"
-              class="folio-artwork-img w-full h-full object-contain border border-deep-ink"
+              class="w-full h-full object-contain border border-deep-ink"
               loading="lazy"
             />
           </a>
@@ -306,7 +240,7 @@
             <img
               src="artworks/full/art1010.avif"
               alt="Untitled (Cassette Torso) — Jeffrey F. S. Neumann, 2020"
-              class="folio-artwork-img w-full h-full object-contain border border-deep-ink"
+              class="w-full h-full object-contain border border-deep-ink"
               loading="lazy"
             />
           </a>
@@ -321,269 +255,41 @@
       </div>
     </section>
 
-    <!-- Snap 5: Stats -->
-    <section class="folio-section" style="justify-content:flex-start;padding-top:15vh;">
-      <div class="w-full">
-        <span style="font-family:Inter,sans-serif;font-size:10px;font-weight:600;letter-spacing:0.2em;color:#FF6600;display:block;margin-bottom:2.5rem;">THE ARCHIVE</span>
-        <div class="grid grid-cols-2 gap-x-8 gap-y-10">
-          <div style="border-left:2px solid #FF6600;padding-left:1rem;padding-top:0.25rem;padding-bottom:0.25rem;">
-            <span style="font-family:'Playfair Display',serif;font-size:40px;font-weight:700;line-height:1;color:#0B0B0B;display:block;">1,084</span>
-            <span style="font-family:Inter,sans-serif;font-size:10px;font-weight:600;letter-spacing:0.15em;color:#575757;margin-top:8px;display:block;">WORKS</span>
-          </div>
-          <div style="border-left:2px solid #FF6600;padding-left:1rem;padding-top:0.25rem;padding-bottom:0.25rem;">
-            <span style="font-family:'Playfair Display',serif;font-size:40px;font-weight:700;line-height:1;color:#0B0B0B;display:block;">50</span>
-            <span style="font-family:Inter,sans-serif;font-size:10px;font-weight:600;letter-spacing:0.15em;color:#575757;margin-top:8px;display:block;">YEARS</span>
-          </div>
-          <div style="border-left:2px solid #FF6600;padding-left:1rem;padding-top:0.25rem;padding-bottom:0.25rem;">
-            <span style="font-family:'Playfair Display',serif;font-size:40px;font-weight:700;line-height:1;color:#0B0B0B;display:block;">14</span>
-            <span style="font-family:Inter,sans-serif;font-size:10px;font-weight:600;letter-spacing:0.15em;color:#575757;margin-top:8px;display:block;">SERIES</span>
-          </div>
-          <div style="border-left:2px solid #FF6600;padding-left:1rem;padding-top:0.25rem;padding-bottom:0.25rem;">
-            <span style="font-family:'Playfair Display',serif;font-size:40px;font-weight:700;line-height:1;color:#0B0B0B;display:block;">5</span>
-            <span style="font-family:Inter,sans-serif;font-size:10px;font-weight:600;letter-spacing:0.15em;color:#575757;margin-top:8px;display:block;">DECADES</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Snap 6: Companion -->
-    <section class="folio-section" style="background:#0B0B0B;justify-content:flex-start;padding-top:15vh;">
-      <div class="w-full">
-        <span style="font-family:Inter,sans-serif;font-size:10px;font-weight:600;letter-spacing:0.2em;color:#FF6600;display:block;margin-bottom:1.25rem;">THE COMPANION (AI)</span>
-        <h3 style="font-family:'Playfair Display',serif;font-size:24px;font-weight:600;color:#FCF9F3;font-style:italic;margin-bottom:0.75rem;line-height:1.3;">Ask the Archive</h3>
-        <p style="font-family:Inter,sans-serif;font-size:13px;color:#575757;margin-bottom:2rem;line-height:1.6;">Interrogate the history, materials, and themes of Neumann's work.</p>
-        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:2rem;">
-          <button class="suggestion-chip-mobile" style="padding:8px 12px;border:1px solid #575757;background:none;color:#FCF9F3;font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.1em;cursor:pointer;">the Guernica series</button>
-          <button class="suggestion-chip-mobile" style="padding:8px 12px;border:1px solid #575757;background:none;color:#FCF9F3;font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.1em;cursor:pointer;">targets and warplanes</button>
-          <button class="suggestion-chip-mobile" style="padding:8px 12px;border:1px solid #575757;background:none;color:#FCF9F3;font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.1em;cursor:pointer;">midwest winter</button>
-        </div>
-        <div style="position:relative;">
-          <input
-            id="folio-companion-input"
-            style="width:100%;background:transparent;border:none;border-bottom:1px solid #575757;padding:16px 40px 16px 0;color:#FCF9F3;font-family:Inter,sans-serif;font-size:16px;outline:none;"
-            placeholder="Ask about a series, material, or theme…"
-            type="text"
-            aria-label="Ask the archive"
-          />
-          <button id="folio-companion-submit" style="position:absolute;right:0;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#FCF9F3;padding:4px;" aria-label="Submit question">
-            <span class="material-symbols-outlined">arrow_forward</span>
-          </button>
-        </div>
-        <a href="companion.html" style="display:inline-block;margin-top:2rem;font-family:Inter,sans-serif;font-size:10px;font-weight:600;letter-spacing:0.15em;color:#575757;text-decoration:none;">OPEN COMPANION →</a>
-      </div>
-    </section>
-
-    <!-- Snap 7: Navigation grid -->
-    <section class="folio-section">
-      <div class="grid grid-cols-2 gap-4 w-full max-w-sm">
-        <a href="archive.html" class="aspect-square flex flex-col items-center justify-center border border-deep-ink group active:bg-deep-ink transition-colors duration-200">
-          <span class="material-symbols-outlined text-international-orange group-hover:scale-110 transition-transform">inventory_2</span>
-          <span class="mt-2 font-label-caps text-label-caps uppercase group-active:text-bone-white">Archive</span>
-        </a>
-        <a href="series-index.html" class="aspect-square flex flex-col items-center justify-center border border-deep-ink group active:bg-deep-ink transition-colors duration-200">
-          <span class="material-symbols-outlined text-international-orange group-hover:scale-110 transition-transform">auto_awesome_motion</span>
-          <span class="mt-2 font-label-caps text-label-caps uppercase group-active:text-bone-white">Series</span>
-        </a>
-        <a href="timeline.html" class="aspect-square flex flex-col items-center justify-center border border-deep-ink group active:bg-deep-ink transition-colors duration-200">
-          <span class="material-symbols-outlined text-international-orange group-hover:scale-110 transition-transform">history_toggle_off</span>
-          <span class="mt-2 font-label-caps text-label-caps uppercase group-active:text-bone-white">Timeline</span>
-        </a>
-        <a href="about.html" class="aspect-square flex flex-col items-center justify-center border border-deep-ink group active:bg-deep-ink transition-colors duration-200">
-          <span class="material-symbols-outlined text-international-orange group-hover:scale-110 transition-transform">person</span>
-          <span class="mt-2 font-label-caps text-label-caps uppercase group-active:text-bone-white">About</span>
-        </a>
-      </div>
-      <p class="mt-8 font-label-caps text-[10px] text-archive-gray tracking-[0.2em]">© 2026 JEFFREY F. S. NEUMANN</p>
-    </section>
-
   </div>
 </div>
 
 <!-- ═══════════════════════════════════════════════
-     DESKTOP — existing layout
+     DESKTOP
      Hidden on mobile
      ═══════════════════════════════════════════════ -->
 <main id="main" class="hidden md:block pt-16">
 
-  <!-- Hero Section -->
-  <section class="relative w-full overflow-hidden" style="height: 100dvh; background-color: #1a1814;" id="hero-section">
-    <canvas id="dust-motte-canvas" class="absolute inset-0 z-10 pointer-events-none" aria-hidden="true"></canvas>
-    <!-- Full-bleed image -->
+  <!-- Hero -->
+  <section class="relative w-full overflow-hidden" style="height: 100dvh; background-color: #1a1814;">
     <img
       src="artworks/full/art0953.avif"
       alt="XXXIII Días Installation View — Jeffrey F. S. Neumann"
-      class="absolute inset-0 w-full h-full object-cover" style="transform: scale(1.25) translateY(-7%); transform-origin: center center;"
+      class="absolute inset-0 w-full h-full object-cover"
       width="2800" height="1288" loading="eager" fetchpriority="high"
     />
-    <!-- Text overlay — vertically centered -->
-    <div class="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-margin-desktop reveal-element" data-delay="0">
-      <!-- Radial oval behind text -->
-      <div aria-hidden="true" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:1200px;height:580px;background:radial-gradient(ellipse at center, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.38) 40%, transparent 70%);pointer-events:none;z-index:-1;"></div>
-      <span class="font-label-caps text-label-caps text-international-orange mb-3 block tracking-[0.2em]">PERSONAL ARCHIVE</span>
-      <h1 class="font-display-lg text-display-lg text-bone-white mb-4 italic leading-tight">Five Decades of Making</h1>
-      <p class="font-body-md text-body-md text-bone-white/70 mb-8">
-        1,084 works · 1974–present · Collage, sculpture, photography · Cleveland
-      </p>
-      <div class="flex gap-4 justify-center">
-        <a href="archive.html" class="px-7 py-3 bg-international-orange text-white font-label-caps text-label-caps btn-transition hover:bg-bone-white hover:text-deep-ink">EXPLORE ARCHIVE</a>
-        <a href="series-index.html" class="px-7 py-3 border border-bone-white/50 text-bone-white font-label-caps text-label-caps btn-transition hover:border-bone-white hover:bg-bone-white/10">VIEW SERIES</a>
-      </div>
+    <div class="absolute inset-0 z-10 flex flex-col items-end justify-end p-margin-desktop pb-12">
+      <p class="font-label-caps text-label-caps text-bone-white/70">1,084 works · 1974–present · Cleveland</p>
     </div>
-    <style>
-      @keyframes scrollPulse {
-        0%, 100% { opacity: 0.4; transform: scaleY(1); }
-        50% { opacity: 1; transform: scaleY(1.15); }
-      }
-      @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(12px); }
-        to   { opacity: 1; transform: translateY(0); }
-      }
-      @keyframes chevronBounce {
-        0%, 100% { transform: translateY(0); opacity: 0.9; }
-        50% { transform: translateY(5px); opacity: 1; }
-      }
-      @media (prefers-reduced-motion: reduce) {
-        .scroll-indicator { display: none; }
-      }
-    </style>
   </section>
-  <!-- Scroll indicator — outside overflow-hidden section so it's not clipped -->
-  <div id="desktop-scroll-indicator" class="hidden md:flex fixed flex-col items-center gap-2 pointer-events-none" style="bottom:2rem;left:50%;transform:translateX(-50%);z-index:30;transition:opacity 0.4s ease;opacity:0;">
-    <svg width="38" height="22" viewBox="0 0 38 22" fill="none" xmlns="http://www.w3.org/2000/svg" style="animation: chevronBounce 1.8s ease-in-out infinite; filter: drop-shadow(0 2px 8px rgba(0,0,0,1));" aria-label="Scroll down">
-      <path d="M2 2L19 20L36 2" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </div>
-  <script>
-    (function(){
-      var ind = document.getElementById('desktop-scroll-indicator');
-      var hero = document.getElementById('hero-section');
-      if (!ind || !hero) return;
-      // Fade in after 1.2s on page load
-      setTimeout(function(){ if(window.scrollY < hero.offsetHeight * 0.5) ind.style.opacity = '1'; }, 1200);
-      var obs = new IntersectionObserver(function(entries){
-        ind.style.opacity = entries[0].isIntersecting ? '1' : '0';
-      }, { threshold: 0.5 });
-      obs.observe(hero);
-    })();
-  </script>
 
-  <!-- Featured Works Section -->
+  <!-- Featured Works -->
   <section class="py-24 px-margin-desktop max-w-container-max mx-auto">
-    <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-      <div class="max-w-2xl">
-        <span class="font-label-caps text-label-caps text-international-orange mb-2 block">CURATED SELECTION</span>
-        <h2 class="font-headline-lg text-headline-lg">Featured Works</h2>
-        <p class="mt-4 font-body-lg text-body-lg text-archive-gray">A cross-section of Neumann's fifty-year practice — collage, sculpture, and photography spanning 1974 to the present.</p>
-      </div>
-      <a href="archive.html" class="group flex items-center gap-2 font-label-caps text-label-caps text-deep-ink hover:text-international-orange transition-colors">
-        VIEW ALL 1,084 WORKS <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
-      </a>
-    </div>
+    <h2 class="font-headline-lg text-headline-lg mb-16">Featured Works</h2>
     <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter" id="featured-grid">
       <!-- populated by JS -->
     </div>
   </section>
 
-  <!-- Companion Section -->
-  <section class="bg-deep-ink py-24 px-margin-desktop overflow-hidden relative">
-    <div class="absolute top-0 left-0 w-full h-1 bg-international-orange"></div>
-    <div class="max-w-4xl mx-auto relative z-10">
-      <div class="text-center mb-16">
-        <span class="font-label-caps text-label-caps text-international-orange mb-4 block">THE COMPANION (AI)</span>
-        <h2 class="font-headline-lg text-headline-lg text-bone-white">Ask the Archive</h2>
-        <p class="mt-4 font-body-lg text-body-lg text-archive-gray max-w-2xl mx-auto">Interrogate the history, materials, and themes of Neumann's work through the archival intelligence.</p>
-      </div>
-      <div class="relative group">
-        <input
-          id="companion-input"
-          class="w-full bg-transparent border-b border-archive-gray py-6 px-4 text-bone-white font-headline-md text-2xl focus:outline-none focus:border-international-orange transition-colors placeholder:text-archive-gray/50"
-          placeholder="Ask about a series, material, or theme…"
-          type="text"
-          aria-label="Ask the archive"
-        />
-        <button
-          id="companion-submit"
-          class="absolute right-4 top-1/2 -translate-y-1/2 text-bone-white hover:text-international-orange transition-colors"
-          aria-label="Submit question"
-        >
-          <span class="material-symbols-outlined text-4xl">psychology</span>
-        </button>
-      </div>
-      <div class="mt-10 flex flex-wrap justify-center gap-4">
-        <button class="suggestion-chip px-4 py-2 border border-archive-gray text-bone-white font-label-caps text-[10px] hover:border-international-orange hover:text-international-orange transition-all">the Guernica series</button>
-        <button class="suggestion-chip px-4 py-2 border border-archive-gray text-bone-white font-label-caps text-[10px] hover:border-international-orange hover:text-international-orange transition-all">targets and warplanes</button>
-        <button class="suggestion-chip px-4 py-2 border border-archive-gray text-bone-white font-label-caps text-[10px] hover:border-international-orange hover:text-international-orange transition-all">midwest winter</button>
-      </div>
-    </div>
-    <div class="absolute -right-20 -bottom-20 opacity-5 pointer-events-none select-none">
-      <span class="text-[300px] font-bold text-bone-white">JFSN</span>
-    </div>
-  </section>
-
 </main>
 
-<!-- Footer (desktop only) -->
-<footer class="hidden md:block bg-surface-container-high py-16 px-margin-desktop border-t border-outline-variant">
-  <div class="max-w-container-max mx-auto grid grid-cols-1 gap-10" style="grid-template-columns: repeat(5, minmax(0, 1fr))">
-    <div class="col-span-1">
-      <h3 class="font-headline-md text-headline-md tracking-tighter mb-6 flex items-center gap-2">
-        <img src="jfsn-butterfly.png" alt="" width="24" height="24" loading="lazy" aria-hidden="true">
-        JFSN
-      </h3>
-      <p class="font-body-md text-archive-gray text-sm leading-relaxed" style="padding-right: 2rem">
-        The personal archive of Jeffrey F. S. Neumann — 1,084 works spanning five decades. Collage, sculpture, photography.
-      </p>
-    </div>
-    <div class="col-span-1">
-      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">EXPLORE</h4>
-      <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
-        <li><a class="hover:text-international-orange transition-colors" href="archive.html">Complete Archive</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="timeline.html">Interactive Timeline</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="series-index.html">Series Index</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="guernica.html">Guernica Series</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="wall.html">The Wall</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="lost.html">Lost Works</a></li>
-      </ul>
-    </div>
-    <div class="col-span-1">
-      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">MEDIUM</h4>
-      <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
-        <li><a class="hover:text-international-orange transition-colors" href="collage.html">Collage</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="sculpture.html">Sculpture</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="photography.html">Photography</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="painting.html">Painting</a></li>
-      </ul>
-    </div>
-    <div class="col-span-1">
-      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">VISUALIZATIONS</h4>
-      <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
-        <li><a class="hover:text-international-orange transition-colors" href="mosaic.html">Portrait Mosaic</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="chromatic.html">Chromatic River</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="constellation.html">Constellation</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="companion.html">AI Companion</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="changes.html">Changes</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="about.html">About</a></li>
-      </ul>
-    </div>
-    <div class="col-span-1">
-      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">CONTACT</h4>
-      <a class="font-nav-link text-nav-link text-deep-ink block mb-4 border-b border-deep-ink inline-block pb-1 hover:text-international-orange hover:border-international-orange transition-all" href="mailto:jfsneumann@gmail.com">jfsneumann@gmail.com</a>
-      <div class="flex flex-wrap gap-3 mt-2">
-        <a class="font-label-caps text-[10px] text-archive-gray hover:text-international-orange transition-colors" href="https://www.instagram.com/jfsneumann" target="_blank" rel="noopener">Instagram</a>
-        <a class="font-label-caps text-[10px] text-archive-gray hover:text-international-orange transition-colors" href="https://www.linkedin.com/in/jeffreyneumann/" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="font-label-caps text-[10px] text-archive-gray hover:text-international-orange transition-colors" href="https://twitter.com/jfsn" target="_blank" rel="noopener">Twitter/X</a>
-        <a class="font-label-caps text-[10px] text-archive-gray hover:text-international-orange transition-colors" href="https://www.youtube.com/@jfsneumann/videos" target="_blank" rel="noopener">YouTube</a>
-        <a class="font-label-caps text-[10px] text-archive-gray hover:text-international-orange transition-colors" href="https://www.behance.net/jfsn" target="_blank" rel="noopener">Behance</a>
-        <a class="font-label-caps text-[10px] text-archive-gray hover:text-international-orange transition-colors" href="https://dribbble.com/JFSN" target="_blank" rel="noopener">Dribbble</a>
-      </div>
-    </div>
-  </div>
-  <div class="mt-16 pt-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
-    <p class="font-label-caps text-[10px] text-archive-gray">© 2026 JEFFREY F. S. NEUMANN. ALL RIGHTS RESERVED.</p>
-    <div class="flex gap-8">
-      <a class="font-label-caps text-[10px] text-archive-gray hover:text-deep-ink" href="privacy.html">PRIVACY</a>
-    </div>
-  </div>
+<!-- Footer -->
+<footer class="hidden md:block py-8 px-margin-desktop border-t border-outline-variant">
+  <p class="font-label-caps text-[10px] text-archive-gray">© 2026 Jeffrey F. S. Neumann · <a href="mailto:jfsneumann@gmail.com" class="hover:text-deep-ink">jfsneumann@gmail.com</a></p>
 </footer>
 
 <!-- Mobile bottom nav -->
@@ -592,26 +298,18 @@
     <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
     <span class="font-label-md text-[10px] uppercase">Home</span>
   </a>
-  <a href="archive.html" class="flex flex-col items-center justify-center text-archive-gray hover:text-international-orange transition-colors">
+  <a href="archive.html" class="flex flex-col items-center justify-center text-archive-gray hover:text-international-orange">
     <span class="material-symbols-outlined">inventory_2</span>
     <span class="font-label-md text-[10px] uppercase">Archive</span>
   </a>
-  <a href="series-index.html" class="flex flex-col items-center justify-center text-archive-gray hover:text-international-orange transition-colors">
-    <span class="material-symbols-outlined">auto_awesome_motion</span>
-    <span class="font-label-md text-[10px] uppercase">Series</span>
-  </a>
-  <a href="timeline.html" class="flex flex-col items-center justify-center text-archive-gray hover:text-international-orange transition-colors">
-    <span class="material-symbols-outlined">history_toggle_off</span>
-    <span class="font-label-md text-[10px] uppercase">Timeline</span>
-  </a>
-  <a href="companion.html" class="flex flex-col items-center justify-center text-archive-gray hover:text-international-orange transition-colors">
-    <span class="material-symbols-outlined">chat_bubble</span>
-    <span class="font-label-md text-[10px] uppercase">Companion</span>
+  <a href="about.html" class="flex flex-col items-center justify-center text-archive-gray hover:text-international-orange">
+    <span class="material-symbols-outlined">person</span>
+    <span class="font-label-md text-[10px] uppercase">About</span>
   </a>
 </nav>
 
 <script>
-  // Desktop: populate featured grid with art0483, art1009, art1010
+  // Desktop: populate featured grid
   (async () => {
     const grid = document.getElementById('featured-grid');
     if (!grid) return;
@@ -620,171 +318,31 @@
       const res = await fetch('catalog-home.json');
       const works = await res.json();
       const featured = FEATURED_IDS.map(id => works.find(w => w.file === id)).filter(Boolean);
-      featured.forEach((w, i) => {
+      featured.forEach((w) => {
         const medium = (w.work_type || '').toUpperCase().replace(/_/g, ' ');
         const id = w.file.replace('.avif', '');
         const card = document.createElement('a');
         card.href = `artwork.html?id=${id}`;
-        card.className = `archive-card kinetic-border group cursor-pointer no-underline reveal-element`;
-        card.dataset.delay = String(i * 100);
+        card.className = 'group cursor-pointer no-underline';
         card.innerHTML = `
-          <div class="card-img aspect-[3/4] bg-surface-container-high relative overflow-hidden" style="background-image:url(artworks/thumbs/${w.file});background-size:cover;background-position:center;">
+          <div class="card-img aspect-[3/4] bg-surface-container-high relative overflow-hidden">
             <img
               alt="${w.title}"
-              class="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105"
+              class="absolute inset-0 w-full h-full object-cover"
               src="artworks/thumbs/${w.file}"
-              style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 65%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 65%,transparent 100%);transition:filter 0.7s ease,-webkit-mask-image 0.7s ease,mask-image 0.7s ease,transform 0.35s ease;"
               loading="lazy" width="400" height="533"
             />
           </div>
           <div class="card-meta mt-4">
-            <span class="font-label-caps text-label-caps text-international-orange parallax-label block" data-speed="0.1">${w.year}</span>
+            <span class="font-label-caps text-label-caps text-archive-gray block">${w.year}</span>
             <h3 class="font-headline-md text-headline-md text-deep-ink mt-1">${w.title}</h3>
             <p class="font-label-caps text-label-caps text-archive-gray mt-1">${medium}</p>
           </div>`;
         grid.appendChild(card);
-        revealObserver.observe(card);
       });
     } catch(e) {
       console.error('catalog-home load failed', e);
     }
-  })();
-
-  // Companion input — forward to companion.html
-  const input = document.getElementById('companion-input');
-  const submit = document.getElementById('companion-submit');
-  if (input && submit) {
-    function goToCompanion() {
-      const q = input.value.trim();
-      if (q) window.location.href = `companion.html?q=${encodeURIComponent(q)}`;
-      else window.location.href = 'companion.html';
-    }
-    submit.addEventListener('click', goToCompanion);
-    input.addEventListener('keydown', e => { if (e.key === 'Enter') goToCompanion(); });
-    document.querySelectorAll('.suggestion-chip').forEach(btn => {
-      btn.addEventListener('click', () => {
-        input.value = btn.textContent.replace(/"/g, '').trim();
-        goToCompanion();
-      });
-    });
-  }
-
-  // Mobile folio companion
-  const folioInput = document.getElementById('folio-companion-input');
-  const folioSubmit = document.getElementById('folio-companion-submit');
-  if (folioInput && folioSubmit) {
-    function goToCompanionMobile() {
-      const q = folioInput.value.trim();
-      window.location.href = q ? `companion.html?q=${encodeURIComponent(q)}` : 'companion.html';
-    }
-    folioSubmit.addEventListener('click', goToCompanionMobile);
-    folioInput.addEventListener('keydown', e => { if (e.key === 'Enter') goToCompanionMobile(); });
-    document.querySelectorAll('.suggestion-chip-mobile').forEach(btn => {
-      btn.addEventListener('click', () => {
-        folioInput.value = btn.textContent.trim();
-        goToCompanionMobile();
-      });
-    });
-  }
-
-  // Scroll reveal
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const delay = parseInt(entry.target.dataset.delay || '0');
-        setTimeout(() => entry.target.classList.add('visible'), delay);
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-  document.querySelectorAll('.reveal-element').forEach(el => revealObserver.observe(el));
-
-  // SCROLL indicator — hide after first snap scroll
-  (function() {
-    const indicator = document.getElementById('scroll-indicator');
-    const folio = document.getElementById('folio-container');
-    if (!indicator || !folio) return;
-    function hideOnScroll() {
-      if (folio.scrollTop > 40) {
-        indicator.style.opacity = '0';
-        folio.removeEventListener('scroll', hideOnScroll);
-      }
-    }
-    folio.addEventListener('scroll', hideOnScroll, { passive: true });
-  })();
-
-  // Ghost trace parallax on scroll
-  window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-    document.querySelectorAll('.parallax-label').forEach(el => {
-      const speed = parseFloat(el.dataset.speed) || 0.1;
-      const rect = el.getBoundingClientRect();
-      const elementTop = rect.top + scrollY;
-      const offset = (scrollY + window.innerHeight / 2 - elementTop) * speed;
-      el.style.transform = `translateY(${offset}px)`;
-    });
-  }, { passive: true });
-
-  // Dust motte (desktop hero only)
-  (function initDustMotte() {
-    const canvas = document.getElementById('dust-motte-canvas');
-    const hero = document.getElementById('hero-section');
-    if (!canvas || !hero) return;
-    const ctx = canvas.getContext('2d');
-    let particles = [], mouse = { x: null, y: null }, width, height;
-
-    const resize = () => {
-      width = canvas.width = hero.offsetWidth;
-      height = canvas.height = hero.offsetHeight;
-      initParticles();
-    };
-
-    class Particle {
-      reset() {
-        this.x = Math.random() * width;
-        this.y = Math.random() * height;
-        this.size = Math.random() * 1.5 + 0.5;
-        this.speedX = (Math.random() - 0.5) * 0.2;
-        this.speedY = (Math.random() - 0.5) * 0.2;
-        this.opacity = Math.random() * 0.35;
-      }
-      constructor() { this.reset(); }
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        if (mouse.x !== null) {
-          const dx = mouse.x - this.x, dy = mouse.y - this.y;
-          const dist = Math.sqrt(dx*dx + dy*dy);
-          if (dist < 200) { this.x += dx * 0.001; this.y += dy * 0.001; }
-        }
-        if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) this.reset();
-      }
-      draw() {
-        ctx.fillStyle = `rgba(0,0,0,${this.opacity})`;
-        ctx.fillRect(this.x, this.y, this.size, this.size);
-      }
-    }
-
-    function initParticles() {
-      particles = [];
-      const count = Math.floor((width * height) / 8000);
-      for (let i = 0; i < count; i++) particles.push(new Particle());
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, width, height);
-      particles.forEach(p => { p.update(); p.draw(); });
-      requestAnimationFrame(animate);
-    }
-
-    hero.addEventListener('mousemove', e => {
-      const r = hero.getBoundingClientRect();
-      mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
-    });
-    hero.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
-    window.addEventListener('resize', resize, { passive: true });
-    resize();
-    animate();
   })();
 </script>
 
