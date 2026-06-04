@@ -479,6 +479,15 @@
   input.addEventListener('input', () => {
     input.style.height = 'auto';
     input.style.height = input.scrollHeight + 'px';
+    // If results are showing and user types, clear them ready for a new search
+    if (!resultsEl.hidden) {
+      setStatus(null);
+      divider.hidden   = true;
+      resultsEl.hidden = true;
+      resultsEl.innerHTML = '';
+      againWrap.hidden = true;
+      submitBtn.textContent = 'Find a work →';
+    }
   });
 
   againBtn.addEventListener('click', reset);
@@ -491,6 +500,7 @@
     againWrap.hidden = true;
     examplesEl.hidden = false;
     submitBtn.disabled = false;
+    submitBtn.textContent = 'Find a work →';
     input.value = '';
     input.style.height = 'auto';
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -561,6 +571,9 @@
     });
 
     againWrap.hidden = false;
+    // Re-enable submit so user can search again without clicking "Try another"
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Search again →';
   }
 
   function setStatus(msg, loading) {
