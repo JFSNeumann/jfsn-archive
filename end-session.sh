@@ -44,25 +44,33 @@ echo ""
 
 # ── 2. Backup ─────────────────────────────────────────────────────────────────
 if [ -d "/Volumes/JEFFS-4TB" ]; then
-  echo "💾  Running backup..."
+  echo "💾  Running local backup..."
   bash backup.sh
-  echo "   ✅  Backup complete."
+  echo "   ✅  Local backup complete."
 else
-  echo "⚠️   JEFFS-4TB drive not mounted — skipping backup."
+  echo "⚠️   JEFFS-4TB drive not mounted — skipping local backup."
   echo "   Plug in the drive and run:  bash backup.sh"
+fi
+
+echo ""
+echo "☁️   Running cloud backup (Backblaze B2)..."
+if bash cloud-backup.sh 2>/dev/null; then
+  echo "   ✅  Cloud backup complete."
+else
+  echo "   ⚠️   Cloud backup failed or skipped — run  bash cloud-backup.sh  manually."
 fi
 
 echo ""
 
 # ── 3. Show what to tell Claude ───────────────────────────────────────────────
+RECENT_COMMITS=$(git log --oneline -5 2>/dev/null)
 echo "───────────────────────────────────────"
-echo "  One last thing — tell Claude:"
+echo "  Paste this to Claude to update memory:"
 echo ""
-echo '  "Update memory. Today we: [1-2 sentences about what changed]"'
+echo "  Update memory. Today we:"
+echo "$RECENT_COMMITS" | sed 's/^/  • /'
 echo ""
-echo "  Examples:"
-echo '  "Update memory. Fixed CSP, added description to search, deployed."'
-echo '  "Update memory. Shot 20 new works, ingested them, ran catalog."'
+echo "  (edit the bullets above to match what actually shipped)"
 echo "───────────────────────────────────────"
 echo ""
 
