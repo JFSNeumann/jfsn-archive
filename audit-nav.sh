@@ -75,3 +75,91 @@ for fname in files:
 if not issues_found:
     print('✅  All clear — no nav/footer/link issues found.')
 PYEOF
+
+
+# ── Sitemap validator ─────────────────────────────────────────────────────────
+python3 << 'PYEOF'
+import re, os
+
+with open('sitemap.xml') as f:
+    content = f.read()
+
+urls = re.findall(r'<loc>https://jfsn\.com/([^<]+)</loc>', content)
+
+missing = []
+for url in urls:
+    # Strip query strings for file check
+    path = url.split('?')[0]
+    if path and not os.path.exists(path):
+        missing.append(url)
+
+if missing:
+    print(f'\nsitemap.xml — {len(missing)} URL(s) point to missing files:')
+    for u in missing[:20]:
+        print(f'  ⚠  {u}')
+    if len(missing) > 20:
+        print(f'  ... and {len(missing)-20} more')
+else:
+    print('✅  Sitemap: all URLs resolve to real files.')
+PYEOF
+
+
+# ── Alt text audit ────────────────────────────────────────────────────────────
+python3 << 'PYEOF'
+import re, glob
+
+files = [f for f in glob.glob('*.html') if not any(x in f for x in ['old-site','curate','jeff.html','qa.html','dedupe'])]
+files.sort()
+
+issues_found = False
+for fname in files:
+    with open(fname) as f:
+        content = f.read()
+
+    # Find img tags missing alt entirely (not just empty alt, which is valid for decorative)
+    imgs = re.findall(r'<img(?![^>]*\balt\s*=)[^>]*>', content)
+    # Filter out template/JS-generated tags
+    real = [i for i in imgs if '${' not in i and 'artworks/' not in i]
+    if real:
+        issues_found = True
+        print(f'\n{fname}: {len(real)} <img> tag(s) missing alt attribute')
+        for img in real[:3]:
+            print(f'  ⚠  {img[:120]}')
+
+if not issues_found:
+    print('✅  Alt text: all <img> tags have alt attributes.')
+PYEOF
+
+
+# ── Thumbnail integrity ───────────────────────────────────────────────────────
+python3 << 'PYEOF'
+import json, os
+
+with open('catalog.json') as f:
+    catalog = json.load(f)
+
+missing_thumb = []
+missing_mini  = []
+
+for w in catalog:
+    fname = w['file']  # e.g. art0001.avif
+    stem  = fname.replace('.avif', '')
+    if not os.path.exists(f'artworks/thumbs/{fname}'):
+        missing_thumb.append(stem)
+    if not os.path.exists(f'artworks/mini/{fname}'):
+        missing_mini.append(stem)
+
+if missing_thumb:
+    print(f'\nThumbnails: {len(missing_thumb)} missing in artworks/thumbs/')
+    for s in missing_thumb[:5]: print(f'  ⚠  {s}')
+    if len(missing_thumb) > 5: print(f'  ... and {len(missing_thumb)-5} more')
+else:
+    print('✅  Thumbnails: all 1,084 present in artworks/thumbs/')
+
+if missing_mini:
+    print(f'\nMinis: {len(missing_mini)} missing in artworks/mini/')
+    for s in missing_mini[:5]: print(f'  ⚠  {s}')
+    if len(missing_mini) > 5: print(f'  ... and {len(missing_mini)-5} more')
+else:
+    print('✅  Minis: all 1,084 present in artworks/mini/')
+PYEOF
