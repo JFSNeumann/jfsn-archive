@@ -1,5 +1,11 @@
 [
   {
+    "sha": "3f6ceb7",
+    "date": "2026-06-04",
+    "title": "Fix nav/footer across all pages: 5-item mobile nav, Wall+Constellation in footers, ghost grid, sitemap",
+    "body": ""
+  },
+  {
     "sha": "564ff98",
     "date": "2026-06-04",
     "title": "Fix timeline touch scroll jank — remove manual touchmove handler, add native momentum scrolling",

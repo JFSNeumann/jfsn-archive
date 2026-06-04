@@ -1,8 +1,8 @@
 # Current State
-**Updated:** 2026-06-04 10:20
+**Updated:** 2026-06-04 10:55
 
 ## Last commit
-564ff98 — Fix timeline touch scroll jank — remove manual touchmove handler, add native momentum scrolling
+3f6ceb7 — Fix nav/footer across all pages: 5-item mobile nav, Wall+Constellation in footers, ghost grid, sitemap
 
 ## To do next session
 <!-- Edit this section before closing -->
