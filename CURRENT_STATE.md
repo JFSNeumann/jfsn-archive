@@ -1,18 +1,18 @@
 # Current State
-**Updated:** 2026-06-03 (session 2)
+**Updated:** 2026-06-03 (session 3)
 
 ## Last commit
-(pending end-session.sh)
+e93fad8 — Regenerate API JSON and feed.xml post-session
 
 ## Last deployed
-- HostGator: pending deploy.sh
+- HostGator: ✅ 2026-06-03 (session 3) — about.html keywords + footer fix live
 - Netlify: 2026-06-02
 
 ## To do next session
-- [ ] (Optional) Dual-track timeline: map works alongside historical/art-world context
+See IMPROVEMENTS.md open items — ranked prompt exists for handoff.
 
 ## Known issues
-- **SW cache / site.min.css** — was broken locally (wrong rebuild); now fixed. SW CACHE_V bumped. Deploy will resolve for all live visitors. Locally: unregister SW in DevTools + Cmd+Shift+R.
+- **sw.js regeneration bug** — something (likely build_catalog.py or a script) keeps writing an older CACHE_V timestamp to sw.js after sessions. Caught and discarded twice (sessions 2 and 3). Investigate source; do not commit the rollback.
 
 ## Site is live at
 - jfsn.com  (primary — cPanel)
