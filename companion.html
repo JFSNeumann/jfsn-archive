@@ -120,15 +120,20 @@
   }
   .c-deep-label input { accent-color: var(--c-text); cursor: pointer; }
 
-  .c-examples { width: 100%; display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 3.5rem; }
+  .c-examples { width: 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin: 0.875rem 0 1.25rem; }
+  .c-examples-label {
+    font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--c-muted); opacity: 0.5; flex-shrink: 0; margin-right: 0.25rem;
+  }
   .c-example {
     appearance: none; background: transparent;
-    border: 1px solid var(--c-dim); color: var(--c-muted);
+    border: 1px solid rgba(243,240,234,0.22); color: rgba(243,240,234,0.7);
     font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase;
     padding: 0.4rem 0.875rem; cursor: pointer;
     transition: border-color 0.2s, color 0.2s;
   }
   .c-example:hover { border-color: var(--c-accent); color: var(--c-text); }
+  .c-deep-hint { opacity: 0.5; font-size: 0.65rem; }
 
   .c-status {
     width: 100%; font-size: 0.8125rem; letter-spacing: 0.08em;
@@ -325,30 +330,31 @@
         <textarea
           class="c-textarea"
           id="c-input"
-          rows="2"
+          rows="1"
           placeholder="quiet, obsessive, midwest winter…"
           maxlength="300"
           aria-label="Describe a feeling, color, or memory"
         ></textarea>
+
+        <div class="c-examples" id="c-examples">
+          <span class="c-examples-label">TRY —</span>
+          <button class="c-example" type="button">the Guernica series</button>
+          <button class="c-example" type="button">targets and warplanes</button>
+          <button class="c-example" type="button">something from the 1970s</button>
+          <button class="c-example" type="button">crosses and ritual</button>
+          <button class="c-example" type="button">found objects and memory</button>
+          <button class="c-example" type="button">midwest winter</button>
+          <button class="c-example" type="button">lost and undocumented</button>
+        </div>
+
         <div class="c-submit-row">
           <button class="c-submit" type="submit" id="c-submit">Find a work →</button>
-          <label class="c-deep-label">
-            <input type="checkbox" id="c-deep"> deeper search
+          <label class="c-deep-label" title="Uses extended thinking — slower but more nuanced">
+            <input type="checkbox" id="c-deep"> deeper search <span class="c-deep-hint">(slower · more nuanced)</span>
           </label>
         </div>
       </div>
     </form>
-
-    <div class="c-examples" id="c-examples">
-      <button class="c-example" type="button">the Guernica series</button>
-      <button class="c-example" type="button">Mr. SNOWmann</button>
-      <button class="c-example" type="button">targets and warplanes</button>
-      <button class="c-example" type="button">something from the 1970s</button>
-      <button class="c-example" type="button">crosses and ritual</button>
-      <button class="c-example" type="button">found objects and memory</button>
-      <button class="c-example" type="button">midwest winter</button>
-      <button class="c-example" type="button">lost and undocumented</button>
-    </div>
 
     <p class="c-status" id="c-status" hidden></p>
     <hr class="c-divider" id="c-divider" hidden/>
