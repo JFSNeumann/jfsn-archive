@@ -7,7 +7,7 @@
 Read `/Documents/JFSN/CURRENT_STATE.md` and `/Documents/JFSN/IMPROVEMENTS.md` before doing anything. Then work through the ranked items below in order.
 
 **Project:** JFSN Archive — personal archive site for Jeffrey F. S. Neumann, 1,084 works.
-- Live: jfsn.com (HostGator/cPanel, primary) and jfsn-archive.netlify.app (Netlify — has Companion edge function)
+- Live: jfsn.com (HostGator/cPanel, primary) and jfsn-archive.netlify.app (Netlify — has Companion Netlify Function)
 - Stack: vanilla HTML/CSS/JS, Tailwind compiled to `site.min.css` (31KB), service worker, no frameworks
 - Design system: light/bone-white (`#fcf9f3`), deep-ink (`#0B0B0B`), orange accent (`#FF6600`), Playfair Display headings, Inter UI
 - Deploy workflow: `bash end-session.sh` (git commit + push + rsync backup) → `bash deploy.sh` (FTP to HostGator, separate step)
@@ -23,7 +23,7 @@ Read `/Documents/JFSN/CURRENT_STATE.md` and `/Documents/JFSN/IMPROVEMENTS.md` be
 ### 1. 🔴 Test Companion live on iPhone
 **What:** Open https://jfsn-archive.netlify.app/companion.html on iPhone 15 Pro (must use Netlify URL — Companion edge function doesn't exist on jfsn.com). Type a prompt: "targets" or "something blue and melancholy". Confirm a work title + thumbnail comes back.
 **Why:** Untested since May 2026 redesign. Backend was fixed (model IDs, thinking API, netlify.toml) but UI flow never verified on device.
-**If it fails:** Check Netlify dashboard → Functions → companion logs for errors. The function is at `netlify/edge-functions/companion.js`. Known issues fixed: model names are `claude-haiku-4-5` and `claude-sonnet-4-6-20250514`, thinking uses `{type: 'adaptive'}`.
+**If it fails:** Check Netlify dashboard → Functions → companion logs for errors. The function is at `netlify/functions/companion.mjs` (regular Netlify function, NOT edge function). Model names in code: `claude-haiku-4-5` (fast) and `claude-sonnet-4-6` (deep). Deep mode uses `thinking: {type: 'adaptive'}`.
 **Done when:** Response returns with a work suggestion on iPhone.
 
 ---
@@ -32,7 +32,7 @@ Read `/Documents/JFSN/CURRENT_STATE.md` and `/Documents/JFSN/IMPROVEMENTS.md` be
 **What:** Go to https://jfsn-archive.netlify.app/for-artists.html. Fill in name, email, message. Submit.
 **Why:** Never tested since launch.
 **Expected:** After submit, URL becomes `?sent=1#inquire` and thank-you state shows.
-**If broken:** Check `<form>` tag in `for-artists.html` — needs `netlify` attribute and `action="?sent=1#inquire"`. Also check Netlify dashboard → Forms for submissions.
+**Note:** Form is already correctly configured (`data-netlify="true"`, honeypot, `action="/for-artists.html?sent=1#inquire"`). This is purely a live test — no code fix expected. Check Netlify dashboard → Forms after submitting.
 **Done when:** Submission goes through; check Netlify dashboard confirms receipt.
 
 ---
@@ -76,7 +76,10 @@ document.addEventListener('DOMContentLoaded', function() {
   const badge = document.createElement('div');
   badge.id = 'kbd-hint';
   badge.style.cssText = 'position:fixed;bottom:72px;right:16px;z-index:40;background:#ebe8e2;border:1px solid #c4c7c7;padding:6px 12px;font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#575757;transition:opacity 0.4s;pointer-events:none;';
-  badge.textContent = (prev ? '← ' + prev.textContent.trim() + '  ' : '') + (next ? next.textContent.trim() + ' →' : '');
+  // Use aria-label — textContent includes Material Symbol icon name ("arrow_back 1970s")
+  const prevLabel = prev ? prev.getAttribute('aria-label').replace('Previous decade: ','') : '';
+  const nextLabel = next ? next.getAttribute('aria-label').replace('Next decade: ','') : '';
+  badge.textContent = (prevLabel ? '← ' + prevLabel + '  ' : '') + (nextLabel ? nextLabel + ' →' : '');
   document.body.appendChild(badge);
   const hide = () => { badge.style.opacity = '0'; };
   setTimeout(hide, 4000);
@@ -91,12 +94,13 @@ document.addEventListener('DOMContentLoaded', function() {
 ### 6. 🟡 Chromatic River — mobile tap feedback
 **File:** `chromatic.html` — find the `canvas.addEventListener('click', ...)` block (around line 394–401).
 **Problem:** No visual feedback before `window.location.href` fires — feels dead on mobile.
-**Fix:** Flash the tapped slice, then navigate:
+**Important scope note:** `ctx` is defined inside `draw()` — it's NOT accessible at the click handler level. Get a fresh reference inside the handler:
 ```js
 canvas.addEventListener('click', function(e) {
   const idx = getIdx(e.clientX);
   const w = WORKS[idx];
-  // Brief flash on tapped slice
+  // Get ctx here — it's scoped inside draw(), not available at this level
+  const ctx = canvas.getContext('2d');
   const sliceW = canvas.width / WORKS.length;
   ctx.save();
   ctx.fillStyle = 'rgba(255,255,255,0.55)';
@@ -122,10 +126,21 @@ canvas.addEventListener('click', function(e) {
 ---
 
 ### 8. 🟡 Archive lazy-loading audit
-**File:** `archive.html` — archive renders via JS, not static HTML.
-**Find:** Search for where `<img>` tags are created in the JS (grep for `loading` or `createElement`). 
-**Fix:** First N rendered items (those in the initial viewport ~8 items at typical screen size) should not be lazy. Change `loading="lazy"` to `loading="eager"` for items where `index < 8` (or calculate based on columns × visible rows).
-**Done when:** First row of archive.html renders without deferral on a fresh load.
+**File:** `archive.html` — archive renders via JS. All images are created by `renderCard(w)` at line 461 using a template literal with `loading="lazy"` hardcoded.
+**The fix requires modifying `renderCard` to accept an index:**
+```js
+// Change renderCard signature:
+function renderCard(w, idx) {
+  // ... existing code ...
+  loading="lazy"   // change this line to:
+  loading="${idx < 8 ? 'eager' : 'lazy'}"
+}
+
+// Update the call in renderPage():
+slice.forEach((w, i) => { grid.innerHTML += renderCard(w, page * PAGE_SIZE + i); });
+```
+**Note:** Only applies to the first page load (page 0). Subsequent paginated loads can stay lazy — those are below the fold.
+**Done when:** DevTools Network → filter images on archive.html fresh load → first 8 images load without lazy deferral.
 
 ---
 
