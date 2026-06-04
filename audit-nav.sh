@@ -163,3 +163,65 @@ if missing_mini:
 else:
     print('✅  Minis: all 1,084 present in artworks/mini/')
 PYEOF
+
+
+# ── sw.js freshness check ─────────────────────────────────────────────────────
+python3 << 'PYEOF'
+import re
+from datetime import datetime, timezone
+
+with open('sw.js') as f:
+    content = f.read()
+
+m = re.search(r"CACHE_V\s*=\s*'jfsn-(\d{8})(\d{6})'", content)
+if not m:
+    print('⚠  sw.js: could not parse CACHE_V')
+else:
+    stamp_str = m.group(1) + m.group(2)
+    stamp = datetime.strptime(stamp_str, '%Y%m%d%H%M%S').replace(tzinfo=timezone.utc)
+    age_days = (datetime.now(timezone.utc) - stamp).days
+    if age_days > 7:
+        print(f'⚠  sw.js: CACHE_V is {age_days} days old — consider bumping before deploy')
+    else:
+        print(f'✅  sw.js: CACHE_V is current ({age_days}d old)')
+PYEOF
+
+
+# ── Page weight check ─────────────────────────────────────────────────────────
+python3 << 'PYEOF'
+import re, glob
+
+STYLE_WARN_BYTES = 33000  # warn if inline <style> block exceeds 33KB
+CDN_PATTERNS = ['cdn.tailwindcss', 'unpkg.com']
+# cdn.jsdelivr is approved for constellation.html (D3 — too large to self-host)
+CDN_EXCEPTIONS = {'constellation.html': ['cdn.jsdelivr']}
+
+files = [f for f in glob.glob('*.html') if not any(x in f for x in ['old-site','curate','jeff.html','qa.html','dedupe'])]
+files.sort()
+
+issues_found = False
+for fname in files:
+    with open(fname) as f:
+        content = f.read()
+    issues = []
+
+    # Inline style block size
+    styles = re.findall(r'<style[^>]*>(.*?)</style>', content, re.DOTALL)
+    total = sum(len(s) for s in styles)
+    if total > STYLE_WARN_BYTES:
+        issues.append(f'{total//1024}KB inline <style> (>{STYLE_WARN_BYTES//1024}KB threshold)')
+
+    # CDN scripts that shouldn't be in production
+    exceptions = CDN_EXCEPTIONS.get(fname, [])
+    for cdn in CDN_PATTERNS:
+        if cdn in content and cdn not in exceptions:
+            issues.append(f'CDN reference found: {cdn}')
+
+    if issues:
+        issues_found = True
+        print(f'\n{fname}:')
+        for i in issues: print(f'  ⚠  {i}')
+
+if not issues_found:
+    print('✅  Page weight: no oversized inline styles or CDN references.')
+PYEOF
