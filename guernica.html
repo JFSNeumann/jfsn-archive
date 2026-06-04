@@ -184,23 +184,29 @@
   </div>
 </header>
 
+<!-- Mobile menu overlay -->
 <div id="mobile-menu" aria-hidden="true" style="display:none;position:fixed;inset:0;z-index:40;">
+  <!-- Backdrop -->
   <div id="mobile-menu-backdrop" style="position:absolute;inset:0;background:rgba(11,11,11,0.5);"></div>
+  <!-- Drawer -->
   <nav id="mobile-menu-drawer" aria-label="Mobile menu"
     style="position:absolute;top:0;right:0;width:min(280px,85vw);height:100%;background:#fcf9f3;border-left:1px solid #0B0B0B;display:flex;flex-direction:column;transform:translateX(100%);transition:transform 0.25s ease;">
+    <!-- Header -->
     <div style="display:flex;justify-content:space-between;align-items:center;padding:0 20px;height:64px;border-bottom:1px solid #0B0B0B;">
       <span style="font-family:'Playfair Display',serif;font-size:18px;font-weight:600;letter-spacing:-0.02em;color:#0B0B0B;">JFSN</span>
       <button id="nav-menu-close" aria-label="Close menu"
         style="background:none;border:none;cursor:pointer;color:#0B0B0B;font-size:24px;padding:8px;margin-right:-8px;line-height:1;">&times;</button>
     </div>
+    <!-- Links -->
     <div style="flex:1;overflow-y:auto;padding:8px 0;">
-      <a href="archive.html"      style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Archive</a>
+      <a href="archive.html"     style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Archive</a>
       <a href="series-index.html" style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Series</a>
-      <a href="timeline.html"     style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Timeline</a>
-      <a href="companion.html"    style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Companion</a>
-      <a href="about.html"        style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">About</a>
-      <a href="for-artists.html"  style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#FF6600;text-decoration:none;">For Artists</a>
+      <a href="timeline.html"    style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Timeline</a>
+      <a href="companion.html"   style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Companion</a>
+      <a href="about.html"       style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">About</a>
+      <a href="for-artists.html" style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#FF6600;text-decoration:none;">For Artists</a>
     </div>
+    <!-- Search shortcut -->
     <div style="padding:16px 24px;border-top:1px solid #c4c7c7;">
       <button id="mobile-menu-search"
         style="width:100%;display:flex;align-items:center;gap:10px;background:none;border:1px solid #c4c7c7;padding:10px 14px;cursor:pointer;color:#575757;font-family:Inter,sans-serif;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;">
@@ -213,18 +219,42 @@
 
 <script>
 (function(){
-  var menu=document.getElementById('mobile-menu'),drawer=document.getElementById('mobile-menu-drawer'),
-      openBtn=document.getElementById('nav-menu-btn'),closeBtn=document.getElementById('nav-menu-close'),
-      backdrop=document.getElementById('mobile-menu-backdrop'),menuSearchBtn=document.getElementById('mobile-menu-search');
-  function openMenu(){menu.style.display='block';menu.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';requestAnimationFrame(function(){drawer.style.transform='translateX(0)';});closeBtn.focus();}
-  function closeMenu(){drawer.style.transform='translateX(100%)';document.body.style.overflow='';setTimeout(function(){menu.style.display='none';menu.setAttribute('aria-hidden','true');},260);openBtn.focus();}
-  if(openBtn)openBtn.addEventListener('click',openMenu);
-  if(closeBtn)closeBtn.addEventListener('click',closeMenu);
-  if(backdrop)backdrop.addEventListener('click',closeMenu);
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&menu.style.display==='block')closeMenu();});
-  if(menuSearchBtn)menuSearchBtn.addEventListener('click',function(){closeMenu();setTimeout(function(){if(window.openSiteSearch)window.openSiteSearch();},280);});
+  var menu    = document.getElementById('mobile-menu');
+  var drawer  = document.getElementById('mobile-menu-drawer');
+  var openBtn = document.getElementById('nav-menu-btn');
+  var closeBtn= document.getElementById('nav-menu-close');
+  var backdrop= document.getElementById('mobile-menu-backdrop');
+  var menuSearchBtn = document.getElementById('mobile-menu-search');
+
+  function openMenu(){
+    menu.style.display = 'block';
+    menu.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(function(){
+      drawer.style.transform = 'translateX(0)';
+    });
+    closeBtn.focus();
+  }
+  function closeMenu(){
+    drawer.style.transform = 'translateX(100%)';
+    document.body.style.overflow = '';
+    setTimeout(function(){ menu.style.display = 'none'; menu.setAttribute('aria-hidden','true'); }, 260);
+    openBtn.focus();
+  }
+
+  if(openBtn)  openBtn.addEventListener('click', openMenu);
+  if(closeBtn) closeBtn.addEventListener('click', closeMenu);
+  if(backdrop) backdrop.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && menu.style.display==='block') closeMenu(); });
+
+  // Wire search button in menu to open search overlay
+  if(menuSearchBtn) menuSearchBtn.addEventListener('click', function(){
+    closeMenu();
+    setTimeout(function(){ if(window.openSiteSearch) window.openSiteSearch(); }, 280);
+  });
 })();
 </script>
+
 <script src="search.js" defer></script>
 <!-- NAV:END -->
 
@@ -491,13 +521,39 @@
 </main>
 
 <!-- FOOTER:START -->
-<footer style="border-top:1px solid rgba(11,11,11,0.12);padding:clamp(2rem,4vw,3rem) clamp(1rem,4vw,3rem);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:#575757;">
-  <span>&copy; Jeffrey F. S. Neumann</span>
-  <nav aria-label="Footer">
-    <a href="about.html"     style="color:inherit;text-decoration:none;margin-right:1.5rem;">About</a>
-    <a href="privacy.html"   style="color:inherit;text-decoration:none;margin-right:1.5rem;">Privacy</a>
-    <a href="for-artists.html" style="color:#FF6600;text-decoration:none;">For Artists</a>
-  </nav>
+<footer class="bg-surface-container-high py-16 px-margin-desktop border-t border-outline-variant">
+  <div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+    <div>
+      <h3 class="font-headline-md text-headline-md tracking-tighter mb-6">JFSN</h3>
+      <p class="font-body-md text-archive-gray text-sm leading-relaxed">The personal archive of Jeffrey F. S. Neumann — 1,084 works spanning five decades. Collage, sculpture, photography.</p>
+    </div>
+    <div>
+      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">EXPLORE</h4>
+      <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
+        <li><a class="hover:text-international-orange transition-colors" href="archive.html">Complete Archive</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="timeline.html">Interactive Timeline</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="series-index.html">Series Index</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="lost.html">Lost Works</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">RESOURCES</h4>
+      <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
+        <li><a class="hover:text-international-orange transition-colors" href="mosaic.html">Portrait Mosaic</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="chromatic.html">Chromatic River</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="companion.html">AI Companion</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="for-artists.html">For Artists</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">CONTACT</h4>
+      <a class="font-nav-link text-nav-link text-deep-ink block mb-4 border-b border-deep-ink inline-block pb-1 hover:text-international-orange hover:border-international-orange transition-all" href="mailto:jfsneumann@gmail.com">jfsneumann@gmail.com</a>
+    </div>
+  </div>
+  <div class="mt-16 pt-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
+    <p class="font-label-caps text-[10px] text-archive-gray">© 2026 JEFFREY F. S. NEUMANN. ALL RIGHTS RESERVED.</p>
+    <div class="flex gap-8"><a class="font-label-caps text-[10px] text-archive-gray hover:text-deep-ink" href="privacy.html">PRIVACY</a></div>
+  </div>
 </footer>
 <!-- FOOTER:END -->
 
