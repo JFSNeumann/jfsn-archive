@@ -48,7 +48,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: clamp(3rem, 6vw, 5rem) clamp(1.25rem, 5vw, 4rem) clamp(3rem, 6vw, 5rem);
+    padding: clamp(3rem, 6vw, 5rem) clamp(1.25rem, 5vw, 4rem) clamp(1.5rem, 3vw, 2.5rem);
     max-width: 700px;
     width: 100%;
     margin: 0 auto;
@@ -110,6 +110,9 @@
     cursor: pointer;
     align-self: flex-start;
     transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  @media (min-width: 640px) {
+    .c-submit { padding: 0.875rem 3.5rem; min-width: 220px; }
   }
   .c-submit:hover:not(:disabled) { background: var(--c-text); color: var(--c-bg); border-color: var(--c-text); }
   .c-submit:disabled { opacity: 0.4; cursor: default; }
