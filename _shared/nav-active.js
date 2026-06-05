@@ -17,11 +17,21 @@
   const target = PAGE_NAV[file];
   if (!target) return;
 
+  // Desktop nav
   document.querySelectorAll('header nav a').forEach(a => {
-    const href = a.getAttribute('href');
-    if (href === target) {
+    if (a.getAttribute('href') === target) {
       a.classList.add('text-international-orange', 'nav-underline-active');
       a.classList.remove('text-deep-ink');
+      a.setAttribute('aria-current', 'page');
+    }
+  });
+
+  // Mobile drawer
+  document.querySelectorAll('#mobile-menu-drawer a').forEach(a => {
+    if (a.getAttribute('href') === target) {
+      a.style.color        = '#FF6600';
+      a.style.borderLeft   = '3px solid #FF6600';
+      a.style.paddingLeft  = '21px'; // 24px - 3px border
       a.setAttribute('aria-current', 'page');
     }
   });
