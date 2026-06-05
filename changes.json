@@ -1,5 +1,11 @@
 [
   {
+    "sha": "4b3a019",
+    "date": "2026-06-05",
+    "title": "Session: companion chips, chromatic tap flash fix, docs pruned",
+    "body": "- companion.html: add Mr. SNOWmann chip (now 8 archive-specific prompts)\n- chromatic.html: fix mobile tap flash — -webkit-tap-highlight-color + touch-action on canvas\n- CURRENT_STATE.md, SESSION_PROMPT.md: pruned 4 stale/already-shipped items, renumbered backlog to 1–5\n- api/v1, changes.json, feed.xml, sitemap.xml, sw.js: carry-over from prior session build"
+  },
+  {
     "sha": "abd6146",
     "date": "2026-06-05",
     "title": "Orange cleanup continued, decade nav badge removed, sitemap confirmed",

@@ -45,6 +45,12 @@
 ### Chromatic River mobile tap flash fixed
 - **chromatic.html** — added `-webkit-tap-highlight-color: transparent` and `touch-action: manipulation` to `#river-canvas`. Cause: browser default tap highlight was flashing the entire canvas on touch before the click event fired. Fix suppresses that without adding transitions or animations.
 
+### Mobile bottom nav removed (sitewide)
+- Removed fixed-bottom `<nav>` element from all 31 HTML files
+- ~540 lines deleted across: lost.html, companion.html, photography.html, index.html, chromatic.html, about.html, series.html, guernica.html, changes.html, 1980s–2020s.html, artwork.html, crosses.html, 404.html, painting.html, collaboration.html, framed.html, sculpture.html, targets.html, gallery-images.html, wall.html, mr-snowmann.html, series-index.html, torsos-faces.html, archive.html, privacy.html, collage.html
+- Dead scroll-listener IIFE in archive.html also removed (lines 468–479)
+- Verified: 0 instances of `fixed bottom-0` remain sitewide
+
 ### SESSION_PROMPT pruned
 - Removed stale items: decade keyboard nav badge (was removed not built), preload first-row thumbnails (already shipped), archive lazy-load audit (already shipped)
 - Items 2–9 renumbered to 1–5; completed items moved to "do NOT redo" list

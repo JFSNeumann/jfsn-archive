@@ -15,24 +15,6 @@ for fname in files:
 
     issues = []
 
-    # Mobile nav check
-    mob_nav_m = re.search(r'(aria-label="Mobile navigation".*?</nav>)', content, re.DOTALL)
-    if mob_nav_m:
-        mob = mob_nav_m.group()
-        links = re.findall(r'<a href="([^"]+)"', mob)
-        # index.html intentionally has 3-item mobile nav (snap-scroll folio layout)
-        # All other pages now have 4 items (Timeline removed)
-        min_items = 3 if fname == 'index.html' else 4
-        if len(links) < min_items:
-            issues.append(f'mobile nav: {len(links)} items (need {min_items})')
-        first = re.search(r'<a href="([^"]+)".*?(?=<a )', mob, re.DOTALL)
-        if first:
-            if 'index.html' not in first.group(): issues.append('first nav item not Home')
-            if 'home' not in first.group():       issues.append('first nav item missing home icon')
-            if 'inventory_2' in first.group():    issues.append('first nav item has wrong icon (inventory_2)')
-    elif fname not in ['api.html']:
-        issues.append('no mobile nav')
-
     # Footer check
     footer_m = re.search(r'FOOTER:START.*?FOOTER:END', content, re.DOTALL)
     if footer_m:
