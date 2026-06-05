@@ -1,10 +1,10 @@
 # Current State
-**Updated:** 2026-06-05 (session — orange cleanup continued, decade nav badge removed, sitemap confirmed, 404 chip removed)
+**Updated:** 2026-06-05 (session — companion chips, chromatic tap flash, SESSION_PROMPT pruned)
 
 ## Last commit
 662f7cd — UI cleanup: orange audit, featured works, Companion mobile hardening
 
-## What was done this session
+## What was done this session (2026-06-05)
 
 ### Scroll-reveal removal
 - **lost.html** — removed `.reveal-para` CSS + JS observer, `.btn-transition` on CTA links, `reveal-para` class from all 9 elements
@@ -39,16 +39,25 @@
 - **Textarea** — added `autocorrect="off" autocapitalize="off" spellcheck="false" autocomplete="off" inputmode="text"`
 - **Card images** — `onerror="this.style.opacity='0'"` on result thumbnails
 
+### Companion suggestion chips updated
+- **companion.html** — `Mr. SNOWmann` added as second chip; set is now 8 archive-specific prompts matching SESSION_PROMPT spec
+
+### Chromatic River mobile tap flash fixed
+- **chromatic.html** — added `-webkit-tap-highlight-color: transparent` and `touch-action: manipulation` to `#river-canvas`. Cause: browser default tap highlight was flashing the entire canvas on touch before the click event fired. Fix suppresses that without adding transitions or animations.
+
+### SESSION_PROMPT pruned
+- Removed stale items: decade keyboard nav badge (was removed not built), preload first-row thumbnails (already shipped), archive lazy-load audit (already shipped)
+- Items 2–9 renumbered to 1–5; completed items moved to "do NOT redo" list
+
 ### Sitemap confirmed clean
 - `build_catalog.py` `entries` list confirmed clean — deleted pages (for-artists.html, timeline.html, mosaic.html, constellation.html) were never in it
 - Sitemap regenerated: 1,103 URLs, 0 references to deleted pages ✅
 
 ## To do next session
 - [ ] Test Companion live on iPhone (https://jfsn-archive.netlify.app/companion.html) — mobile hardening untested on device
-- [ ] Update Companion suggestion chips (SESSION_PROMPT item 2 — copy ready in SESSION_PROMPT.md)
-- [ ] Chromatic River mobile tap flash (SESSION_PROMPT item 4)
-- [ ] Preload first-row thumbnails on collage/photography/sculpture/painting (SESSION_PROMPT item 5)
-- [ ] Archive lazy-load audit — first 8 cards eager on archive.html (SESSION_PROMPT item 6)
+- [ ] Review featured.txt / catalog-home.json — 30 homepage works still weighted toward 2020 (SESSION_PROMPT item 2)
+- [ ] Offsite cloud backup via Backblaze B2/rclone (SESSION_PROMPT item 3)
+- [ ] Archive "Recently Added" sort option (SESSION_PROMPT item 5)
 
 ## Known issues (standing)
 - **sw.js CACHE_V** — `build_catalog.py` auto-bumps on every run. Check `git diff sw.js` before committing after any script run.

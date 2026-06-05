@@ -1,5 +1,23 @@
 [
   {
+    "sha": "abd6146",
+    "date": "2026-06-05",
+    "title": "Orange cleanup continued, decade nav badge removed, sitemap confirmed",
+    "body": "- index.html: remove orange medium labels (PHOTOGRAPH/COLLAGE) from all\n  three mobile folio featured work cards\n- archive.html: series label on work cards text-on-tertiary-container →\n  text-secondary\n- 404.html: remove STATUS // UNVERIFIED chip + flicker setInterval JS\n- _shared/ui.js: remove #kbd-hint badge block from decade pages (all six\n  decade pages affected); keyboard ← / → nav unchanged\n- CURRENT_STATE.md: sitemap known issue closed (was never present in script)"
+  },
+  {
+    "sha": "662f7cd",
+    "date": "2026-06-05",
+    "title": "UI cleanup: orange audit, featured works, Companion mobile hardening",
+    "body": "- Remove decorative orange sitewide: section labels, pull-quote borders,\n  horizontal rules, selection highlight, Named Series badge, byline color\n- about.html: remove Artist Biography label, Chronological badge, orphaned\n  data-delay attrs + padding-left transition + stale comment; fix OG copy;\n  portrait loading=eager fetchpriority=high\n- artwork.html: byline text-international-orange → text-secondary\n- series-index.html: remove selection bg, Archival Note heading, rule color\n- lost.html + chromatic.html: remove reveal-para + reveal-header scroll-reveal,\n  btn-transition on CTA links\n- index.html: featured works → art0380/art0002/art0026 (1977/1990/2010,\n  three decades, two media); update mobile folio snaps + desktop FEATURED_IDS\n- companion.html: AbortController 28s timeout, friendly error messages for\n  504/5xx/AbortError, catalog race condition fixed (catalogLoading promise,\n  await before renderResults), touch targets min 44px on chips/submit/label/\n  again-btn, iOS keyboard scrollIntoView + safe-area padding-bottom,\n  textarea autocorrect/autocapitalize/spellcheck/inputmode attrs,\n  onerror on card images"
+  },
+  {
+    "sha": "9d2c65b",
+    "date": "2026-06-05",
+    "title": "Update CURRENT_STATE.md; bump auto-generated artifacts",
+    "body": "- CURRENT_STATE.md: reflects sessions 9–11 (grayscale strip, dead page purge,\n  static page regen, font consolidation, docs updated)\n- api/v1/*.json, changes.json, feed.xml, sw.js: auto-generated, keeping in sync"
+  },
+  {
     "sha": "39d0c83",
     "date": "2026-06-04",
     "title": "Session: artwork-first audit — remove grayscale/effects, delete dead pages, regen static pages",
