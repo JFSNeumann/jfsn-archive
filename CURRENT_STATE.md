@@ -1,10 +1,14 @@
 # Current State
-**Updated:** 2026-06-05 (session — companion chips, chromatic tap flash, SESSION_PROMPT pruned)
+**Updated:** 2026-06-05
 
 ## Last commit
 662f7cd — UI cleanup: orange audit, featured works, Companion mobile hardening
 
 ## What was done this session (2026-06-05)
+
+### Homepage + archive heading cleanup (Stitch review items)
+- **index.html** — removed "Featured Works" h2; reduced section top padding from py-24 to pt-16 pb-24 to compensate
+- **archive.html** — "THE ARCHIVE" h1 demoted from font-display-lg (Playfair Display, large) to font-label-caps (Inter ALL CAPS) — same visual language as the filter labels, far less weight
 
 ### Scroll-reveal removal
 - **lost.html** — removed `.reveal-para` CSS + JS observer, `.btn-transition` on CTA links, `reveal-para` class from all 9 elements
