@@ -65,6 +65,7 @@
     #featured-grid > a:nth-child(1) { grid-column: span 7; grid-row: span 6; display: flex; flex-direction: column; }
     #featured-grid > a:nth-child(2) { grid-column: span 5; grid-row: span 3; display: flex; flex-direction: column; }
     #featured-grid > a:nth-child(3) { grid-column: span 5; grid-row: span 3; display: flex; flex-direction: column; }
+    #featured-grid > a:nth-child(n+4) { grid-column: span 3; }
     #featured-grid > a > .card-img  { flex: 1; aspect-ratio: auto; }
     #featured-grid > a > .card-meta { flex-shrink: 0; }
   }
@@ -285,12 +286,10 @@
   (async () => {
     const grid = document.getElementById('featured-grid');
     if (!grid) return;
-    const FEATURED_IDS = ['art0380.avif', 'art0002.avif', 'art0026.avif'];
     try {
       const res = await fetch('catalog-home.json');
       const works = await res.json();
-      const featured = FEATURED_IDS.map(id => works.find(w => w.file === id)).filter(Boolean);
-      featured.forEach((w) => {
+      works.forEach((w) => {
         const medium = (w.work_type || '').toUpperCase().replace(/_/g, ' ');
         const id = w.file.replace('.avif', '');
         const card = document.createElement('a');
