@@ -1,8 +1,8 @@
 # Current State
-**Updated:** 2026-06-05 (session — UI cleanup, orange audit, featured works, Companion mobile hardening)
+**Updated:** 2026-06-05 (session — orange cleanup continued, decade nav badge removed, sitemap confirmed, 404 chip removed)
 
 ## Last commit
-9d2c65b — Update CURRENT_STATE.md; bump auto-generated artifacts
+662f7cd — UI cleanup: orange audit, featured works, Companion mobile hardening
 
 ## What was done this session
 
@@ -16,6 +16,12 @@
 - **about.html** — removed "Artist Biography" label, "Chronological" badge, exhibition year orange, "Contact/Archive/Now" section label orange; fixed OG description copy; portrait `loading="lazy"` → `loading="eager" fetchpriority="high"`; removed orphaned `padding-left` transition, `data-delay` attributes, stale GoatCounter comment
 - **artwork.html** — byline `text-international-orange` → `text-secondary`
 - **series-index.html** — removed `selection:bg-international-orange`, pull-quote border, "Archival Note" heading orange, horizontal rule orange, "Named Series" badge orange
+- **index.html** — removed orange medium labels (PHOTOGRAPH, COLLAGE) from all three mobile folio cards
+- **archive.html** — series label on work cards: `text-on-tertiary-container` → `text-secondary`
+- **404.html** — removed "STATUS // UNVERIFIED" chip and flicker JS
+
+### Decade keyboard nav badge removed
+- **`_shared/ui.js`** — removed the `#kbd-hint` badge block (DOMContentLoaded listener, div injection, 4s timeout, keydown hide). Keyboard ← / → navigation itself unchanged. Affects all six decade pages (1970s–2020s).
 
 ### Featured works updated
 - Homepage grid changed from art0483/art1009/art1010 (two 2020 collages + one 2020 sculpture) to:
@@ -33,18 +39,22 @@
 - **Textarea** — added `autocorrect="off" autocapitalize="off" spellcheck="false" autocomplete="off" inputmode="text"`
 - **Card images** — `onerror="this.style.opacity='0'"` on result thumbnails
 
+### Sitemap confirmed clean
+- `build_catalog.py` `entries` list confirmed clean — deleted pages (for-artists.html, timeline.html, mosaic.html, constellation.html) were never in it
+- Sitemap regenerated: 1,103 URLs, 0 references to deleted pages ✅
+
 ## To do next session
 - [ ] Test Companion live on iPhone (https://jfsn-archive.netlify.app/companion.html) — mobile hardening untested on device
-- [ ] Update Companion suggestion chips (SESSION_PROMPT item 2 — already has copy ready)
-- [ ] Decade page keyboard nav badge (SESSION_PROMPT item 3)
+- [ ] Update Companion suggestion chips (SESSION_PROMPT item 2 — copy ready in SESSION_PROMPT.md)
 - [ ] Chromatic River mobile tap flash (SESSION_PROMPT item 4)
-- [ ] build_catalog.py sitemap still references deleted pages (for-artists.html, timeline.html, constellation.html) — quick cleanup
+- [ ] Preload first-row thumbnails on collage/photography/sculpture/painting (SESSION_PROMPT item 5)
+- [ ] Archive lazy-load audit — first 8 cards eager on archive.html (SESSION_PROMPT item 6)
 
 ## Known issues (standing)
-- **sw.js CACHE_V** — `build_catalog.py` auto-bumps on every run. Still check `git diff sw.js` before committing after any script run.
+- **sw.js CACHE_V** — `build_catalog.py` auto-bumps on every run. Check `git diff sw.js` before committing after any script run.
 - **index.html has no FOOTER:START marker** — custom homepage footer, not stamped. Edit directly if footer changes.
 - **Decade pages not in stamp-nav.sh** — edit 1970s–2020s.html directly for any nav/footer changes.
-- **about-portrait.jpg** — only JPEG image in the asset pipeline; all artworks are AVIF. Low priority.
+- **about-portrait.jpg** — only JPEG in the asset pipeline; all artworks are AVIF. Low priority.
 
 ---
 

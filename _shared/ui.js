@@ -30,25 +30,6 @@
     }
   });
 
-  // ─── Keyboard nav hint badge for decade pages ────────────────────────────
-  document.addEventListener('DOMContentLoaded', function () {
-    const prev = document.querySelector('[data-prev-decade]');
-    const next = document.querySelector('[data-next-decade]');
-    if (!prev && !next) return;
-    const badge = document.createElement('div');
-    badge.id = 'kbd-hint';
-    badge.style.cssText = 'position:fixed;bottom:72px;right:16px;z-index:40;background:#ebe8e2;border:1px solid #c4c7c7;padding:6px 12px;font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#575757;transition:opacity 0.4s;pointer-events:none;';
-    const prevLabel = prev ? prev.getAttribute('aria-label').replace('Previous decade: ', '') : '';
-    const nextLabel = next ? next.getAttribute('aria-label').replace('Next decade: ', '') : '';
-    badge.textContent = (prevLabel ? '← ' + prevLabel + '  ' : '') + (nextLabel ? nextLabel + ' →' : '');
-    document.body.appendChild(badge);
-    const hide = function () { badge.style.opacity = '0'; };
-    setTimeout(hide, 4000);
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') hide();
-    }, { once: true });
-  });
-
   // ─── Decade hero heading: zoom-out as hero scrolls away ──────────────────
   const hero    = document.querySelector('.decade-hero');
   const heading = document.querySelector('.decade-heading');

@@ -202,7 +202,6 @@
     <div class="flex justify-between items-start mb-12 border-b border-deep-ink pb-4">
       <div class="flex flex-col gap-1">
         <span class="font-label-caps text-label-caps text-archive-gray">REF // 404_NULL_POINTER</span>
-        <span class="font-label-caps text-label-caps text-international-orange" id="status-flicker">STATUS // UNVERIFIED</span>
       </div>
       <span class="font-label-caps text-label-caps text-archive-gray hidden md:block">JFSN ARCHIVE</span>
     </div>
@@ -304,9 +303,6 @@
 </nav>
 <script src="_shared/nav-active.js" defer></script>
 <script>
-// Status flicker effect
-const fl = document.getElementById('status-flicker');
-if (fl) setInterval(() => { fl.style.opacity = Math.random() > 0.95 ? '0.3' : '1'; }, 150);
 // Explore works grid
 fetch('catalog.json').then(r=>r.json()).then(works=>{
   const sample = works.sort(()=>Math.random()-0.5).slice(0,8);
