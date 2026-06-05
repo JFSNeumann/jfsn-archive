@@ -1,5 +1,11 @@
 [
   {
+    "sha": "39d0c83",
+    "date": "2026-06-04",
+    "title": "Session: artwork-first audit — remove grayscale/effects, delete dead pages, regen static pages",
+    "body": "- Removed filter:grayscale, transform:scale, transition on img from companion.html\n  and curate.html (remaining pages were already clean per grep audit)\n- Removed sitemap entries for for-artists.html, timeline.html, constellation.html\n  from build_catalog.py; rebuilt sitemap.xml\n- Regenerated all 1,084 artworks/pages/ via new gen-artwork-pages.py:\n  current 4-item nav (Archive · Series · Companion · About), full-color images,\n  full footer, mobile nav, complete metadata\n- Deleted WORKFLOW-CLIENT.md (client archive service workflow, fully obsolete)\n- Updated CLAUDE.md, WORKFLOW.md, SESSION_PROMPT.md, CURRENT_STATE.md\n  to reflect 18-page site, correct nav, no deleted-page references"
+  },
+  {
     "sha": "ed0cd3b",
     "date": "2026-06-04",
     "title": "Remove grayscale/scale/mask from 23 pages; delete timeline, mosaic, constellation; dead file sweep (old-site, bak files, unused assets); update audit-nav.sh and sitemap",
