@@ -1,5 +1,47 @@
 [
   {
+    "sha": "4d484e1",
+    "date": "2026-06-05",
+    "title": "Session update 2026-06-05 18:19",
+    "body": ""
+  },
+  {
+    "sha": "b04c1f3",
+    "date": "2026-06-05",
+    "title": "about.html: add ON WHAT WAS LOST link after Now section",
+    "body": "Inserted after the closing </p> of the Now copy block — font-label-caps,\ndeep-ink underline, orange on hover, mt-8 spacing."
+  },
+  {
+    "sha": "45dde94",
+    "date": "2026-06-05",
+    "title": "Nav: add Lost as fifth link in desktop nav and mobile drawer",
+    "body": "Stamped into all 26 Stitch pages. Decade pages excluded by design."
+  },
+  {
+    "sha": "f9fc75d",
+    "date": "2026-06-05",
+    "title": "Homepage: add Lost Works link bar on desktop and mobile",
+    "body": "Inserted between featured grid and footer (desktop) and after\nfolio-container (mobile). font-label-caps, text-archive-gray,\norange on hover. No new Tailwind classes."
+  },
+  {
+    "sha": "3b1abc9",
+    "date": "2026-06-05",
+    "title": "Nav: add tooltip to desktop Companion link",
+    "body": "title=\"Ask the archive — AI search\" on desktop nav only.\nMobile drawer unchanged. Stamped into all 26 pages."
+  },
+  {
+    "sha": "eb152ee",
+    "date": "2026-06-05",
+    "title": "Hero: add work caption to bottom-left of desktop and mobile hero",
+    "body": "Mirrors the existing bottom-right archive label — same font-label-caps,\ntext-bone-white/70, same padding. Overlay div changed from items-end\njustify-end to flex-row justify-between to anchor both corners."
+  },
+  {
+    "sha": "b50875e",
+    "date": "2026-06-05",
+    "title": "Featured: rebalance homepage grid to 30 works across all decades",
+    "body": "Replaces hardcoded 3-work FEATURED_IDS with all 30 works from\nfeatured.txt — 5 per decade (6 in 2010s), varying medium across\ncollage, photograph, painting, and sculpture in each era."
+  },
+  {
     "sha": "e1c2df0",
     "date": "2026-06-05",
     "title": "Session update 2026-06-05 17:48",

@@ -1,10 +1,28 @@
 # Current State
-**Updated:** 2026-06-05 17:48
+**Updated:** 2026-06-05
 
 ## Last commit
-e1c2df0 — Session update 2026-06-05 17:48
+9b81b7f — about.html: move Lost Works bar out of Now column to standalone section
 
-## What was done this session (2026-06-05 — session 3)
+## What was done this session (2026-06-05 — session 4)
+
+### Lost Works wired into site
+- Added Lost as 5th nav link sitewide (desktop + mobile drawer) — stamped into all 26 pages
+- Homepage: Lost Works full-width bar between featured grid and footer (desktop + mobile)
+- about.html: Lost Works bar between contact section and Exhibition Record
+- about.html: contact section moved above Exhibition Record
+
+### about.html cleanup
+- Section order: about-hero → contact → Lost Works bar → Exhibition Record
+- Removed duplicate skip-to-content link from changes.html
+- Removed stale link to changes.html from jeff.html tool grid
+
+### Homepage and nav polish
+- Hero caption added bottom-left: "XXXIII Días Installation View · 2022 · COLLAGE"
+- Companion desktop nav tooltip: `title="Ask the archive — AI search"`
+- featured.txt rebalanced: 30 works across all decades, varied medium per era; catalog-home.json rebuilt
+
+## Previous session (2026-06-05 — session 3)
 
 ### Email replaced sitewide (33 files)
 - `jfsneumann@gmail.com` → `jeff@jfsn.com` in all `mailto:` hrefs and visible link text
@@ -74,7 +92,7 @@ e1c2df0 — Session update 2026-06-05 17:48
 
 ## To do next session
 - [ ] Test Companion live on iPhone (https://jfsn-archive.netlify.app/companion.html)
-- [ ] Review featured.txt / catalog-home.json — decade representation
+- [x] ~~Review featured.txt / catalog-home.json — decade representation~~ — done 2026-06-05 session 4
 - [ ] Offsite cloud backup via Backblaze B2/rclone
 
 ## Known issues (standing)
