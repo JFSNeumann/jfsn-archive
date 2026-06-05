@@ -1,4 +1,11 @@
 <!-- FOOTER:START -->
+<style>
+footer a{position:relative;text-decoration:none}
+footer a::after{content:'';position:absolute;bottom:-1px;left:0;width:100%;height:1px;background:#FF6600;transform:scaleX(0);transform-origin:left center;transition:transform 0.2s ease}
+footer a:hover::after{transform:scaleX(1)}
+footer .hover\:border-international-orange::after{display:none}
+@media(prefers-reduced-motion:reduce){footer a::after{transition:none}}
+</style>
 <footer class="bg-surface-container-high py-16 px-margin-desktop border-t border-outline-variant">
   <div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
     <div>
