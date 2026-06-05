@@ -24,6 +24,28 @@
     vertical-align: middle;
   }
   body { -webkit-font-smoothing: antialiased; }
+  /* Lightbox */
+  #lr-overlay { display: none; }
+  #lr-overlay.is-open { display: flex; }
+  .lr-btn {
+    font-family: Inter, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(243,240,234,0.7);
+    background: none;
+    border: 1px solid rgba(243,240,234,0.2);
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .lr-btn:hover { color: #FF6600; border-color: #FF6600; }
+  .lr-btn--close { margin-left: 16px; color: rgba(243,240,234,0.5); }
+  @media (max-width: 480px) {
+    .lr-btn { font-size: 10px; padding: 8px 10px; letter-spacing: 0.06em; }
+    .lr-btn--close { margin-left: 8px; }
+  }
 </style>
 </head>
 <body class="font-body-md text-body-md bg-bone-white text-deep-ink">
@@ -138,9 +160,9 @@
           <img id="work-image" alt="" class="w-full h-auto object-contain" src="" width="1200" height="900" loading="eager"/>
         </div>
         <div class="p-sm border-t border-deep-ink">
-          <a id="full-res-link" href="#" class="font-label-md text-label-md uppercase tracking-widest text-secondary hover:text-international-orange transition-colors">
+          <button id="full-res-btn" class="font-label-md text-label-md uppercase tracking-widest text-secondary hover:text-international-orange transition-colors bg-transparent border-0 cursor-pointer p-0">
             Full resolution
-          </a>
+          </button>
         </div>
       </section>
 
@@ -310,7 +332,8 @@ fetch('catalog.json')
     const img = document.getElementById('work-image');
     img.src = `artworks/full/${w.file}`;
     img.alt = titleText;
-    document.getElementById('full-res-link').href = `artworks/full/${w.file}`;
+    document.getElementById('full-res-btn').dataset.src = `artworks/full/${w.file}`;
+    document.getElementById('full-res-btn').dataset.alt = titleText;
 
     // Title
     document.getElementById('work-title').textContent = titleText;
@@ -352,6 +375,90 @@ fetch('catalog.json')
     document.getElementById('not-found').classList.remove('hidden');
     console.error(e);
   });
+</script>
+
+<div id="lr-overlay" aria-modal="true" role="dialog" aria-label="Full resolution image viewer"
+  style="position:fixed;inset:0;z-index:200;background:rgba(11,11,11,0.96);flex-direction:column;">
+
+  <!-- Image area -->
+  <div id="lr-img-wrap"
+    style="flex:1;overflow:auto;display:flex;align-items:center;justify-content:center;padding:24px 24px 0;">
+    <img id="lr-img" src="" alt=""
+      style="max-width:100%;height:auto;display:block;transform-origin:center center;"
+    />
+  </div>
+
+  <!-- Controls bar -->
+  <div style="flex-shrink:0;display:flex;align-items:center;justify-content:center;gap:8px;padding:16px 24px;border-top:1px solid rgba(255,255,255,0.12);">
+    <button class="lr-btn" data-action="rcw"  aria-label="Rotate clockwise">↻ ROTATE</button>
+    <button class="lr-btn" data-action="rccw" aria-label="Rotate counter-clockwise">↺ ROTATE</button>
+    <button class="lr-btn" data-action="fh"   aria-label="Flip horizontal">⇄ FLIP H</button>
+    <button class="lr-btn" data-action="fv"   aria-label="Flip vertical">⇅ FLIP V</button>
+    <button class="lr-btn" data-action="reset" aria-label="Reset">RESET</button>
+    <button class="lr-btn lr-btn--close" data-action="close" aria-label="Close">✕ CLOSE</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  var overlay  = document.getElementById('lr-overlay');
+  var lrImg    = document.getElementById('lr-img');
+  var openBtn  = document.getElementById('full-res-btn');
+  var imgWrap  = document.getElementById('lr-img-wrap');
+
+  var state = { rot: 0, fh: 1, fv: 1 };
+
+  function applyTransform() {
+    lrImg.style.transform =
+      'rotate(' + state.rot + 'deg) scaleX(' + state.fh + ') scaleY(' + state.fv + ')';
+  }
+
+  function openLightbox() {
+    var src = openBtn.dataset.src;
+    var alt = openBtn.dataset.alt || '';
+    if (!src) return;
+    state = { rot: 0, fh: 1, fv: 1 };
+    lrImg.src = src;
+    lrImg.alt = alt;
+    applyTransform();
+    overlay.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    overlay.focus();
+  }
+
+  function closeLightbox() {
+    overlay.classList.remove('is-open');
+    document.body.style.overflow = '';
+    lrImg.src = '';
+    openBtn.focus();
+  }
+
+  if (openBtn) openBtn.addEventListener('click', openLightbox);
+
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay || e.target === imgWrap) closeLightbox();
+  });
+
+  overlay.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'r' || e.key === 'R') { state.rot = (state.rot + 90) % 360; applyTransform(); }
+    if (e.key === 'f' || e.key === 'F') { state.fh *= -1; applyTransform(); }
+  });
+
+  document.querySelectorAll('.lr-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      switch (btn.dataset.action) {
+        case 'rcw':   state.rot = (state.rot + 90) % 360; break;
+        case 'rccw':  state.rot = (state.rot - 90 + 360) % 360; break;
+        case 'fh':    state.fh *= -1; break;
+        case 'fv':    state.fv *= -1; break;
+        case 'reset': state = { rot: 0, fh: 1, fv: 1 }; break;
+        case 'close': closeLightbox(); return;
+      }
+      applyTransform();
+    });
+  });
+})();
 </script>
 
 <script src="_shared/nav-active.js" defer></script>
