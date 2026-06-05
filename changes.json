@@ -1,5 +1,11 @@
 [
   {
+    "sha": "6b9b1d6",
+    "date": "2026-06-04",
+    "title": "Session 9: artwork-first audit — strip all interface chrome that degrades or competes with the work",
+    "body": "- _shared/ui.css: removed all animations/transitions/grayscale/mask rules (3.7KB→0.7KB, -80%)\n- index.html: removed dust motte, companion section, stats snap, hero transforms, scroll reveals,\n  parallax, grayscale on featured cards, 5-column footer→1 line, nav 5→2 links (797→228 lines)\n- for-artists.html: deleted. Removed 1,147 references across 1,119 files (1,084 artwork pages,\n  29 stamped pages, sw.js, sitemap.xml, stamp-nav.sh, lost.html, jeff.html, privacy.html)\n- series.html: removed series-room entrance overlay, mask-image JS, sibling dim, grayscale,\n  scroll reveal, progress bar, scroll-to-top, density toggle, hover preload, more-series\n  section (919→591 lines)\n- artwork.html: removed grayscale-img/mask/scale, companion button, buy-print + FAA_URLS,\n  related works section, AI description, hover hint, opacity fade-in (594→378 lines)\n- privacy.html: removed 4 sections about for-artists form/client services\n- audit-nav.sh: allow index.html 3-item mobile nav (snap-scroll folio layout)"
+  },
+  {
     "sha": "0a5c272",
     "date": "2026-06-04",
     "title": "Session 7 close: catalog, api, sw, feed — post-deploy artifacts",
