@@ -42,7 +42,7 @@ header nav a {
 header nav a::after {
   content: '';
   position: absolute;
-  bottom: 6px;
+  bottom: 10px;
   left: 0;
   width: 100%;
   height: 1.5px;

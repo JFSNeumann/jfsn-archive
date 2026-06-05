@@ -1,5 +1,47 @@
 [
   {
+    "sha": "41bc55f",
+    "date": "2026-06-05",
+    "title": "Bump CACHE_V to bust stale service workers after deploy",
+    "body": "Nav, footer, and index.html changed this session — force cache\ninvalidation so repeat visitors get the updated files immediately."
+  },
+  {
+    "sha": "1adfea2",
+    "date": "2026-06-05",
+    "title": "Stamp nav/footer underline CSS into all 26 pages; mobile fix",
+    "body": "- Header nav underline draw (hover + active) now embedded in\n  top-nav.html <style> block — reaches every stamped page, not\n  just those loading ui.css\n- Footer underline draw similarly embedded in footer.html\n- Lost Works bar on index.html: px-margin-desktop → px-4 md:px-margin-desktop\n  so mobile gets 16px padding instead of 64px; arrow label whitespace-nowrap"
+  },
+  {
+    "sha": "dbc1626",
+    "date": "2026-06-05",
+    "title": "Fix Lost Works bar padding on mobile (index.html)",
+    "body": "px-margin-desktop (64px) on both bars was eating too much width on\niPhone. Switched to px-4 md:px-margin-desktop (16px mobile / 64px\ndesktop). Added whitespace-nowrap + ml-3 on the arrow label so it\nstays on one line and doesn't break before the →."
+  },
+  {
+    "sha": "068d70c",
+    "date": "2026-06-05",
+    "title": "Add header nav underline draw to all pages via top-nav.html",
+    "body": "Header nav hover/active underline CSS was only reaching pages that load\nui.css (medium/theme pages). Embedded matching rules in top-nav.html so\nthe draw travels to every stamped page. Stamped into all 26 pages."
+  },
+  {
+    "sha": "f91fc6e",
+    "date": "2026-06-05",
+    "title": "Add footer link hover underline draw sitewide",
+    "body": "Embedded CSS in _shared/footer.html so the left-to-right orange\nunderline draw (0.2s scaleX) travels to every stamped page, not just\nthe medium/theme pages that load ui.css. Stamped into all 26 pages."
+  },
+  {
+    "sha": "57006b2",
+    "date": "2026-06-05",
+    "title": "Session update 2026-06-05 19:16",
+    "body": ""
+  },
+  {
+    "sha": "cf4e978",
+    "date": "2026-06-05",
+    "title": "Docs: update CLAUDE.md nav links + close featured.txt in IMPROVEMENTS.md",
+    "body": ""
+  },
+  {
     "sha": "53ebdd3",
     "date": "2026-06-05",
     "title": "Session update 2026-06-05 18:44",
