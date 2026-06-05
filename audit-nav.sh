@@ -21,7 +21,8 @@ for fname in files:
         mob = mob_nav_m.group()
         links = re.findall(r'<a href="([^"]+)"', mob)
         # index.html intentionally has 3-item mobile nav (snap-scroll folio layout)
-        min_items = 3 if fname == 'index.html' else 5
+        # All other pages now have 4 items (Timeline removed)
+        min_items = 3 if fname == 'index.html' else 4
         if len(links) < min_items:
             issues.append(f'mobile nav: {len(links)} items (need {min_items})')
         first = re.search(r'<a href="([^"]+)".*?(?=<a )', mob, re.DOTALL)
@@ -37,7 +38,6 @@ for fname in files:
     if footer_m:
         ft = footer_m.group()
         if 'wall.html'          not in ft: issues.append('footer missing wall.html')
-        if 'constellation.html' not in ft: issues.append('footer missing constellation.html')
     elif fname not in ['index.html']:
         issues.append('no FOOTER:START')
 
@@ -195,8 +195,7 @@ import re, glob
 
 STYLE_WARN_BYTES = 33000  # warn if inline <style> block exceeds 33KB
 CDN_PATTERNS = ['cdn.tailwindcss', 'unpkg.com']
-# cdn.jsdelivr is approved for constellation.html (D3 — too large to self-host)
-CDN_EXCEPTIONS = {'constellation.html': ['cdn.jsdelivr']}
+CDN_EXCEPTIONS = {}
 
 files = [f for f in glob.glob('*.html') if not any(x in f for x in ['old-site','curate','jeff.html','qa.html','dedupe'])]
 files.sort()

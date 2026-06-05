@@ -1,5 +1,17 @@
 [
   {
+    "sha": "3769903",
+    "date": "2026-06-04",
+    "title": "Auto: bump CACHE_V, update changelog + feed + API manifests",
+    "body": ""
+  },
+  {
+    "sha": "b9c33af",
+    "date": "2026-06-04",
+    "title": "Consolidate Google Fonts requests: strip dead weight, merge two links into one",
+    "body": "- Replaced all per-page font variants with single consolidated URL on every page\n- Merged Playfair+Inter link and Material Symbols link into one HTTP request\n- Dropped: Playfair italic (unused on ~95% of pages), Inter 700 (not in token system)\n- Pinned Material Symbols axes to opsz=24, wght=400 (fixed); FILL=0..1 (only axis that varies)\n- api.html retains JetBrains Mono for code samples\n- Stripped archive.html of all hover effects, scroll reveal, grayscale, mask-image,\n  loading progress bar, parallax meta, and touch-grayscale — works render immediately\n- Removed stale for-artists.html entry from sitemap.xml"
+  },
+  {
     "sha": "6b9b1d6",
     "date": "2026-06-04",
     "title": "Session 9: artwork-first audit — strip all interface chrome that degrades or competes with the work",

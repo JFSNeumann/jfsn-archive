@@ -26,14 +26,6 @@
             display: inline-block;
             line-height: 1;
         }
-        .series-image {
-            filter: grayscale(100%);
-            transition: filter 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .series-card:hover .series-image {
-            filter: grayscale(0%);
-            transform: scale(1.04);
-        }
         /* Kinetic border draw on series cards */
         .series-card {
             position: relative;
@@ -87,7 +79,6 @@
     <nav class="hidden md:flex gap-6" aria-label="Primary">
       <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="archive.html">Archive</a>
       <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="series-index.html">Series</a>
-      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="timeline.html">Timeline</a>
       <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="companion.html">Companion</a>
       <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="about.html">About</a>
     </nav>
@@ -115,7 +106,6 @@
     <div style="flex:1;overflow-y:auto;padding:8px 0;">
       <a href="archive.html"     style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Archive</a>
       <a href="series-index.html" style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Series</a>
-      <a href="timeline.html"    style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Timeline</a>
       <a href="companion.html"   style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Companion</a>
       <a href="about.html"       style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">About</a>
     </div>
@@ -214,7 +204,6 @@
       <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">EXPLORE</h4>
       <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
         <li><a class="hover:text-international-orange transition-colors" href="archive.html">Complete Archive</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="timeline.html">Interactive Timeline</a></li>
         <li><a class="hover:text-international-orange transition-colors" href="series-index.html">Series Index</a></li>
         <li><a class="hover:text-international-orange transition-colors" href="lost.html">Lost Works</a></li>
       </ul>
@@ -222,10 +211,8 @@
     <div>
       <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">RESOURCES</h4>
       <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
-        <li><a class="hover:text-international-orange transition-colors" href="mosaic.html">Portrait Mosaic</a></li>
         <li><a class="hover:text-international-orange transition-colors" href="chromatic.html">Chromatic River</a></li>
         <li><a class="hover:text-international-orange transition-colors" href="wall.html">The Wall</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="constellation.html">Constellation</a></li>
         <li><a class="hover:text-international-orange transition-colors" href="companion.html">AI Companion</a></li>
       </ul>
     </div>
@@ -256,10 +243,6 @@
   <a href="series-index.html" class="flex flex-col items-center justify-center text-international-orange" aria-current="page">
     <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome_motion</span>
     <span class="font-label-md text-[10px] uppercase">Series</span>
-  </a>
-  <a href="timeline.html" class="flex flex-col items-center justify-center text-secondary">
-    <span class="material-symbols-outlined">history_toggle_off</span>
-    <span class="font-label-md text-[10px] uppercase">Timeline</span>
   </a>
   <a href="companion.html" class="flex flex-col items-center justify-center text-secondary">
     <span class="material-symbols-outlined">chat_bubble</span>
@@ -316,7 +299,7 @@ fetch('catalog.json')
               alt="${g.name}"
               class="series-image w-full h-full object-cover"
               src="artworks/thumbs/${g.thumb}"
-              style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 65%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 65%,transparent 100%)"
+
               loading="${i < 3 ? 'eager' : 'lazy'}"
               width="600" height="600"
             />
@@ -345,49 +328,11 @@ fetch('catalog.json')
   })
   .catch(e => console.error('catalog load failed', e));
 
-// Parallax on hover
-document.addEventListener('mousemove', e => {
-  document.querySelectorAll('.series-card').forEach(card => {
-    const img = card.querySelector('.series-image');
-    if (!img || !card.matches(':hover')) return;
-    const { left, top, width, height } = card.getBoundingClientRect();
-    const x = ((e.clientX - left) / width - 0.5) * 10;
-    const y = ((e.clientY - top) / height - 0.5) * 10;
-    img.style.transform = `scale(1.1) translate(${x}px, ${y}px)`;
-  });
-});
 </script>
 
-<!-- Touch grayscale — tap to reveal color, auto-revert after 1s -->
-<script>
-document.addEventListener('touchstart', e => {
-  const img = e.target.closest('.series-card')?.querySelector('.series-image');
-  if (!img) return;
-  img.style.filter = 'grayscale(0%)';
-  clearTimeout(img._greyTimer);
-  img._greyTimer = setTimeout(() => { img.style.filter = ''; }, 1000);
-}, { passive: true });
-</script>
 
 <!-- GoatCounter analytics -->
 
 <script src="_shared/nav-active.js" defer></script>
-
-// Hover mask reveal for series cards
-(function(){
-  var MASK="linear-gradient(to bottom,black 0%,black 65%,transparent 100%)";
-  document.addEventListener('mouseover', function(e){
-    var card = e.target.closest('.series-card');
-    if(!card) return;
-    var img = card.querySelector('.series-image');
-    if(img){ img.style.webkitMaskImage='none'; img.style.maskImage='none'; }
-  });
-  document.addEventListener('mouseout', function(e){
-    var card = e.target.closest('.series-card');
-    if(!card) return;
-    var img = card.querySelector('.series-image');
-    if(img){ img.style.webkitMaskImage=MASK; img.style.maskImage=MASK; }
-  });
-})();
 </body>
 </html>
