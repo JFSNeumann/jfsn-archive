@@ -2,15 +2,13 @@
 **Updated:** 2026-06-05
 
 ## Last commit
-dbc1626 — Fix Lost Works bar padding on mobile
+47052b7 — Add hover underline draw to mobile drawer links
 
 ## What was done this session (2026-06-05 — session 7)
 
-### Header nav underline draw sitewide (_shared/top-nav.html)
-- Nav hover/active underline CSS was only reaching pages that load `ui.css` (medium/theme pages). Embedded matching rules directly in `top-nav.html` as a `<style>` block so it travels to every stamped page. Stamped into all 26 pages.
-
-### Lost Works bar mobile padding fix (index.html)
-- Both Lost bars were using `px-margin-desktop` (64px) — too tight on iPhone. Changed to `px-4 md:px-margin-desktop` (16px mobile / 64px desktop). Added `whitespace-nowrap ml-3` to the arrow label so it stays on one line.
+### Nav underline draw sitewide + mobile drawer polish
+- Header nav underline CSS embedded in `top-nav.html` so it reaches every stamped page (was only on ui.css pages). Underline repositioned from `bottom:6px` to `bottom:10px` — now sits just below the text baseline on "Archive", "Series", etc.
+- Mobile drawer upgraded to match desktop: hover + tap underline draw, active-page orange text + 3px left bar via `.drawer-active` class, tap flash on `:active`. Fixed z-index conflict with archive filter bar (overlay 40→45). Lost Works bars on homepage switched to `px-4 md:px-margin-desktop` so mobile gets 16px padding instead of 64px.
 
 ## Previous session (2026-06-05 — session 6)
 

@@ -96,8 +96,8 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
 /* Mobile drawer — underline draw + active state */
 #mobile-menu-drawer a{position:relative;overflow:hidden}
 #mobile-menu-drawer a::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;background:#FF6600;transform:scaleX(0);transform-origin:left center;transition:transform 0.2s ease}
+#mobile-menu-drawer a:hover::after,#mobile-menu-drawer a:active::after{transform:scaleX(1)}
 #mobile-menu-drawer a:active{background:#f0ece6}
-#mobile-menu-drawer a:active::after{transform:scaleX(1)}
 #mobile-menu-drawer a.drawer-active{color:#FF6600 !important;border-left:3px solid #FF6600;padding-left:21px !important}
 #mobile-menu-drawer a.drawer-active::after{transform:scaleX(1);transition:none}
 @media(prefers-reduced-motion:reduce){#mobile-menu-drawer a::after{transition:none}}
@@ -121,7 +121,7 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
 </header>
 
 <!-- Mobile menu overlay -->
-<div id="mobile-menu" aria-hidden="true" style="display:none;position:fixed;inset:0;z-index:40;">
+<div id="mobile-menu" aria-hidden="true" style="display:none;position:fixed;inset:0;z-index:45;">
   <!-- Backdrop -->
   <div id="mobile-menu-backdrop" style="position:absolute;inset:0;background:rgba(11,11,11,0.5);"></div>
   <!-- Drawer -->
