@@ -2,9 +2,17 @@
 **Updated:** 2026-06-05
 
 ## Last commit
-(updated by end-session.sh)
+dbc1626 — Fix Lost Works bar padding on mobile
 
-## What was done this session (2026-06-05 — session 6)
+## What was done this session (2026-06-05 — session 7)
+
+### Header nav underline draw sitewide (_shared/top-nav.html)
+- Nav hover/active underline CSS was only reaching pages that load `ui.css` (medium/theme pages). Embedded matching rules directly in `top-nav.html` as a `<style>` block so it travels to every stamped page. Stamped into all 26 pages.
+
+### Lost Works bar mobile padding fix (index.html)
+- Both Lost bars were using `px-margin-desktop` (64px) — too tight on iPhone. Changed to `px-4 md:px-margin-desktop` (16px mobile / 64px desktop). Added `whitespace-nowrap ml-3` to the arrow label so it stays on one line.
+
+## Previous session (2026-06-05 — session 6)
 
 ### Nav + footer underline polish (_shared/ui.css, nav-active.js)
 - Header nav links get a left-to-right orange underline draw on hover (0.2s), stays solid on the active page via `.nav-underline-active`; `lost.html` added to the `PAGE_NAV` map so the Lost link activates correctly.
