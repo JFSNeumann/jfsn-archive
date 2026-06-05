@@ -76,7 +76,7 @@
 <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-deep-ink focus:text-bone-white focus:font-label-caps focus:text-label-caps">Skip to content</a>
 <header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-background border-b border-deep-ink">
   <div class="flex items-center gap-8">
-    <a href="index.html" class="font-headline-md text-headline-md tracking-tighter text-deep-ink">JFSN</a>
+    <a href="index.html" class="text-headline-md tracking-tighter font-semibold text-deep-ink">JFSN</a>
     <nav class="hidden md:flex gap-6" aria-label="Primary">
       <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="archive.html">Archive</a>
       <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="series-index.html">Series</a>
@@ -99,7 +99,7 @@
     style="position:absolute;top:0;right:0;width:min(280px,85vw);height:100%;background:#fcf9f3;border-left:1px solid #0B0B0B;display:flex;flex-direction:column;transform:translateX(100%);transition:transform 0.25s ease;">
     <!-- Header -->
     <div style="display:flex;justify-content:space-between;align-items:center;padding:0 20px;height:64px;border-bottom:1px solid #0B0B0B;">
-      <span style="font-family:'Playfair Display',serif;font-size:18px;font-weight:600;letter-spacing:-0.02em;color:#0B0B0B;">JFSN</span>
+      <span style="font-family:Inter,sans-serif;font-size:18px;font-weight:600;letter-spacing:-0.02em;color:#0B0B0B;">JFSN</span>
       <button id="nav-menu-close" aria-label="Close menu"
         style="background:none;border:none;cursor:pointer;color:#0B0B0B;font-size:24px;padding:8px;margin-right:-8px;line-height:1;">&times;</button>
     </div>
@@ -196,11 +196,9 @@
             />
           </a>
         </div>
-        <div class="mt-4 border-b border-deep-ink pb-3 flex justify-between items-end">
-          <div>
-            <p class="font-headline-md text-[18px] leading-snug text-deep-ink">Devo at WHK Auditorium</p>
-          </div>
-          <span class="font-label-caps text-label-caps text-archive-gray">1977</span>
+        <div class="mt-4 border-b border-deep-ink pb-3">
+          <p class="text-[18px] leading-snug text-deep-ink">Devo at WHK Auditorium</p>
+          <p class="font-label-caps text-label-caps text-archive-gray mt-2">1977 · PHOTOGRAPH</p>
         </div>
       </div>
     </section>
@@ -218,11 +216,9 @@
             />
           </a>
         </div>
-        <div class="mt-4 border-b border-deep-ink pb-3 flex justify-between items-end">
-          <div>
-            <p class="font-headline-md text-[18px] leading-snug text-deep-ink">Reliquary</p>
-          </div>
-          <span class="font-label-caps text-label-caps text-archive-gray">1990</span>
+        <div class="mt-4 border-b border-deep-ink pb-3">
+          <p class="text-[18px] leading-snug text-deep-ink">Reliquary</p>
+          <p class="font-label-caps text-label-caps text-archive-gray mt-2">1990 · COLLAGE</p>
         </div>
       </div>
     </section>
@@ -240,11 +236,9 @@
             />
           </a>
         </div>
-        <div class="mt-4 border-b border-deep-ink pb-3 flex justify-between items-end">
-          <div>
-            <p class="font-headline-md text-[18px] leading-snug text-deep-ink">Yellow Figure on Black Wall</p>
-          </div>
-          <span class="font-label-caps text-label-caps text-archive-gray">2010</span>
+        <div class="mt-4 border-b border-deep-ink pb-3">
+          <p class="text-[18px] leading-snug text-deep-ink">Yellow Figure on Black Wall</p>
+          <p class="font-label-caps text-label-caps text-archive-gray mt-2">2010 · PHOTOGRAPH</p>
         </div>
       </div>
     </section>
@@ -313,8 +307,8 @@
           </div>
           <div class="card-meta mt-4">
             <span class="font-label-caps text-label-caps text-archive-gray block">${w.year}</span>
-            <h3 class="font-headline-md text-headline-md text-deep-ink mt-1">${w.title}</h3>
-            <p class="font-label-caps text-label-caps text-archive-gray mt-1">${medium}</p>
+            <h3 class="text-headline-md text-deep-ink mt-1">${w.title}</h3>
+            <p class="font-label-caps text-label-caps text-archive-gray mt-2">${medium}</p>
           </div>`;
         grid.appendChild(card);
       });
