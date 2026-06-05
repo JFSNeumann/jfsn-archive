@@ -1,5 +1,23 @@
 [
   {
+    "sha": "0c1e86e",
+    "date": "2026-06-05",
+    "title": "Archive mobile: collapse filters behind toggle button",
+    "body": ""
+  },
+  {
+    "sha": "ffb9b58",
+    "date": "2026-06-05",
+    "title": "Remove Featured Works heading; reduce Archive h1 scale",
+    "body": ""
+  },
+  {
+    "sha": "636f291",
+    "date": "2026-06-05",
+    "title": "Remove mobile bottom nav from all 31 pages + dead archive.html IIFE",
+    "body": "- Deleted fixed-bottom <nav> element sitewide (~540 lines across 31 files)\n- Removed dead scroll-listener IIFE in archive.html (referenced\n  #mobile-bottom-nav which no longer exists)\n- Removed mobile nav check from audit-nav.sh (check is now obsolete)\n- Verified: 0 instances of fixed bottom-0 remain anywhere in the site"
+  },
+  {
     "sha": "4b3a019",
     "date": "2026-06-05",
     "title": "Session: companion chips, chromatic tap flash fix, docs pruned",
