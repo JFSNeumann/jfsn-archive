@@ -166,15 +166,20 @@
     </div>
   </header>
 
-  <!-- Mobile-only sticky horizontal filter ledger -->
-  <div class="md:hidden sticky top-[64px] z-40 bg-background border-y border-outline-variant py-3 -mx-margin-mobile px-margin-mobile mb-md" id="mobile-ledger">
-    <div class="flex items-center gap-3 overflow-x-auto hide-scrollbar">
-      <span class="font-label-md text-label-md text-secondary uppercase shrink-0">Medium:</span>
-      <button class="mobile-medium-btn font-label-lg text-label-lg uppercase px-3 py-3 whitespace-nowrap min-h-[44px] text-on-tertiary-container border-b-2 border-on-tertiary-container" data-val="">All</button>
-      <button class="mobile-medium-btn font-label-lg text-label-lg uppercase px-3 py-3 whitespace-nowrap min-h-[44px] border-b-2 border-transparent text-secondary" data-val="collage">Collage</button>
-      <button class="mobile-medium-btn font-label-lg text-label-lg uppercase px-3 py-3 whitespace-nowrap min-h-[44px] border-b-2 border-transparent text-secondary" data-val="photograph">Photo</button>
-      <button class="mobile-medium-btn font-label-lg text-label-lg uppercase px-3 py-3 whitespace-nowrap min-h-[44px] border-b-2 border-transparent text-secondary" data-val="sculpture">Sculpture</button>
-      <button class="mobile-medium-btn font-label-lg text-label-lg uppercase px-3 py-3 whitespace-nowrap min-h-[44px] border-b-2 border-transparent text-secondary" data-val="painting">Painting</button>
+  <!-- Mobile-only sticky filter toggle -->
+  <div class="md:hidden sticky top-[64px] z-40 bg-background border-y border-outline-variant -mx-margin-mobile px-margin-mobile mb-md" id="mobile-ledger">
+    <button class="font-label-caps text-label-caps border border-outline-variant bg-background px-4 my-3 min-h-[44px] flex items-center gap-2" id="mobile-filter-btn" aria-expanded="false" aria-controls="mobile-filter-panel">
+      <span id="mobile-filter-label">FILTER</span>
+    </button>
+    <div id="mobile-filter-panel" style="display:none;" class="pb-3">
+      <div class="flex items-center gap-3 overflow-x-auto hide-scrollbar">
+        <span class="font-label-md text-label-md text-secondary uppercase shrink-0">Medium:</span>
+        <button class="mobile-medium-btn font-label-lg text-label-lg uppercase px-3 py-3 whitespace-nowrap min-h-[44px] text-on-tertiary-container border-b-2 border-on-tertiary-container" data-val="">All</button>
+        <button class="mobile-medium-btn font-label-lg text-label-lg uppercase px-3 py-3 whitespace-nowrap min-h-[44px] border-b-2 border-transparent text-secondary" data-val="collage">Collage</button>
+        <button class="mobile-medium-btn font-label-lg text-label-lg uppercase px-3 py-3 whitespace-nowrap min-h-[44px] border-b-2 border-transparent text-secondary" data-val="photograph">Photo</button>
+        <button class="mobile-medium-btn font-label-lg text-label-lg uppercase px-3 py-3 whitespace-nowrap min-h-[44px] border-b-2 border-transparent text-secondary" data-val="sculpture">Sculpture</button>
+        <button class="mobile-medium-btn font-label-lg text-label-lg uppercase px-3 py-3 whitespace-nowrap min-h-[44px] border-b-2 border-transparent text-secondary" data-val="painting">Painting</button>
+      </div>
     </div>
   </div>
 
@@ -393,6 +398,13 @@ function applyFilters() {
   const active = mediums.length || decades.length || series.length;
   clearBtn.classList.toggle('hidden', !active);
 
+  // Update mobile filter badge
+  const mobileFilterLabel = document.getElementById('mobile-filter-label');
+  if (mobileFilterLabel) {
+    const n = mediums.length + decades.length + series.length;
+    mobileFilterLabel.textContent = n > 0 ? 'FILTER · ' + n : 'FILTER';
+  }
+
   filtered = sortWorks(allWorks.filter(w => {
     if (mediums.length && !mediums.includes(w.work_type)) return false;
     if (decades.length) {
@@ -482,8 +494,25 @@ document.querySelectorAll('.mobile-medium-btn').forEach(btn => {
       cb.checked = val ? cb.value === val : false;
     });
     applyFilters();
+    // Close panel after selection
+    const panel = document.getElementById('mobile-filter-panel');
+    const filterBtn = document.getElementById('mobile-filter-btn');
+    if (panel) panel.style.display = 'none';
+    if (filterBtn) filterBtn.setAttribute('aria-expanded', 'false');
   });
 });
+
+// Mobile filter toggle
+(function() {
+  const btn = document.getElementById('mobile-filter-btn');
+  const panel = document.getElementById('mobile-filter-panel');
+  if (!btn || !panel) return;
+  btn.addEventListener('click', function() {
+    const open = panel.style.display === 'block';
+    panel.style.display = open ? 'none' : 'block';
+    btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+  });
+})();
 </script>
 
 <script src="_shared/nav-active.js" defer></script>

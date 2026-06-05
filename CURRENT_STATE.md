@@ -6,6 +6,15 @@
 
 ## What was done this session (2026-06-05)
 
+### Archive mobile filter collapse (Stitch review item)
+- **archive.html** — mobile filter ledger collapsed behind a single "FILTER" toggle button; artwork now appears above the fold on mobile
+- Filter panel (All · Collage · Photo · Sculpture · Painting) hidden by default, opens/closes on button tap, closes on filter selection
+- Badge updates to "FILTER · N" when N filters are active, hooked into existing applyFilters() function
+- All existing mobile-medium-btn logic preserved unchanged
+- Desktop sidebar untouched
+- No transitions, no new libraries, touch targets 44px minimum
+- Verified: mobile-ledger intact, mobile-medium-btn intact, 0 animation classes, sticky top-[64px] z-40 preserved
+
 ### Homepage + archive heading cleanup (Stitch review items)
 - **index.html** — removed "Featured Works" h2; reduced section top padding from py-24 to pt-16 pb-24 to compensate
 - **archive.html** — "THE ARCHIVE" h1 demoted from font-display-lg (Playfair Display, large) to font-label-caps (Inter ALL CAPS) — same visual language as the filter labels, far less weight
