@@ -3,6 +3,7 @@ module.exports = {
   content: [
     './*.html',
     './_shared/*.html',
+    './_shared/*.js',
   ],
   darkMode: 'class',
   theme: {
