@@ -14,7 +14,7 @@ A living list. Add to it. Cross things off. This is the backlog.
 ## 🟡 High value, no deadline
 
 ### Content
-- [ ] **featured.txt** — review which works are on the homepage. Last reviewed early 2026. 25 works currently, organized by decade.
+- [x] ~~**featured.txt**~~ — rebalanced 2026-06-05: 30 works across all decades, varied by medium.
 
 ---
 

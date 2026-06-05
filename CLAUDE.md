@@ -115,7 +115,7 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 - Wall (wall.html): 1,084 tiles, all color (no grayscale)
 
 ### Nav systems (two, keep separate)
-1. **Stitch nav** (`_shared/top-nav.html`) — `font-nav-link`, `text-deep-ink`, `international-orange` hover. Used by collage, sculpture, photography, painting, lost, etc. Nav links: Archive · Series · Companion · About.
+1. **Stitch nav** (`_shared/top-nav.html`) — `font-nav-link`, `text-deep-ink`, `international-orange` hover. Used by collage, sculpture, photography, painting, lost, etc. Nav links: Archive · Series · Companion · About · Lost.
 2. **Material Design nav** (inline on decade pages) — `font-label-lg`, uppercase, `text-on-tertiary-container` active. Used by 1970s–2020s.
 
 ### Deployment
