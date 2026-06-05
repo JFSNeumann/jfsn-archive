@@ -10,6 +10,7 @@
     'timeline.html':     'timeline.html',
     'companion.html':    'companion.html',
     'about.html':        'about.html',
+    'lost.html':         'lost.html',
   };
 
   const file = location.pathname.split('/').pop() || 'index.html';

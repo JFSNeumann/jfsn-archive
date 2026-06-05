@@ -1,5 +1,47 @@
 [
   {
+    "sha": "53ebdd3",
+    "date": "2026-06-05",
+    "title": "Session update 2026-06-05 18:44",
+    "body": ""
+  },
+  {
+    "sha": "5c7aad2",
+    "date": "2026-06-05",
+    "title": "artwork.html: replace full-res link with in-page lightbox",
+    "body": "Button triggers overlay with rotate, flip, and reset controls.\nEscape key and backdrop click close it. No new tab, no navigation."
+  },
+  {
+    "sha": "c0d0dac",
+    "date": "2026-06-05",
+    "title": "Session update 2026-06-05 18:31",
+    "body": ""
+  },
+  {
+    "sha": "9b81b7f",
+    "date": "2026-06-05",
+    "title": "about.html: move Lost Works bar out of Now column to standalone section",
+    "body": "Removed inline link from inside the Now div; replaced with full-width\nbar section (matching homepage pattern) between contact and Exhibition Record."
+  },
+  {
+    "sha": "219720b",
+    "date": "2026-06-05",
+    "title": "changes.html: remove duplicate skip-to-content link",
+    "body": "Deleted the hardcoded one before NAV:START; the stamped one inside\nNAV:START is the canonical version and stays."
+  },
+  {
+    "sha": "7f32d61",
+    "date": "2026-06-05",
+    "title": "about.html: move contact section above Exhibition Record",
+    "body": "Reorders main sections: about-hero → contact → Exhibition Record.\nNo content, classes, or attributes changed."
+  },
+  {
+    "sha": "6db27ed",
+    "date": "2026-06-05",
+    "title": "Remove link to changes.html from jeff.html tool card",
+    "body": ""
+  },
+  {
     "sha": "4d484e1",
     "date": "2026-06-05",
     "title": "Session update 2026-06-05 18:19",

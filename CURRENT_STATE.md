@@ -2,9 +2,21 @@
 **Updated:** 2026-06-05
 
 ## Last commit
-5c7aad2 — artwork.html: replace full-res link with in-page lightbox
+(updated by end-session.sh)
 
-## What was done this session (2026-06-05 — session 5)
+## What was done this session (2026-06-05 — session 6)
+
+### Nav + footer underline polish (_shared/ui.css, nav-active.js)
+- Header nav links get a left-to-right orange underline draw on hover (0.2s), stays solid on the active page via `.nav-underline-active`; `lost.html` added to the `PAGE_NAV` map so the Lost link activates correctly.
+- Footer links get the same gesture at 1px height; email link exempted to avoid double-underline; stamped into all 26 pages via `stamp-nav.sh`.
+
+### Featured grid image fade (index.html)
+- Lazy-loaded thumbnails now fade in at `opacity 0.4s` via `onload` → `.is-loaded` rather than popping in; `prefers-reduced-motion` shows them instantly; hero image unaffected.
+
+### Featured grid title size (index.html)
+- Card titles changed from `text-headline-md` (28px Playfair) to `font-label-lg text-label-lg uppercase` (14px Inter) — now matches archive page thumbnail labels.
+
+## Previous session (2026-06-05 — session 5)
 
 ### Lightbox on artwork pages (artwork.html)
 - "Full resolution" link replaced with a button that opens a full-screen overlay — no new tab, no navigation away

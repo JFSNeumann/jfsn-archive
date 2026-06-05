@@ -71,6 +71,17 @@
     #featured-grid > a:nth-child(3) > .card-img { flex: 1; aspect-ratio: auto; }
     #featured-grid > a > .card-meta { flex-shrink: 0; }
   }
+  /* Featured grid — lazy load settle */
+  #featured-grid img {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  #featured-grid img.is-loaded {
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #featured-grid img { opacity: 1; transition: none; }
+  }
 </style>
 </head>
 <body class="bg-bone-white text-deep-ink font-body-md">
@@ -321,11 +332,12 @@
               class="absolute inset-0 w-full h-full object-cover"
               src="artworks/thumbs/${w.file}"
               loading="lazy" width="400" height="533"
+              onload="this.classList.add('is-loaded')"
             />
           </div>
           <div class="card-meta mt-4">
             <span class="font-label-caps text-label-caps text-archive-gray block">${w.year}</span>
-            <h3 class="text-headline-md text-deep-ink mt-1">${w.title}</h3>
+            <h3 class="font-label-lg text-label-lg uppercase text-deep-ink mt-1">${w.title}</h3>
             <p class="font-label-caps text-label-caps text-archive-gray mt-2">${medium}</p>
           </div>`;
         grid.appendChild(card);
