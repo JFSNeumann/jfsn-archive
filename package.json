@@ -4,6 +4,8 @@
   "description": "A static, open-source archive site for visual artists. No CMS, no database, no monthly fees. Built for [jfsn.com](https://jfsn.com) — 1,084 works spanning 50 years, live on a $5/month shared host.",
   "main": "artist-config.js",
   "scripts": {
+    "build:css": "npx tailwindcss -i input.css -o site.min.css --minify",
+    "watch:css": "npx tailwindcss -i input.css -o site.min.css --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

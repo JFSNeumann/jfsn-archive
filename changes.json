@@ -1,5 +1,35 @@
 [
   {
+    "sha": "a546401",
+    "date": "2026-06-05",
+    "title": "Homepage: fix card 4+ metadata overflow in featured grid",
+    "body": "Cards 4+ now span 5 explicit rows (5×80px=400px) and are flex-col so\nthe anchor contains its full height. flex:1 on .card-img scoped to\ncards 1–3 only so cards 4+ respect their aspect-[3/4] naturally."
+  },
+  {
+    "sha": "6964bd6",
+    "date": "2026-06-05",
+    "title": "Homepage: render all catalog-home.json works in desktop featured grid",
+    "body": "Removes hardcoded FEATURED_IDS array; grid now shows all 30 works.\nFirst 3 cards keep existing 7/5/5-col layout; cards 4+ fall into\na uniform 4-column grid (col-span-3 each)."
+  },
+  {
+    "sha": "9e4f27c",
+    "date": "2026-06-05",
+    "title": "Replace jfsneumann@gmail.com with jeff@jfsn.com sitewide",
+    "body": "Updated all mailto: hrefs and visible link text across all 32 pages\nand _shared/footer.html."
+  },
+  {
+    "sha": "046d423",
+    "date": "2026-06-05",
+    "title": "Tailwind: add _shared/*.js to content scan; rebuild site.min.css",
+    "body": "Scan now covers dynamically-added classes (e.g. text-international-orange\nin nav-active.js). Rebuilt CSS trims ~8KB of stale classes from deleted\npages and the dark-system era."
+  },
+  {
+    "sha": "3ddce64",
+    "date": "2026-06-05",
+    "title": "Sort: Recently Added first; featured grid spacing; nav touch targets sitewide",
+    "body": "- archive.html: move id_desc to first sort option, title-case label\n- index.html: gap-x-6/gap-y-8 grid gap, p-3 mat-frame on card images\n- _shared/top-nav.html + stamp-nav.sh: all interactive elements ≥44px\n  (nav links py-3, search/hamburger padding:10px, drawer close/search padded)"
+  },
+  {
     "sha": "98141e0",
     "date": "2026-06-05",
     "title": "Typography: Playfair → Inter audit; active filter demote; featured card metadata hierarchy",

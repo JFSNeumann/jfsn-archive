@@ -1,10 +1,34 @@
 # Current State
-**Updated:** 2026-06-05 11:25
+**Updated:** 2026-06-05
 
 ## Last commit
-(pending end-session.sh)
+a546401 — Homepage: fix card 4+ metadata overflow in featured grid
 
-## What was done this session (2026-06-05 — session 2)
+## What was done this session (2026-06-05 — session 3)
+
+### Email replaced sitewide (33 files)
+- `jfsneumann@gmail.com` → `jeff@jfsn.com` in all `mailto:` hrefs and visible link text
+- Covered `_shared/footer.html`, `about.html`, all 6 decade pages, `index.html`, `privacy.html`, and all remaining stamped pages
+
+### Removed for-artists reference (about.html)
+- Deleted "I also build archives for other artists" sentence/link — gone, no trace
+
+### Homepage featured grid expanded (index.html)
+- Removed hardcoded `FEATURED_IDS` array (3 works); grid now renders all 30 works from `catalog-home.json`
+- Cards 1–3 keep existing asymmetric layout (7-col / 5-col / 5-col)
+- Cards 4+ fall into uniform 4-column grid (`col-span-3` each)
+
+### Fixed card 4+ height containment (index.html)
+- Root cause: `grid-auto-rows: 80px` with no explicit row span on cards 4+, causing metadata to overflow into next card
+- Fix: `nth-child(n+4)` now claims `grid-row: span 5` (5×80px=400px) and is `flex-col`
+- `flex:1` on `.card-img` scoped to cards 1–3 only; cards 4+ use natural `aspect-[3/4]`
+
+### Tailwind build fixed (tailwind.config.js + site.min.css)
+- `input.css` already existed with `@tailwind` directives; `npm run build:css` confirmed working
+- Added `_shared/*.js` to content scan so dynamically-added classes (e.g. `text-international-orange` in `nav-active.js`) are always included
+- `site.min.css` rebuilt at 22,974 bytes (was stale at 31,664 bytes from deleted pages / dark-era classes)
+
+## Previous session (2026-06-05 — session 2)
 
 ### Archive sort: "Recently Added" (archive.html)
 - Moved `id_desc` option to first position in sort dropdown
@@ -23,7 +47,6 @@
 - Drawer close (×): padding `8px` → `10px 14px`, margin-right adjusted → ~44×52
 - Drawer search button: padding `10px 14px` → `12px 14px` → 44px tall
 - Stamped into all 26 pages via stamp-nav.sh
-- Note: `p-[10px]` arbitrary Tailwind class won't rebuild cleanly — buttons use inline style instead; Tailwind build process needs a proper `@tailwind`-directive input file before next rebuild
 
 ### Previous session (2026-06-05 — session 1)
 ### Active filter demote (archive.html)
@@ -51,10 +74,8 @@
 
 ## To do next session
 - [ ] Test Companion live on iPhone (https://jfsn-archive.netlify.app/companion.html)
-- [ ] Review featured.txt / catalog-home.json — decade representation (SESSION_PROMPT item 2)
-- [ ] Offsite cloud backup via Backblaze B2/rclone (SESSION_PROMPT item 3)
-- [ ] Automated deploy: append deploy.sh to end-session.sh (SESSION_PROMPT item 4)
-- [ ] Fix Tailwind build: create proper input CSS file with @tailwind directives so new utility classes can be compiled into site.min.css
+- [ ] Review featured.txt / catalog-home.json — decade representation
+- [ ] Offsite cloud backup via Backblaze B2/rclone
 
 ## Known issues (standing)
 - **sw.js CACHE_V** — `build_catalog.py` auto-bumps on every run. Check `git diff sw.js` before committing after any script run.

@@ -1,5 +1,5 @@
 # JFSN Session Handoff Prompt
-**Generated:** 2026-06-05 (session — companion chips updated, chromatic tap flash fixed, stale items pruned)
+**Generated:** 2026-06-05
 **Copy everything below the line and paste it to start the next session.**
 
 ---
@@ -11,8 +11,9 @@ Read `/Documents/JFSN/CURRENT_STATE.md` and `/Documents/JFSN/IMPROVEMENTS.md` be
 - Stack: vanilla HTML/CSS/JS, Tailwind compiled to `site.min.css` (31KB), service worker, no frameworks
 - Design system: light/bone-white (`#fcf9f3`), deep-ink (`#0B0B0B`), orange accent (`#FF6600`), Playfair Display headings, Inter UI
 - Nav: Archive · Series · Companion · About (4 items)
-- Deploy workflow: `bash end-session.sh` (git commit + push + rsync backup) → `bash deploy.sh` (FTP to HostGator, separate step)
+- Deploy workflow: `bash end-session.sh` (git commit + push + rsync backup) → deploy via desktop app (JFSN.app)
 - Footer/nav: edit `_shared/top-nav.html` or `_shared/footer.html`, then `bash stamp-nav.sh`
+- **CSS rebuild:** `npm run build:css` — run this after adding any new Tailwind utility class, then commit `site.min.css`
 - **Known sw.js behavior:** `build_catalog.py` auto-bumps CACHE_V — fixed to only bump if newer. After any script run, verify `git diff sw.js` shows no unexpected rollback.
 
 ---
@@ -22,53 +23,41 @@ Read `/Documents/JFSN/CURRENT_STATE.md` and `/Documents/JFSN/IMPROVEMENTS.md` be
 ---
 
 ### 1. 🔴 Test Companion live on iPhone
-**What:** Open https://jfsn-archive.netlify.app/companion.html on iPhone 15 Pro (must use Netlify URL — Companion function doesn't exist on jfsn.com). Type a prompt: "targets" or "something blue and melancholy". Confirm a work title + thumbnail comes back.
-**Why:** Untested since May 2026 redesign. Backend was fixed (model IDs, thinking API, netlify.toml) but UI flow never verified on device.
-**If it fails:** Check Netlify dashboard → Functions → companion logs for errors. The function is at `netlify/functions/companion.mjs` (regular Netlify function, NOT edge function). Model names in code: `claude-haiku-4-5` (fast) and `claude-sonnet-4-6` (deep). Deep mode uses `thinking: {type: 'adaptive'}`.
-**Done when:** Response returns with a work suggestion on iPhone.
+| | |
+|---|---|
+| **File** | n/a — live test only |
+| **Change** | Open https://jfsn-archive.netlify.app/companion.html on iPhone 15 Pro. Type prompt: “targets” or “something blue and melancholy”. |
+| **If it fails** | Netlify dashboard → Functions → companion logs. Function: `netlify/functions/companion.mjs`. Models: `claude-haiku-4-5` (fast), `claude-sonnet-4-6` (deep). Deep mode uses `thinking: {type: 'adaptive'}`. |
+| **Done when** | A work title + thumbnail returns on iPhone. |
 
 ---
 
-### 2. 🟡 Review featured.txt / homepage works
-**Problem:** `catalog-home.json` (30 works shown on homepage) is heavily weighted toward 2020 works — 22 of 30 are from 2020. The homepage should feel like a survey of 50 years, not a 2020 snapshot.
-**File:** `featured.txt` — one artwork filename per line. Edit this, then:
-```bash
-python3 artworks/build_catalog.py   # regenerates catalog-home.json + bumps sw.js CACHE_V
-bash end-session.sh
-bash deploy.sh
-```
-**Goal:** Representation from at least 4 decades. Keep the strongest works — variety in era, medium (collage/sculpture/photography), and palette.
-**Done when:** Homepage shows works from 1970s, 1980s/90s, 2000s, and 2020s. Jeff approves the selection.
+### 2. 🟡 Review homepage works (decade balance)
+| | |
+|---|---|
+| **File** | `featured.txt` — one artwork filename per line |
+| **Change** | Edit `featured.txt` so the 30 works span at least 4 decades. Currently 22/30 are from 2020. Keep the strongest works; vary era, medium (collage/sculpture/photography), palette. |
+| **Rebuild** | `python3 artworks/build_catalog.py` → regenerates `catalog-home.json` + bumps `sw.js CACHE_V` |
+| **Done when** | Homepage shows works from 1970s, 1980s–90s, 2000s, and 2020s. Jeff approves the selection. |
 
 ---
 
 ### 3. 🟢 Offsite cloud backup
-**Problem:** All three archive copies (MacBook, Time Machine, JEFFS-4TB) are in the same room — single point of physical failure.
-**Recommended:** Backblaze B2 via rclone.
-- Install: `brew install rclone` then `rclone config` to add B2 bucket
-- Sync command: `rclone sync /Documents/JFSN/ b2:jfsn-archive/ --exclude "node_modules/**"`
-- Cost: ~$0.50/month for ~800MB
-- Add sync to `backup.sh` or create a separate `cloud-backup.sh` triggered from `end-session.sh`
-**Minimal version (just the irreplaceable data):** Sync only `catalog.json`, `chromatic.json`, `catalog-home.json`, `featured.txt`, `artworks/*.json` — these are the files that can't be regenerated from scratch.
-**Done when:** rclone configured, first sync completes, added to a script.
+| | |
+|---|---|
+| **File** | New: `cloud-backup.sh` (or append to `backup.sh`) |
+| **Change** | Install rclone (`brew install rclone`), configure B2 bucket (`rclone config`), then create script: `rclone sync /Documents/JFSN/ b2:jfsn-archive/ --exclude "node_modules/**"` |
+| **Cost** | ~$0.50/month for ~800MB |
+| **Done when** | `rclone` configured, first sync completes, script runs from `end-session.sh`. |
 
 ---
 
-### 4. 🟢 Automated deploy after commit
-**Current:** Two manual steps: `bash end-session.sh` then `bash deploy.sh`.
-**Option A (simplest):** Append `bash "$(dirname "$0")/deploy.sh"` to end of `end-session.sh`, after the git push. FTP takes 2–5 min so it'll block — acceptable if sessions end that way.
-**Option B (non-blocking):** Launch deploy in background: `bash deploy.sh &` — output goes to a log file.
-**Option C (Netlify only):** Netlify already auto-deploys on GitHub push. HostGator requires FTP so can't be auto.
-**Recommended:** Option A for simplicity.
-**Done when:** A single `bash end-session.sh` handles git + FTP deploy.
-
----
-
-### 5. 🟢 Archive sort by "recently added"
-**File:** `archive.html` — find the sort logic (a JS sort function operating on the works array).
-**Add:** A sort option `id_desc` that sorts by numeric ID descending (art1084, art1083… = most recently ingested first). Extract the number from the file/id string: `parseInt(a.file.replace(/\D/g,''))`.
-**UI:** Add "Recently Added" option to the sort dropdown.
-**Done when:** A "Recently Added" sort option appears and clicking it shows newest works first.
+### 4. 🟢 Single-command deploy
+| | |
+|---|---|
+| **File** | `end-session.sh` |
+| **Change** | Append `bash "$(dirname "$0")/deploy.sh"` at the end (after git push + backup). FTP takes 2–5 min — acceptable blocking. |
+| **Done when** | `bash end-session.sh` handles git + backup + FTP in one run. |
 
 ---
 
@@ -76,8 +65,8 @@ bash deploy.sh
 
 ```bash
 bash end-session.sh   # git commit + push + rsync backup
-bash deploy.sh        # FTP to HostGator
 ```
+Then deploy via the JFSN desktop app.
 
 Cross off the item in `IMPROVEMENTS.md`. Update `CURRENT_STATE.md`.
 
