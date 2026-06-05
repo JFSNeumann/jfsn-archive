@@ -11,11 +11,11 @@ Live: jfsn.com (cPanel/HostGator) and jfsn-archive.netlify.app (Netlify, has Com
 
 ## Design System (current — Stitch/Tailwind, light)
 
-The site was fully redesigned in May 2026 from a dark system to a light system. All 22 public pages are on the light system. `site.css` has been deleted — do not reference it or the old dark tokens.
+The site was fully redesigned in May 2026 from a dark system to a light system. All 18 public pages are on the light system. `site.css` has been deleted — do not reference it or the old dark tokens.
 
 ### Token reference (two configs in use)
 
-**Stitch pages** (collage, sculpture, photography, painting, lost, mosaic, etc.):
+**Stitch pages** (collage, sculpture, photography, painting, lost, etc.):
 ```js
 colors: {
   "background":             "#fcf9f3",   // bone-white page bg
@@ -53,8 +53,7 @@ colors: {
 - Orange accent (#FF6600 / #e05900) for hover, active states, links — not decoration
 - No gradients. No drop shadows on images. No rounded corners (border-radius: 0).
 - Borders use outline-variant (#c4c7c7) — 1px solid
-- Artwork thumbnails: grayscale by default, color + scale on hover
-- Hover border draw: 1px orange `clip-path` animation via `_shared/ui.css`
+- Artwork thumbnails: full color always. No grayscale, no scale, no mask-image, no transition on img.
 
 ---
 
@@ -72,7 +71,7 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 
 ### Key files
 - `_shared/top-nav.html` — canonical nav for Stitch pages (stamp-nav.sh)
-- `_shared/ui.css` — shared interactions: border draw, grayscale→color hover on `.thumb__link img`, scroll reveal for `.thumb` items, decade zoom
+- `_shared/ui.css` — shared structural rules: `.thumb-frame` / `.thumb__link` positioning, vertical page label (`.page-label-vert`)
 - `_shared/ui.js` — keyboard nav (← / → decade pages), vertical "you are here" label, hero zoom, scroll reveal IntersectionObserver for `.thumb` items
 - `_shared/nav-active.js` — auto-sets orange active link by pathname
 - `stamp-nav.sh` — stamps nav into all Stitch pages (NOT decade pages — different token system)
@@ -82,18 +81,16 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 - `end-session.sh` — git commit + push + backup (does NOT deploy)
 - `make_handoff.py` — regenerates Allison handoff PDF; run after any credential change
 
-### Page inventory (all 22 public pages)
+### Page inventory (all 18 public pages)
 | Page | Notes |
 |------|-------|
 | `index.html` | Homepage, featured works from catalog-home.json |
 | `archive.html` | 1,084 works, filters by medium/decade/series |
 | `artwork.html` | Single work, loaded by `?id=artNNNN` |
 | `series-index.html` | Guernica + 7 themes |
-| `timeline.html` | Horizontal scrub strip, all dated works |
 | `companion.html` | AI companion (Netlify edge function) |
 | `about.html` | Bio, exhibitions, contact |
 | `lost.html` | Essay + ghost grid of 750 lost works |
-| `mosaic.html` | Photomosaic portrait from all 1,084 works |
 | `chromatic.html` | Color-slice canvas of all works by year |
 | `collage.html` | 638 works, masonry grid |
 | `sculpture.html` | 76 works |
@@ -102,27 +99,23 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 | `1970s.html`–`2020s.html` | 6 decade pages, Material Design tokens, ← / → keyboard nav |
 | `series.html` | Single series deep-dive |
 | `guernica.html` | 232 Guernica works, static theme page |
-| `for-artists.html` | Archive-as-a-service, inquiry form (Netlify only) |
-| `constellation.html` | D3 force graph |
 | `wall.html` | 1,084 mini images, sibling dim via `:has()` |
 | `api.html` | Developer API docs, light system |
 | `changes.html` | Git log feed |
 | `privacy.html` | Privacy page |
 | `404.html` | Error page |
 
-### Wow-factor interactions (all live)
-- Grayscale → color on hover: `_shared/ui.css` `.thumb__link img` — applies to all medium pages with `.thumb` class
+### Interactions (live)
 - Orange border draw on hover: `_shared/ui.css` `.thumb__link::after` — clip-path animation
-- Scroll reveal for `.thumb` items: `_shared/ui.js` IntersectionObserver, staggered `(i % 6) * 50ms`
 - Keyboard ← / → between decade pages: `_shared/ui.js`
 - Vertical "you are here" margin label: `_shared/ui.js` + `data-page-label` on `<body>`
 - Hero heading zoom-out on scroll: `_shared/ui.js` `.decade-hero` / `.decade-heading`
-- Ghost grid (lost.html): 750 JS-generated empty tiles
+- Ghost grid (lost.html): 25 JS-generated empty tiles
 - Chromatic River (chromatic.html): HiDPI canvas, 1,084 color slices, hover + click
-- Wall (wall.html): 1,084 tiles grayscale by default, color on hover, sibling dim via `:has()`
+- Wall (wall.html): 1,084 tiles, all color (no grayscale)
 
 ### Nav systems (two, keep separate)
-1. **Stitch nav** (`_shared/top-nav.html`) — `font-nav-link`, `text-deep-ink`, `international-orange` hover. Used by collage, sculpture, photography, painting, lost, mosaic, for-artists, etc.
+1. **Stitch nav** (`_shared/top-nav.html`) — `font-nav-link`, `text-deep-ink`, `international-orange` hover. Used by collage, sculpture, photography, painting, lost, etc. Nav links: Archive · Series · Companion · About.
 2. **Material Design nav** (inline on decade pages) — `font-label-lg`, uppercase, `text-on-tertiary-container` active. Used by 1970s–2020s.
 
 ### Deployment

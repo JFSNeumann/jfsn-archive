@@ -146,13 +146,10 @@ series_pages = sorted({r['series'] for r in records if r.get('series')})
 entries = [
     (SITE_URL + '/',                    '1.0', 'monthly'),
     (SITE_URL + '/archive.html',        '0.9', 'weekly'),
-    (SITE_URL + '/for-artists.html',    '0.9', 'monthly'),
     (SITE_URL + '/series-index.html',   '0.8', 'monthly'),
-    (SITE_URL + '/timeline.html',       '0.8', 'monthly'),
-    (SITE_URL + '/constellation.html',  '0.8', 'monthly'),
-    (SITE_URL + '/api.html',            '0.7', 'monthly'),
-    (SITE_URL + '/about.html',          '0.7', 'monthly'),
     (SITE_URL + '/companion.html',      '0.7', 'monthly'),
+    (SITE_URL + '/about.html',          '0.7', 'monthly'),
+    (SITE_URL + '/api.html',            '0.7', 'monthly'),
     (SITE_URL + '/changes.html',        '0.4', 'weekly'),
     (SITE_URL + '/privacy.html',        '0.3', 'yearly'),
 ]

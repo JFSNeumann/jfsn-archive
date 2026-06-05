@@ -148,41 +148,10 @@ Open `qa.html` locally (via `python3 server.py` then http://localhost:8000/qa.ht
 
 ---
 
-## For Artists — pre-launch checklist
+## Per-deploy hygiene
 
-Things to do once, in Netlify or by hand, before promoting `for-artists.html`. The site code is ready; these are the things only you can do.
-
-### Before announcing the page
-
-- [ ] **Netlify Forms — enable email notifications.**
-      Netlify → Site → Forms → Notifications → "Add notification" → Email.
-      Without this, you won't be alerted when an inquiry comes in. Submissions still get stored in the Netlify dashboard, but you'll only see them if you check.
-- [ ] **Netlify Forms — submit a test inquiry from the live site.**
-      Use a real email address. Confirm it shows up in Netlify → Forms and that the notification email arrives. Verify the `tier` hidden field carries through when you click an "Inquire" button.
-- [ ] **Custom OG card for `for-artists.html`.**
-      The current `og-card.jpg` is the archive's general card. Build a dedicated 1200×630 image with "Archive your life's work" + "from $500" and reference it via a per-page `og:image` override. Save as `og-card-for-artists.jpg`.
-- [ ] **First-touch reply template.**
-      Draft a 5–8 sentence reply you'll send within 48 hours of an inquiry. Save it in a notes app so you don't compose from scratch each time.
-- [ ] **Founding-artist slot counter (manual).**
-      The For Artists page advertises 3 founding slots at 30% off. After each slot is claimed, edit `for-artists.html` to update the `.founding__eyebrow` text ("3 slots" → "2 slots remaining" → "1 slot remaining" → delete the whole `<aside class="founding">` once filled).
-- [x] **GoatCounter analytics** ✅ — account live at `jfsn.goatcounter.com`, email verified 2026-06-03. Snippet already on all pages.
-      The site already has the GoatCounter snippet installed on every public page. To activate it:
-      1. Sign up at <https://www.goatcounter.com> (free for personal use).
-      2. Pick a subdomain — the current snippet uses `jfsn.goatcounter.com`. If you choose differently, find/replace `jfsn.goatcounter.com` across all `.html` files.
-      3. In GoatCounter → Sites → Settings, add `jfsn.com` as an allowed domain.
-      4. A conversion goal already fires on the For Artists inquiry submission (`/goal/inquiry-submitted`). View it under GoatCounter → Dashboard → Events.
-
-### After your first founding-artist engagement
-
-- [ ] **Collect a 1–2 sentence testimonial + permission.**
-      Drop it into the commented `<!-- ── Testimonials ──` block in `for-artists.html` and delete the surrounding comment markers to publish the section.
-- [ ] **Update the founding-slot counter** (see above).
-- [ ] **Consider a case-study link** on each pricing tier (replace `archive.html?dec=2020s` etc. with the new client's archive URL).
-
-### Per-deploy hygiene
-
-- [ ] After meaningful CSS/HTML changes that returning visitors should see immediately, bump `CACHE_V` in `sw.js`. The current convention is `jfsn-YYYYMMDD-<reason>` (e.g. `jfsn-20260603-drop-site-css`).
-- [ ] When adding new top-level pages, add them to `entries[]` in `artworks/build_catalog.py` so they end up in `sitemap.xml`.
+- After meaningful CSS/HTML changes that returning visitors should see immediately, bump `CACHE_V` in `sw.js`. Convention: `jfsn-YYYYMMDD-<reason>` (e.g. `jfsn-20260603-drop-site-css`).
+- When adding new top-level pages, add them to `entries[]` in `artworks/build_catalog.py` so they end up in `sitemap.xml`.
 
 ---
 
