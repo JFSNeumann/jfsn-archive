@@ -2,9 +2,16 @@
 **Updated:** 2026-06-05
 
 ## Last commit
-9b81b7f — about.html: move Lost Works bar out of Now column to standalone section
+5c7aad2 — artwork.html: replace full-res link with in-page lightbox
 
-## What was done this session (2026-06-05 — session 4)
+## What was done this session (2026-06-05 — session 5)
+
+### Lightbox on artwork pages (artwork.html)
+- "Full resolution" link replaced with a button that opens a full-screen overlay — no new tab, no navigation away
+- Controls: rotate CW/CCW, flip H/V, reset, close (✕ button, Escape key, or backdrop click)
+- Fixed inline `style="display:none"` conflict with CSS class toggle by removing it from the div; CSS `#lr-overlay { display:none }` handles initial state
+
+## Previous session (2026-06-05 — session 4)
 
 ### Lost Works wired into site
 - Added Lost as 5th nav link sitewide (desktop + mobile drawer) — stamped into all 26 pages
