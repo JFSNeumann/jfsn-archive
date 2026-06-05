@@ -1,82 +1,60 @@
 # Current State
-**Updated:** 2026-06-05
+**Updated:** 2026-06-05 11:25
 
 ## Last commit
-662f7cd — UI cleanup: orange audit, featured works, Companion mobile hardening
+(pending end-session.sh)
 
-## What was done this session (2026-06-05)
+## What was done this session (2026-06-05 — session 2)
 
-### Archive mobile filter collapse (Stitch review item)
-- **archive.html** — mobile filter ledger collapsed behind a single "FILTER" toggle button; artwork now appears above the fold on mobile
-- Filter panel (All · Collage · Photo · Sculpture · Painting) hidden by default, opens/closes on button tap, closes on filter selection
-- Badge updates to "FILTER · N" when N filters are active, hooked into existing applyFilters() function
-- All existing mobile-medium-btn logic preserved unchanged
-- Desktop sidebar untouched
-- No transitions, no new libraries, touch targets 44px minimum
-- Verified: mobile-ledger intact, mobile-medium-btn intact, 0 animation classes, sticky top-[64px] z-40 preserved
+### Archive sort: "Recently Added" (archive.html)
+- Moved `id_desc` option to first position in sort dropdown
+- Label updated to title case: "Recently Added"
+- Sort logic (`parseInt(b.file) - parseInt(a.file)`) was already correct — no JS changes needed
 
-### Homepage + archive heading cleanup (Stitch review items)
-- **index.html** — removed "Featured Works" h2; reduced section top padding from py-24 to pt-16 pb-24 to compensate
-- **archive.html** — "THE ARCHIVE" h1 demoted from font-display-lg (Playfair Display, large) to font-label-caps (Inter ALL CAPS) — same visual language as the filter labels, far less weight
+### Featured works grid spacing (index.html)
+- Grid gap: `gap-gutter` (24px) → `gap-x-6 gap-y-8` (24px horizontal, 32px vertical)
+- Card image wrapper: added `p-3` (12px) — mat-frame breathing room inside bone slab
+- No change to aspect ratios, work order, or which works are shown
 
-### Scroll-reveal removal
-- **lost.html** — removed `.reveal-para` CSS + JS observer, `.btn-transition` on CTA links, `reveal-para` class from all 9 elements
-- **chromatic.html** — removed `.reveal-header` CSS + JS observer, `reveal-header` class from page header section
+### Nav touch targets (sitewide — _shared/top-nav.html + stamp-nav.sh)
+- Desktop nav links: added `py-3` → 44px tall (was 20px)
+- Search button: added `style="padding:10px"` → 44×44 (was 24×24)
+- Hamburger button: added `style="padding:10px"` → 44×44 (was 24×24)
+- Drawer close (×): padding `8px` → `10px 14px`, margin-right adjusted → ~44×52
+- Drawer search button: padding `10px 14px` → `12px 14px` → 44px tall
+- Stamped into all 26 pages via stamp-nav.sh
+- Note: `p-[10px]` arbitrary Tailwind class won't rebuild cleanly — buttons use inline style instead; Tailwind build process needs a proper `@tailwind`-directive input file before next rebuild
 
-### Orange accent audit + cleanup (sitewide)
-- Removed all decorative orange (content labels, section headers, pull-quote borders, horizontal rules, text-selection highlight, "Named Series" badge)
-- Orange now appears only as interaction signal: hover states, active nav, focus rings, filter buttons, loading bar
-- **about.html** — removed "Artist Biography" label, "Chronological" badge, exhibition year orange, "Contact/Archive/Now" section label orange; fixed OG description copy; portrait `loading="lazy"` → `loading="eager" fetchpriority="high"`; removed orphaned `padding-left` transition, `data-delay` attributes, stale GoatCounter comment
-- **artwork.html** — byline `text-international-orange` → `text-secondary`
-- **series-index.html** — removed `selection:bg-international-orange`, pull-quote border, "Archival Note" heading orange, horizontal rule orange, "Named Series" badge orange
-- **index.html** — removed orange medium labels (PHOTOGRAPH, COLLAGE) from all three mobile folio cards
-- **archive.html** — series label on work cards: `text-on-tertiary-container` → `text-secondary`
-- **404.html** — removed "STATUS // UNVERIFIED" chip and flicker JS
+### Previous session (2026-06-05 — session 1)
+### Active filter demote (archive.html)
+- Mobile filter buttons: orange active state (`text-on-tertiary-container`, `border-on-tertiary-container`) → weight+underline (`font-semibold`, `text-on-surface`, `border-on-surface`)
+- "CLEAR ALL FILTERS" button: `text-on-tertiary-container` → `text-secondary`
+- Orange now reserved for hover only; active selection reads via weight + near-black underline
 
-### Decade keyboard nav badge removed
-- **`_shared/ui.js`** — removed the `#kbd-hint` badge block (DOMContentLoaded listener, div injection, 4s timeout, keydown hide). Keyboard ← / → navigation itself unchanged. Affects all six decade pages (1970s–2020s).
+### Playfair Display → Inter audit (sitewide)
+- JFSN wordmark (desktop nav + mobile drawer + footer): `font-headline-md` → Inter across all 31 pages via `_shared/top-nav.html` + `_shared/footer.html` → stamp-nav.sh
+- Decade pages (1970s–2020s): desktop nav + footer wordmarks swapped directly (×6)
+- `changes.html`: `.ch__title`, `.ch__intro`, `.ch-entry__title` → Inter
+- `series.html`: `.thumb__caption` → Inter
+- `companion.html`: `--c-font-display` → Inter; `.c-title` pinned to Playfair explicitly (KEEP)
+- `about.html`: Exhibition Record h2 + 6 exhibition title entries → Inter; bio paragraph (KEEP)
+- `chromatic.html`: stat values (1,084 · years · mediums) → Inter
+- `artwork.html`: work title h1 → Inter
+- `index.html`: folio + homepage grid artwork title classes → Inter
+- `series-index.html`: JS card title classes → Inter (+ added `font-semibold`)
+- `api.html`: `.stat-val` + page h1 → Inter
+- Playfair remains only on: decade page heroes, `about.html` name h1 + bio paragraph, `series-index.html` h1, `series.html` + medium-page `.series-title` / `.medium-page__title`, `companion.html` `.c-title`
 
-### Featured works updated
-- Homepage grid changed from art0483/art1009/art1010 (two 2020 collages + one 2020 sculpture) to:
-  - **art0380** — Devo at WHK Auditorium, 1977, photograph
-  - **art0002** — Reliquary, 1990, collage
-  - **art0026** — Yellow Figure on Black Wall, 2010, photograph
-- Updated in both desktop `FEATURED_IDS` and all three mobile folio snap sections
-
-### Companion mobile hardening (companion.html)
-- **AbortController** — 28-second fetch timeout; AbortError gives friendly message
-- **Touch targets** — `.c-example` chips, `.c-submit`, `.c-deep-label`, `.c-again-btn` all raised to `min-height: 44px`
-- **iOS keyboard** — `scrollIntoView` on textarea focus; `padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px))` on main
-- **Catalog race condition** — catalog fetch stored as `catalogLoading` promise; submit handler awaits it before `renderResults`, fixing ?q= auto-submit showing raw IDs
-- **Error messages** — 504/524 → user-friendly copy; 5xx → generic retry message; AbortError → timeout message
-- **Textarea** — added `autocorrect="off" autocapitalize="off" spellcheck="false" autocomplete="off" inputmode="text"`
-- **Card images** — `onerror="this.style.opacity='0'"` on result thumbnails
-
-### Companion suggestion chips updated
-- **companion.html** — `Mr. SNOWmann` added as second chip; set is now 8 archive-specific prompts matching SESSION_PROMPT spec
-
-### Chromatic River mobile tap flash fixed
-- **chromatic.html** — added `-webkit-tap-highlight-color: transparent` and `touch-action: manipulation` to `#river-canvas`. Cause: browser default tap highlight was flashing the entire canvas on touch before the click event fired. Fix suppresses that without adding transitions or animations.
-
-### Mobile bottom nav removed (sitewide)
-- Removed fixed-bottom `<nav>` element from all 31 HTML files
-- ~540 lines deleted across: lost.html, companion.html, photography.html, index.html, chromatic.html, about.html, series.html, guernica.html, changes.html, 1980s–2020s.html, artwork.html, crosses.html, 404.html, painting.html, collaboration.html, framed.html, sculpture.html, targets.html, gallery-images.html, wall.html, mr-snowmann.html, series-index.html, torsos-faces.html, archive.html, privacy.html, collage.html
-- Dead scroll-listener IIFE in archive.html also removed (lines 468–479)
-- Verified: 0 instances of `fixed bottom-0` remain sitewide
-
-### SESSION_PROMPT pruned
-- Removed stale items: decade keyboard nav badge (was removed not built), preload first-row thumbnails (already shipped), archive lazy-load audit (already shipped)
-- Items 2–9 renumbered to 1–5; completed items moved to "do NOT redo" list
-
-### Sitemap confirmed clean
-- `build_catalog.py` `entries` list confirmed clean — deleted pages (for-artists.html, timeline.html, mosaic.html, constellation.html) were never in it
-- Sitemap regenerated: 1,103 URLs, 0 references to deleted pages ✅
+### Featured works card metadata (index.html)
+- Mobile folio: year+medium stacked below title as single line (`1977 · PHOTOGRAPH`) with `mt-2` breathing room; removed flex justify-between
+- Desktop grid: medium line `mt-1` → `mt-2`
 
 ## To do next session
-- [ ] Test Companion live on iPhone (https://jfsn-archive.netlify.app/companion.html) — mobile hardening untested on device
-- [ ] Review featured.txt / catalog-home.json — 30 homepage works still weighted toward 2020 (SESSION_PROMPT item 2)
+- [ ] Test Companion live on iPhone (https://jfsn-archive.netlify.app/companion.html)
+- [ ] Review featured.txt / catalog-home.json — decade representation (SESSION_PROMPT item 2)
 - [ ] Offsite cloud backup via Backblaze B2/rclone (SESSION_PROMPT item 3)
-- [ ] Archive "Recently Added" sort option (SESSION_PROMPT item 5)
+- [ ] Automated deploy: append deploy.sh to end-session.sh (SESSION_PROMPT item 4)
+- [ ] Fix Tailwind build: create proper input CSS file with @tailwind directives so new utility classes can be compiled into site.min.css
 
 ## Known issues (standing)
 - **sw.js CACHE_V** — `build_catalog.py` auto-bumps on every run. Check `git diff sw.js` before committing after any script run.

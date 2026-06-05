@@ -1,5 +1,23 @@
 [
   {
+    "sha": "98141e0",
+    "date": "2026-06-05",
+    "title": "Typography: Playfair → Inter audit; active filter demote; featured card metadata hierarchy",
+    "body": "- Active filter buttons: orange → weight+underline (font-semibold, border-on-surface)\n- Playfair Display removed from all UI/metadata contexts sitewide:\n  JFSN wordmark (nav + footer + mobile drawer) → Inter across all 31 pages\n  Decade page desktop nav + footer wordmarks → Inter (direct edits ×6)\n  changes.html: .ch__title, .ch__intro, .ch-entry__title → Inter\n  series.html: .thumb__caption → Inter\n  companion.html: .c-textarea, .c-card__title, .c-card__reason → Inter (via --c-font-display); .c-title kept Playfair\n  about.html: Exhibition Record h2 + 6 exhibition title entries → Inter\n  chromatic.html: stat values (1084, years, mediums) → Inter\n  artwork.html: work title h1 → Inter\n  index.html: folio + grid artwork titles → Inter\n  series-index.html: JS card title classes → Inter\n  api.html: .stat-val + page h1 → Inter\n- Featured works cards: year+medium stacked below title with mt-2 separation; mobile combines into single metadata line (1977 · PHOTOGRAPH)"
+  },
+  {
+    "sha": "2f0768e",
+    "date": "2026-06-05",
+    "title": "Fix: hide desktop sidebar on mobile (archive filter collapse)",
+    "body": ""
+  },
+  {
+    "sha": "aa372c3",
+    "date": "2026-06-05",
+    "title": "Carry-over build artifacts from prior session",
+    "body": ""
+  },
+  {
     "sha": "0c1e86e",
     "date": "2026-06-05",
     "title": "Archive mobile: collapse filters behind toggle button",
