@@ -68,7 +68,7 @@
         body { -webkit-font-smoothing: antialiased; }
     </style>
 </head>
-<body class="bg-bone-white text-deep-ink font-body-md selection:bg-international-orange selection:text-white">
+<body class="bg-bone-white text-deep-ink font-body-md">
 
 <!-- Top Nav -->
 <!-- NAV:START -->
@@ -166,7 +166,7 @@
   <!-- Page Header -->
   <header class="mb-xl max-w-2xl">
     <h1 class="font-display-lg text-display-lg mb-md leading-none">Series &amp; Themes</h1>
-    <p class="font-body-lg text-body-lg text-secondary border-l-2 border-international-orange pl-md">
+    <p class="font-body-lg text-body-lg text-secondary border-l-2 border-outline-variant pl-md">
       Recurring subjects, materials, and obsessions across five decades of work.
     </p>
   </header>
@@ -184,11 +184,11 @@
 <!-- Archival Note -->
 <section class="w-full py-32 bg-surface-container-high border-t border-outline-variant">
   <div class="max-w-4xl mx-auto px-margin-desktop flex flex-col items-center text-center">
-    <h4 class="font-label-lg text-label-lg uppercase tracking-widest mb-md text-international-orange">Archival Note</h4>
+    <h4 class="font-label-lg text-label-lg uppercase tracking-widest mb-md text-archive-gray">Archival Note</h4>
     <p class="font-body-lg text-body-lg text-on-surface-variant mb-lg italic leading-relaxed max-w-2xl">
       "The series format allows for the exploration of a singular concept across multiple iterations, revealing the subtle evolution of form and intent."
     </p>
-    <div class="w-12 h-px bg-on-tertiary-container"></div>
+    <div class="w-12 h-px bg-outline-variant"></div>
   </div>
 </section>
 
@@ -285,7 +285,7 @@ fetch('catalog.json')
       const archiveLink = g.page || `archive.html`;
 
       const tag = g.kind === 'series'
-        ? `<span class="inline-block font-label-md text-label-md uppercase tracking-widest text-international-orange border border-international-orange px-sm py-xs mb-sm">Named Series</span>`
+        ? `<span class="inline-block font-label-md text-label-md uppercase tracking-widest text-archive-gray border border-outline-variant px-sm py-xs mb-sm">Named Series</span>`
         : '';
 
       const aspect = isFeatured ? 'aspect-[4/5]' : 'aspect-square';

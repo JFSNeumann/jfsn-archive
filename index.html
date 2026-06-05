@@ -183,14 +183,14 @@
       </div>
     </section>
 
-    <!-- Snap 2: art0483 -->
+    <!-- Snap 2: art0380 -->
     <section class="folio-section">
       <div class="w-full flex flex-col h-full justify-center py-4">
         <div class="flex-grow flex items-center justify-center min-h-0">
-          <a href="artwork.html?id=art0483" class="block w-full h-full max-h-[60vh]">
+          <a href="artwork.html?id=art0380" class="block w-full h-full max-h-[60vh]">
             <img
-              src="artworks/full/art0483.avif"
-              alt="Untitled (CD Formation) 2 — Jeffrey F. S. Neumann, 1990"
+              src="artworks/full/art0380.avif"
+              alt="Devo at WHK Auditorium — Jeffrey F. S. Neumann, 1977"
               class="w-full h-full object-contain border border-deep-ink"
               loading="eager"
             />
@@ -198,22 +198,45 @@
         </div>
         <div class="mt-4 border-b border-deep-ink pb-3 flex justify-between items-end">
           <div>
+            <span class="font-label-caps text-[10px] text-international-orange tracking-[0.15em] block mb-1">PHOTOGRAPH</span>
+            <p class="font-headline-md text-[18px] leading-snug text-deep-ink">Devo at WHK Auditorium</p>
+          </div>
+          <span class="font-label-caps text-label-caps text-archive-gray">1977</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Snap 3: art0002 -->
+    <section class="folio-section">
+      <div class="w-full flex flex-col h-full justify-center py-4">
+        <div class="flex-grow flex items-center justify-center min-h-0">
+          <a href="artwork.html?id=art0002" class="block w-full h-full max-h-[60vh]">
+            <img
+              src="artworks/full/art0002.avif"
+              alt="Reliquary — Jeffrey F. S. Neumann, 1990"
+              class="w-full h-full object-contain border border-deep-ink"
+              loading="lazy"
+            />
+          </a>
+        </div>
+        <div class="mt-4 border-b border-deep-ink pb-3 flex justify-between items-end">
+          <div>
             <span class="font-label-caps text-[10px] text-international-orange tracking-[0.15em] block mb-1">COLLAGE</span>
-            <p class="font-headline-md text-[18px] leading-snug text-deep-ink">Untitled (CD Formation) 2</p>
+            <p class="font-headline-md text-[18px] leading-snug text-deep-ink">Reliquary</p>
           </div>
           <span class="font-label-caps text-label-caps text-archive-gray">1990</span>
         </div>
       </div>
     </section>
 
-    <!-- Snap 3: art1009 -->
+    <!-- Snap 4: art0026 -->
     <section class="folio-section">
       <div class="w-full flex flex-col h-full justify-center py-4">
         <div class="flex-grow flex items-center justify-center min-h-0">
-          <a href="artwork.html?id=art1009" class="block w-full h-full max-h-[60vh]">
+          <a href="artwork.html?id=art0026" class="block w-full h-full max-h-[60vh]">
             <img
-              src="artworks/full/art1009.avif"
-              alt="Untitled (Machine Assemblage) — Jeffrey F. S. Neumann, 2020"
+              src="artworks/full/art0026.avif"
+              alt="Yellow Figure on Black Wall — Jeffrey F. S. Neumann, 2010"
               class="w-full h-full object-contain border border-deep-ink"
               loading="lazy"
             />
@@ -221,33 +244,10 @@
         </div>
         <div class="mt-4 border-b border-deep-ink pb-3 flex justify-between items-end">
           <div>
-            <span class="font-label-caps text-[10px] text-international-orange tracking-[0.15em] block mb-1">SCULPTURE</span>
-            <p class="font-headline-md text-[18px] leading-snug text-deep-ink">Untitled (Machine Assemblage)</p>
+            <span class="font-label-caps text-[10px] text-international-orange tracking-[0.15em] block mb-1">PHOTOGRAPH</span>
+            <p class="font-headline-md text-[18px] leading-snug text-deep-ink">Yellow Figure on Black Wall</p>
           </div>
-          <span class="font-label-caps text-label-caps text-archive-gray">2020</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Snap 4: art1010 -->
-    <section class="folio-section">
-      <div class="w-full flex flex-col h-full justify-center py-4">
-        <div class="flex-grow flex items-center justify-center min-h-0">
-          <a href="artwork.html?id=art1010" class="block w-full h-full max-h-[60vh]">
-            <img
-              src="artworks/full/art1010.avif"
-              alt="Untitled (Cassette Torso) — Jeffrey F. S. Neumann, 2020"
-              class="w-full h-full object-contain border border-deep-ink"
-              loading="lazy"
-            />
-          </a>
-        </div>
-        <div class="mt-4 border-b border-deep-ink pb-3 flex justify-between items-end">
-          <div>
-            <span class="font-label-caps text-[10px] text-international-orange tracking-[0.15em] block mb-1">COLLAGE</span>
-            <p class="font-headline-md text-[18px] leading-snug text-deep-ink">Untitled (Cassette Torso)</p>
-          </div>
-          <span class="font-label-caps text-label-caps text-archive-gray">2020</span>
+          <span class="font-label-caps text-label-caps text-archive-gray">2010</span>
         </div>
       </div>
     </section>
@@ -310,7 +310,7 @@
   (async () => {
     const grid = document.getElementById('featured-grid');
     if (!grid) return;
-    const FEATURED_IDS = ['art0483.avif', 'art1009.avif', 'art1010.avif'];
+    const FEATURED_IDS = ['art0380.avif', 'art0002.avif', 'art0026.avif'];
     try {
       const res = await fetch('catalog-home.json');
       const works = await res.json();

@@ -75,16 +75,7 @@
       pointer-events: none;
     }
 
-    /* Scroll reveal */
-    .reveal-header {
-      opacity: 0;
-      transform: translateY(14px);
-      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .reveal-header.visible { opacity: 1; transform: translateY(0); }
-
     @media (prefers-reduced-motion: reduce) {
-      .reveal-header { opacity: 1; transform: none; transition: none; }
       #chromatic-loader { display: none; }
     }
   </style>
@@ -187,7 +178,7 @@
 <main id="main" class="pt-16">
 
   <!-- Header -->
-  <section class="border-b border-deep-ink py-12 px-margin-desktop reveal-header">
+  <section class="border-b border-deep-ink py-12 px-margin-desktop">
     <div class="max-w-2xl">
       <span class="font-label-caps text-label-caps text-archive-gray mb-3 block">1,084 WORKS &middot; 1970&ndash;PRESENT</span>
       <h1 class="font-display text-[clamp(3rem,8vw,6rem)] leading-[1] tracking-tight font-bold text-deep-ink mb-5">Chromatic</h1>
@@ -296,12 +287,6 @@ document.getElementById('river-canvas').addEventListener('keydown', function(e) 
 <script src="search.js" defer></script>
 <script src="_shared/nav-active.js" defer></script>
 <script>
-// Header reveal
-const _rh = document.querySelector('.reveal-header');
-if (_rh) {
-  const _ro = new IntersectionObserver(([e]) => { if (e.isIntersecting) { _rh.classList.add('visible'); _ro.disconnect(); } }, { threshold: 0.1 });
-  _ro.observe(_rh);
-}
 // Remove loader (no async data)
 document.getElementById('chromatic-loader').remove();
 </script>

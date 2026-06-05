@@ -1,69 +1,56 @@
 # Current State
-**Updated:** 2026-06-04 (sessions 9–11: artwork-first audit, dead-page purge, static page regen)
+**Updated:** 2026-06-05 (session — UI cleanup, orange audit, featured works, Companion mobile hardening)
 
 ## Last commit
-39d0c83 — Session: artwork-first audit — remove grayscale/effects, delete dead pages, regen static pages
+9d2c65b — Update CURRENT_STATE.md; bump auto-generated artifacts
 
-## What was done in the last three sessions
+## What was done this session
 
-### Interface / CSS strip (sessions 9–10)
-- **Grayscale removed sitewide** — `filter: grayscale`, mask-image gradient, `.grayscale-img` class gone from all HTML, CSS, and JS. Verified clean by grep across all files including artworks/pages/.
-- **Scale on hover removed** — `transform: scale(1.02)`, `scale(1.05)` gone from all pages.
-- **Transition on img elements removed** — no `transition:` on artwork images anywhere.
-- **`_shared/ui.css` stripped** — 3,704 → 746 bytes. All animations, border-draw, scroll-reveal, opacity/transform choreography removed.
-- **`index.html` stripped** — 797 → 228 lines. Dust motte, Companion section, stats snap, hero H1/label/gradient/CTAs, scroll reveals, parallax, 5-column footer → 1 line, nav 5 → 2 links.
-- **`series.html` stripped** — 919 → 591 lines. Series-room entrance overlay, mask JS, sibling dim, density toggle, progress bar, scroll-to-top, hover preload, more-series section all removed.
-- **`artwork.html` stripped** — 594 → 378 lines. Grayscale/mask/scale on image, companion button, Buy a Print + FAA_URLS table, related works section, AI description, hover hint, opacity fade-in removed.
+### Scroll-reveal removal
+- **lost.html** — removed `.reveal-para` CSS + JS observer, `.btn-transition` on CTA links, `reveal-para` class from all 9 elements
+- **chromatic.html** — removed `.reveal-header` CSS + JS observer, `reveal-header` class from page header section
 
-### Dead pages deleted
-- `for-artists.html` — commercial service page. 1,147 references removed across 1,119 files.
-- `timeline.html` — removed from nav, sitemap, CLAUDE.md, all internal links.
-- `mosaic.html` — same.
-- `constellation.html` — same.
-- `old-site/` directory — deleted entirely.
-- `WORKFLOW-CLIENT.md` — obsolete client onboarding doc, deleted.
+### Orange accent audit + cleanup (sitewide)
+- Removed all decorative orange (content labels, section headers, pull-quote borders, horizontal rules, text-selection highlight, "Named Series" badge)
+- Orange now appears only as interaction signal: hover states, active nav, focus rings, filter buttons, loading bar
+- **about.html** — removed "Artist Biography" label, "Chronological" badge, exhibition year orange, "Contact/Archive/Now" section label orange; fixed OG description copy; portrait `loading="lazy"` → `loading="eager" fetchpriority="high"`; removed orphaned `padding-left` transition, `data-delay` attributes, stale GoatCounter comment
+- **artwork.html** — byline `text-international-orange` → `text-secondary`
+- **series-index.html** — removed `selection:bg-international-orange`, pull-quote border, "Archival Note" heading orange, horizontal rule orange, "Named Series" badge orange
 
-### Static pages regenerated
-- **`artworks/pages/`** — all 1,084 static artwork pages rebuilt from new `gen-artwork-pages.py`. Current nav (4 links: Archive / Series / Companion / About), full color images, no grayscale, no Buy a Print, no related works, correct footer, mobile nav.
-- **`gen-artwork-pages.py`** — rewritten and committed. Source of truth for static page generation.
+### Featured works updated
+- Homepage grid changed from art0483/art1009/art1010 (two 2020 collages + one 2020 sculpture) to:
+  - **art0380** — Devo at WHK Auditorium, 1977, photograph
+  - **art0002** — Reliquary, 1990, collage
+  - **art0026** — Yellow Figure on Black Wall, 2010, photograph
+- Updated in both desktop `FEATURED_IDS` and all three mobile folio snap sections
 
-### Fonts consolidated
-- All Google Fonts requests merged into a single `<link>` per page: Playfair Display + Inter + Material Symbols in one request. Two-link pattern eliminated.
+### Companion mobile hardening (companion.html)
+- **AbortController** — 28-second fetch timeout; AbortError gives friendly message
+- **Touch targets** — `.c-example` chips, `.c-submit`, `.c-deep-label`, `.c-again-btn` all raised to `min-height: 44px`
+- **iOS keyboard** — `scrollIntoView` on textarea focus; `padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px))` on main
+- **Catalog race condition** — catalog fetch stored as `catalogLoading` promise; submit handler awaits it before `renderResults`, fixing ?q= auto-submit showing raw IDs
+- **Error messages** — 504/524 → user-friendly copy; 5xx → generic retry message; AbortError → timeout message
+- **Textarea** — added `autocorrect="off" autocapitalize="off" spellcheck="false" autocomplete="off" inputmode="text"`
+- **Card images** — `onerror="this.style.opacity='0'"` on result thumbnails
 
-### Docs updated
-- `SESSION_PROMPT.md` — reflects current 18-page site (was referencing deleted pages).
-- `CLAUDE.md` — updated.
-- `sitemap.xml` — cleaned. No references to for-artists, timeline, mosaic, constellation.
-
----
-
-## Current site shape
-
-**32 public pages** at root:
-- 6 decade pages (1970s–2020s)
-- Core: index, archive, artwork, series, series-index, about, companion
-- Medium: collage, sculpture, photography, painting
-- Theme series: guernica, targets, framed, torsos-faces, mr-snowmann, crosses, collaboration
-- Special: lost, chromatic, wall, gallery-images, changes, api
-- Utility: 404, privacy
-
-**1,084 works** cataloged, 0 errors.
-
----
+## To do next session
+- [ ] Test Companion live on iPhone (https://jfsn-archive.netlify.app/companion.html) — mobile hardening untested on device
+- [ ] Update Companion suggestion chips (SESSION_PROMPT item 2 — already has copy ready)
+- [ ] Decade page keyboard nav badge (SESSION_PROMPT item 3)
+- [ ] Chromatic River mobile tap flash (SESSION_PROMPT item 4)
+- [ ] build_catalog.py sitemap still references deleted pages (for-artists.html, timeline.html, constellation.html) — quick cleanup
 
 ## Known issues (standing)
 - **sw.js CACHE_V** — `build_catalog.py` auto-bumps on every run. Still check `git diff sw.js` before committing after any script run.
 - **index.html has no FOOTER:START marker** — custom homepage footer, not stamped. Edit directly if footer changes.
 - **Decade pages not in stamp-nav.sh** — edit 1970s–2020s.html directly for any nav/footer changes.
-
----
-
-## To do next session
-- [ ] Test Companion live on iPhone (https://jfsn-archive.netlify.app/companion.html)
-- [ ] Update Companion suggestion chips to archive-specific vocabulary
+- **about-portrait.jpg** — only JPEG image in the asset pipeline; all artworks are AVIF. Low priority.
 
 ---
 
 ## Site is live at
-- jfsn.com (primary — cPanel/HostGator)
-- jfsn-archive.netlify.app (secondary — Netlify, Companion function only)
+- jfsn.com  (primary — cPanel)
+- jfsn-archive.netlify.app  (secondary — Netlify, has Companion function)
+
+## Archive stats
+- 1084 works cataloged, 0 errors

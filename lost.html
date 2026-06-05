@@ -53,16 +53,6 @@
         height: 2px;
         background-color: #FF6600;
     }
-    .btn-transition { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-
-    /* Scroll reveal for essay paragraphs */
-    .reveal-para {
-        opacity: 0;
-        transform: translateY(14px);
-        transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .reveal-para.visible { opacity: 1; transform: translateY(0); }
-
     /* Ghost tile entrance — initially invisible */
     .ghost-tile-wrap {
         opacity: 0;
@@ -72,7 +62,7 @@
 
     @media (prefers-reduced-motion: reduce) {
         *, *::before, *::after { transition: none !important; animation: none !important; }
-        .reveal-para, .ghost-tile-wrap { opacity: 1; transform: none; }
+        .ghost-tile-wrap { opacity: 1; }
     }
 </style>
 </head>
@@ -185,47 +175,47 @@
   <article class="py-16 px-margin-desktop">
     <div class="max-w-2xl">
 
-      <p class="reveal-para font-body-lg text-body-lg text-deep-ink text-xl leading-relaxed mb-8">
+      <p class="font-body-lg text-body-lg text-deep-ink text-xl leading-relaxed mb-8">
         The number isn&rsquo;t precise because the number never existed. There was no inventory, no scan, no list.
       </p>
 
-      <p class="reveal-para font-body-md text-body-md text-deep-ink leading-relaxed mb-6">
+      <p class="font-body-md text-body-md text-deep-ink leading-relaxed mb-6">
         The 2000s. I was renting space from a friend. Water pipes broke. Cardboard, paper, canvas &mdash; the works that depended on dry storage soaked through. What could be salvaged was salvaged.
       </p>
 
-      <p class="reveal-para font-body-md text-body-md text-deep-ink leading-relaxed mb-6">
+      <p class="font-body-md text-body-md text-deep-ink leading-relaxed mb-6">
         Then, months later, bed bugs.
       </p>
 
-      <p class="reveal-para font-body-md text-body-md text-deep-ink leading-relaxed mb-6">
+      <p class="font-body-md text-body-md text-deep-ink leading-relaxed mb-6">
         What had survived the water didn&rsquo;t survive the second event. Everything stored in that space had to be discarded &mdash; preventatively, completely. Collage, sculpture, prints, painted constructions. Every medium I worked in during that decade.
       </p>
 
-      <p class="reveal-para font-body-md text-body-md text-deep-ink leading-relaxed mb-8">
+      <p class="font-body-md text-body-md text-deep-ink leading-relaxed mb-8">
         There are no images. There are no records. There is no list. What remains is memory.
       </p>
 
       <!-- Rule -->
-      <div class="reveal-para w-16 h-px bg-international-orange mb-8"></div>
+      <div class="w-16 h-px bg-outline-variant mb-8"></div>
 
-      <p class="reveal-para font-body-md text-body-md text-deep-ink leading-relaxed mb-6">
+      <p class="font-body-md text-body-md text-deep-ink leading-relaxed mb-6">
         The archive on this site &mdash; 1,084 works, 1974 to the present &mdash; exists in part because of that loss. Every piece is photographed. Every piece is described. Every piece has a backup of its backup. The metadata schema is open source. The ingest pipeline is open source. Anyone who wants to build the same thing for their own studio can fork it.
       </p>
 
-      <p class="reveal-para font-body-md text-body-md text-deep-ink leading-relaxed mb-6">
+      <p class="font-body-md text-body-md text-deep-ink leading-relaxed mb-6">
         This page is here so the lost works aren&rsquo;t forgotten twice &mdash; once when the pipes broke, and again by silence.
       </p>
 
-      <p class="reveal-para font-body-md text-body-md text-deep-ink leading-relaxed mb-12">
+      <p class="font-body-md text-body-md text-deep-ink leading-relaxed mb-12">
         If you are an artist with work in storage you have not catalogued: this is the message. Not <em>be careful</em>. <em>Be early.</em>
       </p>
 
-      <p class="reveal-para font-label-caps text-label-caps text-archive-gray mb-12">&mdash; JEFFREY F. S. NEUMANN</p>
+      <p class="font-label-caps text-label-caps text-archive-gray mb-12">&mdash; JEFFREY F. S. NEUMANN</p>
 
       <!-- CTA links -->
       <div class="flex flex-wrap gap-6">
-<a href="https://github.com/JFSNeumann/jfsn-archive" target="_blank" rel="noopener" class="font-label-caps text-label-caps text-deep-ink border-b border-deep-ink pb-0.5 hover:text-international-orange hover:border-international-orange transition-all btn-transition">OPEN SOURCE &rarr;</a>
-        <a href="archive.html" class="font-label-caps text-label-caps text-deep-ink border-b border-deep-ink pb-0.5 hover:text-international-orange hover:border-international-orange transition-all btn-transition">VIEW THE ARCHIVE &rarr;</a>
+<a href="https://github.com/JFSNeumann/jfsn-archive" target="_blank" rel="noopener" class="font-label-caps text-label-caps text-deep-ink border-b border-deep-ink pb-0.5 hover:text-international-orange hover:border-international-orange transition-all">OPEN SOURCE &rarr;</a>
+        <a href="archive.html" class="font-label-caps text-label-caps text-deep-ink border-b border-deep-ink pb-0.5 hover:text-international-orange hover:border-international-orange transition-all">VIEW THE ARCHIVE &rarr;</a>
       </div>
 
     </div>
@@ -279,17 +269,6 @@
     requestAnimationFrame(revealBatch);
   }, { threshold: 0 });
   gridObserver.observe(grid);
-
-  // Scroll reveal for essay paragraphs
-  const paraObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        paraObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.reveal-para').forEach(el => paraObserver.observe(el));
 })();
 </script>
 
