@@ -18,25 +18,11 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Material+Symbols+Outlined:opsz,wght,FILL@24,400,0..1&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="site.min.css"/>
 <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .grayscale-filter {
-            filter: grayscale(100%);
-            transition: filter 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .grayscale-filter:hover {
-            filter: grayscale(0%);
-            transform: scale(1.04);
-        }
-        /* Orange border lift on card hover */
-        a.group:hover > div.border {
-            border-color: #e05900;
-            transition: border-color 0.25s ease;
         }
         .custom-checkbox {
             appearance: none;
@@ -62,78 +48,9 @@
             border-width: 0 1px 1px 0;
             transform: rotate(45deg);
         }
-        .kinetic-hover { transition: color 0.2s ease; }
-        .kinetic-hover:hover { color: #e05900; }
-        #work-count { font-variant-numeric: tabular-nums; transition: color 0.15s ease; }
-        #work-count.count-flash { color: #e05900; }
-        @media (prefers-reduced-motion: reduce) { #work-count { transition: none; } }
-
-        /* Animated border draw on hover — corner-to-corner */
-        .archive-card {
-            position: relative;
-            cursor: crosshair;
-        }
-        .archive-card::before, .archive-card::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 0;
-            border: 1px solid transparent;
-            box-sizing: border-box;
-            pointer-events: none;
-            z-index: 10;
-        }
-        .archive-card::before { top: 0; left: 0; }
-        .archive-card::after  { bottom: 0; right: 0; }
-        .archive-card:hover::before {
-            width: 100%; height: 100%;
-            border-top-color: #e05900;
-            border-right-color: #e05900;
-            transition: width 0.15s ease-out, height 0.15s ease-out 0.15s;
-        }
-        .archive-card:hover::after {
-            width: 100%; height: 100%;
-            border-bottom-color: #e05900;
-            border-left-color: #e05900;
-            transition: width 0.15s ease-out, height 0.15s ease-out 0.15s;
-        }
-
-        /* Scroll reveal staggers */
-        .reveal-card {
-            opacity: 0;
-            transform: translateY(16px);
-            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .reveal-card.visible { opacity: 1; transform: translateY(0); }
-
-        /* Ghost trace parallax on metadata */
-        .parallax-meta { will-change: transform; }
-
-        /* Loading progress bar */
-        #loading-bar {
-            height: 2px;
-            width: 0%;
-            background: #e05900;
-            transition: width 0.4s ease;
-        }
-
-        /* Mobile sticky filter ledger */
-        #mobile-ledger {
-            transition: padding 0.3s ease, box-shadow 0.3s ease;
-        }
-        #mobile-ledger.stuck {
-            padding-top: 8px;
-            padding-bottom: 8px;
-            box-shadow: 0 4px 12px -4px rgba(0,0,0,0.1);
-        }
+        #work-count { font-variant-numeric: tabular-nums; }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-        @media (prefers-reduced-motion: reduce) {
-            .reveal-card { opacity: 1; transform: none; transition: none; }
-            .archive-card::before, .archive-card::after { transition: none; }
-            .parallax-meta { will-change: auto; }
-        }
     </style>
 </head>
 <body class="font-body-md text-body-md bg-background text-on-background">
@@ -251,9 +168,6 @@
     </div>
   </header>
 
-  <!-- Loading progress bar -->
-  <div class="h-[2px] w-full mb-4 bg-transparent"><div id="loading-bar"></div></div>
-
   <!-- Mobile-only sticky horizontal filter ledger -->
   <div class="md:hidden sticky top-[64px] z-40 bg-background border-y border-outline-variant py-3 -mx-margin-mobile px-margin-mobile mb-md" id="mobile-ledger">
     <div class="flex items-center gap-3 overflow-x-auto hide-scrollbar">
@@ -278,19 +192,19 @@
           <div class="space-y-3" id="filter-medium">
             <label class="flex items-center gap-3 cursor-pointer">
               <input class="custom-checkbox" type="checkbox" value="collage"/>
-              <span class="font-label-md text-label-md uppercase kinetic-hover">Collage <span class="text-outline">(638)</span></span>
+              <span class="font-label-md text-label-md uppercase">Collage <span class="text-outline">(638)</span></span>
             </label>
             <label class="flex items-center gap-3 cursor-pointer">
               <input class="custom-checkbox" type="checkbox" value="photograph"/>
-              <span class="font-label-md text-label-md uppercase kinetic-hover">Photography <span class="text-outline">(328)</span></span>
+              <span class="font-label-md text-label-md uppercase">Photography <span class="text-outline">(328)</span></span>
             </label>
             <label class="flex items-center gap-3 cursor-pointer">
               <input class="custom-checkbox" type="checkbox" value="sculpture"/>
-              <span class="font-label-md text-label-md uppercase kinetic-hover">Sculpture <span class="text-outline">(76)</span></span>
+              <span class="font-label-md text-label-md uppercase">Sculpture <span class="text-outline">(76)</span></span>
             </label>
             <label class="flex items-center gap-3 cursor-pointer">
               <input class="custom-checkbox" type="checkbox" value="painting"/>
-              <span class="font-label-md text-label-md uppercase kinetic-hover">Painting <span class="text-outline">(42)</span></span>
+              <span class="font-label-md text-label-md uppercase">Painting <span class="text-outline">(42)</span></span>
             </label>
           </div>
         </div>
@@ -302,42 +216,42 @@
             <div class="flex items-center justify-between gap-2">
               <label class="flex items-center gap-3 cursor-pointer">
                 <input class="custom-checkbox" type="checkbox" value="1970s"/>
-                <span class="font-label-md text-label-md uppercase kinetic-hover">1970s <span class="text-outline">(58)</span></span>
+                <span class="font-label-md text-label-md uppercase">1970s <span class="text-outline">(58)</span></span>
               </label>
               <a href="1970s.html" class="font-label-md text-[10px] uppercase tracking-widest text-secondary hover:text-on-tertiary-container transition-colors whitespace-nowrap" title="Deep dive: 1970s">↗</a>
             </div>
             <div class="flex items-center justify-between gap-2">
               <label class="flex items-center gap-3 cursor-pointer">
                 <input class="custom-checkbox" type="checkbox" value="1980s"/>
-                <span class="font-label-md text-label-md uppercase kinetic-hover">1980s <span class="text-outline">(11)</span></span>
+                <span class="font-label-md text-label-md uppercase">1980s <span class="text-outline">(11)</span></span>
               </label>
               <a href="1980s.html" class="font-label-md text-[10px] uppercase tracking-widest text-secondary hover:text-on-tertiary-container transition-colors whitespace-nowrap" title="Deep dive: 1980s">↗</a>
             </div>
             <div class="flex items-center justify-between gap-2">
               <label class="flex items-center gap-3 cursor-pointer">
                 <input class="custom-checkbox" type="checkbox" value="1990s"/>
-                <span class="font-label-md text-label-md uppercase kinetic-hover">1990s <span class="text-outline">(193)</span></span>
+                <span class="font-label-md text-label-md uppercase">1990s <span class="text-outline">(193)</span></span>
               </label>
               <a href="1990s.html" class="font-label-md text-[10px] uppercase tracking-widest text-secondary hover:text-on-tertiary-container transition-colors whitespace-nowrap" title="Deep dive: 1990s">↗</a>
             </div>
             <div class="flex items-center justify-between gap-2">
               <label class="flex items-center gap-3 cursor-pointer">
                 <input class="custom-checkbox" type="checkbox" value="2000s"/>
-                <span class="font-label-md text-label-md uppercase kinetic-hover">2000s <span class="text-outline">(274)</span></span>
+                <span class="font-label-md text-label-md uppercase">2000s <span class="text-outline">(274)</span></span>
               </label>
               <a href="2000s.html" class="font-label-md text-[10px] uppercase tracking-widest text-secondary hover:text-on-tertiary-container transition-colors whitespace-nowrap" title="Deep dive: 2000s">↗</a>
             </div>
             <div class="flex items-center justify-between gap-2">
               <label class="flex items-center gap-3 cursor-pointer">
                 <input class="custom-checkbox" type="checkbox" value="2010s"/>
-                <span class="font-label-md text-label-md uppercase kinetic-hover">2010s <span class="text-outline">(307)</span></span>
+                <span class="font-label-md text-label-md uppercase">2010s <span class="text-outline">(307)</span></span>
               </label>
               <a href="2010s.html" class="font-label-md text-[10px] uppercase tracking-widest text-secondary hover:text-on-tertiary-container transition-colors whitespace-nowrap" title="Deep dive: 2010s">↗</a>
             </div>
             <div class="flex items-center justify-between gap-2">
               <label class="flex items-center gap-3 cursor-pointer">
                 <input class="custom-checkbox" type="checkbox" value="2020s"/>
-                <span class="font-label-md text-label-md uppercase kinetic-hover">2020s <span class="text-outline">(241)</span></span>
+                <span class="font-label-md text-label-md uppercase">2020s <span class="text-outline">(241)</span></span>
               </label>
               <a href="2020s.html" class="font-label-md text-[10px] uppercase tracking-widest text-secondary hover:text-on-tertiary-container transition-colors whitespace-nowrap" title="Deep dive: 2020s">↗</a>
             </div>
@@ -350,13 +264,13 @@
           <div class="space-y-3" id="filter-series">
             <label class="flex items-center gap-3 cursor-pointer">
               <input class="custom-checkbox" type="checkbox" value="Guernica"/>
-              <span class="font-label-md text-label-md uppercase kinetic-hover">Guernica <span class="text-outline">(232)</span></span>
+              <span class="font-label-md text-label-md uppercase">Guernica <span class="text-outline">(232)</span></span>
             </label>
           </div>
         </div>
 
         <!-- Clear filters -->
-        <button id="clear-filters" class="hidden font-label-md text-label-md uppercase text-on-tertiary-container kinetic-hover tracking-widest pt-md">
+        <button id="clear-filters" class="hidden font-label-md text-label-md uppercase text-on-tertiary-container tracking-widest pt-md">
           CLEAR ALL FILTERS
         </button>
 
@@ -372,7 +286,7 @@
       </p>
 
       <div class="mt-xl flex justify-center">
-        <button id="load-more" class="hidden px-xl py-md border border-outline-variant font-label-lg text-label-lg uppercase kinetic-hover bg-transparent tracking-widest hover:border-on-tertiary-container">
+        <button id="load-more" class="hidden px-xl py-md border border-outline-variant font-label-lg text-label-lg uppercase bg-transparent tracking-widest hover:border-on-tertiary-container">
           LOAD MORE
         </button>
       </div>
@@ -473,17 +387,16 @@ function renderCard(w, idx) {
   const title = w.title || 'Untitled';
   const loadAttr = (idx !== undefined && idx < 8) ? 'eager" fetchpriority="high' : 'lazy';
   return `
-    <a href="artwork.html?id=${id}" class="archive-card reveal-card group block no-underline text-on-background bg-background sm:bg-transparent">
-      <div class="overflow-hidden sm:mb-md sm:border sm:border-outline-variant bg-surface-container-low" style="background-image:url(artworks/thumbs/${w.file});background-size:cover;background-position:center;">
+    <a href="artwork.html?id=${id}" class="archive-card block no-underline text-on-background bg-background sm:bg-transparent">
+      <div class="overflow-hidden sm:mb-md sm:border sm:border-outline-variant bg-surface-container-low">
         <img
           alt="${title}"
-          class="w-full aspect-[3/4] object-cover grayscale-filter"
+          class="w-full aspect-[3/4] object-cover"
           src="artworks/thumbs/${w.file}"
-          style="-webkit-mask-image:linear-gradient(to bottom,black 0%,black 65%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 65%,transparent 100%)"
           loading="${loadAttr}" width="300" height="400"
         />
       </div>
-      <div class="space-y-1 parallax-meta px-3 pt-2 pb-3 sm:px-0 sm:pt-0 sm:pb-0">
+      <div class="space-y-1 px-3 pt-2 pb-3 sm:px-0 sm:pt-0 sm:pb-0">
         <h4 class="font-label-lg text-label-lg uppercase leading-snug">${title}</h4>
         <span class="block font-label-md text-label-md uppercase text-secondary">${w.year || '—'} | ${med}</span>
         ${w.series ? `<span class="block font-label-md text-label-md text-on-tertiary-container uppercase">${w.series}</span>` : ''}
@@ -530,15 +443,8 @@ function renderPage() {
 
   const total = filtered.length;
   workCount.textContent = total.toLocaleString();
-  workCount.classList.remove('count-flash');
-  requestAnimationFrame(() => workCount.classList.add('count-flash'));
-  setTimeout(() => workCount.classList.remove('count-flash'), 400);
   emptyState.classList.toggle('hidden', total > 0);
   loadMoreBtn.classList.toggle('hidden', page * PAGE_SIZE >= total);
-  // Observe newly added cards (observeNewCards defined below)
-  requestAnimationFrame(() => {
-    if (typeof observeNewCards === 'function') observeNewCards();
-  });
 }
 
 // Pre-select filter from URL param, e.g. archive.html?decade=1990s or ?medium=collage
@@ -579,38 +485,13 @@ document.querySelectorAll('.custom-checkbox').forEach(cb => {
 });
 
 loadMoreBtn.addEventListener('click', () => {
-  // Progress bar animation
-  const bar = document.getElementById('loading-bar');
-  bar.style.width = '70%';
-  setTimeout(() => {
-    renderPage();
-    bar.style.width = '100%';
-    setTimeout(() => {
-      bar.style.transition = 'none';
-      bar.style.width = '0%';
-      setTimeout(() => { bar.style.transition = 'width 0.4s ease'; }, 50);
-    }, 400);
-  }, 300);
+  renderPage();
 });
 
 clearBtn.addEventListener('click', () => {
   document.querySelectorAll('.custom-checkbox').forEach(cb => cb.checked = false);
   applyFilters();
 });
-
-// Scroll reveal for dynamically added cards
-const cardObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      setTimeout(() => entry.target.classList.add('visible'), (i % 8) * 60);
-      cardObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
-
-function observeNewCards() {
-  document.querySelectorAll('.reveal-card:not(.visible)').forEach(el => cardObserver.observe(el));
-}
 
 // Mobile bottom nav — hide on scroll down, show on scroll up
 (function() {
@@ -624,35 +505,6 @@ function observeNewCards() {
     lastY = y;
   }, { passive: true });
 })();
-
-// Touch grayscale — tap to reveal color, auto-revert after 1s
-document.addEventListener('touchstart', e => {
-  const img = e.target.closest('.archive-card')?.querySelector('img');
-  if (!img) return;
-  img.style.filter = 'grayscale(0%)';
-  clearTimeout(img._greyTimer);
-  img._greyTimer = setTimeout(() => { img.style.filter = ''; }, 1000);
-}, { passive: true });
-
-// Ghost trace parallax on scroll
-window.addEventListener('scroll', () => {
-  document.querySelectorAll('.parallax-meta').forEach(el => {
-    const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight && rect.bottom > 0) {
-      const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * 0.04;
-      el.style.transform = `translateY(${offset}px)`;
-    }
-  });
-}, { passive: true });
-
-// Mobile ledger sticky shadow
-const mobileLedger = document.getElementById('mobile-ledger');
-if (mobileLedger) {
-  const stickyObserver = new IntersectionObserver(([e]) => {
-    mobileLedger.classList.toggle('stuck', e.intersectionRatio < 1);
-  }, { threshold: 1, rootMargin: '-65px 0px 0px 0px' });
-  stickyObserver.observe(mobileLedger);
-}
 
 // Mobile medium filter buttons
 document.querySelectorAll('.mobile-medium-btn').forEach(btn => {
@@ -674,25 +526,6 @@ document.querySelectorAll('.mobile-medium-btn').forEach(btn => {
 });
 </script>
 
-<!-- GoatCounter analytics -->
-
 <script src="_shared/nav-active.js" defer></script>
-
-// Hover mask reveal for archive cards
-(function(){
-  var MASK="linear-gradient(to bottom,black 0%,black 65%,transparent 100%)";
-  document.addEventListener('mouseover', function(e){
-    var card = e.target.closest('.archive-card');
-    if(!card) return;
-    var img = card.querySelector('img');
-    if(img){ img.style.webkitMaskImage='none'; img.style.maskImage='none'; }
-  });
-  document.addEventListener('mouseout', function(e){
-    var card = e.target.closest('.archive-card');
-    if(!card) return;
-    var img = card.querySelector('img');
-    if(img){ img.style.webkitMaskImage=MASK; img.style.maskImage=MASK; }
-  });
-})();
 </body>
 </html>
