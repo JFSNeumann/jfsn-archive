@@ -99,7 +99,7 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 | `1970s.html`–`2020s.html` | 6 decade pages, Material Design tokens, ← / → keyboard nav |
 | `series.html` | Single series deep-dive |
 | `guernica.html` | 232 Guernica works, static theme page |
-| `wall.html` | 1,084 mini images, sibling dim via `:has()` |
+| `wall.html` | 1,084 mini images, all full color, no sibling dim |
 | `api.html` | Developer API docs, light system |
 | `changes.html` | Git log feed |
 | `privacy.html` | Privacy page |

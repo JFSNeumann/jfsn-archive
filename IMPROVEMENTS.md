@@ -27,6 +27,6 @@ A living list. Add to it. Cross things off. This is the backlog.
 
 ## How to use this list
 
-Start each session: `bash start-session.sh` — shows open items + runs full audit.
+Start each session: paste the start prompt → `Read CURRENT_STATE.md and IMPROVEMENTS.md. Summarize open items by priority, flag anything stale, then ask what I want to work on.`
 
 Add new ideas here any time. Delete completed items; history lives in git log.

@@ -107,7 +107,7 @@ Real content example:
    E.g. — Title: "XXXIII Días Installation View" · Year: 2000 · Medium: Photography]
 
 Key interaction: [The one thing that makes this page worth visiting.
-  E.g. — "Grayscale thumbnail → full color on hover. Everything else recedes."
+  E.g. — "Orange outline appears on image hover. Title turns orange. UI recedes."
   Or — "Horizontal scrub strip. Drag left/right to move through 50 years."]
 
 Do not include:
