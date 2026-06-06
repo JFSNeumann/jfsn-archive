@@ -1,15 +1,15 @@
 # Current State
-**Updated:** 2026-06-06 (session 10)
+**Updated:** 2026-06-06 12:32
 
 ## Last commit
-Pending — end-session.sh not yet run
+d73e0691 — Session update 2026-06-06 12:30
 
 ## What was done this session (2026-06-06 — session 10)
 
-### Homepage featured grid polish (index.html)
-- Orange hover frame fixed: replaced `outline` (hidden behind absolute-positioned image) with a `.card-frame` overlay div at `z-index:2` that renders on top of the artwork; `border-color` transitions from transparent → `#FF6600`
-- Spacing improved: card-meta gap image→title increased `mt-3`→`mt-4` (16px); gap between 3-card editorial section and 4-column grid increased `mt-8`→`mt-16` (64px)
-- `site.min.css` rebuilt to include `mt-3`, `mt-4`, `mt-8`, `mt-16`, `grid-cols-4`; SW cache bumped to `jfsn-20260606163000`
+### Homepage polish + full docs overhaul
+- Orange hover frame on homepage cards fixed: replaced `outline` (hidden behind absolute-positioned image) with `.card-frame` overlay div at `z-index:2`; spacing improved `mt-4` image→title, `mt-16` between editorial and 4-col grid
+- `README.md` completely rewritten as a human-readable master reference covering pages, architecture, design system, workflow, scripts, gotchas, and hosting
+- All `.md` files audited across 4 passes — fixed stale facts: grayscale rule in STITCH.md, nav count (4→5), site.min.css size, deleted page references, Companion function type, theme count (14→10), retired series (XXIII/Squadron), repass completion status; added docs check reminder to `end-session.sh`
 
 ## What was done last session (2026-06-06 — session 9)
 
