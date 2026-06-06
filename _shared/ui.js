@@ -53,44 +53,7 @@
     }
   }
 
-  // ─── Color-fade reveal: color image behind greyscale + mask fade ──────────
-  var MASK = 'linear-gradient(to bottom, black 0%, black 65%, transparent 100%)';
-  document.querySelectorAll('.thumb__link').forEach(function(link) {
-    var img = link.querySelector('img');
-    if (!img) return;
-    var src = img.getAttribute('src');
-    if (src) {
-      link.style.backgroundImage = 'url(' + src + ')';
-      link.style.backgroundSize = 'cover';
-      link.style.backgroundPosition = 'center';
-    }
-    img.style.webkitMaskImage = MASK;
-    img.style.maskImage = MASK;
-    link.addEventListener('mouseenter', function() {
-      img.style.webkitMaskImage = 'none';
-      img.style.maskImage = 'none';
-    });
-    link.addEventListener('mouseleave', function() {
-      img.style.webkitMaskImage = MASK;
-      img.style.maskImage = MASK;
-    });
-  });
-
-  // ─── Scroll reveal for .thumb items (medium pages) ───────────────────────
-  const thumbs = document.querySelectorAll('.thumb');
-  if (thumbs.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const thumbObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add('visible'), (i % 6) * 50);
-          thumbObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.05, rootMargin: '0px 0px -30px 0px' });
-    thumbs.forEach(t => thumbObserver.observe(t));
-  } else {
-    // Reduced motion: show immediately
-    thumbs.forEach(t => t.classList.add('visible'));
-  }
+  // Artwork thumbnails are full color always — no mask-image, no scroll-reveal.
+  // (Removed session 8; banned — do not re-add.)
 
 })();

@@ -7,7 +7,6 @@
   const PAGE_NAV = {
     'archive.html':      'archive.html',
     'series-index.html': 'series-index.html',
-    'timeline.html':     'timeline.html',
     'companion.html':    'companion.html',
     'about.html':        'about.html',
     'lost.html':         'lost.html',
