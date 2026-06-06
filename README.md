@@ -276,6 +276,7 @@ Does not work on plain cPanel (no server-side function support).
 - **index.html:** Has no FOOTER:START/END markers — custom footer, edit directly.
 - **Homepage card hover frame:** Uses `.card-frame` overlay (`z-index:2`), not CSS `outline`. Outline is hidden behind the absolutely-positioned image. Any hardcoded featured card needs the `.card-frame` div inside `.card-img`.
 - **sw.js auto-bump:** `build_catalog.py` auto-bumps `CACHE_V` on every run. Check `git diff sw.js` before committing after any script run.
+- **Hero AVIF upload path:** `.htaccess` rewrites `artworks/full/*.avif` → `/artworks/*.avif` (legacy flat path). New hero crops (`artNNNN-hero.avif`) must be uploaded to `/artworks/` on the HostGator server — NOT `/artworks/full/`. Upload via lftp to `/artworks/artNNNN-hero.avif`.
 - **`mt-3` / new Tailwind classes:** Classes not in the build are silently ignored. If a spacing or layout class isn't applying, run `npm run build:css`.
 - **Playfair Display:** Only on decade page heroes, `about.html` name h1 + bio paragraph, series heroes, `companion.html` title. Everything else is Inter.
 - **analytics:** GoatCounter on all public pages via `_shared/footer.html` → `jfsn.goatcounter.com`.

@@ -1,10 +1,17 @@
 # Current State
-**Updated:** 2026-06-06 12:32
+**Updated:** 2026-06-06 14:24
 
 ## Last commit
-d73e0691 — Session update 2026-06-06 12:30
+b9e916d0 — Session update 2026-06-06 14:23
 
-## What was done this session (2026-06-06 — session 10)
+## What was done this session (2026-06-06 — session 11)
+
+### Hero AVIFs + CSP fixes
+- Fixed hero 404s on jfsn.com: `.htaccess` rewrites `artworks/full/*.avif` → `/artworks/*.avif` (legacy flat dir); hero crops must be uploaded to `/artworks/` on server. Uploaded art0953/1008/1009/1010-hero.avif to correct path — all return 200.
+- Fixed GoatCounter CSP violations: added `gc.zgo.at` to `script-src` and `jfsn.goatcounter.com` to `connect-src` in `.htaccess`. Analytics now unblocked on jfsn.com.
+- Documented hero upload path gotcha in README.md and CLAUDE.md.
+
+## What was done last session (2026-06-06 — session 10)
 
 ### Homepage polish + full docs overhaul
 - Orange hover frame on homepage cards fixed: replaced `outline` (hidden behind absolute-positioned image) with `.card-frame` overlay div at `z-index:2`; spacing improved `mt-4` image→title, `mt-16` between editorial and 4-col grid

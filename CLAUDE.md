@@ -122,6 +122,7 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 - `bash end-session.sh` — git commit, push to GitHub, rsync backup to external drive
 - Deploy to HostGator via desktop JFSN.app (not deploy.sh)
 - Service worker: `sw.js` — bump `CACHE_V` whenever deploy may be cached by old SW
+- **Hero AVIF upload path:** `.htaccess` rewrites `artworks/full/*.avif` → `/artworks/*.avif` (legacy flat dir). New hero crops (`artNNNN-hero.avif`) must be uploaded to `/artworks/` on HostGator — NOT `/artworks/full/`. Use lftp: `put artNNNN-hero.avif -o /artworks/artNNNN-hero.avif`
 
 ### Conventions
 - Vanilla HTML/CSS/JS. Production uses `site.min.css` (22,530 bytes compiled Tailwind — not CDN). Stitch exports start with Tailwind CDN and get swapped to `site.min.css` during post-export cleanup.
