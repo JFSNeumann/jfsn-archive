@@ -122,6 +122,11 @@ echo ""
 echo "🚀  Open the JFSN desktop app to deploy to HostGator when ready."
 
 echo ""
+echo "📄  Docs check — did anything change this session that affects:"
+echo "    README.md · CLAUDE.md · STITCH.md · SESSION_PROMPT.md"
+echo "    If yes → update in a follow-up commit before next session."
+
+echo ""
 echo "═══════════════════════════════════════"
 echo "  Done. Good work today."
 echo "═══════════════════════════════════════"
