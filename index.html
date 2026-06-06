@@ -21,7 +21,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link rel="preload" href="artworks/full/art0953.avif" as="image" type="image/avif"/>
+<link rel="preload" href="artworks/full/art0953-hero.avif" as="image" type="image/avif"/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Material+Symbols+Outlined:opsz,wght,FILL@24,400,0..1&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="site.min.css"/>
 <style>
@@ -71,6 +71,63 @@
     #featured-grid > a:nth-child(3) > .card-img { flex: 1; aspect-ratio: auto; }
     #featured-grid > a > .card-meta { flex-shrink: 0; }
   }
+  /* Hero rotator */
+  .hero-slide {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: center center;
+    opacity: 0; transition: opacity 1.2s ease;
+  }
+  .hero-slide.is-active { opacity: 1; }
+
+  /* Ken Burns — direction set via data-kb attribute on each slide */
+  @keyframes kb-tl { from { transform: scale(1.04) translate( 1%,  0.8%); } to { transform: scale(1) translate(0,0); } }
+  @keyframes kb-tr { from { transform: scale(1.04) translate(-1%,  0.8%); } to { transform: scale(1) translate(0,0); } }
+  @keyframes kb-bl { from { transform: scale(1.04) translate( 1%, -0.8%); } to { transform: scale(1) translate(0,0); } }
+  @keyframes kb-br { from { transform: scale(1.04) translate(-1%, -0.8%); } to { transform: scale(1) translate(0,0); } }
+  .hero-slide[data-kb="tl"].is-active { animation: kb-tl 7s ease-out forwards; }
+  .hero-slide[data-kb="tr"].is-active { animation: kb-tr 7s ease-out forwards; }
+  .hero-slide[data-kb="bl"].is-active { animation: kb-bl 7s ease-out forwards; }
+  .hero-slide[data-kb="br"].is-active { animation: kb-br 7s ease-out forwards; }
+
+  /* Hero controls — fade in on hover, always visible on touch devices */
+  .hero-ctrl { opacity: 0; transition: opacity 0.25s ease; pointer-events: none; }
+  .hero-section:hover .hero-ctrl,
+  .hero-section:focus-within .hero-ctrl { opacity: 1; pointer-events: auto; }
+  @media (hover: none) { .hero-ctrl { opacity: 1; pointer-events: auto; } }
+
+  /* Dots */
+  .hero-dot {
+    display: inline-block; width: 5px; height: 5px; border-radius: 50%;
+    background: rgba(255,255,255,0.3); border: 1.5px solid rgba(255,255,255,0.5);
+    cursor: pointer; padding: 0; flex-shrink: 0;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .hero-dot.is-active { background: rgba(255,255,255,0.9); border-color: rgba(255,255,255,0.9); }
+  .hero-dot:hover { background: rgba(255,255,255,0.6); }
+
+  /* Arrows */
+  .hero-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%); z-index: 20;
+    background: none; border: none; color: rgba(255,255,255,0.5);
+    font-size: 40px; font-weight: 200; cursor: pointer; padding: 20px 18px; line-height: 1;
+  }
+  .hero-arrow:hover { color: rgba(255,255,255,0.9); }
+  #hero-prev-d { left: 0; }
+  #hero-next-d { right: 0; }
+
+  /* Pause button */
+  .hero-pause-btn {
+    background: none; border: none; color: rgba(255,255,255,0.55);
+    cursor: pointer; font-size: 10px; letter-spacing: 0.08em;
+    font-family: 'Inter', sans-serif; padding: 2px 4px; line-height: 1;
+  }
+  .hero-pause-btn:hover { color: rgba(255,255,255,0.9); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-slide { transition: none; animation: none !important; }
+    .hero-ctrl { transition: none; }
+  }
+
   /* Featured grid — lazy load settle */
   #featured-grid img {
     opacity: 0;
@@ -201,17 +258,14 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
   <div class="folio-container" id="folio-container">
 
     <!-- Snap 1: Hero -->
-    <section class="folio-section justify-start p-0 overflow-hidden" style="background-color: #1a1814;">
-      <img
-        src="artworks/full/art0953.avif"
-        alt="XXXIII Días Installation View — Jeffrey F. S. Neumann"
-        class="absolute inset-0 w-full h-full object-cover"
-        loading="eager"
-        fetchpriority="high"
-      />
-      <div class="absolute inset-0 flex flex-row items-end justify-between p-8 z-10">
-        <p class="font-label-caps text-label-caps text-bone-white/70">XXXIII Días Installation View · 2022 · COLLAGE</p>
-        <p class="font-label-caps text-label-caps text-bone-white/70">1,084 works · 1974–present</p>
+    <section id="hero-m" class="hero-section folio-section justify-start p-0 overflow-hidden" style="background-color: #1a1814;">
+      <div id="hero-slides-m"></div>
+      <div class="absolute inset-0 z-10 flex flex-col justify-end p-8" style="background:linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.15) 22%, transparent 45%)">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;">
+          <a id="hero-caption-m" href="artwork.html?id=art0953" aria-live="polite" class="font-label-caps text-label-caps text-bone-white/70 no-underline">XXXIII Días Installation View · 2022 · COLLAGE</a>
+          <p class="font-label-caps text-label-caps text-bone-white/70" style="white-space:nowrap;margin-left:12px;">1,084 works · 1974–present</p>
+        </div>
+        <div id="hero-dots-m" class="hero-ctrl" style="display:flex;gap:8px;align-items:center;margin-top:10px;"></div>
       </div>
     </section>
 
@@ -291,16 +345,19 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
 <main id="main" class="hidden md:block pt-16">
 
   <!-- Hero -->
-  <section class="relative w-full overflow-hidden" style="height: 100dvh; background-color: #1a1814;">
-    <img
-      src="artworks/full/art0953.avif"
-      alt="XXXIII Días Installation View — Jeffrey F. S. Neumann"
-      class="absolute inset-0 w-full h-full object-cover"
-      width="2800" height="1288" loading="eager" fetchpriority="high"
-    />
-    <div class="absolute inset-0 z-10 flex flex-row items-end justify-between p-margin-desktop pb-12">
-      <p class="font-label-caps text-label-caps text-bone-white/70">XXXIII Días Installation View · 2022 · COLLAGE</p>
-      <p class="font-label-caps text-label-caps text-bone-white/70">1,084 works · 1974–present · Cleveland</p>
+  <section id="hero-d" class="hero-section relative w-full overflow-hidden" style="height: 100dvh; background-color: #1a1814;">
+    <div id="hero-slides-d"></div>
+    <button id="hero-prev-d" class="hero-arrow hero-ctrl" aria-label="Previous artwork">&#8249;</button>
+    <button id="hero-next-d" class="hero-arrow hero-ctrl" aria-label="Next artwork">&#8250;</button>
+    <div class="absolute inset-0 z-10 flex flex-col justify-end p-margin-desktop pb-10" style="background:linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.15) 22%, transparent 45%)">
+      <div style="display:flex;align-items:flex-end;gap:24px;">
+        <a id="hero-caption-d" href="artwork.html?id=art0953" aria-live="polite" class="font-label-caps text-label-caps text-bone-white/70 no-underline" style="flex:1;">XXXIII Días Installation View · 2022 · COLLAGE</a>
+        <div id="hero-dots-d" class="hero-ctrl" style="display:flex;gap:8px;align-items:center;flex-shrink:0;padding-bottom:1px;"></div>
+        <div style="display:flex;align-items:center;gap:12px;flex:1;justify-content:flex-end;">
+          <p class="font-label-caps text-label-caps text-bone-white/70">1,084 works · 1974–present · Cleveland</p>
+          <button id="hero-pause-d" class="hero-pause-btn hero-ctrl" aria-label="Pause slideshow">❙❙</button>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -345,8 +402,8 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
             <img
               alt="${w.title}"
               class="absolute inset-0 w-full h-full object-cover"
-              src="artworks/thumbs/${w.file}"
-              loading="lazy" width="400" height="533"
+              src="artworks/medium/${w.file}"
+              loading="lazy" width="900" height="1200"
               onload="this.classList.add('is-loaded')"
             />
           </div>
@@ -367,5 +424,178 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
 <script data-goatcounter="https://jfsn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
 <script src="_shared/nav-active.js" defer></script>
+<script>
+(function () {
+  'use strict';
+
+  var KB_DIRS     = ['tl', 'tr', 'bl', 'br'];
+  var MAX_SLIDES  = 4;
+  var INTERVAL_MS = 6000;
+  var FALLBACK    = [
+    { id: 'art0953', caption: 'XXXIII Días Installation View · 2022 · COLLAGE',  pos: 'center 20%'     },
+    { id: 'art1008', caption: 'Pubiern Robodt 365 · 1990 · SCULPTURE',            pos: 'center center'  },
+    { id: 'art1009', caption: 'Untitled (Machine Assemblage) · 2020 · SCULPTURE', pos: 'center center'  },
+    { id: 'art1010', caption: 'Untitled (Cassette Torso) · 2020 · COLLAGE',       pos: 'center center'  },
+  ];
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function shuffle(arr) {
+    var a = arr.slice(), i, j, t;
+    for (i = a.length - 1; i > 0; i--) {
+      j = Math.floor(Math.random() * (i + 1));
+      t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  function parseTxt(text) {
+    return text.split('\n').map(function (l) { return l.trim(); })
+      .filter(function (l) { return l && l[0] !== '#'; })
+      .map(function (l) {
+        var p = l.split('|').map(function (s) { return s.trim(); });
+        return { id: p[0], caption: p[1] || '', pos: p[2] || 'center center' };
+      })
+      .filter(function (h) { return h.id && h.caption; });
+  }
+
+  function makeSlide(h, kbDir, suffix, eager) {
+    var img = document.createElement('img');
+    img.className  = 'hero-slide hero-slide-' + suffix;
+    img.src        = 'artworks/full/' + h.id + '-' + (suffix === 'd' ? 'hero' : 'mobile') + '.avif';
+    img.alt        = h.caption + ' — Jeffrey F. S. Neumann';
+    img.style.objectPosition = h.pos;
+    img.dataset.kb = kbDir;
+    img.setAttribute('loading', eager ? 'eager' : 'lazy');
+    if (eager) img.setAttribute('fetchpriority', 'high');
+    return img;
+  }
+
+  function makeDots(container, n) {
+    container.innerHTML = '';
+    for (var i = 0; i < n; i++) {
+      var btn = document.createElement('button');
+      btn.className = 'hero-dot';
+      btn.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+      btn.dataset.dotIdx = i;
+      container.appendChild(btn);
+    }
+    return container.querySelectorAll('.hero-dot');
+  }
+
+  function resetAnim(el) { el.style.animation = 'none'; el.offsetHeight; el.style.animation = ''; }
+
+  function init(pool) {
+    var selected = shuffle(pool).slice(0, MAX_SLIDES);
+
+    var dWrap    = document.getElementById('hero-slides-d');
+    var mWrap    = document.getElementById('hero-slides-m');
+    var dDotsEl  = document.getElementById('hero-dots-d');
+    var mDotsEl  = document.getElementById('hero-dots-m');
+    var dCaption = document.getElementById('hero-caption-d');
+    var mCaption = document.getElementById('hero-caption-m');
+    var pauseBtn = document.getElementById('hero-pause-d');
+    var prevBtn  = document.getElementById('hero-prev-d');
+    var nextBtn  = document.getElementById('hero-next-d');
+
+    /* Build slides */
+    selected.forEach(function (h, i) {
+      var kb = KB_DIRS[i % 4];
+      if (dWrap) dWrap.appendChild(makeSlide(h, kb, 'd', i === 0));
+      if (mWrap) mWrap.appendChild(makeSlide(h, kb, 'm', i === 0));
+    });
+
+    var dSlides = dWrap ? dWrap.querySelectorAll('.hero-slide-d') : [];
+    var mSlides = mWrap ? mWrap.querySelectorAll('.hero-slide-m') : [];
+    var dDots   = dDotsEl ? makeDots(dDotsEl, selected.length) : [];
+    var mDots   = mDotsEl ? makeDots(mDotsEl, selected.length) : [];
+
+    var idx       = 0;
+    var firstLoad = true;
+    var paused    = false;
+    var timer     = null;
+
+    function activate(i) {
+      [dSlides, mSlides].forEach(function (list) {
+        list.forEach(function (s, j) { var on = j === i; if (on) resetAnim(s); s.classList.toggle('is-active', on); });
+      });
+      [dDots, mDots].forEach(function (list) {
+        list.forEach(function (d, j) { d.classList.toggle('is-active', j === i); });
+      });
+      /* Caption synced to crossfade midpoint (instant on first load) */
+      var delay = firstLoad ? 0 : 600;
+      firstLoad = false;
+      setTimeout(function () {
+        var h = selected[i];
+        if (dCaption) { dCaption.textContent = h.caption; dCaption.href = 'artwork.html?id=' + h.id; }
+        if (mCaption) { mCaption.textContent = h.caption; mCaption.href = 'artwork.html?id=' + h.id; }
+      }, delay);
+      /* Preload next slide ~2s after activation */
+      var nextH = selected[(i + 1) % selected.length];
+      setTimeout(function () {
+        new Image().src = 'artworks/full/' + nextH.id + '-hero.avif';
+        new Image().src = 'artworks/full/' + nextH.id + '-mobile.avif';
+      }, 2000);
+    }
+
+    function randNext(cur) {
+      var n = cur;
+      while (n === cur && selected.length > 1) n = Math.floor(Math.random() * selected.length);
+      return n;
+    }
+
+    function startTimer() {
+      if (reduced || paused) return;
+      timer = setInterval(function () { idx = randNext(idx); activate(idx); }, INTERVAL_MS);
+    }
+    function stopTimer() { clearInterval(timer); timer = null; }
+
+    function advance(dir) {
+      idx = (idx + dir + selected.length) % selected.length;
+      stopTimer(); activate(idx); if (!paused) startTimer();
+    }
+
+    /* Pause on hover */
+    [document.getElementById('hero-d'), document.getElementById('hero-m')].forEach(function (sec) {
+      if (!sec) return;
+      sec.addEventListener('mouseenter', stopTimer);
+      sec.addEventListener('mouseleave', function () { if (!paused) startTimer(); });
+    });
+
+    /* Pause button toggle */
+    if (pauseBtn) pauseBtn.addEventListener('click', function () {
+      paused = !paused;
+      pauseBtn.textContent = paused ? '▶' : '❙❙';
+      pauseBtn.setAttribute('aria-label', paused ? 'Play slideshow' : 'Pause slideshow');
+      paused ? stopTimer() : startTimer();
+    });
+
+    /* Arrows */
+    if (prevBtn) prevBtn.addEventListener('click', function () { advance(-1); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { advance(1); });
+
+    /* Dot clicks */
+    [dDots, mDots].forEach(function (list) {
+      list.forEach(function (d) {
+        d.addEventListener('click', function () {
+          idx = parseInt(d.dataset.dotIdx, 10);
+          stopTimer(); activate(idx); if (!paused) startTimer();
+        });
+      });
+    });
+
+    activate(idx);
+    startTimer();
+  }
+
+  /* Load pool from featured-hero.txt, fall back to hardcoded if unavailable */
+  fetch('artworks/featured-hero.txt')
+    .then(function (r) { return r.ok ? r.text() : Promise.reject(); })
+    .then(function (text) {
+      var pool = parseTxt(text);
+      init(pool.length >= 2 ? pool : FALLBACK);
+    })
+    .catch(function () { init(FALLBACK); });
+})();
+</script>
 </body>
 </html>

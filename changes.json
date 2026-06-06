@@ -1,5 +1,47 @@
 [
   {
+    "sha": "d318fb7",
+    "date": "2026-06-05",
+    "title": "Session update 2026-06-05 19:57",
+    "body": ""
+  },
+  {
+    "sha": "47052b7",
+    "date": "2026-06-05",
+    "title": "Add hover underline draw to mobile drawer links",
+    "body": "Drawer links now animate on both :hover (mouse/trackpad) and\n:active (tap) — consistent with desktop nav behaviour."
+  },
+  {
+    "sha": "5646c0c",
+    "date": "2026-06-05",
+    "title": "Fix mobile drawer z-index conflict with archive filter bar",
+    "body": "Mobile menu overlay was z-index:40, same as archive.html's sticky\nfilter bar (z-40) — filter painted over the open drawer. Bumped\noverlay to z-index:45 so drawer always covers page elements.\nStays below header (z-50). Stamped into all 26 pages."
+  },
+  {
+    "sha": "c19f7fb",
+    "date": "2026-06-05",
+    "title": "Stamp nav underline fix + post-deploy generated file updates",
+    "body": "- All 26 pages stamped with bottom:10px underline + drawer animation\n- sw.js CACHE_V bumped by deploy to jfsn-20260605233605\n- changes.json / feed.xml / api/v1 updated by build process"
+  },
+  {
+    "sha": "dd20129",
+    "date": "2026-06-05",
+    "title": "Move nav underline closer to text (bottom: 6px → 10px)",
+    "body": "With py-3 (12px padding) and 20px line-height, bottom:6px placed\nthe underline in the middle of the padding gap — too far from the\nwords. bottom:10px sits just below the text baseline. Fixed in both\ntop-nav.html (stamped pages) and ui.css (medium/theme pages)."
+  },
+  {
+    "sha": "0fe2668",
+    "date": "2026-06-05",
+    "title": "Add underline draw animation to mobile drawer links",
+    "body": "Drawer links now get the same scaleX ::after underline as desktop:\n- Tap (:active): draws left-to-right orange underline, warm bg flash\n- Current page (.drawer-active): underline held solid + orange text + left bar\n- prefers-reduced-motion respected\nMoved active state from inline JS styles to CSS class for consistency.\nStamped into all 26 pages."
+  },
+  {
+    "sha": "dbaa9fc",
+    "date": "2026-06-05",
+    "title": "Mobile drawer active state + tap feedback",
+    "body": "nav-active.js now also activates the mobile drawer link for the\ncurrent page: orange text + 3px left-bar indicator. Drawer links\nalso get an :active tap flash (background + orange text) so taps\nfeel responsive on iPhone. Stamped into all 26 pages."
+  },
+  {
     "sha": "41bc55f",
     "date": "2026-06-05",
     "title": "Bump CACHE_V to bust stale service workers after deploy",

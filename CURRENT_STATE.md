@@ -4,6 +4,11 @@
 ## Last commit
 47052b7 — Add hover underline draw to mobile drawer links
 
+## What was done this session (2026-06-06 — session 8)
+
+### Hero rotator — full UX overhaul (index.html, artworks/featured-hero.txt)
+Built a complete hero system: Ken Burns zoom-out effect (4 direction variants, 1.04× scale, 7s, data-kb attribute per slide), crossfade scrim for caption legibility, pause on hover, ‹ › arrows, dot indicators, aria-live on captions, next-slide preload, and caption sync to crossfade midpoint. Slides are now generated dynamically from `artworks/featured-hero.txt` — add a line to the file to expand the hero pool without touching HTML. Fixed KB animation re-trigger bug (reflow reset), reduced scale from 1.07→1.04 to eliminate pop at transition seam.
+
 ## What was done this session (2026-06-05 — session 7)
 
 ### Nav underline draw sitewide + mobile drawer polish

@@ -24,14 +24,16 @@ After running:
     python3 artworks/build_catalog.py       # picks up new stubs automatically
 """
 
-import argparse, json, shutil, sys
+import argparse, json, os, shutil, subprocess, sys, tempfile
 from pathlib import Path
 
 # ── quality settings ─────────────────────────────────────────────────────────
 Q_FULL   = 82   # full-res AVIF quality  (0–100, higher = better)
 Q_THUMB  = 76   # 400 px thumbnail quality
+Q_MEDIUM = 78   # 900 px medium quality
 Q_MINI   = 70   # 200 px mini quality
 
+MEDIUM_W = 900
 THUMB_W  = 400
 MINI_W   = 200
 
@@ -42,6 +44,7 @@ HERE   = Path(__file__).parent
 INBOX  = HERE / "inbox"
 DONE   = HERE / "inbox" / "done"
 FULL   = HERE / "full"
+MEDIUM = HERE / "medium"
 THUMBS = HERE / "thumbs"
 MINI   = HERE / "mini"
 DIMS   = HERE.parent / "dims.json"
@@ -61,6 +64,8 @@ def check_deps():
         missing.append("pillow-heif")
     if missing:
         sys.exit(f"Install missing packages:\n  pip3 install --break-system-packages {' '.join(missing)}")
+    if not shutil.which("avifenc"):
+        sys.exit("avifenc not found — install with: brew install libavif")
 
 
 def next_art_id():
@@ -82,9 +87,26 @@ def resize_fit(img, width):
     return img.resize((width, new_h), Image.LANCZOS)
 
 
+def sharpen(img):
+    """Gentle unsharp mask — recovers softness from HEIC/JPEG compression."""
+    from PIL import ImageFilter
+    return img.filter(ImageFilter.UnsharpMask(radius=0.8, percent=80, threshold=2))
+
+
 def save_avif(img, path, quality):
-    """Save PIL image as AVIF."""
-    img.save(str(path), format="AVIF", quality=quality)
+    """Save PIL image as AVIF using avifenc (better quality than pillow-avif-plugin).
+    avifenc -q uses 0–100 scale where 100 = lossless, same direction as Pillow.
+    """
+    tmp_fd, tmp_path = tempfile.mkstemp(suffix=".png")
+    try:
+        os.close(tmp_fd)
+        img.save(tmp_path, format="PNG")
+        subprocess.run(
+            ["avifenc", "--speed", "4", "-q", str(quality), tmp_path, str(path)],
+            check=True, capture_output=True,
+        )
+    finally:
+        os.unlink(tmp_path)
 
 
 def load_image(src: Path):
@@ -111,10 +133,11 @@ def load_image(src: Path):
 
 
 def process(src: Path, art_id: str, dry_run: bool) -> dict:
-    """Convert one source file → full/thumb/mini AVIFs. Returns dims entry."""
-    full_out  = FULL   / f"{art_id}.avif"
-    thumb_out = THUMBS / f"{art_id}.avif"
-    mini_out  = MINI   / f"{art_id}.avif"
+    """Convert one source file → full/medium/thumb/mini AVIFs. Returns dims entry."""
+    full_out   = FULL   / f"{art_id}.avif"
+    medium_out = MEDIUM / f"{art_id}.avif"
+    thumb_out  = THUMBS / f"{art_id}.avif"
+    mini_out   = MINI   / f"{art_id}.avif"
     done_out  = DONE   / src.name
 
     if dry_run:
@@ -129,11 +152,17 @@ def process(src: Path, art_id: str, dry_run: bool) -> dict:
     print(f"  {art_id}  {src.name}", end="", flush=True)
 
     img  = load_image(src)
+    img  = sharpen(img)
     w, h = img.size
 
     # Full-res
     save_avif(img, full_out, Q_FULL)
     print(" ✓full", end="", flush=True)
+
+    # Medium (900px — for featured grid on desktop)
+    medium = resize_fit(img, MEDIUM_W)
+    save_avif(medium, medium_out, Q_MEDIUM)
+    print(" ✓medium", end="", flush=True)
 
     # Thumbnail
     thumb = resize_fit(img, THUMB_W)
@@ -178,7 +207,7 @@ def main():
 
     # Ensure output dirs exist
     if not args.dry_run:
-        for d in (FULL, THUMBS, MINI):
+        for d in (FULL, MEDIUM, THUMBS, MINI):
             d.mkdir(parents=True, exist_ok=True)
 
     # Collect inbox files
