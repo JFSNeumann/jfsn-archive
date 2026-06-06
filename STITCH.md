@@ -63,7 +63,7 @@ Mobile bottom nav: fixed bottom, bg #F3F0EA, border-top 1px solid #0B0B0B,
 This is a personal archive, not a promotional platform.
 - No calls to action ("Sign up", "Get started", "Subscribe")
 - No testimonials section
-- No pricing or tier mentions (unless this IS for-artists.html)
+- No pricing or tier mentions
 - No newsletter signup
 - No "hero" with a stock photo
 - No engagement patterns

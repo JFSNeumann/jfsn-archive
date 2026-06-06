@@ -57,7 +57,7 @@ Open each new JSON and check:
       `description`, `palette`, `themes`, `series`, `keywords`, `featured`, `schema_version`
 - [ ] `year` is present as a key (even if null)
 - [ ] `schema_version` is `"1"`
-- [ ] `series` is `"Guernica"` or `null` (XXIII and Squadron are retired — all go to Guernica or null)
+- [ ] `series` is `"Guernica"` or `null` only — XXIII and Squadron are retired
 - [ ] `featured` is `false`
 
 ### Description
@@ -82,7 +82,7 @@ Open each new JSON and check:
 - [ ] `keywords` are specific to THIS work, not generic (check: would these keywords
       distinguish this work from 50 similar ones?)
 - [ ] `composition` is 5–8 words, precise, useful as a search term
-- [ ] `series` is correctly identified (XXIII/Squadron/Guernica) or null
+- [ ] `series` is `"Guernica"` or `null` — never XXIII or Squadron (retired)
 
 ---
 

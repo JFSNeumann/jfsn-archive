@@ -24,7 +24,7 @@ python3 artworks/catalog.py --limit 5
 python3 artworks/catalog.py --workers 4
 ```
 
-**Cost:** ~$0.01–0.02 per image. 944 remaining ≈ $10–15.  
+**Cost:** ~$0.01–0.02 per image for any new works added.  
 **Resumable:** already-processed AVIFs are skipped automatically.  
 **Errors:** written to `artworks/logs/catalog_errors.jsonl` (JSONL — queryable with `jq`). Re-running picks them up.
 
@@ -181,7 +181,7 @@ Open `qa.html` locally (via `python3 server.py` then http://localhost:8000/qa.ht
 - `motifs`: 30 terms  
 - `materials`: 15 terms  
 - `themes`: 14 terms  
-- `series`: XXIII · Squadron · Guernica · null  
+- `series`: Guernica · null  (XXIII and Squadron retired — use Guernica or null)
 - `work_type`: collage · sculpture · painting · photograph  
   _(installation_view deprecated — run `repass_installation_view.py`)_
 

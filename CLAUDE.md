@@ -11,7 +11,7 @@ Live: jfsn.com (cPanel/HostGator) and jfsn-archive.netlify.app (Netlify, has Com
 
 ## Design System (current — Stitch/Tailwind, light)
 
-The site was fully redesigned in May 2026 from a dark system to a light system. All 18 public pages are on the light system. `site.css` has been deleted — do not reference it or the old dark tokens.
+The site was fully redesigned in May 2026 from a dark system to a light system. All pages are on the light system. `site.css` has been deleted — do not reference it or the old dark tokens.
 
 ### Token reference (two configs in use)
 

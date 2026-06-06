@@ -34,6 +34,7 @@ A static, no-CMS archive on a $5/month shared host (HostGator/cPanel). No databa
 | 1970s–2020s | `/1970s.html` etc. | 6 decade pages, ← → keyboard nav |
 | Guernica | `/guernica.html` | 232 Guernica works |
 | Changes | `/changes.html` | Git log feed |
+| Privacy | `/privacy.html` | Privacy policy |
 
 **Deleted (do not recreate):** `timeline.html`, `constellation.html`, `mosaic.html`, `for-artists.html`
 
