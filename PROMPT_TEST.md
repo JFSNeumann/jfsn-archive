@@ -1,8 +1,7 @@
 # Prompt Test Protocol — Run Before Full Batch
 
-> **Status as of 2026-05-27:** The 939-image batch ran and produced 744 cataloged works.
-> Migration 002 cleaned up 35 sidecars. Run `validate_catalog.py --legacy-ok` to confirm 0 errors.
-> Remaining 107 warnings are description openers (A/An/The) — fix with `repass_descriptions.py`.
+> **Status as of 2026-06-06:** 1,084 works cataloged, 0 errors. All migrations complete.
+> Run `validate_catalog.py --legacy-ok --quiet` before any new batch to confirm clean baseline.
 
 Run this before triggering any new batch. Takes ~5 minutes.
 

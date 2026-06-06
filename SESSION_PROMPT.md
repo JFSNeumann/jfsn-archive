@@ -1,5 +1,5 @@
 # JFSN Session Handoff Prompt
-**Generated:** 2026-06-05
+**Generated:** 2026-06-06
 **Copy everything below the line and paste it to start the next session.**
 
 ---
@@ -8,9 +8,9 @@ Read `/Documents/JFSN/CURRENT_STATE.md` and `/Documents/JFSN/IMPROVEMENTS.md` be
 
 **Project:** JFSN Archive — personal archive site for Jeffrey F. S. Neumann, 1,084 works.
 - Live: jfsn.com (HostGator/cPanel, primary) and jfsn-archive.netlify.app (Netlify — has Companion Netlify Function)
-- Stack: vanilla HTML/CSS/JS, Tailwind compiled to `site.min.css` (31KB), service worker, no frameworks
+- Stack: vanilla HTML/CSS/JS, Tailwind compiled to `site.min.css` (22,530 bytes), service worker, no frameworks
 - Design system: light/bone-white (`#fcf9f3`), deep-ink (`#0B0B0B`), orange accent (`#FF6600`), Playfair Display headings, Inter UI
-- Nav: Archive · Series · Companion · About (4 items)
+- Nav: Archive · Series · Companion · About · Lost (5 items)
 - Deploy workflow: `bash end-session.sh` (git commit + push + rsync backup) → deploy via desktop app (JFSN.app)
 - Footer/nav: edit `_shared/top-nav.html` or `_shared/footer.html`, then `bash stamp-nav.sh`
 - **CSS rebuild:** `npm run build:css` — run this after adding any new Tailwind utility class, then commit `site.min.css`
@@ -32,13 +32,8 @@ Read `/Documents/JFSN/CURRENT_STATE.md` and `/Documents/JFSN/IMPROVEMENTS.md` be
 
 ---
 
-### 2. 🟡 Review homepage works (decade balance)
-| | |
-|---|---|
-| **File** | `featured.txt` — one artwork filename per line |
-| **Change** | Edit `featured.txt` so the 30 works span at least 4 decades. Currently 22/30 are from 2020. Keep the strongest works; vary era, medium (collage/sculpture/photography), palette. |
-| **Rebuild** | `python3 artworks/build_catalog.py` → regenerates `catalog-home.json` + bumps `sw.js CACHE_V` |
-| **Done when** | Homepage shows works from 1970s, 1980s–90s, 2000s, and 2020s. Jeff approves the selection. |
+### 2. ✅ ~~Review homepage works (decade balance)~~ — done 2026-06-05
+30 works across all decades, varied medium per era. `featured.txt` rebalanced.
 
 ---
 
@@ -52,12 +47,8 @@ Read `/Documents/JFSN/CURRENT_STATE.md` and `/Documents/JFSN/IMPROVEMENTS.md` be
 
 ---
 
-### 4. 🟢 Single-command deploy
-| | |
-|---|---|
-| **File** | `end-session.sh` |
-| **Change** | Append `bash "$(dirname "$0")/deploy.sh"` at the end (after git push + backup). FTP takes 2–5 min — acceptable blocking. |
-| **Done when** | `bash end-session.sh` handles git + backup + FTP in one run. |
+### 4. 🟢 Single-command deploy — deploy via JFSN.app (desktop), not end-session.sh
+Deploy step is intentionally separate — JFSN.app handles FTP to HostGator. end-session.sh does git + backup only.
 
 ---
 

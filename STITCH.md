@@ -36,7 +36,7 @@ Design system:
 - No drop shadows
 - No gradients
 - Borders: 1px solid #c4c7c7
-- Artwork thumbnails: grayscale by default, full color on hover
+- Artwork thumbnails: full color always — no grayscale, ever
 ```
 
 ---
@@ -50,9 +50,9 @@ Mark the top nav exactly like this so stamp-nav.sh can replace it:
   <!-- NAV:END -->
 
 The nav contains: JFSN wordmark (links to index.html) + Archive · Series ·
-Timeline · Companion · About links + search icon + mobile menu icon.
+Companion · About · Lost links + search icon + mobile menu icon.
 Mobile bottom nav: fixed bottom, bg #F3F0EA, border-top 1px solid #0B0B0B,
-icons for Archive / Series / Timeline / Companion.
+5 items: Archive / Series / Companion / About / Lost.
 ```
 
 ---
@@ -113,6 +113,7 @@ Key interaction: [The one thing that makes this page worth visiting.
 Do not include:
 - [List 3–5 things Stitch will add by default that you don't want]
 - No [carousels / testimonials / newsletter signup / pricing table / etc.]
+- No grayscale on artwork thumbnails — always full color
 
 Mobile: [Describe mobile layout specifically — snap scroll? single column? hidden sidebar?]
 Desktop: [Describe desktop layout — sidebar + main? full-bleed? grid?]
@@ -146,17 +147,15 @@ no external component libraries, loading="lazy" on artwork images.
 
 | Page | Notes |
 |------|-------|
-| `collage.html` | Masonry grid, grayscale→color hover, scroll reveal |
+| `collage.html` | Masonry grid, full color always, no scroll reveal |
 | `photography.html` | Same structure as collage |
 | `index.html` | Desktop: full-bleed hero + featured grid. Mobile: snap-scroll folio |
 | `archive.html` | Sidebar filters + main grid, mobile sticky filter ledger |
-| `about.html` | Multi-section: bio, exhibition record, contact |
+| `about.html` | Multi-section: bio → contact → Lost Works bar → exhibition record |
 | `lost.html` | Essay + ghost grid — sparse, no CTAs, memorial tone |
 | `series-index.html` | Card grid, 8 series, Playfair Display titles |
-| `constellation.html` | Dark canvas interface, light nav/footer surround |
-| `timeline.html` | Horizontal scrub strip, all dated works |
-| `for-artists.html` | Archive-as-a-service pitch + inquiry form (Netlify only) |
-| `companion.html` | AI Companion — chat UI, edge function on Netlify |
-| `wall.html` | 1,084 mini tiles, sibling dim via `:has()` |
+| `companion.html` | AI Companion — chat UI, Netlify Function |
+| `wall.html` | 1,084 mini tiles, all full color |
 | `guernica.html` | Static theme page — 232 works, full static grid |
 | `api.html` | Developer docs — expandable endpoint cards, code blocks, light bg |
+| **DELETED** | `constellation.html`, `timeline.html`, `for-artists.html`, `mosaic.html` — do not recreate |
