@@ -137,7 +137,7 @@ Read CURRENT_STATE.md and IMPROVEMENTS.md. Summarize open items by priority, fla
 
 ### End (in order)
 ```bash
-bash end-session.sh   # git commit + push to GitHub + rsync backup to JEFFS-4TB
+bash end-session.sh   # git commit + push to GitHub + rsync to JEFFS-4TB + Backblaze B2 cloud backup
 ```
 Then deploy via **JFSN.app** (desktop app → FTP to HostGator). Don't use `deploy.sh` — JFSN.app is the deploy path now.  
 Then update Claude memory: "Update memory. Today we: [1–2 sentences]."
@@ -236,7 +236,7 @@ Edit `featured.txt` (one ID per line, e.g. `art0075`), then run `build_catalog.p
 | `artworks/validate_catalog.py` | Schema QA — run before build | After cataloging |
 | `artworks/build_catalog.py` | Publishes catalog.json + api/v1/ | After validation |
 | `artworks/build_dims.py` | Rebuilds dims.json from thumbnails | After new thumbs |
-| `end-session.sh` | git commit + push + rsync backup (does NOT deploy) | End of session |
+| `end-session.sh` | git commit + push + rsync to JEFFS-4TB + Backblaze B2 (does NOT deploy) | End of session |
 | `stamp-nav.sh` | Stamps `_shared/top-nav.html` into ~30 Stitch pages | After nav changes |
 | `make_handoff.py` | Regenerates Allison handoff PDF | After credential changes |
 

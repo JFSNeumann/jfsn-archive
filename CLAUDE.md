@@ -5,7 +5,7 @@ Personal archive site for Jeffrey F. S. Neumann — 1,084 works spanning 1974–
 Collage, sculpture, photography. This is a personal record, not a promotional platform.
 Making is the point.
 
-Live: jfsn.com (cPanel/HostGator) and jfsn-archive.netlify.app (Netlify, has Companion edge function)
+Live: jfsn.com (cPanel/HostGator) and jfsn-archive.netlify.app (Netlify, has Companion Netlify Function + artwork-meta edge function)
 
 ---
 
@@ -88,7 +88,7 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 | `archive.html` | 1,084 works, filters by medium/decade/series |
 | `artwork.html` | Single work, loaded by `?id=artNNNN` |
 | `series-index.html` | Guernica + 7 themes |
-| `companion.html` | AI companion (Netlify edge function) |
+| `companion.html` | AI companion (Netlify Function — `netlify/functions/companion.mjs`) |
 | `about.html` | Bio, exhibitions, contact |
 | `lost.html` | Essay + ghost grid of 750 lost works |
 | `chromatic.html` | Color-slice canvas of all works by year |

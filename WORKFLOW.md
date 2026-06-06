@@ -65,15 +65,9 @@ Run this after every validated batch. No harm in running it multiple times.
 
 ## One-time operations
 
-### Fix legacy description openers (~$0.50, run when API key ready)
-```bash
-python3 artworks/repass_descriptions.py --dry-run            # preview
-python3 artworks/repass_descriptions.py --limit 10           # test
-python3 artworks/repass_descriptions.py --journal            # fix all + write before/after diffs
-python3 artworks/validate_catalog.py --quiet                 # should show 0 errors
-```
-
-Journal diffs are written to `artworks/logs/repass-YYYYMMDD.jsonl` for audit.
+### Fix legacy description openers — ✅ COMPLETE (all migrations done 2026-06-06)
+All 1,084 records pass strict validation. `repass_descriptions.py` has been run.
+Journal diffs in `artworks/logs/repass-YYYYMMDD.jsonl` for audit if needed.
 
 ### When schema changes
 1. Update `SYSTEM_PROMPT` in `catalog.py`
@@ -138,7 +132,7 @@ Documentation page: `api.html` — upload alongside the other HTML files.
 | `artworks/build_catalog.py` | Publish catalog.json + api/v1/ outputs | After validation passes |
 | `artworks/build_dims.py` | Rebuild dims.json from thumbnails | After new thumbs are added |
 | `artworks/repass_existing.py` | Apply retroactive rule fixes | After schema rule changes |
-| `artworks/repass_descriptions.py` | Fix legacy description openers | Once, when API key is ready |
+| `artworks/repass_descriptions.py` | Fix legacy description openers | ✅ Done — all migrations complete |
 | `artworks/repass_installation_view.py` | Migrate installation_view → photograph | Run once (6 records) |
 | `artworks/vocab.py` | Single source of truth for controlled vocabularies | Edit to add/change vocab terms |
 
@@ -180,7 +174,7 @@ Open `qa.html` locally (via `python3 server.py` then http://localhost:8000/qa.ht
 - `palette`: 20 terms  
 - `motifs`: 30 terms  
 - `materials`: 15 terms  
-- `themes`: 14 terms  
+- `themes`: 10 terms  
 - `series`: Guernica · null  (XXIII and Squadron retired — use Guernica or null)
 - `work_type`: collage · sculpture · painting · photograph  
   _(installation_view deprecated — run `repass_installation_view.py`)_

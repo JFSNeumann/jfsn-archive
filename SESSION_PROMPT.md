@@ -68,7 +68,7 @@ Cross off the item in `IMPROVEMENTS.md`. Update `CURRENT_STATE.md`.
 - ✅ **for-artists.html deleted** — service page removed; all 1,147 internal references cleaned
 - ✅ **timeline.html, mosaic.html, constellation.html deleted** — removed from nav, sitemap, docs
 - ✅ **Grayscale filter and transform:scale removed sitewide** — no images anywhere on the site have filter:grayscale, transition on img, or scale hover. Confirmed by grep across all HTML outside artworks/.
-- ✅ **artworks/pages/ regenerated** — all 1,084 static artwork pages rebuilt from `gen-artwork-pages.py`. New pages: current 4-item nav, full color images, full footer, mobile nav, complete metadata (description, palette, motifs, composition).
+- ✅ **artworks/pages/ regenerated** — all 1,084 static artwork pages rebuilt from `gen-artwork-pages.py`. Full color images, full footer, mobile nav, complete metadata. Note: regenerated before Lost was added as 5th nav item — may need a fresh run to pick up 5-item nav.
 - ✅ **WORKFLOW-CLIENT.md deleted** — entire client archive onboarding workflow; obsolete since service offering ended
 - ✅ **CLAUDE.md / WORKFLOW.md / SESSION_PROMPT.md updated** — reflect current 18-page site, correct nav, no deleted-page references
 - ✅ **Companion suggestion chips updated** — 8 archive-specific chips live on companion.html; Mr. SNOWmann added (2026-06-05)
