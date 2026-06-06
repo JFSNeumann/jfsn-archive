@@ -1,10 +1,30 @@
 # Current State
-**Updated:** 2026-06-05
+**Updated:** 2026-06-06 (session 10)
 
 ## Last commit
-47052b7 — Add hover underline draw to mobile drawer links
+Pending — end-session.sh not yet run
 
-## What was done this session (2026-06-06 — session 8)
+## What was done this session (2026-06-06 — session 10)
+
+### Homepage featured grid polish (index.html)
+- Orange hover frame fixed: replaced `outline` (hidden behind absolute-positioned image) with a `.card-frame` overlay div at `z-index:2` that renders on top of the artwork; `border-color` transitions from transparent → `#FF6600`
+- Spacing improved: card-meta gap image→title increased `mt-3`→`mt-4` (16px); gap between 3-card editorial section and 4-column grid increased `mt-8`→`mt-16` (64px)
+- `site.min.css` rebuilt to include `mt-3`, `mt-4`, `mt-8`, `mt-16`, `grid-cols-4`; SW cache bumped to `jfsn-20260606163000`
+
+## What was done last session (2026-06-06 — session 9)
+
+### Hero rotator refinements (index.html, _shared/top-nav.html → stamped sitewide)
+- Touch swipe on mobile hero (40px threshold, both hero sections)
+- Sequential cycle replacing random: `(idx+1) % n`; MAX_SLIDES reduced 4→3 so one slide rotates out per visit
+- Mobile `-mobile.avif` crop removed — always uses `-hero.avif`; mobile preload ref cleaned up
+- Interval extended 6000→8000ms so Ken Burns 7s animation fully completes before crossfade
+- Keyboard ArrowLeft/ArrowRight advance hero; guarded against firing in input/textarea
+- Caption hover cue: underlines + brightens to full white on hover
+- JFSN wordmark tooltip sitewide: hover shows "Jeffrey Francis Stanley Neumann" in a small bordered label; CSS-only, stamped into all 26 pages via `stamp-nav.sh`
+- Sitewide image micro-interactions: `cursor: zoom-in`, orange outline on hover, `brightness(1.04)`, focus ring — applied via `_shared/ui.css` (`.thumb__link`) and inline `<style>` on index.html and archive.html
+- Homepage featured grid: dominant color mats from `chromatic.json` (30% blend), split into editorial (#featured-grid, 3 cards) + uniform (#featured-grid-small, 27 cards), title→orange on hover, metadata reordered (title first)
+
+## What was done last session (2026-06-06 — session 8)
 
 ### Hero rotator — full UX overhaul (index.html, artworks/featured-hero.txt)
 Built a complete hero system: Ken Burns zoom-out effect (4 direction variants, 1.04× scale, 7s, data-kb attribute per slide), crossfade scrim for caption legibility, pause on hover, ‹ › arrows, dot indicators, aria-live on captions, next-slide preload, and caption sync to crossfade midpoint. Slides are now generated dynamically from `artworks/featured-hero.txt` — add a line to the file to expand the hero pool without touching HTML. Fixed KB animation re-trigger bug (reflow reset), reduced scale from 1.07→1.04 to eliminate pop at transition seam.

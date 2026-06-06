@@ -59,16 +59,13 @@
     position: relative;
     padding: 0 20px;
   }
-  /* Featured grid layout */
+  /* Featured grid layout — editorial top 3 cards */
   @media (min-width: 768px) {
     #featured-grid { grid-auto-rows: 80px; }
     #featured-grid > a:nth-child(1) { grid-column: span 7; grid-row: span 6; display: flex; flex-direction: column; }
     #featured-grid > a:nth-child(2) { grid-column: span 5; grid-row: span 3; display: flex; flex-direction: column; }
     #featured-grid > a:nth-child(3) { grid-column: span 5; grid-row: span 3; display: flex; flex-direction: column; }
-    #featured-grid > a:nth-child(n+4) { grid-column: span 3; grid-row: span 5; display: flex; flex-direction: column; }
-    #featured-grid > a:nth-child(1) > .card-img,
-    #featured-grid > a:nth-child(2) > .card-img,
-    #featured-grid > a:nth-child(3) > .card-img { flex: 1; aspect-ratio: auto; }
+    #featured-grid > a > .card-img { flex: 1; aspect-ratio: auto; }
     #featured-grid > a > .card-meta { flex-shrink: 0; }
   }
   /* Hero rotator */
@@ -123,6 +120,12 @@
   }
   .hero-pause-btn:hover { color: rgba(255,255,255,0.9); }
 
+  /* Caption — hint it's a link */
+  #hero-caption-d,
+  #hero-caption-m { text-decoration: none; }
+  #hero-caption-d:hover,
+  #hero-caption-m:hover { color: rgba(255,255,255,0.95); text-decoration: underline; text-underline-offset: 3px; }
+
   @media (prefers-reduced-motion: reduce) {
     .hero-slide { transition: none; animation: none !important; }
     .hero-ctrl { transition: none; }
@@ -131,13 +134,44 @@
   /* Featured grid — lazy load settle */
   #featured-grid img {
     opacity: 0;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.4s ease, filter 0.3s ease;
   }
   #featured-grid img.is-loaded {
     opacity: 1;
   }
   @media (prefers-reduced-motion: reduce) {
     #featured-grid img { opacity: 1; transition: none; }
+  }
+
+  /* Featured grid — title hover (both grids) */
+  #featured-grid > a .card-title,
+  #featured-grid-small > a .card-title { transition: color 0.2s ease; }
+  #featured-grid > a:hover .card-title,
+  #featured-grid-small > a:hover .card-title { color: #FF6600; }
+  /* Card 1 gets more typographic weight to match its 7-col scale */
+  #featured-grid > a:first-child .card-title { font-size: 17px; letter-spacing: 0.04em; }
+
+  /* Card micro-interactions (both grids) */
+  #featured-grid > a,
+  #featured-grid-small > a { cursor: zoom-in; }
+
+  /* Orange frame overlay rendered above the image */
+  .card-frame {
+    position: absolute;
+    inset: 0;
+    border: 2px solid rgba(255,102,0,0);
+    transition: border-color 0.25s ease;
+    pointer-events: none;
+    z-index: 2;
+  }
+  #featured-grid > a:hover .card-frame,
+  #featured-grid-small > a:hover .card-frame { border-color: #FF6600; }
+  #featured-grid > a:focus-visible .card-frame,
+  #featured-grid-small > a:focus-visible .card-frame { border-color: #FF6600; }
+  #featured-grid > a:hover img,
+  #featured-grid-small > a:hover img { filter: brightness(1.04); }
+  @media (prefers-reduced-motion: reduce) {
+    .card-frame { transition: none; }
   }
 </style>
 </head>
@@ -150,6 +184,11 @@ header nav a::after{content:'';position:absolute;bottom:10px;left:0;width:100%;h
 header nav a:hover::after{transform:scaleX(1)}
 header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
 @media(prefers-reduced-motion:reduce){header nav a::after{transition:none}}
+/* JFSN wordmark tooltip */
+.jfsn-wordmark{position:relative}
+.jfsn-wordmark::before{content:'Jeffrey Francis Stanley Neumann';position:absolute;top:calc(100% + 10px);left:0;white-space:nowrap;font-family:'Inter',sans-serif;font-size:11px;font-weight:400;letter-spacing:0.06em;color:#575757;background:#fcf9f3;border:1px solid #c4c7c7;padding:4px 8px;pointer-events:none;opacity:0;transform:translateY(-4px);transition:opacity 0.15s ease,transform 0.15s ease}
+.jfsn-wordmark:hover::before{opacity:1;transform:translateY(0)}
+@media(prefers-reduced-motion:reduce){.jfsn-wordmark::before{transition:none}}
 /* Mobile drawer — underline draw + active state */
 #mobile-menu-drawer a{position:relative;overflow:hidden}
 #mobile-menu-drawer a::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;background:#FF6600;transform:scaleX(0);transform-origin:left center;transition:transform 0.2s ease}
@@ -162,7 +201,7 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
 <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-deep-ink focus:text-bone-white focus:font-label-caps focus:text-label-caps">Skip to content</a>
 <header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-background border-b border-deep-ink">
   <div class="flex items-center gap-8">
-    <a href="index.html" class="text-headline-md tracking-tighter font-semibold text-deep-ink">JFSN</a>
+    <a href="index.html" class="jfsn-wordmark text-headline-md tracking-tighter font-semibold text-deep-ink">JFSN</a>
     <nav class="hidden md:flex gap-6" aria-label="Primary">
       <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="archive.html">Archive</a>
       <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="series-index.html">Series</a>
@@ -363,7 +402,13 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
 
   <!-- Featured Works -->
   <section class="pt-16 pb-24 px-margin-desktop max-w-container-max mx-auto">
+    <p class="font-label-caps text-label-caps text-archive-gray mb-8 border-b border-outline-variant pb-4">Selected Works</p>
+    <!-- Editorial top: 3 asymmetric cards -->
     <div class="grid grid-cols-1 md:grid-cols-12 gap-x-6 gap-y-8" id="featured-grid">
+      <!-- populated by JS -->
+    </div>
+    <!-- Uniform grid: cards 4+ — auto-sizes to content, no row-span math -->
+    <div class="hidden md:grid md:grid-cols-4 gap-6 mt-16" id="featured-grid-small">
       <!-- populated by JS -->
     </div>
   </section>
@@ -389,30 +434,53 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
     const grid = document.getElementById('featured-grid');
     if (!grid) return;
     try {
-      const res = await fetch('catalog-home.json');
-      const works = await res.json();
-      works.forEach((w) => {
+      const [works, chromatic] = await Promise.all([
+        fetch('catalog-home.json').then(r => r.json()),
+        fetch('chromatic.json').then(r => r.json()).catch(() => []),
+      ]);
+
+      /* Build id → dominant bg hex lookup */
+      const colorMap = {};
+      chromatic.forEach(c => { colorMap[c.id] = c.bg; });
+
+      /* Blend dominant color 30% with bone-white for mat — softens vivid hues */
+      function matColor(hex) {
+        if (!hex) return '#ebe8e2';
+        const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+        return `rgb(${Math.round(r*.3+243*.7)},${Math.round(g*.3+240*.7)},${Math.round(b*.3+234*.7)})`;
+      }
+
+      const smallGrid = document.getElementById('featured-grid-small');
+
+      works.forEach((w, i) => {
         const medium = (w.work_type || '').toUpperCase().replace(/_/g, ' ');
         const id = w.file.replace('.avif', '');
+        const isFirst = i === 0;
+        const bg = matColor(colorMap[id]);
         const card = document.createElement('a');
         card.href = `artwork.html?id=${id}`;
-        card.className = 'group cursor-pointer no-underline';
+        card.className = 'group no-underline';
         card.innerHTML = `
-          <div class="card-img aspect-[3/4] bg-surface-container-high relative overflow-hidden p-3">
+          <div class="card-img aspect-[3/4] relative overflow-hidden p-3" style="background:${bg};">
             <img
               alt="${w.title}"
-              class="absolute inset-0 w-full h-full object-cover"
+              class="absolute inset-0 w-full h-full object-cover${isFirst ? ' is-loaded' : ''}"
               src="artworks/medium/${w.file}"
-              loading="lazy" width="900" height="1200"
-              onload="this.classList.add('is-loaded')"
+              loading="${isFirst ? 'eager' : 'lazy'}"${isFirst ? ' fetchpriority="high"' : ''}
+              width="900" height="1200"
+              ${isFirst ? '' : 'onload="this.classList.add(\'is-loaded\')"'}
             />
+            <div class="card-frame" aria-hidden="true"></div>
           </div>
           <div class="card-meta mt-4">
-            <span class="font-label-caps text-label-caps text-archive-gray block">${w.year}</span>
-            <h3 class="font-label-lg text-label-lg uppercase text-deep-ink mt-1">${w.title}</h3>
-            <p class="font-label-caps text-label-caps text-archive-gray mt-2">${medium}</p>
+            <h3 class="card-title font-label-lg text-label-lg uppercase text-deep-ink">${w.title}</h3>
+            <p class="font-label-caps text-label-caps text-archive-gray mt-2">${w.year} · ${medium}</p>
           </div>`;
-        grid.appendChild(card);
+        if (i < 3) {
+          grid.appendChild(card);
+        } else if (smallGrid) {
+          smallGrid.appendChild(card);
+        }
       });
     } catch(e) {
       console.error('catalog-home load failed', e);
@@ -429,8 +497,8 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
   'use strict';
 
   var KB_DIRS     = ['tl', 'tr', 'bl', 'br'];
-  var MAX_SLIDES  = 4;
-  var INTERVAL_MS = 6000;
+  var MAX_SLIDES  = 3;
+  var INTERVAL_MS = 8000;
   var FALLBACK    = [
     { id: 'art0953', caption: 'XXXIII Días Installation View · 2022 · COLLAGE',  pos: 'center 20%'     },
     { id: 'art1008', caption: 'Pubiern Robodt 365 · 1990 · SCULPTURE',            pos: 'center center'  },
@@ -461,7 +529,7 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
   function makeSlide(h, kbDir, suffix, eager) {
     var img = document.createElement('img');
     img.className  = 'hero-slide hero-slide-' + suffix;
-    img.src        = 'artworks/full/' + h.id + '-' + (suffix === 'd' ? 'hero' : 'mobile') + '.avif';
+    img.src        = 'artworks/full/' + h.id + '-hero.avif';
     img.alt        = h.caption + ' — Jeffrey F. S. Neumann';
     img.style.objectPosition = h.pos;
     img.dataset.kb = kbDir;
@@ -533,19 +601,12 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
       var nextH = selected[(i + 1) % selected.length];
       setTimeout(function () {
         new Image().src = 'artworks/full/' + nextH.id + '-hero.avif';
-        new Image().src = 'artworks/full/' + nextH.id + '-mobile.avif';
       }, 2000);
-    }
-
-    function randNext(cur) {
-      var n = cur;
-      while (n === cur && selected.length > 1) n = Math.floor(Math.random() * selected.length);
-      return n;
     }
 
     function startTimer() {
       if (reduced || paused) return;
-      timer = setInterval(function () { idx = randNext(idx); activate(idx); }, INTERVAL_MS);
+      timer = setInterval(function () { idx = (idx + 1) % selected.length; activate(idx); }, INTERVAL_MS);
     }
     function stopTimer() { clearInterval(timer); timer = null; }
 
@@ -572,6 +633,25 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
     /* Arrows */
     if (prevBtn) prevBtn.addEventListener('click', function () { advance(-1); });
     if (nextBtn) nextBtn.addEventListener('click', function () { advance(1); });
+
+    /* Touch swipe */
+    [document.getElementById('hero-d'), document.getElementById('hero-m')].forEach(function (sec) {
+      if (!sec) return;
+      var tx = 0;
+      sec.addEventListener('touchstart', function (e) { tx = e.touches[0].clientX; }, { passive: true });
+      sec.addEventListener('touchend', function (e) {
+        var dx = e.changedTouches[0].clientX - tx;
+        if (Math.abs(dx) > 40) advance(dx < 0 ? 1 : -1);
+      });
+    });
+
+    /* Keyboard arrows — skip if focus is in a text field */
+    document.addEventListener('keydown', function (e) {
+      var tag = document.activeElement && document.activeElement.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+      if (e.key === 'ArrowLeft')  advance(-1);
+      if (e.key === 'ArrowRight') advance(1);
+    });
 
     /* Dot clicks */
     [dDots, mDots].forEach(function (list) {

@@ -78,6 +78,11 @@ header nav a::after{content:'';position:absolute;bottom:10px;left:0;width:100%;h
 header nav a:hover::after{transform:scaleX(1)}
 header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
 @media(prefers-reduced-motion:reduce){header nav a::after{transition:none}}
+/* JFSN wordmark tooltip */
+.jfsn-wordmark{position:relative}
+.jfsn-wordmark::before{content:'Jeffrey Francis Stanley Neumann';position:absolute;top:calc(100% + 10px);left:0;white-space:nowrap;font-family:'Inter',sans-serif;font-size:11px;font-weight:400;letter-spacing:0.06em;color:#575757;background:#fcf9f3;border:1px solid #c4c7c7;padding:4px 8px;pointer-events:none;opacity:0;transform:translateY(-4px);transition:opacity 0.15s ease,transform 0.15s ease}
+.jfsn-wordmark:hover::before{opacity:1;transform:translateY(0)}
+@media(prefers-reduced-motion:reduce){.jfsn-wordmark::before{transition:none}}
 /* Mobile drawer — underline draw + active state */
 #mobile-menu-drawer a{position:relative;overflow:hidden}
 #mobile-menu-drawer a::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;background:#FF6600;transform:scaleX(0);transform-origin:left center;transition:transform 0.2s ease}
@@ -90,7 +95,7 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
 <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-deep-ink focus:text-bone-white focus:font-label-caps focus:text-label-caps">Skip to content</a>
 <header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-background border-b border-deep-ink">
   <div class="flex items-center gap-8">
-    <a href="index.html" class="text-headline-md tracking-tighter font-semibold text-deep-ink">JFSN</a>
+    <a href="index.html" class="jfsn-wordmark text-headline-md tracking-tighter font-semibold text-deep-ink">JFSN</a>
     <nav class="hidden md:flex gap-6" aria-label="Primary">
       <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="archive.html">Archive</a>
       <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="series-index.html">Series</a>

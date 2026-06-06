@@ -4,12 +4,6 @@
   position: relative;
 }
 
-.thumb__link {
-  position: relative;
-  background-size: cover;
-  background-position: center;
-}
-
 /* ─── Vertical "you are here" label ─────────────────────────────────────── */
 
 .page-label-vert {
@@ -63,6 +57,38 @@ header nav a.nav-underline-active::after {
 
 @media (prefers-reduced-motion: reduce) {
   header nav a::after { transition: none; }
+}
+
+/* ─── Artwork thumbnail micro-interactions ──────────────────────────────── */
+
+.thumb__link {
+  position: relative;
+  cursor: zoom-in;
+  outline: 2px solid rgba(255,102,0,0);
+  outline-offset: 0;
+  transition: outline-color 0.25s ease;
+}
+
+.thumb__link img {
+  transition: filter 0.3s ease;
+  display: block;
+}
+
+.thumb__link:hover {
+  outline-color: #FF6600;
+}
+
+.thumb__link:hover img {
+  filter: brightness(1.04);
+}
+
+.thumb__link:focus-visible {
+  outline-color: #FF6600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thumb__link { transition: none; }
+  .thumb__link img { transition: none; }
 }
 
 /* ─── Footer link underline — hover draw ─────────────────────────────── */
