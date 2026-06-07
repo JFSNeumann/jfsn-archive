@@ -142,19 +142,49 @@ if skipped:
         print(f"  {s}")
 
 # ── sitemap.xml ──────────────────────────────────────────────────────────────
+# Intentionally excluded from sitemap:
+#   artwork.html   — dynamic (?id=artNNNN); covered by artworks/pages/*.html entries below
+#   series.html    — dynamic (?theme= / ?series=); covered by theme/series param entries below
+#   404.html       — error page, not indexable
+#   curate.html, dedupe.html, jeff.html, qa.html — dev tools (noindex)
+# When adding a new public page: add it to entries[] AND run audit-nav.sh to verify.
 today       = datetime.date.today().isoformat()
 theme_pages = sorted({t for r in records for t in (r.get('themes') or [])})
 series_pages = sorted({r['series'] for r in records if r.get('series')})
 
 entries = [
-    (SITE_URL + '/',                    '1.0', 'monthly'),
-    (SITE_URL + '/archive.html',        '0.9', 'weekly'),
-    (SITE_URL + '/series-index.html',   '0.8', 'monthly'),
-    (SITE_URL + '/companion.html',      '0.7', 'monthly'),
-    (SITE_URL + '/about.html',          '0.7', 'monthly'),
-    (SITE_URL + '/api.html',            '0.7', 'monthly'),
-    (SITE_URL + '/changes.html',        '0.4', 'weekly'),
-    (SITE_URL + '/privacy.html',        '0.3', 'yearly'),
+    (SITE_URL + '/',                        '1.0', 'monthly'),
+    (SITE_URL + '/archive.html',            '0.9', 'weekly'),
+    (SITE_URL + '/series-index.html',       '0.8', 'monthly'),
+    (SITE_URL + '/companion.html',          '0.7', 'monthly'),
+    (SITE_URL + '/about.html',              '0.7', 'monthly'),
+    (SITE_URL + '/lost.html',               '0.7', 'monthly'),
+    (SITE_URL + '/api.html',                '0.6', 'monthly'),
+    (SITE_URL + '/chromatic.html',          '0.6', 'monthly'),
+    (SITE_URL + '/wall.html',               '0.6', 'monthly'),
+    # Decade pages
+    (SITE_URL + '/1970s.html',              '0.6', 'monthly'),
+    (SITE_URL + '/1980s.html',              '0.6', 'monthly'),
+    (SITE_URL + '/1990s.html',              '0.6', 'monthly'),
+    (SITE_URL + '/2000s.html',              '0.6', 'monthly'),
+    (SITE_URL + '/2010s.html',              '0.6', 'monthly'),
+    (SITE_URL + '/2020s.html',              '0.6', 'monthly'),
+    # Medium pages
+    (SITE_URL + '/collage.html',            '0.6', 'monthly'),
+    (SITE_URL + '/photography.html',        '0.6', 'monthly'),
+    (SITE_URL + '/sculpture.html',          '0.6', 'monthly'),
+    (SITE_URL + '/painting.html',           '0.6', 'monthly'),
+    # Theme/series deep-dives
+    (SITE_URL + '/guernica.html',           '0.6', 'monthly'),
+    (SITE_URL + '/targets.html',            '0.6', 'monthly'),
+    (SITE_URL + '/torsos-faces.html',       '0.6', 'monthly'),
+    (SITE_URL + '/crosses.html',            '0.6', 'monthly'),
+    (SITE_URL + '/framed.html',             '0.6', 'monthly'),
+    (SITE_URL + '/mr-snowmann.html',        '0.6', 'monthly'),
+    (SITE_URL + '/collaboration.html',      '0.6', 'monthly'),
+    (SITE_URL + '/gallery-images.html',     '0.6', 'monthly'),
+    (SITE_URL + '/changes.html',            '0.4', 'weekly'),
+    (SITE_URL + '/privacy.html',            '0.3', 'yearly'),
 ]
 # Theme-based series pages
 for theme in theme_pages:

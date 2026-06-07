@@ -289,3 +289,49 @@ for fname in files:
 if not issues_found:
     print('✅  OG images: all og:image files exist.')
 PYEOF
+
+
+# ── Reverse sitemap check — public pages that are NOT in sitemap ──────────────
+# This catches new pages added to the project that were never added to the
+# sitemap list in build_catalog.py. Run this after adding any new .html file.
+python3 << 'PYEOF'
+import re, glob
+
+# Pages intentionally excluded from sitemap:
+#   artwork.html   — dynamic (?id=), covered by artworks/pages/*.html
+#   series.html    — dynamic (?theme= / ?series=), covered by those param URLs
+#   404.html       — error page, not indexable
+#   curate.html    — dev tool (noindex)
+#   dedupe.html    — dev tool (noindex)
+#   jeff.html      — dev tool (noindex)
+#   qa.html        — dev tool (noindex)
+EXCLUDED = {
+    'artwork.html', 'series.html', '404.html',
+    'curate.html', 'dedupe.html', 'jeff.html', 'qa.html',
+}
+
+with open('sitemap.xml') as f:
+    sitemap = f.read()
+
+# Extract bare page names from sitemap (strip query strings, strip leading /)
+sitemap_pages = set()
+for loc in re.findall(r'<loc>https://jfsn\.com/([^<]+)</loc>', sitemap):
+    bare = loc.split('?')[0]
+    sitemap_pages.add(bare)
+# index.html lives at / in the sitemap
+sitemap_pages.add('index.html')
+
+public_html = sorted(
+    f for f in glob.glob('*.html')
+    if f not in EXCLUDED
+)
+
+missing = [f for f in public_html if f not in sitemap_pages]
+
+if missing:
+    print(f'\n⚠  {len(missing)} public page(s) not in sitemap.xml — add to build_catalog.py:')
+    for f in missing:
+        print(f'  ⚠  {f}')
+else:
+    print('✅  Sitemap coverage: all public pages are in sitemap.xml.')
+PYEOF

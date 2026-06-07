@@ -126,6 +126,7 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 - **`api/.htaccess` is auto-generated:** `build_catalog.py` overwrites it on every run. Edit the `htaccess` template string in that script — never the file directly. Do NOT add `SecFilterEngine`/`SecRuleEngine` — they cause HTTP 500 on HostGator.
 - **`catalog-lite.json` fields:** `file, title, year, work_type, themes, keywords, motifs, description` only. Don't add fields without checking what `search.js` and the Netlify edge function actually use.
 - **`artworks/pages/` regen:** `python3 gen-artwork-pages.py` rebuilds all 1,084 static pages. All include `search.js` + `nav-active.js` as of session 11. Use `--limit 5` to test template changes first.
+- **New page checklist:** When adding any new public `.html` page: (1) add to sitemap entries list in `build_catalog.py`, (2) run `python3 artworks/build_catalog.py` to rebuild sitemap, (3) run `bash audit-nav.sh` — the reverse sitemap check will catch if it's missing.
 
 ### Conventions
 - Vanilla HTML/CSS/JS. Production uses `site.min.css` (22,530 bytes compiled Tailwind — not CDN). Stitch exports start with Tailwind CDN and get swapped to `site.min.css` during post-export cleanup.

@@ -282,6 +282,7 @@ Does not work on plain cPanel (no server-side function support).
 - **`mt-3` / new Tailwind classes:** Classes not in the build are silently ignored. If a spacing or layout class isn't applying, run `npm run build:css`.
 - **Playfair Display:** Only on decade page heroes, `about.html` name h1 + bio paragraph, series heroes, `companion.html` title. Everything else is Inter.
 - **analytics:** GoatCounter on all public pages via `_shared/footer.html` → `jfsn.goatcounter.com`.
+- **New page sitemap rule:** When adding any new public `.html` page — add it to the `entries[]` list in `artworks/build_catalog.py`, run `python3 artworks/build_catalog.py`, then run `bash audit-nav.sh`. The reverse sitemap check will warn if you missed it. Intentionally excluded: `artwork.html`, `series.html` (both dynamic), `404.html`, and dev tools (`curate`, `dedupe`, `jeff`, `qa`).
 
 ---
 

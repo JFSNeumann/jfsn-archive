@@ -1,10 +1,17 @@
 # Current State
-**Updated:** 2026-06-06 (session 12)
+**Updated:** 2026-06-07 (session 13)
 
 ## Last commit
 (run end-session.sh to update)
 
-## What was done this session (2026-06-06 — session 12)
+## What was done this session (2026-06-07 — session 13)
+
+### Cleanup, sitemap fix, audit improvements
+- Deleted 12 stale files: empty jsons, one-time migration scripts, legacy deploy/backup scripts, test file; all superseded by current workflow.
+- Fixed sitemap: 1,092 → 1,124 URLs — added lost.html, chromatic.html, wall.html, all 6 decade pages, all 4 medium pages, 8 theme/series deep-dive pages that were missing since creation.
+- Added reverse sitemap check to audit-nav.sh (now 11 checks) — catches any future page added without a sitemap entry; documented new-page checklist in CLAUDE.md, README.md, and build_catalog.py; fixed index.html mobile skip-to-content (#main target was desktop-only).
+
+## What was done last session (2026-06-06 — session 12)
 
 ### Homepage polish + a11y + UX
 - Replaced minimal one-liner footer with full shared 4-column footer (matching all other pages); added footer underline-draw styles inline.

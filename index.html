@@ -303,6 +303,9 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
 <script src="search.js" defer></script>
 <!-- NAV:END -->
 
+<!-- Skip-to-content target — sits before both mobile and desktop content -->
+<div id="main" tabindex="-1" style="outline:none;"></div>
+
 <!-- ═══════════════════════════════════════════════
      MOBILE — Folio (snap scroll)
      Hidden on md+ breakpoint
@@ -398,7 +401,7 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
      DESKTOP
      Hidden on mobile
      ═══════════════════════════════════════════════ -->
-<main id="main" class="hidden md:block pt-16">
+<main class="hidden md:block pt-16">
 
   <!-- Hero -->
   <section id="hero-d" class="hero-section relative w-full overflow-hidden" style="height: 100dvh; background-color: #1a1814;">
