@@ -173,9 +173,23 @@
   @media (prefers-reduced-motion: reduce) {
     .card-frame { transition: none; }
   }
+
+  /* Mobile folio art links — cursor + orange outline on hover/focus */
+  .folio-art-link {
+    cursor: zoom-in;
+    outline: 2px solid rgba(255,102,0,0);
+    outline-offset: 0;
+    transition: outline-color 0.2s ease;
+  }
+  .folio-art-link:hover,
+  .folio-art-link:focus-visible { outline-color: #FF6600; }
+  @media (prefers-reduced-motion: reduce) {
+    .folio-art-link { transition: none; }
+  }
 </style>
 </head>
 <body class="bg-bone-white text-deep-ink font-body-md">
+<h1 class="sr-only">Jeffrey F. S. Neumann — Personal Archive</h1>
 
 <!-- NAV:START -->
 <style>
@@ -312,7 +326,7 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
     <section class="folio-section">
       <div class="w-full flex flex-col h-full justify-center py-4">
         <div class="flex-grow flex items-center justify-center min-h-0">
-          <a href="artwork.html?id=art0380" class="block w-full h-full max-h-[60vh]">
+          <a href="artwork.html?id=art0380" class="folio-art-link block w-full h-full max-h-[60vh]">
             <img
               src="artworks/full/art0380.avif"
               alt="Devo at WHK Auditorium — Jeffrey F. S. Neumann, 1977"
@@ -332,7 +346,7 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
     <section class="folio-section">
       <div class="w-full flex flex-col h-full justify-center py-4">
         <div class="flex-grow flex items-center justify-center min-h-0">
-          <a href="artwork.html?id=art0002" class="block w-full h-full max-h-[60vh]">
+          <a href="artwork.html?id=art0002" class="folio-art-link block w-full h-full max-h-[60vh]">
             <img
               src="artworks/full/art0002.avif"
               alt="Reliquary — Jeffrey F. S. Neumann, 1990"
@@ -352,7 +366,7 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
     <section class="folio-section">
       <div class="w-full flex flex-col h-full justify-center py-4">
         <div class="flex-grow flex items-center justify-center min-h-0">
-          <a href="artwork.html?id=art0026" class="block w-full h-full max-h-[60vh]">
+          <a href="artwork.html?id=art0026" class="folio-art-link block w-full h-full max-h-[60vh]">
             <img
               src="artworks/full/art0026.avif"
               alt="Yellow Figure on Black Wall — Jeffrey F. S. Neumann, 2010"
@@ -369,6 +383,9 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
     </section>
 
   </div>
+  <section class="border-t border-outline-variant py-8 px-4">
+    <a href="archive.html" class="font-label-caps text-label-caps text-archive-gray hover:text-international-orange transition-colors duration-200">View all 1,084 works &rarr;</a>
+  </section>
   <section class="border-t border-deep-ink py-10 px-4 md:px-margin-desktop">
     <a href="lost.html" class="group flex items-baseline justify-between max-w-container-max mx-auto">
       <span class="font-label-caps text-label-caps text-archive-gray group-hover:text-international-orange transition-colors">AN ESTIMATED 500–1,000 WORKS LOST TO WATER DAMAGE</span>
@@ -402,7 +419,7 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
 
   <!-- Featured Works -->
   <section class="pt-16 pb-24 px-margin-desktop max-w-container-max mx-auto">
-    <p class="font-label-caps text-label-caps text-archive-gray mb-8 border-b border-outline-variant pb-4">Selected Works</p>
+    <h2 class="font-label-caps text-label-caps text-archive-gray mb-8 border-b border-outline-variant pb-4">Selected Works — 30 of 1,084</h2>
     <!-- Editorial top: 3 asymmetric cards -->
     <div class="grid grid-cols-1 md:grid-cols-12 gap-x-6 gap-y-8" id="featured-grid">
       <!-- populated by JS -->
@@ -410,6 +427,10 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
     <!-- Uniform grid: cards 4+ — auto-sizes to content, no row-span math -->
     <div class="hidden md:grid md:grid-cols-4 gap-6 mt-16" id="featured-grid-small">
       <!-- populated by JS -->
+    </div>
+    <!-- Archive CTA -->
+    <div class="mt-12 pt-8 border-t border-outline-variant">
+      <a href="archive.html" class="font-label-caps text-label-caps text-archive-gray hover:text-international-orange transition-colors duration-200">View all 1,084 works &rarr;</a>
     </div>
   </section>
 
@@ -423,8 +444,44 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
 </main>
 
 <!-- Footer -->
-<footer class="hidden md:block py-8 px-margin-desktop border-t border-outline-variant">
-  <p class="font-label-caps text-[10px] text-archive-gray">© 2026 Jeffrey F. S. Neumann · <a href="mailto:jeff@jfsn.com" class="hover:text-deep-ink">jeff@jfsn.com</a></p>
+<style>
+footer a{position:relative;text-decoration:none}
+footer a::after{content:'';position:absolute;bottom:-1px;left:0;width:100%;height:1px;background:#FF6600;transform:scaleX(0);transform-origin:left center;transition:transform 0.2s ease}
+footer a:hover::after{transform:scaleX(1)}
+footer .hover\:border-international-orange::after{display:none}
+@media(prefers-reduced-motion:reduce){footer a::after{transition:none}}
+</style>
+<footer class="bg-surface-container-high py-16 px-margin-desktop border-t border-outline-variant">
+  <div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+    <div>
+      <h3 class="text-headline-md tracking-tighter font-semibold mb-6">JFSN</h3>
+      <p class="font-body-md text-archive-gray text-sm leading-relaxed">The personal archive of Jeffrey F. S. Neumann — 1,084 works spanning five decades. Collage, sculpture, photography.</p>
+    </div>
+    <div>
+      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">EXPLORE</h4>
+      <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
+        <li><a class="hover:text-international-orange transition-colors" href="archive.html">Complete Archive</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="series-index.html">Series Index</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="lost.html">Lost Works</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">RESOURCES</h4>
+      <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
+        <li><a class="hover:text-international-orange transition-colors" href="chromatic.html">Chromatic River</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="wall.html">The Wall</a></li>
+        <li><a class="hover:text-international-orange transition-colors" href="companion.html">AI Companion</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">CONTACT</h4>
+      <a class="font-nav-link text-nav-link text-deep-ink block mb-4 border-b border-deep-ink inline-block pb-1 hover:text-international-orange hover:border-international-orange transition-all" href="mailto:jeff@jfsn.com">jeff@jfsn.com</a>
+    </div>
+  </div>
+  <div class="mt-16 pt-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
+    <p class="font-label-caps text-[10px] text-archive-gray">© 2026 JEFFREY F. S. NEUMANN. ALL RIGHTS RESERVED.</p>
+    <div class="flex gap-8"><a class="font-label-caps text-[10px] text-archive-gray hover:text-deep-ink" href="privacy.html">PRIVACY</a></div>
+  </div>
 </footer>
 
 
@@ -452,7 +509,16 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
 
       const smallGrid = document.getElementById('featured-grid-small');
 
-      works.forEach((w, i) => {
+      /* Shuffle cards 4–30 so repeat visitors see variety; keep top 3 editorial */
+      const editorial = works.slice(0, 3);
+      const uniform   = works.slice(3);
+      for (let i = uniform.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [uniform[i], uniform[j]] = [uniform[j], uniform[i]];
+      }
+      const allWorks = [...editorial, ...uniform];
+
+      allWorks.forEach((w, i) => {
         const medium = (w.work_type || '').toUpperCase().replace(/_/g, ' ');
         const id = w.file.replace('.avif', '');
         const isFirst = i === 0;
@@ -463,7 +529,7 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
         card.innerHTML = `
           <div class="card-img aspect-[3/4] relative overflow-hidden p-3" style="background:${bg};">
             <img
-              alt="${w.title}"
+              alt="${w.title} — Jeffrey F. S. Neumann, ${w.year}"
               class="absolute inset-0 w-full h-full object-cover${isFirst ? ' is-loaded' : ''}"
               src="artworks/medium/${w.file}"
               loading="${isFirst ? 'eager' : 'lazy'}"${isFirst ? ' fetchpriority="high"' : ''}

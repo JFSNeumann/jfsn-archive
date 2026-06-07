@@ -1,10 +1,17 @@
 # Current State
-**Updated:** 2026-06-06 19:55
+**Updated:** 2026-06-06 (session 12)
 
 ## Last commit
-02ef0cd2 — Fix hero AVIF 404s + GoatCounter CSP; update docs
+(run end-session.sh to update)
 
-## What was done this session (2026-06-06 — session 11)
+## What was done this session (2026-06-06 — session 12)
+
+### Homepage polish + a11y + UX
+- Replaced minimal one-liner footer with full shared 4-column footer (matching all other pages); added footer underline-draw styles inline.
+- Added visually-hidden `<h1>`, promoted "Selected Works" `<p>` to `<h2>`, fixed generated card alt text to include year, added "View all 1,084 works →" CTA on both desktop and mobile, added `folio-art-link` cursor/orange-outline treatment to 3 mobile folio art links, shuffled uniform grid (cards 4–30) on each load while keeping editorial top 3 fixed.
+- Regenerated Allison handoff PDF (no content changes — date refresh only).
+
+## What was done last session (2026-06-06 — session 11)
 
 ### Hero AVIFs + CSP fixes
 - Fixed hero 404s on jfsn.com: `.htaccess` rewrites `artworks/full/*.avif` → `/artworks/*.avif` (legacy flat dir); hero crops must be uploaded to `/artworks/` on server. Uploaded art0953/1008/1009/1010-hero.avif to correct path — all return 200.

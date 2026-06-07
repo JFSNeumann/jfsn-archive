@@ -1,5 +1,17 @@
 [
   {
+    "sha": "7d848e6",
+    "date": "2026-06-06",
+    "title": "Session update 2026-06-06 20:12",
+    "body": ""
+  },
+  {
+    "sha": "f897d98",
+    "date": "2026-06-06",
+    "title": "Fix API 500, trim catalog-lite, add search to static artwork pages",
+    "body": "api/.htaccess: remove mod_security directives — SecFilter*/SecRuleEngine\n  cause HTTP 500 on HostGator regardless of IfModule guard; CORS headers alone\n  are sufficient. Fixed at source in build_catalog.py so rebuilds don't revert.\n\ncatalog-lite.json: strip series, palette, featured, composition (not read by\n  any consumer). Saves 147KB (814KB → 667KB, 18% reduction) — loaded by every\n  user who opens search (⌘K).\n\ngen-artwork-pages.py: add search.js + nav-active.js to all 1,084 static\n  artwork pages — previously had no ⌘K search and no active nav link.\n  Regenerated all artworks/pages/*.html."
+  },
+  {
     "sha": "6dedf51",
     "date": "2026-06-06",
     "title": "UX: recently-viewed tracking, archive filter URL state",
