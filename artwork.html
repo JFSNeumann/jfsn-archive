@@ -365,6 +365,16 @@ fetch('catalog.json')
     // Title
     document.getElementById('work-title').textContent = titleText;
 
+    // Recently-viewed — write to localStorage so search overlay can show it
+    try {
+      const RECENT_KEY = 'jfsn-recently-viewed';
+      let recent = JSON.parse(localStorage.getItem(RECENT_KEY) || '[]');
+      recent = recent.filter(r => r.id !== workId); // remove if already present
+      recent.unshift({ id: workId, title: titleText, year: w.year || null });
+      if (recent.length > 12) recent.length = 12; // keep last 12
+      localStorage.setItem(RECENT_KEY, JSON.stringify(recent));
+    } catch (_) {}
+
     // Meta rows
     const meta = document.getElementById('meta-rows');
     meta.innerHTML = metaRow('Year', w.year || '—');

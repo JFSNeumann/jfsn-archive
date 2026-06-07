@@ -427,6 +427,7 @@ function sortWorks(arr) {
 }
 
 function applyFilters() {
+  syncURL();
   const mediums = [...document.querySelectorAll('#filter-medium input:checked')].map(i => i.value);
   const decades = [...document.querySelectorAll('#filter-decade input:checked')].map(i => i.value);
   const series  = [...document.querySelectorAll('#filter-series input:checked')].map(i => i.value);
@@ -467,20 +468,44 @@ function renderPage() {
   loadMoreBtn.classList.toggle('hidden', page * PAGE_SIZE >= total);
 }
 
-// Pre-select filter from URL param, e.g. archive.html?decade=1990s or ?medium=collage
+// Pre-select filters from URL — supports multi-value and sort restore
+// e.g. archive.html?medium=collage&decade=1990s&sort=year_asc
 function applyURLParams() {
   const p = new URLSearchParams(location.search);
-  const decade = p.get('decade');
-  const medium = p.get('medium');
-  if (decade) {
-    const cb = document.querySelector(`#filter-decade input[value="${CSS.escape(decade)}"]`);
-    if (cb) { cb.checked = true; }
+  let changed = false;
+  p.getAll('medium').forEach(v => {
+    const cb = document.querySelector(`#filter-medium input[value="${CSS.escape(v)}"]`);
+    if (cb) { cb.checked = true; changed = true; }
+  });
+  p.getAll('decade').forEach(v => {
+    const cb = document.querySelector(`#filter-decade input[value="${CSS.escape(v)}"]`);
+    if (cb) { cb.checked = true; changed = true; }
+  });
+  p.getAll('series').forEach(v => {
+    const cb = document.querySelector(`#filter-series input[value="${CSS.escape(v)}"]`);
+    if (cb) { cb.checked = true; changed = true; }
+  });
+  const sort = p.get('sort');
+  if (sort) {
+    const sel = document.getElementById('sort-select');
+    if (sel) { sel.value = sort; changed = true; }
   }
-  if (medium) {
-    const cb = document.querySelector(`#filter-medium input[value="${CSS.escape(medium)}"]`);
-    if (cb) { cb.checked = true; }
-  }
-  if (decade || medium) applyFilters();
+  if (changed) applyFilters();
+}
+
+// Persist active filters into URL so back-navigation restores state
+function syncURL() {
+  const mediums = [...document.querySelectorAll('#filter-medium input:checked')].map(i => i.value);
+  const decades = [...document.querySelectorAll('#filter-decade input:checked')].map(i => i.value);
+  const series  = [...document.querySelectorAll('#filter-series input:checked')].map(i => i.value);
+  const sort    = document.getElementById('sort-select').value;
+  const p = new URLSearchParams();
+  mediums.forEach(v => p.append('medium', v));
+  decades.forEach(v => p.append('decade', v));
+  series.forEach(v  => p.append('series', v));
+  if (sort && sort !== 'id_desc') p.set('sort', sort); // only persist non-default
+  const qs = p.toString();
+  history.replaceState(null, '', qs ? '?' + qs : location.pathname);
 }
 
 document.getElementById('sort-select').addEventListener('change', () => {
