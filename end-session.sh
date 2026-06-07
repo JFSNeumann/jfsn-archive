@@ -72,7 +72,6 @@ fi
 echo ""
 
 # ── 3. Show what to tell Claude ───────────────────────────────────────────────
-RECENT_COMMITS=$(git log --oneline -5 2>/dev/null)
 echo "───────────────────────────────────────"
 echo "  Visual check (do before committing CSS/layout changes):"
 echo ""
@@ -82,10 +81,8 @@ echo "  3. Confirm no regressions, then commit"
 echo ""
 echo "  Paste this to Claude to update memory:"
 echo ""
-echo "  Update memory. Today we:"
-echo "$RECENT_COMMITS" | sed 's/^/  • /'
+echo "  Update memory."
 echo ""
-echo "  (edit the bullets above to match what actually shipped)"
 echo "───────────────────────────────────────"
 echo ""
 
@@ -118,8 +115,9 @@ fi
 echo "📄  CURRENT_STATE.md header updated (session notes preserved)."
 echo ""
 
-# ── 5. Deploy reminder ─────────────────────────────────────────────────────
-echo "🚀  Open the JFSN desktop app to deploy to HostGator when ready."
+# ── 5. Deploy — launch JFSN.app automatically ────────────────────────────────
+echo "🚀  Launching JFSN.app to deploy to HostGator..."
+open /Applications/JFSN.app 2>/dev/null || echo "   ⚠️   JFSN.app not found — deploy manually."
 
 echo ""
 echo "📄  Docs check — did anything change this session that affects:"

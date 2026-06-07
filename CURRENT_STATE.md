@@ -1,14 +1,17 @@
 # Current State
-**Updated:** 2026-06-07 (session 13)
+**Updated:** 2026-06-06 20:54
 
 ## Last commit
-(run end-session.sh to update)
+9d2cf90b — Session update 2026-06-06 20:52
 
-## What was done this session (2026-06-07 — session 13b)
+## What was done this session (2026-06-07 — session 14)
 
-### deploy.sh restored
-- Restored deploy.sh from git (HEAD~1) after mistakenly deleting it — JFSN.app shells out to deploy.sh for FTP; it is not legacy and must stay.
-- deploy.sh is now documented as required by JFSN.app; noted in memory.
+### Workflow automation + session prompt cleanup
+- Simplified end-session workflow: JFSN.app now launches automatically from end-session.sh (no more manual double-click); memory prompt reduced to just "Update memory."
+- Revised session start/end prompts to match new workflow; updated jfsn_session_prompts.md memory file.
+- deploy.sh + backup.sh + cloud-backup.sh restored after accidental deletion; all three documented as required (do not delete).
+
+## What was done last session (2026-06-07 — session 13)
 
 ### Cleanup, sitemap fix, audit improvements
 - Deleted 12 stale files: empty jsons, one-time migration scripts, legacy deploy/backup scripts, test file; all superseded by current workflow.
