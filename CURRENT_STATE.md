@@ -4,7 +4,11 @@
 ## Last commit
 (run end-session.sh to update)
 
-## What was done this session (2026-06-07 — session 13)
+## What was done this session (2026-06-07 — session 13b)
+
+### deploy.sh restored
+- Restored deploy.sh from git (HEAD~1) after mistakenly deleting it — JFSN.app shells out to deploy.sh for FTP; it is not legacy and must stay.
+- deploy.sh is now documented as required by JFSN.app; noted in memory.
 
 ### Cleanup, sitemap fix, audit improvements
 - Deleted 12 stale files: empty jsons, one-time migration scripts, legacy deploy/backup scripts, test file; all superseded by current workflow.
