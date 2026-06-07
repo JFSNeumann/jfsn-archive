@@ -1,5 +1,77 @@
 [
   {
+    "sha": "6dedf51",
+    "date": "2026-06-06",
+    "title": "UX: recently-viewed tracking, archive filter URL state",
+    "body": "artwork.html: write jfsn-recently-viewed to localStorage on every work load\n  (search overlay reads this key; was wired up on the read side only)\n  Stores {id, title, year}, capped at 12 entries, deduped on id\n\narchive.html: persist filter + sort state into URL via replaceState\n  - applyFilters() now calls syncURL() on every filter change\n  - applyURLParams() restored to handle multi-value params (getAll)\n    and sort param — back-navigation now restores exact filter state\n  - URL format: ?medium=collage&decade=1990s&sort=year_asc\n\nServer: removed stale files from HostGator via FTP\n  for-artists.html, constellation.html, mosaic.html, timeline.html\n  zart0953-hero.avif, catalog-lite.json.bak2/3/4"
+  },
+  {
+    "sha": "4046b7d",
+    "date": "2026-06-06",
+    "title": "py/sh QA: remove stale deleted-page refs, fix deploy path",
+    "body": "stamp-nav.sh: remove timeline.html, mosaic.html, constellation.html from TARGETS\nverify_deploy.py: replace constellation/timeline checks with lost.html + companion.html\nadd-works.sh: remove deploy.sh auto-call; prompt to use JFSN.app instead"
+  },
+  {
+    "sha": "2cad3eb",
+    "date": "2026-06-06",
+    "title": "Remove stale links to deleted pages in jeff.html",
+    "body": "timeline.html, constellation.html, mosaic.html — all deleted.\nReplaced with chromatic.html which is live."
+  },
+  {
+    "sha": "21b3bc3",
+    "date": "2026-06-06",
+    "title": "JS/JSON QA: remove banned patterns, purge stale refs, fix manifest",
+    "body": "ui.js: remove mask-image gradient + scroll-reveal IntersectionObserver\n  on .thumb (both explicitly banned; removed session 8 but crept back in)\nnav-active.js: remove stale timeline.html entry (page deleted)\nsw.js: remove /timeline.html from PRECACHE; add chromatic/wall/privacy/series;\n  bump CACHE_V jfsn-20260606200000\nmanifest.json: theme_color + background_color #0b0b0b → #fcf9f3 (light system)"
+  },
+  {
+    "sha": "02ef0cd",
+    "date": "2026-06-06",
+    "title": "Fix hero AVIF 404s + GoatCounter CSP; update docs",
+    "body": "- Hero AVIFs uploaded to /artworks/ (flat dir) per .htaccess rewrite rule\n- .htaccess CSP: gc.zgo.at → script-src; jfsn.goatcounter.com → connect-src\n- README.md + CLAUDE.md: hero AVIF upload path gotcha documented"
+  },
+  {
+    "sha": "b9e916d",
+    "date": "2026-06-06",
+    "title": "Session update 2026-06-06 14:23",
+    "body": ""
+  },
+  {
+    "sha": "6144e80",
+    "date": "2026-06-06",
+    "title": "Docs fourth pass — Companion function type, cloud backup, theme count, repass status, artwork static pages nav note",
+    "body": ""
+  },
+  {
+    "sha": "2fa8d44",
+    "date": "2026-06-06",
+    "title": "Docs third pass — fix 5 remaining stale facts (page count, catalog cost, retired series, for-artists ref, missing privacy.html)",
+    "body": ""
+  },
+  {
+    "sha": "e583611",
+    "date": "2026-06-06",
+    "title": "Docs double-check pass — fix 4 remaining stale items (wall sibling-dim, nav count, cloud backup status, start-session script ref)",
+    "body": ""
+  },
+  {
+    "sha": "9c74875",
+    "date": "2026-06-06",
+    "title": "end-session.sh: add docs check reminder before closing",
+    "body": ""
+  },
+  {
+    "sha": "35fa205",
+    "date": "2026-06-06",
+    "title": "Docs sweep — fix stale facts across all .md files (grayscale rule, nav count, CSS size, clip-path interaction, deleted pages)",
+    "body": ""
+  },
+  {
+    "sha": "9c3c3e9",
+    "date": "2026-06-06",
+    "title": "Overhaul README.md — accurate master reference replacing stale open-source marketing doc",
+    "body": ""
+  },
+  {
     "sha": "d73e069",
     "date": "2026-06-06",
     "title": "Session update 2026-06-06 12:30",

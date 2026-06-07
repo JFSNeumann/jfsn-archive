@@ -1,8 +1,8 @@
 # Current State
-**Updated:** 2026-06-06 14:24
+**Updated:** 2026-06-06 19:55
 
 ## Last commit
-b9e916d0 — Session update 2026-06-06 14:23
+02ef0cd2 — Fix hero AVIF 404s + GoatCounter CSP; update docs
 
 ## What was done this session (2026-06-06 — session 11)
 
