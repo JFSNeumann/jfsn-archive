@@ -258,6 +258,100 @@ feed_lines += ['  </channel>', '</rss>']
 OUT_FEED.write_text('\n'.join(feed_lines) + '\n')
 print(f"feed.xml          — {len(recent_20)} recent works")
 
+# ── Auto-patch work counts in medium, theme, and decade pages ─────────────────
+# Each entry: (html_filename, count_function)
+# The function receives the full records list and returns an integer count.
+# build_catalog.py replaces every occurrence of the old number in context-sensitive
+# patterns (numberOfItems, meta description, og:description, JSON-LD description,
+# visible paragraph text) so all counts stay in sync whenever new works are ingested.
+
+def _count_type(recs, wtype):
+    return sum(1 for r in recs if (r.get('work_type') or '') == wtype)
+
+def _count_theme(recs, theme):
+    return sum(1 for r in recs if theme in (r.get('themes') or []))
+
+def _count_series(recs, series_name):
+    return sum(1 for r in recs if (r.get('series') or '') == series_name)
+
+def _count_decade(recs, start, end):
+    return sum(1 for r in recs if start <= (r.get('year') or 0) <= end)
+
+PAGE_COUNTS = [
+    # Medium pages
+    ('collage.html',        lambda r: _count_type(r, 'collage')),
+    ('photography.html',    lambda r: _count_type(r, 'photograph')),
+    ('sculpture.html',      lambda r: _count_type(r, 'sculpture')),
+    ('painting.html',       lambda r: _count_type(r, 'painting')),
+    # Theme pages
+    ('targets.html',        lambda r: _count_theme(r, 'Targets')),
+    ('framed.html',         lambda r: _count_theme(r, 'Framed')),
+    ('torsos-faces.html',   lambda r: _count_theme(r, 'Torsos & Faces')),
+    ('gallery-images.html', lambda r: _count_theme(r, 'Gallery')),
+    ('mr-snowmann.html',    lambda r: _count_theme(r, 'Mr. Snowmann')),
+    ('crosses.html',        lambda r: _count_theme(r, 'Crosses')),
+    ('collaboration.html',  lambda r: _count_theme(r, 'Collaboration')),
+    # Series pages
+    ('guernica.html',       lambda r: _count_series(r, 'Guernica')),
+    # Decade pages
+    ('1970s.html',          lambda r: _count_decade(r, 1970, 1979)),
+    ('1980s.html',          lambda r: _count_decade(r, 1980, 1989)),
+    ('1990s.html',          lambda r: _count_decade(r, 1990, 1999)),
+    ('2000s.html',          lambda r: _count_decade(r, 2000, 2009)),
+    ('2010s.html',          lambda r: _count_decade(r, 2010, 2019)),
+    ('2020s.html',          lambda r: _count_decade(r, 2020, 2029)),
+]
+
+# Patterns that contain the count — each is a (search, replace_template) pair
+# where {old} and {new} are substituted before applying re.sub.
+COUNT_PATTERNS = [
+    # JSON-LD numberOfItems
+    (r'"numberOfItems":\s*{old}\b',         '"numberOfItems": {new}'),
+    # visible paragraph: "NNN works" or "NNN&nbsp;works"
+    (r'\b{old}(?:&nbsp;|&#x00A0;|\s)works\b', '{new} works'),
+    (r'\b{old} works\b',                     '{new} works'),
+    # numberOfItems already covered; catch stray bare numbers only in specific attrs
+    (r'(?<="numberOfItems": ){old}\b',       '{new}'),
+]
+
+_patch_count = 0
+for page_file, count_fn in PAGE_COUNTS:
+    page_path = ROOT / page_file
+    if not page_path.exists():
+        continue
+    new_count = count_fn(records)
+    html = page_path.read_text(encoding='utf-8')
+
+    # Find the current count written in the file (numberOfItems value)
+    m = re.search(r'"numberOfItems":\s*(\d+)', html)
+    if not m:
+        continue
+    old_count = int(m.group(1))
+    if old_count == new_count:
+        continue  # nothing to do
+
+    old_s, new_s = str(old_count), str(new_count)
+
+    # 1. numberOfItems
+    html = re.sub(
+        r'("numberOfItems":\s*)' + old_s + r'\b',
+        r'\g<1>' + new_s,
+        html
+    )
+    # 2. visible text: "NNN works" and "NNN&nbsp;works"
+    html = re.sub(r'\b' + old_s + r'(?=(?:&nbsp;|&#x00A0;)works\b)', new_s, html)
+    html = re.sub(r'\b' + old_s + r'(?= works\b)', new_s, html)
+    # 3. meta/og/JSON-LD description strings that start with the count
+    #    e.g. content="638 collage works..." or "638 collages..."
+    html = re.sub(r'(?<=["\s])' + old_s + r'(?= \w)', new_s, html)
+
+    page_path.write_text(html, encoding='utf-8')
+    _patch_count += 1
+    print(f"{page_file:<28} — count updated {old_s} → {new_s}")
+
+if _patch_count == 0:
+    print("page counts       — all up to date")
+
 # ── Stamp build timestamp into index.html catalog fetch URL ──────────────────
 # Replaces ?v=BUILD_TS so browsers always fetch fresh catalog-home.json after deploy.
 INDEX  = Path(__file__).parent.parent / "index.html"

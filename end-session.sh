@@ -117,7 +117,7 @@ echo ""
 
 # ── 5. Deploy — launch JFSN.app automatically ────────────────────────────────
 echo "🚀  Launching JFSN.app to deploy to HostGator..."
-open /Applications/JFSN.app 2>/dev/null || echo "   ⚠️   JFSN.app not found — deploy manually."
+open ~/Desktop/Deploy\ JFSN.app 2>/dev/null || echo "   ⚠️   Deploy JFSN.app not found on Desktop — deploy manually."
 
 echo ""
 echo "📄  Docs check — did anything change this session that affects:"
