@@ -61,10 +61,10 @@ print(f"\nVerifying {SITE} …\n")
 # Pages
 check("index.html",          "/index.html")
 check("archive.html",        "/archive.html")
-check("constellation.html",  "/constellation.html")
-check("api.html",            "/api.html")
-check("timeline.html",       "/timeline.html")
 check("about.html",          "/about.html")
+check("lost.html",           "/lost.html")
+check("api.html",            "/api.html")
+check("companion.html",      "/companion.html")
 
 # Catalog
 check("catalog-home.json — exists",   "/catalog-home.json",

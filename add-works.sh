@@ -54,10 +54,4 @@ python3 "$SCRIPT_DIR/artworks/build_catalog.py"
 echo ""
 
 # ── 3. deploy (optional) ──────────────────────────────────────────────────────
-if $NO_DEPLOY; then
-  echo "✅  Done. Skipped deploy (--no-deploy)."
-  echo "    Run ./deploy.sh when ready to go live."
-else
-  echo "🚀  Deploying..."
-  "$SCRIPT_DIR/deploy.sh"
-fi
+echo "✅  Done. Open JFSN.app to deploy to HostGator when ready."

@@ -18,10 +18,10 @@ fi
 
 TARGETS=(
   index.html archive.html artwork.html series-index.html
-  timeline.html companion.html about.html
-  lost.html mosaic.html
+  companion.html about.html
+  lost.html
   collage.html sculpture.html photography.html painting.html
-  changes.html chromatic.html constellation.html
+  changes.html chromatic.html
   guernica.html targets.html framed.html torsos-faces.html
   gallery-images.html mr-snowmann.html crosses.html collaboration.html
   privacy.html series.html wall.html 404.html api.html
