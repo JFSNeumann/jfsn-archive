@@ -123,6 +123,9 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 - Deploy to HostGator via desktop JFSN.app (not deploy.sh)
 - Service worker: `sw.js` — bump `CACHE_V` whenever deploy may be cached by old SW
 - **Hero AVIF upload path:** `.htaccess` rewrites `artworks/full/*.avif` → `/artworks/*.avif` (legacy flat dir). New hero crops (`artNNNN-hero.avif`) must be uploaded to `/artworks/` on HostGator — NOT `/artworks/full/`. Use lftp: `put artNNNN-hero.avif -o /artworks/artNNNN-hero.avif`
+- **`api/.htaccess` is auto-generated:** `build_catalog.py` overwrites it on every run. Edit the `htaccess` template string in that script — never the file directly. Do NOT add `SecFilterEngine`/`SecRuleEngine` — they cause HTTP 500 on HostGator.
+- **`catalog-lite.json` fields:** `file, title, year, work_type, themes, keywords, motifs, description` only. Don't add fields without checking what `search.js` and the Netlify edge function actually use.
+- **`artworks/pages/` regen:** `python3 gen-artwork-pages.py` rebuilds all 1,084 static pages. All include `search.js` + `nav-active.js` as of session 11. Use `--limit 5` to test template changes first.
 
 ### Conventions
 - Vanilla HTML/CSS/JS. Production uses `site.min.css` (22,530 bytes compiled Tailwind — not CDN). Stitch exports start with Tailwind CDN and get swapped to `site.min.css` during post-export cleanup.

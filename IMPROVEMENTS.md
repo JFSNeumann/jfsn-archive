@@ -1,5 +1,5 @@
 # JFSN — Improvement List
-**Updated:** 2026-06-06 (session 10)
+**Updated:** 2026-06-06 (session 11)
 
 A living list. Add to it. Cross things off. This is the backlog.
 
