@@ -383,6 +383,8 @@ def generate_page(work, idx, all_works, colors):
   </a>
 </nav>
 
+<script src="../../search.js" defer></script>
+<script src="../../_shared/nav-active.js" defer></script>
 </body>
 </html>'''
 

@@ -43,8 +43,11 @@ ARTIST_NAME = _cfg.get("artist_name", "Unknown Artist")
 ARTIST_SHORT = _cfg.get("artist_short") or ARTIST_NAME
 # ─────────────────────────────────────────────────────────────────────────────
 
-# Fields kept in the lite catalog (used by archive grid, homepage, artwork prev/next)
-LITE_FIELDS = {'file', 'title', 'work_type', 'year', 'themes', 'series', 'keywords', 'motifs', 'palette', 'featured', 'description', 'composition'}
+# Fields kept in the lite catalog.
+# Consumers: search.js (file,title,year,work_type,themes,keywords,motifs)
+#            artwork-meta.js edge function (adds description for social meta)
+# Stripped: series, palette, featured, composition — not read by any consumer
+LITE_FIELDS = {'file', 'title', 'work_type', 'year', 'themes', 'keywords', 'motifs', 'description'}
 FEATURED = Path(__file__).parent.parent / "featured.txt"
 
 # Load featured IDs (strip comments and whitespace)
@@ -385,16 +388,9 @@ palette_data = _facet_index("palette", "color")
 }, separators=(',', ':')))
 
 # .htaccess — CORS + content-type for Apache (cPanel compatible)
+# Note: mod_security directives removed — IfModule guards are insufficient on
+# HostGator; SecFilter*/SecRuleEngine in .htaccess returns 500 regardless.
 htaccess = """\
-# Disable mod_security for API endpoints (cPanel shared hosting)
-<IfModule mod_security.c>
-  SecFilterEngine Off
-  SecFilterScanPOST Off
-</IfModule>
-<IfModule mod_security2.c>
-  SecRuleEngine Off
-</IfModule>
-
 <IfModule mod_headers.c>
   <FilesMatch "\\.json$">
     Header set Access-Control-Allow-Origin "*"
