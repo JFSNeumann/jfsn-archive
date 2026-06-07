@@ -192,7 +192,6 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
     <nav class="hidden md:flex gap-6" aria-label="Primary">
       <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="archive.html">Archive</a>
       <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="series-index.html">Series</a>
-      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="companion.html" title="Ask the archive — AI search">Companion</a>
       <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="about.html">About</a>
       <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="lost.html">Lost</a>
     </nav>
@@ -220,12 +219,15 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
     <div style="flex:1;overflow-y:auto;padding:8px 0;">
       <a href="archive.html"     style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Archive</a>
       <a href="series-index.html" style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Series</a>
-      <a href="companion.html"   style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Companion</a>
       <a href="about.html"       style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">About</a>
       <a href="lost.html"        style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Lost</a>
     </div>
+    <!-- Portrait -->
+    <div style="padding:16px 24px;">
+      <img src="me black.gif" alt="Jeffrey F. S. Neumann" style="display:block;width:50%;margin:0 auto;opacity:0.85;">
+    </div>
     <!-- Search shortcut -->
-    <div style="padding:16px 24px;border-top:1px solid #c4c7c7;">
+    <div style="padding:0 24px 16px;border-top:1px solid #c4c7c7;">
       <button id="mobile-menu-search"
         style="width:100%;display:flex;align-items:center;gap:10px;background:none;border:1px solid #c4c7c7;padding:12px 14px;cursor:pointer;color:#575757;font-family:Inter,sans-serif;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;">
         <span class="material-symbols-outlined" style="font-size:16px;">search</span>
@@ -345,34 +347,74 @@ footer a:hover::after{transform:scaleX(1)}
 footer .hover\:border-international-orange::after{display:none}
 @media(prefers-reduced-motion:reduce){footer a::after{transition:none}}
 </style>
-<footer class="bg-surface-container-high py-16 px-margin-desktop border-t border-outline-variant">
-  <div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
-    <div>
-      <h3 class="text-headline-md tracking-tighter font-semibold mb-6">JFSN</h3>
-      <p class="font-body-md text-archive-gray text-sm leading-relaxed">The personal archive of Jeffrey F. S. Neumann — 1,084 works spanning five decades. Collage, sculpture, photography.</p>
+<footer class="bg-surface-container-high pt-20 pb-28 px-margin-desktop border-t border-outline-variant">
+  <div class="max-w-container-max mx-auto grid grid-cols-1 gap-10" style="grid-template-columns:1fr;gap:40px 32px;">
+    <div class="hidden md:grid" style="grid-template-columns:2.2fr 1fr 1fr 1.3fr;gap:32px;align-items:center;">
+      <!-- Col 1: portrait + identity -->
+      <div style="display:flex;align-items:center;gap:20px;">
+        <div style="flex-shrink:0;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle, rgba(255,255,255,0.75) 30%, rgba(255,255,255,0) 75%);display:flex;align-items:center;justify-content:center;">
+          <img src="me black.gif" alt="Jeffrey F. S. Neumann" width="90" style="opacity:0.85;">
+        </div>
+        <div>
+          <h3 style="font-family:Inter,sans-serif;font-size:18px;font-weight:600;letter-spacing:-0.02em;color:#0B0B0B;margin-bottom:10px;">JFSN</h3>
+          <p style="font-family:Inter,sans-serif;font-size:13px;line-height:1.65;color:#575757;">The personal archive of Jeffrey F. S. Neumann — 1,084 works spanning five decades. Collage, sculpture, photography.</p>
+        </div>
+      </div>
+      <!-- Col 2: Explore -->
+      <div style="padding-top:20px;padding-bottom:20px;align-self:start;">
+        <h4 class="font-label-caps text-label-caps mb-5 text-deep-ink">EXPLORE</h4>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;">
+          <li><a class="font-nav-link text-nav-link text-archive-gray hover:text-international-orange transition-colors" href="archive.html">Complete Archive</a></li>
+          <li><a class="font-nav-link text-nav-link text-archive-gray hover:text-international-orange transition-colors" href="series-index.html">Series Index</a></li>
+          <li><a class="font-nav-link text-nav-link text-archive-gray hover:text-international-orange transition-colors" href="lost.html">Lost Works</a></li>
+        </ul>
+      </div>
+      <!-- Col 3: Resources -->
+      <div style="padding-top:20px;padding-bottom:20px;align-self:start;">
+        <h4 class="font-label-caps text-label-caps mb-5 text-deep-ink">RESOURCES</h4>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;">
+          <li><a class="font-nav-link text-nav-link text-archive-gray hover:text-international-orange transition-colors" href="chromatic.html">Chromatic River</a></li>
+          <li><a class="font-nav-link text-nav-link text-archive-gray hover:text-international-orange transition-colors" href="wall.html">The Wall</a></li>
+          <li><a class="font-nav-link text-nav-link text-archive-gray hover:text-international-orange transition-colors" href="companion.html">AI Companion</a></li>
+        </ul>
+      </div>
+      <!-- Col 4: Contact + Social -->
+      <div style="padding-top:20px;padding-bottom:20px;align-self:start;">
+        <h4 class="font-label-caps text-label-caps mb-5 text-deep-ink">CONTACT</h4>
+        <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange hover:border-international-orange transition-all" style="display:inline-block;border-bottom:1px solid #0B0B0B;padding-bottom:2px;" href="mailto:jeff@jfsn.com">jeff@jfsn.com</a>
+      </div>
     </div>
-    <div>
-      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">EXPLORE</h4>
-      <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
-        <li><a class="hover:text-international-orange transition-colors" href="archive.html">Complete Archive</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="series-index.html">Series Index</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="lost.html">Lost Works</a></li>
-      </ul>
-    </div>
-    <div>
-      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">RESOURCES</h4>
-      <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
-        <li><a class="hover:text-international-orange transition-colors" href="chromatic.html">Chromatic River</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="wall.html">The Wall</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="companion.html">AI Companion</a></li>
-      </ul>
-    </div>
-    <div>
-      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">CONTACT</h4>
-      <a class="font-nav-link text-nav-link text-deep-ink block mb-4 border-b border-deep-ink inline-block pb-1 hover:text-international-orange hover:border-international-orange transition-all" href="mailto:jeff@jfsn.com">jeff@jfsn.com</a>
+    <!-- Mobile: stacked layout -->
+    <div class="md:hidden grid grid-cols-2 gap-8">
+      <div style="grid-column:1/-1;display:flex;align-items:flex-start;gap:16px;">
+        <img src="me black.gif" alt="Jeffrey F. S. Neumann" width="70" style="flex-shrink:0;opacity:0.85;">
+        <div>
+          <h3 style="font-family:Inter,sans-serif;font-size:18px;font-weight:600;letter-spacing:-0.02em;color:#0B0B0B;margin-bottom:8px;">JFSN</h3>
+          <p style="font-family:Inter,sans-serif;font-size:13px;line-height:1.65;color:#575757;">The personal archive of Jeffrey F. S. Neumann — 1,084 works spanning five decades.</p>
+        </div>
+      </div>
+      <div>
+        <h4 class="font-label-caps text-label-caps mb-4 text-deep-ink">EXPLORE</h4>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;">
+          <li><a class="font-nav-link text-nav-link text-archive-gray" href="archive.html">Complete Archive</a></li>
+          <li><a class="font-nav-link text-nav-link text-archive-gray" href="series-index.html">Series Index</a></li>
+          <li><a class="font-nav-link text-nav-link text-archive-gray" href="lost.html">Lost Works</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-label-caps text-label-caps mb-4 text-deep-ink">RESOURCES</h4>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;">
+          <li><a class="font-nav-link text-nav-link text-archive-gray" href="chromatic.html">Chromatic River</a></li>
+          <li><a class="font-nav-link text-nav-link text-archive-gray" href="wall.html">The Wall</a></li>
+          <li><a class="font-nav-link text-nav-link text-archive-gray" href="companion.html">AI Companion</a></li>
+        </ul>
+      </div>
+      <div style="grid-column:1/-1;">
+        <a class="font-nav-link text-nav-link text-deep-ink" style="display:inline-block;border-bottom:1px solid #0B0B0B;padding-bottom:2px;" href="mailto:jeff@jfsn.com">jeff@jfsn.com</a>
+      </div>
     </div>
   </div>
-  <div class="mt-16 pt-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
+  <div class="mt-12 pt-6 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
     <p class="font-label-caps text-[10px] text-archive-gray">© 2026 JEFFREY F. S. NEUMANN. ALL RIGHTS RESERVED.</p>
     <div class="flex gap-8"><a class="font-label-caps text-[10px] text-archive-gray hover:text-deep-ink" href="privacy.html">PRIVACY</a></div>
   </div>

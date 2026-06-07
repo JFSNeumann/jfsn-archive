@@ -1,10 +1,17 @@
 # Current State
-**Updated:** 2026-06-06 20:54
+**Updated:** 2026-06-07
 
 ## Last commit
-9d2cf90b — Session update 2026-06-06 20:52
+(run end-session.sh to update)
 
-## What was done this session (2026-06-07 — session 14)
+## What was done this session (2026-06-07 — session 16)
+
+### Footer, nav, and lost.html overhaul
+- Footer redesigned sitewide: portrait image with radial glow added to col 1, Companion moved to footer-only (removed from desktop nav and mobile drawer on all 26 Stitch pages + 6 decade pages), nav columns top-aligned with padding-bottom, pb-28 bottom breathing room, Lost Works added to decade page Explore lists, stale Terms link removed from decade footers.
+- lost.html redesigned to match about.html layout: two-column hero with `Lost.` display heading + essay left, trash-can photo right (artwork-in-trash-can.jpg, desaturated/cropped), second essay section with sidebar archive links, ghost grid reduced from 25 to 10 tiles.
+- Mobile drawer updated sitewide: portrait image (50%, centered) added above Search Archive button; nav-active.js cleaned up (companion.html removed from PAGE_NAV).
+
+## What was done last session (2026-06-07 — session 14)
 
 ### Workflow automation + session prompt cleanup
 - Simplified end-session workflow: JFSN.app now launches automatically from end-session.sh (no more manual double-click); memory prompt reduced to just "Update memory."

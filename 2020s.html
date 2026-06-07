@@ -75,7 +75,6 @@
     <div class="hidden md:flex items-center gap-8">
       <a class="font-label-lg text-label-lg text-primary opacity-80 hover:opacity-100 hover:text-on-tertiary-container transition-colors uppercase" href="archive.html">Archive</a>
       <a class="font-label-lg text-label-lg text-primary opacity-80 hover:opacity-100 hover:text-on-tertiary-container transition-colors uppercase" href="series-index.html">Series</a>
-      <a class="font-label-lg text-label-lg text-primary opacity-80 hover:opacity-100 hover:text-on-tertiary-container transition-colors uppercase" href="companion.html">Companion</a>
       <a class="font-label-lg text-label-lg text-primary opacity-80 hover:opacity-100 hover:text-on-tertiary-container transition-colors uppercase" href="about.html">About</a>
     </div>
     <div class="flex items-center gap-4">
@@ -104,7 +103,6 @@
     <div style="padding:24px;display:flex;flex-direction:column;gap:0;">
       <a href="archive.html"     style="display:block;padding:16px 0;font-family:Inter,sans-serif;font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#000;text-decoration:none;border-bottom:1px solid #c4c7c7;">Archive</a>
       <a href="series-index.html" style="display:block;padding:16px 0;font-family:Inter,sans-serif;font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#000;text-decoration:none;border-bottom:1px solid #c4c7c7;">Series</a>
-      <a href="companion.html"   style="display:block;padding:16px 0;font-family:Inter,sans-serif;font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#000;text-decoration:none;border-bottom:1px solid #c4c7c7;">Companion</a>
       <a href="about.html"       style="display:block;padding:16px 0;font-family:Inter,sans-serif;font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#000;text-decoration:none;border-bottom:1px solid #c4c7c7;">About</a>
       <p style="margin-top:24px;font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#5e5e5e;">By Decade</p>
       <a href="1970s.html" style="display:block;padding:12px 0;font-family:Inter,sans-serif;font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#5e5e5e;text-decoration:none;border-bottom:1px solid #c4c7c7;">1970s</a>
@@ -2815,19 +2813,25 @@
 
 <!-- FOOTER:START -->
 <footer class="bg-surface-container-high border-t border-outline-variant">
-  <div class="max-w-[1200px] mx-auto px-margin-desktop py-xl grid grid-cols-1 md:grid-cols-4 gap-12">
-    <div>
-      <h3 class="text-headline-md font-semibold tracking-tighter mb-6">JFSN</h3>
-      <p class="font-body-md text-body-md text-secondary leading-relaxed">The personal archive of Jeffrey F. S. Neumann — 1,084 works spanning five decades. Collage, sculpture, photography.</p>
+  <div class="max-w-[1200px] mx-auto px-margin-desktop py-xl pb-28 grid grid-cols-1 md:grid-cols-4 gap-12" style="align-items:start;">
+    <div style="display:flex;align-items:center;gap:16px;">
+      <div style="flex-shrink:0;width:90px;height:90px;border-radius:50%;background:radial-gradient(circle, rgba(255,255,255,0.75) 30%, rgba(255,255,255,0) 75%);display:flex;align-items:center;justify-content:center;">
+        <img src="me black.gif" alt="Jeffrey F. S. Neumann" width="74" style="opacity:0.85;">
+      </div>
+      <div>
+        <h3 class="text-headline-md font-semibold tracking-tighter mb-3">JFSN</h3>
+        <p class="font-body-md text-body-md text-secondary leading-relaxed">The personal archive of Jeffrey F. S. Neumann — 1,084 works spanning five decades. Collage, sculpture, photography.</p>
+      </div>
     </div>
-    <div>
+    <div style="padding-top:8px;padding-bottom:20px;align-self:start;">
       <h4 class="font-label-lg text-label-lg mb-6 text-primary uppercase tracking-widest">Explore</h4>
       <ul class="space-y-3 font-label-md text-label-md text-secondary">
         <li><a class="hover:text-on-tertiary-container transition-colors uppercase tracking-widest" href="archive.html">Complete Archive</a></li>
         <li><a class="hover:text-on-tertiary-container transition-colors uppercase tracking-widest" href="series-index.html">Series Index</a></li>
+        <li><a class="hover:text-on-tertiary-container transition-colors uppercase tracking-widest" href="lost.html">Lost Works</a></li>
       </ul>
     </div>
-    <div>
+    <div style="padding-top:8px;padding-bottom:20px;align-self:start;">
       <h4 class="font-label-lg text-label-lg mb-6 text-primary uppercase tracking-widest">Resources</h4>
       <ul class="space-y-3 font-label-md text-label-md text-secondary">
         <li><a class="hover:text-on-tertiary-container transition-colors uppercase tracking-widest" href="chromatic.html">Chromatic River</a></li>
@@ -2836,14 +2840,14 @@
         <li><a class="hover:text-on-tertiary-container transition-colors uppercase tracking-widest" href="about.html">About</a></li>
       </ul>
     </div>
-    <div>
+    <div style="padding-top:8px;padding-bottom:20px;align-self:start;">
       <h4 class="font-label-lg text-label-lg mb-6 text-primary uppercase tracking-widest">Contact</h4>
       <a class="font-label-md text-label-md text-primary block mb-4 border-b border-primary inline-block pb-1 hover:text-on-tertiary-container hover:border-on-tertiary-container transition-all uppercase tracking-widest" href="mailto:jeff@jfsn.com">jeff@jfsn.com</a>
     </div>
   </div>
   <div class="max-w-[1200px] mx-auto px-margin-desktop pb-8 pt-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
     <p class="font-label-md text-[10px] text-secondary uppercase tracking-widest">© 2026 Jeffrey F. S. Neumann. All rights reserved.</p>
-    <div class="flex gap-8"><a class="font-label-md text-[10px] text-secondary hover:text-primary uppercase tracking-widest" href="privacy.html">Privacy</a><a class="font-label-md text-[10px] text-secondary hover:text-primary uppercase tracking-widest" href="privacy.html">Terms</a></div>
+    <div class="flex gap-8"><a class="font-label-md text-[10px] text-secondary hover:text-primary uppercase tracking-widest" href="privacy.html">Privacy</a></div>
   </div>
 </footer>
 <!-- FOOTER:END -->
