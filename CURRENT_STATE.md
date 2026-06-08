@@ -2,9 +2,17 @@
 **Updated:** 2026-06-08
 
 ## Last commit
-(run end-session.sh to update)
+46ee7f13 — Session 18: homepage evolution — favorites, start-here, image treatment, CLAUDE.md
 
-## What was done this session (2026-06-08 — session 17)
+## What was done this session (2026-06-08 — session 18)
+
+### Homepage evolution — favorites, start-here, image treatment
+
+- Added `favorites.txt` (45 art IDs), `favorites.html` (masonry grid of personally significant works), and `start-here.html` (orientation page: who Jeff is, major themes, how to explore). Both new pages include footer markers, JSON-LD, and sitemap entries.
+- Rewrote `_shared/ui.css` image hover treatment: replaced `::after` saturation overlay with `mask-image: linear-gradient(to bottom, transparent 0%, black 60%)` on `.thumb__link img`; removed grayscale; added title-orange-on-hover via `.thumb:hover .thumb__caption a`. Applies sitewide to all 15+ thumbnail pages.
+- `index.html` gains "About This Archive" and "Where To Begin" sections (desktop only); `build_catalog.py` gains `_load_id_file()` helper and `favorite` field on all 1,084 records; `sw.js` CACHE_V bumped to post-ui.css timestamp; `CLAUDE.md` updated with corrected image treatment docs, new page inventory entries, and stamp-nav.sh checklist note.
+
+## What was done last session (2026-06-08 — session 17)
 
 ### Image hover effect + sw.js fix
 - Fixed `build_catalog.py` sw.js CACHE_V bump: now only increments when catalog.json content actually changes, eliminating noisy git diffs on no-op runs.
@@ -187,9 +195,11 @@ Built a complete hero system: Ken Burns zoom-out effect (4 direction variants, 1
 - [ ] Offsite cloud backup via Backblaze B2/rclone
 
 ## Known issues (standing)
-- **sw.js CACHE_V** — `build_catalog.py` auto-bumps on every run. Check `git diff sw.js` before committing after any script run.
+- **sw.js CACHE_V** — `build_catalog.py` auto-bumps only when catalog content changes. If you edit HTML/CSS/JS without rebuilding the catalog, bump CACHE_V manually before deploying.
 - **index.html has no FOOTER:START marker** — custom homepage footer, not stamped. Edit directly if footer changes.
 - **Decade pages not in stamp-nav.sh** — edit 1970s–2020s.html directly for any nav/footer changes.
+- **start-here.html and favorites.html not yet in stamp-nav.sh** — nav/footer are inline copies. Add to stamp-nav.sh TARGETS next session.
+- **favorites.html fetches full catalog.json (898KB)** — adding `favorite` to `LITE_FIELDS` in build_catalog.py would let it use catalog-lite.json (667KB) instead.
 - **about-portrait.jpg** — only JPEG in the asset pipeline; all artworks are AVIF. Low priority.
 
 ---
