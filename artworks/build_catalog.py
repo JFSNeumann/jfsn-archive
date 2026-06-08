@@ -48,15 +48,20 @@ ARTIST_SHORT = _cfg.get("artist_short") or ARTIST_NAME
 #            artwork-meta.js edge function (adds description for social meta)
 # Stripped: series, palette, featured, composition — not read by any consumer
 LITE_FIELDS = {'file', 'title', 'work_type', 'year', 'themes', 'keywords', 'motifs', 'description'}
-FEATURED = Path(__file__).parent.parent / "featured.txt"
+FEATURED   = Path(__file__).parent.parent / "featured.txt"
+FAVORITES  = Path(__file__).parent.parent / "favorites.txt"
 
-# Load featured IDs (strip comments and whitespace)
-featured_ids = set()
-if FEATURED.exists():
-    for line in FEATURED.read_text().splitlines():
-        line = line.split('#')[0].strip()
-        if line:
-            featured_ids.add(line)
+def _load_id_file(path):
+    ids = set()
+    if path.exists():
+        for line in path.read_text().splitlines():
+            line = line.split('#')[0].strip()
+            if line:
+                ids.add(line)
+    return ids
+
+featured_ids = _load_id_file(FEATURED)
+favorite_ids = _load_id_file(FAVORITES)
 
 records = []
 skipped = []
@@ -68,6 +73,7 @@ for p in sorted(FULL.glob("art*.json")):
         rec = json.loads(p.read_text())
         art_id = p.stem  # e.g. "art0061"
         rec['featured'] = art_id in featured_ids
+        rec['favorite'] = art_id in favorite_ids
         records.append(rec)
         cataloged_ids.add(art_id)
     except Exception as e:
@@ -99,6 +105,7 @@ for p in sorted(THUMBS.glob("art*.avif")):
             'motifs':   [],
             'palette':  [],
             'featured': art_id in featured_ids,
+            'favorite': art_id in favorite_ids,
             'description': None,
             'composition': None,
         })
@@ -138,6 +145,9 @@ print(f"catalog-home.json — {len(home_lite)} records ({OUT_HOME.stat().st_size
 if featured_ids:
     found = sum(1 for r in records if r.get('featured'))
     print(f"Featured: {found} works marked (from featured.txt)")
+if favorite_ids:
+    found_fav = sum(1 for r in records if r.get('favorite'))
+    print(f"Favorites: {found_fav} works marked (from favorites.txt)")
 if skipped:
     print(f"Skipped {len(skipped)}:")
     for s in skipped:
@@ -185,6 +195,8 @@ entries = [
     (SITE_URL + '/mr-snowmann.html',        '0.6', 'monthly'),
     (SITE_URL + '/collaboration.html',      '0.6', 'monthly'),
     (SITE_URL + '/gallery-images.html',     '0.6', 'monthly'),
+    (SITE_URL + '/start-here.html',         '0.7', 'monthly'),
+    (SITE_URL + '/favorites.html',          '0.6', 'monthly'),
     (SITE_URL + '/changes.html',            '0.4', 'weekly'),
     (SITE_URL + '/privacy.html',            '0.3', 'yearly'),
 ]

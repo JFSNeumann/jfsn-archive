@@ -135,10 +135,9 @@
   #featured-grid img,
   #featured-grid-small img {
     opacity: 0;
-    filter: grayscale(100%);
-    -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
-    mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
-    transition: opacity 0.4s ease, filter 0.3s ease;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 60%);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 60%);
+    transition: opacity 0.4s ease;
   }
   #featured-grid img.is-loaded,
   #featured-grid-small img.is-loaded {
@@ -178,7 +177,7 @@
   #featured-grid-small > a:hover img,
   #featured-grid > a:focus-visible img,
   #featured-grid-small > a:focus-visible img {
-    filter: grayscale(0%) brightness(1.04);
+    filter: brightness(1.04);
     -webkit-mask-image: none;
     mask-image: none;
   }
@@ -430,6 +429,51 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
           <p class="font-label-caps text-label-caps text-bone-white/70">1,084 works · 1974–present · Cleveland</p>
           <button id="hero-pause-d" class="hero-pause-btn hero-ctrl" aria-label="Pause slideshow">❙❙</button>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About This Archive -->
+  <section class="border-b border-outline-variant py-16 px-margin-desktop">
+    <div class="max-w-container-max mx-auto" style="max-width:680px;margin-left:0;">
+      <h2 class="font-label-caps text-label-caps text-archive-gray mb-6">About This Archive</h2>
+      <p style="font-family:Inter,sans-serif;font-size:17px;line-height:1.75;color:#575757;">
+        Jeffrey F. S. Neumann has been making things since the early 1970s — collage, assemblage, sculpture, photography, and experiments that resist easy category. This archive documents 1,084 of those works, spanning five decades of practice in Cleveland, Ohio.
+      </p>
+      <p style="font-family:Inter,sans-serif;font-size:17px;line-height:1.75;color:#575757;margin-top:1em;">
+        It exists as a personal record, not a gallery. The works here were made because making is the point. An estimated 500–1,000 earlier pieces were lost to water damage; what survived is here in full.
+      </p>
+      <p style="font-family:Inter,sans-serif;font-size:17px;line-height:1.75;color:#575757;margin-top:1em;">
+        This is a place for family, friends, and anyone curious about a lifetime of looking and making.
+      </p>
+    </div>
+  </section>
+
+  <!-- Explore Paths -->
+  <section class="border-b border-outline-variant py-12 px-margin-desktop">
+    <div class="max-w-container-max mx-auto">
+      <h2 class="font-label-caps text-label-caps text-archive-gray mb-8">Where To Begin</h2>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-0" style="border-top:1px solid #c4c7c7;">
+        <a href="start-here.html" class="group block py-8 pr-8" style="border-bottom:1px solid #c4c7c7;">
+          <p class="font-label-lg text-label-lg uppercase text-deep-ink group-hover:text-international-orange transition-colors duration-200">Start Here</p>
+          <p style="font-family:Inter,sans-serif;font-size:13px;line-height:1.6;color:#575757;margin-top:8px;">Who Jeff is and why this archive exists.</p>
+          <p class="font-label-caps text-label-caps text-archive-gray group-hover:text-international-orange transition-colors duration-200" style="margin-top:12px;">Explore &rarr;</p>
+        </a>
+        <a href="favorites.html" class="group block py-8 pr-8 md:pl-8" style="border-bottom:1px solid #c4c7c7;border-left:1px solid #c4c7c7;">
+          <p class="font-label-lg text-label-lg uppercase text-deep-ink group-hover:text-international-orange transition-colors duration-200">Favorites</p>
+          <p style="font-family:Inter,sans-serif;font-size:13px;line-height:1.6;color:#575757;margin-top:8px;">Works Jeff has marked as personally significant.</p>
+          <p class="font-label-caps text-label-caps text-archive-gray group-hover:text-international-orange transition-colors duration-200" style="margin-top:12px;">View &rarr;</p>
+        </a>
+        <a href="guernica.html" class="group block py-8 pr-8 md:pl-8" style="border-bottom:1px solid #c4c7c7;border-left:1px solid #c4c7c7;">
+          <p class="font-label-lg text-label-lg uppercase text-deep-ink group-hover:text-international-orange transition-colors duration-200">Guernica</p>
+          <p style="font-family:Inter,sans-serif;font-size:13px;line-height:1.6;color:#575757;margin-top:8px;">232 works. The longest-running series in the archive.</p>
+          <p class="font-label-caps text-label-caps text-archive-gray group-hover:text-international-orange transition-colors duration-200" style="margin-top:12px;">View &rarr;</p>
+        </a>
+        <a href="archive.html" class="group block py-8 md:pl-8" style="border-bottom:1px solid #c4c7c7;border-left:1px solid #c4c7c7;">
+          <p class="font-label-lg text-label-lg uppercase text-deep-ink group-hover:text-international-orange transition-colors duration-200">Full Archive</p>
+          <p style="font-family:Inter,sans-serif;font-size:13px;line-height:1.6;color:#575757;margin-top:8px;">All 1,084 works. Filter by medium, decade, or series.</p>
+          <p class="font-label-caps text-label-caps text-archive-gray group-hover:text-international-orange transition-colors duration-200" style="margin-top:12px;">Browse &rarr;</p>
+        </a>
       </div>
     </div>
   </section>
