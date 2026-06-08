@@ -63,7 +63,9 @@ header nav a.nav-underline-active::after {
 
 .thumb__link {
   display: block;
+  position: relative;
   cursor: zoom-in;
+  isolation: isolate;
   outline: 2px solid rgba(255,102,0,0);
   outline-offset: 0;
   transition: outline-color 0.25s ease;
@@ -73,9 +75,19 @@ header nav a.nav-underline-active::after {
   display: block;
   width: 100%;
   height: auto;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 60%);
-  mask-image: linear-gradient(to bottom, transparent 0%, black 60%);
-  transition: filter 0.3s ease;
+}
+
+/* Greyscale band at top, fading to full colour at bottom */
+.thumb__link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #808080;
+  mix-blend-mode: saturation;
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 25%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 0%, black 25%, transparent 100%);
+  transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
 .thumb__link:hover,
@@ -83,11 +95,15 @@ header nav a.nav-underline-active::after {
   outline-color: #FF6600;
 }
 
+/* Full colour on hover — remove the greyscale overlay */
+.thumb__link:hover::after,
+.thumb__link:focus-visible::after {
+  opacity: 0;
+}
+
 .thumb__link:hover img,
 .thumb__link:focus-visible img {
   filter: brightness(1.04);
-  -webkit-mask-image: none;
-  mask-image: none;
 }
 
 /* Title turns orange when hovering anywhere on the card */
@@ -102,6 +118,7 @@ header nav a.nav-underline-active::after {
 
 @media (prefers-reduced-motion: reduce) {
   .thumb__link { transition: none; }
+  .thumb__link::after { transition: none; }
   .thumb__link img { transition: none; }
 }
 
