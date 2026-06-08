@@ -106,7 +106,9 @@ for p in sorted(THUMBS.glob("art*.avif")):
 # Keep catalog in stable ID order
 records.sort(key=lambda r: r.get('file', ''))
 
-OUT.write_text(json.dumps(records, separators=(',', ':')))
+_new_catalog = json.dumps(records, separators=(',', ':'))
+_catalog_changed = not OUT.exists() or OUT.read_text() != _new_catalog
+OUT.write_text(_new_catalog)
 print(f"catalog.json      — {len(records)} records ({OUT.stat().st_size // 1024} KB)")
 
 lite = [{k: v for k, v in r.items() if k in LITE_FIELDS} for r in records]
@@ -364,19 +366,21 @@ if INDEX.exists():
     print(f"index.html        — cache stamp updated (?v={build_ts})")
 
 # ── Auto-bump sw.js CACHE_V so returning visitors always get fresh assets ────
-# Only write if new timestamp is strictly newer than the current value, so manual
-# bumps (committed mid-session) are never silently rolled back by a later catalog run.
+# Only bumps when catalog.json actually changed — no-op runs leave sw.js untouched.
 if SW.exists():
-    sw_text     = SW.read_text()
-    new_cache_v = f"jfsn-{build_ts}"
-    cur_match   = re.search(r"CACHE_V\s*=\s*'(jfsn-[^']+)'", sw_text)
-    cur_cache_v = cur_match.group(1) if cur_match else ""
-    if new_cache_v > cur_cache_v:
-        stamped_sw = re.sub(r"CACHE_V\s*=\s*'jfsn-[^']+'", f"CACHE_V  = '{new_cache_v}'", sw_text)
-        SW.write_text(stamped_sw)
-        print(f"sw.js             — CACHE_V bumped to '{new_cache_v}'")
+    if not _catalog_changed:
+        print("sw.js             — CACHE_V unchanged (catalog unchanged)")
     else:
-        print(f"sw.js             — CACHE_V unchanged (current '{cur_cache_v}' is newer or equal)")
+        sw_text     = SW.read_text()
+        new_cache_v = f"jfsn-{build_ts}"
+        cur_match   = re.search(r"CACHE_V\s*=\s*'(jfsn-[^']+)'", sw_text)
+        cur_cache_v = cur_match.group(1) if cur_match else ""
+        if new_cache_v > cur_cache_v:
+            stamped_sw = re.sub(r"CACHE_V\s*=\s*'jfsn-[^']+'", f"CACHE_V  = '{new_cache_v}'", sw_text)
+            SW.write_text(stamped_sw)
+            print(f"sw.js             — CACHE_V bumped to '{new_cache_v}'")
+        else:
+            print(f"sw.js             — CACHE_V unchanged (current '{cur_cache_v}' is newer or equal)")
 
 # ── Open Archive API — static JSON endpoints ─────────────────────────────────
 # Generates api/v1/ at the site root so every build stays in sync.

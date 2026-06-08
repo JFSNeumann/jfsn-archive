@@ -1,10 +1,16 @@
 # Current State
-**Updated:** 2026-06-07
+**Updated:** 2026-06-08
 
 ## Last commit
 (run end-session.sh to update)
 
-## What was done this session (2026-06-07 — session 16)
+## What was done this session (2026-06-08 — session 17)
+
+### Image hover effect + sw.js fix
+- Fixed `build_catalog.py` sw.js CACHE_V bump: now only increments when catalog.json content actually changes, eliminating noisy git diffs on no-op runs.
+- Implemented sitewide image hover effect: thumbnails show full color at the bottom fading to grey at the top via a `mix-blend-mode: saturation` `::after` overlay with a gradient mask; hover removes the overlay for full color. Applied via `_shared/ui.css` (`.thumb__link`) and `index.html` homepage cards. CLAUDE.md updated to document the new permitted treatment.
+
+## What was done last session (2026-06-07 — session 16)
 
 ### Footer, nav, and lost.html overhaul
 - Footer redesigned sitewide: portrait image with radial glow added to col 1, Companion moved to footer-only (removed from desktop nav and mobile drawer on all 26 Stitch pages + 6 decade pages), nav columns top-aligned with padding-bottom, pb-28 bottom breathing room, Lost Works added to decade page Explore lists, stale Terms link removed from decade footers.

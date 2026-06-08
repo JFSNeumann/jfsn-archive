@@ -64,18 +64,38 @@ header nav a.nav-underline-active::after {
 .thumb__link {
   position: relative;
   cursor: zoom-in;
+  isolation: isolate;
   outline: 2px solid rgba(255,102,0,0);
   outline-offset: 0;
   transition: outline-color 0.25s ease;
 }
 
 .thumb__link img {
-  transition: filter 0.3s ease;
   display: block;
+  transition: filter 0.3s ease;
+}
+
+/* Grey-to-color: grey saturation overlay fades from opaque at top to transparent at bottom */
+.thumb__link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #808080;
+  mix-blend-mode: saturation;
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 60%);
+  mask-image: linear-gradient(to bottom, black 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 0.3s ease;
 }
 
 .thumb__link:hover {
   outline-color: #FF6600;
+}
+
+.thumb__link:hover::after,
+.thumb__link:focus-visible::after {
+  opacity: 0;
 }
 
 .thumb__link:hover img {
@@ -89,6 +109,7 @@ header nav a.nav-underline-active::after {
 @media (prefers-reduced-motion: reduce) {
   .thumb__link { transition: none; }
   .thumb__link img { transition: none; }
+  .thumb__link::after { transition: none; }
 }
 
 /* ─── Footer link underline — hover draw ─────────────────────────────── */

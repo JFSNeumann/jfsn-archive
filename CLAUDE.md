@@ -53,7 +53,7 @@ colors: {
 - Orange accent (#FF6600 / #e05900) for hover, active states, links — not decoration
 - No gradients. No drop shadows on images. No rounded corners (border-radius: 0).
 - Borders use outline-variant (#c4c7c7) — 1px solid
-- Artwork thumbnails: full color always. No grayscale, no scale, no mask-image, no transition on img.
+- Artwork thumbnails: 100% grayscale + `mask-image` fade (solid to 40%, transparent at 100%) at rest. Full color + mask removed on hover/focus. Transition: `filter 0.3s ease`. No scale, no overlay, no sibling dim.
 
 ---
 
@@ -71,7 +71,7 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 
 ### Key files
 - `_shared/top-nav.html` — canonical nav for Stitch pages (stamp-nav.sh)
-- `_shared/ui.css` — shared structural rules: `.thumb__link` micro-interactions (cursor:zoom-in, orange outline-color on hover, brightness(1.04)), `.page-label-vert`, nav + footer underline draws
+- `_shared/ui.css` — shared structural rules: `.thumb__link` micro-interactions (cursor:zoom-in, 50% grayscale + ⅔ mask-image fade at rest, full color on hover, orange outline-color on hover), `.page-label-vert`, nav + footer underline draws
 - `_shared/ui.js` — keyboard nav (← / → decade pages), vertical "you are here" label. NOTE: scroll-reveal was removed in session 8 — `.thumb` items visible by default, no IntersectionObserver entrance animation
 - `_shared/nav-active.js` — auto-sets orange active link by pathname
 - `stamp-nav.sh` — stamps nav into all Stitch pages (NOT decade pages — different token system)
