@@ -2,7 +2,7 @@
 **Updated:** 2026-06-08
 
 ## Last commit
-46ee7f13 — Session 18: homepage evolution — favorites, start-here, image treatment, CLAUDE.md
+6fb99e5e — Session update 2026-06-08 20:25
 
 ## What was done this session (2026-06-08 — session 18)
 
