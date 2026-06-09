@@ -226,7 +226,7 @@ Built a complete hero system: Ken Burns zoom-out effect (4 direction variants, 1
 - **favorites.html fetches full catalog.json (898KB)** — adding `favorite` to `LITE_FIELDS` in build_catalog.py would let it use catalog-lite.json (667KB) instead.
 - **about-portrait.jpg** — only JPEG in the asset pipeline; all artworks are AVIF. Low priority.
 - **search.js hard-codes series counts** (Guernica: 232, Targets: 403, Mr. SNOWmann: 72) — will drift after next ingest. Patch in build_catalog.py when next ingest runs.
-- **No physical dimensions in catalog** — build_dims.py exists but has never run. Physical dimensions are essential for works that will eventually be distributed to heirs.
+- **No physical dimensions in catalog** — `build_dims.py` is a layout utility (reads pixel dimensions from thumbnails for masonry grid; now run, dims.json committed). Physical artwork dimensions (inches/cm) are a separate gap — no tooling exists yet. These are essential archival data for works that will be distributed to heirs.
 
 ---
 
