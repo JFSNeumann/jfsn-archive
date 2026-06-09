@@ -52,12 +52,40 @@
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         /* Archive card micro-interactions */
-        .archive-card { cursor: zoom-in; outline: 2px solid rgba(255,102,0,0); outline-offset: 0; transition: outline-color 0.25s ease; }
-        .archive-card img { transition: filter 0.3s ease; }
-        .archive-card:hover { outline-color: #FF6600; }
-        .archive-card:hover img { filter: brightness(1.04); }
-        .archive-card:focus-visible { outline-color: #FF6600; }
-        @media (prefers-reduced-motion: reduce) { .archive-card { transition: none; } .archive-card img { transition: none; } }
+        .archive-card { cursor: zoom-in; }
+        .archive-card h4 { transition: color 0.2s ease; }
+        .archive-card:hover h4, .archive-card:focus-visible h4 { color: #e05900; }
+        /* Image wrapper: outline + saturation overlay */
+        .archive-card-img {
+          position: relative;
+          overflow: hidden;
+          isolation: isolate;
+          outline: 2px solid rgba(229,89,0,0);
+          outline-offset: 0;
+          transition: outline-color 0.25s ease;
+        }
+        .archive-card:hover .archive-card-img,
+        .archive-card:focus-visible .archive-card-img { outline-color: #e05900; }
+        .archive-card-img::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: #808080;
+          mix-blend-mode: saturation;
+          -webkit-mask-image: linear-gradient(to bottom, black 0%, black 40%, transparent 100%);
+          mask-image: linear-gradient(to bottom, black 0%, black 40%, transparent 100%);
+          opacity: 1;
+          transition: opacity 0.3s ease;
+          pointer-events: none;
+          z-index: 1;
+        }
+        .archive-card:hover .archive-card-img::after,
+        .archive-card:focus-visible .archive-card-img::after { opacity: 0; }
+        @media (prefers-reduced-motion: reduce) {
+          .archive-card h4 { transition: none; }
+          .archive-card-img { transition: none; }
+          .archive-card-img::after { transition: none; }
+        }
     </style>
 </head>
 <body class="font-body-md text-body-md bg-background text-on-background">
@@ -339,12 +367,12 @@ footer .hover\:border-international-orange::after{display:none}
 @media(prefers-reduced-motion:reduce){footer a::after{transition:none}}
 </style>
 <footer class="bg-surface-container-high pt-20 pb-28 px-margin-desktop border-t border-outline-variant">
-  <div class="max-w-container-max mx-auto grid grid-cols-1 gap-10" style="grid-template-columns:1fr;gap:40px 32px;">
-    <div class="hidden md:grid" style="grid-template-columns:2.2fr 1fr 1fr 1.3fr;gap:32px;align-items:center;">
+  <div class="max-w-container-max mx-auto">
+    <div class="hidden md:grid" style="grid-template-columns:2.2fr 1fr 1fr 1.3fr;gap:32px;align-items:start;">
       <!-- Col 1: portrait + identity -->
-      <div style="display:flex;align-items:center;gap:20px;">
-        <div style="flex-shrink:0;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle, rgba(255,255,255,0.75) 30%, rgba(255,255,255,0) 75%);display:flex;align-items:center;justify-content:center;">
-          <img src="me black.gif" alt="Jeffrey F. S. Neumann" width="90" style="opacity:0.85;">
+      <div style="display:flex;align-items:center;gap:20px;padding-top:70px;">
+        <div style="flex-shrink:0;width:88px;height:88px;border-radius:50%;background:radial-gradient(circle, rgba(255,255,255,0.75) 30%, rgba(255,255,255,0) 75%);display:flex;align-items:center;justify-content:center;">
+          <img src="me black.gif" alt="Jeffrey F. S. Neumann" width="72" style="opacity:0.85;">
         </div>
         <div>
           <h3 style="font-family:Inter,sans-serif;font-size:18px;font-weight:600;letter-spacing:-0.02em;color:#0B0B0B;margin-bottom:10px;">JFSN</h3>
@@ -352,7 +380,7 @@ footer .hover\:border-international-orange::after{display:none}
         </div>
       </div>
       <!-- Col 2: Explore -->
-      <div style="padding-top:20px;padding-bottom:20px;align-self:start;">
+      <div style="padding-top:56px;">
         <h4 class="font-label-caps text-label-caps mb-5 text-deep-ink">EXPLORE</h4>
         <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;">
           <li><a class="font-nav-link text-nav-link text-archive-gray hover:text-international-orange transition-colors" href="archive.html">Complete Archive</a></li>
@@ -361,7 +389,7 @@ footer .hover\:border-international-orange::after{display:none}
         </ul>
       </div>
       <!-- Col 3: Resources -->
-      <div style="padding-top:20px;padding-bottom:20px;align-self:start;">
+      <div style="padding-top:56px;">
         <h4 class="font-label-caps text-label-caps mb-5 text-deep-ink">RESOURCES</h4>
         <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;">
           <li><a class="font-nav-link text-nav-link text-archive-gray hover:text-international-orange transition-colors" href="chromatic.html">Chromatic River</a></li>
@@ -370,7 +398,7 @@ footer .hover\:border-international-orange::after{display:none}
         </ul>
       </div>
       <!-- Col 4: Contact + Social -->
-      <div style="padding-top:20px;padding-bottom:20px;align-self:start;">
+      <div style="padding-top:56px;">
         <h4 class="font-label-caps text-label-caps mb-5 text-deep-ink">CONTACT</h4>
         <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange hover:border-international-orange transition-all" style="display:inline-block;border-bottom:1px solid #0B0B0B;padding-bottom:2px;" href="mailto:jeff@jfsn.com">jeff@jfsn.com</a>
       </div>
@@ -405,7 +433,7 @@ footer .hover\:border-international-orange::after{display:none}
       </div>
     </div>
   </div>
-  <div class="mt-12 pt-6 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
+  <div class="mt-16 pt-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
     <p class="font-label-caps text-[10px] text-archive-gray">© 2026 JEFFREY F. S. NEUMANN. ALL RIGHTS RESERVED.</p>
     <div class="flex gap-8"><a class="font-label-caps text-[10px] text-archive-gray hover:text-deep-ink" href="privacy.html">PRIVACY</a></div>
   </div>
@@ -443,7 +471,7 @@ function renderCard(w, idx) {
   const loadAttr = (idx !== undefined && idx < 8) ? 'eager" fetchpriority="high' : 'lazy';
   return `
     <a href="artwork.html?id=${id}" class="archive-card block no-underline text-on-background bg-background sm:bg-transparent">
-      <div class="overflow-hidden sm:mb-md sm:border sm:border-outline-variant bg-surface-container-low">
+      <div class="archive-card-img sm:mb-md sm:border sm:border-outline-variant bg-surface-container-low">
         <img
           alt="${title}"
           class="w-full aspect-[3/4] object-cover"

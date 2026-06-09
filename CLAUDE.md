@@ -55,7 +55,7 @@ colors: {
 - Orange accent (#FF6600 / #e05900) for hover, active states, links — not decoration
 - No gradients. No drop shadows on images. No rounded corners (border-radius: 0).
 - Borders use outline-variant (#c4c7c7) — 1px solid
-- Artwork thumbnails: no grayscale at rest. A `::after` pseudo-element on `.thumb__link` uses `background: #808080; mix-blend-mode: saturation` with `-webkit-mask-image`/`mask-image: linear-gradient(to bottom, black 0%, black 25%, transparent 100%)` — top 25% desaturated, fading to full colour at bottom. On hover/focus: `::after` opacity → 0 (full colour), `filter: brightness(1.04)` on `<img>`, orange `outline-color` on `.thumb__link`. `.thumb__link` has `isolation: isolate` + `position: relative`. No mask-image on `<img>` itself. No scale, no sibling dim. Implemented in `_shared/ui.css` — do NOT re-add grayscale filter, mask-image on img, or any separate overlay div.
+- Artwork thumbnails: full colour at rest with grey-at-top overlay. A `::after` pseudo-element on `.thumb__link` uses `background: #808080; mix-blend-mode: saturation` with `mask-image: linear-gradient(to bottom, black 0%, black 40%, transparent 100%)` — top 40% desaturated, fading to full colour at bottom. On hover/focus: `::after` opacity → 0 (full colour revealed), orange `outline` on `<img>`, title turns orange via `.thumb:hover .thumb__caption a`. `.thumb__link` has `isolation: isolate` + `position: relative`. Orange outline is on the `<img>` element, NOT on `.thumb__link` (so border appears around image only, not text). Caption titles: `font-family: Inter; font-weight: 600`. No brightness filter. No mask-image on `<img>` itself. No scale, no sibling dim. Implemented in `_shared/ui.css` — do NOT re-add grayscale filter, mask-image on img, brightness filter, or any separate overlay div.
 
 ---
 
@@ -73,7 +73,7 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 
 ### Key files
 - `_shared/top-nav.html` — canonical nav for Stitch pages (stamp-nav.sh)
-- `_shared/ui.css` — shared structural rules: `.thumb__link` micro-interactions (cursor:zoom-in, top-fade mask-image at rest, full color + brightness(1.04) on hover, orange outline-color on hover, title turns orange via `.thumb:hover .thumb__caption a`), `.page-label-vert`, nav + footer underline draws
+- `_shared/ui.css` — shared structural rules: `.thumb__link` micro-interactions (cursor:zoom-in; saturation overlay at rest with mask gradient top 40%; full colour + orange outline on `<img>` on hover; title turns orange via `.thumb:hover .thumb__caption a`; caption titles Inter 600), `.page-label-vert`, nav + footer underline draws
 - `_shared/ui.js` — keyboard nav (← / → decade pages), vertical "you are here" label. NOTE: scroll-reveal was removed in session 8 — `.thumb` items visible by default, no IntersectionObserver entrance animation
 - `_shared/nav-active.js` — auto-sets orange active link by pathname
 - `stamp-nav.sh` — stamps nav into all Stitch pages (NOT decade pages — different token system). **New pages must be added to the TARGETS array manually** — they are not auto-discovered.

@@ -3,8 +3,41 @@
 
 ## Last commit
 dc15fff1 — CURRENT_STATE.md: stamp B2 backup timestamp 2026-06-09
+*(session 23 changes not yet committed — deploy pending)*
 
-## What was done this session (2026-06-09 — session 22)
+## What was done this session (2026-06-09 — session 23)
+
+### Image hover system rebuilt + CSS cleanup across all pages
+
+**Image hover — new system (all artwork thumbnail pages):**
+- Removed stale `mask-image` fade from index.html images (was causing pinkish fade at top of Selected Works cards)
+- Saturation overlay (`mix-blend-mode: saturation`, `#808080`, mask gradient black 0%→transparent 100%) on all pages — grey at top, full colour at bottom at rest; full colour on hover
+- Applied three ways: `_shared/ui.css` `.thumb__link::after` (all medium/theme pages), `.card-img::after` in index.html, `.archive-card-img::after` in archive.html
+- Orange border scoped to image only (not card text): moved from `.thumb__link` to `.thumb__link img` in ui.css; from `.archive-card` to `.archive-card-img` in archive.html
+- Title-orange hover added to archive.html `h4` (was missing — archive uses a different card structure)
+
+**Typography — thumbnail captions:**
+- Added `font-family: Inter; font-weight: 600` to `.thumb__caption a` in `ui.css`
+- Applies to all 12 medium/theme pages automatically
+- Added missing `_shared/ui.css` link to `series.html`
+
+**CSS cleanup:**
+- `ui.css`: consolidated two `prefers-reduced-motion` blocks into one
+- `archive.html`: merged duplicate `.archive-card-img` rules; orange consistent at `#e05900` throughout; reduced-motion covers all transitions
+- `index.html`: moved `card-title` base transition out of hover rule; added `focus-visible` to overlay trigger; consolidated reduced-motion to one line
+
+**Files modified:**
+- `_shared/ui.css` — saturation overlay, outline on img, Inter 600 captions, reduced-motion cleanup
+- `index.html` — removed mask-image fade, added `.card-img::after` overlay, CSS cleanup
+- `archive.html` — saturation overlay, title-orange, merged rules
+- `series.html` — added `ui.css` link
+- `sw.js` — CACHE_V bumped to `jfsn-20260609160000`
+- `CLAUDE.md` — artwork thumbnail description updated
+- `IMPROVEMENTS.md` — backlog updated
+
+**⚠️ Not yet deployed — run end-session.sh then JFSN.app**
+
+## What was done last session (2026-06-09 — session 22)
 
 ### Documentation housekeeping + Allison handoff PDF regeneration
 

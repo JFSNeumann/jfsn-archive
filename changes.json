@@ -1,5 +1,35 @@
 [
   {
+    "sha": "56ae3b8",
+    "date": "2026-06-09",
+    "title": "Session integrity fixes: last commit hash + catalog-lite fields",
+    "body": "- CURRENT_STATE.md: last commit hash corrected to dc15fff1\n- CLAUDE.md: catalog-lite.json fields list updated to include series and\n  favorite (added session 21, omitted from field inventory)"
+  },
+  {
+    "sha": "dc15fff",
+    "date": "2026-06-09",
+    "title": "CURRENT_STATE.md: stamp B2 backup timestamp 2026-06-09",
+    "body": ""
+  },
+  {
+    "sha": "f03a2ee",
+    "date": "2026-06-09",
+    "title": "Session 22 complete: oral history drafts, doc fixes, PDF regenerated",
+    "body": ""
+  },
+  {
+    "sha": "98c9aab",
+    "date": "2026-06-09",
+    "title": "Fix stale documentation + regenerate Allison handoff PDF",
+    "body": "CURRENT_STATE.md:\n- Session number corrected (was session 20, now session 22)\n- Last commit hash updated\n- Stale known issue removed (favorites.html fetch size — resolved session 21)\n- Session 22 entry added; prior sessions renumbered/reorganized\n\nCLAUDE.md:\n- Page inventory: \"20 public pages\" → 30; 7 theme pages added\n  (targets, framed, torsos-faces, crosses, mr-snowmann, gallery-images, collaboration)\n- start-here.html and favorites.html: removed \"NOT in stamp-nav.sh yet\" notes\n- favorites.html: corrected to catalog-lite.json (was catalog.json)\n- lost.html ghost grid: 25 → 10 tiles\n- Nav links: removed Companion from nav list (footer-only since session 16)\n- site.min.css: 22,530 → 23,071 bytes\n\nJFSN-Archive-Handoff-Allison.pdf:\n- Regenerated via make_handoff.py (was June 3, now June 9)"
+  },
+  {
+    "sha": "fc117b5",
+    "date": "2026-06-09",
+    "title": "Session 22: oral history analysis, two essay drafts, checkpoint",
+    "body": "- master-notes.md: Sections 13–16 added\n  - Section 13: \"What Making Things Gave Me\" (confirmed by Jeff)\n  - Section 14: \"What Didn't Survive\" (candidate for lost.html)\n  - Section 15: analytical conclusions — archive as survivor, water damage\n    as most time-sensitive gap, grandchildren as most durable story\n  - Section 16: six quotes elevated to primary source status\n  - Unresolved Questions section re-prioritized\n- api/, changes.json, feed.xml, index.html: timestamp-only build artifacts"
+  },
+  {
     "sha": "dec66fc",
     "date": "2026-06-09",
     "title": "CURRENT_STATE.md: stamp B2 backup timestamp 2026-06-09",

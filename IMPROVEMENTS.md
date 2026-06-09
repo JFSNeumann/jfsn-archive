@@ -26,12 +26,20 @@ A living list. Add to it. Cross things off. This is the backlog.
 
 ## 🟢 Nice to have, low urgency
 
+### Technical
+- [ ] **`border-radius` on saturation overlay** — medium/theme pages have `border-radius: 2px` on `.thumb__link` but `.thumb__link::after` doesn't inherit it, so overlay corners are square over rounded element. Fix: add `border-radius: inherit` to `.thumb__link::after` in `ui.css`.
+- [ ] **`favorites.html`** — still fetches full `catalog.json` (898KB). Adding `favorite` to `LITE_FIELDS` would let it use `catalog-lite.json` (701KB). Low priority.
+- [ ] **HSTS** — uncomment one line in `.htaccess` once SSL confirmed active in HostGator cPanel.
+
 ### Physical
 - [ ] **Print run of 12** — 12 prints of 12 works, numbered. Not a code problem.
 
 ---
 
 ## ✅ Completed (recent)
+- [x] ~~**Image hover system**~~ — saturation overlay on all artwork thumbnail pages; orange border image-only; Inter 600 captions (session 23)
+- [x] ~~**Archive title-orange**~~ — was missing; added to archive.html h4 (session 23)
+- [x] ~~**series.html missing ui.css**~~ — link added (session 23)
 - [x] ~~**featured.txt**~~ — rebalanced 2026-06-05
 - [x] ~~**search.js browse counts**~~ — auto-patched via build_catalog.py (session 21)
 - [x] ~~**series.html named series broken**~~ — series field missing from catalog-lite.json (session 21)

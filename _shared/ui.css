@@ -66,48 +66,46 @@ header nav a.nav-underline-active::after {
   position: relative;
   cursor: zoom-in;
   isolation: isolate;
-  outline: 2px solid rgba(255,102,0,0);
-  outline-offset: 0;
-  transition: outline-color 0.25s ease;
 }
 
 .thumb__link img {
   display: block;
   width: 100%;
   height: auto;
+  outline: 2px solid rgba(255,102,0,0);
+  outline-offset: 0;
+  transition: outline-color 0.25s ease;
 }
 
-/* Greyscale band at top, fading to full colour at bottom */
+.thumb__link:hover img,
+.thumb__link:focus-visible img {
+  outline-color: #FF6600;
+}
+
+/* Saturation overlay: grey at top, fades to full colour at bottom */
 .thumb__link::after {
   content: '';
   position: absolute;
   inset: 0;
   background: #808080;
   mix-blend-mode: saturation;
-  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 25%, transparent 100%);
-  mask-image: linear-gradient(to bottom, black 0%, black 25%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 40%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 0%, black 40%, transparent 100%);
+  opacity: 1;
   transition: opacity 0.3s ease;
   pointer-events: none;
+  z-index: 1;
 }
 
-.thumb__link:hover,
-.thumb__link:focus-visible {
-  outline-color: #FF6600;
-}
-
-/* Full colour on hover — remove the greyscale overlay */
 .thumb__link:hover::after,
 .thumb__link:focus-visible::after {
   opacity: 0;
 }
 
-.thumb__link:hover img,
-.thumb__link:focus-visible img {
-  filter: brightness(1.04);
-}
-
 /* Title turns orange when hovering anywhere on the card */
 .thumb__caption a {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
   transition: color 0.2s ease;
 }
 
@@ -117,9 +115,9 @@ header nav a.nav-underline-active::after {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .thumb__link { transition: none; }
-  .thumb__link::after { transition: none; }
   .thumb__link img { transition: none; }
+  .thumb__link::after { transition: none; }
+  .thumb__caption a { transition: none; }
 }
 
 /* ─── Footer link underline — hover draw ─────────────────────────────── */
