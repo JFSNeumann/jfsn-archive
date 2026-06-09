@@ -4,7 +4,13 @@
 ## Last commit
 6fb99e5e — Session update 2026-06-08 20:25
 
-## What was done this session (2026-06-08 — session 18)
+## What was done this session (2026-06-08 — session 19)
+
+### Oral history interview + start-here.html content review
+
+Conducted a full content review of start-here.html from three perspectives (grandchild in 20 years, first-time visitor, friend of Jeff), identifying what was clear, confusing, personal, generic, and missing — with specific recommendations for what only Jeff can write. Ran an oral history interview session capturing Jeff's voice across topics: why he made things, found materials, the Guernica series, the water damage loss, who the archive is for, and the grandchildren collaboration. Draft paragraphs in Jeff's voice were produced for use on start-here.html, lost.html, and about.html. Confirmed favorites.txt — all 45 works kept, no changes.
+
+## What was done last session (2026-06-08 — session 18)
 
 ### Homepage evolution — favorites, start-here, image treatment, mobile padding
 
