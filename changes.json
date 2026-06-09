@@ -1,5 +1,11 @@
 [
   {
+    "sha": "5ea1679",
+    "date": "2026-06-09",
+    "title": "Session 21: oral history PDF + four technical fixes",
+    "body": "Preservation:\n- docs/oral-history/JFSN-Oral-History.pdf — oral history exported as\n  standalone PDF; also copied to iCloud Drive for off-repo backup\n- JFSN-MISSION.md — added to version control\n\nTechnical fixes (from comprehensive audit):\n- CLAUDE.md — corrected thumbnail hover doc (::after pseudo-element with\n  mix-blend-mode:saturation, not mask-image on <img>)\n- stamp-nav.sh — added start-here.html and favorites.html to TARGETS\n- start-here.html, favorites.html — stamped with current nav/footer\n- sw.js — added start-here.html and favorites.html to PRECACHE\n- artworks/build_catalog.py — added 'favorite' to LITE_FIELDS\n- catalog-lite.json — rebuilt; now includes favorite field (45 works)\n- favorites.html — fetch catalog-lite.json (was catalog.json, 898KB→685KB)\n- _shared/nav-active.js — favorites.html maps to Archive active state\n- .htaccess — services.html, websites.html, for-artists.html now redirect\n  to /about.html (for-artists.html was deleted session 9; was 404ing)"
+  },
+  {
     "sha": "40191d7",
     "date": "2026-06-08",
     "title": "Session update 2026-06-08 21:23",

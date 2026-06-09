@@ -64,7 +64,12 @@ fi
 echo ""
 echo "☁️   Running cloud backup (Backblaze B2)..."
 if bash cloud-backup.sh 2>/dev/null; then
-  echo "   ✅  Cloud backup complete."
+  B2_TS=$(date '+%Y-%m-%d %H:%M:%S')
+  echo "   ✅  Cloud backup complete at $B2_TS"
+  # Stamp the timestamp into CURRENT_STATE.md for next-session verification
+  if grep -q '^\*\*Last B2 backup:\*\*' CURRENT_STATE.md 2>/dev/null; then
+    sed -i '' "s|^\*\*Last B2 backup:\*\*.*|**Last B2 backup:** $B2_TS|" CURRENT_STATE.md
+  fi
 else
   echo "   ⚠️   Cloud backup failed or skipped — run  bash cloud-backup.sh  manually."
 fi

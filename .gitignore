@@ -16,7 +16,6 @@ artworks/logs/
 # ── Node / Tailwind build ─────────────────────────────────────────────────────
 node_modules/
 package-lock.json
-input.css
 
 # ── Private tool folders ──────────────────────────────────────────────────────
 .claude/

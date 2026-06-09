@@ -215,16 +215,18 @@ Built a complete hero system: Ken Burns zoom-out effect (4 direction variants, 1
 
 ## To do next session
 - [ ] Test Companion live on iPhone (https://jfsn-archive.netlify.app/companion.html)
-- [x] ~~Review featured.txt / catalog-home.json — decade representation~~ — done 2026-06-05 session 4
-- [ ] Offsite cloud backup via Backblaze B2/rclone
+- [ ] Begin capturing physical dimensions for surviving works (requires Jeff)
+- [ ] Auto-patch `search.js` hard-coded series counts via `build_catalog.py` (next ingest session)
+- [ ] Enable HSTS in `.htaccess` (verify HostGator SSL is active in cPanel first)
 
 ## Known issues (standing)
 - **sw.js CACHE_V** — `build_catalog.py` auto-bumps only when catalog content changes. If you edit HTML/CSS/JS without rebuilding the catalog, bump CACHE_V manually before deploying.
 - **index.html has no FOOTER:START marker** — custom homepage footer, not stamped. Edit directly if footer changes.
 - **Decade pages not in stamp-nav.sh** — edit 1970s–2020s.html directly for any nav/footer changes.
-- **start-here.html and favorites.html not yet in stamp-nav.sh** — nav/footer are inline copies. Add to stamp-nav.sh TARGETS next session.
 - **favorites.html fetches full catalog.json (898KB)** — adding `favorite` to `LITE_FIELDS` in build_catalog.py would let it use catalog-lite.json (667KB) instead.
 - **about-portrait.jpg** — only JPEG in the asset pipeline; all artworks are AVIF. Low priority.
+- **search.js hard-codes series counts** (Guernica: 232, Targets: 403, Mr. SNOWmann: 72) — will drift after next ingest. Patch in build_catalog.py when next ingest runs.
+- **No physical dimensions in catalog** — build_dims.py exists but has never run. Physical dimensions are essential for works that will eventually be distributed to heirs.
 
 ---
 
@@ -234,3 +236,6 @@ Built a complete hero system: Ken Burns zoom-out effect (4 direction variants, 1
 
 ## Archive stats
 - 1084 works cataloged, 0 errors
+
+## Backup status
+**Last B2 backup:** 2026-06-09 (manual run — end-session.sh will auto-update this line)
