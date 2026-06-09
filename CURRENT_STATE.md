@@ -237,4 +237,4 @@ Built a complete hero system: Ken Burns zoom-out effect (4 direction variants, 1
 - 1084 works cataloged, 0 errors
 
 ## Backup status
-**Last B2 backup:** 2026-06-09 (manual run — end-session.sh will auto-update this line)
+**Last B2 backup:** 2026-06-09 12:45:51
