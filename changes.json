@@ -1,5 +1,29 @@
 [
   {
+    "sha": "14c7d39",
+    "date": "2026-06-09",
+    "title": "CURRENT_STATE.md: clarify physical dimensions known-issue",
+    "body": "build_dims.py is a layout utility (pixel dims for masonry grid), not an\nartwork-dimensions capture tool. Clarify the distinction so future sessions\ndon't misread it."
+  },
+  {
+    "sha": "db47cbb",
+    "date": "2026-06-09",
+    "title": "Fix two silent bugs found during Task 4 investigation",
+    "body": "1. series.html broken for all named series (?series=Guernica returned 0 works)\n   - Root cause: 'series' field was stripped from catalog-lite.json LITE_FIELDS\n   - Fix: add 'series' to LITE_FIELDS in build_catalog.py; rebuild catalog-lite.json\n   - All named series now load correctly (Guernica: 232 works verified in preview)\n\n2. dims.json missing — series.html masonry layout fell back to uniform squares\n   - Root cause: build_dims.py had never been run\n   - Fix: run build_dims.py to generate dims.json (1,084 entries, 21KB)\n   - Masonry grid now uses real aspect ratios from thumbnail pixel dimensions"
+  },
+  {
+    "sha": "c6718f3",
+    "date": "2026-06-09",
+    "title": "start-here.html: incorporate oral history into page content",
+    "body": "Replace generic text with Jeff's actual words captured in oral history sessions:\n- Why This Archive Exists: specific water-damage story (bed bugs, six feet away,\n  \"Sad. Enough.\", \"Took a fucking long time. Moments of doubt in the middle.\")\n- About Jeff: CIA ambition, found-materials quote, grandchildren collaboration\n- Guernica: add Jeff's quote (\"Nice and big. Used it as a direction...\")\n- Sidebar: replace generic loss summary with his exact words\n- Sidebar: add \"On finishing\" block (\"Always have the option to add/subtract...\")"
+  },
+  {
+    "sha": "befa61e",
+    "date": "2026-06-09",
+    "title": "Session 21 technical audit fixes",
+    "body": "- Delete 13 orphaned files (7 series PNGs, 5 root images, zart0953-hero.avif typo)\n- Fix dead cache-stamp: add ?v=BUILD_TS to catalog-home.json fetch in index.html\n- Commit input.css to git (was gitignored — needed for CSS rebuild from clean clone)\n- end-session.sh: print and record B2 backup timestamp in CURRENT_STATE.md\n- CURRENT_STATE.md: clear stale known-issues, add new items (dimensions, search.js counts, HSTS)"
+  },
+  {
     "sha": "5ea1679",
     "date": "2026-06-09",
     "title": "Session 21: oral history PDF + four technical fixes",
