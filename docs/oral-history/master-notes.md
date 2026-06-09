@@ -3,7 +3,7 @@
 **Project:** Jeffrey F. S. Neumann Archive  
 **Purpose:** Preserve memories, stories, and context that exist only in Jeff's mind. This document is a primary source, not a summary. Do not rewrite it into polished prose.  
 **Last updated:** 2026-06-09  
-**Sessions captured:** 2026-06-08, 2026-06-09, 2026-06-09 (session 2)
+**Sessions captured:** 2026-06-08, 2026-06-09, 2026-06-09 (session 2), 2026-06-09 (session 3 — analysis + drafts)
 
 ---
 
@@ -243,3 +243,138 @@ The archive is about persistence. Not success, not recognition, not groundbreaki
 
 **On what exists only in Jeff's memory:**  
 The reasons. The specifics. The private accounting of what fifty years of making actually meant to him. The catalog preserves the work. Only these sessions can preserve the person behind it.
+
+---
+
+## 13. First-Person Draft — "What Making Things Gave Me"
+
+**Status:** Draft written 2026-06-09. Jeff confirmed: *"feels true."*
+
+This is a synthesized first-person draft built from all oral history sessions to date. Not a direct quote — a reasonable reconstruction of Jeff's voice and position. Confirmed as accurate by Jeff.
+
+Candidate for use on: `start-here.html`, `about.html`, or a standalone essay page.
+
+---
+
+What Making Things Gave Me
+
+I went to art school expecting to become a fine artist. That was the plan. I had an eye for it — I knew that much about myself, even then. Rauschenberg was on the walls. Found material. The idea that anything could be the thing. That permission never left me.
+
+But life went a different direction. Career. Marriage. Children. Bills. The ordinary weight of a life that needed to be lived. I worked as a designer and creative director for decades, which is its own kind of making — but not the same kind. The studio work moved to the edges. Evenings. Weekends. Whatever was left over after everything else got done.
+
+I kept going because stopping wasn't something I seriously considered.
+
+Art supplies were always too expensive, so I used what I could find. CDs. Computer floppies. Keyboards. Prism paper from school that I never stopped loving. Things that still had a life left in them. I wasn't trying to be resourceful. It just seemed right that discarded things should become something else.
+
+Somewhere along the way I realized that Rauschenberg had already been where I was going. That the territory I thought was mine had already been explored. This took years to fully understand — it wasn't a single moment. And then I kept going anyway.
+
+I kept going because the making itself was the point.
+
+Not the recognition. Not the sales. Not whatever you were supposed to want. Those were things I thought I was supposed to want, and maybe for a while I did. But what I actually wanted was the thing itself — the next piece, the next problem, the return to a piece that wasn't finished yet. Nothing ever really finished. That was part of it too. The option to go back was always open.
+
+After retirement, I started wondering whether any of it mattered. Whether anyone would want to see it. That wondering led to this archive — 1,084 works, fifty years, as much of it as I could save. I built it for my daughters' families. For the grandchildren who are now making things alongside me, whose drawings end up in pieces until I can't tell where they stop and I start.
+
+That's the part that surprised me. I thought I was building a record of the past. But the grandchildren made it something else — evidence that making things doesn't end, it just changes hands.
+
+What making things gave me is harder to say than I expected. Not success. Not recognition. Something more like a continuous private conversation with myself about what I was seeing and thinking and feeling, conducted through materials instead of words.
+
+Fifty years of that conversation. And it's not finished yet.
+
+---
+
+## 14. Draft — "What Didn't Survive"
+
+**Status:** Written 2026-06-09. Not yet confirmed by Jeff. Candidate for start-here.html or lost.html.
+
+**Core argument:** The archive is the survivor, not the complete record. 1,084 is not Jeff's output — it is what remained after storage, attrition, giveaways, and the water damage. The gap is as significant as the catalog.
+
+---
+
+There is a sculpture somewhere in the world that I made at art school in the late 1970s.
+
+Prism paper on iron gridwork from a junkyard. Something torn from a magazine incorporated into the surface. About 38 inches wide, 24 inches tall, 3 or 4 inches deep. It hung on a wall. I showed it at a student show. Someone bought it.
+
+I don't know who. I don't know where it is now. No photograph exists.
+
+That person has lived with that piece for nearly fifty years. They may not know who made it. They may have thrown it away. They may love it. I have no way to know, and I will never find out. That work is gone from my life in the way that most things eventually go — not destroyed, just unreachable.
+
+That sculpture is not in this archive. It never could be.
+
+---
+
+The works I lost to water damage are a different kind of gone.
+
+A friend called. I went to see if I could save anything. I was told to stay away — bed bugs. So I stood on the sidewalk, about six feet back, and watched what was left of an estimated five hundred to one thousand works waiting for the garbage truck.
+
+I had made some great large pieces. I thought they were really good.
+
+I stood six feet away.
+
+There was no inventory. Most of those works had never been photographed. I knew what I had made. I could not prove it to anyone. After the truck came, I couldn't even prove it to myself — only in memory, which is its own kind of unreliable record.
+
+The archive you are looking at now has 1,084 works in it. That number sounds complete. It isn't. It is what survived. What didn't survive is larger, and almost entirely undocumented.
+
+One picture. Some of the lost works exist in exactly one photograph, taken incidentally, where the work appears in the background of something else. You can see it was there. You cannot see it clearly. That is all that's left.
+
+---
+
+I built this archive so the surviving work wouldn't disappear twice.
+
+But I also built it knowing that a significant portion of the work already had. The archive is not a complete record of fifty years of making. It is the record of what the water didn't reach, what wasn't given away before anyone thought to document it, what survived storage and moves and the ordinary attrition of objects through time.
+
+The CIA sculpture, the lost works, the pieces I made and gave away and forgot about — those are also part of the story. Their absence is part of the story.
+
+What the archive says is: *this much survived.* What it doesn't say, but should, is: *there was more.*
+
+---
+
+## 15. Analytical Conclusions — Session 3 (2026-06-09)
+
+These are editorial/biographical conclusions, not direct quotes. Marked as interpretation.
+
+**The archive is the survivor, not the complete record.**
+The 1,084 works are what remained. The gap is as significant as the catalog. Future contributors and family members should understand this from the first page.
+
+**The sidewalk moment is the most time-sensitive factual gap.**
+The specific works lost in the water damage — what they looked like, which Jeff considered his best — exist only in his memory. This is not a philosophical gap. It is a concrete historical record that will permanently disappear without documentation. Priority for next oral history session.
+
+**The grandchildren story is the most historically durable turning point.**
+It is the only turning point that faces forward, involves living people, and is still happening. In 100 years, the most likely reason someone opens this archive is to see hands they recognize. Not ideas. Hands.
+
+**"Sad. Enough." is the most compressed emotional record in the archive.**
+Three words. Nothing else Jeff has said approaches that density. Treat as primary source.
+
+**The career years may be the most practically useful story for grandchildren.**
+The answer to how you keep making things through a full life — job, family, not enough money, not enough time. Jeff lived that question for thirty years. The answer is in the timeline.
+
+**The draft "What Making Things Gave Me" presents a more resolved narrator than the record supports.**
+The actual record includes doubt: *"Getting old / no one really cares or wants to see it."* The Guernica series — 232 works, 30 years — is absent from the draft. Both gaps should be addressed in revision.
+
+**The "continuous making" framing of the career years may be inaccurate.**
+Master-notes.md suggests the work became more serious when the kids were heading to college. That implies a shift, not unbroken continuity. Needs clarification from Jeff.
+
+---
+
+## 16. Quotes Confirmed or Newly Elevated This Session
+
+All previously captured. Elevated to primary status based on session 3 analysis:
+
+- *"Sad. Enough."* — water damage. Most compressed. Treat as primary source.
+- *"From around six feet away on the sidewalk."* — the physical fact. Specific. Irreplaceable.
+- *"Ha Ha Ha — 30 odd years ago and still making artwork."* — career years. The laugh is the tone.
+- *"Getting hard to tell where they end and I begin. I think that's right."* — grandchildren. Forward-facing.
+- *"Getting old / no one really cares or wants to see it."* — the doubt. Must not be edited out of the record.
+- *"Yes, it might be worth it in the end =)"* — the emoji matters. That is his register.
+
+---
+
+## Updated Unresolved Questions — Priority for Future Sessions
+
+1. **What specific works were lost in the water damage?** Medium, scale, subject. Which did Jeff consider his best. This is the most time-sensitive question in the archive.
+2. **The grandchildren — specifically.** Which grandchildren. Ages. What they contribute. Do they know they're in the archive? Have they seen finished pieces?
+3. **Why did he keep going after the Rauschenberg realization?** Still unanswered. Approach gently.
+4. **What do the career years actually look like?** Was there a period he nearly stopped? What brought him back more seriously?
+5. **Why Guernica for thirty years?** What did it keep giving him?
+6. **What does "worth it" mean to him now, at 71?**
+7. **What does a day of making look like now?**
+8. **Does he have regrets about work he never started?**
