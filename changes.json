@@ -1,5 +1,29 @@
 [
   {
+    "sha": "dec66fc",
+    "date": "2026-06-09",
+    "title": "CURRENT_STATE.md: stamp B2 backup timestamp 2026-06-09",
+    "body": ""
+  },
+  {
+    "sha": "feda0b6",
+    "date": "2026-06-09",
+    "title": "build_catalog.py output: rebuild api/, changes.json, feed.xml, index.html cache stamp",
+    "body": ""
+  },
+  {
+    "sha": "dff7551",
+    "date": "2026-06-09",
+    "title": "IMPROVEMENTS.md: update backlog to reflect session 21 work",
+    "body": "Mark 7 completed items. Add open items: physical dimensions, oral history\nquestions, favorites.html fetch optimization, HSTS. Remove stale entries."
+  },
+  {
+    "sha": "216c12f",
+    "date": "2026-06-09",
+    "title": "build_catalog.py: auto-patch search.js browse counts on every build",
+    "body": "Adds a patch step that keeps the three hard-coded series counts in\nsearch.js browseHTML() in sync with the catalog. Eliminates silent\ndrift after ingest without requiring manual updates to search.js.\n\nPatterns patched: Guernica Series, Targets, Mr. SNOWmann."
+  },
+  {
     "sha": "14c7d39",
     "date": "2026-06-09",
     "title": "CURRENT_STATE.md: clarify physical dimensions known-issue",
