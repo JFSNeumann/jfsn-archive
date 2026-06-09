@@ -6,11 +6,11 @@
 
 ## What was done this session (2026-06-08 — session 18)
 
-### Homepage evolution — favorites, start-here, image treatment
+### Homepage evolution — favorites, start-here, image treatment, mobile padding
 
 - Added `favorites.txt` (45 art IDs), `favorites.html` (masonry grid of personally significant works), and `start-here.html` (orientation page: who Jeff is, major themes, how to explore). Both new pages include footer markers, JSON-LD, and sitemap entries.
-- Rewrote `_shared/ui.css` image hover treatment: replaced `::after` saturation overlay with `mask-image: linear-gradient(to bottom, transparent 0%, black 60%)` on `.thumb__link img`; removed grayscale; added title-orange-on-hover via `.thumb:hover .thumb__caption a`. Applies sitewide to all 15+ thumbnail pages.
-- `index.html` gains "About This Archive" and "Where To Begin" sections (desktop only); `build_catalog.py` gains `_load_id_file()` helper and `favorite` field on all 1,084 records; `sw.js` CACHE_V bumped to post-ui.css timestamp; `CLAUDE.md` updated with corrected image treatment docs, new page inventory entries, and stamp-nav.sh checklist note.
+- Corrected `_shared/ui.css` image hover treatment to final form: `::after` pseudo-element with `mix-blend-mode:saturation`, grey background, and `mask-image: linear-gradient(to bottom, black 0%, black 25%, transparent 100%)` — top 25% greyscale, fading to full colour at bottom; hover removes overlay. `.thumb__link` has `isolation:isolate` + `position:relative`. Title turns orange via `.thumb:hover .thumb__caption a`.
+- Fixed mobile text edge-bleed on all 12 medium/theme pages (collage, sculpture, photography, painting, guernica, targets, framed, torsos-faces, crosses, mr-snowmann, gallery-images, collaboration): added `padding-left/right: clamp(1rem, 4vw, 4rem)` to `.medium-page`.
 
 ## What was done last session (2026-06-08 — session 17)
 

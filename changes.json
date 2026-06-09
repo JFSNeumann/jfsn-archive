@@ -1,5 +1,29 @@
 [
   {
+    "sha": "d75adc8",
+    "date": "2026-06-08",
+    "title": "Fix mobile text edge-bleed on all 12 medium/theme pages",
+    "body": "Add padding-left/right clamp(1rem, 4vw, 4rem) to .medium-page —\n16px at 375px viewport, scales to 64px at desktop."
+  },
+  {
+    "sha": "a391f33",
+    "date": "2026-06-08",
+    "title": "Fix image hover: greyscale top 25% fading to full colour via ::after saturation overlay",
+    "body": ""
+  },
+  {
+    "sha": "313a11e",
+    "date": "2026-06-08",
+    "title": "Update CURRENT_STATE.md for session 18",
+    "body": ""
+  },
+  {
+    "sha": "46ee7f1",
+    "date": "2026-06-08",
+    "title": "Session 18: homepage evolution — favorites, start-here, image treatment, CLAUDE.md",
+    "body": "- Add favorites.html and start-here.html (new pages, with footer/JSON-LD)\n- Add favorites.txt (45 personally significant works)\n- build_catalog.py: _load_id_file() helper, favorite field on all records, sitemap entries\n- _shared/ui.css: replace ::after saturation overlay with mask-image fade; title-orange hover\n- index.html: About This Archive and Where To Begin sections (desktop); remove grayscale\n- sw.js: bump CACHE_V to post-ui.css timestamp\n- CLAUDE.md: correct image treatment docs, add new pages, favorites.txt, new-page checklist"
+  },
+  {
     "sha": "85e54e7",
     "date": "2026-06-08",
     "title": "Session update 2026-06-08 18:11",
