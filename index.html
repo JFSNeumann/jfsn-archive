@@ -588,7 +588,7 @@ footer .hover\:border-international-orange::after{display:none}
     if (!grid) return;
     try {
       const [works, chromatic] = await Promise.all([
-        fetch('catalog-home.json?v=20260609161623').then(r => r.json()),
+        fetch('catalog-home.json?v=20260609162522').then(r => r.json()),
         fetch('chromatic.json').then(r => r.json()).catch(() => []),
       ]);
 
