@@ -1,14 +1,36 @@
 # Current State
-**Updated:** 2026-06-08
+**Updated:** 2026-06-09
 
 ## Last commit
-6fb99e5e — Session update 2026-06-08 20:25
+fc117b52 — Session 22: oral history analysis, two essay drafts, checkpoint
 
-## What was done this session (2026-06-09 — session 20)
+## What was done this session (2026-06-09 — session 22)
+
+### Documentation housekeeping + Allison handoff PDF regeneration
+
+No new features. Cleanup session.
+
+**Documentation fixed:**
+- CURRENT_STATE.md: session number corrected (was "session 20"), stale known issue removed (favorites.html fetch size — resolved session 21), last commit updated
+- CLAUDE.md: page inventory updated to 30 public pages (was "20"), seven theme pages added, start-here/favorites stale notes removed, site.min.css size corrected (23,071 bytes), ghost grid count corrected (10, not 25), nav links corrected
+- Allison handoff PDF regenerated (was June 3, now current)
+
+**Files modified:**
+- `CURRENT_STATE.md` — session number, last commit, stale known issue
+- `CLAUDE.md` — page inventory, site.min.css size, ghost grid count, nav links, stamp-nav.sh status
+- `JFSN-Archive-Handoff-Allison.pdf` — regenerated via make_handoff.py
+
+**Oral history work (sessions 20–21, same day):**
+- Checkpoint validation of all documentation against project state
+- Two first-person essay drafts written: "What Making Things Gave Me" (confirmed by Jeff as true) and "What Didn't Survive" (not yet confirmed)
+- master-notes.md: Sections 13–16 added — drafts, analytical conclusions, elevated quotes, updated open questions
+- Central finding: the archive is the survivor, not the complete record
+
+## What was done last session (2026-06-09 — session 20–21)
 
 ### Deep legacy audits + oral history continuation
 
-No code written. This was a preservation and oral history session.
+No code written. Preservation and oral history sessions.
 
 **Audits completed:**
 - Deep Legacy Audit Round 1: evaluated site as archivist/oral historian; identified top 10 missing stories, missing context, unanswered questions, and preservation priorities. Central finding: the site preserves the inventory of a creative life but not the person behind it.
@@ -20,9 +42,9 @@ No code written. This was a preservation and oral history session.
 - First specific lost work described in detail: CIA sculpture, late 1970s, prism paper on iron gridwork from a junkyard, magazine element, ~38"W × 24"T × 3–4"D, hung on wall, shown at student show, sold. No image exists. Someone has lived with it for ~50 years. Jeff doesn't know where it is.
 
 **Files modified:**
-- `docs/oral-history/master-notes.md` — added Section 11 (incompleteness as method) and Section 12 (CIA sculpture, first specific lost work documented)
+- `docs/oral-history/master-notes.md` — Sections 11–16 added across sessions 20–22
 
-## What was done last session (2026-06-08 — session 19)
+## What was done previously (2026-06-08 — session 19)
 
 ### Oral history interview + start-here.html content review
 
@@ -223,7 +245,6 @@ Built a complete hero system: Ken Burns zoom-out effect (4 direction variants, 1
 - **sw.js CACHE_V** — `build_catalog.py` auto-bumps only when catalog content changes. If you edit HTML/CSS/JS without rebuilding the catalog, bump CACHE_V manually before deploying.
 - **index.html has no FOOTER:START marker** — custom homepage footer, not stamped. Edit directly if footer changes.
 - **Decade pages not in stamp-nav.sh** — edit 1970s–2020s.html directly for any nav/footer changes.
-- **favorites.html fetches full catalog.json (898KB)** — adding `favorite` to `LITE_FIELDS` in build_catalog.py would let it use catalog-lite.json (667KB) instead.
 - **about-portrait.jpg** — only JPEG in the asset pipeline; all artworks are AVIF. Low priority.
 - **No physical dimensions in catalog** — `build_dims.py` is a layout utility (reads pixel dimensions from thumbnails for masonry grid; now run, dims.json committed). Physical artwork dimensions (inches/cm) are a separate gap — no tooling exists yet. These are essential archival data for works that will be distributed to heirs.
 

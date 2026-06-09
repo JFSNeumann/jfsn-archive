@@ -84,7 +84,7 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 - `end-session.sh` — git commit + push + backup (does NOT deploy)
 - `make_handoff.py` — regenerates Allison handoff PDF; run after any credential change
 
-### Page inventory (all 20 public pages)
+### Page inventory (30 public pages)
 | Page | Notes |
 |------|-------|
 | `index.html` | Homepage, featured works from catalog-home.json |
@@ -93,7 +93,7 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 | `series-index.html` | Guernica + 7 themes |
 | `companion.html` | AI companion (Netlify Function — `netlify/functions/companion.mjs`) |
 | `about.html` | Bio, exhibitions, contact |
-| `lost.html` | Essay + ghost grid of 750 lost works |
+| `lost.html` | Essay + ghost grid of 10 tiles |
 | `chromatic.html` | Color-slice canvas of all works by year |
 | `collage.html` | 638 works, masonry grid |
 | `sculpture.html` | 76 works |
@@ -102,25 +102,32 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 | `1970s.html`–`2020s.html` | 6 decade pages, Material Design tokens, ← / → keyboard nav |
 | `series.html` | Single series deep-dive |
 | `guernica.html` | 232 Guernica works, static theme page |
+| `targets.html` | Targets theme page |
+| `framed.html` | Framed theme page |
+| `torsos-faces.html` | Torsos & Faces theme page |
+| `crosses.html` | Crosses theme page |
+| `mr-snowmann.html` | Mr. SNOWmann theme page |
+| `gallery-images.html` | Gallery Images theme page |
+| `collaboration.html` | Collaboration theme page — grandchildren + family work |
 | `wall.html` | 1,084 mini images, all full color, no sibling dim |
 | `api.html` | Developer API docs, light system |
 | `changes.html` | Git log feed |
 | `privacy.html` | Privacy page |
 | `404.html` | Error page |
-| `start-here.html` | Orientation page — who Jeff is, major themes, how to explore. NOT in stamp-nav.sh yet. |
-| `favorites.html` | 45 personally significant works from favorites.txt. Fetches catalog.json (full). NOT in stamp-nav.sh yet. |
+| `start-here.html` | Orientation page — who Jeff is, major themes, how to explore. In stamp-nav.sh. |
+| `favorites.html` | 45 personally significant works from favorites.txt. Fetches catalog-lite.json. In stamp-nav.sh. |
 
 ### Interactions (live)
 - Orange outline on hover: `_shared/ui.css` `.thumb__link` — `outline-color` transition from `rgba(255,102,0,0)` → `#FF6600`. Homepage cards use `.card-frame` overlay div instead (image is `absolute inset-0` and covers CSS outline)
 - Keyboard ← / → between decade pages: `_shared/ui.js`
 - Vertical "you are here" margin label: `_shared/ui.js` + `data-page-label` on `<body>`
 - Hero heading zoom-out on scroll: `_shared/ui.js` `.decade-hero` / `.decade-heading`
-- Ghost grid (lost.html): 25 JS-generated empty tiles
+- Ghost grid (lost.html): 10 JS-generated empty tiles
 - Chromatic River (chromatic.html): HiDPI canvas, 1,084 color slices, hover + click
 - Wall (wall.html): 1,084 tiles, all color, no sibling dim (removed session 10)
 
 ### Nav systems (two, keep separate)
-1. **Stitch nav** (`_shared/top-nav.html`) — `font-nav-link`, `text-deep-ink`, `international-orange` hover. Used by collage, sculpture, photography, painting, lost, etc. Nav links: Archive · Series · Companion · About · Lost.
+1. **Stitch nav** (`_shared/top-nav.html`) — `font-nav-link`, `text-deep-ink`, `international-orange` hover. Used by collage, sculpture, photography, painting, lost, etc. Nav links: Archive · Series · About · Lost. (Companion is footer-only — not in nav.)
 2. **Material Design nav** (inline on decade pages) — `font-label-lg`, uppercase, `text-on-tertiary-container` active. Used by 1970s–2020s.
 
 ### Deployment
@@ -134,7 +141,7 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 - **New page checklist:** When adding any new public `.html` page: (1) add to sitemap entries list in `build_catalog.py`, (2) run `python3 artworks/build_catalog.py` to rebuild sitemap, (3) add to TARGETS array in `stamp-nav.sh` so future nav updates propagate to it, (4) run `bash audit-nav.sh` — the reverse sitemap check will catch if it's missing from the sitemap.
 
 ### Conventions
-- Vanilla HTML/CSS/JS. Production uses `site.min.css` (22,530 bytes compiled Tailwind — not CDN). Stitch exports start with Tailwind CDN and get swapped to `site.min.css` during post-export cleanup.
+- Vanilla HTML/CSS/JS. Production uses `site.min.css` (23,071 bytes compiled Tailwind — not CDN). Stitch exports start with Tailwind CDN and get swapped to `site.min.css` during post-export cleanup.
 - **Tailwind rebuild rule:** Any time a new utility class is added to any HTML file, run `npm run build:css` and commit the updated `site.min.css`. Classes not in the build are silently ignored at runtime — there is no error, just a missing style.
 - **No arbitrary values:** Never use `p-[10px]` when a standard scale value exists (`p-2.5` = 10px). Arbitrary values require a rebuild and pollute the class list. Check the spacing scale in `tailwind.config.js` first.
 - `loading="lazy"` on all artwork images
