@@ -368,6 +368,58 @@ All previously captured. Elevated to primary status based on session 3 analysis:
 
 ---
 
+## 17. Session — 2026-06-09 (Session 4 — Oral History)
+
+### New material captured
+
+**On what making gave him:**
+*"sense of being creative/inventive"*
+
+**On early recognition:**
+Teachers and family confirmed he was good. No single person whose opinion stood out — doesn't remember. The belief in his own ability came from inside, not from one voice.
+
+**On found objects as method:**
+CDs, prisma paper, tape. Hard to remember the full list. Became a way of life. Never had money. Was jealous of other artists who did — specifically about materials, not recognition or status. *"became a way of my life making art / never had money / jealous of all the other artist that did"*
+
+**art1056 — specific work:**
+Sculpture made from old light bulbs, tubes, wires — found objects. Low budget. Image exists. Representative of the found-object method.
+
+**The Guernica-scale painting — memory-only:**
+Jeff made a full-size interpretation of Picasso's Guernica (approximately 11 ft × 25 ft) in his studio. Lost in the water damage. Never photographed. No record exists. Subject: his version of Picasso's painting. What he changed: *"boring / next"* — too long ago to reconstruct. This work exists only in his memory.
+
+**On the water damage loss:**
+Over 50% of life's work lost. Jeff thinks about both what's gone and what survived — holds both simultaneously.
+
+**Works still out there:**
+A few pieces are with friends and relatives. Jeff has not tried to track them down for the archive. *"No / next."*
+
+**On Anselm Kiefer:**
+If money were no object, Jeff would work like Anselm Kiefer — large studio, monumental scale, unbelievable works. The jealousy is direct: *"where did he get the money?"* What pulls him to Kiefer: *"everything"* — scale, materials, subject matter, the whole thing.
+
+**On misunderstood works:**
+Can't think of anything.
+
+**On what he wants family to know:**
+*"Not yet."* Door remains open.
+
+**On what he wants people to understand that the work can't show:**
+*"Do not know."* — honest, unresolved. This question should return in a later session.
+
+### Key quotes from this session
+
+- *"sense of being creative/inventive"* — what making gave him
+- *"became a way of my life making art / never had money / jealous of all the other artist that did"*
+- *"where did he get the money?"* — on Kiefer
+- *"everything"* — what pulls him to Kiefer's work
+- *"do not know"* — what he wants people to understand beyond the work
+
+### Memory-only from this session
+
+- The Guernica-scale painting: its existence, scale, loss. No photograph, no record, no description recoverable at this distance.
+- The specific pieces held by friends and relatives — untracked, unrecorded.
+
+---
+
 ## Updated Unresolved Questions — Priority for Future Sessions
 
 1. **What specific works were lost in the water damage?** Medium, scale, subject. Which did Jeff consider his best. This is the most time-sensitive question in the archive.
@@ -378,3 +430,5 @@ All previously captured. Elevated to primary status based on session 3 analysis:
 6. **What does "worth it" mean to him now, at 71?**
 7. **What does a day of making look like now?**
 8. **Does he have regrets about work he never started?**
+9. **What is there about Kiefer specifically — beyond "everything" — that he recognizes in his own ambitions?**
+10. **What does he want Allison or a grandchild to know that he hasn't said out loud yet?** (He said "not yet" — come back.)
