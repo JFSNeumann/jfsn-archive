@@ -595,6 +595,26 @@ print(f"api/v1/works/     — {n_works} per-work files")
 print(f"api/v1/themes.json, series.json, motifs.json, palette.json")
 print(f"api/.htaccess     — CORS headers (Apache/cPanel)")
 
+# ── Patch hard-coded counts in search.js browseHTML() ────────────────────────
+# search.js embeds three work counts as string literals in browseHTML().
+# Keeps them in sync with the catalog automatically on every build.
+SEARCH_JS = ROOT / "search.js"
+if SEARCH_JS.exists():
+    _sjs = SEARCH_JS.read_text()
+    _sjs_orig = _sjs
+    _search_patches = [
+        ('Guernica',     _count_series(records, 'Guernica'),  r"(label: 'Guernica Series'.*?meta: ')\d+ works(')"),
+        ('Targets',      _count_theme(records,  'Targets'),   r"(label: 'Targets'.*?meta: ')\d+ works(')"),
+        ('Mr. SNOWmann', _count_theme(records,  'Mr. Snowmann'), r"(label: 'Mr. SNOWmann'.*?meta: ')\d+ works(')"),
+    ]
+    for name, count, pattern in _search_patches:
+        _sjs = re.sub(pattern, rf"\g<1>{count} works\g<2>", _sjs, flags=re.DOTALL)
+    if _sjs != _sjs_orig:
+        SEARCH_JS.write_text(_sjs)
+        print(f"search.js         — browse counts updated")
+    else:
+        print(f"search.js         — browse counts up to date")
+
 # ── Living changelog ─────────────────────────────────────────────────────────
 # Parses git log into changes.json for the /changes.html page.
 try:
