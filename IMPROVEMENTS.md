@@ -1,5 +1,5 @@
 # JFSN — Improvement List
-**Updated:** 2026-06-06 (session 11)
+**Updated:** 2026-06-09 (session 21)
 
 A living list. Add to it. Cross things off. This is the backlog.
 
@@ -14,7 +14,13 @@ A living list. Add to it. Cross things off. This is the backlog.
 ## 🟡 High value, no deadline
 
 ### Content
-- [x] ~~**featured.txt**~~ — rebalanced 2026-06-05: 30 works across all decades, varied by medium.
+- [ ] **Physical artwork dimensions** — no tooling exists yet. Essential archival data for works that will be distributed to heirs. Requires Jeff to measure surviving works. Start with the most significant pieces.
+- [ ] **Oral history — unanswered questions** — see `docs/oral-history/master-notes.md` Section "Unresolved Questions" for priority list. Top item: why did he keep going after the Rauschenberg realization?
+- [ ] **start-here.html** — oral history content written in (session 21). Review with Jeff and refine.
+
+### Technical
+- [ ] **favorites.html** — still fetches full `catalog.json` (898KB). Adding `favorite` to `LITE_FIELDS` would let it use `catalog-lite.json` (701KB). Low priority.
+- [ ] **HSTS** — uncomment one line in `.htaccess` once SSL confirmed active in HostGator cPanel.
 
 ---
 
@@ -22,6 +28,17 @@ A living list. Add to it. Cross things off. This is the backlog.
 
 ### Physical
 - [ ] **Print run of 12** — 12 prints of 12 works, numbered. Not a code problem.
+
+---
+
+## ✅ Completed (recent)
+- [x] ~~**featured.txt**~~ — rebalanced 2026-06-05
+- [x] ~~**search.js browse counts**~~ — auto-patched via build_catalog.py (session 21)
+- [x] ~~**series.html named series broken**~~ — series field missing from catalog-lite.json (session 21)
+- [x] ~~**dims.json missing**~~ — build_dims.py run, masonry layout restored (session 21)
+- [x] ~~**start-here.html oral history**~~ — Jeff's voice written into page (session 21)
+- [x] ~~**cache-stamp dead code**~~ — ?v=BUILD_TS now in index.html (session 21)
+- [x] ~~**orphaned files**~~ — 13 files deleted (session 21)
 
 ---
 
