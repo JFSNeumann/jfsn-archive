@@ -9,6 +9,7 @@
     'series-index.html': 'series-index.html',
     'about.html':        'about.html',
     'lost.html':         'lost.html',
+    'favorites.html':    'archive.html',
   };
 
   const file = location.pathname.split('/').pop() || 'index.html';

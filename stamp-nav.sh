@@ -25,6 +25,7 @@ TARGETS=(
   guernica.html targets.html framed.html torsos-faces.html
   gallery-images.html mr-snowmann.html crosses.html collaboration.html
   privacy.html series.html wall.html 404.html api.html
+  start-here.html favorites.html
 )
 # Note: decade pages (1970s–2020s) use the Material Design nav token system
 # and are maintained separately — edit them directly, not via this stamp script.

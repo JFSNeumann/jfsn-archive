@@ -4,7 +4,25 @@
 ## Last commit
 6fb99e5e — Session update 2026-06-08 20:25
 
-## What was done this session (2026-06-08 — session 19)
+## What was done this session (2026-06-09 — session 20)
+
+### Deep legacy audits + oral history continuation
+
+No code written. This was a preservation and oral history session.
+
+**Audits completed:**
+- Deep Legacy Audit Round 1: evaluated site as archivist/oral historian; identified top 10 missing stories, missing context, unanswered questions, and preservation priorities. Central finding: the site preserves the inventory of a creative life but not the person behind it.
+- Deep Legacy Audit Round 2: identified 10 strongest themes, 10 most unusual aspects of Jeff's story, 10 statements future family would find surprising, 10 implicit ideas not yet stated, 10 assumptions future visitors won't share, 10 stories most at risk of being lost. Concluded the central human story is: a person trusted his own eye for fifty years without much external confirmation that he was right.
+- Ranked the 10 most important things still unknown about Jeff. Most important single question identified: "What did making things give Jeff that he couldn't get elsewhere?"
+
+**Oral history captured:**
+- Jeff's position on incompleteness: *"Always have the option to add/subtract — could be unfinished till the end."* This is structural, not incidental.
+- First specific lost work described in detail: CIA sculpture, late 1970s, prism paper on iron gridwork from a junkyard, magazine element, ~38"W × 24"T × 3–4"D, hung on wall, shown at student show, sold. No image exists. Someone has lived with it for ~50 years. Jeff doesn't know where it is.
+
+**Files modified:**
+- `docs/oral-history/master-notes.md` — added Section 11 (incompleteness as method) and Section 12 (CIA sculpture, first specific lost work documented)
+
+## What was done last session (2026-06-08 — session 19)
 
 ### Oral history interview + start-here.html content review
 

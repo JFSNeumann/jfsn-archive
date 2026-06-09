@@ -34,6 +34,8 @@ const PRECACHE = [
   '/mr-snowmann.html',
   '/crosses.html',
   '/collaboration.html',
+  '/start-here.html',
+  '/favorites.html',
   '/site.min.css',
   '/search.js',
   '/catalog-home.json',

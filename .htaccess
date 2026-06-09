@@ -15,8 +15,10 @@
   # ------------------------------------------
   # Legacy URL redirects — old pages that moved
   RewriteRule ^timeline-fixed\.html$ /timeline.html [R=301,L]
-  RewriteRule ^services\.html$ /for-artists.html [R=301,L]
-  RewriteRule ^websites\.html$ /for-artists.html [R=301,L]
+  # for-artists.html was deleted session 9; redirect legacy service pages to about
+  RewriteRule ^services\.html$ /about.html [R=301,L]
+  RewriteRule ^websites\.html$ /about.html [R=301,L]
+  RewriteRule ^for-artists\.html$ /about.html [R=301,L]
 
   # ------------------------------------------
   # Share artwork images with /old/ subfolder

@@ -1,5 +1,7 @@
 # JFSN Archive — Claude Code Design Brief
 
+> **Primary guiding document:** `JFSN-MISSION.md` — read it before making any significant development or content decision.
+
 ## Project
 Personal archive site for Jeffrey F. S. Neumann — 1,084 works spanning 1974–present.
 Collage, sculpture, photography. This is a personal record, not a promotional platform.
@@ -53,7 +55,7 @@ colors: {
 - Orange accent (#FF6600 / #e05900) for hover, active states, links — not decoration
 - No gradients. No drop shadows on images. No rounded corners (border-radius: 0).
 - Borders use outline-variant (#c4c7c7) — 1px solid
-- Artwork thumbnails: no grayscale at rest. `mask-image: linear-gradient(to bottom, transparent 0%, black 60%)` on `<img>` — fades in from top, full color at bottom. On hover/focus: mask removed, `filter: brightness(1.04)`, orange outline. Transition: `filter 0.3s ease`. No scale, no overlay, no sibling dim. Implemented in `_shared/ui.css` `.thumb__link img` — do NOT re-add grayscale filter or `::after` saturation overlay.
+- Artwork thumbnails: no grayscale at rest. A `::after` pseudo-element on `.thumb__link` uses `background: #808080; mix-blend-mode: saturation` with `-webkit-mask-image`/`mask-image: linear-gradient(to bottom, black 0%, black 25%, transparent 100%)` — top 25% desaturated, fading to full colour at bottom. On hover/focus: `::after` opacity → 0 (full colour), `filter: brightness(1.04)` on `<img>`, orange `outline-color` on `.thumb__link`. `.thumb__link` has `isolation: isolate` + `position: relative`. No mask-image on `<img>` itself. No scale, no sibling dim. Implemented in `_shared/ui.css` — do NOT re-add grayscale filter, mask-image on img, or any separate overlay div.
 
 ---
 

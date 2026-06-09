@@ -73,10 +73,12 @@ header nav a::after{content:'';position:absolute;bottom:10px;left:0;width:100%;h
 header nav a:hover::after{transform:scaleX(1)}
 header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
 @media(prefers-reduced-motion:reduce){header nav a::after{transition:none}}
+/* JFSN wordmark tooltip */
 .jfsn-wordmark{position:relative}
 .jfsn-wordmark::before{content:'Jeffrey Francis Stanley Neumann';position:absolute;top:calc(100% + 10px);left:0;white-space:nowrap;font-family:'Inter',sans-serif;font-size:11px;font-weight:400;letter-spacing:0.06em;color:#575757;background:#fcf9f3;border:1px solid #c4c7c7;padding:4px 8px;pointer-events:none;opacity:0;transform:translateY(-4px);transition:opacity 0.15s ease,transform 0.15s ease}
 .jfsn-wordmark:hover::before{opacity:1;transform:translateY(0)}
 @media(prefers-reduced-motion:reduce){.jfsn-wordmark::before{transition:none}}
+/* Mobile drawer — underline draw + active state */
 #mobile-menu-drawer a{position:relative;overflow:hidden}
 #mobile-menu-drawer a::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;background:#FF6600;transform:scaleX(0);transform-origin:left center;transition:transform 0.2s ease}
 #mobile-menu-drawer a:hover::after,#mobile-menu-drawer a:active::after{transform:scaleX(1)}
@@ -101,24 +103,32 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
     <button class="md:hidden material-symbols-outlined text-deep-ink" style="padding:10px;" aria-label="Open menu" id="nav-menu-btn">menu</button>
   </div>
 </header>
+
+<!-- Mobile menu overlay -->
 <div id="mobile-menu" aria-hidden="true" style="display:none;position:fixed;inset:0;z-index:45;">
+  <!-- Backdrop -->
   <div id="mobile-menu-backdrop" style="position:absolute;inset:0;background:rgba(11,11,11,0.5);"></div>
+  <!-- Drawer -->
   <nav id="mobile-menu-drawer" aria-label="Mobile menu"
     style="position:absolute;top:0;right:0;width:min(280px,85vw);height:100%;background:#fcf9f3;border-left:1px solid #0B0B0B;display:flex;flex-direction:column;transform:translateX(100%);transition:transform 0.25s ease;">
+    <!-- Header -->
     <div style="display:flex;justify-content:space-between;align-items:center;padding:0 20px;height:64px;border-bottom:1px solid #0B0B0B;">
       <span style="font-family:Inter,sans-serif;font-size:18px;font-weight:600;letter-spacing:-0.02em;color:#0B0B0B;">JFSN</span>
       <button id="nav-menu-close" aria-label="Close menu"
         style="background:none;border:none;cursor:pointer;color:#0B0B0B;font-size:24px;padding:10px 14px;margin-right:-14px;line-height:1;">&times;</button>
     </div>
+    <!-- Links -->
     <div style="flex:1;overflow-y:auto;padding:8px 0;">
-      <a href="archive.html"      style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Archive</a>
+      <a href="archive.html"     style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Archive</a>
       <a href="series-index.html" style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Series</a>
-      <a href="about.html"        style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">About</a>
-      <a href="lost.html"         style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Lost</a>
+      <a href="about.html"       style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">About</a>
+      <a href="lost.html"        style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Lost</a>
     </div>
+    <!-- Portrait -->
     <div style="padding:16px 24px;">
       <img src="me black.gif" alt="Jeffrey F. S. Neumann" style="display:block;width:50%;margin:0 auto;opacity:0.85;">
     </div>
+    <!-- Search shortcut -->
     <div style="padding:0 24px 16px;border-top:1px solid #c4c7c7;">
       <button id="mobile-menu-search"
         style="width:100%;display:flex;align-items:center;gap:10px;background:none;border:1px solid #c4c7c7;padding:12px 14px;cursor:pointer;color:#575757;font-family:Inter,sans-serif;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;">
@@ -128,20 +138,45 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
     </div>
   </nav>
 </div>
+
 <script>
 (function(){
-  var menu=document.getElementById('mobile-menu'),drawer=document.getElementById('mobile-menu-drawer'),
-      openBtn=document.getElementById('nav-menu-btn'),closeBtn=document.getElementById('nav-menu-close'),
-      backdrop=document.getElementById('mobile-menu-backdrop'),menuSearchBtn=document.getElementById('mobile-menu-search');
-  function openMenu(){menu.style.display='block';menu.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';requestAnimationFrame(function(){drawer.style.transform='translateX(0)';});closeBtn.focus();}
-  function closeMenu(){drawer.style.transform='translateX(100%)';document.body.style.overflow='';setTimeout(function(){menu.style.display='none';menu.setAttribute('aria-hidden','true');},260);openBtn.focus();}
-  if(openBtn)openBtn.addEventListener('click',openMenu);
-  if(closeBtn)closeBtn.addEventListener('click',closeMenu);
-  if(backdrop)backdrop.addEventListener('click',closeMenu);
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&menu.style.display==='block')closeMenu();});
-  if(menuSearchBtn)menuSearchBtn.addEventListener('click',function(){closeMenu();setTimeout(function(){if(window.openSiteSearch)window.openSiteSearch();},280);});
+  var menu    = document.getElementById('mobile-menu');
+  var drawer  = document.getElementById('mobile-menu-drawer');
+  var openBtn = document.getElementById('nav-menu-btn');
+  var closeBtn= document.getElementById('nav-menu-close');
+  var backdrop= document.getElementById('mobile-menu-backdrop');
+  var menuSearchBtn = document.getElementById('mobile-menu-search');
+
+  function openMenu(){
+    menu.style.display = 'block';
+    menu.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(function(){
+      drawer.style.transform = 'translateX(0)';
+    });
+    closeBtn.focus();
+  }
+  function closeMenu(){
+    drawer.style.transform = 'translateX(100%)';
+    document.body.style.overflow = '';
+    setTimeout(function(){ menu.style.display = 'none'; menu.setAttribute('aria-hidden','true'); }, 260);
+    openBtn.focus();
+  }
+
+  if(openBtn)  openBtn.addEventListener('click', openMenu);
+  if(closeBtn) closeBtn.addEventListener('click', closeMenu);
+  if(backdrop) backdrop.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && menu.style.display==='block') closeMenu(); });
+
+  // Wire search button in menu to open search overlay
+  if(menuSearchBtn) menuSearchBtn.addEventListener('click', function(){
+    closeMenu();
+    setTimeout(function(){ if(window.openSiteSearch) window.openSiteSearch(); }, 280);
+  });
 })();
 </script>
+
 <script src="search.js" defer></script>
 <!-- NAV:END -->
 
@@ -295,8 +330,9 @@ footer .hover\:border-international-orange::after{display:none}
 @media(prefers-reduced-motion:reduce){footer a::after{transition:none}}
 </style>
 <footer class="bg-surface-container-high pt-20 pb-28 px-margin-desktop border-t border-outline-variant">
-  <div class="max-w-container-max mx-auto">
-    <div class="hidden md:grid" style="grid-template-columns:2.2fr 1fr 1fr 1.3fr;gap:32px;align-items:start;">
+  <div class="max-w-container-max mx-auto grid grid-cols-1 gap-10" style="grid-template-columns:1fr;gap:40px 32px;">
+    <div class="hidden md:grid" style="grid-template-columns:2.2fr 1fr 1fr 1.3fr;gap:32px;align-items:center;">
+      <!-- Col 1: portrait + identity -->
       <div style="display:flex;align-items:center;gap:20px;">
         <div style="flex-shrink:0;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle, rgba(255,255,255,0.75) 30%, rgba(255,255,255,0) 75%);display:flex;align-items:center;justify-content:center;">
           <img src="me black.gif" alt="Jeffrey F. S. Neumann" width="90" style="opacity:0.85;">
@@ -306,7 +342,8 @@ footer .hover\:border-international-orange::after{display:none}
           <p style="font-family:Inter,sans-serif;font-size:13px;line-height:1.65;color:#575757;">The personal archive of Jeffrey F. S. Neumann — 1,084 works spanning five decades. Collage, sculpture, photography.</p>
         </div>
       </div>
-      <div style="padding-top:20px;">
+      <!-- Col 2: Explore -->
+      <div style="padding-top:20px;padding-bottom:20px;align-self:start;">
         <h4 class="font-label-caps text-label-caps mb-5 text-deep-ink">EXPLORE</h4>
         <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;">
           <li><a class="font-nav-link text-nav-link text-archive-gray hover:text-international-orange transition-colors" href="archive.html">Complete Archive</a></li>
@@ -314,7 +351,8 @@ footer .hover\:border-international-orange::after{display:none}
           <li><a class="font-nav-link text-nav-link text-archive-gray hover:text-international-orange transition-colors" href="lost.html">Lost Works</a></li>
         </ul>
       </div>
-      <div style="padding-top:20px;">
+      <!-- Col 3: Resources -->
+      <div style="padding-top:20px;padding-bottom:20px;align-self:start;">
         <h4 class="font-label-caps text-label-caps mb-5 text-deep-ink">RESOURCES</h4>
         <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;">
           <li><a class="font-nav-link text-nav-link text-archive-gray hover:text-international-orange transition-colors" href="chromatic.html">Chromatic River</a></li>
@@ -322,11 +360,13 @@ footer .hover\:border-international-orange::after{display:none}
           <li><a class="font-nav-link text-nav-link text-archive-gray hover:text-international-orange transition-colors" href="companion.html">AI Companion</a></li>
         </ul>
       </div>
-      <div style="padding-top:20px;">
+      <!-- Col 4: Contact + Social -->
+      <div style="padding-top:20px;padding-bottom:20px;align-self:start;">
         <h4 class="font-label-caps text-label-caps mb-5 text-deep-ink">CONTACT</h4>
-        <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-all" style="display:inline-block;border-bottom:1px solid #0B0B0B;padding-bottom:2px;" href="mailto:jeff@jfsn.com">jeff@jfsn.com</a>
+        <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange hover:border-international-orange transition-all" style="display:inline-block;border-bottom:1px solid #0B0B0B;padding-bottom:2px;" href="mailto:jeff@jfsn.com">jeff@jfsn.com</a>
       </div>
     </div>
+    <!-- Mobile: stacked layout -->
     <div class="md:hidden grid grid-cols-2 gap-8">
       <div style="grid-column:1/-1;display:flex;align-items:flex-start;gap:16px;">
         <img src="me black.gif" alt="Jeffrey F. S. Neumann" width="70" style="flex-shrink:0;opacity:0.85;">
