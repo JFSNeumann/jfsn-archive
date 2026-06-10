@@ -3,7 +3,7 @@
 
 ## Last commit
 dc15fff1 — CURRENT_STATE.md: stamp B2 backup timestamp 2026-06-09
-*(session 23 changes not yet committed — deploy pending)*
+*(deployed 2026-06-09)*
 
 ## What was done this session (2026-06-09 — session 23)
 

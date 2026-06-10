@@ -17,6 +17,8 @@ If a quote is uncertain, mark it `[approximate]`. If it is verbatim, leave it un
 
 ## 1. Origins — Art School and Early Ambition
 
+**Birth year confirmed: 1955.** Born Cleveland, Ohio.
+
 Jeff attended the Cleveland Institute of Art. He went intending to become a fine artist. That was the plan.
 
 At CIA, he encountered materials that became lasting obsessions: prism paper (holographic, iridescent, surface that shifts with light), vacuum-formed plastic, old fluorescent and CFL tubes, sheets of glass. Rauschenberg was on the walls — combines built from anything. The idea that found material was as valid as paint. That permission never left.

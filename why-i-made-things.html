@@ -133,6 +133,23 @@
   @media (prefers-reduced-motion: reduce) {
     .sidebar-link-list a { transition: none; }
   }
+  .toc-link {
+    font-family: Inter, sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: #575757;
+    text-decoration: none;
+    display: block;
+    padding: 3px 0 3px 10px;
+    border-left: 2px solid transparent;
+    line-height: 1.4;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .toc-link:hover, .toc-link.toc-active {
+    color: #FF6600;
+    border-left-color: #FF6600;
+  }
+  @media (prefers-reduced-motion: reduce) { .toc-link { transition: none; } }
 </style>
 </head>
 <body class="bg-background text-deep-ink font-body-md" data-page-label="WHY I MADE THINGS">
@@ -197,7 +214,7 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
     </div>
     <!-- Portrait -->
     <div style="padding:16px 24px;">
-      <img src="me black.gif" alt="Jeffrey F. S. Neumann" style="display:block;width:50%;margin:0 auto;opacity:0.85;">
+      <img src="me black.gif" alt="Jeffrey F. S. Neumann" style="display:block;width:30%;margin:0 auto;opacity:0.85;">
     </div>
     <!-- Search shortcut -->
     <div style="padding:0 24px 16px;border-top:1px solid #c4c7c7;">
@@ -264,11 +281,31 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
   </div>
 
   <!-- Two-column body -->
-  <div class="px-margin-desktop py-20 max-w-container-max mx-auto">
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-16">
+  <div class="px-margin-mobile md:px-margin-desktop py-20 max-w-container-max mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
 
       <!-- Main content -->
       <div class="md:col-span-7">
+
+        <!-- Section 0: In His Own Words (confirmed full draft) -->
+        <section class="essay-section" id="in-his-own-words" style="padding-top:0;margin-top:0;border-top:none;">
+          <span class="section-label">In His Own Words</span>
+          <h2 class="essay-heading">What Making Things Gave Me</h2>
+          <div class="prose">
+            <p>I went to art school expecting to become a fine artist. That was the plan. I had an eye for it — I knew that much about myself, even then. Rauschenberg was on the walls. Found material. The idea that anything could be the thing. That permission never left me.</p>
+            <p>But life went a different direction. Career. Marriage. Children. Bills. The ordinary weight of a life that needed to be lived. I worked as a designer and creative director for decades, which is its own kind of making — but not the same kind. The studio work moved to the edges. Evenings. Weekends. Whatever was left over after everything else got done.</p>
+            <p>I kept going because stopping wasn't something I seriously considered.</p>
+            <p>Art supplies were always too expensive, so I used what I could find. CDs. Computer floppies. Keyboards. Prism paper from school that I never stopped loving. Things that still had a life left in them. I wasn't trying to be resourceful. It just seemed right that discarded things should become something else.</p>
+            <p>Somewhere along the way I realized that Rauschenberg had already been where I was going. That the territory I thought was mine had already been explored. This took years to fully understand — it wasn't a single moment. And then I kept going anyway.</p>
+            <p>I kept going because the making itself was the point.</p>
+            <p>Not the recognition. Not the sales. Not whatever you were supposed to want. Those were things I thought I was supposed to want, and maybe for a while I did. But what I actually wanted was the thing itself — the next piece, the next problem, the return to a piece that wasn't finished yet. Nothing ever really finished. That was part of it too. The option to go back was always open.</p>
+            <p>After retirement, I started wondering whether any of it mattered. Whether anyone would want to see it. That wondering led to this archive — 1,084 works, fifty years, as much of it as I could save. I built it for my daughters' families. For the grandchildren who are now making things alongside me, whose drawings end up in pieces until I can't tell where they stop and I start.</p>
+            <p>That's the part that surprised me. I thought I was building a record of the past. But the grandchildren made it something else — evidence that making things doesn't end, it just changes hands.</p>
+            <p>What making things gave me is harder to say than I expected. Not success. Not recognition. Something more like a continuous private conversation with myself about what I was seeing and thinking and feeling, conducted through materials instead of words.</p>
+            <p>Fifty years of that conversation. And it's not finished yet.</p>
+          </div>
+          <p class="source-note">Drawn from oral history sessions, June 2026. Confirmed by Jeff as accurate in substance.</p>
+        </section>
 
         <!-- Section 1: What Making Things Gave Me -->
         <section class="essay-section" id="what-making-things-gave-me">
@@ -295,6 +332,19 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
             <p>Making things was not a hobby or a side project. It was how he understood himself.</p>
           </div>
           <p class="source-note">Quote verbatim from oral history session, June 2026. Context is paraphrase — confirmed in substance.</p>
+        </section>
+
+        <!-- Section 2b: The Doubt -->
+        <section class="essay-section" id="the-doubt">
+          <span class="section-label">The Doubt</span>
+          <h2 class="essay-heading">Getting Old</h2>
+          <div class="prose">
+            <p>Since retiring, Jeff has been wondering whether it was worth it. Whether anyone cares or wants to see the work.</p>
+            <blockquote><p>"Getting old / no one really cares or wants to see it."</p></blockquote>
+            <p>This is not despair. It is an honest accounting. It sits alongside the fact that he is still making things most days.</p>
+            <p>The archive emerged from this moment — looking back across fifty years of making and deciding the surviving work deserved preservation. Not because the world was waiting. Because it was the right thing to do.</p>
+          </div>
+          <p class="source-note">Quote verbatim from oral history session, June 2026.</p>
         </section>
 
         <!-- Section 3: Found Materials -->
@@ -371,6 +421,21 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
       <div class="md:col-span-4 md:col-start-9">
         <div style="position:sticky;top:96px;">
 
+          <!-- On This Page TOC -->
+          <nav aria-label="On this page" style="margin-bottom:24px;border-bottom:1px solid #c4c7c7;padding-bottom:24px;">
+            <span style="display:block;font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#0B0B0B;margin-bottom:12px;">On This Page</span>
+            <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:2px;" id="toc-list">
+              <li><a href="#in-his-own-words" class="toc-link">What Making Things Gave Me</a></li>
+              <li><a href="#what-making-things-gave-me" class="toc-link">Satisfaction</a></li>
+              <li><a href="#identity" class="toc-link">Always a Maker</a></li>
+              <li><a href="#the-doubt" class="toc-link">Getting Old</a></li>
+              <li><a href="#found-materials" class="toc-link">Something That Still Had a Life Left in It</a></li>
+              <li><a href="#the-loss" class="toc-link">Sad. Enough.</a></li>
+              <li><a href="#the-grandchildren" class="toc-link">Getting Hard to Tell</a></li>
+              <li><a href="#kept-going" class="toc-link">Kept Going</a></li>
+            </ul>
+          </nav>
+
           <!-- About this page -->
           <div style="padding:20px;border:1px solid #c4c7c7;margin-bottom:24px;">
             <span style="display:block;font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#0B0B0B;margin-bottom:10px;">About This Page</span>
@@ -405,6 +470,23 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
     </div>
   </div>
 
+<script>
+(function(){
+  var links = document.querySelectorAll('#toc-list .toc-link');
+  if (!links.length) return;
+  var sections = Array.from(links).map(function(l){ return document.querySelector(l.getAttribute('href')); }).filter(Boolean);
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) {
+        links.forEach(function(l){ l.classList.remove('toc-active'); });
+        var a = document.querySelector('#toc-list .toc-link[href="#'+e.target.id+'"]');
+        if (a) a.classList.add('toc-active');
+      }
+    });
+  }, { rootMargin: '-10% 0px -75% 0px' });
+  sections.forEach(function(s){ obs.observe(s); });
+})();
+</script>
 </main>
 
 <!-- FOOTER:START -->

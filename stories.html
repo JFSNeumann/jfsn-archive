@@ -133,6 +133,23 @@
   @media (prefers-reduced-motion: reduce) {
     .sidebar-link-list a { transition: none; }
   }
+  .toc-link {
+    font-family: Inter, sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: #575757;
+    text-decoration: none;
+    display: block;
+    padding: 3px 0 3px 10px;
+    border-left: 2px solid transparent;
+    line-height: 1.4;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .toc-link:hover, .toc-link.toc-active {
+    color: #FF6600;
+    border-left-color: #FF6600;
+  }
+  @media (prefers-reduced-motion: reduce) { .toc-link { transition: none; } }
 </style>
 </head>
 <body class="bg-background text-deep-ink font-body-md" data-page-label="STORIES">
@@ -197,7 +214,7 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
     </div>
     <!-- Portrait -->
     <div style="padding:16px 24px;">
-      <img src="me black.gif" alt="Jeffrey F. S. Neumann" style="display:block;width:50%;margin:0 auto;opacity:0.85;">
+      <img src="me black.gif" alt="Jeffrey F. S. Neumann" style="display:block;width:30%;margin:0 auto;opacity:0.85;">
     </div>
     <!-- Search shortcut -->
     <div style="padding:0 24px 16px;border-top:1px solid #c4c7c7;">
@@ -264,8 +281,8 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
   </div>
 
   <!-- Two-column body -->
-  <div class="px-margin-desktop py-20 max-w-container-max mx-auto">
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-16">
+  <div class="px-margin-mobile md:px-margin-desktop py-20 max-w-container-max mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
 
       <!-- Main content: stories -->
       <div class="md:col-span-7">
@@ -460,6 +477,22 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
       <div class="md:col-span-4 md:col-start-9">
         <div style="position:sticky;top:96px;">
 
+          <!-- On This Page TOC -->
+          <nav aria-label="On this page" style="margin-bottom:24px;border-bottom:1px solid #c4c7c7;padding-bottom:24px;">
+            <span style="display:block;font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#0B0B0B;margin-bottom:12px;">On This Page</span>
+            <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:2px;" id="toc-list">
+              <li><a href="#six-feet-away" class="toc-link">Six Feet Away</a></li>
+              <li><a href="#cia-sculpture" class="toc-link">The CIA Sculpture</a></li>
+              <li><a href="#ha-ha-ha" class="toc-link">Ha Ha Ha</a></li>
+              <li><a href="#rauschenberg" class="toc-link">What Rauschenberg Already Did</a></li>
+              <li><a href="#found-materials" class="toc-link">Something That Still Had a Life Left in It</a></li>
+              <li><a href="#getting-hard-to-tell" class="toc-link">Getting Hard to Tell</a></li>
+              <li><a href="#archive-build" class="toc-link">Took a Fucking Long Time</a></li>
+              <li><a href="#kiefer" class="toc-link">Where Did He Get the Money</a></li>
+              <li><a href="#what-he-wants-a-grandchild-to-know" class="toc-link">What He Wants a Grandchild to Know</a></li>
+            </ul>
+          </nav>
+
           <!-- About these stories -->
           <div style="padding:20px;border:1px solid #c4c7c7;margin-bottom:24px;">
             <span style="display:block;font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#0B0B0B;margin-bottom:10px;">About These Stories</span>
@@ -495,6 +528,23 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
     </div>
   </div>
 
+<script>
+(function(){
+  var links = document.querySelectorAll('#toc-list .toc-link');
+  if (!links.length) return;
+  var sections = Array.from(links).map(function(l){ return document.querySelector(l.getAttribute('href')); }).filter(Boolean);
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) {
+        links.forEach(function(l){ l.classList.remove('toc-active'); });
+        var a = document.querySelector('#toc-list .toc-link[href="#'+e.target.id+'"]');
+        if (a) a.classList.add('toc-active');
+      }
+    });
+  }, { rootMargin: '-10% 0px -75% 0px' });
+  sections.forEach(function(s){ obs.observe(s); });
+})();
+</script>
 </main>
 
 <!-- FOOTER:START -->

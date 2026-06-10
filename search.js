@@ -106,7 +106,7 @@
       <div id="sse-kb-body">
         <div class="sse-kb-section">
           <p class="sse-kb-section-label">Global</p>
-          <div class="sse-kb-row"><span class="sse-kb-desc">Open search</span><span class="sse-kb-keys"><kbd>⌘K</kbd> <span class="sse-kb-or">or</span> <kbd>Ctrl K</kbd></span></div>
+          <div class="sse-kb-row"><span class="sse-kb-desc">Open search</span><span class="sse-kb-keys"><kbd>⌘K</kbd> <span class="sse-kb-or">or</span> <kbd>Ctrl K</kbd> <span class="sse-kb-or">or</span> <kbd>/</kbd></span></div>
           <div class="sse-kb-row"><span class="sse-kb-desc">Show shortcuts</span><span class="sse-kb-keys"><kbd>?</kbd></span></div>
           <div class="sse-kb-row"><span class="sse-kb-desc">Close overlay</span><span class="sse-kb-keys"><kbd>Esc</kbd></span></div>
         </div>
@@ -129,7 +129,7 @@
   const existingBtn = document.querySelector('button[aria-label="Search"]');
   if (existingBtn) {
     existingBtn.addEventListener('click', open);
-    existingBtn.title = 'Search (⌘K)';
+    existingBtn.title = 'Search (⌘K or /)';
   }
   // Legacy: old nav.nav pattern
   const nav = document.querySelector('nav.nav');
@@ -191,6 +191,13 @@
       e.preventDefault();
       overlay.hidden ? open() : close();
       return;
+    }
+
+    // / — open search (when no input is focused)
+    if (e.key === '/') {
+      const tag = e.target.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+      if (overlay.hidden) { e.preventDefault(); open(); return; }
     }
 
     // ? — toggle shortcuts help (when search is closed and no input is focused)

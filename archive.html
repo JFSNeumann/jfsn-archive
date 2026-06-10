@@ -49,6 +49,29 @@
             transform: rotate(45deg);
         }
         #work-count { font-variant-numeric: tabular-nums; }
+        @media (max-width: 767px) { #work-count-label { display: none; } }
+        .filter-chip {
+          display: inline-flex; align-items: center; gap: 6px;
+          font-family: Inter, sans-serif; font-size: 11px; font-weight: 500;
+          letter-spacing: 0.08em; text-transform: uppercase;
+          color: #0B0B0B; background: #ebe8e2;
+          border: 1px solid #c4c7c7; padding: 4px 10px 4px 12px;
+          cursor: default; white-space: nowrap;
+        }
+        .filter-chip button {
+          background: none; border: none; cursor: pointer; padding: 0;
+          color: #575757; font-size: 14px; line-height: 1;
+          display: flex; align-items: center;
+        }
+        .filter-chip button:hover { color: #FF6600; }
+        .filter-chip-clear {
+          font-family: Inter, sans-serif; font-size: 11px; font-weight: 500;
+          letter-spacing: 0.08em; text-transform: uppercase;
+          color: #575757; background: none; border: none;
+          cursor: pointer; padding: 4px 0; text-decoration: underline;
+          text-underline-offset: 3px;
+        }
+        .filter-chip-clear:hover { color: #FF6600; }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         /* Archive card micro-interactions */
@@ -150,7 +173,7 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
     </div>
     <!-- Portrait -->
     <div style="padding:16px 24px;">
-      <img src="me black.gif" alt="Jeffrey F. S. Neumann" style="display:block;width:50%;margin:0 auto;opacity:0.85;">
+      <img src="me black.gif" alt="Jeffrey F. S. Neumann" style="display:block;width:30%;margin:0 auto;opacity:0.85;">
     </div>
     <!-- Search shortcut -->
     <div style="padding:0 24px 16px;border-top:1px solid #c4c7c7;">
@@ -207,15 +230,15 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
 <main id="main" class="pt-[100px] pb-xl px-margin-mobile md:px-margin-desktop max-w-[1200px] mx-auto">
 
   <!-- Page Header -->
-  <header class="mb-lg border-b border-outline-variant pb-md flex justify-between items-end">
+  <header class="mb-md md:mb-lg border-b border-outline-variant pb-md flex justify-between items-end">
     <div>
       <h1 class="font-label-caps text-label-caps tracking-widest mb-2">THE ARCHIVE</h1>
       <p class="font-label-md text-label-md text-secondary tracking-widest uppercase">
-        <span id="work-count">1,084</span> CATALOGED WORKS
+        <span id="work-count">1,084</span> <span id="work-count-label">CATALOGED WORKS</span>
       </p>
     </div>
     <div class="flex items-center gap-2 pb-1">
-      <label for="sort-select" class="font-label-md text-label-md text-secondary uppercase tracking-widest whitespace-nowrap">Sort:</label>
+      <label for="sort-select" class="hidden md:inline font-label-md text-label-md text-secondary uppercase tracking-widest whitespace-nowrap">Sort:</label>
       <select id="sort-select" class="font-label-md text-label-md uppercase tracking-widest bg-background border border-outline-variant px-2 py-1 text-on-surface cursor-pointer" style="outline:none;">
         <option value="id_desc">Recently Added</option>
         <option value="id_asc">Default</option>
@@ -341,6 +364,9 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
 
     <!-- Grid -->
     <div class="flex-grow min-w-0">
+      <!-- Active filter chips -->
+      <div id="filter-chips" style="display:none;margin-bottom:20px;flex-wrap:wrap;align-items:center;gap:8px;"></div>
+
       <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-px sm:gap-x-gutter sm:gap-y-lg bg-deep-ink sm:bg-transparent" id="works-grid"></div>
 
       <p id="empty-state" class="hidden py-xl text-center font-label-lg text-label-lg text-secondary uppercase tracking-widest">
@@ -463,6 +489,8 @@ const grid = document.getElementById('works-grid');
 const loadMoreBtn = document.getElementById('load-more');
 const emptyState = document.getElementById('empty-state');
 const workCount = document.getElementById('work-count');
+const workCountLabel = document.getElementById('work-count-label');
+const filterChips = document.getElementById('filter-chips');
 const clearBtn = document.getElementById('clear-filters');
 
 function typeLabel(t) {
@@ -522,6 +550,27 @@ function applyFilters() {
     mobileFilterLabel.textContent = n > 0 ? 'FILTER · ' + n : 'FILTER';
   }
 
+  // Render filter chips
+  function removeFilter(type, val) {
+    const cb = document.querySelector(`#filter-${type} input[value="${CSS.escape(val)}"]`);
+    if (cb) { cb.checked = false; applyFilters(); }
+  }
+  const medLabels = { collage:'Collage', photograph:'Photography', sculpture:'Sculpture', painting:'Painting' };
+  const chipItems = [
+    ...mediums.map(v => ({ label: medLabels[v] || v, type:'medium', val:v })),
+    ...decades.map(v => ({ label: v, type:'decade', val:v })),
+    ...series.map(v  => ({ label: v, type:'series', val:v }))
+  ];
+  if (chipItems.length) {
+    filterChips.style.display = 'flex';
+    filterChips.innerHTML = chipItems.map(c =>
+      `<span class="filter-chip">${c.label}<button aria-label="Remove ${c.label} filter" onclick="(function(){var cb=document.querySelector('#filter-${c.type} input[value=\\'${c.val}\\']');if(cb){cb.checked=false;applyFilters();}})()">×</button></span>`
+    ).join('') + (chipItems.length > 1 ? `<button class="filter-chip-clear" onclick="document.querySelectorAll('.custom-checkbox:checked').forEach(function(cb){cb.checked=false;});applyFilters();">Clear all</button>` : '');
+  } else {
+    filterChips.style.display = 'none';
+    filterChips.innerHTML = '';
+  }
+
   filtered = sortWorks(allWorks.filter(w => {
     if (mediums.length && !mediums.includes(w.work_type)) return false;
     if (decades.length) {
@@ -544,6 +593,7 @@ function renderPage() {
 
   const total = filtered.length;
   workCount.textContent = total.toLocaleString();
+  workCountLabel.textContent = total === allWorks.length ? 'CATALOGED WORKS' : 'WORKS';
   emptyState.classList.toggle('hidden', total > 0);
   loadMoreBtn.classList.toggle('hidden', page * PAGE_SIZE >= total);
 }

@@ -110,7 +110,7 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
     </div>
     <!-- Portrait -->
     <div style="padding:16px 24px;">
-      <img src="me black.gif" alt="Jeffrey F. S. Neumann" style="display:block;width:50%;margin:0 auto;opacity:0.85;">
+      <img src="me black.gif" alt="Jeffrey F. S. Neumann" style="display:block;width:30%;margin:0 auto;opacity:0.85;">
     </div>
     <!-- Search shortcut -->
     <div style="padding:0 24px 16px;border-top:1px solid #c4c7c7;">
@@ -197,6 +197,11 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
         <div class="flex flex-col gap-sm" id="meta-rows">
           <!-- populated by JS -->
         </div>
+        <button id="copy-link-btn" onclick="(function(btn){navigator.clipboard.writeText(window.location.href).then(function(){var orig=btn.textContent;btn.textContent='COPIED';setTimeout(function(){btn.textContent=orig;},1800);});})(this)"
+          style="margin-top:8px;background:none;border:none;cursor:pointer;padding:0;font-family:Inter,sans-serif;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#c4c7c7;text-align:left;transition:color 0.2s ease;"
+          onmouseover="this.style.color='#FF6600'" onmouseout="this.style.color='#c4c7c7'">
+          COPY LINK
+        </button>
       </aside>
 
     </div>
@@ -218,6 +223,7 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
         <span class="material-symbols-outlined text-deep-ink group-hover:text-international-orange ml-sm shrink-0">arrow_forward</span>
       </a>
     </nav>
+    <p class="hidden md:block text-center" style="font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.1em;color:#c4c7c7;padding:6px 0;">USE ← → KEYS TO BROWSE</p>
 
   </div>
 
