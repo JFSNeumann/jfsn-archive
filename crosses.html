@@ -178,6 +178,11 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
 .jfsn-wordmark::before{content:'Jeffrey Francis Stanley Neumann';position:absolute;top:calc(100% + 10px);left:0;white-space:nowrap;font-family:'Inter',sans-serif;font-size:11px;font-weight:400;letter-spacing:0.06em;color:#575757;background:#fcf9f3;border:1px solid #c4c7c7;padding:4px 8px;pointer-events:none;opacity:0;transform:translateY(-4px);transition:opacity 0.15s ease,transform 0.15s ease}
 .jfsn-wordmark:hover::before{opacity:1;transform:translateY(0)}
 @media(prefers-reduced-motion:reduce){.jfsn-wordmark::before{transition:none}}
+/* Scroll: hide on down, show on up, blur when scrolled */
+header{transition:transform 0.3s ease,background-color 0.2s ease}
+header.header-scrolled{background-color:rgba(252,249,243,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+header.header-hidden{transform:translateY(-100%)}
+@media(prefers-reduced-motion:reduce){header{transition:background-color 0.2s ease}}
 /* Mobile drawer — underline draw + active state */
 #mobile-menu-drawer a{position:relative;overflow:hidden}
 #mobile-menu-drawer a::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;background:#FF6600;transform:scaleX(0);transform-origin:left center;transition:transform 0.2s ease}
@@ -199,7 +204,10 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
     </nav>
   </div>
   <div class="flex items-center gap-4">
-    <button class="material-symbols-outlined text-deep-ink hover:text-international-orange transition-colors" style="padding:10px;" aria-label="Search" id="nav-search-btn">search</button>
+    <button class="flex items-center gap-1.5 text-deep-ink hover:text-international-orange transition-colors" style="padding:10px;" aria-label="Search" id="nav-search-btn">
+      <span class="material-symbols-outlined" style="font-size:24px;line-height:1;">search</span>
+      <span class="hidden md:inline" style="font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.05em;color:#575757;border:1px solid #c4c7c7;padding:1px 5px;pointer-events:none;">⌘K</span>
+    </button>
     <button class="md:hidden material-symbols-outlined text-deep-ink" style="padding:10px;" aria-label="Open menu" id="nav-menu-btn">menu</button>
   </div>
 </header>
@@ -278,6 +286,33 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
 </script>
 
 <script src="search.js" defer></script>
+<script>
+(function(){
+  var header = document.querySelector('header');
+  if (!header) return;
+  var lastY = window.scrollY;
+  var menuOpen = false;
+  var openBtn = document.getElementById('nav-menu-btn');
+  var closeBtn = document.getElementById('nav-menu-close');
+  var backdrop = document.getElementById('mobile-menu-backdrop');
+  if (openBtn)  openBtn.addEventListener('click',  function(){ menuOpen = true; });
+  if (closeBtn) closeBtn.addEventListener('click', function(){ menuOpen = false; });
+  if (backdrop) backdrop.addEventListener('click', function(){ menuOpen = false; });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') menuOpen = false; });
+  window.addEventListener('scroll', function(){
+    var y = window.scrollY;
+    header.classList.toggle('header-scrolled', y > 8);
+    if (!menuOpen) {
+      if (y > lastY && y > 80) {
+        header.classList.add('header-hidden');
+      } else {
+        header.classList.remove('header-hidden');
+      }
+    }
+    lastY = y;
+  }, { passive: true });
+})();
+</script>
 <!-- NAV:END -->
 
 <main id="main" class="pt-16">
@@ -386,18 +421,22 @@ footer a::after{content:'';position:absolute;bottom:-1px;left:0;width:100%;heigh
 footer a:hover::after{transform:scaleX(1)}
 footer .hover\:border-international-orange::after{display:none}
 @media(prefers-reduced-motion:reduce){footer a::after{transition:none}}
+#back-to-top{background:none;border:none;cursor:pointer;font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;display:flex;align-items:center;gap:5px;padding:0;transition:color 0.15s ease}
+#back-to-top:hover{color:#0B0B0B}
+#back-to-top::after{display:none}
 </style>
 <footer class="bg-surface-container-high pt-20 pb-28 px-margin-desktop border-t border-outline-variant">
   <div class="max-w-container-max mx-auto">
     <div class="hidden md:grid" style="grid-template-columns:2.2fr 1fr 1fr 1.3fr;gap:32px;align-items:start;">
-      <!-- Col 1: portrait + identity -->
-      <div style="display:flex;align-items:center;gap:20px;padding-top:70px;">
+      <!-- Col 1: portrait + identity + contact -->
+      <div style="display:flex;align-items:flex-start;gap:20px;padding-top:56px;">
         <div style="flex-shrink:0;width:88px;height:88px;border-radius:50%;background:radial-gradient(circle, rgba(255,255,255,0.75) 30%, rgba(255,255,255,0) 75%);display:flex;align-items:center;justify-content:center;">
           <img src="me black.gif" alt="Jeffrey F. S. Neumann" width="72" style="opacity:0.85;">
         </div>
         <div>
           <h3 style="font-family:Inter,sans-serif;font-size:18px;font-weight:600;letter-spacing:-0.02em;color:#0B0B0B;margin-bottom:10px;">JFSN</h3>
-          <p style="font-family:Inter,sans-serif;font-size:13px;line-height:1.65;color:#575757;">The personal archive of Jeffrey F. S. Neumann — 1,084 works spanning five decades. Collage, sculpture, photography.</p>
+          <p style="font-family:Inter,sans-serif;font-size:13px;line-height:1.65;color:#575757;margin-bottom:14px;">The personal archive of Jeffrey F. S. Neumann — 1,084 works spanning five decades. Collage, sculpture, photography.</p>
+          <a class="font-nav-link text-nav-link text-archive-gray hover:text-international-orange transition-colors" style="display:inline-block;border-bottom:1px solid #c4c7c7;padding-bottom:2px;" href="mailto:jeff@jfsn.com">jeff@jfsn.com</a>
         </div>
       </div>
       <!-- Col 2: Explore -->
@@ -423,10 +462,15 @@ footer .hover\:border-international-orange::after{display:none}
           <li><a class="font-nav-link text-nav-link text-archive-gray hover:text-international-orange transition-colors" href="companion.html">AI Companion</a></li>
         </ul>
       </div>
-      <!-- Col 4: Contact + Social -->
+      <!-- Col 4: About this site -->
       <div style="padding-top:56px;">
-        <h4 class="font-label-caps text-label-caps mb-5 text-deep-ink">CONTACT</h4>
-        <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange hover:border-international-orange transition-all" style="display:inline-block;border-bottom:1px solid #0B0B0B;padding-bottom:2px;" href="mailto:jeff@jfsn.com">jeff@jfsn.com</a>
+        <h4 class="font-label-caps text-label-caps mb-5 text-deep-ink">ABOUT</h4>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;">
+          <li><a class="font-nav-link text-nav-link text-archive-gray hover:text-international-orange transition-colors" href="about.html">About Jeff</a></li>
+          <li><a class="font-nav-link text-nav-link text-archive-gray hover:text-international-orange transition-colors" href="start-here.html">Start Here</a></li>
+          <li><a class="font-nav-link text-nav-link text-archive-gray hover:text-international-orange transition-colors" href="api.html">Open API</a></li>
+          <li><a class="font-nav-link text-nav-link text-archive-gray hover:text-international-orange transition-colors" href="privacy.html">Privacy</a></li>
+        </ul>
       </div>
     </div>
     <!-- Mobile: stacked layout -->
@@ -435,7 +479,8 @@ footer .hover\:border-international-orange::after{display:none}
         <img src="me black.gif" alt="Jeffrey F. S. Neumann" width="70" style="flex-shrink:0;opacity:0.85;">
         <div>
           <h3 style="font-family:Inter,sans-serif;font-size:18px;font-weight:600;letter-spacing:-0.02em;color:#0B0B0B;margin-bottom:8px;">JFSN</h3>
-          <p style="font-family:Inter,sans-serif;font-size:13px;line-height:1.65;color:#575757;">The personal archive of Jeffrey F. S. Neumann — 1,084 works spanning five decades.</p>
+          <p style="font-family:Inter,sans-serif;font-size:13px;line-height:1.65;color:#575757;margin-bottom:10px;">The personal archive of Jeffrey F. S. Neumann — 1,084 works spanning five decades.</p>
+          <a class="font-nav-link text-nav-link text-archive-gray" style="display:inline-block;border-bottom:1px solid #c4c7c7;padding-bottom:2px;" href="mailto:jeff@jfsn.com">jeff@jfsn.com</a>
         </div>
       </div>
       <div>
@@ -459,16 +504,25 @@ footer .hover\:border-international-orange::after{display:none}
           <li><a class="font-nav-link text-nav-link text-archive-gray" href="companion.html">AI Companion</a></li>
         </ul>
       </div>
-      <div style="grid-column:1/-1;">
-        <a class="font-nav-link text-nav-link text-deep-ink" style="display:inline-block;border-bottom:1px solid #0B0B0B;padding-bottom:2px;" href="mailto:jeff@jfsn.com">jeff@jfsn.com</a>
-      </div>
     </div>
   </div>
   <div class="mt-16 pt-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
-    <p class="font-label-caps text-[10px] text-archive-gray">© 2026 JEFFREY F. S. NEUMANN. ALL RIGHTS RESERVED.</p>
-    <div class="flex gap-8"><a class="font-label-caps text-[10px] text-archive-gray hover:text-deep-ink" href="privacy.html">PRIVACY</a></div>
+    <p class="font-label-caps text-[10px] text-archive-gray">© <span id="footer-year">2026</span> JEFFREY F. S. NEUMANN. ALL RIGHTS RESERVED.</p>
+    <div class="flex items-center gap-8">
+      <button id="back-to-top" aria-label="Back to top">↑ BACK TO TOP</button>
+      <a class="font-label-caps text-[10px] text-archive-gray hover:text-deep-ink" href="privacy.html">PRIVACY</a>
+    </div>
   </div>
 </footer>
+<script>
+document.getElementById('footer-year').textContent = new Date().getFullYear();
+(function(){
+  var btn = document.getElementById('back-to-top');
+  if (btn) btn.addEventListener('click', function(){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+})();
+</script>
 <script data-goatcounter="https://jfsn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
 <!-- FOOTER:END -->

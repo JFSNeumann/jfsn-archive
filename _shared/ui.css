@@ -95,6 +95,7 @@ header nav a.nav-underline-active::after {
   transition: opacity 0.3s ease;
   pointer-events: none;
   z-index: 1;
+  border-radius: inherit;
 }
 
 .thumb__link:hover::after,

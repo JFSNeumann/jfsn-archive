@@ -5,7 +5,47 @@
 dc15fff1 — CURRENT_STATE.md: stamp B2 backup timestamp 2026-06-09
 *(deployed 2026-06-09)*
 
-## What was done this session (2026-06-09 — session 23)
+## What was done this session (2026-06-10 — session 24)
+
+### UX/UI improvements — best-in-class pass
+
+**Two-column layout fix (stories.html, why-i-made-things.html, start-here.html):**
+- `gap-16` → `gap-8` on all three two-column pages (was causing overflow off-screen left at tablet widths)
+- Left column: `px-margin-desktop` → `px-margin-mobile md:px-margin-desktop` on body wrapper
+
+**Table of contents (stories.html, why-i-made-things.html):**
+- TOC nav added to sidebar with section links and IntersectionObserver active tracking
+- Orange left-bar indicator on active section; `rootMargin: '-10% 0px -75% 0px'`
+
+**Search keyboard shortcut:**
+- `/` key now opens search overlay (in addition to existing `⌘K` / `Ctrl K`)
+- Help modal and tooltip updated to show all three shortcuts
+
+**Archive filter chips:**
+- Active filters render as dismissible chips below filter bar
+- Each chip has individual × button; "Clear all" appears when multiple filters active
+- Work count label shows "CATALOGED WORKS" at rest, "WORKS" when filtered
+- Sort label hidden on mobile; header margin reduced on mobile
+
+**Artwork pages:**
+- Keyboard hint `USE ← → KEYS TO BROWSE` below prev/next bar (desktop only, 10px Inter gray)
+- `COPY LINK` button below metadata — copies URL, flashes "COPIED" for 1.8s
+
+**Series-index hover states:**
+- Already complete: `group-hover:text-international-orange` on title, `group-hover:opacity-100` on arrow, kinetic border-draw via `::before`/`::after` pseudo-elements. No changes needed.
+
+**Files modified:**
+- `stories.html` — gap-8 fix, padding fix, TOC added
+- `why-i-made-things.html` — gap-8 fix, padding fix, TOC added
+- `start-here.html` — gap-8 fix, padding fix
+- `search.js` — `/` keyboard shortcut, tooltip update, modal update
+- `archive.html` — filter chips, work count label, mobile sort label hidden, mobile header spacing
+- `artwork.html` — keyboard hint, copy link button
+- `sw.js` — CACHE_V bumped to `jfsn-20260610180000`
+
+**Deployed:** 2026-06-10 via end-session.sh + JFSN.app
+
+## What was done last session (2026-06-09 — session 23)
 
 ### Image hover system rebuilt + CSS cleanup across all pages
 

@@ -1,5 +1,5 @@
 # JFSN — Improvement List
-**Updated:** 2026-06-09 (session 21)
+**Updated:** 2026-06-10 (session 24)
 
 A living list. Add to it. Cross things off. This is the backlog.
 
@@ -31,12 +31,15 @@ A living list. Add to it. Cross things off. This is the backlog.
 - [ ] **`favorites.html`** — still fetches full `catalog.json` (898KB). Adding `favorite` to `LITE_FIELDS` would let it use `catalog-lite.json` (701KB). Low priority.
 - [ ] **HSTS** — uncomment one line in `.htaccess` once SSL confirmed active in HostGator cPanel.
 
-### Physical
-- [ ] **Print run of 12** — 12 prints of 12 works, numbered. Not a code problem.
 
 ---
 
 ## ✅ Completed (recent)
+- [x] ~~**Two-column layout overflow fix**~~ — gap-16→gap-8, mobile padding fix on stories/why-i-made-things/start-here (session 24)
+- [x] ~~**TOC on long pages**~~ — stories.html + why-i-made-things.html sidebar TOC with active tracking (session 24)
+- [x] ~~**Search `/` shortcut**~~ — opens search overlay, modal + tooltip updated (session 24)
+- [x] ~~**Archive filter chips**~~ — dismissible chips, clear all, count label, mobile fixes (session 24)
+- [x] ~~**Artwork keyboard hint + copy link**~~ — keyboard hint below nav, copy link button (session 24)
 - [x] ~~**Image hover system**~~ — saturation overlay on all artwork thumbnail pages; orange border image-only; Inter 600 captions (session 23)
 - [x] ~~**Archive title-orange**~~ — was missing; added to archive.html h4 (session 23)
 - [x] ~~**series.html missing ui.css**~~ — link added (session 23)
