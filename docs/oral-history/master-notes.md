@@ -170,8 +170,10 @@ The boundary between contributions has become unclear.
 
 *"I think that's right."*
 
+**Grandchildren named (2026-06-09, session 5):** Sebastian, Caspar, Anthony, and Emilia.
+
 **What remains unknown:**  
-Which grandchildren. What specifically they contribute. Whether they know these works exist in the archive. Whether they have seen the finished pieces.
+What specifically each contributes. Whether they know these works exist in the archive. Whether they have seen the finished pieces.
 
 ---
 
@@ -402,6 +404,11 @@ Can't think of anything.
 **On what he wants family to know:**
 *"Not yet."* Door remains open.
 
+**On what he wants a grandchild to know (2026-06-09, session 5):**
+*"that they would be very impressed if they had the chance to see all the works in one space"*
+
+Not about meaning. Not about legacy. The physical experience of scale — all of it together, in one room. That is what he wants them to know.
+
 **On what he wants people to understand that the work can't show:**
 *"Do not know."* — honest, unresolved. This question should return in a later session.
 
@@ -432,6 +439,49 @@ Can't think of anything.
 8. **Does he have regrets about work he never started?**
 9. **What is there about Kiefer specifically — beyond "everything" — that he recognizes in his own ambitions?**
 10. **What does he want Allison or a grandchild to know that he hasn't said out loud yet?** (He said "not yet" — come back.)
+
+---
+
+## 19. The Guernica-Scale Painting — 2026-06-09 (Session 5)
+
+**Topic:** The full-size Guernica interpretation. This is the most significant unrecorded work in the archive.
+
+### What is now known
+
+- Made in Jeff's home studio basement
+- Made on flexible material (same collage materials as everything else) — rolled, not stretched
+- Scale (~11×25 ft) was achievable because it could be rolled up and stored
+- No one else ever saw it. It lived in the basement. Never shown.
+- Later moved to storage. Lost in the water damage from storage, not from the original basement.
+- Year made: unknown
+- Jeff does not think about it much. That is his honest account.
+
+### Why he made it at full scale
+
+*"It was about time."*
+
+After more than thirty years working with Guernica as a reference and structure, making one at the actual scale was simply the next thing. Not a statement. Not an event. It was about time.
+
+### Key quotes
+
+- *"it was about time"* — why he made it at full scale
+- *"do not know"* — year made; how long it took; how it changed the making
+- *"not really"* — whether he thinks about it now
+
+### New quotes (session 5)
+
+- *"too many lost to consider"* — when asked which lost works he considers his best. Not evasion — honest accounting. The loss is too large to rank.
+
+### What remains unknown
+
+- Approximate decade or year
+- Whether anything from it survives — fragments, photographs, any documentation at all
+- What specifically he changed from Picasso's composition
+- Whether it was ever unrolled and hung at full scale, or worked on flat/rolled
+
+### Archivist note
+
+The most striking fact in this session is the last answer: he doesn't think about it much. A full-size interpretation of what he considered the most important painting of the 20th century — made alone in a basement, seen by no one, lost. And not something he dwells on. This is consistent with the rest of the record. The making was the point. What happened after was a separate matter.
 
 ---
 
