@@ -5,11 +5,21 @@
  */
 (function () {
   const PAGE_NAV = {
-    'archive.html':      'archive.html',
-    'series-index.html': 'series-index.html',
-    'about.html':        'about.html',
-    'lost.html':         'lost.html',
-    'favorites.html':    'archive.html',
+    'archive.html':             'archive.html',
+    'series-index.html':        'archive.html',   // catalog tool — highlight Archive
+    'about.html':               'about.html',
+    'lost.html':                'lost.html',
+    'favorites.html':           'archive.html',
+    'stories.html':             'stories.html',
+    'why-i-made-things.html':   'about.html',     // About cluster
+    'timeline.html':            'about.html',     // About cluster
+    'start-here.html':          'about.html',     // About cluster
+    'collaboration.html':       'archive.html',   // medium/theme page
+    'guernica.html':            'archive.html',   // series page
+    'collage.html':             'archive.html',
+    'sculpture.html':           'archive.html',
+    'photography.html':         'archive.html',
+    'painting.html':            'archive.html',
   };
 
   const file = location.pathname.split('/').pop() || 'index.html';

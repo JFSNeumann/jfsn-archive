@@ -198,6 +198,9 @@ entries = [
     (SITE_URL + '/gallery-images.html',     '0.6', 'monthly'),
     (SITE_URL + '/start-here.html',         '0.7', 'monthly'),
     (SITE_URL + '/favorites.html',          '0.6', 'monthly'),
+    (SITE_URL + '/stories.html',            '0.8', 'monthly'),
+    (SITE_URL + '/why-i-made-things.html',  '0.8', 'monthly'),
+    (SITE_URL + '/timeline.html',           '0.7', 'monthly'),
     (SITE_URL + '/changes.html',            '0.4', 'weekly'),
     (SITE_URL + '/privacy.html',            '0.3', 'yearly'),
 ]

@@ -3,7 +3,7 @@
 **Project:** Jeffrey F. S. Neumann Archive  
 **Purpose:** Preserve memories, stories, and context that exist only in Jeff's mind. This document is a primary source, not a summary. Do not rewrite it into polished prose.  
 **Last updated:** 2026-06-09  
-**Sessions captured:** 2026-06-08, 2026-06-09, 2026-06-09 (session 2), 2026-06-09 (session 3 — analysis + drafts)
+**Sessions captured:** 2026-06-08, 2026-06-09, 2026-06-09 (session 2), 2026-06-09 (session 3 — analysis + drafts), 2026-06-09 (session 4 — site implementation + checkpoint)
 
 ---
 
@@ -432,3 +432,35 @@ Can't think of anything.
 8. **Does he have regrets about work he never started?**
 9. **What is there about Kiefer specifically — beyond "everything" — that he recognizes in his own ambitions?**
 10. **What does he want Allison or a grandchild to know that he hasn't said out loud yet?** (He said "not yet" — come back.)
+
+---
+
+## 18. Site Implementation — 2026-06-09 (Session 4)
+
+This session built the three narrative pages and connected them throughout the existing site. Implementation record kept here so the archive and the oral history remain in sync.
+
+### Pages created
+- `stories.html` — 8 documented stories, 4 explicit placeholders. All quotes verbatim from sessions above.
+- `why-i-made-things.html` — essay built from sessions 1–4. Jeff confirmed draft as "feels true."
+- `timeline.html` — decade skeleton 1950s–2020s. 1980s and 2010s named as gaps, not papered over.
+
+### Nav change
+Primary nav: Series removed, Stories added. New order: Archive · About · Stories · Lost.
+
+### Pages edited to add narrative links
+- `about.html` — "In Jeff's Own Words" section added (3 cards to new pages)
+- `lost.html` — was a dead end; now links to stories, why-i-made-things, about
+- `guernica.html` — added note about the Guernica-scale lost painting + links
+- `collaboration.html` — added grandchildren quote + narrative links
+- `series-index.html` — added orienting paragraph
+- `start-here.html` — added Stories and Why I Made Things to Begin links
+- `index.html` — Where To Begin expanded from 4 to 6 items; Stories and Why I Made Things added
+- `1970s.html` through `2020s.html` — Stories and Timeline added to footer Explore column
+
+### Audit result
+11/11 checks passing. 1,129 sitemap URLs. All new pages in sitemap.
+
+### What remains to be captured (most urgent)
+1. The Guernica-scale painting — described in stories.html and timeline.html as a placeholder. Needs a dedicated session.
+2. The grandchildren's names — 31 works, anonymous. Simple fix, urgent.
+3. Why he kept going — the central question, still open.

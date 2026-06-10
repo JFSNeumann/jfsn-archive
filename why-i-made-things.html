@@ -1,48 +1,141 @@
 <!DOCTYPE html>
-<html class="scroll-smooth" lang="en">
+<html class="light" lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta name="theme-color" content="#fcf9f3"/>
-<title>Privacy — Jeffrey F. S. Neumann</title>
-<meta name="description" content="What information jfsn.com collects, why, and what is done with it."/>
-<link rel="canonical" href="https://jfsn.com/privacy.html"/>
+<title>Why I Made Things — Jeffrey F. S. Neumann</title>
+<meta name="description" content="Jeff Neumann on why he kept making things for fifty years — in his own words."/>
+<link rel="canonical" href="https://jfsn.com/why-i-made-things.html"/>
 <link rel="icon" href="favicon.svg" type="image/svg+xml"/>
 <link rel="alternate" type="application/rss+xml" title="Jeffrey F. S. Neumann — Archive" href="https://jfsn.com/feed.xml"/>
 <link rel="manifest" href="manifest.json"/>
 <link rel="apple-touch-icon" href="icon-192.png"/>
 <meta property="og:type" content="website"/>
-<meta property="og:title" content="Privacy — Jeffrey F. S. Neumann"/>
-<meta property="og:description" content="What information jfsn.com collects, why, and what is done with it."/>
+<meta property="og:title" content="Why I Made Things — Jeffrey F. S. Neumann"/>
+<meta property="og:description" content="Jeff Neumann on why he kept making things for fifty years — in his own words."/>
 <meta property="og:image" content="https://jfsn.com/og-card.jpg"/>
-<meta property="og:url" content="https://jfsn.com/privacy.html"/>
+<meta property="og:url" content="https://jfsn.com/why-i-made-things.html"/>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","name":"Privacy — Jeffrey F. S. Neumann","description":"What information jfsn.com collects, why, and what is done with it.","url":"https://jfsn.com/privacy.html"}
+{"@context":"https://schema.org","@type":"WebPage","name":"Why I Made Things — Jeffrey F. S. Neumann","url":"https://jfsn.com/why-i-made-things.html","description":"Jeff Neumann on why he kept making things for fifty years — in his own words.","isPartOf":{"@type":"WebSite","name":"Jeffrey F. S. Neumann — Archive","url":"https://jfsn.com"}}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Material+Symbols+Outlined:opsz,wght,FILL@24,400,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600&family=Material+Symbols+Outlined:opsz,wght,FILL@24,400,0..1&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="_shared/ui.css"/>
 <link rel="stylesheet" href="site.min.css"/>
 <style>
-    .material-symbols-outlined {
-        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-    }
-    .btn-transition { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-    @media (prefers-reduced-motion: reduce) {
-        *, *::before, *::after { transition: none !important; animation: none !important; }
-    }
-    .prose a {
-        color: #0B0B0B;
-        border-bottom: 1px solid #c4c7c7;
-        padding-bottom: 1px;
-        transition: color 0.15s, border-color 0.15s;
-    }
-    .prose a:hover { color: #FF6600; border-color: #FF6600; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  body { -webkit-font-smoothing: antialiased; }
+  .prose p {
+    font-family: Inter, sans-serif;
+    font-size: 17px;
+    line-height: 1.8;
+    color: #575757;
+    margin-top: 1.25em;
+  }
+  .prose p:first-child { margin-top: 0; }
+  .prose blockquote {
+    border-left: 3px solid #FF6600;
+    margin: 1.75em 0;
+    padding: 0 0 0 24px;
+  }
+  .prose blockquote p {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: #0B0B0B;
+    line-height: 1.55;
+    margin-top: 0;
+  }
+  .section-label {
+    font-family: Inter, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #575757;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .essay-section {
+    padding-top: 56px;
+    margin-top: 56px;
+    border-top: 1px solid #c4c7c7;
+  }
+  .essay-section:first-of-type {
+    padding-top: 0;
+    margin-top: 0;
+    border-top: none;
+  }
+  .essay-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: #0B0B0B;
+    margin-top: 8px;
+    margin-bottom: 20px;
+  }
+  .placeholder-box {
+    border: 1px dashed #c4c7c7;
+    padding: 20px 24px;
+    margin-top: 24px;
+    background: #faf8f3;
+  }
+  .placeholder-box p {
+    font-family: Inter, sans-serif;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #575757;
+    font-style: italic;
+    margin: 0;
+  }
+  .placeholder-box .placeholder-label {
+    font-family: Inter, sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #c4c7c7;
+    display: block;
+    margin-bottom: 8px;
+    font-style: normal;
+  }
+  .source-note {
+    font-family: Inter, sans-serif;
+    font-size: 12px;
+    line-height: 1.65;
+    color: #888;
+    font-style: italic;
+    margin-top: 12px;
+  }
+  .sidebar-link-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .sidebar-link-list a {
+    font-family: Inter, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #0B0B0B;
+    text-decoration: none;
+    border-bottom: 1px solid #c4c7c7;
+    padding-bottom: 2px;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+  .sidebar-link-list a:hover { color: #FF6600; border-color: #FF6600; }
+  @media (prefers-reduced-motion: reduce) {
+    .sidebar-link-list a { transition: none; }
+  }
 </style>
 </head>
-<body class="bg-background text-deep-ink font-body-md overflow-x-hidden">
-
-<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-deep-ink focus:text-bone-white focus:font-label-caps focus:text-label-caps">Skip to content</a>
+<body class="bg-background text-deep-ink font-body-md" data-page-label="WHY I MADE THINGS">
 
 <!-- NAV:START -->
 <style>
@@ -158,56 +251,159 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
 <script src="search.js" defer></script>
 <!-- NAV:END -->
 
-<main id="main" class="pt-16">
+<div id="main" tabindex="-1" style="outline:none;"></div>
+
+<main class="pt-16">
 
   <!-- Page header -->
-  <section class="border-b border-outline-variant py-12 px-margin-desktop">
-    <span class="font-label-caps text-label-caps text-archive-gray mb-3 block">PRIVACY</span>
-    <h1 class="font-display text-3xl md:text-4xl font-semibold tracking-tight text-deep-ink mb-2">What this site does with your information.</h1>
-  </section>
-
-  <!-- Content -->
-  <article class="prose py-12 px-margin-desktop">
-    <div class="max-w-2xl">
-
-      <p class="font-display text-xl italic text-archive-gray leading-relaxed mb-10">
-        Short version: this is a one-person artist site. Almost nothing is collected. What is collected is only used to reply to you.
-      </p>
-
-      <h2 class="font-display text-xl font-semibold text-deep-ink mt-10 mb-3">What gets collected</h2>
-      <p class="font-body-md text-body-md leading-relaxed mb-6">
-        Nothing. If you browse the archive, no personal data is collected. There are no cookies, no advertising trackers, no remarketing pixels, and no ads.
-      </p>
-
-      <h2 class="font-display text-xl font-semibold text-deep-ink mt-10 mb-3">Analytics</h2>
-      <p class="font-body-md text-body-md leading-relaxed mb-4">
-      </p>
-      <p class="font-body-md text-body-md leading-relaxed mb-6">
-      </p>
-
-      <h2 class="font-display text-xl font-semibold text-deep-ink mt-10 mb-3">Logs, hosting, security</h2>
-      <p class="font-body-md text-body-md leading-relaxed mb-6">
-        Netlify and any CDN in front of it record routine access logs (IP address, timestamp, requested URL) for abuse prevention and uptime. These are not joined with form submissions and are not used to build profiles of visitors.
-      </p>
-
-      <h2 class="font-display text-xl font-semibold text-deep-ink mt-10 mb-3">Children</h2>
-      <p class="font-body-md text-body-md leading-relaxed mb-6">
-        This site is not directed at children under 13 and does not knowingly collect information from them.
-      </p>
-
-      <h2 class="font-display text-xl font-semibold text-deep-ink mt-10 mb-3">Changes</h2>
-      <p class="font-body-md text-body-md leading-relaxed mb-6">
-        If this notice changes meaningfully, the &ldquo;Last updated&rdquo; date below will move and the change will be summarized in a brief note at the top of this page.
-      </p>
-
-      <h2 class="font-display text-xl font-semibold text-deep-ink mt-10 mb-3">Contact</h2>
-      <p class="font-body-md text-body-md leading-relaxed mb-10">
-        Questions, deletion requests, or anything else: <a href="mailto:jeff@jfsn.com">jeff@jfsn.com</a>.
-      </p>
-
-      <p class="font-label-caps text-label-caps text-archive-gray mt-16">LAST UPDATED: 27 MAY 2026</p>
+  <div class="border-b border-deep-ink px-margin-desktop py-16">
+    <div class="max-w-container-max mx-auto">
+      <h1 style="font-family:'Playfair Display',serif;font-size:clamp(44px,6.5vw,80px);font-weight:700;line-height:1.05;letter-spacing:-0.02em;color:#0B0B0B;">Why I Made Things.</h1>
+      <p style="font-family:Inter,sans-serif;font-size:17px;color:#575757;margin-top:16px;max-width:560px;line-height:1.6;">In Jeff's own words — drawn from oral history sessions conducted in 2026. Confirmed by Jeff as accurate in substance.</p>
     </div>
-  </article>
+  </div>
+
+  <!-- Two-column body -->
+  <div class="px-margin-desktop py-20 max-w-container-max mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-16">
+
+      <!-- Main content -->
+      <div class="md:col-span-7">
+
+        <!-- Section 1: What Making Things Gave Me -->
+        <section class="essay-section" id="what-making-things-gave-me">
+          <span class="section-label">What Making Things Gave Me</span>
+          <h2 class="essay-heading">Satisfaction</h2>
+          <div class="prose">
+            <p>Making things gave Jeff a sense of accomplishment and satisfaction that other parts of life didn't provide in the same way. It was a form of expression that felt honest — a way to put something into the world that could outlast the moment it was made in.</p>
+            <p>Across fifty years, that held. Not recognition. Not income. Not audience. Satisfaction — in the act, and in having made something real.</p>
+            <blockquote><p>"Satisfaction of making something with whatever I had available."</p></blockquote>
+            <p>The word "whatever" matters. The materials were whatever was around — found objects, discarded things, remnants. The constraint was real. The satisfaction was real too.</p>
+          </div>
+          <p class="source-note">Confirmed as accurate in substance by Jeff Neumann, June 2026. Quote verbatim from oral history session.</p>
+        </section>
+
+        <!-- Section 2: Identity -->
+        <section class="essay-section" id="identity">
+          <span class="section-label">Making as Identity</span>
+          <h2 class="essay-heading">Always a Maker</h2>
+          <div class="prose">
+            <p>Jeff made things as a child. He made things through school, through a career as a designer, through raising a family. He made things when there was no time or money for it. He still makes things now, at 71.</p>
+            <p>There was never a period when he stopped.</p>
+            <blockquote><p>"Became a way of my life making art / never had money / jealous of all the other artist that did."</p></blockquote>
+            <p>The jealousy was about materials — about what other artists could do with resources he didn't have. It wasn't about recognition or status. It was about scale. About what you can do when you have the tools for it.</p>
+            <p>Making things was not a hobby or a side project. It was how he understood himself.</p>
+          </div>
+          <p class="source-note">Quote verbatim from oral history session, June 2026. Context is paraphrase — confirmed in substance.</p>
+        </section>
+
+        <!-- Section 3: Found Materials -->
+        <section class="essay-section" id="found-materials">
+          <span class="section-label">The Found Materials</span>
+          <h2 class="essay-heading">Something That Still Had a Life Left in It</h2>
+          <div class="prose">
+            <p>Art supplies were always too expensive. So Jeff built work from what was available: CDs, computer floppies, keyboards, prism paper from school, things from the dollar store, tape.</p>
+            <blockquote><p>"Something that still had a life left in it."</p></blockquote>
+            <p>That phrase captures something essential. The found materials weren't just cheap substitutes for proper art supplies. They were objects with previous lives — discarded, written off, done. Taking them and making them into something else was the point.</p>
+            <p>This wasn't a conceptual position at first. It was financial reality. Over fifty years, it became identity. Discarded objects becoming something else was not just necessity — it was how Jeff understood what making things meant.</p>
+            <p>The connection to Robert Rauschenberg's Combines — objects from the world assembled into art — became clear over time. Rauschenberg had already explored that territory. When Jeff realized it, he kept going anyway. See: <a href="stories.html#rauschenberg" style="color:#575757;text-decoration:underline;text-underline-offset:3px;">What Rauschenberg Already Did →</a></p>
+          </div>
+          <p class="source-note">Quotes verbatim from oral history sessions, June 2026.</p>
+        </section>
+
+        <!-- Section 4: The Loss -->
+        <section class="essay-section" id="the-loss">
+          <span class="section-label">The Loss and What Remained</span>
+          <h2 class="essay-heading">Sad. Enough.</h2>
+          <div class="prose">
+            <p>An estimated five hundred to one thousand works were lost to water damage. Jeff stood on the sidewalk and watched them wait for the garbage men to take them away.</p>
+            <blockquote><p>"I made some great large pieces and I thought they were really good."</p></blockquote>
+            <blockquote><p>"Sad. Enough."</p></blockquote>
+            <p>That is all that was said about it. Whatever happened after — whatever the loss actually cost him internally — has not yet been captured.</p>
+            <p>What's documented is this: the loss did not stop the making. The work continued. This archive is evidence of that.</p>
+            <p>Some of the lost work exists now in exactly one photograph — appearing incidentally in the background of something else. You can see it was there. You cannot see it clearly. See: <a href="lost.html" style="color:#575757;text-decoration:underline;text-underline-offset:3px;">Lost Works →</a></p>
+          </div>
+          <div class="placeholder-box">
+            <span class="placeholder-label">Oral history needed</span>
+            <p>What happened after the loss? Did the making change — in scale, method, subject? Did Jeff consciously decide to keep going, or did it just continue? These questions have not been asked yet. They are among the most important remaining gaps in this record.</p>
+          </div>
+          <p class="source-note">Quotes verbatim from oral history session, June 2026.</p>
+        </section>
+
+        <!-- Section 5: The Grandchildren -->
+        <section class="essay-section" id="the-grandchildren">
+          <span class="section-label">Making With Others</span>
+          <h2 class="essay-heading">Getting Hard to Tell</h2>
+          <div class="prose">
+            <p>For approximately four years, Jeff has been incorporating his grandchildren's drawings into his work. The boundary between their contribution and his has become unclear.</p>
+            <blockquote><p>"Getting hard to tell where they end and I begin. I think that's right."</p></blockquote>
+            <p>This is the only part of the practice that faces forward — still happening, involving living people other than Jeff, with no clear endpoint.</p>
+            <p>In fifty years, the most likely reason someone opens this archive is to recognize hands they know. The work has begun to contain those hands.</p>
+            <p>See the collaborative works: <a href="collaboration.html" style="color:#575757;text-decoration:underline;text-underline-offset:3px;">Collaboration →</a></p>
+          </div>
+          <div class="placeholder-box">
+            <span class="placeholder-label">Oral history needed — names and specifics</span>
+            <p>The grandchildren are not named anywhere in this archive. Their names, what specifically they contribute, how they came to be collaborators — none of this has been documented. This is a priority before any of the children are much older.</p>
+          </div>
+          <p class="source-note">Quotes verbatim from oral history session, June 2026.</p>
+        </section>
+
+        <!-- Section 6: Why it all kept going -->
+        <section class="essay-section" id="kept-going">
+          <span class="section-label">The Open Question</span>
+          <h2 class="essay-heading">Kept Going</h2>
+          <div class="prose">
+            <p>Over the course of decades, Jeff came to understand that Robert Rauschenberg had already explored much of the territory he had been working in. When asked what he discovered: <em>"Nothing ground breaking."</em></p>
+            <p>The art world was not paying attention. There was no income from the work, and there never had been. Most of what he considered his best work was gone. The territory wasn't new.</p>
+            <p>When asked what he did: <em>"Kept going."</em></p>
+            <p>Why — that question has not been fully answered. It may be the question that most deserves an answer. It will be returned to in a future session.</p>
+          </div>
+          <div class="placeholder-box">
+            <span class="placeholder-label">Central open question</span>
+            <p>Why did Jeff keep making things for fifty years after every external incentive was gone or absent? This is the question this page is trying to answer. The answer is not fully captured yet. It will be returned to.</p>
+          </div>
+          <p class="source-note">Quotes verbatim from oral history session, June 2026.</p>
+        </section>
+
+      </div>
+
+      <!-- Sidebar -->
+      <div class="md:col-span-4 md:col-start-9">
+        <div style="position:sticky;top:96px;">
+
+          <!-- About this page -->
+          <div style="padding:20px;border:1px solid #c4c7c7;margin-bottom:24px;">
+            <span style="display:block;font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#0B0B0B;margin-bottom:10px;">About This Page</span>
+            <p style="font-family:Inter,sans-serif;font-size:13px;line-height:1.7;color:#575757;margin:0;">Drawn from oral history sessions conducted in June 2026. Jeff confirmed the draft version of this page as "feeling true." Direct quotes are preserved exactly. Placeholders name what still needs to be captured.</p>
+          </div>
+
+          <!-- Key quotes -->
+          <div style="margin-bottom:24px;border-top:1px solid #c4c7c7;padding-top:24px;">
+            <span style="display:block;font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#0B0B0B;margin-bottom:16px;">In His Own Words</span>
+            <p style="font-family:'Playfair Display',serif;font-size:16px;font-style:italic;line-height:1.6;color:#0B0B0B;margin:0 0 16px;">"Satisfaction of making something with whatever I had available."</p>
+            <p style="font-family:'Playfair Display',serif;font-size:16px;font-style:italic;line-height:1.6;color:#0B0B0B;margin:0 0 16px;">"Something that still had a life left in it."</p>
+            <p style="font-family:'Playfair Display',serif;font-size:16px;font-style:italic;line-height:1.6;color:#0B0B0B;margin:0 0 16px;">"Sad. Enough."</p>
+            <p style="font-family:'Playfair Display',serif;font-size:16px;font-style:italic;line-height:1.6;color:#0B0B0B;margin:0;">"Kept going."</p>
+          </div>
+
+          <!-- Related -->
+          <div style="border-top:1px solid #c4c7c7;padding-top:24px;">
+            <span style="display:block;font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#0B0B0B;margin-bottom:16px;">Related</span>
+            <ul class="sidebar-link-list">
+              <li><a href="stories.html">Stories →</a></li>
+              <li><a href="about.html">About Jeff →</a></li>
+              <li><a href="timeline.html">A Life in Time →</a></li>
+              <li><a href="lost.html">What Was Lost →</a></li>
+              <li><a href="collaboration.html">The Collaboration →</a></li>
+              <li><a href="archive.html">The Complete Archive →</a></li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
 
 </main>
 
@@ -305,8 +501,8 @@ footer .hover\:border-international-orange::after{display:none}
 <script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
 <!-- FOOTER:END -->
 
-
-<script src="search.js" defer></script>
 <script src="_shared/nav-active.js" defer></script>
+<script src="_shared/ui.js" defer></script>
+
 </body>
 </html>
