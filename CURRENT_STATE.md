@@ -1,11 +1,43 @@
 # Current State
-**Updated:** 2026-06-09
+**Updated:** 2026-06-10
 
 ## Last commit
-dc15fff1 — CURRENT_STATE.md: stamp B2 backup timestamp 2026-06-09
-*(deployed 2026-06-09)*
+3728fdae — Header + footer UX pass: scroll-hide nav, blur, ⌘K hint, back-to-top, dynamic year, footer col restructure
+*(not yet deployed — run JFSN.app)*
 
-## What was done this session (2026-06-10 — session 24)
+## What was done this session (2026-06-10 — session 25)
+
+### Header + footer UX pass
+
+**Header (top-nav.html → stamped to all 31 pages):**
+- Hide on scroll down / show on scroll up (JS scroll listener, menu-state aware, CSS `transform: translateY(-100%)`)
+- Backdrop blur + bg opacity when scrolled past 8px (`backdrop-filter: blur(12px)`, `rgba(252,249,243,0.92)`)
+- `⌘K` badge next to search icon (desktop only, `hidden md:inline`, bordered label)
+
+**Footer (footer.html → stamped to all 31 pages):**
+- `↑ BACK TO TOP` button in bottom bar, smooth scroll
+- Copyright year now dynamic via JS (`new Date().getFullYear()`)
+- Email moved into Col 1 below bio (natural identity+contact pairing)
+- Col 4 renamed ABOUT: About Jeff · Start Here · Open API · Privacy
+
+**Other:**
+- `border-radius: inherit` on `.thumb__link::after` in `ui.css` (saturation overlay corner fix)
+- Removed "Print run of 12" from IMPROVEMENTS.md (not a code task)
+- SW cache bumped to `jfsn-20260610200000`
+
+**Files modified:**
+- `_shared/ui.css` — border-radius fix
+- `_shared/top-nav.html` — scroll CSS + ⌘K badge + scroll JS
+- `_shared/footer.html` — back-to-top, dynamic year, restructured col 4
+- `sw.js` — CACHE_V bumped
+- `IMPROVEMENTS.md` — print run removed
+- All 31 stamped pages — nav + footer propagated
+
+**⚠️ Not yet deployed — run JFSN.app**
+
+**Note:** Decade pages (1970s–2020s.html) are NOT in stamp-nav.sh — header scroll/blur/⌘K and footer changes are not on those 6 pages.
+
+## What was done last session (2026-06-10 — session 24)
 
 ### UX/UI improvements — best-in-class pass
 
