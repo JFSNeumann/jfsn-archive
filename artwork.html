@@ -62,6 +62,8 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
 .jfsn-wordmark::before{content:'Jeffrey Francis Stanley Neumann';position:absolute;top:calc(100% + 10px);left:0;white-space:nowrap;font-family:'Inter',sans-serif;font-size:11px;font-weight:400;letter-spacing:0.06em;color:#575757;background:#fcf9f3;border:1px solid #c4c7c7;padding:4px 8px;pointer-events:none;opacity:0;transform:translateY(-4px);transition:opacity 0.15s ease,transform 0.15s ease}
 .jfsn-wordmark:hover::before{opacity:1;transform:translateY(0)}
 @media(prefers-reduced-motion:reduce){.jfsn-wordmark::before{transition:none}}
+/* Fade below navbar */
+header::after{content:'';position:absolute;top:100%;left:0;width:100%;height:40px;background:linear-gradient(to bottom,rgba(11,11,11,0.07) 0%,transparent 100%);pointer-events:none;z-index:0;}
 /* Scroll: hide on down, show on up, blur when scrolled */
 header{transition:transform 0.3s ease,background-color 0.2s ease}
 header.header-scrolled{background-color:rgba(252,249,243,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
@@ -214,8 +216,13 @@ header.header-hidden{transform:translateY(-100%)}
 
       <!-- Image -->
       <section class="md:col-span-8 border border-deep-ink">
-        <div id="work-image-wrap" class="bg-surface-container">
+        <div id="work-image-wrap" class="bg-surface-container" style="position:relative;">
           <img id="work-image" alt="" class="w-full h-auto object-contain" src="" width="1200" height="900" loading="eager"/>
+          <!-- Mobile title overlay — hidden on md+ -->
+          <div id="artwork-mobile-title" class="md:hidden" style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(11,11,11,0.58),transparent);padding:28px 16px 12px;pointer-events:none;">
+            <p id="artwork-mobile-title-text" style="font-family:Inter,sans-serif;font-size:12px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#fff;line-height:1.3;"></p>
+            <p id="artwork-mobile-year-text" style="font-family:Inter,sans-serif;font-size:11px;font-weight:400;letter-spacing:0.06em;color:#c4c7c7;margin-top:3px;"></p>
+          </div>
         </div>
         <div class="p-sm border-t border-deep-ink">
           <button id="full-res-btn" class="font-label-md text-label-md uppercase tracking-widest text-secondary hover:text-international-orange transition-colors bg-transparent border-0 cursor-pointer p-0">
@@ -238,6 +245,9 @@ header.header-hidden{transform:translateY(-100%)}
           onmouseover="this.style.color='#FF6600'" onmouseout="this.style.color='#c4c7c7'">
           COPY LINK
         </button>
+        <div class="hidden md:block" style="margin-top:24px;padding-top:16px;border-top:1px solid #c4c7c7;">
+          <p style="font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:#c4c7c7;">← → Browse Works</p>
+        </div>
       </aside>
 
     </div>
@@ -505,6 +515,11 @@ fetch('catalog.json')
 
     // Title
     document.getElementById('work-title').textContent = titleText;
+    // Mobile overlay title
+    var mTitle = document.getElementById('artwork-mobile-title-text');
+    var mYear  = document.getElementById('artwork-mobile-year-text');
+    if (mTitle) mTitle.textContent = titleText;
+    if (mYear)  mYear.textContent  = w.year || '';
 
     // Recently-viewed — write to localStorage so search overlay can show it
     try {

@@ -166,6 +166,8 @@ header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
 .jfsn-wordmark::before{content:'Jeffrey Francis Stanley Neumann';position:absolute;top:calc(100% + 10px);left:0;white-space:nowrap;font-family:'Inter',sans-serif;font-size:11px;font-weight:400;letter-spacing:0.06em;color:#575757;background:#fcf9f3;border:1px solid #c4c7c7;padding:4px 8px;pointer-events:none;opacity:0;transform:translateY(-4px);transition:opacity 0.15s ease,transform 0.15s ease}
 .jfsn-wordmark:hover::before{opacity:1;transform:translateY(0)}
 @media(prefers-reduced-motion:reduce){.jfsn-wordmark::before{transition:none}}
+/* Fade below navbar */
+header::after{content:'';position:absolute;top:100%;left:0;width:100%;height:40px;background:linear-gradient(to bottom,rgba(11,11,11,0.07) 0%,transparent 100%);pointer-events:none;z-index:0;}
 /* Scroll: hide on down, show on up, blur when scrolled */
 header{transition:transform 0.3s ease,background-color 0.2s ease}
 header.header-scrolled{background-color:rgba(252,249,243,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
@@ -315,6 +317,49 @@ header.header-hidden{transform:translateY(-100%)}
       <p style="font-family:Inter,sans-serif;font-size:17px;color:#575757;margin-top:16px;max-width:560px;line-height:1.6;">In Jeff's own words — drawn from oral history sessions conducted in 2026. Confirmed by Jeff as accurate in substance.</p>
     </div>
   </div>
+
+  <!-- Mobile jump nav — hidden on md+ (sidebar TOC handles desktop) -->
+  <div class="md:hidden border-b border-outline-variant px-margin-mobile" id="mobile-toc-wrap">
+    <button id="mobile-toc-btn" aria-expanded="false" aria-controls="mobile-toc-list"
+      style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:14px 0;background:none;border:none;cursor:pointer;font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#575757;">
+      <span>Jump to Section</span><span id="mobile-toc-chevron" style="transition:transform 0.2s ease;">↓</span>
+    </button>
+    <div id="mobile-toc-list" style="display:none;padding-bottom:12px;">
+      <a href="#in-his-own-words"         class="mobile-toc-link">What Making Things Gave Me</a>
+      <a href="#what-making-things-gave-me" class="mobile-toc-link">Satisfaction</a>
+      <a href="#identity"                 class="mobile-toc-link">Always a Maker</a>
+      <a href="#the-doubt"                class="mobile-toc-link">Getting Old</a>
+      <a href="#found-materials"          class="mobile-toc-link">Something That Still Had a Life Left in It</a>
+      <a href="#the-loss"                 class="mobile-toc-link">Sad. Enough.</a>
+      <a href="#the-grandchildren"        class="mobile-toc-link">Getting Hard to Tell</a>
+      <a href="#kept-going"               class="mobile-toc-link">Kept Going</a>
+    </div>
+  </div>
+  <style>
+  .mobile-toc-link{display:block;padding:9px 0;font-family:Inter,sans-serif;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#575757;text-decoration:none;border-bottom:1px solid #f0ede7;}
+  .mobile-toc-link:hover,.mobile-toc-link:active{color:#FF6600;}
+  </style>
+  <script>
+  (function(){
+    var btn=document.getElementById('mobile-toc-btn');
+    var list=document.getElementById('mobile-toc-list');
+    var chev=document.getElementById('mobile-toc-chevron');
+    if(!btn)return;
+    btn.addEventListener('click',function(){
+      var open=list.style.display==='block';
+      list.style.display=open?'none':'block';
+      btn.setAttribute('aria-expanded',String(!open));
+      chev.style.transform=open?'rotate(0deg)':'rotate(180deg)';
+    });
+    document.querySelectorAll('.mobile-toc-link').forEach(function(a){
+      a.addEventListener('click',function(){
+        list.style.display='none';
+        btn.setAttribute('aria-expanded','false');
+        chev.style.transform='rotate(0deg)';
+      });
+    });
+  })();
+  </script>
 
   <!-- Two-column body -->
   <div class="px-margin-mobile md:px-margin-desktop py-20 max-w-container-max mx-auto">
