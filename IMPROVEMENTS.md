@@ -1,5 +1,5 @@
 # JFSN — Improvement List
-**Updated:** 2026-06-10 (session 24)
+**Updated:** 2026-06-11 (session 31)
 
 A living list. Add to it. Cross things off. This is the backlog.
 
@@ -7,6 +7,10 @@ A living list. Add to it. Cross things off. This is the backlog.
 
 ## 🔴 Do soon
 
+- [ ] **SECURITY: rotate the FTP password** — it is public (hardcoded in make_handoff.py on public GitHub + inside the Allison PDF on GitHub and at jfsn.com/JFSN-Archive-Handoff-Allison.pdf). cPanel → FTP Accounts → change password → update `.ftp.env`. Full steps: docs/SESSION-31-PRESERVATION-HANDOFF.md §1.1.
+- [ ] **Remove the Allison PDF from the webroot** + add `*.pdf` and `docs/` excludes to deploy.sh; make make_handoff.py read creds from .ftp.env.
+- [ ] **Ask Jeff the Exhibition Record question** — about.html lists six shows with venues; git forensics shows it grew from "TBD gallery" placeholders, no source (master-notes §26). Read the six rows to Jeff: which happened? Then fix or re-hide the table.
+- [ ] **One ~1-minute audio recording** — standing #1 creator-context priority (§25). No audio of Jeff exists anywhere.
 - [ ] **Ingest new work** — drop photos into `artworks/inbox/`, run `bash add-works.sh`. Pipeline is ready.
 
 ---
@@ -26,17 +30,18 @@ Four specific gaps identified session 26 (2026-06-10):
 - [ ] **start-here.html** — oral history content written in (session 21). Review with Jeff and refine.
 
 ### Technical
-- [ ] **favorites.html** — still fetches full `catalog.json` (898KB). Adding `favorite` to `LITE_FIELDS` would let it use `catalog-lite.json` (701KB). Low priority.
-- [ ] **HSTS** — uncomment one line in `.htaccess` once SSL confirmed active in HostGator cPanel.
+- [ ] **HSTS** — uncomment line 93 in `.htaccess`; SSL is confirmed working (site serves https with full security headers).
+- [ ] **Catalog provenance fields** — `year_precision`, `description_source`, `composite` flags through build_catalog → lite → api/v1 → artwork.html ("c. 1970s" display) → JSON-LD. The one multi-session project worth doing (handoff §3).
+- [ ] **gallery-images.html intro + hero caption** — needs Jeff-approved rewrite; current text states the composites are real exhibition documentation (false per master-notes §22/§25).
 
 ---
 
 ## 🟢 Nice to have, low urgency
 
 ### Technical
-- [ ] **`favorites.html`** — still fetches full `catalog.json` (898KB). Adding `favorite` to `LITE_FIELDS` would let it use `catalog-lite.json` (701KB). Low priority.
-- [ ] **HSTS** — uncomment one line in `.htaccess` once SSL confirmed active in HostGator cPanel.
-
+- [ ] **Decade footer parity** — all 6 decade pages missing api/favorites/start-here/why-i-made-things links vs shared footer. Best fixed with a stamped Material footer block, not hand edits.
+- [ ] **artwork.html theme links** — Themes metadata row is plain text; link to theme pages via a small slug map (also in gen-artwork-pages.py template).
+- [ ] **sw.js PRECACHE** — add stories.html, why-i-made-things.html, timeline.html.
 
 ---
 

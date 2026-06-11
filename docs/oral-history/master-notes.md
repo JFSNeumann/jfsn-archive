@@ -2,8 +2,8 @@
 
 **Project:** Jeffrey F. S. Neumann Archive  
 **Purpose:** Preserve memories, stories, and context that exist only in Jeff's mind. This document is a primary source, not a summary. Do not rewrite it into polished prose.  
-**Last updated:** 2026-06-09  
-**Sessions captured:** 2026-06-08, 2026-06-09, 2026-06-09 (session 2), 2026-06-09 (session 3 — analysis + drafts), 2026-06-09 (session 4 — site implementation + checkpoint)
+**Last updated:** 2026-06-11  
+**Sessions captured:** 2026-06-08, 2026-06-09, 2026-06-09 (session 2), 2026-06-09 (session 3 — analysis + drafts), 2026-06-09 (session 4 — site implementation + checkpoint), 2026-06-10 (analysis, §§20–24), 2026-06-11 (creator corrections, §25)
 
 ---
 
@@ -516,3 +516,246 @@ Primary nav: Series removed, Stories added. New order: Archive · About · Stori
 1. The Guernica-scale painting — described in stories.html and timeline.html as a placeholder. Needs a dedicated session.
 2. The grandchildren's names — 31 works, anonymous. Simple fix, urgent.
 3. Why he kept going — the central question, still open.
+
+---
+
+## 20. Knowledge-Gap Audit — 2026-06-10 (Catalog Data Analysis)
+
+**Source:** Not an oral history session. A data analysis of catalog.json (1,084 records), favorites.txt, and all narrative pages, cross-checked against this document. Goal: identify what exists only in Jeff's memory. This list extends and re-ranks the "Updated Unresolved Questions" section above — items 4, 5, and 6 below are gaps this document did not previously know it had.
+
+### Findings from the catalog data (record these — they are evidence, not interpretation)
+
+- **Dating is decade-bucketed.** 1,075 of 1,084 works carry round years (56 at "1970," 193 at "1990," 273 at "2000," 302 at "2010," 240 at "2020"). Only 9 works have specific years. True chronology exists only in Jeff's memory.
+- **An exhibition happened and is unrecorded.** 16 works are titled "XXXIII" / "XXXIII Días," including "XXXIII Gallery Installation," "Installation View, Crowd," "XXXIII Días Installation View" (2022, the homepage hero), and "XXXIII Aunt Mary." No page or note explains the show, the name, or Aunt Mary. This document's working assumption that recognition never came is contradicted by these titles.
+- **The 1980s are nearly empty.** 11 works survive from the decade, and most are photographs *of* the studio (Polaroid Self-Portrait 1980, Studio Desk View), not artworks.
+- **328 works are photographs (30% of the archive)** — titles suggest documented street art and wall figures ("Stencil Girl, Brick Wall," "Rhode, White Figure," "Occupy Democracy," "Devo at WHK 1977"). No narrative page mentions photography as a practice.
+- **No sentence by Jeff about any individual work exists anywhere.** All 1,084 descriptions are machine-written visual descriptions; favorites.txt is bare IDs.
+
+### Ranked knowledge gaps — priority for future sessions
+
+Each entry: the gap, then the single best question. One question per session moment; "boring / next" always available.
+
+1. **The lost-works register** (Critical) — what the 500–1,000 destroyed works were. Already #1 above; reaffirmed. Ask for ONE work, not a ranking: *"Not the best one, not all of them — just one lost work you can still see clearly. What was it made of, how big, where did it hang?"*
+2. **Why he kept going / what "worth it" means at 71** (Critical) — still the central question. Concrete angle: *"The day you fully understood Rauschenberg had been there first — what did you make next, and why that?"*
+3. **The 1980s — the silent decade** (Critical) — lost work, or a near-stop? Opposite stories; only Jeff knows which. *"Were you making art in the 1980s? If yes — where did it all go? If no — what stopped, and what restarted?"*
+4. **XXXIII Días — the undocumented exhibition** (High) — NEW, from catalog titles. *"What was XXXIII Días — where was it, who came, and what were the thirty-three days?"*
+5. **The people around the work** (High) — only named people in fifty years of record: Rauschenberg, Picasso, Kiefer, four grandchildren, and "Aunt Mary" (one work title, unexplained). Wife, daughters, the friend who called — all absent. *"Who is Aunt Mary — and across fifty years, who actually saw the work while it was being made?"*
+6. **The photographic practice** (High) — NEW, from catalog. A third of the archive, no stated purpose; locations and attributions in photographs decay fastest. *"The figures on walls in your photographs — whose are they, and why were you the one photographing them?"*
+7. **Why these 45 favorites** (High) — the closest thing to Jeff curating his own retrospective; selections survive, judgment doesn't. One sentence per work would be the most quotable primary source in the archive. *"Pick whichever favorite you'd save from a fire — what does it have that the other 1,083 don't?"*
+8. **True chronology** (Medium) — even partial sequencing is evidence no one else can supply. *"Within the Guernica series, which works are earliest and which are recent reworkings — can you point to five in order?"*
+9. **Origins of the named themes** (Medium) — Targets, Crosses, Mr. SNOWmann: recurring private iconography, no origin stories. *"Where did Mr. SNOWmann come from — the first time, not the theory?"*
+10. **The first sale** (Medium) — the emotional record was deferred, not refused (§12). *"Almost fifty years on — what do you remember about the day the sculpture sold?"*
+
+### Archivist note
+
+Items 1–3 exist nowhere but Jeff's memory and degrade fastest. Items 4–6 were invisible to the oral history until the catalog data surfaced them — XXXIII Días especially deserves a session soon, because it may revise the persistence-without-recognition narrative this document is built on. Grandchildren specifics (prior list #2) are deliberately ranked lower here: the grandchildren are alive and can be interviewed themselves; only Jeff holds items 1–6.
+
+---
+
+## 21. Archival Investigation — Contradictions, Anomalies, and Hidden Patterns — 2026-06-10
+
+**Source:** Not an oral history session. A second data analysis of catalog.json — motif frequencies, theme×decade and medium×decade cross-tabulations, title text, and keyword fields — read against this document for contradictions. Everything below is labeled **evidence** (from the data) or **interpretation** (a reading that needs Jeff). Interpretations must not be treated as fact or written into site pages without confirmation.
+
+### Ranked findings
+
+**1. The work is about war, and nothing in the archive says so.**
+*Evidence:* 403 works themed Targets; 398 works with warplane/roundel motifs; 293 with bullseyes. Both target and warplane production peak in the 2000s bucket (168 / 142). The one precisely dated work from that decade: "Face of Death V" (art0582, 2004). The 30-year spine is Guernica. No narrative page mentions war or politics.
+*Interpretation:* A sustained civilian response to the Iraq/Afghanistan wars, by a man who was draft-age as Vietnam ended. Confidence: pattern High / war-reading Medium.
+*Question:* "Warplanes and targets are in two-thirds of your work after 1990, and they surge during the Iraq years — what were the planes and targets about?"
+
+**2. "Buy Me" — three works, three decades.**
+*Evidence:* "Buy Me (Targets and Planes)" 1990 (art0518), "Buy Me Collage" 2010 (art0762), "Buy Me (Chess)" 2012 (art0937). Against the captured detachment ("you were supposed to want them").
+*Interpretation:* The work says something rawer about wanting to be bought/seen than the interviews admit. Verify whether the words are physically inscribed in the works (likely — keyword `text` exists on 17 works). Confidence Medium-High.
+*Question:* "Three works over twenty years say 'Buy Me.' Is it written on them — and was it a joke?"
+
+**3. Mr. SNOWmann appears on city walls.**
+*Evidence:* Within the 41 street photographs (keywords street-art / paste-up / stencil / tag-on-other-work; 40 of 41 dated 2010s): "Reaper, Snowman" and "Star of David, Snowman." The Mr. SNOWmann theme spikes the same decade (44 of 72 works). "Sticker Wall, CAID" — plausibly Contemporary Art Institute of Detroit. `tag-on-other-work` is the single most common keyword in the catalog (41 works).
+*Interpretation:* Jeff may have had a public, anonymous street practice in his late fifties — or photographed his character in others' hands. Confidence Low-Medium.
+*Question:* "The snowmen on walls in your 2010s photographs — are they yours?"
+
+**4. A sustained exhibiting period in the 2000s — two decades before XXXIII Días.**
+*Evidence:* Gallery theme = 149 works: 80 in the 2000s bucket, 54 in the 2010s, only 5 in the 2020s. Eighty titles contain "Installation," 91 contain "View."
+*Interpretation:* Roughly 2000–2015 the work was being hung somewhere, repeatedly — during the exact period the narrative treats as private making at the margins. This and §20's XXXIII Días finding together contradict the recognition-never-came framing. Confidence: documentation High / venues unknown.
+*Question:* "The installation views from the 2000s — what were these shows, where, and who hung them?"
+
+**5. The earliest works contain impossible materials.**
+*Evidence:* Three works dated 1970 contain compact discs (post-1982 technology): art0001, "Felix Double Disc" (art0145), "Silk Torpedo Intervention" (art1026). "Merry Christmas 2013, Black" (art0085) sits in the 2000 bucket with 2013 in its title.
+*Interpretation:* Either misdating, or the earliest works were physically reworked decades later — "could be unfinished till the end" made literal. If reworked, no work can be assumed to show its original state. Confidence High.
+*Question:* "Felix Double Disc is dated 1970 but has CDs on it — did you go back into it later, or is the date wrong?"
+
+**6. Painting disappeared for thirty years and returned after retirement.**
+*Evidence:* Paintings per decade: 10 (1970s), 4 (1980s), 0 (1990s), 0 (2000s), 7 (2010s), 21 (2020s). Half of all surviving paintings made after age 65. Collage runs continuously (~150/decade) over the same span.
+*Interpretation:* The medium he went to school for is the one career and money squeezed out first, and retirement gave back. Confidence: pattern High / explanation needs Jeff.
+*Question:* "You didn't paint for thirty years and then made twenty-one paintings after retiring — what did painting need that the other work didn't?"
+
+**7. The first body of work was minimalist block sculpture — never mentioned.**
+*Evidence:* The 1970-bucket sculptures: "Painted Block Wall," "Chromatic Block Grid," "Painted Block Pyramid," "Stacked Painted Blocks," "Blocks Under Glass." 51 of 52 Art School–themed works are in the 1970 bucket.
+*Interpretation:* The earliest surviving practice is formalist and geometric — not Rauschenberg accumulation. The turn from formalism to found objects is an untold turning point. Confidence: cluster High / sequence Medium.
+*Question:* "Before the collages — the painted block constructions at CIA. What were they, and what ended them?"
+
+**8. "Tracings" — a new method emerging right now.**
+*Evidence:* Tracings theme: 12 works, 10 in the 2020s bucket — "Falling Figures Traced," "Big Boy Tracing," "Untitled (Traced Female Torso)," "Snowmann with CD Eyes."
+*Interpretation:* A late-style shift in progress, interviewable in real time. Confidence: cluster High / meaning unknown.
+*Question:* "What are you tracing these days, and why did tracing start?"
+
+**9. The Christmas works.**
+*Evidence:* "Merry Christmas 1" (art0083), "Merry Christmas 2" (art0322, 2013), "Merry Christmas 2013, Black" (art0085).
+*Interpretation:* Possible annual occasion pieces with recipients — and "2013, Black" reads like a year something happened. Confidence Medium.
+*Question:* "Were the Merry Christmas pieces made for someone each year — and what was black about Christmas 2013?"
+
+**10. "Guernica London Spain" — possible pilgrimage.**
+*Evidence:* art0507, titled "Guernica London Spain," dated 2017 — one of only nine non-round years in the catalog. Picasso's Guernica hangs in Madrid; it showed at London's Whitechapel in 1939.
+*Interpretation:* He may have traveled to stand in front of the painting he worked against for thirty years — or made a work about wishing to. Confidence Low.
+*Question:* "Did you ever stand in front of the real Guernica?"
+
+### Archivist note — the pattern across findings 1, 2, and 4
+
+In all three, the data shows more wanting — to be seen, to be bought, to be shown — than the interviews admit. The spare "kept going" voice may be the 71-year-old's settlement with a hungrier younger man whose evidence is still in the catalog. Hold both as true: the captured voice is the primary source for who he is now; the catalog is the primary source for who he was then. Do not edit either to match the other.
+
+> **⚠️ See Section 22 (creator correction, 2026-06-10): findings 3, 4, and 10 of this section, and the §20 XXXIII Días finding, are revised. The installation/gallery images are largely Photoshop composites, not exhibition documentation.**
+
+---
+
+## 22. Creator Correction — The Installation Images Are Composites — 2026-06-10
+
+**Source:** Direct clarification from Jeff, 2026-06-10. This is primary-source evidence from the artist and supersedes the interpretations it touches.
+
+### The correction, as given
+
+Many of the gallery, installation, crowd, and exhibition-view images are **Photoshop composites** in which Jeff inserted his own artwork into existing galleries, museums, exhibition photographs, public spaces, or other people's installations. These images are often visualizations, imagined placements, artistic experiments, or presentation studies — **not documentary evidence of actual exhibitions.**
+
+### What this revises
+
+- **§20, finding "An exhibition happened and is unrecorded" (XXXIII Días):** No longer established. The XXXIII Días installation views may be composites. Whether any real event occurred in 2022 is now an open question, not a finding. The research question stands but must be asked without presumption.
+- **§21, finding 4 ("A sustained exhibiting period in the 2000s"):** Withdrawn as stated. The 149 Gallery-themed works concentrated in the 2000s likely document a *compositing practice*, not an exhibiting period. The corrected question is what the composites were for, and when the practice began.
+- **§21, finding 3 (Mr. SNOWmann on city walls):** Weakened. The wall snowmen may be composites (work inserted into street photographs) rather than physical paste-ups. Three readings now possible: physical street practice / Photoshop placement / photographing others' work. Confidence downgraded to Low.
+- **§21, finding 10 ("Guernica London Spain"):** Possibly a composite placement (his work imagined into a venue) rather than evidence of travel. Confidence remains Low; the question stands.
+- **§21 archivist note ("more wanting than the interviews admit"):** Partially *strengthened*, not weakened — imagined exhibitions built in Photoshop are, if anything, stronger evidence of the wanting than real ones. But this is interpretation; labeled as such.
+
+### What this does NOT revise
+
+- §21 findings 1 (war imagery), 2 ("Buy Me" titles), 5 (anachronistic materials), 6 (painting hiatus), 7 (block sculptures), 8 (Tracings), 9 (Christmas works) — none depended on the installation images being real.
+- §20 items 1–3 and 5–10 (lost works, why he kept going, the 1980s, the people, favorites, chronology, themes, first sale).
+
+### New fact established by the correction
+
+Jeff has a **digital compositing practice** — Photoshop as a medium for imagined placements and presentation studies. This practice is documented nowhere in the oral history and is not represented in the catalog's `work_type` taxonomy (the composites are classified as "photograph"). Its origin, extent, and meaning are now themselves open oral-history questions.
+
+### Archivist lesson (for future contributors)
+
+Catalog metadata was treated as documentary evidence twice in one day, and twice produced a false exhibition history. In this archive, an image of an event is not evidence the event occurred — the artist works in imagined realities. **Verify with the artist before treating any image as a record.** While he can still be asked, this is cheap. After, it is impossible — which is exactly why per-image clarification (real / composite / unknown) belongs near the top of session priorities.
+
+---
+
+## 23. Sole-Source Facts — Knowledge With Exactly One Living Source — 2026-06-10
+
+**Source:** Analysis session, 2026-06-10. These are facts (not interpretations) that only Jeff can supply, ranked strictly by recoverability: item 1 has zero alternative recovery routes (no witness, no forensics, no record); item 15 has several weak ones. **Excluded deliberately:** the CIA sculpture's location and the Guernica-scale painting's year — Jeff has already answered "don't know"; those facts are gone and should not be re-asked.
+
+1. **What the lost works were** (zero recovery routes) — *"Not the best ones — just any you can still see. Describe what's in front of you, one at a time, until you want to stop."*
+2. **What the Guernica-scale painting looked like** (sole witness; never seen by anyone) — *"If you stood in front of the big Guernica — left edge to right edge — what would I see?"* (Visual inventory, not feelings — the feelings question got "boring/next.")
+3. **Whether any physical exhibition ever happened, anywhere, in fifty years** — forensics can prove an image fake but can't prove no show occurred; without venue names nothing is searchable. *"In fifty years, was your work ever physically on a wall in public — even once — and where?"*
+4. **What XXXIII Días is** — the name has no external referent. *"Thirty-three days of what — and why is Aunt Mary in it?"*
+5. **Attribution inside the 31 collaboration works** — the grandchildren were too young to recover their own hands later. *"Take one collaboration piece — point to what's theirs and what's yours, child by child."*
+6. **Which faces in the works are family** — 268 photographic-face works; fragments defeat recognition. *"Are there family faces hidden in the collages — whose, and in which works?"*
+7. **What happened in the 1980s** — destroyed, dispersed, or never made. *"Walk me through the studio in those 1980 photos — what was being made there, and where did it go?"*
+8. **Which works were reworked, and what a work's year means** (begun/finished/last touched) — *"When the catalog says 1970 — is that when it started, ended, or neither? And which old pieces did you go back into?"*
+9. **Which titles are his** — *"Did you name your works — and which titles in the catalog would you recognize as yours?"*
+10. **The wall snowmen: physical paste-up, Photoshop, or someone else's** — *"And which walls, which city?"* (CAID title suggests Detroit.)
+11. **Who holds the dispersed works** — names only, not a tracking project (he declined that: "No / next"). *"No tracking-down — just names: who has pieces of yours?"*
+12. **Whether "Buy Me" is his hand** (inscribed, found text, or cataloger's reading) — *"The works that say 'Buy Me' — did you write that, and were you kidding?"*
+13. **Whether he ever stood before the real Guernica** — *"And what is 'Guernica London Spain' (art0507, 2017)?"*
+14. **Whether the 1970s block sculptures still exist as objects** — *"The painted block pieces from CIA — do any still exist, and what were they?"*
+15. **What the Photoshop composites were for** (visualization, presentation studies, submissions — and whether any were ever sent) — *"When you put your work into those galleries in Photoshop — what was it for, and did you ever send one to anybody?"*
+
+---
+
+## 24. The Craftsman Questions — Knowledge Creators Never Volunteer — 2026-06-10
+
+**Source:** Audit of the questioning strategy itself, 2026-06-10. Finding: every question in §§"Unresolved Questions," 20, 21, and 23 interrogates Jeff as a *subject* (meaning, memory, loss, motive). None interrogate him as a *craftsman and custodian* — the mundane layer that dies silently because it never feels worth saying. These are also the easy interviews: lists, objects, shop talk — no emotional weight, no "boring/next" risk. Good openers before the hard questions.
+
+1. **Construction materials** (conservation-critical: cheap adhesives + acidic supports decide whether works survive) — *"When you stick a CD to a board — what's the board, and what's the glue?"*
+2. **Signatures** (every future authentication depends on it) — *"Do you sign your work — where, how, always — and did the habit change?"*
+3. **Fate of failures** (thrown out, kept, or cannibalized into other works?) — *"When a piece never comes together — what do you physically do with it?"*
+4. **The morgue** (the raw-material stockpile is itself an archive; estates discard it in the first week) — *"Where does the unused material live, and what would I find in it?"*
+5. **The digitization campaign** (the archive's own provenance: camera, period, what was skipped) — *"How did you photograph a thousand works — and what didn't get shot?"*
+6. **Planning papers** (do sketchbooks/notes exist? If yes: most intimate estate objects. If no: a major method fact) — *"Is there paper — sketchbooks, notes, from any decade — and where?"*
+7. **The first move** — *"A new piece, minute one — what's in your hand, and what's the first thing you do?"*
+8. **Physical housing of the 1,084 now** (the water damage proved storage is where this work dies; the handoff covers FTP, not closets) — *"Room by room — where do the works live, and which storage worries you?"*
+9. **Workspace genealogy** — *"List every place you've ever made work — every house, every room, in order."*
+10. **Tools** — *"Which tools have been with you longest — and which one should nobody ever throw away?"*
+11. **The economics, in numbers** (working-artist economics are among the rarest records in art history) — *"In a normal month, any decade — what did making art cost, and where did the money come from?"*
+12. **Physical adaptation at 71** (whether late method shifts — e.g. Tracings — are ideas or accommodations) — *"Anything your hands or eyes did at forty that they don't do now — and what did you change?"*
+13. **Repairs** (his fixes are part of each object's history; indistinguishable from damage without testimony) — *"What falls apart on the works over the years, and what do you do about it?"*
+14. **The sound in the room** — *"When you're working — what's playing, what time is it, is the door open?"*
+15. **The library** ("decades of research" implies marked-up books; heirs will sell them in a box lot unwarned) — *"Which art books do you own — and which one is falling apart from use?"*
+
+---
+
+## 25. Creator Corrections — Composites Scope, XXXIII Días Origin, Priority Revision — 2026-06-11
+
+**Source:** Creator corrections relayed via session prompt, 2026-06-11. **Paraphrase of Jeff's account, not verbatim quotes.** Primary-source evidence from the artist; supersedes the interpretations it touches. Extends §22.
+
+### Correction A — Composites scope strengthened (extends §22)
+
+**All** gallery images, **all** installation-view images, and **all** crowd images are Photoshop composites — artwork placed into existing venues. None should be treated as evidence that an exhibition occurred.
+
+**Very few actual exhibitions occurred** in fifty years.
+
+What this changes beyond §22:
+- §22 said "many" of these images are composites and recommended a per-image clarification project (real / composite / unknown). That project is **no longer needed** — the blanket rule replaces it. All such images are composites.
+- The §23 item 3 question ("was the work ever physically on a wall in public?") is **substantially answered**: very few actual exhibitions occurred. One is already documented — the CIA student show, late 1970s (§12).
+- **Residual open question (small):** which few exhibitions *did* occur — names/places only, one short list. Low-effort, settles the recognition record permanently.
+
+### Correction B — XXXIII Días origin (supersedes §20 finding 4, revises §23 item 4)
+
+Jeff heard there was discussion of making a film about Picasso creating Guernica. The film title was expected to be "33 Days" (XXXIII Días). This appears to be the origin of the series title.
+
+- Do not assume XXXIII Días was a documented exhibition. The "XXXIII Días Installation View" images fall under Correction A — composites.
+- The §20/§23 question "what was XXXIII Días?" is substantially answered. **Still unexplained:** who Aunt Mary is in "XXXIII Aunt Mary."
+- *Archivist note (external context, unverified):* a Spanish film project titled "33 días" about Picasso painting Guernica (Carlos Saura, announced ~2012) matches this account. If correct, it corroborates the testimony and suggests the series name postdates ~2012. Verify before publishing.
+
+### Correction C — Preservation priority revision (creator-directed)
+
+Avoid recommending large, labor-intensive documentation projects unless they are likely to be completed. **The best preservation work is work Jeff will actually enjoy doing. Optimize for completion, not ambition.**
+
+Revised priorities, in order:
+1. **Three short audio recordings** — 1–3 recordings, ~one minute each. Not a large oral-history project. Suggested topics: Why I Make Things · What I Hope My Grandchildren Understand · One Lost Work I Remember. Extremely high preservation value (no audio of Jeff exists anywhere).
+2. **Preserve the composite correction permanently** — this section is that record, together with §22.
+3. **Small lost-works register** — short record of major lost works; not a comprehensive database. See `docs/lost-works-register.md`.
+4. **Low-effort favorite-works notes** — occasional notes only, if Jeff chooses. Do not campaign through all 45.
+5. **Light family context** — a small amount is sufficient; no relationship databases.
+
+### Standing restatement
+
+JFSN is not primarily a website project. It is a personal archive, an oral-history project, a creator-context project, a family-legacy project, and a preservation effort for 1,084 works across ~50 years. *"The goal is not to build a better art website. The goal is to preserve a creative life."* Future analysis must treat creator testimony as primary evidence.
+
+---
+
+## 26. Provenance Finding — The about.html "Exhibition Record" Is Unverified Generated Content — 2026-06-11
+
+**Source:** Git-history investigation, 2026-06-11 (verification session). This is archival forensics, not testimony.
+
+### The finding
+
+about.html publishes a six-row "Exhibition Record": CIA Alumni Exhibition 2022 · Group Exhibition, 78th Street Studios 2019 · Two-Person Exhibition, Waterloo Arts 2016 · Group Exhibition, Plain Arts Gallery 2012 · Solo Exhibition, Negative Space Gallery 2008 · CIA Alumni Show 2003.
+
+Git history establishes its origin:
+
+- **Initial commit (c3e39ce1, 2026-05-26):** the block existed only as a *hidden* HTML comment marked "Exhibitions and Press: hidden until ready to publish," containing placeholder rows — "Group show, TBD gallery 2025," "Solo exhibition, TBD gallery 2024," "Group show, TBD gallery 2023," "CIA Alumni Exhibition, Cleveland 2022."
+- **Commit 438fb034 (2026-05-30, a technical session):** the TBD placeholders were replaced with the six specific named venues and the block was published. No interview occurred that day; the first oral-history session was 2026-06-08.
+
+The venue names are real Cleveland art institutions, which makes the table *plausible-looking*. But the trajectory — placeholder scaffolding → specific entries appearing in a batch technical commit → published without recorded testimony — means this table has **no established source**. It may be wholly invented, partially true, or (least likely) accurate.
+
+### Why it matters
+
+Jeff's correction of 2026-06-11 (§25): very few actual exhibitions ever occurred. The published table claims six in twenty years. One of these statements is substantially wrong, and the table is the one without a source. Until verified, the Exhibition Record is the single most citable piece of potentially false history in the archive — a grandchild or researcher would treat a dated venue table as documentary fact.
+
+### The question for Jeff (one sitting, low effort)
+
+Read the six rows aloud. For each: *"Did this happen?"* Whatever survives becomes the permanent short list of real exhibitions (§25 residual question — this is the same question, now with a concrete checklist). Whatever doesn't survive is removed from about.html.
+
+**Until Jeff answers, the recommended state is to re-hide the table** (restore it to its pre-2026-05-30 hidden state) rather than delete it — preserving the conflict for verification rather than erasing the evidence.
+
+### Note on the catalog's installation-view titles
+
+Related, for completeness: 87 works carry machine-written titles containing "Installation/Gallery View/Crowd," and 93 catalog descriptions use the phrase "installation view." Under §25's blanket rule these depict composites. These titles appear on theme/medium/decade grid pages and in catalog data (api/v1, catalog-lite, JSON-LD) with no composite marker. Inventory and remediation options: docs/SESSION-31-PRESERVATION-HANDOFF.md.

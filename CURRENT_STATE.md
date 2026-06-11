@@ -1,9 +1,18 @@
 # Current State
-**Updated:** 2026-06-10
+**Updated:** 2026-06-11 (session 31 — verification session)
 
-## Last commit
-6301b536 — Session update 2026-06-10 21:04
-*(not yet deployed — run JFSN.app)*
+## Deploy status
+Sessions 25–28 **deployed** to HostGator by Jeff 2026-06-11 (verified live: file sizes match local). Sessions 29–31 are documentation-only — nothing for visitors needs deploying.
+
+## ⚠️ Critical open item (session 31)
+**The FTP password is publicly exposed and still active** — in make_handoff.py on public GitHub and inside the Allison PDF (on GitHub + downloadable at jfsn.com). Rotate it in cPanel first thing. Full remediation steps: `docs/SESSION-31-PRESERVATION-HANDOFF.md` §1.1.
+
+## What was done session 31 (2026-06-11 — verification, no site changes)
+- Re-verified all session-30 review findings from scratch (credential exposure, backup gaps, narrative claims). Companion cleared; old-site origin of the exhibition table disproven.
+- **Git forensics on about.html "Exhibition Record":** grew from hidden "TBD gallery" placeholders into six specific venues in a technical commit (438fb034, 2026-05-30) — no source. Recorded as master-notes **§26** with the question protocol for Jeff.
+- Found master-notes §20–25 + lost-works-register.md + SESSION-29-CHECKPOINT.md existed in ONE copy (laptop only — git, GitHub, 4TB, B2 all stale). Committed, pushed, and backed up this session.
+- Created `docs/SESSION-31-PRESERVATION-HANDOFF.md` — full truth report, classification, quick wins, unresolved questions.
+- IMPROVEMENTS.md cleaned (duplicates/stale removed, 🔴 security items added).
 
 ## What was done this session (2026-06-10 — session 28)
 
