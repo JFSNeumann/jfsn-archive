@@ -103,7 +103,7 @@
 # ============================================
 
 # Block access to sensitive files
-<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|sql|env|git|gitignore|gitattributes)$">
+<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|sql|env|git|gitignore|gitattributes|py|toml|lock)$">
   Order Allow,Deny
   Deny from all
 </FilesMatch>

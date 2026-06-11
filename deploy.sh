@@ -40,18 +40,21 @@ mirror -R --verbose=1 \
   --exclude-glob="artworks/full/*.avif" \
   --exclude-glob="artworks/thumbs/*.avif" \
   --exclude-glob="artworks/mini/*.avif" \
-  --exclude-glob="artworks/*.py" \
   --exclude-glob="artworks/logs/" \
   --exclude-glob="__pycache__/" \
+  --exclude-glob="*.py" \
   --exclude-glob="*.pyc" \
+  --exclude-glob="*.pdf" \
+  --exclude-glob="*.md" \
+  --exclude-glob="docs/*" \
   --exclude-glob="node_modules/" \
   --exclude-glob="package-lock.json" \
+  --exclude-glob="package.json" \
+  --exclude-glob="tailwind.config.js" \
+  --exclude-glob="deno.lock" \
+  --exclude-glob="netlify.toml" \
   --exclude-glob="input.css" \
   --exclude-glob="curate-session.json" \
-  --exclude-glob="server.py" \
-  --exclude-glob="*.md" \
-  --exclude-glob="PROMPT_TEST.md" \
-  --exclude-glob="WORKFLOW.md" \
   $SCRIPT_DIR/ $FTP_REMOTE/
 
 bye

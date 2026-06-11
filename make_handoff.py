@@ -10,6 +10,26 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
 from reportlab.lib.colors import HexColor
 
+import os, re, sys
+
+def _load_ftp_creds():
+    """Read FTP credentials from .ftp.env — never hardcode them in this file.
+    This script lives in a public GitHub repo; the generated PDF is print-only."""
+    env_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '.ftp.env')
+    creds = {}
+    try:
+        for line in open(env_path):
+            m = re.match(r'\s*(FTP_USER|FTP_PASS)\s*=\s*["\']?([^"\'\n]+)', line)
+            if m:
+                creds[m.group(1)] = m.group(2)
+    except FileNotFoundError:
+        sys.exit("ERROR: .ftp.env not found — cannot embed FTP credentials in the handoff PDF.")
+    if 'FTP_USER' not in creds or 'FTP_PASS' not in creds:
+        sys.exit("ERROR: FTP_USER/FTP_PASS missing from .ftp.env.")
+    return creds
+
+_FTP = _load_ftp_creds()
+
 W, H = letter  # 612 x 792
 
 # Light system — matches jfsn.com redesign
@@ -140,11 +160,15 @@ def page1(c):
         ('Website',          'jfsn.com'),
         ('Hosting company',  'HostGator'),
         ('Account email',    'jfsneumann@gmail.com'),
-        ('FTP username',     'jeffery@jfsn.com'),
-        ('FTP password',     '1q2w3e4r!!'),
+        ('FTP username',     _FTP['FTP_USER']),
+        ('FTP password',     _FTP['FTP_PASS']),
         ('GitHub',           'github.com/JFSNeumann/jfsn-archive'),
         ('Code on Mac',      '/Users/jeffreyneumann/Documents/JFSN/'),
         ('HostGator support','1-866-96-GATOR'),
+        ('Domain registrar', 'Gandi — held by Jeff’s friend (name: ___________) — renews each March 5'),
+        ('Cloud backup',     'Backblaze B2, bucket jfsn-archive — login jfsneumann@gmail.com (pw in Bitwarden)'),
+        ('Mirror site',      'jfsn-archive.netlify.app — Netlify login in Bitwarden'),
+        ('Recovery guide',   'docs/CUSTODIAN-RECOVERY-PLAN.md (in the code folder and on GitHub)'),
     ]
     for key, val in rows:
         divider(c, mx, y + 12, W - mx*2)
@@ -169,7 +193,7 @@ def page1(c):
     c.setFont(LABEL_FONT, 7.5)
     c.setFillColor(GRAY)
     c.drawString(mx + 102, y,
-        'Pay the HostGator bill when it arrives by email. The archive runs itself — 1,084 works, fully cataloged.')
+        'Pay the HostGator bill, and make sure jfsn.com is renewed every March 5 — the domain is the one thing money can’t recover late.')
 
     # ── Footer page number ──
     c.setFont(LABEL_FONT, 8)

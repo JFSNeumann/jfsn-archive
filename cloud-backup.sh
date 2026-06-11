@@ -28,9 +28,10 @@ echo ""
 echo "☁️   Cloud backup → Backblaze B2"
 echo ""
 
-# Full sync excluding large/regeneratable directories
+# Full sync excluding large/regeneratable directories.
+# old-site/ IS included deliberately: it is Jeff's earlier website — archival
+# material whose only other complete copy is the HostGator server itself.
 rclone sync . "$BUCKET" \
-  --exclude "old-site/**" \
   --exclude "node_modules/**" \
   --exclude ".git/**" \
   --exclude "artworks/inbox/**" \
