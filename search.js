@@ -147,6 +147,61 @@
   }
 
   // ── Open / Close search ──────────────────────────────────────────────────
+  // ── Typewriter placeholder ───────────────────────────────────────────────
+  const TYPEWRITER_TITLES = [
+    'Untitled (Figure, Blue Ground)',
+    'Cassette Torso',
+    'Reliquary',
+    'XXXIII Días',
+    'Guernica Study',
+    'Pubiern Robodt 365',
+    'Search by title, year, theme…',
+  ];
+  let twIdx = 0, twCharIdx = 0, twDir = 1, twTimer = null;
+
+  function typewriterTick() {
+    if (document.activeElement === input) { stopTypewriter(); return; }
+    const target = TYPEWRITER_TITLES[twIdx];
+    if (twDir === 1) {
+      twCharIdx++;
+      input.placeholder = target.slice(0, twCharIdx);
+      if (twCharIdx >= target.length) {
+        twDir = -1;
+        clearInterval(twTimer);
+        twTimer = setTimeout(function () { twTimer = setInterval(typewriterTick, 60); }, 2200);
+        return;
+      }
+    } else {
+      twCharIdx--;
+      input.placeholder = target.slice(0, twCharIdx);
+      if (twCharIdx <= 0) {
+        twDir = 1;
+        twIdx = (twIdx + 1) % TYPEWRITER_TITLES.length;
+        clearInterval(twTimer);
+        twTimer = setTimeout(function () { twTimer = setInterval(typewriterTick, 80); }, 400);
+        return;
+      }
+    }
+  }
+
+  function startTypewriter() {
+    twIdx = 0; twCharIdx = 0; twDir = 1;
+    input.placeholder = '';
+    if (twTimer) clearTimeout(twTimer);
+    twTimer = setInterval(typewriterTick, 80);
+  }
+  function stopTypewriter() {
+    clearInterval(twTimer);
+    clearTimeout(twTimer);
+    twTimer = null;
+    input.placeholder = 'Search works, themes, year…';
+  }
+
+  input.addEventListener('focus', stopTypewriter);
+  input.addEventListener('blur', function () {
+    if (!overlay.hidden && !input.value) startTypewriter();
+  });
+
   function open() {
     kbModal.hidden = true;
     document.body.style.overflow = 'hidden';
@@ -155,6 +210,8 @@
     input.select();
     render(input.value);
     if (!catalog && !loading) loadCatalog();
+    // Start typewriter after a brief pause if input stays empty
+    setTimeout(function () { if (!input.value && document.activeElement !== input) startTypewriter(); }, 1200);
   }
 
   function close() {
@@ -164,6 +221,7 @@
     results.innerHTML = '';
     selectedIdx   = -1;
     matches       = [];
+    stopTypewriter();
   }
 
   window.openSiteSearch = open;
@@ -271,7 +329,16 @@
     matches = scored.slice(0, 8);
 
     if (!matches.length) {
-      results.innerHTML = '<div class="sse-msg">No results</div>' + surpriseItemHTML();
+      // Zero-results voice — Jeff's voice responses
+      const voices = [
+        'Nothing by that name. Here\'s something from around that time.',
+        'Not in the catalog. But this one has been waiting.',
+        'No match found. The archive offers this instead.',
+        'Nothing here by that name — though it may have been lost.',
+        'That one isn\'t here. This one is.',
+      ];
+      const msg = voices[Math.floor(Math.random() * voices.length)];
+      results.innerHTML = '<div class="sse-msg" style="font-style:italic;opacity:0.7;letter-spacing:0.04em;text-transform:none;font-size:.8rem;">' + escH(msg) + '</div>' + surpriseItemHTML();
       bindClicks();
       return;
     }

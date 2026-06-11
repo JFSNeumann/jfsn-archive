@@ -153,3 +153,267 @@ footer .hover\:border-international-orange::after {
 @media (prefers-reduced-motion: reduce) {
   footer a::after { transition: none; }
 }
+
+/* ─── Page load progress bar ─────────────────────────────────────────────── */
+
+#jfsn-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background: #FF6600;
+  z-index: 9999;
+  pointer-events: none;
+  transition: width 0.1s ease, opacity 0.3s ease;
+}
+
+/* ─── Custom cursor ───────────────────────────────────────────────────────── */
+
+#jfsn-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background: #FF6600;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  will-change: transform;
+}
+
+#jfsn-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid rgba(255, 102, 0, 0.55);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9997;
+  opacity: 0;
+  transition: opacity 0.2s ease, width 0.2s ease, height 0.2s ease, border-color 0.2s ease;
+  will-change: transform;
+}
+
+#jfsn-cursor-ring.jfsn-cursor-expanded {
+  width: 48px;
+  height: 48px;
+  border-color: rgba(255, 102, 0, 0.85);
+  margin-left: -8px;
+  margin-top: -8px;
+}
+
+#jfsn-cursor-ring.jfsn-cursor-clicked {
+  width: 20px;
+  height: 20px;
+  border-color: #FF6600;
+  opacity: 0.8 !important;
+  margin-left: 6px;
+  margin-top: 6px;
+}
+
+/* Hide native cursor on artwork areas when custom cursor is active */
+@media (hover: hover) {
+  .thumb__link,
+  .card-img,
+  [data-cursor-expand] {
+    cursor: none;
+  }
+}
+
+/* ─── Film grain ambient layer ────────────────────────────────────────────── */
+
+#jfsn-grain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9996;
+  opacity: 0.028;
+  mix-blend-mode: multiply;
+}
+
+/* ─── Kinetic letter-settle ──────────────────────────────────────────────── */
+
+@keyframes letter-settle {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ls-ready .ls-char {
+  opacity: 0;
+  animation: letter-settle 0.32s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* ─── Artwork developing animation ───────────────────────────────────────── */
+
+@keyframes artwork-develop {
+  from {
+    filter: brightness(0.6) saturate(0.35);
+  }
+  to {
+    filter: brightness(1) saturate(1);
+  }
+}
+
+.artwork-developing {
+  animation: artwork-develop 0.5s ease-out forwards;
+}
+
+/* ─── View Transitions ────────────────────────────────────────────────────── */
+
+@keyframes vt-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes vt-fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+::view-transition-old(root) {
+  animation: vt-fade-out 0.18s ease forwards;
+}
+::view-transition-new(root) {
+  animation: vt-fade-in 0.22s ease forwards;
+}
+
+/* Artwork hero morphing transition */
+::view-transition-group(vt-artwork-*) {
+  animation-duration: 0.35s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ─── Serendipity mode overlay ───────────────────────────────────────────── */
+
+#jfsn-ser {
+  position: fixed;
+  inset: 0;
+  z-index: 9990;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+#jfsn-ser.jfsn-ser-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#jfsn-ser-bg {
+  position: absolute;
+  inset: 0;
+  background: #fcf9f3;
+}
+
+#jfsn-ser-img {
+  position: relative;
+  max-width: min(72vw, 640px);
+  max-height: 80vh;
+  object-fit: contain;
+  display: block;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 1;
+  box-shadow: 0 0 0 1px rgba(11,11,11,0.08);
+}
+
+#jfsn-ser-img.jfsn-ser-img-in {
+  opacity: 1;
+}
+
+#jfsn-ser-meta {
+  position: absolute;
+  bottom: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #575757;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 2;
+  pointer-events: none;
+}
+
+#jfsn-ser-meta.jfsn-ser-meta-in {
+  opacity: 1;
+}
+
+#jfsn-ser-close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: none;
+  border: 1px solid #c4c7c7;
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #575757;
+  padding: 6px 12px;
+  cursor: pointer;
+  z-index: 3;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+#jfsn-ser-close:hover {
+  color: #FF6600;
+  border-color: #FF6600;
+}
+
+#jfsn-ser-hint {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: #c4c7c7;
+  white-space: nowrap;
+  z-index: 2;
+  pointer-events: none;
+}
+
+#jfsn-ser-hint kbd {
+  font-family: inherit;
+  border: 1px solid #c4c7c7;
+  padding: 1px 5px;
+  font-size: 9px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #jfsn-progress,
+  #jfsn-cursor-dot,
+  #jfsn-cursor-ring,
+  #jfsn-grain { display: none; }
+  .ls-ready .ls-char { opacity: 1; animation: none; }
+  .artwork-developing { animation: none; filter: none; }
+  #jfsn-ser { transition: none; }
+  #jfsn-ser-img { transition: none; }
+  #jfsn-ser-meta { transition: none; }
+}

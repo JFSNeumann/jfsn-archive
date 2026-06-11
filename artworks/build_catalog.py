@@ -47,8 +47,8 @@ ARTIST_SHORT = _cfg.get("artist_short") or ARTIST_NAME
 # Consumers: search.js (file,title,year,work_type,themes,keywords,motifs)
 #            series.html (series — needed for ?series= named-series filter)
 #            artwork-meta.js edge function (adds description for social meta)
-# Stripped: palette, featured, composition — not read by any consumer
-LITE_FIELDS = {'file', 'title', 'work_type', 'year', 'themes', 'keywords', 'motifs', 'description', 'favorite', 'series'}
+# Stripped: palette, composition — not read by any consumer
+LITE_FIELDS = {'file', 'title', 'work_type', 'year', 'themes', 'keywords', 'motifs', 'description', 'favorite', 'featured', 'series'}
 FEATURED   = Path(__file__).parent.parent / "featured.txt"
 FAVORITES  = Path(__file__).parent.parent / "favorites.txt"
 

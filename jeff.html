@@ -11,12 +11,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Material+Symbols+Outlined:opsz,wght,FILL@24,400,0..1&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="site.min.css"/>
-  
+
   <style>
     .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
 
-    /* Cards */
     .tool-card {
       display: flex;
       flex-direction: column;
@@ -29,10 +28,7 @@
       transition: background 0.15s, color 0.12s;
       position: relative;
     }
-    .tool-card:hover {
-      background: #0B0B0B;
-      color: #F3F0EA;
-    }
+    .tool-card:hover { background: #0B0B0B; color: #F3F0EA; }
     .tool-card:hover .card-desc { color: rgba(243,240,234,0.55); }
     .tool-card:hover .card-tag  { color: #FF6600; }
     .tool-card .card-title {
@@ -55,7 +51,6 @@
       margin-top: 0.35rem;
     }
 
-    /* Section divider */
     .sec-label {
       grid-column: 1 / -1;
       display: flex;
@@ -80,7 +75,6 @@
       background: rgba(11,11,11,0.15);
     }
 
-    /* Credentials table */
     .cred-row {
       display: grid;
       grid-template-columns: 180px 1fr;
@@ -108,7 +102,6 @@
     .cred-val a { color: #FF6600; text-decoration: none; }
     .cred-val a:hover { text-decoration: underline; }
 
-    /* Wide card */
     .col-span-full { grid-column: 1 / -1; }
     @media (min-width: 768px) { .md-col-span-2 { grid-column: span 2; } }
   </style>
@@ -117,7 +110,6 @@
 
 <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-deep-ink focus:text-bone-white">Skip to content</a>
 
-<!-- Header -->
 <header class="border-b border-deep-ink bg-background px-margin-desktop py-4 flex justify-between items-center">
   <div>
     <span class="font-display text-2xl tracking-tight text-deep-ink">JFSN</span>
@@ -129,7 +121,6 @@
   </div>
 </header>
 
-<!-- Status bar -->
 <div class="border-b border-deep-ink bg-background px-margin-desktop py-3 flex justify-between items-center">
   <div class="flex items-center gap-2">
     <span class="w-2 h-2 rounded-full bg-international-orange" id="status-dot"></span>
@@ -138,45 +129,65 @@
   <span class="font-label text-[10px] font-semibold uppercase tracking-widest text-archive-gray">jeff.html</span>
 </div>
 
-<!-- Main -->
 <main id="main" class="px-margin-desktop py-8 max-w-[1200px]">
 
-  <!-- ── Public Site ── -->
+  <!-- Public Site -->
   <div class="grid grid-cols-2 md:grid-cols-4 gap-[1px] bg-deep-ink border border-deep-ink mb-6">
 
-    <div class="sec-label col-span-full bg-background px-4 pt-4 pb-1">
-      <span>Public Site</span>
-    </div>
+    <div class="sec-label col-span-full bg-background px-4 pt-4 pb-1"><span>Main</span></div>
 
     <a class="tool-card" href="index.html" target="_blank">
       <div class="card-title">Home</div>
-      <div class="card-desc">The front door — featured works, editorial grid</div>
+      <div class="card-desc">Featured works, editorial grid, hero rotator</div>
     </a>
     <a class="tool-card" href="archive.html" target="_blank">
       <div class="card-title">Archive</div>
-      <div class="card-desc">All 1,084 works — filter, search, sort, explore</div>
+      <div class="card-desc">All 1,084 works — filter, search, sort</div>
     </a>
     <a class="tool-card" href="about.html" target="_blank">
       <div class="card-title">About</div>
-      <div class="card-desc">The person behind 50 years of making</div>
+      <div class="card-desc">Bio, exhibitions, contact, related reading</div>
+    </a>
+    <a class="tool-card" href="start-here.html" target="_blank">
+      <div class="card-title">Start Here</div>
+      <div class="card-desc">Introduction to Jeff, the archive, how to explore</div>
+    </a>
+    <a class="tool-card" href="favorites.html" target="_blank">
+      <div class="card-title">Favorites</div>
+      <div class="card-desc">45 works Jeff would point to first</div>
     </a>
     <a class="tool-card" href="series-index.html" target="_blank">
       <div class="card-title">Series Index</div>
-      <div class="card-desc">Ten bodies of work, each with its own logic</div>
+      <div class="card-desc">Eight bodies of work, each with its own logic</div>
     </a>
-    <a class="tool-card" href="chromatic.html" target="_blank">
-      <div class="card-title">Chromatic River</div>
-      <div class="card-desc">1,084 color slices by year — HiDPI canvas</div>
+    <a class="tool-card" href="lost.html" target="_blank">
+      <div class="card-title">Lost Works</div>
+      <div class="card-desc">500–1,000 works gone. Why this archive exists.</div>
     </a>
-    <a class="tool-card" href="wall.html" target="_blank">
-      <div class="card-title">The Wall</div>
-      <div class="card-desc">All 1,084 at once — dense grid, click to open</div>
+    <a class="tool-card" href="companion.html" target="_blank">
+      <div class="card-title">Companion</div>
+      <div class="card-desc">AI search — ask anything, get a real work back</div>
+      <div class="card-tag">Netlify only</div>
+    </a>
+    <a class="tool-card" href="timeline.html" target="_blank">
+      <div class="card-title">A Life in Time</div>
+      <div class="card-desc">Chronological record — facts, memories, named gaps</div>
+    </a>
+
+    <!-- Reading -->
+    <div class="sec-label col-span-full bg-background px-4 pt-4 pb-1"><span>Reading</span></div>
+
+    <a class="tool-card" href="stories.html" target="_blank">
+      <div class="card-title">Stories</div>
+      <div class="card-desc">Specific things that happened — oral history</div>
+    </a>
+    <a class="tool-card" href="why-i-made-things.html" target="_blank">
+      <div class="card-title">Why I Made Things</div>
+      <div class="card-desc">Fifty years of making — what it gave him</div>
     </a>
 
     <!-- By Medium -->
-    <div class="sec-label col-span-full bg-background px-4 pt-4 pb-1">
-      <span>By Medium</span>
-    </div>
+    <div class="sec-label col-span-full bg-background px-4 pt-4 pb-1"><span>By Medium</span></div>
 
     <a class="tool-card" href="collage.html" target="_blank">
       <div class="card-title">Collage</div>
@@ -194,23 +205,49 @@
       <div class="card-title">Painting</div>
       <div class="card-desc">42 works</div>
     </a>
+
+    <!-- By Theme -->
+    <div class="sec-label col-span-full bg-background px-4 pt-4 pb-1"><span>By Theme</span></div>
+
     <a class="tool-card" href="guernica.html" target="_blank">
-      <div class="card-title">Guernica Series</div>
-      <div class="card-desc">232 works in dialogue with Picasso's Guernica</div>
+      <div class="card-title">Guernica</div>
+      <div class="card-desc">232 works in dialogue with Picasso — 30+ years</div>
     </a>
-    <a class="tool-card" href="lost.html" target="_blank">
-      <div class="card-title">Lost Works</div>
-      <div class="card-desc">500–1,000 works gone. Why this archive exists.</div>
+    <a class="tool-card" href="targets.html" target="_blank">
+      <div class="card-title">Targets</div>
+      <div class="card-desc">Recurring target motif across media and decades</div>
+    </a>
+    <a class="tool-card" href="torsos-faces.html" target="_blank">
+      <div class="card-title">Torsos &amp; Faces</div>
+      <div class="card-desc">The figure — cropped, fragmented, layered</div>
+    </a>
+    <a class="tool-card" href="crosses.html" target="_blank">
+      <div class="card-title">Crosses</div>
+      <div class="card-desc">Cross as form, not symbol</div>
+    </a>
+    <a class="tool-card" href="framed.html" target="_blank">
+      <div class="card-title">Framed</div>
+      <div class="card-desc">Works that use the frame as part of the piece</div>
+    </a>
+    <a class="tool-card" href="mr-snowmann.html" target="_blank">
+      <div class="card-title">Mr. SNOWmann</div>
+      <div class="card-desc">Recurring character — doll, sketch, collage element</div>
+    </a>
+    <a class="tool-card" href="gallery-images.html" target="_blank">
+      <div class="card-title">Gallery Images</div>
+      <div class="card-desc">Installation views and exhibition documentation</div>
+    </a>
+    <a class="tool-card" href="collaboration.html" target="_blank">
+      <div class="card-title">Collaboration</div>
+      <div class="card-desc">Work made with grandchildren — 2022–present</div>
     </a>
 
     <!-- By Decade -->
-    <div class="sec-label col-span-full bg-background px-4 pt-4 pb-1">
-      <span>By Decade</span>
-    </div>
+    <div class="sec-label col-span-full bg-background px-4 pt-4 pb-1"><span>By Decade</span></div>
 
     <a class="tool-card" href="1970s.html" target="_blank">
       <div class="card-title">The 1970s</div>
-      <div class="card-desc">58 works — the first pieces, Cleveland Institute of Art</div>
+      <div class="card-desc">58 works — CIA, first pieces</div>
     </a>
     <a class="tool-card" href="1980s.html" target="_blank">
       <div class="card-title">The 1980s</div>
@@ -233,16 +270,28 @@
       <div class="card-desc">241 works — archive project + ongoing making</div>
     </a>
 
+    <!-- Visualizations -->
+    <div class="sec-label col-span-full bg-background px-4 pt-4 pb-1"><span>Visualizations</span></div>
+
+    <a class="tool-card" href="chromatic.html" target="_blank">
+      <div class="card-title">Chromatic River</div>
+      <div class="card-desc">1,084 color slices by year — HiDPI canvas</div>
+    </a>
+    <a class="tool-card" href="wall.html" target="_blank">
+      <div class="card-title">The Wall</div>
+      <div class="card-desc">All 1,084 at once — dense grid, click to open</div>
+    </a>
+
   </div>
 
-  <!-- ── Studio Tools ── -->
+  <!-- Studio Tools -->
   <div class="mb-2">
     <span class="font-label text-[10px] font-semibold uppercase tracking-widest text-archive-gray">Studio Tools</span>
   </div>
   <div class="grid grid-cols-2 md:grid-cols-3 gap-[1px] bg-deep-ink border border-deep-ink mb-6">
     <a class="tool-card" href="curate.html" target="_blank">
       <div class="card-title">Curate</div>
-      <div class="card-desc">Where curation happens — titles, themes, dates</div>
+      <div class="card-desc">Titles, themes, dates — where curation happens</div>
       <div class="card-tag">Local only</div>
     </a>
     <a class="tool-card" href="dedupe.html" target="_blank">
@@ -255,26 +304,13 @@
       <div class="card-desc">Run before deploying — catches schema errors</div>
       <div class="card-tag">Local only</div>
     </a>
-
-    <a class="tool-card" href="companion.html" target="_blank">
-      <div class="card-title">Companion</div>
-      <div class="card-desc">Ask anything — get a real work back</div>
-      <div class="card-tag">Local only</div>
-    </a>
     <a class="tool-card" href="api.html" target="_blank">
       <div class="card-title">API Docs</div>
       <div class="card-desc">All 1,084 works as open, structured data</div>
     </a>
-  </div>
-
-  <!-- ── Other Pages ── -->
-  <div class="mb-2">
-    <span class="font-label text-[10px] font-semibold uppercase tracking-widest text-archive-gray">Other Pages</span>
-  </div>
-  <div class="grid grid-cols-2 md:grid-cols-3 gap-[1px] bg-deep-ink border border-deep-ink mb-6">
-<a class="tool-card" href="chromatic.html" target="_blank">
-      <div class="card-title">Chromatic</div>
-      <div class="card-desc">Color river — 1,084 works as dominant hue slices</div>
+    <a class="tool-card" href="changes.html" target="_blank">
+      <div class="card-title">Changes</div>
+      <div class="card-desc">Git log feed — what changed and when</div>
     </a>
     <a class="tool-card" href="404.html" target="_blank">
       <div class="card-title">404</div>
@@ -282,7 +318,7 @@
     </a>
   </div>
 
-  <!-- ── Key Credentials ── -->
+  <!-- Key Credentials -->
   <div class="mb-2">
     <span class="font-label text-[10px] font-semibold uppercase tracking-widest text-archive-gray">Key Credentials</span>
   </div>
@@ -290,6 +326,10 @@
     <div class="cred-row">
       <div class="cred-key">Live site</div>
       <div class="cred-val"><a href="https://jfsn.com" target="_blank">jfsn.com</a></div>
+    </div>
+    <div class="cred-row">
+      <div class="cred-key">Netlify (Companion)</div>
+      <div class="cred-val"><a href="https://jfsn-archive.netlify.app" target="_blank">jfsn-archive.netlify.app</a></div>
     </div>
     <div class="cred-row">
       <div class="cred-key">Hosting</div>

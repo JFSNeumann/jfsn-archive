@@ -2,10 +2,43 @@
 **Updated:** 2026-06-10
 
 ## Last commit
-3728fdae — Header + footer UX pass: scroll-hide nav, blur, ⌘K hint, back-to-top, dynamic year, footer col restructure
+8395d618 — CURRENT_STATE.md: stamp session 25
 *(not yet deployed — run JFSN.app)*
 
-## What was done this session (2026-06-10 — session 25)
+## What was done this session (2026-06-10 — session 26)
+
+### start-here.html spacing + jeff.html revision
+
+**start-here.html:**
+- Outer two-column wrapper: `py-20` → `padding-top:64px; padding-bottom:96px` — content no longer crowds footer
+- "Begin Exploring" section: added `pb-20`
+- Sidebar portrait: `max-width:180px` → `max-width:120px`
+
+**Footer bottom bar (all 31 stamped pages):**
+- Added `pb-8` to bottom bar div (© copyright / ↑ BACK TO TOP / PRIVACY) — breathing room restored
+- Stamped via stamp-nav.sh
+
+**jeff.html — full revision:**
+- Added all missing pages: start-here, favorites, stories, why-i-made-things, timeline, all 8 theme pages
+- Sections: Main · Reading · By Medium · By Theme · By Decade · Visualizations · Studio Tools
+- Companion tag corrected to "Netlify only"; Netlify URL added to credentials
+- Removed "Other Pages" section (had duplicate Chromatic); Changes + 404 moved to Studio Tools
+
+**Sitewide content audit:**
+- All 31 pages reviewed for stale counts, email, dead links, dark tokens, removed features
+- Result: all clean — no stale content found
+
+**Files modified:**
+- `_shared/footer.html` — pb-8 on bottom bar
+- `start-here.html` — spacing fix, sidebar image resize
+- `sw.js` — CACHE_V bumped to `jfsn-20260610210000`
+- `jeff.html` — full revision
+- All 31 stamped pages — footer pb-8 propagated
+- `docs/SESSION-26-CHECKPOINT.md` — created
+
+**⚠️ Not yet deployed — run JFSN.app**
+
+## What was done last session (2026-06-10 — session 25)
 
 ### Header + footer UX pass
 

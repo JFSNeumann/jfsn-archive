@@ -13,6 +13,13 @@ A living list. Add to it. Cross things off. This is the backlog.
 
 ## 🟡 High value, no deadline
 
+### index.html UX/UI — best-in-class pass
+Four specific gaps identified session 26 (2026-06-10):
+- [ ] **Hero scroll cue** — no signal that content exists below the hero. Add a subtle animated `↓` fading in after 2s at bottom center. CSS only, prefers-reduced-motion safe.
+- [ ] **"About This Archive" visual hierarchy** — three dense paragraphs, no visual weight. Promote first sentence to Playfair pull-quote, or add a stat column (1,084 · 1974–present · Cleveland) to the right. Or move section below the art grid so art leads.
+- [ ] **"Where To Begin" card warmth** — reads like a nav table. Consider orange left-bar on hover (instead of full invert), more padding, or italic descriptor line. Keep existing `→` micro-labels.
+- [ ] **Section separation** — bone-white sections blur together on scroll. Add `border-top: 1px solid #c4c7c7` between hero / about / where-to-begin / selected-works.
+
 ### Content
 - [ ] **Physical artwork dimensions** — no tooling exists yet. Essential archival data for works that will be distributed to heirs. Requires Jeff to measure surviving works. Start with the most significant pieces.
 - [ ] **Oral history — unanswered questions** — see `docs/oral-history/master-notes.md` Section "Unresolved Questions" for priority list. Top item: why did he keep going after the Rauschenberg realization?
@@ -27,7 +34,6 @@ A living list. Add to it. Cross things off. This is the backlog.
 ## 🟢 Nice to have, low urgency
 
 ### Technical
-- [ ] **`border-radius` on saturation overlay** — medium/theme pages have `border-radius: 2px` on `.thumb__link` but `.thumb__link::after` doesn't inherit it, so overlay corners are square over rounded element. Fix: add `border-radius: inherit` to `.thumb__link::after` in `ui.css`.
 - [ ] **`favorites.html`** — still fetches full `catalog.json` (898KB). Adding `favorite` to `LITE_FIELDS` would let it use `catalog-lite.json` (701KB). Low priority.
 - [ ] **HSTS** — uncomment one line in `.htaccess` once SSL confirmed active in HostGator cPanel.
 
@@ -35,6 +41,10 @@ A living list. Add to it. Cross things off. This is the backlog.
 ---
 
 ## ✅ Completed (recent)
+- [x] ~~**start-here.html spacing**~~ — Begin Exploring no longer crowds footer; outer wrapper padding fixed (session 26)
+- [x] ~~**Footer bottom bar breathing room**~~ — pb-8 added, stamped to all 31 pages (session 26)
+- [x] ~~**jeff.html stale**~~ — full revision: all current pages, theme pages, Netlify URL, corrected tags (session 26)
+- [x] ~~**`border-radius` on saturation overlay**~~ — `border-radius: inherit` added to `.thumb__link::after` in ui.css (session 25)
 - [x] ~~**Two-column layout overflow fix**~~ — gap-16→gap-8, mobile padding fix on stories/why-i-made-things/start-here (session 24)
 - [x] ~~**TOC on long pages**~~ — stories.html + why-i-made-things.html sidebar TOC with active tracking (session 24)
 - [x] ~~**Search `/` shortcut**~~ — opens search overlay, modal + tooltip updated (session 24)
