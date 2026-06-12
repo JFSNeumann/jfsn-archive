@@ -1,5 +1,11 @@
 # Current State
-**Updated:** 2026-06-11 21:08 (session 32 — homepage WOW features, closed)
+**Updated:** 2026-06-12 (session 33 — integrity audit, hero AVIF deploy fix, domain docs preserved)
+
+## What was done session 33 (2026-06-12)
+- **Domain & preservation handoff finalized** — `docs/FINAL-DOMAIN-AND-PRESERVATION-HANDOFF.md` + the three DOMAIN-RECOVERY-* docs. Key facts: Jeff is the Gandi registrant of record for jfsn.com (paid to 2027-03-05, unlocked, in a friend's account); the FTP password **cannot be rotated** (no cPanel access, Pure-FTPd has no self-service change) — the "rotate in cPanel" guidance below is SUPERSEDED. Keystone action: Jeff contacts the friend (see handoff §9).
+- **Full integrity audit** — internal links, image pipeline (1,084/1,084 full+mini+thumbs), sitemap, live spot-checks: clean. audit-nav 11/11.
+- **FIXED: live hero 404s** — session 32's HTML had been deployed but the 6 new hero AVIFs were never uploaded; 6 of 10 hero slides 404'd on the live homepage. Uploaded flat to /artworks/ via lftp, verified all 200 via the rewrite path (2026-06-12).
+- Committed + pushed + backed up the domain-recovery docs (were single-copy on the laptop).
 
 ## What was done session 32 (2026-06-11 — index.html only)
 - **Chromatic River band** — full-bleed canvas under the hero (desktop + mobile): all 1,084 works as chronological color slices from chromatic.json; hover tooltip, click-through to artwork, decade labels with collision-skip; links to chromatic.html. Sections hide themselves if chromatic.json fails to load.
@@ -14,13 +20,13 @@
 - **Lost banner ghost tiles** — three empty 20px outlined frames beside the banner text (both mobile + desktop copies); motif borrowed from lost.html's ghost grid; static, aria-hidden.
 - **"Open one at random"** — link in both Wall band headers; picks a random work from the already-fetched chromatic.json on each click; falls back to archive.html if data never loaded.
 - sw.js CACHE_V bumped to `jfsn-20260611180000`. No new Tailwind utilities (no CSS rebuild needed). Verified in preview: desktop + mobile, zero console errors.
-- **⚠️ Not yet deployed — run JFSN.app, then upload the 6 hero AVIFs flat to /artworks/ (see Hero pool bullet above).** The hero caption truth issue was RESOLVED this session (see Hero caption bullet); gallery-images.html intro/meta is the remaining composite-wording item (IMPROVEMENTS.md 🟡).
+- ~~⚠️ Not yet deployed~~ **DEPLOYED** — session 32 HTML went live via JFSN.app; the 6 hero AVIFs were uploaded + verified 2026-06-12 (session 33). The hero caption truth issue was RESOLVED (see Hero caption bullet); gallery-images.html intro/meta is the remaining composite-wording item (IMPROVEMENTS.md 🟡).
 
 ## Deploy status
-Sessions 25–28 **deployed** to HostGator by Jeff 2026-06-11 (verified live: file sizes match local). Sessions 29–31 are documentation-only — nothing for visitors needs deploying.
+Sessions 25–32 **deployed** to HostGator (session 32 HTML verified live 2026-06-12; hero AVIFs uploaded same day). Sessions 29–31 + 33 are documentation-only beyond the AVIF upload.
 
-## ⚠️ Critical open item (session 31)
-**The FTP password is publicly exposed and still active** — in make_handoff.py on public GitHub and inside the Allison PDF (on GitHub + downloadable at jfsn.com). Rotate it in cPanel first thing. Full remediation steps: `docs/SESSION-31-PRESERVATION-HANDOFF.md` §1.1.
+## ⚠️ Critical open item — UPDATED 2026-06-12
+**The FTP password is publicly exposed, still active, and CANNOT be rotated** — cPanel/HostGator account access is unavailable and Pure-FTPd has no self-service password change (proven by live test 2026-06-12). Do NOT chase cPanel rotation. Impact is bounded: the archive is replicated 4× and only live-site defacement is at risk. Durable fix: recover jfsn.com (Jeff contacts the friend holding the Gandi account), move serving off HostGator, let the hosting lapse. Authoritative record: `docs/FINAL-DOMAIN-AND-PRESERVATION-HANDOFF.md`. Within-reach mitigation: delete the Allison PDF from the webroot over FTP (write access still works).
 
 ## What was done session 31 (2026-06-11 — verification, no site changes)
 - Re-verified all session-30 review findings from scratch (credential exposure, backup gaps, narrative claims). Companion cleared; old-site origin of the exhibition table disproven.

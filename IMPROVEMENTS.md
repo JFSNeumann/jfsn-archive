@@ -7,12 +7,12 @@ A living list. Add to it. Cross things off. This is the backlog.
 
 ## 🔴 Do soon
 
-- [ ] **SECURITY: rotate the FTP password** — it is public (hardcoded in make_handoff.py on public GitHub + inside the Allison PDF on GitHub and at jfsn.com/JFSN-Archive-Handoff-Allison.pdf). cPanel → FTP Accounts → change password → update `.ftp.env`. Full steps: docs/SESSION-31-PRESERVATION-HANDOFF.md §1.1.
-- [ ] **Remove the Allison PDF from the webroot** + add `*.pdf` and `docs/` excludes to deploy.sh; make make_handoff.py read creds from .ftp.env.
-- [ ] **Ask Jeff the Exhibition Record question** — about.html lists six shows with venues; git forensics shows it grew from "TBD gallery" placeholders, no source (master-notes §26). Read the six rows to Jeff: which happened? Then fix or re-hide the table.
-- [ ] **One ~1-minute audio recording** — standing #1 creator-context priority (§25). No audio of Jeff exists anywhere.
+- [ ] **DOMAIN: Jeff contacts the friend holding the Gandi account** — ask for a Change of Owner to a Jeff-controlled account, or the transfer code. The keystone action; everything needed is in docs/DOMAIN-RECOVERY-DOCUMENT-PACK.md. (FTP password rotation is IMPOSSIBLE — no cPanel access, proven 2026-06-12; superseded as an action item. See docs/FINAL-DOMAIN-AND-PRESERVATION-HANDOFF.md.)
+- [ ] **Remove the Allison PDF from the webroot** (`lftp rm /JFSN-Archive-Handoff-Allison.pdf` — FTP write still works) + add `*.pdf` and `docs/` excludes to deploy.sh.
+- [ ] **Ask Jeff the Exhibition Record question** — about.html lists six shows with venues; git forensics shows it grew from "TBD gallery" placeholders, no source (master-notes §26). Read the six rows to Jeff: which happened? Then fix or re-hide the table. **Record the answer as audio — doubles as the first recording of Jeff's voice.**
+- [ ] **One ~1-minute audio recording** — standing #1 creator-context priority (§25). No audio of Jeff exists anywhere. Also: listen to `old-site/BB/audio/sample.wav` (21s — possibly the only existing audio).
+- [ ] **Seed lost-works register from fine-art-2000** — review `old-site/old/fine-art-2000/` (23 JPEGs, ~2000) with Jeff; works not in the catalog are lost-work candidates for docs/lost-works-register.md.
 - [ ] **Ingest new work** — drop photos into `artworks/inbox/`, run `bash add-works.sh`. Pipeline is ready.
-- [ ] **Deploy session 32** — run JFSN.app, then upload the 6 new hero AVIFs FLAT to /artworks/ on HostGator (lftp commands in CURRENT_STATE.md). sw.js CACHE_V already bumped.
 
 ---
 
@@ -40,6 +40,8 @@ A living list. Add to it. Cross things off. This is the backlog.
 ---
 
 ## ✅ Completed (recent)
+- [x] ~~**Deploy session 32**~~ — HTML deployed via JFSN.app; 6 hero AVIFs uploaded flat to /artworks/ + verified 200 live (session 33, 2026-06-12)
+- [x] ~~**Full integrity audit**~~ — links, image pipeline, sitemap, live spot-checks all clean; found + fixed the hero 404s (session 33)
 - [x] ~~**index.html WOW pass**~~ — Chromatic River band, Wall band, hero detail→reveal, In His Own Words card (verbatim quote + audio slot) (session 32)
 - [x] ~~**Mobile About This Archive**~~ — compact prose + 2×2 stats + voice card on mobile; folio images full→medium (3.1MB→820KB) (session 32)
 - [x] ~~**Hero caption truth fix**~~ — "XXXIII Días — imagined installation (Photoshop composite)" in all 4 locations (session 32)
