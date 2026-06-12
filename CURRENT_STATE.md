@@ -1,12 +1,12 @@
 # Current State
-**Updated:** 2026-06-12 (session 33 — integrity audit, hero AVIF deploy fix, domain docs preserved)
+**Updated:** 2026-06-12 16:37
 
 ## What was done session 33 (2026-06-12)
 - **Domain & preservation handoff finalized** — `docs/FINAL-DOMAIN-AND-PRESERVATION-HANDOFF.md` + the three DOMAIN-RECOVERY-* docs. Key facts: Jeff is the Gandi registrant of record for jfsn.com (paid to 2027-03-05, unlocked, in a friend's account); the FTP password **cannot be rotated** (no cPanel access, Pure-FTPd has no self-service change) — the "rotate in cPanel" guidance below is SUPERSEDED. Keystone action: Jeff contacts the friend (see handoff §9).
 - **Full integrity audit** — internal links, image pipeline (1,084/1,084 full+mini+thumbs), sitemap, live spot-checks: clean. audit-nav 11/11.
 - **FIXED: live hero 404s** — session 32's HTML had been deployed but the 6 new hero AVIFs were never uploaded; 6 of 10 hero slides 404'd on the live homepage. Uploaded flat to /artworks/ via lftp, verified all 200 via the rewrite path (2026-06-12).
 - Committed + pushed + backed up the domain-recovery docs (were single-copy on the laptop).
-- **Exhibition Record VERIFIED by Jeff (typed, no audio)** — all six shows happened, with corrections: CIA was a 1978 *student* exhibition (not 2022 alumni), 78th Street was 2009 (not 2019), Waterloo Arts was 2006 (not 2016), the 2008 solo was at Grumpy's Cafe (not Negative Space), 2003 was at the Cleveland Center for Contemporary Art. Most recent real show: 2012. about.html corrected, deployed via lftp, verified live. Testimony: master-notes **§27**. Open: exhibition type for the 2003 row (one word from Jeff).
+- **Exhibition Record VERIFIED by Jeff (typed, no audio)** — all six shows happened, with corrections: CIA was a 1978 *student* exhibition (not 2022 alumni), 78th Street was 2009 (not 2019), Waterloo Arts was 2006 (not 2016), the 2008 solo was at Grumpy's Cafe (not Negative Space), 2003 was at the Cleveland Center for Contemporary Art. Most recent real show: 2012. about.html corrected, deployed via lftp, verified live. Testimony: master-notes **§27**. (2003 row confirmed same session: group show.)
 - **fine-art-2000 lead closed** — Jeff confirmed all 14 works from the ~2000 site are already in the catalog (not lost). Materials testimony captured: USPS/FedEx package containers, CDs, Targets (§27).
 - sw.js CACHE_V bumped to `jfsn-20260612124500` (about.html change), deployed.
 - end-session.sh/backup.sh fixed: benign count mismatch no longer aborts before cloud backup; dest count now uses source-side filters.
@@ -23,8 +23,6 @@
   - CACHE_V `jfsn-20260612201522`. audit-nav 11/11. Preview-verified desktop (full-res hero, 3 medium + 27 thumbs, 640px reserve) + mobile (hero-m, icon SVGs, 136px reserve). NOTE: hidden preview tab freezes CSS animation clock — hero opacity 0 in background screenshots is a preview artifact, not a bug.
   - **Ask Jeff to re-run Lighthouse** to confirm the scores moved.
 - JEFFS-4TB threw write I/O errors once mid-day (USB glitch) — resolved by replug; final backup verified, 24,309 files counts match. If it recurs, suspect the cable/port before the drive.
-- **Homepage image UX pass (7 items, all deployed + verified live):** (1) featured cards now show the WHOLE work — `object-contain p-3` on a dominant-color mat (the matColor() mat was computed but invisible under the old `object-cover`); (2) composite-titled works removed from featured pool — featured.txt: art0029→art0340, art0028→art0296, art0953→art0391, catalog rebuilt; (3) mobile hero caption full-width single line (stats line removed — duplicated in About); (4) folio frames + orange hover outline now hug the artwork, not the letterbox (img max-w/max-h auto, outline moved to img); (5) hero pause button ~44px hit area + dot tap areas via ::after, dot gap 8→14px; (6) mobile Wall band title shortened to "THE WALL"; (7) stale art0953-hero preload removed (~650KB saved on 9/10 visits). site.min.css rebuilt (new utilities). CACHE_V auto-bumped by build_catalog.
-- **Jeff rule update:** new hover effects are ALLOWED again (do-not-reintroduce list still stands; lightboxes still out).
 
 ## What was done session 32 (2026-06-11 — index.html only)
 - **Chromatic River band** — full-bleed canvas under the hero (desktop + mobile): all 1,084 works as chronological color slices from chromatic.json; hover tooltip, click-through to artwork, decade labels with collision-skip; links to chromatic.html. Sections hide themselves if chromatic.json fails to load.
