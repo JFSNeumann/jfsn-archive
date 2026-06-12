@@ -14,7 +14,7 @@
 - **Lost banner ghost tiles** — three empty 20px outlined frames beside the banner text (both mobile + desktop copies); motif borrowed from lost.html's ghost grid; static, aria-hidden.
 - **"Open one at random"** — link in both Wall band headers; picks a random work from the already-fetched chromatic.json on each click; falls back to archive.html if data never loaded.
 - sw.js CACHE_V bumped to `jfsn-20260611180000`. No new Tailwind utilities (no CSS rebuild needed). Verified in preview: desktop + mobile, zero console errors.
-- **⚠️ Not yet deployed — run JFSN.app.** Hero caption truth issue (XXXIII Días composite) still pending Jeff's wording — unchanged this session.
+- **⚠️ Not yet deployed — run JFSN.app, then upload the 6 hero AVIFs flat to /artworks/ (see Hero pool bullet above).** The hero caption truth issue was RESOLVED this session (see Hero caption bullet); gallery-images.html intro/meta is the remaining composite-wording item (IMPROVEMENTS.md 🟡).
 
 ## Deploy status
 Sessions 25–28 **deployed** to HostGator by Jeff 2026-06-11 (verified live: file sizes match local). Sessions 29–31 are documentation-only — nothing for visitors needs deploying.
