@@ -92,7 +92,7 @@ header nav a.nav-underline-active::after {
   -webkit-mask-image: linear-gradient(to bottom, black 0%, black 40%, transparent 100%);
   mask-image: linear-gradient(to bottom, black 0%, black 40%, transparent 100%);
   opacity: 1;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.25s ease;
   pointer-events: none;
   z-index: 1;
   border-radius: inherit;
@@ -107,7 +107,7 @@ header nav a.nav-underline-active::after {
 .thumb__caption a {
   font-family: 'Inter', sans-serif;
   font-weight: 600;
-  transition: color 0.2s ease;
+  transition: color 0.25s ease;
 }
 
 .thumb:hover .thumb__caption a,
