@@ -788,7 +788,7 @@ Read the six published rows to Jeff with "did this happen?" His answer, verbatim
 | ~~2016~~ → **2006** | Two-Person Exhibition, Waterloo Arts |
 | 2012 (unchanged) | Group Exhibition, Plain Arts Gallery |
 | 2008, venue ~~Negative Space Gallery~~ → **Grumpy's Cafe** | Solo Exhibition |
-| 2003, ~~CIA Alumni Show~~ → **Cleveland Center for Contemporary Art** | exhibition type not stated — shown as "Exhibition" pending a word from Jeff |
+| 2003, ~~CIA Alumni Show~~ → **Cleveland Center for Contemporary Art** | exhibition type confirmed by Jeff same session: **"group"** — shown as Group Exhibition |
 
 This is now the permanent real-exhibitions list. Six shows across ~34 years (1978–2012) is consistent with §25's "very few." Note the original table's 2022/2019/2016 recency was invented — the most recent real exhibition was 2012.
 
