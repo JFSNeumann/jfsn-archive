@@ -1,5 +1,5 @@
 # JFSN — Improvement List
-**Updated:** 2026-06-11 (session 32)
+**Updated:** 2026-06-12 (session 33)
 
 A living list. Add to it. Cross things off. This is the backlog.
 
@@ -7,6 +7,8 @@ A living list. Add to it. Cross things off. This is the backlog.
 
 ## 🔴 Do soon
 
+- [ ] **Run `bash cloud-backup.sh`** — B2 hit its daily transaction cap 2026-06-12; the cloud copy is a day behind (everything else is in laptop + GitHub + 4TB).
+- [ ] **Re-run Lighthouse on jfsn.com** — confirm the 2026-06-12 performance pass moved the scores (was desktop 79 / mobile 74, mobile LCP 18.2s; expect mobile LCP ~3–4s).
 - [ ] **DOMAIN: Jeff contacts the friend holding the Gandi account** — ask for a Change of Owner to a Jeff-controlled account, or the transfer code. The keystone action; everything needed is in docs/DOMAIN-RECOVERY-DOCUMENT-PACK.md. (FTP password rotation is IMPOSSIBLE — no cPanel access, proven 2026-06-12; superseded as an action item. See docs/FINAL-DOMAIN-AND-PRESERVATION-HANDOFF.md.)
 - [ ] **Remove the Allison PDF from the webroot** (`lftp rm /JFSN-Archive-Handoff-Allison.pdf` — FTP write still works) + add `*.pdf` and `docs/` excludes to deploy.sh.
 - [ ] **One ~1-minute audio recording** — standing #1 creator-context priority (§25). No audio of Jeff exists anywhere (he declined for the exhibition answers 2026-06-12 — don't push; offer occasionally). Also: listen to `old-site/BB/audio/sample.wav` (21s — possibly the only existing audio).
@@ -38,6 +40,9 @@ A living list. Add to it. Cross things off. This is the backlog.
 ---
 
 ## ✅ Completed (recent)
+- [x] ~~**Performance pass**~~ — mobile hero variants (1080px -hero-m, ~80% smaller), hero pool inlined via build_catalog stamp (featured-hero.txt still the editing surface), thumbs for featured cards 4–30, CLS min-height reserves, Material Symbols icon font → inline SVG sitewide incl. all 1,084 regenerated artwork pages; colors.json restored from git (session 33, 2026-06-12)
+- [x] ~~**Hover pass**~~ — hero holds still on hover, Wall band tooltips, mat bloom (30→55% blend), ghost tiles join Lost hover, unified 0.25s card timing sitewide (session 33)
+- [x] ~~**Homepage image UX pass**~~ — whole works on visible color mats (object-contain), 3 composite-titled works out of featured pool, folio frames hug artwork, mobile hero caption single line, 44px touch targets, mobile Wall title, stale preload removed (session 33)
 - [x] ~~**Exhibition Record verified by Jeff**~~ — all six happened, with corrections (4 of 6 rows had wrong years/venues; most recent real show was 2012, the CIA show was a 1978 *student* exhibition; 2003 CCCA confirmed group show). about.html corrected + deployed + verified live; testimony in master-notes §27 (session 33, 2026-06-12)
 - [x] ~~**fine-art-2000 lost-works lead closed**~~ — Jeff confirmed all 14 works from his ~2000 site are already in the catalog; bonus materials testimony (USPS/FedEx containers, CDs, Targets) recorded in §27 (session 33)
 - [x] ~~**Deploy session 32**~~ — HTML deployed via JFSN.app; 6 hero AVIFs uploaded flat to /artworks/ + verified 200 live (session 33, 2026-06-12)
