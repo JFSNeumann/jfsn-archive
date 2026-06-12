@@ -1,5 +1,17 @@
 [
   {
+    "sha": "ae3011b",
+    "date": "2026-06-11",
+    "title": "Sessions 30-31: credential containment, deploy hardening, old-site preservation, continuity documents",
+    "body": "Security:\n- make_handoff.py reads FTP creds from .ftp.env (hardcoded password removed)\n- Allison handoff PDF untracked from repo (local + backups retained), gitignored\n- deploy.sh: class-based excludes (*.py *.pdf *.md docs/ build configs)\n- _redirects: 42 forced-404 Netlify rules blocking internal docs/scripts/configs\n- .htaccess: py/toml/lock added to FilesMatch deny (already live on HostGator)\n\nPreservation:\n- old-site (12,914 files / 1.5GB: resume, design career 2014-2023, fine-art-2000,\n  grandson material) recovered from its single-copy home; now in 4 locations\n- server-only curate-session.json preserved (757 theme assignments)\n- cloud-backup.sh now includes old-site\n\nDocumentation (docs/): SESSION-30 remediation checkpoint + final report,\ncredential exposure report, old-site preservation inventory,\nhosting-independence audit, custodian recovery plan, disaster-recovery\nchecklist; handoff PDF generator gains domain/B2/Netlify/recovery rows."
+  },
+  {
+    "sha": "77cbb13",
+    "date": "2026-06-11",
+    "title": "Session 31: verification — master-notes §26 (Exhibition Record provenance), preservation handoff, register + checkpoint committed, docs cleaned",
+    "body": ""
+  },
+  {
     "sha": "b45bf87",
     "date": "2026-06-10",
     "title": "Session 28 checkpoint: CURRENT_STATE.md updated",

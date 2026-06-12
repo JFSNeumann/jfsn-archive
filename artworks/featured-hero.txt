@@ -1,8 +1,16 @@
 # Hero image pool — add lines here to expand the rotation
-# Format: artID | caption | object-position (optional, default: center center)
-# Each entry needs: artworks/full/artID-hero.avif and artID-mobile.avif
-# JS picks up to 4 at random on each page load
-art0953|XXXIII Días Installation View · 2022 · COLLAGE|center 20%
+# Format: artID | caption | object-position (optional, default: center center) | reveal-origin (optional)
+# reveal-origin = where the detail-to-reveal zoom starts (e.g. "30% 70%"); defaults to object-position
+# Each entry needs: artworks/full/artID-hero.avif (the -mobile variant is no longer used)
+# JS picks up to 3 at random on each page load
+# NOTE (server deploy): hero AVIFs must be uploaded to /artworks/ on HostGator (flat dir), NOT /artworks/full/
+art0953|XXXIII Días — imagined installation (Photoshop composite) · 2022 · COLLAGE|center 20%
 art1008|Pubiern Robodt 365 · 1990 · SCULPTURE
 art1009|Untitled (Machine Assemblage) · 2020 · SCULPTURE
 art1010|Untitled (Cassette Torso) · 2020 · COLLAGE
+art0585|Untitled (Cube Grid) · 1970 · PAINTING|center center|35% 35%
+art0250|Crown Tower with Discs · 1990 · SCULPTURE|center 60%|50% 65%
+art0779|The Defining Years · 2000 · COLLAGE|center center|30% 40%
+art0392|Art Machine · 2010 · COLLAGE|center center|72% 45%
+art0663|XXXIII Aunt Mary · 2010 · COLLAGE|center 35%|50% 30%
+art1020|Clockwork Targets Formation · 2020 · PAINTING|center center|35% 60%

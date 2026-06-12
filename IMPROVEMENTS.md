@@ -1,5 +1,5 @@
 # JFSN — Improvement List
-**Updated:** 2026-06-11 (session 31)
+**Updated:** 2026-06-11 (session 32)
 
 A living list. Add to it. Cross things off. This is the backlog.
 
@@ -12,17 +12,11 @@ A living list. Add to it. Cross things off. This is the backlog.
 - [ ] **Ask Jeff the Exhibition Record question** — about.html lists six shows with venues; git forensics shows it grew from "TBD gallery" placeholders, no source (master-notes §26). Read the six rows to Jeff: which happened? Then fix or re-hide the table.
 - [ ] **One ~1-minute audio recording** — standing #1 creator-context priority (§25). No audio of Jeff exists anywhere.
 - [ ] **Ingest new work** — drop photos into `artworks/inbox/`, run `bash add-works.sh`. Pipeline is ready.
+- [ ] **Deploy session 32** — run JFSN.app, then upload the 6 new hero AVIFs FLAT to /artworks/ on HostGator (lftp commands in CURRENT_STATE.md). sw.js CACHE_V already bumped.
 
 ---
 
 ## 🟡 High value, no deadline
-
-### index.html UX/UI — best-in-class pass
-Four specific gaps identified session 26 (2026-06-10):
-- [ ] **Hero scroll cue** — no signal that content exists below the hero. Add a subtle animated `↓` fading in after 2s at bottom center. CSS only, prefers-reduced-motion safe.
-- [ ] **"About This Archive" visual hierarchy** — three dense paragraphs, no visual weight. Promote first sentence to Playfair pull-quote, or add a stat column (1,084 · 1974–present · Cleveland) to the right. Or move section below the art grid so art leads.
-- [ ] **"Where To Begin" card warmth** — reads like a nav table. Consider orange left-bar on hover (instead of full invert), more padding, or italic descriptor line. Keep existing `→` micro-labels.
-- [ ] **Section separation** — bone-white sections blur together on scroll. Add `border-top: 1px solid #c4c7c7` between hero / about / where-to-begin / selected-works.
 
 ### Content
 - [ ] **Physical artwork dimensions** — no tooling exists yet. Essential archival data for works that will be distributed to heirs. Requires Jeff to measure surviving works. Start with the most significant pieces.
@@ -32,7 +26,7 @@ Four specific gaps identified session 26 (2026-06-10):
 ### Technical
 - [ ] **HSTS** — uncomment line 93 in `.htaccess`; SSL is confirmed working (site serves https with full security headers).
 - [ ] **Catalog provenance fields** — `year_precision`, `description_source`, `composite` flags through build_catalog → lite → api/v1 → artwork.html ("c. 1970s" display) → JSON-LD. The one multi-session project worth doing (handoff §3).
-- [ ] **gallery-images.html intro + hero caption** — needs Jeff-approved rewrite; current text states the composites are real exhibition documentation (false per master-notes §22/§25).
+- [ ] **gallery-images.html intro + meta/og** — needs Jeff-approved rewrite; current text states the composites are real exhibition documentation (false per master-notes §22/§25). (Homepage hero caption half DONE session 32 — "imagined installation (Photoshop composite)".)
 
 ---
 
@@ -46,6 +40,13 @@ Four specific gaps identified session 26 (2026-06-10):
 ---
 
 ## ✅ Completed (recent)
+- [x] ~~**index.html WOW pass**~~ — Chromatic River band, Wall band, hero detail→reveal, In His Own Words card (verbatim quote + audio slot) (session 32)
+- [x] ~~**Mobile About This Archive**~~ — compact prose + 2×2 stats + voice card on mobile; folio images full→medium (3.1MB→820KB) (session 32)
+- [x] ~~**Hero caption truth fix**~~ — "XXXIII Días — imagined installation (Photoshop composite)" in all 4 locations (session 32)
+- [x] ~~**Hero pool 4→10**~~ — one work per decade from favorites, curated reveal-origins, composite titles excluded (session 32)
+- [x] ~~**favorites.html duplicate footer**~~ — old unmarked footer removed; sitewide footer audit clean (session 32)
+- [x] ~~**Lost banner ghost tiles + "open one at random"**~~ — (session 32)
+- [x] ~~**index.html session-26 UX gaps**~~ — hero scroll cue, About stat column, Where To Begin card warmth, section borders: all verified shipped (sessions 27–32)
 - [x] ~~**start-here.html spacing**~~ — Begin Exploring no longer crowds footer; outer wrapper padding fixed (session 26)
 - [x] ~~**Footer bottom bar breathing room**~~ — pb-8 added, stamped to all 31 pages (session 26)
 - [x] ~~**jeff.html stale**~~ — full revision: all current pages, theme pages, Netlify URL, corrected tags (session 26)
