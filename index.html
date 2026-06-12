@@ -21,7 +21,6 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link rel="preload" href="artworks/full/art0953-hero.avif" as="image" type="image/avif"/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Material+Symbols+Outlined:opsz,wght,FILL@24,400,0..1&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="site.min.css"/>
 <style>
@@ -76,13 +75,14 @@
   .hero-section:focus-within .hero-ctrl { opacity: 1; pointer-events: auto; }
   @media (hover: none) { .hero-ctrl { opacity: 1; pointer-events: auto; } }
 
-  /* Dots */
+  /* Dots — ::after expands each dot's tap area without changing the 5px visual */
   .hero-dot {
     display: inline-block; width: 5px; height: 5px; border-radius: 50%;
     background: rgba(255,255,255,0.3); border: 1.5px solid rgba(255,255,255,0.5);
-    cursor: pointer; padding: 0; flex-shrink: 0;
+    cursor: pointer; padding: 0; flex-shrink: 0; position: relative;
     transition: background 0.2s, border-color 0.2s;
   }
+  .hero-dot::after { content: ''; position: absolute; inset: -7px; }
   .hero-dot.is-active { background: rgba(255,255,255,0.9); border-color: rgba(255,255,255,0.9); }
   .hero-dot:hover { background: rgba(255,255,255,0.6); }
 
@@ -96,11 +96,11 @@
   #hero-prev-d { left: 0; }
   #hero-next-d { right: 0; }
 
-  /* Pause button */
+  /* Pause button — visual stays small; padding + negative margin give a ~44px hit area */
   .hero-pause-btn {
     background: none; border: none; color: rgba(255,255,255,0.55);
     cursor: pointer; font-size: 10px; letter-spacing: 0.08em;
-    font-family: 'Inter', sans-serif; padding: 2px 4px; line-height: 1;
+    font-family: 'Inter', sans-serif; padding: 16px 12px; margin: -14px -8px; line-height: 1;
   }
   .hero-pause-btn:hover { color: rgba(255,255,255,0.9); }
 
@@ -182,17 +182,23 @@
     .card-img::after, .card-frame, .card-title { transition: none; }
   }
 
-  /* Mobile folio art links — cursor + orange outline on hover/focus */
+  /* Mobile folio art links — frame and orange outline hug the artwork itself,
+     not the letterbox, so the ink border reads as a real frame */
   .folio-art-link {
     cursor: zoom-in;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .folio-art-link img {
     outline: 2px solid rgba(255,102,0,0);
     outline-offset: 0;
     transition: outline-color 0.2s ease;
   }
-  .folio-art-link:hover,
-  .folio-art-link:focus-visible { outline-color: #FF6600; }
+  .folio-art-link:hover img,
+  .folio-art-link:focus-visible img { outline-color: #FF6600; }
   @media (prefers-reduced-motion: reduce) {
-    .folio-art-link { transition: none; }
+    .folio-art-link img { transition: none; }
   }
   /* Tablet: 3-col featured grid (4-col starts at 1024px) */
   @media (min-width: 768px) and (max-width: 1023px) {
@@ -399,11 +405,8 @@ header.header-hidden{transform:translateY(-100%)}
     <section id="hero-m" class="hero-section folio-section justify-start p-0 overflow-hidden" style="background-color: #1a1814;">
       <div id="hero-slides-m"></div>
       <div class="absolute inset-0 z-10 flex flex-col justify-end p-8" style="background:linear-gradient(to top, rgba(0,0,0,0.70) 0%, rgba(0,0,0,0.30) 32%, transparent 58%)">
-        <div style="display:flex;align-items:flex-end;justify-content:space-between;">
-          <a id="hero-caption-m" href="artwork.html?id=art0953" aria-live="polite" class="font-label-caps text-label-caps text-bone-white/70 no-underline">XXXIII Días — imagined installation (Photoshop composite) · 2022 · COLLAGE</a>
-          <p class="font-label-caps text-label-caps text-bone-white/70" style="white-space:nowrap;margin-left:12px;">1,084 works · 1974–present</p>
-        </div>
-        <div id="hero-dots-m" class="hero-ctrl" style="display:flex;gap:8px;align-items:center;margin-top:10px;"></div>
+        <a id="hero-caption-m" href="artwork.html?id=art0953" aria-live="polite" class="font-label-caps text-label-caps text-bone-white/70 no-underline" style="display:block;">XXXIII Días — imagined installation (Photoshop composite) · 2022 · COLLAGE</a>
+        <div id="hero-dots-m" class="hero-ctrl" style="display:flex;gap:14px;align-items:center;margin-top:12px;"></div>
       </div>
     </section>
 
@@ -411,11 +414,11 @@ header.header-hidden{transform:translateY(-100%)}
     <section class="folio-section">
       <div class="w-full flex flex-col h-full justify-center py-4">
         <div class="flex-grow flex items-center justify-center min-h-0">
-          <a href="artwork.html?id=art0380" class="folio-art-link block w-full h-full max-h-[60vh]">
+          <a href="artwork.html?id=art0380" class="folio-art-link w-full h-full max-h-[60vh]">
             <img
               src="artworks/medium/art0380.avif"
               alt="Devo at WHK Auditorium — Jeffrey F. S. Neumann, 1977"
-              class="w-full h-full object-contain border border-deep-ink"
+              class="max-w-full max-h-full w-auto h-auto object-contain border border-deep-ink"
               loading="eager"
             />
           </a>
@@ -431,11 +434,11 @@ header.header-hidden{transform:translateY(-100%)}
     <section class="folio-section">
       <div class="w-full flex flex-col h-full justify-center py-4">
         <div class="flex-grow flex items-center justify-center min-h-0">
-          <a href="artwork.html?id=art0002" class="folio-art-link block w-full h-full max-h-[60vh]">
+          <a href="artwork.html?id=art0002" class="folio-art-link w-full h-full max-h-[60vh]">
             <img
               src="artworks/medium/art0002.avif"
               alt="Reliquary — Jeffrey F. S. Neumann, 1990"
-              class="w-full h-full object-contain border border-deep-ink"
+              class="max-w-full max-h-full w-auto h-auto object-contain border border-deep-ink"
               loading="lazy"
             />
           </a>
@@ -451,11 +454,11 @@ header.header-hidden{transform:translateY(-100%)}
     <section class="folio-section">
       <div class="w-full flex flex-col h-full justify-center py-4">
         <div class="flex-grow flex items-center justify-center min-h-0">
-          <a href="artwork.html?id=art0026" class="folio-art-link block w-full h-full max-h-[60vh]">
+          <a href="artwork.html?id=art0026" class="folio-art-link w-full h-full max-h-[60vh]">
             <img
               src="artworks/medium/art0026.avif"
               alt="Yellow Figure on Black Wall — Jeffrey F. S. Neumann, 2010"
-              class="w-full h-full object-contain border border-deep-ink"
+              class="max-w-full max-h-full w-auto h-auto object-contain border border-deep-ink"
               loading="lazy"
             />
           </a>
@@ -563,7 +566,7 @@ header.header-hidden{transform:translateY(-100%)}
   <!-- Mobile: The Wall band -->
   <section id="wall-section-m" class="border-t border-outline-variant" aria-label="The Wall">
     <div class="px-4" style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding-top:20px;padding-bottom:12px;">
-      <h2 class="font-label-caps text-label-caps text-archive-gray" style="margin:0;">THE WALL — 1,084 WORKS, ONE SURFACE</h2>
+      <h2 class="font-label-caps text-label-caps text-archive-gray" style="margin:0;">THE WALL</h2>
       <span style="display:flex;gap:16px;flex-shrink:0;">
         <a href="archive.html" id="random-work-m" class="font-label-caps text-label-caps text-archive-gray hover:text-international-orange transition-colors duration-200" style="white-space:nowrap;">ONE AT RANDOM &rarr;</a>
         <a href="wall.html" class="font-label-caps text-label-caps text-archive-gray hover:text-international-orange transition-colors duration-200" style="white-space:nowrap;">SEE ALL &rarr;</a>
@@ -601,7 +604,7 @@ header.header-hidden{transform:translateY(-100%)}
     <div class="absolute inset-0 z-10 flex flex-col justify-end p-margin-desktop pb-10" style="background:linear-gradient(to top, rgba(0,0,0,0.70) 0%, rgba(0,0,0,0.30) 32%, transparent 58%)">
       <div style="display:flex;align-items:flex-end;gap:24px;">
         <a id="hero-caption-d" href="artwork.html?id=art0953" aria-live="polite" class="font-label-caps text-label-caps text-bone-white/70 no-underline" style="flex:1;">XXXIII Días — imagined installation (Photoshop composite) · 2022 · COLLAGE</a>
-        <div id="hero-dots-d" class="hero-ctrl" style="display:flex;gap:8px;align-items:center;flex-shrink:0;padding-bottom:1px;"></div>
+        <div id="hero-dots-d" class="hero-ctrl" style="display:flex;gap:14px;align-items:center;flex-shrink:0;padding-bottom:1px;"></div>
         <div style="display:flex;align-items:center;gap:12px;flex:1;justify-content:flex-end;">
           <p class="font-label-caps text-label-caps text-bone-white/70">1,084 works · 1974–present · Cleveland</p>
           <button id="hero-pause-d" class="hero-pause-btn hero-ctrl" aria-label="Pause slideshow">❙❙</button>
@@ -923,7 +926,7 @@ footer .hover\:border-international-orange::after{display:none}
     if (!grid) return;
     try {
       const [works, chromatic] = await Promise.all([
-        fetch('catalog-home.json?v=20260612011124').then(r => r.json()),
+        fetch('catalog-home.json?v=20260612165115').then(r => r.json()),
         fetch('chromatic.json').then(r => r.json()).catch(() => []),
       ]);
 
@@ -958,10 +961,10 @@ footer .hover\:border-international-orange::after{display:none}
         card.href = `artwork.html?id=${id}`;
         card.className = 'group no-underline';
         card.innerHTML = `
-          <div class="card-img aspect-[3/4] relative overflow-hidden p-3" style="background:${bg};">
+          <div class="card-img aspect-[3/4] relative overflow-hidden" style="background:${bg};">
             <img
               alt="${w.title} — Jeffrey F. S. Neumann, ${w.year}"
-              class="absolute inset-0 w-full h-full object-cover${isFirst ? ' is-loaded' : ''}"
+              class="absolute inset-0 w-full h-full object-contain p-3${isFirst ? ' is-loaded' : ''}"
               src="artworks/medium/${w.file}"
               loading="${isFirst ? 'eager' : 'lazy'}"${isFirst ? ' fetchpriority="high"' : ''}
               width="900" height="1200"
