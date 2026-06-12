@@ -21,7 +21,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Material+Symbols+Outlined:opsz,wght,FILL@24,400,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="site.min.css"/>
 <style>
   .material-symbols-outlined {
@@ -48,7 +48,9 @@
   }
   /* Featured grid layout — editorial top 3 cards */
   @media (min-width: 768px) {
-    #featured-grid { grid-auto-rows: 80px; }
+    /* min-height reserves the editorial grid's footprint (6×80px rows + 5×32px
+       gaps) so content below doesn't shift when the cards populate */
+    #featured-grid { grid-auto-rows: 80px; min-height: 640px; }
     #featured-grid > a:nth-child(1) { grid-column: span 7; grid-row: span 6; display: flex; flex-direction: column; }
     #featured-grid > a:nth-child(2) { grid-column: span 5; grid-row: span 3; display: flex; flex-direction: column; }
     #featured-grid > a:nth-child(3) { grid-column: span 5; grid-row: span 3; display: flex; flex-direction: column; }
@@ -243,7 +245,11 @@
   }
 
   /* ── Wall band — the mass of the archive on one surface ── */
+  /* min-heights reserve the band's final footprint (rows × tile + gaps) so the
+     Lost banner and footer don't jump when JS populates the grid */
   .wall-band-grid { display: grid; gap: 2px; }
+  #wall-band-d { min-height: 230px; }
+  #wall-band-m { min-height: 136px; }
   .wall-band-grid a {
     position: relative; display: block; aspect-ratio: 1 / 1; overflow: hidden;
     outline: 2px solid rgba(255,102,0,0); outline-offset: -2px;
@@ -307,10 +313,10 @@ header.header-hidden{transform:translateY(-100%)}
   </div>
   <div class="flex items-center gap-4">
     <button class="flex items-center gap-1.5 text-deep-ink hover:text-international-orange transition-colors" style="padding:10px;" aria-label="Search" id="nav-search-btn">
-      <span class="material-symbols-outlined" style="font-size:24px;line-height:1;">search</span>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><line x1="20.4" y1="20.4" x2="16" y2="16"/></svg>
       <span class="hidden md:inline" style="font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.05em;color:#575757;border:1px solid #c4c7c7;padding:1px 5px;pointer-events:none;">⌘K</span>
     </button>
-    <button class="md:hidden material-symbols-outlined text-deep-ink" style="padding:10px;" aria-label="Open menu" id="nav-menu-btn">menu</button>
+    <button class="md:hidden text-deep-ink" style="padding:10px;" aria-label="Open menu" id="nav-menu-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
   </div>
 </header>
 
@@ -342,7 +348,7 @@ header.header-hidden{transform:translateY(-100%)}
     <div style="padding:0 24px 16px;border-top:1px solid #c4c7c7;">
       <button id="mobile-menu-search"
         style="width:100%;display:flex;align-items:center;gap:10px;background:none;border:1px solid #c4c7c7;padding:12px 14px;cursor:pointer;color:#575757;font-family:Inter,sans-serif;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;">
-        <span class="material-symbols-outlined" style="font-size:16px;">search</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><line x1="20.4" y1="20.4" x2="16" y2="16"/></svg>
         Search archive
       </button>
     </div>
@@ -953,7 +959,7 @@ footer .hover\:border-international-orange::after{display:none}
     if (!grid) return;
     try {
       const [works, chromatic] = await Promise.all([
-        fetch('catalog-home.json?v=20260612165115').then(r => r.json()),
+        fetch('catalog-home.json?v=20260612201501').then(r => r.json()),
         fetch('chromatic.json').then(r => r.json()).catch(() => []),
       ]);
 
@@ -993,7 +999,7 @@ footer .hover\:border-international-orange::after{display:none}
             <img
               alt="${w.title} — Jeffrey F. S. Neumann, ${w.year}"
               class="absolute inset-0 w-full h-full object-contain p-3${isFirst ? ' is-loaded' : ''}"
-              src="artworks/medium/${w.file}"
+              src="artworks/${i < 3 ? 'medium' : 'thumbs'}/${w.file}"
               loading="${isFirst ? 'eager' : 'lazy'}"${isFirst ? ' fetchpriority="high"' : ''}
               width="900" height="1200"
               ${isFirst ? '' : 'onload="this.classList.add(\'is-loaded\')"'}
@@ -1034,6 +1040,11 @@ footer .hover\:border-international-orange::after{display:none}
   ];
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* Phones get the 1080px -hero-m variant (~80% smaller); desktop gets full res */
+  function heroSrc(id) {
+    return 'artworks/full/' + id + (window.innerWidth < 768 ? '-hero-m.avif' : '-hero.avif');
+  }
+
   function shuffle(arr) {
     var a = arr.slice(), i, j, t;
     for (i = a.length - 1; i > 0; i--) {
@@ -1043,20 +1054,10 @@ footer .hover\:border-international-orange::after{display:none}
     return a;
   }
 
-  function parseTxt(text) {
-    return text.split('\n').map(function (l) { return l.trim(); })
-      .filter(function (l) { return l && l[0] !== '#'; })
-      .map(function (l) {
-        var p = l.split('|').map(function (s) { return s.trim(); });
-        return { id: p[0], caption: p[1] || '', pos: p[2] || 'center center', origin: p[3] || '' };
-      })
-      .filter(function (h) { return h.id && h.caption; });
-  }
-
   function makeSlide(h, suffix, eager) {
     var img = document.createElement('img');
     img.className  = 'hero-slide hero-slide-' + suffix;
-    img.src        = 'artworks/full/' + h.id + '-hero.avif';
+    img.src        = heroSrc(h.id);
     img.alt        = h.caption + ' — Jeffrey F. S. Neumann';
     img.style.objectPosition = h.pos;
     /* Detail → reveal: open on a detail of the work, pull back to the whole.
@@ -1129,7 +1130,7 @@ footer .hover\:border-international-orange::after{display:none}
       /* Preload next slide ~2s after activation */
       var nextH = selected[(i + 1) % selected.length];
       setTimeout(function () {
-        new Image().src = 'artworks/full/' + nextH.id + '-hero.avif';
+        new Image().src = heroSrc(nextH.id);
       }, 2000);
     }
 
@@ -1196,14 +1197,13 @@ footer .hover\:border-international-orange::after{display:none}
     startTimer();
   }
 
-  /* Load pool from featured-hero.txt, fall back to hardcoded if unavailable */
-  fetch('artworks/featured-hero.txt')
-    .then(function (r) { return r.ok ? r.text() : Promise.reject(); })
-    .then(function (text) {
-      var pool = parseTxt(text);
-      init(pool.length >= 2 ? pool : FALLBACK);
-    })
-    .catch(function () { init(FALLBACK); });
+  /* Hero pool — inlined so the LCP image is discovered at parse time, not after
+     a featured-hero.txt round trip. build_catalog.py stamps this block from
+     artworks/featured-hero.txt (still the editing surface) on every run. */
+  /* HERO_POOL:START — auto-generated, do not edit by hand */
+  var POOL = [{"id": "art0953", "caption": "XXXIII Días — imagined installation (Photoshop composite) · 2022 · COLLAGE", "pos": "center 20%"}, {"id": "art1008", "caption": "Pubiern Robodt 365 · 1990 · SCULPTURE", "pos": "center center"}, {"id": "art1009", "caption": "Untitled (Machine Assemblage) · 2020 · SCULPTURE", "pos": "center center"}, {"id": "art1010", "caption": "Untitled (Cassette Torso) · 2020 · COLLAGE", "pos": "center center"}, {"id": "art0585", "caption": "Untitled (Cube Grid) · 1970 · PAINTING", "pos": "center center", "origin": "35% 35%"}, {"id": "art0250", "caption": "Crown Tower with Discs · 1990 · SCULPTURE", "pos": "center 60%", "origin": "50% 65%"}, {"id": "art0779", "caption": "The Defining Years · 2000 · COLLAGE", "pos": "center center", "origin": "30% 40%"}, {"id": "art0392", "caption": "Art Machine · 2010 · COLLAGE", "pos": "center center", "origin": "72% 45%"}, {"id": "art0663", "caption": "XXXIII Aunt Mary · 2010 · COLLAGE", "pos": "center 35%", "origin": "50% 30%"}, {"id": "art1020", "caption": "Clockwork Targets Formation · 2020 · PAINTING", "pos": "center center", "origin": "35% 60%"}];
+  /* HERO_POOL:END */
+  init(POOL.length >= 2 ? POOL : FALLBACK);
 })();
 </script>
 

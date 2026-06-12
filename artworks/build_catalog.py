@@ -378,6 +378,38 @@ build_ts = datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%d%H%M%S')
 
 if INDEX.exists():
     stamped = re.sub(r'\?v=(?:BUILD_TS|\d{14})', f'?v={build_ts}', INDEX.read_text())
+
+    # ── Stamp the hero pool from artworks/featured-hero.txt into index.html ──
+    # The pool is inlined between HERO_POOL markers so the LCP hero image is
+    # discovered at HTML parse time (no featured-hero.txt fetch on the critical
+    # path). featured-hero.txt remains the editing surface — rerun this script
+    # after changing it.
+    hero_txt = Path(__file__).parent / "featured-hero.txt"
+    if hero_txt.exists():
+        pool = []
+        for line in hero_txt.read_text().splitlines():
+            line = line.strip()
+            if not line or line.startswith('#'):
+                continue
+            parts = [p.strip() for p in line.split('|')]
+            if len(parts) < 2 or not parts[0]:
+                continue
+            entry = {"id": parts[0], "caption": parts[1],
+                     "pos": parts[2] if len(parts) > 2 and parts[2] else "center center"}
+            if len(parts) > 3 and parts[3]:
+                entry["origin"] = parts[3]
+            pool.append(entry)
+        pool_js = ("  /* HERO_POOL:START — auto-generated, do not edit by hand */\n"
+                   f"  var POOL = {json.dumps(pool, ensure_ascii=False)};\n"
+                   "  /* HERO_POOL:END */")
+        stamped, n = re.subn(
+            r'[ \t]*/\* HERO_POOL:START[^\n]*\n.*?/\* HERO_POOL:END \*/',
+            lambda m: pool_js, stamped, flags=re.S)
+        if n:
+            print(f"index.html        — hero pool stamped ({len(pool)} works)")
+        else:
+            print("index.html        — WARNING: HERO_POOL markers not found, pool not stamped")
+
     INDEX.write_text(stamped)
     print(f"index.html        — cache stamp updated (?v={build_ts})")
 
