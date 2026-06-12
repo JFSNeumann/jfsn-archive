@@ -6,6 +6,10 @@
 - **Full integrity audit** — internal links, image pipeline (1,084/1,084 full+mini+thumbs), sitemap, live spot-checks: clean. audit-nav 11/11.
 - **FIXED: live hero 404s** — session 32's HTML had been deployed but the 6 new hero AVIFs were never uploaded; 6 of 10 hero slides 404'd on the live homepage. Uploaded flat to /artworks/ via lftp, verified all 200 via the rewrite path (2026-06-12).
 - Committed + pushed + backed up the domain-recovery docs (were single-copy on the laptop).
+- **Exhibition Record VERIFIED by Jeff (typed, no audio)** — all six shows happened, with corrections: CIA was a 1978 *student* exhibition (not 2022 alumni), 78th Street was 2009 (not 2019), Waterloo Arts was 2006 (not 2016), the 2008 solo was at Grumpy's Cafe (not Negative Space), 2003 was at the Cleveland Center for Contemporary Art. Most recent real show: 2012. about.html corrected, deployed via lftp, verified live. Testimony: master-notes **§27**. Open: exhibition type for the 2003 row (one word from Jeff).
+- **fine-art-2000 lead closed** — Jeff confirmed all 14 works from the ~2000 site are already in the catalog (not lost). Materials testimony captured: USPS/FedEx package containers, CDs, Targets (§27).
+- sw.js CACHE_V bumped to `jfsn-20260612124500` (about.html change), deployed.
+- end-session.sh/backup.sh fixed: benign count mismatch no longer aborts before cloud backup; dest count now uses source-side filters.
 
 ## What was done session 32 (2026-06-11 — index.html only)
 - **Chromatic River band** — full-bleed canvas under the hero (desktop + mobile): all 1,084 works as chronological color slices from chromatic.json; hover tooltip, click-through to artwork, decade labels with collision-skip; links to chromatic.html. Sections hide themselves if chromatic.json fails to load.

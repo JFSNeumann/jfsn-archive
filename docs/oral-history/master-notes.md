@@ -759,3 +759,45 @@ Read the six rows aloud. For each: *"Did this happen?"* Whatever survives become
 ### Note on the catalog's installation-view titles
 
 Related, for completeness: 87 works carry machine-written titles containing "Installation/Gallery View/Crowd," and 93 catalog descriptions use the phrase "installation view." Under §25's blanket rule these depict composites. These titles appear on theme/medium/decade grid pages and in catalog data (api/v1, catalog-lite, JSON-LD) with no composite marker. Inventory and remediation options: docs/SESSION-31-PRESERVATION-HANDOFF.md.
+
+---
+
+## 27. The Exhibition Record, Verified — Creator Corrections — 2026-06-12
+
+**Source:** Jeff's typed corrections, 2026-06-12 session. Primary testimony. He declined audio ("no audio") — typed answers only. This RESOLVES the §26 question.
+
+### The finding
+
+Read the six published rows to Jeff with "did this happen?" His answer, verbatim:
+
+> change these - no audio
+>
+> CIA Student Exhibition — 2022   1978
+> Group Exhibition, 78th Street Studios — 2019.    2009
+> Two-Person Exhibition, Waterloo Arts — 2016     2006
+> Group Exhibition, Plain Arts Gallery — 2012
+> Solo Exhibition, Grumpy's Cafe— 2008
+> Cleveland Center for Contemporary Art — 2003
+
+**Interpretation (applied to about.html same day):** all six exhibitions happened, with corrections — the machine-generated table had real events but wrong years/venues in four of six rows:
+
+| Year (was) | Corrected row |
+|---|---|
+| ~~2022~~ → **1978** | **Student Exhibition** (not Alumni), Cleveland Institute of Art — corroborates §12 (CIA sculpture "shown in a student exhibition. Sold.") and now dates it |
+| ~~2019~~ → **2009** | Group Exhibition, 78th Street Studios |
+| ~~2016~~ → **2006** | Two-Person Exhibition, Waterloo Arts |
+| 2012 (unchanged) | Group Exhibition, Plain Arts Gallery |
+| 2008, venue ~~Negative Space Gallery~~ → **Grumpy's Cafe** | Solo Exhibition |
+| 2003, ~~CIA Alumni Show~~ → **Cleveland Center for Contemporary Art** | exhibition type not stated — shown as "Exhibition" pending a word from Jeff |
+
+This is now the permanent real-exhibitions list. Six shows across ~34 years (1978–2012) is consistent with §25's "very few." Note the original table's 2022/2019/2016 recency was invented — the most recent real exhibition was 2012.
+
+### Same sitting — the fine-art-2000 works (§31d discovery closed)
+
+Shown the 14 numbered works from `old-site/old/fine-art-2000/` (his ~2000 website, bare-number titles). Jeff, verbatim:
+
+> these are allready in the archive
+>
+> made from different USPS & Fedex package containers, CDs, Targets/ etc.
+
+**Findings:** (1) All 14 survive in the catalog — they are NOT lost works; the fine-art-2000 lost-works lead is closed. (2) New materials testimony: these cluster collages are made from **USPS & FedEx package containers, CDs, and Targets** — shipping-material provenance for the white/blue strip works, in his own words. First explicit materials statement for this body of work.
