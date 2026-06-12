@@ -1,5 +1,5 @@
 # Current State
-**Updated:** 2026-06-11 (session 32 — homepage WOW features)
+**Updated:** 2026-06-11 21:08 (session 32 — homepage WOW features, closed)
 
 ## What was done session 32 (2026-06-11 — index.html only)
 - **Chromatic River band** — full-bleed canvas under the hero (desktop + mobile): all 1,084 works as chronological color slices from chromatic.json; hover tooltip, click-through to artwork, decade labels with collision-skip; links to chromatic.html. Sections hide themselves if chromatic.json fails to load.
@@ -126,4 +126,4 @@ Session 26: start-here.html spacing, footer breathing room (pb-8 stamped sitewid
 - 1,084 works cataloged, 0 errors
 
 ## Backup status
-**Last B2 backup:** 2026-06-10 21:04:37
+**Last B2 backup:** 2026-06-11 21:07:18
