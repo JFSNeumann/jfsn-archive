@@ -54,8 +54,13 @@ echo ""
 # ── 2. Backup ─────────────────────────────────────────────────────────────────
 if [ -d "/Volumes/JEFFS-4TB" ]; then
   echo "💾  Running local backup..."
-  bash backup.sh
-  echo "   ✅  Local backup complete."
+  # A count warning from backup.sh must never abort this script —
+  # skipping the cloud backup is worse than a stale local count.
+  if bash backup.sh; then
+    echo "   ✅  Local backup complete."
+  else
+    echo "   ⚠️   backup.sh reported a count mismatch — review, but continuing to cloud backup."
+  fi
 else
   echo "⚠️   JEFFS-4TB drive not mounted — skipping local backup."
   echo "   Plug in the drive and run:  bash backup.sh"

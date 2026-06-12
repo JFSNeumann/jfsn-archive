@@ -58,7 +58,7 @@ echo "[$(date '+%Y-%m-%d %H:%M:%S')] Backup complete." | tee -a "$LOG"
 
 # Quick sanity check: file counts match?
 SRC_COUNT=$(find "$SRC" -type f ! -name '.DS_Store' ! -name '.ftp.env' ! -path '*__pycache__*' ! -path '*.venv*' ! -path '*node_modules*' 2>/dev/null | wc -l | tr -d ' ')
-DEST_COUNT=$(find "$DEST" -type f ! -name 'LAST-BACKUP.txt' 2>/dev/null | wc -l | tr -d ' ')
+DEST_COUNT=$(find "$DEST" -type f ! -name 'LAST-BACKUP.txt' ! -name '.DS_Store' ! -name '.ftp.env' ! -path '*__pycache__*' ! -path '*.venv*' ! -path '*node_modules*' 2>/dev/null | wc -l | tr -d ' ')
 echo "  File count — source: $SRC_COUNT  backup: $DEST_COUNT"
 if [ "$SRC_COUNT" != "$DEST_COUNT" ]; then
   echo "  ⚠  File counts differ. Investigate before trusting this backup." >&2
