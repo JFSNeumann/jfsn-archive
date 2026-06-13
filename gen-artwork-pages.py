@@ -15,6 +15,7 @@ import argparse
 import html
 import json
 import sys
+import urllib.parse
 from pathlib import Path
 
 ROOT     = Path(__file__).parent
@@ -42,18 +43,27 @@ MEDIUM_LABELS = {
     'painting':   'Painting',
 }
 
+# Orientation is derived from image proportions (dims.json) — a stand-in for
+# physical dimensions until those are measured. Links to the archive filter.
+ORIENT_LABELS = {
+    'vertical':   'Vertical',
+    'horizontal': 'Horizontal',
+    'square':     'Square',
+}
+
 
 def e(s):
     return html.escape(str(s or ''), quote=True)
 
 
 def theme_link(theme):
+    # Dedicated deep-dive page if one exists; otherwise the generic theme view.
     page = THEME_PAGES.get(theme)
-    if page:
-        return (f'<a href="{page}" '
-                f'class="hover:text-international-orange transition-colors underline underline-offset-2">'
-                f'{e(theme)}</a>')
-    return e(theme)
+    if not page:
+        page = '../../series.html?theme=' + urllib.parse.quote(theme, safe='')
+    return (f'<a href="{page}" '
+            f'class="hover:text-international-orange transition-colors underline underline-offset-2">'
+            f'{e(theme)}</a>')
 
 
 def meta_row(label, value_html):
@@ -138,6 +148,14 @@ def generate_page(work, idx, all_works, colors):
     # Meta rows
     rows = meta_row('Year', e(str(year)) if year else '—')
     rows += meta_row('Medium', e(medium))
+    orientation = work.get('orientation')
+    if orientation in ORIENT_LABELS:
+        rows += meta_row(
+            'Orientation',
+            f'<a href="../../archive.html?orientation={orientation}" '
+            f'class="hover:text-international-orange transition-colors underline underline-offset-2">'
+            f'{ORIENT_LABELS[orientation]}</a>'
+        )
     if series:
         series_href = '../../guernica.html' if series == 'Guernica' else (
             f'../../series.html?series={html.escape(series, quote=True)}')

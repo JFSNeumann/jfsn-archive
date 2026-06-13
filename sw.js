@@ -5,7 +5,7 @@
    - HTML/CSS/JS  → network-first (always fresh; fall back to cache if offline)
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-20260612212319';
+const CACHE_V  = 'jfsn-20260613180000';
 const PRECACHE = [
   '/',
   '/index.html',
@@ -36,6 +36,9 @@ const PRECACHE = [
   '/collaboration.html',
   '/start-here.html',
   '/favorites.html',
+  '/stories.html',
+  '/why-i-made-things.html',
+  '/timeline.html',
   '/site.min.css',
   '/search.js',
   '/catalog-home.json',

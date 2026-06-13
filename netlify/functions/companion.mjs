@@ -100,18 +100,23 @@ export const handler = async (event) => {
   const messages = [{ role: 'user', content: prompt }];
 
   // Agentic loop: let Claude call search_works as many times as it needs.
+  // NOTE: this runs inside a Netlify synchronous function with a hard 30s
+  // wall-clock limit. Deep mode previously used Sonnet + adaptive thinking +
+  // max_tokens 4000, which blew past 30s on every request (the function was
+  // killed mid-flight → 502 Sandbox.Timedout). Adaptive thinking is unbounded
+  // and the loop is multi-round-trip, so it cannot fit the budget. Deep mode
+  // now means "Sonnet instead of Haiku" — a real quality bump — without
+  // extended thinking, so it completes well inside the limit. If the deeper
+  // reasoning is ever wanted back, the function must move to a streaming or
+  // background architecture (the 30s cap can't be raised on a sync function).
   for (let turn = 0; turn < 5; turn++) {
     const params = {
       model,
-      max_tokens: deep ? 4000 : 1024,
+      max_tokens: 1024,
       system:     SYSTEM,
       tools:      [SEARCH_TOOL],
       messages,
     };
-
-    if (deep) {
-      params.thinking = { type: 'adaptive' };
-    }
 
     const msg = await client.messages.create(params);
 

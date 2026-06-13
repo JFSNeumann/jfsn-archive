@@ -48,7 +48,7 @@ ARTIST_SHORT = _cfg.get("artist_short") or ARTIST_NAME
 #            series.html (series — needed for ?series= named-series filter)
 #            artwork-meta.js edge function (adds description for social meta)
 # Stripped: palette, composition — not read by any consumer
-LITE_FIELDS = {'file', 'title', 'work_type', 'year', 'themes', 'keywords', 'motifs', 'description', 'favorite', 'featured', 'series'}
+LITE_FIELDS = {'file', 'title', 'work_type', 'year', 'themes', 'keywords', 'motifs', 'description', 'favorite', 'featured', 'series', 'orientation'}
 FEATURED   = Path(__file__).parent.parent / "featured.txt"
 FAVORITES  = Path(__file__).parent.parent / "favorites.txt"
 
@@ -64,6 +64,31 @@ def _load_id_file(path):
 featured_ids = _load_id_file(FEATURED)
 favorite_ids = _load_id_file(FAVORITES)
 
+# ── Orientation (derived from image proportions) ──────────────────────────────
+# dims.json holds [width, height] in thumbnail pixels for every work. This is a
+# stand-in for physical dimensions (which require Jeff to measure) — it lets the
+# archive filter and artwork pages show whether a piece is vertical, horizontal,
+# or square. A 10% tolerance band keeps near-square works out of the tall/wide
+# buckets. Rerun build_dims.py if dims.json is ever missing or stale.
+DIMS = ROOT / "dims.json"
+_dims = {}
+if DIMS.exists():
+    try:
+        _dims = json.loads(DIMS.read_text())
+    except Exception as e:
+        print(f"Warning: could not parse dims.json: {e}")
+
+def _orientation(art_id):
+    wh = _dims.get(art_id)
+    if not wh or len(wh) < 2 or not wh[0] or not wh[1]:
+        return None
+    w, h = wh[0], wh[1]
+    if h > w * 1.1:
+        return 'vertical'
+    if w > h * 1.1:
+        return 'horizontal'
+    return 'square'
+
 records = []
 skipped = []
 cataloged_ids = set()
@@ -75,6 +100,7 @@ for p in sorted(FULL.glob("art*.json")):
         art_id = p.stem  # e.g. "art0061"
         rec['featured'] = art_id in featured_ids
         rec['favorite'] = art_id in favorite_ids
+        rec['orientation'] = _orientation(art_id)
         records.append(rec)
         cataloged_ids.add(art_id)
     except Exception as e:
@@ -109,6 +135,7 @@ for p in sorted(THUMBS.glob("art*.avif")):
             'favorite': art_id in favorite_ids,
             'description': None,
             'composition': None,
+            'orientation': _orientation(art_id),
         })
 
 # Keep catalog in stable ID order

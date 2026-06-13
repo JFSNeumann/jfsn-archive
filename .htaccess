@@ -89,8 +89,8 @@
   # Permissions policy
   Header set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()"
 
-  # HSTS — uncomment once SSL is confirmed active
-  # Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+  # HSTS — SSL confirmed active (jfsn.com serves https with full security headers)
+  Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
 
   # Remove server fingerprinting
   Header unset Server

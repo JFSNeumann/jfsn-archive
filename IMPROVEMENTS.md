@@ -1,5 +1,5 @@
 # JFSN — Improvement List
-**Updated:** 2026-06-12 (session 33)
+**Updated:** 2026-06-13 (session 35)
 
 A living list. Add to it. Cross things off. This is the backlog.
 
@@ -7,9 +7,7 @@ A living list. Add to it. Cross things off. This is the backlog.
 
 ## 🔴 Do soon
 
-- [ ] **Re-run Lighthouse on jfsn.com** — confirm the 2026-06-12 performance pass moved the scores (was desktop 79 / mobile 74, mobile LCP 18.2s; expect mobile LCP ~3–4s). Jeff's to do — remind at session start.
 - [ ] **DOMAIN: Jeff contacts the friend holding the Gandi account** — ask for a Change of Owner to a Jeff-controlled account, or the transfer code. The keystone action; everything needed is in docs/DOMAIN-RECOVERY-DOCUMENT-PACK.md. (FTP password rotation is IMPOSSIBLE — no cPanel access, proven 2026-06-12; superseded as an action item. See docs/FINAL-DOMAIN-AND-PRESERVATION-HANDOFF.md.)
-- [ ] **Companion function returns 502 "Unexpected model response"** — pre-existing on BOTH Netlify prod and fresh deploys (found 2026-06-12 during mirror refresh; valid `{"prompt":...}` POST reproduces it). Debug `netlify/functions/companion.mjs` response handling.
 - [ ] **One ~1-minute audio recording** — standing #1 creator-context priority (§25). No audio of Jeff exists anywhere (he declined for the exhibition answers 2026-06-12 — don't push; offer occasionally). Also: listen to `old-site/BB/audio/sample.wav` (21s — possibly the only existing audio).
 - [ ] **Ingest new work** — drop photos into `artworks/inbox/`, run `bash add-works.sh`. Pipeline is ready.
 
@@ -18,27 +16,24 @@ A living list. Add to it. Cross things off. This is the backlog.
 ## 🟡 High value, no deadline
 
 ### Content
-- [ ] **Physical artwork dimensions** — no tooling exists yet. Essential archival data for works that will be distributed to heirs. Requires Jeff to measure surviving works. Start with the most significant pieces.
+- [ ] **Physical artwork dimensions (real measurements)** — orientation stand-in SHIPPED session 35 (vertical/horizontal/square from pixel dims via dims.json, shown on artwork pages + an archive filter). Actual inches/cm still need Jeff to measure surviving works; no tooling. Start with the most significant pieces.
 - [ ] **Oral history — unanswered questions** — see `docs/oral-history/master-notes.md` Section "Unresolved Questions" for priority list. Top item: why did he keep going after the Rauschenberg realization?
 - [ ] **start-here.html** — oral history content written in (session 21). Review with Jeff and refine.
 
 ### Technical
-- [ ] **HSTS** — uncomment line 93 in `.htaccess`; SSL is confirmed working (site serves https with full security headers).
-- [ ] **Catalog provenance fields** — `year_precision`, `description_source`, `composite` flags through build_catalog → lite → api/v1 → artwork.html ("c. 1970s" display) → JSON-LD. The one multi-session project worth doing (handoff §3).
-- [ ] **gallery-images.html intro + meta/og** — needs Jeff-approved rewrite; current text states the composites are real exhibition documentation (false per master-notes §22/§25). (Homepage hero caption half DONE session 32 — "imagined installation (Photoshop composite)".)
+- [ ] **Catalog provenance fields** — `year_precision`, `description_source`, `composite` flags through build_catalog → lite → api/v1 → artwork.html ("c. 1970s" display) → JSON-LD. The one multi-session project worth doing (handoff §3). NB: the `orientation` field added session 35 is the same pipeline pattern to follow.
 
 ---
 
 ## 🟢 Nice to have, low urgency
 
 ### Technical
-- [ ] **Decade footer parity** — all 6 decade pages missing api/favorites/start-here/why-i-made-things links vs shared footer. Best fixed with a stamped Material footer block, not hand edits.
-- [ ] **artwork.html theme links** — Themes metadata row is plain text; link to theme pages via a small slug map (also in gen-artwork-pages.py template).
-- [ ] **sw.js PRECACHE** — add stories.html, why-i-made-things.html, timeline.html.
+- [ ] **series-index.html per-theme icons** — extend the session-35 icon vocabulary (inline feather SVGs) to the 8 series/themes, but ONLY if they read as earned rather than literal. Review with Jeff first.
 
 ---
 
 ## ✅ Completed (recent)
+- [x] ~~**Session 35 (2026-06-13) — Companion fix + orientation + icons + truth pass; ALL deployed + verified live**~~ — **Companion deep-mode 502 fixed**: root cause was Netlify's hard 30s function timeout (Sonnet 4.6 + adaptive thinking + 5-turn loop + 4000 tokens), NOT bad model output as previously logged; deep mode is now Sonnet 4.6 *without* extended thinking at 1024 tokens — verified live (HTTP 200 in ~17.5s). **gallery-images.html** rewritten to the composite truth ("Imagined Placements"; intro + meta + OG + JSON-LD). **Image-orientation stand-in**: `build_catalog.py` reads `dims.json` → `orientation` (vertical 424 / horizontal 573 / square 87) in catalog + lite; shown on artwork.html + all 1,084 regenerated static pages; new ORIENTATION filter on archive.html. **Artwork theme links** (themes row links via slug map; series.html?theme= fallback). **Decade-footer parity** (api/favorites/start-here/why-i-made-things added to all 6). **HSTS** enabled in .htaccess. **sw.js PRECACHE** +stories/why-i-made-things/timeline. **Hero keeps scaling on hover** (removed the pause rule). **Icons sitewide** (inline feather SVGs, no icon fonts): homepage "Where To Begin" (6 + Start Here orange feature), start-here "Begin Exploring" (8, Full Archive = orange primary), mobile drawer (4, re-stamped to 31 pages). **Lighthouse re-run** confirmed the perf pass: desktop ~86 / mobile ~78, LCP ~2.4–5.4s (was 18.2s). CACHE_V `jfsn-20260613180000`; audit-nav 11/11. NOTE: mobile nav is a hamburger drawer, not a fixed bottom bar (CLAUDE.md corrected).
 - [x] ~~**Nine homepage/sitewide UX features (sessions 34b, both rounds)**~~ — river tooltip mini previews (homepage bands + chromatic.html), cross-document view-transition artwork morph SITEWIDE (incl. 1,084 regenerated static pages; old broken same-doc code removed), hero→river "you are here" marker, Today from the Archive daily strip, mobile folio dot rail, mini-river on artwork.html ("where this sits"), river touch scrubbing, clickable decade labels → filtered archive. All deployed + verified on jfsn.com and Netlify (2026-06-12)
 - [x] ~~**Allison PDF removed from BOTH webroots**~~ — deleted from jfsn.com via FTP (404 verified); Netlify mirror refreshed via curated CLI deploy — PDF + make_handoff.py now 404 there too, `_redirects` 42 forced-404 rules finally live, mirror current through session 33 (was a stale June-5 snapshot; **site has NO git integration — Netlify deploys are manual CLI from a curated staging dir, see CREDENTIAL-EXPOSURE-REPORT.md §6**). deploy.sh `*.pdf`/`docs/` excludes were already in place since session 31. Every public copy of the credential is now CLOSED or BLOCKED (session 34, 2026-06-12)
 - [x] ~~**Performance pass**~~ — mobile hero variants (1080px -hero-m, ~80% smaller), hero pool inlined via build_catalog stamp (featured-hero.txt still the editing surface), thumbs for featured cards 4–30, CLS min-height reserves, Material Symbols icon font → inline SVG sitewide incl. all 1,084 regenerated artwork pages; colors.json restored from git (session 33, 2026-06-12)

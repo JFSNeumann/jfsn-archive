@@ -112,12 +112,6 @@
   #hero-caption-d:hover,
   #hero-caption-m:hover { color: rgba(255,255,255,0.95); text-decoration: underline; text-underline-offset: 3px; }
 
-  /* Hover = look: freeze the reveal drift while the pointer rests on the hero
-     (the slide timer already pauses on hover via JS) */
-  @media (hover: hover) {
-    .hero-section:hover .hero-slide[data-kb="reveal"].is-active { animation-play-state: paused; }
-  }
-
   @media (prefers-reduced-motion: reduce) {
     .hero-slide { transition: none; animation: none !important; }
     .hero-ctrl { transition: none; }
@@ -382,10 +376,10 @@ header.header-hidden{transform:translateY(-100%)}
     </div>
     <!-- Links -->
     <div style="flex:1;overflow-y:auto;padding:8px 0;">
-      <a href="archive.html"  style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Archive</a>
-      <a href="about.html"    style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">About</a>
-      <a href="stories.html"  style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Stories</a>
-      <a href="lost.html"     style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Lost</a>
+      <a href="archive.html"  style="display:flex;align-items:center;gap:14px;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="flex-shrink:0;"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Archive</a>
+      <a href="about.html"    style="display:flex;align-items:center;gap:14px;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="flex-shrink:0;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>About</a>
+      <a href="stories.html"  style="display:flex;align-items:center;gap:14px;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="flex-shrink:0;"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Stories</a>
+      <a href="lost.html"     style="display:flex;align-items:center;gap:14px;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="flex-shrink:0;"><rect x="3" y="3" width="18" height="18" stroke-dasharray="4 4"/></svg>Lost</a>
     </div>
     <!-- Portrait -->
     <div style="padding:16px 24px;">
@@ -680,27 +674,32 @@ header.header-hidden{transform:translateY(-100%)}
   <section class="border-t border-outline-variant px-4 pt-8 pb-2">
     <p class="font-label-caps text-label-caps text-archive-gray mb-6">Where To Begin</p>
     <div style="display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #c4c7c7;">
-      <a href="start-here.html" style="display:block;padding:20px 16px 20px 0;border-bottom:1px solid #c4c7c7;text-decoration:none;">
+      <a href="start-here.html" style="display:block;padding:20px 16px 20px 13px;border-bottom:1px solid #c4c7c7;text-decoration:none;background:rgba(255,102,0,0.05);box-shadow:inset 3px 0 0 #FF6600;">
+        <span style="display:block;color:#FF6600;margin-bottom:8px;"><svg class="wtb-svg-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></span>
         <p style="font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#0B0B0B;margin:0 0 6px;">Start Here</p>
         <p style="font-family:Inter,sans-serif;font-size:12px;line-height:1.55;color:#575757;margin:0 0 10px;">Who Jeff is and why this archive exists.</p>
-        <p style="font-family:Inter,sans-serif;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#575757;margin:0;">Explore &rarr;</p>
+        <p style="font-family:Inter,sans-serif;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#FF6600;margin:0;">Explore &rarr;</p>
       </a>
       <a href="stories.html" style="display:block;padding:20px 0 20px 16px;border-bottom:1px solid #c4c7c7;border-left:1px solid #c4c7c7;text-decoration:none;">
+        <span style="display:block;color:#575757;margin-bottom:8px;"><svg class="wtb-svg-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span>
         <p style="font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#0B0B0B;margin:0 0 6px;">Stories</p>
         <p style="font-family:Inter,sans-serif;font-size:12px;line-height:1.55;color:#575757;margin:0 0 10px;">Specific things that happened. In his own words.</p>
         <p style="font-family:Inter,sans-serif;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#575757;margin:0;">Read &rarr;</p>
       </a>
       <a href="favorites.html" style="display:block;padding:20px 16px 20px 0;border-bottom:1px solid #c4c7c7;text-decoration:none;">
+        <span style="display:block;color:#575757;margin-bottom:8px;"><svg class="wtb-svg-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
         <p style="font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#0B0B0B;margin:0 0 6px;">Favorites</p>
         <p style="font-family:Inter,sans-serif;font-size:12px;line-height:1.55;color:#575757;margin:0 0 10px;">Works Jeff has marked as personally significant.</p>
         <p style="font-family:Inter,sans-serif;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#575757;margin:0;">View &rarr;</p>
       </a>
       <a href="guernica.html" style="display:block;padding:20px 0 20px 16px;border-bottom:1px solid #c4c7c7;border-left:1px solid #c4c7c7;text-decoration:none;">
+        <span style="display:block;color:#575757;margin-bottom:8px;"><svg class="wtb-svg-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
         <p style="font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#0B0B0B;margin:0 0 6px;">Guernica</p>
         <p style="font-family:Inter,sans-serif;font-size:12px;line-height:1.55;color:#575757;margin:0 0 10px;">232 works. The longest-running series in the archive.</p>
         <p style="font-family:Inter,sans-serif;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#575757;margin:0;">View &rarr;</p>
       </a>
       <a href="archive.html" style="display:block;padding:20px 16px 20px 0;border-bottom:1px solid #c4c7c7;text-decoration:none;">
+        <span style="display:block;color:#575757;margin-bottom:8px;"><svg class="wtb-svg-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>
         <p style="font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#0B0B0B;margin:0 0 6px;">Full Archive</p>
         <p style="font-family:Inter,sans-serif;font-size:12px;line-height:1.55;color:#575757;margin:0 0 10px;">All 1,084 works. Filter by medium, decade, or series.</p>
         <p style="font-family:Inter,sans-serif;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#575757;margin:0;">Browse &rarr;</p>
@@ -915,6 +914,14 @@ header.header-hidden{transform:translateY(-100%)}
   .wtb-card:hover::before { transform: scaleY(1); }
   .wtb-card:hover { padding-left: 16px; }
   .wtb-card + .wtb-card-left { border-left: 1px solid #c4c7c7; }
+  /* Icons */
+  .wtb-iconwrap { display: block; margin-bottom: 16px; }
+  .wtb-svg { width: 26px; height: 26px; display: block; }
+  .wtb-svg-sm { width: 20px; height: 20px; display: block; }
+  /* Start Here gets a standing orange accent: persistent bar + tint + orange icon */
+  .wtb-card--feature { background: rgba(255,102,0,0.05); }
+  .wtb-card--feature, .wtb-card--feature:hover { padding-left: 24px; }
+  .wtb-card--feature::before { transform: scaleY(1); }
   @media (prefers-reduced-motion: reduce) {
     .wtb-card, .wtb-card::before { transition: none; }
   }
@@ -923,32 +930,38 @@ header.header-hidden{transform:translateY(-100%)}
     <div class="max-w-container-max mx-auto">
       <h2 class="font-label-caps text-label-caps text-archive-gray mb-8">Where To Begin</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-0" style="border-top:1px solid #c4c7c7;">
-        <a href="start-here.html" class="wtb-card group">
+        <a href="start-here.html" class="wtb-card wtb-card--feature group">
+          <span class="wtb-iconwrap text-international-orange"><svg class="wtb-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></span>
           <p class="font-label-lg text-label-lg uppercase text-deep-ink group-hover:text-international-orange transition-colors duration-200">Start Here</p>
           <p style="font-family:Inter,sans-serif;font-size:13px;line-height:1.6;color:#575757;margin-top:8px;font-style:italic;">Who Jeff is and why this archive exists.</p>
-          <p class="font-label-caps text-label-caps text-archive-gray group-hover:text-international-orange transition-colors duration-200" style="margin-top:14px;">Explore &rarr;</p>
+          <p class="font-label-caps text-label-caps text-international-orange" style="margin-top:14px;">Explore &rarr;</p>
         </a>
         <a href="stories.html" class="wtb-card group" style="border-left:1px solid #c4c7c7;padding-left:32px;">
+          <span class="wtb-iconwrap text-archive-gray group-hover:text-international-orange transition-colors duration-200"><svg class="wtb-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span>
           <p class="font-label-lg text-label-lg uppercase text-deep-ink group-hover:text-international-orange transition-colors duration-200">Stories</p>
           <p style="font-family:Inter,sans-serif;font-size:13px;line-height:1.6;color:#575757;margin-top:8px;font-style:italic;">Specific things that happened. In his own words.</p>
           <p class="font-label-caps text-label-caps text-archive-gray group-hover:text-international-orange transition-colors duration-200" style="margin-top:14px;">Read &rarr;</p>
         </a>
         <a href="why-i-made-things.html" class="wtb-card group" style="border-left:1px solid #c4c7c7;padding-left:32px;">
+          <span class="wtb-iconwrap text-archive-gray group-hover:text-international-orange transition-colors duration-200"><svg class="wtb-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg></span>
           <p class="font-label-lg text-label-lg uppercase text-deep-ink group-hover:text-international-orange transition-colors duration-200">Why I Made Things</p>
           <p style="font-family:Inter,sans-serif;font-size:13px;line-height:1.6;color:#575757;margin-top:8px;font-style:italic;">Fifty years of making. In Jeff's own words.</p>
           <p class="font-label-caps text-label-caps text-archive-gray group-hover:text-international-orange transition-colors duration-200" style="margin-top:14px;">Read &rarr;</p>
         </a>
         <a href="favorites.html" class="wtb-card group">
+          <span class="wtb-iconwrap text-archive-gray group-hover:text-international-orange transition-colors duration-200"><svg class="wtb-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
           <p class="font-label-lg text-label-lg uppercase text-deep-ink group-hover:text-international-orange transition-colors duration-200">Favorites</p>
           <p style="font-family:Inter,sans-serif;font-size:13px;line-height:1.6;color:#575757;margin-top:8px;font-style:italic;">Works Jeff has marked as personally significant.</p>
           <p class="font-label-caps text-label-caps text-archive-gray group-hover:text-international-orange transition-colors duration-200" style="margin-top:14px;">View &rarr;</p>
         </a>
         <a href="guernica.html" class="wtb-card group" style="border-left:1px solid #c4c7c7;padding-left:32px;">
+          <span class="wtb-iconwrap text-archive-gray group-hover:text-international-orange transition-colors duration-200"><svg class="wtb-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
           <p class="font-label-lg text-label-lg uppercase text-deep-ink group-hover:text-international-orange transition-colors duration-200">Guernica</p>
           <p style="font-family:Inter,sans-serif;font-size:13px;line-height:1.6;color:#575757;margin-top:8px;font-style:italic;">232 works. The longest-running series in the archive.</p>
           <p class="font-label-caps text-label-caps text-archive-gray group-hover:text-international-orange transition-colors duration-200" style="margin-top:14px;">View &rarr;</p>
         </a>
         <a href="archive.html" class="wtb-card group" style="border-left:1px solid #c4c7c7;padding-left:32px;">
+          <span class="wtb-iconwrap text-archive-gray group-hover:text-international-orange transition-colors duration-200"><svg class="wtb-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>
           <p class="font-label-lg text-label-lg uppercase text-deep-ink group-hover:text-international-orange transition-colors duration-200">Full Archive</p>
           <p style="font-family:Inter,sans-serif;font-size:13px;line-height:1.6;color:#575757;margin-top:8px;font-style:italic;">All 1,084 works. Filter by medium, decade, or series.</p>
           <p class="font-label-caps text-label-caps text-archive-gray group-hover:text-international-orange transition-colors duration-200" style="margin-top:14px;">Browse &rarr;</p>
@@ -1086,7 +1099,7 @@ footer .hover\:border-international-orange::after{display:none}
     if (!grid) return;
     try {
       const [works, chromatic] = await Promise.all([
-        fetch('catalog-home.json?v=20260613013851').then(r => r.json()),
+        fetch('catalog-home.json?v=20260613155207').then(r => r.json()),
         fetch('chromatic.json').then(r => r.json()).catch(() => []),
       ]);
 

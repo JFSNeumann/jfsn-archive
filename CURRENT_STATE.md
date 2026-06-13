@@ -1,5 +1,18 @@
 # Current State
-**Updated:** 2026-06-12 21:38
+**Updated:** 2026-06-13 (session 35)
+
+## What was done session 35 (2026-06-13 — Companion fix + orientation + icons + truth pass; ALL DEPLOYED by Jeff + verified live)
+
+- **Companion deep-mode 502 — FIXED + verified live.** Reproduced it: fast mode (Haiku) always returned 200; deep mode (`deep:true`) **timed out at Netlify's hard 30s limit every time** (Sonnet 4.6 + adaptive thinking + 5-turn agentic loop + 4000 max_tokens → `Sandbox.Timedout`). The old "Unexpected model response" label was a misdiagnosis; model IDs + thinking shape were always valid (confirmed against the claude-api reference). Fix in `netlify/functions/companion.mjs`: **deep = Sonnet 4.6 *without* extended thinking, max_tokens 1024** (deep now means "Sonnet instead of Haiku," a real quality bump that fits the budget). Deployed to Netlify via curated CLI; **verified live: deep POST → HTTP 200 in ~17.5s.** If deeper reasoning is ever wanted back, the function must move to a streaming/background architecture (30s cap can't be raised on a sync function).
+- **gallery-images.html — composite-truth rewrite.** Kind label → "Imagined Placements"; meta "149 composites"; intro + meta description + OG + JSON-LD all rewritten to state these are Photoshop composites / imagined placements, NOT exhibition records (per master-notes §22/§25). Closes the IMPROVEMENTS 🟡 item.
+- **Image-orientation stand-in (for "physical dimensions").** `build_catalog.py` now loads `dims.json` and writes `orientation` (vertical 424 / horizontal 573 / square 87) into catalog.json + catalog-lite.json; artwork.html + all 1,084 regenerated static pages display it (links to the archive filter); archive.html gained an ORIENTATION filter. Real inches/cm still need Jeff to measure — this is the proportions stand-in he asked for.
+- **Artwork theme links** — themes metadata row now links to theme pages (slug map; `series.html?theme=` fallback), in artwork.html + the gen-artwork-pages template + 1,084 regenerated pages.
+- **Decade-footer parity** — api / favorites / start-here / why-i-made-things added to all 6 decade page footers.
+- **HSTS** enabled (`.htaccess` — SSL confirmed). **sw.js PRECACHE** +stories/why-i-made-things/timeline.
+- **Hero keeps scaling on hover** — removed the `animation-play-state: paused` rule (Jeff asked; the Ken-Burns reveal no longer freezes on mouseover).
+- **Icons (inline feather SVGs, no icon fonts):** homepage "Where To Begin" 6 cards + **Start Here orange feature** (tint + persistent bar + orange icon); start-here.html "Begin Exploring" 8 pills + Full Archive orange primary; **mobile drawer** 4 links (Archive/About/Stories/Lost) — re-stamped to all 31 pages via stamp-nav.sh. **Discovery: there is NO fixed bottom tab bar — mobile nav is a hamburger drawer** (CLAUDE.md "fixed bottom nav" line corrected).
+- **Lighthouse re-run (Jeff):** desktop ~86 / mobile ~78, LCP ~2.4–5.4s — down from 18.2s. The session-33 perf pass is confirmed working; that 🔴 item is closed.
+- CACHE_V `jfsn-20260613180000`; audit-nav 11/11. No CSS rebuild (reused utilities / inline). All shipped + deployed to HostGator (JFSN.app) and the Companion fix to Netlify.
 
 ## What was done session 34b (2026-06-12, evening — 9 homepage/sitewide features, ALL DEPLOYED + verified live on both hosts)
 
@@ -16,7 +29,7 @@
 - **River touch scrub** — press-drag on homepage river shows mini+title chip above the finger, release opens the work; tap unchanged; `touch-action: pan-y` preserves scrolling.
 - **Clickable decade labels** — homepage + chromatic.html link to `archive.html?decade=YYYYs` (filter verified applying), ~49px tap targets; chromatic.html also gained the mini-thumb hover preview (its #river-thumb was scaffolded but never wired) and the homepage's label collision-skip.
 - sw.js CACHE_V `jfsn-20260612212319`. audit-nav 11/11. No new Tailwind utilities (no CSS rebuild). Both hosts verified: HostGator byte-identical (incl. sampled regenerated pages), Netlify redeployed via curated stage (PDF still 404).
-- Committed e1fabdb4 + pushed; all four stores synced at session close (B2 cap had reset by 9:30 PM).
+- Committed e1fabdb4 + pushed; all four stores synced at session close (B2 cap had reset by 9:30 PM). **Correction (session 35 verify):** the 4TB rsync at 21:39 ran *before* the final commit de112913 (21:43, the IMPROVEMENTS B2-item edit), so the 4TB was one commit behind until session 35's start-of-session backup caught it up — end-session.sh runs backup.sh before its own final auto-commit, which opens this gap. GitHub + B2 + Mac were current at close.
 
 ## What was done session 34 (2026-06-12, evening)
 - **Allison PDF deleted from the jfsn.com webroot** (FTP `rm`, verified 404; homepage/site healthy). deploy.sh `*.pdf`/`docs/` excludes were already in place since session 31 — no change needed.
