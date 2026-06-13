@@ -1,5 +1,5 @@
 # Current State
-**Updated:** 2026-06-12 21:30
+**Updated:** 2026-06-12 21:38
 
 ## What was done session 34b (2026-06-12, evening — 9 homepage/sitewide features, ALL DEPLOYED + verified live on both hosts)
 
@@ -16,7 +16,7 @@
 - **River touch scrub** — press-drag on homepage river shows mini+title chip above the finger, release opens the work; tap unchanged; `touch-action: pan-y` preserves scrolling.
 - **Clickable decade labels** — homepage + chromatic.html link to `archive.html?decade=YYYYs` (filter verified applying), ~49px tap targets; chromatic.html also gained the mini-thumb hover preview (its #river-thumb was scaffolded but never wired) and the homepage's label collision-skip.
 - sw.js CACHE_V `jfsn-20260612212319`. audit-nav 11/11. No new Tailwind utilities (no CSS rebuild). Both hosts verified: HostGator byte-identical (incl. sampled regenerated pages), Netlify redeployed via curated stage (PDF still 404).
-- **NOT yet committed to git** — run end-session.sh (carries index/artwork/chromatic/interactions/gen-artwork-pages/sw.js + 1,084 regenerated pages + state docs).
+- Committed e1fabdb4 + pushed; all four stores synced at session close (B2 cap had reset by 9:30 PM).
 
 ## What was done session 34 (2026-06-12, evening)
 - **Allison PDF deleted from the jfsn.com webroot** (FTP `rm`, verified 404; homepage/site healthy). deploy.sh `*.pdf`/`docs/` excludes were already in place since session 31 — no change needed.
@@ -171,4 +171,4 @@ Session 26: start-here.html spacing, footer breathing room (pb-8 stamped sitewid
 - 1,084 works cataloged, 0 errors
 
 ## Backup status
-**Last B2 backup:** 2026-06-12 12:22:32
+**Last B2 backup:** 2026-06-12 21:38:50
