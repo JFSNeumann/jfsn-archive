@@ -21,7 +21,7 @@ A living list. Add to it. Cross things off. This is the backlog.
 - [ ] **start-here.html** — oral history content written in (session 21). Review with Jeff and refine.
 
 ### Technical
-- [ ] **Catalog provenance fields** — `year_precision`, `description_source`, `composite` flags through build_catalog → lite → api/v1 → artwork.html ("c. 1970s" display) → JSON-LD. The one multi-session project worth doing (handoff §3). NB: the `orientation` field added session 35 is the same pipeline pattern to follow.
+- [ ] **Catalog provenance fields — RECOMMENDED FIRST BUILD next session.** `year_precision`, `composite`, `description_source` through build_catalog → lite → api/v1 → artwork.html → JSON-LD (same pipeline as the session-35 `orientation` field). **Three decisions must go to Jeff BEFORE building — writing them blind mislabels 1,084 records. The exact questions are scoped in `SESSION_PROMPT.md` §4** (year display format + which years are exact; the precise composite set/rule; whether description_source is worth it given descriptions aren't shown on-page). Build order once answered: composite → year_precision → description_source.
 
 ---
 

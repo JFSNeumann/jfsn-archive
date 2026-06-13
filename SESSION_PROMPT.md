@@ -37,8 +37,18 @@ No audio of Jeff exists anywhere. He declined once (2026-06-12) — offer occasi
 ### 3. 🟡 Real physical dimensions (inches/cm)
 Orientation stand-in already shipped (vertical/horizontal/square from `dims.json`, on artwork pages + archive filter). Real measurements need Jeff to measure surviving works — no tooling. Start with the most significant pieces.
 
-### 4. 🟡 Catalog provenance fields  *(the one multi-session project)*
-`year_precision`, `description_source`, `composite` flags through `build_catalog.py` → lite → api/v1 → artwork.html ("c. 1970s" display) → JSON-LD. **Follow the `orientation` field pattern added session 35** (same pipeline). Lets the site show the truth it currently hides (decade-estimate years, machine-written descriptions, composite images). Recommended start: `composite` + `year_precision` (data already known).
+### 4. 🟡 Catalog provenance fields  *(RECOMMENDED FIRST BUILD — the one multi-session project)*
+Lets the site show the truth it currently hides: decade-estimate years presented as hard years, machine-written descriptions presented as authoritative, composite images presented as real. **Same pipeline as the `orientation` field (session 35):** `build_catalog.py` → catalog + lite → api/v1 → artwork.html + `gen-artwork-pages.py` template display → JSON-LD → regenerate 1,084 pages.
+
+**⚠️ Do NOT write these blind — guessing mislabels 1,084 records, the opposite of the goal. Put these three decisions to Jeff FIRST, then build once:**
+
+| Field | What's known | Decision Jeff must make |
+|---|---|---|
+| `year_precision` | ~1,075/1,084 years are round decade-bucket estimates; ~9 are non-round | Are ANY years genuinely exact, or are all estimates? Display format: **"c. 1974"** vs **"1970s (est.)"**? Proposed safe default: mark all `estimated`, display "c. <year>", Jeff flags any he knows exactly. |
+| `composite` | Jeff confirmed ALL gallery/installation images are Photoshop composites (master-notes §22/§25); gallery-images.html already says so | Is the composite set **only** the "Gallery" theme (149), or are there installation/crowd works outside it? Need the exact set or a rule before flagging — flagging only the Gallery theme would falsely imply every other work is real. Surface as a small "Photoshop composite — imagined placement" note on those artwork pages. |
+| `description_source` | ALL descriptions are machine-written (known fact) — safe to flag uniformly `ai-generated`, no Jeff input needed | Note: descriptions aren't shown on artwork pages (removed session 9), so this mainly makes the **open API** honest. Worth it? |
+
+Recommended order once decisions are in: `composite` first (highest truth value, gallery-images groundwork done), then `year_precision`, then `description_source`.
 
 ### 5. 🟡 Oral history — unanswered questions
 `docs/oral-history/master-notes.md` → "Unresolved Questions". Top item: why did he keep going after the Rauschenberg realization? Approach gently; spare answers are the voice.
