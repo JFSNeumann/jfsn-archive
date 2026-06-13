@@ -1,78 +1,75 @@
 # JFSN Session Handoff Prompt
-**Generated:** 2026-06-06 (session 11)
+**Generated:** 2026-06-13 (session 35)
 **Copy everything below the line and paste it to start the next session.**
+
+> Note: the **v3 verification-first start prompt** (in memory `jfsn_session_prompts.md`) is the primary way to open a session — it checks backups + live drift first. This file is the ranked *work* handoff to use after that.
 
 ---
 
-Read `/Documents/JFSN/CURRENT_STATE.md` and `/Documents/JFSN/IMPROVEMENTS.md` before doing anything. Then work through the ranked items below in order.
+Read `/Documents/JFSN/CURRENT_STATE.md` and `/Documents/JFSN/IMPROVEMENTS.md` before doing anything. Then work the ranked items below in order.
 
-**Project:** JFSN Archive — personal archive site for Jeffrey F. S. Neumann, 1,084 works.
-- Live: jfsn.com (HostGator/cPanel, primary) and jfsn-archive.netlify.app (Netlify — has Companion Netlify Function)
-- Stack: vanilla HTML/CSS/JS, Tailwind compiled to `site.min.css` (22,530 bytes), service worker, no frameworks
-- Design system: light/bone-white (`#fcf9f3`), deep-ink (`#0B0B0B`), orange accent (`#FF6600`), Playfair Display headings, Inter UI
-- Nav: Archive · Series · Companion · About · Lost (5 items)
-- Deploy workflow: `bash end-session.sh` (git commit + push + rsync + Backblaze B2 backup) → deploy via **JFSN.app** desktop app (NOT deploy.sh)
-- Footer/nav: edit `_shared/top-nav.html` or `_shared/footer.html`, then `bash stamp-nav.sh`
-- **CSS rebuild:** `npm run build:css` — run after adding any new Tailwind utility class, then commit `site.min.css`
-- **SW cache:** bump `CACHE_V` in `sw.js` after any CSS rebuild or asset change. `build_catalog.py` auto-bumps on every run — check `git diff sw.js` before committing.
+**Project:** JFSN Archive — personal archive site for Jeffrey F. S. Neumann, 1,084 works. A *preservation project*, not a website project — optimize for completion, not ambition. Making is the point; never push outreach/promotion.
+- Live: **jfsn.com** (HostGator/cPanel, primary) and **jfsn-archive.netlify.app** (Netlify — has the Companion function + artwork-meta edge function)
+- Stack: vanilla HTML/CSS/JS, Tailwind compiled to `site.min.css` (no CDN), service worker, no frameworks
+- Design system: light/bone-white (`#fcf9f3`), deep-ink (`#0B0B0B`), orange accent (`#FF6600`), Playfair Display headings, Inter UI. No gradients, no rounded corners, 1px borders.
+- **Nav: Archive · About · Stories · Lost (4 items).** Series + Companion are footer-only.
+- **Mobile nav is a hamburger → slide-in drawer** (`#mobile-menu-drawer`), NOT a fixed bottom bar.
+- **Icons: inline feather-style SVGs only** (24-viewBox, 1.8 stroke, `currentColor`). No icon fonts — Material Symbols was removed sitewide.
+- Deploy: `bash end-session.sh` (git commit + push + 4TB rsync + Backblaze B2) → deploy to HostGator via **JFSN.app** desktop app (NOT deploy.sh). **Netlify has NO git integration** — function/Companion changes deploy via a curated CLI stage (`netlify deploy --prod`); recipe in `docs/CREDENTIAL-EXPOSURE-REPORT.md` §6.
+- Footer/nav: edit `_shared/top-nav.html` / `_shared/footer.html`, then `bash stamp-nav.sh` (31 pages; decade pages NOT included — edit directly).
+- **CSS rebuild:** `npm run build:css` after any new Tailwind utility, then bump `CACHE_V` in `sw.js`. `build_catalog.py` auto-bumps CACHE_V only when catalog content changes — check `git diff sw.js`.
+- **B2 daily cap:** Backblaze hits a transaction cap most days; it resets midnight GMT (≈ 8 PM EDT). If `end-session.sh` reports B2 skipped, run `bash cloud-backup.sh` after the reset.
 
 ---
 
 ## Ranked items — work top to bottom
 
----
-
-### 1. 🔴 Test Companion live on iPhone
+### 1. 🔴 DOMAIN — Jeff contacts the friend holding the Gandi account  *(Jeff's action; keystone)*
 | | |
 |---|---|
-| **File** | n/a — live test only |
-| **Change** | Open https://jfsn-archive.netlify.app/companion.html on iPhone 15 Pro. Type prompt: "targets" or "something blue and melancholy". |
-| **If it fails** | Netlify dashboard → Functions → companion logs. Function: `netlify/functions/companion.mjs`. Models: `claude-haiku-4-5` (fast), `claude-sonnet-4-6` (deep). |
-| **Done when** | A work title + thumbnail returns on iPhone. |
+| **Why** | jfsn.com is registered at Gandi in a *friend's* account. Jeff is registrant of record but can't renew (expires **2027-03-05**), move nameservers, or transfer. SPOF #1, and the durable fix for the unrotatable exposed FTP password (recover domain → move serving off HostGator → let hosting lapse). |
+| **Do** | Ask the friend for a Change-of-Owner to a Jeff-controlled Gandi account, or the transfer code. Everything prepared in `docs/DOMAIN-RECOVERY-DOCUMENT-PACK.md` + `docs/FINAL-DOMAIN-AND-PRESERVATION-HANDOFF.md`. |
+| **Done when** | Domain is in Jeff's own account, or the transfer code is in hand. |
 
----
+### 2. 🟡 One ~1-minute audio recording  *(standing #1 creator-context priority — offer gently, don't push)*
+No audio of Jeff exists anywhere. He declined once (2026-06-12) — offer occasionally, never insist. Also: listen to `old-site/BB/audio/sample.wav` (21s — possibly the only existing audio).
 
-### 2. 🟢 Print run of 12
-Physical — 12 prints of 12 works, numbered. Not a code problem.
+### 3. 🟡 Real physical dimensions (inches/cm)
+Orientation stand-in already shipped (vertical/horizontal/square from `dims.json`, on artwork pages + archive filter). Real measurements need Jeff to measure surviving works — no tooling. Start with the most significant pieces.
 
----
+### 4. 🟡 Catalog provenance fields  *(the one multi-session project)*
+`year_precision`, `description_source`, `composite` flags through `build_catalog.py` → lite → api/v1 → artwork.html ("c. 1970s" display) → JSON-LD. **Follow the `orientation` field pattern added session 35** (same pipeline). Lets the site show the truth it currently hides (decade-estimate years, machine-written descriptions, composite images). Recommended start: `composite` + `year_precision` (data already known).
 
-### 3. ✅ ~~Review homepage works (decade balance)~~ — done 2026-06-05
-### 4. ✅ ~~Offsite cloud backup~~ — done 2026-06-06
-### 5. ✅ ~~Server cleanup (stale deleted pages)~~ — done 2026-06-06
-### 6. ✅ ~~API 500 error~~ — done 2026-06-06 (mod_security in api/.htaccess)
-### 7. ✅ ~~catalog-lite.json oversized~~ — done 2026-06-06 (814KB → 667KB)
-### 8. ✅ ~~Static artwork pages missing search~~ — done 2026-06-06 (all 1,084 regenerated)
+### 5. 🟡 Oral history — unanswered questions
+`docs/oral-history/master-notes.md` → "Unresolved Questions". Top item: why did he keep going after the Rauschenberg realization? Approach gently; spare answers are the voice.
+
+### 6. 🟢 series-index.html per-theme icons  *(review first)*
+Extend the session-35 inline-SVG icon vocabulary to the 8 series/themes — ONLY if they read as earned, not literal (target/cross/face icons risk feeling cheesy on an art site). Show Jeff before committing.
+
+### 7. 🟢 Ingest new work (pipeline ready)
+Drop photos into `artworks/inbox/`, run `bash add-works.sh`.
 
 ---
 
 ## After every item
-
 ```bash
-bash end-session.sh   # git commit + push + rsync + Backblaze B2 backup
+bash end-session.sh   # git commit + push + 4TB rsync + Backblaze B2
 ```
-Then deploy via JFSN.app. Cross off the item in `IMPROVEMENTS.md`. Update `CURRENT_STATE.md`.
+Then deploy via JFSN.app (HostGator). **If a Netlify function / the Companion changed, also redeploy Netlify via the curated CLI stage.** Cross off the item in `IMPROVEMENTS.md`; update `CURRENT_STATE.md`.
 
 ---
 
-## Things found and fixed — do NOT redo
-
-- ✅ **Hero AVIF upload path** — hero crops go to `/artworks/` on HostGator (flat dir, .htaccess rewrites). NOT `/artworks/full/`.
-- ✅ **GoatCounter CSP** — `gc.zgo.at` in `script-src`, `jfsn.goatcounter.com` in `connect-src` in root `.htaccess`
-- ✅ **API 500 fixed** — mod_security directives removed from `api/.htaccess` template in `build_catalog.py`
-- ✅ **catalog-lite.json trimmed** — only `file, title, year, work_type, themes, keywords, motifs, description` (147KB saved)
-- ✅ **Recently-viewed** — `artwork.html` now writes `jfsn-recently-viewed` localStorage; search overlay reads it
-- ✅ **Archive filter URL state** — `replaceState` on every filter change; `applyURLParams` restores all filters + sort on load/back-nav
-- ✅ **artworks/pages/ regenerated with search** — all 1,084 static artwork pages have `search.js` + `nav-active.js`
-- ✅ **ui.js banned patterns removed** — mask-image gradient and scroll-reveal IntersectionObserver on `.thumb` were re-introduced; removed session 11
-- ✅ **Analytics (GoatCounter) unblocked** — previously blocked by CSP; fixed 2026-06-06
-- ✅ **for-artists.html deleted** — service page removed; all references cleaned
-- ✅ **timeline.html, mosaic.html, constellation.html deleted** — removed from nav, stamp-nav.sh, sw.js PRECACHE, verify_deploy.py, jeff.html
-- ✅ **manifest.json colors** — theme_color/background_color updated from dark `#0b0b0b` to light `#fcf9f3`
-- ✅ **Grayscale filter and transform:scale removed sitewide** — banned; confirmed by grep
-- ✅ **Companion suggestion chips updated** — 8 archive-specific chips on companion.html
-- ✅ **Chromatic River mobile tap flash fixed**
-- ✅ **curate.html + dedupe.html noindex** — dev tools not crawlable
+## Done recently — do NOT redo
+- ✅ **Companion deep-mode 502 = Netlify 30s timeout** (NOT "Unexpected model response"). Deep is now Sonnet 4.6 **without** extended thinking, 1024 tokens. Verified live (session 35). Don't re-add `thinking` to deep mode on a synchronous function.
+- ✅ **Image orientation** field + archive filter (session 35). `dims.json` → `orientation` in catalog + lite.
+- ✅ **gallery-images.html** rewritten to composite truth ("Imagined Placements") — these are Photoshop composites, NOT real exhibitions (master-notes §22/§25).
+- ✅ **Icons sitewide** — homepage "Where To Begin", start-here "Begin Exploring", mobile drawer. Inline SVG, no icon fonts.
+- ✅ **Material Symbols icon font removed sitewide** — all icons inline SVG (`artworks/replace_icons.py`). Never re-add the font.
+- ✅ **HSTS** enabled in `.htaccess`. **Performance pass** confirmed by Lighthouse (desktop ~86 / mobile ~78, LCP ~2.4–5.4s, was 18.2s).
+- ✅ **Allison PDF + FTP-password exposure** — every public copy closed/blocked (`docs/CREDENTIAL-EXPOSURE-REPORT.md`). FTP password **cannot be rotated** (no cPanel access) — don't chase it; the fix is the domain move (item 1).
+- ✅ **Netlify has NO git integration** — proven 2026-06-12. Deploys are manual curated CLI only. Don't expect a push to deploy it.
+- ✅ **Exhibition Record** verified by Jeff (master-notes §27); **catalog images are composites, not event records** — never treat a gallery/installation image as proof an event happened.
+- ✅ Banned thumbnail patterns (grayscale filter, scale/transform on hover, sibling dim, scroll-reveal, hero text labels over artwork) — removed; do not reintroduce.
 
 ---
 
@@ -80,20 +77,21 @@ Then deploy via JFSN.app. Cross off the item in `IMPROVEMENTS.md`. Update `CURRE
 
 | File | Purpose |
 |------|---------|
-| `_shared/top-nav.html` | Canonical nav (stamp-nav.sh). Nav: Archive · Series · Companion · About · Lost |
+| `_shared/top-nav.html` | Canonical nav + mobile drawer (stamp-nav.sh → 31 pages). Nav: Archive · About · Stories · Lost. Drawer links carry inline-SVG icons. |
 | `_shared/footer.html` | Canonical footer — analytics + SW registration |
 | `_shared/ui.js` | Keyboard nav (← / → decade pages), vertical page label. No scroll-reveal. |
-| `_shared/ui.css` | `.thumb__link` micro-interactions (cursor:zoom-in, orange outline-color, brightness) |
-| `_shared/nav-active.js` | Sets orange active nav link by pathname (5 entries, all live pages) |
-| `stamp-nav.sh` | Stamps nav + footer into Stitch pages. Decade pages NOT included — edit directly |
+| `_shared/ui.css` | `.thumb__link` micro-interactions (saturation overlay, orange outline on img on hover) |
+| `_shared/nav-active.js` | Sets orange active nav link by pathname |
+| `_shared/jfsn-interactions.js` | Cursor ring, film grain, view-transition stamper, serendipity, etc. |
+| `stamp-nav.sh` | Stamps nav/footer into Stitch pages. Decade pages NOT included — edit directly. |
 | `catalog.json` | All 1,084 works — generated by `artworks/build_catalog.py` |
-| `catalog-lite.json` | Trimmed catalog for search.js + edge function (667KB) |
-| `gen-artwork-pages.py` | Regenerates all 1,084 `artworks/pages/` static HTML pages |
-| `sw.js` | Service worker — CACHE_V auto-bumped by build_catalog.py |
-| `end-session.sh` | git commit + push + rsync + Backblaze B2 (does NOT deploy to HostGator) |
+| `catalog-lite.json` | Trimmed catalog for search.js + edge function. Fields incl. `series, favorite, featured, orientation`. |
+| `gen-artwork-pages.py` | Regenerates all 1,084 `artworks/pages/` static pages (needs `colors.json`). `--limit 5` to test. |
+| `sw.js` | Service worker — network-first HTML/CSS/JS, cache-first AVIF. CACHE_V auto-bumped by build_catalog when catalog changes. |
+| `end-session.sh` | git commit + push + 4TB rsync + Backblaze B2 (does NOT deploy to HostGator) |
+| `netlify/functions/companion.mjs` | Companion (Netlify only). Deep = Sonnet w/o thinking. |
 
 **Decade pages (1970s–2020s):** NOT in stamp-nav.sh — Material Design tokens. Edit directly.
 **Dev tools (curate.html, dedupe.html, qa.html, jeff.html):** noindex, not in sitemap.
-**artworks/pages/ regeneration:** `python3 gen-artwork-pages.py` — rebuilds all 1,084. Use `--limit 5` to test, `--id art0001` for one page.
-**Hero AVIFs on server:** upload to `/artworks/artNNNN-hero.avif` (flat dir) — .htaccess rewrites from `artworks/full/` on the fly.
-**api/.htaccess:** auto-generated by `build_catalog.py` — edit the template in that script, not the file directly.
+**Hero AVIFs on server:** upload to `/artworks/artNNNN-hero.avif` (flat dir) — `.htaccess` rewrites from `artworks/full/`. Each hero needs `-hero.avif` (desktop) + `-hero-m.avif` (1080px mobile).
+**api/.htaccess:** auto-generated by `build_catalog.py` — edit the template in that script. No mod_security (HTTP 500 on HostGator).
