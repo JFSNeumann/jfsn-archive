@@ -46,6 +46,17 @@
     .lr-btn { font-size: 10px; padding: 8px 10px; letter-spacing: 0.06em; }
     .lr-btn--close { margin-left: 8px; }
   }
+
+  /* Cross-document view transition: the artwork image is the shared element —
+     a clicked card on the homepage morphs into this image. Browsers without
+     support ignore both rules — zero change. */
+  @view-transition { navigation: auto; }
+  #work-image { view-transition-name: artwork-hero; }
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) { animation: none !important; }
+  }
 </style>
 </head>
 <body class="font-body-md text-body-md bg-bone-white text-deep-ink">
@@ -248,6 +259,16 @@ header.header-hidden{transform:translateY(-100%)}
         <div class="hidden md:block" style="margin-top:24px;padding-top:16px;border-top:1px solid #c4c7c7;">
           <p style="font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:#c4c7c7;">← → Browse Works</p>
         </div>
+        <!-- Where this sits — the whole archive as color, this work marked -->
+        <a id="artwork-river" href="chromatic.html" aria-label="See this work's place in the full fifty-year chromatic river"
+           style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid #c4c7c7;text-decoration:none;">
+          <p style="font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:#575757;margin:0 0 8px;">Where this sits — fifty years</p>
+          <span style="position:relative;display:block;">
+            <canvas id="artwork-river-canvas" height="40" aria-hidden="true" style="display:block;width:100%;"></canvas>
+            <span id="artwork-river-notch" aria-hidden="true" style="position:absolute;top:0;bottom:0;width:2px;background:#FF6600;"></span>
+            <span id="artwork-river-year" aria-hidden="true" style="position:absolute;top:3px;font-family:Inter,sans-serif;font-size:9px;letter-spacing:0.1em;color:#FF6600;background:rgba(11,11,11,0.55);padding:1px 4px;white-space:nowrap;"></span>
+          </span>
+        </a>
       </aside>
 
     </div>
@@ -507,9 +528,11 @@ fetch('catalog.json')
     }, { once: true });
     img.src = `artworks/full/${w.file}`;
     img.alt = titleText;
-    if (document.startViewTransition) {
-      img.style.viewTransitionName = 'vt-artwork-' + workId;
-    }
+    /* view-transition-name lives in CSS (#work-image → artwork-hero) so the
+       cross-document morph pairs with the card stamped on the homepage. The
+       old inline 'vt-artwork-<id>' stamp overrode that rule and paired with
+       nothing — the same-document morph it belonged to never survived
+       navigation. */
     document.getElementById('full-res-btn').dataset.src = `artworks/full/${w.file}`;
     document.getElementById('full-res-btn').dataset.alt = titleText;
 
@@ -655,5 +678,53 @@ fetch('catalog.json')
 </script>
 
 <script src="_shared/nav-active.js" defer></script>
+<script>
+/* Mini chromatic river — this work's place in fifty years of making */
+(function () {
+  var box = document.getElementById('artwork-river');
+  if (!box) return;
+  var id = new URLSearchParams(location.search).get('id');
+  if (!id) return;
+  fetch('chromatic.json')
+    .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+    .then(function (data) {
+      data.sort(function (a, b) { return a.year - b.year; });
+      var idx = -1;
+      for (var i = 0; i < data.length; i++) { if (data[i].id === id) { idx = i; break; } }
+      if (idx < 0) return;
+      var canvas = document.getElementById('artwork-river-canvas');
+      var sizeRetries = 0;
+      function draw() {
+        var W = box.clientWidth;
+        if (!W) { /* layout not settled yet — retry next frame, bounded */
+          if (sizeRetries++ < 60) requestAnimationFrame(draw);
+          return;
+        }
+        var H = 40, dpr = window.devicePixelRatio || 1;
+        canvas.width = W * dpr; canvas.height = H * dpr;
+        canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+        var ctx = canvas.getContext('2d');
+        var sliceW = canvas.width / data.length;
+        data.forEach(function (w, i) {
+          ctx.fillStyle = w.bg;
+          ctx.fillRect(Math.floor(i * sliceW), 0, Math.ceil(sliceW) + 1, canvas.height);
+        });
+        var pct = ((idx + 0.5) / data.length) * 100;
+        document.getElementById('artwork-river-notch').style.left = 'calc(' + pct + '% - 1px)';
+        var yr = document.getElementById('artwork-river-year');
+        yr.textContent = data[idx].year;
+        if (pct > 82) { yr.style.left = 'auto'; yr.style.right = (100 - pct) + '%'; yr.style.marginRight = '5px'; }
+        else          { yr.style.right = 'auto'; yr.style.left = pct + '%'; yr.style.marginLeft = '5px'; }
+      }
+      box.style.display = 'block';
+      draw();
+      var rT = null;
+      window.addEventListener('resize', function () {
+        clearTimeout(rT); rT = setTimeout(draw, 200);
+      }, { passive: true });
+    })
+    .catch(function () { /* no data — strip stays hidden */ });
+})();
+</script>
 </body>
 </html>

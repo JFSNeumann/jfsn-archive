@@ -229,6 +229,24 @@
   @media (prefers-reduced-motion: reduce) {
     .folio-art-link img { transition: none; }
   }
+  /* Folio progress rail — one tappable dot per snap section */
+  #folio-rail { opacity: 0; pointer-events: none; transition: opacity 0.25s ease; }
+  #folio-rail.is-visible { opacity: 1; pointer-events: auto; }
+  .folio-rail-dot {
+    width: 44px; height: 44px; background: none; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding: 0 12px 0 0;
+  }
+  .folio-rail-dot span[aria-hidden] {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: rgba(11,11,11,0.22); border: 1.5px solid rgba(11,11,11,0.3);
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .folio-rail-dot.is-active span[aria-hidden] { background: #FF6600; border-color: #FF6600; }
+  @media (prefers-reduced-motion: reduce) {
+    #folio-rail, .folio-rail-dot span[aria-hidden] { transition: none; }
+  }
+
   /* Tablet: 3-col featured grid (4-col starts at 1024px) */
   @media (min-width: 768px) and (max-width: 1023px) {
     #featured-grid-small { grid-template-columns: repeat(3, 1fr) !important; }
@@ -236,13 +254,27 @@
 
   /* ── Chromatic River band — fifty years of color in one line ── */
   .river-band-wrap { position: relative; }
-  .river-band-canvas { display: block; width: 100%; cursor: zoom-in; -webkit-tap-highlight-color: transparent; }
+  .river-band-canvas { display: block; width: 100%; cursor: zoom-in; -webkit-tap-highlight-color: transparent; touch-action: pan-y; }
   .river-band-canvas:focus-visible { outline: 2px solid #FF6600; outline-offset: -2px; }
   .river-band-cursorline {
     position: absolute; top: 0; width: 1px;
     background: rgba(252,249,243,0.95);
     pointer-events: none; display: none;
   }
+  /* "You are here" — marks the current hero work's place in the timeline.
+     pointer-events: none so clicks still open the work under the cursor. */
+  .river-hero-marker {
+    position: absolute; top: 0; bottom: 0; width: 2px;
+    background: #FF6600; pointer-events: none; display: none;
+    transition: left 0.45s ease;
+  }
+  .river-hero-marker span {
+    position: absolute; top: 3px; left: 5px;
+    font-family: 'Inter', sans-serif; font-size: 9px; letter-spacing: 0.1em;
+    color: #FF6600; background: rgba(11,11,11,0.55); padding: 1px 4px;
+    white-space: nowrap;
+  }
+  @media (prefers-reduced-motion: reduce) { .river-hero-marker { transition: none; } }
 
   /* ── Wall band — the mass of the archive on one surface ── */
   /* min-heights reserve the band's final footprint (rows × tile + gaps) so the
@@ -266,6 +298,21 @@
     background: #0B0B0B; color: #F3F0EA;
     font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.04em;
     padding: 5px 9px; pointer-events: none; white-space: nowrap;
+  }
+  /* Mini preview inside the tooltip — fixed 72px box so the tooltip's height
+     never jumps while the image loads (shown only on hover-capable devices) */
+  #band-tooltip-img {
+    display: none; width: 72px; height: 72px; object-fit: cover;
+    margin-bottom: 6px; background: #1a1814;
+  }
+
+  /* Cross-document view transition: the clicked artwork morphs into the
+     artwork page. Browsers without support ignore the at-rule — zero change. */
+  @view-transition { navigation: auto; }
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) { animation: none !important; }
   }
 </style>
 </head>
@@ -505,6 +552,56 @@ header.header-hidden{transform:translateY(-100%)}
 
   </div>
 
+  <!-- Folio progress rail — fixed dots on the right edge, visible while the folio is on screen -->
+  <nav id="folio-rail" aria-label="Folio position" style="position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:30;display:flex;flex-direction:column;"></nav>
+  <span id="folio-rail-status" class="sr-only" aria-live="polite"></span>
+  <script>
+  (function () {
+    var container = document.getElementById('folio-container');
+    var rail = document.getElementById('folio-rail');
+    if (!container || !rail) return;
+    var sections = container.querySelectorAll('.folio-section');
+    if (sections.length < 2) return;
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var status = document.getElementById('folio-rail-status');
+    var dots = [];
+    sections.forEach(function (sec, i) {
+      var b = document.createElement('button');
+      b.className = 'folio-rail-dot';
+      b.setAttribute('aria-label', 'Go to folio section ' + (i + 1) + ' of ' + sections.length);
+      var dot = document.createElement('span');
+      dot.setAttribute('aria-hidden', 'true');
+      b.appendChild(dot);
+      b.addEventListener('click', function () {
+        sec.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+      });
+      rail.appendChild(b);
+      dots.push(b);
+    });
+    function setActive(i) {
+      dots.forEach(function (d, j) {
+        d.classList.toggle('is-active', j === i);
+        if (j === i) d.setAttribute('aria-current', 'true');
+        else d.removeAttribute('aria-current');
+      });
+      if (status) status.textContent = 'Folio section ' + (i + 1) + ' of ' + sections.length;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        setActive(Array.prototype.indexOf.call(sections, en.target));
+      });
+    }, { root: container, threshold: 0.6 });
+    sections.forEach(function (s) { io.observe(s); });
+    /* Rail shows only while the folio itself is on screen */
+    var vis = new IntersectionObserver(function (entries) {
+      rail.classList.toggle('is-visible', entries[0].isIntersecting && entries[0].intersectionRatio > 0.25);
+    }, { threshold: [0, 0.25, 0.5] });
+    vis.observe(container);
+    setActive(0);
+  })();
+  </script>
+
   <!-- Mobile: Chromatic River band -->
   <section id="river-section-m" class="border-t border-outline-variant" aria-label="Fifty years of color">
     <div class="river-band-wrap" id="river-wrap-m">
@@ -562,6 +659,21 @@ header.header-hidden{transform:translateY(-100%)}
            <p style="font-family:Inter,sans-serif;font-size:12px;color:#575757;margin:8px 0 0;">&ldquo;Why I make things&rdquo; — Jeff, in his own voice.</p>
       -->
     </div>
+  </section>
+
+  <!-- Mobile: Today from the archive -->
+  <section id="today-section-m" class="border-t border-outline-variant px-4" aria-label="Today from the archive" style="padding-top:18px;padding-bottom:18px;">
+    <a id="today-strip-m" href="archive.html" class="group" style="display:flex;align-items:center;gap:14px;text-decoration:none;min-height:56px;">
+      <img class="today-img" src="" alt="" width="56" height="56" loading="lazy" style="width:56px;height:56px;object-fit:cover;flex-shrink:0;border:1px solid #0B0B0B;background:#ebe8e2;">
+      <span style="flex:1;min-width:0;">
+        <span class="font-label-caps text-label-caps text-archive-gray" style="display:block;font-size:10px;">TODAY FROM THE ARCHIVE</span>
+        <span style="display:flex;align-items:baseline;gap:8px;margin-top:4px;">
+          <span class="today-title group-hover:text-international-orange transition-colors" style="font-family:'Playfair Display',serif;font-size:17px;font-weight:600;color:#0B0B0B;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
+          <span class="today-year" style="font-family:Inter,sans-serif;font-size:11px;letter-spacing:0.08em;color:#575757;flex-shrink:0;"></span>
+        </span>
+      </span>
+      <span class="font-label-caps text-label-caps text-archive-gray group-hover:text-international-orange transition-colors" style="white-space:nowrap;">VIEW &rarr;</span>
+    </a>
   </section>
 
   <!-- Mobile: Where To Begin -->
@@ -763,6 +875,21 @@ header.header-hidden{transform:translateY(-100%)}
     obs.observe(el);
   })();
   </script>
+
+  <!-- Today from the archive — date-seeded daily pick, same work for everyone -->
+  <section id="today-section-d" class="border-b border-outline-variant px-margin-desktop" aria-label="Today from the archive">
+    <div class="max-w-container-max mx-auto">
+      <a id="today-strip-d" href="archive.html" class="group" style="display:flex;align-items:center;gap:20px;text-decoration:none;padding:18px 0;min-height:60px;">
+        <img class="today-img" src="" alt="" width="60" height="60" loading="lazy" style="width:60px;height:60px;object-fit:cover;flex-shrink:0;border:1px solid #0B0B0B;background:#ebe8e2;">
+        <span style="flex:1;min-width:0;display:flex;align-items:baseline;gap:16px;">
+          <span class="font-label-caps text-label-caps text-archive-gray" style="white-space:nowrap;">TODAY FROM THE ARCHIVE</span>
+          <span class="today-title group-hover:text-international-orange transition-colors" style="font-family:'Playfair Display',serif;font-size:20px;font-weight:600;color:#0B0B0B;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
+          <span class="today-year" style="font-family:Inter,sans-serif;font-size:12px;letter-spacing:0.08em;color:#575757;flex-shrink:0;"></span>
+        </span>
+        <span class="font-label-caps text-label-caps text-archive-gray group-hover:text-international-orange transition-colors" style="white-space:nowrap;">VIEW TODAY'S WORK &rarr;</span>
+      </a>
+    </div>
+  </section>
 
   <!-- Explore Paths -->
   <style>
@@ -1022,6 +1149,18 @@ footer .hover\:border-international-orange::after{display:none}
   })();
 </script>
 
+<script>
+  /* Stamp the clicked artwork so it morphs into the artwork page via the
+     cross-document view transition. Stamping only the clicked image keeps the
+     name unique per page; in unsupporting browsers the property is ignored. */
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('#featured-grid a, #featured-grid-small a, .wall-band-grid a');
+    if (!a) return;
+    var img = a.querySelector('img');
+    if (img) img.style.viewTransitionName = 'artwork-hero';
+  }, true);
+</script>
+
 <!-- GoatCounter — privacy-first analytics -->
 <script data-goatcounter="https://jfsn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
@@ -1113,6 +1252,9 @@ footer .hover\:border-international-orange::after{display:none}
     var timer     = null;
 
     function activate(i) {
+      /* Tell the river band which work is on the hero ("you are here" marker) */
+      window.__heroWorkId = selected[i].id;
+      document.dispatchEvent(new CustomEvent('herowork'));
       [dSlides, mSlides].forEach(function (list) {
         list.forEach(function (s, j) { var on = j === i; if (on) resetAnim(s); s.classList.toggle('is-active', on); });
       });
@@ -1211,7 +1353,7 @@ footer .hover\:border-international-orange::after{display:none}
      Chromatic River band + The Wall band
      One fetch of chromatic.json drives both, desktop + mobile.
      ═══════════════════════════════════════════════ -->
-<div id="band-tooltip"></div>
+<div id="band-tooltip"><img id="band-tooltip-img" alt="" width="72" height="72"><span id="band-tooltip-text"></span></div>
 <script>
 (function () {
   'use strict';
@@ -1219,6 +1361,29 @@ footer .hover\:border-international-orange::after{display:none}
   var DATA = null;        /* [{id, year, title, bg}] sorted by year */
   var DECADE_IDX = null;  /* { '1970': firstIndex, ... } */
   var tooltip = document.getElementById('band-tooltip');
+  var tipImg  = document.getElementById('band-tooltip-img');
+  var tipText = document.getElementById('band-tooltip-text');
+  /* Mini preview only on hover-capable pointers — touch devices keep text-only */
+  var HOVER_FINE = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  /* One tooltip writer for both bands: text + (on desktop) the work's mini.
+     The img box is a fixed 72px square, so position math never shifts mid-load. */
+  function showTip(id, text, x, y, forceImg) {
+    tipText.textContent = text;
+    if ((HOVER_FINE || forceImg) && id) {
+      if (tipImg.dataset.id !== id) {
+        tipImg.dataset.id = id;
+        tipImg.src = 'artworks/mini/' + id + '.avif';
+      }
+      tipImg.style.display = 'block';
+    } else {
+      tipImg.style.display = 'none';
+    }
+    tooltip.style.display = 'block';
+    var h = tooltip.offsetHeight || 26;
+    tooltip.style.left = Math.min(x + 12, window.innerWidth - 260) + 'px';
+    tooltip.style.top  = Math.max(4, y - h - 14) + 'px';
+  }
 
   /* ── Chromatic River ── */
 
@@ -1258,10 +1423,17 @@ footer .hover\:border-international-orange::after{display:none}
         var x = (DECADE_IDX[dec] / total) * W;
         if (x - lastX < 52) return;
         lastX = x;
-        var span = document.createElement('span');
-        span.style.cssText = 'position:absolute;left:' + (x / W * 100) + '%;top:50%;transform:translateY(-50%);padding-left:4px;font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#575757;white-space:nowrap;';
-        span.textContent = dec + 's';
-        labels.appendChild(span);
+        /* Decade label links to the archive pre-filtered to that decade.
+           Symmetric padding keeps the text centered while growing the tap
+           target to ~44px. */
+        var a = document.createElement('a');
+        a.href = 'archive.html?decade=' + dec + 's';
+        a.setAttribute('aria-label', 'Browse the ' + dec + 's in the archive');
+        a.style.cssText = 'position:absolute;left:' + (x / W * 100) + '%;top:50%;transform:translateY(-50%);padding:17px 10px 17px 4px;font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#575757;white-space:nowrap;text-decoration:none;transition:color 0.2s ease;';
+        a.addEventListener('mouseenter', function () { a.style.color = '#FF6600'; });
+        a.addEventListener('mouseleave', function () { a.style.color = '#575757'; });
+        a.textContent = dec + 's';
+        labels.appendChild(a);
       });
     }
   }
@@ -1285,10 +1457,7 @@ footer .hover\:border-international-orange::after{display:none}
         cursor.style.left = (e.clientX - rect.left) + 'px';
         cursor.style.height = rect.height + 'px';
       }
-      tooltip.textContent = w.year + ' — ' + w.title;
-      tooltip.style.display = 'block';
-      tooltip.style.left = Math.min(e.clientX + 12, window.innerWidth - 260) + 'px';
-      tooltip.style.top  = (e.clientY - 36) + 'px';
+      showTip(w.id, w.year + ' — ' + w.title, e.clientX, e.clientY);
     });
     canvas.addEventListener('mouseleave', function () {
       if (cursor) cursor.style.display = 'none';
@@ -1305,6 +1474,99 @@ footer .hover\:border-international-orange::after{display:none}
     canvas.addEventListener('keydown', function (e) {
       if (e.key === 'Enter') window.location.href = 'chromatic.html';
       if (e.key === 'Escape') canvas.blur();
+    });
+
+    /* Touch scrub: press-drag along the river shows the preview chip above
+       the finger; release opens that work. A plain tap falls through to the
+       click handler (today's behavior). touch-action: pan-y keeps vertical
+       page scrolling; horizontal motion belongs to the scrub. */
+    var scrubIdx = -1, scrubbing = false, startX = 0, startY = 0;
+    canvas.addEventListener('touchstart', function (e) {
+      var t = e.touches[0];
+      startX = t.clientX; startY = t.clientY;
+      scrubbing = false; scrubIdx = -1;
+    }, { passive: true });
+    canvas.addEventListener('touchmove', function (e) {
+      var t = e.touches[0];
+      if (!scrubbing) {
+        var dx = Math.abs(t.clientX - startX), dy = Math.abs(t.clientY - startY);
+        if (dx < 10 || dx < dy) return; /* not a horizontal drag (yet) */
+        scrubbing = true;
+      }
+      e.preventDefault();
+      scrubIdx = riverIdx(canvas, t.clientX);
+      var w = DATA[scrubIdx];
+      if (cursor) {
+        var rect = canvas.getBoundingClientRect();
+        cursor.style.display = 'block';
+        cursor.style.left = (t.clientX - rect.left) + 'px';
+        cursor.style.height = rect.height + 'px';
+      }
+      showTip(w.id, w.year + ' — ' + w.title, t.clientX, t.clientY, true);
+    }, { passive: false });
+    function endScrub(e) {
+      tooltip.style.display = 'none';
+      if (cursor) cursor.style.display = 'none';
+      if (scrubbing && scrubIdx >= 0) {
+        if (e.cancelable) e.preventDefault(); /* no synthetic click after a scrub */
+        window.location.href = 'artwork.html?id=' + DATA[scrubIdx].id;
+      }
+      scrubbing = false; scrubIdx = -1;
+    }
+    canvas.addEventListener('touchend', endScrub);
+    canvas.addEventListener('touchcancel', function () {
+      tooltip.style.display = 'none';
+      if (cursor) cursor.style.display = 'none';
+      scrubbing = false; scrubIdx = -1;
+    });
+  }
+
+  /* ── Hero "you are here" marker on the river ── */
+
+  function placeHeroMarker(suffix) {
+    var wrap = document.getElementById('river-wrap-' + suffix);
+    if (!wrap || !DATA) return;
+    var id = window.__heroWorkId;
+    var m  = wrap.querySelector('.river-hero-marker');
+    var idx = -1;
+    if (id) for (var i = 0; i < DATA.length; i++) { if (DATA[i].id === id) { idx = i; break; } }
+    if (idx < 0) { if (m) m.style.display = 'none'; return; }
+    if (!m) {
+      m = document.createElement('div');
+      m.className = 'river-hero-marker';
+      m.appendChild(document.createElement('span'));
+      wrap.appendChild(m);
+    }
+    var pct = ((idx + 0.5) / DATA.length) * 100;
+    m.style.left = 'calc(' + pct + '% - 1px)';
+    var sp = m.querySelector('span');
+    sp.textContent = DATA[idx].year;
+    /* Keep the year label inside the band near the right edge */
+    if (pct > 90) { sp.style.left = 'auto'; sp.style.right = '5px'; }
+    else          { sp.style.left = '5px';  sp.style.right = 'auto'; }
+    m.style.display = 'block';
+  }
+  function placeHeroMarkers() { placeHeroMarker('d'); placeHeroMarker('m'); }
+  document.addEventListener('herowork', placeHeroMarkers);
+
+  /* ── Today from the archive ── */
+
+  function buildToday() {
+    /* Date-seeded deterministic pick: same work for every visitor all day,
+       a different one tomorrow. DATA is year-sorted (stable), so the index
+       maps to the same work everywhere. */
+    var d = new Date();
+    var seed = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+    var idx = Math.abs(Math.imul(seed, 2654435761)) % DATA.length;
+    var w = DATA[idx];
+    ['today-strip-d', 'today-strip-m'].forEach(function (id) {
+      var a = document.getElementById(id);
+      if (!a) return;
+      a.href = 'artwork.html?id=' + w.id;
+      a.querySelector('.today-img').src = 'artworks/mini/' + w.id + '.avif';
+      a.querySelector('.today-img').alt = w.title + ', ' + w.year;
+      a.querySelector('.today-title').textContent = w.title;
+      a.querySelector('.today-year').textContent = w.year;
     });
   }
 
@@ -1332,6 +1594,7 @@ footer .hover\:border-international-orange::after{display:none}
       a.href = 'artwork.html?id=' + w.id;
       a.setAttribute('aria-label', w.title + ', ' + w.year);
       a.dataset.tip = w.year + ' — ' + w.title;
+      a.dataset.id  = w.id;
       a.style.background = w.bg;
       var img = document.createElement('img');
       img.src = 'artworks/mini/' + w.id + '.avif';
@@ -1352,10 +1615,7 @@ footer .hover\:border-international-orange::after{display:none}
     grid.addEventListener('mousemove', function (e) {
       var a = e.target.closest ? e.target.closest('a') : null;
       if (!a || !a.dataset.tip) { tooltip.style.display = 'none'; return; }
-      tooltip.textContent = a.dataset.tip;
-      tooltip.style.display = 'block';
-      tooltip.style.left = Math.min(e.clientX + 12, window.innerWidth - 260) + 'px';
-      tooltip.style.top  = (e.clientY - 36) + 'px';
+      showTip(a.dataset.id, a.dataset.tip, e.clientX, e.clientY);
     });
     grid.addEventListener('mouseleave', function () { tooltip.style.display = 'none'; });
   }
@@ -1378,6 +1638,8 @@ footer .hover\:border-international-orange::after{display:none}
         if (!(dec in DECADE_IDX)) DECADE_IDX[dec] = i;
       });
       renderAll();
+      placeHeroMarkers(); /* hero fired before this script's listener existed */
+      buildToday();
       wireRiver('d'); wireRiver('m');
       wireWall('d'); wireWall('m');
       /* "Open one at random" — any of the 1,084, fresh pick per click */
@@ -1398,7 +1660,8 @@ footer .hover\:border-international-orange::after{display:none}
     })
     .catch(function () {
       /* No data — remove the bands rather than show empty strips */
-      ['river-section-d', 'river-section-m', 'wall-section-d', 'wall-section-m'].forEach(function (id) {
+      ['river-section-d', 'river-section-m', 'wall-section-d', 'wall-section-m',
+       'today-section-d', 'today-section-m'].forEach(function (id) {
         var el = document.getElementById(id);
         if (el) el.style.display = 'none';
       });

@@ -40,6 +40,9 @@ body.jfsn-custom-cursor,body.jfsn-custom-cursor *{cursor:none!important;}
 #jfsn-ser-hint{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.1em;color:#c4c7c7;white-space:nowrap;z-index:2;pointer-events:none;}
 #jfsn-ser-hint kbd{font-family:inherit;border:1px solid #c4c7c7;padding:1px 5px;font-size:9px;}
 @media(prefers-reduced-motion:reduce){#jfsn-progress,#jfsn-cursor-dot,#jfsn-cursor-ring,#jfsn-grain{display:none!important;}.ls-ready .ls-char{opacity:1;animation:none;}.artwork-developing{animation:none;filter:none;}#jfsn-ser,#jfsn-ser-img,#jfsn-ser-meta{transition:none;}}
+/* Cross-document view transition — clicked artwork morphs into its page (no-op where unsupported) */
+@view-transition{navigation:auto;}
+@media(prefers-reduced-motion:reduce){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important;}}
     `;
     document.head.appendChild(s);
   }
@@ -212,28 +215,17 @@ body.jfsn-custom-cursor,body.jfsn-custom-cursor *{cursor:none!important;}
     });
   }
 
-  /* ─── 5. View Transitions API — thumbnail → artwork morphing ─────────── */
-  if (!reduced && document.startViewTransition) {
-    document.addEventListener('click', function (e) {
-      var link = e.target.closest('.thumb__link');
-      if (!link || !link.href) return;
-      if (!link.href.includes('artwork.html')) return;
-
-      var img = link.querySelector('img');
-      var id  = new URL(link.href).searchParams.get('id');
-      if (!img || !id) return;
-
-      e.preventDefault();
-      img.style.viewTransitionName = 'vt-artwork-' + id;
-
-      document.startViewTransition(function () {
-        return new Promise(function (resolve) {
-          window.location.href = link.href;
-          setTimeout(resolve, 80);
-        });
-      });
-    });
-  }
+  /* ─── 5. Cross-document view transition — clicked artwork → its page ──
+     Stamps the shared name on the clicked thumbnail; the artwork page's main
+     image carries the same name, so the browser morphs one into the other.
+     (Replaced the old same-document startViewTransition code, which never
+     survived the navigation and delayed every thumb click by 80ms.) */
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest && e.target.closest('a[href*="artwork.html?id="], a[href*="/pages/art"]');
+    if (!link) return;
+    var img = link.querySelector('img');
+    if (img) img.style.viewTransitionName = 'artwork-hero';
+  }, true);
 
   /* ─── 6. Serendipity mode (S key / shake) ────────────────────────────── */
   (function () {

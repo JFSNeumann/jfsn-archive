@@ -1,5 +1,29 @@
 # Current State
-**Updated:** 2026-06-12 16:37
+**Updated:** 2026-06-12 21:30
+
+## What was done session 34b (2026-06-12, evening — 9 homepage/sitewide features, ALL DEPLOYED + verified live on both hosts)
+
+**Round 1 (homepage, deployed mid-session):**
+- **River preview** — #band-tooltip carries the work's mini image (72px fixed box, no layout shift) on river + Wall band hover; text-only on touch.
+- **Cross-document View Transitions** — `@view-transition` on index + artwork.html; clicked featured/wall images stamp `artwork-hero`, pairing with `#work-image`. Progressive enhancement; reduced-motion neutralized.
+- **Hero→river marker** — orange notch + year chip on the river at the current hero work's chronological spot; glides on slide change (`herowork` event + `window.__heroWorkId`).
+- **Today from the Archive** — date-seeded daily pick (`Math.imul(seed, 2654435761) % len` over year-sorted chromatic.json), slim strip both viewports between About and Where To Begin; hides with the other bands on data failure.
+- **Mobile folio rail** — 4 fixed dots right edge, IO-synced, 44px targets, aria-current + sr-only live text; visible only while the folio is on screen.
+
+**Round 2 (sitewide, deployed end of session):**
+- **Sitewide morph** — VT rules now ship in jfsn-interactions.js's injected CSS (all 37 pages); generic capture-phase stamper marks any clicked `a[href*="artwork.html?id="], a[href*="/pages/art"]` image. **Old session-27 same-document startViewTransition block REMOVED** (never worked cross-page, delayed clicks 80ms; its inline `vt-artwork-<id>` stamp in artwork.html removed too — it overrode the CSS name). gen-artwork-pages.py template: `@view-transition` + `.vt-artwork-main` on the main img — **all 1,084 pages regenerated + deployed**.
+- **Mini-river on artwork.html** — "Where this sits — fifty years" strip in the metadata aside: chromatic slices + orange notch/year chip at the current work; links to chromatic.html. `draw()` retries via rAF until the box has width (desktop layout race found in preview).
+- **River touch scrub** — press-drag on homepage river shows mini+title chip above the finger, release opens the work; tap unchanged; `touch-action: pan-y` preserves scrolling.
+- **Clickable decade labels** — homepage + chromatic.html link to `archive.html?decade=YYYYs` (filter verified applying), ~49px tap targets; chromatic.html also gained the mini-thumb hover preview (its #river-thumb was scaffolded but never wired) and the homepage's label collision-skip.
+- sw.js CACHE_V `jfsn-20260612212319`. audit-nav 11/11. No new Tailwind utilities (no CSS rebuild). Both hosts verified: HostGator byte-identical (incl. sampled regenerated pages), Netlify redeployed via curated stage (PDF still 404).
+- **NOT yet committed to git** — run end-session.sh (carries index/artwork/chromatic/interactions/gen-artwork-pages/sw.js + 1,084 regenerated pages + state docs).
+
+## What was done session 34 (2026-06-12, evening)
+- **Allison PDF deleted from the jfsn.com webroot** (FTP `rm`, verified 404; homepage/site healthy). deploy.sh `*.pdf`/`docs/` excludes were already in place since session 31 — no change needed.
+- **Netlify mirror fixed** — discovered the site has **NO git integration** (build_settings empty, all deploys were manual CLI; that's why pushes never deployed — the pipeline wasn't broken, it never existed). Deployed a curated staging copy (rsync excludes: docs/, old-site/, *.py/*.pdf/*.md/*.sh, .ftp.env, configs — 0 sensitive files) via `netlify deploy --prod`; draft-verified first. `_redirects` 42 forced-404 rules now live. Mirror is current through session 33 (start-here/stories/favorites were 404 on the old June-5 snapshot, now 200). **Future Netlify deploys: same curated-staging method** — staging recipe in CREDENTIAL-EXPOSURE-REPORT.md §6.
+- **Credential exposure report updated** — every public copy of the FTP password is now CLOSED or BLOCKED (rows 2–6 closed; row 1 is 403-blocked; row 7 git history permanent by policy). GitHub tip re-verified clean.
+- **Found: Companion 502 "Unexpected model response"** — pre-existing on prod (not caused by the refresh; identical on old snapshot). Logged in IMPROVEMENTS 🔴.
+- B2 still transaction-capped at session start (verified by rclone 403); cap resets midnight GMT ≈ 8 PM EDT. Last good B2 sync 12:22 today.
 
 ## What was done session 33 (2026-06-12)
 - **Domain & preservation handoff finalized** — `docs/FINAL-DOMAIN-AND-PRESERVATION-HANDOFF.md` + the three DOMAIN-RECOVERY-* docs. Key facts: Jeff is the Gandi registrant of record for jfsn.com (paid to 2027-03-05, unlocked, in a friend's account); the FTP password **cannot be rotated** (no cPanel access, Pure-FTPd has no self-service change) — the "rotate in cPanel" guidance below is SUPERSEDED. Keystone action: Jeff contacts the friend (see handoff §9).
@@ -43,7 +67,7 @@
 Sessions 25–32 **deployed** to HostGator (session 32 HTML verified live 2026-06-12; hero AVIFs uploaded same day). Sessions 29–31 + 33 are documentation-only beyond the AVIF upload.
 
 ## ⚠️ Critical open item — UPDATED 2026-06-12
-**The FTP password is publicly exposed, still active, and CANNOT be rotated** — cPanel/HostGator account access is unavailable and Pure-FTPd has no self-service password change (proven by live test 2026-06-12). Do NOT chase cPanel rotation. Impact is bounded: the archive is replicated 4× and only live-site defacement is at risk. Durable fix: recover jfsn.com (Jeff contacts the friend holding the Gandi account), move serving off HostGator, let the hosting lapse. Authoritative record: `docs/FINAL-DOMAIN-AND-PRESERVATION-HANDOFF.md`. Within-reach mitigation: delete the Allison PDF from the webroot over FTP (write access still works).
+**The FTP password is publicly exposed, still active, and CANNOT be rotated** — cPanel/HostGator account access is unavailable and Pure-FTPd has no self-service password change (proven by live test 2026-06-12). Do NOT chase cPanel rotation. Impact is bounded: the archive is replicated 4× and only live-site defacement is at risk. Durable fix: recover jfsn.com (Jeff contacts the friend holding the Gandi account), move serving off HostGator, let the hosting lapse. Authoritative record: `docs/FINAL-DOMAIN-AND-PRESERVATION-HANDOFF.md`. ~~Within-reach mitigation: delete the Allison PDF from the webroot~~ **DONE session 34** — every public copy of the credential is now removed or blocked (see CREDENTIAL-EXPOSURE-REPORT.md).
 
 ## What was done session 31 (2026-06-11 — verification, no site changes)
 - Re-verified all session-30 review findings from scratch (credential exposure, backup gaps, narrative claims). Companion cleared; old-site origin of the exhibition table disproven.
@@ -110,7 +134,7 @@ Sessions 25–32 **deployed** to HostGator (session 32 HTML verified live 2026-0
 - `start-here.html` — quote card visual weight
 - `sw.js` — CACHE_V bumped
 
-**⚠️ Not yet deployed — run JFSN.app**
+~~⚠️ Not yet deployed~~ **DEPLOYED 2026-06-11** (sessions 25–28 went live together via JFSN.app).
 
 ---
 
@@ -125,12 +149,10 @@ Session 26: start-here.html spacing, footer breathing room (pb-8 stamped sitewid
 ---
 
 ## To do next session
-- [ ] **Deploy** — sessions 25–28 not yet on HostGator. Run JFSN.app.
+*(superseded — IMPROVEMENTS.md is the live backlog; deploy of sessions 25–28 done 2026-06-11)*
 - [ ] **Oral history** — "Why did Jeff keep going after the Rauschenberg realization?" — most important unanswered question. Approach gently.
 - [ ] **start-here.html** — read aloud together. Oral history content is in; review for accuracy and voice.
 - [ ] **Physical dimensions for surviving works** — requires Jeff to measure. No tooling exists. Essential for heirs.
-- [ ] **HSTS** — uncomment one line in `.htaccess` once SSL confirmed active in HostGator cPanel.
-- [ ] **favorites.html fetch size** — still uses full `catalog.json` (898KB); easy fix but low priority.
 
 ## Known issues (standing)
 - **sw.js CACHE_V** — `build_catalog.py` auto-bumps only when catalog content changes. Manual bump required after HTML/CSS/JS edits without catalog rebuild.

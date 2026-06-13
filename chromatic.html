@@ -253,7 +253,7 @@ header.header-hidden{transform:translateY(-100%)}
   <!-- River -->
   <section class="border-b border-deep-ink">
     <!-- Decade labels -->
-    <div id="decade-labels" class="relative h-8 px-0" aria-hidden="true" style="background:#fcf9f3;border-bottom:1px solid #c4c7c7;"></div>
+    <div id="decade-labels" class="relative h-8 px-0" style="background:#fcf9f3;border-bottom:1px solid #c4c7c7;"></div>
     <!-- Canvas -->
     <div id="river-wrap">
       <canvas id="river-canvas" height="220" role="img" tabindex="0" aria-label="Chromatic river: 1,084 works sorted by year, each shown as a vertical color slice. Click a slice to open that work. Press Escape to leave."></canvas>
@@ -495,13 +495,25 @@ const DECADES = {1970:0,1980:58,1990:69,2000:262,2010:536,2020:843};
     // Decade labels bar
     labels.innerHTML = '';
     labels.style.width = W + 'px';
+    let lastLabelX = -Infinity;
     Object.entries(DECADES).forEach(function(entry) {
       const decade = entry[0], idx = entry[1];
       const pct = (idx / total) * 100;
-      const span = document.createElement('span');
-      span.style.cssText = 'position:absolute;left:' + pct + '%;font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#575757;top:50%;transform:translateY(-50%);padding-left:4px;white-space:nowrap;';
-      span.textContent = decade + 's';
-      labels.appendChild(span);
+      /* Skip labels that would collide with the previous one (the 1980s hold
+         only 11 works, so its label lands on top of the 1990s) */
+      const px = (idx / total) * W;
+      if (px - lastLabelX < 56) return;
+      lastLabelX = px;
+      /* Decade label links to the archive pre-filtered to that decade;
+         symmetric padding grows the tap target to ~44px. */
+      const a = document.createElement('a');
+      a.href = 'archive.html?decade=' + decade + 's';
+      a.setAttribute('aria-label', 'Browse the ' + decade + 's in the archive');
+      a.style.cssText = 'position:absolute;left:' + pct + '%;font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#575757;top:50%;transform:translateY(-50%);padding:17px 10px 17px 4px;white-space:nowrap;text-decoration:none;transition:color 0.2s ease;';
+      a.addEventListener('mouseenter', function () { a.style.color = '#FF6600'; });
+      a.addEventListener('mouseleave', function () { a.style.color = '#575757'; });
+      a.textContent = decade + 's';
+      labels.appendChild(a);
     });
   }
 
@@ -533,7 +545,14 @@ const DECADES = {1970:0,1980:58,1990:69,2000:262,2010:536,2020:843};
     tooltip.style.left = tx + 'px';
     tooltip.style.top  = (e.clientY - 36) + 'px';
 
-    // Thumbnail preview
+    // Thumbnail preview — the work's mini floats above the tooltip
+    if (thumb.dataset.id !== w[3]) {
+      thumb.dataset.id = w[3];
+      thumb.src = 'artworks/mini/' + w[3] + '.avif';
+    }
+    thumb.style.display = 'block';
+    thumb.style.left = tx + 'px';
+    thumb.style.top  = (e.clientY - 36 - (thumb.offsetHeight || 120) - 8) + 'px';
   });
 
   canvas.addEventListener('mouseleave', function() {

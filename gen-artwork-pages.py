@@ -219,6 +219,13 @@ def generate_page(work, idx, all_works, colors):
     vertical-align: middle;
   }}
   body {{ -webkit-font-smoothing: antialiased; }}
+  /* Cross-document view transition: a clicked thumbnail elsewhere on the site
+     morphs into this page's main image. No-op in unsupporting browsers. */
+  @view-transition {{ navigation: auto; }}
+  .vt-artwork-main {{ view-transition-name: artwork-hero; }}
+  @media (prefers-reduced-motion: reduce) {{
+    ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) {{ animation: none !important; }}
+  }}
 </style>
 </head>
 <body class="font-body-md text-body-md bg-bone-white text-deep-ink">
@@ -290,7 +297,7 @@ def generate_page(work, idx, all_works, colors):
       <div style="background-color:{bgcolor};">
         <img src="../full/{e(work['file'])}"
              alt="{e(title)}"
-             class="w-full h-auto object-contain"
+             class="w-full h-auto object-contain vt-artwork-main"
              loading="eager"
              width="1200" height="900"/>
       </div>

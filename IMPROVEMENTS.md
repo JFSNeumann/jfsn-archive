@@ -7,10 +7,10 @@ A living list. Add to it. Cross things off. This is the backlog.
 
 ## 🔴 Do soon
 
-- [ ] **Run `bash cloud-backup.sh`** — B2 hit its daily transaction cap 2026-06-12; the cloud copy is a day behind (everything else is in laptop + GitHub + 4TB).
+- [ ] **Run `bash cloud-backup.sh`** — B2 hit its daily transaction cap 2026-06-12 (still capped at session-34 start; cap resets midnight GMT ≈ 8 PM EDT). B2's last good sync was 2026-06-12 12:22 — it's missing the afternoon performance pass + final session-33 commits (all safe on laptop + GitHub + 4TB).
 - [ ] **Re-run Lighthouse on jfsn.com** — confirm the 2026-06-12 performance pass moved the scores (was desktop 79 / mobile 74, mobile LCP 18.2s; expect mobile LCP ~3–4s).
 - [ ] **DOMAIN: Jeff contacts the friend holding the Gandi account** — ask for a Change of Owner to a Jeff-controlled account, or the transfer code. The keystone action; everything needed is in docs/DOMAIN-RECOVERY-DOCUMENT-PACK.md. (FTP password rotation is IMPOSSIBLE — no cPanel access, proven 2026-06-12; superseded as an action item. See docs/FINAL-DOMAIN-AND-PRESERVATION-HANDOFF.md.)
-- [ ] **Remove the Allison PDF from the webroot** (`lftp rm /JFSN-Archive-Handoff-Allison.pdf` — FTP write still works) + add `*.pdf` and `docs/` excludes to deploy.sh.
+- [ ] **Companion function returns 502 "Unexpected model response"** — pre-existing on BOTH Netlify prod and fresh deploys (found 2026-06-12 during mirror refresh; valid `{"prompt":...}` POST reproduces it). Debug `netlify/functions/companion.mjs` response handling.
 - [ ] **One ~1-minute audio recording** — standing #1 creator-context priority (§25). No audio of Jeff exists anywhere (he declined for the exhibition answers 2026-06-12 — don't push; offer occasionally). Also: listen to `old-site/BB/audio/sample.wav` (21s — possibly the only existing audio).
 - [ ] **Ingest new work** — drop photos into `artworks/inbox/`, run `bash add-works.sh`. Pipeline is ready.
 
@@ -40,6 +40,8 @@ A living list. Add to it. Cross things off. This is the backlog.
 ---
 
 ## ✅ Completed (recent)
+- [x] ~~**Nine homepage/sitewide UX features (sessions 34b, both rounds)**~~ — river tooltip mini previews (homepage bands + chromatic.html), cross-document view-transition artwork morph SITEWIDE (incl. 1,084 regenerated static pages; old broken same-doc code removed), hero→river "you are here" marker, Today from the Archive daily strip, mobile folio dot rail, mini-river on artwork.html ("where this sits"), river touch scrubbing, clickable decade labels → filtered archive. All deployed + verified on jfsn.com and Netlify (2026-06-12)
+- [x] ~~**Allison PDF removed from BOTH webroots**~~ — deleted from jfsn.com via FTP (404 verified); Netlify mirror refreshed via curated CLI deploy — PDF + make_handoff.py now 404 there too, `_redirects` 42 forced-404 rules finally live, mirror current through session 33 (was a stale June-5 snapshot; **site has NO git integration — Netlify deploys are manual CLI from a curated staging dir, see CREDENTIAL-EXPOSURE-REPORT.md §6**). deploy.sh `*.pdf`/`docs/` excludes were already in place since session 31. Every public copy of the credential is now CLOSED or BLOCKED (session 34, 2026-06-12)
 - [x] ~~**Performance pass**~~ — mobile hero variants (1080px -hero-m, ~80% smaller), hero pool inlined via build_catalog stamp (featured-hero.txt still the editing surface), thumbs for featured cards 4–30, CLS min-height reserves, Material Symbols icon font → inline SVG sitewide incl. all 1,084 regenerated artwork pages; colors.json restored from git (session 33, 2026-06-12)
 - [x] ~~**Hover pass**~~ — hero holds still on hover, Wall band tooltips, mat bloom (30→55% blend), ghost tiles join Lost hover, unified 0.25s card timing sitewide (session 33)
 - [x] ~~**Homepage image UX pass**~~ — whole works on visible color mats (object-contain), 3 composite-titled works out of featured pool, folio frames hug artwork, mobile hero caption single line, 44px touch targets, mobile Wall title, stale preload removed (session 33)
