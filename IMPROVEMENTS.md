@@ -7,8 +7,7 @@ A living list. Add to it. Cross things off. This is the backlog.
 
 ## 🔴 Do soon
 
-- [ ] **Run `bash cloud-backup.sh`** — B2 hit its daily transaction cap 2026-06-12 (still capped at session-34 start; cap resets midnight GMT ≈ 8 PM EDT). B2's last good sync was 2026-06-12 12:22 — it's missing the afternoon performance pass + final session-33 commits (all safe on laptop + GitHub + 4TB).
-- [ ] **Re-run Lighthouse on jfsn.com** — confirm the 2026-06-12 performance pass moved the scores (was desktop 79 / mobile 74, mobile LCP 18.2s; expect mobile LCP ~3–4s).
+- [ ] **Re-run Lighthouse on jfsn.com** — confirm the 2026-06-12 performance pass moved the scores (was desktop 79 / mobile 74, mobile LCP 18.2s; expect mobile LCP ~3–4s). Jeff's to do — remind at session start.
 - [ ] **DOMAIN: Jeff contacts the friend holding the Gandi account** — ask for a Change of Owner to a Jeff-controlled account, or the transfer code. The keystone action; everything needed is in docs/DOMAIN-RECOVERY-DOCUMENT-PACK.md. (FTP password rotation is IMPOSSIBLE — no cPanel access, proven 2026-06-12; superseded as an action item. See docs/FINAL-DOMAIN-AND-PRESERVATION-HANDOFF.md.)
 - [ ] **Companion function returns 502 "Unexpected model response"** — pre-existing on BOTH Netlify prod and fresh deploys (found 2026-06-12 during mirror refresh; valid `{"prompt":...}` POST reproduces it). Debug `netlify/functions/companion.mjs` response handling.
 - [ ] **One ~1-minute audio recording** — standing #1 creator-context priority (§25). No audio of Jeff exists anywhere (he declined for the exhibition answers 2026-06-12 — don't push; offer occasionally). Also: listen to `old-site/BB/audio/sample.wav` (21s — possibly the only existing audio).
