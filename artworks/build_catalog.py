@@ -15,6 +15,22 @@ This script also generates artist-config.js for use by browser-side JS.
 import json, datetime, urllib.parse, re
 from pathlib import Path
 
+# ── Stable writes — skip rewriting a generated file when only a timestamp would
+#    change, so no-op builds don't churn git (api `generated`, feed dates). This
+#    is what left end-session.sh with post-commit residuals every run. ─────────
+_GEN_TS  = [r'"generated":\s*"[^"]*"']
+_FEED_TS = [r'<lastBuildDate>[^<]*</lastBuildDate>', r'<pubDate>[^<]*</pubDate>']
+
+def _write_stable(path, content, volatile=()):
+    """Write only if `content` differs from the existing file once `volatile`
+    regex substrings are blanked out. Returns True if it actually wrote."""
+    if path.exists():
+        norm = (lambda s: re.sub('|'.join(volatile), '', s)) if volatile else (lambda s: s)
+        if norm(path.read_text()) == norm(content):
+            return False
+    path.write_text(content)
+    return True
+
 ROOT    = Path(__file__).parent.parent
 API_V1  = ROOT / "api" / "v1"
 API_WORKS = API_V1 / "works"
@@ -300,7 +316,7 @@ for r in recent_20:
         '    </item>',
     ]
 feed_lines += ['  </channel>', '</rss>']
-OUT_FEED.write_text('\n'.join(feed_lines) + '\n')
+_write_stable(OUT_FEED, '\n'.join(feed_lines) + '\n', _FEED_TS)
 print(f"feed.xml          — {len(recent_20)} recent works")
 
 # ── Auto-patch work counts in medium, theme, and decade pages ─────────────────
@@ -501,7 +517,7 @@ meta = {
     "license": "CC BY 4.0 — https://creativecommons.org/licenses/by/4.0/",
     "citation": f"Jeffrey F. S. Neumann Archive. {SITE_URL}/api/v1/meta.json",
 }
-(API_V1 / "meta.json").write_text(json.dumps(meta, indent=2))
+_write_stable(API_V1 / "meta.json", json.dumps(meta, indent=2), _GEN_TS)
 
 # works.json — full catalog (compact; large file)
 works_envelope = {
@@ -510,7 +526,7 @@ works_envelope = {
     "count": len(cataloged),
     "works": cataloged,
 }
-(API_V1 / "works.json").write_text(json.dumps(works_envelope, separators=(',', ':')))
+_write_stable(API_V1 / "works.json", json.dumps(works_envelope, separators=(',', ':')), _GEN_TS)
 
 # works/{id}.json — one file per cataloged work
 for r in cataloged:
@@ -550,10 +566,10 @@ def _facet_index(field: str, label: str, series_param: str | None = None) -> lis
 
 # themes.json
 themes_data = _facet_index("themes", "theme", "theme")
-(API_V1 / "themes.json").write_text(json.dumps({
+_write_stable(API_V1 / "themes.json", json.dumps({
     "api_version": "1", "generated": now,
     "count": len(themes_data), "themes": themes_data,
-}, separators=(',', ':')))
+}, separators=(',', ':')), _GEN_TS)
 
 # series.json — named series only
 series_bucket: dict[str, list[str]] = {}
@@ -571,24 +587,24 @@ named_series = [
     }
     for name, ids in sorted(series_bucket.items(), key=lambda x: (-len(x[1]), x[0]))
 ]
-(API_V1 / "series.json").write_text(json.dumps({
+_write_stable(API_V1 / "series.json", json.dumps({
     "api_version": "1", "generated": now,
     "count": len(named_series), "series": named_series,
-}, separators=(',', ':')))
+}, separators=(',', ':')), _GEN_TS)
 
 # motifs.json
 motifs_data = _facet_index("motifs", "motif")
-(API_V1 / "motifs.json").write_text(json.dumps({
+_write_stable(API_V1 / "motifs.json", json.dumps({
     "api_version": "1", "generated": now,
     "count": len(motifs_data), "motifs": motifs_data,
-}, separators=(',', ':')))
+}, separators=(',', ':')), _GEN_TS)
 
 # palette.json
 palette_data = _facet_index("palette", "color")
-(API_V1 / "palette.json").write_text(json.dumps({
+_write_stable(API_V1 / "palette.json", json.dumps({
     "api_version": "1", "generated": now,
     "count": len(palette_data), "palette": palette_data,
-}, separators=(',', ':')))
+}, separators=(',', ':')), _GEN_TS)
 
 # .htaccess — CORS + content-type for Apache (cPanel compatible)
 # Note: mod_security directives removed — IfModule guards are insufficient on

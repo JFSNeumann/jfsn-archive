@@ -72,7 +72,7 @@ Drop photos into `artworks/inbox/`, run `bash add-works.sh`.
 ```bash
 bash end-session.sh   # git commit + push + 4TB rsync + Backblaze B2
 ```
-Then deploy via JFSN.app (HostGator). **If a Netlify function / the Companion changed, also redeploy Netlify via the curated CLI stage.** Cross off the item in `IMPROVEMENTS.md`; update `CURRENT_STATE.md`.
+Then deploy via JFSN.app (HostGator). **If a Netlify function / the Companion changed, also redeploy the mirror with `bash deploy-netlify.sh`** (`--check` → draft → `--prod`; it curates the stage + safety-gates against publishing docs/credentials). Cross off the item in `IMPROVEMENTS.md`; update `CURRENT_STATE.md`.
 
 ---
 

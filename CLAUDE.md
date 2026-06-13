@@ -133,6 +133,8 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 ### Deployment
 - `bash end-session.sh` — git commit, push to GitHub, rsync backup to external drive
 - Deploy to HostGator via desktop JFSN.app (not deploy.sh)
+- Deploy the **Netlify mirror** via `bash deploy-netlify.sh` (`--check` = dry safety scan → default = draft/preview → `--prod` = live). It builds a curated staging copy + refuses to deploy if any `docs/`/`.ftp.env`/`*.py`/`*.sh`/`*.pdf`/`*.md` slipped in — the guardrail against the 2026-06 credential-exposure failure mode. Netlify has NO git integration.
+- `build_catalog.py` writes the api JSON + feed.xml through `_write_stable` — they are NOT rewritten when only the `generated`/date timestamp would change. If you see those files *not* updating on a no-content build, that's intentional (kills git churn / end-session residuals), not a bug.
 - Service worker: `sw.js` — bump `CACHE_V` whenever deploy may be cached by old SW
 - **Hero AVIF upload path:** `.htaccess` rewrites `artworks/full/*.avif` → `/artworks/*.avif` (legacy flat dir). New hero crops (`artNNNN-hero.avif`) must be uploaded to `/artworks/` on HostGator — NOT `/artworks/full/`. Use lftp: `put artNNNN-hero.avif -o /artworks/artNNNN-hero.avif`
 - **`api/.htaccess` is auto-generated:** `build_catalog.py` overwrites it on every run. Edit the `htaccess` template string in that script — never the file directly. Do NOT add `SecFilterEngine`/`SecRuleEngine` — they cause HTTP 500 on HostGator.
