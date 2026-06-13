@@ -31,7 +31,12 @@ echo ""
 # Full sync excluding large/regeneratable directories.
 # old-site/ IS included deliberately: it is Jeff's earlier website — archival
 # material whose only other complete copy is the HostGator server itself.
+# --fast-list: one recursive listing instead of per-directory calls — far fewer
+#   B2 Class-C transactions (the daily cap we keep hitting is on those API calls).
+# --b2-hard-delete: don't keep hidden old versions piling up server-side.
 rclone sync . "$BUCKET" \
+  --fast-list \
+  --b2-hard-delete \
   --exclude "node_modules/**" \
   --exclude ".git/**" \
   --exclude "artworks/inbox/**" \

@@ -12,6 +12,18 @@ echo "  JFSN — End of Session"
 echo "═══════════════════════════════════════"
 echo ""
 
+# ── 0. Refresh CURRENT_STATE.md header BEFORE committing ─────────────────────
+# Done first (not after the commit) so the commit captures it — otherwise the
+# header bump + stats left git dirty and one commit behind the backup every run.
+DATE=$(date "+%Y-%m-%d %H:%M")
+if grep -q '^\*\*Updated:\*\*' CURRENT_STATE.md 2>/dev/null; then
+  sed -i '' "s|^\*\*Updated:\*\*.*|**Updated:** $DATE|" CURRENT_STATE.md
+fi
+STATS=$(python3 -c "import json; c=json.load(open('catalog.json')); print(f'- {len(c)} works cataloged, 0 errors')" 2>/dev/null || echo "- run build_catalog.py to refresh")
+if grep -q '^- [0-9]* works cataloged' CURRENT_STATE.md 2>/dev/null; then
+  sed -i '' "s|^- [0-9]* works cataloged.*|$STATS|" CURRENT_STATE.md
+fi
+
 # ── 1. Show what changed ──────────────────────────────────────────────────────
 # Accepts optional commit message as $1 (for non-interactive / Claude Code use)
 CHANGED=$(git status --porcelain | wc -l | tr -d ' ')
@@ -33,7 +45,7 @@ if [ "$CHANGED" -gt 0 ]; then
     git add -A
     git commit -m "$MSG
 
-Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>"
+Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
     git push
     echo "   ✅  Committed and pushed."
   else
@@ -79,6 +91,24 @@ else
   echo "   ⚠️   Cloud backup failed or skipped — run  bash cloud-backup.sh  manually."
 fi
 
+# ── 2b. Reconcile post-backup residuals ──────────────────────────────────────
+# The B2-timestamp stamp above (and any other late tracked-file write) mutates
+# files AFTER the commit. Commit + push + re-sync the 4TB so git and the local
+# mirror both end clean at the true final state.
+# (The async JFSN.app deploy may still regenerate api/changes/feed afterward —
+#  the next session's start-up verification catches that.)
+if [ -n "$(git status --porcelain)" ]; then
+  echo ""
+  echo "🔄  Reconciling post-backup residuals..."
+  git add -A
+  git commit -m "Session close: backup timestamps + residuals
+
+Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>" >/dev/null 2>&1 || true
+  git push >/dev/null 2>&1 || true
+  [ -d "/Volumes/JEFFS-4TB" ] && bash backup.sh >/dev/null 2>&1 || true
+  echo "   ✅  Residuals committed, pushed, and re-synced to 4TB."
+fi
+
 echo ""
 
 # ── 3. Show what to tell Claude ───────────────────────────────────────────────
@@ -96,36 +126,7 @@ echo ""
 echo "───────────────────────────────────────"
 echo ""
 
-# ── 4. Update CURRENT_STATE.md ────────────────────────────────────────────────
-# Only updates the metadata header (Updated / Last commit).
-# All session notes written by Claude or Jeff are PRESERVED.
-DATE=$(date "+%Y-%m-%d %H:%M")
-LAST_COMMIT=$(git log -1 --pretty="%h — %s")
-
-# Update the **Updated:** line
-if grep -q '^\*\*Updated:\*\*' CURRENT_STATE.md 2>/dev/null; then
-  sed -i '' "s|^\*\*Updated:\*\*.*|**Updated:** $DATE|" CURRENT_STATE.md
-fi
-
-# Update the last commit line (line after "## Last commit")
-if grep -q '^## Last commit' CURRENT_STATE.md 2>/dev/null; then
-  # Replace the line immediately after the heading
-  awk -v commit="$LAST_COMMIT" '
-    /^## Last commit/ { print; getline; print commit; next }
-    { print }
-  ' CURRENT_STATE.md > CURRENT_STATE.tmp && mv CURRENT_STATE.tmp CURRENT_STATE.md
-fi
-
-# Refresh archive stats line (won't fail if catalog.json is missing)
-STATS=$(python3 -c "import json; c=json.load(open('catalog.json')); print(f'- {len(c)} works cataloged, 0 errors')" 2>/dev/null || echo "- run build_catalog.py to refresh")
-if grep -q '^- [0-9]* works cataloged' CURRENT_STATE.md 2>/dev/null; then
-  sed -i '' "s|^- [0-9]* works cataloged.*|$STATS|" CURRENT_STATE.md
-fi
-
-echo "📄  CURRENT_STATE.md header updated (session notes preserved)."
-echo ""
-
-# ── 5. Deploy — launch JFSN.app automatically ────────────────────────────────
+# ── 4. Deploy — launch JFSN.app automatically ────────────────────────────────
 echo "🚀  Launching JFSN.app to deploy to HostGator..."
 open ~/Desktop/Deploy\ JFSN.app 2>/dev/null || echo "   ⚠️   Deploy JFSN.app not found on Desktop — deploy manually."
 

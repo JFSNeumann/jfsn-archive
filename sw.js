@@ -5,7 +5,7 @@
    - HTML/CSS/JS  → network-first (always fresh; fall back to cache if offline)
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-20260613180000';
+const CACHE_V  = 'jfsn-20260613190000';
 const PRECACHE = [
   '/',
   '/index.html',
@@ -117,7 +117,28 @@ self.addEventListener('fetch', e => {
         }
         return res;
       })
-      .catch(() => caches.match(e.request)
-        .then(cached => cached || new Response('', { status: 503 })))
+      .catch(async () => {
+        // Offline: serve the exact cached response if we have it.
+        const cached = await caches.match(e.request);
+        if (cached) return cached;
+        // Never blank a navigation — fall back to the cached app shell, then a
+        // small branded offline page. (Old behaviour returned an empty 503,
+        // which painted a white screen for any uncached page offline.)
+        if (e.request.mode === 'navigate') {
+          const shell = (await caches.match('/index.html')) || (await caches.match('/'));
+          if (shell) return shell;
+          return new Response(
+            '<!doctype html><html lang="en"><meta charset="utf-8">' +
+            '<meta name="viewport" content="width=device-width,initial-scale=1">' +
+            '<title>Offline — JFSN Archive</title>' +
+            '<body style="margin:0;font-family:Inter,system-ui,sans-serif;background:#fcf9f3;color:#0B0B0B;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:2rem">' +
+            '<div><p style="font-size:18px;margin:0 0 8px">You’re offline.</p>' +
+            '<p style="color:#575757;margin:0">This page isn’t cached yet — reconnect and reload.</p></div>',
+            { headers: { 'Content-Type': 'text/html; charset=utf-8' }, status: 503 }
+          );
+        }
+        // Non-navigation (CSS/JS/etc.) with no cache — nothing useful to give.
+        return new Response('', { status: 503 });
+      })
   );
 });
