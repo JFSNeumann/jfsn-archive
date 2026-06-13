@@ -264,7 +264,7 @@ License: CC BY 4.0 (metadata only — artwork images belong to the artist).
 
 `/companion.html` — Claude-powered chat with full archive knowledge.  
 Requires Netlify function: `netlify/functions/companion.mjs` + `ANTHROPIC_API_KEY` in Netlify dashboard.  
-Models: `claude-haiku-4-5` (fast) / `claude-sonnet-4-6` (deep). Deep mode uses `thinking: {type: 'adaptive'}`.  
+Models: `claude-haiku-4-5` (fast) / `claude-sonnet-4-6` (deep). **No extended thinking** — deep mode is Sonnet without thinking (session 35); adaptive thinking + the multi-turn tool loop blew past Netlify's hard 30s function timeout, so deep = "Sonnet instead of Haiku," `max_tokens` 1024. Reviving deeper reasoning needs a streaming/background function.  
 Does not work on plain cPanel (no server-side function support).
 
 ---
@@ -278,7 +278,7 @@ Does not work on plain cPanel (no server-side function support).
 - **sw.js auto-bump:** `build_catalog.py` auto-bumps `CACHE_V` on every run. Check `git diff sw.js` before committing after any script run.
 - **Hero AVIF upload path:** `.htaccess` rewrites `artworks/full/*.avif` → `/artworks/*.avif` (legacy flat path). New hero crops (`artNNNN-hero.avif`) must be uploaded to `/artworks/` on the HostGator server — NOT `/artworks/full/`. Upload via lftp to `/artworks/artNNNN-hero.avif`.
 - **`api/.htaccess` is auto-generated:** `build_catalog.py` overwrites it on every run from a template string inside the script. Edit the template there — never edit the file directly. Do NOT add `SecFilterEngine`/`SecRuleEngine` mod_security directives — they cause HTTP 500 on HostGator.
-- **`catalog-lite.json` fields:** trimmed to `file, title, year, work_type, themes, keywords, motifs, description` — only what `search.js` and the Netlify edge function actually read. Don't bloat it; LITE_FIELDS is defined in `build_catalog.py`.
+- **`catalog-lite.json` fields:** `file, title, year, work_type, themes, keywords, motifs, description, series, favorite, featured, orientation` — what `search.js`, archive filters (incl. the orientation filter), `series.html`, and the Netlify edge function read. `orientation` (vertical/horizontal/square, from `dims.json`) added session 35. Don't bloat it; LITE_FIELDS is the source of truth in `build_catalog.py`.
 - **`mt-3` / new Tailwind classes:** Classes not in the build are silently ignored. If a spacing or layout class isn't applying, run `npm run build:css`.
 - **Playfair Display:** Only on decade page heroes, `about.html` name h1 + bio paragraph, series heroes, `companion.html` title. Everything else is Inter.
 - **analytics:** GoatCounter on all public pages via `_shared/footer.html` → `jfsn.goatcounter.com`.
