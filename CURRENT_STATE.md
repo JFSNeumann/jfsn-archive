@@ -1,6 +1,13 @@
 # Current State
 **Updated:** 2026-06-13 15:55
 
+## ⚠️ NEXT-SESSION VERIFY (session 35 carryover) — check these first
+- **Latest commit at session-35 close: `da819efb`.** GitHub + 4TB + Mac were clean there.
+- **B2:** a background job was scheduled to run `cloud-backup.sh` ~8:16 PM EDT (2026-06-13), after the daily cap reset. **Confirm it fired — verify B2 holds `da819efb` (or later).** If it didn't (Mac slept / Claude Code closed), B2 is behind → run `bash cloud-backup.sh` (lighter now with `--fast-list`).
+- **Live sw.js on jfsn.com = `jfsn-20260613190000`** (the offline-fallback fix; deployed + verified to HostGator this session).
+- **Netlify mirror is intentionally behind on that SW fix** (its `sw.js` may still be `180000`) — the offline fix went to HostGator only. Run `bash deploy-netlify.sh` (`--check` → draft → `--prod`) for parity if wanted; not urgent (offline-only behavior on the secondary host).
+- New tooling added this session (repo-only, no deploy needed): `deploy-netlify.sh` (safe curated mirror deploy) and `build_catalog.py` stable-writes (api/feed no longer churn on timestamp).
+
 ## What was done session 35 (2026-06-13 — Companion fix + orientation + icons + truth pass; ALL DEPLOYED by Jeff + verified live)
 
 - **Companion deep-mode 502 — FIXED + verified live.** Reproduced it: fast mode (Haiku) always returned 200; deep mode (`deep:true`) **timed out at Netlify's hard 30s limit every time** (Sonnet 4.6 + adaptive thinking + 5-turn agentic loop + 4000 max_tokens → `Sandbox.Timedout`). The old "Unexpected model response" label was a misdiagnosis; model IDs + thinking shape were always valid (confirmed against the claude-api reference). Fix in `netlify/functions/companion.mjs`: **deep = Sonnet 4.6 *without* extended thinking, max_tokens 1024** (deep now means "Sonnet instead of Haiku," a real quality bump that fits the budget). Deployed to Netlify via curated CLI; **verified live: deep POST → HTTP 200 in ~17.5s.** If deeper reasoning is ever wanted back, the function must move to a streaming/background architecture (30s cap can't be raised on a sync function).
