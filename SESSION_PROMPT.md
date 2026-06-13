@@ -50,6 +50,13 @@ Lets the site show the truth it currently hides: decade-estimate years presented
 
 Recommended order once decisions are in: `composite` first (highest truth value, gallery-images groundwork done), then `year_precision`, then `description_source`.
 
+### 4b. 🟡 Mobile hero LCP — highest-impact *technical* fix (no decisions needed; good warm-up)
+Lighthouse: homepage LCP ~2.4–5.4s on mobile depending on which hero slide loads (swings desktop 86 / mobile 78), with ~640–852 KB image-delivery savings still flagged. The hero is the LCP element. Levers — none need Jeff's input, so this is a clean win to do *before* the provenance decisions land:
+- Lead the rotation with the **lightest** hero crop (reorder `artworks/featured-hero.txt`) so first paint is fast regardless of which slide is up.
+- Re-compress the heavy `artNNNN-hero.avif` / `-hero-m.avif` crops harder (some mobile `-m` variants are still 130–173 KB; target <90 KB).
+- Confirm only the first slide + its `-m` variant are preloaded; the rest lazy-load.
+Re-run Lighthouse after to confirm the swing closes.
+
 ### 5. 🟡 Oral history — unanswered questions
 `docs/oral-history/master-notes.md` → "Unresolved Questions". Top item: why did he keep going after the Rauschenberg realization? Approach gently; spare answers are the voice.
 

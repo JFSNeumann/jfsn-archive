@@ -21,6 +21,7 @@ A living list. Add to it. Cross things off. This is the backlog.
 - [ ] **start-here.html** — oral history content written in (session 21). Review with Jeff and refine.
 
 ### Technical
+- [ ] **Mobile hero LCP** — highest-impact technical fix, no decisions needed. Lighthouse swings desktop 86 / mobile 78; LCP ~2.4–5.4s depending on which hero slide loads; ~640–852 KB image-delivery savings flagged. Levers: lead `artworks/featured-hero.txt` with the lightest crop; compress heavy `-hero(-m).avif` harder (some `-m` still 130–173 KB → target <90 KB); preload only first slide + its `-m`. Re-run Lighthouse after. (Details in SESSION_PROMPT §4b.)
 - [ ] **Catalog provenance fields — RECOMMENDED FIRST BUILD next session.** `year_precision`, `composite`, `description_source` through build_catalog → lite → api/v1 → artwork.html → JSON-LD (same pipeline as the session-35 `orientation` field). **Three decisions must go to Jeff BEFORE building — writing them blind mislabels 1,084 records. The exact questions are scoped in `SESSION_PROMPT.md` §4** (year display format + which years are exact; the precise composite set/rule; whether description_source is worth it given descriptions aren't shown on-page). Build order once answered: composite → year_precision → description_source.
 
 ---
@@ -28,6 +29,8 @@ A living list. Add to it. Cross things off. This is the backlog.
 ## 🟢 Nice to have, low urgency
 
 ### Technical
+- [ ] **Deploy the pending `sw.js` offline fix** — session 35 fixed the blank-white-page-when-offline bug (navigations now fall back to the cached shell / a branded offline page instead of an empty 503). Committed but NOT yet live — ships on the next JFSN.app deploy. Offline-visitors only, low urgency.
+- [ ] **Accessibility pass** — Lighthouse a11y is 93–96, not 100. Check small uppercase `#575757` labels' contrast on bone-white, `:focus-visible` states, and icon-button labels against the stated WCAG-AA goal.
 - [ ] **series-index.html per-theme icons** — extend the session-35 icon vocabulary (inline feather SVGs) to the 8 series/themes, but ONLY if they read as earned rather than literal. Review with Jeff first.
 
 ---
