@@ -1,5 +1,5 @@
 # Current State
-**Updated:** 2026-06-13 21:07
+**Updated:** 2026-06-14 10:11
 
 ## ⚠️ NEXT-SESSION VERIFY (session 36 carryover) — check these first
 - **Session 36 is DEPLOYED + verified live on jfsn.com** (commit `2097325e`, doc-fix `7b1caea3`). HostGator deploy via JFSN.app (`deploy.sh` full mirror); the 3 recompressed heroes went via `lftp` (`artworks/full/*.avif` is excluded from deploy.sh). All four stores synced at close (GitHub + 4TB + Mac + **B2 current**, backup 21:10). Live-verified: homepage byte-match, static composite pages show "(est.)" + the composite note, recompressed heroes serve at the smaller sizes.
