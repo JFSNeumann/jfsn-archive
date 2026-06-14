@@ -7,7 +7,10 @@
 - **B2:** has NO recurring schedule — only the 11 PM `com.jfsn.backup` LaunchAgent, which runs `backup.sh` = **4TB rsync ONLY**. B2 rides on `end-session.sh` / manual `cloud-backup.sh` (cap resets ~8 PM EDT). Worth making B2 recurring someday.
 - **Live sw.js on jfsn.com = `jfsn-20260614010023`** (deployed + verified this session; auto-bumped by build_catalog when the catalog gained provenance fields).
 - **Netlify mirror is intentionally behind on the SW offline fix** (`jfsn-20260612212319`). Run `bash deploy-netlify.sh` (`--check` → draft → `--prod`) for parity if wanted; not urgent.
-- **OPEN: re-run Lighthouse mobile** to confirm the hero LCP swing closed (was 1.3s–7.1s; art0392 now always leads + is preloaded). **Also desktop CLS = 0.147** (mobile is fine at 0.001) — desktop-layout shift, culprit unidentified (need the Lighthouse "Layout shift culprits" detail). Both in IMPROVEMENTS.
+- **Post-deploy Lighthouse (Jeff, 2026-06-14) + two follow-up fixes:**
+  - ✅ **Desktop CLS 0.147 → 0** — the river full-screen bug WAS the desktop CLS culprit (the compounding canvas height was the layout shift). Fixed by the `data-h` river fix. Desktop: perf 89, LCP 1.9s (art0392).
+  - 🔴→🛠 **Mobile LCP was STILL 7.6s** after the lead+preload fix. Root cause: the hero **kb-reveal animation** (`transform: scale(1.7→1)` over **7.6s**) keeps the hero image producing a changing paint size for the whole animation, so Chrome finalizes LCP at the animation's END (7.6s — exact match). **Fix (commit `03086654`, LIVE):** slide 0 (the LCP element) no longer gets `data-kb="reveal"` → renders statically at final scale, so LCP fires at the preloaded image's load time; slides 2+ keep the Ken Burns reveal. CACHE_V `jfsn-20260614040000`. **Could NOT verify throttled LCP locally (preview is unthrottled) — Jeff must RE-RUN mobile Lighthouse to confirm the drop.** If still high, next suspects: shorten/soften kb-reveal globally, or the heavier later `-hero-m` slides.
+  - Note: this is a textbook LCP anti-pattern (animating the LCP element). General rule for this site's hero: the first/eager slide must not transform-animate.
 
 ## What was done session 36 (2026-06-13 — mobile hero LCP + provenance fields; DEPLOYED + verified live)
 
