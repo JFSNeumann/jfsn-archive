@@ -24,10 +24,13 @@ colors: {
   "deep-ink":               "#0B0B0B",   // primary text
   "archive-gray":           "#575757",   // secondary text / labels
   "international-orange":   "#FF6600",   // accent — hover, active, links
-  "outline-variant":        "#c4c7c7",   // borders
+  "outline-variant":        "#c4c7c7",   // neutral border (still valid)
+  "archival-outline":       "#8e7164",   // warm-brown archival border (Stitch June-2026 — adopted)
+  "archival-outline-soft":  "#e3bfb1",   // warm-brown soft border / divider
   "surface-container-high": "#ebe8e2",   // footer bg
   "bone-white":             "#F3F0EA",   // mobile nav bg
 }
+// paper-shadow: 0 0 20px rgba(0,0,0,0.05)  — soft diffused card shadow (Stitch June-2026 — adopted; soft only, never heavy)
 ```
 
 **Material Design pages** (decade pages 1970s–2020s, archive.html):
@@ -53,8 +56,12 @@ colors: {
 ### Visual rules
 - Light ground always — bone-white or near-white bg, deep-ink text
 - Orange accent (#FF6600 / #e05900) for hover, active states, links — not decoration
-- No gradients. No drop shadows on images. No rounded corners (border-radius: 0).
-- Borders use outline-variant (#c4c7c7) — 1px solid
+- No gradients. No rounded corners (border-radius: 0).
+- **Soft paper-shadow on image cards is ALLOWED** (Stitch June-2026 — adopted): `box-shadow: 0 0 20px rgba(0,0,0,0.05)`, soft/diffused only — never heavy or hard-edged. The old blanket "no drop shadows on images" ban is lifted for this tactile card treatment only. (Artwork thumbnails in grids keep their flat full-colour treatment — see below.)
+- Borders: neutral `outline-variant` (#c4c7c7) OR the adopted **warm-brown archival border** (#8e7164 / soft #e3bfb1, Stitch June-2026) — 1px or 2px solid, for section breaks, cards, and "where to begin" tiles.
+- **Adopted Stitch June-2026 design language** (accepted into the live system, see `design-concepts/stitch-june-2026/DESIGN.md`): soft paper-shadow cards · warm-brown archival borders · monospace technical metadata using the **real** `artNNNN` IDs · `⌘K` command palette with backdrop-blur glassmorphism · bracket system-links `[ EXPLORE → ]` · `collage-overlap` tonal layering (desktop only — minimize on mobile for tap targets) · The Wall / Chromatic River / Stories / Curatorial Map pillars.
+- **Integrity clause (NON-NEGOTIABLE — supersedes any mockup):** NEVER ship fabricated provenance / accession numbers, "Archival Grade Verified" / "Verification Status" badges, invented DPI/resolution/file-size, fabricated quotes, or composite images presented as real exhibitions. Years stay decade estimates ("1990s (est.)"); composites stay flagged. The *design* is adopted; the *data* stays honest.
+- **STILL BANNED (artwork-first — confirmed by Jeff 2026-06-14):** grayscale on artwork thumbnails (full colour ALWAYS), scale/transform-on-hover, sibling dim, scroll-reveal, hover overlays on artwork cards, hero text labels over artwork, mask-image on `<img>`, brightness filter. The Stitch adoption does NOT lift these.
 - Artwork thumbnails: full colour at rest with grey-at-top overlay. A `::after` pseudo-element on `.thumb__link` uses `background: #808080; mix-blend-mode: saturation` with `mask-image: linear-gradient(to bottom, black 0%, black 40%, transparent 100%)` — top 40% desaturated, fading to full colour at bottom. On hover/focus: `::after` opacity → 0 (full colour revealed), orange `outline` on `<img>`, title turns orange via `.thumb:hover .thumb__caption a`. `.thumb__link` has `isolation: isolate` + `position: relative`. Orange outline is on the `<img>` element, NOT on `.thumb__link` (so border appears around image only, not text). Caption titles: `font-family: Inter; font-weight: 600`. No brightness filter. No mask-image on `<img>` itself. No scale, no sibling dim. Implemented in `_shared/ui.css` — do NOT re-add grayscale filter, mask-image on img, brightness filter, or any separate overlay div.
 
 ---

@@ -1,5 +1,5 @@
 # JFSN Session Handoff Prompt
-**Generated:** 2026-06-13 (session 36)
+**Generated:** 2026-06-14 (session 38)
 **Copy everything below the line and paste it to start the next session.**
 
 > Note: the **v3 verification-first start prompt** (in memory `jfsn_session_prompts.md`) is the primary way to open a session — it checks backups + live drift first. This file is the ranked *work* handoff to use after that.
@@ -24,8 +24,14 @@ Read `/Documents/JFSN/CURRENT_STATE.md` and `/Documents/JFSN/IMPROVEMENTS.md` be
 
 ## Ranked items — work top to bottom
 
-### 0. ⏏ FIRST: confirm the two open perf items (session 36 close)
-Everything below was DEPLOYED + verified live this session (commit `414c872f`; all 4 stores synced). Two perf items are still open and need Jeff's Lighthouse:
+### 0. ⏏ FIRST: the Stitch homepage is BUILT but NOT DEPLOYED (session 38)
+**`index.html` was rebuilt to the Google Stitch June-2026 design and verified in local preview — but it is NOT live.** Before anything else:
+- **Review the new homepage** (open the preview / `npm`-less static serve of `index.html`, or just deploy and check live). Then **deploy via JFSN.app** (HostGator). Deploy-prep is already done: `site.min.css` rebuilt, `CACHE_V = jfsn-20260614220000`, `audit-nav` green. Session-38 work was committed at close via `end-session.sh`.
+- **Decision needed: homepage-first, or redesign more pages?** Only `index.html` got the full Stitch redesign. The other 30 pages still have the OLD body design (only their *footers* changed — mono signature added sitewide via `stamp-nav.sh`). The next Stitch concepts are **Archive ("The Wall"), Series Index, Stories/oral-history, and the artwork detail ("Technical Record")** — see `design-concepts/stitch-june-2026/`. Apply the same extract-don't-ship workflow + the integrity carve-outs (no grayscale thumbs, no fabricated provenance/verification/DPI/quotes).
+- **Paper-texture prototype is live on the homepage only** (`#paper-texture-proto`, subtle grain). Jeff to approve / tune intensity / propagate sitewide — or delete that one `<style>` block to revert.
+- **Footer is now single-source** (`_shared/footer.html` → `stamp-nav.sh`); the homepage's old bespoke footer is gone. Don't re-introduce a bespoke homepage footer.
+
+### 0b. Two open perf items (session 36 carryover) — need Jeff's Lighthouse
 
 **0a. Mobile LCP — confirm the static-hero fix landed.** Mobile LCP went 7.6→7.2→5.9s across fixes; the final fix (slide 0 is now a static `<img>` in the HTML, off the JS critical path — commit `d5ca52b9`) should drop it toward desktop's ~1.5s. **Re-run mobile Lighthouse on jfsn.com.** If LCP is now green/good → close it. If still >2.5s, next levers: make Google Fonts non-render-blocking (render-blocking ~780ms is still flagged), or defer hero slides 1–2 loading so only slide 0's 46 KB loads first. (Background: the hero is a JS slideshow; slide 0 = static HTML stamped by build_catalog from featured-hero.txt line 1; init() reuses it. Don't re-introduce a transform animation on slide 0.)
 

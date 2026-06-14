@@ -26,6 +26,8 @@
 .sse-info{display:flex;flex-direction:column;gap:.2rem;min-width:0}
 .sse-title{font-size:.875rem;color:var(--sse-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sse-meta{font-size:.625rem;letter-spacing:.1em;text-transform:uppercase;color:var(--sse-muted);opacity:.65}
+.sse-id{margin-left:auto;flex-shrink:0;align-self:center;font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:.62rem;letter-spacing:.04em;color:var(--sse-muted);opacity:.55}
+.sse-item[aria-selected="true"] .sse-id{color:var(--sse-accent,#FF6600);opacity:.9}
 .sse-special{gap:.75rem}
 .sse-surprise-icon{font-size:1.25rem;width:44px;text-align:center;color:var(--sse-accent);flex-shrink:0}
 .sse-section-label{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(243,240,234,.3);padding:.75rem 1rem .25rem;border-top:1px solid var(--sse-dim)}
@@ -356,6 +358,7 @@
           <span class="sse-title">${escH(title)}</span>
           ${meta ? `<span class="sse-meta">${escH(meta)}</span>` : ''}
         </div>
+        <span class="sse-id">${escH(artId)}</span>
       </a>`;
     }).join('');
 
