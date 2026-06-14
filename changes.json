@@ -1,5 +1,41 @@
 [
   {
+    "sha": "88d25c2",
+    "date": "2026-06-14",
+    "title": "CURRENT_STATE: post-deploy Lighthouse — desktop CLS fixed; mobile LCP animation fix",
+    "body": ""
+  },
+  {
+    "sha": "0308665",
+    "date": "2026-06-14",
+    "title": "Perf: don't animate the LCP hero slide (mobile LCP was pinned to 7.6s)",
+    "body": "The kb-reveal transform scale(1.7 to 1) over 7.6s kept the hero image\nproducing a changing paint size for the whole animation, so Chrome\nfinalized LCP at the animation end (~7.6s on mobile Lighthouse). Slide 0\nis the LCP element, so it now renders statically at final scale (no\ndata-kb); LCP can fire as soon as the preloaded image loads. Slides 2+\nkeep the Ken Burns reveal."
+  },
+  {
+    "sha": "079e669",
+    "date": "2026-06-14",
+    "title": "CURRENT_STATE: log river full-screen hotfix + preview SW-cache gotcha",
+    "body": ""
+  },
+  {
+    "sha": "da8d8c2",
+    "date": "2026-06-14",
+    "title": "Fix: chromatic river band grew to full-screen on mobile",
+    "body": "drawRiver() read its logical height from canvas.getAttribute('height'),\nthe same attribute it overwrites with canvas.height = H*dpr. Each redraw\n(every resize event — frequent on mobile Safari as the address bar\nshows/hides) re-read the inflated value and multiplied by dpr again:\n56 -> 112 -> 224 ... until the band filled the screen. Now reads the\nlogical height from a stable data-h attribute it never mutates."
+  },
+  {
+    "sha": "fbef33d",
+    "date": "2026-06-13",
+    "title": "CURRENT_STATE: correct deploy note — deploy.sh full-mirrors artworks/pages/ (only full/ AVIFs need lftp)",
+    "body": ""
+  },
+  {
+    "sha": "7b1caea",
+    "date": "2026-06-13",
+    "title": "CURRENT_STATE: session 36 deployed + verified live; deploy gotcha + B2 schedule notes",
+    "body": ""
+  },
+  {
     "sha": "2097325",
     "date": "2026-06-13",
     "title": "Session close: backup timestamps + residuals",

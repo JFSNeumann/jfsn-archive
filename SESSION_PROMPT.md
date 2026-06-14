@@ -24,11 +24,12 @@ Read `/Documents/JFSN/CURRENT_STATE.md` and `/Documents/JFSN/IMPROVEMENTS.md` be
 
 ## Ranked items — work top to bottom
 
-### 0. ⏏ FIRST: confirm session-36 shipped + Lighthouse re-run
-Session 36 (mobile hero LCP + provenance fields) was BUILT + preview-verified but may not have been deployed at session close. Check: (1) `git log` shows the session-36 commit; (2) jfsn.com live = local (homepage + an artwork page byte-match); (3) **re-run Lighthouse mobile on jfsn.com** — the hero LCP fix should have closed the 1.3s–7.1s swing (art0392 now always leads + is preloaded). If still not deployed: deploy via JFSN.app + (optional) lftp the 3 recompressed hero AVIFs (`art0953/art1008/art1009-hero.avif`) to `/artworks/` flat.
+### 0. ⏏ FIRST: confirm the two open perf items (session 36 close)
+Everything below was DEPLOYED + verified live this session (commit `414c872f`; all 4 stores synced). Two perf items are still open and need Jeff's Lighthouse:
 
-### 1. 🟡 Desktop CLS = 0.147  *(NEW, session 36 — clean technical win, no decisions)*
-Lighthouse desktop CLS is 0.147 (poor); mobile is 0.001 (perfect), so it's a **desktop-layout** shift. Expand the Lighthouse "Layout shift culprits" detail to find it (likely the featured grid, the chromatic river canvas, or a web-font swap reflow). Reserve space / set dimensions on the culprit. Holds desktop perf back from green.
+**0a. Mobile LCP — confirm the static-hero fix landed.** Mobile LCP went 7.6→7.2→5.9s across fixes; the final fix (slide 0 is now a static `<img>` in the HTML, off the JS critical path — commit `d5ca52b9`) should drop it toward desktop's ~1.5s. **Re-run mobile Lighthouse on jfsn.com.** If LCP is now green/good → close it. If still >2.5s, next levers: make Google Fonts non-render-blocking (render-blocking ~780ms is still flagged), or defer hero slides 1–2 loading so only slide 0's 46 KB loads first. (Background: the hero is a JS slideshow; slide 0 = static HTML stamped by build_catalog from featured-hero.txt line 1; init() reuses it. Don't re-introduce a transform animation on slide 0.)
+
+**0b. Desktop CLS = 0.16 — get the culprit, then fix.** Highly variable across runs (0 / 0.05 / 0.147 / 0.16); locally only reproduces at 0.012, so it's throttle/timing-dependent — suspected **web-font swap on the large Playfair headings** reflowing after paint. **In the desktop Lighthouse run, EXPAND the "Layout shift culprits" row and read the shifting node.** Then fix surgically (likely: preload or self-host the 2 Google Fonts, or add `size-adjust`/reserve heading space). DON'T guess CLS — it's been chased blind twice already.
 
 ### 2. 🔴 DOMAIN — Jeff contacts the friend holding the Gandi account  *(Jeff's action; keystone)*
 jfsn.com is registered at Gandi in a *friend's* account. Jeff is registrant of record but can't renew (expires **2027-03-05**), move nameservers, or transfer. SPOF #1, and the durable fix for the unrotatable exposed FTP password (recover domain → move serving off HostGator → let hosting lapse). Ask the friend for a Change-of-Owner or the transfer code. Prepared in `docs/DOMAIN-RECOVERY-DOCUMENT-PACK.md` + `docs/FINAL-DOMAIN-AND-PRESERVATION-HANDOFF.md`.
