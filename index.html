@@ -481,7 +481,7 @@ header.header-hidden{transform:translateY(-100%)}
 
     <!-- Snap 1: Hero -->
     <section id="hero-m" class="hero-section folio-section justify-start p-0 overflow-hidden" style="background-color: #1a1814;">
-      <div id="hero-slides-m"></div>
+      <div id="hero-slides-m"><!-- HERO_SLIDE0_M:START --><img class="hero-slide hero-slide-m is-active" src="artworks/full/art0392-hero-m.avif" alt="Art Machine · 2010 · COLLAGE — Jeffrey F. S. Neumann" style="object-position:center center" fetchpriority="high"><!-- HERO_SLIDE0_M:END --></div>
       <div class="absolute inset-0 z-10 flex flex-col justify-end p-8" style="background:linear-gradient(to top, rgba(0,0,0,0.70) 0%, rgba(0,0,0,0.30) 32%, transparent 58%)">
         <a id="hero-caption-m" href="artwork.html?id=art0953" aria-live="polite" class="font-label-caps text-label-caps text-bone-white/70 no-underline" style="display:block;">XXXIII Días — imagined installation (Photoshop composite) · 2022 · COLLAGE</a>
         <div id="hero-dots-m" class="hero-ctrl" style="display:flex;gap:14px;align-items:center;margin-top:12px;"></div>
@@ -497,7 +497,7 @@ header.header-hidden{transform:translateY(-100%)}
               src="artworks/medium/art0380.avif"
               alt="Devo at WHK Auditorium — Jeffrey F. S. Neumann, 1977"
               class="max-w-full max-h-full w-auto h-auto object-contain border border-deep-ink"
-              loading="eager"
+              loading="lazy"
             />
           </a>
         </div>
@@ -746,7 +746,7 @@ header.header-hidden{transform:translateY(-100%)}
 
   <!-- Hero -->
   <section id="hero-d" class="hero-section relative w-full overflow-hidden" style="height: 100dvh; background-color: #1a1814;">
-    <div id="hero-slides-d"></div>
+    <div id="hero-slides-d"><!-- HERO_SLIDE0_D:START --><img class="hero-slide hero-slide-d is-active" src="artworks/full/art0392-hero.avif" alt="Art Machine · 2010 · COLLAGE — Jeffrey F. S. Neumann" style="object-position:center center" fetchpriority="high"><!-- HERO_SLIDE0_D:END --></div>
     <button id="hero-prev-d" class="hero-arrow hero-ctrl" aria-label="Previous artwork">&#8249;</button>
     <button id="hero-next-d" class="hero-arrow hero-ctrl" aria-label="Next artwork">&#8250;</button>
     <div class="absolute inset-0 z-10 flex flex-col justify-end p-margin-desktop pb-10" style="background:linear-gradient(to top, rgba(0,0,0,0.70) 0%, rgba(0,0,0,0.30) 32%, transparent 58%)">
@@ -1103,7 +1103,7 @@ footer .hover\:border-international-orange::after{display:none}
     if (!grid) return;
     try {
       const [works, chromatic] = await Promise.all([
-        fetch('catalog-home.json?v=20260614011017').then(r => r.json()),
+        fetch('catalog-home.json?v=20260614140508').then(r => r.json()),
         fetch('chromatic.json').then(r => r.json()).catch(() => []),
       ]);
 
@@ -1261,10 +1261,13 @@ footer .hover\:border-international-orange::after{display:none}
     var prevBtn  = document.getElementById('hero-prev-d');
     var nextBtn  = document.getElementById('hero-next-d');
 
-    /* Build slides */
+    /* Build slides. Slide 0 (the LCP element) is stamped statically in the HTML
+       (already in #hero-slides-{d,m}, preloaded, no animation) so it paints
+       without waiting for this JS — reuse it, only build slides 1..N here. */
     selected.forEach(function (h, i) {
-      if (dWrap) dWrap.appendChild(makeSlide(h, 'd', i === 0));
-      if (mWrap) mWrap.appendChild(makeSlide(h, 'm', i === 0));
+      if (i === 0) return;
+      if (dWrap) dWrap.appendChild(makeSlide(h, 'd', false));
+      if (mWrap) mWrap.appendChild(makeSlide(h, 'm', false));
     });
 
     var dSlides = dWrap ? dWrap.querySelectorAll('.hero-slide-d') : [];

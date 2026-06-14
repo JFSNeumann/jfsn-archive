@@ -496,6 +496,27 @@ if INDEX.exists():
             else:
                 print("index.html        — WARNING: HERO_PRELOAD markers not found, preload not stamped")
 
+            # ── Stamp the static slide-0 <img> (the LCP element) in both heroes ──
+            # Rendering slide 0 as real HTML (not JS-injected) lets it paint
+            # straight from the preload, off the JS critical path. init() reuses
+            # it (skips i===0). Kept in sync with pool[0] here.
+            cap0 = (pool[0].get("caption") or "").replace('"', '&quot;')
+            pos0 = pool[0].get("pos") or "center center"
+            for suf, var in (("M", "-hero-m"), ("D", "-hero")):
+                cls = f"hero-slide hero-slide-{suf.lower()} is-active"
+                slide0 = (
+                    f"<!-- HERO_SLIDE0_{suf}:START -->"
+                    f'<img class="{cls}" src="artworks/full/{lcp_id}{var}.avif" '
+                    f'alt="{cap0} — Jeffrey F. S. Neumann" '
+                    f'style="object-position:{pos0}" fetchpriority="high">'
+                    f"<!-- HERO_SLIDE0_{suf}:END -->")
+                stamped, s0n = re.subn(
+                    rf'<!-- HERO_SLIDE0_{suf}:START -->.*?<!-- HERO_SLIDE0_{suf}:END -->',
+                    lambda m: slide0, stamped, flags=re.S)
+                if not s0n:
+                    print(f"index.html        — WARNING: HERO_SLIDE0_{suf} markers not found")
+            print(f"index.html        — static slide-0 stamped ({lcp_id})")
+
     INDEX.write_text(stamped)
     print(f"index.html        — cache stamp updated (?v={build_ts})")
 
