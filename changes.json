@@ -1,5 +1,35 @@
 [
   {
+    "sha": "822bf2a",
+    "date": "2026-06-14",
+    "title": "Session close: backup timestamps + residuals",
+    "body": ""
+  },
+  {
+    "sha": "21b7285",
+    "date": "2026-06-14",
+    "title": "Session update 2026-06-14 10:11",
+    "body": ""
+  },
+  {
+    "sha": "261642e",
+    "date": "2026-06-14",
+    "title": "Handoff: scope the two open perf items (mobile LCP re-run, desktop CLS culprit)",
+    "body": ""
+  },
+  {
+    "sha": "414c872",
+    "date": "2026-06-14",
+    "title": "CURRENT_STATE: static-hero LCP fix deployed; log desktop CLS regression to chase",
+    "body": ""
+  },
+  {
+    "sha": "d5ca52b",
+    "date": "2026-06-14",
+    "title": "Perf: static slide-0 hero (decouple the LCP image from JS)",
+    "body": "The hero <img> was JS-injected into an empty div, so Lighthouse's\nsimulated mobile throttling modeled the LCP as the end of a long chain\n(HTML -> render-blocking fonts -> JS -> img). Slide 0 (the LCP element)\nis now stamped as a real static img in the HTML (preloaded, is-active,\nno animation); init() reuses it and only builds slides 1..N. Also\nart0380 snap-2 folio image eager -> lazy (it's below the fold). LCP image\nnow paints straight from the preload off the JS critical path."
+  },
+  {
     "sha": "88d25c2",
     "date": "2026-06-14",
     "title": "CURRENT_STATE: post-deploy Lighthouse — desktop CLS fixed; mobile LCP animation fix",
