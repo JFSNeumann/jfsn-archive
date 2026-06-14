@@ -1,5 +1,12 @@
 # Current State
-**Updated:** 2026-06-14 10:11
+**Updated:** 2026-06-14 14:04
+
+## ⚠️ SESSION 37 (2026-06-14) — verification + security finding (NO site/repo content changed)
+- **No site work this session.** Activity was: (1) start-of-session verification, (2) cleanup of Claude Code's permission allowlist (`~/.claude/settings.local.json`, NOT this repo), (3) a security finding (below). Nothing deployed.
+- **Backups verified + brought current at start:** all four stores hold commit `0c23b24c` (GitHub ✓, Mac ✓, 4TB rsynced ✓, B2 synced ✓ — cap not hit; 4TB had been 1 commit behind via the known end-session ordering gap, now caught up). **Live drift clean:** homepage byte-matches local index.html, live `sw.js = jfsn-20260614050000`, Allison PDF 404 on both HostGator + Netlify.
+- **🔴 SECURITY — ON HOLD (Jeff):** three **active** Anthropic API keys found in plaintext, all verified HTTP 200. **KEY-A `sk-ant-api03-Yfu_u…hxwQAA` is live + in use in `.ftp.env:6`.** KEY-B `…bL_4x…54cgAA` + KEY-C `…xMeKO…SvhQAA` were stale copies removed from the allowlist today (copies linger in `/tmp/settings.local.json.bak-*`). **Pending Jeff action:** revoke all 3 at console, make 1 new key, put it in `.ftp.env`. Full detail in memory `project_exposed_keys`.
+- **Two perf items from session 36 are STILL OPEN + UNVERIFIED** (Jeff never pasted Lighthouse): mobile LCP (static-hero fix) + desktop CLS 0.16 (font-swap suspect). See the session-36 verify block below + SESSION_PROMPT §0.
+- **Next session focus (Jeff): review the new Google Stitch concepts** at `design-concepts/stitch-june-2026/` (7 DESIGN*.md + 7 code*.html + 7 screen*.png). Read STITCH.md first; apply the suggestion filter.
 
 ## ⚠️ NEXT-SESSION VERIFY (session 36 carryover) — check these first
 - **Session 36 is DEPLOYED + verified live on jfsn.com** (commit `2097325e`, doc-fix `7b1caea3`). HostGator deploy via JFSN.app (`deploy.sh` full mirror); the 3 recompressed heroes went via `lftp` (`artworks/full/*.avif` is excluded from deploy.sh). All four stores synced at close (GitHub + 4TB + Mac + **B2 current**, backup 21:10). Live-verified: homepage byte-match, static composite pages show "(est.)" + the composite note, recompressed heroes serve at the smaller sizes.
