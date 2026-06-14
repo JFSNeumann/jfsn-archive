@@ -603,7 +603,7 @@ header.header-hidden{transform:translateY(-100%)}
   <!-- Mobile: Chromatic River band -->
   <section id="river-section-m" class="border-t border-outline-variant" aria-label="Fifty years of color">
     <div class="river-band-wrap" id="river-wrap-m">
-      <canvas id="river-canvas-m" class="river-band-canvas" height="56" role="img" tabindex="0"
+      <canvas id="river-canvas-m" class="river-band-canvas" height="56" data-h="56" role="img" tabindex="0"
         aria-label="Fifty years of color: all 1,084 works in chronological order, each shown as a vertical slice of its dominant color. Tap a slice to open that work."></canvas>
       <div class="river-band-cursorline" id="river-cursor-m"></div>
     </div>
@@ -790,7 +790,7 @@ header.header-hidden{transform:translateY(-100%)}
   <!-- Chromatic River band — fifty years of color in one line -->
   <section id="river-section-d" class="border-b border-outline-variant" aria-label="Fifty years of color">
     <div class="river-band-wrap" id="river-wrap-d">
-      <canvas id="river-canvas-d" class="river-band-canvas" height="72" role="img" tabindex="0"
+      <canvas id="river-canvas-d" class="river-band-canvas" height="72" data-h="72" role="img" tabindex="0"
         aria-label="Fifty years of color: all 1,084 works in chronological order, each shown as a vertical slice of its dominant color. Click a slice to open that work."></canvas>
       <div class="river-band-cursorline" id="river-cursor-d"></div>
     </div>
@@ -1414,7 +1414,11 @@ footer .hover\:border-international-orange::after{display:none}
     if (!wrap || !canvas) return;
     var W = wrap.clientWidth;
     if (!W) return; /* hidden at this breakpoint */
-    var H = parseInt(canvas.getAttribute('height'), 10) || 64;
+    /* Logical (CSS) height — read from data-h, NOT the height attribute:
+       we overwrite canvas.height below (= H*dpr), which mutates that attribute,
+       so re-reading it would compound on every redraw (56→112→224…) and blow
+       the band up to full-screen on mobile after a few resize events. */
+    var H = parseInt(canvas.dataset.h, 10) || parseInt(canvas.getAttribute('height'), 10) || 64;
     var dpr = window.devicePixelRatio || 1;
     canvas.width  = W * dpr;
     canvas.height = H * dpr;
