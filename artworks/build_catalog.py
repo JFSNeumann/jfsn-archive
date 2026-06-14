@@ -64,7 +64,13 @@ ARTIST_SHORT = _cfg.get("artist_short") or ARTIST_NAME
 #            series.html (series — needed for ?series= named-series filter)
 #            artwork-meta.js edge function (adds description for social meta)
 # Stripped: palette, composition — not read by any consumer
-LITE_FIELDS = {'file', 'title', 'work_type', 'year', 'themes', 'keywords', 'motifs', 'description', 'favorite', 'featured', 'series', 'orientation'}
+LITE_FIELDS = {'file', 'title', 'work_type', 'year', 'themes', 'keywords', 'motifs', 'description', 'favorite', 'featured', 'series', 'orientation', 'composite', 'year_precision', 'year_display'}
+
+# Title language that marks an image as a staged "imagined placement" composite
+# even when it isn't tagged Gallery/Studio (master-notes §22/§25).
+PLACEMENT_RE = re.compile(
+    r'installation|panorama|gallery|exhibit|crowd|booth|art fair|'
+    r'wall installation|wall with works|on the wall', re.I)
 FEATURED   = Path(__file__).parent.parent / "featured.txt"
 FAVORITES  = Path(__file__).parent.parent / "favorites.txt"
 
@@ -156,6 +162,24 @@ for p in sorted(THUMBS.glob("art*.avif")):
 
 # Keep catalog in stable ID order
 records.sort(key=lambda r: r.get('file', ''))
+
+# ── Provenance fields (session 36) ───────────────────────────────────────────
+# year_precision: every year is a decade-bucket estimate (creator-confirmed —
+#   even the 9 non-round ones are guesses, not known dates). Display as "1990s (est.)".
+# composite: Gallery/Studio/installation imagery = Photoshop "imagined placements",
+#   NOT real single works or real exhibitions (master-notes §22/§25). Broadest sweep:
+#   Gallery theme OR Studio theme OR placement-language title.
+for r in records:
+    y = r.get('year')
+    if y not in (None, '') and str(y).isdigit():
+        decade = (int(y) // 10) * 10
+        r['year_precision'] = 'estimated'
+        r['year_display'] = f'{decade}s (est.)'
+    th = r.get('themes') or []
+    r['composite'] = ('Gallery' in th) or ('Studio' in th) or bool(PLACEMENT_RE.search(r.get('title') or ''))
+
+_n_comp = sum(1 for r in records if r.get('composite'))
+print(f"provenance        — {_n_comp} composites flagged; {len(records)} years marked estimated")
 
 _new_catalog = json.dumps(records, separators=(',', ':'))
 _catalog_changed = not OUT.exists() or OUT.read_text() != _new_catalog
@@ -452,6 +476,25 @@ if INDEX.exists():
             print(f"index.html        — hero pool stamped ({len(pool)} works)")
         else:
             print("index.html        — WARNING: HERO_POOL markers not found, pool not stamped")
+
+        # ── Stamp the <head> preload links from pool[0] (the LCP anchor) ──
+        # Slide 0 is fixed in init(), so we can preload its exact image at parse
+        # time. href matches the /full/ path the <img> requests (htaccess rewrites
+        # to the flat dir server-side; preload-match is on the requested URL).
+        if pool:
+            lcp_id = pool[0]["id"]
+            preload_html = (
+                "<!-- HERO_PRELOAD:START — auto-generated from featured-hero.txt line 1 by build_catalog.py -->\n"
+                f'<link rel="preload" as="image" href="artworks/full/{lcp_id}-hero-m.avif" type="image/avif" media="(max-width: 767px)" fetchpriority="high"/>\n'
+                f'<link rel="preload" as="image" href="artworks/full/{lcp_id}-hero.avif" type="image/avif" media="(min-width: 768px)" fetchpriority="high"/>\n'
+                "<!-- HERO_PRELOAD:END -->")
+            stamped, pn = re.subn(
+                r'<!-- HERO_PRELOAD:START.*?HERO_PRELOAD:END -->',
+                lambda m: preload_html, stamped, flags=re.S)
+            if pn:
+                print(f"index.html        — hero preload stamped ({lcp_id})")
+            else:
+                print("index.html        — WARNING: HERO_PRELOAD markers not found, preload not stamped")
 
     INDEX.write_text(stamped)
     print(f"index.html        — cache stamp updated (?v={build_ts})")

@@ -30,7 +30,10 @@
     "schema_version": "1",
     "series": null,
     "favorite": false,
-    "orientation": "horizontal"
+    "orientation": "horizontal",
+    "year_precision": "estimated",
+    "year_display": "2010s (est.)",
+    "composite": true
   },
   "links": {
     "image": "https://jfsn.com/artworks/full/art0780.avif",

@@ -79,6 +79,9 @@ def generate_page(work, idx, all_works, colors):
     art_id  = work['file'].replace('.avif', '')
     title   = work.get('title') or 'Untitled'
     year    = work.get('year')
+    # Years are decade-bucket estimates — show "1990s (est.)", not a hard year.
+    year_disp = work.get('year_display') or (str(year) if year else None)
+    composite = work.get('composite')
     wtype   = work.get('work_type') or ''
     medium  = MEDIUM_LABELS.get(wtype, wtype.title() if wtype else '')
     desc    = work.get('description') or ''
@@ -102,7 +105,7 @@ def generate_page(work, idx, all_works, colors):
         raw_seo = (desc[:152] + '…') if len(desc) > 155 else desc
         seo_desc = e(raw_seo)
     else:
-        seo_desc = e(f"{title}{', ' + str(year) if year else ''} — {medium} by Jeffrey F. S. Neumann.")
+        seo_desc = e(f"{title}{', ' + year_disp if year_disp else ''} — {medium} by Jeffrey F. S. Neumann.")
 
     # JSON-LD
     ld: dict = {
@@ -146,8 +149,13 @@ def generate_page(work, idx, all_works, colors):
         ld["artMedium"] = medium
 
     # Meta rows
-    rows = meta_row('Year', e(str(year)) if year else '—')
+    rows = meta_row('Year', e(year_disp) if year_disp else '—')
     rows += meta_row('Medium', e(medium))
+    if composite:
+        rows += meta_row(
+            'Image',
+            '<span class="italic text-archive-gray">Photoshop composite — imagined placement</span>'
+        )
     orientation = work.get('orientation')
     if orientation in ORIENT_LABELS:
         rows += meta_row(

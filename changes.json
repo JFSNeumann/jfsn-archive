@@ -1,5 +1,53 @@
 [
   {
+    "sha": "d3d382e",
+    "date": "2026-06-13",
+    "title": "CURRENT_STATE: add next-session verify callout (B2 job, mirror SW lag)",
+    "body": "Captures the session-35 carryover so next session checks it even without\nthis chat: confirm the overnight B2 cloud-backup ran (else run it), live\nsw.js = jfsn-20260613190000 on HostGator, Netlify mirror intentionally\nbehind on the SW fix, new tooling present."
+  },
+  {
+    "sha": "da819ef",
+    "date": "2026-06-13",
+    "title": "Workflow: safe one-command Netlify deploy + kill build_catalog timestamp churn",
+    "body": "- deploy-netlify.sh: curated staging + safety gate (aborts if docs/.ftp.env/\n  scripts present) + --check/draft/--prod modes. Removes the hand-curation that\n  caused the credential exposure. --check verified: 7706 files, clean.\n- build_catalog.py: route the 6 api JSON files + feed.xml through _write_stable\n  so timestamp-only diffs don't churn git (the root of end-session residuals).\n  Verified: clean build now leaves only changes.json (git log) + index.html stamp.\n- CLAUDE.md / SESSION_PROMPT.md documented."
+  },
+  {
+    "sha": "eb06693",
+    "date": "2026-06-13",
+    "title": "Tee up mobile-hero LCP fix + capture SW-deploy and a11y pass in backlog",
+    "body": "SESSION_PROMPT §4b: mobile LCP as the no-decisions-needed technical warm-up\nalongside provenance. IMPROVEMENTS: LCP under High-value; pending sw.js\noffline-fix deploy + accessibility pass under Nice-to-have."
+  },
+  {
+    "sha": "db5b589",
+    "date": "2026-06-13",
+    "title": "Scope provenance-fields as next session's first build",
+    "body": "SESSION_PROMPT §4 + IMPROVEMENTS now carry the three decisions Jeff must\nmake before any catalog write (year precision/display, composite set/rule,\ndescription_source), so next session opens with the question ready instead\nof guessing provenance into 1,084 records."
+  },
+  {
+    "sha": "c5abe51",
+    "date": "2026-06-13",
+    "title": "Robustness: SW offline fallback, end-session reconcile, lighter B2 sync",
+    "body": "- sw.js: navigations offline now fall back to cached shell / branded offline\n  page instead of an empty 503 white screen (CACHE_V jfsn-20260613190000).\n- end-session.sh: refresh CURRENT_STATE header BEFORE the commit, and add a\n  post-backup reconcile (commit+push+re-4TB) so git/mirror end clean; co-author\n  -> Opus 4.8.\n- cloud-backup.sh: --fast-list + --b2-hard-delete to cut B2 Class-C\n  transactions (the daily cap we keep hitting)."
+  },
+  {
+    "sha": "55f6367",
+    "date": "2026-06-13",
+    "title": "Refresh SESSION_PROMPT.md handoff — was stale from session 11",
+    "body": "Updated nav (4 items), removed resolved Companion-test item, re-ranked\nagainst current open items (Gandi domain, audio, dimensions, provenance),\nrefreshed done/gotchas (deep-mode no-thinking, orientation, drawer nav,\nno icon fonts, Netlify no-git, FTP unrotatable)."
+  },
+  {
+    "sha": "cfdfb6a",
+    "date": "2026-06-13",
+    "title": "Docs: fix stale Companion deep-mode + catalog-lite fields (orientation) refs",
+    "body": "Session 35 made these stale: deep mode no longer uses adaptive thinking\n(Netlify 30s timeout), and catalog-lite now includes orientation + featured."
+  },
+  {
+    "sha": "fd7cf96",
+    "date": "2026-06-13",
+    "title": "Session 35 residuals: regenerated build artifacts + CURRENT_STATE stamp",
+    "body": ""
+  },
+  {
     "sha": "15e5303",
     "date": "2026-06-13",
     "title": "Session update 2026-06-13 15:55",

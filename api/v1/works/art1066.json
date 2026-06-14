@@ -34,7 +34,10 @@
     "featured": false,
     "schema_version": "1",
     "favorite": false,
-    "orientation": "square"
+    "orientation": "square",
+    "year_precision": "estimated",
+    "year_display": "1970s (est.)",
+    "composite": false
   },
   "links": {
     "image": "https://jfsn.com/artworks/full/art1066.avif",

@@ -39,7 +39,10 @@
     "featured": false,
     "schema_version": "1",
     "favorite": false,
-    "orientation": "vertical"
+    "orientation": "vertical",
+    "year_precision": "estimated",
+    "year_display": "2020s (est.)",
+    "composite": false
   },
   "links": {
     "image": "https://jfsn.com/artworks/full/art0379.avif",

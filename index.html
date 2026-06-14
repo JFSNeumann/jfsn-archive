@@ -11,6 +11,10 @@
 <link rel="alternate" type="application/rss+xml" title="Jeffrey F. S. Neumann — Archive" href="https://jfsn.com/feed.xml"/>
 <link rel="manifest" href="manifest.json"/>
 <link rel="apple-touch-icon" href="icon-192.png"/>
+<!-- HERO_PRELOAD:START — auto-generated from featured-hero.txt line 1 by build_catalog.py -->
+<link rel="preload" as="image" href="artworks/full/art0392-hero-m.avif" type="image/avif" media="(max-width: 767px)" fetchpriority="high"/>
+<link rel="preload" as="image" href="artworks/full/art0392-hero.avif" type="image/avif" media="(min-width: 768px)" fetchpriority="high"/>
+<!-- HERO_PRELOAD:END -->
 <meta property="og:type" content="website"/>
 <meta property="og:title" content="Jeffrey F. S. Neumann — Archive"/>
 <meta property="og:description" content="1,084 works spanning 1974 to the present. Collage, sculpture, and photography by Jeffrey F. S. Neumann."/>
@@ -1099,7 +1103,7 @@ footer .hover\:border-international-orange::after{display:none}
     if (!grid) return;
     try {
       const [works, chromatic] = await Promise.all([
-        fetch('catalog-home.json?v=20260613195548').then(r => r.json()),
+        fetch('catalog-home.json?v=20260614010023').then(r => r.json()),
         fetch('chromatic.json').then(r => r.json()).catch(() => []),
       ]);
 
@@ -1236,7 +1240,10 @@ footer .hover\:border-international-orange::after{display:none}
   function resetAnim(el) { el.style.animation = 'none'; el.offsetHeight; el.style.animation = ''; }
 
   function init(pool) {
-    var selected = shuffle(pool).slice(0, MAX_SLIDES);
+    /* Slide 0 is fixed (the LCP anchor — preloaded in <head>, kept lightest in
+       featured-hero.txt); the rest are shuffled for variety. This makes the LCP
+       image deterministic so the <head> preload actually matches what renders. */
+    var selected = [pool[0]].concat(shuffle(pool.slice(1))).slice(0, MAX_SLIDES);
 
     var dWrap    = document.getElementById('hero-slides-d');
     var mWrap    = document.getElementById('hero-slides-m');
@@ -1356,7 +1363,7 @@ footer .hover\:border-international-orange::after{display:none}
      a featured-hero.txt round trip. build_catalog.py stamps this block from
      artworks/featured-hero.txt (still the editing surface) on every run. */
   /* HERO_POOL:START — auto-generated, do not edit by hand */
-  var POOL = [{"id": "art0953", "caption": "XXXIII Días — imagined installation (Photoshop composite) · 2022 · COLLAGE", "pos": "center 20%"}, {"id": "art1008", "caption": "Pubiern Robodt 365 · 1990 · SCULPTURE", "pos": "center center"}, {"id": "art1009", "caption": "Untitled (Machine Assemblage) · 2020 · SCULPTURE", "pos": "center center"}, {"id": "art1010", "caption": "Untitled (Cassette Torso) · 2020 · COLLAGE", "pos": "center center"}, {"id": "art0585", "caption": "Untitled (Cube Grid) · 1970 · PAINTING", "pos": "center center", "origin": "35% 35%"}, {"id": "art0250", "caption": "Crown Tower with Discs · 1990 · SCULPTURE", "pos": "center 60%", "origin": "50% 65%"}, {"id": "art0779", "caption": "The Defining Years · 2000 · COLLAGE", "pos": "center center", "origin": "30% 40%"}, {"id": "art0392", "caption": "Art Machine · 2010 · COLLAGE", "pos": "center center", "origin": "72% 45%"}, {"id": "art0663", "caption": "XXXIII Aunt Mary · 2010 · COLLAGE", "pos": "center 35%", "origin": "50% 30%"}, {"id": "art1020", "caption": "Clockwork Targets Formation · 2020 · PAINTING", "pos": "center center", "origin": "35% 60%"}];
+  var POOL = [{"id": "art0392", "caption": "Art Machine · 2010 · COLLAGE", "pos": "center center", "origin": "72% 45%"}, {"id": "art0953", "caption": "XXXIII Días — imagined installation (Photoshop composite) · 2022 · COLLAGE", "pos": "center 20%"}, {"id": "art1008", "caption": "Pubiern Robodt 365 · 1990 · SCULPTURE", "pos": "center center"}, {"id": "art1009", "caption": "Untitled (Machine Assemblage) · 2020 · SCULPTURE", "pos": "center center"}, {"id": "art1010", "caption": "Untitled (Cassette Torso) · 2020 · COLLAGE", "pos": "center center"}, {"id": "art0585", "caption": "Untitled (Cube Grid) · 1970 · PAINTING", "pos": "center center", "origin": "35% 35%"}, {"id": "art0250", "caption": "Crown Tower with Discs · 1990 · SCULPTURE", "pos": "center 60%", "origin": "50% 65%"}, {"id": "art0779", "caption": "The Defining Years · 2000 · COLLAGE", "pos": "center center", "origin": "30% 40%"}, {"id": "art0663", "caption": "XXXIII Aunt Mary · 2010 · COLLAGE", "pos": "center 35%", "origin": "50% 30%"}, {"id": "art1020", "caption": "Clockwork Targets Formation · 2020 · PAINTING", "pos": "center center", "origin": "35% 60%"}];
   /* HERO_POOL:END */
   init(POOL.length >= 2 ? POOL : FALLBACK);
 })();

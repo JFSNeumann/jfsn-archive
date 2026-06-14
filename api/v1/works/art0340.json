@@ -35,7 +35,10 @@
     "work_type": "sculpture",
     "year": 1990,
     "favorite": true,
-    "orientation": "square"
+    "orientation": "square",
+    "year_precision": "estimated",
+    "year_display": "1990s (est.)",
+    "composite": false
   },
   "links": {
     "image": "https://jfsn.com/artworks/full/art0340.avif",

@@ -31,7 +31,10 @@
     "featured": false,
     "schema_version": "1",
     "favorite": false,
-    "orientation": "vertical"
+    "orientation": "vertical",
+    "year_precision": "estimated",
+    "year_display": "2010s (est.)",
+    "composite": true
   },
   "links": {
     "image": "https://jfsn.com/artworks/full/art0188.avif",

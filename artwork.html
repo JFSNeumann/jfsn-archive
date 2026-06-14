@@ -500,10 +500,10 @@ fetch('catalog.json')
     // SEO
     const titleText = w.title || 'Untitled';
     document.getElementById('page-title').textContent = `${titleText} — Jeffrey F. S. Neumann`;
-    document.getElementById('page-desc').content = `${titleText}${w.year ? ', ' + w.year : ''} — ${typeLabel(w.work_type)} by Jeffrey F. S. Neumann.`;
+    document.getElementById('page-desc').content = `${titleText}${(w.year_display || w.year) ? ', ' + (w.year_display || w.year) : ''} — ${typeLabel(w.work_type)} by Jeffrey F. S. Neumann.`;
     document.getElementById('page-canonical').href = `https://jfsn.com/artworks/pages/${workId}.html`;
     document.getElementById('og-title').content  = `${titleText} — Jeffrey F. S. Neumann`;
-    document.getElementById('og-desc').content   = `${titleText}${w.year ? ', ' + w.year : ''} — ${typeLabel(w.work_type)} by Jeffrey F. S. Neumann.`;
+    document.getElementById('og-desc').content   = `${titleText}${(w.year_display || w.year) ? ', ' + (w.year_display || w.year) : ''} — ${typeLabel(w.work_type)} by Jeffrey F. S. Neumann.`;
     document.getElementById('og-image').content  = `https://jfsn.com/artworks/thumbs/${w.file}`;
     document.getElementById('og-url').content    = `https://jfsn.com/artwork.html?id=${workId}`;
 
@@ -557,7 +557,7 @@ fetch('catalog.json')
     var mTitle = document.getElementById('artwork-mobile-title-text');
     var mYear  = document.getElementById('artwork-mobile-year-text');
     if (mTitle) mTitle.textContent = titleText;
-    if (mYear)  mYear.textContent  = w.year || '';
+    if (mYear)  mYear.textContent  = w.year_display || w.year || '';
 
     // Recently-viewed — write to localStorage so search overlay can show it
     try {
@@ -571,8 +571,11 @@ fetch('catalog.json')
 
     // Meta rows
     const meta = document.getElementById('meta-rows');
-    meta.innerHTML = metaRow('Year', w.year || '—');
+    meta.innerHTML = metaRow('Year', w.year_display || w.year || '—');
     meta.innerHTML += metaRow('Medium', typeLabel(w.work_type));
+    if (w.composite) {
+      meta.innerHTML += metaRow('Image', '<span class="italic text-archive-gray">Photoshop composite — imagined placement</span>');
+    }
     if (w.orientation && ORIENT_LABELS[w.orientation]) {
       meta.innerHTML += metaRow('Orientation', `<a href="archive.html?orientation=${w.orientation}" class="underline underline-offset-4 hover:text-international-orange">${ORIENT_LABELS[w.orientation]}</a>`);
     }

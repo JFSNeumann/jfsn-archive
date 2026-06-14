@@ -31,7 +31,10 @@
     "schema_version": "1",
     "series": null,
     "favorite": false,
-    "orientation": "square"
+    "orientation": "square",
+    "year_precision": "estimated",
+    "year_display": "1970s (est.)",
+    "composite": true
   },
   "links": {
     "image": "https://jfsn.com/artworks/full/art1080.avif",

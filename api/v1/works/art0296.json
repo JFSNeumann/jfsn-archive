@@ -42,7 +42,10 @@
     "featured": true,
     "schema_version": "1",
     "favorite": true,
-    "orientation": "horizontal"
+    "orientation": "horizontal",
+    "year_precision": "estimated",
+    "year_display": "2000s (est.)",
+    "composite": false
   },
   "links": {
     "image": "https://jfsn.com/artworks/full/art0296.avif",
