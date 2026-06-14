@@ -1219,7 +1219,13 @@ footer .hover\:border-international-orange::after{display:none}
     /* Detail → reveal: open on a detail of the work, pull back to the whole.
        Start focus = optional 4th field in featured-hero.txt, else the pos. */
     img.style.transformOrigin = h.origin || h.pos || 'center center';
-    img.dataset.kb = 'reveal';
+    /* Slide 0 is the LCP element — it must NOT animate. The kb-reveal
+       transform: scale(1.7 to 1) over 7.6s keeps the hero image producing a
+       changing paint size for the whole animation, so Chrome finalizes LCP at
+       the animation's END (~7.6s on mobile). Rendering slide 0 statically at
+       final scale lets LCP fire as soon as the (preloaded) image loads. Slides
+       2+ keep the reveal for visual life. */
+    if (!eager) img.dataset.kb = 'reveal';
     img.setAttribute('loading', eager ? 'eager' : 'lazy');
     if (eager) img.setAttribute('fetchpriority', 'high');
     return img;
