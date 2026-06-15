@@ -47,6 +47,7 @@ mirror -R --verbose=1 \
   --exclude-glob="*.pdf" \
   --exclude-glob="*.md" \
   --exclude-glob="docs/*" \
+  --exclude="design-concepts/" \
   --exclude-glob="node_modules/" \
   --exclude-glob="package-lock.json" \
   --exclude-glob="package.json" \

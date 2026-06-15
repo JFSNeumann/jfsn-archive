@@ -1,5 +1,29 @@
 [
   {
+    "sha": "149375f",
+    "date": "2026-06-14",
+    "title": "Session 38: Stitch June-2026 homepage adoption + footer single-source",
+    "body": "- index.html rebuilt to the Stitch design: editorial masthead hero\n  (static cover art0392, rotation retired via MAX_SLIDES=1, LCP preserved),\n  Where-To-Begin bento, mono-caption Selected Works, charcoal Lost section,\n  orange-eyebrow + Playfair section headers, bracket CTAs, paper-texture prototype\n- search.js: mono catalog IDs in the existing ⌘K palette results\n- Footer reconciled to one source of truth: index.html now uses\n  _shared/footer.html (FOOTER markers + stamp-nav.sh, 31 files); mono\n  signature promoted sitewide; removed homepage's duplicate goatcounter + SW\n- CLAUDE.md / DESIGN.md: record Stitch adoption (soft shadows, warm-brown\n  borders, mono IDs, brackets, collage-overlap) + integrity clause;\n  grayscale still banned (Jeff: keep full-color)\n- site.min.css rebuilt; CACHE_V -> jfsn-20260614220000\n- Preview-verified, NOT deployed (homepage-only redesign pending live review)"
+  },
+  {
+    "sha": "e511d99",
+    "date": "2026-06-14",
+    "title": "Session close: backup timestamps + residuals",
+    "body": ""
+  },
+  {
+    "sha": "f9d8cc7",
+    "date": "2026-06-14",
+    "title": "Session update 2026-06-14 14:04",
+    "body": ""
+  },
+  {
+    "sha": "0c23b24",
+    "date": "2026-06-14",
+    "title": "Session close: deploy ?v= cache-stamp residual",
+    "body": ""
+  },
+  {
     "sha": "822bf2a",
     "date": "2026-06-14",
     "title": "Session close: backup timestamps + residuals",
