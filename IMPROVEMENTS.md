@@ -21,8 +21,8 @@ A living list. Add to it. Cross things off. This is the backlog.
 - [ ] **start-here.html** — oral history content written in (session 21). Review with Jeff and refine.
 
 ### Technical
-- [ ] **Deploy sessions 36–39 + stories.html** — BUILT + preview-verified, not yet live. (1) `bash end-session.sh`. (2) JFSN.app deploy (index.html + stories.html + all 31 stamped pages, sw.js CACHE_V bumped). (3) lftp the 3 recompressed hero AVIFs (`art0953/art1008/art1009-hero.avif`) to `/artworks/` flat — optional ~679 KB win, decoupled from LCP. (4) **Re-run Lighthouse mobile** to confirm LCP closed.
-- [ ] **Next Stitch pages** — about.html (next session), then start-here.html, artwork.html.
+- [ ] **Deploy sessions 36–40 + stories.html + about.html** — BUILT + preview-verified, not yet live. (1) `bash end-session.sh`. (2) JFSN.app deploy (index.html + stories.html + about.html + all 31 stamped pages, sw.js CACHE_V bumped). (3) lftp the 3 recompressed hero AVIFs (`art0953/art1008/art1009-hero.avif`) to `/artworks/` flat — optional ~679 KB win, decoupled from LCP. (4) **Re-run Lighthouse mobile** to confirm LCP closed.
+- [ ] **Next Stitch pages** — start-here.html, then artwork.html. (about.html ✅ session 40)
 - [ ] **Desktop CLS = 0.147** (Lighthouse, NEW finding session 36) — mobile CLS is perfect (0.001), so it's desktop-layout-specific. Culprit unidentified; need the expanded Lighthouse "Layout shift culprits" detail (likely the featured grid, river canvas, or a font-swap reflow). Holds desktop perf back from green.
 - [ ] **Grid/search/favorites year labels** (optional follow-up to provenance) — these still show the bare decade year ("1990"); only artwork detail pages + API carry the honest "1990s (est.)". Could extend `year_display` to grids, but it adds visual noise to terse captions — deferred pending Jeff's call.
 

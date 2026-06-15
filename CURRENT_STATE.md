@@ -1,5 +1,20 @@
 # Current State
-**Updated:** 2026-06-15 19:07
+**Updated:** 2026-06-15 19:26
+
+## ✅ SESSION 40 (2026-06-15) — about.html Stitch port (READY TO DEPLOY)
+- **about.html fully ported to Stitch June-2026 design language.** Surface pass — content, bio text, exhibition record, and In Jeff's Own Words links unchanged.
+  - **Orange section label** ("THE ARCHIVE — CLEVELAND, OHIO") + Playfair italic subline ("Five decades of making.") above the bio h1
+  - **Portrait card** — warm-brown archival border `#8e7164` + soft paper-shadow `0 0 20px rgba(0,0,0,0.05)`; "HOVER TO REVEAL" mono label below-left in `#8e7164`
+  - **`[ Browse all 1,084 works → ]`** bracket CTA below the bio
+  - **3-col strip** — warm-brown `#e3bfb1` top divider; mono data lines (`CONTACT` / `1,084 WORKS · 1974–PRESENT` / `CLEVELAND, OHIO`) above each column label; Archive column CTA → `[ Browse all works → ]` bracket style
+  - **Lost Works bar** — border upgraded from `border-deep-ink` (black) to warm-brown `#8e7164`
+  - **Exhibition Record** — heading gets Playfair italic subline ("A public record, verified by Jeff."); top rule → warm-brown `#8e7164`
+  - **NEW charcoal quote section** — Jeff's verbatim "Something that still had a life left in it." in large Playfair italic on `#0B0B0B` ground; `[ WHY I MADE THINGS → ]` bracket link; bleeds edge-to-edge (verified mobile + desktop)
+  - **In Jeff's Own Words cards** — warm-brown `#8e7164` borders + paper-shadow + paper-lift hover (`translateY(-2px)`) + `[ READ → ]` bracket links
+  - **Scroll-reveal** on 3-col strip, Exhibition Record, quote section, In Jeff's Own Words (IntersectionObserver, `prefers-reduced-motion` respected)
+- **No new Tailwind utilities** — no CSS rebuild needed.
+- **🟡 NEEDS DEPLOY:** run `bash end-session.sh` then deploy via **JFSN.app** (HostGator). Sessions 36–40 all ship together.
+- **Next session:** start-here.html or artwork.html Stitch port.
 
 ## ✅ SESSION 39 (2026-06-15) — stories.html Stitch port (READY TO DEPLOY)
 - **stories.html fully ported to Stitch design language.** Targeted surface pass — content, layout, and two-column structure unchanged.
