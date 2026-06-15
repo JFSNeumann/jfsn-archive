@@ -24,12 +24,11 @@ Read `/Documents/JFSN/CURRENT_STATE.md` and `/Documents/JFSN/IMPROVEMENTS.md` be
 
 ## Ranked items — work top to bottom
 
-### 0. ⏏ FIRST: the Stitch homepage is BUILT but NOT DEPLOYED (session 38)
-**`index.html` was rebuilt to the Google Stitch June-2026 design and verified in local preview — but it is NOT live.** Before anything else:
-- **Review the new homepage** (open the preview / `npm`-less static serve of `index.html`, or just deploy and check live). Then **deploy via JFSN.app** (HostGator). Deploy-prep is already done: `site.min.css` rebuilt, `CACHE_V = jfsn-20260614220000`, `audit-nav` green. Session-38 work was committed at close via `end-session.sh`.
-- **Decision needed: homepage-first, or redesign more pages?** Only `index.html` got the full Stitch redesign. The other 30 pages still have the OLD body design (only their *footers* changed — mono signature added sitewide via `stamp-nav.sh`). The next Stitch concepts are **Archive ("The Wall"), Series Index, Stories/oral-history, and the artwork detail ("Technical Record")** — see `design-concepts/stitch-june-2026/`. Apply the same extract-don't-ship workflow + the integrity carve-outs (no grayscale thumbs, no fabricated provenance/verification/DPI/quotes).
-- **Paper-texture prototype is live on the homepage only** (`#paper-texture-proto`, subtle grain). Jeff to approve / tune intensity / propagate sitewide — or delete that one `<style>` block to revert.
-- **Footer is now single-source** (`_shared/footer.html` → `stamp-nav.sh`); the homepage's old bespoke footer is gone. Don't re-introduce a bespoke homepage footer.
+### 0. ⏏ FIRST: Stitch homepage is LIVE — next is redesigning the other pages (session 38)
+**`index.html` is rebuilt to the Stitch June-2026 design and DEPLOYED + live-verified on jfsn.com** (shipped homepage-first; commits `149375f1` build + `3029e4c6` deploy-fix; all 4 stores synced). The other 30 pages still have the OLD body design (their footers got the mono signature). **This session: redesign the next pages** from `design-concepts/stitch-june-2026/` — **Archive ("The Wall"), Series Index, Stories/oral-history, artwork detail ("Technical Record")**. Reuse the Stitch surface language now live on the homepage: editorial masthead + orange-eyebrow/Playfair section headers, bento where it fits, mono captions + bracket CTAs, warm-brown borders, soft card-shadow. **Integrity carve-outs (non-negotiable):** NO grayscale thumbs (Jeff: keep full-color), NO fabricated provenance/verification/DPI/quotes; years stay "1990s (est.)".
+- **Deploy = `bash deploy.sh`** (full lftp mirror; runs `build_catalog.py` first; this is what JFSN.app wraps). ⚠️ **After adding any new top-level folder, curl-check it's 404 on jfsn.com** — the session-38 deploy leaked `design-concepts/` (now excluded; `verify_deploy.py` does NOT catch leaks). Run `npm run build:css` + bump `CACHE_V` if utilities changed.
+- **Paper-texture prototype is LIVE on the homepage** (`#paper-texture-proto`, subtle 0.04 grain). Jeff to approve / tune / propagate to `_shared` per-page — or delete that one `<style>` block to revert.
+- **Footer is single-source** (`_shared/footer.html` → `stamp-nav.sh`); don't re-introduce a bespoke homepage footer.
 
 ### 0b. Two open perf items (session 36 carryover) — need Jeff's Lighthouse
 
