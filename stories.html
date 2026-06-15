@@ -27,6 +27,15 @@
 <style>
   .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
   body { -webkit-font-smoothing: antialiased; }
+  /* Scroll-reveal for story articles */
+  @media (prefers-reduced-motion: no-preference) {
+    .story-section.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .story-section.reveal.is-visible { opacity: 1; transform: translateY(0); }
+  }
+  /* Sidebar card hover lift */
+  .sidebar-card { transition: box-shadow 0.2s ease, transform 0.2s ease; }
+  .sidebar-card:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.09); transform: translateY(-2px); }
+  @media (prefers-reduced-motion: reduce) { .sidebar-card { transition: none; } }
   .prose p {
     font-family: Inter, sans-serif;
     font-size: 17px;
@@ -37,7 +46,7 @@
   .prose p:first-child { margin-top: 0; }
   .prose blockquote {
     border-left: 3px solid #FF6600;
-    margin: 1.5em 0;
+    margin: 2em 0;
     padding: 0 0 0 20px;
   }
   .prose blockquote p {
@@ -54,7 +63,7 @@
     font-weight: 500;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: #575757;
+    color: #8e7164;
     margin-bottom: 12px;
     display: block;
   }
@@ -71,7 +80,7 @@
   .story-section {
     padding-top: 56px;
     margin-top: 56px;
-    border-top: 1px solid #c4c7c7;
+    border-top: 1px solid #e3bfb1;
   }
   .story-section:first-of-type {
     padding-top: 0;
@@ -79,7 +88,7 @@
     border-top: none;
   }
   .placeholder-box {
-    border: 1px dashed #c4c7c7;
+    border: 1px solid #e3bfb1;
     padding: 20px 24px;
     margin-top: 20px;
     background: #faf8f3;
@@ -150,6 +159,13 @@
     border-left-color: #FF6600;
   }
   @media (prefers-reduced-motion: reduce) { .toc-link { transition: none; } }
+  /* Reading progress bar */
+  #reading-progress { position:fixed;top:0;left:0;width:0%;height:2px;background:#FF6600;z-index:200;transition:width 0.1s linear;pointer-events:none; }
+  @media(prefers-reduced-motion:reduce){ #reading-progress { transition:none; } }
+  /* art1056 hover thumbnail */
+  .artwork-peek { position:relative;display:inline; }
+  .artwork-peek .peek-thumb { display:none;position:absolute;bottom:calc(100% + 8px);left:0;width:100px;height:100px;object-fit:cover;border:1px solid #e3bfb1;box-shadow:0 4px 16px rgba(0,0,0,0.12);z-index:10;pointer-events:none; }
+  .artwork-peek:hover .peek-thumb { display:block; }
 </style>
 </head>
 <body class="bg-background text-deep-ink font-body-md" data-page-label="STORIES">
@@ -308,11 +324,13 @@ header.header-hidden{transform:translateY(-100%)}
 
 <div id="main" tabindex="-1" style="outline:none;"></div>
 
+<div id="reading-progress" aria-hidden="true"></div>
 <main class="pt-16">
 
   <!-- Page header -->
-  <div class="border-b border-deep-ink px-margin-desktop py-16">
+  <div style="border-bottom:1px solid #8e7164;" class="px-margin-desktop py-16">
     <div class="max-w-container-max mx-auto">
+      <span style="display:block;font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#FF6600;margin-bottom:12px;">Oral History</span>
       <h1 style="font-family:'Playfair Display',serif;font-size:clamp(48px,7vw,88px);font-weight:700;line-height:1.05;letter-spacing:-0.02em;color:#0B0B0B;">Stories.</h1>
       <p style="font-family:Inter,sans-serif;font-size:17px;color:#575757;margin-top:16px;max-width:560px;line-height:1.6;">Specific things that happened. In Jeff's own words where possible. The parts of the record that don't fit in a catalog.</p>
     </div>
@@ -333,6 +351,7 @@ header.header-hidden{transform:translateY(-100%)}
       <a href="#getting-hard-to-tell"            class="mobile-toc-link">Getting Hard to Tell</a>
       <a href="#archive-build"                   class="mobile-toc-link">Took a Fucking Long Time</a>
       <a href="#kiefer"                          class="mobile-toc-link">Where Did He Get the Money</a>
+      <a href="#future-stories"                   class="mobile-toc-link">Stories Not Yet Documented</a>
       <a href="#what-he-wants-a-grandchild-to-know" class="mobile-toc-link">What He Wants a Grandchild to Know</a>
     </div>
   </div>
@@ -388,7 +407,7 @@ header.header-hidden{transform:translateY(-100%)}
             <span class="placeholder-label">Oral history needed</span>
             <p>When exactly did the water damage happen? What specific works were lost — medium, scale, subject? Which did Jeff consider his best? One lost work is known to have been a full-size interpretation of Picasso's Guernica (approximately 11 × 25 feet), made in his studio, never photographed. Its appearance and content have not yet been captured. This is the most time-sensitive gap in the archive.</p>
           </div>
-          <p class="source-note">All quotes verbatim from oral history sessions, June 2026. → <a href="lost.html" style="color:#575757;">See also: Lost Works</a></p>
+          <p class="source-note">All quotes verbatim from oral history sessions, June 2026. <a href="lost.html" style="color:#575757;">[ See also: Lost Works → ]</a></p>
         </article>
 
         <!-- Story 2 -->
@@ -456,7 +475,7 @@ header.header-hidden{transform:translateY(-100%)}
             <p>This wasn't a conceptual position at first — it was financial reality. Over time, it became identity. Discarded objects becoming something else was not just necessity. It was how Jeff understood what making things meant.</p>
             <p>If money were no object, he would work like Anselm Kiefer — large studio, monumental scale, extraordinary materials.</p>
             <blockquote><p>"Where did he get the money?"</p></blockquote>
-            <p>The found objects were real. They were also constraint. The vision always operated at a different scale than the materials allowed. <em>art1056</em> — a sculpture made from old light bulbs, tubes, and wires — is in the archive and is representative of what the found-object method produced. <a href="artwork.html?id=art1056" style="color:#575757;text-decoration:underline;text-underline-offset:3px;">View art1056 →</a></p>
+            <p>The found objects were real. They were also constraint. The vision always operated at a different scale than the materials allowed. <em>art1056</em> — a sculpture made from old light bulbs, tubes, and wires — is in the archive and is representative of what the found-object method produced. <span class="artwork-peek"><a href="artwork.html?id=art1056" style="color:#575757;text-decoration:none;">[ View art1056 → ]</a><img class="peek-thumb" src="artworks/mini/art1056.avif" alt="art1056 preview" loading="lazy"></span></p>
           </div>
           <div class="placeholder-box">
             <span class="placeholder-label">Oral history needed</span>
@@ -475,7 +494,7 @@ header.header-hidden{transform:translateY(-100%)}
             <p>The boundary between what the grandchildren contribute and what Jeff contributes has become unclear.</p>
             <blockquote><p>"Getting hard to tell where they end and I begin."</p></blockquote>
             <blockquote><p>"I think that's right."</p></blockquote>
-            <p>This is the only part of the archive that faces forward — still happening, involving living people other than Jeff, with no clear endpoint. In fifty years, the most likely reason someone opens this archive is to recognize hands they know. <a href="collaboration.html" style="color:#575757;text-decoration:underline;text-underline-offset:3px;">See the collaborative works →</a></p>
+            <p>This is the only part of the archive that faces forward — still happening, involving living people other than Jeff, with no clear endpoint. In fifty years, the most likely reason someone opens this archive is to recognize hands they know. <a href="collaboration.html" style="color:#575757;text-decoration:none;">[ See the collaborative works → ]</a></p>
           </div>
           <div class="placeholder-box">
             <span class="placeholder-label">Oral history needed — names and specifics</span>
@@ -560,7 +579,7 @@ header.header-hidden{transform:translateY(-100%)}
         <div style="position:sticky;top:96px;">
 
           <!-- On This Page TOC -->
-          <nav aria-label="On this page" style="margin-bottom:24px;border-bottom:1px solid #c4c7c7;padding-bottom:24px;">
+          <nav aria-label="On this page" style="margin-bottom:24px;border-bottom:1px solid #e3bfb1;padding-bottom:24px;">
             <span style="display:block;font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#0B0B0B;margin-bottom:12px;">On This Page</span>
             <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:2px;" id="toc-list">
               <li><a href="#six-feet-away" class="toc-link">Six Feet Away</a></li>
@@ -571,36 +590,37 @@ header.header-hidden{transform:translateY(-100%)}
               <li><a href="#getting-hard-to-tell" class="toc-link">Getting Hard to Tell</a></li>
               <li><a href="#archive-build" class="toc-link">Took a Fucking Long Time</a></li>
               <li><a href="#kiefer" class="toc-link">Where Did He Get the Money</a></li>
+              <li><a href="#future-stories" class="toc-link">Stories Not Yet Documented</a></li>
               <li><a href="#what-he-wants-a-grandchild-to-know" class="toc-link">What He Wants a Grandchild to Know</a></li>
             </ul>
           </nav>
 
           <!-- About these stories -->
-          <div style="padding:20px;border:1px solid #c4c7c7;margin-bottom:24px;">
+          <div class="sidebar-card" style="padding:20px;border:1px solid #8e7164;margin-bottom:24px;box-shadow:0 0 20px rgba(0,0,0,0.05);">
             <span style="display:block;font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#0B0B0B;margin-bottom:10px;">About These Stories</span>
             <p style="font-family:Inter,sans-serif;font-size:13px;line-height:1.7;color:#575757;margin:0;">Drawn from oral history sessions with Jeff Neumann, June 2026. Direct quotes are preserved exactly. Paraphrased content is noted. Placeholders name what is known to be missing. This page will grow as sessions continue.</p>
           </div>
 
           <!-- Key quotes -->
-          <div style="margin-bottom:24px;border-top:1px solid #c4c7c7;padding-top:24px;">
+          <div style="margin-bottom:24px;border-top:1px solid #e3bfb1;padding-top:24px;">
             <span style="display:block;font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#0B0B0B;margin-bottom:16px;">Key Quotes</span>
-            <p style="font-family:'Playfair Display',serif;font-size:16px;font-style:italic;line-height:1.6;color:#0B0B0B;margin:0 0 16px;">"Sad. Enough."</p>
-            <p style="font-family:'Playfair Display',serif;font-size:16px;font-style:italic;line-height:1.6;color:#0B0B0B;margin:0 0 16px;">"Something that still had a life left in it."</p>
-            <p style="font-family:'Playfair Display',serif;font-size:16px;font-style:italic;line-height:1.6;color:#0B0B0B;margin:0 0 16px;">"Getting hard to tell where they end and I begin. I think that's right."</p>
-            <p style="font-family:'Playfair Display',serif;font-size:16px;font-style:italic;line-height:1.6;color:#0B0B0B;margin:0;">"Not yet."</p>
+            <p style="font-family:'Playfair Display',serif;font-size:16px;font-style:italic;line-height:1.6;color:#0B0B0B;margin:0 0 16px;border-left:2px solid #e3bfb1;padding-left:14px;">"Sad. Enough."</p>
+            <p style="font-family:'Playfair Display',serif;font-size:16px;font-style:italic;line-height:1.6;color:#0B0B0B;margin:0 0 16px;border-left:2px solid #e3bfb1;padding-left:14px;">"Something that still had a life left in it."</p>
+            <p style="font-family:'Playfair Display',serif;font-size:16px;font-style:italic;line-height:1.6;color:#0B0B0B;margin:0 0 16px;border-left:2px solid #e3bfb1;padding-left:14px;">"Getting hard to tell where they end and I begin. I think that's right."</p>
+            <p style="font-family:'Playfair Display',serif;font-size:16px;font-style:italic;line-height:1.6;color:#0B0B0B;margin:0;border-left:2px solid #e3bfb1;padding-left:14px;">"Not yet."</p>
           </div>
 
           <!-- Related pages -->
-          <div style="border-top:1px solid #c4c7c7;padding-top:24px;">
+          <div style="border-top:1px solid #e3bfb1;padding-top:24px;">
             <span style="display:block;font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#0B0B0B;margin-bottom:16px;">Related</span>
             <ul class="sidebar-link-list">
-              <li><a href="about.html">About Jeff →</a></li>
-              <li><a href="why-i-made-things.html">Why I Made Things →</a></li>
-              <li><a href="timeline.html">A Life in Time →</a></li>
-              <li><a href="lost.html">What Was Lost →</a></li>
-              <li><a href="guernica.html">The Guernica Series →</a></li>
-              <li><a href="collaboration.html">The Collaboration →</a></li>
-              <li><a href="favorites.html">Favorites →</a></li>
+              <li><a href="about.html">[ About Jeff → ]</a></li>
+              <li><a href="why-i-made-things.html">[ Why I Made Things → ]</a></li>
+              <li><a href="timeline.html">[ A Life in Time → ]</a></li>
+              <li><a href="lost.html">[ What Was Lost → ]</a></li>
+              <li><a href="guernica.html">[ The Guernica Series → ]</a></li>
+              <li><a href="collaboration.html">[ The Collaboration → ]</a></li>
+              <li><a href="favorites.html">[ Favorites → ]</a></li>
             </ul>
           </div>
 
@@ -609,6 +629,31 @@ header.header-hidden{transform:translateY(-100%)}
 
     </div>
   </div>
+
+<script>
+(function(){
+  // Reading progress bar
+  var progressBar = document.getElementById('reading-progress');
+  if (progressBar) {
+    window.addEventListener('scroll', function(){
+      var s = document.documentElement;
+      var pct = (s.scrollTop / (s.scrollHeight - s.clientHeight)) * 100;
+      progressBar.style.width = Math.min(pct, 100) + '%';
+    }, { passive: true });
+  }
+  // Scroll-reveal on story sections (skip first — it's above the fold)
+  var articles = document.querySelectorAll('.story-section');
+  articles.forEach(function(el, i){ if (i > 0) el.classList.add('reveal'); });
+  if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+    var revealObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add('is-visible'); revealObs.unobserve(e.target); }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.story-section.reveal').forEach(function(el){ revealObs.observe(el); });
+  }
+})();
+</script>
 
 <script>
 (function(){

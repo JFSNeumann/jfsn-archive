@@ -1,5 +1,23 @@
 # Current State
-**Updated:** 2026-06-15 17:54
+**Updated:** 2026-06-15 19:07
+
+## ✅ SESSION 39 (2026-06-15) — stories.html Stitch port (READY TO DEPLOY)
+- **stories.html fully ported to Stitch design language.** Targeted surface pass — content, layout, and two-column structure unchanged.
+  - **Orange "ORAL HISTORY" eyebrow** above h1; page header border → warm-brown `#8e7164`
+  - **Story section dividers** → `#e3bfb1` warm-brown (was cool gray `#c4c7c7`)
+  - **"About These Stories" sidebar card** → `#8e7164` border + paper-shadow `0 0 20px rgba(0,0,0,0.05)` + hover lift
+  - **Key Quotes sidebar** → warm-brown `#e3bfb1` left rule on each quote
+  - **All `→` links** → `[ bracket → ]` format (Related sidebar + inline content links)
+  - **Placeholder boxes** → solid `#e3bfb1` border (was dashed gray)
+  - **Section labels** (dateline/location) → `#8e7164` warm-brown (reads as archival metadata, not text)
+  - **Scroll-reveal** on story articles 2–10 (IntersectionObserver, `prefers-reduced-motion` respected; first story above fold is static)
+  - **Reading progress bar** — 2px orange line at top of viewport, fills on scroll
+  - **Blockquote breathing room** — `margin: 2em 0` (was `1.5em`)
+  - **art1056 hover thumbnail** — `[ View art1056 → ]` shows mini image on hover
+  - **"Stories Not Yet Documented" added to both TOCs** (desktop sidebar + mobile jump nav) — was missing
+- **No new Tailwind utilities** — no CSS rebuild needed.
+- **🟡 NEEDS DEPLOY:** run `bash end-session.sh` then deploy via **JFSN.app** (HostGator). Sessions 36–39 all ship together.
+- **Next session:** about.html Stitch port (same approach as stories.html).
 
 ## ⚠️ SESSION 38 CONTINUED (2026-06-15) — Stitch detail pass + nav refinement (NEEDS DEPLOY)
 - **Homepage Stitch detail pass** — four targeted changes to close the gap between the live homepage and the Stitch reference design:
