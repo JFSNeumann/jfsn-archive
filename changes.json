@@ -1,5 +1,17 @@
 [
   {
+    "sha": "3aad427",
+    "date": "2026-06-15",
+    "title": "Session 38 close: docs reflect deployed homepage + deploy-leak fix",
+    "body": "CURRENT_STATE + SESSION_PROMPT: homepage is live (shipped homepage-first);\nnext session = redesign Archive/Series/Stories/artwork-detail. Record the\ndesign-concepts deploy-leak incident + fix as a lesson."
+  },
+  {
+    "sha": "3029e4c",
+    "date": "2026-06-15",
+    "title": "Fix deploy.sh: exclude design-concepts/ from live mirror + deploy residuals",
+    "body": "- deploy.sh: design-concepts/ (Stitch mockups + screenshots) leaked to the\n  public site on the session-38 deploy — the --exclude-glob form doesn't\n  match nested paths. Switched to the regex --exclude form. The leaked\n  folder was removed from the live server (verified 404).\n- build_catalog deploy residuals: catalog-home ?v= cache stamp, sitemap\n  lastmod (06-15), changes.json feed."
+  },
+  {
     "sha": "149375f",
     "date": "2026-06-14",
     "title": "Session 38: Stitch June-2026 homepage adoption + footer single-source",

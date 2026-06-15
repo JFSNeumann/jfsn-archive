@@ -1,5 +1,17 @@
 # Current State
-**Updated:** 2026-06-14 (session 38)
+**Updated:** 2026-06-15 13:15
+
+## ⚠️ SESSION 38 CONTINUED (2026-06-15) — Stitch detail pass + nav refinement (NEEDS DEPLOY)
+- **Homepage Stitch detail pass** — four targeted changes to close the gap between the live homepage and the Stitch reference design:
+  - **Hero subhead font:** Inter → **Playfair Display italic** (`index.html` line 774). Mobile hero already had Playfair italic for "Personal Archive" span — now consistent across both viewports.
+  - **Lost section image:** opacity `0.28 → 0.45` + `filter:blur(1.5px)` at rest; clears to `opacity:0.75 blur(0)` on hover. The art0585 fragment is now visibly atmospheric against the charcoal bg. (`index.html` `.lost-fragment img` CSS).
+  - **Nav wordmark:** Playfair Display `text-headline-md tracking-tighter` → **Inter 18px weight 700 letter-spacing -0.03em**. Matches Stitch's compact logo treatment. (`_shared/top-nav.html` line 32).
+  - **Nav links:** removed `uppercase font-label-caps text-label-caps` → **title-case Inter 14px weight 500**. Matches Stitch exactly (Archive / About / Stories / Lost). (`_shared/top-nav.html` lines 34-37 + `stamp-nav.sh` run → 31 pages).
+- **Items already done (verified this continuation, NOT changed):** Wall tooltip already 2× (144px via `.tip-wall`); hero bottom gradient already present; Selected Works already `object-cover`; art1010 already LCP anchor + preloaded.
+- **Stitch MCP added** to Claude config (`claude mcp add stitch https://stitch.googleapis.com/mcp --transport http`). Active in the NEXT session — requires a new Claude Code session to load.
+- **CACHE_V bumped** to `jfsn-20260615180000` in `sw.js`.
+- **🟡 NEEDS DEPLOY:** run `bash end-session.sh` then deploy via **JFSN.app** (HostGator). No CSS rebuild needed (inline styles only, no new Tailwind utilities).
+- **Not yet done:** paper-texture decision (Jeff to approve/delete); Archive/Series/Stories/artwork-detail redesign (next session).
 
 ## ⚠️ SESSION 38 (2026-06-14→15) — Stitch June-2026 HOMEPAGE adoption (DEPLOYED + live-verified)
 - **Big visual session: `index.html` rebuilt to the Google Stitch June-2026 design, and DEPLOYED to jfsn.com.** Jeff accepted the Stitch direction; decision = **ship homepage-first** (redesign Archive/Series/Stories/artwork-detail in later sessions). Preview-verified then **deployed via `deploy.sh` (full lftp mirror) + live-verified**: masthead h1, bento, section eyebrows, footer mono signature all live; live `sw.js` CACHE_V `jfsn-20260614220000`. Commits `149375f1` (build) + `3029e4c6` (deploy fix). All 4 stores synced.

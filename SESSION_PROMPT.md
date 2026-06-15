@@ -1,5 +1,5 @@
 # JFSN Session Handoff Prompt
-**Generated:** 2026-06-14 (session 38)
+**Generated:** 2026-06-15 (session 38 continued)
 **Copy everything below the line and paste it to start the next session.**
 
 > Note: the **v3 verification-first start prompt** (in memory `jfsn_session_prompts.md`) is the primary way to open a session — it checks backups + live drift first. This file is the ranked *work* handoff to use after that.
@@ -24,8 +24,14 @@ Read `/Documents/JFSN/CURRENT_STATE.md` and `/Documents/JFSN/IMPROVEMENTS.md` be
 
 ## Ranked items — work top to bottom
 
-### 0. ⏏ FIRST: Stitch homepage is LIVE — next is redesigning the other pages (session 38)
-**`index.html` is rebuilt to the Stitch June-2026 design and DEPLOYED + live-verified on jfsn.com** (shipped homepage-first; commits `149375f1` build + `3029e4c6` deploy-fix; all 4 stores synced). The other 30 pages still have the OLD body design (their footers got the mono signature). **This session: redesign the next pages** from `design-concepts/stitch-june-2026/` — **Archive ("The Wall"), Series Index, Stories/oral-history, artwork detail ("Technical Record")**. Reuse the Stitch surface language now live on the homepage: editorial masthead + orange-eyebrow/Playfair section headers, bento where it fits, mono captions + bracket CTAs, warm-brown borders, soft card-shadow. **Integrity carve-outs (non-negotiable):** NO grayscale thumbs (Jeff: keep full-color), NO fabricated provenance/verification/DPI/quotes; years stay "1990s (est.)".
+### 0. ⏏ FIRST: Deploy the session-38 homepage detail pass, then redesign other pages
+
+**START-OF-SESSION DEPLOY:** The session-38 continuation (2026-06-15) made four Stitch detail changes that are NOT yet deployed — run `bash end-session.sh` then **JFSN.app** before doing anything else:
+- Hero subhead → Playfair italic · Lost image → 0.45 opacity + blur · Nav wordmark → Inter compact · Nav links → title-case (31 pages stamped) · `CACHE_V = jfsn-20260615180000`
+
+**Stitch MCP is now configured** (`stitch` server in `~/.claude.json`). Start a new Claude Code session to activate it — then the next session can query Stitch design specs directly for Archive/Wall/Stories redesign.
+
+**Next page redesigns** (in order from `design-concepts/stitch-june-2026/`): **Archive ("The Wall"), Series Index, Stories/oral-history, artwork detail ("Technical Record")**. Reuse the Stitch surface language now live on the homepage: editorial masthead + orange-eyebrow/Playfair section headers, bento where it fits, mono captions + bracket CTAs, warm-brown borders, soft card-shadow. **Integrity carve-outs (non-negotiable):** NO grayscale thumbs (Jeff: keep full-color), NO fabricated provenance/verification/DPI/quotes; years stay "1990s (est.)".
 - **Deploy = `bash deploy.sh`** (full lftp mirror; runs `build_catalog.py` first; this is what JFSN.app wraps). ⚠️ **After adding any new top-level folder, curl-check it's 404 on jfsn.com** — the session-38 deploy leaked `design-concepts/` (now excluded; `verify_deploy.py` does NOT catch leaks). Run `npm run build:css` + bump `CACHE_V` if utilities changed.
 - **Paper-texture prototype is LIVE on the homepage** (`#paper-texture-proto`, subtle 0.04 grain). Jeff to approve / tune / propagate to `_shared` per-page — or delete that one `<style>` block to revert.
 - **Footer is single-source** (`_shared/footer.html` → `stamp-nav.sh`); don't re-introduce a bespoke homepage footer.
