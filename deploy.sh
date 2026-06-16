@@ -58,6 +58,9 @@ mirror -R --verbose=1 \
   --exclude-glob="netlify.toml" \
   --exclude-glob="input.css" \
   --exclude-glob="curate-session.json" \
+  --exclude-glob="curate.html" \
+  --exclude-glob="dedupe.html" \
+  --exclude-glob="qa.html" \
   $SCRIPT_DIR/ $FTP_REMOTE/
 
 bye

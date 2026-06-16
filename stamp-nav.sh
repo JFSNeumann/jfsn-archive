@@ -27,9 +27,13 @@ TARGETS=(
   privacy.html series.html wall.html 404.html api.html
   start-here.html favorites.html
   stories.html why-i-made-things.html timeline.html
+  1970s.html 1980s.html 1990s.html 2000s.html 2010s.html 2020s.html
 )
-# Note: decade pages (1970s–2020s) use the Material Design nav token system
-# and are maintained separately — edit them directly, not via this stamp script.
+# Note: decade pages migrated to the canonical Stitch nav/footer 2026-06-16
+# (global review) — they now carry NAV:START/FOOTER:END markers like every
+# other page, so they're included here. They still use Material Design
+# tailwind tokens for their hero/grid/prev-next chrome — only the header and
+# footer chrome were unified.
 
 STAMPED=0
 SKIPPED=0

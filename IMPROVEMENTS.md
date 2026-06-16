@@ -8,6 +8,7 @@ A living list. Add to it. Cross things off. This is the backlog.
 ## 🔴 Do soon
 
 - [ ] **Ingest new work** — drop photos into `artworks/inbox/`, run `bash add-works.sh`. Pipeline is ready.
+- [ ] **Re-run Lighthouse mobile + desktop** — sessions 36–44 fixes (mobile LCP static-hero, desktop CLS font-display=optional) are confirmed LIVE (verified live `sw.js` CACHE_V, live `display=optional`, live `wall.html` tap-target CSS, live `guernica.html` border — all match local 2026-06-16). Only the post-deploy Lighthouse confirmation is still outstanding.
 
 ---
 
@@ -19,7 +20,6 @@ A living list. Add to it. Cross things off. This is the backlog.
 - [ ] **start-here.html** — oral history content written in (session 21). Review with Jeff and refine.
 
 ### Technical
-- [ ] **Deploy sessions 36–44** — BUILT + preview-verified, not yet live. (1) `bash end-session.sh`. (2) JFSN.app deploy (all pages, sw.js CACHE_V `jfsn-20260616120000`). (3) lftp the 3 recompressed hero AVIFs (`art0953/art1008/art1009-hero.avif`) to `/artworks/` flat — optional ~679 KB win, decoupled from LCP. (4) **Re-run Lighthouse mobile + desktop** to confirm LCP and the new CLS fix both closed.
 - [ ] **Grid/search/favorites year labels** (optional follow-up to provenance) — these still show the bare decade year ("1990"); only artwork detail pages + API carry the honest "1990s (est.)". Could extend `year_display` to grids, but it adds visual noise to terse captions — deferred pending Jeff's call.
 
 ---
@@ -27,13 +27,15 @@ A living list. Add to it. Cross things off. This is the backlog.
 ## 🟢 Nice to have, low urgency
 
 ### Technical
-- [ ] **Deploy the pending `sw.js` offline fix** — session 35 fixed the blank-white-page-when-offline bug (navigations now fall back to the cached shell / a branded offline page instead of an empty 503). Committed but NOT yet live — ships on the next JFSN.app deploy. Offline-visitors only, low urgency.
 - [ ] **Accessibility pass** — Lighthouse a11y is 93–96, not 100. Check small uppercase `#575757` labels' contrast on bone-white, `:focus-visible` states, and icon-button labels against the stated WCAG-AA goal.
 - [ ] **series-index.html per-theme icons** — extend the session-35 icon vocabulary (inline feather SVGs) to the 8 series/themes, but ONLY if they read as earned rather than literal. Review with Jeff first.
 
 ---
 
 ## ✅ Completed (recent)
+- [x] ~~**Decade pages (1970s–2020s) migrated to Stitch nav/footer**~~ — DONE 2026-06-16, closed the biggest visual-coherence gap found in a global review: decade pages were the only pages still on the old bespoke nav/footer (no Stories/Lost links, no ⌘K, no warm-brown borders, no bracket CTAs, no progress bar). All 6 pages now use the literal canonical `_shared/top-nav.html`/`footer.html`, warm-brown borders, orange eyebrow, `[ Browse with filters → ]` bracket CTA, and a reading progress bar — added to `stamp-nav.sh` TARGETS so future nav/footer edits propagate automatically. Artwork grid/thumbnail markup on these pages was intentionally left untouched (separate, larger effort). Preview-verified desktop + mobile, zero console errors, `audit-nav.sh` clean.
+- [x] ~~**Sessions 36–44 fully deployed**~~ — VERIFIED LIVE 2026-06-16 (global review): live `sw.js` CACHE_V matches local exactly, live `index.html` carries `display=optional`, live `wall.html` has the 64px mobile tap-target CSS, live `guernica.html` carries the `#8e7164` border, the 3 recompressed hero AVIFs serve at their smaller live sizes, and the `sw.js` offline-fallback branded page is present live. Backlog had this listed as "not yet live" — it was stale.
+- [x] ~~**Internal dev-tool exposure (curate.html / dedupe.html / qa.html / curate-session.json)**~~ — CLOSED 2026-06-16, found during a global review: these `noindex`-tagged local-curation tools were publicly reachable (HTTP 200) on jfsn.com because `deploy.sh` / `deploy-netlify.sh` never excluded them. Their POST targets (`/save-session`, `/rename-works`) only exist on the local `server.py` dev server, so nothing was exploitable — but the pages and the internal theme-grouping notes in `curate-session.json` had no business being public. Added all four to both deploy scripts' exclude lists and removed the live copies from HostGator via lftp; all four verified 404.
 - [x] ~~**One ~1-minute audio recording**~~ — DONE 2026-06-16, first audio of Jeff ever recorded (~34s, iPhone Voice Memos, "a few words about who he is"). Saved as `audio/who-i-am.m4a`, wired into both `<audio>` placeholder slots in index.html (desktop "In His Own Words" card + mobile section), deployed + verified live.
 - [x] ~~**DOMAIN: contact friend holding Gandi account**~~ — CLOSED 2026-06-16, this item was based on a wrong assumption. Jeff showed a Gandi invoice (N° 2026021000232) proving he owns the account directly: organization "jfsneumann", billed to his own address, paid by his own card, Feb 10 2026. No friend is involved; nothing to do here beyond paying the March 5 renewal each year as usual.
 - [x] ~~**Session 44 (2026-06-16) — wall.html mobile tap-targets + responsive images**~~ — tiles were 40.7px on a 375px viewport (under the 44px guideline) with no srcset; raised the mobile `minmax()` floor to 64px (renders at 74px), added a touch-only 2px gap, and added a new 80px `micro` image tier (avg 2.7KB vs mini's 11KB) wired into `srcset`/`sizes` on all 1,084 tiles + the `ingest.py` pipeline for future works. Caveat: on Jeff's actual iPhone 15 Pro (DPR3) the micro tier mostly won't engage since 64px CSS × 3 DPR exceeds 80px — real savings land on standard-DPI screens, not retina mobile; zero regression either way.

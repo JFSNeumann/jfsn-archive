@@ -53,7 +53,12 @@ rsync -a ./ "$STAGE/" \
   --exclude 'tailwind.config.js' \
   --exclude 'input.css' \
   --exclude '.gitignore' \
-  --exclude 'deno.lock'
+  --exclude 'deno.lock' \
+  --exclude 'design-concepts/' \
+  --exclude 'curate.html' \
+  --exclude 'dedupe.html' \
+  --exclude 'qa.html' \
+  --exclude 'curate-session.json'
 
 # ── Safety gate: never deploy a stage that contains sensitive files ───────────
 echo "🔒  Scanning staging copy for sensitive files..."
