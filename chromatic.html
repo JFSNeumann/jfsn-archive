@@ -62,7 +62,10 @@
       display: none;
       z-index: 99;
       outline: 1px solid rgba(0,0,0,0.15);
+      transition: width 0.15s ease;
     }
+    #river-thumb.river-thumb--scrub { width: 180px; outline: 2px solid #FF6600; }
+    @media (prefers-reduced-motion: reduce) { #river-thumb { transition: none; } }
 
     /* Loading bar */
     #chromatic-loader {
@@ -530,13 +533,13 @@ const DECADES = {1970:0,1980:58,1990:69,2000:262,2010:536,2020:843};
     return Math.max(0, Math.min(WORKS.length - 1, Math.floor((x / rect.width) * WORKS.length)));
   }
 
-  canvas.addEventListener('mousemove', function(e) {
-    const idx = getIdx(e.clientX);
+  function updatePreview(clientX, clientY, scrubbing) {
+    const idx = getIdx(clientX);
     const w = WORKS[idx];
 
     // Cursor line
     const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
+    const x = clientX - rect.left;
     cursor.style.display = 'block';
     cursor.style.left = x + 'px';
     cursor.style.height = rect.height + 'px';
@@ -544,29 +547,31 @@ const DECADES = {1970:0,1980:58,1990:69,2000:262,2010:536,2020:843};
     // Tooltip
     tooltip.textContent = w[0] + ' — ' + w[1];
     tooltip.style.display = 'block';
-    const tx = Math.min(e.clientX + 12, window.innerWidth - 340);
+    const tx = Math.min(Math.max(clientX + 12, 8), window.innerWidth - 340);
     tooltip.style.left = tx + 'px';
-    tooltip.style.top  = (e.clientY - 36) + 'px';
+    tooltip.style.top  = (clientY - 36) + 'px';
 
-    // Thumbnail preview — the work's mini floats above the tooltip
+    // Thumbnail preview — the work's mini floats above the tooltip.
+    // Scrubbing (touch drag) gets a larger, orange-outlined preview — a
+    // bigger visual target since there's no hover state to lean on.
     if (thumb.dataset.id !== w[3]) {
       thumb.dataset.id = w[3];
       thumb.src = 'artworks/mini/' + w[3] + '.avif';
     }
+    thumb.classList.toggle('river-thumb--scrub', !!scrubbing);
     thumb.style.display = 'block';
     thumb.style.left = tx + 'px';
-    thumb.style.top  = (e.clientY - 36 - (thumb.offsetHeight || 120) - 8) + 'px';
-  });
+    thumb.style.top  = (clientY - 36 - (thumb.offsetHeight || 120) - 8) + 'px';
+    return w;
+  }
 
-  canvas.addEventListener('mouseleave', function() {
+  function hidePreview() {
     cursor.style.display  = 'none';
     tooltip.style.display = 'none';
     thumb.style.display   = 'none';
-  });
+  }
 
-  canvas.addEventListener('click', function(e) {
-    const idx = getIdx(e.clientX);
-    const w = WORKS[idx];
+  function flashAndGo(idx, w) {
     const ctx = canvas.getContext('2d');
     const sliceW = canvas.width / WORKS.length;
     ctx.save();
@@ -574,7 +579,55 @@ const DECADES = {1970:0,1980:58,1990:69,2000:262,2010:536,2020:843};
     ctx.fillRect(idx * sliceW, 0, sliceW, canvas.height);
     ctx.restore();
     setTimeout(function() { window.location.href = 'artwork.html?id=' + w[3]; }, 130);
+  }
+
+  // ── Mouse — continuous hover preview (desktop already "scrubs" for free
+  // simply by moving the pointer; no press required) ──────────────────────
+  canvas.addEventListener('mousemove', function(e) {
+    updatePreview(e.clientX, e.clientY, false);
   });
+
+  canvas.addEventListener('mouseleave', hidePreview);
+
+  canvas.addEventListener('click', function(e) {
+    const idx = getIdx(e.clientX);
+    flashAndGo(idx, WORKS[idx]);
+  });
+
+  // ── Touch — press-and-drag scrub. A tap (no real movement) still
+  // navigates immediately like a click; an actual drag just scrubs the
+  // preview live and never navigates on its own — release where you want,
+  // then tap again to commit. Mirrors a video-scrubber, not a blind swipe. ──
+  let touchStartX = 0, touchStartY = 0, touchMoved = false;
+  const TAP_THRESHOLD = 8;
+
+  canvas.addEventListener('touchstart', function(e) {
+    const t = e.touches[0];
+    touchStartX = t.clientX; touchStartY = t.clientY; touchMoved = false;
+    updatePreview(t.clientX, t.clientY, true);
+  }, { passive: true });
+
+  canvas.addEventListener('touchmove', function(e) {
+    const t = e.touches[0];
+    const dx = t.clientX - touchStartX, dy = t.clientY - touchStartY;
+    if (Math.abs(dx) > TAP_THRESHOLD || Math.abs(dy) > TAP_THRESHOLD) touchMoved = true;
+    // Only claim the gesture (block page scroll) once it reads as a
+    // horizontal scrub — a mostly-vertical touch should still scroll.
+    if (touchMoved && Math.abs(dx) > Math.abs(dy)) e.preventDefault();
+    updatePreview(t.clientX, t.clientY, true);
+  }, { passive: false });
+
+  canvas.addEventListener('touchend', function(e) {
+    const t = e.changedTouches[0];
+    const idx = getIdx(t.clientX);
+    if (!touchMoved) {
+      flashAndGo(idx, WORKS[idx]);
+    } else {
+      // Scrubbed and released — leave the preview up briefly so the choice
+      // is visible, then fade it; a deliberate tap is what commits.
+      setTimeout(hidePreview, 1400);
+    }
+  }, { passive: true });
 })();
 </script>
 </body>

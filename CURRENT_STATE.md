@@ -1,5 +1,18 @@
 # Current State
-**Updated:** 2026-06-16 14:45
+**Updated:** 2026-06-16 14:51
+
+## ✅ SESSION 45 CONTINUED A 7TH TIME (2026-06-16) — "WOW factor" feature 2 of 3: Chromatic River touch scrub (READY TO DEPLOY)
+- **#2 shipped: touch scrub on chromatic.html.** Investigated the actual gap before building: desktop already gets a continuous live preview "for free" just by moving the mouse (no press needed) via the existing `mousemove` hover handler — so the real missing piece wasn't a desktop feature, it was that **mobile had zero preview interaction at all**. The canvas only had `mousemove`/`mouseleave`/`click` listeners; touch devices got a blind tap-anywhere-and-get-sent-somewhere experience with no feedback first.
+- **Fix:** refactored the inline preview logic into a shared `updatePreview()` function (used by both mouse and touch) and added `touchstart`/`touchmove`/`touchend` handlers:
+  - `touchstart` + `touchmove` continuously update the same tooltip/cursor-line/thumbnail preview the mouse gets — a real scrub, not a blind swipe.
+  - Tap-vs-drag detection (8px movement threshold): a tap with no real movement still navigates immediately, same as the old click; an actual drag never auto-navigates — it just scrubs the preview live, and a deliberate follow-up tap is what commits. Mirrors a video scrubber rather than a swipe-and-hope gesture.
+  - `touchmove` only calls `preventDefault()` once the gesture reads as horizontal (`|dx| > |dy|`) — a mostly-vertical touch still scrolls the page normally, so this doesn't fight the browser's native scroll.
+  - During an active touch scrub, the floating thumbnail preview grows (120px → 180px) and gains an orange outline (`.river-thumb--scrub`) — a bigger, clearer target since touch has no separate hover state to lean on.
+- Preview-verified via dispatched `Touch`/`TouchEvent`s (can't generate real touch input through this tool): confirmed the preview updates live during a simulated drag, confirmed a drag does NOT navigate, confirmed a tap-without-movement DOES navigate (the eval call itself failed with "target navigated" — the expected outcome). Desktop mouse hover re-verified unchanged. Zero console errors, screenshot shows tooltip/thumbnail rendering correctly with no layout regressions.
+- **No new Tailwind utilities** — inline `<style>` block only, no CSS rebuild needed.
+- **CACHE_V bumped** to `jfsn-20260616201500` in sw.js.
+- **🟡 NEEDS DEPLOY:** `bash end-session.sh` then JFSN.app.
+- **Next up: #3, a new Curatorial Map page — scoping a focused first version, not a sprawling graph-viz project.**
 
 ## ✅ SESSION 45 CONTINUED A 6TH TIME (2026-06-16) — "WOW factor" feature 1 of 3: Slideshow mode on artwork.html (READY TO DEPLOY)
 - **Jeff asked for ideas to improve the "wow" factor.** Offered three, ranked by effort: (1) slideshow mode on artwork.html, (2) a scrub-through interaction on the Chromatic River, (3) a new "Curatorial Map" page — the one navigational pillar named in the Stitch adoption doc (`design-concepts/stitch-june-2026/DESIGN.md`) that was never actually built (The Wall / Chromatic River / Stories all exist; Curatorial Map doesn't). Jeff said "do all" and left sequencing to me — doing them smallest-to-largest, shipping each independently.
