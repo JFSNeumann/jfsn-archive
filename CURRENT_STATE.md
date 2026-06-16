@@ -1,5 +1,14 @@
 # Current State
-**Updated:** 2026-06-16 14:06
+**Updated:** 2026-06-16 14:19
+
+## ✅ SESSION 45 CONTINUED A 4TH TIME (2026-06-16) — Selected Works hover captions restored (READY TO DEPLOY)
+- **Jeff asked why hovering over the homepage "Selected Works" images shows no title/year/medium, unlike the Stitch reference.** Not a bug — `git show fcef12a0` ("Remove captions from Selected Works grid — pure image display", 2026-06-15 17:50) shows Jeff deliberately removed both the hover-reveal caption overlay (Playfair italic title + year/medium, fading in over a dark gradient) and the always-visible meta row below each card (`year · medium` + `[ View → ]`) the day before this session, going for pure image display. The CSS rules for `.card-title`/`.card-meta` hover-orange behavior were left behind as dead code (nothing in the markup referenced them anymore) — that's what made it look broken rather than intentional.
+- **Asked Jeff which way to go (restore vs. clean up the dead CSS vs. leave alone) — he chose restore.** Re-added the exact markup + CSS from before that commit to `index.html`'s dynamic card template (~line 1369) and the `<style>` block (~line 1058): `.card-caption` hover-reveal overlay (Playfair italic title, dark gradient, fades in on `.group:hover`) + the `.card-meta` row (mono `year · medium` + orange `[ View → ]` bracket) below every card. `prefers-reduced-motion` respected (no change needed — same guard as before).
+- **This is desktop-only by design, not a gap** — confirmed `#featured-grid` lives inside `<main class="hidden md:block ...">`; mobile shows a separate snap-scroll "folio" experience instead and never had this grid. No mobile-specific work needed.
+- Preview-verified on desktop: meta row renders with correct title/year/medium per card; forced the hover state to confirm the caption overlay renders correctly (Playfair italic title + mono year/medium over the gradient). Zero console errors.
+- **No new Tailwind utilities** — no CSS rebuild needed (inline styles + existing utility classes only).
+- **CACHE_V bumped** to `jfsn-20260616183000` in sw.js.
+- **🟡 NEEDS DEPLOY:** `bash end-session.sh` then JFSN.app.
 
 ## ✅ SESSION 45 CONTINUED A 3RD TIME (2026-06-16) — Render-blocking Google Fonts fixed sitewide, found via a 3rd round of Lighthouse runs (READY TO DEPLOY)
 - **Jeff ran Lighthouse mobile twice more after the srcset fix deployed.** Performance 89/LCP 1.6s/CLS 0.087, then Performance 76/LCP 6.2s/CLS 0.03. LCP is still swinging (1.6s–6.2s across the day's 6 total runs) and — confirming the caveat from the last fix — **"Improve image delivery" barely moved (634 KiB → 502 KiB)** since the srcset fix mostly helps standard-DPI screens, not Lighthouse's higher-DPR mobile emulation. But **"Render-blocking requests" (570–890ms) has now appeared in literally every Lighthouse run today**, before any of today's other fixes and after all of them — it was never about the hero or the Selected Works cards. That's the one still worth closing.
