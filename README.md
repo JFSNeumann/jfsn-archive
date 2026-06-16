@@ -74,7 +74,8 @@ sw.js                 Service worker — cache-first AVIF, network-first HTML/CS
 |-------|-------|-----|
 | `background` / `bone-white` | `#fcf9f3` / `#F3F0EA` | Page bg |
 | `deep-ink` | `#0B0B0B` | Primary text |
-| `international-orange` | `#FF6600` | Hover, active, focus — not decoration |
+| `international-orange` | `#FF6600` | Hover, active, focus, fills/borders, and text on dark backgrounds — not persistent text on light bg (fails AA there) |
+| `orange-ink` | `#B84700` | Accessible orange for persistent text on light bg (eyebrow labels, bracket links) — 5.07:1 AA, added session 46 |
 | `archive-gray` | `#575757` | Secondary text / labels |
 | `outline-variant` | `#c4c7c7` | Borders |
 | Headings | Playfair Display | Decade heroes, about name/bio, series heroes, Companion title |

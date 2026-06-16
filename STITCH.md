@@ -24,7 +24,7 @@ A good prompt reduces rework from ~2 hours to ~20 minutes.
 Design system:
 - Background: #fcf9f3 (bone-white)
 - Text: #0B0B0B (deep-ink)
-- Accent: #FF6600 (international-orange) — hover states, active links, labels only
+- Accent: #FF6600 (international-orange) — hover/active/focus states, fills, borders. For persistent (always-visible, non-hover) orange TEXT on this light background — eyebrow labels, bracket links — use #B84700 (orange-ink) instead; #FF6600 text only passes contrast on dark backgrounds (session 46 fix, don't reintroduce)
 - Secondary text: #575757 (archive-gray)
 - Border: #c4c7c7 (outline-variant)
 - Footer background: #ebe8e2 (surface-container-high)

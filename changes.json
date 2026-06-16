@@ -1,5 +1,11 @@
 [
   {
+    "sha": "4f66d66",
+    "date": "2026-06-16",
+    "title": "Accessibility pass: fix orange-text contrast sitewide + focus-visible gaps",
+    "body": "- Added accessible orange-ink (#B84700, 5.07:1 AA) for persistent orange text on light backgrounds; kept international-orange (#FF6600) for fills/borders/hover-states/dark-bg text where it already passed contrast\n- Fixed eyebrow labels, bracket links, nav active-states across all 38 hand-written pages, top-nav template, and the artwork-page generator (regenerated all 1,084 static pages)\n- Fixed archive.html sort dropdown and custom checkboxes: removed outline:none with no replacement, added proper :focus-visible indicators\n- Audited icon-only buttons/links sitewide for aria-label coverage — no gaps found\n- CACHE_V bumped, site.min.css rebuilt, audit-nav.sh clean"
+  },
+  {
     "sha": "84797ad",
     "date": "2026-06-16",
     "title": "Session update 2026-06-16 15:09",

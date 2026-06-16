@@ -23,7 +23,8 @@ colors: {
   "background":             "#fcf9f3",   // bone-white page bg
   "deep-ink":               "#0B0B0B",   // primary text
   "archive-gray":           "#575757",   // secondary text / labels
-  "international-orange":   "#FF6600",   // accent — hover, active, links
+  "international-orange":   "#FF6600",   // accent — hover/focus/active states, fills, borders, and text ON DARK backgrounds only (6.7:1 there). Fails WCAG AA (2.79:1) as persistent text on light bone-white/white backgrounds.
+  "orange-ink":             "#B84700",   // accessible orange (5.07:1 AA) — use for ANY persistent (non-hover) orange TEXT on a light background: eyebrow labels, bracket links, nav active-states. Added session 46 (accessibility pass) after an audit found international-orange text failing contrast sitewide.
   "outline-variant":        "#c4c7c7",   // neutral border (still valid)
   "archival-outline":       "#8e7164",   // warm-brown archival border (Stitch June-2026 — adopted)
   "archival-outline-soft":  "#e3bfb1",   // warm-brown soft border / divider
@@ -56,6 +57,7 @@ colors: {
 ### Visual rules
 - Light ground always — bone-white or near-white bg, deep-ink text
 - Orange accent (#FF6600 / #e05900) for hover, active states, links — not decoration
+- **Contrast rule (added session 46):** `#FF6600` text only passes WCAG AA on dark backgrounds (6.7:1). For persistent orange TEXT on a light background — eyebrow labels, bracket links, anything visible without a hover/active trigger — use `orange-ink` (`#B84700`, 5.07:1) instead. Fills, borders, hover-only states, and text already on a dark section keep `#FF6600`.
 - No gradients. No rounded corners (border-radius: 0).
 - **Soft paper-shadow on image cards is ALLOWED** (Stitch June-2026 — adopted): `box-shadow: 0 0 20px rgba(0,0,0,0.05)`, soft/diffused only — never heavy or hard-edged. The old blanket "no drop shadows on images" ban is lifted for this tactile card treatment only. (Artwork thumbnails in grids keep their flat full-colour treatment — see below.)
 - Borders: neutral `outline-variant` (#c4c7c7) OR the adopted **warm-brown archival border** (#8e7164 / soft #e3bfb1, Stitch June-2026) — 1px or 2px solid, for section breaks, cards, and "where to begin" tiles.
