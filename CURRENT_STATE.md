@@ -1,5 +1,21 @@
 # Current State
-**Updated:** 2026-06-15 19:26
+**Updated:** 2026-06-15 20:05
+
+## ✅ SESSION 41 (2026-06-15) — Cross-page consistency + lost.html Stitch pass (READY TO DEPLOY)
+- **Active-section tracking** added to mobile jump navs on start-here.html + about.html: IntersectionObserver watches each section, highlights the matching TOC link orange (`.toc-active`) as you scroll. Sections watched: `#sh-welcome` → `#sh-begin` (start-here); `#about-hero` / `#contact` / `#exhibition-record` / `#in-his-words` (about).
+- **Reading progress bar** added to why-i-made-things.html — 2px orange fixed line at top of viewport, fills on scroll (CSS + div + JS, matching stories.html / about.html / start-here.html).
+- **lost.html Stitch surface pass:**
+  - Orange eyebrow "WHAT IS NOT HERE" (was archive-gray)
+  - Image card → warm-brown border `#8e7164` + paper-shadow
+  - Second section divider → soft `#e3bfb1` (was cool neutral)
+  - Sidebar CTAs → bracket-link format `[ VIEW THE ARCHIVE → ]` etc. (was deep-ink underline)
+  - Reading progress bar added
+- **B2 nightly LaunchAgent** created: `~/Library/LaunchAgents/com.jfsn.cloud-backup.plist` fires `cloud-backup.sh` at 9 PM daily; loaded + registered (`launchctl list` verified). Logs to `~/Library/Logs/jfsn-cloud-backup.log`. B2 is now automated on the same schedule as the 4TB rsync.
+- **CACHE_V bumped** to `jfsn-20260615230000` in sw.js.
+- **No new Tailwind utilities** — no CSS rebuild needed.
+- **end-session.sh already auto-updates CURRENT_STATE.md date** (lines 17–22) — the `sed` was already in place; no change needed.
+- **🟡 NEEDS DEPLOY:** run `bash end-session.sh` then deploy via **JFSN.app** (HostGator). Sessions 36–41 ship together.
+- **Next session:** artwork.html Stitch port or oral history pass.
 
 ## ✅ SESSION 40 (2026-06-15) — about.html Stitch port (READY TO DEPLOY)
 - **about.html fully ported to Stitch June-2026 design language.** Surface pass — content, bio text, exhibition record, and In Jeff's Own Words links unchanged.

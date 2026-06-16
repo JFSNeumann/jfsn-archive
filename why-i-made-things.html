@@ -27,6 +27,8 @@
 <style>
   .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
   body { -webkit-font-smoothing: antialiased; }
+  #reading-progress{position:fixed;top:0;left:0;height:2px;width:0%;background:#FF6600;z-index:9999;transition:width 0.1s linear;pointer-events:none;}
+  .mobile-toc-link.toc-active{color:#FF6600;font-weight:600;}
   .prose p {
     font-family: Inter, sans-serif;
     font-size: 17px;
@@ -306,6 +308,7 @@ header.header-hidden{transform:translateY(-100%)}
 </script>
 <!-- NAV:END -->
 
+<div id="reading-progress" aria-hidden="true"></div>
 <div id="main" tabindex="-1" style="outline:none;"></div>
 
 <main class="pt-16">
@@ -566,6 +569,17 @@ header.header-hidden{transform:translateY(-100%)}
     });
   }, { rootMargin: '-10% 0px -75% 0px' });
   sections.forEach(function(s){ obs.observe(s); });
+})();
+</script>
+<script>
+(function(){
+  var bar = document.getElementById('reading-progress');
+  if (!bar) return;
+  window.addEventListener('scroll', function(){
+    var d = document.documentElement;
+    var pct = d.scrollTop / (d.scrollHeight - d.clientHeight) * 100;
+    bar.style.width = Math.min(pct, 100) + '%';
+  }, { passive: true });
 })();
 </script>
 </main>

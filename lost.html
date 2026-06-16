@@ -53,6 +53,9 @@
         height: 2px;
         background-color: #FF6600;
     }
+    #reading-progress{position:fixed;top:0;left:0;height:2px;width:0%;background:#FF6600;z-index:9999;transition:width 0.1s linear;pointer-events:none;}
+    .bracket-link{display:inline-flex;align-items:center;gap:6px;font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#FF6600;text-decoration:none;transition:opacity 0.15s ease;}
+    .bracket-link:hover{opacity:0.75;}
     /* Ghost tile entrance — initially invisible */
     .ghost-tile-wrap {
         opacity: 0;
@@ -220,13 +223,14 @@ header.header-hidden{transform:translateY(-100%)}
 </script>
 <!-- NAV:END -->
 
+<div id="reading-progress" aria-hidden="true"></div>
 <main id="main" class="pt-[100px] pb-xl max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop">
 
   <!-- Hero: two-column like about.html -->
   <section class="relative grid grid-cols-1 md:grid-cols-12 gap-lg mb-xl" id="lost-hero">
 
     <div class="md:col-span-7 flex flex-col justify-center">
-      <span class="font-label-caps text-label-caps text-archive-gray mb-4 block">WHAT IS NOT HERE</span>
+      <span class="font-label-caps text-label-caps mb-4 block" style="color:#FF6600;">WHAT IS NOT HERE</span>
       <h1 class="font-display leading-none tracking-tight font-bold text-deep-ink mb-6" style="font-size:clamp(5rem,14vw,9rem);line-height:0.9;font-family:'Playfair Display',serif;">Lost.</h1>
       <p class="font-body-lg text-body-lg text-archive-gray leading-snug mb-lg">
         Five hundred to a thousand works.<br>Water. Then bed bugs. No catalog.
@@ -252,7 +256,7 @@ header.header-hidden{transform:translateY(-100%)}
     </div>
 
     <div class="md:col-span-5">
-      <div class="border border-outline-variant overflow-hidden bg-surface-container-high" style="aspect-ratio:3/4;">
+      <div class="overflow-hidden bg-surface-container-high" style="aspect-ratio:3/4;border:1px solid #8e7164;box-shadow:0 0 20px rgba(0,0,0,0.05);">
         <img
           src="artwork-in-trash-can.jpg"
           alt="Artwork discarded in a trash bin — the 2000s water damage event"
@@ -270,7 +274,7 @@ header.header-hidden{transform:translateY(-100%)}
   </section>
 
   <!-- Second essay block -->
-  <section class="border-t border-outline-variant pt-lg pb-xl grid grid-cols-1 md:grid-cols-12 gap-lg">
+  <section class="pt-lg pb-xl grid grid-cols-1 md:grid-cols-12 gap-lg" style="border-top:1px solid #e3bfb1;">
     <div class="md:col-span-7 md:col-start-1 space-y-md">
       <p class="font-body-md text-body-md text-archive-gray leading-relaxed">
         The archive on this site &mdash; 1,084 works, 1974 to the present &mdash; exists in part because of that loss. Every piece is photographed. Every piece is described. Every piece has a backup of its backup. The metadata schema is open source. The ingest pipeline is open source. Anyone who wants to build the same thing for their own studio can fork it.
@@ -292,17 +296,28 @@ header.header-hidden{transform:translateY(-100%)}
           Collage, sculpture, photography.
         </p>
       </div>
-      <div class="flex flex-col gap-sm pt-sm border-t border-outline-variant">
-        <a href="archive.html" class="font-label-caps text-label-caps text-deep-ink border-b border-deep-ink pb-0.5 hover:text-international-orange hover:border-international-orange transition-all self-start">VIEW THE ARCHIVE &rarr;</a>
-        <a href="stories.html#six-feet-away" class="font-label-caps text-label-caps text-deep-ink border-b border-deep-ink pb-0.5 hover:text-international-orange hover:border-international-orange transition-all self-start">THE FULL STORY &rarr;</a>
-        <a href="why-i-made-things.html" class="font-label-caps text-label-caps text-deep-ink border-b border-deep-ink pb-0.5 hover:text-international-orange hover:border-international-orange transition-all self-start">WHY HE KEPT GOING &rarr;</a>
-        <a href="about.html" class="font-label-caps text-label-caps text-deep-ink border-b border-deep-ink pb-0.5 hover:text-international-orange hover:border-international-orange transition-all self-start">ABOUT JEFF &rarr;</a>
-        <a href="https://github.com/JFSNeumann/jfsn-archive" target="_blank" rel="noopener" class="font-label-caps text-label-caps text-deep-ink border-b border-deep-ink pb-0.5 hover:text-international-orange hover:border-international-orange transition-all self-start">OPEN SOURCE &rarr;</a>
+      <div class="flex flex-col gap-sm pt-sm" style="border-top:1px solid #e3bfb1;">
+        <a href="archive.html" class="bracket-link">[ VIEW THE ARCHIVE &rarr; ]</a>
+        <a href="stories.html#six-feet-away" class="bracket-link">[ THE FULL STORY &rarr; ]</a>
+        <a href="why-i-made-things.html" class="bracket-link">[ WHY HE KEPT GOING &rarr; ]</a>
+        <a href="about.html" class="bracket-link">[ ABOUT JEFF &rarr; ]</a>
+        <a href="https://github.com/JFSNeumann/jfsn-archive" target="_blank" rel="noopener" class="bracket-link">[ OPEN SOURCE &rarr; ]</a>
       </div>
     </div>
   </section>
 
 </main>
+<script>
+(function(){
+  var bar = document.getElementById('reading-progress');
+  if (!bar) return;
+  window.addEventListener('scroll', function(){
+    var d = document.documentElement;
+    var pct = d.scrollTop / (d.scrollHeight - d.clientHeight) * 100;
+    bar.style.width = Math.min(pct, 100) + '%';
+  }, { passive: true });
+})();
+</script>
 
 <!-- Guernica-scale painting note -->
 <section class="border-t border-outline-variant py-12 px-margin-mobile md:px-margin-desktop">
