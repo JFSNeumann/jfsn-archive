@@ -1,5 +1,5 @@
 # JFSN Session Handoff Prompt
-**Generated:** 2026-06-15 (session 38 continued)
+**Generated:** 2026-06-16 (end of session 45)
 **Copy everything below the line and paste it to start the next session.**
 
 > Note: the **v3 verification-first start prompt** (in memory `jfsn_session_prompts.md`) is the primary way to open a session — it checks backups + live drift first. This file is the ranked *work* handoff to use after that.
@@ -11,97 +11,56 @@ Read `/Documents/JFSN/CURRENT_STATE.md` and `/Documents/JFSN/IMPROVEMENTS.md` be
 **Project:** JFSN Archive — personal archive site for Jeffrey F. S. Neumann, 1,084 works. A *preservation project*, not a website project — optimize for completion, not ambition. Making is the point; never push outreach/promotion.
 - Live: **jfsn.com** (HostGator/cPanel, primary) and **jfsn-archive.netlify.app** (Netlify — has the Companion function + artwork-meta edge function)
 - Stack: vanilla HTML/CSS/JS, Tailwind compiled to `site.min.css` (no CDN), service worker, no frameworks
-- Design system: light/bone-white (`#fcf9f3`), deep-ink (`#0B0B0B`), orange accent (`#FF6600`), Playfair Display headings, Inter UI. No gradients, no rounded corners, 1px borders.
-- **Nav: Archive · About · Stories · Lost (4 items).** Series + Companion are footer-only.
+- Design system: light/bone-white (`#fcf9f3`), deep-ink (`#0B0B0B`), orange accent (`#FF6600`), warm-brown archival borders (`#8e7164`/`#e3bfb1`), Playfair Display headings, Inter UI, monospace bracket-buttons (`[ LABEL → ]`) for actions. No gradients, no rounded corners, 1px borders.
+- **Nav: Archive · About · Stories · Lost (4 items) + ⌘K search.** Series + Companion are footer-only.
 - **Mobile nav is a hamburger → slide-in drawer** (`#mobile-menu-drawer`), NOT a fixed bottom bar.
 - **Icons: inline feather-style SVGs only** (24-viewBox, 1.8 stroke, `currentColor`). No icon fonts.
-- Deploy: `bash end-session.sh` (git commit + push + 4TB rsync + Backblaze B2) → deploy to HostGator via **JFSN.app** desktop app (NOT deploy.sh). **Netlify has NO git integration** — function/Companion changes deploy via a curated CLI stage (`netlify deploy --prod`); recipe in `docs/CREDENTIAL-EXPOSURE-REPORT.md` §6.
-- Footer/nav: edit `_shared/top-nav.html` / `_shared/footer.html`, then `bash stamp-nav.sh` (31 pages; decade pages NOT included — edit directly).
-- **CSS rebuild:** `npm run build:css` after any new Tailwind utility, then bump `CACHE_V` in `sw.js`. `build_catalog.py` auto-bumps CACHE_V only when catalog content changes — check `git diff sw.js`.
-- **B2 daily cap:** Backblaze hits a transaction cap most days; it resets midnight GMT (≈ 8 PM EDT). If `end-session.sh` reports B2 skipped, run `bash cloud-backup.sh` after the reset. (B2 has NO recurring schedule — only the 11 PM `com.jfsn.backup` LaunchAgent, which runs `backup.sh` = 4TB rsync ONLY.)
+- Deploy: `bash end-session.sh` (git commit + push + 4TB rsync + Backblaze B2) → deploy to HostGator via **JFSN.app** desktop app (NOT `deploy.sh` directly — that's what the app wraps). Hero AVIFs (`artNNNN-hero*.avif`) need a **separate flat lftp upload to `/artworks/`** — `deploy.sh` excludes `artworks/full/*.avif` from the normal mirror.
+- Footer/nav: edit `_shared/top-nav.html` / `_shared/footer.html`, then `bash stamp-nav.sh` (now **38 pages**, including the 6 decade pages and the new `curatorial-map.html` as of session 45).
+- **CSS rebuild:** `npm run build:css` after any new Tailwind utility, then bump `CACHE_V` in `sw.js`. Most session-45 work used inline `<style>` + existing classes only — no rebuild needed. `build_catalog.py` auto-bumps CACHE_V only when catalog content changes — check `git diff sw.js`.
+- **New page checklist** (just used for `curatorial-map.html`): add to `build_catalog.py`'s sitemap `entries` list + rerun it, add to `stamp-nav.sh` TARGETS, add a footer link if it should be discoverable, run `audit-nav.sh` to confirm sitemap coverage.
+- **B2 daily cap:** Backblaze hits a transaction cap most days; resets midnight GMT (≈ 8 PM EDT). **Currently capped as of session 45 close** — run `bash cloud-backup.sh` after the reset. GitHub + 4TB are current through commit `e8befe4d`.
+
+---
+
+## What happened in session 45 (long session, several continuations)
+
+1. **Full global review** across security, deploy hygiene, content integrity, performance, backlog health, and visual coherence (the user explicitly asked for this). Found and closed two real issues: internal dev-tool pages (`curate.html`/`dedupe.html`/`qa.html`/`curate-session.json`) were live on jfsn.com despite being local-only tools — now excluded from both deploy scripts and removed from HostGator; and IMPROVEMENTS.md had a stale "not yet deployed" item for sessions 36–44 that were actually already live.
+2. **Decade pages (1970s–2020s) migrated to the Stitch nav/footer** — the single biggest visual-coherence gap on the site (they were the only pages still on the old bespoke chrome). Artwork grid/thumbnail markup on those 6 pages was deliberately left untouched — that's a separate, larger effort if ever wanted.
+3. **A real performance chase, driven entirely by Jeff's own Lighthouse runs** (not guessing): found and fixed a hero-image regression (heavy image silently became the permanent preloaded LCP element when the homepage hero rotation was retired), added `srcset` to the homepage's top-3 "Selected Works" cards, and converted sitewide render-blocking Google Fonts to async preload+swap (confirmed gone from Lighthouse's insights list after deploying). Worst-case mobile LCP dropped from 8.7s to ~5.2s across the day.
+4. **Two design-consistency fixes Jeff caught by eye**: restored the Selected Works hover captions he'd removed the day before (his call, not a revert of judgment — he asked to bring them back), and fixed the artwork.html full-resolution lightbox's two identically-labeled "ROTATE" buttons + its one-off button style.
+5. **Three new "wow factor" features**, all requested in one go ("do all"): slideshow mode on `artwork.html`, touch scrub on the Chromatic River, and a brand-new `curatorial-map.html` page (the one navigational pillar that was named in the Stitch adoption doc but never built).
+
+Every change above was preview-verified (desktop + mobile, console-checked) before deploying, and every deploy was confirmed live via curl against jfsn.com — not just "should be live."
 
 ---
 
 ## Ranked items — work top to bottom
 
-### 0. ⏏ FIRST: Deploy the session-38 homepage detail pass, then redesign other pages
+### 0. Catch up B2 backup
+Run `bash cloud-backup.sh` once the daily transaction cap has reset (check the time — resets ~8 PM EDT). GitHub and the 4TB drive are current; only B2 is behind.
 
-**START-OF-SESSION DEPLOY:** The session-38 continuation (2026-06-15) made four Stitch detail changes that are NOT yet deployed — run `bash end-session.sh` then **JFSN.app** before doing anything else:
-- Hero subhead → Playfair italic · Lost image → 0.45 opacity + blur · Nav wordmark → Inter compact · Nav links → title-case (31 pages stamped) · `CACHE_V = jfsn-20260615180000`
+### 1. Ask Jeff for one more Lighthouse mobile run
+Session 45 fixed three concrete, verified things in response to four rounds of his real Lighthouse data. One more run will show whether the LCP swing has genuinely settled (~1.6–5s range) or whether there's still something concrete left, vs. just Lighthouse's own simulated-throttling noise. Don't speculate on numbers — wait for his data like this session did.
 
-**Stitch MCP is now configured** (`stitch` server in `~/.claude.json`). Start a new Claude Code session to activate it — then the next session can query Stitch design specs directly for Archive/Wall/Stories redesign.
+### 2. Decide whether to spend a session on the decade-page artwork grids
+Session 45 gave the 6 decade pages (1970s–2020s) nav/footer/border/CTA parity with the rest of the site, but deliberately did NOT touch their masonry grid/thumbnail markup (different system from the `.thumb__link` saturation-overlay treatment used elsewhere). That's the one remaining visual-system split on the site. Worth asking Jeff if it's worth the effort — it's a real chunk of work, not a quick pass.
 
-**Next page redesigns** (in order from `design-concepts/stitch-june-2026/`): **Archive ("The Wall"), Series Index, Stories/oral-history, artwork detail ("Technical Record")**. Reuse the Stitch surface language now live on the homepage: editorial masthead + orange-eyebrow/Playfair section headers, bento where it fits, mono captions + bracket CTAs, warm-brown borders, soft card-shadow. **Integrity carve-outs (non-negotiable):** NO grayscale thumbs (Jeff: keep full-color), NO fabricated provenance/verification/DPI/quotes; years stay "1990s (est.)".
-- **Deploy = `bash deploy.sh`** (full lftp mirror; runs `build_catalog.py` first; this is what JFSN.app wraps). ⚠️ **After adding any new top-level folder, curl-check it's 404 on jfsn.com** — the session-38 deploy leaked `design-concepts/` (now excluded; `verify_deploy.py` does NOT catch leaks). Run `npm run build:css` + bump `CACHE_V` if utilities changed.
-- **Paper-texture prototype is LIVE on the homepage** (`#paper-texture-proto`, subtle 0.04 grain). Jeff to approve / tune / propagate to `_shared` per-page — or delete that one `<style>` block to revert.
-- **Footer is single-source** (`_shared/footer.html` → `stamp-nav.sh`); don't re-introduce a bespoke homepage footer.
+### 3. Oral history — unanswered questions
+See `docs/oral-history/master-notes.md` "Unresolved Questions." Top item: why did Jeff keep going after the Rauschenberg realization? Approach gently, in his own time — this needs Jeff, not autonomous work.
 
-### 0b. Two open perf items (session 36 carryover) — need Jeff's Lighthouse
+### 4. Physical artwork dimensions
+Orientation stand-in (vertical/horizontal/square) shipped session 35. Actual inches/cm need Jeff to measure surviving works by hand — no tooling exists for this. Start with the most significant pieces if he wants to begin.
 
-**0a. Mobile LCP — confirm the static-hero fix landed.** Mobile LCP went 7.6→7.2→5.9s across fixes; the final fix (slide 0 is now a static `<img>` in the HTML, off the JS critical path — commit `d5ca52b9`) should drop it toward desktop's ~1.5s. **Re-run mobile Lighthouse on jfsn.com.** If LCP is now green/good → close it. If still >2.5s, next levers: make Google Fonts non-render-blocking (render-blocking ~780ms is still flagged), or defer hero slides 1–2 loading so only slide 0's 46 KB loads first. (Background: the hero is a JS slideshow; slide 0 = static HTML stamped by build_catalog from featured-hero.txt line 1; init() reuses it. Don't re-introduce a transform animation on slide 0.)
+### 5. Accessibility pass (low urgency, but real)
+Lighthouse a11y sits at 93–96, not 100. Check small uppercase `#575757` labels' contrast on bone-white, `:focus-visible` states, and icon-button labels against the project's stated WCAG-AA goal. Bounded, verifiable, doesn't need Jeff's input first — a good one to just do.
 
-**0b. Desktop CLS = 0.16 — get the culprit, then fix.** Highly variable across runs (0 / 0.05 / 0.147 / 0.16); locally only reproduces at 0.012, so it's throttle/timing-dependent — suspected **web-font swap on the large Playfair headings** reflowing after paint. **In the desktop Lighthouse run, EXPAND the "Layout shift culprits" row and read the shifting node.** Then fix surgically (likely: preload or self-host the 2 Google Fonts, or add `size-adjust`/reserve heading space). DON'T guess CLS — it's been chased blind twice already.
-
-### 3. 🟡 One ~1-minute audio recording  *(standing #1 creator-context priority — offer gently, don't push)*
-No audio of Jeff exists anywhere. He declined once (2026-06-12) — offer occasionally, never insist. Also: listen to `old-site/BB/audio/sample.wav` (21s — possibly the only existing audio).
-
-### 4. 🟡 Real physical dimensions (inches/cm)
-Orientation stand-in shipped (session 35); `composite` + `year (est.)` provenance shipped (session 36). Real measurements need Jeff to measure surviving works — no tooling. Start with the most significant pieces.
-
-### 5. 🟢 Grid/search/favorites year labels  *(optional follow-up to session-36 provenance)*
-Detail pages + API now show "1990s (est.)", but grid/search/favorites captions still show the bare decade year ("1990"). Could extend `year_display` to grids — but it adds visual noise to terse captions. Jeff's call.
-
-### 6. 🟡 Oral history — unanswered questions
-`docs/oral-history/master-notes.md` → "Unresolved Questions". Top item: why did he keep going after the Rauschenberg realization? Approach gently; spare answers are the voice.
-
-### 7. 🟢 series-index.html per-theme icons  *(review first)*
-Extend the inline-SVG icon vocabulary to the 8 series/themes — ONLY if they read as earned, not literal. Show Jeff before committing.
-
-### 8. 🟢 Ingest new work (pipeline ready)
-Drop photos into `artworks/inbox/`, run `bash add-works.sh`.
+### 6. Always available
+Ingest new work: drop photos into `artworks/inbox/`, run `bash add-works.sh`.
 
 ---
 
-## After every item
-```bash
-bash end-session.sh   # git commit + push + 4TB rsync + Backblaze B2
-```
-Then deploy via JFSN.app (HostGator). **If a Netlify function / the Companion changed, also redeploy the mirror with `bash deploy-netlify.sh`.** Cross off the item in `IMPROVEMENTS.md`; update `CURRENT_STATE.md`.
-
----
-
-## Done recently — do NOT redo
-- ✅ **Domain ownership question CLOSED** (2026-06-16) — the "friend holds the Gandi account" item was based on a wrong assumption. Jeff showed a Gandi invoice proving he owns the account directly (org "jfsneumann", billed/paid by him). No friend involved, no outreach needed. Don't resurrect this item.
-- ✅ **Mobile hero LCP** (session 36) — `featured-hero.txt` leads with **art0392** (lightest); slide-0 deterministic in `index.html init()`; media-aware `<head>` preload stamped by `build_catalog.py` (HERO_PRELOAD markers). Don't re-randomize slide 0 — it breaks the preload match.
-- ✅ **Provenance fields** (session 36) — `year_precision='estimated'` + `year_display="1990s (est.)"` on ALL 1,084; `composite=True` on 250 works (Gallery ∪ Studio ∪ `PLACEMENT_RE` title). Shown on artwork pages + API. `description_source` deliberately SKIPPED (Jeff's call). To change the composite set, edit the rule in `build_catalog.py` + rerun gen-artwork-pages.
-- ✅ **Companion deep-mode 502 = Netlify 30s timeout** (session 35). Deep = Sonnet 4.6 **without** extended thinking, 1024 tokens. Don't re-add `thinking` to deep mode on a sync function.
-- ✅ **Image orientation** field + archive filter (session 35).
-- ✅ **gallery-images.html** rewritten to composite truth ("Imagined Placements") — Photoshop composites, NOT real exhibitions.
-- ✅ **Icons sitewide** inline SVG; **Material Symbols icon font removed sitewide** — never re-add.
-- ✅ **HSTS** enabled. **Performance pass** confirmed (Lighthouse, was 18.2s LCP).
-- ✅ **Allison PDF + FTP-password exposure** — every public copy closed/blocked. FTP password **cannot be rotated** (no cPanel) — fix is the domain move (item 2).
-- ✅ **Netlify has NO git integration** — deploys are manual curated CLI only.
-- ✅ **Exhibition Record** verified by Jeff (master-notes §27); **catalog images are composites, not event records.**
-- ✅ Banned thumbnail patterns (grayscale, scale/transform hover, sibling dim, scroll-reveal, hero text labels over artwork) — do not reintroduce.
-
----
-
-## Architecture quick-ref
-
-| File | Purpose |
-|------|---------|
-| `_shared/top-nav.html` | Canonical nav + mobile drawer (stamp-nav.sh → 31 pages). Nav: Archive · About · Stories · Lost. |
-| `_shared/footer.html` | Canonical footer — analytics + SW registration |
-| `_shared/ui.js` | Keyboard nav (← / → decade pages), vertical page label. No scroll-reveal. |
-| `_shared/ui.css` | `.thumb__link` micro-interactions (saturation overlay, orange outline on img on hover) |
-| `catalog.json` | All 1,084 works — generated by `artworks/build_catalog.py` |
-| `catalog-lite.json` | Trimmed catalog for search.js + edge function. Fields incl. `series, favorite, featured, orientation, composite, year_precision, year_display`. |
-| `artworks/featured-hero.txt` | Hero pool. **Line 1 = LCP anchor** (always shows first, preloaded) — keep it the lightest crop. build_catalog stamps HERO_POOL + `<head>` preload from it. |
-| `gen-artwork-pages.py` | Regenerates all 1,084 `artworks/pages/` static pages (needs `colors.json`). `--limit 5` to test. |
-| `sw.js` | Service worker. CACHE_V auto-bumped by build_catalog when catalog changes; else bump manually. |
-| `end-session.sh` | git commit + push + 4TB rsync + Backblaze B2 (does NOT deploy to HostGator) |
-| `netlify/functions/companion.mjs` | Companion (Netlify only). Deep = Sonnet w/o thinking. |
-
-**Decade pages (1970s–2020s):** NOT in stamp-nav.sh — Material Design tokens. Edit directly.
-**Hero AVIFs on server:** upload to `/artworks/artNNNN-hero.avif` (flat dir) — `.htaccess` rewrites from `artworks/full/`. Each hero needs `-hero.avif` (desktop) + `-hero-m.avif` (1080px mobile). Recompressed-hero originals are backed up in `artworks/_hero-orig-backup/`.
-**api/.htaccess:** auto-generated by `build_catalog.py` — edit the template in that script. No mod_security (HTTP 500 on HostGator).
+## Standing rules (don't relitigate these)
+- **Never reintroduce:** grayscale thumbnails, scale-on-hover, sibling-dim, hero overlays with promotional copy, fabricated provenance/verification/DPI/quotes. Composite ("imagined placement") works must keep their honesty note; years stay decade estimates ("1990s (est.)").
+- **The image is the primary object — UI recedes.** This is why captions/badges/decoration get questioned by default, and why three different sessions have removed and re-added the Selected Works captions — it's a real, live tension Jeff is still tuning, not a settled question.
+- **Don't recommend big documentation projects.** The best preservation work is work Jeff will actually enjoy doing.
