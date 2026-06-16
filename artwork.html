@@ -280,7 +280,10 @@ header.header-hidden{transform:translateY(-100%)}
           [ Copy link → ]
         </button>
         <div class="hidden md:block" style="margin-top:16px;padding-top:16px;border-top:1px solid #e3bfb1;">
-          <p style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#c4c7c7;">[ ← → Browse Works ]</p>
+          <p style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#c4c7c7;margin-bottom:10px;">[ ← → Browse Works ]</p>
+          <button id="slideshow-btn" class="bracket-link" style="background:none;border:none;cursor:pointer;padding:0;text-align:left;color:#FF6600;">
+            [ ▶ Play sequence → ]
+          </button>
         </div>
         <!-- Where this sits — the whole archive as color, this work marked -->
         <a id="artwork-river" href="chromatic.html" aria-label="See this work's place in the full fifty-year chromatic river"
@@ -461,6 +464,7 @@ const workId = params.get('id');
 
 // Keyboard ← / → navigation
 let _prevHref = null, _nextHref = null;
+let _allWorks = null, _curIdx = -1;
 document.addEventListener('keydown', function(e) {
   if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
   if (e.metaKey || e.ctrlKey || e.altKey) return;
@@ -521,6 +525,8 @@ fetch('catalog.json')
       document.getElementById('not-found').classList.remove('hidden');
       return;
     }
+    _allWorks = works;
+    _curIdx = idx;
 
     const w = works[idx];
     document.getElementById('work-content').classList.remove('hidden');
@@ -726,6 +732,141 @@ fetch('catalog.json')
         case 'close': closeLightbox(); return;
       }
       applyTransform();
+    });
+  });
+})();
+</script>
+
+<!-- Slideshow mode — full-archive autoplay sequence -->
+<div id="slideshow-overlay" aria-modal="true" role="dialog" aria-label="Archive slideshow"
+  style="position:fixed;inset:0;z-index:210;background:rgba(11,11,11,0.97);flex-direction:column;display:none;">
+
+  <div id="ss-progress" aria-hidden="true" style="position:absolute;top:0;left:0;height:2px;background:#FF6600;width:0%;transition:width 0.1s linear;"></div>
+
+  <div id="ss-img-wrap" style="flex:1;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:24px 24px 0;position:relative;">
+    <img id="ss-img" src="" alt="" style="max-width:100%;max-height:100%;height:auto;display:block;"/>
+    <div id="ss-caption" aria-hidden="true" style="position:absolute;bottom:24px;left:0;right:0;text-align:center;pointer-events:none;">
+      <p id="ss-caption-title" style="font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:18px;color:#ffffff;margin:0 0 6px;"></p>
+      <p id="ss-caption-meta" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;letter-spacing:0.08em;color:rgba(255,255,255,0.6);margin:0;"></p>
+    </div>
+  </div>
+
+  <div style="flex-shrink:0;display:flex;align-items:center;justify-content:center;gap:8px;padding:16px 24px;border-top:1px solid rgba(255,255,255,0.12);flex-wrap:wrap;">
+    <button class="lr-btn" data-ss-action="prev"  aria-label="Previous work">[ ← PREV ]</button>
+    <button class="lr-btn" id="ss-play-btn" data-ss-action="toggle" aria-label="Play or pause">[ ▶ PLAY ]</button>
+    <button class="lr-btn" data-ss-action="next"  aria-label="Next work">[ NEXT → ]</button>
+    <button class="lr-btn" data-ss-action="view"  aria-label="View this work's full detail page">[ VIEW WORK ]</button>
+    <button class="lr-btn lr-btn--close" data-ss-action="close" aria-label="Close slideshow">[ ✕ CLOSE ]</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  var overlay   = document.getElementById('slideshow-overlay');
+  var ssImg     = document.getElementById('ss-img');
+  var ssTitle   = document.getElementById('ss-caption-title');
+  var ssMeta    = document.getElementById('ss-caption-meta');
+  var ssProgress= document.getElementById('ss-progress');
+  var playBtn   = document.getElementById('ss-play-btn');
+  var openBtn   = document.getElementById('slideshow-btn');
+  var INTERVAL  = 4500;
+
+  var ssIdx = -1, playing = false, timer = null, tickStart = 0, raf = null;
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function typeLabelLocal(t) {
+    return { collage: 'Collage', photograph: 'Photography', sculpture: 'Sculpture', painting: 'Painting' }[t] || t;
+  }
+
+  function preload(i) {
+    if (!_allWorks || !_allWorks[i]) return;
+    var im = new Image();
+    im.src = 'artworks/medium/' + _allWorks[i].file;
+  }
+
+  function showSlide(i) {
+    if (!_allWorks || !_allWorks.length) return;
+    ssIdx = ((i % _allWorks.length) + _allWorks.length) % _allWorks.length;
+    var w = _allWorks[ssIdx];
+    ssImg.classList.remove('artwork-developing');
+    ssImg.src = 'artworks/medium/' + w.file;
+    ssImg.alt = w.title || 'Untitled';
+    ssTitle.textContent = w.title || 'Untitled';
+    ssMeta.textContent = (w.year_display || w.year || '') + ' · ' + typeLabelLocal(w.work_type);
+    if (!reduceMotion) {
+      void ssImg.offsetWidth; // restart animation
+      ssImg.classList.add('artwork-developing');
+    }
+    preload(ssIdx + 1);
+    preload(ssIdx - 1 < 0 ? _allWorks.length - 1 : ssIdx - 1);
+  }
+
+  function updateProgressBar(ts) {
+    if (!playing) return;
+    var elapsed = ts - tickStart;
+    ssProgress.style.width = Math.min(100, (elapsed / INTERVAL) * 100) + '%';
+    raf = requestAnimationFrame(updateProgressBar);
+  }
+
+  function startPlay() {
+    playing = true;
+    playBtn.textContent = '[ ❙❙ PAUSE ]';
+    tickStart = performance.now();
+    raf = requestAnimationFrame(updateProgressBar);
+    timer = setInterval(function () {
+      showSlide(ssIdx + 1);
+      tickStart = performance.now();
+    }, INTERVAL);
+  }
+
+  function stopPlay() {
+    playing = false;
+    playBtn.textContent = '[ ▶ PLAY ]';
+    clearInterval(timer);
+    if (raf) cancelAnimationFrame(raf);
+    ssProgress.style.width = '0%';
+  }
+
+  function openSlideshow() {
+    if (_curIdx < 0) return;
+    overlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    showSlide(_curIdx);
+    if (!reduceMotion) startPlay();
+    overlay.focus();
+  }
+
+  function closeSlideshow() {
+    stopPlay();
+    overlay.style.display = 'none';
+    document.body.style.overflow = '';
+    ssImg.src = '';
+    if (openBtn) openBtn.focus();
+  }
+
+  if (openBtn) openBtn.addEventListener('click', openSlideshow);
+
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay) closeSlideshow();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (overlay.style.display !== 'flex') return;
+    if (e.key === 'Escape') { closeSlideshow(); return; }
+    if (e.key === ' ') { e.preventDefault(); playing ? stopPlay() : startPlay(); return; }
+    if (e.key === 'ArrowLeft')  { stopPlay(); showSlide(ssIdx - 1); return; }
+    if (e.key === 'ArrowRight') { stopPlay(); showSlide(ssIdx + 1); return; }
+  });
+
+  document.querySelectorAll('[data-ss-action]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      switch (btn.dataset.ssAction) {
+        case 'prev':   stopPlay(); showSlide(ssIdx - 1); break;
+        case 'next':   stopPlay(); showSlide(ssIdx + 1); break;
+        case 'toggle': playing ? stopPlay() : startPlay(); break;
+        case 'view':   location.href = 'artwork.html?id=' + _allWorks[ssIdx].file.replace('.avif', ''); break;
+        case 'close':  closeSlideshow(); break;
+      }
     });
   });
 })();
