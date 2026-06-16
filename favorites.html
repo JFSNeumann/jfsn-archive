@@ -27,6 +27,9 @@
 <style>
   .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
   body { -webkit-font-smoothing: antialiased; }
+  /* Reading progress bar */
+  #fav-progress{position:fixed;top:0;left:0;width:0%;height:2px;background:#FF6600;z-index:9999;pointer-events:none;transition:width 0.1s linear;}
+  @media(prefers-reduced-motion:reduce){#fav-progress{transition:none;}}
   .fav-grid {
     column-count: 4;
     column-gap: 16px;
@@ -205,17 +208,30 @@ header.header-hidden{transform:translateY(-100%)}
 </script>
 <!-- NAV:END -->
 
+<div id="fav-progress" aria-hidden="true"></div>
+<script>
+(function(){
+  var bar = document.getElementById('fav-progress');
+  if (!bar) return;
+  function update() { var h = document.documentElement.scrollHeight - window.innerHeight; bar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%'; }
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+})();
+</script>
+
 <div id="main" tabindex="-1" style="outline:none;"></div>
 
 <main class="pt-16">
 
   <!-- Page header -->
-  <div class="border-b border-outline-variant px-margin-desktop py-12">
+  <div class="px-margin-desktop py-12" style="border-bottom:1px solid #8e7164;">
     <div class="max-w-container-max mx-auto flex items-baseline justify-between flex-wrap gap-4">
       <div>
-        <h1 class="font-label-caps text-label-caps text-archive-gray" data-letter-settle>Favorites</h1>
-        <p style="font-family:Inter,sans-serif;font-size:14px;color:#575757;margin-top:8px;max-width:480px;line-height:1.6;">Works Jeff has marked as personally significant. No ranking, no scoring — just the pieces that matter.</p>
-        <p id="fav-whisper" style="font-family:Inter,sans-serif;font-size:12px;font-style:italic;color:#c4c7c7;margin-top:10px;opacity:0;transition:opacity 0.6s ease;">45 works. Personally significant.</p>
+        <p style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;letter-spacing:0.1em;color:#FF6600;text-transform:uppercase;margin-bottom:6px;">Jeffrey F. S. Neumann · Personally Significant</p>
+        <h1 class="font-label-caps text-label-caps text-deep-ink" data-letter-settle>Favorites</h1>
+        <p style="font-family:'Playfair Display',Georgia,serif;font-size:15px;font-style:italic;color:#575757;margin-top:4px;">No ranking, no scoring — just the pieces that matter.</p>
+        <p style="font-family:Inter,sans-serif;font-size:13px;color:#575757;margin-top:8px;max-width:480px;line-height:1.6;">Works Jeff has marked as personally significant from across the full archive.</p>
+        <p id="fav-whisper" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;letter-spacing:0.06em;color:#8e7164;margin-top:10px;opacity:0;transition:opacity 0.6s ease;text-transform:uppercase;"></p>
       </div>
       <p id="fav-count" class="font-label-caps text-label-caps text-archive-gray"></p>
     </div>
@@ -255,9 +271,10 @@ header.header-hidden{transform:translateY(-100%)}
     }
     if (countEl) countEl.textContent = favs.length + ' work' + (favs.length === 1 ? '' : 's');
     // Whisper note — appears 600ms after page settles
+    var whisperEl = document.getElementById('fav-whisper');
+    if (whisperEl) whisperEl.textContent = favs.length + ' Works · Marked by Jeff';
     setTimeout(function () {
-      var w = document.getElementById('fav-whisper');
-      if (w) w.style.opacity = '1';
+      if (whisperEl) whisperEl.style.opacity = '1';
     }, 600);
     const eager = 4;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

@@ -85,9 +85,29 @@
       gap: 1rem;
       flex-wrap: wrap;
       padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
-      border-bottom: 1px solid rgba(11,11,11,0.12);
+      border-bottom: 1px solid #8e7164;
       margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
     }
+    .medium-page__eyebrow {
+      font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+      font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: #FF6600; margin-bottom: 8px;
+    }
+    .medium-page__subline {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 16px; font-style: italic; color: #575757;
+      margin: 4px 0 0;
+    }
+    #medium-progress{position:fixed;top:0;left:0;width:0%;height:2px;background:#FF6600;z-index:9999;pointer-events:none;transition:width 0.1s linear;}
+    @media(prefers-reduced-motion:reduce){#medium-progress{transition:none;}}
+    .browse-filters-link {
+      font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+      font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+      color: #FF6600; text-decoration: none;
+      border: 1px solid #FF6600; padding: 10px 16px;
+      display: inline-block; transition: background 0.2s ease, color 0.2s ease;
+    }
+    .browse-filters-link:hover { background: #FF6600; color: #0B0B0B; }
     .medium-page__title {
       font-family: 'Playfair Display', Georgia, serif;
       font-size: clamp(2.5rem, 5.5vw, 4.5rem);
@@ -119,39 +139,7 @@
       color: #FF6600;
       border-color: #FF6600;
     }
-    .browse-filters-link {
-      display: block;
-      width: 100%;
-      border: 1px solid #0B0B0B;
-      padding: 12px 16px;
-      font-family: Inter, sans-serif;
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      text-align: center;
-      text-decoration: none;
-      color: #0B0B0B;
-      transition: color 0.15s ease, border-color 0.15s ease;
-      margin-bottom: clamp(2rem, 4vw, 3.5rem);
-    }
-    .browse-filters-link:hover { color: #FF6600; border-color: #FF6600; }
-    @media (min-width: 768px) {
-      .browse-filters-link {
-        display: inline;
-        width: auto;
-        border: none;
-        padding: 0;
-        text-align: left;
-        color: #0B0B0B;
-        border-bottom: 1px solid rgba(11,11,11,0.12);
-        margin-bottom: 0;
-        font-size: inherit;
-        font-weight: inherit;
-        letter-spacing: inherit;
-        text-transform: none;
-      }
-    }
+    /* browse-filters-link overridden above in Stitch block */
     .medium-grid {
       column-count: 4;
       column-gap: 0.75rem;
@@ -343,6 +331,17 @@ header.header-hidden{transform:translateY(-100%)}
 </script>
 <!-- NAV:END -->
 
+<div id="medium-progress" aria-hidden="true"></div>
+<script>
+(function(){
+  var bar = document.getElementById('medium-progress');
+  if (!bar) return;
+  function update() { var h = document.documentElement.scrollHeight - window.innerHeight; bar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%'; }
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+})();
+</script>
+
 <main id="main" class="pt-16">
 
   <!-- Mobile medium filter bar -->
@@ -358,14 +357,18 @@ header.header-hidden{transform:translateY(-100%)}
   <div class="container medium-page">
 
     <div class="medium-page__head">
-      <h1 class="medium-page__title">Photography</h1>
+      <div>
+        <p class="medium-page__eyebrow">Jeffrey F. S. Neumann · 1974–Present</p>
+        <h1 class="medium-page__title">Photography</h1>
+        <p class="medium-page__subline">Five decades of looking.</p>
+      </div>
       <p class="medium-page__meta">328 works &middot; 1974&ndash;present</p>
     </div>
 
     <p class="medium-page__intro">
       Photography in this archive is rarely separate from the other work — images become source material for collage, documentation turns into its own object, the studio becomes the subject. But the photographs also stand alone: a particular quality of Cleveland light, industrial texture, vernacular surfaces that keep reappearing whether they're invited or not. These 328 works span from early black-and-white through color film and into digital, across five decades of looking.
     </p>
-    <a href="archive.html?type=photograph" class="browse-filters-link">Browse with filters &rarr;</a>
+    <a href="archive.html?medium=photograph" class="browse-filters-link" style="margin-bottom:clamp(2rem,4vw,3.5rem);">[ Browse with filters → ]</a>
 
     <div class="medium-grid" id="grid">
     <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art0004" style="background-color:#323223;"><img srcset="artworks/mini/art0004.avif 200w, artworks/thumbs/art0004.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art0004.avif" alt="Alley, Magenta Figure" loading="eager" fetchpriority="high" width="400" height="599"><figcaption class="thumb__caption"><a href="artwork.html?id=art0004">Alley, Magenta Figure</a><span>2010</span></figcaption></a></figure>

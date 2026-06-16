@@ -58,6 +58,12 @@
         }
         /* Scroll-reveal removed — cards visible immediately (banned pattern, session 14) */
         body { -webkit-font-smoothing: antialiased; }
+        /* Reading progress bar */
+        #series-progress{position:fixed;top:0;left:0;width:0%;height:2px;background:#FF6600;z-index:9999;pointer-events:none;transition:width 0.1s linear;}
+        @media(prefers-reduced-motion:reduce){#series-progress{transition:none;}}
+        /* Stitch June-2026 card borders + paper-shadow */
+        .series-card{border-color:#8e7164;box-shadow:0 0 20px rgba(0,0,0,0.05);}
+        .series-card:hover{border-color:#FF6600;}
     </style>
 </head>
 <body class="bg-bone-white text-deep-ink font-body-md">
@@ -215,40 +221,50 @@ header.header-hidden{transform:translateY(-100%)}
 </script>
 <!-- NAV:END -->
 
+<div id="series-progress" aria-hidden="true"></div>
+<script>
+(function(){
+  var bar = document.getElementById('series-progress');
+  if (!bar) return;
+  function update() {
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+})();
+</script>
+
 <main id="main" class="pt-[120px] pb-xl px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto">
 
   <!-- Page Header -->
-  <header class="mb-xl max-w-2xl">
+  <header class="mb-xl max-w-2xl" style="border-bottom:1px solid #8e7164;padding-bottom:2rem;">
+    <p style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;letter-spacing:0.1em;color:#FF6600;text-transform:uppercase;margin-bottom:8px;">Recurring Subjects · Five Decades</p>
     <h1 class="font-display-lg text-display-lg mb-md leading-none">Series &amp; Themes</h1>
-    <p class="font-body-lg text-body-lg text-secondary border-l-2 border-outline-variant pl-md">
+    <p style="font-family:'Playfair Display',Georgia,serif;font-size:16px;font-style:italic;color:#575757;margin-bottom:1.25rem;">Obsessions, materials, and motifs that kept coming back.</p>
+    <p class="font-body-lg text-body-lg text-secondary pl-md" style="border-left:2px solid #8e7164;">
       Recurring subjects, materials, and obsessions across five decades of work. The Guernica series is the longest-running — 232 works, 1990–present. The Collaboration series includes four years of work made with Jeff's grandchildren.
     </p>
     <p class="font-body-md text-body-md text-secondary mt-md">
-      For context on the practice and what these recurring motifs mean:
-      <a href="why-i-made-things.html" class="border-b border-outline-variant hover:text-international-orange hover:border-international-orange transition-colors">Why I Made Things</a> &ensp;&middot;&ensp;
-      <a href="stories.html" class="border-b border-outline-variant hover:text-international-orange hover:border-international-orange transition-colors">Stories</a> &ensp;&middot;&ensp;
-      <a href="about.html" class="border-b border-outline-variant hover:text-international-orange hover:border-international-orange transition-colors">About Jeff</a>
+      <a href="why-i-made-things.html" class="hover:text-international-orange transition-colors" style="border-bottom:1px solid #c4c7c7;">[ Why I Made Things → ]</a> &ensp;
+      <a href="stories.html" class="hover:text-international-orange transition-colors" style="border-bottom:1px solid #c4c7c7;">[ Stories → ]</a> &ensp;
+      <a href="about.html" class="hover:text-international-orange transition-colors" style="border-bottom:1px solid #c4c7c7;">[ About Jeff → ]</a>
     </p>
   </header>
 
   <!-- Grid — populated by JS -->
-  <section class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-gutter" id="series-grid">
-    <!-- Loading placeholder -->
-    <div class="lg:col-span-2 border border-outline-variant bg-surface-container-low h-64 animate-pulse"></div>
-    <div class="border border-outline-variant bg-surface-container-low h-64 animate-pulse"></div>
-    <div class="border border-outline-variant bg-surface-container-low h-64 animate-pulse"></div>
-  </section>
+  <section class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-gutter" id="series-grid"></section>
 
 </main>
 
-<!-- Archival Note -->
-<section class="w-full py-32 bg-surface-container-high border-t border-outline-variant">
-  <div class="max-w-4xl mx-auto px-margin-desktop flex flex-col items-center text-center">
-    <h4 class="font-label-lg text-label-lg uppercase tracking-widest mb-md text-archive-gray">Archival Note</h4>
-    <p class="font-body-lg text-body-lg text-on-surface-variant mb-lg italic leading-relaxed max-w-2xl">
-      "The series format allows for the exploration of a singular concept across multiple iterations, revealing the subtle evolution of form and intent."
-    </p>
-    <div class="w-12 h-px bg-outline-variant"></div>
+<!-- Closing strip -->
+<section class="w-full py-20" style="background:#0B0B0B;border-top:1px solid #8e7164;">
+  <div class="max-w-4xl mx-auto px-margin-desktop flex flex-col md:flex-row items-center justify-between gap-8">
+    <div>
+      <p style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;letter-spacing:0.1em;color:#8e7164;text-transform:uppercase;margin-bottom:8px;">1,084 Works · 1974–Present</p>
+      <p style="font-family:'Playfair Display',Georgia,serif;font-size:22px;font-style:italic;color:#fcf9f3;line-height:1.4;">Every theme began as something he couldn't stop making.</p>
+    </div>
+    <a href="archive.html" class="shrink-0" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12px;letter-spacing:0.08em;color:#FF6600;text-decoration:none;border:1px solid #FF6600;padding:12px 20px;white-space:nowrap;transition:background 0.2s ease,color 0.2s ease;" onmouseover="this.style.background='#FF6600';this.style.color='#0B0B0B';" onmouseout="this.style.background='transparent';this.style.color='#FF6600';">[ BROWSE ALL WORKS → ]</a>
   </div>
 </section>
 

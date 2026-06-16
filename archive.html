@@ -50,6 +50,9 @@
         }
         #work-count { font-variant-numeric: tabular-nums; }
         @media (max-width: 767px) { #work-count-label { display: none; } }
+        /* Reading progress bar */
+        #archive-progress{position:fixed;top:0;left:0;width:0%;height:2px;background:#FF6600;z-index:9999;pointer-events:none;transition:width 0.1s linear;}
+        @media(prefers-reduced-motion:reduce){#archive-progress{transition:none;}}
         .filter-chip {
           display: inline-flex; align-items: center; gap: 6px;
           font-family: Inter, sans-serif; font-size: 11px; font-weight: 500;
@@ -74,6 +77,10 @@
         .filter-chip-clear:hover { color: #FF6600; }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        /* Stitch June-2026 — archive card borders + sidebar dividers */
+        @media (min-width: 640px) {
+          .archive-card-img { border-color: #8e7164 !important; box-shadow: 0 0 20px rgba(0,0,0,0.05); }
+        }
         /* Archive card micro-interactions */
         .archive-card { cursor: zoom-in; }
         .archive-card h4 { transition: color 0.2s ease; }
@@ -265,12 +272,28 @@ header.header-hidden{transform:translateY(-100%)}
 </script>
 <!-- NAV:END -->
 
+<div id="archive-progress" aria-hidden="true"></div>
+<script>
+(function(){
+  var bar = document.getElementById('archive-progress');
+  if (!bar) return;
+  function update() {
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+})();
+</script>
+
 <main id="main" class="pt-[100px] pb-xl px-margin-mobile md:px-margin-desktop max-w-[1200px] mx-auto">
 
   <!-- Page Header -->
-  <header class="mb-md md:mb-lg border-b border-outline-variant pb-md flex justify-between items-end">
+  <header class="mb-md md:mb-lg pb-md flex justify-between items-end" style="border-bottom:1px solid #8e7164;">
     <div>
-      <h1 class="font-label-caps text-label-caps tracking-widest mb-2">THE ARCHIVE</h1>
+      <p style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;letter-spacing:0.1em;color:#FF6600;text-transform:uppercase;margin-bottom:6px;">Jeffrey F. S. Neumann · 1974–Present</p>
+      <h1 class="font-label-caps text-label-caps tracking-widest mb-1">THE ARCHIVE</h1>
+      <p style="font-family:'Playfair Display',Georgia,serif;font-size:15px;font-style:italic;color:#575757;margin-bottom:6px;">Collage, sculpture, photography.</p>
       <p class="font-label-md text-label-md text-secondary tracking-widest uppercase">
         <span id="work-count">1,084</span> <span id="work-count-label">CATALOGED WORKS</span>
       </p>
@@ -287,7 +310,7 @@ header.header-hidden{transform:translateY(-100%)}
   </header>
 
   <!-- Mobile-only sticky filter toggle -->
-  <div class="md:hidden sticky top-[64px] z-40 bg-background border-y border-outline-variant -mx-margin-mobile px-margin-mobile mb-md" id="mobile-ledger">
+  <div class="md:hidden sticky top-[64px] z-40 bg-background -mx-margin-mobile px-margin-mobile mb-md" id="mobile-ledger" style="border-top:1px solid #e3bfb1;border-bottom:1px solid #e3bfb1;">
     <button class="font-label-caps text-label-caps border border-outline-variant bg-background px-4 my-3 min-h-[44px] flex items-center gap-2" id="mobile-filter-btn" aria-expanded="false" aria-controls="mobile-filter-panel">
       <span id="mobile-filter-label">FILTER</span>
     </button>
@@ -310,7 +333,7 @@ header.header-hidden{transform:translateY(-100%)}
       <div class="sticky top-[100px] space-y-md">
 
         <!-- Medium -->
-        <div class="border-b border-outline-variant pb-md">
+        <div class="pb-md" style="border-bottom:1px solid #e3bfb1;">
           <h3 class="font-label-lg text-label-lg uppercase mb-4 tracking-widest">MEDIUM</h3>
           <div class="space-y-3" id="filter-medium">
             <label class="flex items-center gap-3 cursor-pointer">
@@ -333,7 +356,7 @@ header.header-hidden{transform:translateY(-100%)}
         </div>
 
         <!-- Decade -->
-        <div class="border-b border-outline-variant pb-md">
+        <div class="pb-md" style="border-bottom:1px solid #e3bfb1;">
           <h3 class="font-label-lg text-label-lg uppercase mb-4 tracking-widest">DECADE</h3>
           <div class="space-y-3" id="filter-decade">
             <div class="flex items-center justify-between gap-2">
@@ -382,7 +405,7 @@ header.header-hidden{transform:translateY(-100%)}
         </div>
 
         <!-- Series -->
-        <div class="border-b border-outline-variant pb-md">
+        <div class="pb-md" style="border-bottom:1px solid #e3bfb1;">
           <h3 class="font-label-lg text-label-lg uppercase mb-4 tracking-widest">SERIES</h3>
           <div class="space-y-3" id="filter-series">
             <label class="flex items-center gap-3 cursor-pointer">

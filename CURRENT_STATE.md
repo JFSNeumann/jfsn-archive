@@ -1,5 +1,15 @@
 # Current State
-**Updated:** 2026-06-15 20:25
+**Updated:** 2026-06-15 21:00
+
+## ✅ SESSION 43 (2026-06-15) — Stitch pass: archive, series-index, 4 medium pages, favorites (READY TO DEPLOY)
+- **archive.html** — orange mono eyebrow + Playfair italic subline; page header border → `#8e7164`; archive card borders → `#8e7164` + paper-shadow (desktop, media-query override); sidebar filter section dividers → `#e3bfb1`; mobile ledger border → `#e3bfb1`; reading progress bar.
+- **series-index.html** — orange eyebrow + Playfair subline + `#8e7164` header border + warm-brown left rule on intro; bracket context links `[ Why I Made Things → ]` etc.; series card borders → `#8e7164` + paper-shadow (CSS override); skeleton loading placeholders removed (animate-pulse — banned); fabricated "Archival Note" quote removed → replaced with charcoal closing strip (factual Playfair line + `[ BROWSE ALL WORKS → ]`); reading progress bar.
+- **collage.html / sculpture.html / photography.html / painting.html** — identical surface pass on all four: orange mono eyebrow; Playfair italic sublines drawn from each page's own intro text ("Anything can be a mark." / "Extended into space." / "Five decades of looking." / "Present since the beginning."); page header border → `#8e7164`; `[ Browse with filters → ]` bracket CTA replacing old full-width button; fixed filter URL param `?type=` → `?medium=` to match archive.html; reading progress bar on all four.
+- **favorites.html** — orange mono eyebrow; h1 promoted from muted `text-archive-gray` → `text-deep-ink`; Playfair italic subline; page header border → `#8e7164`; `fav-whisper` upgraded from near-invisible `#c4c7c7` → warm-brown mono `#8e7164`, text now dynamically populated as `45 Works · Marked by Jeff`; reading progress bar.
+- **CACHE_V bumped** to `jfsn-20260615235900` in sw.js.
+- **No new Tailwind utilities** — no CSS rebuild needed.
+- **🟡 NEEDS DEPLOY:** run `bash end-session.sh` then deploy via **JFSN.app** (HostGator). Sessions 36–43 ship together.
+- **Next session:** 8 theme pages Stitch pass (guernica, targets, framed, torsos-faces, gallery-images, mr-snowmann, crosses, collaboration) — or oral history pass.
 
 ## ✅ SESSION 42 (2026-06-15) — artwork.html Stitch port (READY TO DEPLOY)
 - **artwork.html fully ported to Stitch June-2026 design language.** Surface pass — all JS, lightbox, mini-river, keyboard nav, swipe, and prev/next behaviour unchanged.
