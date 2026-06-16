@@ -7,7 +7,6 @@ A living list. Add to it. Cross things off. This is the backlog.
 
 ## 🔴 Do soon
 
-- [ ] **One ~1-minute audio recording** — standing #1 creator-context priority (§25). No audio of Jeff exists anywhere (he declined for the exhibition answers 2026-06-12 — don't push; offer occasionally). Also: listen to `old-site/BB/audio/sample.wav` (21s — possibly the only existing audio).
 - [ ] **Ingest new work** — drop photos into `artworks/inbox/`, run `bash add-works.sh`. Pipeline is ready.
 
 ---
@@ -35,6 +34,7 @@ A living list. Add to it. Cross things off. This is the backlog.
 ---
 
 ## ✅ Completed (recent)
+- [x] ~~**One ~1-minute audio recording**~~ — DONE 2026-06-16, first audio of Jeff ever recorded (~34s, iPhone Voice Memos, "a few words about who he is"). Saved as `audio/who-i-am.m4a`, wired into both `<audio>` placeholder slots in index.html (desktop "In His Own Words" card + mobile section), deployed + verified live.
 - [x] ~~**DOMAIN: contact friend holding Gandi account**~~ — CLOSED 2026-06-16, this item was based on a wrong assumption. Jeff showed a Gandi invoice (N° 2026021000232) proving he owns the account directly: organization "jfsneumann", billed to his own address, paid by his own card, Feb 10 2026. No friend is involved; nothing to do here beyond paying the March 5 renewal each year as usual.
 - [x] ~~**Session 44 (2026-06-16) — wall.html mobile tap-targets + responsive images**~~ — tiles were 40.7px on a 375px viewport (under the 44px guideline) with no srcset; raised the mobile `minmax()` floor to 64px (renders at 74px), added a touch-only 2px gap, and added a new 80px `micro` image tier (avg 2.7KB vs mini's 11KB) wired into `srcset`/`sizes` on all 1,084 tiles + the `ingest.py` pipeline for future works. Caveat: on Jeff's actual iPhone 15 Pro (DPR3) the micro tier mostly won't engage since 64px CSS × 3 DPR exceeds 80px — real savings land on standard-DPI screens, not retina mobile; zero regression either way.
 - [x] ~~**Session 44 (2026-06-16) — Desktop CLS root cause found + fixed sitewide**~~ — hero h1 fallback font (`serif`) wraps to a 3rd line at `max-width:16ch`, 77px taller than the Playfair Display render, until the swap completes — classic font-swap CLS, explains the bouncing 0/0.05/0.147/0.16 Lighthouse numbers from session 36. Fixed by switching `&display=swap` → `&display=optional` on the Google Fonts link sitewide (1,122 files incl. the artwork-page template) — cached-font visitors still get Playfair Display; cold-cache slow-network visitors keep the fallback for the whole pageview with zero shift. Awaiting Jeff's post-deploy Lighthouse re-run to confirm.
