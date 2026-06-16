@@ -349,3 +349,4 @@ Session 26: start-here.html spacing, footer breathing room (pb-8 stamped sitewid
 
 ## Backup status
 **Last B2 backup:** 2026-06-15 21:02:21
+**⚠️ B2 cloud backup FAILED this session (2026-06-16 ~08:35)** — `transaction_cap_exceeded` (403). GitHub + 4TB are both current through commit `fd3ae8a6`; B2 is one session behind. Run `bash cloud-backup.sh` once the cap resets (~midnight GMT / ~8 PM EDT) to catch it up.
