@@ -1328,7 +1328,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
     if (!grid) return;
     try {
       const [works, chromatic] = await Promise.all([
-        fetch('catalog-home.json?v=20260616153626').then(r => r.json()),
+        fetch('catalog-home.json?v=20260616155742').then(r => r.json()),
         fetch('chromatic.json').then(r => r.json()).catch(() => []),
       ]);
 
@@ -1369,6 +1369,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
               alt="${w.title} — Jeffrey F. S. Neumann, ${w.year}"
               class="zoom-img absolute inset-0 w-full h-full object-cover${isFirst ? ' is-loaded' : ''}"
               src="artworks/${i < 3 ? 'medium' : 'thumbs'}/${w.file}"
+              ${i < 3 ? `srcset="artworks/thumbs/${w.file} 400w, artworks/medium/${w.file} 900w" sizes="(max-width:767px) 92vw, (max-width:1023px) 480px, 620px"` : ''}
               loading="${isFirst ? 'eager' : 'lazy'}"${isFirst ? ' fetchpriority="high"' : ''}
               width="900" height="1200"
               ${isFirst ? '' : 'onload="this.classList.add(\'is-loaded\')"'}
