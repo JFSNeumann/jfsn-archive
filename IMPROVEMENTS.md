@@ -22,7 +22,7 @@ A living list. Add to it. Cross things off. This is the backlog.
 
 ### Technical
 - [ ] **Deploy sessions 36–41** — BUILT + preview-verified, not yet live. (1) `bash end-session.sh`. (2) JFSN.app deploy (all pages, sw.js CACHE_V `jfsn-20260615230000`). (3) lftp the 3 recompressed hero AVIFs (`art0953/art1008/art1009-hero.avif`) to `/artworks/` flat — optional ~679 KB win, decoupled from LCP. (4) **Re-run Lighthouse mobile** to confirm LCP closed.
-- [ ] **Next Stitch pages** — artwork.html. (about.html ✅ s40; start-here ✅ s41; lost ✅ s41; why-i-made-things ✅ s41)
+- [ ] **Next Stitch pages** — archive.html or series-index.html. (artwork.html ✅ s42; about.html ✅ s40; start-here ✅ s41; lost ✅ s41; why-i-made-things ✅ s41)
 - [ ] **Desktop CLS = 0.147** (Lighthouse, NEW finding session 36) — mobile CLS is perfect (0.001), so it's desktop-layout-specific. Culprit unidentified; need the expanded Lighthouse "Layout shift culprits" detail (likely the featured grid, river canvas, or a font-swap reflow). Holds desktop perf back from green.
 - [ ] **Grid/search/favorites year labels** (optional follow-up to provenance) — these still show the bare decade year ("1990"); only artwork detail pages + API carry the honest "1990s (est.)". Could extend `year_display` to grids, but it adds visual noise to terse captions — deferred pending Jeff's call.
 

@@ -1,5 +1,24 @@
 # Current State
-**Updated:** 2026-06-15 20:05
+**Updated:** 2026-06-15 20:25
+
+## ✅ SESSION 42 (2026-06-15) — artwork.html Stitch port (READY TO DEPLOY)
+- **artwork.html fully ported to Stitch June-2026 design language.** Surface pass — all JS, lightbox, mini-river, keyboard nav, swipe, and prev/next behaviour unchanged.
+  - **Reading progress bar** — 2px orange fixed line at top of viewport, matching about/stories/lost/why-i-made-things
+  - **`[ ← Back to Archive ]`** bracket link (was plain arrow + text link)
+  - **Image card** — warm-brown archival border `#8e7164` + paper-shadow `0 0 20px rgba(0,0,0,0.05)` replacing `border-deep-ink`; bottom bar border → soft `#e3bfb1`
+  - **`[ Full resolution → ]`** bracket format button (was uppercase label)
+  - **Orange mono eyebrow** `ART0392 — 2010S (EST.)` in monospace orange above the h1 title, populated by JS from archive ID + year_display
+  - **Playfair italic subline** showing medium type (e.g. "Collage") below the title — populated by JS
+  - **Aside title divider** → warm-brown `#e3bfb1` (was `border-deep-ink`)
+  - **Meta rows** dividers → warm-brown `#e3bfb1` (was `border-deep-ink` / solid black)
+  - **Archive No. row** value → mono warm-brown `#8e7164` font (matches Stitch monospace ID style)
+  - **`[ Copy link → ]`** bracket format button
+  - **`[ ← → Browse Works ]`** keyboard hint in monospace
+  - **Prev/Next bar** — top/bottom borders → warm-brown `#8e7164` (was `border-deep-ink`); scroll-reveal fade-in on enter
+  - **`.artwork-developing`** keyframe defined inline (was referenced in JS but not defined; now provides a saturation develop animation on image load)
+- **No new Tailwind utilities** — no CSS rebuild needed.
+- **🟡 NEEDS DEPLOY:** run `bash end-session.sh` then deploy via **JFSN.app** (HostGator). Sessions 36–42 ship together.
+- **Next session:** archive.html Stitch port, or oral history pass.
 
 ## ✅ SESSION 41 (2026-06-15) — Cross-page consistency + lost.html Stitch pass (READY TO DEPLOY)
 - **Active-section tracking** added to mobile jump navs on start-here.html + about.html: IntersectionObserver watches each section, highlights the matching TOC link orange (`.toc-active`) as you scroll. Sections watched: `#sh-welcome` → `#sh-begin` (start-here); `#about-hero` / `#contact` / `#exhibition-record` / `#in-his-words` (about).

@@ -57,6 +57,29 @@
     ::view-transition-old(*),
     ::view-transition-new(*) { animation: none !important; }
   }
+
+  /* Stitch June-2026 — artwork page */
+  #reading-progress {
+    position: fixed; top: 0; left: 0; height: 2px;
+    background: #FF6600; width: 0%; z-index: 9999;
+    transition: width 0.1s linear; pointer-events: none;
+  }
+  @keyframes artwork-develop {
+    from { filter: saturate(0) brightness(1.08); opacity: 0.6; }
+    to   { filter: saturate(1) brightness(1); opacity: 1; }
+  }
+  .artwork-developing { animation: artwork-develop 0.9s ease forwards; }
+  .bracket-link {
+    display: inline-block;
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 11px; font-weight: 500; letter-spacing: 0.06em;
+    color: #0B0B0B; text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .bracket-link:hover { color: #FF6600; }
+  .reveal-on-scroll { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .reveal-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) { .reveal-on-scroll { opacity: 1; transform: none; transition: none; } }
 </style>
 </head>
 <body class="font-body-md text-body-md bg-bone-white text-deep-ink">
@@ -213,11 +236,10 @@ header.header-hidden{transform:translateY(-100%)}
 </script>
 <!-- NAV:END -->
 
+<div id="reading-progress" aria-hidden="true"></div>
 <main id="main" class="pt-[100px] pb-xl px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto">
 
-  <a href="archive.html" class="inline-flex items-center gap-xs font-label-md text-label-md text-secondary hover:text-international-orange transition-colors uppercase tracking-widest mb-lg">
-    <svg class="text-base" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="20" y1="12" x2="5" y2="12"/><polyline points="11 6 5 12 11 18"/></svg> Back to Archive
-  </a>
+  <a href="archive.html" class="bracket-link mb-lg block">[ ← Back to Archive ]</a>
 
   <div id="loading" class="py-xl text-center font-label-lg text-label-lg text-secondary uppercase tracking-widest">Loading…</div>
   <div id="not-found" class="hidden py-xl text-center font-label-lg text-label-lg text-secondary uppercase tracking-widest">Work not found.</div>
@@ -226,7 +248,7 @@ header.header-hidden{transform:translateY(-100%)}
     <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-start mb-xl">
 
       <!-- Image -->
-      <section class="md:col-span-8 border border-deep-ink">
+      <section class="md:col-span-8" style="border:1px solid #8e7164;box-shadow:0 0 20px rgba(0,0,0,0.05);">
         <div id="work-image-wrap" class="bg-surface-container" style="position:relative;">
           <img id="work-image" alt="" class="w-full h-auto object-contain" src="" width="1200" height="900" loading="eager"/>
           <!-- Mobile title overlay — hidden on md+ -->
@@ -235,29 +257,29 @@ header.header-hidden{transform:translateY(-100%)}
             <p id="artwork-mobile-year-text" style="font-family:Inter,sans-serif;font-size:11px;font-weight:400;letter-spacing:0.06em;color:#c4c7c7;margin-top:3px;"></p>
           </div>
         </div>
-        <div class="p-sm border-t border-deep-ink">
-          <button id="full-res-btn" class="font-label-md text-label-md uppercase tracking-widest text-secondary hover:text-international-orange transition-colors bg-transparent border-0 cursor-pointer p-0">
-            Full resolution
+        <div class="p-sm" style="border-top:1px solid #e3bfb1;">
+          <button id="full-res-btn" class="bracket-link bg-transparent border-0 cursor-pointer p-0">
+            [ Full resolution → ]
           </button>
         </div>
       </section>
 
       <!-- Metadata -->
       <aside class="md:col-span-4 flex flex-col gap-md sticky top-[100px]">
-        <div class="border-b border-deep-ink pb-md">
+        <div style="border-bottom:1px solid #e3bfb1;padding-bottom:1rem;">
+          <p id="work-eyebrow" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10px;letter-spacing:0.1em;color:#FF6600;text-transform:uppercase;margin-bottom:8px;"></p>
           <h1 id="work-title" class="text-headline-md leading-tight mb-xs"></h1>
-          <p class="font-label-md text-label-md text-secondary uppercase tracking-widest">Jeffrey F. S. Neumann</p>
+          <p id="work-type-subline" style="font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:15px;color:#575757;margin-top:4px;"></p>
         </div>
         <div class="flex flex-col gap-sm" id="meta-rows">
           <!-- populated by JS -->
         </div>
-        <button id="copy-link-btn" onclick="(function(btn){navigator.clipboard.writeText(window.location.href).then(function(){var orig=btn.textContent;btn.textContent='COPIED';setTimeout(function(){btn.textContent=orig;},1800);});})(this)"
-          style="margin-top:8px;background:none;border:none;cursor:pointer;padding:0;font-family:Inter,sans-serif;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#c4c7c7;text-align:left;transition:color 0.2s ease;"
-          onmouseover="this.style.color='#FF6600'" onmouseout="this.style.color='#c4c7c7'">
-          COPY LINK
+        <button id="copy-link-btn" onclick="(function(btn){navigator.clipboard.writeText(window.location.href).then(function(){var orig=btn.textContent;btn.textContent='[ COPIED ]';setTimeout(function(){btn.textContent=orig;},1800);});})(this)"
+          class="bracket-link" style="margin-top:8px;background:none;border:none;cursor:pointer;padding:0;text-align:left;">
+          [ Copy link → ]
         </button>
-        <div class="hidden md:block" style="margin-top:24px;padding-top:16px;border-top:1px solid #c4c7c7;">
-          <p style="font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:#c4c7c7;">← → Browse Works</p>
+        <div class="hidden md:block" style="margin-top:16px;padding-top:16px;border-top:1px solid #e3bfb1;">
+          <p style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#c4c7c7;">[ ← → Browse Works ]</p>
         </div>
         <!-- Where this sits — the whole archive as color, this work marked -->
         <a id="artwork-river" href="chromatic.html" aria-label="See this work's place in the full fifty-year chromatic river"
@@ -274,7 +296,7 @@ header.header-hidden{transform:translateY(-100%)}
     </div>
 
     <!-- Prev / Next -->
-    <nav class="w-full bg-bone-white border-y border-deep-ink grid grid-cols-2 divide-x divide-outline-variant h-[56px] items-center" id="prev-next" aria-label="Adjacent works">
+    <nav class="w-full bg-bone-white grid grid-cols-2 divide-x divide-outline-variant h-[56px] items-center reveal-on-scroll" id="prev-next" aria-label="Adjacent works" style="border-top:1px solid #8e7164;border-bottom:1px solid #8e7164;">
       <a id="prev-link" href="#" class="group flex items-center px-margin-mobile md:px-md h-full overflow-hidden">
         <svg class="text-deep-ink group-hover:text-international-orange mr-sm shrink-0" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="20" y1="12" x2="5" y2="12"/><polyline points="11 6 5 12 11 18"/></svg>
         <div class="flex flex-col overflow-hidden">
@@ -463,10 +485,13 @@ function typeLabel(t) {
   return { collage: 'Collage', photograph: 'Photography', sculpture: 'Sculpture', painting: 'Painting' }[t] || t;
 }
 
-function metaRow(label, value) {
-  return `<div class="grid grid-cols-3 gap-xs items-baseline border-b border-deep-ink py-sm">
+function metaRow(label, value, mono) {
+  const valStyle = mono
+    ? 'font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:10px;letter-spacing:0.06em;color:#8e7164;'
+    : '';
+  return `<div class="grid grid-cols-3 gap-xs items-baseline py-sm" style="border-bottom:1px solid #e3bfb1;">
     <span class="font-label-md text-label-md text-secondary uppercase">${label}</span>
-    <span class="col-span-2 font-body-md text-body-md">${value}</span>
+    <span class="col-span-2 font-body-md text-body-md" style="${valStyle}">${value}</span>
   </div>`;
 }
 
@@ -553,8 +578,13 @@ fetch('catalog.json')
     document.getElementById('full-res-btn').dataset.src = `artworks/full/${w.file}`;
     document.getElementById('full-res-btn').dataset.alt = titleText;
 
-    // Title
+    // Title + Stitch eyebrow + italic subline
     document.getElementById('work-title').textContent = titleText;
+    var archiveId = (w.file || '').replace('.avif','').toUpperCase();
+    var eyebrow = document.getElementById('work-eyebrow');
+    if (eyebrow) eyebrow.textContent = archiveId + ' — ' + (w.year_display || w.year || '');
+    var subline = document.getElementById('work-type-subline');
+    if (subline) subline.textContent = typeLabel(w.work_type) + (w.series ? ' · ' + w.series : '');
     // Mobile overlay title
     var mTitle = document.getElementById('artwork-mobile-title-text');
     var mYear  = document.getElementById('artwork-mobile-year-text');
@@ -587,7 +617,7 @@ fetch('catalog.json')
     if (w.themes && w.themes.length) {
       meta.innerHTML += metaRow('Themes', w.themes.map(themeLink).join(', '));
     }
-    meta.innerHTML += metaRow('Archive No.', w.file.replace('.avif', '').toUpperCase());
+    meta.innerHTML += metaRow('Archive No.', w.file.replace('.avif', '').toUpperCase(), true);
 
     // Prev / next
     const prevWork = idx > 0 ? works[idx - 1] : null;
@@ -701,6 +731,27 @@ fetch('catalog.json')
 </script>
 
 <script src="_shared/nav-active.js" defer></script>
+<script>
+/* Reading progress bar */
+(function(){
+  var bar = document.getElementById('reading-progress');
+  if (!bar) return;
+  window.addEventListener('scroll', function(){
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+  }, { passive: true });
+})();
+/* Scroll-reveal for prev/next bar */
+(function(){
+  if (!window.IntersectionObserver) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var els = document.querySelectorAll('.reveal-on-scroll');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('is-visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  els.forEach(function(el){ io.observe(el); });
+})();
+</script>
 <script>
 /* Mini chromatic river — this work's place in fifty years of making */
 (function () {
