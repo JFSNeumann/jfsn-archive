@@ -1,228 +1,72 @@
 <!DOCTYPE html>
-<html class="light" lang="en">
+<html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta name="theme-color" content="#fdf8f8"/>
-<title>The Companion — Jeffrey F. S. Neumann</title>
-<meta name="description" content="Describe a feeling, a word, a memory. The archive finds a work that fits."/>
-<link rel="canonical" href="https://jfsn.com/companion.html"/>
-<link rel="icon" href="favicon.svg" type="image/svg+xml"/>
-<link rel="manifest" href="manifest.json"/>
-<link rel="apple-touch-icon" href="icon-192.png"/>
-<meta property="og:type" content="website"/>
-<meta property="og:title" content="The Companion — Jeffrey F. S. Neumann"/>
-<meta property="og:description" content="Describe a feeling, a word, a memory. The archive finds a work that fits."/>
-<meta property="og:image" content="https://jfsn.com/og-card.jpg"/>
-<meta property="og:url" content="https://jfsn.com/companion.html"/>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"The Companion — Jeffrey F. S. Neumann","description":"An AI companion for exploring 1,084 works by Jeffrey F. S. Neumann. Ask about themes, materials, or any work in the archive.","url":"https://jfsn.com/companion.html","creator":{"@type":"Person","name":"Jeffrey F. S. Neumann","url":"https://jfsn.com"}}
-</script>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600&display=optional" onload="this.onload=null;this.rel='stylesheet'"/>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Curatorial Map — Jeffrey F. S. Neumann</title>
+  <meta name="description" content="1,084 works mapped by decade and medium, with recurring themes — Guernica, Targets, Crosses, Mr. Snowmann and more — highlighted across the grid to see where they surface.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="canonical" href="https://jfsn.com/curatorial-map.html">
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Curatorial Map — Jeffrey F. S. Neumann"/>
+  <meta property="og:description" content="1,084 works mapped by decade and medium, with recurring themes highlighted across the grid."/>
+  <meta property="og:image" content="https://jfsn.com/og-card.jpg"/>
+  <meta property="og:url" content="https://jfsn.com/curatorial-map.html"/>
+  <script type="application/ld+json">
+{"@context":"https://schema.org","@type":"CollectionPage","name":"Curatorial Map — Jeffrey F. S. Neumann","description":"1,084 works mapped by decade and medium, with recurring themes highlighted across the grid.","url":"https://jfsn.com/curatorial-map.html","creator":{"@type":"Person","name":"Jeffrey F. S. Neumann","url":"https://jfsn.com"}}
+  </script>
+  <link rel="manifest" href="manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600&display=optional" onload="this.onload=null;this.rel='stylesheet'"/>
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600&display=optional"/></noscript>
-<link rel="stylesheet" href="site.min.css"/>
-<style>
-  .material-symbols-outlined {
-    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-    vertical-align: middle;
-  }
+  <link rel="stylesheet" href="_shared/ui.css">
+  <link rel="stylesheet" href="site.min.css">
 
-  /* ── Card / result styles (dark section) ── */
-  :root {
-    --c-bg:   #0B0B0B;
-    --c-text: #F3F0EA;
-    --c-muted: rgba(243,240,234,0.62);
-    --c-dim:   rgba(243,240,234,0.12);
-    --c-accent: #FF6600;
-    --c-font-display: Inter, sans-serif;
-    --c-cap: 0.75rem;
-  }
+  <meta name="theme-color" content="#fcf9f3"/>
+  <style>
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;}}
 
-  .c-wrap {
-    background: var(--c-bg);
-    color: var(--c-text);
-    border-top: 2px solid var(--c-accent);
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: clamp(3rem, 6vw, 5rem) clamp(1.25rem, 5vw, 4rem) clamp(1.5rem, 3vw, 2.5rem);
-    max-width: 700px;
-    width: 100%;
-    margin: 0 auto;
-    position: relative;
-  }
-  .c-eyebrow {
-    font-size: var(--c-cap);
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--c-accent);
-    margin: 0 0 1.25rem;
-  }
-  .c-title {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: clamp(2.25rem, 5vw, 4rem);
-    font-weight: 300;
-    line-height: 1.08;
-    letter-spacing: -0.01em;
-    color: var(--c-text);
-    margin: 0 0 0.875rem;
-  }
-  .c-title em { font-style: italic; color: var(--c-muted); }
-  .c-sub {
-    font-size: clamp(0.875rem, 1.5vw, 1rem);
-    color: var(--c-muted);
-    line-height: 1.65;
-    margin: 0 0 2.5rem;
-  }
-  .c-form { width: 100%; margin-bottom: 1.25rem; }
-  .c-input-wrap { display: flex; flex-direction: column; gap: 0.875rem; }
-  .c-textarea {
-    width: 100%;
-    background: transparent;
-    border: 1px solid var(--c-dim);
-    color: var(--c-text);
-    font-family: var(--c-font-display);
-    font-size: clamp(1.125rem, 2vw, 1.375rem);
-    font-weight: 300;
-    line-height: 1.5;
-    padding: 1rem 1.25rem;
-    resize: none;
-    outline: none;
-    transition: border-color 0.2s;
-    min-height: 4.5rem;
-    box-sizing: border-box;
-  }
-  .c-textarea::placeholder { color: var(--c-dim); opacity: 1; }
-  .c-textarea:focus { border-color: var(--c-muted); }
-  .c-submit {
-    appearance: none;
-    background: transparent;
-    border: 1px solid var(--c-muted);
-    color: var(--c-text);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    padding: 0.875rem 2rem;
-    min-height: 44px;
-    cursor: pointer;
-    align-self: flex-start;
-    transition: background 0.15s, color 0.15s, border-color 0.15s;
-  }
-  @media (min-width: 640px) {
-    .c-submit { padding: 0.875rem 3.5rem; min-width: 220px; }
-  }
-  .c-submit:hover:not(:disabled) { background: var(--c-text); color: var(--c-bg); border-color: var(--c-text); }
-  .c-submit:disabled { opacity: 0.4; cursor: default; }
-  .c-submit-row { display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; }
-  .c-deep-label {
-    font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--c-muted); cursor: pointer; display: flex; align-items: center; gap: 0.4rem; user-select: none;
-    min-height: 44px; padding: 0.25rem 0;
-  }
-  .c-deep-label input { accent-color: var(--c-text); cursor: pointer; }
+    /* Reading progress bar */
+    #map-progress{position:fixed;top:0;left:0;width:0%;height:2px;background:#FF6600;z-index:9999;pointer-events:none;transition:width 0.1s linear;}
+    @media(prefers-reduced-motion:reduce){#map-progress{transition:none;}}
 
-  .c-examples { width: 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin: 0.875rem 0 1.25rem; }
-  .c-examples-label {
-    font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--c-muted); opacity: 0.5; flex-shrink: 0; margin-right: 0.25rem;
-  }
-  .c-example {
-    appearance: none; background: transparent;
-    border: 1px solid rgba(243,240,234,0.22); color: rgba(243,240,234,0.7);
-    font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase;
-    padding: 0.625rem 0.875rem; min-height: 44px; cursor: pointer;
-    display: inline-flex; align-items: center;
-    transition: border-color 0.2s, color 0.2s;
-  }
-  .c-example:hover { border-color: var(--c-accent); color: var(--c-text); }
-  .c-deep-hint { opacity: 0.5; font-size: 0.65rem; }
+    .map-eyebrow{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#FF6600;margin-bottom:8px;}
+    .map-subline{font-family:'Playfair Display',Georgia,serif;font-size:16px;font-style:italic;color:#575757;margin:4px 0 0;}
+    .browse-filters-link{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#FF6600;text-decoration:none;border:1px solid #FF6600;padding:10px 16px;display:inline-block;transition:background 0.2s ease,color 0.2s ease;}
+    .browse-filters-link:hover{background:#FF6600;color:#0B0B0B;}
 
-  .c-status {
-    width: 100%; font-size: 0.8125rem; letter-spacing: 0.08em;
-    text-transform: uppercase; color: var(--c-muted); margin-bottom: 2rem;
-  }
-  .c-status[hidden] { display: none; }
-  @keyframes pulse-opacity { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
-  .c-status.loading { animation: pulse-opacity 1.6s ease-in-out infinite; }
+    /* Theme filter chips */
+    .theme-chip{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:#575757;background:none;border:1px solid #c4c7c7;padding:7px 12px;cursor:pointer;transition:background 0.2s ease,color 0.2s ease,border-color 0.2s ease;}
+    .theme-chip:hover{border-color:#FF6600;color:#FF6600;}
+    .theme-chip.is-active{background:#FF6600;border-color:#FF6600;color:#0B0B0B;}
 
-  .c-divider { width: 100%; border: none; border-top: 1px solid var(--c-dim); margin: 0 0 2.5rem; }
-  .c-divider[hidden] { display: none; }
+    /* Map grid */
+    .map-grid{display:grid;grid-template-columns:84px repeat(6,1fr);gap:1px;background:#e3bfb1;}
+    .map-cell-label{background:#fcf9f3;display:flex;align-items:center;padding:8px;font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:#575757;}
+    .map-decade-label{background:#fcf9f3;display:flex;align-items:center;justify-content:center;padding:10px 4px;font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;}
+    .map-cell{background:#fcf9f3;display:flex;flex-wrap:wrap;align-content:flex-start;gap:2px;padding:6px;min-height:48px;}
+    .map-swatch{width:9px;height:9px;flex-shrink:0;cursor:pointer;transition:opacity 0.2s ease,outline-color 0.15s ease;outline:1px solid transparent;outline-offset:1px;}
+    .map-swatch:hover{outline-color:#FF6600;}
+    .map-grid.is-filtering .map-swatch{opacity:0.12;}
+    .map-grid.is-filtering .map-swatch.is-match{opacity:1;outline:1px solid #FF6600;}
+    @media(prefers-reduced-motion:reduce){.map-swatch{transition:none;}}
 
-  .c-results { width: 100%; display: flex; flex-direction: column; gap: 2.5rem; }
-  .c-results[hidden] { display: none; }
+    @media (max-width: 767px) {
+      .map-grid{grid-template-columns:60px repeat(6,minmax(46px,1fr));}
+      .map-cell{padding:4px;min-height:32px;}
+      .map-decade-label{font-size:9px;padding:6px 2px;}
+      .map-cell-label{font-size:9px;padding:4px;}
+      .map-swatch{width:7px;height:7px;}
+    }
 
-  .c-card {
-    display: grid; grid-template-columns: 160px 1fr;
-    gap: 1.5rem; align-items: start;
-    opacity: 0; transform: translateY(12px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-  }
-  .c-card.visible { opacity: 1; transform: none; }
-  @media (max-width: 480px) { .c-card { grid-template-columns: 1fr; } }
-
-  .c-card__img { display: block; aspect-ratio: 1; overflow: hidden; background: rgba(243,240,234,0.04); text-decoration: none; }
-  .c-card__img img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
-  .c-card__body { display: flex; flex-direction: column; gap: 0.45rem; padding-top: 0.2rem; }
-  .c-card__meta { font-size: var(--c-cap); letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-muted); }
-  .c-card__title { font-family: var(--c-font-display); font-size: clamp(1.125rem, 2vw, 1.375rem); font-weight: 300; line-height: 1.2; color: var(--c-text); }
-  .c-card__reason { font-family: var(--c-font-display); font-size: clamp(0.9375rem, 1.5vw, 1.0625rem); font-style: italic; font-weight: 300; color: var(--c-muted); line-height: 1.55; margin-top: 0.2rem; }
-  .c-card__link { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-muted); border-bottom: 1px solid var(--c-dim); padding-bottom: 1px; align-self: flex-start; margin-top: 0.4rem; transition: color 0.15s, border-color 0.15s; }
-  .c-card__link:hover { color: var(--c-text); border-color: var(--c-muted); }
-
-  .c-again { width: 100%; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; padding-top: 1rem; border-top: 1px solid var(--c-dim); margin-top: 1rem; }
-  .c-again[hidden] { display: none; }
-  .c-again-btn { appearance: none; background: transparent; border: 1px solid var(--c-dim); color: var(--c-muted); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.75rem 1.5rem; min-height: 44px; cursor: pointer; transition: border-color 0.15s, color 0.15s; }
-  .c-again-btn:hover { border-color: var(--c-muted); color: var(--c-text); }
-  .c-browse-link { font-size: 0.8125rem; color: var(--c-muted); border-bottom: 1px solid var(--c-dim); padding-bottom: 1px; transition: color 0.15s, border-color 0.15s; text-decoration: none; }
-  .c-browse-link:hover { color: var(--c-text); border-color: var(--c-muted); }
-
-  /* Pulsing active indicator */
-  .companion-status {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 1.75rem;
-  }
-  .companion-dot {
-    width: 6px;
-    height: 6px;
-    background: var(--c-accent);
-    border-radius: 50%;
-    flex-shrink: 0;
-    animation: pulse-dot 2s ease-in-out infinite;
-  }
-  @keyframes pulse-dot {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 102, 0, 0.5); }
-    50%       { box-shadow: 0 0 0 6px rgba(255, 102, 0, 0); }
-  }
-  .companion-status-label {
-    font-size: 0.6875rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--c-accent);
-  }
-
-  /* Bubble-in for result cards */
-  @keyframes bubble-in {
-    from { opacity: 0; transform: translateY(10px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  .c-card.visible {
-    animation: bubble-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { transition: none !important; animation: none !important; }
-  }
-</style>
+    #map-tooltip{position:fixed;background:#0b0b0b;color:#f3f0ea;font-family:Inter,sans-serif;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;padding:6px 10px;pointer-events:none;display:none;z-index:100;white-space:nowrap;max-width:320px;overflow:hidden;text-overflow:ellipsis;}
+    #map-thumb{position:fixed;width:120px;pointer-events:none;display:none;z-index:99;outline:1px solid rgba(0,0,0,0.15);}
+  </style>
 </head>
-<body class="font-body-md bg-bone-white text-deep-ink flex flex-col min-h-screen">
 
-<!-- Top Nav -->
+<body class="bg-background text-deep-ink overflow-x-hidden" data-page-label="curatorial-map">
+
 <!-- NAV:START -->
 <style>
 header nav a{position:relative}
@@ -375,71 +219,57 @@ header.header-hidden{transform:translateY(-100%)}
 </script>
 <!-- NAV:END -->
 
-<!-- Dark companion section -->
-<main id="main" tabindex="-1" class="flex-grow bg-[#0B0B0B] pt-[72px] relative" style="padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px))">
-  <div class="c-wrap">
-    <div class="companion-status">
-      <span class="companion-dot"></span>
-      <span class="companion-status-label">Companion · Active</span>
-    </div>
-    <p class="c-eyebrow">The Companion</p>
-    <h1 class="c-title">Describe<br><em>anything.</em></h1>
-    <p class="c-sub">
-      A feeling. A color. A decade. A single word.<br>
-      Something in 1,084 works may be waiting for you.
+<div id="map-progress" aria-hidden="true"></div>
+<script>
+(function(){
+  var bar = document.getElementById('map-progress');
+  if (!bar) return;
+  function update() { var h = document.documentElement.scrollHeight - window.innerHeight; bar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%'; }
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+})();
+</script>
+
+<main id="main" class="pt-[100px] pb-xl px-margin-mobile md:px-margin-desktop max-w-[1200px] mx-auto">
+
+  <header style="border-bottom:1px solid #8e7164;padding-bottom:1.5rem;margin-bottom:2rem;">
+    <p class="map-eyebrow">JEFFREY F. S. NEUMANN · CURATORIAL MAP</p>
+    <h1 class="font-headline-lg text-headline-lg" style="font-family:'Playfair Display',Georgia,serif;">Curatorial Map</h1>
+    <p class="map-subline">Where the recurring forms surface, across five decades.</p>
+    <p class="font-body-md text-body-md text-archive-gray" style="max-width:58ch;margin-top:14px;line-height:1.7;">
+      Every work, placed by decade and medium. Pick a theme below to see where it actually lives in the archive — when it started, where it concentrates, whether it crosses mediums or stays put. The same 1,084 works as everywhere else on this site, read a different way.
     </p>
+    <a href="archive.html" class="browse-filters-link" style="margin-top:20px;">[ Browse with filters &rarr; ]</a>
+  </header>
 
-    <form class="c-form" id="c-form" autocomplete="off">
-      <div class="c-input-wrap">
-        <textarea
-          class="c-textarea"
-          id="c-input"
-          rows="1"
-          placeholder="quiet, obsessive, midwest winter…"
-          maxlength="300"
-          aria-label="Describe a feeling, color, or memory"
-          autocomplete="off"
-          autocorrect="off"
-          autocapitalize="off"
-          spellcheck="false"
-          inputmode="text"
-        ></textarea>
+  <!-- Theme chips -->
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;" id="theme-chips" role="group" aria-label="Filter the map by recurring theme"></div>
 
-        <div class="c-examples" id="c-examples">
-          <span class="c-examples-label">TRY —</span>
-          <button class="c-example" type="button">the Guernica series</button>
-          <button class="c-example" type="button">Mr. SNOWmann</button>
-          <button class="c-example" type="button">targets and warplanes</button>
-          <button class="c-example" type="button">something from the 1970s</button>
-          <button class="c-example" type="button">crosses and ritual</button>
-          <button class="c-example" type="button">found objects and memory</button>
-          <button class="c-example" type="button">midwest winter</button>
-          <button class="c-example" type="button">lost and undocumented</button>
-        </div>
+  <!-- Map grid -->
+  <div id="map-loading" class="font-label-caps text-label-caps text-archive-gray" style="padding:40px 0;">Loading the map&hellip;</div>
+  <div class="map-grid hidden" id="map-grid" role="img" aria-label="Grid of all 1,084 works arranged by decade and medium, colored by each work's dominant tone"></div>
 
-        <div class="c-submit-row">
-          <button class="c-submit" type="submit" id="c-submit">Find a work →</button>
-          <label class="c-deep-label" title="Uses extended thinking — slower but more nuanced">
-            <input type="checkbox" id="c-deep"> deeper search <span class="c-deep-hint">(slower · more nuanced)</span>
-          </label>
-        </div>
-      </div>
-    </form>
-
-    <p class="c-status" id="c-status" hidden></p>
-    <hr class="c-divider" id="c-divider" hidden/>
-    <div class="c-results" id="c-results" hidden></div>
-
-    <div class="c-again" id="c-again" hidden>
-      <button class="c-again-btn" id="c-again-btn" type="button">Try another →</button>
-      <a class="c-browse-link" href="archive.html">Browse all 1,084 works →</a>
+  <!-- Counts -->
+  <div class="flex flex-wrap gap-8" style="margin-top:32px;padding-top:24px;border-top:1px solid #e3bfb1;">
+    <div>
+      <span class="font-label-caps text-label-caps text-archive-gray block mb-1">WORKS MAPPED</span>
+      <span class="text-headline-md text-deep-ink" id="map-count">1,084</span>
+    </div>
+    <div>
+      <span class="font-label-caps text-label-caps text-archive-gray block mb-1">DECADES</span>
+      <span class="text-headline-md text-deep-ink">6</span>
+    </div>
+    <div>
+      <span class="font-label-caps text-label-caps text-archive-gray block mb-1">RECURRING THEMES</span>
+      <span class="text-headline-md text-deep-ink">8</span>
     </div>
   </div>
-  <!-- dark-to-footer fade -->
-  <div class="absolute bottom-0 left-0 right-0 h-16 pointer-events-none" style="background: linear-gradient(to bottom, transparent, #ebe8e2);"></div>
+
 </main>
 
-<!-- Footer -->
+<div id="map-tooltip"></div>
+<img id="map-thumb" alt="">
+
 <!-- FOOTER:START -->
 <style>
 footer a{position:relative;text-decoration:none}
@@ -577,178 +407,158 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
 <script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
 <!-- FOOTER:END -->
 
-
+<script src="search.js" defer></script>
+<script src="_shared/nav-active.js" defer></script>
 <script>
 (function () {
-  const FUNCTION_URL = location.hostname.includes('netlify.app')
-    ? '/.netlify/functions/companion'
-    : 'https://jfsn-archive.netlify.app/.netlify/functions/companion';
+  var THEMES = ['Guernica','Targets','Framed','Torsos & Faces','Gallery','Mr. Snowmann','Crosses','Collaboration'];
+  var MEDIUMS = [
+    { key: 'collage',    label: 'Collage' },
+    { key: 'sculpture',  label: 'Sculpture' },
+    { key: 'photograph', label: 'Photography' },
+    { key: 'painting',   label: 'Painting' }
+  ];
+  var DECADES = [1970, 1980, 1990, 2000, 2010, 2020];
 
-  let catalog = null;
-  const catalogLoading = fetch('catalog-lite.json')
-    .then(r => r.ok ? r.json() : null)
-    .then(d => { catalog = d; })
-    .catch(() => {});
+  var grid       = document.getElementById('map-grid');
+  var loading    = document.getElementById('map-loading');
+  var chipsWrap  = document.getElementById('theme-chips');
+  var tooltip    = document.getElementById('map-tooltip');
+  var thumb      = document.getElementById('map-thumb');
+  var activeTheme = null;
 
-  const form       = document.getElementById('c-form');
-  const input      = document.getElementById('c-input');
-  const submitBtn  = document.getElementById('c-submit');
-  const statusEl   = document.getElementById('c-status');
-  const divider    = document.getElementById('c-divider');
-  const resultsEl  = document.getElementById('c-results');
-  const againWrap  = document.getElementById('c-again');
-  const againBtn   = document.getElementById('c-again-btn');
-  const examplesEl = document.getElementById('c-examples');
+  function decadeOf(year) { return Math.floor(year / 10) * 10; }
 
-  // iOS keyboard: scroll textarea into view after keyboard opens (~300ms delay)
-  input.addEventListener('focus', () => {
-    setTimeout(() => input.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 300);
-  });
+  function cellKey(decade, medium) { return decade + '|' + medium; }
 
-  // Pre-fill from ?q= param (set by homepage chips / artwork.html "Ask the Archive" links)
-  const q = new URLSearchParams(location.search).get('q');
-  if (q) {
-    input.value = q;
-    examplesEl.hidden = true;
-    submitBtn.disabled = true;
-    setStatus('Looking through the archive…', true);
-    setTimeout(() => form.dispatchEvent(new Event('submit', { cancelable: true })), 120);
-  }
+  Promise.all([
+    fetch('catalog-lite.json').then(function (r) { return r.json(); }),
+    fetch('chromatic.json').then(function (r) { return r.json(); })
+  ]).then(function (results) {
+    var works = results[0], colors = results[1];
+    var colorById = {};
+    colors.forEach(function (c) { colorById[c.id] = c.bg; });
 
-  document.querySelectorAll('.c-example').forEach(btn =>
-    btn.addEventListener('click', () => { input.value = btn.textContent.trim(); input.focus(); })
-  );
-
-  input.addEventListener('input', () => {
-    input.style.height = 'auto';
-    input.style.height = input.scrollHeight + 'px';
-    if (!resultsEl.hidden) {
-      setStatus(null);
-      divider.hidden   = true;
-      resultsEl.hidden = true;
-      resultsEl.innerHTML = '';
-      againWrap.hidden = true;
-      submitBtn.textContent = 'Find a work →';
-    }
-  });
-
-  againBtn.addEventListener('click', reset);
-  function reset() {
-    statusEl.hidden  = true;
-    statusEl.classList.remove('loading');
-    divider.hidden   = true;
-    resultsEl.hidden = true;
-    resultsEl.innerHTML = '';
-    againWrap.hidden = true;
-    examplesEl.hidden = false;
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'Find a work →';
-    input.value = '';
-    input.style.height = 'auto';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    input.focus();
-  }
-
-  form.addEventListener('submit', async e => {
-    e.preventDefault();
-    const prompt = input.value.trim();
-    if (!prompt) { input.focus(); return; }
-
-    submitBtn.disabled = true;
-    examplesEl.hidden  = true;
-    const deep = !!document.getElementById('c-deep')?.checked;
-    setStatus(deep ? 'Thinking deeply through the archive…' : 'Looking through the archive…', true);
-
-    const controller = new AbortController();
-    const timeoutId  = setTimeout(() => controller.abort(), 28000);
-
-    try {
-      await catalogLoading;
-
-      const res = await fetch(FUNCTION_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt, deep }),
-        signal: controller.signal,
-      });
-      clearTimeout(timeoutId);
-
-      if (!res.ok) {
-        const s = res.status;
-        if (s === 504 || s === 524) throw new Error('The search took too long — please try again.');
-        if (s >= 500) throw new Error('Something went wrong — please try again in a moment.');
-        throw new Error('Unexpected error — please try again.');
-      }
-
-      const { matches } = await res.json();
-      if (!matches?.length) throw new Error('Nothing in the archive matched — try a different description.');
-
-      setStatus(null);
-      renderResults(matches);
-
-    } catch (err) {
-      clearTimeout(timeoutId);
-      const msg = err.name === 'AbortError'
-        ? 'The search took too long — please try again.'
-        : err.message;
-      setStatus(msg, false);
-      submitBtn.disabled = false;
-      examplesEl.hidden  = false;
-    }
-  });
-
-  function renderResults(matches) {
-    const map = {};
-    if (catalog) catalog.forEach(w => { map[w.file.replace('.avif', '')] = w; });
-
-    divider.hidden   = false;
-    resultsEl.hidden = false;
-
-    matches.forEach((m, i) => {
-      const w     = map[m.id] || {};
-      const title = w.title || m.id;
-      const decade = w.year ? (Math.floor(w.year / 10) * 10) + 's' : null;
-      const type   = w.work_type ? w.work_type.replace(/_/g, ' ') : null;
-      const meta   = [decade, type].filter(Boolean).join(' · ');
-
-      const card = document.createElement('div');
-      card.className = 'c-card';
-      card.innerHTML = `
-        <a class="c-card__img" href="artwork.html?id=${esc(m.id)}">
-          <img src="artworks/thumbs/${esc(m.id)}.avif" alt="${esc(title)}" loading="${i === 0 ? 'eager' : 'lazy'}" onerror="this.style.opacity='0'">
-        </a>
-        <div class="c-card__body">
-          ${meta ? `<p class="c-card__meta">${esc(meta)}</p>` : ''}
-          <p class="c-card__title">${esc(title)}</p>
-          <p class="c-card__reason">${esc(m.reason)}</p>
-          <a class="c-card__link" href="artwork.html?id=${esc(m.id)}">View this work &rarr;</a>
-        </div>`;
-      resultsEl.appendChild(card);
-      requestAnimationFrame(() =>
-        setTimeout(() => card.classList.add('visible'), i * 200)
-      );
+    // Build cell buckets
+    var cells = {};
+    DECADES.forEach(function (d) {
+      MEDIUMS.forEach(function (m) { cells[cellKey(d, m.key)] = []; });
     });
 
-    againWrap.hidden = false;
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'Search again →';
-  }
+    works.forEach(function (w) {
+      var id = (w.file || '').replace('.avif', '');
+      var decade = decadeOf(w.year);
+      var key = cellKey(decade, w.work_type);
+      if (!cells[key]) return; // unexpected medium/decade — skip rather than crash the map
+      cells[key].push({
+        id: id,
+        title: w.title || 'Untitled',
+        year: w.year_display || w.year,
+        themes: (w.themes || []).concat(w.series ? [w.series] : []), // "Guernica" lives in `series`, not `themes` — combine both so the filter chips can match either
+        color: colorById[id] || '#ebe8e2'
+      });
+    });
 
-  function setStatus(msg, loading) {
-    if (!msg) { statusEl.hidden = true; statusEl.classList.remove('loading'); return; }
-    statusEl.textContent = msg;
-    statusEl.hidden = false;
-    statusEl.classList.toggle('loading', !!loading);
-  }
+    // Header row
+    var headerRow = document.createElement('div');
+    headerRow.className = 'map-cell-label';
+    grid.appendChild(headerRow);
+    DECADES.forEach(function (d) {
+      var label = document.createElement('div');
+      label.className = 'map-decade-label';
+      label.textContent = d + 's';
+      grid.appendChild(label);
+    });
 
-  function esc(s) {
-    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
+    // Medium rows
+    MEDIUMS.forEach(function (m) {
+      var rowLabel = document.createElement('div');
+      rowLabel.className = 'map-cell-label';
+      rowLabel.textContent = m.label;
+      grid.appendChild(rowLabel);
+
+      DECADES.forEach(function (d) {
+        var cell = document.createElement('div');
+        cell.className = 'map-cell';
+        var items = cells[cellKey(d, m.key)];
+        items.forEach(function (w) {
+          var sw = document.createElement('span');
+          sw.className = 'map-swatch';
+          sw.style.background = w.color;
+          sw.dataset.id = w.id;
+          sw.dataset.title = w.title;
+          sw.dataset.year = w.year;
+          sw.dataset.themes = w.themes.join('|');
+          cell.appendChild(sw);
+        });
+        grid.appendChild(cell);
+      });
+    });
+
+    loading.classList.add('hidden');
+    grid.classList.remove('hidden');
+
+    // Theme chips
+    THEMES.forEach(function (t) {
+      var chip = document.createElement('button');
+      chip.className = 'theme-chip';
+      chip.type = 'button';
+      chip.textContent = t;
+      chip.addEventListener('click', function () {
+        if (activeTheme === t) {
+          activeTheme = null;
+          chip.classList.remove('is-active');
+          grid.classList.remove('is-filtering');
+          grid.querySelectorAll('.map-swatch.is-match').forEach(function (el) { el.classList.remove('is-match'); });
+        } else {
+          activeTheme = t;
+          chipsWrap.querySelectorAll('.theme-chip').forEach(function (c) { c.classList.remove('is-active'); });
+          chip.classList.add('is-active');
+          grid.classList.add('is-filtering');
+          grid.querySelectorAll('.map-swatch').forEach(function (el) {
+            var matches = (el.dataset.themes || '').split('|').indexOf(t) !== -1;
+            el.classList.toggle('is-match', matches);
+          });
+        }
+      });
+      chipsWrap.appendChild(chip);
+    });
+
+    // Hover / click — same tooltip+thumbnail pattern as the Chromatic River
+    grid.addEventListener('mouseover', function (e) {
+      var sw = e.target.closest('.map-swatch');
+      if (!sw) return;
+      tooltip.textContent = sw.dataset.year + ' — ' + sw.dataset.title;
+      tooltip.style.display = 'block';
+      thumb.dataset.id = sw.dataset.id;
+      thumb.src = 'artworks/mini/' + sw.dataset.id + '.avif';
+      thumb.style.display = 'block';
+    });
+    grid.addEventListener('mousemove', function (e) {
+      var sw = e.target.closest('.map-swatch');
+      if (!sw) return;
+      var tx = Math.min(Math.max(e.clientX + 12, 8), window.innerWidth - 340);
+      tooltip.style.left = tx + 'px';
+      tooltip.style.top  = (e.clientY - 36) + 'px';
+      thumb.style.left = tx + 'px';
+      thumb.style.top  = (e.clientY - 36 - (thumb.offsetHeight || 120) - 8) + 'px';
+    });
+    grid.addEventListener('mouseout', function (e) {
+      if (e.target.closest('.map-swatch')) {
+        tooltip.style.display = 'none';
+        thumb.style.display = 'none';
+      }
+    });
+    grid.addEventListener('click', function (e) {
+      var sw = e.target.closest('.map-swatch');
+      if (!sw) return;
+      window.location.href = 'artwork.html?id=' + sw.dataset.id;
+    });
+  }).catch(function (err) {
+    loading.textContent = 'The map could not load — try refreshing.';
+    console.error('curatorial map load failed', err);
+  });
 })();
 </script>
-
-<!-- GoatCounter analytics -->
-
-<script src="_shared/nav-active.js" defer></script>
 </body>
 </html>

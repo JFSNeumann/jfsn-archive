@@ -1229,6 +1229,7 @@ footer .hover\:border-international-orange::after{display:none}
           <li><a class="font-nav-link text-nav-link text-archive-gray hover:text-international-orange transition-colors" href="why-i-made-things.html">Why I Made Things</a></li>
           <li><a class="font-nav-link text-nav-link text-archive-gray hover:text-international-orange transition-colors" href="chromatic.html">Chromatic River</a></li>
           <li><a class="font-nav-link text-nav-link text-archive-gray hover:text-international-orange transition-colors" href="wall.html">The Wall</a></li>
+          <li><a class="font-nav-link text-nav-link text-archive-gray hover:text-international-orange transition-colors" href="curatorial-map.html">Curatorial Map</a></li>
           <li><a class="font-nav-link text-nav-link text-archive-gray hover:text-international-orange transition-colors" href="companion.html">AI Companion</a></li>
         </ul>
       </div>
@@ -1272,6 +1273,7 @@ footer .hover\:border-international-orange::after{display:none}
           <li><a class="font-nav-link text-nav-link text-archive-gray" href="why-i-made-things.html">Why I Made Things</a></li>
           <li><a class="font-nav-link text-nav-link text-archive-gray" href="chromatic.html">Chromatic River</a></li>
           <li><a class="font-nav-link text-nav-link text-archive-gray" href="wall.html">The Wall</a></li>
+          <li><a class="font-nav-link text-nav-link text-archive-gray" href="curatorial-map.html">Curatorial Map</a></li>
           <li><a class="font-nav-link text-nav-link text-archive-gray" href="companion.html">AI Companion</a></li>
         </ul>
       </div>
@@ -1331,7 +1333,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
     if (!grid) return;
     try {
       const [works, chromatic] = await Promise.all([
-        fetch('catalog-home.json?v=20260616184543').then(r => r.json()),
+        fetch('catalog-home.json?v=20260616190040').then(r => r.json()),
         fetch('chromatic.json').then(r => r.json()).catch(() => []),
       ]);
 

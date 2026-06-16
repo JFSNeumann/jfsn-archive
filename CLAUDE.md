@@ -91,7 +91,7 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 - `end-session.sh` — git commit + push + backup (does NOT deploy)
 - `make_handoff.py` — regenerates Allison handoff PDF; run after any credential change
 
-### Page inventory (30 public pages)
+### Page inventory (31 public pages)
 | Page | Notes |
 |------|-------|
 | `index.html` | Homepage, featured works from catalog-home.json |
@@ -117,6 +117,7 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 | `gallery-images.html` | Gallery Images theme page |
 | `collaboration.html` | Collaboration theme page — grandchildren + family work |
 | `wall.html` | 1,084 mini images, all full color, no sibling dim |
+| `curatorial-map.html` | All 1,084 works in a decade × medium grid, with theme filter chips (session 45) |
 | `api.html` | Developer API docs, light system |
 | `changes.html` | Git log feed |
 | `privacy.html` | Privacy page |

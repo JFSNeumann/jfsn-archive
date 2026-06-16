@@ -242,6 +242,7 @@ entries = [
     (SITE_URL + '/api.html',                '0.6', 'monthly'),
     (SITE_URL + '/chromatic.html',          '0.6', 'monthly'),
     (SITE_URL + '/wall.html',               '0.6', 'monthly'),
+    (SITE_URL + '/curatorial-map.html',     '0.6', 'monthly'),
     # Decade pages
     (SITE_URL + '/1970s.html',              '0.6', 'monthly'),
     (SITE_URL + '/1980s.html',              '0.6', 'monthly'),
