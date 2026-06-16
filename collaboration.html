@@ -12,7 +12,7 @@
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600&display=optional" rel="stylesheet"/>
   <link rel="stylesheet" href="_shared/ui.css">
   <link rel="stylesheet" href="site.min.css"/>
   <meta name="theme-color" content="#fcf9f3"/>
@@ -84,9 +84,20 @@
       gap: 1rem;
       flex-wrap: wrap;
       padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
-      border-bottom: 1px solid rgba(11,11,11,0.12);
+      border-bottom: 1px solid #8e7164;
       margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
     }
+    /* Reading progress bar */
+    #medium-progress{position:fixed;top:0;left:0;width:0%;height:2px;background:#FF6600;z-index:9999;pointer-events:none;transition:width 0.1s linear;}
+    @media(prefers-reduced-motion:reduce){#medium-progress{transition:none;}}
+    .browse-filters-link {
+      font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+      font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+      color: #FF6600; text-decoration: none;
+      border: 1px solid #FF6600; padding: 10px 16px;
+      display: inline-block; transition: background 0.2s ease, color 0.2s ease;
+    }
+    .browse-filters-link:hover { background: #FF6600; color: #0B0B0B; }
     .medium-page__title {
       font-family: 'Playfair Display', Georgia, serif;
       font-size: clamp(2.5rem, 5.5vw, 4.5rem);
@@ -318,6 +329,17 @@ header.header-hidden{transform:translateY(-100%)}
 </script>
 <!-- NAV:END -->
 
+<div id="medium-progress" aria-hidden="true"></div>
+<script>
+(function(){
+  var bar = document.getElementById('medium-progress');
+  if (!bar) return;
+  function update() { var h = document.documentElement.scrollHeight - window.innerHeight; bar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%'; }
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+})();
+</script>
+
 <main id="main" class="pt-16">
   <div class="container medium-page">
 
@@ -346,9 +368,9 @@ header.header-hidden{transform:translateY(-100%)}
     <p class="medium-page__intro" style="margin-top:1em;">
       <strong style="font-family:Inter,sans-serif;font-size:0.85em;letter-spacing:0.08em;text-transform:uppercase;">With the Grandchildren — 2022 to present</strong> — For approximately four years, Jeff has been incorporating his grandchildren's drawings into new work. Sebastian, Caspar, Anthony, and Emilia. <em>"Getting hard to tell where they end and I begin. I think that's right."</em>
       <a href="stories.html#getting-hard-to-tell">Read the story →</a> &ensp;
-      <a href="why-i-made-things.html#the-grandchildren">On making with others →</a> &ensp;
-      <a href="series-index.html">All series &amp; themes &rarr;</a>
+      <a href="why-i-made-things.html#the-grandchildren">On making with others →</a>
     </p>
+    <a href="series-index.html" class="browse-filters-link" style="margin-bottom:clamp(2rem,4vw,3.5rem);">[ All series &amp; themes → ]</a>
 
     <div class="medium-grid" id="grid">
     <figure class="thumb"><a class="thumb__link" href="artwork.html?id=art0819" style="background-color:#ebe8e2;"><img srcset="artworks/mini/art0819.avif 200w, artworks/thumbs/art0819.avif 400w" sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)" src="artworks/thumbs/art0819.avif" alt="XXXIII Gallery Installation" loading="eager" width="400" height="600"><figcaption class="thumb__caption"><a href="artwork.html?id=art0819">XXXIII Gallery Installation</a><span>2000</span></figcaption></a></figure>

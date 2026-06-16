@@ -1,5 +1,39 @@
 # Current State
-**Updated:** 2026-06-15 21:00
+**Updated:** 2026-06-16 08:31
+
+## ✅ SESSION 44 CONTINUED AGAIN (2026-06-16) — wall.html mobile tap-targets + responsive images (READY TO DEPLOY)
+- **Diagnosed wall.html's mobile UX**, asked at Jeff's request: measured the live DOM at 375px width and confirmed `.wall-tile` rendered at **40.7×40.7px** with ~1px gaps — well under the 44px tap-target guideline, on a page that's 1,084 adjacent tappable squares with no labels. Also confirmed zero `srcset`/`sizes` anywhere — every tile downloaded the same 200×200 AVIF regardless of display size.
+- **Fix 1 — tap targets:** raised the `<600px` `.wall-grid` `minmax()` floor from 40px → **64px** (`wall.html` line ~74); added `gap: 2px` under `@media(hover:none)` for touch devices specifically (desktop mouse precision keeps the tight 1px gap). Verified live: tiles now render at **74×74px** on a 375px viewport — well clear of the guideline.
+- **Fix 2 — responsive images:** added a new **`micro` image tier** (80px wide, `Q_MICRO=62`) to the asset pipeline:
+  - `artworks/ingest.py` — added `MICRO_W=80`/`Q_MICRO=62` constants + a `micro` output step in `process()`, so all future ingested works get a micro AVIF automatically alongside full/medium/thumb/mini.
+  - **Backfilled all 1,084 existing works** — generated `artworks/micro/artNNNN.avif` for every work by downscaling from the existing `mini` source (visually identical at this size, much faster than re-deriving from full-res). Avg file size: **2.7 KB** (vs mini's 11 KB) — **~8.8 MB saved off the full wall.html page weight** for any visitor whose resolved tile size actually qualifies for the micro tier (see DPR caveat below).
+  - Added `srcset="artworks/micro/artNNNN.avif 80w, artworks/mini/artNNNN.avif 200w" sizes="(max-width:600px) 64px, 56px"` to all 1,084 `<img>` tags in `wall.html` via a scripted regex pass (verified 1,084/1,084 replaced, markup spot-checked).
+  - **Honest caveat found during verification:** the `sizes` value reflects the actual CSS tile size at each breakpoint (64px mobile / 56px desktop), which is correct — but on a real retina phone (DPR 2–3, e.g. Jeff's iPhone 15 Pro), the *effective* pixel need at a 64px CSS tile is 128–192px, which still exceeds the 80px micro tier, so the browser correctly keeps choosing `mini` there — **no quality loss, but also no byte savings on Jeff's actual test device.** The micro tier genuinely helps standard-DPI (DPR 1) displays and any tile that renders ≤80px CSS-wide. This is a correct, zero-risk addition (strictly non-regressive — same `mini` fallback as before wherever `micro` doesn't qualify) but the practical savings are smaller than the file-size math alone suggests for premium phones.
+- **No new Tailwind utilities** — no CSS rebuild needed.
+- **CACHE_V bumped** to `jfsn-20260616143000` in sw.js.
+- Preview-verified at 375px (mobile) and 1280px (desktop): tile sizes correct, srcset/sizes present and spec-correct on every tile, zero console errors.
+- **🟡 NEEDS DEPLOY:** the new `artworks/micro/` directory (1,084 new files, ~5 MB total) must be uploaded to HostGator alongside the HTML changes — not just the usual JFSN.app mirror, confirm it includes the new directory.
+
+## ✅ SESSION 44 CONTINUED (2026-06-16) — Desktop CLS root cause found + fixed sitewide (READY TO DEPLOY)
+- **Root cause confirmed for the session-36 "desktop CLS 0.16, highly variable" mystery.** Measured the live homepage DOM with both fonts: hero `<h1>` ("Jeffrey F. S. Neumann — Personal Archive") renders at **153px tall / 745px wide with Playfair Display loaded**, but **230px tall / 578px wide with the fallback** (`font-family:'Playfair Display',serif` — generic `serif` is much narrower per character than Playfair Display). Combined with the `max-width:16ch` constraint, the narrower fallback wraps to a 3rd line, making the box **77px taller** until the real font swaps in — a textbook CLS-causing element, and it only registers when the network is slow enough that layout has already painted once before the swap. Matches Jeff's bouncing Lighthouse numbers exactly (0/0.05/0.147/0.16 — throttle/timing-dependent).
+- **Fix:** changed the Google Fonts link's `&display=swap` → `&display=optional` **sitewide** (1,122 files: all hand-written pages + `gen-artwork-pages.py` template + all 1,084 generated artwork pages, via a scoped find/replace on the exact `&display=swap"` string — verified it appears nowhere else in the codebase). `optional` means: use the cached font if available; otherwise give it ~100ms and if it's not ready, **keep the fallback for the whole pageview — no swap, no shift.** Returning visitors (font cached) always see Playfair Display; only a cold-cache slow-network visitor sees the fallback typeface, but with zero layout shift.
+- Verified live in preview: the served HTML now carries `display=optional` (had to clear the SW cache + hard-reload to see past the cached old page — expected, not a bug), zero console errors, hero renders correctly.
+- **No CSS/JS rebuild needed** — single query-param change in existing `<link>` tags.
+- **Ask Jeff to re-run Lighthouse desktop after this deploys** — expect CLS to drop to ~0 and stay stable across runs (no more swap-driven shift to vary on).
+
+## ✅ SESSION 44 (2026-06-16) — Stitch pass: 8 theme pages (READY TO DEPLOY)
+- **guernica.html / targets.html / framed.html / torsos-faces.html / gallery-images.html / mr-snowmann.html / crosses.html / collaboration.html** — identical surface pass on all eight:
+  - Page header border (`.medium-page__head`) → warm-brown `#8e7164` (was neutral `rgba(11,11,11,0.12)`)
+  - Reading progress bar — 2px orange fixed line at top of viewport, fills on scroll (same CSS+div+script pattern as collage/sculpture/photography/painting)
+  - Trailing "All series & themes →" link converted from a plain inline link to a `[ All series & themes → ]` bracket CTA (`.browse-filters-link` class, orange-bordered, fills orange on hover) — promoted out of the intro paragraph onto its own line, matching the `[ Browse with filters → ]` treatment used on the 4 medium pages in session 43
+  - guernica.html + collaboration.html (the two pages with custom multi-paragraph intros and extra inline links) handled individually — their other inline links (`Read the full story →`, `Read the story →`, `On making with others →`) were left as plain inline links, only the trailing series-index link was promoted to bracket style
+  - Kind/badge tags ("Named Series" / "Recurring Theme" / "Imagined Placements" / etc.) and existing breadcrumbs unchanged
+- **This closes the "Next Stitch pages" backlog item** — all medium/theme/series pages are now on the Stitch June-2026 surface treatment. Remaining unconverted page types: decade pages (1970s–2020s, different Material Design token system — intentionally separate) and a few utility pages (api.html, changes.html, privacy.html, 404.html — never in scope for this pass).
+- **CACHE_V bumped** to `jfsn-20260616120000` in sw.js.
+- **No new Tailwind utilities** — no CSS rebuild needed (only existing classes + inline styles).
+- Preview-verified guernica.html + collaboration.html: border, progress bar, bracket CTA all render correctly, zero console errors.
+- **🟡 NEEDS DEPLOY:** run `bash end-session.sh` then deploy via **JFSN.app** (HostGator). Sessions 36–44 ship together.
+- **Next session:** oral history pass, or the accessibility/CLS backlog items.
 
 ## ✅ SESSION 43 (2026-06-15) — Stitch pass: archive, series-index, 4 medium pages, favorites (READY TO DEPLOY)
 - **archive.html** — orange mono eyebrow + Playfair italic subline; page header border → `#8e7164`; archive card borders → `#8e7164` + paper-shadow (desktop, media-query override); sidebar filter section dividers → `#e3bfb1`; mobile ledger border → `#e3bfb1`; reading progress bar.

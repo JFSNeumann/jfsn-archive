@@ -233,7 +233,7 @@ def generate_page(work, idx, all_works, colors):
 <link rel="icon" href="../../favicon.svg" type="image/svg+xml"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600&display=optional" rel="stylesheet"/>
 <link rel="stylesheet" href="../../site.min.css"/>
 <script type="application/ld+json">
 {json.dumps(ld, ensure_ascii=False)}

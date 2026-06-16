@@ -18,6 +18,7 @@ Output:
     artworks/full/art1085.avif    — full resolution
     artworks/thumbs/art1085.avif  — 400 px wide
     artworks/mini/art1085.avif    — 200 px wide
+    artworks/micro/art1085.avif   — 80 px wide (The Wall mosaic, mobile tiles)
     artworks/inbox/done/          — originals moved here after processing
 
 After running:
@@ -32,10 +33,12 @@ Q_FULL   = 82   # full-res AVIF quality  (0–100, higher = better)
 Q_THUMB  = 76   # 400 px thumbnail quality
 Q_MEDIUM = 78   # 900 px medium quality
 Q_MINI   = 70   # 200 px mini quality
+Q_MICRO  = 62   # 80 px micro quality (The Wall mosaic, mobile tiles)
 
 MEDIUM_W = 900
 THUMB_W  = 400
 MINI_W   = 200
+MICRO_W  = 80
 
 INBOX_EXTS = {".heic", ".heif", ".jpg", ".jpeg", ".png", ".tiff", ".tif", ".webp"}
 
@@ -47,6 +50,7 @@ FULL   = HERE / "full"
 MEDIUM = HERE / "medium"
 THUMBS = HERE / "thumbs"
 MINI   = HERE / "mini"
+MICRO  = HERE / "micro"
 DIMS   = HERE.parent / "dims.json"
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -138,6 +142,7 @@ def process(src: Path, art_id: str, dry_run: bool) -> dict:
     medium_out = MEDIUM / f"{art_id}.avif"
     thumb_out  = THUMBS / f"{art_id}.avif"
     mini_out   = MINI   / f"{art_id}.avif"
+    micro_out  = MICRO  / f"{art_id}.avif"
     done_out  = DONE   / src.name
 
     if dry_run:
@@ -173,6 +178,11 @@ def process(src: Path, art_id: str, dry_run: bool) -> dict:
     mini = resize_fit(img, MINI_W)
     save_avif(mini, mini_out, Q_MINI)
     print(" ✓mini", end="", flush=True)
+
+    # Micro (80px — The Wall mosaic, mobile tile srcset)
+    micro = resize_fit(img, MICRO_W)
+    save_avif(micro, micro_out, Q_MICRO)
+    print(" ✓micro", end="", flush=True)
 
     # Move original to done/
     DONE.mkdir(parents=True, exist_ok=True)
