@@ -1,5 +1,16 @@
 # Current State
-**Updated:** 2026-06-16 14:19
+**Updated:** 2026-06-16 14:31
+
+## ✅ SESSION 45 CONTINUED A 5TH TIME (2026-06-16) — Lightbox toolbar consistency fix on artwork.html (READY TO DEPLOY)
+- **Jeff flagged the full-resolution lightbox** (artwork.html, `#lr-overlay` — opens via `[ Full resolution → ]`) for two consistency problems: (1) two buttons both read "ROTATE" with only a small ↻/↺ glyph telling them apart, and (2) the toolbar used a one-off plain-bordered-pill button style instead of the bracket-link convention (`[ X → ]`) used for every other action sitewide, including other dark-ground sections like the homepage's charcoal quote block.
+- **Fix, scoped to `artwork.html` only** (confirmed this lightbox doesn't exist on the 1,084 static `artworks/pages/*.html` — fully contained, no propagation needed):
+  - Relabeled the two rotate buttons to `[ ↻ ROTATE CW ]` / `[ ↺ ROTATE CCW ]` — unambiguous without relying on the glyph alone.
+  - Restyled `.lr-btn` from Inter-uppercase/bordered-pill to the site's monospace bracket-button convention: `ui-monospace` font, orange border + text, fills solid orange with dark ink on hover (same interaction pattern as `.browse-filters-link` elsewhere). All six buttons now read `[ LABEL ]`.
+  - Close button (`.lr-btn--close`) kept its dimmer at-rest treatment (lower-opacity orange border/text) but now fills fully orange on hover like the others, instead of just changing text color.
+- Preview-verified: rotate/flip/reset functionality unchanged (confirmed `rcw` still applies `rotate(90deg)` to the image), hover-fill state renders correctly, zero console errors on desktop and mobile. (One mobile screenshot looked "pre-filled" orange at a glance — confirmed via computed style that's a screenshot-compression artifact at small button size, not an actual style bug; background is genuinely transparent at rest.)
+- **No new Tailwind utilities** — inline `<style>` block only, no CSS rebuild needed.
+- **CACHE_V bumped** to `jfsn-20260616190000` in sw.js.
+- **🟡 NEEDS DEPLOY:** `bash end-session.sh` then JFSN.app.
 
 ## ✅ SESSION 45 CONTINUED A 4TH TIME (2026-06-16) — Selected Works hover captions restored (READY TO DEPLOY)
 - **Jeff asked why hovering over the homepage "Selected Works" images shows no title/year/medium, unlike the Stitch reference.** Not a bug — `git show fcef12a0` ("Remove captions from Selected Works grid — pure image display", 2026-06-15 17:50) shows Jeff deliberately removed both the hover-reveal caption overlay (Playfair italic title + year/medium, fading in over a dark gradient) and the always-visible meta row below each card (`year · medium` + `[ View → ]`) the day before this session, going for pure image display. The CSS rules for `.card-title`/`.card-meta` hover-orange behavior were left behind as dead code (nothing in the markup referenced them anymore) — that's what made it look broken rather than intentional.
