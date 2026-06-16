@@ -12,7 +12,7 @@ Configuration is read from artist-config.json at the project root.
 This script also generates artist-config.js for use by browser-side JS.
 """
 
-import json, datetime, urllib.parse, re
+import json, datetime, urllib.parse, re, hashlib
 from pathlib import Path
 
 # ── Stable writes — skip rewriting a generated file when only a timestamp would
@@ -520,12 +520,32 @@ if INDEX.exists():
     INDEX.write_text(stamped)
     print(f"index.html        — cache stamp updated (?v={build_ts})")
 
-# ── Auto-bump sw.js CACHE_V so returning visitors always get fresh assets ────
-# Only bumps when catalog.json actually changed — no-op runs leave sw.js untouched.
+# ── Auto-bump sw.js CACHE_V whenever catalog OR a watched static asset changed ─
+# Watched assets: compiled CSS, shared JS/CSS, search.js, and every top-level
+# HTML page. Hash is cached in artworks/.asset_hash so a no-op run (nothing
+# changed) leaves sw.js untouched, matching the catalog-unchanged behavior above.
+_ASSET_HASH_FILE = Path(__file__).parent / ".asset_hash"
+_watched = [ROOT / "site.min.css", ROOT / "search.js"]
+_watched += sorted((ROOT / "_shared").glob("*.js"))
+_watched += sorted((ROOT / "_shared").glob("*.css"))
+_watched += [p for p in sorted(ROOT.glob("*.html")) if p.name != "index.html"]
+# index.html is excluded: build_catalog re-stamps it (build_ts, hero pool) on
+# every run, which would make the hash look "changed" even with no real edits.
+_hasher = hashlib.sha256()
+for _f in _watched:
+    if _f.exists():
+        _hasher.update(_f.read_bytes())
+_new_asset_hash = _hasher.hexdigest()
+_prev_asset_hash = _ASSET_HASH_FILE.read_text().strip() if _ASSET_HASH_FILE.exists() else ""
+_assets_changed = _new_asset_hash != _prev_asset_hash
+_ASSET_HASH_FILE.write_text(_new_asset_hash)
+
 if SW.exists():
-    if not _catalog_changed:
-        print("sw.js             — CACHE_V unchanged (catalog unchanged)")
+    if not (_catalog_changed or _assets_changed):
+        print("sw.js             — CACHE_V unchanged (catalog + assets unchanged)")
     else:
+        if _assets_changed and not _catalog_changed:
+            print("sw.js             — bumping CACHE_V (static asset changed)")
         sw_text     = SW.read_text()
         new_cache_v = f"jfsn-{build_ts}"
         cur_match   = re.search(r"CACHE_V\s*=\s*'(jfsn-[^']+)'", sw_text)

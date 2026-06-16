@@ -1,3 +1,5 @@
+> **🟢 DOMAIN SECTION CLOSED 2026-06-16** — Jeff produced his own Gandi invoice proving he already owns and controls the Gandi account directly. The "held in a friend's account, friend not yet contacted" claim below was an incorrect inference from a registrant-of-record whois lookup — there was never a friend in the loop. Domain recovery is not needed; the preservation-priority content below this section is unaffected. See `docs/DOMAIN-RECOVERY-LOG.md` for the closing entry.
+
 # Final Domain & Preservation Handoff
 
 **Created:** 2026-06-12. **Assumption:** the conversation that produced this is gone; only repository files and this document survive. **Written for:** a future contributor, maintainer, family member, or custodian with no prior context. **Contains no credentials** — it is safe in the public repository.

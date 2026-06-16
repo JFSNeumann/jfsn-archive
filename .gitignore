@@ -10,6 +10,7 @@ artworks/mini/*.avif
 __pycache__/
 artworks/__pycache__/
 artworks/logs/
+artworks/.asset_hash
 *.pyc
 .DS_Store
 
@@ -21,7 +22,7 @@ package-lock.json
 .claude/
 .netlify/
 
-# ── Old site (197MB — deployed via FTP, not via git) ─────────────────────────
+# ── Old site (197MB — local-only as of 2026-06-16, no longer deployed) ───────
 old-site/
 *.bak
 *.bak2

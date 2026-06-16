@@ -5,6 +5,7 @@ Run automatically by deploy.sh, or manually: python3 artworks/verify_deploy.py
 """
 
 import urllib.request, json, sys
+from pathlib import Path
 
 SITE = "https://jfsn.com"
 OK   = "✅"
@@ -56,7 +57,33 @@ def check(label, path, expect_status=200, contains=None, json_check=None, warn_o
     if not ok and warn_only:
         print(f"       (new directories may take ~1-2h to propagate on this host)")
 
+def leak_check():
+    """Any local top-level directory not explicitly known-public must NOT be
+    reachable on the live site. Catches the design-concepts/ leak failure mode
+    (that one slipped through because nothing checked new top-level folders)."""
+    global errors
+    root = Path(__file__).parent.parent
+    KNOWN_PUBLIC = {"_shared", "api", "artworks"}
+    HIDDEN_OR_VCS = {".git", ".claude", ".netlify", "node_modules"}
+    found_any = False
+    for entry in sorted(root.iterdir()):
+        if not entry.is_dir() or entry.name in KNOWN_PUBLIC or entry.name in HIDDEN_OR_VCS:
+            continue
+        found_any = True
+        status, _ = fetch(f"/{entry.name}/")
+        ok = status in (403, 404, 0)
+        icon = OK if ok else FAIL
+        if not ok:
+            errors += 1
+        print(f"  {icon}  leak-check: /{entry.name}/ → {status} (expected non-200; add to deploy.sh excludes if new)")
+    if not found_any:
+        print(f"  {OK}  leak-check: no unexpected top-level directories")
+
 print(f"\nVerifying {SITE} …\n")
+
+print("Leak check (unexpected public top-level folders):")
+leak_check()
+print()
 
 # Pages
 check("index.html",          "/index.html")

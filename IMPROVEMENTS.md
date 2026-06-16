@@ -7,7 +7,6 @@ A living list. Add to it. Cross things off. This is the backlog.
 
 ## 🔴 Do soon
 
-- [ ] **DOMAIN: Jeff contacts the friend holding the Gandi account** — ask for a Change of Owner to a Jeff-controlled account, or the transfer code. The keystone action; everything needed is in docs/DOMAIN-RECOVERY-DOCUMENT-PACK.md. (FTP password rotation is IMPOSSIBLE — no cPanel access, proven 2026-06-12; superseded as an action item. See docs/FINAL-DOMAIN-AND-PRESERVATION-HANDOFF.md.)
 - [ ] **One ~1-minute audio recording** — standing #1 creator-context priority (§25). No audio of Jeff exists anywhere (he declined for the exhibition answers 2026-06-12 — don't push; offer occasionally). Also: listen to `old-site/BB/audio/sample.wav` (21s — possibly the only existing audio).
 - [ ] **Ingest new work** — drop photos into `artworks/inbox/`, run `bash add-works.sh`. Pipeline is ready.
 
@@ -36,6 +35,7 @@ A living list. Add to it. Cross things off. This is the backlog.
 ---
 
 ## ✅ Completed (recent)
+- [x] ~~**DOMAIN: contact friend holding Gandi account**~~ — CLOSED 2026-06-16, this item was based on a wrong assumption. Jeff showed a Gandi invoice (N° 2026021000232) proving he owns the account directly: organization "jfsneumann", billed to his own address, paid by his own card, Feb 10 2026. No friend is involved; nothing to do here beyond paying the March 5 renewal each year as usual.
 - [x] ~~**Session 44 (2026-06-16) — wall.html mobile tap-targets + responsive images**~~ — tiles were 40.7px on a 375px viewport (under the 44px guideline) with no srcset; raised the mobile `minmax()` floor to 64px (renders at 74px), added a touch-only 2px gap, and added a new 80px `micro` image tier (avg 2.7KB vs mini's 11KB) wired into `srcset`/`sizes` on all 1,084 tiles + the `ingest.py` pipeline for future works. Caveat: on Jeff's actual iPhone 15 Pro (DPR3) the micro tier mostly won't engage since 64px CSS × 3 DPR exceeds 80px — real savings land on standard-DPI screens, not retina mobile; zero regression either way.
 - [x] ~~**Session 44 (2026-06-16) — Desktop CLS root cause found + fixed sitewide**~~ — hero h1 fallback font (`serif`) wraps to a 3rd line at `max-width:16ch`, 77px taller than the Playfair Display render, until the swap completes — classic font-swap CLS, explains the bouncing 0/0.05/0.147/0.16 Lighthouse numbers from session 36. Fixed by switching `&display=swap` → `&display=optional` on the Google Fonts link sitewide (1,122 files incl. the artwork-page template) — cached-font visitors still get Playfair Display; cold-cache slow-network visitors keep the fallback for the whole pageview with zero shift. Awaiting Jeff's post-deploy Lighthouse re-run to confirm.
 - [x] ~~**Session 44 (2026-06-16) — Stitch pass on 8 theme pages**~~ — guernica/targets/framed/torsos-faces/gallery-images/mr-snowmann/crosses/collaboration: header border → `#8e7164`, reading progress bar, "All series & themes →" promoted to `[ bracket → ]` CTA. Closes the "Next Stitch pages" backlog item — all medium/theme/series pages now on Stitch June-2026 surface treatment. CACHE_V `jfsn-20260616120000`. Preview-verified, zero console errors.

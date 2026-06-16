@@ -1,3 +1,5 @@
+> **🟢 CLOSED 2026-06-16 — this recovery effort is no longer needed.** Jeff produced his own Gandi invoice proving he already owns and controls the Gandi account directly — there was never a friend in the loop. The "friend holds the account" premise below was an incorrect inference. Kept for historical record; see `DOMAIN-RECOVERY-LOG.md` for the closing entry.
+
 # jfsn.com — A Plain-Language Handoff
 
 **Who this is for:** a family member, friend, or future caretaker who needs to look after Jeff Neumann's online archive — especially if Jeff is not available to explain it. You do **not** need to be technical to follow this. It is written to still make sense ten years from now.

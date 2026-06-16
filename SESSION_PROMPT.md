@@ -42,9 +42,6 @@ Read `/Documents/JFSN/CURRENT_STATE.md` and `/Documents/JFSN/IMPROVEMENTS.md` be
 
 **0b. Desktop CLS = 0.16 — get the culprit, then fix.** Highly variable across runs (0 / 0.05 / 0.147 / 0.16); locally only reproduces at 0.012, so it's throttle/timing-dependent — suspected **web-font swap on the large Playfair headings** reflowing after paint. **In the desktop Lighthouse run, EXPAND the "Layout shift culprits" row and read the shifting node.** Then fix surgically (likely: preload or self-host the 2 Google Fonts, or add `size-adjust`/reserve heading space). DON'T guess CLS — it's been chased blind twice already.
 
-### 2. 🔴 DOMAIN — Jeff contacts the friend holding the Gandi account  *(Jeff's action; keystone)*
-jfsn.com is registered at Gandi in a *friend's* account. Jeff is registrant of record but can't renew (expires **2027-03-05**), move nameservers, or transfer. SPOF #1, and the durable fix for the unrotatable exposed FTP password (recover domain → move serving off HostGator → let hosting lapse). Ask the friend for a Change-of-Owner or the transfer code. Prepared in `docs/DOMAIN-RECOVERY-DOCUMENT-PACK.md` + `docs/FINAL-DOMAIN-AND-PRESERVATION-HANDOFF.md`.
-
 ### 3. 🟡 One ~1-minute audio recording  *(standing #1 creator-context priority — offer gently, don't push)*
 No audio of Jeff exists anywhere. He declined once (2026-06-12) — offer occasionally, never insist. Also: listen to `old-site/BB/audio/sample.wav` (21s — possibly the only existing audio).
 
@@ -74,6 +71,7 @@ Then deploy via JFSN.app (HostGator). **If a Netlify function / the Companion ch
 ---
 
 ## Done recently — do NOT redo
+- ✅ **Domain ownership question CLOSED** (2026-06-16) — the "friend holds the Gandi account" item was based on a wrong assumption. Jeff showed a Gandi invoice proving he owns the account directly (org "jfsneumann", billed/paid by him). No friend involved, no outreach needed. Don't resurrect this item.
 - ✅ **Mobile hero LCP** (session 36) — `featured-hero.txt` leads with **art0392** (lightest); slide-0 deterministic in `index.html init()`; media-aware `<head>` preload stamped by `build_catalog.py` (HERO_PRELOAD markers). Don't re-randomize slide 0 — it breaks the preload match.
 - ✅ **Provenance fields** (session 36) — `year_precision='estimated'` + `year_display="1990s (est.)"` on ALL 1,084; `composite=True` on 250 works (Gallery ∪ Studio ∪ `PLACEMENT_RE` title). Shown on artwork pages + API. `description_source` deliberately SKIPPED (Jeff's call). To change the composite set, edit the rule in `build_catalog.py` + rerun gen-artwork-pages.
 - ✅ **Companion deep-mode 502 = Netlify 30s timeout** (session 35). Deep = Sonnet 4.6 **without** extended thinking, 1024 tokens. Don't re-add `thinking` to deep mode on a sync function.

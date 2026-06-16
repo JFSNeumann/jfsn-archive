@@ -1,3 +1,5 @@
+> **🟢 CLOSED 2026-06-16 — this recovery effort is no longer needed.** Jeff produced his own Gandi invoice (org "jfsneumann", billed/paid by him) proving he already owns and controls the Gandi account directly — there was never a friend in the loop. The "friend holds the account" premise below was an incorrect inference from the registrant-of-record whois lookup. Kept for historical record; see `DOMAIN-RECOVERY-LOG.md` for the closing entry.
+
 # Domain Recovery — Document Pack & Evidence Template
 
 **Purpose:** one place to hold everything needed to recover and keep control of **jfsn.com**. Fill in the blanks as facts are gathered. No passwords belong in this file — record *where* a credential lives, never the credential itself. This file is safe to keep in the public repository.
