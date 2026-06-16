@@ -1,5 +1,5 @@
 # Current State
-**Updated:** 2026-06-16 09:13
+**Updated:** 2026-06-16 10:51
 
 ## ✅ SESSION 44 CONTINUED AGAIN (2026-06-16) — wall.html mobile tap-targets + responsive images (READY TO DEPLOY)
 - **Diagnosed wall.html's mobile UX**, asked at Jeff's request: measured the live DOM at 375px width and confirmed `.wall-tile` rendered at **40.7×40.7px** with ~1px gaps — well under the 44px tap-target guideline, on a page that's 1,084 adjacent tappable squares with no labels. Also confirmed zero `srcset`/`sizes` anywhere — every tile downloaded the same 200×200 AVIF regardless of display size.
