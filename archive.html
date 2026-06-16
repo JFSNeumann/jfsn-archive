@@ -49,6 +49,14 @@
             border-width: 0 1px 1px 0;
             transform: rotate(45deg);
         }
+        .custom-checkbox:focus-visible {
+            outline: 2px solid #FF6600;
+            outline-offset: 2px;
+        }
+        #sort-select:focus-visible {
+            outline: 2px solid #FF6600;
+            outline-offset: 2px;
+        }
         #work-count { font-variant-numeric: tabular-nums; }
         @media (max-width: 767px) { #work-count-label { display: none; } }
         /* Reading progress bar */
@@ -145,7 +153,7 @@ header.header-hidden{transform:translateY(-100%)}
 #mobile-menu-drawer a::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;background:#FF6600;transform:scaleX(0);transform-origin:left center;transition:transform 0.2s ease}
 #mobile-menu-drawer a:hover::after,#mobile-menu-drawer a:active::after{transform:scaleX(1)}
 #mobile-menu-drawer a:active{background:#f0ece6}
-#mobile-menu-drawer a.drawer-active{color:#FF6600 !important;border-left:3px solid #FF6600;padding-left:21px !important}
+#mobile-menu-drawer a.drawer-active{color:#B84700 !important;border-left:3px solid #FF6600;padding-left:21px !important}
 #mobile-menu-drawer a.drawer-active::after{transform:scaleX(1);transition:none}
 @media(prefers-reduced-motion:reduce){#mobile-menu-drawer a::after{transition:none}}
 </style>
@@ -161,7 +169,7 @@ header.header-hidden{transform:translateY(-100%)}
       <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="stories.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Stories</a>
       <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="lost.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Lost</a>
     </nav>
-    <button class="flex items-center gap-1.5 text-international-orange hover:text-deep-ink transition-colors" style="padding:10px;" aria-label="Search" id="nav-search-btn">
+    <button class="flex items-center gap-1.5 text-orange-ink hover:text-deep-ink transition-colors" style="padding:10px;" aria-label="Search" id="nav-search-btn">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><line x1="20.4" y1="20.4" x2="16" y2="16"/></svg>
       <span class="hidden md:inline" style="font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.05em;color:#575757;border:1px solid #c4c7c7;padding:1px 5px;pointer-events:none;">⌘K</span>
     </button>
@@ -292,7 +300,7 @@ header.header-hidden{transform:translateY(-100%)}
   <!-- Page Header -->
   <header class="mb-md md:mb-lg pb-md flex justify-between items-end" style="border-bottom:1px solid #8e7164;">
     <div>
-      <p style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;letter-spacing:0.1em;color:#FF6600;text-transform:uppercase;margin-bottom:6px;">Jeffrey F. S. Neumann · 1974–Present</p>
+      <p style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;letter-spacing:0.1em;color:#B84700;text-transform:uppercase;margin-bottom:6px;">Jeffrey F. S. Neumann · 1974–Present</p>
       <h1 class="font-label-caps text-label-caps tracking-widest mb-1">THE ARCHIVE</h1>
       <p style="font-family:'Playfair Display',Georgia,serif;font-size:15px;font-style:italic;color:#575757;margin-bottom:6px;">Collage, sculpture, photography.</p>
       <p class="font-label-md text-label-md text-secondary tracking-widest uppercase">
@@ -301,7 +309,7 @@ header.header-hidden{transform:translateY(-100%)}
     </div>
     <div class="flex items-center gap-2 pb-1">
       <label for="sort-select" class="hidden md:inline font-label-md text-label-md text-secondary uppercase tracking-widest whitespace-nowrap">Sort:</label>
-      <select id="sort-select" class="font-label-md text-label-md uppercase tracking-widest bg-background border border-outline-variant px-2 py-1 text-on-surface cursor-pointer" style="outline:none;">
+      <select id="sort-select" class="font-label-md text-label-md uppercase tracking-widest bg-background border border-outline-variant px-2 py-1 text-on-surface cursor-pointer">
         <option value="id_desc">Recently Added</option>
         <option value="id_asc">Default</option>
         <option value="year_asc">Oldest first</option>

@@ -342,7 +342,7 @@ def generate_page(work, idx, all_works, colors):
     <aside class="md:col-span-4 flex flex-col gap-md sticky top-[100px]">
       <div class="border-b border-deep-ink pb-md">
         <h1 class="font-headline-md text-headline-md leading-tight mb-xs">{e(title)}</h1>
-        <p class="font-label-md text-label-md text-international-orange uppercase tracking-widest">Jeffrey F. S. Neumann</p>
+        <p class="font-label-md text-label-md text-orange-ink uppercase tracking-widest">Jeffrey F. S. Neumann</p>
       </div>
       <div class="flex flex-col gap-sm">
         {rows}
@@ -403,7 +403,7 @@ def generate_page(work, idx, all_works, colors):
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h5v-5.5h3V20h5v-9.5"/></svg>
     <span class="font-label-md text-[10px] uppercase">Home</span>
   </a>
-  <a href="../../archive.html" class="flex flex-col items-center justify-center text-international-orange">
+  <a href="../../archive.html" class="flex flex-col items-center justify-center text-orange-ink">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="3.5" width="17" height="5"/><path d="M5 8.5V20.5h14V8.5"/><line x1="10" y1="12.5" x2="14" y2="12.5"/></svg>
     <span class="font-label-md text-[10px] uppercase">Archive</span>
   </a>

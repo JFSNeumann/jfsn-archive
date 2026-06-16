@@ -14,6 +14,7 @@ module.exports = {
         "deep-ink":               "#0B0B0B",
         "bone-white":             "#F3F0EA",
         "international-orange":   "#FF6600",
+        "orange-ink":             "#B84700",   // accessible orange — text on light bg only (5.07:1 AA); use international-orange for fills/borders/dark-bg text
         "archive-gray":           "#575757",
         "outline-variant":        "#c4c7c7",
         "surface-container-high": "#ebe8e2",
