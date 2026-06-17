@@ -1102,6 +1102,106 @@ input[type="radio"]:checked {
   .breadcrumb-current { transition: none; }
 }
 
+/* ─── Phase C: Refinements (Session 57) ──────────────────────────────────── */
+
+/* 10. Hover link underline animation (bracket links) */
+@keyframes underline-draw {
+  0% {
+    width: 0;
+    left: 0;
+  }
+  100% {
+    width: 100%;
+    left: 0;
+  }
+}
+
+.bracket-link {
+  position: relative;
+  color: #0B0B0B;
+  transition: color 0.2s ease;
+  text-decoration: none;
+}
+
+.bracket-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #FF6600;
+  animation: underline-draw 0.3s ease forwards;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.bracket-link:hover {
+  color: #B84700;
+}
+
+.bracket-link:hover::after {
+  opacity: 1;
+}
+
+/* 11. Table sort indicator animation */
+@keyframes arrow-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(180deg); }
+}
+
+.sort-arrow {
+  display: inline-block;
+  color: #575757;
+  transition: color 0.2s ease;
+}
+
+.sort-column .sort-arrow {
+  color: #B84700;
+  animation: arrow-rotate 0.3s ease;
+}
+
+/* 12. Search result highlight flash */
+@keyframes search-flash {
+  0% { background-color: rgba(255, 255, 0, 0.3); }
+  100% { background-color: rgba(255, 255, 0, 0); }
+}
+
+.search-match {
+  animation: search-flash 0.3s ease-out;
+}
+
+/* 13. Artwork modal entrance */
+@keyframes backdrop-blur-in {
+  0% { backdrop-filter: blur(0px); opacity: 0; }
+  100% { backdrop-filter: blur(4px); opacity: 1; }
+}
+
+@keyframes image-scale-in {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.modal-backdrop {
+  animation: backdrop-blur-in 0.15s ease forwards;
+}
+
+.modal-image {
+  animation: image-scale-in 0.3s ease forwards;
+  animation-delay: 0.1s;
+}
+
+/* Respect reduced motion for Phase C */
+@media (prefers-reduced-motion: reduce) {
+  .bracket-link::after { transition: none; opacity: 0; }
+  .bracket-link:hover { transition: none; }
+  .sort-arrow { transition: none; }
+  .sort-column .sort-arrow { animation: none; }
+  .search-match { animation: none; }
+  .modal-backdrop { animation: none; }
+  .modal-image { animation: none; opacity: 1; transform: scale(1); }
+}
+
 /* ─── Lazy-loaded image fade-in ──────────────────────────────────────────── */
 
 img[loading="lazy"] {

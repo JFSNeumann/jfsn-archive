@@ -37,6 +37,43 @@
     }
   }
 
+  // ─── Phase C 14: Mobile swipe gesture feedback ──────────────────────────
+  // Decade pages: swipe left/right to navigate, haptic on slide-end
+  var touchStartX = 0;
+  var touchEndX = 0;
+
+  document.addEventListener('touchstart', function(e) {
+    if (e.touches && e.touches.length > 0) {
+      touchStartX = e.touches[0].clientX;
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchend', function(e) {
+    if (e.changedTouches && e.changedTouches.length > 0) {
+      touchEndX = e.changedTouches[0].clientX;
+      handleSwipe();
+    }
+  }, { passive: true });
+
+  function handleSwipe() {
+    var diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 50) { // 50px threshold
+      if (diff > 0) { // swipe left → next
+        var nextEl = document.querySelector('[data-next-decade]');
+        if (nextEl) {
+          if (navigator.vibrate) navigator.vibrate([10, 5, 10]);
+          setTimeout(function() { window.location.href = nextEl.href; }, 50);
+        }
+      } else { // swipe right → prev
+        var prevEl = document.querySelector('[data-prev-decade]');
+        if (prevEl) {
+          if (navigator.vibrate) navigator.vibrate([10, 5, 10]);
+          setTimeout(function() { window.location.href = prevEl.href; }, 50);
+        }
+      }
+    }
+  }
+
   // ─── Keyboard navigation ─────────────────────────────────────────────────
   // Decade pages: ← / → between decades
   // Visual feedback: brief label shows destination
