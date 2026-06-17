@@ -98,8 +98,35 @@
       * { animation: none !important; transition: none !important; }
     }
 
+    /* Sticky Nav Sidebar */
+    .guide-nav { position: fixed; left: 0; top: 70px; width: 240px; height: calc(100vh - 70px); background: white; border-right: 1px solid #e3bfb1; overflow-y: auto; z-index: 40; padding: 20px 0; }
+    .guide-nav input { width: 100%; max-width: calc(240px - 20px); margin: 0 10px 16px; padding: 8px 12px; border: 1px solid #c4c7c7; font-size: 13px; font-family: Inter, sans-serif; }
+    .guide-nav ul { list-style: none; padding: 0; margin: 0; }
+    .guide-nav li { margin: 0; }
+    .guide-nav a { display: block; padding: 8px 16px; font-size: 13px; color: #575757; text-decoration: none; border-left: 2px solid transparent; transition: all 0.2s ease; }
+    .guide-nav a:hover { color: #0B0B0B; background: #fcf9f3; }
+    .guide-nav a.active { color: #B84700; border-left-color: #B84700; background: #fcf9f3; font-weight: 600; }
+
+    /* Content offset for sidebar */
+    main { margin-left: 240px; }
+
+    /* Token Table */
+    .token-table { width: 100%; border-collapse: collapse; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 12px; margin: 20px 0; }
+    .token-table th { background: #fcf9f3; padding: 12px; text-align: left; font-weight: 600; border-bottom: 2px solid #8e7164; color: #0B0B0B; }
+    .token-table td { padding: 12px; border-bottom: 1px solid #e3bfb1; }
+    .token-table tr:hover { background: #fcf9f3; }
+    .token-swatch { width: 32px; height: 32px; border: 1px solid #c4c7c7; border-radius: 0; display: inline-block; vertical-align: middle; }
+
+    /* Code Snippets */
+    .snippet-box { background: #fcf9f3; border: 1px solid #8e7164; padding: 16px; margin: 16px 0; }
+    .snippet-box h4 { margin: 0 0 12px; font-size: 14px; font-weight: 600; color: #0B0B0B; }
+    .snippet-box pre { background: white; border: 1px solid #c4c7c7; padding: 12px; overflow-x: auto; margin: 0; font-size: 11px; line-height: 1.5; }
+    .snippet-box code { font-family: ui-monospace, 'SF Mono', Menlo, monospace; }
+
     /* Mobile Responsive */
     @media (max-width: 768px) {
+      .guide-nav { display: none; }
+      main { margin-left: 0; }
       .guide-section { padding: 24px 16px; }
       .section-title { font-size: 28px; }
       .color-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
@@ -120,18 +147,175 @@
   </div>
 </header>
 
+<!-- STICKY NAV -->
+<nav class="guide-nav" aria-label="Guide sections">
+  <input type="search" placeholder="Search..." id="guide-search" aria-label="Search style guide"/>
+  <ul>
+    <li><a href="#quick-start" class="nav-link">Quick Start</a></li>
+    <li><a href="#tokens" class="nav-link">Design Tokens</a></li>
+    <li><a href="#principles" class="nav-link">Principles</a></li>
+    <li><a href="#components" class="nav-link">Components</a></li>
+    <li><a href="#typography" class="nav-link">Typography</a></li>
+    <li><a href="#colors" class="nav-link">Colors</a></li>
+    <li><a href="#animations" class="nav-link">Animations</a></li>
+    <li><a href="#accessibility" class="nav-link">Accessibility</a></li>
+  </ul>
+</nav>
+
 <main id="main" style="margin-top: 70px;">
 
 <div class="guide-section">
   <h1 class="section-title">Design System Showcase</h1>
   <p style="font-size: 16px; color: #575757; line-height: 1.6;">
-    Interactive demonstration of the JFSN Archive design system. Hover over components to see interactions in action.
-    Read <a href="DESIGN-SYSTEM.md" style="color: #B84700; text-decoration: underline;">DESIGN-SYSTEM.md</a> for full documentation.
+    Interactive demonstration of the JFSN Archive design system. Use the sidebar to jump to sections or search components.
   </p>
 </div>
 
+<!-- QUICK START -->
+<div class="guide-section" id="quick-start">
+  <h2 class="section-title">Quick Start Snippets</h2>
+  <p style="font-size: 14px; color: #575757; margin-bottom: 32px;">Copy-paste ready code to implement patterns across all 40 pages.</p>
+
+  <div class="snippet-box">
+    <h4>Add style guide to any page</h4>
+    <pre><code>&lt;!-- In &lt;head&gt; --&gt;
+&lt;link rel="stylesheet" href="/_shared/ui.css"&gt;
+&lt;link rel="stylesheet" href="/site.min.css"&gt;
+
+&lt;!-- At end of &lt;body&gt; --&gt;
+&lt;script src="/_shared/ui.js"&gt;&lt;/script&gt;
+&lt;script src="/_shared/nav-active.js"&gt;&lt;/script&gt;</code></pre>
+  </div>
+
+  <div class="snippet-box">
+    <h4>Create a filter chip component</h4>
+    <pre><code>&lt;span class="filter-chip"&gt;
+  Collage
+  &lt;button aria-label="Remove filter" data-filter-type="medium" data-filter-val="collage"&gt;×&lt;/button&gt;
+&lt;/span&gt;</code></pre>
+  </div>
+
+  <div class="snippet-box">
+    <h4>Add keyboard shortcut listener</h4>
+    <pre><code>document.addEventListener('keydown', (e) =&gt; {
+  if (e.key === '?') showKeyboardShortcuts();
+  if (e.key === 'ArrowLeft') previousWork();
+  if (e.key === 'ArrowRight') nextWork();
+});</code></pre>
+  </div>
+</div>
+
+<!-- DESIGN TOKENS -->
+<div class="guide-section" id="tokens">
+  <h2 class="section-title">Design Tokens Reference</h2>
+  <p style="font-size: 14px; color: #575757; margin-bottom: 32px;">Single source of truth for colors, spacing, timing, and z-index. Use CSS custom properties in your CSS.</p>
+
+  <h3 class="subsection-title">Color Tokens</h3>
+  <table class="token-table">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Light Value</th>
+        <th>Usage</th>
+        <th>Contrast</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>--color-text-primary</code></td>
+        <td><span class="token-swatch" style="background: #0B0B0B;"></span> #0B0B0B</td>
+        <td>Body text, headings</td>
+        <td>18:1 ✅</td>
+      </tr>
+      <tr>
+        <td><code>--color-text-secondary</code></td>
+        <td><span class="token-swatch" style="background: #575757;"></span> #575757</td>
+        <td>Secondary text, labels</td>
+        <td>7.2:1 ✅</td>
+      </tr>
+      <tr>
+        <td><code>--color-accent-primary</code></td>
+        <td><span class="token-swatch" style="background: #B84700;"></span> #B84700</td>
+        <td>Persistent text (links, labels)</td>
+        <td>5.07:1 AA</td>
+      </tr>
+      <tr>
+        <td><code>--color-accent-hover</code></td>
+        <td><span class="token-swatch" style="background: #FF6600;"></span> #FF6600</td>
+        <td>Hover states, active links</td>
+        <td>6.7:1 on dark</td>
+      </tr>
+      <tr>
+        <td><code>--color-border-warm</code></td>
+        <td><span class="token-swatch" style="background: #8e7164;"></span> #8e7164</td>
+        <td>Cards, section breaks (Stitch adopted)</td>
+        <td>6.5:1 ✅</td>
+      </tr>
+      <tr>
+        <td><code>--color-background</code></td>
+        <td><span class="token-swatch" style="background: #fcf9f3;"></span> #fcf9f3</td>
+        <td>Page background (bone-white)</td>
+        <td>—</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 class="subsection-title">Spacing Scale (8px base)</h3>
+  <table class="token-table">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Value</th>
+        <th>Usage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><code>--spacing-xs</code></td><td>0.5rem (8px)</td><td>Padding, gaps between small elements</td></tr>
+      <tr><td><code>--spacing-sm</code></td><td>1rem (16px)</td><td>Form fields, padding</td></tr>
+      <tr><td><code>--spacing-md</code></td><td>1.5rem (24px)</td><td>Section padding, card gaps</td></tr>
+      <tr><td><code>--spacing-lg</code></td><td>2rem (32px)</td><td>Major section spacing</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="subsection-title">Animation Timing</h3>
+  <table class="token-table">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Value</th>
+        <th>Usage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><code>--duration-fast</code></td><td>150ms</td><td>Micro-interactions (hover, focus)</td></tr>
+      <tr><td><code>--duration-normal</code></td><td>300ms</td><td>Standard transitions</td></tr>
+      <tr><td><code>--duration-slow</code></td><td>500ms</td><td>Entrance animations</td></tr>
+      <tr><td><code>--easing-standard</code></td><td>cubic-bezier(0.4, 0, 0.2, 1)</td><td>Material Design easing</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="subsection-title">Z-Index Scale</h3>
+  <table class="token-table">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Value</th>
+        <th>Usage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><code>--z-base</code></td><td>1</td><td>Default, normal flow</td></tr>
+      <tr><td><code>--z-dropdown</code></td><td>10</td><td>Dropdowns, submenus</td></tr>
+      <tr><td><code>--z-sticky</code></td><td>20</td><td>Sticky headers, sidebars</td></tr>
+      <tr><td><code>--z-fixed</code></td><td>30</td><td>Fixed nav, modals</td></tr>
+      <tr><td><code>--z-tooltip</code></td><td>40</td><td>Tooltips, floating elements</td></tr>
+      <tr><td><code>--z-notification</code></td><td>50</td><td>Toasts, alerts</td></tr>
+    </tbody>
+  </table>
+</div>
+
 <!-- DESIGN PRINCIPLES -->
-<div class="guide-section">
+<div class="guide-section" id="principles">
   <h2 class="section-title">Design Principles</h2>
   <p style="font-size: 14px; color: #575757; margin-bottom: 32px;">
     Every design decision at JFSN flows from these five core principles. They guide component design, interaction timing, and visual hierarchy.
@@ -183,7 +367,7 @@
 </div>
 
 <!-- COLORS -->
-<div class="guide-section">
+<div class="guide-section" id="colors">
   <h2 class="section-title">Color System</h2>
 
   <p class="label">Stitch Light (Primary UI)</p>
@@ -258,7 +442,7 @@
 </div>
 
 <!-- TYPOGRAPHY -->
-<div class="guide-section">
+<div class="guide-section" id="typography">
   <h2 class="section-title">Typography</h2>
 
   <h3 class="subsection-title">Scale</h3>
@@ -443,7 +627,7 @@
 </div>
 
 <!-- COMPONENT STATES GALLERY -->
-<div class="guide-section">
+<div class="guide-section" id="components">
   <h2 class="section-title">Component States Gallery</h2>
   <p style="font-size: 14px; color: #575757; margin-bottom: 32px;">
     Every interactive component has multiple states. Hover/focus on elements below to see all states in action.
@@ -574,7 +758,7 @@
 </div>
 
 <!-- ACCESSIBILITY -->
-<div class="guide-section">
+<div class="guide-section" id="accessibility">
   <h2 class="section-title">Accessibility Checklist</h2>
 
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
@@ -1105,7 +1289,7 @@
 </div>
 
 <!-- ANIMATION SHOWCASE: LOOPING DEMOS -->
-<div class="guide-section">
+<div class="guide-section" id="animations">
   <h2 class="section-title">Animation Showcase: Live Demos</h2>
   <p style="font-size: 14px; color: #575757; margin-bottom: 32px;">
     Watch these animations loop continuously to see the exact timing, easing, and feel. All respect prefers-reduced-motion settings.
@@ -1969,5 +2153,42 @@ document.getElementById('demo-shortcuts-btn').addEventListener('click', function
 
 <script src="_shared/ui.js" defer></script>
 <script src="_shared/nav-active.js" defer></script>
+
+<!-- Guide Nav & Search -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const searchInput = document.getElementById('guide-search');
+  const navLinks = document.querySelectorAll('.guide-nav .nav-link');
+  const sections = document.querySelectorAll('[id^="principles"], [id^="components"], [id^="typography"], [id^="colors"], [id^="animations"], [id^="accessibility"], [id^="quick-start"], [id^="tokens"]');
+
+  // Search functionality: filter nav links by text
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase();
+      navLinks.forEach(link => {
+        const text = link.textContent.toLowerCase();
+        link.style.display = text.includes(query) ? 'block' : 'none';
+      });
+    });
+  }
+
+  // Active nav link highlighting
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      if (window.pageYOffset >= sectionTop - 100) {
+        current = section.getAttribute('id');
+      }
+    });
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current) {
+        link.classList.add('active');
+      }
+    });
+  });
+});
+</script>
 </body>
 </html>
