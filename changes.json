@@ -1,5 +1,53 @@
 [
   {
+    "sha": "472eafa",
+    "date": "2026-06-17",
+    "title": "Session update 2026-06-17 09:49",
+    "body": ""
+  },
+  {
+    "sha": "ca1f117",
+    "date": "2026-06-17",
+    "title": "Remove water droplets from lost.html",
+    "body": "SVG droplets with z-index:-1 weren't rendering visibly. Rather than chase\ntechnical fixes, removing to keep the page clean and focus on what matters:\nPhase 1 & 2 animations verification for Session 53."
+  },
+  {
+    "sha": "ac00778",
+    "date": "2026-06-17",
+    "title": "Add realistic water droplets to lost.html",
+    "body": "Implemented water droplet background overlay using SVG with:\n- Radial gradient light reflections (30% offset for realistic shine)\n- Soft gaussian-blur shadows underneath each droplet for 3D depth\n- Mix of large (28-42px), medium (22-28px), and small (14-25px) droplets\n- Natural opacity variations (62-82%) for scatter effect\n- Fixed positioning as background (z-index: -1) so content stays readable\n- Thematically appropriate for lost.html (water damage destroyed the works)\n\nBased on reference image with realistic water bead appearance."
+  },
+  {
+    "sha": "2b83a49",
+    "date": "2026-06-17",
+    "title": "Remove all wet glass/water droplet effects",
+    "body": "Reverted Lost Works section to pure black background. Removed:\n- CSS wet glass texture (::before radial gradients)\n- Section ID and positioning hooks\n- Clean, stark 'void' aesthetic restored"
+  },
+  {
+    "sha": "9e86914",
+    "date": "2026-06-17",
+    "title": "Increase wet glass texture opacity for visibility",
+    "body": "Bumped radial gradient opacities from 8%/6%/4% to 18%/15%/12% so the\ncondensation shimmer on the Lost Works black section is clearly visible\nwhile still remaining subtle and atmospheric. Creates soft white glow\npatches that suggest moisture without being distracting."
+  },
+  {
+    "sha": "7ffbfac",
+    "date": "2026-06-17",
+    "title": "Replace SVG droplets with subtle CSS wet glass texture",
+    "body": "Removed visible droplet SVG and replaced with minimal CSS background effect:\nthree stacked radial gradients (8%, 6%, 4% opacity) that create a soft\ncondensation shimmer on the black Lost Works section. Very subtle—adds\natmospheric 'wet glass' quality without being literal or distracting.\n\nUses ::before pseudo-element with pointer-events:none so text/buttons\nremain interactive. Clean, performant, and fits the 'void' aesthetic."
+  },
+  {
+    "sha": "c5b9cbb",
+    "date": "2026-06-17",
+    "title": "Replace animated droplets with realistic static water beads",
+    "body": "Changed Lost Works section wet effect from animated drifting droplets to\nrealistic static water beads with radial gradient light reflections. Each\ndroplet now has a bright highlight (like actual light refraction on glass)\nand varied opacity for natural depth. No animation—just peaceful, realistic\nwet glass aesthetic that complements the 'void in the record' metaphor.\n\nUses SVG radial gradients with two-tone light reflection patterns for\nthat authentic water bead appearance."
+  },
+  {
+    "sha": "c3bfaee",
+    "date": "2026-06-17",
+    "title": "Add wet droplet effect to Lost Works section",
+    "body": "Implemented light SVG-based rain droplet animation on the black background\nof the Lost Works section (both mobile and desktop). Droplets fade in/out\nand drift downward with staggered timing, creating a glass rain effect\nsimilar to Apple FaceTime. Uses mix-blend-mode:screen for the wet overlay\nand GPU-accelerated CSS keyframes for smooth 60fps animation. Respects\nprefers-reduced-motion accessibility setting."
+  },
+  {
     "sha": "cff2962",
     "date": "2026-06-16",
     "title": "Session close: backup timestamps + residuals",
