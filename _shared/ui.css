@@ -1357,51 +1357,51 @@ footer {
 }
 
 [data-theme="guernica"] footer {
-  background-color: rgba(139, 21, 56, 0.06);
+  background-color: rgba(139, 21, 56, 0.12);
 }
 
 [data-theme="targets"] footer {
-  background-color: rgba(26, 77, 122, 0.06);
+  background-color: rgba(26, 77, 122, 0.12);
 }
 
 [data-theme="torsos"] footer {
-  background-color: rgba(150, 75, 59, 0.06);
+  background-color: rgba(150, 75, 59, 0.12);
 }
 
 [data-theme="framed"] footer {
-  background-color: rgba(45, 90, 90, 0.06);
+  background-color: rgba(45, 90, 90, 0.12);
 }
 
 [data-theme="gallery"] footer {
-  background-color: rgba(74, 85, 104, 0.06);
+  background-color: rgba(74, 85, 104, 0.12);
 }
 
 [data-theme="snowmann"] footer {
-  background-color: rgba(122, 92, 77, 0.06);
+  background-color: rgba(122, 92, 77, 0.12);
 }
 
 [data-theme="crosses"] footer {
-  background-color: rgba(91, 107, 123, 0.06);
+  background-color: rgba(91, 107, 123, 0.12);
 }
 
 [data-theme="collaboration"] footer {
-  background-color: rgba(90, 107, 91, 0.06);
+  background-color: rgba(90, 107, 91, 0.12);
 }
 
 [data-medium="collage"] footer {
-  background-color: rgba(168, 92, 60, 0.06);
+  background-color: rgba(168, 92, 60, 0.12);
 }
 
 [data-medium="sculpture"] footer {
-  background-color: rgba(107, 114, 128, 0.06);
+  background-color: rgba(107, 114, 128, 0.12);
 }
 
 [data-medium="photography"] footer {
-  background-color: rgba(71, 85, 105, 0.06);
+  background-color: rgba(71, 85, 105, 0.12);
 }
 
 [data-medium="painting"] footer {
-  background-color: rgba(107, 76, 138, 0.06);
+  background-color: rgba(107, 76, 138, 0.12);
 }
 
 /* ─── Section dividers: subtle color tint ────────────────────────────────── */
