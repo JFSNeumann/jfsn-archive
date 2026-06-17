@@ -1404,6 +1404,63 @@ footer {
   background-color: rgba(107, 76, 138, 0.12);
 }
 
+/* ─── Decade pages footer colors (Session 52 Enhancement) ────────────────── */
+
+body[data-page-label="1970s"],
+body[data-page-label="1980s"] {
+  --decade-footer-color: rgba(122, 92, 77, 0.12);
+}
+
+body[data-page-label="1990s"],
+body[data-page-label="2000s"],
+body[data-page-label="2010s"] {
+  --decade-footer-color: rgba(71, 85, 105, 0.12);
+}
+
+body[data-page-label="2020s"] {
+  --decade-footer-color: rgba(71, 85, 105, 0.10);
+}
+
+body[data-page-label] footer {
+  background-color: var(--decade-footer-color, transparent);
+  transition: background-color 0.2s ease;
+}
+
+/* ─── Footer section dividers (Session 52 Enhancement) ──────────────────── */
+
+footer > div:first-child {
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  gap: 0;
+}
+
+footer > div:first-child > div {
+  padding-right: 3rem;
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+footer > div:first-child > div:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+@media (max-width: 767px) {
+  footer > div:first-child > div {
+    border-right: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    padding-right: 0;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  footer > div:first-child > div:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+}
+
 /* ─── Section dividers: subtle color tint ────────────────────────────────── */
 
 [data-theme] section {

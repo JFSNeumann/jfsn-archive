@@ -452,6 +452,34 @@
   // ─── Phase 2: Theme color transitions (Session 52 #8) ─────────────────
   // Already CSS-driven via header nav a::after with background-color transition
 
+  // ─── Header collapse on scroll (Session 52 Enhancement) ────────────────
+  // Hide header on scroll down, show on scroll up
+  var header = document.querySelector('header');
+  if (header) {
+    var lastScrollY = 0;
+    var ticking = false;
+
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        requestAnimationFrame(function() {
+          var currentScrollY = window.scrollY;
+
+          if (currentScrollY > lastScrollY && currentScrollY > 100) {
+            // Scrolling down, hide header
+            header.classList.add('header-hidden');
+          } else {
+            // Scrolling up or near top, show header
+            header.classList.remove('header-hidden');
+          }
+
+          lastScrollY = currentScrollY;
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+  }
+
   // Artwork thumbnails are full color always — no mask-image, no scroll-reveal.
   // (Removed session 8; banned — do not re-add.)
 
