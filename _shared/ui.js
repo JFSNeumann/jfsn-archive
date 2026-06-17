@@ -615,4 +615,171 @@
   // Artwork thumbnails are full color always — no mask-image, no scroll-reveal.
   // (Removed session 8; banned — do not re-add.)
 
+  // ─── TIER 1-3: Page Transition Loader ─────────────────────────────────────
+  // Shows progress bar on page navigation
+  (function() {
+    let loader = document.getElementById('page-transition-loader');
+    if (!loader) {
+      loader = document.createElement('div');
+      loader.id = 'page-transition-loader';
+      document.body.insertBefore(loader, document.body.firstChild);
+    }
+
+    // Intercept link clicks to show loader
+    document.addEventListener('click', function(e) {
+      const link = e.target.closest('a');
+      if (link && link.href && !link.target && link.href.includes(window.location.origin)) {
+        loader.classList.add('active');
+        setTimeout(() => {
+          loader.classList.add('complete');
+          loader.classList.remove('active');
+        }, 500);
+      }
+    }, true);
+  })();
+
+  // ─── TIER 2: Lazy-Load Image Fade-In Enhancement ──────────────────────────
+  // Fade in images as they load
+  (function() {
+    if ('IntersectionObserver' in window) {
+      const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+      lazyImages.forEach(img => {
+        const originalSrc = img.src;
+        img.addEventListener('load', function() {
+          this.classList.add('loaded');
+        });
+        // Mark as loaded if already cached
+        if (img.complete) {
+          img.classList.add('loaded');
+        }
+      });
+    }
+  })();
+
+  // ─── TIER 2: Keyboard Shortcut Hints ─────────────────────────────────────
+  // Add hints to interactive elements showing keyboard shortcuts
+  (function() {
+    const hints = {
+      '#nav-search-btn': '⌘K',
+      '#mobile-menu-btn': 'ESC to close',
+      '[href*="archive"]': 'A',
+      '[href*="start-here"]': 'S'
+    };
+
+    Object.entries(hints).forEach(([selector, hint]) => {
+      const el = document.querySelector(selector);
+      if (el && !el.dataset.shortcutHint) {
+        el.setAttribute('data-shortcut-hint', hint);
+      }
+    });
+  })();
+
+  // ─── TIER 2: Archive Filter Presets ────────────────────────────────────────
+  // Add "Most Popular", "Recent", "Random" filter preset buttons
+  (function() {
+    const archivePage = document.querySelector('[data-page-label="archive"]');
+    if (!archivePage) return;
+
+    const filterChipsContainer = document.getElementById('filter-chips');
+    if (!filterChipsContainer) return;
+
+    // Create presets UI
+    const presetsDiv = document.createElement('div');
+    presetsDiv.id = 'filter-presets';
+    presetsDiv.style.cssText = 'display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;';
+    presetsDiv.innerHTML = `
+      <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#575757;align-self:center;">Quick filters:</span>
+      <button class="filter-preset-btn" data-preset="popular">Most Popular</button>
+      <button class="filter-preset-btn" data-preset="recent">Recent Additions</button>
+      <button class="filter-preset-btn filter-preset-random" data-preset="random">🎲 Random</button>
+    `;
+    filterChipsContainer.parentElement.insertBefore(presetsDiv, filterChipsContainer);
+
+    // Wire preset buttons
+    presetsDiv.querySelectorAll('.filter-preset-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const preset = this.dataset.preset;
+        if (window.applyFilterPreset) {
+          window.applyFilterPreset(preset);
+        }
+      });
+    });
+  })();
+
+  // ─── TIER 2: Related Works Smart Loading ──────────────────────────────────
+  // Show related works in batches with "Show more" button
+  (function() {
+    const relatedList = document.getElementById('related-works-list');
+    if (!relatedList) return;
+
+    const items = relatedList.querySelectorAll('.related-work-card');
+    if (items.length <= 3) return;
+
+    // Hide items after third
+    items.forEach((item, i) => {
+      if (i >= 3) {
+        item.style.display = 'none';
+        item.classList.add('related-works-item');
+      }
+    });
+
+    // Add "Show more" button
+    const showMoreBtn = document.createElement('button');
+    showMoreBtn.className = 'related-works-show-more';
+    showMoreBtn.textContent = `+ Show ${items.length - 3} more`;
+    showMoreBtn.style.marginTop = '12px';
+    relatedList.parentElement.insertBefore(showMoreBtn, relatedList.nextElementSibling);
+
+    let expanded = false;
+    showMoreBtn.addEventListener('click', function() {
+      if (expanded) {
+        items.forEach((item, i) => {
+          if (i >= 3) item.style.display = 'none';
+        });
+        showMoreBtn.textContent = `+ Show ${items.length - 3} more`;
+        expanded = false;
+      } else {
+        items.forEach(item => {
+          item.style.display = 'block';
+        });
+        showMoreBtn.textContent = '- Show less';
+        expanded = true;
+      }
+    });
+  })();
+
+  // ─── TIER 3: Favorite Count Animation ──────────────────────────────────────
+  // Pulse animation when favorite count changes
+  (function() {
+    window.animateFavoriteCount = function(element) {
+      if (!element) return;
+      element.classList.add('incrementing');
+      setTimeout(() => {
+        element.classList.remove('incrementing');
+      }, 300);
+    };
+  })();
+
+  // ─── TIER 3: Keyboard Shortcut Palette Activation ────────────────────────
+  // ESC dismisses modals, common shortcuts highlighted
+  (function() {
+    document.addEventListener('keydown', function(e) {
+      // ESC closes modals
+      if (e.key === 'Escape') {
+        const modals = document.querySelectorAll('[id*="modal"]');
+        modals.forEach(m => {
+          if (m.style.display === 'block') {
+            m.style.display = 'none';
+          }
+        });
+      }
+      // ⌘K or Ctrl+K opens search
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        const searchBtn = document.getElementById('nav-search-btn');
+        if (searchBtn) searchBtn.click();
+      }
+    });
+  })();
+
 })();

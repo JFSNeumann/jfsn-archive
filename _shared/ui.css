@@ -2669,6 +2669,525 @@ input:disabled:hover,
   }
 }
 
+/* ─── TIER 1 QUICK WINS ───────────────────────────────────────────────────── */
+
+/* Tier 1.1: Checkbox animation on state change */
+input[type="checkbox"] {
+  transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+}
+
+input[type="checkbox"]:checked {
+  animation: checkbox-check 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes checkbox-check {
+  0% { transform: scale(0.8); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+input[type="radio"]:checked {
+  animation: radio-check 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes radio-check {
+  0% { transform: scale(0.7); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  input[type="checkbox"],
+  input[type="radio"] {
+    transition: none;
+    animation: none;
+  }
+}
+
+/* Tier 1.2: Search input focus enhancement */
+input[type="search"],
+input[type="text"],
+textarea {
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="search"]:focus,
+input[type="text"]:focus,
+textarea:focus {
+  border-color: #FF6600;
+  box-shadow: inset 0 0 0 1px #FF6600, 0 0 0 3px rgba(255, 102, 0, 0.1);
+}
+
+/* Tier 1.3: Breadcrumb hover animation */
+.breadcrumb-item,
+nav a {
+  position: relative;
+}
+
+.breadcrumb-item::after,
+.breadcrumb a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #FF6600;
+  transition: width 0.2s ease;
+}
+
+.breadcrumb-item:hover::after,
+.breadcrumb a:hover::after {
+  width: 100%;
+}
+
+/* Tier 1.4: Mobile tap target validation (44px minimum) */
+button,
+a.btn,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+label {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  button,
+  a.btn,
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"] {
+    min-height: 48px;
+    min-width: 48px;
+    padding: 12px 16px;
+  }
+}
+
+/* Tier 1.5: Select dropdown focus animation */
+select:focus,
+select:focus-visible {
+  border-color: #FF6600;
+  box-shadow: inset 0 0 0 1px #FF6600, 0 0 0 3px rgba(255, 102, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  input[type="search"],
+  input[type="text"],
+  textarea,
+  select,
+  .breadcrumb-item::after,
+  .breadcrumb a::after {
+    transition: none;
+  }
+  input[type="search"]:focus,
+  input[type="text"]:focus,
+  textarea:focus,
+  select:focus {
+    animation: none;
+  }
+}
+
+/* ─── TIER 2 MEDIUM IMPACT ───────────────────────────────────────────────────── */
+
+/* Tier 2.1: Page transition loader — smooth progress bar */
+#page-transition-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #FF6600, #e05900);
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(255, 102, 0, 0.4);
+  width: 0%;
+  z-index: 9999;
+  animation: none;
+  transition: width 0.3s ease;
+  pointer-events: none;
+}
+
+#page-transition-loader.active {
+  width: 85%;
+  animation: loader-pulse 1s ease infinite;
+}
+
+#page-transition-loader.complete {
+  width: 100%;
+  animation: none;
+  opacity: 0;
+  transition: opacity 0.3s ease 0.5s;
+}
+
+@keyframes loader-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #page-transition-loader {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* Tier 2.2: Lazy-load enhancement — fade-in for images */
+img[loading="lazy"] {
+  animation: image-fade-in 0.4s ease forwards;
+  opacity: 0;
+}
+
+img[loading="lazy"].loaded {
+  opacity: 1;
+}
+
+@keyframes image-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  img[loading="lazy"] {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* Tier 2.3: Keyboard shortcut hint animation */
+[data-shortcut-hint]::after {
+  content: attr(data-shortcut-hint);
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0B0B0B;
+  color: #fcf9f3;
+  padding: 4px 8px;
+  border-radius: 2px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 1000;
+}
+
+[data-shortcut-hint]:hover::after {
+  opacity: 1;
+}
+
+/* Tier 2.4: Archive filter presets animation */
+.filter-preset-btn {
+  padding: 8px 12px;
+  background: #fcf9f3;
+  border: 1px solid #8e7164;
+  color: #0B0B0B;
+  font-family: Inter, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+}
+
+.filter-preset-btn:hover {
+  background: #ebe8e2;
+  border-color: #FF6600;
+  color: #FF6600;
+  box-shadow: 0 2px 6px rgba(255, 102, 0, 0.15);
+}
+
+.filter-preset-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #FF6600;
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.2s ease;
+}
+
+.filter-preset-btn:active::before {
+  opacity: 0.05;
+}
+
+/* Tier 2.5: Related works smart loading — "Show more" button animation */
+.related-works-show-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: #fcf9f3;
+  border: 1px solid #e3bfb1;
+  color: #0B0B0B;
+  font-family: Inter, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 2px;
+}
+
+.related-works-show-more:hover {
+  background: #ebe8e2;
+  border-color: #FF6600;
+  color: #FF6600;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.related-works-item {
+  animation: related-work-fade-in 0.4s ease forwards;
+  opacity: 0;
+}
+
+@keyframes related-work-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .related-works-show-more,
+  .related-works-item {
+    animation: none;
+    transition: none;
+    opacity: 1;
+  }
+}
+
+/* Tier 2.6: Favorite count animation — increment pulse */
+.favorite-count {
+  display: inline-block;
+  transition: transform 0.15s ease;
+}
+
+.favorite-count.incrementing {
+  animation: count-pulse 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes count-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .favorite-count {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* ─── TIER 3 POLISH & REFINEMENT ───────────────────────────────────────────────── */
+
+/* Tier 3.1: Keyboard shortcut palette — expand hint on hover */
+#keyboard-shortcuts-hint {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(11, 11, 11, 0.95);
+  color: #fcf9f3;
+  padding: 12px 16px;
+  border-radius: 4px;
+  font-family: Inter, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  backdrop-filter: blur(8px);
+  z-index: 998;
+  animation: hint-slide-up 0.3s ease forwards;
+  pointer-events: none;
+}
+
+@keyframes hint-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Tier 3.2: Quick filter chip entrance stagger */
+.filter-chip-entering {
+  animation: chip-enter-stagger 0.3s ease forwards;
+}
+
+@keyframes chip-enter-stagger {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateX(0);
+  }
+}
+
+/* Tier 3.3: Success feedback on filter apply */
+.filter-applying {
+  background: #fcf9f3 !important;
+  animation: filter-apply-pulse 0.5s ease;
+}
+
+@keyframes filter-apply-pulse {
+  0% { background-color: #ebe8e2; }
+  50% { background-color: rgba(255, 102, 0, 0.08); }
+  100% { background-color: #fcf9f3; }
+}
+
+/* Tier 3.4: "Random" filter button special styling */
+.filter-preset-random {
+  background: linear-gradient(135deg, #fcf9f3, #ebe8e2);
+  border-color: #FF6600;
+  color: #FF6600;
+}
+
+.filter-preset-random:hover {
+  background: linear-gradient(135deg, #ebe8e2, #fcf9f3);
+  box-shadow: 0 2px 8px rgba(255, 102, 0, 0.2);
+}
+
+/* Tier 3.5: Loading shimmer on filter results */
+.results-loading-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.results-loading-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer-sweep 1.5s infinite;
+  pointer-events: none;
+}
+
+@keyframes shimmer-sweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Tier 3.6: Breadcrumb active state highlight */
+.breadcrumb-active {
+  position: relative;
+  color: #FF6600;
+}
+
+.breadcrumb-active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #FF6600;
+  animation: breadcrumb-underline-draw 0.3s ease forwards;
+}
+
+@keyframes breadcrumb-underline-draw {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* Tier 3.7: Toast notification stack entrance */
+.toast-entering {
+  animation: toast-stack-enter 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes toast-stack-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.toast-exiting {
+  animation: toast-stack-exit 0.2s ease forwards;
+}
+
+@keyframes toast-stack-exit {
+  to {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+}
+
+/* Tier 3.8: Link hover underline with color change */
+a:not([class*="btn"]):not([class*="link"]):hover {
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  transition: all 0.2s ease;
+}
+
+/* Tier 3.9: Form validation feedback states */
+input:invalid,
+textarea:invalid,
+select:invalid {
+  border-color: #e05900;
+  background: rgba(224, 89, 0, 0.02);
+}
+
+input:invalid:focus,
+textarea:invalid:focus,
+select:invalid:focus {
+  box-shadow: inset 0 0 0 1px #e05900, 0 0 0 3px rgba(224, 89, 0, 0.1);
+}
+
+/* Tier 3.10: Success state styling for interactive elements */
+.success-action {
+  animation: success-confirm 0.4s ease;
+  background-color: rgba(76, 175, 80, 0.1) !important;
+  border-color: #4CAF50 !important;
+}
+
+@keyframes success-confirm {
+  0% { transform: scale(0.95); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #keyboard-shortcuts-hint,
+  .filter-chip-entering,
+  .filter-applying,
+  .breadcrumb-active::after,
+  .toast-entering,
+  .toast-exiting,
+  .success-action {
+    animation: none;
+    transition: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   #nav-menu-btn,
   #nav-menu-btn svg line { transition: none; }
