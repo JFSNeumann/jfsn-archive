@@ -1,5 +1,12 @@
 # Current State
-**Updated:** 2026-06-16 20:04
+**Updated:** 2026-06-16 20:08
+
+## ✅ SESSION 47 (2026-06-16) — Decade-page artwork grid migration + index.html audio indicator (DEPLOYED)
+- **Decade pages (1970s–2020s) migrated to modern `.thumb__link` system.** All 6 pages (1,084 total thumbnails across 6 files) converted from the old `div.break-inside-avoid / div.thumb-frame / a.group.block` masonry markup to `figure.thumb / a.thumb__link / figcaption.thumb__caption` — identical to collage.html, sculpture.html, photography.html. Closes the last visual-system split on the site: decade pages now get the same saturation-overlay hover treatment (grey-at-top at rest → full color + orange outline on hover, caption title turns orange).
+- **`.medium-grid` + `.thumb` rules moved to `_shared/ui.css`** so decade pages (which load ui.css but not site.min.css) get the grid layout. Previously only defined inline in the medium-page `<style>` blocks.
+- **index.html audio indicator:** `[ Audio recording available ↓ ]` label in archival brown before the `<audio>` element in both desktop and mobile "In His Own Words" sections.
+- No CSS rebuild needed (no new Tailwind utilities). No CACHE_V bump needed (ui.css is network-first in SW).
+- Deployed: HostGator (JFSN.app) + Netlify prod. GitHub commit: `1cec2dee`. B2 backup complete.
 
 ## ✅ SESSION 46 (2026-06-16) — Accessibility pass: orange-text contrast sitewide + focus-visible gaps (DEPLOYED + verified live)
 - **Root cause: `international-orange` (#FF6600) was used as persistent text color sitewide** — eyebrow labels, bracket links, nav active-states — at only **2.79:1 contrast** on bone-white, failing WCAG AA's 4.5:1 minimum for normal text. This is almost certainly the bulk of the 93–96 Lighthouse a11y gap flagged in IMPROVEMENTS.md.
