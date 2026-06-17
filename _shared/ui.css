@@ -2430,6 +2430,29 @@ footer a:hover::after,
   }
 }
 
+/* ─── Error animations sitewide (Phase 5.2+) ─────────────────────────────── */
+/* Applied to any .error, .ch-error, [data-error] on all pages */
+@keyframes error-pulse {
+  0%, 100% { border-color: transparent; color: #575757; }
+  50% { border-color: #d32f2f; color: #d32f2f; }
+}
+
+.error,
+.ch-error,
+[data-error="true"] {
+  animation: error-pulse 0.6s ease 2; /* pulse 2x on error */
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .error,
+  .ch-error,
+  [data-error="true"] {
+    animation: none;
+  }
+}
+
 /* ─── Icon hover consistency (Phase 5.1) ──────────────────────────────────── */
 /* Unified icon color transition on hover — 150ms smooth, no scale/transform */
 button svg,

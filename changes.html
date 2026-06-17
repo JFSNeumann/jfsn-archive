@@ -122,19 +122,6 @@
       color: #575757;
       padding: 4rem 0;
     }
-    /* Phase 5.2: Error message pulse animation */
-    @keyframes error-pulse {
-      0%, 100% { border-color: transparent; color: #575757; }
-      50% { border-color: #d32f2f; color: #d32f2f; }
-    }
-    .ch-error {
-      animation: error-pulse 0.6s ease 2; /* pulse 2x on error */
-      border-top: 1px solid transparent;
-      border-bottom: 1px solid transparent;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .ch-error { animation: none; }
-    }
   </style>
 </head>
 
