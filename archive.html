@@ -467,6 +467,9 @@ header.header-hidden{transform:translateY(-100%)}
 
     <!-- Grid -->
     <div class="flex-grow min-w-0">
+      <!-- Breadcrumb navigation (URL-inferred) -->
+      <div id="breadcrumb" style="margin-bottom:16px;font-family:Inter,sans-serif;font-size:12px;color:#575757;"></div>
+
       <!-- Active filter chips -->
       <div id="filter-chips" style="display:none;margin-bottom:20px;flex-wrap:wrap;align-items:center;gap:8px;"></div>
 
@@ -712,6 +715,35 @@ function syncURL() {
   if (sort && sort !== 'id_desc') p.set('sort', sort); // only persist non-default
   const qs = p.toString();
   history.replaceState(null, '', qs ? '?' + qs : location.pathname);
+  updateBreadcrumb();
+}
+
+// Generate breadcrumb from URL parameters
+function updateBreadcrumb() {
+  const bc = document.getElementById('breadcrumb');
+  const p = new URLSearchParams(location.search);
+  const mediums = p.getAll('medium');
+  const decades = p.getAll('decade');
+  const series = p.getAll('series');
+
+  let parts = ['<a href="archive.html" style="color:#575757;text-decoration:none;border-bottom:1px solid #575757;">Archive</a>'];
+
+  if (mediums.length === 1) {
+    const label = { collage:'Collage', photograph:'Photography', sculpture:'Sculpture', painting:'Painting' }[mediums[0]] || mediums[0];
+    parts.push(`<a href="archive.html?medium=${mediums[0]}" style="color:#575757;text-decoration:none;border-bottom:1px solid #575757;">${label}</a>`);
+  }
+  if (decades.length === 1) {
+    parts.push(`<a href="archive.html?decade=${decades[0]}" style="color:#575757;text-decoration:none;border-bottom:1px solid #575757;">${decades[0]}</a>`);
+  }
+  if (series.length === 1) {
+    parts.push(`<a href="archive.html?series=${series[0]}" style="color:#575757;text-decoration:none;border-bottom:1px solid #575757;">${series[0]}</a>`);
+  }
+
+  if (parts.length > 1) {
+    bc.innerHTML = parts.join(' <span style="color:#8e7164;margin:0 4px;">›</span> ');
+  } else {
+    bc.innerHTML = '';
+  }
 }
 
 document.getElementById('sort-select').addEventListener('change', () => {
@@ -728,6 +760,7 @@ fetch('catalog-lite.json')
     filtered = sortWorks(data);
     renderPage();
     applyURLParams();
+    updateBreadcrumb();
   })
   .catch(e => console.error('catalog load failed', e));
 

@@ -256,6 +256,9 @@ header.header-hidden{transform:translateY(-100%)}
 
   <a href="archive.html" class="bracket-link mb-lg block">[ ← Back to Archive ]</a>
 
+  <!-- Breadcrumb navigation -->
+  <div id="breadcrumb" style="margin-bottom:16px;font-family:Inter,sans-serif;font-size:12px;color:#575757;"></div>
+
   <div id="loading" class="py-xl text-center font-label-lg text-label-lg text-secondary uppercase tracking-widest">Loading…</div>
   <div id="not-found" class="hidden py-xl text-center font-label-lg text-label-lg text-secondary uppercase tracking-widest">Work not found.</div>
 
@@ -450,6 +453,23 @@ function themeLink(t) {
 // dimensions until those are measured. Links to the matching archive filter.
 const ORIENT_LABELS = { vertical:'Vertical', horizontal:'Horizontal', square:'Square' };
 
+// Generate breadcrumb for artwork page
+function updateArtworkBreadcrumb(work) {
+  const bc = document.getElementById('breadcrumb');
+  let parts = ['<a href="archive.html" style="color:#575757;text-decoration:none;border-bottom:1px solid #575757;">Archive</a>'];
+
+  if (work.series) {
+    parts.push(`<a href="archive.html?series=${work.series}" style="color:#575757;text-decoration:none;border-bottom:1px solid #575757;">${work.series}</a>`);
+  } else if (work.year) {
+    const decade = Math.floor(work.year / 10) * 10 + 's';
+    parts.push(`<a href="archive.html?decade=${decade}" style="color:#575757;text-decoration:none;border-bottom:1px solid #575757;">${decade}</a>`);
+  }
+
+  if (parts.length > 1) {
+    bc.innerHTML = parts.join(' <span style="color:#8e7164;margin:0 4px;">›</span> ');
+  }
+}
+
 fetch('catalog.json')
   .then(r => r.json())
   .then(works => {
@@ -465,6 +485,7 @@ fetch('catalog.json')
 
     const w = works[idx];
     document.getElementById('work-content').classList.remove('hidden');
+    updateArtworkBreadcrumb(w);
 
     // SEO
     const titleText = w.title || 'Untitled';
