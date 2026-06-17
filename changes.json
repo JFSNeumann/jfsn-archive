@@ -1,5 +1,35 @@
 [
   {
+    "sha": "5d2e739",
+    "date": "2026-06-16",
+    "title": "Session close: backup timestamps + residuals",
+    "body": ""
+  },
+  {
+    "sha": "de5d338",
+    "date": "2026-06-16",
+    "title": "Session update 2026-06-16 23:22",
+    "body": ""
+  },
+  {
+    "sha": "fa17e3f",
+    "date": "2026-06-16",
+    "title": "Session 52 header/footer enhancements: collapse, decade colors, dividers",
+    "body": "1. Header collapse on scroll — Hide header when scrolling down, show on scroll up\n   Improves content visibility while scrolling, common modern UX pattern\n\n2. Decade pages footer tinting — Subtle color tints based on decade:\n   - 1970s-1980s: warm sepia/brown (archival feel)\n   - 1990s-2010s: neutral slate\n   - 2020s: cool tone\n   Adds visual coherence with theme pages\n\n3. Footer section dividers — Subtle vertical borders between EXPLORE/RESOURCES/ABOUT\n   Desktop: vertical dividers with 1px border-right\n   Mobile: horizontal dividers with border-bottom\n   Improves footer structure clarity\n\n4. Back-to-top button — Already integrated in footer (✅ no changes needed)\n   Desktop: visible in bottom bar\n   Mobile: floating button above bottom nav\n\nAll enhancements maintain prefers-reduced-motion accessibility."
+  },
+  {
+    "sha": "5f0f0a6",
+    "date": "2026-06-16",
+    "title": "Increase footer theme colors opacity: 0.06 → 0.12 for visibility",
+    "body": "Footer background colors were too subtle (6% opacity) — footers always appeared grey.\nDoubled opacity to 12% so theme/medium color tints are now clearly visible but still elegant.\n\nAffects all 12 theme/medium pages:\n- Themes: Guernica (crimson), Targets (blue), Torsos (terracotta), Framed (teal),\n  Gallery (slate), Mr. Snowmann (brown), Crosses (grey-blue), Collaboration (sage)\n- Mediums: Collage (rust), Sculpture (stone), Photography (slate), Painting (plum)"
+  },
+  {
+    "sha": "7dbd257",
+    "date": "2026-06-16",
+    "title": "Clean up temporary, duplicate, and utility files",
+    "body": "Deleted:\n- design-concepts/stitch-june-2026/: 12 duplicate DESIGN*.md and code*.html files (kept originals)\n- curate.html, dedupe.html, jeff.html: utility/test pages (not in nav, undocumented)\n- monitor.js: monitoring utility (unused)\n- input.css: Tailwind source (site.min.css is the compiled output)\n- old-site/: 1.5GB legacy dark-mode site from pre-May-2026 migration\n\nThese were temporary files, design iterations, development utilities, and legacy\nbackups taking up unnecessary space and git history. Cleaned by Session 52."
+  },
+  {
     "sha": "cbe3cbb",
     "date": "2026-06-16",
     "title": "Session update 2026-06-16 23:04",
