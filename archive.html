@@ -473,6 +473,15 @@ header.header-hidden{transform:translateY(-100%)}
       <!-- Active filter chips -->
       <div id="filter-chips" style="display:none;margin-bottom:20px;flex-wrap:wrap;align-items:center;gap:8px;"></div>
 
+      <!-- Advanced Filters: Saved Searches & Presets -->
+      <div id="saved-filters-ui" style="display:none;margin-bottom:20px;padding:12px;background:#fcf9f3;border:1px solid #8e7164;border-radius:4px;">
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+          <button id="save-filter-btn" style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;background:none;border:1px solid #8e7164;padding:6px 12px;cursor:pointer;transition:all 0.2s ease;">+ Save Filter</button>
+          <span id="saved-filter-count" style="font-size:10px;color:#8e7164;"></span>
+        </div>
+        <div id="saved-filters-list" style="display:flex;gap:6px;flex-wrap:wrap;"></div>
+      </div>
+
       <!-- Loading state -->
       <!-- Phase A 4.3: Loading state with progress bar + staggered dots -->
       <div id="filter-loading" class="filter-loading" style="display:none;text-align:center;padding:20px 0;margin:0 0 16px;">
@@ -881,6 +890,83 @@ document.addEventListener('click', function(e) {
     window.location.href = link.href;
   }, 100);
 }, true);
+
+// Advanced Filters: Saved Searches & Presets (localStorage)
+function getSavedFilters() {
+  return JSON.parse(localStorage.getItem('jfsn-saved-filters') || '[]');
+}
+
+function saveFilter() {
+  const mediums = Array.from(document.querySelectorAll('#filter-medium input:checked')).map(el => el.value);
+  const decades = Array.from(document.querySelectorAll('#filter-decade input:checked')).map(el => el.value);
+  const series = Array.from(document.querySelectorAll('#filter-series input:checked')).map(el => el.value);
+
+  if (!mediums.length && !decades.length && !series.length) {
+    window.showToast('Select at least one filter to save', 3000, 'info');
+    return;
+  }
+
+  const name = prompt('Name this filter preset:');
+  if (!name) return;
+
+  const saved = getSavedFilters();
+  saved.push({ name, mediums, decades, series, timestamp: Date.now() });
+  localStorage.setItem('jfsn-saved-filters', JSON.stringify(saved));
+  renderSavedFilters();
+  window.showToast(`Saved: ${name}`, 3000, 'success');
+}
+
+function loadFilter(index) {
+  const saved = getSavedFilters()[index];
+  if (!saved) return;
+
+  // Clear all
+  document.querySelectorAll('.custom-checkbox').forEach(cb => cb.checked = false);
+
+  // Load saved filters
+  saved.mediums.forEach(v => {
+    const cb = document.querySelector(`#filter-medium input[value="${v}"]`);
+    if (cb) cb.checked = true;
+  });
+  saved.decades.forEach(v => {
+    const cb = document.querySelector(`#filter-decade input[value="${v}"]`);
+    if (cb) cb.checked = true;
+  });
+  saved.series.forEach(v => {
+    const cb = document.querySelector(`#filter-series input[value="${v}"]`);
+    if (cb) cb.checked = true;
+  });
+
+  applyFilters();
+}
+
+function deleteFilter(index) {
+  if (!confirm('Delete this filter preset?')) return;
+  const saved = getSavedFilters();
+  saved.splice(index, 1);
+  localStorage.setItem('jfsn-saved-filters', JSON.stringify(saved));
+  renderSavedFilters();
+  window.showToast('Deleted', 2000, 'info');
+}
+
+function renderSavedFilters() {
+  const saved = getSavedFilters();
+  const ui = document.getElementById('saved-filters-ui');
+  const list = document.getElementById('saved-filters-list');
+  const count = document.getElementById('saved-filter-count');
+
+  ui.style.display = saved.length ? 'block' : 'none';
+  count.textContent = saved.length ? `${saved.length} saved` : '';
+  list.innerHTML = saved.map((f, i) => `
+    <button onclick="loadFilter(${i})" style="font-size:10px;background:#ebe8e2;border:1px solid #8e7164;padding:6px 10px;cursor:pointer;transition:all 0.2s ease;color:#0B0B0B;">
+      ${f.name}
+    </button>
+    <button onclick="deleteFilter(${i})" style="font-size:10px;background:none;border:1px solid #c4c7c7;padding:4px 8px;cursor:pointer;color:#575757;">×</button>
+  `).join('');
+}
+
+document.getElementById('save-filter-btn').addEventListener('click', saveFilter);
+renderSavedFilters();
 </script>
 
 <script src="_shared/nav-active.js" defer></script>

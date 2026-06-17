@@ -117,7 +117,8 @@
     }
   });
 
-  // ─── Decade hero heading: zoom-out as hero scrolls away ──────────────────
+  // ─── Hero Scroll Animation: Refined zoom-out + color shift ──────────────
+  // Heading scales and fades as hero scrolls away, with subtle color shift
   const hero    = document.querySelector('.decade-hero');
   const heading = document.querySelector('.decade-heading');
 
@@ -127,10 +128,16 @@
       const heroH    = hero.offsetHeight;
       // progress: 0 = hero fully visible, 1 = hero fully scrolled past
       const progress = Math.max(0, Math.min(1, -rect.top / heroH));
-      const scale    = 1 + progress * 0.28;
-      const opacity  = 1 - progress * 1.4; // fade faster than scale
-      heading.style.transform = 'scale(' + scale + ')';
-      heading.style.opacity   = Math.max(0, opacity);
+
+      // Enhanced refinement: smoother easing curve
+      const easeProgress = progress < 0.5 ? 2 * progress * progress : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+
+      const scale    = 1 + easeProgress * 0.28; // zoom-out
+      const opacity  = 1 - easeProgress * 1.4; // fade
+      const blur     = easeProgress * 2; // subtle blur as it scales
+
+      heading.style.transform = `scale(${scale}) blur(${blur}px)`;
+      heading.style.opacity = Math.max(0, opacity);
     };
 
     // Only run if reduced-motion is not set
@@ -242,9 +249,94 @@
     }, 2000);
   }
 
-  // ─── Keyboard shortcuts ───────────────────────────────────────────────────
-  // P/N: prev/next work on artwork pages
-  // ?: show shortcuts help
+  // ─── Keyboard Shortcuts Documentation Overlay ──────────────────────────
+  // P/N: prev/next work, ←→: decade nav, ?: show shortcuts
+  var keyboardShortcutsModal = null;
+
+  function showKeyboardShortcuts() {
+    if (keyboardShortcutsModal && keyboardShortcutsModal.style.display === 'flex') return; // Already open
+
+    keyboardShortcutsModal = document.createElement('div');
+    keyboardShortcutsModal.id = 'keyboard-shortcuts-modal';
+    keyboardShortcutsModal.style.cssText = `
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      backdrop-filter: blur(4px);
+    `;
+
+    const content = document.createElement('div');
+    content.style.cssText = `
+      background: white;
+      border: 1px solid #8e7164;
+      padding: 32px;
+      border-radius: 4px;
+      max-width: 500px;
+      max-height: 80vh;
+      overflow-y: auto;
+      animation: reveal-fade-in 0.3s ease-out;
+    `;
+
+    content.innerHTML = `
+      <h2 style="font-family: 'Playfair Display', serif; font-size: 28px; margin: 0 0 24px; color: #0B0B0B;">Keyboard Shortcuts</h2>
+
+      <div style="font-size: 12px; line-height: 1.8;">
+        <h3 style="font-family: Inter; font-weight: 600; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8e7164; margin: 16px 0 8px;">Artwork Pages</h3>
+        <table style="width: 100%; border-collapse: collapse;">
+          <tr style="border-bottom: 1px solid #e3bfb1;">
+            <td style="padding: 8px 0; font-weight: 600; color: #0B0B0B; width: 80px;">P</td>
+            <td style="padding: 8px 0; color: #575757;">Previous work</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e3bfb1;">
+            <td style="padding: 8px 0; font-weight: 600; color: #0B0B0B;">N</td>
+            <td style="padding: 8px 0; color: #575757;">Next work</td>
+          </tr>
+        </table>
+
+        <h3 style="font-family: Inter; font-weight: 600; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8e7164; margin: 16px 0 8px;">Decade Pages</h3>
+        <table style="width: 100%; border-collapse: collapse;">
+          <tr style="border-bottom: 1px solid #e3bfb1;">
+            <td style="padding: 8px 0; font-weight: 600; color: #0B0B0B; width: 80px;">← →</td>
+            <td style="padding: 8px 0; color: #575757;">Navigate decades</td>
+          </tr>
+        </table>
+
+        <h3 style="font-family: Inter; font-weight: 600; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8e7164; margin: 16px 0 8px;">General</h3>
+        <table style="width: 100%; border-collapse: collapse;">
+          <tr style="border-bottom: 1px solid #e3bfb1;">
+            <td style="padding: 8px 0; font-weight: 600; color: #0B0B0B; width: 80px;">?</td>
+            <td style="padding: 8px 0; color: #575757;">Show this help</td>
+          </tr>
+        </table>
+      </div>
+
+      <p style="font-size: 10px; color: #8e7164; margin-top: 24px; margin-bottom: 0;">Press ESC to close</p>
+    `;
+
+    keyboardShortcutsModal.appendChild(content);
+    document.body.appendChild(keyboardShortcutsModal);
+
+    // Close on ESC
+    var closeHandler = function(e) {
+      if (e.key === 'Escape') {
+        keyboardShortcutsModal.remove();
+        document.removeEventListener('keydown', closeHandler);
+      }
+    };
+    document.addEventListener('keydown', closeHandler);
+
+    // Close on backdrop click
+    keyboardShortcutsModal.addEventListener('click', function(e) {
+      if (e.target === keyboardShortcutsModal) {
+        keyboardShortcutsModal.remove();
+      }
+    });
+  }
+
   document.addEventListener('keydown', function(e) {
     // Don't fire when user is typing in input/textarea
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
@@ -270,16 +362,10 @@
       }
     }
 
-    // ? = show keyboard shortcuts help (if available)
+    // ? = show keyboard shortcuts help
     if (e.key === '?') {
-      var tag = e.target.tagName;
-      if (tag === 'INPUT' || tag === 'TEXTAREA') return;
-      // Check if search is loaded (has openSiteSearch function)
-      if (window.openSiteSearch) {
-        // Trigger search keyboard shortcuts modal (? key in search)
-        var event = new KeyboardEvent('keydown', { key: '?' });
-        document.dispatchEvent(event);
-      }
+      e.preventDefault();
+      showKeyboardShortcuts();
     }
   });
 
