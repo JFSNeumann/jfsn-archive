@@ -696,13 +696,18 @@ header.header-hidden{transform:translateY(-100%)}
   </section>
 
   <!-- Mobile: Where To Begin -->
+  <style>
+    .wtb-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .wtb-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+    @media (prefers-reduced-motion: reduce) { .wtb-card { transition: none; } .wtb-card:hover { transform: none; } }
+  </style>
   <section class="border-t border-outline-variant px-4 pt-8 pb-4">
     <div class="mb-5">
       <span class="font-label-caps text-label-caps text-orange-ink" style="display:block;margin-bottom:8px;letter-spacing:0.18em;">Navigate the Studio</span>
       <p style="font-family:'Playfair Display',serif;font-size:26px;line-height:1.1;color:#0B0B0B;font-weight:600;margin:0;">Where To Begin</p>
     </div>
     <!-- Start Here feature -->
-    <a href="start-here.html" style="display:block;padding:22px 18px;border:1px solid #e3bfb1;background:rgba(255,102,0,0.05);text-decoration:none;margin-bottom:12px;">
+    <a href="start-here.html" class="wtb-card" style="display:block;padding:22px 18px;border:1px solid #e3bfb1;background:rgba(255,102,0,0.05);text-decoration:none;margin-bottom:12px;">
       <span style="display:block;color:#B84700;margin-bottom:12px;"><svg class="wtb-svg-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></span>
       <p style="font-family:'Playfair Display',serif;font-size:25px;line-height:1.15;color:#0B0B0B;margin:0 0 6px;">Start Here</p>
       <p style="font-family:Inter,sans-serif;font-size:12.5px;line-height:1.55;color:#575757;margin:0 0 12px;">Who Jeff is and why this archive exists.</p>
@@ -710,22 +715,22 @@ header.header-hidden{transform:translateY(-100%)}
     </a>
     <!-- 2×2 -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-      <a href="stories.html" style="display:block;padding:18px 16px;background:#0B0B0B;border:1px solid #0B0B0B;text-decoration:none;">
+      <a href="stories.html" class="wtb-card" style="display:block;padding:18px 16px;background:#0B0B0B;border:1px solid #0B0B0B;text-decoration:none;">
         <span style="display:block;color:#F3F0EA;margin-bottom:12px;"><svg class="wtb-svg-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span>
         <p style="font-family:'Playfair Display',serif;font-size:18px;color:#F3F0EA;margin:0 0 6px;">Stories</p>
         <span class="bracket" style="color:rgba(243,240,234,0.55);font-size:10px;">[ Read &rarr; ]</span>
       </a>
-      <a href="favorites.html" style="display:block;padding:18px 16px;border:1px solid #c4c7c7;text-decoration:none;">
+      <a href="favorites.html" class="wtb-card" style="display:block;padding:18px 16px;border:1px solid #c4c7c7;text-decoration:none;">
         <span style="display:block;color:#575757;margin-bottom:12px;"><svg class="wtb-svg-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
         <p style="font-family:'Playfair Display',serif;font-size:18px;color:#0B0B0B;margin:0 0 6px;">Favorites</p>
         <span class="bracket" style="color:#B84700;font-size:10px;">[ View &rarr; ]</span>
       </a>
-      <a href="guernica.html" style="display:block;padding:18px 16px;border:1px solid #c4c7c7;text-decoration:none;">
+      <a href="guernica.html" class="wtb-card" style="display:block;padding:18px 16px;border:1px solid #c4c7c7;text-decoration:none;">
         <span style="display:block;color:#575757;margin-bottom:12px;"><svg class="wtb-svg-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
         <p style="font-family:'Playfair Display',serif;font-size:18px;color:#0B0B0B;margin:0 0 6px;">Guernica</p>
         <span class="bracket" style="color:#B84700;font-size:10px;">[ View &rarr; ]</span>
       </a>
-      <a href="archive.html" style="display:block;padding:18px 16px;border:1px solid #c4c7c7;text-decoration:none;">
+      <a href="archive.html" class="wtb-card" style="display:block;padding:18px 16px;border:1px solid #c4c7c7;text-decoration:none;">
         <span style="display:block;color:#575757;margin-bottom:12px;"><svg class="wtb-svg-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>
         <p style="font-family:'Playfair Display',serif;font-size:18px;color:#0B0B0B;margin:0 0 6px;">Full Archive</p>
         <span class="bracket" style="color:#B84700;font-size:10px;">[ Browse &rarr; ]</span>
