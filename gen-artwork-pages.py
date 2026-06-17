@@ -187,7 +187,8 @@ def generate_page(work, idx, all_works, colors):
     if prev_id:
         prev_html = (
             f'<a href="{prev_id}.html" '
-            f'class="group flex items-center px-margin-mobile md:px-md h-full overflow-hidden">'
+            f'class="adjacent-nav-btn group flex items-center px-margin-mobile md:px-md h-full overflow-hidden relative">'
+            f'<img src="../../artworks/thumbs/{prev_id}.avif" alt="{e(prev_title)}" class="adjacent-preview" loading="lazy" width="80" height="80"/>'
             f'<svg class="text-deep-ink group-hover:text-international-orange mr-sm shrink-0" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="20" y1="12" x2="5" y2="12"/><polyline points="11 6 5 12 11 18"/></svg>'
             f'<div class="flex flex-col overflow-hidden">'
             f'<span class="font-label-caps text-[10px] text-archive-gray uppercase tracking-widest leading-none mb-[2px]">PREVIOUS</span>'
@@ -200,7 +201,8 @@ def generate_page(work, idx, all_works, colors):
     if next_id:
         next_html = (
             f'<a href="{next_id}.html" '
-            f'class="group flex items-center justify-end px-margin-mobile md:px-md h-full overflow-hidden">'
+            f'class="adjacent-nav-btn group flex items-center justify-end px-margin-mobile md:px-md h-full overflow-hidden relative">'
+            f'<img src="../../artworks/thumbs/{next_id}.avif" alt="{e(next_title)}" class="adjacent-preview" loading="lazy" width="80" height="80"/>'
             f'<div class="flex flex-col overflow-hidden text-right">'
             f'<span class="font-label-caps text-[10px] text-archive-gray uppercase tracking-widest leading-none mb-[2px]">NEXT</span>'
             f'<span class="font-label-caps text-[11px] text-deep-ink uppercase truncate group-hover:text-international-orange">{next_title}</span>'
@@ -309,9 +311,9 @@ def generate_page(work, idx, all_works, colors):
 
   <nav aria-label="Breadcrumb" class="mb-lg">
     <ol class="flex gap-xs items-center font-label-md text-label-md text-secondary uppercase tracking-widest" style="list-style:none;padding:0;margin:0;">
-      <li><a href="../../archive.html" class="hover:text-international-orange transition-colors">Archive</a></li>
-      <li aria-hidden="true" class="opacity-40">/</li>
-      <li aria-current="page" class="text-deep-ink truncate">{e(title)}</li>
+      <li class="breadcrumb-item" data-crumb-idx="0"><a href="../../archive.html" class="hover:text-international-orange transition-colors">Archive</a></li>
+      <li aria-hidden="true" class="opacity-40 breadcrumb-item" data-crumb-idx="1">/</li>
+      <li aria-current="page" class="text-deep-ink truncate breadcrumb-item" data-crumb-idx="2">{e(title)}</li>
     </ol>
   </nav>
 
@@ -324,7 +326,8 @@ def generate_page(work, idx, all_works, colors):
              alt="{e(title)}"
              class="w-full h-auto object-contain vt-artwork-main"
              loading="eager"
-             width="1200" height="900"/>
+             width="1200" height="900"
+             data-dominant-color="{bgcolor}"/>
       </div>
       <div class="p-sm border-t border-deep-ink flex justify-between items-center">
         <span class="font-label-md text-label-md text-secondary uppercase tracking-widest cursor-pointer hover:text-international-orange transition-colors" onclick="navigator.clipboard.writeText(\\"{e(art_id.upper())}\\\").then(()=>window.showToast(\\\"Copied: {e(art_id.upper())}!\\\"))" title="Click to copy">{e(art_id.upper())}</span>

@@ -276,6 +276,34 @@ footer .hover\:border-international-orange::after {
   }
 }
 
+/* ─── Breadcrumb sequential entrance ─────────────────────────────────────── */
+
+@keyframes breadcrumb-fade-in {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.breadcrumb-item {
+  opacity: 0;
+  animation: breadcrumb-fade-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.breadcrumb-item[data-crumb-idx="0"] { animation-delay: 0.05s; }
+.breadcrumb-item[data-crumb-idx="1"] { animation-delay: 0.15s; }
+.breadcrumb-item[data-crumb-idx="2"] { animation-delay: 0.25s; }
+.breadcrumb-item[data-crumb-idx="3"] { animation-delay: 0.35s; }
+.breadcrumb-item[data-crumb-idx="4"] { animation-delay: 0.45s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .breadcrumb-item { opacity: 1; animation: none; }
+}
+
 .ls-ready .ls-char {
   opacity: 0;
   animation: letter-settle 0.32s cubic-bezier(0.22, 1, 0.36, 1) forwards;
@@ -294,6 +322,21 @@ footer .hover\:border-international-orange::after {
 
 .artwork-developing {
   animation: artwork-develop 0.5s ease-out forwards;
+}
+
+/* ─── Lazy-loaded image fade-in ──────────────────────────────────────────── */
+
+img[loading="lazy"] {
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+}
+
+img[loading="lazy"].jfsn-loaded {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  img[loading="lazy"] { transition: none; opacity: 1; }
 }
 
 /* ─── View Transitions ────────────────────────────────────────────────────── */
@@ -467,6 +510,65 @@ footer .hover\:border-international-orange::after {
 #nav-menu-btn[aria-expanded="true"] svg line:nth-child(3) {
   stroke-dasharray: 24.04;
   stroke-dashoffset: -10.5;
+}
+
+/* ─── Metadata rows: hover highlight ─────────────────────────────────────── */
+
+div[class*="grid"][class*="gap"][class*="border-b"][class*="py-sm"] {
+  transition: background-color 0.2s ease, border-left-color 0.2s ease;
+  border-left: 3px solid transparent;
+}
+
+div[class*="grid"][class*="gap"][class*="border-b"][class*="py-sm"]:hover {
+  background-color: rgba(142, 113, 100, 0.04);
+  border-left-color: #FF6600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  div[class*="grid"][class*="gap"][class*="border-b"][class*="py-sm"] { transition: none; }
+}
+
+/* ─── TOC link active state enhancement ───────────────────────────────────── */
+
+.toc-active {
+  color: #FF6600 !important;
+  font-weight: 600 !important;
+  border-left: 2px solid #FF6600 !important;
+  padding-left: 10px !important;
+  transition: all 0.25s ease;
+}
+
+/* ─── Adjacent works preview ─────────────────────────────────────────────── */
+
+.adjacent-preview {
+  position: absolute;
+  top: -110px;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  border: 1px solid #c4c7c7;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.adjacent-nav-btn:hover .adjacent-preview {
+  opacity: 1;
+}
+
+.adjacent-nav-btn {
+  position: relative;
+}
+
+@media (max-width: 640px) {
+  .adjacent-preview {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toc-active { transition: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

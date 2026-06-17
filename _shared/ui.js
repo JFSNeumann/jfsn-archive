@@ -182,6 +182,48 @@
     };
   }
 
+  // ─── Scroll-to-section flash highlight ──────────────────────────────────
+  // When a TOC link is clicked, briefly highlight the target section
+  document.addEventListener('click', function(e) {
+    var link = e.target.closest('a[href^="#"]');
+    if (!link) return;
+    var targetId = link.getAttribute('href').substring(1);
+    var section = document.getElementById(targetId);
+    if (!section) return;
+
+    // Add brief highlight
+    section.style.transition = 'background-color 0.3s ease';
+    var origBg = section.style.backgroundColor || '';
+    section.style.backgroundColor = 'rgba(142, 113, 100, 0.08)';
+    setTimeout(function() {
+      section.style.backgroundColor = origBg;
+    }, 600);
+  });
+
+  // ─── Lazy-load image fade-in + dominant color placeholder ─────────────
+  var lazyImages = document.querySelectorAll('img[loading="lazy"]');
+  lazyImages.forEach(function(img) {
+    // Get dominant color from data attribute if available
+    var dominantColor = img.dataset.dominantColor || '#f3f0ea';
+    img.style.backgroundColor = dominantColor;
+
+    // Trigger fade-in when image loads
+    if (img.complete) {
+      // Image already loaded (cached)
+      img.classList.add('jfsn-loaded');
+    } else {
+      img.addEventListener('load', function() {
+        img.classList.add('jfsn-loaded');
+      });
+      // Fallback: fade in after 1s even if load doesn't fire
+      setTimeout(function() {
+        if (!img.classList.contains('jfsn-loaded')) {
+          img.classList.add('jfsn-loaded');
+        }
+      }, 1000);
+    }
+  });
+
   // Artwork thumbnails are full color always — no mask-image, no scroll-reveal.
   // (Removed session 8; banned — do not re-add.)
 
