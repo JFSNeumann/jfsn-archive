@@ -1,5 +1,41 @@
 [
   {
+    "sha": "d284fa0",
+    "date": "2026-06-17",
+    "title": "Apply style guide changes to all pages",
+    "body": "Added _shared/ui.css and _shared/ui.js to all 40 pages:\n- ui.css: Phase A-D animations, micro-interactions, utilities\n- ui.js: Keyboard shortcuts overlay, hero scroll animation, page transitions, toast notifications, saved filters support\n\nAll pages now have:\n✓ Keyboard shortcuts (press ? for help)\n✓ Micro-interactions and animations\n✓ Shared interactive features\n✓ Consistent styling system\n\nUpdated CACHE_V in sw.js to invalidate old cached assets."
+  },
+  {
+    "sha": "47c8dac",
+    "date": "2026-06-17",
+    "title": "Add 3 final advanced features",
+    "body": "1. Homepage Hero Scroll Animation Refinement\n   - Enhanced easing curve (ease-in-out for smoother progression)\n   - Added subtle blur effect (0→2px) as heading scales\n   - Improved responsiveness with better progress calculations\n   - Respects prefers-reduced-motion\n\n2. Keyboard Shortcuts Documentation Overlay\n   - Press '?' to show modal overlay with shortcuts\n   - Displays P/N (prev/next work), ←→ (decade nav), ? (help)\n   - Modal has backdrop blur + fade-in animation\n   - Close with ESC or backdrop click\n   - Uses existing reveal-fade-in animation\n\n3. Advanced Filter UI (Saved Searches & Presets)\n   - Save current filter combination as preset (localStorage)\n   - Load saved presets with one click\n   - Delete presets with × button\n   - Shows count of saved filters\n   - Uses localStorage (persistent across sessions)\n   - Integrates with existing toast notification system\n\nAll features maintain design consistency and accessibility."
+  },
+  {
+    "sha": "90b4dfc",
+    "date": "2026-06-17",
+    "title": "Update style guide: document Session 57 completion (27 improvements shipped)",
+    "body": ""
+  },
+  {
+    "sha": "78cfe75",
+    "date": "2026-06-17",
+    "title": "Add 4 final UI enhancement features",
+    "body": "1. Scroll-Reveal Animations\n   - CSS: @keyframes reveal-fade-in (opacity 0→1, translateY 20px→0, 0.6s ease-out)\n   - JS: IntersectionObserver detects .reveal-on-scroll entries\n   - Stagger delay: var(--reveal-delay) for sequence effect (50ms per element)\n   - Respects prefers-reduced-motion\n\n2. Micro-Interactions (Button Press Feedback)\n   - Button press: scale(1→0.95→1) for tactile feedback (150ms)\n   - Success state: .success-state with green bg + ✓ prefix\n   - Success pulse: scale(1→1.05→1) animation (400ms)\n   - Error state: .error-state with red bg\n   - Respects prefers-reduced-motion\n\n3. Custom Scrollbar Styling\n   - ✅ Already implemented in Phase D\n   - Warm-brown (#8e7164) + orange hover\n   - Desktop only, system fallback\n\n4. Loading Skeleton Placeholders\n   - Shimmer animation (gradient sweep, 2s cycle)\n   - Variants: .skeleton--text, .skeleton--avatar, .skeleton--card, .skeleton--image\n   - Size variants: lg, sm\n   - Grid layout: .skeleton-grid for card placeholders\n   - Warm-brown color palette (#e3bfb1/#d9b3a3)\n   - Respects prefers-reduced-motion\n\nAll features maintain design consistency and accessibility standards."
+  },
+  {
+    "sha": "8cc79a9",
+    "date": "2026-06-17",
+    "title": "Add 3 medium-priority UX improvements",
+    "body": "1. Data Table Styling (for CSV/API results)\n   - Zebra striping for readability (odd rows light)\n   - Hover state transitions (background + shadow)\n   - Mobile: responsive stacking with data-label attributes\n   - Better visual hierarchy with header styling\n   - Monospace for code/IDs, lighter text for notes\n\n2. Related Works Sidebar (on artwork pages)\n   - Card-based styling with left orange border accent\n   - Hover state: background shift + text color change\n   - Better spacing and visual separation\n   - Subtle shadow on hover\n   - Responsive layout improvements\n\n3. Print Styles (optimize for printing)\n   - Enhanced page setup (0.75in margins, letter size)\n   - Remove navigation, filters, interactive UI\n   - Better heading hierarchy and sizing\n   - Show URLs for all links (print reference)\n   - Zebra-striping removed, table borders added for clarity\n   - Code blocks with background for readability\n   - Page-break rules for sections and tables\n   - Better image sizing and spacing\n\nAll improvements maintain brand consistency while enhancing usability."
+  },
+  {
+    "sha": "ce336db",
+    "date": "2026-06-17",
+    "title": "Fix 3 high-priority UX issues",
+    "body": "1. Decade page discoverability: Already solved\n   - Decade links in start-here.html (3-column grid)\n   - start-here.html linked in main nav\n   - Status: VERIFIED ✅\n\n2. Search/filter loading state: UPGRADED\n   - Replaced old inline pulse animation with Phase A loading animations\n   - Now shows progress bar + staggered dot animation (more visible feedback)\n   - File: archive.html #filter-loading (lines 477-481)\n   - Uses .filter-loading and .loader-dot classes from ui.css\n\n3. Mobile breadcrumb truncation: FIXED\n   - Bug: mobile condition never triggered (parts.length always 1)\n   - Fix: Simplify logic to always truncate on mobile (< 768px)\n   - Now shows \"Archive › … › Current\" on mobile, full path on desktop\n   - File: archive.html updateBreadcrumb() function (lines 782-795)\n\nAll ready for next deploy."
+  },
+  {
     "sha": "5d3ec7b",
     "date": "2026-06-17",
     "title": "Bump CACHE_V for Phase A-D animations deploy",
