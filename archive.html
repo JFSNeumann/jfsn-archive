@@ -647,8 +647,26 @@ function applyFilters() {
   if (chipItems.length) {
     filterChips.style.display = 'flex';
     filterChips.innerHTML = chipItems.map(c =>
-      `<span class="filter-chip">${c.label}<button aria-label="Remove ${c.label} filter" onclick="(function(){var cb=document.querySelector('#filter-${c.type} input[value=\\'${c.val}\\']');if(cb){cb.checked=false;applyFilters();}})()">×</button></span>`
+      `<span class="filter-chip">${c.label}<button aria-label="Remove ${c.label} filter" data-filter-type="${c.type}" data-filter-val="${c.val}">×</button></span>`
     ).join('') + (chipItems.length > 1 ? `<button class="filter-chip-clear" onclick="document.querySelectorAll('.custom-checkbox:checked').forEach(function(cb){cb.checked=false;});applyFilters();">Clear all</button>` : '');
+
+    // Attach chip removal handlers with animation (Phase A 4.1)
+    document.querySelectorAll('.filter-chip button[data-filter-type]').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const chip = this.closest('.filter-chip');
+        chip.classList.add('removing');
+        if (navigator.vibrate) navigator.vibrate(20);
+        setTimeout(() => {
+          const cb = document.querySelector('#filter-' + this.dataset.filterType + ' input[value="' + this.dataset.filterVal + '"]');
+          if (cb) {
+            cb.checked = false;
+            applyFilters();
+          }
+        }, 200);
+      });
+    });
+  }
   } else {
     filterChips.style.display = 'none';
     filterChips.innerHTML = '';

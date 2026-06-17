@@ -1,285 +1,957 @@
-# BEST-IN-CLASS UX/UI IMPROVEMENT PROMPT
+# Best-in-Class UX/UI: Museum-Grade Micro-Interactions & Animation Refinement
 
-**JFSN Archive — Micro-Interactions, Animations & Design Refinement**  
-*Session 57+ Implementation Guide*
+## Vision
 
----
+Transform JFSN archive from a clean, fast experience into a museum-grade interface with subtle, purposeful micro-interactions. Every animation serves discovery — fades, slides, color shifts, and timing cues that guide without distraction. No decorative motion. No scale/transform on artwork. Respect `prefers-reduced-motion` universally.
 
-## Context: What You Already Have
-
-The JFSN Archive currently runs on:
-- ✅ **Stitch Light design system** (5 + 2 adopted tokens, archival warm-brown borders, soft paper-shadow cards)
-- ✅ **Phase 1 & 2 animations** (10 total: entrance fades + slides with stagger, breadcrumb draw, filter chip animations)
-- ✅ **Solid component library** (quote cards, archive cards, buttons, links, forms, data tables, breadcrumbs, filter chips)
-- ✅ **Accessibility baseline** (WCAG AA contrast, keyboard nav, screen readers, reduced-motion respect)
-- ✅ **Performance wins** (LCP 3.9s, Archive performance 78, Service Worker caching)
-- ✅ **Navigation polish** (6-item decade grid on start-here, mobile breadcrumb truncation, related works sidebar)
-
-**Foundation is solid.** Everything shipped works. The goal is to elevate to museum-grade elegance through deliberate, restrained micro-interactions and strategic animation refinement.
+**Scope:** 17 items across 4 phases (12–16 hours total)  
+**Constraint vocabulary:** fade · slide · color · lift (perspective depth only) · stagger · delay  
+**Design tokens:** Warm-brown borders + orange accent + saturation overlay system (existing)  
+**Entry point:** Phase A quick wins (2–4h) establish patterns; Phases B–D refine.
 
 ---
 
-## TIER 1: MICRO-INTERACTIONS (Highest Impact, Lowest Risk)
+## Full 17-Item Inventory
 
-### 1.1 Cursor Feedback on Artworks (Zoom-In Signaling)
-- **Current:** `.thumb__link { cursor: zoom-in }` is set but could be enhanced
-- **Opportunity:** On hover, add a **subtle 200ms scale-out animation on the cursor area** (imperceptible but feels responsive). Consider showing a small "Click to view" tooltip (fade-in, 300ms delay, fade-out on leave).
-- **Best-in-class:** Figma, Apple Photos, and high-end design tools signal affordance via cursor + imperceptible feedback.
-- **Constraint:** Don't scale artwork (banned). Cursor feedback only.
-- **Priority:** High. Users need to know artwork is clickable.
+### Phase A: Quick Wins (2–4h) ⭐ Start here
+1. **Filter chip removal animation** — pulse + slide-left fade + haptic
+2. **Data table row hover state** — background shift + border slide-in + text color
+3. **Loading state refinement** — progress bar + dot scale stagger
+4. **Cursor feedback tooltip** — "Click to view" fade-in at 300ms delay
 
-### 1.2 Filter Chip Removal (Haptic-Like Feedback)
-- **Current:** `.filter-chip` has click-to-remove, but no visual sting.
-- **Opportunity:** On click, chip plays a quick 150ms **color-pulse** (orange → base → orange, 1 beat). Then a 200ms **slide-left fade** out (translateX(-20px) + opacity 0). On mobile, add a subtle **haptic trigger** (navigator.vibrate if available, 20ms pulse).
-- **Best-in-class:** Jira, Linear, and iOS Mail all give satisfying feedback when removing filters/emails.
-- **Animation timing:**
-  ```css
-  @keyframes chip-remove {
-    0% { transform: translateX(0); opacity: 1; }
-    100% { transform: translateX(-20px); opacity: 0; }
-  }
-  /* 200ms ease-out */
-  ```
-- **Priority:** High. Makes filtering feel responsive and intentional.
+### Phase B: State & Transition (4–6h)
+5. **Page transitions** — fade-through-color overlay on nav (archive ↔ artwork)
+6. **Archive grid staggered entrance** — items slide-up + fade in 40ms stagger (left→right, top→bottom)
+7. **Related works sidebar** — staggered card entrance (50ms per card, fade + slide-up)
+8. **Form input check animation** — checkbox/radio scale-in bounce on check
+9. **Breadcrumb color shift** — current page text slides orange on focus
 
-### 1.3 Breadcrumb Navigation Feedback
-- **Current:** Breadcrumbs are clickable but feel flat.
-- **Opportunity:** On hover, **the clicked segment highlights with a subtle background shift** (#e3bfb1 soft outline for 100ms), then **unlinks back to base state**. Add a **click-to-load transition**: when clicked, the page fades out (opacity 0.5, 150ms) while the header stays fixed, then the new page fades in. Feels like a single continuous experience.
-- **Best-in-class:** Stripe docs and Shopify admin both have elegant breadcrumb navigation with anticipatory feedback.
-- **Priority:** Medium. Improves navigation confidence.
+### Phase C: Refinements (2–4h)
+10. **Hover link underline animation** — `⌘K` bracket links draw underline (color + width scale)
+11. **Table sort indicator animation** — arrow rotates + color shifts on active sort column
+12. **Search result highlight flash** — matching text gets subtle yellow flash on load
+13. **Artwork modal entrance** — backdrop blur fade-in + image scale-in (100ms offset)
+14. **Mobile gesture feedback** — swipe to navigate decade pages, haptic on slide-end
 
-### 1.4 Form Input States (Focus-to-Entry Anticipation)
-- **Current:** Custom checkboxes have focus outline but no pre-check feedback.
-- **Opportunity:** On focus, add a **20ms border color transition** (#FF6600 border glow). On check, **the checkmark appears with a subtle 150ms scale-in bounce** (scale 0.7→1, ease: cubic-bezier(0.68, -0.55, 0.265, 1.55)). Add a tiny **success flash** (green 80ms pulse if feedback is desired, optional).
-- **Best-in-class:** Stripe's checkout and Figma's forms both have delightful check interactions.
-- **Priority:** Medium. Improves form perception of quality.
-
-### 1.5 Data Table Row Hover (Researcher Delight)
-- **Current:** Table rows have no hover state.
-- **Opportunity:** On row hover, **background transitions to #ebe8e2 (100ms ease)**. The Work ID text **color transitions to orange-ink** (same timing). Add a **left border accent** (2px, #FF6600, slides in from left with 150ms transform: scaleX). Row feels selected without bulk.
-- **Best-in-class:** Notion tables and Airtable have elegant row highlighting.
-- **Priority:** Medium. Researchers expect this; tables feel unfinished without it.
+### Phase D: Polish (1–2h)
+15. **Scrollbar styling** — custom warm-brown scrollbar (desktop only, system default fallback)
+16. **Focus ring animation** — focus state outline pulses orange (200ms cycle) on keyboard nav
+17. **Success/error toast animation** — slide-in from top, color-coded (green/red), auto-fade after 3s
 
 ---
 
-## TIER 2: ANIMATION ENHANCEMENTS (Refined Entrance + State Transitions)
+## Phase A: Quick Wins Detailed (2–4h)
 
-### 2.1 Loading State Refinement
-- **Current:** Filter-loading div has pulsing dots (good).
-- **Opportunity:** Add a subtle **progress indicator bar** above the grid when filtering starts. Bar fills from left to right over 200ms (then holds 90% until content loads, then completes). Add a **scale-in animation to the loading dots** themselves (0.7→1.0, stagger 100ms per dot, infinite repeat).
-- **Timing:**
-  ```css
-  @keyframes dot-pulse-scale {
-    0%, 100% { transform: scale(0.8); opacity: 0.6; }
-    50% { transform: scale(1); opacity: 1; }
-  }
-  /* 1s infinite */
-  ```
-- **Priority:** High. Current loader is subtle; refined version signals work is happening.
+### 4.1 Filter Chip Removal Animation
+**File:** `archive.html` (look for `.filter-chip` or `#filter-chips`)  
+**Effort:** 30 min
 
-### 2.2 Page Transition (Fade-Through-Color)
-- **Current:** No page transitions between archive → artwork or archive filters.
-- **Opportunity:** When navigating between archive filters or clicking an artwork, add a **split-second overlay fade** (black or archival-brown, 0→0.08→0, 200ms total). Use `page-transition` API if available (Chrome 111+); fallback to JS overlay.
-- **Best-in-class:** Apple's iOS Photos app and Framer do this elegantly.
-- **Constraint:** Keep it subtle (8% opacity max) so images remain visible.
-- **Priority:** Medium. Elevates perceived polish.
+**What:** When user clicks chip's × button, animate out:
+- **150ms color pulse** (orange flash, 1 beat) 
+- **200ms slide-left fade** (translateX(-20px) + opacity 0)
+- Mobile: Add `navigator.vibrate(20)` haptic pulse on click
 
-### 2.3 Breadcrumb Underline Animation (Draw vs. Fade)
-- **Current:** Breadcrumb links have animated underlines (good).
-- **Opportunity:** **Change from `transform: scaleX`** to a **clip-path reveal** for more elegant draw-in effect:
-  ```css
-  text-decoration: underline;
-  text-decoration-color: transparent;
-  clip-path: polygon(0 0, var(--reveal, 0%) 0, var(--reveal, 0%) 100%, 0 100%);
-  /* On hover, set --reveal: 100% via CSS variable transition */
-  ```
-  Creates a true "underline draws from left to right" effect.
-- **Priority:** Low (cosmetic refinement, but high-class).
+**CSS to add** (in `_shared/ui.css`):
+```css
+@keyframes chip-remove {
+  0% { transform: translateX(0); opacity: 1; }
+  100% { transform: translateX(-20px); opacity: 0; }
+}
 
-### 2.4 Related Works Sidebar Entrance (Staggered Grid)
-- **Current:** Related works appear instantly on artwork load.
-- **Opportunity:** Each related work card **fades in + slides up in sequence** (50ms stagger). First card at 0ms, second at 50ms, etc.
-- **Animation:**
-  ```css
-  @keyframes related-enter {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  /* 0.4s ease-out, staggered */
-  ```
-- **Priority:** Medium. Adds visual rhythm to the sidebar.
+@keyframes chip-pulse {
+  0%, 100% { background-color: #ebe8e2; }
+  50% { background-color: #FFB366; }
+}
 
-### 2.5 Search Results Grid Entrance (Masonry Reveal)
-- **Current:** Archive grid items render instantly after filter.
-- **Opportunity:** Each thumbnail **fades in with a staggered entrance** (40ms delay per item in reading order: left→right, top→bottom). Add a **subtle 3D perspective effect** (transform-origin: center; transform: perspective(1000px) rotateY(5deg)→rotateY(0deg)) to create depth. Feels like results are being arranged in front of you.
-- **Constraint:** Perspective only on desktop (mobile: simple fade).
-- **Priority:** Medium. Transforms archive grid from "list" to "spatial arrangement."
+.filter-chip.removing {
+  animation: chip-pulse 0.15s ease, chip-remove 0.2s ease-out forwards;
+}
+```
+
+**JS to add** (in archive.html or ui.js):
+```js
+document.querySelectorAll('.filter-chip .remove-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const chip = btn.closest('.filter-chip');
+    chip.classList.add('removing');
+    if (navigator.vibrate) navigator.vibrate(20);
+    setTimeout(() => chip.remove(), 200);
+  });
+});
+```
+
+**Test:** Click chip × → see color pulse + slide-left fade  
+**Mobile test:** iPhone 15 Pro, device vibrates on removal
 
 ---
 
-## TIER 3: DESIGN POLISH (Subtle, Refined Aesthetic)
+### 4.2 Data Table Row Hover State
+**File:** `archive.html` or `style-guide.html` (data table `<table>`)  
+**Effort:** 40 min
 
-### 3.1 Orange Accent Transition (Hover Anticipation)
-- **Current:** Hover effects use instant color changes.
-- **Opportunity:** Change all `color: #FF6600` transitions to **use a cubic-bezier ease** (0.4, 0, 0.2, 1) for a **snappier, more premium feel**. Use `transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1)` site-wide.
-- **Example:**
-  ```css
-  a { transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
-  ```
-- **Why:** Material Design uses this easing; it feels polished and intentional.
-- **Priority:** Low (perceptual only, high class).
+**What:** On row hover:
+- Background transitions to `#ebe8e2` (100ms ease)
+- Work ID text transitions to orange-ink `#B84700` (same timing)
+- Left border accent slides in (2px, `#FF6600`, scaleX 0→1, 150ms)
 
-### 3.2 Soft Shadow Layering (Card Depth Hierarchy)
-- **Current:** Cards use uniform `0 0 20px rgba(0,0,0,0.05)` (soft diffuse shadow).
-- **Opportunity:** Add **layered shadows for depth perception**:
-  ```css
-  box-shadow: 
-    0 1px 2px rgba(0, 0, 0, 0.04),
-    0 4px 8px rgba(0, 0, 0, 0.05),
-    0 12px 24px rgba(0, 0, 0, 0.06);
-  ```
-  Creates a **subtle 3D lift** (like the card is floating slightly above the page).
-- **Where:** Quote cards, archive cards, component cards.
-- **Priority:** Low (aesthetic only, but luxury-brand feel).
+**CSS to add** (in `_shared/ui.css`):
+```css
+table tbody tr {
+  transition: background-color 0.1s ease;
+  position: relative;
+}
 
-### 3.3 Backdrop Blur on Fixed Header (Glassmorphism Polish)
-- **Current:** Header has solid background `rgba(252,249,243,0.92)`.
-- **Opportunity:** Add **`backdrop-filter: blur(8px)`** for modern browsers. Creates a **frosted glass effect** when scrolling.
-- **CSS:**
-  ```css
-  header {
-    background: rgba(252, 249, 243, 0.85);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+table tbody tr::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: #FF6600;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.15s ease;
+}
+
+table tbody tr:hover {
+  background-color: #ebe8e2;
+}
+
+table tbody tr:hover::before {
+  transform: scaleX(1);
+}
+
+table tbody tr:hover td:first-child {
+  color: #B84700;
+  transition: color 0.1s ease;
+}
+```
+
+**Test:** Hover table row → background shifts, left border slides in, Work ID turns orange  
+**Mobile test:** Tap row (focus simulation on supported browsers)
+
+---
+
+### 4.3 Loading State Refinement
+**File:** `archive.html` (look for `#filter-loading` or `.loading-indicator`)  
+**Effort:** 30 min
+
+**What:** Enhance existing pulsing dots:
+- Add subtle **progress bar** above grid (fills 0→90% over 200ms while loading)
+- Refine **dot animation** (scale 0.8→1.0 with stagger, more visible)
+
+**CSS to add** (in `_shared/ui.css`):
+```css
+@keyframes dot-pulse-scale {
+  0%, 100% { transform: scale(0.8); opacity: 0.6; }
+  50% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes progress-fill {
+  0% { width: 0%; }
+  100% { width: 90%; }
+}
+
+.filter-loading {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.filter-loading::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 0;
+  height: 2px;
+  background-color: #FF6600;
+  animation: progress-fill 0.2s ease forwards;
+}
+
+.loader-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #FF6600;
+  margin: 0 4px;
+  animation: dot-pulse-scale 1s infinite;
+}
+
+.loader-dot:nth-child(1) { animation-delay: 0s; }
+.loader-dot:nth-child(2) { animation-delay: 0.1s; }
+.loader-dot:nth-child(3) { animation-delay: 0.2s; }
+```
+
+**Test:** Apply filter → see progress bar fill + dots pulse with stagger  
+**Check:** After load, progress bar holds at 90%, dots stop
+
+---
+
+### 4.4 Cursor Feedback on Artworks (Tooltip)
+**File:** `_shared/ui.css` (`.thumb__link` or artwork hover state)  
+**Effort:** 20 min
+
+**What:** On hover over artwork thumbnail:
+- Cursor already set to `zoom-in` ✓
+- Add optional **tooltip** "Click to view" (fade-in at 300ms delay)
+
+**CSS to add** (in `_shared/ui.css`):
+```css
+.thumb__link::after {
+  content: 'Click to view';
+  position: absolute;
+  bottom: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(11, 11, 11, 0.9);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 3px;
+  font-size: 10px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease 0.3s; /* 300ms delay */
+  z-index: 10;
+}
+
+.thumb__link:hover::after {
+  opacity: 1;
+}
+
+/* Disable tooltip on touch devices */
+@media (hover: none) {
+  .thumb__link::after {
+    display: none;
   }
-  ```
-- **Priority:** Low (enhancement, fallback is solid).
+}
+```
 
-### 3.4 Monospace Metadata Styling (Technical Elegance)
-- **Current:** Monospace is used for Work IDs but could be more distinctive.
-- **Opportunity:** Add a **subtle background tint** to monospace metadata:
-  ```css
-  code, .monospace { 
-    background: #f9f7f4; 
-    padding: 2px 4px;
-    border-radius: 2px;
-  }
-  ```
-  Makes technical identifiers **stand out as code**, not just plain text.
-- **Priority:** Low (researcher quality signal).
+**Constraint:** Don't scale the image itself (banned). Tooltip only.
 
-### 3.5 Scrollbar Styling (Desktop Refinement)
-- **Current:** System default scrollbar.
-- **Opportunity:** Custom scrollbar **matching design tokens**:
-  ```css
-  ::-webkit-scrollbar {
-    width: 8px;
+**Test:** Hover thumbnail → tooltip appears after 300ms, reads "Click to view"  
+**Mobile test:** No tooltip on tap (disabled via `@media (hover: none)`)
+
+---
+
+## Phase B: State & Transition Detailed (4–6h)
+
+### 5. Page Transitions
+**File:** All page navigation routes  
+**Effort:** 1h
+
+**What:** Fade-through-color overlay when navigating between pages.
+
+**Decision Point:** Which pages?  
+- Option A: All internal nav (archive → artwork → series → etc.)
+- Option B: Archive-only (archive ↔ artwork detail)
+- **Recommendation:** Archive-only for Phase A (less disruptive, easier to test)
+
+**CSS:**
+```css
+@keyframes page-fade {
+  0% { opacity: 0; }
+  50% { opacity: 0.08; }
+  100% { opacity: 0; }
+}
+
+.page-transition {
+  position: fixed;
+  inset: 0;
+  background-color: #0B0B0B;
+  opacity: 0;
+  pointer-events: none;
+  animation: page-fade 0.2s ease forwards;
+  z-index: 999;
+}
+```
+
+**JS:**
+```js
+// On internal nav link click:
+document.addEventListener('click', (e) => {
+  const link = e.target.closest('a[href*="#"]');
+  if (!link) return;
+  
+  const overlay = document.createElement('div');
+  overlay.className = 'page-transition';
+  document.body.appendChild(overlay);
+  
+  setTimeout(() => { link.click(); overlay.remove(); }, 100);
+});
+```
+
+**Test:** Navigate archive → artwork detail → see fade-through-color overlay
+
+---
+
+### 6. Archive Grid Staggered Entrance
+**File:** `archive.html` (grid container + `.thumb` items)  
+**Effort:** 1.5h
+
+**What:** When archive grid loads, items fade + slide-up with 40ms stagger per item (left→right, top→bottom).
+
+**Decision Point:** Inline delay styles or JS loop?  
+- Option A: `animation-delay` inline on each `.thumb` (smaller JS footprint)
+- Option B: JS loop adding `--delay` CSS variable (more flexible)
+- **Recommendation:** CSS variables + JS (cleaner, easier to adjust)
+
+**CSS:**
+```css
+@keyframes grid-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
   }
-  ::-webkit-scrollbar-track {
-    background: #fcf9f3;
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
+}
+
+.thumb {
+  animation: grid-enter 0.6s ease-out forwards;
+  animation-delay: var(--delay, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thumb {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+```
+
+**JS** (in archive.html or ui.js):
+```js
+function staggerGridItems() {
+  const items = document.querySelectorAll('.thumb');
+  const columns = Math.ceil(window.innerWidth / 280); // rough column count
+  
+  items.forEach((item, i) => {
+    const row = Math.floor(i / columns);
+    const col = i % columns;
+    const delay = (row * columns + col) * 0.04; // 40ms stagger
+    item.style.setProperty('--delay', `${delay}s`);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', staggerGridItems);
+window.addEventListener('resize', staggerGridItems);
+```
+
+**Test:** Load archive.html → grid items fade + slide-up with visible stagger  
+**Reduced motion test:** No animation, items visible immediately
+
+---
+
+### 7. Related Works Sidebar
+**File:** `artwork.html` (related works section)  
+**Effort:** 1h
+
+**What:** Related works cards fade + slide-up with 50ms stagger per card.
+
+**CSS:**
+```css
+@keyframes related-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.related-work-card {
+  animation: related-enter 0.5s ease-out forwards;
+  animation-delay: var(--delay, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .related-work-card {
+    animation: none;
+  }
+}
+```
+
+**JS:**
+```js
+const cards = document.querySelectorAll('.related-work-card');
+cards.forEach((card, i) => {
+  card.style.setProperty('--delay', `${i * 0.05}s`);
+});
+```
+
+**Test:** Open artwork → related works slide up with stagger
+
+---
+
+### 8. Form Input Check Animation
+**File:** Any `<input type="checkbox">` or `<input type="radio">`  
+**Effort:** 45 min
+
+**What:** On check/uncheck, checkmark/radio dot scales in (1.0 → 1.2 → 1.0, 150ms bounce).
+
+**CSS:**
+```css
+@keyframes check-scale {
+  0% { transform: scale(0.8); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+  animation: check-scale 0.15s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  input[type="checkbox"]:checked,
+  input[type="radio"]:checked {
+    animation: none;
+  }
+}
+```
+
+**Test:** Check/uncheck filter checkboxes → see bounce scale animation
+
+---
+
+### 9. Breadcrumb Color Shift
+**File:** `artwork.html` breadcrumb trail  
+**Effort:** 30 min
+
+**What:** Current page link text slides from `#0B0B0B` to `#B84700` (orange-ink) when page loads or focus enters breadcrumb.
+
+**CSS:**
+```css
+.breadcrumb-current {
+  color: #0B0B0B;
+  transition: color 0.3s ease;
+}
+
+.breadcrumb-current:focus,
+.breadcrumb.active .breadcrumb-current {
+  color: #B84700;
+}
+```
+
+**Test:** Open artwork detail → breadcrumb "current page" turns orange
+
+---
+
+## Phase C: Refinements Detailed (2–4h)
+
+### 10. Hover Link Underline Animation
+**File:** `⌘K` bracket links (`[ EXPLORE → ]`)  
+**Effort:** 45 min
+
+**What:** Underline draws from left-to-right on hover, plus color shift from `#0B0B0B` to `#B84700`.
+
+**CSS:**
+```css
+@keyframes underline-draw {
+  0% {
+    width: 0;
+    left: 0;
+  }
+  100% {
+    width: 100%;
+    left: 0;
+  }
+}
+
+.bracket-link {
+  position: relative;
+  color: #0B0B0B;
+  transition: color 0.2s ease;
+  text-decoration: none;
+}
+
+.bracket-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #FF6600;
+  animation: underline-draw 0.3s ease forwards;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.bracket-link:hover {
+  color: #B84700;
+}
+
+.bracket-link:hover::after {
+  opacity: 1;
+}
+```
+
+**Test:** Hover over bracket link → underline draws + text turns orange
+
+---
+
+### 11. Table Sort Indicator Animation
+**File:** `archive.html` data table headers  
+**Effort:** 45 min
+
+**What:** When column is sorted, arrow rotates (180°) + color shifts to `#B84700`.
+
+**CSS:**
+```css
+@keyframes arrow-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(180deg); }
+}
+
+.sort-arrow {
+  display: inline-block;
+  color: #575757;
+  transition: color 0.2s ease;
+}
+
+.sort-column .sort-arrow {
+  color: #B84700;
+  animation: arrow-rotate 0.3s ease;
+}
+```
+
+**Test:** Click table sort header → arrow rotates + turns orange
+
+---
+
+### 12. Search Result Highlight Flash
+**File:** `search.js` or search results display  
+**Effort:** 30 min
+
+**What:** Matching text gets subtle yellow flash on load (300ms duration, 30% opacity yellow).
+
+**CSS:**
+```css
+@keyframes search-flash {
+  0% { background-color: rgba(255, 255, 0, 0.3); }
+  100% { background-color: rgba(255, 255, 0, 0); }
+}
+
+.search-match {
+  animation: search-flash 0.3s ease-out;
+}
+```
+
+**JS:**
+```js
+// On search result render:
+const matches = document.querySelectorAll('.search-result .work-title');
+matches.forEach(m => m.classList.add('search-match'));
+```
+
+**Test:** Search for term → results highlight yellow then fade
+
+---
+
+### 13. Artwork Modal Entrance
+**File:** `artwork.html` modal or lightbox (if added)  
+**Effort:** 1h
+
+**What:** Backdrop blur fades in (150ms) + image scales in with 100ms offset (scale 0.9 → 1.0).
+
+**CSS:**
+```css
+@keyframes backdrop-blur-in {
+  0% { backdrop-filter: blur(0px); opacity: 0; }
+  100% { backdrop-filter: blur(4px); opacity: 1; }
+}
+
+@keyframes image-scale-in {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.modal-backdrop {
+  animation: backdrop-blur-in 0.15s ease forwards;
+}
+
+.modal-image {
+  animation: image-scale-in 0.3s ease forwards;
+  animation-delay: 0.1s;
+}
+```
+
+**Test:** Open artwork modal → backdrop blurs in, image scales in after
+
+---
+
+### 14. Mobile Gesture Feedback
+**File:** `_shared/ui.js` (decade navigation)  
+**Effort:** 1.5h
+
+**What:** Swipe left/right to navigate decade pages. Haptic feedback on slide-end (if supported).
+
+**JS:**
+```js
+let touchStartX = 0;
+let touchEndX = 0;
+
+document.addEventListener('touchstart', (e) => {
+  touchStartX = e.changedTouches[0].clientX;
+});
+
+document.addEventListener('touchend', (e) => {
+  touchEndX = e.changedTouches[0].clientX;
+  handleSwipe();
+});
+
+function handleSwipe() {
+  const diff = touchStartX - touchEndX;
+  if (Math.abs(diff) > 50) { // threshold: 50px
+    if (diff > 0) { // swipe left
+      navigateDecade('next');
+    } else { // swipe right
+      navigatePrevious('prev');
+    }
+    if (navigator.vibrate) navigator.vibrate([10, 5, 10]); // haptic pattern
+  }
+}
+```
+
+**Test:** On mobile, swipe left/right between decades → haptic feedback on slide-end
+
+---
+
+## Phase D: Polish (1–2h)
+
+### 15. Scrollbar Styling
+**File:** `_shared/ui.css`  
+**Effort:** 20 min
+
+**What:** Custom scrollbar matching design tokens (warm-brown + orange hover).
+
+**CSS:**
+```css
+/* Webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #8e7164; /* warm-brown */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #FF6600; /* orange on hover */
+}
+
+/* Firefox */
+* {
+  scrollbar-color: #8e7164 transparent;
+  scrollbar-width: thin;
+}
+
+@media (prefers-reduced-motion: reduce) {
   ::-webkit-scrollbar-thumb {
-    background: #8e7164;
-    border-radius: 4px;
+    transition: none;
   }
-  ::-webkit-scrollbar-thumb:hover {
-    background: #FF6600;
+}
+```
+
+**Fallback:** System default scrollbar on older browsers (no error).
+
+**Test:** Desktop only. Scroll page → custom scrollbar visible, orange on hover.
+
+---
+
+### 16. Focus Ring Animation
+**File:** `_shared/ui.css`  
+**Effort:** 30 min
+
+**What:** Focus state outline pulses orange (200ms cycle) on keyboard nav.
+
+**CSS:**
+```css
+@keyframes focus-pulse {
+  0%, 100% { outline-color: rgba(255, 102, 0, 0.5); }
+  50% { outline-color: rgba(255, 102, 0, 1); }
+}
+
+*:focus-visible {
+  outline: 2px solid #FF6600;
+  animation: focus-pulse 0.2s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *:focus-visible {
+    animation: none;
+    outline: 2px solid #FF6600;
   }
-  ```
-- **Priority:** Very Low (desktop-only, cosmetic).
+}
+```
+
+**Test:** Tab through nav links → focus ring pulses orange
 
 ---
 
-## TIER 4: ADVANCED INTERACTIONS (Optional, High Effort)
+### 17. Success/Error Toast Animation
+**File:** Toast or notification component  
+**Effort:** 45 min
 
-### 4.1 Artwork Detail Page: Scroll-Linked Header Animation
-- When scrolling down on artwork.html, **hero heading shrinks** (font-size: 64px→40px, 300ms) and **hero credit line fades** (opacity: 1→0). Header becomes compact. On scroll up, reverses.
-- Feels like the page is **responding to your reading depth**.
-- **Priority:** Low (nice-to-have).
+**What:** Toast slides in from top (200ms), holds for 3s, slides out + fades (200ms). Color-coded: green for success, red for error.
 
-### 4.2 Archive Grid: Scroll-Reveal with Parallax Light
-- As grid items scroll into view, **background color of each row subtly shifts** (bone-white → 1% darker → back). Feels like items are being "lit up" as they become visible.
-- **Priority:** Very Low (CPU-intensive, low ROI).
+**CSS:**
+```css
+@keyframes toast-slide-in {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
 
-### 4.3 ⌘K Command Palette: Enter Animation
-- When ⌘K opens, **backdrop fades in** (0→0.5 opacity, 150ms), **search input scales up** (0.95→1.0, 200ms ease-out), **cursor auto-focuses input**. Feels like the palette is expanding into view.
-- **Priority:** Low (if command palette is implemented).
+@keyframes toast-slide-out {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
 
----
+.toast {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 20px;
+  border-radius: 4px;
+  z-index: 1000;
+  animation: toast-slide-in 0.2s ease forwards;
+}
 
-## IMPLEMENTATION PRIORITY ROADMAP
+.toast.success {
+  background-color: #4CAF50;
+  color: white;
+}
 
-### Phase A: Quick Wins (2–4 hours)
-1. Filter chip removal animation (haptic + slide-out)
-2. Data table row hover state (color + left accent)
-3. Loading state refinement (progress bar + dot scale)
-4. Cursor feedback on artworks (tooltip)
+.toast.error {
+  background-color: #F44336;
+  color: white;
+}
 
-### Phase B: Polish (4–6 hours)
-1. Form input check animation (scale-in bounce)
-2. Breadcrumb navigation transitions (fade-through-color on page nav)
-3. Related works sidebar entrance (staggered)
-4. Archive grid masonry reveal (perspective on desktop)
+.toast.exit {
+  animation: toast-slide-out 0.2s ease forwards;
+}
+```
 
-### Phase C: Refinement (2–3 hours)
-1. Orange easing site-wide (cubic-bezier)
-2. Layered card shadows
-3. Backdrop blur on header
-4. Monospace background tint
-5. Custom scrollbar
+**JS:**
+```js
+function showToast(message, type = 'success') {
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  
+  setTimeout(() => {
+    toast.classList.add('exit');
+    setTimeout(() => toast.remove(), 200);
+  }, 3000);
+}
 
-### Phase D: Advanced (Optional, 4+ hours)
-1. Scroll-linked header animation on artwork pages
-2. Breadcrumb underline clip-path reveal
-3. Page transition fade-through-color overlay
+// Usage: showToast('Work added to favorites!', 'success');
+```
 
----
-
-## DESIGN PRINCIPLE FOR THIS WORK
-
-**Micro-interactions are invisible until they're missing.**
-
-Each interaction should:
-1. **Signal affordance** (this is clickable/interactive)
-2. **Give feedback** (something happened)
-3. **Connect states** (A → B transition is visible, not jarring)
-4. **Respect user preference** (reduced-motion: disabled immediately)
-5. **Feel intentional** (chosen timing, easing, amplitude — not random)
-
-**Rule of restraint:** If an interaction takes more than 300ms or draws attention to itself, it's too much. Goal is responsive + premium, not animated.
-
----
-
-## IMPLEMENTATION NOTES
-
-- **Affected files:** `_shared/ui.css`, `archive.html`, `artwork.html`, `_shared/*.html` pages, `site.min.css` (rebuild after each phase)
-- **Testing:** Preview server + iPhone 15 Pro (mobile viewport)
-- **Accessibility:** All animations respect `prefers-reduced-motion: reduce`
-- **Performance:** Use `will-change: transform` sparingly; test against LCP/CLS budgets
-- **Browser support:** Modern Chrome, Safari, Firefox 103+; graceful degradation for older browsers
-
----
-
-## RECOMMENDED SESSION WORKFLOW
-
-1. **Start:** Verify current state (archive.html, artwork.html, _shared/ui.css)
-2. **Phase A:** Implement 4 quick-win micro-interactions (test each)
-3. **Phase B:** Add animation enhancements (test stagger timing)
-4. **Phase C:** Polish (easing + shadows + refinement)
-5. **Phase D:** Advanced (if time/energy; otherwise defer)
-6. **End:** Deploy, CACHE_V bump, memory update
-
-**Estimated total time:** 12–16 hours spread across 2–3 sessions.
+**Test:** Trigger success/error action → toast slides in, holds, slides out
 
 ---
 
-## DECISION POINTS FOR YOU
+## Decision Points (Answer Before Phase A)
 
-1. **Animation scope:** Are you comfortable with **staggered grid animations** (Phase B)? Requires either inline styles or small JS loop.
-2. **Page transitions:** Want **fade-through-color overlay** on all navigation, or just archive → artwork?
-3. **Haptic feedback:** Should filter chip removal **vibrate on mobile**, or leave for future?
-4. **Scrollbar:** Worth adding for desktop, or keep system default?
+**Q1: Staggered Grid Animations**  
+Archive grid items fade + slide-up with 40ms stagger per item?  
+- [ ] Yes, proceed (Recommended)
+- [ ] No, skip for now
+
+**Q2: Page Transitions**  
+Fade-through-color overlay on nav?  
+- [ ] All internal nav
+- [ ] Archive-only (Recommended)
+- [ ] Skip for now
+
+**Q3: Mobile Haptic Feedback**  
+Filter chip removal + swipe gestures trigger `navigator.vibrate()`?  
+- [ ] Yes, include (Recommended)
+- [ ] No, skip haptics
+
+**Q4: Scrollbar Styling**  
+Custom warm-brown/orange scrollbar (desktop only)?  
+- [ ] Yes, add it
+- [ ] No, save for later (Recommended — low ROI)
 
 ---
 
-*Created: 2026-06-17, Session 56 → 57 Handoff*
+## Design Tokens
+
+**Colors:**
+- Primary text: `#0B0B0B` (deep-ink)
+- Secondary text: `#575757` (archive-gray)
+- Accent (hover/fills): `#FF6600` (international-orange)
+- Accent (persistent text on light bg): `#B84700` (orange-ink)
+- Warm-brown border: `#8e7164` (archival-outline)
+- Soft border: `#e3bfb1` (archival-outline-soft)
+- Background: `#fcf9f3` (bone-white) or `#fdf8f8` (light)
+- Hover background: `#ebe8e2` (surface-container-high)
+
+**Timing:**
+- Quick interactions: 0.15s (chip pulse, focus ring)
+- Standard transitions: 0.2s–0.3s (hover, color shift)
+- Entrance animations: 0.5s–0.6s (grid items, cards)
+- Delays: 0.04s–0.3s (stagger, deferred entrance)
+- Toast hold: 3000ms (3 seconds)
+
+**Easing:**
+- Entrance: `ease-out` (grid, cards)
+- Hover: `ease` (standard)
+- Bounce: `cubic-bezier(0.68, -0.55, 0.265, 1.55)` (scale animations)
+- Linear: `linear` (progress bar, loading dots)
+
+---
+
+## Accessibility & Testing
+
+### Mandatory Rules
+1. **Respect `prefers-reduced-motion`** — all animations must disable when system preference is ON
+   ```css
+   @media (prefers-reduced-motion: reduce) {
+     * { animation: none !important; }
+   }
+   ```
+
+2. **No animation on artwork images** — constraint still stands
+   - Grid items fade/slide, but image itself does NOT scale, transform, or filter
+   - Caption/metadata can animate; image cannot
+
+3. **Haptic feedback fallback** — check `navigator.vibrate` exists before calling
+   ```js
+   if (navigator.vibrate) navigator.vibrate(20);
+   ```
+
+4. **Focus indicators must remain visible** — focus-visible outline always 2px minimum
+
+5. **Test on real devices** — mobile animation feels different at 60fps on hardware vs. browser
+
+### Testing Checklist (After Each Item)
+
+- [ ] **Visual test** on desktop (Chrome/Safari, DevTools, animation timing visible)
+- [ ] **Mobile test** on iPhone 15 Pro (375px viewport, 60fps check)
+- [ ] **Reduced motion test** (System → Accessibility → Reduce Motion → ON; animations must disable)
+- [ ] **Keyboard nav test** (Tab through all interactive elements, focus rings visible)
+- [ ] **Performance check** (Lighthouse on affected page; LCP must not degrade, CLS ≤ 0.1)
+- [ ] **Console clean** (no errors, no warnings)
+- [ ] **Touch-friendly delays** (300ms+ delay on tooltip/hover to avoid false positives on mobile)
+- [ ] **Color contrast** (any text change must maintain WCAG AA ratio)
+
+---
+
+## Phase Roadmap & Commit Strategy
+
+### Phase A: Launch (2–4h)
+1. Add 4 quick-win animations to `_shared/ui.css` + `archive.html`/`ui.js`
+2. Test each item before moving to next
+3. **Commit:** `Phase A: Micro-interactions (chip removal, table hover, loader, tooltip)`
+4. Run `npm run build:css` (CSS rebuild required)
+5. Bump `CACHE_V` in `sw.js` + commit
+6. Deploy to HostGator via JFSN.app
+7. Test live at jfsn.com + screenshot/video each animation
+
+### Phase B: State & Transition (4–6h)
+1. Items 5–9 from Phase B detailed specs
+2. Test each on preview before moving to next
+3. **Commit:** `Phase B: Page transitions, grid stagger, form animations, breadcrumbs`
+4. Deploy + verify live
+
+### Phase C: Refinements (2–4h)
+1. Items 10–14 from Phase C detailed specs
+2. Test on both desktop and mobile
+3. **Commit:** `Phase C: Link underlines, sort animations, search highlights, modals, gestures`
+4. Deploy + verify live
+
+### Phase D: Polish (1–2h)
+1. Items 15–17 from Phase D detailed specs
+2. Final accessibility sweep (reduced motion, focus rings, contrast)
+3. **Commit:** `Phase D: Scrollbar, focus pulse, toasts`
+4. Final Lighthouse check
+5. Deploy + announce completion
+
+---
+
+## Build & Deploy Notes
+
+**CSS Rebuild Rule:** After any Phase commit, run:
+```bash
+npm run build:css
+```
+
+This regenerates `site.min.css` from Tailwind + custom `_shared/ui.css` rules.
+
+**Service Worker Cache Bump:** After every CSS rebuild:
+1. Edit `sw.js`, find `CACHE_V = "jfsn-YYYYMMDD-HHMMSS"`
+2. Bump timestamp: `CACHE_V = "jfsn-20260617-145000"`
+3. Commit separately: `Bump CACHE_V for CSS rebuild`
+
+**Deploy:**
+- Via desktop JFSN.app to HostGator (primary)
+- Optional: `bash deploy-netlify.sh` → (--check) → (live) for Netlify mirror
+
+**Verification:**
+- Live at jfsn.com, test all animations on desktop + iPhone 15 Pro
+- Run Lighthouse: archive.html should maintain LCP ~3.9s, CLS ≤ 0.1
+- Record video of each Phase completion for portfolio/documentation
+
+---
+
+## Reference
+
+**Design tokens:** See CLAUDE.md § "Design System (current)"  
+**Animation constraints:** See CLAUDE.md § "Artwork thumbnails — core rule"  
+**CSS build:** `npm run build:css` (Tailwind → `site.min.css`)  
+**UI utilities:** `_shared/ui.css` (shared animations + interactions)  
+**Mobile test device:** iPhone 15 Pro, 375px viewport  
+**Reduced motion system setting:** macOS → System Settings → Accessibility → Display → Reduce Motion
+
+---
+
+## Start Here: Phase A Checklist
+
+- [ ] Review decisions (Q1–Q4 above)
+- [ ] Open http://localhost:8099 (preview)
+- [ ] Open `_shared/ui.css` in editor
+- [ ] Implement 4.1 (chip removal)
+- [ ] Test 4.1 on desktop + iPhone 15 Pro
+- [ ] Implement 4.2 (table hover)
+- [ ] Test 4.2
+- [ ] Implement 4.3 (loading state)
+- [ ] Test 4.3
+- [ ] Implement 4.4 (tooltip)
+- [ ] Test 4.4
+- [ ] All tests pass + console clean
+- [ ] `git add -A && git commit -m "Phase A: ..."`
+- [ ] `npm run build:css`
+- [ ] Bump CACHE_V + commit
+- [ ] Deploy + verify live at jfsn.com
+
+Good luck. You've got this. 🎨

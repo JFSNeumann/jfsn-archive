@@ -1,5 +1,23 @@
 [
   {
+    "sha": "73336fd",
+    "date": "2026-06-17",
+    "title": "Session update 2026-06-17 14:02",
+    "body": ""
+  },
+  {
+    "sha": "e54776f",
+    "date": "2026-06-17",
+    "title": "Complete 5 design polish enhancements",
+    "body": "High Priority (3):\n1. Decade page discoverability — Add 6-item decade grid to start-here.html\n2. Search/filter loading state — Add pulsing dots loader during filter updates\n3. Mobile breadcrumb truncation — Show 'Archive › ... › Last' on mobile, full path on desktop\n\nMedium Priority (2):\n4. Data table styling — Add table component example to style-guide.html (header, rows, alternating)\n5. Related works sidebar — Add 'More in this series' section to artwork.html showing up to 4 related works\n\nAll changes live and deployable."
+  },
+  {
+    "sha": "066ea36",
+    "date": "2026-06-17",
+    "title": "Add interactive design system showcase page",
+    "body": "Create style-guide.html with:\n- Color swatches (all tokens + WCAG contrast ratios)\n- Typography scale (Playfair/Inter samples with specs)\n- Component library (cards, buttons, links, forms, breadcrumbs with examples)\n- Interactive demonstrations (hover effects, focus states, animations)\n- Accessibility checklist (contrast, keyboard, screen readers, motion, touch)\n- Polishing opportunities (12 ranked enhancements by priority)\n\nUsed for design review and testing. Fully compliant with audit. Added to sitemap."
+  },
+  {
     "sha": "484df3a",
     "date": "2026-06-17",
     "title": "Add comprehensive design system documentation",

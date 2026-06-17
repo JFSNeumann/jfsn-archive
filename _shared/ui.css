@@ -106,7 +106,7 @@ header nav a.nav-underline-active::after {
 }
 
 /* Saturation overlay: grey at top, fades to full colour at bottom */
-.thumb__link::after {
+.thumb__link::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -121,8 +121,8 @@ header nav a.nav-underline-active::after {
   border-radius: inherit;
 }
 
-.thumb__link:hover::after,
-.thumb__link:focus-visible::after {
+.thumb__link:hover::before,
+.thumb__link:focus-visible::before {
   opacity: 0;
 }
 
@@ -140,7 +140,7 @@ header nav a.nav-underline-active::after {
 
 @media (prefers-reduced-motion: reduce) {
   .thumb__link img { transition: none; }
-  .thumb__link::after { transition: none; }
+  .thumb__link::before { transition: none; }
   .thumb__caption a { transition: none; }
 }
 
@@ -884,6 +884,136 @@ header nav a::after {
     animation: none;
     opacity: 1;
   }
+}
+
+/* ─── Phase A: Micro-Interactions (Session 57) ──────────────────────────── */
+
+/* 4.1 Filter chip removal animation */
+@keyframes chip-remove {
+  0% { transform: translateX(0); opacity: 1; }
+  100% { transform: translateX(-20px); opacity: 0; }
+}
+
+@keyframes chip-pulse {
+  0%, 100% { background-color: #ebe8e2; }
+  50% { background-color: #FFB366; }
+}
+
+.filter-chip.removing {
+  animation: chip-pulse 0.15s ease, chip-remove 0.2s ease-out forwards;
+}
+
+/* 4.2 Data table row hover state */
+table tbody tr {
+  transition: background-color 0.1s ease;
+  position: relative;
+}
+
+table tbody tr::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: #FF6600;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.15s ease;
+}
+
+table tbody tr:hover {
+  background-color: #ebe8e2;
+}
+
+table tbody tr:hover::before {
+  transform: scaleX(1);
+}
+
+table tbody tr:hover td:first-child {
+  color: #B84700;
+  transition: color 0.1s ease;
+}
+
+/* 4.3 Loading state refinement */
+@keyframes dot-pulse-scale {
+  0%, 100% { transform: scale(0.8); opacity: 0.6; }
+  50% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes progress-fill {
+  0% { width: 0%; }
+  100% { width: 90%; }
+}
+
+.filter-loading {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.filter-loading::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 0;
+  height: 2px;
+  background-color: #FF6600;
+  animation: progress-fill 0.2s ease forwards;
+}
+
+.loader-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #FF6600;
+  margin: 0 4px;
+  animation: dot-pulse-scale 1s infinite;
+}
+
+.loader-dot:nth-child(1) { animation-delay: 0s; }
+.loader-dot:nth-child(2) { animation-delay: 0.1s; }
+.loader-dot:nth-child(3) { animation-delay: 0.2s; }
+
+/* 4.4 Cursor feedback tooltip */
+.thumb__link::after {
+  content: 'Click to view';
+  position: absolute;
+  bottom: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(11, 11, 11, 0.9);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 3px;
+  font-size: 10px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease 0.3s;
+  z-index: 10;
+}
+
+.thumb__link:hover::after {
+  opacity: 1;
+}
+
+/* Disable tooltip on touch devices */
+@media (hover: none) {
+  .thumb__link::after {
+    display: none;
+  }
+}
+
+/* Respect reduced motion for Phase A */
+@media (prefers-reduced-motion: reduce) {
+  .filter-chip.removing { animation: none; }
+  table tbody tr { transition: none; }
+  table tbody tr::before { transition: none; }
+  table tbody tr:hover td:first-child { transition: none; }
+  .loader-dot { animation: none; opacity: 1; transform: scale(1); }
+  .filter-loading::before { animation: none; }
+  .thumb__link::after { transition: none; opacity: 0; }
 }
 
 /* ─── Lazy-loaded image fade-in ──────────────────────────────────────────── */
