@@ -1,5 +1,35 @@
 [
   {
+    "sha": "5d3ec7b",
+    "date": "2026-06-17",
+    "title": "Bump CACHE_V for Phase A-D animations deploy",
+    "body": ""
+  },
+  {
+    "sha": "1e11895",
+    "date": "2026-06-17",
+    "title": "Phase D: Polish (final 3 items — all systems shipped)",
+    "body": "Implement Phase D from BEST-IN-CLASS-UX-PROMPT.md:\n\n15. Scrollbar styling: Warm-brown (#8e7164) + orange (#FF6600) hover (desktop only, system fallback)\n16. Focus ring animation: Pulses orange (0.2s cycle, infinite) on keyboard nav via :focus-visible\n17. Success/error toast: Slide-in from top (200ms), hold 3s, slide-out (200ms). Color-coded (green/red/blue)\n\nChanges:\n- Add 8 keyframe animations + 3 toast type classes to _shared/ui.css\n- Refactor window.showToast() in _shared/ui.js to use CSS animations + type parameter\n- Simplify toast markup, leverage CSS for all motion\n- All animations respect prefers-reduced-motion\n\nPHASE D (POLISH): COMPLETE ✅\n\n================================================================================\nALL 17 ITEMS SHIPPED ✅✅✅\n\nPhase A (4): Filter chip, table row, loader, tooltip\nPhase B (5): Page transitions, grid stagger, related works, form input, breadcrumb\nPhase C (5): Link underline, sort indicator, search flash, modal, swipe gesture\nPhase D (3): Scrollbar, focus ring, toast\n\nTotal effort: ~12–16 hours implementation time\nStatus: Museum-grade micro-interactions complete. Ready for deployment & testing."
+  },
+  {
+    "sha": "902b9de",
+    "date": "2026-06-17",
+    "title": "Phase C: Refinements (animations + mobile gestures)",
+    "body": "Implement Phase C from BEST-IN-CLASS-UX-PROMPT.md:\n\n10. Hover link underline: Bracket links draw underline + text turns orange-ink\n11. Table sort indicator: Arrow rotates 180° + color shifts on active column\n12. Search result highlight: Yellow flash (300ms) on search result load\n13. Artwork modal entrance: Backdrop blur fade-in (150ms) + image scale-in (100ms offset)\n14. Mobile gesture feedback: Swipe left/right between decades + haptic pattern [10,5,10]\n\nChanges:\n- Add 8 keyframe animations to _shared/ui.css (underline-draw, arrow-rotate, search-flash, backdrop-blur-in, image-scale-in)\n- Swipe handler in _shared/ui.js with haptic feedback via navigator.vibrate()\n- All animations respect prefers-reduced-motion\n\nPhase C (Refinements): COMPLETE ✅\nTotal Phases A+B+C: 14 items implemented (9-12 hours) ✅"
+  },
+  {
+    "sha": "4b8fb95",
+    "date": "2026-06-17",
+    "title": "Phase B: State & Transition (animations + JS handlers)",
+    "body": "Implement Phase B from BEST-IN-CLASS-UX-PROMPT.md:\n\n5. Page transitions: Fade-through-color overlay on archive→artwork nav (200ms)\n6. Archive grid staggered entrance: 40ms stagger per item (left→right, top→bottom)\n7. Related works sidebar: 50ms stagger per card (fade + slide-up)\n8. Form input check: Scale bounce (0.8→1.2→1.0) on checkbox/radio check\n9. Breadcrumb color shift: Text slides to orange-ink (#B84700) on focus\n\nChanges:\n- Add 5 keyframe animations to _shared/ui.css (page-fade-through, grid-enter, related-enter, check-scale)\n- Grid stagger: JS function staggerGridItems() in archive.html, called after renderPage()\n- Page transitions: Event listener in archive.html intercepts artwork.html link clicks\n- Related works: Stagger applied via JS after HTML population in artwork.html\n- All animations respect prefers-reduced-motion\n\nPhase B (State & Transition): COMPLETE ✅"
+  },
+  {
+    "sha": "11347f2",
+    "date": "2026-06-17",
+    "title": "Phase A: Micro-interactions (Part 1 — CSS + chip removal JS)",
+    "body": "Implement Phase A animations from BEST-IN-CLASS-UX-PROMPT.md:\n- 4.1: Filter chip removal (pulse + slide-left + haptic vibration)\n- 4.2: Table row hover (background + border accent + text color)\n- 4.3: Loading state (progress bar + dot scale stagger)\n- 4.4: Tooltip on artwork thumbnails (moved saturation overlay to ::before to free ::after)\n\nChanges:\n- Add 4 phase-a keyframes to _shared/ui.css\n- Move saturation overlay from ::after to ::before (preserves current visual, frees ::after for tooltip)\n- Add chip removal handler in archive.html with event listeners (replaces inline onclick)\n- All animations respect prefers-reduced-motion\n\nTested: CSS hot-reloads via preview server; JS wired to filter chips."
+  },
+  {
     "sha": "73336fd",
     "date": "2026-06-17",
     "title": "Session update 2026-06-17 14:02",
