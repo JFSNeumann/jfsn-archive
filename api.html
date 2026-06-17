@@ -345,8 +345,22 @@ header.header-hidden{transform:translateY(-100%)}
       <code>Access-Control-Allow-Origin: *</code>. Safe to call from any browser or script.
     </div>
 
+    <!-- ── Quick Start ──────────────────────────────────────────────── -->
+    <section style="margin-top:2.5rem;padding:1rem;background:#F3F0EA;border:1px solid #c4c7c7;" aria-label="Quick start">
+      <p class="font-label-caps text-label-caps text-archive-gray" style="letter-spacing:0.14em;margin:0 0 0.75rem;">Quick start</p>
+      <p style="font-size:0.8125rem;color:#575757;line-height:1.6;margin:0 0 0.75rem;">
+        <strong class="text-deep-ink">Get all cataloged works:</strong>
+      </p>
+      <pre style="margin:0;"><button class="copy-btn" onclick="copyPre(this)">Copy</button><code>curl https://jfsn.com/api/v1/works.json</code></pre>
+      <p style="font-size:0.8125rem;color:#575757;line-height:1.6;margin:0.75rem 0 0;">
+        <strong class="text-deep-ink">Get a single work:</strong> append the artwork ID (e.g., <code>art0005.json</code>).
+        <strong class="text-deep-ink">Browse by theme:</strong> fetch <code>themes.json</code>, find your theme, use the <code>work_ids</code> array.
+        All endpoints are static files — cache-friendly and CDN-served. <a href="#endpoints" style="color:#0B0B0B;border-bottom:1px solid #c4c7c7;text-decoration:none;">Full reference below →</a>
+      </p>
+    </section>
+
     <!-- ── Endpoints ──────────────────────────────────────────────────── -->
-    <section style="margin-top:3rem;" aria-label="Endpoints">
+    <section id="endpoints" style="margin-top:3rem;" aria-label="Endpoints">
       <p class="font-label-caps text-label-caps text-archive-gray" style="letter-spacing:0.14em;margin:0 0 1.25rem;padding-bottom:0.5rem;border-bottom:1px solid #c4c7c7;">Endpoints</p>
 
       <!-- meta -->
@@ -599,6 +613,97 @@ print(f"{len(gold_works)} works featuring gold")
 # Download metadata for a specific work
 work = requests.get('https://jfsn.com/api/v1/works/art0001.json').json()
 print(work['work']['title'], '—', work['work']['description'])</code></pre>
+    </section>
+
+    <!-- ── CSV Exports ──────────────────────────────────────────────── -->
+    <section style="margin-top:3rem;" aria-label="CSV exports">
+      <p class="font-label-caps text-label-caps text-archive-gray" style="letter-spacing:0.14em;margin:0 0 1.25rem;padding-bottom:0.5rem;border-bottom:1px solid #c4c7c7;">CSV exports</p>
+      <p style="font-size:0.8125rem;color:#575757;line-height:1.6;margin:0 0 1rem;">
+        The JSON endpoints work directly with spreadsheet tools and data analysis software. Convert to CSV for Excel, Google Sheets, or research databases:
+      </p>
+
+      <p class="font-label-caps text-label-caps text-archive-gray" style="font-size:0.625rem;letter-spacing:0.12em;margin-bottom:0.375rem;">Python (pandas)</p>
+      <pre><button class="copy-btn" onclick="copyPre(this)">Copy</button><code>import pandas as pd
+
+# Download all works and save as CSV
+url = 'https://jfsn.com/api/v1/works.json'
+data = pd.read_json(url)
+works_df = pd.json_normalize(data['works'])
+works_df.to_csv('jfsn-archive.csv', index=False)
+
+# Keep only essential columns
+essential = works_df[['file', 'title', 'year', 'work_type', 'themes', 'palette']]
+essential.to_csv('jfsn-archive-minimal.csv', index=False)</code></pre>
+
+      <p class="font-label-caps text-label-caps text-archive-gray" style="font-size:0.625rem;letter-spacing:0.12em;margin-top:1.25rem;margin-bottom:0.375rem;">Shell (jq + csvkit)</p>
+      <pre><button class="copy-btn" onclick="copyPre(this)">Copy</button><code># Fetch and convert to CSV with jq
+curl https://jfsn.com/api/v1/works.json \
+  | jq -r '.works[] | [.file, .title, .year, .work_type] | @csv' \
+  > jfsn-archive.csv
+
+# Or use csvkit for more control
+curl https://jfsn.com/api/v1/works.json \
+  | jq '.works' | in2csv --format json > jfsn-archive.csv</code></pre>
+
+      <p class="font-label-caps text-label-caps text-archive-gray" style="font-size:0.625rem;letter-spacing:0.12em;margin-top:1.25rem;margin-bottom:0.375rem;">Google Sheets</p>
+      <p style="font-size:0.8125rem;color:#575757;line-height:1.6;margin:0;">
+        Use the <code>=IMPORTDATA()</code> or <code>=IMPORTJSON()</code> function (via extensions like <a href="https://workspace.google.com/marketplace/app/json_import_plugin/11162652951" target="_blank" rel="noopener" style="color:#0B0B0B;border-bottom:1px solid #c4c7c7;">JSON Import Plugin</a>):
+      </p>
+      <pre style="margin-top:0.5rem;"><button class="copy-btn" onclick="copyPre(this)">Copy</button><code>=IMPORTJSON("https://jfsn.com/api/v1/works.json", "works")</code></pre>
+    </section>
+
+    <!-- ── Researcher's Guide ──────────────────────────────────────────────── -->
+    <section style="margin-top:3rem;" aria-label="Data accuracy and research notes">
+      <p class="font-label-caps text-label-caps text-archive-gray" style="letter-spacing:0.14em;margin:0 0 1.25rem;padding-bottom:0.5rem;border-bottom:1px solid #c4c7c7;">Researcher's data guide</p>
+
+      <div style="border:1px solid #c4c7c7;border-left:3px solid #FF6600;padding:0.875rem 1rem;font-size:0.8125rem;line-height:1.65;color:#575757;margin-bottom:1rem;">
+        <strong class="text-deep-ink" style="font-weight:500;">Years are decade estimates</strong> — Every work's year (1974–2020s) is extracted from visual evidence on the piece itself, not from external records. All 1,084 years are estimates assigned to decade buckets (1970s, 1980s, etc.); even works with visible single years are rounded to the decade. When analyzing temporal patterns, treat the year as ±5 years uncertainty. Query: use <code>year_precision: "estimated"</code> in each work record and <code>year_display: "1990s (est.)"</code> for display.
+      </div>
+
+      <div style="border:1px solid #c4c7c7;border-left:3px solid #FF6600;padding:0.875rem 1rem;font-size:0.8125rem;line-height:1.65;color:#575757;margin-bottom:1rem;">
+        <strong class="text-deep-ink" style="font-weight:500;">Composites are flagged, not real</strong> — ~250 works are marked <code>composite: true</code>. These are Photoshop composites showing imagined placements (e.g., how a work might look in a gallery), NOT photographs of real exhibitions. The gallery-images.html page explains this directly. For archival/historical analysis, use <code>composite: false</code> to filter to real single works.
+      </div>
+
+      <div style="border:1px solid #c4c7c7;border-left:3px solid #FF6600;padding:0.875rem 1rem;font-size:0.8125rem;line-height:1.65;color:#575757;margin-bottom:1rem;">
+        <strong class="text-deep-ink" style="font-weight:500;">Themes & motifs are subjective</strong> — The 14 themes (Guernica, Targets, Crosses, etc.) and 30 motifs (compact-disc, warplane-topdown, etc.) are curatorial selections, not machine-tagged. They reflect patterns the creator recognized, not exhaustive indexing. Use them for thematic discovery, not statistical completeness.
+      </div>
+
+      <div style="border:1px solid #c4c7c7;border-left:3px solid #FF6600;padding:0.875rem 1rem;font-size:0.8125rem;line-height:1.65;color:#575757;margin-bottom:1rem;">
+        <strong class="text-deep-ink" style="font-weight:500;">Physical dimensions are partial</strong> — The <code>orientation</code> field (vertical / horizontal / square) is derived from image aspect ratios, not real-world measurements. Actual inches/centimeters are not yet digitized; contact for specific works.
+      </div>
+
+      <p style="font-size:0.8125rem;color:#575757;line-height:1.6;margin:0;">
+        <strong class="text-deep-ink">Recommended queries:</strong>
+        Filter by <code>composite: false</code> + <code>work_type: "collage"</code> to find real collages.
+        Group by decade to track stylistic evolution (mindful of the ±5 year range).
+        Use <code>themes</code> and <code>motifs</code> for thematic research, not quantitative claims about the archive.
+        Always cite <code>year_display</code> (e.g., "1990s (est.)") when publishing.
+      </p>
+    </section>
+
+    <!-- ── Research Pathways ──────────────────────────────────────────────── -->
+    <section style="margin-top:3rem;" aria-label="Research pathways and related tools">
+      <p class="font-label-caps text-label-caps text-archive-gray" style="letter-spacing:0.14em;margin:0 0 1.25rem;padding-bottom:0.5rem;border-bottom:1px solid #c4c7c7;">Research pathways</p>
+
+      <p style="font-size:0.8125rem;color:#575757;line-height:1.6;margin:0 0 1rem;">
+        <strong class="text-deep-ink">Curatorial exploration:</strong> Start with <a href="curatorial-map.html" style="color:#0B0B0B;border-bottom:1px solid #c4c7c7;text-decoration:none;">Curatorial Map</a> to see all 1,084 works in a decade × medium grid with theme overlays. Then use the API to fetch full metadata for works in your areas of interest.
+      </p>
+
+      <p style="font-size:0.8125rem;color:#575757;line-height:1.6;margin:0 0 1rem;">
+        <strong class="text-deep-ink">Color-driven research:</strong> Fetch <code>palette.json</code> to find all works featuring a specific color (e.g., all works with "gold"). Cross-reference with <a href="chromatic.html" style="color:#0B0B0B;border-bottom:1px solid #c4c7c7;text-decoration:none;">Chromatic River</a>, an interactive canvas of all works sorted by year and color.
+      </p>
+
+      <p style="font-size:0.8125rem;color:#575757;line-height:1.6;margin:0 0 1rem;">
+        <strong class="text-deep-ink">Theme & series analysis:</strong> Use <code>themes.json</code> (14 curatorial themes) and <code>series.json</code> (3 named bodies: XXIII, Squadron, Guernica) to explore recurring motifs and interconnected works. Each endpoint includes the archive browse URL for interactive browsing.
+      </p>
+
+      <p style="font-size:0.8125rem;color:#575757;line-height:1.6;margin:0 0 1rem;">
+        <strong class="text-deep-ink">Temporal patterns:</strong> Sort works by decade (using <code>year_display</code> and the ±5 year caveat) to track stylistic evolution. Medium breakdown (<code>work_type</code>) shows which materials dominate each era.
+      </p>
+
+      <p style="font-size:0.8125rem;color:#575757;line-height:1.6;margin:0;">
+        <strong class="text-deep-ink">Individual work study:</strong> Each artwork's page (e.g., <code>jfsn.com/artwork.html?id=art0005</code>) includes the full metadata, a high-resolution lightbox, and links to related works in the same series or theme. The JSON endpoint <code>/api/v1/works/art0005.json</code> carries the same data in machine-readable form.
+      </p>
     </section>
 
     <!-- ── Versioning ──────────────────────────────────────────────────── -->
