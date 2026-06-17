@@ -153,6 +153,15 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 - **`artworks/pages/` regen:** `python3 gen-artwork-pages.py` rebuilds all 1,084 static pages. All include `search.js` + `nav-active.js` as of session 11. Use `--limit 5` to test template changes first.
 - **New page checklist:** When adding any new public `.html` page: (1) add to sitemap entries list in `build_catalog.py`, (2) run `python3 artworks/build_catalog.py` to rebuild sitemap, (3) add to TARGETS array in `stamp-nav.sh` so future nav updates propagate to it, (4) run `bash audit-nav.sh` — the reverse sitemap check will catch if it's missing from the sitemap.
 
+### Global Design System Reference
+- **Keyboard shortcut:** ⌘Shift+D (Mac) or Ctrl+Shift+D (Windows/Linux) opens a full-screen modal with the complete design system
+- **Footer button:** All pages show ⌘SHIFT+D in the footer — click to open the modal
+- **Contents:** Colors with contrast ratios, typography (Playfair/Inter), spacing scale, animation timing, design tokens, z-index scale, copy-paste code snippets, accessibility rules
+- **Search:** Sidebar search filters sections in real-time (Principles, Colors, Typography, Spacing, Animations, Design Tokens, Code Snippets, Accessibility)
+- **Navigation:** Click a sidebar link to jump to that section; active link highlights on scroll
+- **Esc to close:** Press Esc or click the backdrop to close
+- **Always stamped:** The modal is built into `_shared/top-nav.html` and stamped to all 38 pages by `stamp-nav.sh`, so it's available everywhere for continuous UX/UI reference and refinement
+
 ### Conventions
 - Vanilla HTML/CSS/JS. Production uses `site.min.css` (23,071 bytes compiled Tailwind — not CDN). Stitch exports start with Tailwind CDN and get swapped to `site.min.css` during post-export cleanup.
 - **Tailwind rebuild rule:** Any time a new utility class is added to any HTML file, run `npm run build:css` and commit the updated `site.min.css`. Classes not in the build are silently ignored at runtime — there is no error, just a missing style.
