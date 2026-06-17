@@ -1,5 +1,41 @@
 [
   {
+    "sha": "cbe3cbb",
+    "date": "2026-06-16",
+    "title": "Session update 2026-06-16 23:04",
+    "body": ""
+  },
+  {
+    "sha": "86be3d0",
+    "date": "2026-06-16",
+    "title": "Add ui.css to homepage and artwork pages for animations (Phase 1 & 2)",
+    "body": "- Updated index.html to load _shared/ui.css\n- Updated gen-artwork-pages.py template to include ui.css link\n- Regenerated all 1,084 artwork pages with ui.css include\n- Ensures Phase 1 & 2 animations work on all pages (decade pages, artwork pages, homepage)"
+  },
+  {
+    "sha": "1e3bda1",
+    "date": "2026-06-16",
+    "title": "Session 52 Phase 1 & 2: Add entrance and micro-polish animations",
+    "body": "Phase 1 (Quick Wins):\n1. Hero text entrance stagger on decade pages\n2. Metadata rows fade-in on artwork pages\n3. Filter chip underline draw animation (CSS-driven)\n4. Related works fade-in on scroll via IntersectionObserver\n5. Focus ring fade-in (150ms smooth entrance)\n\nPhase 2 (Micro-Polish):\n6. Button pressed-state inset shadow pulse\n7. Page transition fade on P/N navigation\n8. Theme color transitions on nav underline\n9. Favorite heart rotation on click (90°, 300ms)\n10. Counter completion pulse on homepage\n\nAdded @keyframes for all animations, JavaScript triggers for scroll-reveal and\ninteraction handlers. Respects prefers-reduced-motion throughout."
+  },
+  {
+    "sha": "e8299d0",
+    "date": "2026-06-16",
+    "title": "Session 50 checkpoint: 40 UX improvements + monitoring + analytics",
+    "body": "Complete session summary and next-session quick-start guide.\n\nSession shipped:\n- 7 initial micro-interactions\n- 6 high-impact enhancements\n- 12 signature colors (series/medium)\n- 8 icon animations + footer colors\n- 4 Tier 1 UX improvements (keyboard, focus, badges, disabled states)\n- 12 Tier 2 & 2C improvements (counter, print, filters, related works, etc.)\n- 3 monitoring systems (GoatCounter, localStorage, uptime)\n- Oral history prep (10 suggested works)\n- Known issues tracker\n\n40 improvements total. All code committed. Ready for jfsn.com deployment."
+  },
+  {
+    "sha": "139da59",
+    "date": "2026-06-16",
+    "title": "Bump CACHE_V for monitoring script deployment",
+    "body": ""
+  },
+  {
+    "sha": "adf370f",
+    "date": "2026-06-16",
+    "title": "Add comprehensive monitoring, analytics, oral history prep, and issue tracking",
+    "body": "MONITORING & ANALYTICS:\n- monitor.js: Tracks favorites, theme views, keyboard shortcuts, performance\n- Events auto-sent to GoatCounter: /event/favorite/add/artNNNN, /view/category/X\n- localStorage tracking: local favorites log, theme views, session stats\n- uptime-check.sh: Hourly cron script, alerts on HTTP non-200\n- Built-in window.getLocalStats() function for debugging\n\nORAL HISTORY PREP:\n- SUGGESTED-RECORDINGS.md: 10 iconic works for 1-min recordings\n  - Guernica series (50yr engagement), lost pieces, scale decisions,\n    recent work, thematic depth, collaborations, symbols, materials,\n    failures, practice evolution\n- Recording template + setup instructions\n- Links to master-notes for archiving audio\n\nISSUE TRACKING:\n- KNOWN-ISSUES.md: LCP 5.3s deterministic (acceptable), mobile edge cases,\n  P/N shortcuts conflict watch, related-works dedup, localStorage limits\n- Testing checklist (weekly)\n- Metrics dashboard (Performance, LCP, Uptime, 404 rate)\n- Troubleshooting guide\n- Future improvements list\n\nMONITORING-SETUP.md:\n- Three monitoring systems explained (GoatCounter, localStorage, uptime)\n- How to check each weekly\n- Alert setup instructions\n- Sample insights after 1 week / 1 month\n- Custom query examples\n- Troubleshooting Q&A\n\nFOOTER INTEGRATION:\n- monitor.js now loaded on all pages via footer.html\n- Favorite button tracking wired in\n- Theme view tracking auto-fires on page load\n\nFiles created/modified:\n- monitor.js (new) — analytics instrumentation\n- scripts/uptime-check.sh (new) — hourly health check\n- docs/oral-history/SUGGESTED-RECORDINGS.md (new)\n- docs/KNOWN-ISSUES.md (new) — comprehensive issue tracker\n- docs/MONITORING-SETUP.md (new) — user guide\n- _shared/footer.html — added monitor.js script tag\n- _shared/ui.js — wired trackFavorite() call\n\nAll non-breaking. Monitoring is passive, analytics lightweight.\nNo performance impact (~4KB monitor.js, async load)."
+  },
+  {
     "sha": "a76cf02",
     "date": "2026-06-16",
     "title": "Implement all Tier 2 & 2C high-impact UX improvements (12 features)",
