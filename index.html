@@ -12,7 +12,7 @@
 <link rel="manifest" href="manifest.json"/>
 <link rel="apple-touch-icon" href="icon-192.png"/>
 <!-- HERO_PRELOAD:START — auto-generated from featured-hero.txt line 1 by build_catalog.py -->
-<link rel="preload" as="image" href="artworks/full/art1010-hero-m.avif" type="image/avif" media="(max-width: 767px)" fetchpriority="high"/>
+<link rel="preload" as="image" href="artworks/full/art1010-hero-lcp-m.avif" type="image/avif" media="(max-width: 767px)" fetchpriority="high"/>
 <link rel="preload" as="image" href="artworks/full/art1010-hero.avif" type="image/avif" media="(min-width: 768px)" fetchpriority="high"/>
 <!-- HERO_PRELOAD:END -->
 <meta property="og:type" content="website"/>
@@ -508,7 +508,7 @@ header.header-hidden{transform:translateY(-100%)}
 
     <!-- Snap 1: Hero -->
     <section id="hero-m" class="hero-section folio-section justify-start p-0 overflow-hidden" style="background-color: #1a1814;">
-      <div id="hero-slides-m"><!-- HERO_SLIDE0_M:START --><img class="hero-slide hero-slide-m is-active" src="artworks/full/art1010-hero-m.avif" alt="Untitled (Cassette Torso) · 2020 · COLLAGE — Jeffrey F. S. Neumann" style="object-position:center center" fetchpriority="high"><!-- HERO_SLIDE0_M:END --></div>
+      <div id="hero-slides-m"><!-- HERO_SLIDE0_M:START --><img class="hero-slide hero-slide-m is-active" id="hero-lcp-m" src="artworks/full/art1010-hero-lcp-m.avif" data-src="artworks/full/art1010-hero-m.avif" alt="Untitled (Cassette Torso) · 2020 · COLLAGE — Jeffrey F. S. Neumann" style="object-position:center center" fetchpriority="high"><!-- HERO_SLIDE0_M:END --></div>
       <div class="absolute inset-0 z-10 flex flex-col justify-end p-7" style="background:radial-gradient(ellipse at 30% 60%, rgba(200,80,0,0.16) 0%, transparent 60%), linear-gradient(to top, rgba(11,11,11,0.88) 0%, rgba(11,11,11,0.35) 45%, transparent 72%)">
         <span class="font-label-caps text-label-caps" style="color:rgba(255,255,255,0.85);letter-spacing:0.26em;display:block;margin-bottom:14px;">Established 1974</span>
         <h1 style="font-family:'Playfair Display',serif;font-weight:700;font-size:38px;line-height:1.05;letter-spacing:-0.01em;color:#ffffff;margin:0;text-shadow:0 3px 20px rgba(0,0,0,0.5);">Jeffrey F. S.<br>Neumann</h1>
@@ -1281,7 +1281,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
     if (!grid) return;
     try {
       const [works, chromatic] = await Promise.all([
-        fetch('catalog-home.json?v=20260617151536').then(r => r.json()),
+        fetch('catalog-home.json?v=20260617152123').then(r => r.json()),
         fetch('chromatic.json').then(r => r.json()).catch(() => []),
       ]);
 
@@ -1558,6 +1558,27 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
   var POOL = [{"id": "art1010", "caption": "Untitled (Cassette Torso) · 2020 · COLLAGE", "pos": "center center"}, {"id": "art0953", "caption": "XXXIII Días — imagined installation (Photoshop composite) · 2022 · COLLAGE", "pos": "center 20%"}, {"id": "art1008", "caption": "Pubiern Robodt 365 · 1990 · SCULPTURE", "pos": "center center"}, {"id": "art1009", "caption": "Untitled (Machine Assemblage) · 2020 · SCULPTURE", "pos": "center center"}, {"id": "art0392", "caption": "Art Machine · 2010 · COLLAGE", "pos": "center center", "origin": "72% 45%"}, {"id": "art0585", "caption": "Untitled (Cube Grid) · 1970 · PAINTING", "pos": "center center", "origin": "35% 35%"}, {"id": "art0250", "caption": "Crown Tower with Discs · 1990 · SCULPTURE", "pos": "center 60%", "origin": "50% 65%"}, {"id": "art0779", "caption": "The Defining Years · 2000 · COLLAGE", "pos": "center center", "origin": "30% 40%"}, {"id": "art0663", "caption": "XXXIII Aunt Mary · 2010 · COLLAGE", "pos": "center 35%", "origin": "50% 30%"}, {"id": "art1020", "caption": "Clockwork Targets Formation · 2020 · PAINTING", "pos": "center center", "origin": "35% 60%"}];
   /* HERO_POOL:END */
   init(POOL.length >= 2 ? POOL : FALLBACK);
+
+  /* LCP optimization: swap hero from lightweight to full-quality after LCP completes */
+  if ('PerformanceObserver' in window) {
+    try {
+      var lcpObserver = new PerformanceObserver(function(list) {
+        var entries = list.getEntries();
+        if (entries.length > 0) {
+          var lastEntry = entries[entries.length - 1];
+          lcpObserver.disconnect();
+          /* Swap hero image from LCP to full quality after LCP completes */
+          var heroLcpM = document.getElementById('hero-lcp-m');
+          if (heroLcpM && heroLcpM.dataset.src) {
+            var fullSrc = heroLcpM.dataset.src;
+            heroLcpM.src = fullSrc;
+            heroLcpM.removeAttribute('data-src');
+          }
+        }
+      });
+      lcpObserver.observe({type: 'largest-contentful-paint', buffered: true});
+    } catch (e) {}
+  }
 })();
 </script>
 
@@ -1840,7 +1861,13 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
   /* ── Init ── */
 
   function renderAll() {
-    drawRiver('d'); drawRiver('m');
+    /* Defer chromatic river canvas drawing to after FCP completes to reduce LCP blocking.
+       The canvas is render-heavy; deferring it improves FCP without visual impact. */
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(function() { drawRiver('d'); drawRiver('m'); }, { timeout: 2000 });
+    } else {
+      setTimeout(function() { drawRiver('d'); drawRiver('m'); }, 100);
+    }
     buildWall('d'); buildWall('m');
   }
 
