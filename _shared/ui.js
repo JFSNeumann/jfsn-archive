@@ -141,79 +141,45 @@
   }
 
   // ─── Toast notification system ──────────────────────────────────────────
-  // Usage: window.showToast('Copied!', 2000)
-  window.showToast = function(message, duration = 2000) {
+  // Usage: window.showToast('Copied!', 2000, 'success')
+  // Types: 'success' (green), 'error' (red), 'info' (blue), or default (neutral)
+  window.showToast = function(message, duration = 3000, type = 'info') {
     let container = document.getElementById('jfsn-toast-container');
     if (!container) {
       container = document.createElement('div');
       container.id = 'jfsn-toast-container';
-      container.style.cssText = 'position:fixed;bottom:28px;right:28px;z-index:1000;pointer-events:none;';
+      container.style.cssText = 'pointer-events:none;';
       document.body.appendChild(container);
     }
 
     const toast = document.createElement('div');
-    toast.className = 'jfsn-toast';
+    toast.className = `toast ${type}`;
     toast.textContent = message;
-    toast.style.cssText = `
-      font-family: Inter, sans-serif;
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: #0B0B0B;
-      background: #fcf9f3;
-      border: 1px solid #8e7164;
-      padding: 10px 14px;
-      border-radius: 0;
-      margin-bottom: 8px;
-      opacity: 0;
-      transform: translateY(8px);
-      transition: opacity 0.25s ease, transform 0.25s ease;
-      pointer-events: auto;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    `;
     container.appendChild(toast);
 
-    // Trigger entrance animation
-    requestAnimationFrame(() => {
-      toast.style.opacity = '1';
-      toast.style.transform = 'translateY(0)';
-    });
-
-    // Auto-remove
+    // Phase D 17: Toast slide-in animation (CSS-driven)
+    // Auto-remove and slide-out
     setTimeout(() => {
-      toast.style.opacity = '0';
-      toast.style.transform = 'translateY(8px)';
-      setTimeout(() => toast.remove(), 250);
+      toast.classList.add('exit');
+      setTimeout(() => toast.remove(), 200);
     }, duration);
   };
 
-  // Respect prefers-reduced-motion for all toast animations
+  // Respect prefers-reduced-motion for toast animations
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const origToast = window.showToast;
-    window.showToast = function(message, duration = 2000) {
+    window.showToast = function(message, duration = 3000, type = 'info') {
       let container = document.getElementById('jfsn-toast-container');
       if (!container) {
         container = document.createElement('div');
         container.id = 'jfsn-toast-container';
-        container.style.cssText = 'position:fixed;bottom:28px;right:28px;z-index:1000;pointer-events:none;';
+        container.style.cssText = 'pointer-events:none;';
         document.body.appendChild(container);
       }
       const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
       toast.textContent = message;
-      toast.style.cssText = `
-        font-family: Inter, sans-serif;
-        font-size: 12px;
-        font-weight: 500;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-        color: #0B0B0B;
-        background: #fcf9f3;
-        border: 1px solid #8e7164;
-        padding: 10px 14px;
-        margin-bottom: 8px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      `;
+      toast.style.animation = 'none';
       container.appendChild(toast);
       setTimeout(() => toast.remove(), duration);
     };
