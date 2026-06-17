@@ -749,7 +749,7 @@ header.header-hidden{transform:translateY(-100%)}
   </section>
 
   <section style="background:#0B0B0B;position:relative;" class="py-16 md:py-24 px-4 md:px-margin-desktop">
-    <div aria-hidden="true" style="position:fixed;right:40px;top:50%;transform:translateY(-50%);height:75vh;width:auto;pointer-events:none;z-index:1;"><img src="me-white.png" alt="" style="height:100%;width:auto;object-fit:contain;opacity:0.2;display:block;"></div>
+    <div aria-hidden="true" style="position:fixed;right:40px;top:50%;transform:translateY(-50%);height:75vh;width:150px;pointer-events:none;z-index:1;"><img src="me-white.png" alt="" style="height:100%;width:100%;object-fit:contain;opacity:0.2;display:block;"></div>
     <div class="max-w-container-max mx-auto" style="text-align:center;position:relative;z-index:2;">
       <span class="font-label-caps text-label-caps text-international-orange" style="display:block;margin-bottom:20px;letter-spacing:0.24em;">The Void in the Record</span>
       <h2 style="font-family:'Playfair Display',serif;font-size:clamp(26px,5vw,40px);line-height:1.2;color:#F3F0EA;font-weight:600;max-width:20ch;margin:0 auto 22px;">An estimated 500&ndash;1,000 works lost to water damage.</h2>
@@ -1340,7 +1340,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
     if (!grid) return;
     try {
       const [works, chromatic] = await Promise.all([
-        fetch('catalog-home.json?v=20260617003439').then(r => r.json()),
+        fetch('catalog-home.json?v=20260617013653').then(r => r.json()),
         fetch('chromatic.json').then(r => r.json()).catch(() => []),
       ]);
 
