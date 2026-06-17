@@ -1,5 +1,23 @@
 [
   {
+    "sha": "05b0378",
+    "date": "2026-06-16",
+    "title": "Session close: backup timestamps + residuals",
+    "body": ""
+  },
+  {
+    "sha": "1cec2de",
+    "date": "2026-06-16",
+    "title": "Session update 2026-06-16 20:04",
+    "body": ""
+  },
+  {
+    "sha": "1c5ced0",
+    "date": "2026-06-16",
+    "title": "Docs: reflect session 46 accessibility fix in CLAUDE.md, README, STITCH.md, backlog",
+    "body": "- CLAUDE.md + README.md: document the new orange-ink token and the contrast\n  rule (international-orange text only passes AA on dark backgrounds)\n- STITCH.md: clarify the Stitch prompt template's ambiguous \"labels only\"\n  phrasing that contributed to the original bug\n- IMPROVEMENTS.md: cross off the accessibility-pass item, log what shipped\n- CURRENT_STATE.md: add session 46 entry\n- SESSION_PROMPT.md: regenerated for next session (was stale, written before\n  this session's work)"
+  },
+  {
     "sha": "4f66d66",
     "date": "2026-06-16",
     "title": "Accessibility pass: fix orange-text contrast sitewide + focus-visible gaps",

@@ -23,10 +23,8 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebSite","name":"Jeffrey F. S. Neumann — Archive","url":"https://jfsn.com","description":"Personal archive of Jeffrey F. S. Neumann — 1,084 works spanning collage, sculpture, and painting, 1974–present.","author":{"@type":"Person","name":"Jeffrey F. S. Neumann","jobTitle":"Artist","address":{"@type":"PostalAddress","addressLocality":"Cleveland","addressRegion":"OH"}}}
 </script>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=optional" onload="this.onload=null;this.rel='stylesheet'"/>
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=optional"/></noscript>
+<link rel="preload" as="font" type="font/woff2" href="/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2" crossorigin/>
+<link rel="preload" as="font" type="font/woff2" href="/fonts/nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgEM86xQ.woff2" crossorigin/>
 <link rel="stylesheet" href="site.min.css"/>
 <style>
   .material-symbols-outlined {
@@ -515,6 +513,8 @@ header.header-hidden{transform:translateY(-100%)}
           <a href="artwork.html?id=art0380" class="folio-art-link w-full h-full max-h-[60vh]">
             <img
               src="artworks/medium/art0380.avif"
+              srcset="artworks/thumbs/art0380.avif 400w, artworks/medium/art0380.avif 900w"
+              sizes="(max-width:767px) 90vw, 600px"
               alt="Devo at WHK Auditorium — Jeffrey F. S. Neumann, 1977"
               class="max-w-full max-h-full w-auto h-auto object-contain border border-deep-ink"
               loading="lazy"
@@ -535,6 +535,8 @@ header.header-hidden{transform:translateY(-100%)}
           <a href="artwork.html?id=art0002" class="folio-art-link w-full h-full max-h-[60vh]">
             <img
               src="artworks/medium/art0002.avif"
+              srcset="artworks/thumbs/art0002.avif 400w, artworks/medium/art0002.avif 900w"
+              sizes="(max-width:767px) 90vw, 600px"
               alt="Reliquary — Jeffrey F. S. Neumann, 1990"
               class="max-w-full max-h-full w-auto h-auto object-contain border border-deep-ink"
               loading="lazy"
@@ -555,6 +557,8 @@ header.header-hidden{transform:translateY(-100%)}
           <a href="artwork.html?id=art0026" class="folio-art-link w-full h-full max-h-[60vh]">
             <img
               src="artworks/medium/art0026.avif"
+              srcset="artworks/thumbs/art0026.avif 400w, artworks/medium/art0026.avif 900w"
+              sizes="(max-width:767px) 90vw, 600px"
               alt="Yellow Figure on Black Wall — Jeffrey F. S. Neumann, 2010"
               class="max-w-full max-h-full w-auto h-auto object-contain border border-deep-ink"
               loading="lazy"
@@ -1335,7 +1339,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
     if (!grid) return;
     try {
       const [works, chromatic] = await Promise.all([
-        fetch('catalog-home.json?v=20260616195432').then(r => r.json()),
+        fetch('catalog-home.json?v=20260616203316').then(r => r.json()),
         fetch('chromatic.json').then(r => r.json()).catch(() => []),
       ]);
 
