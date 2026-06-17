@@ -1,5 +1,11 @@
 [
   {
+    "sha": "10627fc",
+    "date": "2026-06-17",
+    "title": "Phase 3 Animations — 5 polish touches deployed",
+    "body": "1. Section entrance color tint fade (stories, why-i-made-things): fade in\n   warm-brown background tint (rgba(142,113,100,0.04)) when sections scroll\n   into view (300ms, IntersectionObserver-triggered)\n\n2. Quote hover pulse (stories, why-i-made-things): quoted blockquote text\n   pulses from deep-ink to orange and back (0.4s, 2 repeats) on hover\n\n3. Search result underline draw (search.js): smooth left-to-right orange\n   underline appears on hover for each search result (200ms scaleX, GPU-friendly)\n\n4. Drawer item stagger on mobile (stories nav): nav items fade in 50ms apart\n   when drawer opens (staggered animation delays, smooth entrance)\n\n5. Touch device feedback (jfsn-interactions.js): on touch devices, buttons\n   and links flash with brief orange background on tap (100ms, :active state)\n\nAll animations respect prefers-reduced-motion; GPU-accelerated only (opacity,\ntransform, color). Performance: no regression expected, no layout shifts.\n\nVerified: all animations in code, accessible, tested on localhost."
+  },
+  {
     "sha": "0ec045f",
     "date": "2026-06-17",
     "title": "Add explicit width/height to hero images to prevent layout shift",

@@ -15,11 +15,12 @@ for fname in files:
 
     issues = []
 
-    # Footer check
+    # Footer check (Phase 1-2 simplified footer: privacy, github, copyright, back-to-top)
     footer_m = re.search(r'FOOTER:START.*?FOOTER:END', content, re.DOTALL)
     if footer_m:
         ft = footer_m.group()
-        if 'wall.html'          not in ft: issues.append('footer missing wall.html')
+        if 'privacy.html'       not in ft: issues.append('footer missing privacy.html')
+        if 'github.com'         not in ft: issues.append('footer missing github link')
     elif fname not in ['index.html']:
         issues.append('no FOOTER:START')
 
