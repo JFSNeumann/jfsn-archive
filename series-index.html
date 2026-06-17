@@ -371,6 +371,18 @@ fetch('catalog.json')
     const grid = document.getElementById('series-grid');
     grid.innerHTML = '';
 
+    // Icon map: earned symbols for each series/theme
+    const iconMap = {
+      'Guernica': '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 12l9-9 9 9M3 12v6a3 3 0 003 3h12a3 3 0 003-3v-6"/></svg>',
+      'Targets': '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="9"/></svg>',
+      'Framed': '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18"/><rect x="8" y="8" width="8" height="8"/></svg>',
+      'Torsos & Faces': '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M6 20c0-2.21 2.686-4 6-4s6 1.79 6 4"/></svg>',
+      'Gallery-Images': '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2" y="7" width="20" height="15" rx="2"/><path d="M16 5V3H8v2M2 13l5-5 5 5v4M22 13l-4-4-4 4v4"/></svg>',
+      'Mr. SNOWmann': '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="5" r="3"/><circle cx="12" cy="13" r="3.5"/><circle cx="12" cy="22" r="4"/></svg>',
+      'Crosses': '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="12" y1="3" x2="12" y2="21"/><line x1="3" y1="12" x2="21" y2="12"/></svg>',
+      'Collaboration': '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>'
+    };
+
     GROUPS.forEach((g, i) => {
       const isFeatured = g.featured;
       const archiveLink = g.page || `archive.html`;
@@ -378,6 +390,9 @@ fetch('catalog.json')
       const tag = g.kind === 'series'
         ? `<span class="inline-block font-label-md text-label-md uppercase tracking-widest text-archive-gray border border-outline-variant px-sm py-xs mb-sm">Named Series</span>`
         : '';
+
+      const icon = iconMap[g.name] || '';
+      const iconHTML = icon ? `<div class="flex items-center gap-2 mb-2 text-archive-gray group-hover:text-international-orange transition-colors">${icon}</div>` : '';
 
       const aspect = isFeatured ? 'aspect-[4/5]' : 'aspect-square';
       const colSpan = isFeatured ? 'lg:col-span-2 lg:row-span-2' : '';
@@ -397,6 +412,7 @@ fetch('catalog.json')
           </div>
           <div class="p-md flex flex-col justify-between flex-grow">
             ${tag}
+            ${iconHTML}
             <h3 class="${titleSize} group-hover:text-international-orange transition-colors">${g.name}</h3>
             <div class="mt-base flex items-center justify-between">
               <span class="font-label-md text-label-md uppercase tracking-widest text-secondary">${counts[g.name]} WORKS</span>
