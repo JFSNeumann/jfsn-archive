@@ -280,6 +280,88 @@
     }
   });
 
+  // ─── Number counter animation (homepage hero) ─────────────────────────
+  // Count up "1,084 works" on page load
+  var counter = document.querySelector('[data-counter]');
+  if (counter && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var target = parseInt(counter.dataset.counter) || 1084;
+    var duration = 1500; // 1.5s
+    var startTime = Date.now();
+    var animate = function() {
+      var elapsed = Date.now() - startTime;
+      var progress = Math.min(elapsed / duration, 1);
+      var current = Math.floor(progress * target);
+      counter.textContent = current.toLocaleString();
+      if (progress < 1) requestAnimationFrame(animate);
+    };
+    // Start after page settles
+    setTimeout(animate, 300);
+  }
+
+  // ─── Keyboard shortcut hints on pages ────────────────────────────────
+  var artworkNav = document.querySelector('nav[aria-label="Adjacent works"]');
+  if (artworkNav) {
+    var hint = document.createElement('div');
+    hint.style.cssText = 'font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:#8e7164;margin-top:8px;';
+    hint.textContent = '💡 P/N to navigate · ← → for decade';
+    artworkNav.parentElement.appendChild(hint);
+  }
+
+  // ─── Scroll position indicator on long pages ─────────────────────────
+  var sections = document.querySelectorAll('section[id], [id^="section"], [id^="part"]');
+  if (sections.length > 3) {
+    var indicator = document.createElement('div');
+    indicator.id = 'scroll-indicator';
+    indicator.className = 'visible';
+    document.body.appendChild(indicator);
+
+    window.addEventListener('scroll', function() {
+      var current = 1;
+      for (var i = 0; i < sections.length; i++) {
+        var rect = sections[i].getBoundingClientRect();
+        if (rect.top < window.innerHeight / 2) current = i + 1;
+      }
+      indicator.textContent = 'Section ' + current + ' of ' + sections.length;
+    }, { passive: true });
+  }
+
+  // ─── Favorite functionality (localStorage) ──────────────────────────
+  window.toggleFavorite = function(artId) {
+    var favorites = JSON.parse(localStorage.getItem('jfsn-favorites') || '[]');
+    var btn = document.querySelector('.favorite-btn');
+    if (favorites.includes(artId)) {
+      favorites = favorites.filter(function(id) { return id !== artId; });
+      if (btn) btn.classList.remove('is-favorited');
+    } else {
+      favorites.push(artId);
+      if (btn) {
+        btn.classList.add('is-favorited');
+        btn.classList.add('pulse');
+        setTimeout(function() { btn.classList.remove('pulse'); }, 400);
+      }
+    }
+    localStorage.setItem('jfsn-favorites', JSON.stringify(favorites));
+    window.showToast(favorites.includes(artId) ? 'Added to favorites' : 'Removed from favorites');
+  };
+
+  // Restore favorite state on page load
+  var favBtn = document.querySelector('.favorite-btn');
+  if (favBtn) {
+    var artId = favBtn.dataset.artId;
+    var favorites = JSON.parse(localStorage.getItem('jfsn-favorites') || '[]');
+    if (favorites.includes(artId)) {
+      favBtn.classList.add('is-favorited');
+    }
+  }
+
+  // ─── Link destination previews (footer links) ───────────────────────
+  var footerLinks = document.querySelectorAll('footer a[href]:not([href^="#"])');
+  footerLinks.forEach(function(link) {
+    var href = link.getAttribute('href');
+    var title = link.textContent.trim();
+    link.setAttribute('data-link-title', title);
+  });
+
   // Artwork thumbnails are full color always — no mask-image, no scroll-reveal.
   // (Removed session 8; banned — do not re-add.)
 

@@ -384,6 +384,222 @@ a.toc-link:focus-visible,
   }
 }
 
+/* ─── Active decade highlight ────────────────────────────────────────────── */
+
+a[aria-current="page"],
+a.decade-active {
+  position: relative;
+  color: #FF6600 !important;
+  font-weight: 600 !important;
+  transition: color 0.2s ease;
+}
+
+a[aria-current="page"]::after,
+a.decade-active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #FF6600;
+  transition: width 0.2s ease;
+}
+
+/* ─── Medium badges on artwork cards ─────────────────────────────────────── */
+
+.medium-badge {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  position: relative;
+  top: -1px;
+  margin-right: 4px;
+  transition: transform 0.2s ease;
+}
+
+.medium-badge[data-medium="collage"] { background-color: #A85C3C; }
+.medium-badge[data-medium="sculpture"] { background-color: #6B7280; }
+.medium-badge[data-medium="photography"] { background-color: #475569; }
+.medium-badge[data-medium="painting"] { background-color: #6B4C8A; }
+
+/* ─── Archive filter active states ──────────────────────────────────────── */
+
+button[data-filter-active="true"],
+.filter-chip.is-active {
+  font-weight: 600 !important;
+  border-bottom: 2px solid #FF6600 !important;
+  color: #FF6600 !important;
+}
+
+/* ─── Print-friendly styles ────────────────────────────────────────────── */
+
+@media print {
+  header, footer, nav, #nav-search-btn, #nav-menu-btn,
+  #mobile-menu, .btt-float, #btt-float,
+  .adjacent-nav-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    color: #000;
+  }
+
+  main {
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  img {
+    max-width: 100%;
+    page-break-inside: avoid;
+  }
+
+  section, article {
+    page-break-inside: avoid;
+    margin-bottom: 2rem;
+  }
+
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+
+  @page {
+    margin: 1in;
+  }
+}
+
+/* ─── Link destination preview (tooltip) ────────────────────────────────── */
+
+a[data-link-title] {
+  position: relative;
+}
+
+a[data-link-title]::after {
+  content: attr(data-link-title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  background: #0B0B0B;
+  color: #fcf9f3;
+  padding: 4px 8px;
+  border-radius: 0;
+  font-size: 11px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 100;
+  font-family: Inter, sans-serif;
+  letter-spacing: 0.05em;
+}
+
+a[data-link-title]:hover::after {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a[data-link-title]::after { transition: none; }
+}
+
+/* ─── Scroll position indicator ────────────────────────────────────────── */
+
+#scroll-indicator {
+  position: fixed;
+  top: 80px;
+  right: 24px;
+  font-family: Inter, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8e7164;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 30;
+}
+
+#scroll-indicator.visible {
+  opacity: 1;
+}
+
+@media (max-width: 1024px) {
+  #scroll-indicator {
+    display: none;
+  }
+}
+
+/* ─── Breadcrumb hover color hints ──────────────────────────────────────── */
+
+.breadcrumb-item a {
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.breadcrumb-item a::before {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: #FF6600;
+  transition: width 0.2s ease;
+}
+
+.breadcrumb-item a:hover::before {
+  width: 100%;
+}
+
+/* ─── Favorite button ────────────────────────────────────────────────────── */
+
+.favorite-btn {
+  background: none;
+  border: 1px solid #c4c7c7;
+  cursor: pointer;
+  padding: 6px 10px;
+  font-size: 14px;
+  transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  font-family: Inter, sans-serif;
+  color: #575757;
+}
+
+.favorite-btn:hover {
+  border-color: #FF6600;
+  color: #FF6600;
+}
+
+.favorite-btn.is-favorited {
+  color: #FF6600;
+  border-color: #FF6600;
+  font-weight: 600;
+}
+
+.favorite-btn.is-favorited::before {
+  content: '♥ ';
+}
+
+@keyframes favorite-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+.favorite-btn.pulse {
+  animation: favorite-pulse 0.4s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .favorite-btn { transition: none; }
+  .favorite-btn.pulse { animation: none; }
+}
+
 /* ─── Custom cursor ───────────────────────────────────────────────────────── */
 
 #jfsn-cursor-dot {

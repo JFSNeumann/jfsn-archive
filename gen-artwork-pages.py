@@ -221,6 +221,36 @@ def generate_page(work, idx, all_works, colors):
         if desc else ''
     )
 
+    # Related works by same theme
+    related_works_html = ''
+    if themes:
+        related = []
+        for other in all_works:
+            if other == work:
+                continue
+            other_themes = other.get('themes', [])
+            if any(t in other_themes for t in themes):
+                related.append(other)
+                if len(related) >= 3:
+                    break
+
+        if related:
+            related_html = '<div class="grid grid-cols-3 gap-4 mt-lg pt-lg border-t border-archival-outline">'
+            related_html += '<h3 class="col-span-3 font-headline-sm text-headline-sm mb-2">Related Works</h3>'
+            for rel_work in related:
+                rel_id = rel_work['file'].replace('.avif', '')
+                rel_title = rel_work.get('title', 'Untitled')[:30]
+                thumb_file = rel_work['file']
+                related_html += (
+                    f'<a href="{rel_id}.html" class="group cursor-pointer">'
+                    f'<img src="../../artworks/thumbs/{thumb_file}" alt="{e(rel_title)}" '
+                    f'class="w-full h-auto object-cover" loading="lazy" width="200" height="200"/>'
+                    f'<p class="font-body-sm text-body-sm mt-1 group-hover:text-international-orange transition-colors">{e(rel_title)}</p>'
+                    f'</a>'
+                )
+            related_html += '</div>'
+            related_works_html = related_html
+
     return f'''<!DOCTYPE html>
 <html class="light" lang="en">
 <head>
@@ -332,13 +362,16 @@ def generate_page(work, idx, all_works, colors):
              width="1200" height="900"
              data-dominant-color="{bgcolor}"/>
       </div>
-      <div class="p-sm border-t border-deep-ink flex justify-between items-center">
+      <div class="p-sm border-t border-deep-ink flex justify-between items-center gap-2">
         <span class="font-label-md text-label-md text-secondary uppercase tracking-widest cursor-pointer hover:text-international-orange transition-colors" onclick="navigator.clipboard.writeText(\\"{e(art_id.upper())}\\\").then(()=>window.showToast(\\\"Copied: {e(art_id.upper())}!\\\"))" title="Click to copy">{e(art_id.upper())}</span>
-        <a href="../full/{e(work['file'])}"
-           class="font-label-md text-label-md uppercase tracking-widest text-secondary hover:text-international-orange transition-colors"
-           target="_blank" rel="noopener">
-          Full resolution <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><line x1="20.4" y1="20.4" x2="16" y2="16"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-        </a>
+        <div class="flex gap-2 items-center">
+          <button class="favorite-btn" data-art-id="{art_id}" onclick="window.toggleFavorite(\\"{art_id}\\\")" title="Add to favorites">Favorite</button>
+          <a href="../full/{e(work['file'])}"
+             class="font-label-md text-label-md uppercase tracking-widest text-secondary hover:text-international-orange transition-colors"
+             target="_blank" rel="noopener">
+            Full resolution <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><line x1="20.4" y1="20.4" x2="16" y2="16"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+          </a>
+        </div>
       </div>
     </section>
 
@@ -355,6 +388,9 @@ def generate_page(work, idx, all_works, colors):
     </aside>
 
   </div>
+
+  <!-- Related works by theme -->
+  {related_works_html}
 
   <!-- Prev / Next -->
   <nav class="w-full bg-bone-white border-y border-deep-ink grid grid-cols-2 divide-x divide-outline-variant h-[56px] items-center" aria-label="Adjacent works">

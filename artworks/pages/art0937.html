@@ -109,13 +109,16 @@
              width="1200" height="900"
              data-dominant-color="#dcd7cd"/>
       </div>
-      <div class="p-sm border-t border-deep-ink flex justify-between items-center">
+      <div class="p-sm border-t border-deep-ink flex justify-between items-center gap-2">
         <span class="font-label-md text-label-md text-secondary uppercase tracking-widest cursor-pointer hover:text-international-orange transition-colors" onclick="navigator.clipboard.writeText(\"ART0937\").then(()=>window.showToast(\"Copied: ART0937!\"))" title="Click to copy">ART0937</span>
-        <a href="../full/art0937.avif"
-           class="font-label-md text-label-md uppercase tracking-widest text-secondary hover:text-international-orange transition-colors"
-           target="_blank" rel="noopener">
-          Full resolution <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><line x1="20.4" y1="20.4" x2="16" y2="16"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-        </a>
+        <div class="flex gap-2 items-center">
+          <button class="favorite-btn" data-art-id="art0937" onclick="window.toggleFavorite(\"art0937\")" title="Add to favorites">Favorite</button>
+          <a href="../full/art0937.avif"
+             class="font-label-md text-label-md uppercase tracking-widest text-secondary hover:text-international-orange transition-colors"
+             target="_blank" rel="noopener">
+            Full resolution <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><line x1="20.4" y1="20.4" x2="16" y2="16"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+          </a>
+        </div>
       </div>
     </section>
 
@@ -132,6 +135,9 @@
     </aside>
 
   </div>
+
+  <!-- Related works by theme -->
+  <div class="grid grid-cols-3 gap-4 mt-lg pt-lg border-t border-archival-outline"><h3 class="col-span-3 font-headline-sm text-headline-sm mb-2">Related Works</h3><a href="art0002.html" class="group cursor-pointer"><img src="../../artworks/thumbs/art0002.avif" alt="Reliquary" class="w-full h-auto object-cover" loading="lazy" width="200" height="200"/><p class="font-body-sm text-body-sm mt-1 group-hover:text-international-orange transition-colors">Reliquary</p></a><a href="art0003.html" class="group cursor-pointer"><img src="../../artworks/thumbs/art0003.avif" alt="Sortie" class="w-full h-auto object-cover" loading="lazy" width="200" height="200"/><p class="font-body-sm text-body-sm mt-1 group-hover:text-international-orange transition-colors">Sortie</p></a><a href="art0008.html" class="group cursor-pointer"><img src="../../artworks/thumbs/art0008.avif" alt="Drafting Table" class="w-full h-auto object-cover" loading="lazy" width="200" height="200"/><p class="font-body-sm text-body-sm mt-1 group-hover:text-international-orange transition-colors">Drafting Table</p></a></div>
 
   <!-- Prev / Next -->
   <nav class="w-full bg-bone-white border-y border-deep-ink grid grid-cols-2 divide-x divide-outline-variant h-[56px] items-center" aria-label="Adjacent works">
