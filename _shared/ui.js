@@ -239,6 +239,47 @@
     }, 2000);
   }
 
+  // ─── Keyboard shortcuts ───────────────────────────────────────────────────
+  // P/N: prev/next work on artwork pages
+  // ?: show shortcuts help
+  document.addEventListener('keydown', function(e) {
+    // Don't fire when user is typing in input/textarea
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+
+    // P = previous work
+    if (e.key === 'p' || e.key === 'P') {
+      var prevLink = document.querySelector('a[href$=".html"][href*="art"][href*="../"]');
+      if (prevLink && prevLink.textContent.includes('PREVIOUS')) {
+        e.preventDefault();
+        prevLink.click();
+      }
+    }
+
+    // N = next work
+    if (e.key === 'n' || e.key === 'N') {
+      var nextLink = document.querySelector('a[href$=".html"][href*="art"][href*="../"]');
+      if (nextLink && nextLink.textContent.includes('NEXT')) {
+        e.preventDefault();
+        var allLinks = Array.from(document.querySelectorAll('a[href$=".html"][href*="art"][href*="../"]'));
+        nextLink = allLinks[allLinks.length - 1];
+        if (nextLink) nextLink.click();
+      }
+    }
+
+    // ? = show keyboard shortcuts help (if available)
+    if (e.key === '?') {
+      var tag = e.target.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+      // Check if search is loaded (has openSiteSearch function)
+      if (window.openSiteSearch) {
+        // Trigger search keyboard shortcuts modal (? key in search)
+        var event = new KeyboardEvent('keydown', { key: '?' });
+        document.dispatchEvent(event);
+      }
+    }
+  });
+
   // Artwork thumbnails are full color always — no mask-image, no scroll-reveal.
   // (Removed session 8; banned — do not re-add.)
 

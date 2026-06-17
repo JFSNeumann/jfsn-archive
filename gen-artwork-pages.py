@@ -61,8 +61,11 @@ def theme_link(theme):
     page = THEME_PAGES.get(theme)
     if not page:
         page = '../../series.html?theme=' + urllib.parse.quote(theme, safe='')
+    # Map theme names to color scheme slugs
+    theme_slug = theme.lower().replace(' ', '-').replace('&', '')
     return (f'<a href="{page}" '
-            f'class="hover:text-international-orange transition-colors underline underline-offset-2">'
+            f'data-theme-tag="{theme_slug}" '
+            f'class="theme-tag hover:text-international-orange transition-colors underline underline-offset-2">'
             f'{e(theme)}</a>')
 
 

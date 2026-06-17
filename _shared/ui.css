@@ -299,6 +299,91 @@ button[class*="filter"]:hover svg {
   }
 }
 
+/* ─── Theme-colored metadata tags ─────────────────────────────────────────── */
+
+.theme-tag {
+  position: relative;
+  padding-left: 10px;
+}
+
+.theme-tag::before {
+  content: '●';
+  position: absolute;
+  left: 0;
+  color: #c4c7c7;
+  transition: color 0.2s ease;
+}
+
+/* Theme colors for tag bullets */
+.theme-tag[data-theme-tag="guernica"]::before { color: #8B1538; }
+.theme-tag[data-theme-tag="targets"]::before { color: #1A4D7A; }
+.theme-tag[data-theme-tag="torsos-faces"]::before { color: #964B3B; }
+.theme-tag[data-theme-tag="framed"]::before { color: #2D5A5A; }
+.theme-tag[data-theme-tag="gallery-images"]::before { color: #4A5568; }
+.theme-tag[data-theme-tag="mr-snowmann"]::before { color: #7A5C4D; }
+.theme-tag[data-theme-tag="crosses"]::before { color: #5B6B7B; }
+.theme-tag[data-theme-tag="collaboration"]::before { color: #5A6B5B; }
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-tag::before { transition: none; }
+}
+
+/* ─── Disabled state styling ───────────────────────────────────────────────── */
+
+button:disabled,
+a[aria-disabled="true"],
+.adjacent-nav-btn[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transition: opacity 0.2s ease;
+}
+
+button:disabled:hover,
+a[aria-disabled="true"]:hover {
+  opacity: 0.4;
+}
+
+/* ─── Focus ring enhancement (keyboard navigation) ────────────────────────── */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #FF6600;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Override default focus styles for better visibility */
+*:focus {
+  outline: 2px solid transparent;
+}
+
+*:focus-visible {
+  outline: 2px solid #FF6600;
+  outline-offset: 2px;
+}
+
+/* Search results and interactive items */
+.sse-item:focus-visible {
+  outline: 2px solid #FF6600;
+  outline-offset: -2px;
+}
+
+/* TOC links */
+a.toc-link:focus-visible,
+.toc-link:focus-visible {
+  outline: 2px solid #FF6600;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button:disabled,
+  a[aria-disabled="true"] {
+    transition: none;
+  }
+}
+
 /* ─── Custom cursor ───────────────────────────────────────────────────────── */
 
 #jfsn-cursor-dot {
