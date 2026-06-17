@@ -294,6 +294,7 @@ header.header-hidden{transform:translateY(-100%)}
       <a href="#sh-themes"        class="mobile-toc-link">Major Themes</a>
       <a href="#sh-how-to"        class="mobile-toc-link">How To Explore</a>
       <a href="#sh-researchers"   class="mobile-toc-link">For Researchers</a>
+      <a href="#sh-guided-paths"  class="mobile-toc-link">Guided Paths</a>
       <a href="#sh-begin"         class="mobile-toc-link">Begin Exploring</a>
     </div>
   </div>
@@ -425,6 +426,32 @@ header.header-hidden{transform:translateY(-100%)}
           </div>
         </div>
 
+        <!-- Guided Discovery Paths -->
+        <div class="mb-16 pt-16 reveal-section" id="sh-guided-paths" style="border-top:1px solid #e3bfb1;">
+          <span class="section-label">Guided Discovery Paths</span>
+          <div class="prose">
+            <p>Not sure where to start? Follow one of these curated exploration sequences:</p>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:20px;">
+            <a href="archive.html?decade=2010s" class="quote-card" style="text-decoration:none;display:block;">
+              <span style="display:block;font-family:Inter,sans-serif;font-weight:600;font-size:13px;color:#0B0B0B;margin-bottom:8px;">👁 First Look</span>
+              <p style="font-family:Inter,sans-serif;font-size:13px;line-height:1.6;color:#575757;margin:0;">Start with recent work (2010s–2020s) to see the current practice, then follow back through decades.</p>
+            </a>
+            <a href="series.html?theme=Guernica" class="quote-card" style="text-decoration:none;display:block;">
+              <span style="display:block;font-family:Inter,sans-serif;font-weight:600;font-size:13px;color:#0B0B0B;margin-bottom:8px;">📚 Thematic Deep Dive</span>
+              <p style="font-family:Inter,sans-serif;font-size:13px;line-height:1.6;color:#575757;margin:0;">Explore Guernica (232 works over 30+ years) to understand how a single idea evolves and sustains.</p>
+            </a>
+            <a href="chromatic.html" class="quote-card" style="text-decoration:none;display:block;">
+              <span style="display:block;font-family:Inter,sans-serif;font-weight:600;font-size:13px;color:#0B0B0B;margin-bottom:8px;">🎨 Color Journey</span>
+              <p style="font-family:Inter,sans-serif;font-size:13px;line-height:1.6;color:#575757;margin:0;">Watch color evolution across five decades in the Chromatic River — a year-by-year visual timeline.</p>
+            </a>
+            <a href="api.html" class="quote-card" style="text-decoration:none;display:block;">
+              <span style="display:block;font-family:Inter,sans-serif;font-weight:600;font-size:13px;color:#0B0B0B;margin-bottom:8px;">🔬 Research Path</span>
+              <p style="font-family:Inter,sans-serif;font-size:13px;line-height:1.6;color:#575757;margin:0;">Access machine-readable data, CSV exports, and API documentation for analysis and scholarly work.</p>
+            </a>
+          </div>
+        </div>
+
         <!-- Begin Exploring -->
         <div class="pt-16 pb-20 reveal-section" id="sh-begin" style="border-top:1px solid #e3bfb1;">
           <span class="section-label">Begin Exploring</span>
@@ -473,7 +500,7 @@ header.header-hidden{transform:translateY(-100%)}
 (function(){
   var links = document.querySelectorAll('#sh-mobile-toc-list .mobile-toc-link');
   if (links.length) {
-    var sectionIds = ['sh-welcome','sh-why-exists','sh-about-jeff','sh-themes','sh-how-to','sh-researchers','sh-begin'];
+    var sectionIds = ['sh-welcome','sh-why-exists','sh-about-jeff','sh-themes','sh-how-to','sh-researchers','sh-guided-paths','sh-begin'];
     var sections = sectionIds.map(function(id){ return document.getElementById(id); }).filter(Boolean);
     var obs = new IntersectionObserver(function(entries){
       entries.forEach(function(e){
