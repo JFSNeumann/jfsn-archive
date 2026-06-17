@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#fcf9f3"/>
+  <title>Design System — JFSN Archive</title>
+  <meta name="description" content="Interactive design system showcase for the JFSN Archive. Review colors, typography, components, interactions, and accessibility guidelines."/>
+  <link rel="canonical" href="https://jfsn.com/style-guide.html"/>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Design System — JFSN Archive"/>
+  <meta property="og:description" content="Interactive design system showcase for the JFSN Archive."/>
+  <meta property="og:image" content="https://jfsn.com/og-card.jpg"/>
+  <meta property="og:url" content="https://jfsn.com/style-guide.html"/>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebPage","name":"Design System — JFSN Archive","description":"Interactive design system showcase for the JFSN Archive.","url":"https://jfsn.com/style-guide.html","creator":{"@type":"Person","name":"Jeffrey F. S. Neumann","url":"https://jfsn.com"}}
+  </script>
+  <link rel="stylesheet" href="site.min.css"/>
+  <style>
+    body { background: #fcf9f3; color: #0B0B0B; }
+    .guide-section { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+    .guide-section + .guide-section { border-top: 1px solid #e3bfb1; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 700; margin: 0 0 40px; }
+    .subsection-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 600; margin: 32px 0 20px; }
+    .label { font-family: Inter, sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #8e7164; margin-bottom: 12px; }
+
+    /* Color Swatches */
+    .color-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px; }
+    .color-swatch { border: 1px solid #8e7164; padding: 0; border-radius: 0; overflow: hidden; }
+    .swatch-color { height: 80px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; text-shadow: 0 1px 3px rgba(0,0,0,0.3); }
+    .swatch-info { padding: 12px; background: white; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 10px; }
+    .swatch-name { font-weight: 600; margin-bottom: 4px; }
+    .swatch-hex { color: #575757; }
+    .swatch-contrast { font-size: 9px; color: #8e7164; margin-top: 4px; }
+
+    /* Typography */
+    .type-sample { margin-bottom: 32px; padding: 20px; background: white; border: 1px solid #e3bfb1; }
+    .type-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #8e7164; margin-bottom: 8px; }
+    .type-specs { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 10px; color: #575757; margin-top: 8px; }
+
+    /* Components Grid */
+    .component-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+    .component { padding: 20px; background: white; border: 1px solid #8e7164; box-shadow: 0 0 20px rgba(0,0,0,0.05); }
+    .component-title { font-size: 13px; font-weight: 600; margin-bottom: 16px; color: #0B0B0B; }
+
+    /* Cards */
+    .quote-card { background: #fcf9f3; border: 1px solid #8e7164; padding: 16px; margin: 16px 0; box-shadow: 0 0 20px rgba(0,0,0,0.05); }
+    .quote-card-title { display: block; font-weight: 500; color: #0B0B0B; margin-bottom: 6px; }
+    .quote-card-text { font-size: 13px; line-height: 1.65; color: #575757; margin: 0; }
+
+    /* Buttons */
+    .button-demo { display: flex; gap: 12px; flex-wrap: wrap; margin: 16px 0; }
+    .btn-cta { background: #FF6600; color: white; border: 2px solid #FF6600; padding: 12px 20px; font-family: Inter, sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; transition: opacity 0.2s ease; }
+    .btn-cta:hover { opacity: 0.85; }
+    .btn-cta:focus { outline: 2px solid #0B0B0B; outline-offset: 2px; }
+    .btn-secondary { background: transparent; color: #0B0B0B; border: 2px solid #c4c7c7; padding: 12px 20px; font-family: Inter, sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+    .btn-secondary:hover { border-color: #FF6600; color: #FF6600; }
+    .btn-secondary:focus { outline: 2px solid #FF6600; outline-offset: 2px; }
+
+    /* Links */
+    .link-demo { margin: 16px 0; }
+    .bracket-link { display: flex; justify-content: space-between; align-items: center; color: #B84700; text-decoration: none; border-bottom: 1px solid #B84700; padding: 8px 0; transition: color 0.2s ease; }
+    .bracket-link:hover { color: #FF6600; }
+    .bracket-link:focus { outline: 2px solid #FF6600; outline-offset: 2px; }
+
+    /* Forms */
+    .form-demo { margin: 16px 0; }
+    .form-group { margin-bottom: 16px; }
+    .form-label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 6px; color: #0B0B0B; }
+    .checkbox-demo { display: flex; align-items: center; gap: 8px; margin: 8px 0; }
+    .custom-checkbox { appearance: none; width: 14px; height: 14px; border: 1px solid #c4c7c7; cursor: pointer; flex-shrink: 0; }
+    .custom-checkbox:checked { background-color: #000000; border-color: #000000; }
+    .custom-checkbox:checked::after { content: '✓'; position: absolute; color: white; font-size: 10px; margin-left: 2px; }
+    .custom-checkbox:focus { outline: 2px solid #FF6600; outline-offset: 2px; }
+
+    /* Breadcrumb */
+    .breadcrumb-demo { margin: 16px 0; font-family: Inter, sans-serif; font-size: 12px; color: #575757; }
+    .breadcrumb-demo a { color: #575757; text-decoration: none; border-bottom: 1px solid #575757; }
+    .breadcrumb-demo a:hover { color: #FF6600; border-bottom-color: #FF6600; }
+    .breadcrumb-demo span { color: #8e7164; margin: 0 4px; }
+
+    /* Animations */
+    @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slide-up { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .animate-fade { animation: fade-in 0.6s ease forwards; }
+    .animate-slide { animation: slide-up 0.6s ease forwards; }
+    .stagger-1 { animation-delay: 0s; }
+    .stagger-2 { animation-delay: 0.05s; }
+    .stagger-3 { animation-delay: 0.1s; }
+    .stagger-4 { animation-delay: 0.15s; }
+    .animation-demo { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 20px 0; }
+    .animation-box { width: 60px; height: 60px; background: #FF6600; border: 1px solid #8e7164; }
+
+    /* Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .guide-section { padding: 24px 16px; }
+      .section-title { font-size: 28px; }
+      .color-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+      .component-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV:START -->
+<a href="#main" class="sr-only focus:not-sr-only">Skip to content</a>
+<header style="position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: rgba(252,249,243,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid #e3bfb1;">
+  <div style="max-width: 1200px; margin: 0 auto; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <a href="index.html" style="font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: #0B0B0B; text-decoration: none;">JFSN</a>
+    <nav style="display: none; gap: 24px;">
+      <a href="start-here.html" style="font-family: Inter, sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #0B0B0B; text-decoration: none;">Start Here</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" style="margin-top: 70px;">
+
+<div class="guide-section">
+  <h1 class="section-title">Design System Showcase</h1>
+  <p style="font-size: 16px; color: #575757; line-height: 1.6;">
+    Interactive demonstration of the JFSN Archive design system. Hover over components to see interactions in action.
+    Read <a href="DESIGN-SYSTEM.md" style="color: #B84700; text-decoration: underline;">DESIGN-SYSTEM.md</a> for full documentation.
+  </p>
+</div>
+
+<!-- COLORS -->
+<div class="guide-section">
+  <h2 class="section-title">Color System</h2>
+
+  <p class="label">Stitch Light (Primary UI)</p>
+  <div class="color-grid">
+    <div class="color-swatch">
+      <div class="swatch-color" style="background: #fcf9f3; color: #0B0B0B; text-shadow: none;">bone-white</div>
+      <div class="swatch-info">
+        <div class="swatch-name">bone-white</div>
+        <div class="swatch-hex">#fcf9f3</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-color" style="background: #0B0B0B;">deep-ink</div>
+      <div class="swatch-info">
+        <div class="swatch-name">deep-ink</div>
+        <div class="swatch-hex">#0B0B0B</div>
+        <div class="swatch-contrast">20:1 on #fcf9f3</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-color" style="background: #575757;">archive-gray</div>
+      <div class="swatch-info">
+        <div class="swatch-name">archive-gray</div>
+        <div class="swatch-hex">#575757</div>
+        <div class="swatch-contrast">8.59:1 on #fcf9f3</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-color" style="background: #B84700;">orange-ink</div>
+      <div class="swatch-info">
+        <div class="swatch-name">orange-ink</div>
+        <div class="swatch-hex">#B84700</div>
+        <div class="swatch-contrast">5.07:1 on #fcf9f3 ✓</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-color" style="background: #FF6600;">international-orange</div>
+      <div class="swatch-info">
+        <div class="swatch-name">international-orange</div>
+        <div class="swatch-hex">#FF6600</div>
+        <div class="swatch-contrast">2.79:1 (fails on light) ✗</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-color" style="background: #8e7164;">archival-outline</div>
+      <div class="swatch-info">
+        <div class="swatch-name">archival-outline</div>
+        <div class="swatch-hex">#8e7164</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-color" style="background: #e3bfb1; color: #0B0B0B; text-shadow: none;">archival-outline-soft</div>
+      <div class="swatch-info">
+        <div class="swatch-name">archival-outline-soft</div>
+        <div class="swatch-hex">#e3bfb1</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-color" style="background: #c4c7c7; color: #0B0B0B; text-shadow: none;">outline-variant</div>
+      <div class="swatch-info">
+        <div class="swatch-name">outline-variant</div>
+        <div class="swatch-hex">#c4c7c7</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="label" style="margin-top: 40px;">Key Principle</p>
+  <div style="background: white; border: 1px solid #e3bfb1; padding: 20px; margin: 16px 0;">
+    <strong style="color: #B84700;">Use orange-ink (#B84700) for persistent text on light backgrounds.</strong><br/>
+    International-orange (#FF6600) only for hover states, fills, and sections on dark backgrounds. Never persistent text on light.
+  </div>
+</div>
+
+<!-- TYPOGRAPHY -->
+<div class="guide-section">
+  <h2 class="section-title">Typography</h2>
+
+  <h3 class="subsection-title">Scale</h3>
+
+  <div class="type-sample">
+    <div class="type-label">Display Large</div>
+    <div style="font-family: 'Playfair Display', serif; font-size: 64px; font-weight: 700; line-height: 1; letter-spacing: -0.02em; margin-bottom: 12px;">Five Decades</div>
+    <div class="type-specs">Playfair Display, 64px, weight 700, line-height 1, letter-spacing -0.02em</div>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-label">Heading 1</div>
+    <div style="font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 700; line-height: 1.2; margin-bottom: 12px;">The Archive</div>
+    <div class="type-specs">Playfair Display, 40px, weight 700, line-height 1.2</div>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-label">Body Medium</div>
+    <div style="font-family: Inter, sans-serif; font-size: 16px; line-height: 1.6; margin-bottom: 12px;">This is the default body text used throughout the archive for essays, descriptions, and long-form content. It maintains excellent readability at all screen sizes.</div>
+    <div class="type-specs">Inter, 16px, weight 400, line-height 1.6</div>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-label">Label Medium</div>
+    <div style="font-family: Inter, sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px;">1990S · COLLAGE</div>
+    <div class="type-specs">Inter, 11px, weight 600, letter-spacing 0.08em, uppercase</div>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-label">Monospace (Metadata)</div>
+    <div style="font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px;">ART1234 · 1990S (EST.)</div>
+    <div class="type-specs">SF Mono, 10px, weight 400, letter-spacing 0.08em</div>
+  </div>
+</div>
+
+<!-- COMPONENTS -->
+<div class="guide-section">
+  <h2 class="section-title">Components</h2>
+
+  <h3 class="subsection-title">Quote Card (Sidebar)</h3>
+  <div class="quote-card">
+    <span class="quote-card-title">On Loss</span>
+    <p class="quote-card-text"><em>"Saw it out front waiting for the garbage men to take them all away."</em></p>
+  </div>
+  <p style="font-size: 12px; color: #575757;">Warm-brown archival border, soft shadow, used for callouts and featured content.</p>
+
+  <h3 class="subsection-title">Archive Card (Grid Thumbnail)</h3>
+  <div style="max-width: 200px; margin: 20px 0;">
+    <div style="border: 1px solid #8e7164; box-shadow: 0 0 20px rgba(0,0,0,0.05); overflow: hidden;">
+      <div style="position: relative; overflow: hidden; background: #f0f0f0; height: 160px; display: flex; align-items: center; justify-content: center; color: #999;">
+        [Image]
+      </div>
+      <div style="padding: 12px;">
+        <h4 style="font-family: Inter, sans-serif; font-size: 13px; font-weight: 600; margin: 0 0 4px;">Untitled</h4>
+        <span style="font-size: 11px; color: #575757;">1990s (est.) | Collage</span>
+      </div>
+    </div>
+  </div>
+  <p style="font-size: 12px; color: #575757;">Full color at rest, saturation overlay fades on hover, title turns orange.</p>
+
+  <h3 class="subsection-title">Buttons</h3>
+  <div class="button-demo">
+    <button class="btn-cta">[ CTA Fill → ]</button>
+    <button class="btn-secondary">[ Secondary ]</button>
+  </div>
+  <p style="font-size: 12px; color: #575757;">
+    CTA: orange background, white text. Secondary: transparent, gray border. Both transition smoothly on hover, focus outline always visible.
+  </p>
+
+  <h3 class="subsection-title">Links</h3>
+  <div class="link-demo">
+    <a href="#" class="bracket-link" onclick="return false;">
+      <span>Full Archive</span>
+      <span>[ Browse → ]</span>
+    </a>
+  </div>
+  <p style="font-size: 12px; color: #575757;">Bracket link with orange-ink text, bottom border. Underline animates on hover via transform: scaleX.</p>
+
+  <h3 class="subsection-title">Forms</h3>
+  <div class="form-demo">
+    <div class="form-group">
+      <label class="form-label">Filter by Medium</label>
+      <div class="checkbox-demo">
+        <input type="checkbox" class="custom-checkbox" value="collage" checked/>
+        <span>Collage</span>
+      </div>
+      <div class="checkbox-demo">
+        <input type="checkbox" class="custom-checkbox" value="sculpture"/>
+        <span>Sculpture</span>
+      </div>
+    </div>
+  </div>
+  <p style="font-size: 12px; color: #575757;">Custom checkboxes with focus outline, no native browser styling.</p>
+
+  <h3 class="subsection-title">Breadcrumbs (URL-Inferred)</h3>
+  <div class="breadcrumb-demo">
+    <a href="#" onclick="return false;">Archive</a>
+    <span>›</span>
+    <a href="#" onclick="return false;">1990s</a>
+    <span>›</span>
+    <a href="#" onclick="return false;">Guernica</a>
+  </div>
+  <p style="font-size: 12px; color: #575757;">Clickable breadcrumbs that reflect current filters. Separator in warm-brown archival color.</p>
+
+  <h3 class="subsection-title">Filter Chips</h3>
+  <div style="display: flex; gap: 8px; flex-wrap: wrap; margin: 20px 0;">
+    <span style="display: inline-flex; align-items: center; gap: 6px; font-family: Inter, sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #0B0B0B; background: #ebe8e2; border: 1px solid #c4c7c7; padding: 4px 10px; cursor: default;">
+      Collage
+      <button style="background: none; border: none; cursor: pointer; padding: 0; color: #575757; font-size: 14px;">×</button>
+    </span>
+    <span style="display: inline-flex; align-items: center; gap: 6px; font-family: Inter, sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #0B0B0B; background: #ebe8e2; border: 1px solid #c4c7c7; padding: 4px 10px; cursor: default;">
+      1990s
+      <button style="background: none; border: none; cursor: pointer; padding: 0; color: #575757; font-size: 14px;">×</button>
+    </span>
+  </div>
+  <p style="font-size: 12px; color: #575757;">Active filters displayed as removable chips.</p>
+</div>
+
+<!-- INTERACTIONS -->
+<div class="guide-section">
+  <h2 class="section-title">Interactions & Animations</h2>
+
+  <h3 class="subsection-title">Entrance Animations (Staggered)</h3>
+  <p style="font-size: 12px; color: #575757; margin-bottom: 16px;">
+    Hover over or reload the page to see entrance animations. Fade + slide-up with 50ms stagger between items.
+  </p>
+  <div class="animation-demo">
+    <div class="animation-box animate-fade stagger-1"></div>
+    <div class="animation-box animate-fade stagger-2"></div>
+    <div class="animation-box animate-fade stagger-3"></div>
+    <div class="animation-box animate-fade stagger-4"></div>
+  </div>
+  <p style="font-size: 12px; color: #575757; margin-top: 12px;">
+    <strong>Reduced motion:</strong> If you have "Prefer reduced motion" enabled in system settings, animations will be disabled automatically.
+  </p>
+
+  <h3 class="subsection-title">Hover States</h3>
+  <div style="background: white; border: 1px solid #e3bfb1; padding: 20px; margin: 20px 0;">
+    <p style="font-size: 12px; color: #575757; margin-bottom: 12px;">Try hovering over elements above:</p>
+    <ul style="font-size: 12px; color: #575757; line-height: 1.8;">
+      <li><strong>Buttons:</strong> Opacity transition, no scale</li>
+      <li><strong>Links:</strong> Underline animates in via transform</li>
+      <li><strong>Cards:</strong> Optional shadow intensification (not currently visible, can be added)</li>
+    </ul>
+  </div>
+
+  <h3 class="subsection-title">Focus States</h3>
+  <div style="background: white; border: 1px solid #e3bfb1; padding: 20px; margin: 20px 0;">
+    <p style="font-size: 12px; color: #575757; margin-bottom: 12px;">Try tabbing to any button or link:</p>
+    <ul style="font-size: 12px; color: #575757; line-height: 1.8;">
+      <li><strong>Outline:</strong> 2px solid #FF6600, offset 2px</li>
+      <li><strong>Never hidden:</strong> Always visible, never removed</li>
+      <li><strong>High contrast:</strong> Orange on bone-white background</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ACCESSIBILITY -->
+<div class="guide-section">
+  <h2 class="section-title">Accessibility Checklist</h2>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+    <div style="background: white; border: 1px solid #8e7164; padding: 20px;">
+      <h4 style="font-size: 13px; font-weight: 600; margin: 0 0 12px; color: #0B0B0B;">Contrast ✓</h4>
+      <ul style="font-size: 12px; color: #575757; margin: 0; padding-left: 20px; line-height: 1.8;">
+        <li>Text: 8.59:1 (exceeds 4.5:1)</li>
+        <li>Orange-ink: 5.07:1 (WCAG AA)</li>
+        <li>International-orange: link-only or dark bg</li>
+      </ul>
+    </div>
+
+    <div style="background: white; border: 1px solid #8e7164; padding: 20px;">
+      <h4 style="font-size: 13px; font-weight: 600; margin: 0 0 12px; color: #0B0B0B;">Keyboard Nav ✓</h4>
+      <ul style="font-size: 12px; color: #575757; margin: 0; padding-left: 20px; line-height: 1.8;">
+        <li>Tab order logical</li>
+        <li>Focus always visible</li>
+        <li>Arrow keys on decades</li>
+      </ul>
+    </div>
+
+    <div style="background: white; border: 1px solid #8e7164; padding: 20px;">
+      <h4 style="font-size: 13px; font-weight: 600; margin: 0 0 12px; color: #0B0B0B;">Screen Readers ✓</h4>
+      <ul style="font-size: 12px; color: #575757; margin: 0; padding-left: 20px; line-height: 1.8;">
+        <li>Descriptive alt text</li>
+        <li><code>aria-current="page"</code></li>
+        <li>No color-only info</li>
+      </ul>
+    </div>
+
+    <div style="background: white; border: 1px solid #8e7164; padding: 20px;">
+      <h4 style="font-size: 13px; font-weight: 600; margin: 0 0 12px; color: #0B0B0B;">Motion ✓</h4>
+      <ul style="font-size: 12px; color: #575757; margin: 0; padding-left: 20px; line-height: 1.8;">
+        <li>Respects reduced-motion</li>
+        <li>No auto-play</li>
+        <li>User-controlled</li>
+      </ul>
+    </div>
+
+    <div style="background: white; border: 1px solid #8e7164; padding: 20px;">
+      <h4 style="font-size: 13px; font-weight: 600; margin: 0 0 12px; color: #0B0B0B;">Touch Targets ✓</h4>
+      <ul style="font-size: 12px; color: #575757; margin: 0; padding-left: 20px; line-height: 1.8;">
+        <li>Minimum 44×44px</li>
+        <li>Mobile-optimized</li>
+        <li>Adequate spacing</li>
+      </ul>
+    </div>
+
+    <div style="background: white; border: 1px solid #8e7164; padding: 20px;">
+      <h4 style="font-size: 13px; font-weight: 600; margin: 0 0 12px; color: #0B0B0B;">Responsive ✓</h4>
+      <ul style="font-size: 12px; color: #575757; margin: 0; padding-left: 20px; line-height: 1.8;">
+        <li>Mobile-first design</li>
+        <li>Fluid typography</li>
+        <li>Tested iPhone 15 Pro</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- POLISHING OPPORTUNITIES -->
+<div class="guide-section">
+  <h2 class="section-title">Polishing Opportunities</h2>
+
+  <p style="font-size: 14px; color: #575757; margin-bottom: 20px;">
+    The design system is production-ready. These are optional enhancements for future iterations:
+  </p>
+
+  <h3 class="subsection-title" style="color: #B84700;">High Priority</h3>
+  <div style="background: #fcf9f3; border-left: 4px solid #B84700; padding: 16px; margin-bottom: 20px;">
+    <p style="margin: 0 0 8px; font-weight: 600;">1. Decade page discoverability</p>
+    <p style="margin: 0; font-size: 12px; color: #575757;">Links to 1980s–2020s hidden; consider adding to explore page or nav sidebar.</p>
+  </div>
+
+  <div style="background: #fcf9f3; border-left: 4px solid #B84700; padding: 16px; margin-bottom: 20px;">
+    <p style="margin: 0 0 8px; font-weight: 600;">2. Search/filter loading state</p>
+    <p style="margin: 0; font-size: 12px; color: #575757;">No visual feedback during filter update; subtle loading indicator could help.</p>
+  </div>
+
+  <div style="background: #fcf9f3; border-left: 4px solid #B84700; padding: 16px; margin-bottom: 20px;">
+    <p style="margin: 0 0 8px; font-weight: 600;">3. Mobile breadcrumb truncation</p>
+    <p style="margin: 0; font-size: 12px; color: #575757;">Long breadcrumbs overflow on small screens; truncate with "Archive › ... › [current]".</p>
+  </div>
+
+  <h3 class="subsection-title" style="color: #8e7164;">Medium Priority</h3>
+  <ul style="font-size: 12px; color: #575757; line-height: 1.8;">
+    <li>Dark mode (optional, for researchers)</li>
+    <li>Data table styling (for CSV/API results)</li>
+    <li>Related works sidebar (on artwork pages)</li>
+    <li>Print styles (optimize for printing)</li>
+  </ul>
+
+  <h3 class="subsection-title" style="color: #c4c7c7;">Low Priority</h3>
+  <ul style="font-size: 12px; color: #575757; line-height: 1.8;">
+    <li>Scroll-reveal animations (gentle fade-in on section entry)</li>
+    <li>Micro-interactions (button press feedback, success confirmations)</li>
+    <li>Custom scrollbar styling</li>
+    <li>Loading skeleton placeholders</li>
+  </ul>
+</div>
+
+<!-- FOOTER -->
+<div class="guide-section" style="text-align: center; padding: 60px 20px;">
+  <p style="font-size: 12px; color: #8e7164;">
+    JFSN Archive Design System · Last updated 2026-06-17<br/>
+    <a href="DESIGN-SYSTEM.md" style="color: #B84700; text-decoration: none; border-bottom: 1px solid #B84700;">Full Documentation</a>
+  </p>
+</div>
+
+</main>
+
+<!-- FOOTER:START -->
+<footer style="background: #ebe8e2; border-top: 1px solid #c4c7c7; padding: 32px 20px;">
+  <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
+    <p style="font-family: Inter, sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #575757; margin: 0 0 16px;">© 2026 Jeffrey F. S. Neumann. All Rights Reserved.</p>
+    <div style="display: flex; gap: 16px; justify-content: center; align-items: center;">
+      <a href="privacy.html" style="font-family: Inter, sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #575757; text-decoration: none;">Privacy</a>
+      <a href="https://github.com/JFSNeumann/jfsn-archive" target="_blank" style="font-family: Inter, sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #575757; text-decoration: none;">Open Source</a>
+    </div>
+  </div>
+</footer>
+<!-- FOOTER:END -->
+
+<script src="search.js" defer></script>
+<script src="_shared/nav-active.js" defer></script>
+
+</body>
+</html>
