@@ -1,5 +1,5 @@
 # Current State
-**Updated:** 2026-06-16 15:52
+**Updated:** 2026-06-16 20:04
 
 ## ✅ SESSION 46 (2026-06-16) — Accessibility pass: orange-text contrast sitewide + focus-visible gaps (DEPLOYED + verified live)
 - **Root cause: `international-orange` (#FF6600) was used as persistent text color sitewide** — eyebrow labels, bracket links, nav active-states — at only **2.79:1 contrast** on bone-white, failing WCAG AA's 4.5:1 minimum for normal text. This is almost certainly the bulk of the 93–96 Lighthouse a11y gap flagged in IMPROVEMENTS.md.
