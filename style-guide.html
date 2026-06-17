@@ -495,22 +495,204 @@
   </div>
 </div>
 
-<!-- REMAINING POLISHING OPPORTUNITIES -->
+<!-- INTERACTIVE FEATURES SHOWCASE -->
+<div class="guide-section">
+  <h2 class="section-title">Interactive Features Showcase</h2>
+
+  <p style="font-size: 14px; color: #575757; margin-bottom: 32px;">
+    Best-in-class interactions now live on every page. Try them out below, or press <strong>?</strong> anywhere on the site to access keyboard shortcuts.
+  </p>
+
+  <!-- KEYBOARD SHORTCUTS DEMO -->
+  <h3 class="subsection-title" style="color: #4CAF50;">Keyboard Shortcuts Modal</h3>
+  <div style="background: white; border: 1px solid #8e7164; padding: 20px; margin-bottom: 24px;">
+    <p style="font-size: 12px; color: #575757; margin-bottom: 16px;">
+      Press <strong>?</strong> anywhere on the site to open a full-screen modal with keyboard navigation help. Includes backdrop blur, fade-in animation, and ESC to close.
+    </p>
+    <button id="demo-shortcuts-btn" style="background: #FF6600; color: white; border: 2px solid #FF6600; padding: 12px 20px; font-family: Inter, sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: opacity 0.2s ease;">
+      Open Shortcuts Modal (or press ?)
+    </button>
+    <p style="font-size: 11px; color: #8e7164; margin-top: 12px;">
+      <strong>Includes:</strong> P/N (prev/next work) · ←→ (decade nav) · ? (help) · ESC (close)
+    </p>
+  </div>
+
+  <!-- FILTER PRESETS DEMO -->
+  <h3 class="subsection-title" style="color: #4CAF50;">Saved Filter Presets</h3>
+  <div style="background: white; border: 1px solid #8e7164; padding: 20px; margin-bottom: 24px;">
+    <p style="font-size: 12px; color: #575757; margin-bottom: 16px;">
+      On the archive page, save your filter combinations (medium, decade, series) as named presets. Presets persist across sessions using browser localStorage.
+    </p>
+    <div style="background: #f5f5f5; padding: 16px; border-left: 4px solid #FF6600; margin-bottom: 16px;">
+      <p style="font-size: 11px; color: #333; margin: 0; line-height: 1.8;">
+        <strong>Workflow:</strong><br/>
+        1. Select filters (Collage + 1970s decade)<br/>
+        2. Click "+ Save Filter"<br/>
+        3. Name your preset ("Retro Collages")<br/>
+        4. Click saved preset to restore filters instantly<br/>
+        5. Click × to delete a preset
+      </p>
+    </div>
+    <a href="archive.html" style="display: inline-block; background: #FF6600; color: white; padding: 12px 20px; font-family: Inter, sans-serif; font-size: 13px; font-weight: 600; text-decoration: none; transition: opacity 0.2s ease;">
+      Try on Archive Page
+    </a>
+  </div>
+
+  <!-- TOAST NOTIFICATION GALLERY -->
+  <h3 class="subsection-title" style="color: #4CAF50;">Toast Notifications</h3>
+  <div style="background: white; border: 1px solid #8e7164; padding: 20px; margin-bottom: 24px;">
+    <p style="font-size: 12px; color: #575757; margin-bottom: 16px;">
+      Feedback messages appear at the bottom-right with slide-in animation. Available types: success (green), error (red), info (blue).
+    </p>
+    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+      <button onclick="window.showToast && window.showToast('Filter saved successfully!', 3000, 'success')" style="background: #4CAF50; color: white; border: none; padding: 10px 16px; font-size: 12px; font-weight: 600; cursor: pointer; transition: opacity 0.2s;">
+        Show Success
+      </button>
+      <button onclick="window.showToast && window.showToast('Something went wrong.', 3000, 'error')" style="background: #d32f2f; color: white; border: none; padding: 10px 16px; font-size: 12px; font-weight: 600; cursor: pointer; transition: opacity 0.2s;">
+        Show Error
+      </button>
+      <button onclick="window.showToast && window.showToast('Keyboard shortcuts: press ?', 3000, 'info')" style="background: #1976d2; color: white; border: none; padding: 10px 16px; font-size: 12px; font-weight: 600; cursor: pointer; transition: opacity 0.2s;">
+        Show Info
+      </button>
+    </div>
+  </div>
+
+  <!-- GESTURE GUIDE -->
+  <h3 class="subsection-title" style="color: #4CAF50;">Mobile Swipe Gestures</h3>
+  <div style="background: white; border: 1px solid #8e7164; padding: 20px; margin-bottom: 24px;">
+    <p style="font-size: 12px; color: #575757; margin-bottom: 16px;">
+      On decade pages (1970s–2020s), swipe left or right to navigate between decades. Includes haptic feedback on mobile devices.
+    </p>
+    <div style="background: #f5f5f5; padding: 16px; border-left: 4px solid #FF6600;">
+      <p style="font-size: 11px; color: #333; margin: 0; line-height: 1.8;">
+        <strong>Haptic Pattern:</strong> 10ms tap · 5ms pause · 10ms tap (tactile confirmation)<br/>
+        <strong>Works on:</strong> iPhone, Android, any device with vibration API
+      </p>
+    </div>
+  </div>
+
+  <!-- PAGE TRANSITION OVERLAY -->
+  <h3 class="subsection-title" style="color: #4CAF50;">Page Transition Animation</h3>
+  <div style="background: white; border: 1px solid #8e7164; padding: 20px; margin-bottom: 24px;">
+    <p style="font-size: 12px; color: #575757; margin-bottom: 16px;">
+      When navigating from archive to individual artwork, a fade-through-color overlay connects the two states visually (200ms duration).
+    </p>
+    <div style="background: #f5f5f5; padding: 16px; border-left: 4px solid #FF6600;">
+      <p style="font-size: 11px; color: #333; margin: 0; line-height: 1.8;">
+        <strong>Visual Effect:</strong> Semi-transparent overlay fades in then out<br/>
+        <strong>Timing:</strong> 200ms total (smooth, not distracting)<br/>
+        <strong>Respects:</strong> prefers-reduced-motion (disabled if user preference set)
+      </p>
+    </div>
+  </div>
+
+  <!-- MICRO-INTERACTION TIMING CHART -->
+  <h3 class="subsection-title" style="color: #4CAF50;">Micro-Interaction Timing Reference</h3>
+  <div style="background: white; border: 1px solid #8e7164; padding: 20px; margin-bottom: 24px; overflow-x: auto;">
+    <table style="width: 100%; font-size: 11px; color: #333; border-collapse: collapse;">
+      <thead>
+        <tr style="background: #fcf9f3; border-bottom: 2px solid #8e7164;">
+          <th style="padding: 10px; text-align: left; font-weight: 600;">Interaction</th>
+          <th style="padding: 10px; text-align: center; font-weight: 600;">Duration</th>
+          <th style="padding: 10px; text-align: left; font-weight: 600;">Easing</th>
+          <th style="padding: 10px; text-align: left; font-weight: 600;">Purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom: 1px solid #e3bfb1;">
+          <td style="padding: 10px;">Hover state (button/link)</td>
+          <td style="padding: 10px; text-align: center;">200ms</td>
+          <td style="padding: 10px; font-family: ui-monospace;">ease</td>
+          <td style="padding: 10px;">Feedback</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #e3bfb1;">
+          <td style="padding: 10px;">Page transition overlay</td>
+          <td style="padding: 10px; text-align: center;">200ms</td>
+          <td style="padding: 10px; font-family: ui-monospace;">ease</td>
+          <td style="padding: 10px;">Navigation</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #e3bfb1;">
+          <td style="padding: 10px;">Entrance (fade-in)</td>
+          <td style="padding: 10px; text-align: center;">500ms</td>
+          <td style="padding: 10px; font-family: ui-monospace;">ease</td>
+          <td style="padding: 10px;">Load reveal</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #e3bfb1;">
+          <td style="padding: 10px;">Stagger (per item)</td>
+          <td style="padding: 10px; text-align: center;">50ms</td>
+          <td style="padding: 10px; font-family: ui-monospace;">—</td>
+          <td style="padding: 10px;">Sequential effect</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #e3bfb1;">
+          <td style="padding: 10px;">Toast slide-in</td>
+          <td style="padding: 10px; text-align: center;">300ms</td>
+          <td style="padding: 10px; font-family: ui-monospace;">ease-out</td>
+          <td style="padding: 10px;">Notification</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #e3bfb1;">
+          <td style="padding: 10px;">Focus ring pulse</td>
+          <td style="padding: 10px; text-align: center;">600ms</td>
+          <td style="padding: 10px; font-family: ui-monospace;">ease-in-out</td>
+          <td style="padding: 10px;">Keyboard nav</td>
+        </tr>
+        <tr>
+          <td style="padding: 10px;">Button press (scale)</td>
+          <td style="padding: 10px; text-align: center;">150ms</td>
+          <td style="padding: 10px; font-family: ui-monospace;">cubic-bezier(0.4,0,0.2,1)</td>
+          <td style="padding: 10px;">Click feedback</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size: 10px; color: #8e7164; margin-top: 12px;">
+      <strong>Principle:</strong> Interactions ≤ 300ms feel instantaneous. Entrances 400–600ms feel elegant. All durations respect prefers-reduced-motion setting.
+    </p>
+  </div>
+
+  <!-- EASING CURVES GUIDE -->
+  <h3 class="subsection-title" style="color: #4CAF50;">Easing Curves (Universal)</h3>
+  <div style="background: white; border: 1px solid #8e7164; padding: 20px; margin-bottom: 24px;">
+    <p style="font-size: 12px; color: #575757; margin-bottom: 16px;">
+      All site-wide animations use one of two easing curves for consistency and premium feel:
+    </p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
+      <div style="background: #f5f5f5; padding: 12px; border-left: 4px solid #FF6600;">
+        <p style="font-size: 11px; font-weight: 600; color: #0B0B0B; margin: 0 0 4px;">Hover / Feedback</p>
+        <p style="font-size: 10px; color: #333; margin: 0; font-family: ui-monospace;">ease (0.25, 0.46, 0.45, 0.94)</p>
+        <p style="font-size: 9px; color: #8e7164; margin-top: 6px;">Quick + responsive</p>
+      </div>
+      <div style="background: #f5f5f5; padding: 12px; border-left: 4px solid #FF6600;">
+        <p style="font-size: 11px; font-weight: 600; color: #0B0B0B; margin: 0 0 4px;">Entrance / Premium</p>
+        <p style="font-size: 10px; color: #333; margin: 0; font-family: ui-monospace;">cubic-bezier(0.4, 0, 0.2, 1)</p>
+        <p style="font-size: 9px; color: #8e7164; margin-top: 6px;">Smooth + elegant</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FUTURE ENHANCEMENTS -->
 <div class="guide-section">
   <h2 class="section-title">Future Enhancements</h2>
 
   <p style="font-size: 14px; color: #575757; margin-bottom: 20px;">
-    The design system is now production-polished. These remain optional for future iterations:
+    The design system is now production-polished with best-in-class interactions. These remain optional for future iterations:
   </p>
 
   <h3 class="subsection-title" style="color: #8e7164;">Low Priority (Future)</h3>
   <ul style="font-size: 12px; color: #575757; line-height: 1.8;">
-    <li>Dark mode (optional, for researchers)</li>
-    <li>Homepage hero scroll animation refinement</li>
-    <li>Keyboard shortcuts documentation overlay</li>
-    <li>Advanced filter UI (saved searches, presets)</li>
+    <li><strong>Dark mode</strong> (optional, for researchers — would require ~200 CSS variables)</li>
+    <li><strong>Haptic patterns library</strong> (extend beyond swipe — click, hold, error patterns)</li>
+    <li><strong>Advanced gesture set</strong> (pinch, long-press, double-tap on mobile)</li>
+    <li><strong>Accessibility sound cues</strong> (optional audio feedback for keyboard users)</li>
   </ul>
 </div>
+
+<script>
+document.getElementById('demo-shortcuts-btn').addEventListener('click', function() {
+  if (window.showKeyboardShortcuts) {
+    window.showKeyboardShortcuts();
+  }
+});
+</script>
 
 <!-- FOOTER -->
 <div class="guide-section" style="text-align: center; padding: 60px 20px;">
