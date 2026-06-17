@@ -1,12 +1,26 @@
-# JFSN Session Handoff Prompt
-**Generated:** 2026-06-16 (end of session 47)
+# JFSN Session 59 Startup Prompt
+**Generated:** 2026-06-17 (end of session 58)
 **Copy everything below the line and paste it to start the next session.**
 
 > Note: the **v3 verification-first start prompt** (in memory `jfsn_session_prompts.md`) is the primary way to open a session — it checks backups + live drift first. This file is the ranked *work* handoff to use after that.
 
 ---
 
-Read `/Documents/JFSN/CURRENT_STATE.md` and `/Documents/JFSN/IMPROVEMENTS.md` before doing anything. Then work the ranked items below in order.
+---
+
+## ⚡ How to Start Session 59
+
+**Paste this into Claude Code:**
+
+> Verify Session 58 shipped correctly (check deployment status, live site freshness, archive filters work). Then show me what to work on next from the ranked items.
+
+Then read:
+- `/Documents/JFSN/CURRENT_STATE.md` — current page inventory + status
+- `/Documents/JFSN/IMPROVEMENTS.md` — living backlog (check what's done, what's pending)
+
+Work the ranked items below in order.
+
+---
 
 **Project:** JFSN Archive — personal archive site for Jeffrey F. S. Neumann, 1,084 works. A *preservation project*, not a website project — optimize for completion, not ambition. Making is the point; never push outreach/promotion.
 - Live: **jfsn.com** (HostGator/cPanel, primary) and **jfsn-archive.netlify.app** (Netlify — has the Companion function + artwork-meta edge function)
@@ -23,28 +37,45 @@ Read `/Documents/JFSN/CURRENT_STATE.md` and `/Documents/JFSN/IMPROVEMENTS.md` be
 
 ---
 
-## What happened in session 47
+## What happened in session 58
 
-Decade-page artwork grid migration: all 6 decade pages (1970s–2020s, 1,084 thumbnails total) migrated from the old `div.break-inside-avoid / div.thumb-frame / a.group.block` masonry markup to the modern `figure.thumb / a.thumb__link / figcaption.thumb__caption` system used on collage/sculpture/photography/painting pages. Decade pages now get the saturation-overlay hover treatment sitewide — grey-at-top at rest, full color + orange outline on hover, caption title turns orange. `.medium-grid` and `.thumb` base rules added to `_shared/ui.css`. Also shipped the `index.html` audio indicator (`[ Audio recording available ↓ ]` in archival brown before the `<audio>` element). GitHub commit `1cec2dee`, deployed to both HostGator and Netlify.
+**Fixed archive.html bug:** Syntax error on line 677 (extra closing brace before `else` statement) broke filter JavaScript. Fixed and committed.
+
+**Added style guide UX improvements:** Sticky sidebar nav with real-time search, design tokens reference table (colors/spacing/timing/z-index), and 3 copy-paste code snippets for developers. Added navigation IDs to all major sections. 229 lines added, all committed to GitHub (`52259f71`).
+
+**Status:** Code is committed and pushed, but NOT YET DEPLOYED to jfsn.com. Ready for deployment via JFSN.app or `bash deploy-netlify.sh --prod`.
 
 ---
 
 ## Ranked items — work top to bottom
 
-### 1. Ask Jeff for a fresh Lighthouse run (mobile + desktop, accessibility tab included)
-Session 46 fixed the accessibility score's likely main cause (orange-text contrast) plus a real focus-visible gap. Session 47 closed the decade-page visual split. A fresh run will confirm whether a11y is at 100 and whether performance has held.
+### 1. **DEPLOY Session 58 changes** (Critical)
+- Use JFSN.app to push archive.html (bug fix) + style-guide.html (nav/tokens/snippets) to HostGator
+- Test archive.html filters work (they're fixed now)
+- Test style-guide.html sidebar, search, tokens visible
+- Confirm no regressions on other pages
 
-### 2. Oral history — unanswered questions
-See `docs/oral-history/master-notes.md` "Unresolved Questions." Top item: why did Jeff keep going after the Rauschenberg realization? Approach gently, in his own time — this needs Jeff, not autonomous work.
+### 2. **Oral history refinement** (Preservation priority)
+See `docs/oral-history/master-notes.md` for context. Options:
+- Record 1-minute audio clips (if microphone ready)
+- Add favorite work notes (light, occasional)
+- Light family context to About page
+- No large projects — just small wins Jeff enjoys
 
-### 3. Physical artwork dimensions
-Orientation stand-in (vertical/horizontal/square) shipped session 35. Actual inches/cm need Jeff to measure surviving works by hand — no tooling exists for this. Start with the most significant pieces if he wants to begin.
+### 3. **Dark mode decision** (Optional design work)
+- Review dark mode exploration in style guide (section 12, marked "exploratory")
+- Decide: ship it, defer to v2, or drop it?
+- If shipping: test contrast on all components, add toggle, announce
 
-### 4. series-index.html per-theme icons (low urgency)
-Extend the session-35 icon vocabulary (inline feather SVGs) to the 8 series/themes pages, but only if they read as earned rather than literal. Review with Jeff first.
+### 4. **Style guide mobile testing** (UX polish)
+- Test sticky nav on iPhone 15 Pro (375px)
+- Ensure search input stays usable
+- Test token table horizontal scroll
 
-### 5. Always available
-Ingest new work: drop photos into `artworks/inbox/`, run `bash add-works.sh`.
+### 5. **Always available**
+- Ingest new work: drop photos into `artworks/inbox/`, run `bash add-works.sh`
+- Record audio notes for any works
+- Expand lost-works register as Jeff remembers pieces
 
 ---
 
