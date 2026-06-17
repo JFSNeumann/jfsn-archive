@@ -1,5 +1,11 @@
 [
   {
+    "sha": "2a877bd",
+    "date": "2026-06-17",
+    "title": "Fix: restore drawer stagger animation CSS",
+    "body": "The drawer-stagger animation CSS was inadvertently lost during Phase 1-2\nstamping. Restored the animation keyframes and animation-delay classes to\n_shared/top-nav.html and re-stamped to all 38 pages.\n\nVerification confirms:\n  ✅ Drawer stagger animation present on all pages\n  ✅ All audit checks pass\n  ✅ Nav highlighting correct (nav-active.js working)\n  ✅ Footer simplified correctly (4 items)\n  ✅ All 6 primary nav items present with correct labels"
+  },
+  {
     "sha": "2a42eb9",
     "date": "2026-06-17",
     "title": "Phase 3 IA Restructuring — About Jeff consolidation",
