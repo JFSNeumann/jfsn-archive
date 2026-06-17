@@ -1016,6 +1016,92 @@ table tbody tr:hover td:first-child {
   .thumb__link::after { transition: none; opacity: 0; }
 }
 
+/* ─── Phase B: State & Transition (Session 57) ──────────────────────────── */
+
+/* 5. Page transitions (archive-only fade-through-color) */
+@keyframes page-fade-through {
+  0% { opacity: 0; }
+  50% { opacity: 0.08; }
+  100% { opacity: 0; }
+}
+
+.page-transition {
+  position: fixed;
+  inset: 0;
+  background-color: #0B0B0B;
+  opacity: 0;
+  pointer-events: none;
+  animation: page-fade-through 0.2s ease forwards;
+  z-index: 999;
+}
+
+/* 6. Archive grid staggered entrance */
+@keyframes grid-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.thumb {
+  animation: grid-enter 0.6s ease-out forwards;
+  animation-delay: var(--delay, 0);
+}
+
+/* 7. Related works sidebar staggered entrance */
+@keyframes related-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.related-work-card {
+  animation: related-enter 0.5s ease-out forwards;
+  animation-delay: var(--delay, 0);
+}
+
+/* 8. Form input check animation (checkbox/radio bounce) */
+@keyframes check-scale {
+  0% { transform: scale(0.8); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+  animation: check-scale 0.15s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* 9. Breadcrumb color shift */
+.breadcrumb-current {
+  color: #0B0B0B;
+  transition: color 0.3s ease;
+}
+
+.breadcrumb-current:focus,
+.breadcrumb.active .breadcrumb-current {
+  color: #B84700;
+}
+
+/* Respect reduced motion for Phase B */
+@media (prefers-reduced-motion: reduce) {
+  .page-transition { animation: none; }
+  .thumb { animation: none; opacity: 1; transform: none; }
+  .related-work-card { animation: none; opacity: 1; transform: none; }
+  input[type="checkbox"]:checked,
+  input[type="radio"]:checked { animation: none; }
+  .breadcrumb-current { transition: none; }
+}
+
 /* ─── Lazy-loaded image fade-in ──────────────────────────────────────────── */
 
 img[loading="lazy"] {

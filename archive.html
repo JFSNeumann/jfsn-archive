@@ -688,10 +688,21 @@ function applyFilters() {
   renderPage();
 }
 
+// Phase B 6: Grid staggered entrance (40ms per item, left→right, top→bottom)
+function staggerGridItems() {
+  const items = document.querySelectorAll('.thumb');
+  const cols = window.innerWidth >= 1024 ? 4 : (window.innerWidth >= 600 ? 3 : 2);
+  items.forEach((item, i) => {
+    const delay = (i % (cols * 1)) * 0.04; // 40ms stagger per item in reading order
+    item.style.setProperty('--delay', `${delay}s`);
+  });
+}
+
 function renderPage() {
   const slice = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
   const html = slice.map((w, i) => renderCard(w, page * PAGE_SIZE + i)).join('');
   grid.insertAdjacentHTML('beforeend', html);
+  staggerGridItems(); // Phase B 6: Apply stagger to all grid items
   page++;
 
   const total = filtered.length;
@@ -858,6 +869,21 @@ document.querySelectorAll('.mobile-medium-btn').forEach(btn => {
     btn.setAttribute('aria-expanded', open ? 'false' : 'true');
   });
 })();
+
+// Phase B 5: Page transitions (archive ↔ artwork fade-through-color)
+document.addEventListener('click', function(e) {
+  const link = e.target.closest('a[href*="artwork.html"]');
+  if (!link || link.target === '_blank') return;
+
+  e.preventDefault();
+  const overlay = document.createElement('div');
+  overlay.className = 'page-transition';
+  document.body.appendChild(overlay);
+
+  setTimeout(() => {
+    window.location.href = link.href;
+  }, 100);
+}, true);
 </script>
 
 <script src="_shared/nav-active.js" defer></script>
