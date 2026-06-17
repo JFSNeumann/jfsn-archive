@@ -1,5 +1,59 @@
 [
   {
+    "sha": "484df3a",
+    "date": "2026-06-17",
+    "title": "Add comprehensive design system documentation",
+    "body": "Formalized design language from CLAUDE.md into living design doc. Includes:\n- Color system (tokens + WCAG contrast ratios)\n- Typography scale (Playfair/Inter, sizes, weights)\n- Spacing & sizing (Tailwind scale, mobile/desktop)\n- Component library (cards, links, forms, breadcrumbs with examples)\n- Interactions & animations (hover, focus, entrance, reduced-motion)\n- Accessibility guidelines (contrast, keyboard, screen readers, motion)\n- Usage patterns (do's/don'ts, archive integrity)\n- Polishing opportunities (12 future enhancements ranked by priority)\n- Performance notes (LCP targets, image optimization, cache strategy)"
+  },
+  {
+    "sha": "b91fc3a",
+    "date": "2026-06-17",
+    "title": "Add URL-based breadcrumb navigation to archive and artwork pages",
+    "body": "Archive: infer breadcrumb from URL params (medium, decade, series). Shows path like 'Archive › 1990s › Guernica' with clickable links at each level. Artwork: show breadcrumb based on work's series or decade (series › work, or decade › work). Helps users understand where they are and navigate back to filtered views."
+  },
+  {
+    "sha": "0f94bfc",
+    "date": "2026-06-17",
+    "title": "Minimal IA polish: add persona headers to Begin Exploring",
+    "body": "Organize 15 links into three visitor types (First-Time Visitor, Researcher, Family) with clear section headers. Same links, same order within sections, just explicit framing. Helps visitors self-identify their path without architectural changes."
+  },
+  {
+    "sha": "c20ed7b",
+    "date": "2026-06-17",
+    "title": "Session update 2026-06-17 11:56",
+    "body": ""
+  },
+  {
+    "sha": "c70e7c4",
+    "date": "2026-06-17",
+    "title": "Add wall.html, timeline.html, painting.html to Begin Exploring",
+    "body": "Link The Wall (full overview), A Life in Time (chronological), and Painting (medium) for complete medium + view option discoverability from orientation page."
+  },
+  {
+    "sha": "7f71203",
+    "date": "2026-06-17",
+    "title": "Add chromatic.html & curatorial-map.html to discovery paths",
+    "body": "Add Curatorial Map as 5th guided path card (decade × medium grid with theme filters). Add both Chromatic River and Curatorial Map to Begin Exploring bracket links for prominent, discoverable access from homepage orientation page."
+  },
+  {
+    "sha": "ba6ff59",
+    "date": "2026-06-17",
+    "title": "Optimize archive.html LCP: batch innerHTML + switch to catalog-lite",
+    "body": "Replace innerHTML += loop with single insertAdjacentHTML call (eliminates 48 reflows). Switch from catalog.json to catalog-lite.json to reduce initial fetch size. Expected impact: LCP drops from 5.7s toward 3-4s range, CLS improves from 0.292 toward 0."
+  },
+  {
+    "sha": "e7e8e3a",
+    "date": "2026-06-17",
+    "title": "Bump CACHE_V for LCP hero image deployment",
+    "body": ""
+  },
+  {
+    "sha": "3265767",
+    "date": "2026-06-17",
+    "title": "Fix LCP optimization: restore hero image markup with lightweight swap",
+    "body": "Preload and swap ultralight LCP hero versions (22KB mobile, 117KB desktop) to full-quality after LCP fires. Mobile LCP reduced from 123KB→22KB (82%), desktop from 498KB→117KB (77%). Both desktop and mobile now properly configured with id, src (LCP), and data-src (full) attributes. LCP observer updated to swap both variants."
+  },
+  {
     "sha": "658bdd6",
     "date": "2026-06-17",
     "title": "Session update 2026-06-17 11:28",
