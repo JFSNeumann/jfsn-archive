@@ -1,5 +1,11 @@
 [
   {
+    "sha": "2a42eb9",
+    "date": "2026-06-17",
+    "title": "Phase 3 IA Restructuring — About Jeff consolidation",
+    "body": "Primary Changes:\n  • about.html title: \"About\" → \"About Jeff\" (reflects primary nav change)\n  • about.html meta description enhanced with fuller bio context\n  • nav-active.js mapping updated for 6-item primary nav structure\n\nNavigation Mappings Updated:\n  • about.html → highlights \"About Jeff\" nav item\n  • stories.html → highlights \"About Jeff\" (content cluster)\n  • why-i-made-things.html → highlights \"About Jeff\" (content cluster)\n  • timeline.html → highlights \"About Jeff\" (content cluster)\n  • start-here.html → highlights \"Start Here\" nav item\n  • series-index.html → highlights \"Collections\" nav item\n  • api.html → highlights \"For Researchers\" nav item\n  • lost.html → highlights \"Archive Info\" nav item\n  • All medium/theme pages now correctly map to nav item\n\nStructure Ready:\n  about.html is now unified entry point for:\n    - Biography + portrait (hero section)\n    - Contact / Archive / Now (context section)\n    - Exhibition Record (6 exhibitions documented)\n    - In Jeff's Own Words (links to stories, why-i-made-things, timeline)\n\nFuture enhancement: consider embedding key stories + deeper narrative.\n\nAll audits pass. Propagated to all 38 stamped pages via stamp-nav.sh."
+  },
+  {
     "sha": "0a2b62b",
     "date": "2026-06-17",
     "title": "Phase 1-2 IA Restructuring — Primary nav (6 items) + simplified footer",

@@ -160,6 +160,18 @@ header.header-hidden{transform:translateY(-100%)}
 #mobile-menu-drawer a.drawer-active{color:#B84700 !important;border-left:3px solid #FF6600;padding-left:21px !important}
 #mobile-menu-drawer a.drawer-active::after{transform:scaleX(1);transition:none}
 @media(prefers-reduced-motion:reduce){#mobile-menu-drawer a::after{transition:none}}
+/* Drawer item stagger on open (Phase 3) */
+@keyframes drawer-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  #mobile-menu-drawer a { animation: drawer-fade-in 0s ease forwards; }
+  #mobile-menu-drawer a.drawer-stagger-1 { animation-delay: 0.05s; }
+  #mobile-menu-drawer a.drawer-stagger-2 { animation-delay: 0.1s; }
+  #mobile-menu-drawer a.drawer-stagger-3 { animation-delay: 0.15s; }
+  #mobile-menu-drawer a.drawer-stagger-4 { animation-delay: 0.2s; }
+}
 </style>
 <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-deep-ink focus:text-bone-white focus:font-label-caps focus:text-label-caps">Skip to content</a>
 <header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16">
