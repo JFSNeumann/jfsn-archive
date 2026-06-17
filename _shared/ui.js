@@ -483,6 +483,26 @@
     }, { passive: true });
   }
 
+  // ─── Scroll-Reveal: Fade-in sections as they enter viewport ──────────────
+  // Elements with .reveal-on-scroll animate in when they scroll into view
+  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const revealElements = document.querySelectorAll('.reveal-on-scroll');
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = 'running';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    revealElements.forEach(function(el, i) {
+      el.style.animationPlayState = 'paused';
+      el.style.setProperty('--reveal-delay', (i * 0.05) + 's');
+      observer.observe(el);
+    });
+  }
+
   // Artwork thumbnails are full color always — no mask-image, no scroll-reveal.
   // (Removed session 8; banned — do not re-add.)
 

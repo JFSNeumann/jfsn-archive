@@ -1535,6 +1535,155 @@ table td:last-child {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
 }
 
+/* ─── Button Press Feedback (Micro-Interactions) ────────────────────────── */
+
+@keyframes button-press {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+button:active {
+  animation: button-press 0.15s ease;
+}
+
+/* Success feedback animation */
+@keyframes success-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.success-feedback {
+  animation: success-pulse 0.4s ease;
+}
+
+/* Success state styling */
+.success-state {
+  background-color: #4CAF50 !important;
+  color: white !important;
+  border-color: #4CAF50 !important;
+}
+
+.success-state::before {
+  content: '✓ ';
+  font-weight: bold;
+}
+
+/* Error state styling */
+.error-state {
+  background-color: #F44336 !important;
+  color: white !important;
+  border-color: #F44336 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button:active { animation: none; }
+  .success-feedback { animation: none; }
+}
+
+/* ─── Loading Skeleton Placeholders ─────────────────────────────────────── */
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #e3bfb1 25%, #d9b3a3 50%, #e3bfb1 75%);
+  background-size: 1000px 100%;
+  animation: skeleton-loading 2s infinite;
+  border-radius: 4px;
+  height: 1rem;
+  margin-bottom: 8px;
+}
+
+.skeleton--text {
+  height: 1rem;
+  margin-bottom: 8px;
+}
+
+.skeleton--text.skeleton--text-lg {
+  height: 1.5rem;
+}
+
+.skeleton--text.skeleton--text-sm {
+  height: 0.75rem;
+}
+
+.skeleton--avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.skeleton--card {
+  height: 200px;
+  margin-bottom: 16px;
+}
+
+.skeleton--image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin-bottom: 8px;
+}
+
+.skeleton-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Grid of skeleton cards */
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+    background: #e3bfb1;
+  }
+}
+
+/* ─── Scroll-Reveal Animations ──────────────────────────────────────────── */
+
+@keyframes reveal-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal-on-scroll {
+  opacity: 0;
+  animation: reveal-fade-in 0.6s ease-out forwards;
+  animation-delay: var(--reveal-delay, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-on-scroll {
+    opacity: 1;
+    animation: none;
+  }
+}
+
 /* ─── Lazy-loaded image fade-in ──────────────────────────────────────────── */
 
 img[loading="lazy"] {
