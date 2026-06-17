@@ -189,7 +189,7 @@ def generate_page(work, idx, all_works, colors):
     # Prev / next strip
     if prev_id:
         prev_html = (
-            f'<a href="{prev_id}.html" '
+            f'<a href="{prev_id}.html" data-direction="prev" '
             f'class="adjacent-nav-btn group flex items-center px-margin-mobile md:px-md h-full overflow-hidden relative">'
             f'<img src="../../artworks/thumbs/{prev_id}.avif" alt="{e(prev_title)}" class="adjacent-preview" loading="lazy" width="80" height="80"/>'
             f'<svg class="text-deep-ink group-hover:text-international-orange mr-sm shrink-0" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="20" y1="12" x2="5" y2="12"/><polyline points="11 6 5 12 11 18"/></svg>'
@@ -203,7 +203,7 @@ def generate_page(work, idx, all_works, colors):
 
     if next_id:
         next_html = (
-            f'<a href="{next_id}.html" '
+            f'<a href="{next_id}.html" data-direction="next" '
             f'class="adjacent-nav-btn group flex items-center justify-end px-margin-mobile md:px-md h-full overflow-hidden relative">'
             f'<img src="../../artworks/thumbs/{next_id}.avif" alt="{e(next_title)}" class="adjacent-preview" loading="lazy" width="80" height="80"/>'
             f'<div class="flex flex-col overflow-hidden text-right">'

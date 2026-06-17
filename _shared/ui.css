@@ -2341,6 +2341,43 @@ footer > div:first-child > div:last-child {
   .toc-active { transition: none; }
 }
 
+/* ─── Page transition direction feedback (Phase 4.6) ────────────────────────── */
+/* Slide-left for previous, slide-right for next — directional feedback */
+@keyframes slide-out-left {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(-40px); }
+}
+
+@keyframes slide-out-right {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(40px); }
+}
+
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Applied via JavaScript before navigation */
+main.page-exiting-left { animation: slide-out-left 0.25s ease-out forwards; }
+main.page-exiting-right { animation: slide-out-right 0.25s ease-out forwards; }
+main.page-entering-left { animation: slide-in-left 0.25s ease-out forwards; }
+main.page-entering-right { animation: slide-in-right 0.25s ease-out forwards; }
+
+@media (prefers-reduced-motion: reduce) {
+  main.page-exiting-left,
+  main.page-exiting-right,
+  main.page-entering-left,
+  main.page-entering-right {
+    animation: none;
+  }
+}
+
 /* ─── Link underline consistency pass (Phase 4.4) ─────────────────────────── */
 /* All links in content get smooth underline draw on hover */
 main a,

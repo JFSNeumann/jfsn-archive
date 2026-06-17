@@ -132,6 +132,18 @@
         @media(prefers-reduced-motion:reduce){
           .thumb { animation: none; }
         }
+        /* Empty state fade-in animation (Phase 4.7) */
+        #empty-state {
+          animation: empty-state-enter 0.3s ease forwards;
+        }
+        #empty-state.hidden { animation: none; }
+        @keyframes empty-state-enter {
+          from { opacity: 0; transform: scale(0.98); }
+          to { opacity: 1; transform: scale(1); }
+        }
+        @media(prefers-reduced-motion:reduce){
+          #empty-state { animation: none; }
+        }
         /* Image wrapper: outline + saturation overlay */
         .archive-card-img {
           position: relative;
@@ -1059,7 +1071,14 @@ function renderPage() {
   const total = filtered.length;
   workCount.textContent = total.toLocaleString();
   workCountLabel.textContent = total === allWorks.length ? 'CATALOGED WORKS' : 'WORKS';
-  emptyState.classList.toggle('hidden', total > 0);
+  // Phase 4.7: Empty state fade-in animation
+  if (total === 0 && emptyState.classList.contains('hidden')) {
+    emptyState.classList.remove('hidden');
+    // Trigger animation by forcing a reflow
+    void emptyState.offsetWidth;
+  } else if (total > 0) {
+    emptyState.classList.add('hidden');
+  }
   loadMoreBtn.classList.toggle('hidden', page * PAGE_SIZE >= total);
   document.getElementById('filter-loading').style.display = 'none';
 }

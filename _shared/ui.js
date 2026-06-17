@@ -495,6 +495,29 @@
     observer.observe(relatedWorksSection);
   }
 
+  // ─── Phase 4.6: Page transition direction feedback (artwork.html nav) ─────
+  // Slide-left for previous, slide-right for next — directional feedback
+  var adjNavBtns = document.querySelectorAll('a[data-direction]');
+  adjNavBtns.forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      var direction = this.getAttribute('data-direction');
+      var href = this.getAttribute('href');
+      var main = document.querySelector('main');
+      if (!main || !href) return;
+
+      e.preventDefault();
+
+      // Determine animation direction: opposite of navigation direction
+      // (prev navigates left, so we slide out left; next navigates right, so we slide out right)
+      var outClass = direction === 'prev' ? 'page-exiting-left' : 'page-exiting-right';
+
+      main.classList.add(outClass);
+      setTimeout(function() {
+        window.location.href = href;
+      }, 250);
+    });
+  });
+
   // ─── Phase 2: Favorite heart rotation on click (Session 52 #9) ────────
   var favBtn = document.querySelector('.favorite-btn');
   if (favBtn) {
