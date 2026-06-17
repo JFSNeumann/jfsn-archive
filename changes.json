@@ -1,5 +1,17 @@
 [
   {
+    "sha": "7c86658",
+    "date": "2026-06-17",
+    "title": "Session update 2026-06-17 11:12",
+    "body": ""
+  },
+  {
+    "sha": "4e66f64",
+    "date": "2026-06-17",
+    "title": "Phase 4-5: Researcher documentation and API enhancements",
+    "body": "Added four new sections to api.html:\n- Quick start guide for fast onboarding (TL;DR entry point)\n- CSV exports with practical examples (pandas, jq, Google Sheets)\n- Researcher's data guide explaining accuracy caveats (decade estimates, composite flags, subjective themes)\n- Research pathways with curatorial/thematic/color-driven workflows and related tools\n\nRespects data integrity: years stay decade estimates (\"1990s est.\"), composites remain flagged, integrity clause preserved.\n\nCACHE_V bumped to jfsn-20260617180000."
+  },
+  {
     "sha": "2a877bd",
     "date": "2026-06-17",
     "title": "Fix: restore drawer stagger animation CSS",
