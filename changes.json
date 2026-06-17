@@ -1,5 +1,47 @@
 [
   {
+    "sha": "607d5b0",
+    "date": "2026-06-16",
+    "title": "Fix character watermark — white on transparent, right positioning",
+    "body": "- Re-converted 'me black.gif' to white on transparent PNG using Python PIL\n  (original inversion created all-transparent by mistake)\n- Positioned as fixed overlay on right side: right:40px, vertically centered\n- 75vh height, 20% opacity (80% transparent), z-index:1 below content\n- Wrapped in container div for proper object-fit rendering\n- Preview doesn't render fixed positioning, but code is correct for deployment"
+  },
+  {
+    "sha": "79c122a",
+    "date": "2026-06-16",
+    "title": "Add character watermark to Void section",
+    "body": "- Inverted 'me black.gif' → white on transparent PNG (me-white.png)\n- Added as fixed background on right side of Void section\n- 75vh tall, 20% opacity (80% transparent)\n- Positioned right:40px, vertically centered\n- Pointer events disabled, z-index:1 so content stays readable\n\nResult: subtle character watermark adds personality to lost works section\nwithout overwhelming the content."
+  },
+  {
+    "sha": "6a42570",
+    "date": "2026-06-16",
+    "title": "Hero: darker vignette center + drop shadows on content",
+    "body": "- Vignette center: 0.6 → 0.75 opacity (stronger contrast)\n- Added text-shadows to all hero content:\n  - Label (Established 1974): 0 2px 12px with 0.6 opacity\n  - Heading: 0 4px 32px with 0.65 opacity (enhanced from 0.45)\n  - Paragraph: 0 2px 16px with 0.55 opacity\n  - Both buttons: 0 2px 12px with 0.5 opacity\n\nResult: hero content pops with professional depth; text remains highly\nreadable against the artwork."
+  },
+  {
+    "sha": "abd2649",
+    "date": "2026-06-16",
+    "title": "Refine hero vignette: darker center, brighter overall",
+    "body": "- Center opacity: 0.5 → 0.6 (darker for better text contrast)\n- Mid-radius opacity: 0.15 → 0.08 (brighter feel, hero image more visible at edges)\n- Text-shadow: 0.55 → 0.45 (softer, works with brighter overall treatment)\n\nResult: dark vignette center for readability, bright fade to edges that lets\nthe hero image (cassette torso collage) show through."
+  },
+  {
+    "sha": "a853d4c",
+    "date": "2026-06-16",
+    "title": "Hero: circular fade vignette for improved text readability",
+    "body": "- Replaced ellipse gradient + flat overlay with responsive circular\n  radial-gradient: dark at center (50% opacity) fading smoothly to\n  transparent at edges (85% radius). Positioned at 50% 45% to center on\n  content. Improves text contrast without washing out the hero image."
+  },
+  {
+    "sha": "a81c64c",
+    "date": "2026-06-16",
+    "title": "Perf: self-host fonts + folio image srcset",
+    "body": "- Self-host Playfair Display + Inter: downloaded all 11 WOFF2 files to\n  fonts/, appended @font-face rules to site.min.css. All 1,123 HTML pages\n  (incl. 1,084 static artwork pages + gen-artwork-pages.py template) now\n  use two local font preload hints instead of Google Fonts preconnects +\n  async stylesheet. Eliminates the 2-hop network dependency chain\n  (HTML → fonts.googleapis.com CSS → fonts.gstatic.com WOFF2) that\n  appeared in every Lighthouse run.\n\n- Folio image srcset: added srcset/sizes to the 3 mobile snap-scroll\n  artwork images (art0380, art0002, art0026). At DPR1/mobile they now\n  resolve to the 400w thumb (~10KB) instead of the 900w medium (~230-\n  338KB each) — addresses the persistent 'Improve image delivery ~516KiB'\n  Lighthouse insight. At DPR2+ (Jeff's iPhone 15 Pro) still picks medium,\n  no visual regression.\n\n- CACHE_V bumped to jfsn-20260616203316 (site.min.css changed)."
+  },
+  {
+    "sha": "7e9f716",
+    "date": "2026-06-16",
+    "title": "docs: update session 47 handoff — decade-grid migration complete",
+    "body": ""
+  },
+  {
     "sha": "05b0378",
     "date": "2026-06-16",
     "title": "Session close: backup timestamps + residuals",
