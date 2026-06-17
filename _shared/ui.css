@@ -324,8 +324,18 @@ button[class*="filter"]:hover svg {
 .theme-tag[data-theme-tag="crosses"]::before { color: #5B6B7B; }
 .theme-tag[data-theme-tag="collaboration"]::before { color: #5A6B5B; }
 
+/* Phase 5.5: Metadata badge pulse on themed pages */
+@keyframes badge-glow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.theme-tag::before {
+  animation: badge-glow 2s ease infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .theme-tag::before { transition: none; }
+  .theme-tag::before { transition: none; animation: none; }
 }
 
 /* ─── Disabled state styling ───────────────────────────────────────────────── */
@@ -2417,6 +2427,107 @@ footer a:hover::after,
   footer a::after,
   .content a::after {
     transition: none;
+  }
+}
+
+/* ─── Icon hover consistency (Phase 5.1) ──────────────────────────────────── */
+/* Unified icon color transition on hover — 150ms smooth, no scale/transform */
+button svg,
+a svg,
+[role="button"] svg {
+  transition: color 0.15s ease, opacity 0.15s ease;
+  color: currentColor;
+}
+
+button:hover svg,
+a:hover svg,
+[role="button"]:hover svg {
+  color: #FF6600;
+}
+
+button:focus-visible svg,
+a:focus-visible svg,
+[role="button"]:focus-visible svg {
+  color: #FF6600;
+}
+
+/* Specific overrides for icon buttons that need clarity */
+#nav-search-btn svg,
+#nav-menu-btn svg,
+.adjacent-nav-btn svg {
+  transition: color 0.15s ease;
+}
+
+#nav-search-btn:hover svg,
+#nav-menu-btn:hover svg,
+.adjacent-nav-btn:hover svg {
+  color: #FF6600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button svg,
+  a svg,
+  [role="button"] svg {
+    transition: none;
+  }
+}
+
+/* ─── Scroll-to-top button fade (Phase 5.3) ──────────────────────────────── */
+/* Back-to-top button fades in when scrolled down */
+#btt-float {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#btt-float.btt-visible {
+  animation: btt-fade-in 0.3s ease forwards;
+}
+
+@keyframes btt-fade-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #btt-float { animation: none; }
+}
+
+/* ─── Loading indicator spin (Phase 5.4) ──────────────────────────────────── */
+/* Smooth rotation for any .loading or [data-loading] elements */
+.loading,
+[data-loading="true"],
+.spinner {
+  animation: spin-smooth 1s linear infinite;
+}
+
+@keyframes spin-smooth {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Phase 5.6: Loading skeleton pulse animation */
+.skeleton,
+.skeleton__item,
+[data-skeleton],
+.placeholder {
+  animation: skeleton-pulse 2s ease-in-out infinite;
+  background: linear-gradient(90deg, #ebe8e2 0%, #f0ede7 50%, #ebe8e2 100%);
+  background-size: 200% 100%;
+}
+
+@keyframes skeleton-pulse {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading,
+  [data-loading="true"],
+  .spinner,
+  .skeleton,
+  .skeleton__item,
+  [data-skeleton],
+  .placeholder {
+    animation: none;
   }
 }
 
