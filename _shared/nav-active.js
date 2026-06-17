@@ -5,21 +5,25 @@
  */
 (function () {
   const PAGE_NAV = {
-    'archive.html':             'archive.html',
-    'series-index.html':        'archive.html',   // catalog tool — highlight Archive
-    'about.html':               'about.html',
-    'lost.html':                'lost.html',
-    'favorites.html':           'archive.html',
-    'stories.html':             'stories.html',
-    'why-i-made-things.html':   'about.html',     // About cluster
-    'timeline.html':            'about.html',     // About cluster
-    'start-here.html':          'about.html',     // About cluster
-    'collaboration.html':       'archive.html',   // medium/theme page
-    'guernica.html':            'archive.html',   // series page
-    'collage.html':             'archive.html',
+    'start-here.html':          'start-here.html', // START HERE
+    'about.html':               'about.html',      // ABOUT JEFF
+    'stories.html':             'about.html',      // About cluster
+    'why-i-made-things.html':   'about.html',      // About cluster
+    'timeline.html':            'about.html',      // About cluster
+    'archive.html':             'archive.html',    // EXPLORE
+    'favorites.html':           'archive.html',    // Explore cluster
+    'chromatic.html':           'archive.html',
+    'wall.html':                'archive.html',
+    'curatorial-map.html':      'archive.html',
+    'series-index.html':        'series-index.html', // COLLECTIONS
+    'guernica.html':            'series-index.html', // Series/theme — COLLECTIONS
+    'collage.html':             'archive.html',   // Medium page — EXPLORE
     'sculpture.html':           'archive.html',
     'photography.html':         'archive.html',
     'painting.html':            'archive.html',
+    'collaboration.html':       'series-index.html', // Series — COLLECTIONS
+    'api.html':                 'api.html',        // FOR RESEARCHERS
+    'lost.html':                'lost.html',       // ARCHIVE INFO
   };
 
   const file = location.pathname.split('/').pop() || 'index.html';
