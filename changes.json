@@ -1,5 +1,23 @@
 [
   {
+    "sha": "3f4d0f8",
+    "date": "2026-06-17",
+    "title": "Update SESSION_PROMPT.md for Session 59 (archive fix + style guide UX improvements shipped)",
+    "body": ""
+  },
+  {
+    "sha": "52259f7",
+    "date": "2026-06-17",
+    "title": "Session update 2026-06-17 17:32",
+    "body": ""
+  },
+  {
+    "sha": "001e8f1",
+    "date": "2026-06-17",
+    "title": "Add 3 critical UX improvements to style guide",
+    "body": "- Sticky sidebar nav with section search\n- Design tokens reference table (colors, spacing, timing, z-index)\n- Quick-start copy-paste code snippets\n\nNavigation now highlights active section on scroll. Search filters sidebar links in real time. 229 lines added. All section IDs properly configured for linking."
+  },
+  {
     "sha": "79e2fc9",
     "date": "2026-06-17",
     "title": "Fix syntax error in archive.html filter logic (extra closing brace on line 677)",

@@ -246,6 +246,300 @@ header.header-hidden{transform:translateY(-100%)}
   }, { passive: true });
 })();
 </script>
+
+<!-- Design System Modal — ⌘Shift+D (or Ctrl+Shift+D on Windows) -->
+<div id="design-system-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(11,11,11,0.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:9998;overflow-y:auto;padding:20px;">
+  <div style="max-width:1200px;margin:0 auto;background:#fcf9f3;border:1px solid #8e7164;padding:40px;position:relative;">
+    <!-- Close button -->
+    <button id="ds-modal-close" style="position:absolute;top:20px;right:20px;background:none;border:1px solid #c4c7c7;width:36px;height:36px;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;color:#575757;transition:all 0.2s ease;border-radius:0;" title="Close (Esc)">✕</button>
+
+    <div style="display:grid;grid-template-columns:1fr 3fr;gap:40px;">
+      <!-- Sticky sidebar nav -->
+      <aside id="ds-sidebar" style="position:sticky;top:0;height:fit-content;">
+        <div style="margin-bottom:20px;">
+          <input type="text" id="ds-search" placeholder="Search sections..." style="width:100%;padding:8px 12px;border:1px solid #c4c7c7;background:#fcf9f3;font-family:Inter,sans-serif;font-size:14px;box-sizing:border-box;" />
+        </div>
+        <nav id="ds-nav" style="display:flex;flex-direction:column;gap:8px;">
+          <a href="#ds-principles" class="ds-nav-link" style="padding:8px 12px;color:#575757;text-decoration:none;font-family:Inter,sans-serif;font-size:13px;border-left:2px solid transparent;transition:all 0.2s ease;cursor:pointer;">▸ Principles</a>
+          <a href="#ds-colors" class="ds-nav-link" style="padding:8px 12px;color:#575757;text-decoration:none;font-family:Inter,sans-serif;font-size:13px;border-left:2px solid transparent;transition:all 0.2s ease;cursor:pointer;">▸ Colors</a>
+          <a href="#ds-typography" class="ds-nav-link" style="padding:8px 12px;color:#575757;text-decoration:none;font-family:Inter,sans-serif;font-size:13px;border-left:2px solid transparent;transition:all 0.2s ease;cursor:pointer;">▸ Typography</a>
+          <a href="#ds-spacing" class="ds-nav-link" style="padding:8px 12px;color:#575757;text-decoration:none;font-family:Inter,sans-serif;font-size:13px;border-left:2px solid transparent;transition:all 0.2s ease;cursor:pointer;">▸ Spacing</a>
+          <a href="#ds-animations" class="ds-nav-link" style="padding:8px 12px;color:#575757;text-decoration:none;font-family:Inter,sans-serif;font-size:13px;border-left:2px solid transparent;transition:all 0.2s ease;cursor:pointer;">▸ Animations</a>
+          <a href="#ds-tokens" class="ds-nav-link" style="padding:8px 12px;color:#575757;text-decoration:none;font-family:Inter,sans-serif;font-size:13px;border-left:2px solid transparent;transition:all 0.2s ease;cursor:pointer;">▸ Design Tokens</a>
+          <a href="#ds-snippets" class="ds-nav-link" style="padding:8px 12px;color:#575757;text-decoration:none;font-family:Inter,sans-serif;font-size:13px;border-left:2px solid transparent;transition:all 0.2s ease;cursor:pointer;">▸ Code Snippets</a>
+          <a href="#ds-accessibility" class="ds-nav-link" style="padding:8px 12px;color:#575757;text-decoration:none;font-family:Inter,sans-serif;font-size:13px;border-left:2px solid transparent;transition:all 0.2s ease;cursor:pointer;">▸ Accessibility</a>
+        </nav>
+      </aside>
+
+      <!-- Main content -->
+      <main style="max-height:80vh;overflow-y:auto;">
+        <h2 style="font-family:'Playfair Display',serif;font-size:40px;font-weight:700;margin:0 0 40px;color:#0B0B0B;">Design System</h2>
+
+        <!-- Principles -->
+        <section id="ds-principles" class="ds-section" style="margin-bottom:60px;scroll-margin-top:20px;">
+          <h3 style="font-family:'Playfair Display',serif;font-size:24px;font-weight:600;margin:0 0 20px;color:#0B0B0B;">Principles</h3>
+          <div style="font-family:Inter,sans-serif;font-size:14px;line-height:1.6;color:#575757;">
+            <p><strong>Archive first.</strong> Every decision serves the work, not the designer.</p>
+            <p><strong>Light ground.</strong> Bone-white or near-white background, deep-ink text.</p>
+            <p><strong>Orange accent.</strong> #FF6600 for hover, active states, links — not decoration.</p>
+            <p><strong>No gradients, no rounded corners.</strong> Clarity through simplicity.</p>
+            <p><strong>Full color always.</strong> Artwork thumbnails keep saturated color at all times.</p>
+          </div>
+        </section>
+
+        <!-- Colors -->
+        <section id="ds-colors" class="ds-section" style="margin-bottom:60px;scroll-margin-top:20px;">
+          <h3 style="font-family:'Playfair Display',serif;font-size:24px;font-weight:600;margin:0 0 20px;color:#0B0B0B;">Colors</h3>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;">
+            <div style="border:1px solid #8e7164;overflow:hidden;">
+              <div style="height:60px;background:#fcf9f3;"></div>
+              <div style="padding:12px;font-family:ui-monospace,monospace;font-size:11px;"><strong>background</strong><br/>#fcf9f3<br/><span style="color:#8e7164;font-size:9px;">Bone-white page bg</span></div>
+            </div>
+            <div style="border:1px solid #8e7164;overflow:hidden;">
+              <div style="height:60px;background:#0B0B0B;"></div>
+              <div style="padding:12px;font-family:ui-monospace,monospace;font-size:11px;"><strong>deep-ink</strong><br/>#0B0B0B<br/><span style="color:#8e7164;font-size:9px;">Primary text</span></div>
+            </div>
+            <div style="border:1px solid #8e7164;overflow:hidden;">
+              <div style="height:60px;background:#FF6600;"></div>
+              <div style="padding:12px;font-family:ui-monospace,monospace;font-size:11px;"><strong>orange</strong><br/>#FF6600<br/><span style="color:#8e7164;font-size:9px;">Accent (on dark)</span></div>
+            </div>
+            <div style="border:1px solid #8e7164;overflow:hidden;">
+              <div style="height:60px;background:#B84700;"></div>
+              <div style="padding:12px;font-family:ui-monospace,monospace;font-size:11px;"><strong>orange-ink</strong><br/>#B84700<br/><span style="color:#8e7164;font-size:9px;">Text on light bg (AA)</span></div>
+            </div>
+            <div style="border:1px solid #8e7164;overflow:hidden;">
+              <div style="height:60px;background:#8e7164;"></div>
+              <div style="padding:12px;font-family:ui-monospace,monospace;font-size:11px;"><strong>archival-outline</strong><br/>#8e7164<br/><span style="color:#8e7164;font-size:9px;">Warm-brown border</span></div>
+            </div>
+            <div style="border:1px solid #8e7164;overflow:hidden;">
+              <div style="height:60px;background:#e3bfb1;"></div>
+              <div style="padding:12px;font-family:ui-monospace,monospace;font-size:11px;"><strong>archival-soft</strong><br/>#e3bfb1<br/><span style="color:#8e7164;font-size:9px;">Soft divider</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Typography -->
+        <section id="ds-typography" class="ds-section" style="margin-bottom:60px;scroll-margin-top:20px;">
+          <h3 style="font-family:'Playfair Display',serif;font-size:24px;font-weight:600;margin:0 0 20px;color:#0B0B0B;">Typography</h3>
+          <div style="margin-bottom:20px;">
+            <div style="font-family:'Playfair Display',serif;font-size:40px;font-weight:700;margin-bottom:4px;">Playfair Display</div>
+            <div style="font-family:ui-monospace,monospace;font-size:11px;color:#575757;">Headings — 400–700 weight</div>
+          </div>
+          <div style="margin-bottom:20px;">
+            <div style="font-family:'Inter',sans-serif;font-size:14px;font-weight:400;margin-bottom:4px;">The quick brown fox jumps over the lazy dog</div>
+            <div style="font-family:ui-monospace,monospace;font-size:11px;color:#575757;">Inter Regular — Body text</div>
+          </div>
+          <div style="margin-bottom:20px;">
+            <div style="font-family:'Inter',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;">LABELS AND UI TEXT</div>
+            <div style="font-family:ui-monospace,monospace;font-size:11px;color:#575757;">Inter 600, ALL CAPS, tracking 0.1em</div>
+          </div>
+        </section>
+
+        <!-- Spacing -->
+        <section id="ds-spacing" class="ds-section" style="margin-bottom:60px;scroll-margin-top:20px;">
+          <h3 style="font-family:'Playfair Display',serif;font-size:24px;font-weight:600;margin:0 0 20px;color:#0B0B0B;">Spacing Scale</h3>
+          <table style="width:100%;border-collapse:collapse;font-family:Inter,sans-serif;font-size:13px;">
+            <thead><tr style="border-bottom:1px solid #8e7164;"><th style="text-align:left;padding:8px;font-weight:600;">Name</th><th style="text-align:left;padding:8px;font-weight:600;">Value</th><th style="text-align:left;padding:8px;font-weight:600;">Pixels</th></tr></thead>
+            <tbody>
+              <tr style="border-bottom:1px solid #e3bfb1;"><td style="padding:8px;">xs</td><td style="padding:8px;">p-1</td><td style="padding:8px;">4px</td></tr>
+              <tr style="border-bottom:1px solid #e3bfb1;"><td style="padding:8px;">sm</td><td style="padding:8px;">p-2</td><td style="padding:8px;">8px</td></tr>
+              <tr style="border-bottom:1px solid #e3bfb1;"><td style="padding:8px;">md</td><td style="padding:8px;">p-4</td><td style="padding:8px;">16px</td></tr>
+              <tr style="border-bottom:1px solid #e3bfb1;"><td style="padding:8px;">lg</td><td style="padding:8px;">p-8</td><td style="padding:8px;">32px</td></tr>
+              <tr style="border-bottom:1px solid #e3bfb1;"><td style="padding:8px;">xl</td><td style="padding:8px;">p-12</td><td style="padding:8px;">48px</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- Animations -->
+        <section id="ds-animations" class="ds-section" style="margin-bottom:60px;scroll-margin-top:20px;">
+          <h3 style="font-family:'Playfair Display',serif;font-size:24px;font-weight:600;margin:0 0 20px;color:#0B0B0B;">Animation Timing</h3>
+          <table style="width:100%;border-collapse:collapse;font-family:Inter,sans-serif;font-size:13px;">
+            <thead><tr style="border-bottom:1px solid #8e7164;"><th style="text-align:left;padding:8px;font-weight:600;">Purpose</th><th style="text-align:left;padding:8px;font-weight:600;">Duration</th><th style="text-align:left;padding:8px;font-weight:600;">Easing</th></tr></thead>
+            <tbody>
+              <tr style="border-bottom:1px solid #e3bfb1;"><td style="padding:8px;">Fast (micro)</td><td style="padding:8px;">150ms</td><td style="padding:8px;">ease</td></tr>
+              <tr style="border-bottom:1px solid #e3bfb1;"><td style="padding:8px;">Normal (feedback)</td><td style="padding:8px;">300ms</td><td style="padding:8px;">ease</td></tr>
+              <tr style="border-bottom:1px solid #e3bfb1;"><td style="padding:8px;">Slow (entrance)</td><td style="padding:8px;">500ms</td><td style="padding:8px;">ease</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- Design Tokens -->
+        <section id="ds-tokens" class="ds-section" style="margin-bottom:60px;scroll-margin-top:20px;">
+          <h3 style="font-family:'Playfair Display',serif;font-size:24px;font-weight:600;margin:0 0 20px;color:#0B0B0B;">Z-Index Scale</h3>
+          <table style="width:100%;border-collapse:collapse;font-family:Inter,sans-serif;font-size:13px;">
+            <thead><tr style="border-bottom:1px solid #8e7164;"><th style="text-align:left;padding:8px;font-weight:600;">Layer</th><th style="text-align:left;padding:8px;font-weight:600;">Value</th><th style="text-align:left;padding:8px;font-weight:600;">Used For</th></tr></thead>
+            <tbody>
+              <tr style="border-bottom:1px solid #e3bfb1;"><td style="padding:8px;">base</td><td style="padding:8px;">1</td><td style="padding:8px;">Page content</td></tr>
+              <tr style="border-bottom:1px solid #e3bfb1;"><td style="padding:8px;">sticky</td><td style="padding:8px;">10</td><td style="padding:8px;">Fixed nav/header</td></tr>
+              <tr style="border-bottom:1px solid #e3bfb1;"><td style="padding:8px;">dropdown</td><td style="padding:8px;">20</td><td style="padding:8px;">Menus, tooltips</td></tr>
+              <tr style="border-bottom:1px solid #e3bfb1;"><td style="padding:8px;">modal-bg</td><td style="padding:8px;">9990</td><td style="padding:8px;">Modal backdrop</td></tr>
+              <tr style="border-bottom:1px solid #e3bfb1;"><td style="padding:8px;">modal</td><td style="padding:8px;">9998</td><td style="padding:8px;">Modal content</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- Code Snippets -->
+        <section id="ds-snippets" class="ds-section" style="margin-bottom:60px;scroll-margin-top:20px;">
+          <h3 style="font-family:'Playfair Display',serif;font-size:24px;font-weight:600;margin:0 0 20px;color:#0B0B0B;">Copy-Paste Snippets</h3>
+
+          <div style="margin-bottom:30px;">
+            <h4 style="font-family:Inter,sans-serif;font-size:13px;font-weight:600;margin:0 0 12px;color:#0B0B0B;text-transform:uppercase;letter-spacing:0.08em;">Filter Chip Component</h4>
+            <pre style="background:#f5f5f5;border:1px solid #c4c7c7;padding:12px;font-family:ui-monospace,monospace;font-size:11px;overflow-x:auto;margin:0;"><code>&lt;span class="filter-chip"&gt;
+  Collage
+  &lt;button&gt;×&lt;/button&gt;
+&lt;/span&gt;
+
+/* CSS */
+.filter-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; font-weight: 500;
+  text-transform: uppercase; color: #0B0B0B;
+  background: #ebe8e2; border: 1px solid #c4c7c7;
+  padding: 4px 10px;
+}</code></pre>
+          </div>
+
+          <div style="margin-bottom:30px;">
+            <h4 style="font-family:Inter,sans-serif;font-size:13px;font-weight:600;margin:0 0 12px;color:#0B0B0B;text-transform:uppercase;letter-spacing:0.08em;">Orange Link</h4>
+            <pre style="background:#f5f5f5;border:1px solid #c4c7c7;padding:12px;font-family:ui-monospace,monospace;font-size:11px;overflow-x:auto;margin:0;"><code>&lt;a href="#" class="bracket-link"&gt;[ Learn More → ]&lt;/a&gt;
+
+/* CSS */
+.bracket-link {
+  color: #B84700; /* orange-ink for light bg */
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.bracket-link:hover {
+  color: #FF6600;
+}</code></pre>
+          </div>
+
+          <div style="margin-bottom:30px;">
+            <h4 style="font-family:Inter,sans-serif;font-size:13px;font-weight:600;margin:0 0 12px;color:#0B0B0B;text-transform:uppercase;letter-spacing:0.08em;">Keyboard Shortcut Listener</h4>
+            <pre style="background:#f5f5f5;border:1px solid #c4c7c7;padding:12px;font-family:ui-monospace,monospace;font-size:11px;overflow-x:auto;margin:0;"><code>document.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.shiftKey) {
+    if (e.key === 'D') {
+      e.preventDefault();
+      // Toggle your modal here
+    }
+  }
+});</code></pre>
+          </div>
+        </section>
+
+        <!-- Accessibility -->
+        <section id="ds-accessibility" class="ds-section" style="margin-bottom:60px;scroll-margin-top:20px;">
+          <h3 style="font-family:'Playfair Display',serif;font-size:24px;font-weight:600;margin:0 0 20px;color:#0B0B0B;">Accessibility</h3>
+          <div style="font-family:Inter,sans-serif;font-size:14px;line-height:1.6;color:#575757;">
+            <p><strong>Contrast rules:</strong></p>
+            <ul style="margin:0;padding-left:20px;">
+              <li>#FF6600 (orange) on dark backgrounds only (6.7:1)</li>
+              <li>#B84700 (orange-ink) for text on light backgrounds (5.07:1 AA)</li>
+              <li>#0B0B0B (deep-ink) on light backgrounds (16:1)</li>
+            </ul>
+            <p><strong>Keyboard navigation:</strong></p>
+            <ul style="margin:0;padding-left:20px;">
+              <li>All interactive elements focusable with Tab</li>
+              <li>Focus rings: 2px solid #FF6600</li>
+              <li>Shortcuts: ⌘K (search), ⌘Shift+D (design system), ← → (decade nav)</li>
+            </ul>
+            <p><strong>Motion:</strong> Respect <code>prefers-reduced-motion: reduce</code> — disable all entrance animations, keep transitions instant.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var modal = document.getElementById('design-system-modal');
+  var closeBtn = document.getElementById('ds-modal-close');
+  var searchInput = document.getElementById('ds-search');
+  var navLinks = document.querySelectorAll('.ds-nav-link');
+
+  // Open modal with ⌘Shift+D or Ctrl+Shift+D
+  document.addEventListener('keydown', function(e) {
+    if ((e.metaKey || e.ctrlKey) && e.shiftKey && (e.key === 'D' || e.key === 'd')) {
+      e.preventDefault();
+      modal.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+      searchInput.focus();
+    }
+  });
+
+  // Close with Esc
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modal.style.display === 'block') {
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  });
+
+  // Close button
+  closeBtn.addEventListener('click', function() {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  });
+
+  // Close on backdrop click
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  });
+
+  // Search nav links
+  searchInput.addEventListener('input', function(e) {
+    var query = e.target.value.toLowerCase();
+    navLinks.forEach(function(link) {
+      var text = link.textContent.toLowerCase();
+      link.style.display = text.includes(query) ? 'block' : 'none';
+    });
+  });
+
+  // Nav link click behavior
+  navLinks.forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      var href = link.getAttribute('href');
+      var target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        navLinks.forEach(function(l) {
+          l.style.borderLeftColor = 'transparent';
+          l.style.color = '#575757';
+        });
+        link.style.borderLeftColor = '#FF6600';
+        link.style.color = '#0B0B0B';
+      }
+    });
+  });
+
+  // Sync active nav link on scroll
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var id = entry.target.id;
+        navLinks.forEach(function(link) {
+          link.style.borderLeftColor = 'transparent';
+          link.style.color = '#575757';
+        });
+        var activeLink = document.querySelector('.ds-nav-link[href="#' + id + '"]');
+        if (activeLink) {
+          activeLink.style.borderLeftColor = '#FF6600';
+          activeLink.style.color = '#0B0B0B';
+        }
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('.ds-section').forEach(function(section) {
+    observer.observe(section);
+  });
+})();
+</script>
 <!-- NAV:END -->
 <main id="main" class="pt-16">
   <div class="container">
@@ -1366,6 +1660,7 @@ footer .hover\:border-international-orange::after{display:none}
     <p style="font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;">© <span id="footer-year">2026</span> JEFFREY F. S. NEUMANN. ALL RIGHTS RESERVED.</p>
     <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:center;">
       <button id="back-to-top" style="background:none;border:none;cursor:pointer;font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;padding:0;transition:color 0.15s ease;" aria-label="Back to top">↑ BACK TO TOP</button>
+      <button id="ds-footer-btn" style="background:none;border:none;cursor:pointer;font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;padding:0;transition:color 0.15s ease;position:relative;" aria-label="Design system reference">⌘SHIFT+D</button>
       <a style="font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;text-decoration:none;transition:color 0.15s ease;padding:0;border:none;" href="https://github.com/JFSNeumann/jfsn-archive" target="_blank">OPEN SOURCE CODE</a>
       <a style="font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;text-decoration:none;transition:color 0.15s ease;padding:0;border:none;" href="privacy.html">PRIVACY</a>
     </div>
@@ -1380,6 +1675,17 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
   var btn = document.getElementById('back-to-top');
   if (btn) btn.addEventListener('click', function(){
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  // Design system button
+  var dsBtn = document.getElementById('ds-footer-btn');
+  if (dsBtn) dsBtn.addEventListener('click', function(){
+    var modal = document.getElementById('design-system-modal');
+    if (modal) {
+      modal.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+      var searchInput = document.getElementById('ds-search');
+      if (searchInput) searchInput.focus();
+    }
   });
   // Floating button
   var floatBtn = document.getElementById('btt-float');
