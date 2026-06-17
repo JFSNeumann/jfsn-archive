@@ -224,6 +224,21 @@
     }
   });
 
+  // ─── Search icon pulse hint on first visit ──────────────────────────────
+  // Show users the search feature with a gentle pulse (once per session)
+  var searchBtn = document.getElementById('nav-search-btn');
+  if (searchBtn && !sessionStorage.getItem('jfsn-search-seen')) {
+    // Add pulse animation after page settles (2s delay)
+    setTimeout(function() {
+      searchBtn.classList.add('hint-pulse');
+      // Remove after animation completes (4s = 2 loops of 2s each)
+      setTimeout(function() {
+        searchBtn.classList.remove('hint-pulse');
+        sessionStorage.setItem('jfsn-search-seen', 'true');
+      }, 4500);
+    }, 2000);
+  }
+
   // Artwork thumbnails are full color always — no mask-image, no scroll-reveal.
   // (Removed session 8; banned — do not re-add.)
 
