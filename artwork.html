@@ -312,6 +312,14 @@ header.header-hidden{transform:translateY(-100%)}
             <span id="artwork-river-year" aria-hidden="true" style="position:absolute;top:3px;font-family:Inter,sans-serif;font-size:9px;letter-spacing:0.1em;color:#FF6600;background:rgba(11,11,11,0.55);padding:1px 4px;white-space:nowrap;"></span>
           </span>
         </a>
+
+        <!-- Related works in same series -->
+        <div id="related-works" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid #e3bfb1;">
+          <p style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#8e7164;margin-bottom:10px;">[ More in this series ]</p>
+          <div id="related-works-list" style="display:flex;flex-direction:column;gap:8px;">
+            <!-- populated by JS -->
+          </div>
+        </div>
       </aside>
 
     </div>
@@ -486,6 +494,22 @@ fetch('catalog.json')
     const w = works[idx];
     document.getElementById('work-content').classList.remove('hidden');
     updateArtworkBreadcrumb(w);
+
+    // Populate related works in same series
+    if (w.series) {
+      const relatedIds = works
+        .filter(x => x.series === w.series && x.file !== w.file)
+        .slice(0, 4)
+        .map(x => x.file.replace('.avif', ''));
+      if (relatedIds.length > 0) {
+        const relatedDiv = document.getElementById('related-works');
+        const list = document.getElementById('related-works-list');
+        list.innerHTML = relatedIds.map(id =>
+          `<a href="artwork.html?id=${id}" style="font-size:12px;color:#B84700;text-decoration:none;border-bottom:1px solid #B84700;padding:4px 0;display:block;">→ ${id}</a>`
+        ).join('');
+        relatedDiv.style.display = 'block';
+      }
+    }
 
     // SEO
     const titleText = w.title || 'Untitled';

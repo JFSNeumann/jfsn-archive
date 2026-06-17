@@ -473,6 +473,17 @@ header.header-hidden{transform:translateY(-100%)}
       <!-- Active filter chips -->
       <div id="filter-chips" style="display:none;margin-bottom:20px;flex-wrap:wrap;align-items:center;gap:8px;"></div>
 
+      <!-- Loading state -->
+      <div id="filter-loading" style="display:none;text-align:center;padding:20px;font-family:Inter,sans-serif;font-size:12px;color:#575757;">
+        <span style="display:inline-block;width:4px;height:4px;background:#FF6600;border-radius:50%;margin:0 2px;animation:pulse 1.5s infinite;animation-delay:0s;"></span>
+        <span style="display:inline-block;width:4px;height:4px;background:#FF6600;border-radius:50%;margin:0 2px;animation:pulse 1.5s infinite;animation-delay:0.2s;"></span>
+        <span style="display:inline-block;width:4px;height:4px;background:#FF6600;border-radius:50%;margin:0 2px;animation:pulse 1.5s infinite;animation-delay:0.4s;"></span>
+      </div>
+      <style>
+        @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+        @media (prefers-reduced-motion: reduce) { #filter-loading span { animation: none; opacity: 0.6; } }
+      </style>
+
       <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-px sm:gap-x-gutter sm:gap-y-lg bg-deep-ink sm:bg-transparent" id="works-grid"></div>
 
       <p id="empty-state" class="hidden py-xl text-center font-label-lg text-label-lg text-secondary uppercase tracking-widest">
@@ -604,6 +615,7 @@ function sortWorks(arr) {
 
 function applyFilters() {
   syncURL();
+  document.getElementById('filter-loading').style.display = 'block';
   const mediums = [...document.querySelectorAll('#filter-medium input:checked')].map(i => i.value);
   const decades = [...document.querySelectorAll('#filter-decade input:checked')].map(i => i.value);
   const series  = [...document.querySelectorAll('#filter-series input:checked')].map(i => i.value);
@@ -669,6 +681,7 @@ function renderPage() {
   workCountLabel.textContent = total === allWorks.length ? 'CATALOGED WORKS' : 'WORKS';
   emptyState.classList.toggle('hidden', total > 0);
   loadMoreBtn.classList.toggle('hidden', page * PAGE_SIZE >= total);
+  document.getElementById('filter-loading').style.display = 'none';
 }
 
 // Pre-select filters from URL — supports multi-value and sort restore
@@ -718,7 +731,7 @@ function syncURL() {
   updateBreadcrumb();
 }
 
-// Generate breadcrumb from URL parameters
+// Generate breadcrumb from URL parameters (with mobile truncation)
 function updateBreadcrumb() {
   const bc = document.getElementById('breadcrumb');
   const p = new URLSearchParams(location.search);
@@ -727,24 +740,38 @@ function updateBreadcrumb() {
   const series = p.getAll('series');
 
   let parts = ['<a href="archive.html" style="color:#575757;text-decoration:none;border-bottom:1px solid #575757;">Archive</a>'];
+  let lastPart = null;
 
   if (mediums.length === 1) {
     const label = { collage:'Collage', photograph:'Photography', sculpture:'Sculpture', painting:'Painting' }[mediums[0]] || mediums[0];
-    parts.push(`<a href="archive.html?medium=${mediums[0]}" style="color:#575757;text-decoration:none;border-bottom:1px solid #575757;">${label}</a>`);
+    lastPart = `<a href="archive.html?medium=${mediums[0]}" style="color:#575757;text-decoration:none;border-bottom:1px solid #575757;">${label}</a>`;
   }
   if (decades.length === 1) {
-    parts.push(`<a href="archive.html?decade=${decades[0]}" style="color:#575757;text-decoration:none;border-bottom:1px solid #575757;">${decades[0]}</a>`);
+    lastPart = `<a href="archive.html?decade=${decades[0]}" style="color:#575757;text-decoration:none;border-bottom:1px solid #575757;">${decades[0]}</a>`;
   }
   if (series.length === 1) {
-    parts.push(`<a href="archive.html?series=${series[0]}" style="color:#575757;text-decoration:none;border-bottom:1px solid #575757;">${series[0]}</a>`);
+    lastPart = `<a href="archive.html?series=${series[0]}" style="color:#575757;text-decoration:none;border-bottom:1px solid #575757;">${series[0]}</a>`;
   }
 
-  if (parts.length > 1) {
-    bc.innerHTML = parts.join(' <span style="color:#8e7164;margin:0 4px;">›</span> ');
+  if (lastPart) {
+    const separator = ' <span style="color:#8e7164;margin:0 4px;">›</span> ';
+    const isMobile = window.innerWidth < 768;
+
+    if (isMobile && parts.length > 1 && lastPart) {
+      // Mobile: show "Archive › ... › Last"
+      bc.innerHTML = parts[0] + separator + '<span style="color:#8e7164;">…</span>' + separator + lastPart;
+    } else {
+      // Desktop: show full path
+      parts.push(lastPart);
+      bc.innerHTML = parts.join(separator);
+    }
   } else {
     bc.innerHTML = '';
   }
 }
+
+// Update breadcrumb on resize (for mobile truncation)
+window.addEventListener('resize', updateBreadcrumb, { passive: true });
 
 document.getElementById('sort-select').addEventListener('change', () => {
   filtered = sortWorks(filtered);
