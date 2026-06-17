@@ -1,5 +1,29 @@
 [
   {
+    "sha": "0cf50c5",
+    "date": "2026-06-17",
+    "title": "Session update 2026-06-17 11:21",
+    "body": ""
+  },
+  {
+    "sha": "f2e485b",
+    "date": "2026-06-17",
+    "title": "Extend year_display (decade estimates) to grid/search/favorites captions",
+    "body": "Updated search.js to display honest decade estimates \"1990s (est.)\" instead of bare years:\n- Search results: use year_display for metadata display\n- Saved/favorites works: use year_display when available\n- Recently viewed: look up catalog entry to get year_display\n\nPreserves backward compatibility by falling back to year field if year_display not present. This extends the provenance/accuracy work (session 36) from detail pages to all grid contexts where years are displayed."
+  },
+  {
+    "sha": "42e6b01",
+    "date": "2026-06-17",
+    "title": "Phase 6: Add guided discovery paths to start-here.html",
+    "body": "Implemented four curated onboarding paths for different visitor types:\n1. First Look — recent work (2010s-2020s) tracing back through decades\n2. Thematic Deep Dive — Guernica series (232 works, 30+ years) showing sustained focus\n3. Color Journey — Chromatic River year-by-year visual timeline\n4. Research Path — API documentation and machine-readable data access\n\nPaths use quote-card styling (consistent with sidebar cards), include emoji labels (earned, not literal), and link to specific archive views/filters. Mobile TOC updated to include \"Guided Paths\" entry."
+  },
+  {
+    "sha": "036b171",
+    "date": "2026-06-17",
+    "title": "Add earned icons to series/theme cards on series-index.html",
+    "body": "Each series and theme card now displays an inline SVG icon that represents the concept:\n- Guernica: geometric abstraction\n- Targets: concentric circles\n- Framed: nested frames\n- Torsos & Faces: human form\n- Gallery-Images: collection/gallery\n- Mr. SNOWmann: stacked forms\n- Crosses: cross/intersection\n- Collaboration: multiple figures connected\n\nIcons use feather SVG style (20px, 1.8 stroke, currentColor) and transition to orange on hover, matching the site's interaction patterns. Icons are earned symbols, not literal representations, respecting the visual integrity rule."
+  },
+  {
     "sha": "6958f73",
     "date": "2026-06-17",
     "title": "Session update 2026-06-17 11:15",

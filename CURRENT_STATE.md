@@ -1,5 +1,5 @@
 # Current State
-**Updated:** 2026-06-17 11:21
+**Updated:** 2026-06-17 11:28
 
 ## ✅ SESSION 47 (2026-06-16) — Decade-page artwork grid migration + index.html audio indicator (DEPLOYED)
 - **Decade pages (1970s–2020s) migrated to modern `.thumb__link` system.** All 6 pages (1,084 total thumbnails across 6 files) converted from the old `div.break-inside-avoid / div.thumb-frame / a.group.block` masonry markup to `figure.thumb / a.thumb__link / figcaption.thumb__caption` — identical to collage.html, sculpture.html, photography.html. Closes the last visual-system split on the site: decade pages now get the same saturation-overlay hover treatment (grey-at-top at rest → full color + orange outline on hover, caption title turns orange).
