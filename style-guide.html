@@ -1428,6 +1428,460 @@
   </div>
 </div>
 
+<!-- MAJOR PAGE SECTIONS -->
+<div class="guide-section">
+  <h2 class="section-title">Major Page Sections</h2>
+  <p style="font-size: 14px; color: #575757; margin-bottom: 32px;">
+    Large-scale patterns that define homepage and archive page layouts.
+  </p>
+
+  <h3 class="subsection-title">Chromatic River (Color Timeline)</h3>
+  <div style="background: white; border: 1px solid #8e7164; padding: 24px; margin-bottom: 24px;">
+    <div style="background: linear-gradient(to right, #ff6b6b, #ffa500, #f0d000, #00cc00, #0066ff, #9933ff); height: 60px; width: 100%; border: 1px solid #8e7164; margin-bottom: 16px;"></div>
+    <p style="font-size: 12px; color: #575757; margin: 0 0 12px;"><strong>Canvas-based visualization</strong> of all 1,084 works by dominant color in chronological order (1974–present).</p>
+    <ul style="font-size: 11px; color: #575757; margin: 0; padding-left: 20px; line-height: 1.8;">
+      <li>Canvas element (HiDPI aware)</li>
+      <li>Hover shows cursor line (1px white, 50% opacity)</li>
+      <li>Tooltip on hover: preview image (72px), work title, year</li>
+      <li>Click opens work detail page</li>
+      <li>Mobile: shorter height, full width</li>
+      <li>Desktop: full height, 1200px max</li>
+      <li><strong>Data source:</strong> chromatic.json (color + year per work)</li>
+    </ul>
+  </div>
+
+  <h3 class="subsection-title">The Wall (Miniature Grid)</h3>
+  <div style="background: white; border: 1px solid #8e7164; padding: 24px; margin-bottom: 24px;">
+    <div style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 2px; margin-bottom: 16px;">
+      <div style="aspect-ratio: 1; background: #ddd; border: 1px solid #999;"></div>
+      <div style="aspect-ratio: 1; background: #ccc; border: 1px solid #999;"></div>
+      <div style="aspect-ratio: 1; background: #bbb; border: 1px solid #999;"></div>
+      <div style="aspect-ratio: 1; background: #ddd; border: 1px solid #999;"></div>
+      <div style="aspect-ratio: 1; background: #ccc; border: 1px solid #999;"></div>
+      <div style="aspect-ratio: 1; background: #bbb; border: 1px solid #999;"></div>
+      <div style="aspect-ratio: 1; background: #ddd; border: 1px solid #999;"></div>
+      <div style="aspect-ratio: 1; background: #ccc; border: 1px solid #999;"></div>
+      <div style="aspect-ratio: 1; background: #bbb; border: 1px solid #999;"></div>
+      <div style="aspect-ratio: 1; background: #ddd; border: 1px solid #999;"></div>
+      <div style="aspect-ratio: 1; background: #ccc; border: 1px solid #999;"></div>
+      <div style="aspect-ratio: 1; background: #bbb; border: 1px solid #999;"></div>
+    </div>
+    <p style="font-size: 12px; color: #575757; margin: 0 0 12px;"><strong>Dense grid of all 1,084 tiny tiles.</strong> Shows complete archive at a glance.</p>
+    <ul style="font-size: 11px; color: #575757; margin: 0; padding-left: 20px; line-height: 1.8;">
+      <li>Grid: 12 columns on desktop, 6 on tablet, 4 on mobile</li>
+      <li>Tile: aspect-ratio 1:1, gap: 2px</li>
+      <li>Image: full-color AVIF, cover fit</li>
+      <li><strong>Hover:</strong> outline color #FF6600, z-index lifts above neighbors</li>
+      <li><strong>Click:</strong> opens work detail</li>
+      <li>No sibling dim (all images stay full color)</li>
+    </ul>
+  </div>
+
+  <h3 class="subsection-title">Featured Grid (Bento/Editorial Layout)</h3>
+  <div style="background: white; border: 1px solid #8e7164; padding: 24px; margin-bottom: 24px;">
+    <div style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 32px; margin-bottom: 16px; min-height: 400px;">
+      <div style="grid-column: span 7; background: #f0f0f0; border: 1px solid #999; display: flex; align-items: center; justify-content: center; color: #999;">Large Cover (7 cols)</div>
+      <div style="grid-column: span 5; background: #f0f0f0; border: 1px solid #999; display: flex; align-items: center; justify-content: center; color: #999; grid-row: span 1;">Medium Card (5 cols)</div>
+      <div style="grid-column: span 5; background: #f0f0f0; border: 1px solid #999; display: flex; align-items: center; justify-content: center; color: #999; grid-row: span 1;">Medium Card (5 cols)</div>
+    </div>
+    <p style="font-size: 12px; color: #575757; margin: 0 0 12px;"><strong>Editorial grid featuring 3 curated works:</strong> 1 large hero (7 cols × 6 rows) + 2 medium (5 cols × 3 rows each).</p>
+    <ul style="font-size: 11px; color: #575757; margin: 0; padding-left: 20px; line-height: 1.8;">
+      <li>Desktop: 12-column grid, 80px rows, 32px gaps</li>
+      <li>Image lazy-load: `loading="lazy"` + fade-in on `.is-loaded`</li>
+      <li><strong>Hover:</strong> shadow lifts, title turns #FF6600</li>
+      <li><strong>Card Frame:</strong> orange border overlay on hover</li>
+      <li>Tablet/Mobile: stacks to single column</li>
+    </ul>
+  </div>
+
+  <h3 class="subsection-title">Lost Works Banner</h3>
+  <div style="background: #0B0B0B; padding: 32px; color: white; text-align: center; margin-bottom: 24px; border: 1px solid #333;">
+    <p style="font-size: 11px; color: #aaa; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 16px;">The Void in the Record</p>
+    <h2 style="font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 600; margin: 0 0 16px;">An estimated 500–1,000 works lost to water damage.</h2>
+    <p style="font-size: 14px; color: #ccc; margin: 0 0 24px; max-width: 60ch;">A significant part of Jeff's early work was lost. What survived is here in full; what's gone is remembered on the Lost Works page.</p>
+    <button style="background: transparent; color: white; border: 2px solid white; padding: 12px 24px; font-size: 13px; font-weight: 600; cursor: pointer; margin-bottom: 32px;">Explore the Lost Works</button>
+    <div style="display: flex; gap: 6px; justify-content: center; margin-bottom: 32px;">
+      <span style="display: block; width: 20px; height: 20px; border: 1px solid #ccc;"></span>
+      <span style="display: block; width: 20px; height: 20px; border: 1px solid #ccc;"></span>
+      <span style="display: block; width: 20px; height: 20px; border: 1px solid #ccc;"></span>
+    </div>
+    <div style="background: #1a1814; width: 200px; height: 250px; margin: 0 auto; border: 1px solid #444;"></div>
+    <p style="font-size: 10px; color: #999; margin-top: 12px;">Surviving fragment image (shown faded)</p>
+  </div>
+
+  <h3 class="subsection-title">Stats Display (2×2 Grid)</h3>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid #8e7164; margin-bottom: 24px;">
+    <div style="padding: 16px 12px 16px 0; border-bottom: 1px solid #8e7164; border-right: 1px solid #8e7164;">
+      <span style="font-size: 10px; color: #8e7164; font-weight: 600; display: block; margin-bottom: 8px; letter-spacing: 0.08em; text-transform: uppercase;">Works Cataloged</span>
+      <span style="font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: #0B0B0B; display: block;">1,084</span>
+    </div>
+    <div style="padding: 16px 0 16px 16px; border-bottom: 1px solid #8e7164;">
+      <span style="font-size: 10px; color: #8e7164; font-weight: 600; display: block; margin-bottom: 8px; letter-spacing: 0.08em; text-transform: uppercase;">Years Active</span>
+      <span style="font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: #0B0B0B; display: block;">1974–present</span>
+    </div>
+    <div style="padding: 16px 12px 16px 0;">
+      <span style="font-size: 10px; color: #8e7164; font-weight: 600; display: block; margin-bottom: 8px; letter-spacing: 0.08em; text-transform: uppercase;">Lost to Water Damage</span>
+      <span style="font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: #c4c7c7; display: block;">~500–1,000</span>
+    </div>
+    <div style="padding: 16px 0 16px 16px; border-left: 1px solid #8e7164;">
+      <span style="font-size: 10px; color: #8e7164; font-weight: 600; display: block; margin-bottom: 8px; letter-spacing: 0.08em; text-transform: uppercase;">Location</span>
+      <span style="font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 600; color: #0B0B0B; display: block;">Cleveland, Ohio</span>
+    </div>
+  </div>
+</div>
+
+<!-- INTERACTIVE PATTERNS -->
+<div class="guide-section">
+  <h2 class="section-title">Interactive UI Patterns</h2>
+  <p style="font-size: 14px; color: #575757; margin-bottom: 32px;">
+    Complex interactions and stateful UI patterns used across the site.
+  </p>
+
+  <h3 class="subsection-title">Search / Command Palette (⌘K)</h3>
+  <div style="background: white; border: 1px solid #8e7164; padding: 24px; margin-bottom: 24px;">
+    <div style="background: rgba(0,0,0,0.05); border: 1px solid #8e7164; padding: 20px; position: relative; backdrop-filter: blur(12px); margin-bottom: 16px;">
+      <p style="font-size: 11px; color: #8e7164; margin: 0 0 12px; letter-spacing: 0.08em; text-transform: uppercase;">Backdrop blur modal</p>
+      <input type="text" placeholder="Search 1,084 works..." style="width: 100%; padding: 12px 16px; border: 1px solid #c4c7c7; font-size: 13px; font-family: Inter, sans-serif;"/>
+      <div style="margin-top: 12px; font-size: 10px; color: #575757;">Results dropdown below...</div>
+    </div>
+    <ul style="font-size: 11px; color: #575757; margin: 0; padding-left: 20px; line-height: 1.8;">
+      <li><strong>Trigger:</strong> ⌘K (Mac) or Ctrl+K (Windows) or click search icon</li>
+      <li><strong>Modal:</strong> Fixed position, backdrop blur (#fcf9f3 @ 80% opacity)</li>
+      <li><strong>Input:</strong> 16px, placeholder text, auto-focus</li>
+      <li><strong>Results:</strong> Dropdown below, 1084px max height, scroll</li>
+      <li><strong>Result item:</strong> 40px height, hover bg #ebe8e2, click opens work</li>
+      <li><strong>Close:</strong> ESC key or click backdrop</li>
+      <li><strong>Animation:</strong> Fade-in (200ms ease)</li>
+    </ul>
+  </div>
+
+  <h3 class="subsection-title">Mobile Folio (Snap-Scroll Carousel)</h3>
+  <div style="background: white; border: 1px solid #8e7164; padding: 24px; margin-bottom: 24px;">
+    <p style="font-size: 12px; color: #575757; margin: 0 0 12px;"><strong>Vertical snap-scroll carousel on mobile (320–767px).</strong> Shows featured works one at a time.</p>
+    <ul style="font-size: 11px; color: #575757; margin: 0; padding-left: 20px; line-height: 1.8;">
+      <li><strong>Sections:</strong> 1. Hero · 2. art0380 · 3. art0002 · 4. art0026 (4 total)</li>
+      <li><strong>Container:</strong> `scroll-snap-type: y mandatory`, height: calc(100dvh - 4rem)</li>
+      <li><strong>Section:</strong> `scroll-snap-align: start`, 100% viewport height</li>
+      <li><strong>Folio Rail:</strong> Vertical dot indicators on right edge (44×44px buttons)</li>
+      <li><strong>Dot:</strong> 5px filled circle, 1.5px border</li>
+      <li><strong>Active dot:</strong> #FF6600, highlight when section in view</li>
+      <li><strong>Animation:</strong> Smooth scroll behavior, dots update on scroll via IntersectionObserver</li>
+      <li><strong>Desktop:</strong> Hidden (layout switches to grid)</li>
+    </ul>
+  </div>
+
+  <h3 class="subsection-title">View Transition (Cross-Page Image Morph)</h3>
+  <div style="background: white; border: 1px solid #8e7164; padding: 24px; margin-bottom: 24px;">
+    <p style="font-size: 12px; color: #575757; margin: 0 0 12px;"><strong>CSS View Transition API:</strong> Artwork thumbnail morphs into detail page image.</p>
+    <ul style="font-size: 11px; color: #575757; margin: 0; padding-left: 20px; line-height: 1.8;">
+      <li><strong>Browser support:</strong> Chrome 111+, Edge 111+ (graceful fallback: standard navigation)</li>
+      <li><strong>Rule:</strong> `@view-transition { navigation: auto; }` in CSS</li>
+      <li><strong>Named element:</strong> Click handler sets `img.style.viewTransitionName = 'artwork-hero'`</li>
+      <li><strong>Animation:</strong> Browser morphs thumbnail position/size to detail page position</li>
+      <li><strong>Duration:</strong> ~300–400ms (automatic, browser-optimized)</li>
+      <li><strong>Respects:</strong> `prefers-reduced-motion: reduce` (skips transition)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- COMPONENT REFERENCE -->
+<div class="guide-section">
+  <h2 class="section-title">Component Reference & Details</h2>
+  <p style="font-size: 14px; color: #575757; margin-bottom: 32px;">
+    Smaller interactive components and UI elements with detailed specs.
+  </p>
+
+  <h3 class="subsection-title">Icon System (Feather Icons)</h3>
+  <div style="background: white; border: 1px solid #8e7164; padding: 24px; margin-bottom: 24px;">
+    <div style="display: flex; gap: 16px; justify-content: center; margin-bottom: 16px; flex-wrap: wrap;">
+      <div style="text-align: center;">
+        <div style="width: 40px; height: 40px; background: #f0f0f0; border: 1px solid #999; display: flex; align-items: center; justify-content: center; margin-bottom: 8px;">↙</div>
+        <p style="font-size: 9px; color: #8e7164; margin: 0;">Home</p>
+      </div>
+      <div style="text-align: center;">
+        <div style="width: 40px; height: 40px; background: #f0f0f0; border: 1px solid #999; display: flex; align-items: center; justify-content: center; margin-bottom: 8px;">📝</div>
+        <p style="font-size: 9px; color: #8e7164; margin: 0;">Start Here</p>
+      </div>
+      <div style="text-align: center;">
+        <div style="width: 40px; height: 40px; background: #f0f0f0; border: 1px solid #999; display: flex; align-items: center; justify-content: center; margin-bottom: 8px;">👤</div>
+        <p style="font-size: 9px; color: #8e7164; margin: 0;">About</p>
+      </div>
+      <div style="text-align: center;">
+        <div style="width: 40px; height: 40px; background: #f0f0f0; border: 1px solid #999; display: flex; align-items: center; justify-content: center; margin-bottom: 8px;">🔍</div>
+        <p style="font-size: 9px; color: #8e7164; margin: 0;">Search</p>
+      </div>
+    </div>
+    <ul style="font-size: 11px; color: #575757; margin: 0; padding-left: 20px; line-height: 1.8;">
+      <li><strong>Source:</strong> Feather Icons (feathericons.com)</li>
+      <li><strong>Size:</strong> 18px × 18px (base), 20px × 20px (buttons)</li>
+      <li><strong>Stroke width:</strong> 1.8px</li>
+      <li><strong>Color:</strong> Inherit from parent (current text color)</li>
+      <li><strong>Hover:</strong> Color transitions to #FF6600 with 200ms ease</li>
+      <li><strong>Used in:</strong> Mobile drawer (8 icons), buttons, headers</li>
+      <li><strong>Format:</strong> Inline SVG (no external files)</li>
+    </ul>
+  </div>
+
+  <h3 class="subsection-title">Tooltips</h3>
+  <div style="background: white; border: 1px solid #8e7164; padding: 24px; margin-bottom: 24px;">
+    <div style="margin-bottom: 16px; text-align: center;">
+      <span style="position: relative; padding-bottom: 20px; border-bottom: 1px dashed #8e7164;">Hover for tooltip
+        <div style="position: absolute; bottom: -40px; left: 50%; transform: translateX(-50%); background: #0B0B0B; color: #F3F0EA; padding: 6px 12px; font-size: 10px; white-space: nowrap; border-radius: 4px; opacity: 0; pointer-events: none;">Jeffrey Francis Stanley Neumann</div>
+      </span>
+    </div>
+    <ul style="font-size: 11px; color: #575757; margin: 0; padding-left: 20px; line-height: 1.8;">
+      <li><strong>JFSN wordmark hover:</strong> "Jeffrey Francis Stanley Neumann" appears below</li>
+      <li><strong>Chromatic River hover:</strong> Preview image (72×72px) + title + year</li>
+      <li><strong>Position:</strong> Below trigger, centered, 10px offset</li>
+      <li><strong>Background:</strong> #0B0B0B (deep-ink)</li>
+      <li><strong>Text:</strong> 10px, white (#F3F0EA), no-wrap</li>
+      <li><strong>Animation:</strong> Fade-in (200ms ease) on hover, fade-out on mouse-leave</li>
+      <li><strong>z-index:</strong> Above all content</li>
+    </ul>
+  </div>
+
+  <h3 class="subsection-title">Audio Player</h3>
+  <div style="background: white; border: 1px solid #8e7164; padding: 24px; margin-bottom: 24px;">
+    <audio controls style="width: 100%; height: 32px;" preload="none">
+      <source src="dummy.mp3" type="audio/mpeg">
+    </audio>
+    <ul style="font-size: 11px; color: #575757; margin: 12px 0 0; padding-left: 20px; line-height: 1.8;">
+      <li><strong>Element:</strong> HTML5 `&lt;audio controls&gt;`</li>
+      <li><strong>Styling:</strong> Uses browser defaults (no custom CSS currently)</li>
+      <li><strong>Width:</strong> 100% (responsive)</li>
+      <li><strong>Height:</strong> 32px</li>
+      <li><strong>Preload:</strong> `preload="none"` (lazy load)</li>
+      <li><strong>Format:</strong> MP3 (supported across all browsers)</li>
+      <li><strong>Used in:</strong> "In His Own Words" quote card on about.html</li>
+    </ul>
+  </div>
+
+  <h3 class="subsection-title">Ghost Tiles</h3>
+  <div style="background: white; border: 1px solid #8e7164; padding: 24px; margin-bottom: 24px;">
+    <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+      <span style="display: block; width: 20px; height: 20px; border: 1px solid #c4c7c7; transition: border-color 0.25s ease;"></span>
+      <span style="display: block; width: 20px; height: 20px; border: 1px solid #FF6600; transition: border-color 0.25s ease;"></span>
+      <span style="display: block; width: 20px; height: 20px; border: 1px solid #c4c7c7; transition: border-color 0.25s ease;"></span>
+    </div>
+    <ul style="font-size: 11px; color: #575757; margin: 0; padding-left: 20px; line-height: 1.8;">
+      <li><strong>Size:</strong> 20×20px squares</li>
+      <li><strong>Border:</strong> 1px solid #c4c7c7</li>
+      <li><strong>Background:</strong> Transparent</li>
+      <li><strong>Hover:</strong> Border color changes to #FF6600 (200ms ease)</li>
+      <li><strong>Used in:</strong> Lost Works banner section</li>
+      <li><strong>Purpose:</strong> Represents lost/missing works (empty frames)</li>
+    </ul>
+  </div>
+
+  <h3 class="subsection-title">Counter Animation</h3>
+  <div style="background: white; border: 1px solid #8e7164; padding: 24px; margin-bottom: 24px;">
+    <div style="font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: #0B0B0B; margin-bottom: 16px;" data-counter="1084">1,084</div>
+    <ul style="font-size: 11px; color: #575757; margin: 0; padding-left: 20px; line-height: 1.8;">
+      <li><strong>Attribute:</strong> `data-counter="1084"`</li>
+      <li><strong>Animation:</strong> Counts from 0 → 1,084 on page load</li>
+      <li><strong>Duration:</strong> ~1.5 seconds</li>
+      <li><strong>Timing:</strong> JavaScript counts up with easing</li>
+      <li><strong>Used in:</strong> Stats display (Mobile "About This Archive" section)</li>
+      <li><strong>Triggers:</strong> When stats section becomes visible (IntersectionObserver)</li>
+    </ul>
+  </div>
+
+  <h3 class="subsection-title">Filter Chips (All States)</h3>
+  <div style="background: white; border: 1px solid #8e7164; padding: 24px; margin-bottom: 24px;">
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px;">
+      <span style="background: #ebe8e2; border: 1px solid #8e7164; padding: 6px 10px; font-size: 11px; color: #0B0B0B; cursor: pointer;">Default Chip</span>
+      <span style="background: #ebe8e2; border: 1px solid #FF6600; padding: 6px 10px; font-size: 11px; color: #FF6600; cursor: pointer;">Hover Chip</span>
+      <span style="background: #ebe8e2; border: 2px solid #FF6600; padding: 5px 10px; font-size: 11px; color: #0B0B0B; cursor: pointer; outline: 2px solid #FF6600; outline-offset: 1px;">Focus Chip</span>
+      <span style="background: transparent; border: 1px solid #c4c7c7; padding: 6px 10px; font-size: 11px; color: #575757; opacity: 0.5; cursor: not-allowed;">Removing...</span>
+    </div>
+    <ul style="font-size: 11px; color: #575757; margin: 0; padding-left: 20px; line-height: 1.8;">
+      <li><strong>Default:</strong> background #ebe8e2, border #8e7164, text #0B0B0B</li>
+      <li><strong>Hover:</strong> border + text color → #FF6600 (200ms ease)</li>
+      <li><strong>Focus:</strong> 2px #FF6600 outline, offset 1px</li>
+      <li><strong>Removing:</strong> opacity 0.5, border fade to #c4c7c7</li>
+      <li><strong>Remove animation:</strong> Slide-out (slide-left animation) + fade</li>
+      <li><strong>Used in:</strong> Archive page filter UI</li>
+      <li><strong>Haptic:</strong> Vibration feedback on remove (10ms tap)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ADVANCED PATTERNS -->
+<div class="guide-section">
+  <h2 class="section-title">Advanced Patterns & Technical Details</h2>
+  <p style="font-size: 14px; color: #575757; margin-bottom: 32px;">
+    Implementation details, data attributes, CSS custom properties, and mobile transitions.
+  </p>
+
+  <h3 class="subsection-title">Data Attributes Reference</h3>
+  <div style="background: white; border: 1px solid #8e7164; padding: 24px; overflow-x: auto; margin-bottom: 24px;">
+    <table style="width: 100%; font-size: 11px; border-collapse: collapse;">
+      <thead>
+        <tr style="background: #fcf9f3; border-bottom: 2px solid #8e7164;">
+          <th style="padding: 10px; text-align: left; font-weight: 600;">Attribute</th>
+          <th style="padding: 10px; text-align: left; font-weight: 600;">Value(s)</th>
+          <th style="padding: 10px; text-align: left; font-weight: 600;">Used For</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom: 1px solid #e3bfb1;">
+          <td style="padding: 10px;"><code>data-counter</code></td>
+          <td style="padding: 10px;">1084 (number)</td>
+          <td style="padding: 10px;">Count-up animation on stats</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #e3bfb1; background: #f9f9f9;">
+          <td style="padding: 10px;"><code>data-filter-type</code></td>
+          <td style="padding: 10px;">"medium", "decade", "series"</td>
+          <td style="padding: 10px;">Filter chip categorization (archive)</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #e3bfb1;">
+          <td style="padding: 10px;"><code>data-filter-val</code></td>
+          <td style="padding: 10px;">Filter value (e.g., "collage", "1970s")</td>
+          <td style="padding: 10px;">Filter data binding</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #e3bfb1; background: #f9f9f9;">
+          <td style="padding: 10px;"><code>data-page-label</code></td>
+          <td style="padding: 10px;">"1970s", "1980s", etc.</td>
+          <td style="padding: 10px;">Vertical "you are here" label on decade pages</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #e3bfb1;">
+          <td style="padding: 10px;"><code>data-kb="reveal"</code></td>
+          <td style="padding: 10px;">"reveal" (animation type)</td>
+          <td style="padding: 10px;">Hero slide reveal animation type</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="subsection-title">CSS Custom Properties (Variables)</h3>
+  <div style="background: white; border: 1px solid #8e7164; padding: 24px; overflow-x: auto; margin-bottom: 24px;">
+    <table style="width: 100%; font-size: 11px; border-collapse: collapse;">
+      <thead>
+        <tr style="background: #fcf9f3; border-bottom: 2px solid #8e7164;">
+          <th style="padding: 10px; text-align: left; font-weight: 600;">Property</th>
+          <th style="padding: 10px; text-align: left; font-weight: 600;">Example Value</th>
+          <th style="padding: 10px; text-align: left; font-weight: 600;">Used For</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom: 1px solid #e3bfb1;">
+          <td style="padding: 10px;"><code>--delay</code></td>
+          <td style="padding: 10px;">0ms, 50ms, 100ms, 150ms</td>
+          <td style="padding: 10px;">Stagger animation delays (grid, related works)</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #e3bfb1; background: #f9f9f9;">
+          <td style="padding: 10px;"><code>--reveal-delay</code></td>
+          <td style="padding: 10px;">0ms, 100ms, 200ms</td>
+          <td style="padding: 10px;">Scroll-reveal entrance delays</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #e3bfb1;">
+          <td style="padding: 10px;"><code>--mat</code></td>
+          <td style="padding: 10px;">#ebe8e2 (dominant color)</td>
+          <td style="padding: 10px;">Featured card background (average work color)</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #e3bfb1; background: #f9f9f9;">
+          <td style="padding: 10px;"><code>--mat-hover</code></td>
+          <td style="padding: 10px;">#d0c9c0 (darker variant)</td>
+          <td style="padding: 10px;">Featured card hover background</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="subsection-title">Mobile Layout Transitions</h3>
+  <div style="background: white; border: 1px solid #8e7164; padding: 24px; margin-bottom: 24px;">
+    <table style="width: 100%; font-size: 11px; border-collapse: collapse;">
+      <thead>
+        <tr style="background: #fcf9f3; border-bottom: 2px solid #8e7164;">
+          <th style="padding: 10px; text-align: left; font-weight: 600;">Component</th>
+          <th style="padding: 10px; text-align: left; font-weight: 600;">Mobile (&lt;768px)</th>
+          <th style="padding: 10px; text-align: left; font-weight: 600;">Desktop (≥768px)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom: 1px solid #e3bfb1;">
+          <td style="padding: 10px;"><strong>Featured Grid</strong></td>
+          <td style="padding: 10px;">Single col, snap-scroll folio</td>
+          <td style="padding: 10px;">12-col bento layout</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #e3bfb1; background: #f9f9f9;">
+          <td style="padding: 10px;"><strong>Navigation</strong></td>
+          <td style="padding: 10px;">Hamburger menu, drawer</td>
+          <td style="padding: 10px;">Top horizontal nav bar</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #e3bfb1;">
+          <td style="padding: 10px;"><strong>Archive Grid</strong></td>
+          <td style="padding: 10px;">1 column</td>
+          <td style="padding: 10px;">3–4 columns</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #e3bfb1; background: #f9f9f9;">
+          <td style="padding: 10px;"><strong>Stats Display</strong></td>
+          <td style="padding: 10px;">2×2 grid (compact)</td>
+          <td style="padding: 10px;">2×2 grid (wider)</td>
+        </tr>
+        <tr>
+          <td style="padding: 10px;"><strong>Chromatic River</strong></td>
+          <td style="padding: 10px;">Height: 56px</td>
+          <td style="padding: 10px;">Height: 120px</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="subsection-title">Error & Loading States</h3>
+  <div style="background: white; border: 1px solid #8e7164; padding: 24px; margin-bottom: 24px;">
+    <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #e3bfb1;">
+      <p style="font-size: 12px; font-weight: 600; color: #0B0B0B; margin: 0 0 8px;">Loading State</p>
+      <div style="background: #f5f5f5; border: 1px solid #c4c7c7; padding: 12px; font-size: 11px; color: #575757;">
+        <p style="margin: 0;">Filter loading: 3 animated dots pulsing (600ms stagger)</p>
+        <p style="margin: 6px 0 0;">Image loading: placeholder bg #f0f0f0, fade-in on .is-loaded</p>
+      </div>
+    </div>
+    <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #e3bfb1;">
+      <p style="font-size: 12px; font-weight: 600; color: #0B0B0B; margin: 0 0 8px;">Error State</p>
+      <div style="background: #f5f5f5; border: 1px solid #d32f2f; border-left: 4px solid #d32f2f; padding: 12px; font-size: 11px; color: #d32f2f;">
+        <p style="margin: 0;">Network error: red toast notification "Something went wrong."</p>
+      </div>
+    </div>
+    <div>
+      <p style="font-size: 12px; font-weight: 600; color: #0B0B0B; margin: 0 0 8px;">Empty State</p>
+      <div style="background: #f5f5f5; border: 1px solid #c4c7c7; padding: 12px; font-size: 11px; color: #575757; text-align: center;">
+        <p style="margin: 0;">No results: "Try adjusting your filters" (center-aligned, 14px body text)</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">Link Style Variants</h3>
+  <div style="background: white; border: 1px solid #8e7164; padding: 24px; margin-bottom: 24px;">
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      <div>
+        <a href="#" style="color: #B84700; text-decoration: underline; text-underline-offset: 2px;">Regular text link (persistent orange-ink)</a>
+        <p style="font-size: 10px; color: #8e7164; margin-top: 4px;">Used in body copy, essays, prose</p>
+      </div>
+      <div>
+        <a href="#" style="color: #575757; text-decoration: none; border-bottom: 1px solid #575757;">Underline link (secondary text)</a>
+        <p style="font-size: 10px; color: #8e7164; margin-top: 4px;">Lighter styling for secondary links</p>
+      </div>
+      <div>
+        <a href="#" style="color: #B84700; text-decoration: none; border-bottom: 2px solid #B84700;">[ Bracket link →]</a>
+        <p style="font-size: 10px; color: #8e7164; margin-top: 4px;">CTA style, uppercase, prominent</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">Button Variants (Extended)</h3>
+  <div style="background: white; border: 1px solid #8e7164; padding: 24px; margin-bottom: 24px;">
+    <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
+      <button style="background: #FF6600; color: white; border: 2px solid #FF6600; padding: 12px 20px; font-size: 13px; font-weight: 600; cursor: pointer;">CTA Fill</button>
+      <button style="background: transparent; color: #0B0B0B; border: 2px solid #c4c7c7; padding: 12px 20px; font-size: 13px; font-weight: 600; cursor: pointer;">Secondary</button>
+      <button style="background: transparent; color: #B84700; border: none; text-decoration: underline; padding: 12px 0; font-size: 13px; font-weight: 600; cursor: pointer;">Link Button</button>
+      <button style="background: none; border: none; padding: 10px; cursor: pointer; color: #575757;">
+        <span style="font-size: 18px;">🔍</span>
+      </button>
+    </div>
+  </div>
+</div>
+
 <!-- FUTURE ENHANCEMENTS -->
 <div class="guide-section">
   <h2 class="section-title">Future Enhancements</h2>
