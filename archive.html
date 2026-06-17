@@ -657,7 +657,8 @@ function applyFilters() {
 
 function renderPage() {
   const slice = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
-  slice.forEach((w, i) => { grid.innerHTML += renderCard(w, page * PAGE_SIZE + i); });
+  const html = slice.map((w, i) => renderCard(w, page * PAGE_SIZE + i)).join('');
+  grid.insertAdjacentHTML('beforeend', html);
   page++;
 
   const total = filtered.length;
@@ -720,7 +721,7 @@ document.getElementById('sort-select').addEventListener('change', () => {
   renderPage();
 });
 
-fetch('catalog.json')
+fetch('catalog-lite.json')
   .then(r => r.json())
   .then(data => {
     allWorks = data;
