@@ -68,11 +68,37 @@
           color: #0B0B0B; background: #ebe8e2;
           border: 1px solid #c4c7c7; padding: 4px 10px 4px 12px;
           cursor: default; white-space: nowrap;
+          position: relative;
+          transition: background-color 0.15s ease, color 0.15s ease;
+          animation: chip-fade-in 0.3s ease forwards;
         }
+        @keyframes chip-fade-in {
+          from { opacity: 0; transform: translateY(-4px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @media(prefers-reduced-motion:reduce){
+          .filter-chip { animation: none; transition: none; }
+        }
+        /* Filter chip underline draw (Phase 4.1) */
+        .filter-chip::after {
+          content: '';
+          position: absolute;
+          bottom: -1px;
+          left: 0;
+          width: 100%;
+          height: 1px;
+          background: #0B0B0B;
+          transform: scaleX(0);
+          transform-origin: left center;
+          transition: transform 0.2s ease;
+        }
+        .filter-chip.removing::after { transform: scaleX(1); }
         .filter-chip button {
           background: none; border: none; cursor: pointer; padding: 0;
           color: #575757; font-size: 14px; line-height: 1;
           display: flex; align-items: center;
+          position: relative;
+          z-index: 1;
         }
         .filter-chip button:hover { color: #FF6600; }
         .filter-chip-clear {
@@ -93,6 +119,19 @@
         .archive-card { cursor: zoom-in; }
         .archive-card h4 { transition: color 0.2s ease; }
         .archive-card:hover h4, .archive-card:focus-visible h4 { color: #e05900; }
+        /* Grid stagger fade-in on filter change (Phase 4.2) */
+        .thumb {
+          --delay: 0s;
+          animation: grid-fade-in 0.4s ease forwards;
+          animation-delay: var(--delay);
+        }
+        @keyframes grid-fade-in {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @media(prefers-reduced-motion:reduce){
+          .thumb { animation: none; }
+        }
         /* Image wrapper: outline + saturation overlay */
         .archive-card-img {
           position: relative;

@@ -680,13 +680,24 @@ a[data-link-title]:hover::after {
   100% { transform: scale(1); }
 }
 
+/* Favorite button fill animation (Phase 4.3) — fill from bottom up when clicked */
+@keyframes favorite-fill {
+  0% { background-position: 0% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
 .favorite-btn.pulse {
   animation: favorite-pulse 0.4s ease;
+}
+
+.favorite-btn.is-favorited {
+  animation: favorite-fill 0.2s ease forwards;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .favorite-btn { transition: none; }
   .favorite-btn.pulse { animation: none; }
+  .favorite-btn.is-favorited { animation: none; }
 }
 
 /* ─── Custom cursor ───────────────────────────────────────────────────────── */
@@ -2328,6 +2339,76 @@ footer > div:first-child > div:last-child {
 
 @media (prefers-reduced-motion: reduce) {
   .toc-active { transition: none; }
+}
+
+/* ─── Link underline consistency pass (Phase 4.4) ─────────────────────────── */
+/* All links in content get smooth underline draw on hover */
+main a,
+article a,
+footer a,
+.content a {
+  position: relative;
+  text-decoration: none;
+}
+
+main a::after,
+article a::after,
+footer a::after,
+.content a::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: #B84700;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.2s ease;
+}
+
+main a:hover::after,
+article a:hover::after,
+footer a:hover::after,
+.content a:hover::after {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main a::after,
+  article a::after,
+  footer a::after,
+  .content a::after {
+    transition: none;
+  }
+}
+
+/* ─── Disabled button state animation (Phase 4.5) ──────────────────────────── */
+/* Add subtle grayscale to disabled UI buttons (not artwork) */
+button:disabled,
+input:disabled,
+.btn:disabled,
+[aria-disabled="true"] {
+  transition: opacity 0.2s ease, filter 0.2s ease;
+  opacity: 0.6;
+  filter: grayscale(30%);
+  cursor: not-allowed;
+}
+
+button:disabled:hover,
+input:disabled:hover,
+.btn:disabled:hover {
+  opacity: 0.6;
+  filter: grayscale(30%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button:disabled,
+  input:disabled,
+  .btn:disabled,
+  [aria-disabled="true"] {
+    transition: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
