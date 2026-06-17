@@ -352,7 +352,8 @@
       const { r, artId } = m;
       const title   = r.title || artId;
       const typeStr = (r.work_type || '').replace(/_/g, ' ');
-      const meta    = [r.year, typeStr].filter(Boolean).join(' · ');
+      const yearDisplay = r.year_display || r.year; // Use decade estimates when available
+      const meta    = [yearDisplay, typeStr].filter(Boolean).join(' · ');
       return `<a class="sse-item" role="option" aria-selected="false"
                  data-href="artwork.html?id=${artId}" data-idx="${i}"
                  href="artwork.html?id=${artId}">
@@ -417,7 +418,8 @@
       const items = favs.slice(0, 4).map(id => {
         const r     = catalogMap[id];
         const title = (r && r.title) || id;
-        const meta  = r && r.year ? String(r.year) : '';
+        const yearDisplay = r && (r.year_display || r.year) ? String(r.year_display || r.year) : ''; // Use decade estimates
+        const meta  = yearDisplay;
         return `<a class="sse-item" role="option" aria-selected="false"
             data-href="artwork.html?id=${id}" href="artwork.html?id=${id}">
           <img class="sse-thumb" src="artworks/thumbs/${id}.avif" alt="" loading="lazy" width="44" height="44">
@@ -435,16 +437,18 @@
     try {
       const recent = JSON.parse(localStorage.getItem(RECENT_KEY) || '[]');
       if (!recent.length) return '';
-      const items = recent.slice(0, 4).map(item =>
-        `<a class="sse-item" role="option" aria-selected="false"
+      const items = recent.slice(0, 4).map(item => {
+        const r = catalogMap[item.id]; // Look up in catalog for year_display
+        const yearDisplay = r && (r.year_display || r.year) ? String(r.year_display || r.year) : item.year || '';
+        return `<a class="sse-item" role="option" aria-selected="false"
             data-href="artwork.html?id=${item.id}" href="artwork.html?id=${item.id}">
           <img class="sse-thumb" src="artworks/thumbs/${item.id}.avif" alt="" loading="lazy" width="44" height="44">
           <div class="sse-info">
             <span class="sse-title">${escH(item.title || item.id)}</span>
-            <span class="sse-meta">Recently viewed${item.year ? ' · ' + item.year : ''}</span>
+            <span class="sse-meta">Recently viewed${yearDisplay ? ' · ' + yearDisplay : ''}</span>
           </div>
-        </a>`
-      ).join('');
+        </a>`;
+      }).join('');
       return `<div class="sse-section-label">Recently viewed</div>${items}`;
     } catch (e) { return ''; }
   }
