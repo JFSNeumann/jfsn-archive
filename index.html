@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" href="icon-192.png"/>
 <!-- HERO_PRELOAD:START — auto-generated from featured-hero.txt line 1 by build_catalog.py -->
 <link rel="preload" as="image" href="artworks/full/art1010-hero-lcp-m.avif" type="image/avif" media="(max-width: 767px)" fetchpriority="high"/>
-<link rel="preload" as="image" href="artworks/full/art1010-hero.avif" type="image/avif" media="(min-width: 768px)" fetchpriority="high"/>
+<link rel="preload" as="image" href="artworks/full/art1010-hero-lcp.avif" type="image/avif" media="(min-width: 768px)" fetchpriority="high"/>
 <!-- HERO_PRELOAD:END -->
 <meta property="og:type" content="website"/>
 <meta property="og:title" content="Jeffrey F. S. Neumann — Archive"/>
@@ -797,7 +797,7 @@ header.header-hidden{transform:translateY(-100%)}
 
   <!-- Hero -->
   <section id="hero-d" class="hero-section relative w-full overflow-hidden" style="height: 100dvh; background-color: #1a1814;">
-    <div id="hero-slides-d"><!-- HERO_SLIDE0_D:START --><img class="hero-slide hero-slide-d is-active" src="artworks/full/art1010-hero.avif" alt="Untitled (Cassette Torso) · 2020 · COLLAGE — Jeffrey F. S. Neumann" style="object-position:center center" fetchpriority="high"><!-- HERO_SLIDE0_D:END --></div>
+    <div id="hero-slides-d"><!-- HERO_SLIDE0_D:START --><img class="hero-slide hero-slide-d is-active" id="hero-lcp-d" src="artworks/full/art1010-hero-lcp.avif" data-src="artworks/full/art1010-hero.avif" alt="Untitled (Cassette Torso) · 2020 · COLLAGE — Jeffrey F. S. Neumann" style="object-position:center center" fetchpriority="high"><!-- HERO_SLIDE0_D:END --></div>
     <div class="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-margin-desktop" style="background:radial-gradient(circle at 50% 45%, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.08) 45%, transparent 85%);">
       <span class="hero-reveal hero-stagger-1 font-label-caps text-label-caps" style="color:rgba(255,255,255,0.90);letter-spacing:0.32em;display:block;margin-bottom:22px;text-shadow:0 2px 12px rgba(0,0,0,0.6);">Established 1974</span>
       <h1 class="hero-reveal hero-stagger-2" style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(44px,5.6vw,78px);line-height:1.06;letter-spacing:-0.02em;color:#ffffff;margin:0;max-width:16ch;text-shadow:0 4px 32px rgba(0,0,0,0.65);">Jeffrey F. S. Neumann &mdash; Personal Archive</h1>
@@ -1281,7 +1281,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
     if (!grid) return;
     try {
       const [works, chromatic] = await Promise.all([
-        fetch('catalog-home.json?v=20260617152123').then(r => r.json()),
+        fetch('catalog-home.json?v=20260617152844').then(r => r.json()),
         fetch('chromatic.json').then(r => r.json()).catch(() => []),
       ]);
 
@@ -1573,6 +1573,12 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
             var fullSrc = heroLcpM.dataset.src;
             heroLcpM.src = fullSrc;
             heroLcpM.removeAttribute('data-src');
+          }
+          var heroLcpD = document.getElementById('hero-lcp-d');
+          if (heroLcpD && heroLcpD.dataset.src) {
+            var fullSrc = heroLcpD.dataset.src;
+            heroLcpD.src = fullSrc;
+            heroLcpD.removeAttribute('data-src');
           }
         }
       });
