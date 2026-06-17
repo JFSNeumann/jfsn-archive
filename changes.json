@@ -1,5 +1,17 @@
 [
   {
+    "sha": "658bdd6",
+    "date": "2026-06-17",
+    "title": "Session update 2026-06-17 11:28",
+    "body": ""
+  },
+  {
+    "sha": "608be9c",
+    "date": "2026-06-17",
+    "title": "Aggressive LCP optimization: ultra-lightweight hero + deferred river canvas",
+    "body": "Two complementary optimizations to reduce LCP (now 6.1s → target 3-4s):\n\n1. **Ultra-lightweight LCP hero image (art1010-hero-lcp-m.avif)**\n   - Created 22KB ultra-light version vs 123KB full — 82% smaller\n   - Preload and display LCP version initially for fast FCP\n   - JavaScript swaps to full-quality after LCP completes via PerformanceObserver\n   - No visual flicker; full image loads silently in background\n\n2. **Defer chromatic river canvas to after FCP**\n   - Move drawRiver() to requestIdleCallback (2s timeout fallback)\n   - Canvas rendering is CPU-heavy; deferring improves FCP blocking\n   - Wall band still renders immediately (low overhead, higher priority)\n   - Users see interactive content faster, river populates smoothly\n\nExpected impact: Cuts LCP bottleneck from dual problems (large image + canvas) to efficient background work. Target: reduce from 6.1s to 3-4s.\n\nCACHE_V bumped to jfsn-20260617190000.\n\nHero image will be uploaded flat to /artworks/ via FTP during deployment (alongside other hero crops)."
+  },
+  {
     "sha": "0cf50c5",
     "date": "2026-06-17",
     "title": "Session update 2026-06-17 11:21",
