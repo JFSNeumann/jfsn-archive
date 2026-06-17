@@ -1,5 +1,17 @@
 [
   {
+    "sha": "0ec045f",
+    "date": "2026-06-17",
+    "title": "Add explicit width/height to hero images to prevent layout shift",
+    "body": "Both mobile and desktop hero images (art1010-hero-m.avif, art1010-hero.avif)\nnow include width/height attributes matching their intrinsic dimensions:\n- Mobile: 1080×950px\n- Desktop: 2800×2464px\n\nThis allows the browser to calculate aspect ratio and reserve space before\nthe image loads, eliminating potential Cumulative Layout Shift (CLS).\n\nCSS sizing (absolute + 100% fill) remains unchanged; attributes enable\nproper aspect-ratio handling during load."
+  },
+  {
+    "sha": "b50e71c",
+    "date": "2026-06-17",
+    "title": "Compress desktop hero images: art1020/art0779/art0585",
+    "body": "Hero image optimization (conservative path — keeping art1010 as LCP anchor):\n- art1020 (Clockwork Targets): 789 KB → 386 KB (51% savings, 403 KB)\n- art0779 (Defining Years): 762 KB → 398 KB (47.7% savings, 364 KB)\n- art0585 (Cube Grid): 728 KB → 129 KB (82.3% savings, 599 KB!)\n\nTotal desktop hero compression: ~1.37 MB saved. These images are non-critical\n(mobile heroes already optimized; LCP is art1010 at 126 KB mobile, unchanged).\n\nAll three recompressed via q35 --yuv 420 with ≥20% keep rule (Session 45 pattern).\nOriginals backed up to artworks/_hero-orig-backup/.\n\nsw.js CACHE_V bumped to force SW cache invalidation.\nFeatured cards srcset verified present (already optimized from Session 45).\n\nNext: deploy and re-run Lighthouse to measure improvement."
+  },
+  {
     "sha": "472eafa",
     "date": "2026-06-17",
     "title": "Session update 2026-06-17 09:49",

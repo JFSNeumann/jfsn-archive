@@ -31,10 +31,25 @@
     .story-section.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
     .story-section.reveal.is-visible { opacity: 1; transform: translateY(0); }
   }
+  /* Section entrance color tint fade (Phase 3) */
+  @media (prefers-reduced-motion: no-preference) {
+    .story-section { background-color: transparent; transition: background-color 0.3s ease; }
+    .story-section.tint-reveal { background-color: rgba(142, 113, 100, 0.04); }
+  }
   /* Sidebar card hover lift */
   .sidebar-card { transition: box-shadow 0.2s ease, transform 0.2s ease; }
   .sidebar-card:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.09); transform: translateY(-2px); }
   @media (prefers-reduced-motion: reduce) { .sidebar-card { transition: none; } }
+  /* Quote hover pulse (Phase 3) */
+  @keyframes color-pulse {
+    0%, 100% { color: #0B0B0B; }
+    50% { color: #FF6600; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .prose blockquote p { transition: color 0.15s ease; }
+    .prose blockquote p:hover { animation: color-pulse 0.4s ease 2; }
+  }
+  @media (prefers-reduced-motion: reduce) { .prose blockquote p { animation: none; } }
   .prose p {
     font-family: Inter, sans-serif;
     font-size: 17px;
@@ -196,6 +211,18 @@ header.header-hidden{transform:translateY(-100%)}
 #mobile-menu-drawer a.drawer-active{color:#B84700 !important;border-left:3px solid #FF6600;padding-left:21px !important}
 #mobile-menu-drawer a.drawer-active::after{transform:scaleX(1);transition:none}
 @media(prefers-reduced-motion:reduce){#mobile-menu-drawer a::after{transition:none}}
+/* Drawer item stagger on open (Phase 3) */
+@keyframes drawer-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  #mobile-menu-drawer a { animation: drawer-fade-in 0s ease forwards; }
+  #mobile-menu-drawer a.drawer-stagger-1 { animation-delay: 0.05s; }
+  #mobile-menu-drawer a.drawer-stagger-2 { animation-delay: 0.1s; }
+  #mobile-menu-drawer a.drawer-stagger-3 { animation-delay: 0.15s; }
+  #mobile-menu-drawer a.drawer-stagger-4 { animation-delay: 0.2s; }
+}
 </style>
 <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-deep-ink focus:text-bone-white focus:font-label-caps focus:text-label-caps">Skip to content</a>
 <header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16">
@@ -265,8 +292,13 @@ header.header-hidden{transform:translateY(-100%)}
     menu.style.display = 'block';
     menu.setAttribute('aria-hidden','false');
     document.body.style.overflow = 'hidden';
+    var links = drawer.querySelectorAll('a');
+    links.forEach(function(link, idx){ link.classList.remove('drawer-stagger-1','drawer-stagger-2','drawer-stagger-3','drawer-stagger-4'); });
     requestAnimationFrame(function(){
       drawer.style.transform = 'translateX(0)';
+      links.forEach(function(link, idx){
+        if (idx < 4) link.classList.add('drawer-stagger-' + (idx + 1));
+      });
     });
     closeBtn.focus();
   }
@@ -661,7 +693,7 @@ header.header-hidden{transform:translateY(-100%)}
   if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
     var revealObs = new IntersectionObserver(function(entries){
       entries.forEach(function(e){
-        if (e.isIntersecting) { e.target.classList.add('is-visible'); revealObs.unobserve(e.target); }
+        if (e.isIntersecting) { e.target.classList.add('is-visible', 'tint-reveal'); revealObs.unobserve(e.target); }
       });
     }, { threshold: 0.08 });
     document.querySelectorAll('.story-section.reveal').forEach(function(el){ revealObs.observe(el); });

@@ -49,6 +49,21 @@
     line-height: 1.55;
     margin-top: 0;
   }
+  /* Quote hover pulse (Phase 3) */
+  @keyframes color-pulse {
+    0%, 100% { color: #0B0B0B; }
+    50% { color: #FF6600; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .prose blockquote p { transition: color 0.15s ease; }
+    .prose blockquote p:hover { animation: color-pulse 0.4s ease 2; }
+  }
+  @media (prefers-reduced-motion: reduce) { .prose blockquote p { animation: none; } }
+  /* Section entrance color tint fade (Phase 3) */
+  @media (prefers-reduced-motion: no-preference) {
+    .essay-section { background-color: transparent; transition: background-color 0.3s ease; }
+    .essay-section.tint-reveal { background-color: rgba(142, 113, 100, 0.04); }
+  }
   .section-label {
     font-family: Inter, sans-serif;
     font-size: 11px;
@@ -579,6 +594,21 @@ header.header-hidden{transform:translateY(-100%)}
     var pct = d.scrollTop / (d.scrollHeight - d.clientHeight) * 100;
     bar.style.width = Math.min(pct, 100) + '%';
   }, { passive: true });
+})();
+</script>
+<script>
+(function(){
+  if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+    var tintObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting && e.target.offsetParent !== null) {
+          e.target.classList.add('tint-reveal');
+          tintObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.05 });
+    document.querySelectorAll('.essay-section:not(:first-of-type)').forEach(function(el){ tintObs.observe(el); });
+  }
 })();
 </script>
 </main>

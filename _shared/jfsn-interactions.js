@@ -43,6 +43,9 @@ body.jfsn-custom-cursor,body.jfsn-custom-cursor *{cursor:none!important;}
 /* Cross-document view transition — clicked artwork morphs into its page (no-op where unsupported) */
 @view-transition{navigation:auto;}
 @media(prefers-reduced-motion:reduce){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important;}}
+/* Touch device feedback (Phase 3) — brief background flash on tap */
+@keyframes tap-feedback{from{background-color:rgba(255,102,0,.12)}to{background-color:transparent}}
+@media(hover:none) and (prefers-reduced-motion:no-preference){button:active,a:active,.thumb__link:active{animation:tap-feedback .1s ease-out forwards}}
     `;
     document.head.appendChild(s);
   }
