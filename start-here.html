@@ -293,6 +293,7 @@ header.header-hidden{transform:translateY(-100%)}
       <a href="#sh-about-jeff"    class="mobile-toc-link">About Jeff</a>
       <a href="#sh-themes"        class="mobile-toc-link">Major Themes</a>
       <a href="#sh-how-to"        class="mobile-toc-link">How To Explore</a>
+      <a href="#sh-researchers"   class="mobile-toc-link">For Researchers</a>
       <a href="#sh-begin"         class="mobile-toc-link">Begin Exploring</a>
     </div>
   </div>
@@ -415,6 +416,15 @@ header.header-hidden{transform:translateY(-100%)}
           </div>
         </div>
 
+        <!-- For Researchers -->
+        <div class="mb-16 pt-16 reveal-section" id="sh-researchers" style="border-top:1px solid #e3bfb1;">
+          <span class="section-label">For Researchers</span>
+          <div class="prose">
+            <p>If you're analyzing the archive, building research tools, or incorporating the work into an academic context, the API provides machine-readable access to all 1,084 works: metadata, themes, palettes, and direct image links.</p>
+            <p>The data is free to use under CC BY 4.0. All years are decade estimates; ~250 works are Photoshop composites (flagged in the data). Browse the <a href="api.html" class="border-b border-outline-variant hover:text-international-orange hover:border-international-orange transition-colors" style="color:#0B0B0B;text-decoration:none;">API documentation</a> for JSON endpoints, CSV export examples, data accuracy notes, and recommended research workflows.</p>
+          </div>
+        </div>
+
         <!-- Begin Exploring -->
         <div class="pt-16 pb-20 reveal-section" id="sh-begin" style="border-top:1px solid #e3bfb1;">
           <span class="section-label">Begin Exploring</span>
@@ -425,6 +435,7 @@ header.header-hidden{transform:translateY(-100%)}
             <li style="border-bottom:1px solid #e3bfb1;"><a href="why-i-made-things.html" class="bracket-link" style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;font-size:12px;"><span style="color:#0B0B0B;font-family:Inter,sans-serif;font-weight:500;font-size:13px;letter-spacing:0;">Why I Made Things</span><span>[ Read → ]</span></a></li>
             <li style="border-bottom:1px solid #e3bfb1;"><a href="guernica.html" class="bracket-link" style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;font-size:12px;"><span style="color:#0B0B0B;font-family:Inter,sans-serif;font-weight:500;font-size:13px;letter-spacing:0;">Guernica — 232 works</span><span>[ View → ]</span></a></li>
             <li style="border-bottom:1px solid #e3bfb1;"><a href="series-index.html" class="bracket-link" style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;font-size:12px;"><span style="color:#0B0B0B;font-family:Inter,sans-serif;font-weight:500;font-size:13px;letter-spacing:0;">Series Index</span><span>[ Browse → ]</span></a></li>
+            <li style="border-bottom:1px solid #e3bfb1;"><a href="api.html" class="bracket-link" style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;font-size:12px;"><span style="color:#0B0B0B;font-family:Inter,sans-serif;font-weight:500;font-size:13px;letter-spacing:0;">Open API</span><span>[ Docs → ]</span></a></li>
             <li style="border-bottom:1px solid #e3bfb1;"><a href="lost.html" class="bracket-link" style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;font-size:12px;"><span style="color:#0B0B0B;font-family:Inter,sans-serif;font-weight:500;font-size:13px;letter-spacing:0;">Lost Works</span><span>[ Read → ]</span></a></li>
             <li><a href="about.html" class="bracket-link" style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;font-size:12px;"><span style="color:#0B0B0B;font-family:Inter,sans-serif;font-weight:500;font-size:13px;letter-spacing:0;">About Jeff</span><span>[ Read → ]</span></a></li>
           </ul>
@@ -462,7 +473,7 @@ header.header-hidden{transform:translateY(-100%)}
 (function(){
   var links = document.querySelectorAll('#sh-mobile-toc-list .mobile-toc-link');
   if (links.length) {
-    var sectionIds = ['sh-welcome','sh-why-exists','sh-about-jeff','sh-themes','sh-how-to','sh-begin'];
+    var sectionIds = ['sh-welcome','sh-why-exists','sh-about-jeff','sh-themes','sh-how-to','sh-researchers','sh-begin'];
     var sections = sectionIds.map(function(id){ return document.getElementById(id); }).filter(Boolean);
     var obs = new IntersectionObserver(function(entries){
       entries.forEach(function(e){
