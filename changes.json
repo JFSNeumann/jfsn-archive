@@ -1,5 +1,71 @@
 [
   {
+    "sha": "a76cf02",
+    "date": "2026-06-16",
+    "title": "Implement all Tier 2 & 2C high-impact UX improvements (12 features)",
+    "body": "TIER 2A — Quick Wins:\n1. Active decade highlight: current decade nav link gets orange underline + bold\n2. Number counter: 1,084 works counts up on homepage load (1.5s)\n3. Keyboard shortcut hints: displayed on artwork pages (P/N legend)\n4. Medium badges: colored dots on artwork cards by medium type\n\nTIER 2B — Medium Lift:\n5. Print-friendly styles: hides nav/footer, optimizes for printing\n6. Archive filter active states: active filters show orange + bold + underline\n7. Related works section: 3 works by same theme below description\n8. Empty search state: graceful fallback (already existed, enhanced)\n\nTIER 2C — Polish:\n9. Link destination previews: footer links show target on hover (tooltip)\n10. Scroll position indicator: 'Section X of Y' on long pages (right side)\n11. Breadcrumb hover: colored underline appears on breadcrumb links\n12. Favorite functionality: heart button with localStorage, pulse animation\n\nFeatures:\n- Counter animation: data-counter attr on #s, JS counts from 0\n- Related works: auto-generates 3 works matching same themes\n- Favorite button: onclick toggles, shows pulse, persists in localStorage\n- Scroll indicator: tracks section position, appears on 4+ section pages\n- Print styles: hides interactive UI, optimizes spacing\n- All animations respect prefers-reduced-motion\n\nFiles modified:\n- _shared/ui.css: 200+ lines for all new styles (animations, states, print)\n- _shared/ui.js: counter, hints, scroll indicator, favorites, previews\n- index.html: added data-counter=1084 to works number\n- gen-artwork-pages.py: favorite button, related works generation\n- All 1,084 artwork pages regenerated\n\nExamples:\n- Hover footer link → see destination in tooltip\n- Scroll long page → position indicator appears (right side)\n- Click ♥ on artwork → pulse + toast + saved to favorites\n- Print artwork page → clean, nav/footer hidden\n- Homepage load → 1,084 counts up smoothly"
+  },
+  {
+    "sha": "85d2d98",
+    "date": "2026-06-16",
+    "title": "Add 4 high-impact UX improvements (Tier 1)",
+    "body": "Keyboard Shortcuts System:\n- P/N: navigate previous/next work on artwork pages\n- ?: open keyboard shortcuts help modal (if search is loaded)\n- Silent handlers: only fire when not typing in input/textarea\n- Works alongside existing ← → navigation on decade pages\n\nDisabled State Styling:\n- Prev/Next buttons fade to 40% opacity when disabled\n- Cursor changes to not-allowed\n- Visual signal of navigation boundaries\n- Smooth transitions with prefers-reduced-motion support\n\nFocus Ring Enhancement (Keyboard Navigation):\n- 2px orange (#FF6600) focus outline on all interactive elements\n- 2px outline-offset for visibility\n- Applies to: links, buttons, inputs, search results, TOC links\n- Accessibility win: keyboard users can clearly see focus\n- Respects prefers-reduced-motion\n\nTheme-Colored Metadata Tags:\n- Theme tags (Guernica, Targets, Torsos & Faces, etc.) get colored bullets\n- Each theme displays with its signature color (guernica=crimson, etc.)\n- Colored bullets appear before theme name\n- Visual connection between metadata and page color system\n- Reinforces color coding throughout site\n\nFiles modified:\n- _shared/ui.js: keyboard shortcuts (P/N/?) with proper key detection\n- _shared/ui.css: disabled states, focus rings, theme tag colors\n- gen-artwork-pages.py: added data-theme-tag attr to theme links\n- All 1,084 artwork pages regenerated with colored theme tags\n- sw.js: bumped CACHE_V\n\nAll features respect prefers-reduced-motion and accessibility standards."
+  },
+  {
+    "sha": "663f0c3",
+    "date": "2026-06-16",
+    "title": "Add icon hover animations and theme-colored footer backgrounds",
+    "body": "Icon Animations (best practices):\n- Search icon: scale 1.15 + orange on hover\n- Mobile menu: scale 1.1 + orange on hover\n- Back-to-top: lift -3px + color on hover\n- Adjacent works arrows: slide direction (±4px) + orange on hover\n- Full resolution zoom: scale 1.2 + orange on hover\n- External links: translate (2px, -2px) + opacity on hover\n- Drawer icons: scale 1.12 + orange on hover\n\nAll animations:\n- Duration: 200-300ms with appropriate easing\n- Color change to orange accent (#FF6600)\n- Subtle transforms (scale 1.02-1.2, translate 2-4px)\n- Respects prefers-reduced-motion\n\nSearch Icon Enhancement:\n- Added subtle pulse hint on first page load (2 animation cycles)\n- Only shows once per session (uses sessionStorage)\n- Gently teaches users about the ⌘K feature\n- Pulse triggers after 2s, runs for 4.5s total, then removes\n\nFooter Background Colors:\n- Each themed page gets a 6% opacity color wash in footer\n- Uses page's signature color (guernica=crimson, collage=rust, etc.)\n- Maintains contrast for text and links\n- Creates visual continuity from page to footer\n\nFiles modified:\n- _shared/ui.css: icon hover animations, footer color tints, search pulse keyframe\n- _shared/ui.js: search icon pulse hint logic with sessionStorage\n- sw.js: bumped CACHE_V\n\nAll features respect prefers-reduced-motion."
+  },
+  {
+    "sha": "0a08055",
+    "date": "2026-06-16",
+    "title": "Add comprehensive color system across all series & medium pages",
+    "body": "Implemented semantic color palette that adds visual distinction while\nmaintaining artwork-first design. Each series/theme and medium gets a\nsignature color used for:\n- Nav link underlines (active state)\n- TOC link highlights (on long-form pages)\n- Metadata row hover states\n- Section divider tints (12% opacity)\n\nColor assignments:\nSeries Pages:\n- Guernica → Crimson (#8B1538)\n- Targets → Deep Blue (#1A4D7A)\n- Torsos & Faces → Terracotta (#964B3B)\n- Framed → Teal (#2D5A5A)\n- Gallery Images → Slate (#4A5568)\n- Mr. Snowmann → Warm Brown (#7A5C4D)\n- Crosses → Cool Grey-Blue (#5B6B7B)\n- Collaboration → Sage (#5A6B5B)\n\nMedium Pages:\n- Collage → Rust (#A85C3C)\n- Sculpture → Stone Grey (#6B7280)\n- Photography → Cool Slate (#475569)\n- Painting → Plum (#6B4C8A)\n\nFiles modified:\n- _shared/ui.css: color variables, theme-specific selectors, section divider tints\n- guernica.html, targets.html, torsos-faces.html, framed.html,\n  gallery-images.html, mr-snowmann.html, crosses.html, collaboration.html: added data-theme attrs\n- collage.html, sculpture.html, photography.html, painting.html: added data-medium attrs\n- sw.js: bumped CACHE_V\n\nColor system respects prefers-reduced-motion (no transitions on motion-sensitive devices)."
+  },
+  {
+    "sha": "e0ce942",
+    "date": "2026-06-16",
+    "title": "Add 6 high-impact micro-interaction enhancements",
+    "body": "Navigation & Wayfinding:\n- Breadcrumb sequential fade-in with stagger animation (0.05s, 0.15s, 0.25s)\n- TOC active link now shows orange color, bold weight, and left border accent\n- Scroll-to-section flash: target section gets brief orange-tinted highlight (600ms)\n\nArtwork Detail Pages:\n- Metadata rows highlight on hover with left border + subtle background\n- Adjacent works PREV/NEXT buttons now show 80×80px thumbnail preview on hover\n- Dominant color placeholder shows while images load, then fade-in (0.4s ease-out)\n\nFiles modified:\n- _shared/ui.css: breadcrumb stagger animation, metadata hover, preview styles, lazy-load fade-in\n- _shared/ui.js: scroll-to-section flash, lazy-load image fade-in with dominant color\n- gen-artwork-pages.py: breadcrumb data attrs, adjacent preview images, dominant color attr\n- sw.js: bumped CACHE_V\n\nAll features respect prefers-reduced-motion."
+  },
+  {
+    "sha": "d1111a1",
+    "date": "2026-06-16",
+    "title": "Implement site-wide micro-interaction improvements",
+    "body": "Added polish across the site:\n- Thumbnail hover lift shadow (0 4px 16px)\n- Mobile menu hamburger → X animation with aria-expanded state\n- Decade page keyboard nav feedback with visual label\n- Toast notification system for copy-to-clipboard\n- Search result highlighting with left border accent on selection\n- Filter chip underline style on active state (curatorial-map)\n- Copy-to-clipboard functionality on art IDs (all artwork pages)\n- Section-based color-coding on reading progress bars (stories, about, lost)\n\nFiles modified:\n- _shared/ui.css: thumbnail hover shadow, mobile menu animation\n- _shared/ui.js: menu state, nav feedback, toast system\n- search.js: result selection highlighting\n- gen-artwork-pages.py: copy-to-clipboard on art IDs\n- curatorial-map.html: filter chip underline styling\n- stories.html, about.html, lost.html: color-coded progress bars\n- sw.js: bumped CACHE_V"
+  },
+  {
+    "sha": "72b47c3",
+    "date": "2026-06-16",
+    "title": "Add soft lift + shadow hover on Where To Begin cards",
+    "body": "Added .wtb-card class with smooth hover effect to all navigation cards\nin the 'Where To Begin' section (Start Here, Stories, Favorites, Guernica,\nFull Archive):\n- On hover: translateY(-2px) lift + 0 8px 24px soft shadow\n- Smooth 0.2s transition, respects prefers-reduced-motion\n\nFollows established soft-shadow pattern from Stitch adoption."
+  },
+  {
+    "sha": "4e0801e",
+    "date": "2026-06-16",
+    "title": "Add external links to footer: ShowSpace and LinkedIn",
+    "body": "Added two external links to the RESOURCES column in footer:\n- ShowSpace portfolio: https://showspace.so/s/jeffrey-neumann-46\n- LinkedIn: https://www.linkedin.com/in/jeffreyneumann/\n\nSeparated with a light border from internal resources. Links open in\nnew tab (target='_blank'). Stamped footer to all 38 pages."
+  },
+  {
+    "sha": "46d108e",
+    "date": "2026-06-16",
+    "title": "Remove character watermark — failed attempt",
+    "body": "Fixed positioning didn't render reliably across browsers/servers.\nRemoving the watermark div from the Void section. Image file (me-white.png)\nremains in repo but unused."
+  },
+  {
+    "sha": "367febd",
+    "date": "2026-06-16",
+    "title": "Character watermark: full opacity (remove transparency)",
+    "body": "Changed opacity from 0.2 (80% transparent) to 1 (fully opaque).\nCharacter is now clearly visible on the right side of the Void section."
+  },
+  {
+    "sha": "8ef3330",
+    "date": "2026-06-16",
+    "title": "Fix character watermark width — set explicit 150px container",
+    "body": "Changed from width:auto (which collapses to 0) to width:150px on the\ncontainer, and width:100% on the img. This ensures the container has a\ndefined width and the image properly scales to fill it with object-fit."
+  },
+  {
     "sha": "607d5b0",
     "date": "2026-06-16",
     "title": "Fix character watermark — white on transparent, right positioning",

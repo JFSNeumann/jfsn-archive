@@ -329,7 +329,10 @@
   window.toggleFavorite = function(artId) {
     var favorites = JSON.parse(localStorage.getItem('jfsn-favorites') || '[]');
     var btn = document.querySelector('.favorite-btn');
-    if (favorites.includes(artId)) {
+    var isFavorited = favorites.includes(artId);
+    var action = isFavorited ? 'remove' : 'add';
+
+    if (isFavorited) {
       favorites = favorites.filter(function(id) { return id !== artId; });
       if (btn) btn.classList.remove('is-favorited');
     } else {
@@ -341,7 +344,12 @@
       }
     }
     localStorage.setItem('jfsn-favorites', JSON.stringify(favorites));
-    window.showToast(favorites.includes(artId) ? 'Added to favorites' : 'Removed from favorites');
+    window.showToast(action === 'add' ? 'Added to favorites' : 'Removed from favorites');
+
+    // Track analytics
+    if (window.trackFavorite) {
+      window.trackFavorite(artId, action);
+    }
   };
 
   // Restore favorite state on page load
