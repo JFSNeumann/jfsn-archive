@@ -755,21 +755,32 @@ header.header-hidden{transform:translateY(-100%)}
   </section>
 
   <section style="background:#0B0B0B;position:relative;overflow:hidden;" class="py-16 md:py-24 px-4 md:px-margin-desktop">
-    <!-- Wet droplets overlay -->
-    <svg aria-hidden="true" class="lost-droplets" viewBox="0 0 400 600" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;mix-blend-mode:screen;">
+    <!-- Realistic water droplets on glass -->
+    <svg aria-hidden="true" class="lost-droplets" viewBox="0 0 400 600" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;">
       <defs>
-        <filter id="droplet-blur"><feGaussianBlur in="SourceGraphic" stdDeviation="1.2"/></filter>
+        <!-- Realistic droplet gradients with light reflection -->
+        <radialGradient id="droplet-gradient-1" cx="35%" cy="30%">
+          <stop offset="0%" style="stop-color:rgba(255,255,255,0.7);stop-opacity:1" />
+          <stop offset="50%" style="stop-color:rgba(255,255,255,0.4);stop-opacity:1" />
+          <stop offset="100%" style="stop-color:rgba(255,255,255,0.15);stop-opacity:1" />
+        </radialGradient>
+        <radialGradient id="droplet-gradient-2" cx="40%" cy="25%">
+          <stop offset="0%" style="stop-color:rgba(255,255,255,0.65);stop-opacity:1" />
+          <stop offset="50%" style="stop-color:rgba(255,255,255,0.35);stop-opacity:1" />
+          <stop offset="100%" style="stop-color:rgba(255,255,255,0.1);stop-opacity:1" />
+        </radialGradient>
       </defs>
-      <ellipse cx="85" cy="120" rx="8" ry="12" fill="rgba(255,255,255,0.5)" filter="url(#droplet-blur)" class="droplet droplet-1"/>
-      <ellipse cx="280" cy="95" rx="6" ry="10" fill="rgba(255,255,255,0.4)" filter="url(#droplet-blur)" class="droplet droplet-2"/>
-      <ellipse cx="160" cy="180" rx="5" ry="8" fill="rgba(255,255,255,0.6)" filter="url(#droplet-blur)" class="droplet droplet-3"/>
-      <ellipse cx="340" cy="240" rx="7" ry="11" fill="rgba(255,255,255,0.35)" filter="url(#droplet-blur)" class="droplet droplet-4"/>
-      <ellipse cx="45" cy="320" rx="6" ry="9" fill="rgba(255,255,255,0.5)" filter="url(#droplet-blur)" class="droplet droplet-5"/>
-      <ellipse cx="300" cy="380" rx="8" ry="13" fill="rgba(255,255,255,0.45)" filter="url(#droplet-blur)" class="droplet droplet-6"/>
-      <ellipse cx="120" cy="440" rx="5" ry="8" fill="rgba(255,255,255,0.4)" filter="url(#droplet-blur)" class="droplet droplet-7"/>
-      <ellipse cx="360" cy="520" rx="7" ry="11" fill="rgba(255,255,255,0.55)" filter="url(#droplet-blur)" class="droplet droplet-8"/>
-      <ellipse cx="200" cy="380" rx="6" ry="10" fill="rgba(255,255,255,0.38)" filter="url(#droplet-blur)" class="droplet droplet-9"/>
-      <ellipse cx="90" cy="560" rx="5" ry="7" fill="rgba(255,255,255,0.48)" filter="url(#droplet-blur)" class="droplet droplet-10"/>
+      <!-- Droplets with realistic light reflections -->
+      <ellipse cx="85" cy="120" rx="10" ry="14" fill="url(#droplet-gradient-1)" opacity="0.6"/>
+      <ellipse cx="280" cy="95" rx="8" ry="12" fill="url(#droplet-gradient-2)" opacity="0.55"/>
+      <ellipse cx="160" cy="180" rx="7" ry="10" fill="url(#droplet-gradient-1)" opacity="0.65"/>
+      <ellipse cx="340" cy="240" rx="9" ry="13" fill="url(#droplet-gradient-2)" opacity="0.5"/>
+      <ellipse cx="45" cy="320" rx="8" ry="11" fill="url(#droplet-gradient-1)" opacity="0.58"/>
+      <ellipse cx="300" cy="380" rx="10" ry="15" fill="url(#droplet-gradient-2)" opacity="0.62"/>
+      <ellipse cx="120" cy="440" rx="7" ry="9" fill="url(#droplet-gradient-1)" opacity="0.52"/>
+      <ellipse cx="360" cy="520" rx="9" ry="13" fill="url(#droplet-gradient-2)" opacity="0.68"/>
+      <ellipse cx="200" cy="380" rx="8" ry="12" fill="url(#droplet-gradient-1)" opacity="0.54"/>
+      <ellipse cx="90" cy="560" rx="6" ry="8" fill="url(#droplet-gradient-2)" opacity="0.6"/>
     </svg>
     <div class="max-w-container-max mx-auto" style="text-align:center;position:relative;z-index:1;">
       <span class="font-label-caps text-label-caps text-international-orange" style="display:block;margin-bottom:20px;letter-spacing:0.24em;">The Void in the Record</span>
@@ -1044,29 +1055,8 @@ header.header-hidden{transform:translateY(-100%)}
   .lost-fragment:hover .lost-fragment-cap, .lost-fragment:focus-visible .lost-fragment-cap { color:#FF6600; }
   @media (prefers-reduced-motion: reduce) { .lost-fragment img { transition: none; } }
 
-  /* Wet droplets effect — glass rain on Lost Works section */
+  /* Realistic water droplets on glass — static effect */
   .lost-droplets { z-index: 0; }
-  .droplet {
-    animation: droplet-drift 6s ease-in-out infinite;
-    opacity: 0;
-  }
-  .droplet-1 { animation-delay: 0s; }
-  .droplet-2 { animation-delay: 0.4s; }
-  .droplet-3 { animation-delay: 0.8s; }
-  .droplet-4 { animation-delay: 1.2s; }
-  .droplet-5 { animation-delay: 1.6s; }
-  .droplet-6 { animation-delay: 2s; }
-  .droplet-7 { animation-delay: 2.4s; }
-  .droplet-8 { animation-delay: 2.8s; }
-  .droplet-9 { animation-delay: 3.2s; }
-  .droplet-10 { animation-delay: 3.6s; }
-  @keyframes droplet-drift {
-    0% { opacity: 0; transform: translateY(-20px); }
-    15% { opacity: 1; }
-    85% { opacity: 1; }
-    100% { opacity: 0; transform: translateY(40px); }
-  }
-  @media (prefers-reduced-motion: reduce) { .droplet { animation: none; opacity: 0.3; } }
 
   /* Selected Works — soft paper-shadow lift on hover (adopted soft shadow) */
   #featured-grid > a:hover .card-img, #featured-grid > a:focus-visible .card-img,
@@ -1209,21 +1199,32 @@ header.header-hidden{transform:translateY(-100%)}
   </section>
 
   <section style="background:#0B0B0B;position:relative;overflow:hidden;" class="py-16 md:py-24 px-4 md:px-margin-desktop">
-    <!-- Wet droplets overlay -->
-    <svg aria-hidden="true" class="lost-droplets" viewBox="0 0 400 600" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;mix-blend-mode:screen;">
+    <!-- Realistic water droplets on glass -->
+    <svg aria-hidden="true" class="lost-droplets" viewBox="0 0 400 600" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;">
       <defs>
-        <filter id="droplet-blur"><feGaussianBlur in="SourceGraphic" stdDeviation="1.2"/></filter>
+        <!-- Realistic droplet gradients with light reflection -->
+        <radialGradient id="droplet-gradient-1" cx="35%" cy="30%">
+          <stop offset="0%" style="stop-color:rgba(255,255,255,0.7);stop-opacity:1" />
+          <stop offset="50%" style="stop-color:rgba(255,255,255,0.4);stop-opacity:1" />
+          <stop offset="100%" style="stop-color:rgba(255,255,255,0.15);stop-opacity:1" />
+        </radialGradient>
+        <radialGradient id="droplet-gradient-2" cx="40%" cy="25%">
+          <stop offset="0%" style="stop-color:rgba(255,255,255,0.65);stop-opacity:1" />
+          <stop offset="50%" style="stop-color:rgba(255,255,255,0.35);stop-opacity:1" />
+          <stop offset="100%" style="stop-color:rgba(255,255,255,0.1);stop-opacity:1" />
+        </radialGradient>
       </defs>
-      <ellipse cx="85" cy="120" rx="8" ry="12" fill="rgba(255,255,255,0.5)" filter="url(#droplet-blur)" class="droplet droplet-1"/>
-      <ellipse cx="280" cy="95" rx="6" ry="10" fill="rgba(255,255,255,0.4)" filter="url(#droplet-blur)" class="droplet droplet-2"/>
-      <ellipse cx="160" cy="180" rx="5" ry="8" fill="rgba(255,255,255,0.6)" filter="url(#droplet-blur)" class="droplet droplet-3"/>
-      <ellipse cx="340" cy="240" rx="7" ry="11" fill="rgba(255,255,255,0.35)" filter="url(#droplet-blur)" class="droplet droplet-4"/>
-      <ellipse cx="45" cy="320" rx="6" ry="9" fill="rgba(255,255,255,0.5)" filter="url(#droplet-blur)" class="droplet droplet-5"/>
-      <ellipse cx="300" cy="380" rx="8" ry="13" fill="rgba(255,255,255,0.45)" filter="url(#droplet-blur)" class="droplet droplet-6"/>
-      <ellipse cx="120" cy="440" rx="5" ry="8" fill="rgba(255,255,255,0.4)" filter="url(#droplet-blur)" class="droplet droplet-7"/>
-      <ellipse cx="360" cy="520" rx="7" ry="11" fill="rgba(255,255,255,0.55)" filter="url(#droplet-blur)" class="droplet droplet-8"/>
-      <ellipse cx="200" cy="380" rx="6" ry="10" fill="rgba(255,255,255,0.38)" filter="url(#droplet-blur)" class="droplet droplet-9"/>
-      <ellipse cx="90" cy="560" rx="5" ry="7" fill="rgba(255,255,255,0.48)" filter="url(#droplet-blur)" class="droplet droplet-10"/>
+      <!-- Droplets with realistic light reflections -->
+      <ellipse cx="85" cy="120" rx="10" ry="14" fill="url(#droplet-gradient-1)" opacity="0.6"/>
+      <ellipse cx="280" cy="95" rx="8" ry="12" fill="url(#droplet-gradient-2)" opacity="0.55"/>
+      <ellipse cx="160" cy="180" rx="7" ry="10" fill="url(#droplet-gradient-1)" opacity="0.65"/>
+      <ellipse cx="340" cy="240" rx="9" ry="13" fill="url(#droplet-gradient-2)" opacity="0.5"/>
+      <ellipse cx="45" cy="320" rx="8" ry="11" fill="url(#droplet-gradient-1)" opacity="0.58"/>
+      <ellipse cx="300" cy="380" rx="10" ry="15" fill="url(#droplet-gradient-2)" opacity="0.62"/>
+      <ellipse cx="120" cy="440" rx="7" ry="9" fill="url(#droplet-gradient-1)" opacity="0.52"/>
+      <ellipse cx="360" cy="520" rx="9" ry="13" fill="url(#droplet-gradient-2)" opacity="0.68"/>
+      <ellipse cx="200" cy="380" rx="8" ry="12" fill="url(#droplet-gradient-1)" opacity="0.54"/>
+      <ellipse cx="90" cy="560" rx="6" ry="8" fill="url(#droplet-gradient-2)" opacity="0.6"/>
     </svg>
     <div class="max-w-container-max mx-auto" style="text-align:center;position:relative;z-index:1;">
       <span class="reveal-section font-label-caps text-label-caps text-international-orange" style="display:block;margin-bottom:20px;letter-spacing:0.24em;">The Void in the Record</span>
