@@ -293,6 +293,13 @@
       var current = Math.floor(progress * target);
       counter.textContent = current.toLocaleString();
       if (progress < 1) requestAnimationFrame(animate);
+      else {
+        // Counter finished — add completion pulse (Phase 2 #10)
+        counter.classList.add('pulse-complete');
+        setTimeout(function() {
+          counter.classList.remove('pulse-complete');
+        }, 300);
+      }
     };
     // Start after page settles
     setTimeout(animate, 300);
@@ -369,6 +376,81 @@
     var title = link.textContent.trim();
     link.setAttribute('data-link-title', title);
   });
+
+  // ─── Phase 1: Metadata rows stagger (Session 52 #2) ─────────────────────
+  var aside = document.querySelector('aside.md\\:col-span-4');
+  if (aside) {
+    var metadataRows = aside.querySelectorAll('.grid.grid-cols-3');
+    metadataRows.forEach(function(row, idx) {
+      row.style.animationDelay = (idx * 0.1) + 's';
+    });
+  }
+
+  // ─── Phase 1: Related works IntersectionObserver (Session 52 #4) ────────
+  var relatedWorksSection = null;
+  document.querySelectorAll('div.grid').forEach(function(el) {
+    if (el.querySelector('h3') && el.textContent.includes('Related Works')) {
+      relatedWorksSection = el;
+    }
+  });
+  if (relatedWorksSection && 'IntersectionObserver' in window) {
+    relatedWorksSection.classList.add('related-works');
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting && !entry.target.classList.contains('in-view')) {
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    observer.observe(relatedWorksSection);
+  }
+
+  // ─── Phase 2: Favorite heart rotation on click (Session 52 #9) ────────
+  var favBtn = document.querySelector('.favorite-btn');
+  if (favBtn) {
+    favBtn.addEventListener('click', function() {
+      this.classList.add('rotating');
+      setTimeout(function(btn) {
+        return function() { btn.classList.remove('rotating'); };
+      }(this), 300);
+    });
+  }
+
+  // ─── Phase 2: Page transition fade on P/N navigation (Session 52 #7) ───
+  // Intercept prev/next work navigation with fade transition
+  document.addEventListener('keydown', function(e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+
+    // P = previous work
+    if (e.key === 'p' || e.key === 'P') {
+      var prevLink = document.querySelector('a[href$=".html"][href*="art"][href*="../"]');
+      if (prevLink && prevLink.textContent.includes('PREVIOUS')) {
+        e.preventDefault();
+        document.documentElement.classList.add('page-fade-out');
+        setTimeout(function() {
+          prevLink.click();
+        }, 200);
+      }
+    }
+
+    // N = next work
+    if (e.key === 'n' || e.key === 'N') {
+      var allLinks = Array.from(document.querySelectorAll('a[href$=".html"][href*="art"][href*="../"]'));
+      var nextLink = allLinks[allLinks.length - 1];
+      if (nextLink && nextLink.textContent.includes('NEXT')) {
+        e.preventDefault();
+        document.documentElement.classList.add('page-fade-out');
+        setTimeout(function() {
+          nextLink.click();
+        }, 200);
+      }
+    }
+  });
+
+  // ─── Phase 2: Theme color transitions (Session 52 #8) ─────────────────
+  // Already CSS-driven via header nav a::after with background-color transition
 
   // Artwork thumbnails are full color always — no mask-image, no scroll-reveal.
   // (Removed session 8; banned — do not re-add.)

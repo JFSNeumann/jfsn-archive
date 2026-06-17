@@ -744,6 +744,148 @@ a[data-link-title]:hover::after {
   animation: artwork-develop 0.5s ease-out forwards;
 }
 
+/* ─── Phase 1 & 2 Animations (Session 52) ──────────────────────────────── */
+
+/* Phase 1: Quick Wins (entrance animations) */
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up-fade {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes underline-draw {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* Hero text stagger (Phase 1 #1) */
+.decade-hero h1,
+.decade-hero p {
+  opacity: 0;
+  animation: fade-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.decade-hero h1 { animation-delay: 0.05s; }
+.decade-hero p { animation-delay: 0.15s; }
+
+/* Metadata rows stagger (Phase 1 #2) */
+aside .grid.grid-cols-3 {
+  opacity: 0;
+  animation: fade-in 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Filter chip underline animation (Phase 1 #3) */
+.filter-chip::after {
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.15s ease;
+}
+
+.filter-chip.is-active::after {
+  transform: scaleX(1);
+}
+
+/* Related works entrance (Phase 1 #4) */
+.related-works {
+  opacity: 0;
+}
+
+.related-works.in-view {
+  animation: slide-up-fade 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Focus ring fade-in (Phase 1 #5) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #FF6600;
+  outline-offset: 2px;
+  border-radius: 2px;
+  animation: fade-in 0.15s ease forwards;
+}
+
+/* Phase 2: Micro-Polish (state transitions) */
+
+@keyframes inset-shadow-pulse {
+  0%, 100% { box-shadow: none; }
+  50% { box-shadow: inset 0 0 5px rgba(255, 102, 0, 0.3); }
+}
+
+@keyframes color-transition {
+  from { color: inherit; }
+  to { color: #FF6600; }
+}
+
+@keyframes rotation-pulse {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(90deg); }
+}
+
+@keyframes counter-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+/* Button pressed state animation (Phase 2 #6) */
+button:active {
+  animation: inset-shadow-pulse 0.15s ease;
+}
+
+/* Page transition fade (Phase 2 #7) */
+.page-fade-out {
+  animation: fade-in 0.2s ease reverse;
+}
+
+.page-fade-in {
+  animation: fade-in 0.2s ease;
+}
+
+/* Theme color transitions (Phase 2 #8) */
+header nav a::after {
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+/* Favorite heart rotation (Phase 2 #9) */
+.favorite-btn.rotating {
+  animation: rotation-pulse 0.3s ease;
+}
+
+/* Counter completion pulse (Phase 2 #10) */
+[data-counter].pulse-complete {
+  animation: counter-pulse 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .decade-hero h1,
+  .decade-hero p,
+  .metadata__row,
+  .related-works.in-view,
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  button:active,
+  .page-fade-out,
+  .page-fade-in,
+  .favorite-btn.rotating,
+  [data-counter].pulse-complete {
+    animation: none;
+    opacity: 1;
+  }
+}
+
 /* ─── Lazy-loaded image fade-in ──────────────────────────────────────────── */
 
 img[loading="lazy"] {
