@@ -1173,6 +1173,11 @@ function updateBreadcrumb() {
 window.addEventListener('resize', updateBreadcrumb, { passive: true });
 
 document.getElementById('sort-select').addEventListener('change', () => {
+  // Phase 6.3: Sort dropdown change animation
+  const sel = document.getElementById('sort-select');
+  sel.classList.add('changing');
+  setTimeout(() => sel.classList.remove('changing'), 400);
+
   filtered = sortWorks(filtered);
   page = 0;
   grid.innerHTML = '';
