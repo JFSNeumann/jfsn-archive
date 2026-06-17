@@ -517,10 +517,23 @@ header.header-hidden{transform:translateY(-100%)}
 (function(){
   var progressBar = document.getElementById('reading-progress');
   if (progressBar) {
+    var sections = document.querySelectorAll('section[id]');
+    var colors = ['#FF6600', '#8e7164', '#FF6600', '#8e7164', '#FF6600'];
+    var currentColorIdx = 0;
+
     window.addEventListener('scroll', function(){
       var s = document.documentElement;
       var pct = (s.scrollTop / (s.scrollHeight - s.clientHeight)) * 100;
       progressBar.style.width = Math.min(pct, 100) + '%';
+
+      // Change color based on current section
+      sections.forEach(function(section, idx){
+        var rect = section.getBoundingClientRect();
+        if (rect.top < window.innerHeight / 3) {
+          currentColorIdx = idx;
+        }
+      });
+      progressBar.style.backgroundColor = colors[currentColorIdx % colors.length];
     }, { passive: true });
   }
 })();

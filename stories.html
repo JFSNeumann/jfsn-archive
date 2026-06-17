@@ -631,13 +631,28 @@ header.header-hidden{transform:translateY(-100%)}
 
 <script>
 (function(){
-  // Reading progress bar
+  // Reading progress bar with section-based color coding
   var progressBar = document.getElementById('reading-progress');
   if (progressBar) {
+    var links = document.querySelectorAll('#toc-list .toc-link');
+    var colors = ['#FF6600', '#8e7164', '#FF6600', '#8e7164', '#FF6600'];
+    var currentColorIdx = 0;
+
     window.addEventListener('scroll', function(){
       var s = document.documentElement;
       var pct = (s.scrollTop / (s.scrollHeight - s.clientHeight)) * 100;
       progressBar.style.width = Math.min(pct, 100) + '%';
+
+      // Change color based on current section
+      if (links.length) {
+        links.forEach(function(link, idx){
+          var section = document.querySelector(link.getAttribute('href'));
+          if (section && section.getBoundingClientRect().top < window.innerHeight / 3) {
+            currentColorIdx = idx;
+          }
+        });
+        progressBar.style.backgroundColor = colors[currentColorIdx % colors.length];
+      }
     }, { passive: true });
   }
   // Scroll-reveal on story sections (skip first — it's above the fold)

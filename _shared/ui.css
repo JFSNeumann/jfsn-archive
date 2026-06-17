@@ -82,6 +82,10 @@ header nav a.nav-underline-active::after {
   isolation: isolate;
 }
 
+.thumb__link {
+  transition: box-shadow 0.25s ease;
+}
+
 .thumb__link img {
   display: block;
   width: 100%;
@@ -89,6 +93,11 @@ header nav a.nav-underline-active::after {
   outline: 2px solid rgba(255,102,0,0);
   outline-offset: 0;
   transition: outline-color 0.25s ease;
+}
+
+.thumb__link:hover,
+.thumb__link:focus-visible {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
 }
 
 .thumb__link:hover img,
@@ -420,7 +429,49 @@ footer .hover\:border-international-orange::after {
   font-size: 9px;
 }
 
+/* ─── Mobile menu button animation ──────────────────────────────────────── */
+
+#nav-menu-btn {
+  transition: transform 0.2s ease;
+}
+
+#nav-menu-btn svg line {
+  transition: stroke-dasharray 0.25s ease, stroke-dashoffset 0.25s ease;
+}
+
+#nav-menu-btn svg line:nth-child(1) {
+  stroke-dasharray: 20;
+  stroke-dashoffset: 0;
+}
+
+#nav-menu-btn svg line:nth-child(2) {
+  stroke-dasharray: 20;
+  stroke-dashoffset: 0;
+  opacity: 1;
+}
+
+#nav-menu-btn svg line:nth-child(3) {
+  stroke-dasharray: 20;
+  stroke-dashoffset: 0;
+}
+
+#nav-menu-btn[aria-expanded="true"] svg line:nth-child(1) {
+  stroke-dasharray: 24.04;
+  stroke-dashoffset: -10.5;
+}
+
+#nav-menu-btn[aria-expanded="true"] svg line:nth-child(2) {
+  opacity: 0;
+}
+
+#nav-menu-btn[aria-expanded="true"] svg line:nth-child(3) {
+  stroke-dasharray: 24.04;
+  stroke-dashoffset: -10.5;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  #nav-menu-btn,
+  #nav-menu-btn svg line { transition: none; }
   #jfsn-progress,
   #jfsn-cursor-dot,
   #jfsn-cursor-ring,

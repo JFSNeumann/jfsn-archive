@@ -35,9 +35,9 @@
     .browse-filters-link:hover{background:#FF6600;color:#0B0B0B;}
 
     /* Theme filter chips */
-    .theme-chip{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:#575757;background:none;border:1px solid #c4c7c7;padding:7px 12px;cursor:pointer;transition:background 0.2s ease,color 0.2s ease,border-color 0.2s ease;}
-    .theme-chip:hover{border-color:#FF6600;color:#FF6600;}
-    .theme-chip.is-active{background:#FF6600;border-color:#FF6600;color:#0B0B0B;}
+    .theme-chip{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:#575757;background:none;border:none;border-bottom:2px solid transparent;padding:7px 12px;cursor:pointer;transition:color 0.2s ease,border-bottom-color 0.2s ease;}
+    .theme-chip:hover{color:#FF6600;border-bottom-color:#FF6600;}
+    .theme-chip.is-active{background:none;border-bottom-color:#FF6600;color:#FF6600;font-weight:600;}
 
     /* Map grid */
     .map-grid{display:grid;grid-template-columns:84px repeat(6,1fr);gap:1px;background:#e3bfb1;}

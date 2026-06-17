@@ -310,10 +310,23 @@ header.header-hidden{transform:translateY(-100%)}
 (function(){
   var bar = document.getElementById('reading-progress');
   if (!bar) return;
+  var sections = document.querySelectorAll('#lost-hero, #ghost-grid');
+  var colors = ['#FF6600', '#8e7164'];
+  var currentColorIdx = 0;
+
   window.addEventListener('scroll', function(){
     var d = document.documentElement;
     var pct = d.scrollTop / (d.scrollHeight - d.clientHeight) * 100;
     bar.style.width = Math.min(pct, 100) + '%';
+
+    // Change color based on current section
+    sections.forEach(function(section, idx){
+      var rect = section.getBoundingClientRect();
+      if (rect.top < window.innerHeight / 3) {
+        currentColorIdx = idx;
+      }
+    });
+    bar.style.backgroundColor = colors[currentColorIdx % colors.length];
   }, { passive: true });
 })();
 </script>

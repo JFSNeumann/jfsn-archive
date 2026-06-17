@@ -181,7 +181,7 @@ def generate_page(work, idx, all_works, colors):
         rows += meta_row('Palette', e(', '.join(palette)))
     if comp:
         rows += meta_row('Composition', e(comp))
-    rows += meta_row('Archive No.', art_id.upper())
+    rows += meta_row('Archive No.', f'<span class="cursor-pointer hover:text-international-orange transition-colors" onclick="navigator.clipboard.writeText(\\"{art_id.upper()}\\\").then(()=>window.showToast(\\\"Copied: {art_id.upper()}!\\\"))" title="Click to copy">{art_id.upper()}</span>')
 
     # Prev / next strip
     if prev_id:
@@ -327,7 +327,7 @@ def generate_page(work, idx, all_works, colors):
              width="1200" height="900"/>
       </div>
       <div class="p-sm border-t border-deep-ink flex justify-between items-center">
-        <span class="font-label-md text-label-md text-secondary uppercase tracking-widest">{e(art_id.upper())}</span>
+        <span class="font-label-md text-label-md text-secondary uppercase tracking-widest cursor-pointer hover:text-international-orange transition-colors" onclick="navigator.clipboard.writeText(\\"{e(art_id.upper())}\\\").then(()=>window.showToast(\\\"Copied: {e(art_id.upper())}!\\\"))" title="Click to copy">{e(art_id.upper())}</span>
         <a href="../full/{e(work['file'])}"
            class="font-label-md text-label-md uppercase tracking-widest text-secondary hover:text-international-orange transition-colors"
            target="_blank" rel="noopener">
