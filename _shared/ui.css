@@ -512,7 +512,25 @@ img[loading="lazy"].jfsn-loaded {
   stroke-dashoffset: -10.5;
 }
 
-/* ─── Metadata rows: hover highlight ─────────────────────────────────────── */
+/* ─── Color system: Series/Medium palette ────────────────────────────────── */
+/* Each series/medium gets a signature color for subtle visual distinction */
+
+:root {
+  --color-guernica:      #8B1538;  /* Crimson */
+  --color-targets:       #1A4D7A;  /* Deep blue */
+  --color-torsos:        #964B3B;  /* Terracotta */
+  --color-framed:        #2D5A5A;  /* Teal */
+  --color-gallery:       #4A5568;  /* Slate */
+  --color-snowmann:      #7A5C4D;  /* Warm brown */
+  --color-crosses:       #5B6B7B;  /* Cool grey-blue */
+  --color-collab:        #5A6B5B;  /* Sage */
+  --color-collage:       #A85C3C;  /* Rust */
+  --color-sculpture:     #6B7280;  /* Stone */
+  --color-photo:         #475569;  /* Cool slate */
+  --color-painting:      #6B4C8A;  /* Plum */
+}
+
+/* ─── Metadata rows: hover highlight with theme color ──────────────────── */
 
 div[class*="grid"][class*="gap"][class*="border-b"][class*="py-sm"] {
   transition: background-color 0.2s ease, border-left-color 0.2s ease;
@@ -522,6 +540,209 @@ div[class*="grid"][class*="gap"][class*="border-b"][class*="py-sm"] {
 div[class*="grid"][class*="gap"][class*="border-b"][class*="py-sm"]:hover {
   background-color: rgba(142, 113, 100, 0.04);
   border-left-color: #FF6600;
+}
+
+/* ─── Page-specific color theming ────────────────────────────────────────── */
+
+/* Guernica pages */
+[data-theme="guernica"] header nav a.nav-underline-active::after,
+[data-theme="guernica"] nav a.nav-underline-active::after {
+  background-color: var(--color-guernica);
+}
+[data-theme="guernica"] header nav a:hover::after,
+[data-theme="guernica"] nav a:hover::after {
+  background-color: var(--color-guernica);
+}
+[data-theme="guernica"] .toc-active {
+  border-left-color: var(--color-guernica) !important;
+  color: var(--color-guernica) !important;
+}
+[data-theme="guernica"] div[class*="border-b"][class*="py-sm"]:hover {
+  border-left-color: var(--color-guernica);
+}
+
+/* Targets pages */
+[data-theme="targets"] header nav a.nav-underline-active::after,
+[data-theme="targets"] nav a.nav-underline-active::after {
+  background-color: var(--color-targets);
+}
+[data-theme="targets"] header nav a:hover::after,
+[data-theme="targets"] nav a:hover::after {
+  background-color: var(--color-targets);
+}
+[data-theme="targets"] .toc-active {
+  border-left-color: var(--color-targets) !important;
+  color: var(--color-targets) !important;
+}
+[data-theme="targets"] div[class*="border-b"][class*="py-sm"]:hover {
+  border-left-color: var(--color-targets);
+}
+
+/* Torsos & Faces pages */
+[data-theme="torsos"] header nav a.nav-underline-active::after,
+[data-theme="torsos"] nav a.nav-underline-active::after {
+  background-color: var(--color-torsos);
+}
+[data-theme="torsos"] header nav a:hover::after,
+[data-theme="torsos"] nav a:hover::after {
+  background-color: var(--color-torsos);
+}
+[data-theme="torsos"] .toc-active {
+  border-left-color: var(--color-torsos) !important;
+  color: var(--color-torsos) !important;
+}
+[data-theme="torsos"] div[class*="border-b"][class*="py-sm"]:hover {
+  border-left-color: var(--color-torsos);
+}
+
+/* Framed pages */
+[data-theme="framed"] header nav a.nav-underline-active::after,
+[data-theme="framed"] nav a.nav-underline-active::after {
+  background-color: var(--color-framed);
+}
+[data-theme="framed"] header nav a:hover::after,
+[data-theme="framed"] nav a:hover::after {
+  background-color: var(--color-framed);
+}
+[data-theme="framed"] .toc-active {
+  border-left-color: var(--color-framed) !important;
+  color: var(--color-framed) !important;
+}
+[data-theme="framed"] div[class*="border-b"][class*="py-sm"]:hover {
+  border-left-color: var(--color-framed);
+}
+
+/* Gallery Images pages */
+[data-theme="gallery"] header nav a.nav-underline-active::after,
+[data-theme="gallery"] nav a.nav-underline-active::after {
+  background-color: var(--color-gallery);
+}
+[data-theme="gallery"] header nav a:hover::after,
+[data-theme="gallery"] nav a:hover::after {
+  background-color: var(--color-gallery);
+}
+[data-theme="gallery"] .toc-active {
+  border-left-color: var(--color-gallery) !important;
+  color: var(--color-gallery) !important;
+}
+[data-theme="gallery"] div[class*="border-b"][class*="py-sm"]:hover {
+  border-left-color: var(--color-gallery);
+}
+
+/* Mr. Snowmann pages */
+[data-theme="snowmann"] header nav a.nav-underline-active::after,
+[data-theme="snowmann"] nav a.nav-underline-active::after {
+  background-color: var(--color-snowmann);
+}
+[data-theme="snowmann"] header nav a:hover::after,
+[data-theme="snowmann"] nav a:hover::after {
+  background-color: var(--color-snowmann);
+}
+[data-theme="snowmann"] .toc-active {
+  border-left-color: var(--color-snowmann) !important;
+  color: var(--color-snowmann) !important;
+}
+[data-theme="snowmann"] div[class*="border-b"][class*="py-sm"]:hover {
+  border-left-color: var(--color-snowmann);
+}
+
+/* Crosses pages */
+[data-theme="crosses"] header nav a.nav-underline-active::after,
+[data-theme="crosses"] nav a.nav-underline-active::after {
+  background-color: var(--color-crosses);
+}
+[data-theme="crosses"] header nav a:hover::after,
+[data-theme="crosses"] nav a:hover::after {
+  background-color: var(--color-crosses);
+}
+[data-theme="crosses"] .toc-active {
+  border-left-color: var(--color-crosses) !important;
+  color: var(--color-crosses) !important;
+}
+[data-theme="crosses"] div[class*="border-b"][class*="py-sm"]:hover {
+  border-left-color: var(--color-crosses);
+}
+
+/* Collaboration pages */
+[data-theme="collaboration"] header nav a.nav-underline-active::after,
+[data-theme="collaboration"] nav a.nav-underline-active::after {
+  background-color: var(--color-collab);
+}
+[data-theme="collaboration"] header nav a:hover::after,
+[data-theme="collaboration"] nav a:hover::after {
+  background-color: var(--color-collab);
+}
+[data-theme="collaboration"] .toc-active {
+  border-left-color: var(--color-collab) !important;
+  color: var(--color-collab) !important;
+}
+[data-theme="collaboration"] div[class*="border-b"][class*="py-sm"]:hover {
+  border-left-color: var(--color-collab);
+}
+
+/* Medium-specific colors */
+[data-medium="collage"] header nav a.nav-underline-active::after,
+[data-medium="collage"] nav a.nav-underline-active::after {
+  background-color: var(--color-collage);
+}
+[data-medium="collage"] header nav a:hover::after,
+[data-medium="collage"] nav a:hover::after {
+  background-color: var(--color-collage);
+}
+[data-medium="collage"] .toc-active {
+  border-left-color: var(--color-collage) !important;
+  color: var(--color-collage) !important;
+}
+[data-medium="collage"] div[class*="border-b"][class*="py-sm"]:hover {
+  border-left-color: var(--color-collage);
+}
+
+[data-medium="sculpture"] header nav a.nav-underline-active::after,
+[data-medium="sculpture"] nav a.nav-underline-active::after {
+  background-color: var(--color-sculpture);
+}
+[data-medium="sculpture"] header nav a:hover::after,
+[data-medium="sculpture"] nav a:hover::after {
+  background-color: var(--color-sculpture);
+}
+[data-medium="sculpture"] .toc-active {
+  border-left-color: var(--color-sculpture) !important;
+  color: var(--color-sculpture) !important;
+}
+[data-medium="sculpture"] div[class*="border-b"][class*="py-sm"]:hover {
+  border-left-color: var(--color-sculpture);
+}
+
+[data-medium="photography"] header nav a.nav-underline-active::after,
+[data-medium="photography"] nav a.nav-underline-active::after {
+  background-color: var(--color-photo);
+}
+[data-medium="photography"] header nav a:hover::after,
+[data-medium="photography"] nav a:hover::after {
+  background-color: var(--color-photo);
+}
+[data-medium="photography"] .toc-active {
+  border-left-color: var(--color-photo) !important;
+  color: var(--color-photo) !important;
+}
+[data-medium="photography"] div[class*="border-b"][class*="py-sm"]:hover {
+  border-left-color: var(--color-photo);
+}
+
+[data-medium="painting"] header nav a.nav-underline-active::after,
+[data-medium="painting"] nav a.nav-underline-active::after {
+  background-color: var(--color-painting);
+}
+[data-medium="painting"] header nav a:hover::after,
+[data-medium="painting"] nav a:hover::after {
+  background-color: var(--color-painting);
+}
+[data-medium="painting"] .toc-active {
+  border-left-color: var(--color-painting) !important;
+  color: var(--color-painting) !important;
+}
+[data-medium="painting"] div[class*="border-b"][class*="py-sm"]:hover {
+  border-left-color: var(--color-painting);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -565,6 +786,73 @@ div[class*="grid"][class*="gap"][class*="border-b"][class*="py-sm"]:hover {
   .adjacent-preview {
     display: none;
   }
+}
+
+/* ─── Section dividers: subtle color tint ────────────────────────────────── */
+
+[data-theme] section {
+  border-top-color: var(--color-guernica, #c4c7c7);
+  border-left-color: var(--color-guernica, #c4c7c7);
+}
+
+[data-theme="guernica"] section {
+  border-top-color: rgba(139, 21, 56, 0.12);
+  border-left-color: rgba(139, 21, 56, 0.12);
+}
+
+[data-theme="targets"] section {
+  border-top-color: rgba(26, 77, 122, 0.12);
+  border-left-color: rgba(26, 77, 122, 0.12);
+}
+
+[data-theme="torsos"] section {
+  border-top-color: rgba(150, 75, 59, 0.12);
+  border-left-color: rgba(150, 75, 59, 0.12);
+}
+
+[data-theme="framed"] section {
+  border-top-color: rgba(45, 90, 90, 0.12);
+  border-left-color: rgba(45, 90, 90, 0.12);
+}
+
+[data-theme="gallery"] section {
+  border-top-color: rgba(74, 85, 104, 0.12);
+  border-left-color: rgba(74, 85, 104, 0.12);
+}
+
+[data-theme="snowmann"] section {
+  border-top-color: rgba(122, 92, 77, 0.12);
+  border-left-color: rgba(122, 92, 77, 0.12);
+}
+
+[data-theme="crosses"] section {
+  border-top-color: rgba(91, 107, 123, 0.12);
+  border-left-color: rgba(91, 107, 123, 0.12);
+}
+
+[data-theme="collaboration"] section {
+  border-top-color: rgba(90, 107, 91, 0.12);
+  border-left-color: rgba(90, 107, 91, 0.12);
+}
+
+[data-medium="collage"] section {
+  border-top-color: rgba(168, 92, 60, 0.12);
+  border-left-color: rgba(168, 92, 60, 0.12);
+}
+
+[data-medium="sculpture"] section {
+  border-top-color: rgba(107, 114, 128, 0.12);
+  border-left-color: rgba(107, 114, 128, 0.12);
+}
+
+[data-medium="photography"] section {
+  border-top-color: rgba(71, 85, 105, 0.12);
+  border-left-color: rgba(71, 85, 105, 0.12);
+}
+
+[data-medium="painting"] section {
+  border-top-color: rgba(107, 76, 138, 0.12);
+  border-left-color: rgba(107, 76, 138, 0.12);
 }
 
 @media (prefers-reduced-motion: reduce) {
