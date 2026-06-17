@@ -268,6 +268,7 @@ def generate_page(work, idx, all_works, colors):
 <link rel="icon" href="../../favicon.svg" type="image/svg+xml"/>
 <link rel="preload" as="font" type="font/woff2" href="/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2" crossorigin/>
 <link rel="preload" as="font" type="font/woff2" href="/fonts/nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgEM86xQ.woff2" crossorigin/>
+<link rel="stylesheet" href="../../_shared/ui.css"/>
 <link rel="stylesheet" href="../../site.min.css"/>
 <script type="application/ld+json">
 {json.dumps(ld, ensure_ascii=False)}
