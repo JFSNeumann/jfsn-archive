@@ -1026,31 +1026,10 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
 <script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
 <!-- FOOTER:END -->
 
-<!-- Keyboard Shortcuts Help Modal -->
-<div id="shortcuts-modal" class="hidden" style="position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000;">
-  <div style="background: #fcf9f3; border: 1px solid #8e7164; border-radius: 8px; padding: 32px; max-width: 500px; max-height: 80vh; overflow-y: auto; margin: 20px;">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-      <h2 style="font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 600; margin: 0; color: #0B0B0B;">Keyboard Shortcuts</h2>
-      <button id="close-shortcuts" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #575757; padding: 0; width: 32px; height: 32px;">✕</button>
-    </div>
-    <div style="font-family: Inter, sans-serif; font-size: 13px; color: #575757; line-height: 1.8;">
-      <div style="margin-bottom: 16px;">
-        <div style="font-weight: 600; color: #0B0B0B;">Navigation</div>
-        <div>← / → — Previous / next work</div>
-        <div>/ — Focus search (archive)</div>
-      </div>
-      <div style="margin-bottom: 16px;">
-        <div style="font-weight: 600; color: #0B0B0B;">Filters</div>
-        <div>⌘K — Open command palette</div>
-        <div>ESC — Close modals</div>
-      </div>
-      <div>
-        <div style="font-weight: 600; color: #0B0B0B;">Help</div>
-        <div>? — Show this help</div>
-      </div>
-    </div>
-  </div>
-</div>
+<!-- REMOVED: Keyboard Shortcuts modal HTML (Session 66)
+     Modal was hardcoded with inline styles (display: flex), causing it to
+     auto-show and block archive access. Feature disabled entirely until
+     proper consolidation and fix in Session 67+. -->
 
 <script>
 const PAGE_SIZE = 48;
