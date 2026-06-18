@@ -290,6 +290,105 @@
     }
   }
 
+  /* ─── Phase 6: Collapsible Filter Sections ────────────────────────────────── */
+  function setupCollapsibleFilters() {
+    var headers = document.querySelectorAll('.filter-section-header');
+    headers.forEach(function(header) {
+      header.addEventListener('click', function() {
+        var section = this.closest('.filter-section');
+        var toggle = section.querySelector('.filter-section-toggle');
+        var content = section.querySelector('.filter-section-content');
+
+        if (content.classList.contains('collapsed')) {
+          content.classList.remove('collapsed');
+          toggle.classList.remove('collapsed');
+        } else {
+          content.classList.add('collapsed');
+          toggle.classList.add('collapsed');
+        }
+      });
+    });
+  }
+
+  /* ─── Phase 6: View Mode Toggle ────────────────────────────────────────── */
+  window.switchViewMode = function(mode) {
+    var grid = document.getElementById('works-grid');
+    if (!grid) return;
+
+    grid.classList.remove('grid-view', 'list-view', 'masonry-view');
+    grid.classList.add(mode + '-view');
+
+    // Update button states
+    var buttons = document.querySelectorAll('.view-toggle button');
+    buttons.forEach(function(btn) {
+      btn.classList.remove('active');
+      if (btn.dataset.mode === mode) {
+        btn.classList.add('active');
+      }
+    });
+
+    localStorage.setItem('jfsn-view-mode', mode);
+  };
+
+  // Restore view mode from localStorage
+  function restoreViewMode() {
+    var mode = localStorage.getItem('jfsn-view-mode') || 'grid';
+    window.switchViewMode(mode);
+  }
+
+  /* ─── Phase 6: Color Filter Tags ───────────────────────────────────────── */
+  window.toggleColorFilter = function(colorValue) {
+    var swatch = document.querySelector('[data-color="' + colorValue + '"]');
+    if (swatch) {
+      swatch.classList.toggle('active');
+      var colors = [];
+      document.querySelectorAll('.color-swatch.active').forEach(function(s) {
+        colors.push(s.dataset.color);
+      });
+      localStorage.setItem('jfsn-color-filters', JSON.stringify(colors));
+      filterByColor(colors);
+    }
+  };
+
+  function filterByColor(colors) {
+    if (colors.length === 0) {
+      document.querySelectorAll('[data-work-color]').forEach(function(el) {
+        el.style.display = '';
+      });
+      return;
+    }
+
+    document.querySelectorAll('[data-work-color]').forEach(function(el) {
+      var workColor = el.getAttribute('data-work-color');
+      el.style.display = colors.includes(workColor) ? '' : 'none';
+    });
+  }
+
+  /* ─── Phase 6: Smart Shortcuts Hint ────────────────────────────────────── */
+  function setupShortcutsHint() {
+    var hint = document.querySelector('.shortcuts-hint');
+    if (!hint) return;
+
+    // Hide hint after 5 seconds, show on hover
+    var hideTimer;
+    function autoHide() {
+      hideTimer = setTimeout(function() {
+        hint.style.opacity = '0.5';
+      }, 5000);
+    }
+
+    hint.addEventListener('mouseenter', function() {
+      clearTimeout(hideTimer);
+      this.style.opacity = '1';
+    });
+
+    hint.addEventListener('mouseleave', function() {
+      autoHide();
+    });
+
+    autoHide();
+  }
+
   /* ─── Initialize All ────────────────────────────────────────────────────── */
   document.addEventListener('DOMContentLoaded', function() {
     setupGridStagger();
@@ -301,6 +400,9 @@
     setupSearchHighlighting();
     setupPageTransitions();
     setupLazyLoadFadeIn();
+    setupCollapsibleFilters();
+    restoreViewMode();
+    setupShortcutsHint();
   });
 
   // Re-setup grid stagger when filter changes

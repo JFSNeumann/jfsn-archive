@@ -3772,6 +3772,303 @@ textarea:focus-visible {
   animation: success-checkmark 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
+/* ─── Phase 6: View Mode Toggle ────────────────────────────────────────────── */
+
+.view-toggle {
+  display: inline-flex;
+  gap: 6px;
+  border: 1px solid #c4c7c7;
+  border-radius: 0;
+  padding: 2px;
+  background-color: #fcf9f3;
+}
+
+.view-toggle button {
+  background: none;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  color: #575757;
+  transition: all 0.2s ease;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.view-toggle button.active {
+  background-color: #0B0B0B;
+  color: #fcf9f3;
+}
+
+.view-toggle button:hover:not(.active) {
+  background-color: #f0ece6;
+}
+
+/* Grid mode (default) */
+.grid-view {
+  display: grid;
+  grid-auto-flow: row;
+}
+
+/* List mode */
+.list-view .thumb {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  height: auto;
+}
+
+.list-view .thumb__link {
+  flex: 0 0 120px;
+  height: 120px;
+}
+
+.list-view .thumb__caption {
+  flex: 1;
+}
+
+/* ─── Phase 6: Advanced Filter Section ─────────────────────────────────────── */
+
+.filter-section {
+  border-bottom: 1px solid #e3bfb1;
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+}
+
+.filter-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 8px 0;
+  user-select: none;
+}
+
+.filter-section-header h3 {
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0B0B0B;
+  text-transform: uppercase;
+  margin: 0;
+  letter-spacing: 0.08em;
+}
+
+.filter-section-toggle {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.filter-section-toggle.collapsed {
+  transform: rotate(-90deg);
+}
+
+.filter-section-content {
+  max-height: 500px;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.filter-section-content.collapsed {
+  max-height: 0;
+}
+
+/* ─── Phase 6: Enhanced Empty State ────────────────────────────────────────── */
+
+#empty-state {
+  padding: 64px 32px;
+  text-align: center;
+  background: linear-gradient(135deg, #fcf9f3 0%, #f5f2ed 100%);
+  border: 1px dashed #c4c7c7;
+  margin-top: 32px;
+}
+
+#empty-state h3 {
+  font-family: Playfair Display, Georgia, serif;
+  font-size: 32px;
+  font-weight: 600;
+  color: #0B0B0B;
+  margin: 0 0 16px;
+}
+
+#empty-state p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #575757;
+  margin: 0 0 24px;
+}
+
+#empty-state-suggestion {
+  display: inline-block;
+  padding: 12px 20px;
+  background-color: #0B0B0B;
+  color: #fcf9f3;
+  text-decoration: none;
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+#empty-state-suggestion:hover {
+  background-color: #FF6600;
+}
+
+/* ─── Phase 6: Statistics Dashboard ────────────────────────────────────────── */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin: 32px 0;
+}
+
+.stats-card {
+  padding: 20px;
+  border: 1px solid #8e7164;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.stats-card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.stats-value {
+  font-family: Playfair Display, Georgia, serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #0B0B0B;
+  margin: 0;
+}
+
+.stats-label {
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #575757;
+  margin-top: 8px;
+}
+
+/* ─── Phase 6: Bookmarks UI ────────────────────────────────────────────────── */
+
+.bookmark-btn {
+  background: none;
+  border: 1px solid #c4c7c7;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.2s ease;
+  color: #575757;
+}
+
+.bookmark-btn:hover {
+  border-color: #FF6600;
+  color: #FF6600;
+}
+
+.bookmark-btn.bookmarked {
+  background-color: #FF6600;
+  border-color: #FF6600;
+  color: #fcf9f3;
+}
+
+/* ─── Phase 6: Color Swatch Filters ────────────────────────────────────────── */
+
+.color-filter {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 12px 0;
+}
+
+.color-swatch {
+  width: 40px;
+  height: 40px;
+  border-radius: 0;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.color-swatch:hover {
+  border-color: #0B0B0B;
+  transform: scale(1.1);
+}
+
+.color-swatch.active {
+  border-color: #0B0B0B;
+  box-shadow: inset 0 0 0 2px #fcf9f3;
+}
+
+html.dark .color-swatch:hover {
+  border-color: #e8e8e8;
+}
+
+html.dark .color-swatch.active {
+  border-color: #e8e8e8;
+  box-shadow: inset 0 0 0 2px #1a1a1a;
+}
+
+/* ─── Phase 6: Smart Shortcuts Hint ────────────────────────────────────────── */
+
+.shortcuts-hint {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  color: #575757;
+  background: #fcf9f3;
+  border: 1px solid #c4c7c7;
+  padding: 12px 16px;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.shortcuts-hint:hover {
+  opacity: 1;
+}
+
+.shortcuts-hint kbd {
+  font-family: ui-monospace, monospace;
+  background: #ebe8e2;
+  padding: 2px 6px;
+  margin: 0 4px;
+  border-radius: 0;
+  font-size: 11px;
+}
+
+/* ─── Phase 6: Filter Search Box ────────────────────────────────────────── */
+
+.filter-search {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #c4c7c7;
+  background-color: #fcf9f3;
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  margin-bottom: 12px;
+  box-sizing: border-box;
+}
+
+.filter-search:focus {
+  outline: 2px solid #FF6600;
+  outline-offset: 0;
+  border-color: #FF6600;
+}
+
 /* ─── Phase 1: Link Underline Draw Animation ──────────────────────────────── */
 
 .link-underline {
