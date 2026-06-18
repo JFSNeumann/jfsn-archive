@@ -28,9 +28,8 @@
   # More-specific rule first.
   # ------------------------------------------
 
-  # artworks/full/ — files are organized in subdirectories by size
-  # Serve /artworks/full/ directly (no rewrite needed)
-  RewriteRule ^artworks/full/(.+\.avif)$ /artworks/full/$1 [L]
+  # artworks/full/ — files are served directly without rewrite
+  # (Rewrite rules were causing 404s; native serve works fine)
 
   # Thumbnails: path is identical in both old and new sites
   RewriteRule ^old-site/artworks/thumbs/(.+)$ /artworks/thumbs/$1 [L]
