@@ -3505,6 +3505,209 @@ blockquote:hover {
   background-color: #FF6600;
 }
 
+/* ─── Phase 2: Dark Mode ────────────────────────────────────────────────── */
+
+html.dark {
+  color-scheme: dark;
+}
+
+html.dark body {
+  background-color: #1a1a1a;
+  color: #e8e8e8;
+}
+
+html.dark body,
+html.dark .light {
+  --tw-bg-opacity: 1;
+  background-color: rgb(26 26 26 / var(--tw-bg-opacity));
+  color: #e8e8e8;
+}
+
+/* Light mode elements in dark mode */
+html.dark .bg-background,
+html.dark .bg-bone-white {
+  background-color: #252525;
+  border-color: #404040;
+}
+
+html.dark .text-deep-ink,
+html.dark .text-on-background {
+  color: #e8e8e8;
+}
+
+html.dark .text-archive-gray,
+html.dark .text-secondary,
+html.dark .text-on-surface-variant {
+  color: #b0b0b0;
+}
+
+html.dark header {
+  background-color: rgba(26, 26, 26, 0.80) !important;
+  border-color: #404040 !important;
+}
+
+html.dark header::after {
+  background: linear-gradient(to bottom, rgba(232, 232, 232, 0.07) 0%, transparent 100%);
+}
+
+html.dark .border-outline-variant,
+html.dark .border-c4c7c7 {
+  border-color: #404040 !important;
+}
+
+html.dark .border-archival-outline,
+html.dark .border-8e7164 {
+  border-color: #4a3a2a !important;
+}
+
+html.dark .border-e3bfb1 {
+  border-color: #3a2a1a !important;
+}
+
+html.dark .bg-outline-variant {
+  background-color: #333 !important;
+}
+
+html.dark .bg-ebe8e2 {
+  background-color: #2a2a2a !important;
+}
+
+html.dark .breadcrumb {
+  border-bottom-color: #3a2a1a !important;
+}
+
+html.dark .archive-card,
+html.dark .thumb__link {
+  background-color: #252525;
+}
+
+html.dark .archive-card:hover,
+html.dark .archive-card:focus-visible,
+html.dark .thumb__link:hover,
+html.dark .thumb__link:focus-visible {
+  background-color: #2a2a2a;
+}
+
+/* Filter chips in dark mode */
+html.dark .filter-chip {
+  background-color: #2a2a2a !important;
+  border-color: #404040 !important;
+  color: #e8e8e8 !important;
+}
+
+html.dark .filter-chip-collage {
+  background-color: #2a2420 !important;
+  border-color: #3a3420 !important;
+}
+
+html.dark .filter-chip-sculpture {
+  background-color: #202530 !important;
+  border-color: #2a3540 !important;
+}
+
+html.dark .filter-chip-photography {
+  background-color: #2a2230 !important;
+  border-color: #3a3240 !important;
+}
+
+html.dark .filter-chip-painting {
+  background-color: #202a28 !important;
+  border-color: #2a3a38 !important;
+}
+
+/* Dark mode buttons */
+html.dark button,
+html.dark input[type="button"],
+html.dark input[type="submit"] {
+  background-color: #2a2a2a !important;
+  border-color: #404040 !important;
+  color: #e8e8e8 !important;
+}
+
+html.dark button:hover,
+html.dark input[type="button"]:hover,
+html.dark input[type="submit"]:hover {
+  background-color: #333333 !important;
+}
+
+/* Dark mode checkboxes */
+html.dark .custom-checkbox {
+  border-color: #404040 !important;
+  background-color: #1a1a1a !important;
+}
+
+html.dark .custom-checkbox:checked {
+  background-color: #FF6600 !important;
+}
+
+/* Dark mode links */
+html.dark a {
+  color: #FF6600;
+}
+
+html.dark a:hover {
+  color: #ff8c33;
+}
+
+html.dark .link-underline {
+  color: #FF6600;
+}
+
+/* Dark mode form inputs */
+html.dark input[type="text"],
+html.dark input[type="search"],
+html.dark select,
+html.dark textarea {
+  background-color: #252525 !important;
+  border-color: #404040 !important;
+  color: #e8e8e8 !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #808080 !important;
+}
+
+/* Dark mode tables */
+html.dark table {
+  color: #e8e8e8;
+}
+
+html.dark table th,
+html.dark table td {
+  border-color: #404040 !important;
+  color: #e8e8e8;
+}
+
+html.dark table thead {
+  background-color: #252525 !important;
+}
+
+/* Dark mode code/pre */
+html.dark pre,
+html.dark code {
+  background-color: #252525 !important;
+  color: #e8e8e8 !important;
+  border-color: #404040 !important;
+}
+
+/* Dark mode footer */
+html.dark .surface-container-high,
+html.dark .bg-ebe7e6 {
+  background-color: #252525 !important;
+  border-color: #404040 !important;
+}
+
+/* Dark mode design system modal */
+html.dark #design-system-modal {
+  background: rgba(26, 26, 26, 0.85) !important;
+}
+
+html.dark #design-system-modal > div {
+  background-color: #1a1a1a !important;
+  border-color: #404040 !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   #keyboard-shortcuts-hint,
   .filter-chip-entering,
