@@ -267,6 +267,17 @@
       kbModal.hidden = true;
       kbModal.setAttribute('hidden', '');
     }, 10);
+
+    // CRITICAL: Remove all old broken keyboard shortcuts modals
+    ['shortcuts-modal', 'close-shortcuts', 'keyboard-shortcuts-modal', 'keyboard-shortcuts-overlay'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.remove();
+    });
+    document.querySelectorAll('[class*="shortcuts"], [class*="keyboard-shortcuts"]').forEach(el => {
+      if (el.id !== 'sse-kb-modal' && el.id !== 'sse-kb-panel' && el.id !== 'sse-kb-close' && el.id !== 'sse-kb-head' && el.id !== 'sse-kb-body') {
+        el.style.display = 'none !important';
+      }
+    });
   }
 
   // ── Keyboard shortcuts ───────────────────────────────────────────────────

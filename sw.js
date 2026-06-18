@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1781810899'; // Session 67: Modal close fix - use .sse-kb-hidden class instead of [hidden]
+const CACHE_V  = 'jfsn-1781811567'; // Session 67: CRITICAL FIX - Remove all old broken shortcuts modals
 const PRECACHE = [
   '/',
   '/index.html',
