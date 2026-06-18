@@ -363,10 +363,11 @@
     }
 
     // ? = show keyboard shortcuts help
-    if (e.key === '?') {
-      e.preventDefault();
-      showKeyboardShortcuts();
-    }
+    // DISABLED: using keyboard-shortcuts.js implementation instead
+    // if (e.key === '?') {
+    //   e.preventDefault();
+    //   showKeyboardShortcuts();
+    // }
   });
 
   // ─── Number counter animation (homepage hero) ─────────────────────────

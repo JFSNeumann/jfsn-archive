@@ -3,15 +3,20 @@
 const KeyboardShortcuts = {
   modal: null,
   isOpen: false,
+  previousActiveElement: null,
 
   init() {
     this.createModal();
     this.setupListeners();
+    // Ensure modal is closed on init
+    this.isOpen = false;
+    this.modal.classList.remove('open');
+    this.modal.style.display = 'none';
   },
 
   createModal() {
     const html = `
-      <div id="keyboard-shortcuts-overlay" class="keyboard-shortcuts-overlay" role="dialog" aria-labelledby="shortcuts-title">
+      <div id="keyboard-shortcuts-overlay" class="keyboard-shortcuts-overlay" role="dialog" aria-labelledby="shortcuts-title" aria-modal="true" tabindex="-1">
         <div class="keyboard-shortcuts-modal">
           <button class="shortcuts-close" aria-label="Close shortcuts guide">×</button>
           <h2 id="shortcuts-title">Keyboard Shortcuts</h2>
@@ -126,38 +131,70 @@ const KeyboardShortcuts = {
     this.modal = document.getElementById('keyboard-shortcuts-overlay');
 
     // Close button
-    this.modal.querySelector('.shortcuts-close').addEventListener('click', () => this.close());
+    const closeBtn = this.modal.querySelector('.shortcuts-close');
+    closeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      this.close();
+    });
+
+    // Backdrop click to close
     this.modal.addEventListener('click', (e) => {
-      if (e.target === this.modal) this.close();
+      if (e.target === this.modal) {
+        e.stopPropagation();
+        this.close();
+      }
+    });
+
+    // Prevent click propagation inside modal content
+    this.modal.querySelector('.keyboard-shortcuts-modal').addEventListener('click', (e) => {
+      e.stopPropagation();
     });
   },
 
   setupListeners() {
     document.addEventListener('keydown', (e) => {
-      // Show shortcuts on ?
+      // Show shortcuts on ? (but not if another modal is open)
       if (e.key === '?' && !e.ctrlKey && !e.metaKey) {
-        e.preventDefault();
-        this.toggle();
+        const dsModal = document.getElementById('design-system-modal');
+        if (!dsModal || dsModal.style.display !== 'block') {
+          e.preventDefault();
+          this.toggle();
+        }
       }
 
-      // Close on Escape
+      // Close on Escape (only if this modal is open, higher z-index = takes precedence)
       if (e.key === 'Escape' && this.isOpen) {
+        e.preventDefault();
+        e.stopPropagation();
         this.close();
       }
-    });
+    }, true); // Use capture phase to catch before other listeners
   },
 
   open() {
+    if (this.isOpen) return; // Prevent duplicate opens
+    this.modal.style.display = 'flex'; // Ensure visible before adding class
     this.modal.classList.add('open');
     this.isOpen = true;
     document.body.style.overflow = 'hidden';
-    this.modal.focus();
+    // Store previously focused element for restoration
+    this.previousActiveElement = document.activeElement;
+    // Focus the close button instead of the unfocusable div
+    setTimeout(() => {
+      this.modal.querySelector('.shortcuts-close')?.focus();
+    }, 50);
   },
 
   close() {
+    if (!this.isOpen) return; // Prevent duplicate closes
     this.modal.classList.remove('open');
+    this.modal.style.display = 'none'; // Hide immediately
     this.isOpen = false;
     document.body.style.overflow = '';
+    // Restore focus to previously focused element
+    if (this.previousActiveElement && this.previousActiveElement !== document.body) {
+      this.previousActiveElement.focus();
+    }
   },
 
   toggle() {

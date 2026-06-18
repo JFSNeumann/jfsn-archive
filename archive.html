@@ -1603,7 +1603,9 @@ grid.addEventListener('mouseleave', () => {
   <script src="/_shared/swipe-gestures.js" defer></script>
   <script src="/_shared/advanced-interactions.js" defer></script>
   <!-- Enhancement Extras Scripts -->
-  <script src="/_shared/keyboard-shortcuts.js" defer></script>
+  <!-- DISABLED: Duplicate implementations causing modal to auto-open and not close.
+       Fixed in keyboard-shortcuts.js and ui.js. Disable until resolved. -->
+  <!-- <script src="/_shared/keyboard-shortcuts.js" defer></script> -->
   <script src="/_shared/analytics.js" defer></script>
   <script src="/_shared/search-highlight.js" defer></script>
   <script src="/_shared/search-breadcrumb.js" defer></script>
