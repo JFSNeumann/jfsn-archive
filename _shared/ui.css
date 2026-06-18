@@ -3265,6 +3265,246 @@ blockquote:hover {
   }
 }
 
+/* ─── Phase 1: UX/UI Overhaul — Color Coding by Medium ──────────────────── */
+
+/* Subtle background tints for filter chips and grid cards by medium */
+.filter-chip-collage { background-color: #f0e8e0; border-color: #e0d0c0; }
+.filter-chip-sculpture { background-color: #e8f0f8; border-color: #d8e0f0; }
+.filter-chip-photography { background-color: #f0e8f0; border-color: #e0d0e0; }
+.filter-chip-painting { background-color: #e8f8f0; border-color: #d0e8e0; }
+
+/* Grid card tints — apply to .archive-card or .thumb with data-medium attribute */
+.archive-card[data-medium="collage"],
+.thumb[data-medium="collage"] { --medium-tint: #f0e8e0; }
+
+.archive-card[data-medium="sculpture"],
+.thumb[data-medium="sculpture"] { --medium-tint: #e8f0f8; }
+
+.archive-card[data-medium="photography"],
+.thumb[data-medium="photography"] { --medium-tint: #f0e8f0; }
+
+.archive-card[data-medium="painting"],
+.thumb[data-medium="painting"] { --medium-tint: #e8f8f0; }
+
+/* Apply tint as subtle border or background on hover */
+@media (min-width: 640px) {
+  .archive-card[data-medium]:hover,
+  .archive-card[data-medium]:focus-visible {
+    border-left: 3px solid rgba(255, 102, 0, 0.3);
+    padding-left: 12px;
+  }
+}
+
+/* ─── Phase 1: Enhanced Hover States — Shadow Lift ────────────────────────── */
+
+/* Card hover: lift effect with enhanced shadow */
+.archive-card,
+.thumb__link,
+.card-frame {
+  transition: box-shadow 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.archive-card:hover,
+.archive-card:focus-visible,
+.thumb__link:hover,
+.thumb__link:focus-visible,
+.card-frame:hover,
+.card-frame:focus-visible {
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12) !important;
+  transform: translateY(-2px);
+}
+
+/* ─── Phase 1: Mobile Touch Targets — Increased Hit Area ──────────────────── */
+
+@media (max-width: 767px) {
+  /* Ensure all buttons have 44px minimum tap target */
+  button,
+  a[role="button"],
+  .filter-chip button {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+  }
+
+  /* Increase grid card padding for better mobile spacing */
+  .thumb,
+  .archive-card {
+    padding: 8px;
+    margin: 8px;
+  }
+
+  /* Mobile nav drawer items: larger hit targets */
+  #mobile-menu-drawer a {
+    padding: 20px 24px !important;
+    min-height: 56px;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Filter sidebar: better spacing */
+  .archive-filters {
+    padding: 16px;
+  }
+
+  .filter-chip {
+    padding: 8px 12px;
+    margin: 6px 4px 6px 0;
+  }
+}
+
+/* ─── Phase 1: Breadcrumbs ──────────────────────────────────────────────────── */
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: #575757;
+  padding: 16px 0 12px 0;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #e3bfb1;
+}
+
+.breadcrumb a {
+  color: #B84700;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.breadcrumb a::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: #B84700;
+  transition: width 0.2s ease;
+}
+
+.breadcrumb a:hover,
+.breadcrumb a:focus-visible {
+  color: #FF6600;
+}
+
+.breadcrumb a:hover::after,
+.breadcrumb a:focus-visible::after {
+  width: 100%;
+}
+
+.breadcrumb-separator {
+  color: #c4c7c7;
+  display: inline-block;
+  margin: 0 4px;
+  user-select: none;
+}
+
+.breadcrumb-current {
+  color: #0B0B0B;
+  font-weight: 600;
+}
+
+/* ─── Phase 1: Better Empty States ────────────────────────────────────────── */
+
+#empty-state {
+  padding: 48px 24px;
+  text-align: center;
+  color: #575757;
+  font-family: Inter, sans-serif;
+}
+
+#empty-state h3 {
+  font-family: Playfair Display, Georgia, serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #0B0B0B;
+  margin-bottom: 12px;
+}
+
+#empty-state p {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+#empty-state-suggestion {
+  font-size: 13px;
+  color: #B84700;
+  margin-top: 16px;
+}
+
+/* ─── Phase 1: Skeleton Shimmer — Loading State ────────────────────────────── */
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.skeleton-card {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(
+    90deg,
+    #e8e8e8 25%,
+    #f0f0f0 50%,
+    #e8e8e8 75%
+  );
+  background-size: 1000px 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+  border-radius: 0;
+  margin-bottom: 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-card {
+    animation: none;
+    background: #e8e8e8;
+  }
+}
+
+/* ─── Phase 1: Link Underline Draw Animation ──────────────────────────────── */
+
+.link-underline {
+  position: relative;
+  text-decoration: none;
+  color: #B84700;
+  transition: color 0.2s ease;
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #B84700;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.2s ease;
+}
+
+.link-underline:hover,
+.link-underline:focus-visible {
+  color: #FF6600;
+}
+
+.link-underline:hover::after,
+.link-underline:focus-visible::after {
+  transform: scaleX(1);
+  background-color: #FF6600;
+}
+
 @media (prefers-reduced-motion: reduce) {
   #keyboard-shortcuts-hint,
   .filter-chip-entering,
@@ -3272,7 +3512,8 @@ blockquote:hover {
   .breadcrumb-active::after,
   .toast-entering,
   .toast-exiting,
-  .success-action {
+  .success-action,
+  .link-underline::after {
     animation: none;
     transition: none;
   }
