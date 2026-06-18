@@ -158,6 +158,7 @@
     <li><a href="#typography" class="nav-link">Typography</a></li>
     <li><a href="#colors" class="nav-link">Colors</a></li>
     <li><a href="#utility-classes" class="nav-link">Utility Classes</a></li>
+    <li><a href="#artwork-grid" class="nav-link">Artwork Grid</a></li>
     <li><a href="#animations" class="nav-link">Animations</a></li>
     <li><a href="#accessibility" class="nav-link">Accessibility</a></li>
   </ul>
@@ -1590,6 +1591,277 @@ font-size: 13px;</code></pre>
         <p style="font-size: 9px; color: #8e7164; margin-top: 6px;">Smooth + elegant</p>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- ARTWORK GRID SYSTEM -->
+<div class="guide-section" id="artwork-grid">
+  <h2 class="section-title">Artwork Grid System</h2>
+  <p style="font-size: 14px; color: #575757; margin-bottom: 32px;">Masonry column grid used across archive.html, collage.html, decade pages, and theme pages (3,528+ instances). The system is optimized for responsive image display and hover interactions.</p>
+
+  <h3 class="subsection-title">Grid Layout & Responsiveness</h3>
+  <p style="font-size: 12px; color: #575757; margin-bottom: 16px;"><strong>.medium-grid:</strong> CSS column-based layout that reflows based on viewport width. Images maintain aspect ratio; column count adapts responsively.</p>
+
+  <table class="token-table" style="margin-top: 20px;">
+    <thead>
+      <tr>
+        <th>Breakpoint</th>
+        <th>Columns</th>
+        <th>Use Case</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td>Desktop (> 1024px)</td>
+        <td>4 columns</td>
+        <td>Full archive view, primary experience</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td>Tablet (600–1024px)</td>
+        <td>3 columns</td>
+        <td>iPad landscape, wide phones</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td>Mobile (< 600px)</td>
+        <td>2 columns</td>
+        <td>iPhone, portrait phones</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 class="subsection-title">HTML Structure</h3>
+  <p style="font-size: 12px; color: #575757; margin-bottom: 16px;">The grid wrapper uses <code>.medium-grid</code>, and each artwork is wrapped in a semantic <code>&lt;figure&gt;</code> with <code>.thumb</code> class:</p>
+
+  <div class="snippet-box">
+    <h4>Grid Container</h4>
+    <pre><code>&lt;div class="medium-grid"&gt;
+  &lt;!-- thumbnails here --&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+
+  <div class="snippet-box">
+    <h4>Individual Artwork Thumbnail</h4>
+    <pre><code>&lt;figure class="thumb"&gt;
+  &lt;a class="thumb__link" href="artwork.html?id=art0001" style="background-color:#ff003c;"&gt;
+    &lt;img
+      srcset="artworks/mini/art0001.avif 200w, artworks/thumbs/art0001.avif 400w"
+      sizes="(max-width:600px) calc(50vw - 1rem),
+              (max-width:1024px) calc(33vw - 1rem),
+              calc(25vw - 1rem)"
+      src="artworks/thumbs/art0001.avif"
+      alt="Work Title (Medium, Date)"
+      loading="lazy"
+      width="400"
+      height="800"
+    /&gt;
+    &lt;figcaption class="thumb__caption"&gt;
+      &lt;a href="artwork.html?id=art0001"&gt;Work Title&lt;/a&gt;
+      &lt;span&gt;1990&lt;/span&gt;
+    &lt;/figcaption&gt;
+  &lt;/a&gt;
+&lt;/figure&gt;</code></pre>
+  </div>
+
+  <h3 class="subsection-title">Key Components</h3>
+
+  <div style="background: white; border: 1px solid #8e7164; padding: 20px; margin-bottom: 20px;">
+    <p style="font-size: 12px; font-weight: 600; color: #0B0B0B; margin: 0 0 8px;"><strong>.thumb</strong></p>
+    <p style="font-size: 11px; color: #575757; margin: 0; line-height: 1.6;">
+      Figure wrapper. <code>break-inside: avoid</code> prevents column breaks mid-image. Bottom margin (0.75rem) separates items vertically.
+    </p>
+  </div>
+
+  <div style="background: white; border: 1px solid #8e7164; padding: 20px; margin-bottom: 20px;">
+    <p style="font-size: 12px; font-weight: 600; color: #0B0B0B; margin: 0 0 8px;"><strong>.thumb__link</strong></p>
+    <p style="font-size: 11px; color: #575757; margin: 0 0 8px; line-height: 1.6;">
+      <code>cursor: zoom-in</code> signals enlargement. <code>isolation: isolate</code> creates stacking context. Background color set inline (dominant color from artwork).
+    </p>
+    <p style="font-size: 11px; color: #8e7164; font-weight: 600; margin: 0;">Required attributes:</p>
+    <ul style="margin: 4px 0 0; padding-left: 16px; font-size: 11px; color: #575757;">
+      <li><code>href="artwork.html?id=artNNNN"</code> — deep link to work detail</li>
+      <li><code>style="background-color:..."</code> — dominant color (from catalog)</li>
+    </ul>
+  </div>
+
+  <div style="background: white; border: 1px solid #8e7164; padding: 20px; margin-bottom: 20px;">
+    <p style="font-size: 12px; font-weight: 600; color: #0B0B0B; margin: 0 0 8px;"><strong>.thumb__caption</strong></p>
+    <p style="font-size: 11px; color: #575757; margin: 0 0 8px; line-height: 1.6;">
+      Contains title link and year. Title link inherits orange on parent hover. Year displayed as &lt;span&gt;.
+    </p>
+    <p style="font-size: 11px; color: #8e7164; margin: 0;"><strong>Structure:</strong> <code>&lt;a href="..."&gt;Title&lt;/a&gt; &lt;span&gt;Year&lt;/span&gt;</code></p>
+  </div>
+
+  <h3 class="subsection-title">Image Specifications & Responsive Sizes</h3>
+  <p style="font-size: 12px; color: #575757; margin-bottom: 16px;"><strong>srcset:</strong> Two image sizes optimized for different DPR (device pixel ratio).</p>
+
+  <table class="data-table" style="margin-top: 12px;">
+    <thead>
+      <tr style="background: #fcf9f3;">
+        <th style="padding: 8px; text-align: left; border-bottom: 2px solid #8e7164;">Image Version</th>
+        <th style="padding: 8px; text-align: left; border-bottom: 2px solid #8e7164;">Width</th>
+        <th style="padding: 8px; text-align: left; border-bottom: 2px solid #8e7164;">Use Case</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td style="padding: 8px;"><code>artworks/mini/</code></td>
+        <td style="padding: 8px;">200w</td>
+        <td style="padding: 8px;">Mobile (< 600px), 1x DPR</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td style="padding: 8px;"><code>artworks/thumbs/</code></td>
+        <td style="padding: 8px;">400w</td>
+        <td style="padding: 8px;">Tablet/desktop, 2x DPR</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p style="font-size: 12px; color: #575757; margin-top: 16px;"><strong>sizes:</strong> Tells browser how wide image will be rendered at each breakpoint:</p>
+  <pre style="background: #fcf9f3; border: 1px solid #c4c7c7; padding: 12px; font-family: ui-monospace, monospace; font-size: 11px; margin: 12px 0; overflow-x: auto;"><code>sizes="(max-width:600px) calc(50vw - 1rem),
+        (max-width:1024px) calc(33vw - 1rem),
+        calc(25vw - 1rem)"</code></pre>
+  <ul style="font-size: 11px; color: #575757; margin: 12px 0 0; padding-left: 16px; line-height: 1.8;">
+    <li><strong>Mobile:</strong> 50vw - 1rem (half width minus gap)</li>
+    <li><strong>Tablet:</strong> 33vw - 1rem (third width minus gap)</li>
+    <li><strong>Desktop:</strong> 25vw - 1rem (quarter width minus gap)</li>
+  </ul>
+
+  <h3 class="subsection-title">Hover & Focus Interactions</h3>
+  <p style="font-size: 12px; color: #575757; margin-bottom: 16px;">Four simultaneous interactions enhance the thumbnail experience without overwhelming motion-sensitive users:</p>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0;">
+    <div style="background: white; border: 1px solid #8e7164; padding: 16px;">
+      <p style="font-size: 12px; font-weight: 600; color: #0B0B0B; margin: 0 0 8px;">1. Orange Outline</p>
+      <p style="font-size: 11px; color: #575757; margin: 0; line-height: 1.6;">
+        <code>outline: 2px solid #FF6600</code> appears on hover/focus. Animated via <code>outline-color</code> transition.
+      </p>
+    </div>
+    <div style="background: white; border: 1px solid #8e7164; padding: 16px;">
+      <p style="font-size: 12px; font-weight: 600; color: #0B0B0B; margin: 0 0 8px;">2. Soft Shadow</p>
+      <p style="font-size: 11px; color: #575757; margin: 0; line-height: 1.6;">
+        <code>box-shadow: 0 4px 16px rgba(0,0,0,0.08)</code> adds subtle depth on hover/focus.
+      </p>
+    </div>
+    <div style="background: white; border: 1px solid #8e7164; padding: 16px;">
+      <p style="font-size: 12px; font-weight: 600; color: #0B0B0B; margin: 0 0 8px;">3. Saturation Desaturation</p>
+      <p style="font-size: 11px; color: #575757; margin: 0; line-height: 1.6;">
+        <code>::before</code> overlay with <code>mix-blend-mode: saturation</code> greys the top 40%, fades toward bottom. Removed on hover.
+      </p>
+    </div>
+    <div style="background: white; border: 1px solid #8e7164; padding: 16px;">
+      <p style="font-size: 12px; font-weight: 600; color: #0B0B0B; margin: 0 0 8px;">4. Title Highlight</p>
+      <p style="font-size: 11px; color: #575757; margin: 0; line-height: 1.6;">
+        <code>.thumb__caption a</code> color changes to <code>#FF6600</code> on hover anywhere on card.
+      </p>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">Performance Best Practices</h3>
+  <div style="background: #f1f8f4; border-left: 4px solid #4CAF50; padding: 16px; margin: 20px 0;">
+    <p style="font-size: 12px; color: #333; margin: 0; line-height: 1.8;">
+      <strong>✅ loading="lazy":</strong> Images below fold load on-demand. First 2–3 rows use <code>loading="eager"</code>.<br/>
+      <strong>✅ srcset + sizes:</strong> Browser selects best image for device/viewport (no wasteful full-res on mobile).<br/>
+      <strong>✅ AVIF format:</strong> ~50% smaller than PNG/JPG at same quality. Fallback to jpg via mime type checking.<br/>
+      <strong>✅ Dominant color bg:</strong> Placeholder background prevents layout shift while image loads.<br/>
+      <strong>✅ width/height:</code></strong> Explicit dimensions allow CLS-safe rendering while image loads.
+    </p>
+  </div>
+
+  <h3 class="subsection-title">Accessibility Notes</h3>
+  <ul style="font-size: 11px; color: #575757; padding-left: 16px; line-height: 1.8;">
+    <li><code>alt="Work Title (Medium, Date)"</code> — describes work for screen readers. Include medium and date when available.</li>
+    <li><code>:focus-visible</code> — applies same styles as hover for keyboard navigation.</li>
+    <li><code>@media (prefers-reduced-motion: reduce)</code> — disables all transitions for motion-sensitive users.</li>
+    <li><code>cursor: zoom-in</code> — signals that clicking will enlarge. Alternative: remove if not preferred.</li>
+  </ul>
+
+  <h3 class="subsection-title">Usage Patterns Across Site</h3>
+  <table class="token-table">
+    <thead>
+      <tr>
+        <th>Page</th>
+        <th>Grid Class</th>
+        <th>Instances</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><code>collage.html</code></td>
+        <td><code>.medium-grid</code></td>
+        <td>638</td>
+        <td>All collage works, 4-col responsive</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><code>archive.html</code></td>
+        <td><code>.medium-grid</code></td>
+        <td>1,084</td>
+        <td>Filterable, all works, 4-col responsive</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><code>sculpture.html</code></td>
+        <td><code>.medium-grid</code></td>
+        <td>76</td>
+        <td>Sculpture-only view</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><code>photography.html</code></td>
+        <td><code>.medium-grid</code></td>
+        <td>328</td>
+        <td>Photography-only view</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><code>painting.html</code></td>
+        <td><code>.medium-grid</code></td>
+        <td>42</td>
+        <td>Painting-only view</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><code>1970s–2020s.html</code></td>
+        <td><code>.medium-grid</code></td>
+        <td>~180/year</td>
+        <td>Decade-based grouping</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><code>guernica.html</code></td>
+        <td><code>.medium-grid</code></td>
+        <td>232</td>
+        <td>Theme: Guernica variations</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><code>favorites.html</code></td>
+        <td><code>.medium-grid</code></td>
+        <td>45</td>
+        <td>User-selected favorites (from favorites.txt)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 class="subsection-title">Common Modifications</h3>
+
+  <div class="snippet-box">
+    <h4>Change Column Count (e.g., 6-column grid for thumbnails)</h4>
+    <pre><code>.large-grid {
+  column-count: 6;
+  column-gap: 0.75rem;
+}
+@media (max-width: 1024px) { .large-grid { column-count: 4; } }
+@media (max-width: 600px)  { .large-grid { column-count: 3; } }</code></pre>
+  </div>
+
+  <div class="snippet-box">
+    <h4>Remove Hover Saturation Effect</h4>
+    <pre><code>.thumb__link::before {
+  display: none; /* Hide saturation overlay entirely */
+}</code></pre>
+  </div>
+
+  <div class="snippet-box">
+    <h4>Change Hover Outline Color</h4>
+    <pre><code>.thumb__link:hover img,
+.thumb__link:focus-visible img {
+  outline-color: #8e7164; /* Warm brown instead of orange */
+}</code></pre>
   </div>
 </div>
 
