@@ -159,6 +159,7 @@
     <li><a href="#colors" class="nav-link">Colors</a></li>
     <li><a href="#utility-classes" class="nav-link">Utility Classes</a></li>
     <li><a href="#artwork-grid" class="nav-link">Artwork Grid</a></li>
+    <li><a href="#filter-chips" class="nav-link">Filter Chips</a></li>
     <li><a href="#animations" class="nav-link">Animations</a></li>
     <li><a href="#accessibility" class="nav-link">Accessibility</a></li>
   </ul>
@@ -1862,6 +1863,252 @@ font-size: 13px;</code></pre>
 .thumb__link:focus-visible img {
   outline-color: #8e7164; /* Warm brown instead of orange */
 }</code></pre>
+  </div>
+</div>
+
+<!-- FILTER CHIP COMPONENT -->
+<div class="guide-section" id="filter-chips">
+  <h2 class="section-title">Filter Chip Component</h2>
+  <p style="font-size: 14px; color: #575757; margin-bottom: 32px;">Interactive feedback component used on archive.html (40+ instances) to display active filters. Chips dynamically render as users select medium, decade, series, and orientation filters. Each chip has a remove button (×) and optional "Clear all" action.</p>
+
+  <h3 class="subsection-title">Markup Structure</h3>
+
+  <div class="snippet-box">
+    <h4>Individual Filter Chip</h4>
+    <pre><code>&lt;span class="filter-chip"&gt;
+  Collage
+  &lt;button
+    aria-label="Remove Collage filter"
+    data-filter-type="medium"
+    data-filter-val="collage"
+  &gt;×&lt;/button&gt;
+&lt;/span&gt;</code></pre>
+  </div>
+
+  <div class="snippet-box">
+    <h4>Chip Container (Multiple Chips)</h4>
+    <pre><code>&lt;div id="filter-chips-container" style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px;"&gt;
+  &lt;span class="filter-chip"&gt;Collage &lt;button&gt;×&lt;/button&gt;&lt;/span&gt;
+  &lt;span class="filter-chip"&gt;1990s &lt;button&gt;×&lt;/button&gt;&lt;/span&gt;
+  &lt;span class="filter-chip"&gt;Guernica &lt;button&gt;×&lt;/button&gt;&lt;/span&gt;
+  &lt;button class="filter-chip-clear"&gt;Clear all&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+
+  <h3 class="subsection-title">Visual Design & States</h3>
+
+  <table class="token-table">
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th>Value</th>
+        <th>Purpose</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><strong>Background</strong></td>
+        <td><code>#d3d1c7</code></td>
+        <td>Soft taupe, distinguishable from page bg</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><strong>Border</strong></td>
+        <td><code>1px solid #8e7164</code></td>
+        <td>Warm brown outline (Stitch theme)</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><strong>Text</strong></td>
+        <td><code>#0B0B0B</code> (primary)</td>
+        <td>Filter name</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><strong>Remove Button</strong></td>
+        <td><code>#575757</code> (default), <code>#FF6600</code> (hover)</td>
+        <td>× symbol color</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><strong>Padding</strong></td>
+        <td><code>4px 10px 4px 12px</code></td>
+        <td>Asymmetric: left 12px (text), right 10px (button)</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><strong>Gap</strong></td>
+        <td><code>6px</code></td>
+        <td>Space between label and remove button</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 class="subsection-title">Interaction States</h3>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0;">
+    <div style="background: white; border: 1px solid #8e7164; padding: 16px;">
+      <p style="font-size: 12px; font-weight: 600; color: #0B0B0B; margin: 0 0 8px;">Entry Animation</p>
+      <p style="font-size: 11px; color: #575757; margin: 0; line-height: 1.6;">
+        <code>@keyframes chip-fade-in</code>: Slides up (translateY -4px → 0) while fading in over 300ms. Creates delightful feedback when filter applied.
+      </p>
+    </div>
+    <div style="background: white; border: 1px solid #8e7164; padding: 16px;">
+      <p style="font-size: 12px; font-weight: 600; color: #0B0B0B; margin: 0 0 8px;">Remove Animation</p>
+      <p style="font-size: 11px; color: #575757; margin: 0; line-height: 1.6;">
+        <code>.removing</code> class triggers bottom underline animation (scaleX 0 → 1 over 200ms). Paired with opacity fade for removal.
+      </p>
+    </div>
+    <div style="background: white; border: 1px solid #8e7164; padding: 16px;">
+      <p style="font-size: 12px; font-weight: 600; color: #0B0B0B; margin: 0 0 8px;">Button Hover</p>
+      <p style="font-size: 11px; color: #575757; margin: 0; line-height: 1.6;">
+        Remove button (×) changes from <code>#575757</code> → <code>#FF6600</code> on hover. Signals interactivity clearly.
+      </p>
+    </div>
+    <div style="background: white; border: 1px solid #8e7164; padding: 16px;">
+      <p style="font-size: 12px; font-weight: 600; color: #0B0B0B; margin: 0 0 8px;">Motion Respect</p>
+      <p style="font-size: 11px; color: #575757; margin: 0; line-height: 1.6;">
+        <code>@media (prefers-reduced-motion: reduce)</code> disables all animations for motion-sensitive users.
+      </p>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">JavaScript Implementation</h3>
+  <p style="font-size: 12px; color: #575757; margin-bottom: 16px;">Chips are <strong>generated dynamically</strong> as filters are applied. No static HTML required.</p>
+
+  <div class="snippet-box">
+    <h4>Rendering Chips (Simplified)</h4>
+    <pre><code>const chipItems = [
+  ...medium.map(v => ({ label: v, type: 'medium', val: v })),
+  ...decade.map(v => ({ label: v, type: 'decade', val: v })),
+  ...series.map(v => ({ label: v, type: 'series', val: v }))
+];
+
+filterChips.innerHTML = chipItems.map(c =>
+  `&lt;span class="filter-chip"&gt;
+    ${c.label}
+    &lt;button aria-label="Remove ${c.label} filter"
+            data-filter-type="${c.type}"
+            data-filter-val="${c.val}"&gt;×&lt;/button&gt;
+  &lt;/span&gt;`
+).join('');</code></pre>
+  </div>
+
+  <div class="snippet-box">
+    <h4>Remove Handler</h4>
+    <pre><code>document.getElementById('filter-chips-container')
+  .addEventListener('click', (e) => {
+    if (e.target.tagName === 'BUTTON' && e.target.dataset.filterType) {
+      const chip = e.target.closest('.filter-chip');
+
+      // 1. Add .removing class to trigger underline animation
+      chip.classList.add('removing');
+
+      // 2. After animation, remove chip and reapply filters
+      setTimeout(() => {
+        const [type, val] = [e.target.dataset.filterType, e.target.dataset.filterVal];
+        // Uncheck corresponding checkbox
+        document.querySelector(`input[data-filter-type="${type}"][data-filter-val="${val}"]`)
+          ?.click();
+      }, 200); // Match animation duration
+    }
+  });</code></pre>
+  </div>
+
+  <h3 class="subsection-title">Filter Types & Labels</h3>
+
+  <table class="data-table">
+    <thead>
+      <tr style="background: #fcf9f3;">
+        <th style="padding: 8px; text-align: left; border-bottom: 2px solid #8e7164;">Filter Type</th>
+        <th style="padding: 8px; text-align: left; border-bottom: 2px solid #8e7164;">Values</th>
+        <th style="padding: 8px; text-align: left; border-bottom: 2px solid #8e7164;">Label Display</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td style="padding: 8px;"><code>medium</code></td>
+        <td style="padding: 8px;">collage, sculpture, photography, painting</td>
+        <td style="padding: 8px;">Capitalized (e.g., "Collage")</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td style="padding: 8px;"><code>decade</code></td>
+        <td style="padding: 8px;">1970s, 1980s, 1990s, 2000s, 2010s, 2020s</td>
+        <td style="padding: 8px;">As-is (e.g., "1990s")</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td style="padding: 8px;"><code>series</code></td>
+        <td style="padding: 8px;">Guernica, Targets, Crosses, Mr. Snowmann, etc.</td>
+        <td style="padding: 8px;">Title case (e.g., "Guernica")</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td style="padding: 8px;"><code>orientation</code></td>
+        <td style="padding: 8px;">vertical, horizontal, square</td>
+        <td style="padding: 8px;">Capitalized (e.g., "Vertical")</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 class="subsection-title">"Clear All" Button</h3>
+  <p style="font-size: 12px; color: #575757; margin-bottom: 16px;">Shown only when 2+ chips are active. Unsets all filters and reruns search in one action.</p>
+
+  <div style="background: white; border: 1px solid #8e7164; padding: 16px; margin: 16px 0;">
+    <p style="font-size: 11px; color: #575757; margin: 0; line-height: 1.6;">
+      <strong>Styling:</strong> <code>.filter-chip-clear</code> — no background, underlined text, uppercase. Color: <code>#575757</code> (default) → <code>#FF6600</code> (hover).
+    </p>
+  </div>
+
+  <h3 class="subsection-title">Accessibility</h3>
+  <ul style="font-size: 11px; color: #575757; padding-left: 16px; line-height: 1.8;">
+    <li><code>aria-label="Remove [filter name] filter"</code> — screen reader announces button purpose</li>
+    <li>Remove button uses text symbol <code>×</code> (not image or icon) for screen reader clarity</li>
+    <li><code>data-filter-type</code> and <code>data-filter-val</code> attributes preserve filter info for JS handlers</li>
+    <li>Focus visible on remove button with default browser outline (can be customized with `:focus-visible`)</li>
+    <li>Motion preferences respected: animations disabled for users with <code>prefers-reduced-motion: reduce</code></li>
+  </ul>
+
+  <h3 class="subsection-title">Common Customizations</h3>
+
+  <div class="snippet-box">
+    <h4>Change Chip Background Color</h4>
+    <pre><code>.filter-chip {
+  background: #e8d5c4; /* Lighter warm tone */
+}</code></pre>
+  </div>
+
+  <div class="snippet-box">
+    <h4>Add Icon Before Text (Optional)</h4>
+    <pre><code>.filter-chip::before {
+  content: '✓ ';
+  color: #FF6600;
+  font-weight: 700;
+}</code></pre>
+  </div>
+
+  <div class="snippet-box">
+    <h4>Disable Remove Animation</h4>
+    <pre><code>.filter-chip.removing::after {
+  display: none; /* Hide underline animation */
+}</code></pre>
+  </div>
+
+  <div class="snippet-box">
+    <h4>Custom "Clear All" Styling</h4>
+    <pre><code>.filter-chip-clear {
+  background: #FF6600;
+  color: white;
+  border: 1px solid #FF6600;
+  padding: 4px 12px;
+  text-decoration: none;
+  border-radius: 3px;
+}</code></pre>
+  </div>
+
+  <h3 class="subsection-title">Usage on Archive Page</h3>
+  <p style="font-size: 12px; color: #575757; margin-bottom: 16px;">Integrated into archive.html filter sidebar with form checkboxes. Chips update in real-time as user checks/unchecks filters.</p>
+
+  <div style="background: #f1f8f4; border-left: 4px solid #4CAF50; padding: 16px; margin: 20px 0;">
+    <p style="font-size: 12px; color: #333; margin: 0; line-height: 1.8;">
+      <strong>✅ Real-time sync:</strong> Chips add on checkbox check, remove on uncheck.<br/>
+      <strong>✅ Dynamic labels:</strong> Chips generated from active filter values, not hardcoded.<br/>
+      <strong>✅ Two-way control:</strong> Click × on chip or uncheck box → both update.<br/>
+      <strong>✅ Cumulative filters:</strong> Multiple media/decade/series selections show as separate chips.
+    </p>
   </div>
 </div>
 
