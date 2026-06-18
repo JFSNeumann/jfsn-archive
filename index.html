@@ -61,70 +61,14 @@
     #featured-grid > a > .card-img { flex: 1; aspect-ratio: auto; }
     #featured-grid > a > .card-meta { flex-shrink: 0; }
   }
-  /* Hero rotator */
   /* Text selection — orange highlight site-wide */
   ::selection { background: #FF6600; color: #fff; }
-  .hero-slide {
-    position: absolute; inset: 0; width: 100%; height: 100%;
-    object-fit: cover; object-position: center center;
-    opacity: 0; transform: scale(1.05);
-    transition: opacity 1.2s ease, transform 14s cubic-bezier(0.22,0.61,0.36,1);
-  }
-  .hero-slide.is-active { opacity: 0.92; transform: scale(1.0); }
-  /* Hover slows the zoom further — subtle parallax on mouse-over */
-  .hero-section:hover .hero-slide-d.is-active:not([data-kb]) { transform: scale(1.02); transition: opacity 1.2s ease, transform 8s cubic-bezier(0.22,0.61,0.36,1); }
 
-  /* Detail → reveal: each slide opens tight on a detail of the work and
-     slowly pulls back to the full piece. Start focus = transform-origin,
-     set per slide from featured-hero.txt (4th field, falls back to pos). */
-  @keyframes kb-reveal { from { transform: scale(1.7); } to { transform: scale(1); } }
-  .hero-slide[data-kb="reveal"].is-active { animation: kb-reveal 7.6s cubic-bezier(0.22,0.61,0.36,1) forwards; }
-
-  /* Hero controls — fade in on hover, always visible on touch devices */
-  .hero-ctrl { opacity: 0; transition: opacity 0.25s ease; pointer-events: none; }
-  .hero-section:hover .hero-ctrl,
-  .hero-section:focus-within .hero-ctrl { opacity: 1; pointer-events: auto; }
-  @media (hover: none) { .hero-ctrl { opacity: 1; pointer-events: auto; } }
-
-  /* Dots — ::after expands each dot's tap area without changing the 5px visual */
-  .hero-dot {
-    display: inline-block; width: 5px; height: 5px; border-radius: 50%;
-    background: rgba(255,255,255,0.3); border: 1.5px solid rgba(255,255,255,0.5);
-    cursor: pointer; padding: 0; flex-shrink: 0; position: relative;
-    transition: background 0.2s, border-color 0.2s;
-  }
-  .hero-dot::after { content: ''; position: absolute; inset: -7px; }
-  .hero-dot.is-active { background: rgba(255,255,255,0.9); border-color: rgba(255,255,255,0.9); }
-  .hero-dot:hover { background: rgba(255,255,255,0.6); }
-
-  /* Arrows */
-  .hero-arrow {
-    position: absolute; top: 50%; transform: translateY(-50%); z-index: 20;
-    background: none; border: none; color: rgba(255,255,255,0.5);
-    font-size: 40px; font-weight: 200; cursor: pointer; padding: 20px 18px; line-height: 1;
-  }
-  .hero-arrow:hover { color: rgba(255,255,255,0.9); }
-  #hero-prev-d { left: 0; }
-  #hero-next-d { right: 0; }
-
-  /* Pause button — visual stays small; padding + negative margin give a ~44px hit area */
-  .hero-pause-btn {
-    background: none; border: none; color: rgba(255,255,255,0.55);
-    cursor: pointer; font-size: 10px; letter-spacing: 0.08em;
-    font-family: 'Inter', sans-serif; padding: 16px 12px; margin: -14px -8px; line-height: 1;
-  }
-  .hero-pause-btn:hover { color: rgba(255,255,255,0.9); }
-
-  /* Caption — hint it's a link */
+  /* Hero caption — hint it's a link */
   #hero-caption-d,
   #hero-caption-m { text-decoration: none; }
   #hero-caption-d:hover,
   #hero-caption-m:hover { color: rgba(255,255,255,0.95); text-decoration: underline; text-underline-offset: 3px; }
-
-  @media (prefers-reduced-motion: reduce) {
-    .hero-slide { transition: none; animation: none !important; }
-    .hero-ctrl { transition: none; }
-  }
 
   /* Featured grid — lazy load settle */
   #featured-grid img,
@@ -813,7 +757,6 @@ header.header-hidden{transform:translateY(-100%)}
           <a href="archive.html" class="hero-cta-ghost btn-active">Browse all 1,084 works</a>
         </div>
         <a id="hero-caption-m" href="artwork.html?id=art1010" aria-live="polite" class="font-label-caps text-label-caps no-underline" style="color:rgba(255,255,255,0.6);margin-top:18px;">Untitled (Cassette Torso) · 2020 · COLLAGE</a>
-        <div id="hero-dots-m" class="hero-ctrl" style="display:none;"></div>
       </div>
     </section>
 
@@ -1753,195 +1696,13 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
 (function () {
   'use strict';
 
-  var MAX_SLIDES  = 1;   /* Static cover masthead (Stitch June-2026): hero shows the fixed, preloaded LCP cover (art0392) only — rotation retired. init() still runs activate(0) so the chromatic-river "you are here" marker fires. */
-  var INTERVAL_MS = 8000;
-  var FALLBACK    = [
-    { id: 'art0953', caption: 'XXXIII Días — imagined installation (Photoshop composite) · 2022 · COLLAGE',  pos: 'center 20%'     },
-    { id: 'art1008', caption: 'Pubiern Robodt 365 · 1990 · SCULPTURE',            pos: 'center center'  },
-    { id: 'art1009', caption: 'Untitled (Machine Assemblage) · 2020 · SCULPTURE', pos: 'center center'  },
-    { id: 'art1010', caption: 'Untitled (Cassette Torso) · 2020 · COLLAGE',       pos: 'center center'  },
-  ];
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* Phones get the 1080px -hero-m variant (~80% smaller); desktop gets full res */
-  function heroSrc(id) {
-    return 'artworks/full/' + id + (window.innerWidth < 768 ? '-hero-m.avif' : '-hero.avif');
-  }
-
-  function shuffle(arr) {
-    var a = arr.slice(), i, j, t;
-    for (i = a.length - 1; i > 0; i--) {
-      j = Math.floor(Math.random() * (i + 1));
-      t = a[i]; a[i] = a[j]; a[j] = t;
-    }
-    return a;
-  }
-
-  function makeSlide(h, suffix, eager) {
-    var img = document.createElement('img');
-    img.className  = 'hero-slide hero-slide-' + suffix;
-    img.src        = heroSrc(h.id);
-    img.alt        = h.caption + ' — Jeffrey F. S. Neumann';
-    img.style.objectPosition = h.pos;
-    /* Detail → reveal: open on a detail of the work, pull back to the whole.
-       Start focus = optional 4th field in featured-hero.txt, else the pos. */
-    img.style.transformOrigin = h.origin || h.pos || 'center center';
-    /* Slide 0 is the LCP element — it must NOT animate. The kb-reveal
-       transform: scale(1.7 to 1) over 7.6s keeps the hero image producing a
-       changing paint size for the whole animation, so Chrome finalizes LCP at
-       the animation's END (~7.6s on mobile). Rendering slide 0 statically at
-       final scale lets LCP fire as soon as the (preloaded) image loads. Slides
-       2+ keep the reveal for visual life. */
-    if (!eager) img.dataset.kb = 'reveal';
-    img.setAttribute('loading', eager ? 'eager' : 'lazy');
-    if (eager) img.setAttribute('fetchpriority', 'high');
-    return img;
-  }
-
-  function makeDots(container, n) {
-    container.innerHTML = '';
-    for (var i = 0; i < n; i++) {
-      var btn = document.createElement('button');
-      btn.className = 'hero-dot';
-      btn.setAttribute('aria-label', 'Go to slide ' + (i + 1));
-      btn.dataset.dotIdx = i;
-      container.appendChild(btn);
-    }
-    return container.querySelectorAll('.hero-dot');
-  }
-
-  function resetAnim(el) { el.style.animation = 'none'; el.offsetHeight; el.style.animation = ''; }
-
-  function init(pool) {
-    /* Slide 0 is fixed (the LCP anchor — preloaded in <head>, kept lightest in
-       featured-hero.txt); the rest are shuffled for variety. This makes the LCP
-       image deterministic so the <head> preload actually matches what renders. */
-    var selected = [pool[0]].concat(shuffle(pool.slice(1))).slice(0, MAX_SLIDES);
-
-    var dWrap    = document.getElementById('hero-slides-d');
-    var mWrap    = document.getElementById('hero-slides-m');
-    var dDotsEl  = document.getElementById('hero-dots-d');
-    var mDotsEl  = document.getElementById('hero-dots-m');
-    var dCaption = document.getElementById('hero-caption-d');
-    var mCaption = document.getElementById('hero-caption-m');
-    var pauseBtn = document.getElementById('hero-pause-d');
-    var prevBtn  = document.getElementById('hero-prev-d');
-    var nextBtn  = document.getElementById('hero-next-d');
-
-    /* Build slides. Slide 0 (the LCP element) is stamped statically in the HTML
-       (already in #hero-slides-{d,m}, preloaded, no animation) so it paints
-       without waiting for this JS — reuse it, only build slides 1..N here. */
-    selected.forEach(function (h, i) {
-      if (i === 0) return;
-      if (dWrap) dWrap.appendChild(makeSlide(h, 'd', false));
-      if (mWrap) mWrap.appendChild(makeSlide(h, 'm', false));
-    });
-
-    var dSlides = dWrap ? dWrap.querySelectorAll('.hero-slide-d') : [];
-    var mSlides = mWrap ? mWrap.querySelectorAll('.hero-slide-m') : [];
-    var dDots   = dDotsEl ? makeDots(dDotsEl, selected.length) : [];
-    var mDots   = mDotsEl ? makeDots(mDotsEl, selected.length) : [];
-
-    var idx       = 0;
-    var firstLoad = true;
-    var paused    = false;
-    var timer     = null;
-
-    function activate(i) {
-      /* Tell the river band which work is on the hero ("you are here" marker) */
-      window.__heroWorkId = selected[i].id;
-      document.dispatchEvent(new CustomEvent('herowork'));
-      [dSlides, mSlides].forEach(function (list) {
-        list.forEach(function (s, j) { var on = j === i; if (on) resetAnim(s); s.classList.toggle('is-active', on); });
-      });
-      [dDots, mDots].forEach(function (list) {
-        list.forEach(function (d, j) { d.classList.toggle('is-active', j === i); });
-      });
-      /* Caption synced to crossfade midpoint (instant on first load) */
-      var delay = firstLoad ? 0 : 600;
-      firstLoad = false;
-      setTimeout(function () {
-        var h = selected[i];
-        if (dCaption) { dCaption.textContent = h.caption; dCaption.href = 'artwork.html?id=' + h.id; }
-        if (mCaption) { mCaption.textContent = h.caption; mCaption.href = 'artwork.html?id=' + h.id; }
-      }, delay);
-      /* Preload next slide ~2s after activation */
-      var nextH = selected[(i + 1) % selected.length];
-      setTimeout(function () {
-        new Image().src = heroSrc(nextH.id);
-      }, 2000);
-    }
-
-    function startTimer() {
-      if (reduced || paused || selected.length < 2) return;   /* static cover masthead: no rotation */
-      timer = setInterval(function () { idx = (idx + 1) % selected.length; activate(idx); }, INTERVAL_MS);
-    }
-    function stopTimer() { clearInterval(timer); timer = null; }
-
-    function advance(dir) {
-      idx = (idx + dir + selected.length) % selected.length;
-      stopTimer(); activate(idx); if (!paused) startTimer();
-    }
-
-    /* Pause on hover */
-    [document.getElementById('hero-d'), document.getElementById('hero-m')].forEach(function (sec) {
-      if (!sec) return;
-      sec.addEventListener('mouseenter', stopTimer);
-      sec.addEventListener('mouseleave', function () { if (!paused) startTimer(); });
-    });
-
-    /* Pause button toggle */
-    if (pauseBtn) pauseBtn.addEventListener('click', function () {
-      paused = !paused;
-      pauseBtn.textContent = paused ? '▶' : '❙❙';
-      pauseBtn.setAttribute('aria-label', paused ? 'Play slideshow' : 'Pause slideshow');
-      paused ? stopTimer() : startTimer();
-    });
-
-    /* Arrows */
-    if (prevBtn) prevBtn.addEventListener('click', function () { advance(-1); });
-    if (nextBtn) nextBtn.addEventListener('click', function () { advance(1); });
-
-    /* Touch swipe */
-    [document.getElementById('hero-d'), document.getElementById('hero-m')].forEach(function (sec) {
-      if (!sec) return;
-      var tx = 0;
-      sec.addEventListener('touchstart', function (e) { tx = e.touches[0].clientX; }, { passive: true });
-      sec.addEventListener('touchend', function (e) {
-        var dx = e.changedTouches[0].clientX - tx;
-        if (Math.abs(dx) > 40) advance(dx < 0 ? 1 : -1);
-      });
-    });
-
-    /* Keyboard arrows — skip if focus is in a text field */
-    document.addEventListener('keydown', function (e) {
-      var tag = document.activeElement && document.activeElement.tagName;
-      if (tag === 'INPUT' || tag === 'TEXTAREA') return;
-      if (e.key === 'ArrowLeft')  advance(-1);
-      if (e.key === 'ArrowRight') advance(1);
-    });
-
-    /* Dot clicks */
-    [dDots, mDots].forEach(function (list) {
-      list.forEach(function (d) {
-        d.addEventListener('click', function () {
-          idx = parseInt(d.dataset.dotIdx, 10);
-          stopTimer(); activate(idx); if (!paused) startTimer();
-        });
-      });
-    });
-
-    activate(idx);
-    startTimer();
-  }
-
-  /* Hero pool — inlined so the LCP image is discovered at parse time, not after
-     a featured-hero.txt round trip. build_catalog.py stamps this block from
-     artworks/featured-hero.txt (still the editing surface) on every run. */
+  /* Set initial hero work for chromatic river "you are here" marker */
   /* HERO_POOL:START — auto-generated, do not edit by hand */
   var POOL = [{"id": "art1010", "caption": "Untitled (Cassette Torso) · 2020 · COLLAGE", "pos": "center center"}, {"id": "art0953", "caption": "XXXIII Días — imagined installation (Photoshop composite) · 2022 · COLLAGE", "pos": "center 20%"}, {"id": "art1008", "caption": "Pubiern Robodt 365 · 1990 · SCULPTURE", "pos": "center center"}, {"id": "art1009", "caption": "Untitled (Machine Assemblage) · 2020 · SCULPTURE", "pos": "center center"}, {"id": "art0392", "caption": "Art Machine · 2010 · COLLAGE", "pos": "center center", "origin": "72% 45%"}, {"id": "art0585", "caption": "Untitled (Cube Grid) · 1970 · PAINTING", "pos": "center center", "origin": "35% 35%"}, {"id": "art0250", "caption": "Crown Tower with Discs · 1990 · SCULPTURE", "pos": "center 60%", "origin": "50% 65%"}, {"id": "art0779", "caption": "The Defining Years · 2000 · COLLAGE", "pos": "center center", "origin": "30% 40%"}, {"id": "art0663", "caption": "XXXIII Aunt Mary · 2010 · COLLAGE", "pos": "center 35%", "origin": "50% 30%"}, {"id": "art1020", "caption": "Clockwork Targets Formation · 2020 · PAINTING", "pos": "center center", "origin": "35% 60%"}];
   /* HERO_POOL:END */
-  init(POOL.length >= 2 ? POOL : FALLBACK);
+  var heroWork = POOL[0];
+  window.__heroWorkId = heroWork.id;
+  document.dispatchEvent(new CustomEvent('herowork'));
 
   /* LCP optimization: swap hero from lightweight to full-quality after LCP completes */
   if ('PerformanceObserver' in window) {
