@@ -1,0 +1,260 @@
+/* infinite-scroll.css — Infinite scroll and load-more styles */
+
+/* Infinite scroll container */
+[data-infinite-scroll] {
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Items fade in on load */
+.infinite-scroll-item {
+  animation: infinite-scroll-fade-in 0.4s ease-out;
+}
+
+@keyframes infinite-scroll-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Sentinel element */
+.infinite-scroll-sentinel {
+  position: relative;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.infinite-scroll-sentinel.loading {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Loading indicator */
+.infinite-scroll-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  animation: loader-enter 0.3s ease-out;
+}
+
+@keyframes loader-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.loader-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #e3bfb1;
+  border-top-color: #FF6600;
+  border-radius: 50%;
+  animation: loader-spin 0.8s linear infinite;
+}
+
+@keyframes loader-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loader-text {
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  color: #8e7164;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Complete state */
+.infinite-scroll-sentinel.complete {
+  opacity: 1;
+}
+
+.infinite-scroll-complete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  animation: loader-enter 0.3s ease-out;
+}
+
+.infinite-scroll-complete p {
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  color: #8e7164;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Load more button */
+[data-load-more-btn] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 12px 20px;
+  margin-top: 24px;
+  background: transparent;
+  border: 1px solid #8e7164;
+  color: #0B0B0B;
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 2px;
+}
+
+[data-load-more-btn]:hover {
+  background: #fcf9f3;
+  border-color: #FF6600;
+  color: #FF6600;
+}
+
+[data-load-more-btn]:focus-visible {
+  outline: 2px solid #FF6600;
+  outline-offset: 2px;
+}
+
+[data-load-more-btn]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+[data-load-more-btn].loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Grid layout for infinite scroll items */
+.infinite-scroll-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  padding-bottom: 60px;
+}
+
+.infinite-scroll-item {
+  position: relative;
+}
+
+/* Masonry layout variant */
+.infinite-scroll-masonry {
+  column-count: 4;
+  column-gap: 16px;
+  padding-bottom: 60px;
+}
+
+.infinite-scroll-item {
+  break-inside: avoid;
+  margin-bottom: 16px;
+}
+
+/* Mobile responsive */
+@media (max-width: 1200px) {
+  .infinite-scroll-masonry {
+    column-count: 3;
+  }
+
+  .infinite-scroll-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .infinite-scroll-masonry {
+    column-count: 2;
+  }
+
+  .infinite-scroll-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+
+  [data-load-more-btn] {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 600px) {
+  .infinite-scroll-masonry {
+    column-count: 1;
+    padding-bottom: 40px;
+  }
+
+  .infinite-scroll-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .infinite-scroll-sentinel {
+    min-height: 80px;
+  }
+
+  .loader-spinner {
+    width: 24px;
+    height: 24px;
+    border-width: 2px;
+  }
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .infinite-scroll-item,
+  .infinite-scroll-loader,
+  .infinite-scroll-complete {
+    animation: none;
+    opacity: 1;
+  }
+
+  .loader-spinner {
+    animation: none;
+    border-top-color: transparent;
+  }
+}
+
+/* Loading skeleton for items */
+.infinite-scroll-item.skeleton {
+  background: linear-gradient(
+    90deg,
+    #ebe8e2 0%,
+    #f5eee5 50%,
+    #ebe8e2 100%
+  );
+  background-size: 200% 100%;
+  animation: infinite-scroll-shimmer 1.5s infinite;
+  border-radius: 2px;
+}
+
+@keyframes infinite-scroll-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

@@ -1,0 +1,248 @@
+/* advanced-interactions.css — Drag-drop, long-press, context menu styles */
+
+/* Draggable elements */
+[data-draggable] {
+  cursor: move;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: opacity 0.2s ease;
+}
+
+[data-draggable]:hover {
+  opacity: 0.8;
+}
+
+[data-draggable].dragging {
+  opacity: 0.7;
+  transform: scale(1.02) rotateZ(2deg);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  border: 1px dashed #FF6600;
+}
+
+/* Disable text selection while dragging */
+body.dragging-active {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Drop zones */
+[data-drop-zone] {
+  position: relative;
+  border: 2px dashed transparent;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+[data-drop-zone].drop-over {
+  border-color: #FF6600;
+  background: rgba(255, 102, 0, 0.05);
+  box-shadow: inset 0 0 12px rgba(255, 102, 0, 0.1);
+}
+
+[data-drop-zone].drop-over::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 2px;
+  background: linear-gradient(135deg, rgba(255, 102, 0, 0.05), rgba(255, 102, 0, 0));
+  animation: drop-zone-pulse 0.6s ease-out;
+  pointer-events: none;
+}
+
+@keyframes drop-zone-pulse {
+  from {
+    opacity: 1;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+}
+
+/* Long press indicator */
+[data-long-press] {
+  position: relative;
+  cursor: pointer;
+}
+
+[data-long-press].long-pressed {
+  opacity: 0.7;
+  background: rgba(255, 102, 0, 0.1);
+  border-color: #FF6600;
+}
+
+[data-long-press]::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 2px;
+  background: radial-gradient(circle, rgba(255, 102, 0, 0.2), transparent);
+  opacity: 0;
+  animation: none;
+}
+
+[data-long-press].long-pressed::before {
+  animation: long-press-indicator 0.5s ease-out;
+}
+
+@keyframes long-press-indicator {
+  from {
+    opacity: 1;
+    transform: scale(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+/* Context menu */
+.context-menu {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  background: #fcf9f3;
+  border: 1px solid #8e7164;
+  border-radius: 4px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  z-index: 99999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  min-width: 150px;
+}
+
+.context-menu.open {
+  opacity: 1;
+  pointer-events: auto;
+  animation: context-menu-pop 0.2s ease-out;
+}
+
+@keyframes context-menu-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.context-menu-item {
+  background: none;
+  border: none;
+  padding: 12px 16px;
+  text-align: left;
+  cursor: pointer;
+  color: #0B0B0B;
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid #e3bfb1;
+}
+
+.context-menu-item:last-child {
+  border-bottom: none;
+}
+
+.context-menu-item:hover {
+  background: #f5eee5;
+  color: #FF6600;
+  padding-left: 20px;
+}
+
+.context-menu-item:focus-visible {
+  outline: 2px solid #FF6600;
+  outline-offset: -2px;
+}
+
+/* Long press haptic feedback */
+.haptic-feedback {
+  animation: haptic-pulse 0.1s ease-out;
+}
+
+@keyframes haptic-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+/* Drag handle cursor */
+.drag-handle {
+  cursor: grab;
+  padding: 4px 8px;
+  border-radius: 2px;
+  transition: background 0.2s ease;
+}
+
+.drag-handle:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
+
+/* Mobile optimizations */
+@media (max-width: 600px) {
+  .context-menu {
+    min-width: 140px;
+    font-size: 12px;
+  }
+
+  .context-menu-item {
+    padding: 10px 14px;
+    font-size: 12px;
+  }
+
+  [data-draggable].dragging {
+    transform: scale(1.05);
+  }
+
+  [data-drop-zone] {
+    min-height: 60px;
+  }
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  [data-draggable],
+  [data-drop-zone],
+  [data-long-press],
+  .context-menu,
+  .context-menu-item,
+  .drag-handle {
+    transition: none;
+    animation: none;
+  }
+
+  [data-draggable].dragging,
+  [data-drop-zone].drop-over,
+  [data-long-press].long-pressed {
+    transform: none;
+  }
+
+  [data-drop-zone].drop-over::before,
+  [data-long-press]::before,
+  .context-menu.open {
+    animation: none;
+  }
+}
+
+/* Print styles */
+@media print {
+  .context-menu,
+  [data-draggable].dragging {
+    display: none;
+  }
+}
