@@ -12,7 +12,8 @@
 <link rel="manifest" href="manifest.json"/>
 <link rel="apple-touch-icon" href="icon-192.png"/>
 <!-- HERO_PRELOAD:START — auto-generated from featured-hero.txt line 1 by build_catalog.py -->
-<!-- Hero images not yet deployed — placeholder removed -->
+<link rel="preload" as="image" href="artworks/full/art1010-hero-m.avif" type="image/avif" media="(max-width: 767px)" fetchpriority="high"/>
+<link rel="preload" as="image" href="artworks/full/art1010-hero.avif" type="image/avif" media="(min-width: 768px)" fetchpriority="high"/>
 <!-- HERO_PRELOAD:END -->
 <meta property="og:type" content="website"/>
 <meta property="og:title" content="Jeffrey F. S. Neumann — Archive"/>
@@ -1627,7 +1628,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
     if (!grid) return;
     try {
       const [works, chromatic] = await Promise.all([
-        fetch('catalog-home.json?v=20260618024827').then(r => r.json()),
+        fetch('catalog-home.json?v=20260618174209').then(r => r.json()),
         fetch('chromatic.json').then(r => r.json()).catch(() => []),
       ]);
 

@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1718704360'; // Session 67 continued: Remove broken monitor.js reference
+const CACHE_V  = 'jfsn-20260618174209'; // Session 67: Fix analytics error + remove broken hero preload
 const PRECACHE = [
   '/',
   '/index.html',
