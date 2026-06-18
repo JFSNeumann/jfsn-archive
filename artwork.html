@@ -81,6 +81,9 @@
   .reveal-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
   @media (prefers-reduced-motion: reduce) { .reveal-on-scroll { opacity: 1; transform: none; transition: none; } }
 </style>
+  <!-- Phase 1 Enhancement Stylesheets -->
+  <link rel="stylesheet" href="/_shared/lightbox.css"/>
+  <link rel="stylesheet" href="/_shared/enhancements.css"/>
 </head>
 <body class="font-body-md text-body-md bg-bone-white text-deep-ink">
 
@@ -1259,5 +1262,8 @@ fetch('catalog.json')
 
 <script src="_shared/ui.js" defer></script>
 <script src="_shared/nav-active.js" defer></script>
+  <!-- Phase 1 Enhancement Scripts -->
+  <script src="/_shared/lightbox.js" defer></script>
+  <script src="/_shared/scroll-to-top.js" defer></script>
 </body>
 </html>

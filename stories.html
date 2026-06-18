@@ -181,6 +181,9 @@
   .artwork-peek .peek-thumb { display:none;position:absolute;bottom:calc(100% + 8px);left:0;width:100px;height:100px;object-fit:cover;border:1px solid #e3bfb1;box-shadow:0 4px 16px rgba(0,0,0,0.12);z-index:10;pointer-events:none; }
   .artwork-peek:hover .peek-thumb { display:block; }
 </style>
+  <!-- Phase 1 Enhancement Stylesheets -->
+  <link rel="stylesheet" href="/_shared/lightbox.css"/>
+  <link rel="stylesheet" href="/_shared/enhancements.css"/>
 </head>
 <body class="bg-background text-deep-ink font-body-md" data-page-label="STORIES">
 
@@ -1084,5 +1087,8 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
 <script src="_shared/nav-active.js" defer></script>
 <script src="_shared/ui.js" defer></script>
 
+  <!-- Phase 1 Enhancement Scripts -->
+  <script src="/_shared/lightbox.js" defer></script>
+  <script src="/_shared/scroll-to-top.js" defer></script>
 </body>
 </html>

@@ -95,6 +95,9 @@
     .not-found__thumb:hover { opacity: 1; }
     .not-found__thumb img { width: 100%; height: 100%; object-fit: cover; }
   </style>
+  <!-- Phase 1 Enhancement Stylesheets -->
+  <link rel="stylesheet" href="/_shared/lightbox.css"/>
+  <link rel="stylesheet" href="/_shared/enhancements.css"/>
 </head>
 <body class="bg-bone-white text-deep-ink overflow-x-hidden">
 
@@ -736,5 +739,8 @@ fetch('catalog.json').then(r=>r.json()).then(works=>{
 </script>
 <script src="_shared/ui.js" defer></script>
 <script src="_shared/nav-active.js" defer></script>
+  <!-- Phase 1 Enhancement Scripts -->
+  <script src="/_shared/lightbox.js" defer></script>
+  <script src="/_shared/scroll-to-top.js" defer></script>
 </body>
 </html>
