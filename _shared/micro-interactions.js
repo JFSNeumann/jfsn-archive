@@ -1102,6 +1102,172 @@
     });
   }
 
+  /* ─── Phase 12: Fullscreen Gallery Mode ────────────────────────────────────– */
+  window.openFullscreenGallery = function(imageUrl, title) {
+    var gallery = document.querySelector('.fullscreen-gallery');
+    if (!gallery) return;
+    gallery.querySelector('.fullscreen-gallery-image').src = imageUrl;
+    gallery.querySelector('.fullscreen-gallery-info').textContent = title || '';
+    gallery.classList.add('active');
+  };
+
+  function setupFullscreenGallery() {
+    var gallery = document.querySelector('.fullscreen-gallery');
+    var closeBtn = gallery?.querySelector('.fullscreen-gallery-close');
+    var thumbnails = document.querySelectorAll('.thumb img, .artwork-display img');
+
+    thumbnails.forEach(function(thumb) {
+      thumb.style.cursor = 'pointer';
+      thumb.addEventListener('click', function() {
+        window.openFullscreenGallery(this.src, this.alt);
+      });
+    });
+
+    closeBtn?.addEventListener('click', function() {
+      gallery.classList.remove('active');
+    });
+
+    gallery?.addEventListener('click', function(e) {
+      if (e.target === this) this.classList.remove('active');
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        gallery?.classList.remove('active');
+      }
+    });
+  }
+
+  /* ─── Phase 12: Keyboard Shortcuts Reference ────────────────────────────── */
+  function setupShortcutsDialog() {
+    var dialog = document.querySelector('.shortcuts-dialog');
+    var shortcuts = { 'P': 'Previous work', 'N': 'Next work', 'V': 'View toggle', 'B': 'Bookmark', '?': 'Show shortcuts', 'ESC': 'Close dialogs', 'F': 'Fullscreen gallery', 'S': 'Search focus' };
+
+    if (!dialog) return;
+
+    var html = '<h2 class="shortcuts-title">Keyboard Shortcuts</h2><div class="shortcuts-grid">';
+    Object.entries(shortcuts).forEach(function(entry) {
+      html += '<div class="shortcut-item"><span class="shortcut-key">' + entry[0] + '</span><span class="shortcut-description">' + entry[1] + '</span></div>';
+    });
+    html += '</div>';
+    dialog.innerHTML = html;
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === '?') {
+        dialog.classList.toggle('visible');
+      }
+    });
+  }
+
+  /* ─── Phase 12: User Preferences ────────────────────────────────────────────– */
+  function setupPreferencesPanel() {
+    var panel = document.querySelector('.preferences-panel');
+    var toggleBtn = document.querySelector('.preferences-toggle-btn');
+    var closeBtn = panel?.querySelector('.preferences-close');
+    if (!panel) return;
+
+    toggleBtn?.addEventListener('click', function() {
+      panel.classList.toggle('open');
+    });
+
+    closeBtn?.addEventListener('click', function() {
+      panel.classList.remove('open');
+    });
+
+    var toggles = panel.querySelectorAll('.preference-toggle');
+    toggles.forEach(function(toggle) {
+      var key = toggle.dataset.key;
+      var saved = localStorage.getItem('pref-' + key);
+      if (saved === 'true') toggle.classList.add('active');
+
+      toggle.addEventListener('click', function() {
+        this.classList.toggle('active');
+        localStorage.setItem('pref-' + key, this.classList.contains('active'));
+
+        if (key === 'focus-mode') {
+          document.body.classList.toggle('focus-mode');
+        }
+      });
+    });
+  }
+
+  /* ─── Phase 12: Floating Action Buttons ────────────────────────────────────– */
+  function setupFloatingActionButtons() {
+    var fabs = document.querySelectorAll('.fab');
+    fabs.forEach(function(fab) {
+      fab.addEventListener('click', function() {
+        var action = this.dataset.action;
+        switch(action) {
+          case 'search':
+            var searchInput = document.querySelector('.search-input');
+            if (searchInput) searchInput.focus();
+            break;
+          case 'filters':
+            var drawer = document.querySelector('.filters-drawer');
+            drawer?.classList.toggle('open');
+            break;
+          case 'preferences':
+            var panel = document.querySelector('.preferences-panel');
+            panel?.classList.toggle('open');
+            break;
+        }
+      });
+    });
+  }
+
+  /* ─── Phase 12: Filters Drawer ────────────────────────────────────────────– */
+  function setupFiltersDrawer() {
+    var drawer = document.querySelector('.filters-drawer');
+    var applyBtn = drawer?.querySelector('.filters-apply-btn');
+    if (!drawer) return;
+
+    applyBtn?.addEventListener('click', function() {
+      drawer.classList.remove('open');
+      // Trigger filter update
+      var event = new CustomEvent('filtersApplied');
+      document.dispatchEvent(event);
+    });
+  }
+
+  /* ─── Phase 12: Context Menu ───────────────────────────────────────────── */
+  function setupContextMenu() {
+    var menu = document.querySelector('.context-menu');
+    if (!menu) return;
+
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      menu.style.top = e.clientY + 'px';
+      menu.style.left = e.clientX + 'px';
+      menu.classList.add('visible');
+    });
+
+    document.addEventListener('click', function() {
+      menu.classList.remove('visible');
+    });
+  }
+
+  /* ─── Phase 12: Notification System ────────────────────────────────────────– */
+  window.showNotification = function(message, duration) {
+    duration = duration || 3000;
+    var notification = document.createElement('div');
+    notification.className = 'notification-badge';
+    notification.textContent = '✓';
+    notification.style.position = 'fixed';
+    notification.style.top = '20px';
+    notification.style.right = '20px';
+    notification.style.background = '#FF6600';
+    notification.style.padding = '12px 20px';
+    notification.style.borderRadius = '4px';
+    notification.style.color = '#fcf9f3';
+    notification.style.fontSize = '14px';
+    notification.style.zIndex = '10003';
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    setTimeout(function() {
+      notification.remove();
+    }, duration);
+  };
+
   /* ─── Initialize All ────────────────────────────────────────────────────── */
   document.addEventListener('DOMContentLoaded', function() {
     setupGridStagger();
@@ -1135,6 +1301,12 @@
     setupRelatedStories();
     setupChapterNavigation();
     setupWaveformAnimation();
+    setupFullscreenGallery();
+    setupShortcutsDialog();
+    setupPreferencesPanel();
+    setupFloatingActionButtons();
+    setupFiltersDrawer();
+    setupContextMenu();
   });
 
   // Re-setup grid stagger when filter changes
