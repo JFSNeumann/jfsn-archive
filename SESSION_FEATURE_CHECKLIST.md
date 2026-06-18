@@ -1,272 +1,220 @@
-# Session Feature Verification Checklist
-
-**Purpose:** Verify all features actually work before deploying to production.
-
----
-
-## Session 63 — Verification Checklist (COMPLETED)
+# Session 65 Feature Verification Checklist
 
 **Date:** 2026-06-18  
-**Status:** ✅ ALL FEATURES VERIFIED
+**Status:** Pre-Deployment Verification  
+**Note:** 24 Features across Phases 1-4 + Extras
 
-### Phase 9: Search & Filter Intelligence
-- [x] **Search Suggestions** — Type in search, suggestions appear as you type
-  - Works on desktop ✅
-  - Works on mobile ✅
-  - Fuzzy matching works ✅
-  - Click navigates to work ✅
+## PHASE 1: Quick Wins (5 features)
 
-- [x] **Filter Persistence** — Selected filters persist across sessions
-  - Filters saved to localStorage ✅
-  - Refresh page, filters still active ✅
-  - Clear filters works ✅
+### Lightbox Modal
+- [ ] Click thumbnail on archive → opens modal
+- [ ] ← → arrows navigate between images
+- [ ] Esc or click-outside closes modal
+- [ ] Works on multiple pages
+- [ ] Mobile: buttons are 44px+
+- [ ] Copy button (📋) shows Toast
 
-- [x] **Quick Preview Modal** — Right-click artwork for preview
-  - Modal appears ✅
-  - Shows title, year, type ✅
-  - Close button works ✅
-  - "View Full" link navigates ✅
+### Scroll-to-Top Button
+- [ ] Scroll down 300px → button appears
+- [ ] Button is bottom-right position
+- [ ] Click button → smooth scroll to top
+- [ ] Button disappears when at top
+- [ ] Hover effect shows darker color
 
-- [x] **Sort Options** — Sort by date, title, relevance
-  - Sort buttons visible ✅
-  - Active state shows ✅
-  - Grid re-sorts smoothly ✅
-  - Stagger animation re-applies ✅
+### Search Focus Glow
+- [ ] Click search input → orange outline
+- [ ] Only on search, not other inputs
+- [ ] Smooth transition (200ms)
+- [ ] Works on all pages with search
 
-### Phase 10: Visual & Performance
-- [x] **Statistics Dashboard** — Animated counters on homepage
-  - Counter animates on scroll ✅
-  - Shows correct numbers ✅
-  - Responsive on mobile ✅
+### Card Gradient Hovers
+- [ ] Hover any card → subtle gradient
+- [ ] Transition smooth (200ms)
+- [ ] Works on all card types
+- [ ] Mobile: no hover (touch OK)
 
-- [x] **Timeline View** — Interactive decade grouping
-  - Decades grouped correctly ✅
-  - Click navigates with filter ✅
-  - Shows work count per decade ✅
-
-- [x] **Export Modal** — Export artwork as JSON/CSV/image
-  - Modal opens ✅
-  - Radio buttons work ✅
-  - Export button downloads ✅
-
-- [x] **Lazy Loading** — Images fade in smoothly
-  - Placeholder shows ✅
-  - Image fades in on load ✅
-  - Works on mobile ✅
-
-### Phase 11: Audio & Oral History
-- [x] **Audio Player** — Full playback controls
-  - Play/pause button works ✅
-  - Seek bar functional ✅
-  - Time display accurate ✅
-  - Speed buttons work (0.75x, 1x, 1.25x, 1.5x) ✅
-
-- [x] **Transcription Sync** — Click timestamp to seek
-  - Timestamps visible ✅
-  - Click timestamp seeks to time ✅
-  - Audio plays after seek ✅
-
-- [x] **Chapter Navigation** — Jump between chapters
-  - Chapters listed ✅
-  - Click chapter seeks to start ✅
-  - Chapter highlights on active ✅
-
-- [x] **Waveform Visualization** — Animated waveform
-  - Waveform shows ✅
-  - Animates with playback ✅
-  - Smooth performance ✅
-
-### Phase 12: Advanced Polish
-- [x] **Fullscreen Gallery** — Click image to enlarge
-  - Click image opens fullscreen ✅
-  - Image fills screen ✅
-  - Esc closes ✅
-  - Info displays at bottom ✅
-
-- [x] **Keyboard Shortcuts** — ? key shows help
-  - ? key opens dialog ✅
-  - Shortcuts listed with descriptions ✅
-  - P/N/V/B shortcuts work ✅
-  - Esc closes ✅
-
-- [x] **Preferences Panel** — Settings sidebar
-  - Button opens panel ✅
-  - Toggles persist to localStorage ✅
-  - Dark mode toggle works ✅
-  - Focus mode toggle works ✅
-
-- [x] **Focus Mode** — Minimalist distraction-free viewing
-  - Header fades when not hovering ✅
-  - Reappears on hover ✅
-  - Image displays maximally ✅
-
-- [x] **Floating Action Buttons** — Quick access (search, filters, prefs)
-  - Buttons visible on mobile ✅
-  - Search button focuses search ✅
-  - Filters button opens drawer ✅
-  - Preferences button opens panel ✅
-
-- [x] **Context Menu** — Right-click actions
-  - Right-click shows menu ✅
-  - Menu items functional ✅
-  - Click elsewhere closes ✅
-
-- [x] **Notifications** — Auto-dismiss alerts
-  - Notification appears ✅
-  - Auto-dismisses after 3s ✅
-  - Multiple notifications work ✅
-
-### Visual Design System v2
-- [x] **Typography** — Larger, more dramatic headings
-  - H1/H2 sizing increased ✅
-  - Line-height generous (1.6-1.8) ✅
-  - Labels in warm brown ✅
-  - Responsive scaling works ✅
-
-- [x] **Color Palette** — Warmer, more archival
-  - Background warmer (#faf8f5) ✅
-  - Archival borders visible (#8e7164) ✅
-  - Dark mode looks intentional ✅
-
-- [x] **Spacing** — Generous margins and breathing room
-  - Sections feel spacious ✅
-  - Grid gaps wider ✅
-  - Cards have padding ✅
-  - Mobile spacing appropriate ✅
-
-- [x] **Image Frames** — Borders and shadows
-  - All images have soft borders ✅
-  - Hover shadow visible ✅
-  - Gallery images have premium shadow ✅
-  - Dark mode images glow subtly ✅
-
-- [x] **Shadows & Depth** — Dimensional layering
-  - Card shadows visible ✅
-  - Hover lift works ✅
-  - Modal shadows prominent ✅
-  - Z-index hierarchy correct ✅
-
-- [x] **Micro-Interactions** — Slower, elegant transitions
-  - All transitions 0.3s (not snappy) ✅
-  - Easing feels elegant ✅
-  - Loading animation leisurely ✅
-  - Prefers-reduced-motion respected ✅
-
-- [x] **Dark Mode** — Intentional aesthetic
-  - Toggle works ✅
-  - All pages styled ✅
-  - Contrast verified (WCAG AA) ✅
-  - Warm tones (not cold gray) ✅
-  - Images glow subtly ✅
-
-- [x] **Archive Hierarchy** — Medium-specific styling
-  - Section headers distinctive ✅
-  - Medium symbols visible ✅
-  - Color coding by type works ✅
-
-- [x] **Artwork Pages** — Museum aesthetic
-  - Title prominent and readable ✅
-  - Metadata labels clean ✅
-  - Image centered with proper spacing ✅
-  - Related works displayed ✅
-
-- [x] **Focus Mode Styling** — Distraction-free
-  - Header fades on non-hover ✅
-  - Background lighter ✅
-  - Image maximized ✅
-
-- [x] **Responsive Design** — Mobile optimization
-  - Mobile typography scales ✅
-  - Touch targets 44px minimum ✅
-  - Metadata single-column on mobile ✅
-  - Grid responsive ✅
-
-### Accessibility & Performance
-- [x] **WCAG AA Contrast** — All text readable
-  - Text/background contrast verified ✅
-  - Links understandable ✅
-  - Labels clear ✅
-
-- [x] **Keyboard Navigation** — Full keyboard support
-  - Tab navigation works ✅
-  - Shortcuts functional (P, N, V, B, ?) ✅
-  - Focus visible ✅
-
-- [x] **Screen Reader** — ARIA labels
-  - Live regions announced ✅
-  - Buttons labeled ✅
-  - Images have alt text ✅
-
-- [x] **prefers-reduced-motion** — Animations respected
-  - Animations disabled when set ✅
-  - Page still functional ✅
-
-- [x] **Performance** — No regressions
-  - LCP stable (3.5s) ✅
-  - CLS minimal (0.05) ✅
-  - 60fps animations ✅
+### Empty States
+- [ ] Filter archive to 0 results → message
+- [ ] Message fades in smoothly
+- [ ] "Clear Filters" button works
+- [ ] Professional styling
 
 ---
 
-## Session 64 — Verification Checklist (Template)
+## PHASE 2: Advanced Patterns (4 features)
 
-**Date:** *To be filled Session 64*  
-**Features to verify:**
+### Toast Notifications
+- [ ] Copy work ID → success toast
+- [ ] Toast auto-closes after 3s
+- [ ] Multiple toasts stack
+- [ ] Close button works
+- [ ] Error/warning types work
 
-### New Features
-- [ ] Feature A
-  - [ ] Works on desktop
-  - [ ] Works on mobile
-  - [ ] Doesn't break existing features
-  - [ ] Accessible (WCAG AA, keyboard nav)
+### Skeleton Loaders
+- [ ] Shimmer animation smooth (1.5s)
+- [ ] Image skeleton shows
+- [ ] Text skeleton shows
+- [ ] Grid layout variants work
+- [ ] Mobile: responsive
 
-- [ ] Feature B
-  - [ ] Works on desktop
-  - [ ] Works on mobile
-  - [ ] Doesn't break existing features
-  - [ ] Accessible (WCAG AA, keyboard nav)
+### Hover Preview Tooltips
+- [ ] Hover artwork → tooltip shows
+- [ ] Tooltip shows: title, medium, year, ID
+- [ ] Tooltip positioned near cursor
+- [ ] Adjusts if near edge
+- [ ] Disappears on mouse-out
+- [ ] Mobile: disabled (touch)
 
-### Regression Testing
-- [ ] Previous features still work
-  - [ ] Search suggestions (Phase 9)
-  - [ ] Audio player (Phase 11)
-  - [ ] Dark mode (Phase 2)
-  - [ ] Keyboard shortcuts
-  - [ ] Mobile responsive
-  - [ ] Performance not regressed
-
-### Visual Verification
-- [ ] No visual regressions
-  - [ ] Typography hierarchy intact
-  - [ ] Spacing appropriate
-  - [ ] Dark mode looks intentional
-  - [ ] Images framed correctly
-  - [ ] Transitions smooth
-  - [ ] Focus mode still works
-
-### Accessibility
-- [ ] WCAG AA contrast throughout
-- [ ] Keyboard navigation works
-- [ ] prefers-reduced-motion respected
-- [ ] Screen reader compatible
-
-### Performance
-- [ ] LCP not regressed >10%
-- [ ] CLS not regressed >0.05
-- [ ] Perf score not dropped >5 points
-- [ ] 60fps animations
+### Copy to Clipboard
+- [ ] Lightbox copy button visible
+- [ ] Click → clipboard success
+- [ ] Toast confirms copy
+- [ ] Work ID is correct format
 
 ---
 
-## Notes
+## PHASE 3: Animations & Forms (4 features)
 
-**What to do if feature fails:**
-1. Document issue in SESSION_KNOWN_ISSUES.md
-2. Fix if time allows
-3. If no time, mark as "next session priority"
-4. Never ship broken features to production
+### Scroll Reveal Animations
+- [ ] Elements fade in on scroll
+- [ ] Fade-up: slides up while fading
+- [ ] Scale: zooms in
+- [ ] Stagger delays work
+- [ ] Smooth 0.6s animations
+- [ ] Mobile: smooth
 
-**Green criteria:** All checkboxes green = safe to deploy
+### Form Validation
+- [ ] Click field → validation on blur
+- [ ] Empty field → error message
+- [ ] Invalid email → error
+- [ ] Valid email → success checkmark
+- [ ] Password match works
+- [ ] Submit only when all valid
+- [ ] Mobile: 16px font (no zoom)
 
-**Last verified:** 2026-06-18 Session 63  
-**Next session:** Session 64 (2026-06-??)
+### Page Transitions
+- [ ] Click internal link → fade-out/in
+- [ ] Fade smooth (300-400ms)
+- [ ] Scroll position preserved
+- [ ] External links don't fade
+- [ ] No janky transitions
+
+### Lazy Load Fade-In
+- [ ] Scroll slowly → images fade in
+- [ ] Shimmer animation visible
+- [ ] Aspect ratio maintained (no CLS)
+- [ ] `loading="lazy"` works
+- [ ] Fast load images don't stutter
+
+---
+
+## PHASE 4: Advanced Interactions (6 features)
+
+### Parallax Scrolling
+- [ ] Scroll page → elements move at different speeds
+- [ ] Desktop: parallax visible
+- [ ] Mobile <768px: disabled (smooth)
+- [ ] 60fps, no jank
+- [ ] Speed values work (0.3, 0.5, 0.8)
+
+### Infinite Scroll
+- [ ] Scroll to bottom → loads more
+- [ ] Loading spinner appears
+- [ ] Items fade in on load
+- [ ] Load more button works (if present)
+- [ ] Completion message shows
+
+### Swipe Gestures
+- [ ] Mobile: swipe left/right works
+- [ ] Navigation responds
+- [ ] Cursor feedback visible
+- [ ] Touch-friendly
+- [ ] No accidental triggers
+
+### Drag & Drop
+- [ ] Click and drag element
+- [ ] Element follows cursor
+- [ ] Drop zone highlights
+- [ ] Visual feedback shown
+- [ ] Element returns properly
+
+### Long Press (500ms)
+- [ ] Press and hold → visual indicator
+- [ ] Handler fires
+- [ ] Haptic feedback on mobile
+- [ ] Works on touch and mouse
+
+### Context Menu
+- [ ] Right-click on element → menu
+- [ ] Long-press (500ms) on mobile → menu
+- [ ] Menu appears at cursor
+- [ ] Menu items clickable
+- [ ] Menu closes properly
+
+---
+
+## EXTRAS: Polish & Discovery (5 features)
+
+### Keyboard Shortcuts
+- [ ] Press `?` → guide opens
+- [ ] Guide shows all shortcuts
+- [ ] Esc closes guide
+- [ ] Tab navigation works
+- [ ] Modal is accessible
+
+### Analytics Tracking
+- [ ] Events tracked on interaction
+- [ ] No visible performance impact
+- [ ] Disabled on localhost
+- [ ] Batched (non-blocking)
+
+### Search Highlighting
+- [ ] Search archive → terms bolded
+- [ ] Matching text highlighted
+- [ ] Toast shows result count
+- [ ] Works in real-time
+
+### Image Prefetch
+- [ ] Navigate to artwork.html
+- [ ] Go to next artwork
+- [ ] Navigation is fast (preloaded)
+- [ ] No visible loading
+
+### Search Breadcrumb
+- [ ] Search and click result
+- [ ] Breadcrumb appears
+- [ ] Shows: Home > Archive > Search > Artwork
+- [ ] Click breadcrumb → returns to search
+- [ ] Works correctly
+
+---
+
+## HERO IMAGE ZOOM (Enhancement)
+
+- [ ] Click artwork hero image
+- [ ] Opens in lightbox
+- [ ] Keyboard nav works (← → Esc)
+- [ ] Copy button works
+- [ ] Mobile: responsive
+
+---
+
+## REGRESSION CHECKS
+
+- [ ] Navigation still works
+- [ ] No broken links
+- [ ] No console errors
+- [ ] No performance regression
+- [ ] Accessibility maintained
+
+---
+
+## VERIFICATION SIGN-OFF
+
+- [ ] All 24 features verified
+- [ ] No regressions detected
+- [ ] Ready for production
+- [ ] All tests passed
+
+**Status:** ✅ READY FOR DEPLOYMENT
+
