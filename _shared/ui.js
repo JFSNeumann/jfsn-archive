@@ -3,6 +3,31 @@
 (function () {
   'use strict';
 
+  // ─── CRITICAL: Disable keyboard shortcuts modal (Session 66 bug) ───────────
+  // Multiple broken implementations cause modal to auto-open and not close.
+  // Blanket disable until properly consolidated and fixed (Session 67+).
+  (function() {
+    function hideKeyboardShortcutsModal() {
+      var selectors = ['#keyboard-shortcuts-overlay', '.keyboard-shortcuts-overlay', '#keyboard-shortcuts-modal', '.keyboard-shortcuts-modal', '.shortcuts-dialog'];
+      selectors.forEach(function(sel) {
+        document.querySelectorAll(sel).forEach(function(el) {
+          el.style.display = 'none !important';
+          el.style.visibility = 'hidden !important';
+          el.style.opacity = '0 !important';
+          el.style.pointerEvents = 'none !important';
+          el.remove();
+        });
+      });
+    }
+    hideKeyboardShortcutsModal();
+    setTimeout(hideKeyboardShortcutsModal, 10);
+    setTimeout(hideKeyboardShortcutsModal, 100);
+    setTimeout(hideKeyboardShortcutsModal, 500);
+    document.addEventListener('keydown', function(e) {
+      if (e.key === '?') { e.preventDefault(); e.stopPropagation(); hideKeyboardShortcutsModal(); }
+    }, true);
+  })();
+
   // ─── Vertical "you are here" label ───────────────────────────────────────
   const label = document.body.dataset.pageLabel;
   if (label) {
@@ -250,92 +275,17 @@
   }
 
   // ─── Keyboard Shortcuts Documentation Overlay ──────────────────────────
-  // P/N: prev/next work, ←→: decade nav, ?: show shortcuts
+  // DISABLED: Critical bug - modal auto-opens and won't close
+  // Duplicate implementations caused state conflicts
+  // Will be re-enabled after consolidation and fix (Session 67+)
+  // See: Session 66 final summary for investigation details
+  /*
   var keyboardShortcutsModal = null;
 
   function showKeyboardShortcuts() {
-    if (keyboardShortcutsModal && keyboardShortcutsModal.style.display === 'flex') return; // Already open
-
-    keyboardShortcutsModal = document.createElement('div');
-    keyboardShortcutsModal.id = 'keyboard-shortcuts-modal';
-    keyboardShortcutsModal.style.cssText = `
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      backdrop-filter: blur(4px);
-    `;
-
-    const content = document.createElement('div');
-    content.style.cssText = `
-      background: white;
-      border: 1px solid #8e7164;
-      padding: 32px;
-      border-radius: 4px;
-      max-width: 500px;
-      max-height: 80vh;
-      overflow-y: auto;
-      animation: reveal-fade-in 0.3s ease-out;
-    `;
-
-    content.innerHTML = `
-      <h2 style="font-family: 'Playfair Display', serif; font-size: 28px; margin: 0 0 24px; color: #0B0B0B;">Keyboard Shortcuts</h2>
-
-      <div style="font-size: 12px; line-height: 1.8;">
-        <h3 style="font-family: Inter; font-weight: 600; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8e7164; margin: 16px 0 8px;">Artwork Pages</h3>
-        <table style="width: 100%; border-collapse: collapse;">
-          <tr style="border-bottom: 1px solid #e3bfb1;">
-            <td style="padding: 8px 0; font-weight: 600; color: #0B0B0B; width: 80px;">P</td>
-            <td style="padding: 8px 0; color: #575757;">Previous work</td>
-          </tr>
-          <tr style="border-bottom: 1px solid #e3bfb1;">
-            <td style="padding: 8px 0; font-weight: 600; color: #0B0B0B;">N</td>
-            <td style="padding: 8px 0; color: #575757;">Next work</td>
-          </tr>
-        </table>
-
-        <h3 style="font-family: Inter; font-weight: 600; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8e7164; margin: 16px 0 8px;">Decade Pages</h3>
-        <table style="width: 100%; border-collapse: collapse;">
-          <tr style="border-bottom: 1px solid #e3bfb1;">
-            <td style="padding: 8px 0; font-weight: 600; color: #0B0B0B; width: 80px;">← →</td>
-            <td style="padding: 8px 0; color: #575757;">Navigate decades</td>
-          </tr>
-        </table>
-
-        <h3 style="font-family: Inter; font-weight: 600; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8e7164; margin: 16px 0 8px;">General</h3>
-        <table style="width: 100%; border-collapse: collapse;">
-          <tr style="border-bottom: 1px solid #e3bfb1;">
-            <td style="padding: 8px 0; font-weight: 600; color: #0B0B0B; width: 80px;">?</td>
-            <td style="padding: 8px 0; color: #575757;">Show this help</td>
-          </tr>
-        </table>
-      </div>
-
-      <p style="font-size: 10px; color: #8e7164; margin-top: 24px; margin-bottom: 0;">Press ESC to close</p>
-    `;
-
-    keyboardShortcutsModal.appendChild(content);
-    document.body.appendChild(keyboardShortcutsModal);
-
-    // Close on ESC
-    var closeHandler = function(e) {
-      if (e.key === 'Escape') {
-        keyboardShortcutsModal.remove();
-        document.removeEventListener('keydown', closeHandler);
-      }
-    };
-    document.addEventListener('keydown', closeHandler);
-
-    // Close on backdrop click
-    keyboardShortcutsModal.addEventListener('click', function(e) {
-      if (e.target === keyboardShortcutsModal) {
-        keyboardShortcutsModal.remove();
-      }
-    });
+    // [DISABLED - 100+ lines of code removed]
   }
+  */
 
   document.addEventListener('keydown', function(e) {
     // Don't fire when user is typing in input/textarea
