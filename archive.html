@@ -847,7 +847,12 @@ header.header-hidden{transform:translateY(-100%)}
     <!-- Grid -->
     <div class="flex-grow min-w-0">
       <!-- Breadcrumb navigation (URL-inferred) -->
-      <div id="breadcrumb" style="margin-bottom:16px;font-family:Inter,sans-serif;font-size:12px;color:#575757;"></div>
+      <nav class="breadcrumb-nav" role="navigation" aria-label="Breadcrumb" style="margin-bottom:20px;">
+        <a href="index.html" style="font-family:Inter,sans-serif;font-size:13px;color:#575757;text-decoration:none;transition:color 0.2s ease;">Home</a>
+        <span style="color:#8e7164;margin:0 8px;font-size:13px;">/</span>
+        <span style="font-family:Inter,sans-serif;font-size:13px;font-weight:600;color:#0B0B0B;"><span id="breadcrumb-current">Archive</span></span>
+        <span id="breadcrumb-extra" style="color:#8e7164;font-size:13px;"></span>
+      </nav>
 
       <!-- Active filter chips -->
       <div id="filter-chips" style="display:none;margin-bottom:20px;flex-wrap:wrap;align-items:center;gap:8px;"></div>
@@ -875,6 +880,15 @@ header.header-hidden{transform:translateY(-100%)}
       </div>
 
       <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-px sm:gap-x-gutter sm:gap-y-lg bg-deep-ink sm:bg-transparent" id="works-grid" style="padding-bottom: 60px;"></div>
+
+      <!-- Hover preview card -->
+      <div id="hover-preview" class="hidden" style="position: fixed; background: #fcf9f3; border: 1px solid #8e7164; border-radius: 4px; padding: 12px; max-width: 200px; font-family: Inter, sans-serif; font-size: 12px; z-index: 100; box-shadow: 0 0 20px rgba(0,0,0,0.1); pointer-events: none;">
+        <div style="font-weight: 600; color: #0B0B0B; margin-bottom: 6px; line-height: 1.3;" id="preview-title"></div>
+        <div style="color: #575757; font-size: 11px; margin-bottom: 4px;">
+          <span id="preview-medium" style="font-weight: 500;"></span> · <span id="preview-year"></span>
+        </div>
+        <div style="color: #8e7164; font-size: 10px; font-family: ui-monospace, monospace;">ID: <span id="preview-id"></span></div>
+      </div>
 
       <!-- Mobile sticky action bar -->
       <div id="mobile-action-bar" class="md:hidden fixed bottom-0 left-0 right-0 bg-bone-white border-t border-archival-outline px-margin-mobile py-2 flex items-center justify-between gap-3 z-40" style="display: none;">
@@ -932,6 +946,7 @@ footer .hover\:border-international-orange::after{display:none}
     <p style="font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;">© <span id="footer-year">2026</span> JEFFREY F. S. NEUMANN. ALL RIGHTS RESERVED.</p>
     <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:center;">
       <button id="back-to-top" style="background:none;border:none;cursor:pointer;font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;padding:0;transition:color 0.15s ease;" aria-label="Back to top">↑ BACK TO TOP</button>
+      <button id="dark-mode-toggle" style="background:none;border:none;cursor:pointer;font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;padding:0;transition:color 0.15s ease;" aria-label="Toggle dark mode">🌙 DARK MODE</button>
       <button id="ds-footer-btn" style="background:none;border:none;cursor:pointer;font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;padding:0;transition:color 0.15s ease;position:relative;" aria-label="Design system reference">⌘SHIFT+D</button>
       <a style="font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;text-decoration:none;transition:color 0.15s ease;padding:0;border:none;" href="https://github.com/JFSNeumann/jfsn-archive" target="_blank">OPEN SOURCE CODE</a>
       <a style="font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;text-decoration:none;transition:color 0.15s ease;padding:0;border:none;" href="privacy.html">PRIVACY</a>
@@ -1030,7 +1045,7 @@ function renderCard(w, idx) {
   const title = w.title || 'Untitled';
   const loadAttr = (idx !== undefined && idx < 8) ? 'eager" fetchpriority="high' : 'lazy';
   return `
-    <a href="artwork.html?id=${id}" class="archive-card block no-underline text-on-background bg-background sm:bg-transparent">
+    <a href="artwork.html?id=${id}" class="archive-card block no-underline text-on-background bg-background sm:bg-transparent" data-preview-id="${id}" data-preview-title="${title.replace(/"/g, '&quot;')}" data-preview-medium="${med}" data-preview-year="${w.year || '—'}">
       <div class="archive-card-img sm:mb-md sm:border sm:border-outline-variant bg-surface-container-low">
         <img
           alt="${title}"
@@ -1230,40 +1245,31 @@ function syncURL() {
 
 // Generate breadcrumb from URL parameters (with mobile truncation)
 function updateBreadcrumb() {
-  const bc = document.getElementById('breadcrumb');
+  const bcExtra = document.getElementById('breadcrumb-extra');
   const p = new URLSearchParams(location.search);
   const mediums = p.getAll('medium');
   const decades = p.getAll('decade');
   const series = p.getAll('series');
 
-  let parts = ['<a href="archive.html" style="color:#575757;text-decoration:none;border-bottom:1px solid #575757;">Archive</a>'];
   let lastPart = null;
 
   if (mediums.length === 1) {
     const label = { collage:'Collage', photograph:'Photography', sculpture:'Sculpture', painting:'Painting' }[mediums[0]] || mediums[0];
-    lastPart = `<a href="archive.html?medium=${mediums[0]}" style="color:#575757;text-decoration:none;border-bottom:1px solid #575757;">${label}</a>`;
+    lastPart = `<a href="archive.html?medium=${mediums[0]}" style="color:#B84700;text-decoration:none;transition:color 0.2s ease;">${label}</a>`;
   }
   if (decades.length === 1) {
-    lastPart = `<a href="archive.html?decade=${decades[0]}" style="color:#575757;text-decoration:none;border-bottom:1px solid #575757;">${decades[0]}</a>`;
+    lastPart = `<a href="archive.html?decade=${decades[0]}" style="color:#B84700;text-decoration:none;transition:color 0.2s ease;">${decades[0]}</a>`;
   }
   if (series.length === 1) {
-    lastPart = `<a href="archive.html?series=${series[0]}" style="color:#575757;text-decoration:none;border-bottom:1px solid #575757;">${series[0]}</a>`;
+    lastPart = `<a href="archive.html?series=${series[0]}" style="color:#B84700;text-decoration:none;transition:color 0.2s ease;">${series[0]}</a>`;
   }
 
   if (lastPart) {
-    const separator = ' <span style="color:#8e7164;margin:0 4px;">›</span> ';
-    const isMobile = window.innerWidth < 768;
-
-    // Mobile: show "Archive › ... › Last" (ellipsis for truncation)
-    if (isMobile) {
-      bc.innerHTML = parts[0] + separator + '<span style="color:#8e7164;">…</span>' + separator + lastPart;
-    } else {
-      // Desktop: show full path
-      parts.push(lastPart);
-      bc.innerHTML = parts.join(separator);
-    }
+    bcExtra.innerHTML = ' <span style="color:#8e7164;margin:0 8px;">›</span> ' + lastPart;
+    bcExtra.style.display = 'inline';
   } else {
-    bc.innerHTML = '';
+    bcExtra.innerHTML = '';
+    bcExtra.style.display = 'none';
   }
 }
 
@@ -1481,6 +1487,65 @@ document.addEventListener('keydown', (e) => {
     shortcutsModal.classList.add('hidden');
   }
 });
+
+// Dark mode toggle
+const darkModeToggle = document.getElementById('dark-mode-toggle');
+function applyTheme(isDark) {
+  const html = document.documentElement;
+  if (isDark) {
+    html.classList.add('dark');
+    html.style.colorScheme = 'dark';
+    localStorage.setItem('jfsn-theme', 'dark');
+    darkModeToggle.textContent = '☀ LIGHT MODE';
+  } else {
+    html.classList.remove('dark');
+    html.style.colorScheme = 'light';
+    localStorage.setItem('jfsn-theme', 'light');
+    darkModeToggle.textContent = '🌙 DARK MODE';
+  }
+}
+const savedTheme = localStorage.getItem('jfsn-theme');
+if (savedTheme) {
+  applyTheme(savedTheme === 'dark');
+} else {
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  applyTheme(prefersDark);
+}
+darkModeToggle.addEventListener('click', () => {
+  const isDark = document.documentElement.classList.contains('dark');
+  applyTheme(!isDark);
+});
+
+// Hover preview card
+const hoverPreview = document.getElementById('hover-preview');
+grid.addEventListener('mouseenter', (e) => {
+  const card = e.target.closest('.archive-card');
+  if (!card) return;
+
+  document.getElementById('preview-title').textContent = card.dataset.previewTitle;
+  document.getElementById('preview-medium').textContent = card.dataset.previewMedium;
+  document.getElementById('preview-year').textContent = card.dataset.previewYear;
+  document.getElementById('preview-id').textContent = card.dataset.previewId;
+
+  hoverPreview.classList.remove('hidden');
+}, true);
+
+grid.addEventListener('mousemove', (e) => {
+  if (hoverPreview.classList.contains('hidden')) return;
+  const card = e.target.closest('.archive-card');
+  if (!card) {
+    hoverPreview.classList.add('hidden');
+    return;
+  }
+
+  const rect = card.getBoundingClientRect();
+  hoverPreview.style.left = (rect.right + 12) + 'px';
+  hoverPreview.style.top = rect.top + 'px';
+}, true);
+
+grid.addEventListener('mouseleave', () => {
+  hoverPreview.classList.add('hidden');
+}, true);
 </script>
 
 <script src="_shared/ui.js" defer></script>
