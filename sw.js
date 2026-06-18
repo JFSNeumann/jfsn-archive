@@ -5,7 +5,7 @@
    - HTML/CSS/JS  → network-first (always fresh; fall back to cache if offline)
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-20260617231456'; // Phase A-D animations: micro-interactions + refinements + style guide applied to all pages (Session 57)
+const CACHE_V  = 'jfsn-20260617234500'; // Phase 3 animations: section tint fade, quote pulse, search underline, drawer stagger, touch feedback (Session 62)
 const PRECACHE = [
   '/',
   '/index.html',

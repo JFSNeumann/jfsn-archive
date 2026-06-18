@@ -3175,6 +3175,96 @@ select:invalid:focus {
   100% { transform: scale(1); }
 }
 
+/* ─── PHASE 3: Advanced Delight Animations ────────────────────────────────── */
+
+/* Phase 3.1: Section entrance color tint fade (long-form pages) */
+.section-entrance {
+  animation: section-tint-fade 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes section-tint-fade {
+  from {
+    background-color: transparent;
+  }
+  to {
+    background-color: rgba(142, 113, 100, 0.04);
+  }
+}
+
+/* Phase 3.2: Quote hover pulse (blockquote text color) */
+blockquote {
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+blockquote:hover {
+  animation: quote-color-pulse 0.4s ease 2;
+}
+
+@keyframes quote-color-pulse {
+  0%, 100% { color: #575757; }
+  50% { color: #FF6600; }
+}
+
+/* Phase 3.3: Search result underline draw animation */
+.sse-item {
+  position: relative;
+}
+
+.sse-item::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background-color: #FF6600;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.2s ease;
+  pointer-events: none;
+}
+
+.sse-item:hover::after {
+  transform: scaleX(1);
+}
+
+/* Phase 3.4: Drawer item stagger on mobile (navigation items fade in sequentially) */
+#mobile-menu-drawer a {
+  animation: drawer-item-fade-in 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+#mobile-menu-drawer a:nth-child(1) { animation-delay: 0.05s; }
+#mobile-menu-drawer a:nth-child(2) { animation-delay: 0.1s; }
+#mobile-menu-drawer a:nth-child(3) { animation-delay: 0.15s; }
+#mobile-menu-drawer a:nth-child(4) { animation-delay: 0.2s; }
+#mobile-menu-drawer a:nth-child(5) { animation-delay: 0.25s; }
+#mobile-menu-drawer a:nth-child(6) { animation-delay: 0.3s; }
+
+@keyframes drawer-item-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Phase 3.5: Touch device feedback (buttons/links flash orange on active state) */
+@media (hover: none) and (pointer: coarse) {
+  button:active,
+  a:active,
+  .sse-item:active {
+    animation: touch-feedback-flash 0.1s ease;
+    background-color: rgba(255, 102, 0, 0.1) !important;
+  }
+
+  @keyframes touch-feedback-flash {
+    0% { background-color: rgba(255, 102, 0, 0.2); }
+    100% { background-color: rgba(255, 102, 0, 0.1); }
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   #keyboard-shortcuts-hint,
   .filter-chip-entering,
