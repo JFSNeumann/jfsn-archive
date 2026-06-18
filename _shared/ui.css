@@ -3472,6 +3472,120 @@ blockquote:hover {
   }
 }
 
+/* ─── Phase 3: Micro-Interactions ───────────────────────────────────────── */
+
+/* Card entrance stagger on grid load */
+.thumb {
+  --stagger-index: 0;
+  animation: grid-entrance 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(var(--stagger-index) * 40ms);
+  opacity: 0;
+}
+
+@keyframes grid-entrance {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thumb {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* Filter chip pulse feedback on apply */
+.filter-chip {
+  transition: all 0.2s ease;
+}
+
+.filter-chip.applying {
+  animation: chip-pulse 0.4s ease;
+}
+
+@keyframes chip-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+/* Button press feedback */
+button,
+a[role="button"],
+.archive-card {
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+button:active,
+a[role="button"]:active,
+.archive-card:active {
+  transform: scale(0.98);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Copy toast animation */
+@keyframes toast-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes toast-slide-down {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+.toast {
+  animation: toast-slide-up 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #0B0B0B;
+  color: #fcf9f3;
+  padding: 12px 20px;
+  border-radius: 0;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  z-index: 9000;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.toast.exiting {
+  animation: toast-slide-down 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .filter-chip.applying {
+    animation: none;
+  }
+  button:active,
+  a[role="button"]:active {
+    transform: none;
+    box-shadow: none;
+  }
+  .toast,
+  .toast.exiting {
+    animation: none;
+  }
+}
+
 /* ─── Phase 1: Link Underline Draw Animation ──────────────────────────────── */
 
 .link-underline {
