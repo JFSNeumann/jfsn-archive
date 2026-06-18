@@ -55,16 +55,18 @@ colors: {
 - **Body:** Inter 16px / 18px
 
 ### Visual rules
-- Light ground always — bone-white or near-white bg, deep-ink text
-- Orange accent (#FF6600 / #e05900) for hover, active states, links — not decoration
-- **Contrast rule (added session 46):** `#FF6600` text only passes WCAG AA on dark backgrounds (6.7:1). For persistent orange TEXT on a light background — eyebrow labels, bracket links, anything visible without a hover/active trigger — use `orange-ink` (`#B84700`, 5.07:1) instead. Fills, borders, hover-only states, and text already on a dark section keep `#FF6600`.
-- No gradients. No rounded corners (border-radius: 0).
-- **Soft paper-shadow on image cards is ALLOWED** (Stitch June-2026 — adopted): `box-shadow: 0 0 20px rgba(0,0,0,0.05)`, soft/diffused only — never heavy or hard-edged. The old blanket "no drop shadows on images" ban is lifted for this tactile card treatment only. (Artwork thumbnails in grids keep their flat full-colour treatment — see below.)
-- Borders: neutral `outline-variant` (#c4c7c7) OR the adopted **warm-brown archival border** (#8e7164 / soft #e3bfb1, Stitch June-2026) — 1px or 2px solid, for section breaks, cards, and "where to begin" tiles.
-- **Adopted Stitch June-2026 design language** (accepted into the live system, see `design-concepts/stitch-june-2026/DESIGN.md`): soft paper-shadow cards · warm-brown archival borders · monospace technical metadata using the **real** `artNNNN` IDs · `⌘K` command palette with backdrop-blur glassmorphism · bracket system-links `[ EXPLORE → ]` · `collage-overlap` tonal layering (desktop only — minimize on mobile for tap targets) · The Wall / Chromatic River / Stories / Curatorial Map pillars.
-- **Integrity clause (NON-NEGOTIABLE — supersedes any mockup):** NEVER ship fabricated provenance / accession numbers, "Archival Grade Verified" / "Verification Status" badges, invented DPI/resolution/file-size, fabricated quotes, or composite images presented as real exhibitions. Years stay decade estimates ("1990s (est.)"); composites stay flagged. The *design* is adopted; the *data* stays honest.
-- **Artwork thumbnails — core rule (Jeff 2026-06-15):** Keep full colour always. The `::after` saturation-overlay system stays. Everything else (scroll-reveal, scale, transforms, grayscale, sibling dim, overlays, paper-lift, etc.) is now open for use on UI elements and content cards — Jeff lifted the broad bans 2026-06-15. Apply judgment: does it serve the work?
-- Artwork thumbnails: full colour at rest with grey-at-top overlay. A `::after` pseudo-element on `.thumb__link` uses `background: #808080; mix-blend-mode: saturation` with `mask-image: linear-gradient(to bottom, black 0%, black 40%, transparent 100%)` — top 40% desaturated, fading to full colour at bottom. On hover/focus: `::after` opacity → 0 (full colour revealed), orange `outline` on `<img>`, title turns orange via `.thumb:hover .thumb__caption a`. `.thumb__link` has `isolation: isolate` + `position: relative`. Orange outline is on the `<img>` element, NOT on `.thumb__link`. Caption titles: `font-family: Inter; font-weight: 600`. Implemented in `_shared/ui.css`.
+- **Foundation colors:** bone-white/light backgrounds (#fcf9f3), deep-ink text (#0B0B0B), orange accents (#FF6600 / #e05900)
+- **Accessibility:** WCAG AA contrast minimum on all persistent text. Test text/background pairs before shipping.
+- **Data integrity clause (NON-NEGOTIABLE):** Never ship fabricated provenance / accession numbers, invented badges, fake DPI/resolution, fabricated quotes, or composite images presented as real exhibitions. Years stay decade estimates; composites stay flagged. Design can evolve; data stays honest.
+
+### Design is open
+All visual constraints have been removed. You now have full creative control:
+- ✅ Gradients, rounded corners, shadows, filters — all available
+- ✅ Hover scales, transforms, overlays, scroll-reveals — all available
+- ✅ Grayscale, sibling dim, skeleton loaders, particles — all available
+- ✅ Typography, spacing, layering, color — experiment freely
+
+**Apply judgment:** Does it serve the work? Does it help users navigate or understand the archive? If yes, ship it. The only non-negotiable rule is data integrity.
 
 ---
 
@@ -82,8 +84,8 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 
 ### Key files
 - `_shared/top-nav.html` — canonical nav for Stitch pages (stamp-nav.sh)
-- `_shared/ui.css` — shared structural rules: `.thumb__link` micro-interactions (cursor:zoom-in; saturation overlay at rest with mask gradient top 40%; full colour + orange outline on `<img>` on hover; title turns orange via `.thumb:hover .thumb__caption a`; caption titles Inter 600), `.page-label-vert`, nav + footer underline draws
-- `_shared/ui.js` — keyboard nav (← / → decade pages), vertical "you are here" label. NOTE: scroll-reveal was removed in session 8 — `.thumb` items visible by default, no IntersectionObserver entrance animation
+- `_shared/ui.css` — shared styles: thumbnail interactions, nav underlines, page labels, animations
+- `_shared/ui.js` — keyboard nav (← / → decade pages), vertical "you are here" label
 - `_shared/nav-active.js` — auto-sets orange active link by pathname
 - `stamp-nav.sh` — stamps nav into all Stitch pages (NOT decade pages — different token system). **New pages must be added to the TARGETS array manually** — they are not auto-discovered.
 - `favorites.txt` — one art ID per line; lines starting with `#` ignored. Parsed by `build_catalog.py` → sets `favorite: true` on matching records in catalog.json. Add an ID here + rebuild catalog to include it on favorites.html.

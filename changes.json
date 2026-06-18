@@ -1,5 +1,65 @@
 [
   {
+    "sha": "0f54fe1",
+    "date": "2026-06-17",
+    "title": "Visual Design System v2 — Complete Aesthetic Overhaul",
+    "body": "Typography Refinement:\n- Larger, more dramatic heading scales\n- Generous line-height (1.6-1.8) for readability\n- Refined letter-spacing for elegance\n- Archive labels in refined warm brown\n\nColor Palette Enrichment:\n- Warmer bone-white background (#faf8f5)\n- Archival warm-brown borders (#8e7164)\n- Sophisticated shadow system (xs-xl)\n- Dimensional depth instead of flat design\n\nSpacing & Rhythm:\n- CSS variables for consistent spacing scale\n- Generous margins on major sections\n- More breathing room in grids\n- Archive grid padding increased\n\nImage Treatment & Frames:\n- Soft archival borders on all images\n- Gallery-style shadows\n- Hover effects with subtle scale\n- Dark mode images with subtle glow\n\nShadows & Depth:\n- Layered, dimensional shadows\n- Cards have hover lift (translateY)\n- Gallery images have premium shadow\n- Modal/overlay depth enhanced\n\nMicro-Interactions:\n- Slower transitions (0.3s) more intentional\n- Cubic-bezier easing for elegance\n- Custom link underlines with fade\n- Refined loading animation\n\nDark Mode Aesthetic:\n- Different palette (not just inversion)\n- Warm browns in dark (not cold grays)\n- Subtle glow on images\n- Maintained legibility throughout\n\nArchive Page Visual Hierarchy:\n- Section headers with serif typeface\n- Medium-specific symbols in headers\n- Color-coded by medium type\n- Variable grid sizing planned\n\nArtwork Page — Museum Aesthetic:\n- Generous padding around images\n- Museum-style metadata labels\n- Metadata grid layout\n- Gallery image framing\n- Related works as curation, not algorithm\n\nFocus Mode:\n- Distraction-free viewing\n- Header fades until hover\n- Minimal UI during viewing\n\nResponsive Refinements:\n- Mobile typography scaling\n- Single-column metadata on mobile\n- Touch-friendly spacing\n- Maintains elegance at all sizes\n\nTotal: 420+ lines CSS, visual design focused, zero new features\nAll transitions respect prefers-reduced-motion\nAll colors maintain WCAG AA contrast\nAll imagery treatments serve archival aesthetic"
+  },
+  {
+    "sha": "be13f67",
+    "date": "2026-06-17",
+    "title": "Phase 12: Advanced Polish & Interactions",
+    "body": "- Fullscreen gallery mode with keyboard navigation\n- Comprehensive keyboard shortcuts reference dialog\n- User preferences panel (dark mode, focus mode, etc.)\n- Floating action buttons for quick access\n- Filters drawer for mobile-friendly filtering\n- Context menu for artwork actions\n- Notification system with auto-dismiss\n- Gesture hints for touch interactions\n- Focus mode styling (minimalist, distraction-free)\n- 420+ lines CSS, 300+ lines JavaScript\n- 11 total phases, 100+ distinct UX improvements"
+  },
+  {
+    "sha": "c85ade7",
+    "date": "2026-06-17",
+    "title": "Phase 11: Audio & Oral History Integration",
+    "body": "- Full audio player with play/pause and progress control\n- Real-time transcription sync with timestamps\n- Story chapter navigation with time markers\n- Waveform visualization animation\n- Playback speed control (0.75x, 1x, 1.25x, 1.5x)\n- Oral history quote sections with metadata\n- Related stories grid discovery\n- Transcription panel with collapsible sections\n- Audio badge indicators on metadata\n- 350+ lines CSS, 250+ lines JavaScript"
+  },
+  {
+    "sha": "8140a31",
+    "date": "2026-06-17",
+    "title": "Phase 10: Visual & Performance Excellence",
+    "body": "- Statistics dashboard with animated counters\n- Interactive timeline with decade filtering\n- Canvas visualizations for color analysis\n- Advanced metadata explorer (grid view)\n- Export/Share modal (JSON/CSV/Image)\n- AVIF/WebP image optimization hints\n- Lazy loading with fade-in transitions\n- Hero image optimization with picture element\n- 300+ lines CSS, 280+ lines JavaScript"
+  },
+  {
+    "sha": "65c661c",
+    "date": "2026-06-17",
+    "title": "Phase 9: Search & Filter Intelligence",
+    "body": "- Real-time search suggestions with keyboard navigation\n- Filter persistence across sessions (localStorage)\n- Quick preview modal (right-click on artwork)\n- Dominant color backdrop for image loading\n- Advanced sort options (by date, title, relevance)\n- 200+ lines CSS, 250+ lines JavaScript"
+  },
+  {
+    "sha": "f677951",
+    "date": "2026-06-17",
+    "title": "Phase 8: Advanced Animations, Forms & Polish",
+    "body": "CSS Additions:\n- Animated counters: count-up entrance for statistics\n- Form input polish: hover states, focus rings with box-shadow\n- Form validation states: aria-invalid styling + error/success messages\n- Input search styling: magnifying glass background icon\n- Animated gradients: subtle 8s gradient shift for hero sections\n- Scroll-to-top button: fixed position, visible at 300px scroll, smooth scroll\n- Progress indicators: visual progress bar with completion animation\n- Sticky footer actions: slide-up from bottom when needed\n- Page load entrance: smooth fade-in on load (respects prefers-reduced-motion)\n- Breadcrumb enhancements: underline draw on hover, proper spacing\n- Badge system: new/featured/limited states with scale-pop animation\n\nJavaScript Additions:\n- setupScrollToTop(): show/hide + smooth scroll behavior\n- animateCounter(): count from start to target (configurable duration)\n- setupAnimatedCounters(): auto-animate [data-count] elements\n- showProgress() / completeProgress(): progress bar management\n- showStickyFooter(): visibility toggle for footer actions\n- setupFormEnhancements(): real-time validation, aria-invalid states\n\nAll animations smooth, accessible, performant."
+  },
+  {
+    "sha": "7a79784",
+    "date": "2026-06-17",
+    "title": "Phase 7: Accessibility + Interaction Polish",
+    "body": "CSS Additions:\n- ARIA live regions: styled status/alert messages with animations\n- Reading history UI: browsable viewing history with timestamps\n- Enhanced typography scale: responsive text sizing (display-xl → body-sm, caption)\n- Print-friendly styles: hidden UI elements, proper page breaks for artwork printing\n- Touch gesture hints: shown only on touch devices (media: hover: none)\n- Better link styling: underlines, hover states, proper contrast\n- Keyboard focus indicators: 2px orange outline with -4px offset\n- Data attributes styling: [data-featured], [data-new], [data-loading] states\n- High contrast mode support: respects prefers-contrast: more\n\nJavaScript Additions:\n- addToViewingHistory(): persistent viewing history with localStorage\n- getViewingHistory(): retrieve user's view history\n- setupEnhancedShortcuts(): keyboard shortcuts (P=prev, N=next, V=toggle view, B=bookmark, ?=help)\n- setupTouchGestures(): swipe left/right to navigate between works\n- announceToScreenReader(): ARIA live announcements for accessibility\n- Touch gesture detection: 50px minimum swipe distance\n\nAll interactions GPU-accelerated, accessible."
+  },
+  {
+    "sha": "3d7c19e",
+    "date": "2026-06-17",
+    "title": "Phase 6: Advanced Filtering, View Modes & Control",
+    "body": "CSS Additions:\n- View mode toggle: grid/list/masonry modes with persistent localStorage\n- Advanced filter sections: collapsible with smooth animations\n- Filter search box: search within filter categories\n- Enhanced empty states: better messaging + call-to-action\n- Statistics dashboard: cards for archive metrics (works by medium, by decade, etc.)\n- Bookmarks UI: heart button with filled/unfilled states\n- Color swatch filters: clickable color tags for dominant-color filtering\n- Smart shortcuts hint: fades out after 5s, shows on hover\n- Filter search styling: focus states, proper contrast\n\nJavaScript Additions:\n- setupCollapsibleFilters(): toggle filter sections smoothly\n- switchViewMode(): toggle grid/list/masonry + localStorage persistence\n- toggleColorFilter(): manage color filter tags + filtering logic\n- restoreViewMode(): restore user's last view preference on load\n- setupShortcutsHint(): auto-fade hints after 5 seconds\n\nAll interactive elements use GPU-accelerated transitions."
+  },
+  {
+    "sha": "78bb134",
+    "date": "2026-06-17",
+    "title": "Phase 5: Advanced Discovery & Engagement",
+    "body": "New CSS Animations:\n- Scroll-reveal: sections fade/slide in as user scrolls (respects prefers-reduced-motion)\n- Hero parallax: subtle image shift on scroll for depth effect\n- Page transition fade: smooth 300ms cross-fade between pages\n- Responsive masonry grid: 4 cols desktop, 3 tablet, 2 mobile\n- Lazy-load skeleton: shimmer effect for below-fold images\n- Enhanced hover states: 4px lift, deeper shadows\n- Focus ring enhancement: 2px orange outlines with proper offset\n- Loading pulse animation: subtle opacity pulse for loading states\n- Success feedback: scale-in checkmark animation\n\nNew JavaScript (Phase 5):\n- setupScrollReveal(): IntersectionObserver for scroll animations\n- setupHeroParallax(): Parallax image shift on scroll (passive listener)\n- setupSearchHighlighting(): Real-time search result highlighting + glow\n- setupPageTransitions(): Fade between pages on navigation links\n- setupLazyLoadFadeIn(): Fade-in on image load\n- toggleBookmark(): localStorage-based bookmarking (♡ → ♥)\n- updateBookmarkUI(): Update bookmark button state\n\nAll animations GPU-accelerated, accessible (prefers-reduced-motion compliant)."
+  },
+  {
+    "sha": "b085538",
+    "date": "2026-06-17",
+    "title": "Final: Cache version bump for complete Phase 1-4 deployment",
+    "body": "Cache version: jfsn-20260618-all-phases\nAll 15 UX/UI improvements implemented and ready for production\n\n- Phase 1: Breadcrumbs, color coding, shadow lift, touch targets\n- Phase 2: Dark mode toggle + implementation, card depth, link underlines\n- Phase 3: Grid stagger, chip feedback, button press, toast notifications\n- Phase 4: Curated collections, related works, micro-interactions"
+  },
+  {
     "sha": "cc30a3c",
     "date": "2026-06-17",
     "title": "Phase 4: Related Works on Artwork Pages",
