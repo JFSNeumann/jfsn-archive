@@ -1479,19 +1479,9 @@ function renderSavedFilters() {
 document.getElementById('save-filter-btn').addEventListener('click', saveFilter);
 renderSavedFilters();
 
-// Keyboard shortcuts modal
-const shortcutsModal = document.getElementById('shortcuts-modal');
-const closeShortcutsBtn = document.getElementById('close-shortcuts');
-
-closeShortcutsBtn.addEventListener('click', () => {
-  shortcutsModal.classList.add('hidden');
-});
-
-shortcutsModal.addEventListener('click', (e) => {
-  if (e.target === shortcutsModal) {
-    shortcutsModal.classList.add('hidden');
-  }
-});
+// Keyboard shortcuts modal - disabled
+// Elements removed; feature disabled due to duplicate implementations
+// See Session 66 final summary for details
 
 document.addEventListener('keydown', (e) => {
   if (e.key === '?') {
