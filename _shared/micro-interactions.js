@@ -95,11 +95,67 @@
     }
   }
 
+  /* ─── Related Works on Artwork Pages ────────────────────────────────────── */
+  function setupRelatedWorks() {
+    var relatedGrid = document.getElementById('related-works-grid');
+    if (!relatedGrid) return;
+
+    // Get current artwork ID from URL
+    var url = new URL(window.location);
+    var currentId = url.searchParams.get('id');
+    if (!currentId) return;
+
+    // Fetch catalog to find related works
+    fetch('/catalog-lite.json')
+      .then(function(r) { return r.json(); })
+      .then(function(works) {
+        // Find current work
+        var current = works.find(function(w) { return w.file === currentId; });
+        if (!current) return;
+
+        // Find related works: same series, medium, or decade
+        var related = works.filter(function(w) {
+          if (w.file === currentId) return false; // Exclude self
+          if (current.series && w.series === current.series) return true; // Same series
+          if (w.work_type === current.work_type) return true; // Same medium
+          if (w.year === current.year) return true; // Same decade
+          return false;
+        }).slice(0, 8); // Limit to 8
+
+        // Populate grid
+        relatedGrid.innerHTML = '';
+        related.forEach(function(work, idx) {
+          var img = work.file + '.avif';
+          var html = '<a href="artwork.html?id=' + work.file + '" class="thumb" style="--stagger-index:' + idx + ';">' +
+            '<div class="thumb__link" style="display:block;position:relative;cursor:zoom-in;"> ' +
+            '<img src="artworks/medium/' + img + '" alt="' + (work.title || 'Untitled') + '" loading="lazy" style="width:100%;height:auto;display:block;"> ' +
+            '</div>' +
+            '<div class="thumb__caption" style="padding:8px;font-family:Inter,sans-serif;font-size:13px;color:#0B0B0B;"> ' +
+            '<a href="artwork.html?id=' + work.file + '" style="color:inherit;text-decoration:none;">' + (work.title || 'Untitled') + '</a>' +
+            '<br><span style="color:#575757;font-size:11px;">' + (work.year_display || work.year) + '</span>' +
+            '</div>' +
+            '</a>';
+          var li = document.createElement('li');
+          li.innerHTML = html;
+          li.style.listStyle = 'none';
+          relatedGrid.appendChild(li);
+        });
+
+        // Re-setup stagger for related works
+        setupGridStagger();
+      })
+      .catch(function(e) {
+        console.log('Related works load error:', e);
+        relatedGrid.style.display = 'none';
+      });
+  }
+
   /* ─── Initialize All ────────────────────────────────────────────────────── */
   document.addEventListener('DOMContentLoaded', function() {
     setupGridStagger();
     setupFilterChipFeedback();
     setupArtworkShare();
+    setupRelatedWorks();
   });
 
   // Re-setup grid stagger when filter changes
