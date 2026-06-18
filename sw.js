@@ -1,11 +1,16 @@
 /* sw.js — Service Worker for jfsn.com
    Strategy:
-   - AVIF images  → cache-first  (thumbnails/full/mini)
-   - JSON files   → network-first (catalog updates propagate immediately)
-   - HTML/CSS/JS  → network-first (always fresh; fall back to cache if offline)
+   - AVIF images       → cache-first (thumbnails/full/mini)
+   - Catalog JSON      → stale-while-revalidate (serve cached, update in bg)
+   - Other JSON        → network-first (API/config updates)
+   - HTML/CSS/JS       → network-first (always fresh; fall back to cache if offline)
+
+   Stale-while-revalidate: Users get instant cached data, we update it in background.
+   Benefits: Perceived performance (instant load) + data freshness (always up to date)
+
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-20260618024344'; // All 15 UX/UI improvements: Phase 1-4 complete (Session 62)
+const CACHE_V  = 'jfsn-1781792228'; // All 15 UX/UI improvements: Phase 1-4 complete (Session 62)
 const PRECACHE = [
   '/',
   '/index.html',
@@ -90,7 +95,28 @@ self.addEventListener('fetch', e => {
     return;
   }
 
-  /* JSON catalog — network-first so updates propagate immediately */
+  /* JSON catalog (catalog*, chromatic, dims, colors) — stale-while-revalidate
+     Serve cached immediately for perceived performance, update in background */
+  if (url.pathname.match(/(catalog|chromatic|dims|colors).*\.json$/)) {
+    e.respondWith(
+      caches.match(e.request).then(cached => {
+        // 1. Always return cached version immediately (stale)
+        const fetchPromise = fetch(e.request).then(res => {
+          // 2. Update cache in background (while user sees stale)
+          if (res.ok) {
+            const clone = res.clone();
+            caches.open(CACHE_V).then(c => c.put(e.request, clone));
+          }
+          return res;
+        });
+        // Return cached immediately, or wait for network if not cached
+        return cached || fetchPromise;
+      })
+    );
+    return;
+  }
+
+  /* Other JSON (API, config, etc.) — network-first for immediate updates */
   if (url.pathname.endsWith('.json')) {
     e.respondWith(
       fetch(e.request)

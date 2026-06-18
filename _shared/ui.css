@@ -6792,7 +6792,104 @@ body.focus-mode .artwork-display img {
   transform: translateY(-4px);
 }
 
-/* ─── 12. RESPONSIVE REFINEMENTS ───────────────────────────────────────────– */
+/* ─── 12. REUSABLE UTILITY CLASSES (refactored from inline styles) ─────── */
+
+/* Featured card backgrounds (1358 occurrences) */
+.card-bg {
+  background-color: #ebe8e2;
+}
+
+/* Navigation link styles (304 occurrences) */
+.nav-link {
+  padding: 8px 12px;
+  color: #575757;
+  text-decoration: none;
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  border-left: 2px solid transparent;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.nav-link:hover {
+  color: #FF6600;
+  border-left-color: #FF6600;
+}
+
+/* Section headings: 24px Playfair (304 occurrences) */
+.heading-6 {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 20px;
+  color: #0B0B0B;
+}
+
+/* Scroll margin for heading anchors (304 occurrences) */
+.scroll-anchor {
+  margin-bottom: 60px;
+  scroll-margin-top: 20px;
+}
+
+/* Label text: 11px Inter caps (228 occurrences) */
+.label-caps {
+  font-family: Inter, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Warm brown color for labels (228 occurrences) */
+.color-warm {
+  color: #8e7164;
+  font-size: 9px;
+}
+
+/* Warm brown border (228 occurrences) */
+.border-warm {
+  border: 1px solid #8e7164;
+  overflow: hidden;
+}
+
+/* Table styles (114 occurrences) */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+}
+
+.data-table th {
+  text-align: left;
+  padding: 8px;
+  font-weight: 600;
+}
+
+.data-table td {
+  padding: 8px;
+}
+
+/* Code block styles (114 occurrences) */
+.code-block {
+  background: #f5f5f5;
+  border: 1px solid #c4c7c7;
+  padding: 12px;
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  overflow-x: auto;
+  margin: 0;
+  margin-bottom: 30px;
+}
+
+/* Monospace text (114 occurrences) */
+.mono-text {
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  color: #575757;
+}
+
+/* ─── 13. RESPONSIVE REFINEMENTS ───────────────────────────────────────────– */
 
 @media (max-width: 768px) {
   :root {
