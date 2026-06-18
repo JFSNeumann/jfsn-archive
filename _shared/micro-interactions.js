@@ -592,6 +592,191 @@
     });
   }
 
+  /* ─── Phase 9: Real-time Search Suggestions ────────────────────────────────── */
+  function setupSearchSuggestions() {
+    var searchInput = document.querySelector('.search-input');
+    var suggestionsBox = document.querySelector('.search-suggestions');
+    if (!searchInput || !suggestionsBox) return;
+
+    var works = []; // Will be populated from catalog-lite.json
+    fetch('/catalog-lite.json')
+      .then(function(res) { return res.json(); })
+      .then(function(data) { works = data; })
+      .catch(function() {});
+
+    searchInput.addEventListener('input', function() {
+      var query = this.value.toLowerCase().trim();
+      if (query.length < 2) {
+        suggestionsBox.classList.remove('visible');
+        return;
+      }
+
+      var matches = works.filter(function(work) {
+        return work.title.toLowerCase().includes(query) ||
+               work.keywords.toLowerCase().includes(query);
+      }).slice(0, 8);
+
+      if (matches.length === 0) {
+        suggestionsBox.classList.remove('visible');
+        return;
+      }
+
+      suggestionsBox.innerHTML = matches.map(function(work) {
+        return '<div class="search-suggestion-item" data-id="' + work.file + '">' +
+               work.title.replace(new RegExp(query, 'gi'), '<strong>$&</strong>') +
+               '</div>';
+      }).join('');
+
+      suggestionsBox.querySelectorAll('.search-suggestion-item').forEach(function(item) {
+        item.addEventListener('click', function() {
+          window.location.href = '/artwork.html?id=' + this.dataset.id;
+        });
+      });
+
+      suggestionsBox.classList.add('visible');
+    });
+
+    document.addEventListener('click', function(e) {
+      if (e.target !== searchInput) {
+        suggestionsBox.classList.remove('visible');
+      }
+    });
+  }
+
+  /* ─── Phase 9: Filter Persistence ──────────────────────────────────────────── */
+  function setupFilterPersistence() {
+    var filters = document.querySelectorAll('.filter-chip input[type="checkbox"]');
+    var filterKey = 'jfsn-active-filters';
+
+    // Load saved filters
+    var saved = JSON.parse(localStorage.getItem(filterKey) || '{}');
+    filters.forEach(function(checkbox) {
+      if (saved[checkbox.value]) {
+        checkbox.checked = true;
+      }
+    });
+
+    // Save on change
+    filters.forEach(function(checkbox) {
+      checkbox.addEventListener('change', function() {
+        saved[this.value] = this.checked;
+        localStorage.setItem(filterKey, JSON.stringify(saved));
+      });
+    });
+
+    // Quick preset buttons
+    var presetBtns = document.querySelectorAll('.filter-preset-btn');
+    presetBtns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var preset = this.dataset.preset;
+        filters.forEach(function(checkbox) {
+          checkbox.checked = false;
+        });
+        if (preset !== 'all') {
+          filters.forEach(function(checkbox) {
+            if (checkbox.value === preset) checkbox.checked = true;
+          });
+        }
+        // Update localStorage
+        var newFilters = {};
+        filters.forEach(function(checkbox) {
+          if (checkbox.checked) newFilters[checkbox.value] = true;
+        });
+        localStorage.setItem(filterKey, JSON.stringify(newFilters));
+        presetBtns.forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+      });
+    });
+  }
+
+  /* ─── Phase 9: Quick Preview Modal ────────────────────────────────────────── */
+  function setupQuickPreview() {
+    var thumbs = document.querySelectorAll('.thumb, [data-artwork-id]');
+    var modal = document.querySelector('.quick-preview-modal');
+    var closeBtn = document.querySelector('.quick-preview-close');
+    var content = document.querySelector('.quick-preview-content');
+    if (!modal) return;
+
+    thumbs.forEach(function(thumb) {
+      thumb.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        var workId = this.dataset.artworkId || this.querySelector('img').src.match(/art(\d+)/)?.[1];
+        if (!workId) return;
+
+        fetch('/catalog-lite.json')
+          .then(function(res) { return res.json(); })
+          .then(function(data) {
+            var work = data.find(function(w) { return w.file === 'art' + workId; });
+            if (work) {
+              content.innerHTML = '<div class="quick-preview-header"><h3>' + work.title + '</h3>' +
+                '<p>' + work.year + ' · ' + work.work_type + '</p>' +
+                '<p>' + work.dimensions + '</p></div>' +
+                '<img src="/artworks/thumb/' + work.file + '.avif" style="width:100%; height:auto;" />' +
+                '<p style="padding:16px;">' + work.description + '</p>' +
+                '<a href="/artwork.html?id=' + work.file + '" style="display:block; padding:12px 16px; background:#FF6600; color:#fcf9f3; text-decoration:none; text-align:center;">View Full</a>';
+              modal.classList.add('visible');
+            }
+          })
+          .catch(function() {});
+      });
+    });
+
+    closeBtn?.addEventListener('click', function() {
+      modal.classList.remove('visible');
+    });
+
+    modal?.addEventListener('click', function(e) {
+      if (e.target === this) this.classList.remove('visible');
+    });
+  }
+
+  /* ─── Phase 9: Dominant Color Backdrop ────────────────────────────────────── */
+  function setupDominantColorBackdrops() {
+    var images = document.querySelectorAll('.image-with-backdrop img');
+    images.forEach(function(img) {
+      img.addEventListener('load', function() {
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d');
+        canvas.width = 1;
+        canvas.height = 1;
+        ctx.drawImage(this, 0, 0, 1, 1);
+        var imageData = ctx.getImageData(0, 0, 1, 1).data;
+        var color = 'rgb(' + imageData[0] + ', ' + imageData[1] + ', ' + imageData[2] + ')';
+        this.parentElement.style.backgroundColor = color;
+      });
+    });
+  }
+
+  /* ─── Phase 9: Sort Options Manager ────────────────────────────────────────── */
+  function setupSortOptions() {
+    var sortBtns = document.querySelectorAll('.sort-btn');
+    var grid = document.getElementById('works-grid');
+    if (!grid) return;
+
+    sortBtns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        sortBtns.forEach(function(b) { b.classList.remove('active'); });
+        this.classList.add('active');
+
+        var sortBy = this.dataset.sort;
+        var items = Array.from(grid.querySelectorAll('.thumb'));
+
+        items.sort(function(a, b) {
+          switch(sortBy) {
+            case 'recent': return b.dataset.year - a.dataset.year;
+            case 'oldest': return a.dataset.year - b.dataset.year;
+            case 'title-az': return a.dataset.title.localeCompare(b.dataset.title);
+            case 'title-za': return b.dataset.title.localeCompare(a.dataset.title);
+            default: return 0;
+          }
+        });
+
+        items.forEach(function(item) { grid.appendChild(item); });
+        setupGridStagger(); // Re-stagger after sort
+      });
+    });
+  }
+
   /* ─── Initialize All ────────────────────────────────────────────────────── */
   document.addEventListener('DOMContentLoaded', function() {
     setupGridStagger();
@@ -611,6 +796,11 @@
     setupScrollToTop();
     setupAnimatedCounters();
     setupFormEnhancements();
+    setupSearchSuggestions();
+    setupFilterPersistence();
+    setupQuickPreview();
+    setupDominantColorBackdrops();
+    setupSortOptions();
   });
 
   // Re-setup grid stagger when filter changes
