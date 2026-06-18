@@ -777,6 +777,199 @@
     });
   }
 
+  /* ─── Phase 10: Statistics Dashboard ────────────────────────────────────── */
+  function setupStatisticsDashboard() {
+    var dashboard = document.querySelector('.stats-dashboard');
+    if (!dashboard) return;
+
+    fetch('/catalog-lite.json')
+      .then(function(res) { return res.json(); })
+      .then(function(works) {
+        var decades = {};
+        var mediums = {};
+        works.forEach(function(work) {
+          var decade = work.year || 'Unknown';
+          decades[decade] = (decades[decade] || 0) + 1;
+          var medium = work.work_type || 'Other';
+          mediums[medium] = (mediums[medium] || 0) + 1;
+        });
+
+        var html = '<div class="stat-card">' +
+          '<div class="stat-value stat-number">' + works.length + '</div>' +
+          '<span class="stat-label">Total Works</span></div>' +
+          '<div class="stat-card">' +
+          '<div class="stat-value stat-number">' + Object.keys(decades).length + '</div>' +
+          '<span class="stat-label">Time Periods</span></div>' +
+          '<div class="stat-card">' +
+          '<div class="stat-value stat-number">' + Object.keys(mediums).length + '</div>' +
+          '<span class="stat-label">Media Types</span></div>' +
+          '<div class="stat-card">' +
+          '<div class="stat-value stat-number">' + (works.filter(function(w) { return w.favorite; }).length || 0) + '</div>' +
+          '<span class="stat-label">Favorites</span></div>';
+
+        dashboard.innerHTML = html;
+
+        // Animate stat numbers on scroll
+        var statCards = dashboard.querySelectorAll('.stat-card');
+        statCards.forEach(function(card) {
+          var observer = new IntersectionObserver(function(entries) {
+            if (entries[0].isIntersecting) {
+              var num = card.querySelector('.stat-number');
+              if (num) {
+                num.classList.add('stat-pulse');
+                var target = parseInt(num.textContent);
+                animateCounter(num, target, 1500);
+              }
+              observer.unobserve(card);
+            }
+          });
+          observer.observe(card);
+        });
+      })
+      .catch(function() {});
+  }
+
+  /* ─── Phase 10: Timeline Interactive View ────────────────────────────────── */
+  function setupTimeline() {
+    var timeline = document.querySelector('.timeline-container');
+    if (!timeline) return;
+
+    fetch('/catalog-lite.json')
+      .then(function(res) { return res.json(); })
+      .then(function(works) {
+        var byDecade = {};
+        works.forEach(function(work) {
+          var decade = work.year || 'Unknown';
+          if (!byDecade[decade]) byDecade[decade] = [];
+          byDecade[decade].push(work);
+        });
+
+        var decades = Object.keys(byDecade).sort().reverse();
+        var html = '';
+
+        decades.forEach(function(decade, idx) {
+          html += '<div class="timeline-year-group" data-decade="' + decade + '">' +
+            '<div class="timeline-year-label">' + decade + '</div>' +
+            '<div class="timeline-year-works">' + byDecade[decade].length + ' works</div>' +
+            '</div>';
+        });
+
+        timeline.innerHTML = html;
+
+        timeline.querySelectorAll('.timeline-year-group').forEach(function(group) {
+          group.addEventListener('click', function() {
+            var decade = this.dataset.decade;
+            // Filter works by decade
+            window.location.href = '/archive.html?decade=' + decade;
+          });
+        });
+      })
+      .catch(function() {});
+  }
+
+  /* ─── Phase 10: Lazy Image Loading with Fade ────────────────────────────── */
+  function setupLazyImageFade() {
+    var images = document.querySelectorAll('img[loading="lazy"]');
+    var imageObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var img = entry.target;
+          img.classList.remove('lazy-placeholder');
+          img.addEventListener('load', function() {
+            this.classList.add('loaded');
+          });
+          img.addEventListener('error', function() {
+            this.classList.add('loaded');
+          });
+          imageObserver.unobserve(img);
+        }
+      });
+    });
+
+    images.forEach(function(img) {
+      img.classList.add('lazy-placeholder');
+      imageObserver.observe(img);
+    });
+  }
+
+  /* ─── Phase 10: Export/Share Modal ────────────────────────────────────────── */
+  function setupExportModal() {
+    var exportBtns = document.querySelectorAll('.export-btn-trigger');
+    var modal = document.querySelector('.export-modal');
+    if (!modal) return;
+
+    exportBtns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        modal.classList.add('visible');
+      });
+    });
+
+    var closeBtn = modal.querySelector('.export-close');
+    closeBtn?.addEventListener('click', function() {
+      modal.classList.remove('visible');
+    });
+
+    var confirmBtn = modal.querySelector('.export-btn');
+    confirmBtn?.addEventListener('click', function() {
+      var selected = modal.querySelector('input[type="radio"]:checked');
+      if (!selected) return;
+
+      var format = selected.value;
+      var url = new URL(window.location);
+      var workId = url.searchParams.get('id');
+
+      if (workId) {
+        switch(format) {
+          case 'json':
+            fetch('/catalog-lite.json')
+              .then(function(res) { return res.json(); })
+              .then(function(works) {
+                var work = works.find(function(w) { return w.file === workId; });
+                downloadJSON(work);
+              });
+            break;
+          case 'csv':
+            downloadCSV([workId]);
+            break;
+          case 'image':
+            var img = document.querySelector('.artwork-display img');
+            if (img) downloadImage(img.src);
+            break;
+        }
+      }
+
+      modal.classList.remove('visible');
+    });
+  }
+
+  window.downloadJSON = function(data) {
+    var json = JSON.stringify(data, null, 2);
+    var blob = new Blob([json], { type: 'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = (data.file || 'export') + '.json';
+    a.click();
+  };
+
+  window.downloadCSV = function(ids) {
+    var csv = 'ID,Title,Year,Type\n';
+    csv += ids.map(function(id) { return id + ',work data'; }).join('\n');
+    var blob = new Blob([csv], { type: 'text/csv' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'works.csv';
+    a.click();
+  };
+
+  window.downloadImage = function(src) {
+    var a = document.createElement('a');
+    a.href = src;
+    a.download = src.split('/').pop();
+    a.click();
+  };
+
   /* ─── Initialize All ────────────────────────────────────────────────────── */
   document.addEventListener('DOMContentLoaded', function() {
     setupGridStagger();
@@ -801,6 +994,10 @@
     setupQuickPreview();
     setupDominantColorBackdrops();
     setupSortOptions();
+    setupStatisticsDashboard();
+    setupTimeline();
+    setupLazyImageFade();
+    setupExportModal();
   });
 
   // Re-setup grid stagger when filter changes
