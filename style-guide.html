@@ -160,6 +160,7 @@
     <li><a href="#utility-classes" class="nav-link">Utility Classes</a></li>
     <li><a href="#artwork-grid" class="nav-link">Artwork Grid</a></li>
     <li><a href="#filter-chips" class="nav-link">Filter Chips</a></li>
+    <li><a href="#mobile-nav" class="nav-link">Mobile Nav</a></li>
     <li><a href="#animations" class="nav-link">Animations</a></li>
     <li><a href="#accessibility" class="nav-link">Accessibility</a></li>
   </ul>
@@ -2109,6 +2110,363 @@ filterChips.innerHTML = chipItems.map(c =>
       <strong>✅ Two-way control:</strong> Click × on chip or uncheck box → both update.<br/>
       <strong>✅ Cumulative filters:</strong> Multiple media/decade/series selections show as separate chips.
     </p>
+  </div>
+</div>
+
+<!-- MOBILE NAVIGATION DRAWER -->
+<div class="guide-section" id="mobile-nav">
+  <h2 class="section-title">Mobile Navigation Drawer</h2>
+  <p style="font-size: 14px; color: #575757; margin-bottom: 32px;">Hamburger menu → slide-in drawer pattern used on all 31 pages. Provides full navigation on mobile/tablet without sacrificing valuable viewport space. Hidden on desktop (≥768px), visible on mobile by default.</p>
+
+  <h3 class="subsection-title">Overview</h3>
+  <table class="token-table">
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><strong>Trigger</strong></td>
+        <td>Hamburger menu button (#nav-menu-btn)</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><strong>Drawer Element</strong></td>
+        <td>#mobile-menu-drawer (fixed position, right side)</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><strong>Width</strong></td>
+        <td>min(280px, 85vw) — responsive to viewport</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><strong>Animation</strong></td>
+        <td>Slide from right (translateX 100% → 0) over 250ms</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><strong>Close Trigger</strong></td>
+        <td>× button, overlay click, or ESC key</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><strong>Breakpoint Hide</strong></td>
+        <td>md (≥768px) — drawer hidden, desktop nav shows</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 class="subsection-title">HTML Structure</h3>
+
+  <div class="snippet-box">
+    <h4>Hamburger Trigger Button</h4>
+    <pre><code>&lt;button
+  class="md:hidden text-deep-ink"
+  style="padding:10px;"
+  aria-label="Open menu"
+  id="nav-menu-btn"
+&gt;
+  &lt;svg width="22" height="22" viewBox="0 0 24 24"
+       fill="none" stroke="currentColor" stroke-width="1.8"&gt;
+    &lt;line x1="4" y1="6" x2="20" y2="6"/&gt;
+    &lt;line x1="4" y1="12" x2="20" y2="12"/&gt;
+    &lt;line x1="4" y1="18" x2="20" y2="18"/&gt;
+  &lt;/svg&gt;
+&lt;/button&gt;</code></pre>
+  </div>
+
+  <div class="snippet-box">
+    <h4>Drawer Container</h4>
+    <pre><code>&lt;nav id="mobile-menu-drawer"
+     aria-label="Mobile menu"
+     style="position:absolute;
+             top:0;
+             right:0;
+             width:min(280px,85vw);
+             height:100%;
+             background:#fcf9f3;
+             border-left:1px solid #0B0B0B;
+             display:flex;
+             flex-direction:column;
+             transform:translateX(100%);
+             transition:transform 0.25s ease;"&gt;
+  &lt;!-- Header --&gt;
+  &lt;div style="...header styles..."&gt;
+    &lt;span&gt;JFSN&lt;/span&gt;
+    &lt;button id="nav-menu-close" aria-label="Close menu"&gt;×&lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Links --&gt;
+  &lt;div style="flex:1;overflow-y:auto;padding:8px 0;"&gt;
+    &lt;a href="..."&gt;Navigation Link&lt;/a&gt;
+    ...
+  &lt;/div&gt;
+
+  &lt;!-- Footer (Portrait + Search) --&gt;
+  &lt;div style="...footer section..."&gt;...&lt;/div&gt;
+&lt;/nav&gt;</code></pre>
+  </div>
+
+  <h3 class="subsection-title">Drawer Sections</h3>
+
+  <div style="background: white; border: 1px solid #8e7164; padding: 16px; margin-bottom: 16px;">
+    <p style="font-size: 12px; font-weight: 600; color: #0B0B0B; margin: 0 0 8px;">📌 Header (Fixed)</p>
+    <p style="font-size: 11px; color: #575757; margin: 0; line-height: 1.6;">
+      <code>height: 64px</code> — JFSN logo on left, close button (×) on right. Bottom border separates from content.
+    </p>
+  </div>
+
+  <div style="background: white; border: 1px solid #8e7164; padding: 16px; margin-bottom: 16px;">
+    <p style="font-size: 12px; font-weight: 600; color: #0B0B0B; margin: 0 0 8px;">📑 Links (Scrollable)</p>
+    <p style="font-size: 11px; color: #575757; margin: 0 0 8px; line-height: 1.6;">
+      <code>flex: 1; overflow-y: auto</code> — takes remaining space, scrolls if content exceeds height. Links include inline SVG icons.
+    </p>
+    <p style="font-size: 11px; color: #8e7164; margin: 0;"><strong>6 links:</strong> Start Here, About Jeff, Explore, Collections, For Researchers, Archive Info</p>
+  </div>
+
+  <div style="background: white; border: 1px solid #8e7164; padding: 16px; margin-bottom: 16px;">
+    <p style="font-size: 12px; font-weight: 600; color: #0B0B0B; margin: 0 0 8px;">👤 Portrait (Fixed)</p>
+    <p style="font-size: 11px; color: #575757; margin: 0; line-height: 1.6;">
+      Jeff's photo (me black.gif) centered at bottom, opacity 0.85. Adds personal touch, visual breathing room.
+    </p>
+  </div>
+
+  <div style="background: white; border: 1px solid #8e7164; padding: 16px;">
+    <p style="font-size: 12px; font-weight: 600; color: #0B0B0B; margin: 0 0 8px;">🔍 Search Shortcut (Fixed)</p>
+    <p style="font-size: 11px; color: #575757; margin: 0 0 8px; line-height: 1.6;">
+      Button labeled "Search archive" at bottom. Triggers search modal when clicked (opens same search as ⌘K on desktop).
+    </p>
+    <p style="font-size: 11px; color: #8e7164; margin: 0;"><strong>ID:</strong> #mobile-menu-search</p>
+  </div>
+
+  <h3 class="subsection-title">Link Styling & Icons</h3>
+  <p style="font-size: 12px; color: #575757; margin-bottom: 16px;">Each navigation link includes a left-aligned SVG icon. Structure:</p>
+
+  <div class="snippet-box">
+    <h4>Individual Link with Icon</h4>
+    <pre><code>&lt;a href="start-here.html"
+   style="display:flex;
+           align-items:center;
+           gap:14px;
+           padding:16px 24px;
+           font-family:Inter,sans-serif;
+           font-size:13px;
+           font-weight:500;
+           letter-spacing:0.08em;
+           text-transform:uppercase;
+           color:#0B0B0B;
+           text-decoration:none;
+           border-bottom:1px solid #c4c7c7;"&gt;
+  &lt;svg width="18" height="18" viewBox="0 0 24 24"
+       fill="none" stroke="currentColor" stroke-width="1.8"
+       aria-hidden="true" focusable="false"
+       class="flex-no-shrink"&gt;
+    &lt;!-- Icon path --&gt;
+  &lt;/svg&gt;
+  Start Here
+&lt;/a&gt;</code></pre>
+  </div>
+
+  <table class="data-table" style="margin-top: 16px;">
+    <thead>
+      <tr style="background: #fcf9f3;">
+        <th style="padding: 8px; text-align: left; border-bottom: 2px solid #8e7164;">Page</th>
+        <th style="padding: 8px; text-align: left; border-bottom: 2px solid #8e7164;">Icon</th>
+        <th style="padding: 8px; text-align: left; border-bottom: 2px solid #8e7164;">Meaning</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td style="padding: 8px;">Start Here</td>
+        <td style="padding: 8px;">Clock + circle</td>
+        <td style="padding: 8px;">Welcome, orientation</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td style="padding: 8px;">About Jeff</td>
+        <td style="padding: 8px;">Person avatar</td>
+        <td style="padding: 8px;">Biography, artist info</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td style="padding: 8px;">Explore</td>
+        <td style="padding: 8px;">Grid / 4 squares</td>
+        <td style="padding: 8px;">Browse all works</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td style="padding: 8px;">Collections</td>
+        <td style="padding: 8px;">Folder / document</td>
+        <td style="padding: 8px;">Themed collections</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td style="padding: 8px;">For Researchers</td>
+        <td style="padding: 8px;">Circle + info</td>
+        <td style="padding: 8px;">API, developer docs</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td style="padding: 8px;">Archive Info</td>
+        <td style="padding: 8px;">Dashed rect</td>
+        <td style="padding: 8px;">Lost works, metadata</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 class="subsection-title">Interactions & Animations</h3>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0;">
+    <div style="background: white; border: 1px solid #8e7164; padding: 16px;">
+      <p style="font-size: 12px; font-weight: 600; color: #0B0B0B; margin: 0 0 8px;">Open Animation</p>
+      <p style="font-size: 11px; color: #575757; margin: 0; line-height: 1.6;">
+        <code>transform: translateX(100% → 0)</code> over 250ms. Drawer slides in from right edge.
+      </p>
+    </div>
+    <div style="background: white; border: 1px solid #8e7164; padding: 16px;">
+      <p style="font-size: 12px; font-weight: 600; color: #0B0B0B; margin: 0 0 8px;">Close Animation</p>
+      <p style="font-size: 11px; color: #575757; margin: 0; line-height: 1.6;">
+        <code>transform: translateX(0 → 100%)</code> over 250ms. Drawer slides off to right.
+      </p>
+    </div>
+    <div style="background: white; border: 1px solid #8e7164; padding: 16px;">
+      <p style="font-size: 12px; font-weight: 600; color: #0B0B0B; margin: 0 0 8px;">Link Hover</p>
+      <p style="font-size: 11px; color: #575757; margin: 0; line-height: 1.6;">
+        Underline animation: <code>::after { transform: scaleX(0 → 1) }</code> over 200ms. Bottom-up reveal.
+      </p>
+    </div>
+    <div style="background: white; border: 1px solid #8e7164; padding: 16px;">
+      <p style="font-size: 12px; font-weight: 600; color: #0B0B0B; margin: 0 0 8px;">Link Stagger (Entry)</p>
+      <p style="font-size: 11px; color: #575757; margin: 0; line-height: 1.6;">
+        Links fade in with staggered delays (0.05s increments). Classes: <code>.drawer-stagger-1</code> through <code>-4</code>.
+      </p>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">Active Link Highlighting</h3>
+  <p style="font-size: 12px; color: #575757; margin-bottom: 16px;">Current page link is highlighted with orange left border and text color.</p>
+
+  <div style="background: #fcf9f3; border: 1px solid #8e7164; padding: 16px; margin: 16px 0;">
+    <p style="font-size: 11px; color: #575757; margin: 0; line-height: 1.8;">
+      <strong>Class:</strong> <code>.drawer-active</code><br/>
+      <strong>Styles:</strong> <code>color: #B84700; border-left: 3px solid #FF6600; padding-left: 21px</code><br/>
+      <strong>Applied via:</strong> nav-active.js — automatically set based on current pathname
+    </p>
+  </div>
+
+  <h3 class="subsection-title">JavaScript Controls</h3>
+
+  <div class="snippet-box">
+    <h4>Open/Close Handlers</h4>
+    <pre><code>const menuBtn = document.getElementById('nav-menu-btn');
+const closeBtn = document.getElementById('nav-menu-close');
+const drawer = document.getElementById('mobile-menu-drawer');
+const overlay = document.getElementById('mobile-menu-overlay');
+
+menuBtn.addEventListener('click', () => {
+  drawer.style.transform = 'translateX(0)';
+  overlay.style.display = 'block';
+});
+
+const closeMenu = () => {
+  drawer.style.transform = 'translateX(100%)';
+  overlay.style.display = 'none';
+};
+
+closeBtn.addEventListener('click', closeMenu);
+overlay.addEventListener('click', closeMenu);
+
+// ESC key to close
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && drawer.style.transform === 'translateX(0)') {
+    closeMenu();
+  }
+});</code></pre>
+  </div>
+
+  <h3 class="subsection-title">Accessibility</h3>
+  <ul style="font-size: 11px; color: #575757; padding-left: 16px; line-height: 1.8;">
+    <li><code>aria-label="Open menu"</code> on hamburger button — describes button purpose</li>
+    <li><code>aria-label="Close menu"</code> on × close button — screen readers announce action</li>
+    <li><code>aria-label="Mobile menu"</code> on nav element — identifies drawer as navigation</li>
+    <li><code>aria-hidden="true" focusable="false"</code> on SVG icons — excluded from tab order</li>
+    <li><code>.flex-no-shrink</code> class on icons — prevents icon shrinking in flex layout</li>
+    <li><code>ESC</code> key closes drawer — standard keyboard pattern</li>
+    <li>Focus trap: drawer should trap focus while open (optional, depends on implementation)</li>
+    <li>Motion preferences: consider adding <code>@media (prefers-reduced-motion: reduce)</code> to disable slide animation</li>
+  </ul>
+
+  <h3 class="subsection-title">Overlay & Fixed Positioning</h3>
+  <p style="font-size: 12px; color: #575757; margin-bottom: 16px;">Drawer uses fixed positioning and includes an optional semi-transparent overlay to darken background content.</p>
+
+  <div class="snippet-box">
+    <h4>Overlay Element (Optional)</h4>
+    <pre><code>&lt;div id="mobile-menu-overlay"
+     style="position:fixed;
+             top:0;
+             left:0;
+             width:100%;
+             height:100%;
+             background:rgba(0,0,0,0.3);
+             z-index:40;
+             display:none;"&gt;&lt;/div&gt;
+
+&lt;nav id="mobile-menu-drawer"
+     style="...
+             z-index:41;
+             ..."&gt;...&lt;/nav&gt;</code></pre>
+  </div>
+
+  <h3 class="subsection-title">Responsive Behavior</h3>
+
+  <table class="token-table">
+    <thead>
+      <tr>
+        <th>Breakpoint</th>
+        <th>Drawer Display</th>
+        <th>Desktop Nav</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><strong>Mobile (&lt; 768px)</strong></td>
+        <td>Visible</td>
+        <td>Hidden</td>
+        <td>Hamburger trigger shows, full navigation in drawer</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><strong>Desktop (≥ 768px)</strong></td>
+        <td>Hidden</td>
+        <td>Visible</td>
+        <td>Drawer remains in DOM but display: none via CSS</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 class="subsection-title">Common Customizations</h3>
+
+  <div class="snippet-box">
+    <h4>Change Drawer Width</h4>
+    <pre><code>#mobile-menu-drawer {
+  width: min(320px, 90vw); /* Wider drawer */
+}</code></pre>
+  </div>
+
+  <div class="snippet-box">
+    <h4>Disable Link Underline Animation</h4>
+    <pre><code>#mobile-menu-drawer a::after {
+  display: none;
+}</code></pre>
+  </div>
+
+  <div class="snippet-box">
+    <h4>Change Overlay Darkness</h4>
+    <pre><code>#mobile-menu-overlay {
+  background: rgba(0,0,0,0.5); /* Darker overlay */
+}</code></pre>
+  </div>
+
+  <div class="snippet-box">
+    <h4>Disable Reduced-Motion Override</h4>
+    <pre><code>@media (prefers-reduced-motion: reduce) {
+  #mobile-menu-drawer {
+    transition: none; /* Remove animation entirely */
+  }
+}</code></pre>
   </div>
 </div>
 
