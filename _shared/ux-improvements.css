@@ -1,0 +1,245 @@
+/* Session 66: UX/Design Improvements Suite
+   6 enhancements for better discoverability, context, and visual hierarchy */
+
+/* ═══════════════════════════════════════════════════════════
+   #1: Sticky Search Bar (Archive Page)
+   ═══════════════════════════════════════════════════════════ */
+#archive-header {
+  position: sticky;
+  top: 64px; /* Below main nav */
+  z-index: 40;
+  background: rgba(252, 249, 243, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid #c4c7c7;
+  padding: 12px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+}
+
+#archive-header:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+#archive-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 0 var(--margin-mobile, 20px);
+}
+
+@media (min-width: 768px) {
+  #archive-header-content {
+    padding: 0 var(--margin-desktop, 40px);
+  }
+}
+
+/* Search prominence */
+#nav-search-btn {
+  background: #FF6600;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 13px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+#nav-search-btn:hover {
+  background: #e05900;
+  box-shadow: 0 4px 12px rgba(255, 102, 0, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Result count badge */
+#result-count-number {
+  font-weight: 700;
+  color: #FF6600;
+  font-size: 18px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   #2 & #4: Card Hierarchy & Masonry Grid
+   ═══════════════════════════════════════════════════════════ */
+
+/* Masonry-inspired layout: Some cards 2x2, creating visual rhythm */
+#works-grid {
+  display: grid;
+  grid-auto-rows: auto;
+  gap: 8px;
+  padding-bottom: 60px;
+}
+
+@media (max-width: 640px) {
+  #works-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1023px) {
+  #works-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+}
+
+@media (min-width: 1024px) {
+  #works-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+}
+
+/* Featured/favorite items are larger (2x2) */
+.archive-card[data-favorite="true"] {
+  grid-column: span 1;
+}
+
+/* Pattern: every 13th item is 2x2 (creates visual rhythm) */
+@media (min-width: 641px) {
+  #works-grid > :nth-child(13n) {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+}
+
+@media (min-width: 1024px) {
+  #works-grid > :nth-child(17n + 15) {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   #3: Enhanced Card Shadows & Borders
+   ═══════════════════════════════════════════════════════════ */
+
+.archive-card {
+  position: relative;
+  border: 1px solid #e3bfb1;
+  border-radius: 2px;
+  background: #fcf9f3;
+  overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.archive-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  border-color: #8e7164;
+  transform: translateY(-2px);
+}
+
+/* Larger cards get more prominent shadows */
+.archive-card[data-favorite="true"],
+#works-grid > :nth-child(13n):not(:has(img[alt*="—"])),
+#works-grid > :nth-child(17n + 15) {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.archive-card[data-favorite="true"]:hover,
+#works-grid > :nth-child(13n):hover,
+#works-grid > :nth-child(17n + 15):hover {
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   #5: Enhanced Hover Metadata Preview
+   ═══════════════════════════════════════════════════════════ */
+
+.archive-card::before {
+  content: attr(data-preview-title) " · " attr(data-preview-medium) " · " attr(data-preview-year);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 8px 12px;
+  background: rgba(11, 11, 11, 0.92);
+  color: white;
+  font-family: Inter, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  z-index: 10;
+  transform: translateY(100%);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.archive-card:hover::before {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .archive-card::before {
+    transition: none;
+    opacity: 1;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   #3 (Continued): Breadcrumb Navigation (Artwork Page)
+   ═══════════════════════════════════════════════════════════ */
+
+.breadcrumb-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 0;
+  margin-bottom: 24px;
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #575757;
+  border-bottom: 1px solid #e3bfb1;
+}
+
+.breadcrumb-nav a {
+  color: #B84700;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.breadcrumb-nav a:hover {
+  color: #FF6600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.breadcrumb-separator {
+  color: #c4c7c7;
+  margin: 0 4px;
+}
+
+.breadcrumb-current {
+  color: #0B0B0B;
+  font-weight: 600;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Reduced Motion Accessibility
+   ═══════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  #archive-header,
+  #nav-search-btn,
+  .archive-card {
+    transition: none;
+  }
+
+  .archive-card:hover {
+    transform: none;
+  }
+}
