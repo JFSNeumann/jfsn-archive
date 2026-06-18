@@ -1,5 +1,41 @@
 [
   {
+    "sha": "bf86569",
+    "date": "2026-06-17",
+    "title": "Phase 1 UX — Add breadcrumbs to main navigation pages",
+    "body": "- Add breadcrumbs to: About Jeff, Collections, Archive Info pages\n- Consistent styling with link underline draw animation\n- Improves user orientation across the site"
+  },
+  {
+    "sha": "e762a7a",
+    "date": "2026-06-17",
+    "title": "Phase 1 UX — Add breadcrumbs to archive page",
+    "body": "- Breadcrumb navigation: Home / Archive\n- Styled with link underline draw animation\n- Fully accessible with aria-labels\n- Responsive on mobile"
+  },
+  {
+    "sha": "077c0e9",
+    "date": "2026-06-17",
+    "title": "Phase 1 UX/UI Foundation — Color coding, shadow lift, touch targets, breadcrumbs CSS",
+    "body": "- Add color-coding tints by medium (Collage, Sculpture, Photography, Painting)\n- Enhanced hover states with shadow lift + translateY transform\n- Improved mobile touch targets (44px minimum)\n- Breadcrumb navigation styling with link underlines\n- Better empty states messaging\n- Skeleton shimmer for loading feedback\n- Link underline draw animation\n- All animation/transition respects prefers-reduced-motion"
+  },
+  {
+    "sha": "c28e610",
+    "date": "2026-06-17",
+    "title": "Phase 3 Animations — 5 advanced delight touches",
+    "body": "Implements all 5 Phase 3 animations:\n1. Section entrance color tint fade (long-form pages, 300ms)\n2. Quote hover pulse (blockquote text, 0.4s, 2 repeats)\n3. Search result underline draw (200ms scaleX, GPU-friendly)\n4. Drawer item stagger (mobile menu, 50ms offset per item)\n5. Touch device feedback (active state flash, 100ms)\n\nAll animations:\n- GPU-accelerated (opacity, transform, color only)\n- Respect prefers-reduced-motion\n- Use constraint vocabulary (fade, slide, color, lift)\n- No artwork animation (artwork-first rule)\n\nCache version bumped: jfsn-20260617234500"
+  },
+  {
+    "sha": "4b0db83",
+    "date": "2026-06-17",
+    "title": "Improve deployment workflow — 3 new scripts + documentation",
+    "body": "Add three new scripts to streamline Netlify deployments:\n\n1. deploy-netlify-improved.sh\n   - Better error handling (fallback for --prod issues)\n   - Auto Netlify link verification\n   - Draft URL capture & verification\n   - Comprehensive logging to /tmp/\n   - Fallback instructions for permission errors\n\n2. promote-netlify-draft.sh\n   - Promote draft deployments to prod via API (bypasses --prod CLI issues)\n   - List recent deployments\n   - Target specific deployment by ID\n   - Works when netlify CLI --prod returns Forbidden\n\n3. session-end.sh\n   - Unified workflow: commit + push + backup + optional deploy\n   - Prompts on uncommitted changes\n   - Single command for full release pipeline\n   - Optional: --deploy (draft) or --deploy --prod (production)\n\nBenefits:\n- ✓ Eliminates Netlify CLI --prod \"Forbidden\" blockers\n- ✓ Reduces multi-step manual process to 1-2 commands\n- ✓ Better error messages and troubleshooting guidance\n- ✓ API fallback for permission issues\n- ✓ Comprehensive logging & verification\n\nDocumentation: DEPLOYMENT-WORKFLOW.md\n\nUsage:\n  bash session-end.sh --deploy --prod     # Full pipeline in one command\n  bash promote-netlify-draft.sh            # Manual promotion if CLI fails\n  bash deploy-netlify-improved.sh --check  # Safety check before deploy"
+  },
+  {
+    "sha": "3938618",
+    "date": "2026-06-17",
+    "title": "Regenerate build artifacts after all 15 improvements committed",
+    "body": ""
+  },
+  {
     "sha": "2134d83",
     "date": "2026-06-17",
     "title": "All 15 UX/UI improvements — Tier 1-3 micro-interactions complete",
