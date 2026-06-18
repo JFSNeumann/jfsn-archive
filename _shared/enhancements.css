@@ -1,0 +1,271 @@
+/* enhancements.css — Phase 1 quick wins
+   - Scroll-to-top button
+   - Empty states
+   - Search input focus glow
+   - Card gradient hovers */
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* 1. SCROLL-TO-TOP BUTTON */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+.scroll-to-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 48px;
+  height: 48px;
+  background: #FF6600;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 12px rgba(255, 102, 0, 0.3);
+}
+
+.scroll-to-top-show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.scroll-to-top:hover {
+  background: #e05900;
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(255, 102, 0, 0.4);
+}
+
+.scroll-to-top:focus-visible {
+  outline: 2px solid #0B0B0B;
+  outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+  .scroll-to-top {
+    bottom: 16px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-to-top {
+    transition: opacity 0.15s ease;
+  }
+
+  .scroll-to-top:hover {
+    transform: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* 2. EMPTY STATES */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  padding: 40px 20px;
+  text-align: center;
+  animation: empty-state-fade-in 0.5s ease forwards;
+}
+
+@keyframes empty-state-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.empty-state-icon {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 24px;
+  opacity: 0.6;
+}
+
+.empty-state-icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: #8e7164;
+  stroke-width: 1.5;
+}
+
+.empty-state-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #0B0B0B;
+  margin: 0 0 12px;
+}
+
+.empty-state-message {
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  color: #575757;
+  max-width: 400px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .empty-state {
+    min-height: 250px;
+    padding: 30px 16px;
+  }
+
+  .empty-state-icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .empty-state-title {
+    font-size: 20px;
+  }
+
+  .empty-state-message {
+    font-size: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .empty-state {
+    animation: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* 3. SEARCH INPUT FOCUS GLOW */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+#nav-search-input,
+.search-input {
+  transition: all 0.2s ease;
+}
+
+#nav-search-input:focus,
+.search-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #fcf9f3, 0 0 0 4px #FF6600, inset 0 0 8px rgba(255, 102, 0, 0.1);
+  border-color: #FF6600;
+}
+
+#nav-search-input::placeholder,
+.search-input::placeholder {
+  color: #c4c7c7;
+  transition: color 0.2s ease;
+}
+
+#nav-search-input:focus::placeholder,
+.search-input:focus::placeholder {
+  color: #8e7164;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* 4. CARD GRADIENT HOVER TRANSITIONS */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Apply to archive cards, theme cards, and card containers */
+.card,
+.theme-card,
+[class*='card'],
+.quote-card,
+.component {
+  transition: background 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover,
+.theme-card:hover,
+[class*='card']:hover,
+.quote-card:hover,
+.component:hover {
+  background: linear-gradient(135deg, #fcf9f3 0%, #f5eee5 100%);
+}
+
+/* Specific card elements */
+.card-container {
+  transition: all 0.2s ease;
+}
+
+.card-container:hover {
+  background: linear-gradient(135deg, #fcf9f3 0%, #f5eee5 100%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* Homepage featured cards */
+.featured-card {
+  transition: all 0.2s ease;
+}
+
+.featured-card:hover {
+  background: linear-gradient(135deg, #fcf9f3 0%, #f5eee5 100%);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Quote/callout cards */
+.quote-card {
+  transition: all 0.25s ease;
+}
+
+.quote-card:hover {
+  background: linear-gradient(135deg, #fcf9f3 0%, #f5eee5 100%);
+  border-color: #FF6600;
+  box-shadow: 0 4px 16px rgba(255, 102, 0, 0.1);
+}
+
+/* Filter/action cards */
+.action-card,
+.filter-option {
+  transition: all 0.2s ease;
+}
+
+.action-card:hover,
+.filter-option:hover {
+  background: linear-gradient(135deg, #fcf9f3 0%, #f5eee5 100%);
+  border-color: #FF6600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .theme-card,
+  [class*='card'],
+  .quote-card,
+  .component,
+  .card-container,
+  .featured-card,
+  .action-card,
+  .filter-option {
+    transition: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* ACCESSIBILITY */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Ensure focus indicators remain visible on hover */
+.scroll-to-top:focus-visible,
+#nav-search-input:focus-visible,
+.search-input:focus-visible {
+  outline-offset: 2px;
+}
+
+/* Keyboard users benefit from all enhancements */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+  }
+}
