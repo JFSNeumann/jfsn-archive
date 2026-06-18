@@ -38,7 +38,8 @@
 #sse-hint{padding:.5rem 1rem;border-top:1px solid var(--sse-dim);font-size:.625rem;letter-spacing:.08em;color:var(--sse-muted);opacity:.4}
 #sse-hint kbd{font-family:inherit;border:1px solid var(--sse-dim);padding:.05rem .3rem;font-size:.6rem}
 #sse-kb-modal{position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:9000;display:flex;align-items:center;justify-content:center;padding:24px}
-#sse-kb-modal[hidden]{display:none}
+#sse-kb-modal.sse-kb-hidden{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important}
+#sse-kb-modal[hidden]{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important}
 #sse-kb-panel{width:min(480px,92vw);background:#161616;border:1px solid var(--sse-dim);box-shadow:0 24px 64px rgba(0,0,0,.6);overflow:hidden}
 #sse-kb-head{display:flex;justify-content:space-between;align-items:center;padding:.875rem 1rem;border-bottom:1px solid var(--sse-dim)}
 #sse-kb-title{font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--sse-muted)}
@@ -234,18 +235,39 @@
   // ── Shortcuts modal ──────────────────────────────────────────────────────
   function openShortcuts() {
     close(); // close search if open
+    kbModal.classList.remove('sse-kb-hidden');
     kbModal.hidden = false;
     document.body.style.overflow = 'hidden';
-    document.getElementById('sse-kb-close').focus();
+    const closeBtn = document.getElementById('sse-kb-close');
+    if (closeBtn) closeBtn.focus();
   }
 
   function closeShortcuts() {
+    kbModal.classList.add('sse-kb-hidden');
     kbModal.hidden = true;
+    kbModal.setAttribute('hidden', '');
+    kbModal.style.display = 'none';
     document.body.style.overflow = '';
   }
 
-  document.getElementById('sse-kb-close').addEventListener('click', closeShortcuts);
+  const closeBtn = document.getElementById('sse-kb-close');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      closeShortcuts();
+    });
+  }
   kbModal.addEventListener('click', e => { if (e.target === kbModal) closeShortcuts(); });
+
+  // Safeguard: ensure modal starts hidden
+  if (typeof window !== 'undefined') {
+    kbModal.classList.add('sse-kb-hidden');
+    setTimeout(function() {
+      kbModal.hidden = true;
+      kbModal.setAttribute('hidden', '');
+    }, 10);
+  }
 
   // ── Keyboard shortcuts ───────────────────────────────────────────────────
   document.addEventListener('keydown', e => {

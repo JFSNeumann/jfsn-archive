@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1781807899'; // Session 67: Fix page-loading opacity bug in page-transitions.js
+const CACHE_V  = 'jfsn-1781810899'; // Session 67: Modal close fix - use .sse-kb-hidden class instead of [hidden]
 const PRECACHE = [
   '/',
   '/index.html',

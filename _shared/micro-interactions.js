@@ -415,7 +415,13 @@
 
   /* ─── Phase 7: Enhanced Keyboard Shortcuts ──────────────────────────────── */
   function setupEnhancedShortcuts() {
-    // Previous work (P key)
+    // DISABLED: Keyboard shortcuts modal has critical bug (auto-opens, won't close)
+    // Feature disabled in Session 67 pending proper consolidation
+    // See: session67_critical_fix.md for details
+    //
+    // Remaining: Previous work (P), Next work (N), Toggle view mode (V), Bookmark (B)
+    // Disabled: Show shortcuts (? key) — modal had no close functionality
+
     document.addEventListener('keydown', function(e) {
       if (e.key === 'p' || e.key === 'P') {
         var prevLink = document.getElementById('prev-link');
@@ -444,12 +450,12 @@
         if (workId) window.toggleBookmark(workId);
       }
 
-      // Show shortcuts (? key)
-      if (e.shiftKey && e.key === '?') {
-        e.preventDefault();
-        var modal = document.getElementById('shortcuts-modal');
-        if (modal) modal.style.display = 'block';
-      }
+      // DISABLED: Show shortcuts (? key) — incomplete implementation
+      // if (e.shiftKey && e.key === '?') {
+      //   e.preventDefault();
+      //   var modal = document.getElementById('shortcuts-modal');
+      //   if (modal) modal.style.display = 'block';
+      // }
     });
   }
 
@@ -1139,24 +1145,11 @@
   }
 
   /* ─── Phase 12: Keyboard Shortcuts Reference ────────────────────────────── */
+  /* DISABLED: Keyboard shortcuts modal has critical bug (auto-opens, won't close)
+     Consolidation + proper close functionality needed (Session 67+) */
   function setupShortcutsDialog() {
-    var dialog = document.querySelector('.shortcuts-dialog');
-    var shortcuts = { 'P': 'Previous work', 'N': 'Next work', 'V': 'View toggle', 'B': 'Bookmark', '?': 'Show shortcuts', 'ESC': 'Close dialogs', 'F': 'Fullscreen gallery', 'S': 'Search focus' };
-
-    if (!dialog) return;
-
-    var html = '<h2 class="shortcuts-title">Keyboard Shortcuts</h2><div class="shortcuts-grid">';
-    Object.entries(shortcuts).forEach(function(entry) {
-      html += '<div class="shortcut-item"><span class="shortcut-key">' + entry[0] + '</span><span class="shortcut-description">' + entry[1] + '</span></div>';
-    });
-    html += '</div>';
-    dialog.innerHTML = html;
-
-    document.addEventListener('keydown', function(e) {
-      if (e.key === '?') {
-        dialog.classList.toggle('visible');
-      }
-    });
+    // Feature disabled — see setupEnhancedShortcuts() comment
+    return;
   }
 
   /* ─── Phase 12: User Preferences ────────────────────────────────────────────– */
