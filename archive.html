@@ -144,6 +144,32 @@
         @media(prefers-reduced-motion:reduce){
           #empty-state { animation: none; }
         }
+        /* Skeleton loading animation */
+        @keyframes skeleton-pulse {
+          0%, 100% { background-color: #ebe8e2; }
+          50% { background-color: #d3d1c7; }
+        }
+        .skeleton-card {
+          background-color: #ebe8e2;
+          animation: skeleton-pulse 1.5s ease-in-out infinite;
+          border-radius: 2px;
+        }
+        .skeleton-card-image {
+          width: 100%;
+          aspect-ratio: 1;
+          animation: skeleton-pulse 1.5s ease-in-out infinite;
+        }
+        .skeleton-card-text {
+          height: 12px;
+          margin-top: 8px;
+          animation: skeleton-pulse 1.5s ease-in-out infinite;
+        }
+        @media(prefers-reduced-motion:reduce){
+          .skeleton-card, .skeleton-card-image, .skeleton-card-text {
+            animation: none;
+            background-color: #ebe8e2;
+          }
+        }
         /* Image wrapper: outline + saturation overlay */
         .archive-card-img {
           position: relative;
@@ -826,6 +852,11 @@ header.header-hidden{transform:translateY(-100%)}
       <!-- Active filter chips -->
       <div id="filter-chips" style="display:none;margin-bottom:20px;flex-wrap:wrap;align-items:center;gap:8px;"></div>
 
+      <!-- Search/filter result count feedback -->
+      <div id="result-count-feedback" style="display:none;margin-bottom:20px;font-family:Inter,sans-serif;font-size:14px;color:#575757;">
+        Found <span id="result-count-number" style="font-weight:600;color:#0B0B0B;">0</span> works
+      </div>
+
       <!-- Advanced Filters: Saved Searches & Presets -->
       <div id="saved-filters-ui" style="display:none;margin-bottom:20px;padding:12px;background:#fcf9f3;border:1px solid #8e7164;border-radius:4px;">
         <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
@@ -843,11 +874,27 @@ header.header-hidden{transform:translateY(-100%)}
         <span class="loader-dot"></span>
       </div>
 
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-px sm:gap-x-gutter sm:gap-y-lg bg-deep-ink sm:bg-transparent" id="works-grid"></div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-px sm:gap-x-gutter sm:gap-y-lg bg-deep-ink sm:bg-transparent" id="works-grid" style="padding-bottom: 60px;"></div>
 
-      <p id="empty-state" class="hidden py-xl text-center font-label-lg text-label-lg text-secondary uppercase tracking-widest">
-        No works match the current filters.
-      </p>
+      <!-- Mobile sticky action bar -->
+      <div id="mobile-action-bar" class="md:hidden fixed bottom-0 left-0 right-0 bg-bone-white border-t border-archival-outline px-margin-mobile py-2 flex items-center justify-between gap-3 z-40" style="display: none;">
+        <span style="font-family: Inter, sans-serif; font-size: 12px; color: #575757;">
+          <span id="mobile-results-count" style="font-weight: 600; color: #0B0B0B;">0</span> results
+        </span>
+        <button id="scroll-to-filters" class="flex-1 px-3 py-2 bg-deep-ink text-bone-white font-label-sm uppercase tracking-widest text-xs border-none cursor-pointer rounded" style="font-size: 11px;">Scroll up</button>
+      </div>
+
+      <div id="empty-state" class="hidden py-xl px-md text-center">
+        <p class="font-label-lg text-label-lg text-secondary uppercase tracking-widest mb-md">
+          No works match these filters.
+        </p>
+        <p class="text-secondary mb-md" style="font-size: 14px; line-height: 1.6;">
+          Try adjusting your selections or clearing filters to see all 1,084 works.
+        </p>
+        <button class="text-orange-ink hover:text-international-orange font-label-md uppercase tracking-widest" onclick="document.getElementById('filter-medium').querySelectorAll('input').forEach(i => i.checked = false); document.getElementById('filter-decade').querySelectorAll('input').forEach(i => i.checked = false); document.getElementById('filter-series').querySelectorAll('input').forEach(i => i.checked = false); document.getElementById('filter-orientation').querySelectorAll('input').forEach(i => i.checked = false); updateFilters();">
+          [ CLEAR ALL FILTERS ]
+        </button>
+      </div>
 
       <div class="mt-xl flex justify-center">
         <button id="load-more" class="hidden px-xl py-md border border-outline-variant font-label-lg text-label-lg uppercase bg-transparent tracking-widest hover:border-on-tertiary-container">
@@ -928,6 +975,31 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
 <script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
 <!-- FOOTER:END -->
 
+<!-- Keyboard Shortcuts Help Modal -->
+<div id="shortcuts-modal" class="hidden" style="position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000;">
+  <div style="background: #fcf9f3; border: 1px solid #8e7164; border-radius: 8px; padding: 32px; max-width: 500px; max-height: 80vh; overflow-y: auto; margin: 20px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+      <h2 style="font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 600; margin: 0; color: #0B0B0B;">Keyboard Shortcuts</h2>
+      <button id="close-shortcuts" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #575757; padding: 0; width: 32px; height: 32px;">✕</button>
+    </div>
+    <div style="font-family: Inter, sans-serif; font-size: 13px; color: #575757; line-height: 1.8;">
+      <div style="margin-bottom: 16px;">
+        <div style="font-weight: 600; color: #0B0B0B;">Navigation</div>
+        <div>← / → — Previous / next work</div>
+        <div>/ — Focus search (archive)</div>
+      </div>
+      <div style="margin-bottom: 16px;">
+        <div style="font-weight: 600; color: #0B0B0B;">Filters</div>
+        <div>⌘K — Open command palette</div>
+        <div>ESC — Close modals</div>
+      </div>
+      <div>
+        <div style="font-weight: 600; color: #0B0B0B;">Help</div>
+        <div>? — Show this help</div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
 const PAGE_SIZE = 48;
@@ -1054,7 +1126,7 @@ function applyFilters() {
   }));
 
   page = 0;
-  grid.innerHTML = '';
+  showSkeletonLoading();
   renderPage();
 }
 
@@ -1078,6 +1150,25 @@ function renderPage() {
   const total = filtered.length;
   workCount.textContent = total.toLocaleString();
   workCountLabel.textContent = total === allWorks.length ? 'CATALOGED WORKS' : 'WORKS';
+
+  // Update result count feedback
+  const resultCountFeedback = document.getElementById('result-count-feedback');
+  if (total > 0) {
+    document.getElementById('result-count-number').textContent = total.toLocaleString();
+    resultCountFeedback.style.display = total === allWorks.length ? 'none' : 'block';
+  } else {
+    resultCountFeedback.style.display = 'none';
+  }
+
+  // Update mobile action bar
+  const mobileActionBar = document.getElementById('mobile-action-bar');
+  if (total > 0) {
+    document.getElementById('mobile-results-count').textContent = total.toLocaleString();
+    mobileActionBar.style.display = 'flex';
+  } else {
+    mobileActionBar.style.display = 'none';
+  }
+
   // Phase 4.7: Empty state fade-in animation
   if (total === 0 && emptyState.classList.contains('hidden')) {
     emptyState.classList.remove('hidden');
@@ -1191,6 +1282,22 @@ document.getElementById('sort-select').addEventListener('change', () => {
   renderPage();
 });
 
+// Show skeleton loading cards
+function showSkeletonLoading() {
+  grid.innerHTML = '';
+  const skeletons = Array.from({length: 12}, () => `
+    <div class="skeleton-card">
+      <div class="skeleton-card-image"></div>
+      <div class="skeleton-card-text" style="width: 60%; height: 10px; margin-top: 6px;"></div>
+      <div class="skeleton-card-text" style="width: 40%; height: 8px; margin-top: 4px;"></div>
+    </div>
+  `).join('');
+  grid.insertAdjacentHTML('beforeend', skeletons);
+}
+
+// Show skeletons while loading
+showSkeletonLoading();
+
 fetch('catalog-lite.json')
   .then(r => r.json())
   .then(data => {
@@ -1215,6 +1322,13 @@ clearBtn.addEventListener('click', () => {
   applyFilters();
 });
 
+// Mobile action bar scroll button
+document.getElementById('scroll-to-filters').addEventListener('click', () => {
+  const filterSection = document.querySelector('aside');
+  if (filterSection) {
+    filterSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+});
 
 // Mobile medium filter buttons
 document.querySelectorAll('.mobile-medium-btn').forEach(btn => {
@@ -1343,6 +1457,30 @@ function renderSavedFilters() {
 
 document.getElementById('save-filter-btn').addEventListener('click', saveFilter);
 renderSavedFilters();
+
+// Keyboard shortcuts modal
+const shortcutsModal = document.getElementById('shortcuts-modal');
+const closeShortcutsBtn = document.getElementById('close-shortcuts');
+
+closeShortcutsBtn.addEventListener('click', () => {
+  shortcutsModal.classList.add('hidden');
+});
+
+shortcutsModal.addEventListener('click', (e) => {
+  if (e.target === shortcutsModal) {
+    shortcutsModal.classList.add('hidden');
+  }
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === '?') {
+    e.preventDefault();
+    shortcutsModal.classList.toggle('hidden');
+  }
+  if (e.key === 'Escape' && !shortcutsModal.classList.contains('hidden')) {
+    shortcutsModal.classList.add('hidden');
+  }
+});
 </script>
 
 <script src="_shared/ui.js" defer></script>
