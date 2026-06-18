@@ -970,6 +970,138 @@
     a.click();
   };
 
+  /* ─── Phase 11: Audio Player ───────────────────────────────────────────────── */
+  function setupAudioPlayer() {
+    var players = document.querySelectorAll('.audio-player');
+    players.forEach(function(player) {
+      var audio = player.querySelector('audio');
+      var playBtn = player.querySelector('.audio-play-btn');
+      var progressBar = player.querySelector('.audio-progress');
+      var progressFill = player.querySelector('.audio-progress-fill');
+      var timeDisplay = player.querySelector('.audio-time');
+      var speedBtns = player.querySelectorAll('.speed-btn');
+
+      if (!audio || !playBtn) return;
+
+      playBtn.addEventListener('click', function() {
+        if (audio.paused) {
+          audio.play();
+          playBtn.classList.add('playing');
+        } else {
+          audio.pause();
+          playBtn.classList.remove('playing');
+        }
+      });
+
+      audio.addEventListener('timeupdate', function() {
+        var percent = (audio.currentTime / audio.duration) * 100;
+        progressFill.style.width = percent + '%';
+        var mins = Math.floor(audio.currentTime / 60);
+        var secs = Math.floor(audio.currentTime % 60);
+        if (timeDisplay) {
+          timeDisplay.textContent = mins + ':' + (secs < 10 ? '0' : '') + secs;
+        }
+      });
+
+      audio.addEventListener('ended', function() {
+        playBtn.classList.remove('playing');
+      });
+
+      progressBar?.addEventListener('click', function(e) {
+        var rect = this.getBoundingClientRect();
+        var percent = (e.clientX - rect.left) / rect.width;
+        audio.currentTime = percent * audio.duration;
+      });
+
+      speedBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var speed = parseFloat(this.dataset.speed);
+          audio.playbackRate = speed;
+          speedBtns.forEach(function(b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+        });
+      });
+    });
+  }
+
+  /* ─── Phase 11: Transcription Sync ──────────────────────────────────────────– */
+  function setupTranscriptionSync() {
+    var panels = document.querySelectorAll('.transcription-panel');
+    panels.forEach(function(panel) {
+      var timestamps = panel.querySelectorAll('.transcription-timestamp');
+      var audio = document.querySelector('.audio-player audio');
+
+      timestamps.forEach(function(ts) {
+        ts.addEventListener('click', function() {
+          if (!audio) return;
+          var timeStr = this.dataset.time || '0:00';
+          var parts = timeStr.split(':');
+          var seconds = parseInt(parts[0]) * 60 + parseInt(parts[1]);
+          audio.currentTime = seconds;
+          audio.play();
+        });
+      });
+    });
+  }
+
+  /* ─── Phase 11: Related Stories Navigation ────────────────────────────────── */
+  function setupRelatedStories() {
+    var cards = document.querySelectorAll('.story-card');
+    cards.forEach(function(card) {
+      card.addEventListener('click', function() {
+        var storyId = this.dataset.storyId;
+        if (storyId) {
+          window.location.href = '/stories.html?story=' + storyId;
+        }
+      });
+    });
+  }
+
+  /* ─── Phase 11: Chapter Navigation ────────────────────────────────────────── */
+  function setupChapterNavigation() {
+    var chapters = document.querySelectorAll('.chapter-item');
+    chapters.forEach(function(chapter) {
+      chapter.addEventListener('click', function() {
+        var chapterId = this.dataset.chapterId;
+        var audio = document.querySelector('.audio-player audio');
+        if (audio && chapterId) {
+          var startTime = parseFloat(this.dataset.startTime) || 0;
+          audio.currentTime = startTime;
+          audio.play();
+        }
+        chapters.forEach(function(ch) { ch.classList.remove('active'); });
+        chapter.classList.add('active');
+      });
+    });
+  }
+
+  /* ─── Phase 11: Waveform Animation ────────────────────────────────────────── */
+  function setupWaveformAnimation() {
+    var waveforms = document.querySelectorAll('.audio-waveform');
+    waveforms.forEach(function(wf) {
+      var audio = wf.closest('.audio-player')?.querySelector('audio');
+      if (!audio) return;
+
+      audio.addEventListener('play', function() {
+        var bars = wf.querySelectorAll('.waveform-bar');
+        var interval = setInterval(function() {
+          if (!audio.playing) {
+            clearInterval(interval);
+            return;
+          }
+          var barIndex = Math.floor((audio.currentTime / audio.duration) * bars.length);
+          bars.forEach(function(bar, idx) {
+            if (idx < barIndex) {
+              bar.classList.add('playing');
+            } else {
+              bar.classList.remove('playing');
+            }
+          });
+        }, 50);
+      });
+    });
+  }
+
   /* ─── Initialize All ────────────────────────────────────────────────────── */
   document.addEventListener('DOMContentLoaded', function() {
     setupGridStagger();
@@ -998,6 +1130,11 @@
     setupTimeline();
     setupLazyImageFade();
     setupExportModal();
+    setupAudioPlayer();
+    setupTranscriptionSync();
+    setupRelatedStories();
+    setupChapterNavigation();
+    setupWaveformAnimation();
   });
 
   // Re-setup grid stagger when filter changes
