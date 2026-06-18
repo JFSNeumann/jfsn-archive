@@ -1,0 +1,178 @@
+/* lazy-load.css — Lazy load fade-in and placeholder styles */
+
+/* Lazy loading state */
+img.lazy-loading {
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+}
+
+img.lazy-loading::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: lazy-shimmer 1.5s infinite;
+}
+
+@keyframes lazy-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Loaded state */
+img.lazy-loaded {
+  opacity: 1;
+  animation: lazy-fade-in 0.4s ease-out;
+}
+
+@keyframes lazy-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Error state */
+img.lazy-error {
+  opacity: 0.5;
+  background: linear-gradient(135deg, #f5eee5, #ebe8e2);
+}
+
+/* Skeleton placeholder wrapper */
+.lazy-placeholder {
+  position: relative;
+  background: linear-gradient(
+    90deg,
+    #ebe8e2 0%,
+    #f5eee5 50%,
+    #ebe8e2 100%
+  );
+  background-size: 200% 100%;
+  animation: lazy-placeholder-shimmer 1.5s infinite;
+  border-radius: 2px;
+}
+
+@keyframes lazy-placeholder-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.lazy-placeholder img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Picture element with lazy loading */
+picture img.lazy-loading {
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+}
+
+picture img.lazy-loaded {
+  opacity: 1;
+  animation: lazy-fade-in 0.4s ease-out;
+}
+
+/* Background image lazy load */
+[data-lazy-bg] {
+  background-size: cover;
+  background-position: center;
+  transition: opacity 0.4s ease-out;
+}
+
+[data-lazy-bg].lazy-loading {
+  opacity: 0;
+}
+
+[data-lazy-bg].lazy-loaded {
+  opacity: 1;
+}
+
+/* Aspect ratio maintenance during lazy load */
+img[loading="lazy"] {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Prevent layout shift */
+img[loading="lazy"][width],
+img[loading="lazy"][height] {
+  aspect-ratio: attr(width) / attr(height);
+}
+
+/* Container with aspect ratio */
+.lazy-container {
+  position: relative;
+  overflow: hidden;
+  background: #ebe8e2;
+}
+
+.lazy-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Reduce motion support */
+@media (prefers-reduced-motion: reduce) {
+  img.lazy-loading,
+  img.lazy-loaded,
+  .lazy-placeholder,
+  [data-lazy-bg] {
+    animation: none;
+    opacity: 1;
+  }
+
+  @keyframes lazy-shimmer {
+    0%, 100% {
+      background-position: 0;
+    }
+  }
+
+  @keyframes lazy-placeholder-shimmer {
+    0%, 100% {
+      background-position: 0;
+    }
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 600px) {
+  img.lazy-loading,
+  img.lazy-loaded {
+    transition-duration: 0.3s;
+  }
+
+  .lazy-placeholder {
+    animation-duration: 1s;
+  }
+}
+
+/* Print styles */
+@media print {
+  img.lazy-loading,
+  img.lazy-loaded,
+  .lazy-placeholder {
+    animation: none;
+    opacity: 1;
+    background: transparent;
+  }
+}

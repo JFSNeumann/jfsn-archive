@@ -1,0 +1,219 @@
+/* form-validation.css — Form field validation feedback styles */
+
+/* Input field states */
+input,
+textarea,
+select {
+  transition: all 0.2s ease;
+}
+
+/* Valid state */
+input.valid,
+textarea.valid,
+select.valid {
+  border-color: #4CAF50;
+  background: linear-gradient(to right, #fcf9f3, #f5fbf7);
+}
+
+input.valid:focus,
+textarea.valid:focus,
+select.valid:focus {
+  border-color: #4CAF50;
+  box-shadow: 0 0 0 2px #fcf9f3, 0 0 0 4px #4CAF50, inset 0 0 8px rgba(76, 175, 80, 0.05);
+}
+
+/* Invalid state */
+input.invalid,
+textarea.invalid,
+select.invalid {
+  border-color: #FF6B6B;
+  background: linear-gradient(to right, #fcf9f3, #fdf5f5);
+}
+
+input.invalid:focus,
+textarea.invalid:focus,
+select.invalid:focus {
+  border-color: #FF6B6B;
+  box-shadow: 0 0 0 2px #fcf9f3, 0 0 0 4px #FF6B6B, inset 0 0 8px rgba(255, 107, 107, 0.05);
+}
+
+/* Error message */
+.form-error {
+  margin-top: 4px;
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  color: #FF6B6B;
+  font-weight: 500;
+  animation: form-error-enter 0.3s ease forwards;
+  display: block;
+}
+
+@keyframes form-error-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Form group wrapper */
+.form-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0B0B0B;
+  margin-bottom: 6px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.form-group label.required::after {
+  content: ' *';
+  color: #FF6B6B;
+}
+
+/* Input field wrapper */
+.form-group input,
+.form-group textarea,
+.form-group select {
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  padding: 10px 12px;
+  border: 1px solid #8e7164;
+  border-radius: 4px;
+  background: #fcf9f3;
+  color: #0B0B0B;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #c4c7c7;
+}
+
+.form-group input:focus::placeholder,
+.form-group textarea:focus::placeholder {
+  color: #8e7164;
+}
+
+/* Validation icons (optional) */
+.form-group {
+  position: relative;
+}
+
+.form-group.has-validation {
+  padding-right: 40px;
+}
+
+.form-validation-icon {
+  position: absolute;
+  right: 12px;
+  top: 32px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.form-group input.valid ~ .form-validation-icon.success,
+.form-group input.invalid ~ .form-validation-icon.error {
+  opacity: 1;
+}
+
+.form-validation-icon.success {
+  color: #4CAF50;
+}
+
+.form-validation-icon.error {
+  color: #FF6B6B;
+}
+
+/* Submit button disabled while invalid */
+button[type="submit"]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Helper text */
+.form-helper {
+  font-family: Inter, sans-serif;
+  font-size: 11px;
+  color: #8e7164;
+  margin-top: 4px;
+  font-style: italic;
+}
+
+/* Textarea resize styles */
+textarea {
+  resize: vertical;
+  min-height: 100px;
+  font-family: Inter, sans-serif;
+}
+
+/* Select dropdown arrow */
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238e7164' stroke-width='2'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 20px;
+  padding-right: 32px;
+}
+
+/* Validation feedback animation */
+@keyframes form-validation-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+input.invalid.shake,
+textarea.invalid.shake {
+  animation: form-validation-shake 0.3s ease;
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  input,
+  textarea,
+  select,
+  .form-error,
+  input.invalid.shake,
+  textarea.invalid.shake {
+    transition: none;
+    animation: none;
+  }
+}
+
+/* Mobile responsive */
+@media (max-width: 600px) {
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-group label {
+    font-size: 12px;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 12px;
+  }
+
+  .form-error {
+    font-size: 11px;
+  }
+}

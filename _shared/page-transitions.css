@@ -1,0 +1,131 @@
+/* page-transitions.css — Page load and navigation fade transitions */
+
+/* Page loading state */
+body.page-loading {
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+}
+
+body.page-loaded {
+  opacity: 1;
+}
+
+/* Page exit transition */
+body.page-exiting {
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+/* Fade in main content on load */
+main,
+.page-content,
+[role="main"] {
+  opacity: 1;
+  transition: opacity 0.4s ease-out 0.1s;
+}
+
+body.page-loading main,
+body.page-loading .page-content,
+body.page-loading [role="main"] {
+  opacity: 0;
+}
+
+/* Header/nav fade in stagger */
+header,
+nav,
+.navbar {
+  opacity: 1;
+  transition: opacity 0.4s ease-out;
+}
+
+body.page-loading header,
+body.page-loading nav,
+body.page-loading .navbar {
+  opacity: 0;
+}
+
+/* Footer fade in */
+footer,
+.footer {
+  opacity: 1;
+  transition: opacity 0.4s ease-out 0.2s;
+}
+
+body.page-loading footer,
+body.page-loading .footer {
+  opacity: 0;
+}
+
+/* Loading progress indicator (optional) */
+.page-loading-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #FF6600 0%, #8e7164 100%);
+  width: 0;
+  z-index: 9999;
+  animation: loading-progress 0.8s ease forwards;
+}
+
+@keyframes loading-progress {
+  0% {
+    width: 0;
+  }
+  50% {
+    width: 70%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+/* Scroll to top on page transition */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Prevent layout shift during fade */
+body {
+  overflow-y: scroll;
+}
+
+/* Reduce motion: disable transitions */
+@media (prefers-reduced-motion: reduce) {
+  body.page-loading,
+  body.page-exiting,
+  main,
+  .page-content,
+  [role="main"],
+  header,
+  nav,
+  .navbar,
+  footer,
+  .footer {
+    transition: none;
+    opacity: 1;
+  }
+
+  .page-loading-indicator {
+    display: none;
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 600px) {
+  body.page-loading,
+  body.page-loaded,
+  body.page-exiting {
+    transition-duration: 0.25s;
+  }
+}
+
+/* Prevent jank during transition */
+* {
+  will-change: auto;
+}
+
+body.page-loading *,
+body.page-exiting * {
+  will-change: auto;
+}
