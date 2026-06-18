@@ -5,7 +5,7 @@
    - HTML/CSS/JS  → network-first (always fresh; fall back to cache if offline)
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-20260618-phase1'; // Phase 1 UX overhaul: breadcrumbs, color coding, shadow lift, touch targets (Session 62)
+const CACHE_V  = 'jfsn-20260618011749'; // All 15 UX/UI improvements: Phase 1-4 complete (Session 62)
 const PRECACHE = [
   '/',
   '/index.html',

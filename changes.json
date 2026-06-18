@@ -1,5 +1,35 @@
 [
   {
+    "sha": "cc30a3c",
+    "date": "2026-06-17",
+    "title": "Phase 4: Related Works on Artwork Pages",
+    "body": "- Add 'You Might Also Like' section below artwork navigation\n- Populate from catalog-lite.json: same series, medium, or decade\n- Show up to 8 related works in responsive grid\n- Grid entrance stagger animation inherited\n- Click through to other works\n- Improves content discoverability and time-on-site\n- Gracefully hides if no related works found"
+  },
+  {
+    "sha": "a40947a",
+    "date": "2026-06-17",
+    "title": "Phase 4: Curated Collections on Homepage",
+    "body": "- Add 'Explore by Theme' section below featured works\n- 4 major collection tiles: Guernica (232), Photography (328), Sculpture (76), Favorites (45)\n- Image overlays with smooth transitions\n- Color-coded backgrounds matching medium themes\n- Hover effects: lift, shadow depth, image scale\n- Links to filtered views or dedicated collection pages\n- Responsive grid: 1 col mobile → 2 col tablet → 4 col desktop\n- Improves discovery and encourages deep exploration"
+  },
+  {
+    "sha": "f0ff976",
+    "date": "2026-06-17",
+    "title": "Phase 2-3: Micro-Interactions & Polish",
+    "body": "Phase 2 (Search & Polish):\n- Dark mode fully implemented with toggle + localStorage\n- Card depth/shadow treatment with lift effect\n- Link underline draw animations\n- Skeleton shimmer CSS ready\n\nPhase 3 (Delighter Animations):\n- Grid entrance stagger (40ms between items, 0.5s ease-out)\n- Filter chip pulse feedback on apply (scale 1.0→1.08→1.0)\n- Button press feedback (scale 0.98, inset shadow)\n- Copy-to-clipboard toast notifications\n- Toast animations (slide-up entry, slide-down exit)\n- Micro-interactions.js utility library for all interactivity\n- All animations respect prefers-reduced-motion"
+  },
+  {
+    "sha": "d6c03db",
+    "date": "2026-06-17",
+    "title": "Phase 2: Dark Mode — Full implementation",
+    "body": "- Add dark mode toggle button (sun/moon icon) in header\n- Comprehensive dark mode CSS palette:\n  - Background: #1a1a1a (charcoal)\n  - Text: #e8e8e8 (off-white)\n  - Accent: #FF6600 (unchanged)\n  - Cards/UI: #252525, #2a2a2a\n- Persistent localStorage preference\n- Respects system prefers-color-scheme\n- Apply to all 31 pages via nav stamp\n- All interactive elements properly styled for dark mode"
+  },
+  {
+    "sha": "e5c7565",
+    "date": "2026-06-17",
+    "title": "Phase 1 Deployment — Update cache version",
+    "body": "Cache version bumped to jfsn-20260618010316\nEnsures users receive updated CSS + breadcrumbs + hover states"
+  },
+  {
     "sha": "bf86569",
     "date": "2026-06-17",
     "title": "Phase 1 UX — Add breadcrumbs to main navigation pages",
