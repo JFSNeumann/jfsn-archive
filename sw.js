@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1781792228'; // All 15 UX/UI improvements: Phase 1-4 complete (Session 62)
+const CACHE_V  = 'jfsn-1781800600'; // Session 67: Fix images + JS errors (aspect ratio + keyboard shortcuts fix)
 const PRECACHE = [
   '/',
   '/index.html',
