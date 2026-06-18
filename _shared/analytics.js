@@ -5,7 +5,7 @@ const Analytics = {
   endpoint: '/analytics',
   batchSize: 10,
   queue: [],
-  sessionId: this.generateSessionId(),
+  sessionId: null,
 
   init() {
     // Only enable if not in development
@@ -14,6 +14,7 @@ const Analytics = {
       return;
     }
 
+    this.sessionId = this.generateSessionId();
     this.setupPhaseTracking();
     this.setupInteractionTracking();
 

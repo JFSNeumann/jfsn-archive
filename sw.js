@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1781800600'; // Session 67: Fix images + JS errors (aspect ratio + keyboard shortcuts fix)
+const CACHE_V  = 'jfsn-1718704360'; // Session 67 continued: Remove broken monitor.js reference
 const PRECACHE = [
   '/',
   '/index.html',
