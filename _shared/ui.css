@@ -4292,6 +4292,305 @@ a:not([class]):hover {
   }
 }
 
+/* ─── Phase 8: Animated Counters ───────────────────────────────────────────── */
+
+@keyframes count-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.counter {
+  display: inline-block;
+  font-family: ui-monospace, monospace;
+  font-weight: 700;
+  animation: count-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* ─── Phase 8: Form Input Polish ────────────────────────────────────────────── */
+
+input,
+textarea,
+select {
+  transition: all 0.2s ease;
+}
+
+input:hover,
+textarea:hover,
+select:hover {
+  border-color: #8e7164;
+  background-color: #fcf9f3;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid #FF6600;
+  outline-offset: 0;
+  border-color: #FF6600;
+  box-shadow: 0 0 12px rgba(255, 102, 0, 0.1);
+}
+
+input[type="search"] {
+  padding-left: 36px;
+  background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"%3E%3Ccircle cx="11" cy="11" r="8"/%3E%3Cpath d="M21 21l-4.35-4.35"/%3E%3C/svg%3E');
+  background-repeat: no-repeat;
+  background-position: 12px center;
+  background-size: 16px;
+  color: #575757;
+}
+
+input[type="search"]:focus {
+  color: #0B0B0B;
+}
+
+/* ─── Phase 8: Form Validation States ──────────────────────────────────────── */
+
+input[aria-invalid="true"],
+textarea[aria-invalid="true"],
+select[aria-invalid="true"] {
+  border-color: #e05900;
+  background-color: rgba(224, 89, 0, 0.02);
+}
+
+input[aria-invalid="true"]:focus,
+textarea[aria-invalid="true"]:focus,
+select[aria-invalid="true"]:focus {
+  outline-color: #e05900;
+  box-shadow: 0 0 12px rgba(224, 89, 0, 0.15);
+}
+
+.input-error {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #e05900;
+  animation: toast-slide-up 0.3s ease;
+}
+
+.input-success {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #0B7C00;
+  animation: toast-slide-up 0.3s ease;
+}
+
+/* ─── Phase 8: Animated Gradients ──────────────────────────────────────────── */
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animated-gradient {
+  background: linear-gradient(
+    135deg,
+    #fcf9f3 0%,
+    #f0ece6 25%,
+    #e8e3da 50%,
+    #f0ece6 75%,
+    #fcf9f3 100%
+  );
+  background-size: 400% 400%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+html.dark .animated-gradient {
+  background: linear-gradient(
+    135deg,
+    #1a1a1a 0%,
+    #252525 25%,
+    #2a2a2a 50%,
+    #252525 75%,
+    #1a1a1a 100%
+  );
+}
+
+/* ─── Phase 8: Scroll-to-Top Button ────────────────────────────────────────── */
+
+#scroll-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  background-color: #0B0B0B;
+  color: #fcf9f3;
+  border: none;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  opacity: 0;
+  transition: all 0.3s ease;
+  font-size: 20px;
+  line-height: 1;
+}
+
+#scroll-to-top.visible {
+  display: flex;
+  opacity: 1;
+}
+
+#scroll-to-top:hover {
+  background-color: #FF6600;
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* ─── Phase 8: Progress Indicators ──────────────────────────────────────────── */
+
+.progress-bar {
+  width: 100%;
+  height: 2px;
+  background-color: #e3bfb1;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #FF6600;
+  transition: width 0.3s ease;
+  width: 0%;
+}
+
+.progress-fill.complete {
+  animation: success-checkmark 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* ─── Phase 8: Sticky Footer Actions ────────────────────────────────────────── */
+
+.sticky-footer-actions {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fcf9f3;
+  border-top: 1px solid #e3bfb1;
+  padding: 12px 20px;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 50;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.sticky-footer-actions.visible {
+  transform: translateY(0);
+}
+
+html.dark .sticky-footer-actions {
+  background-color: #252525;
+  border-top-color: #404040;
+}
+
+/* ─── Phase 8: Page Load Entrance Animation ────────────────────────────────── */
+
+@keyframes page-entrance {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+body {
+  animation: page-entrance 0.4s ease forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* ─── Phase 8: Breadcrumb Hover Effects ────────────────────────────────────── */
+
+.breadcrumb a {
+  position: relative;
+  padding-bottom: 2px;
+}
+
+.breadcrumb a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s ease;
+}
+
+.breadcrumb a:hover::after,
+.breadcrumb a:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* ─── Phase 8: Badge Styling ────────────────────────────────────────────────── */
+
+.badge {
+  display: inline-block;
+  padding: 4px 8px;
+  background-color: #0B0B0B;
+  color: #fcf9f3;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 0;
+  animation: scale-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes scale-pop {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.badge.badge-new {
+  background-color: #FF6600;
+}
+
+.badge.badge-featured {
+  background-color: #0B7C00;
+}
+
+.badge.badge-limited {
+  background-color: #e05900;
+}
+
 /* ─── Phase 1: Link Underline Draw Animation ──────────────────────────────── */
 
 .link-underline {

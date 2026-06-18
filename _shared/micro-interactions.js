@@ -499,6 +499,99 @@
     }, 1000);
   };
 
+  /* ─── Phase 8: Scroll-to-Top Button ────────────────────────────────────── */
+  function setupScrollToTop() {
+    var btn = document.getElementById('scroll-to-top');
+    if (!btn) return;
+
+    window.addEventListener('scroll', function() {
+      if (window.pageYOffset > 300) {
+        btn.classList.add('visible');
+      } else {
+        btn.classList.remove('visible');
+      }
+    }, { passive: true });
+
+    btn.addEventListener('click', function() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  }
+
+  /* ─── Phase 8: Animated Counters ────────────────────────────────────────── */
+  window.animateCounter = function(element, target, duration) {
+    duration = duration || 2000;
+    var start = parseInt(element.textContent) || 0;
+    var increment = (target - start) / (duration / 16);
+    var current = start;
+
+    var timer = setInterval(function() {
+      current += increment;
+      if ((increment > 0 && current >= target) || (increment < 0 && current <= target)) {
+        current = target;
+        clearInterval(timer);
+      }
+      element.textContent = Math.floor(current).toLocaleString();
+    }, 16);
+  };
+
+  // Auto-animate counters on page load
+  function setupAnimatedCounters() {
+    var counters = document.querySelectorAll('.counter[data-count]');
+    counters.forEach(function(counter) {
+      var target = parseInt(counter.getAttribute('data-count'));
+      animateCounter(counter, target);
+    });
+  }
+
+  /* ─── Phase 8: Progress Bar Manager ────────────────────────────────────── */
+  window.showProgress = function(percentage) {
+    var fill = document.querySelector('.progress-fill');
+    if (!fill) return;
+    fill.style.width = percentage + '%';
+  };
+
+  window.completeProgress = function() {
+    var fill = document.querySelector('.progress-fill');
+    if (!fill) return;
+    fill.style.width = '100%';
+    fill.classList.add('complete');
+  };
+
+  /* ─── Phase 8: Sticky Footer Actions ────────────────────────────────────── */
+  window.showStickyFooter = function(show) {
+    var footer = document.querySelector('.sticky-footer-actions');
+    if (!footer) return;
+    if (show) {
+      footer.classList.add('visible');
+    } else {
+      footer.classList.remove('visible');
+    }
+  };
+
+  /* ─── Phase 8: Form Input Enhancement ────────────────────────────────────── */
+  function setupFormEnhancements() {
+    var inputs = document.querySelectorAll('input, textarea, select');
+
+    inputs.forEach(function(input) {
+      // Show success state on valid input
+      input.addEventListener('input', function() {
+        if (this.hasAttribute('required') && this.value.trim()) {
+          this.removeAttribute('aria-invalid');
+        }
+      });
+
+      // Validation on blur
+      input.addEventListener('blur', function() {
+        if (this.hasAttribute('required') && !this.value.trim()) {
+          this.setAttribute('aria-invalid', 'true');
+        }
+      });
+    });
+  }
+
   /* ─── Initialize All ────────────────────────────────────────────────────── */
   document.addEventListener('DOMContentLoaded', function() {
     setupGridStagger();
@@ -515,6 +608,9 @@
     setupShortcutsHint();
     setupEnhancedShortcuts();
     setupTouchGestures();
+    setupScrollToTop();
+    setupAnimatedCounters();
+    setupFormEnhancements();
   });
 
   // Re-setup grid stagger when filter changes
