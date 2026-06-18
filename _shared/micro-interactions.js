@@ -389,6 +389,116 @@
     autoHide();
   }
 
+  /* ─── Phase 7: Reading History ────────────────────────────────────────────── */
+  window.addToViewingHistory = function(workId, title) {
+    var history = JSON.parse(localStorage.getItem('jfsn-viewing-history') || '[]');
+
+    // Remove if already in history
+    history = history.filter(function(item) { return item.id !== workId; });
+
+    // Add to front
+    history.unshift({
+      id: workId,
+      title: title,
+      timestamp: new Date().toISOString()
+    });
+
+    // Keep last 20
+    history = history.slice(0, 20);
+
+    localStorage.setItem('jfsn-viewing-history', JSON.stringify(history));
+  };
+
+  function getViewingHistory() {
+    return JSON.parse(localStorage.getItem('jfsn-viewing-history') || '[]');
+  }
+
+  /* ─── Phase 7: Enhanced Keyboard Shortcuts ──────────────────────────────── */
+  function setupEnhancedShortcuts() {
+    // Previous work (P key)
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'p' || e.key === 'P') {
+        var prevLink = document.getElementById('prev-link');
+        if (prevLink) prevLink.click();
+      }
+
+      // Next work (N key)
+      if (e.key === 'n' || e.key === 'N') {
+        var nextLink = document.getElementById('next-link');
+        if (nextLink) nextLink.click();
+      }
+
+      // Toggle view mode (V key on archive)
+      if (e.key === 'v' || e.key === 'V') {
+        var modes = ['grid', 'list', 'masonry'];
+        var current = localStorage.getItem('jfsn-view-mode') || 'grid';
+        var idx = modes.indexOf(current);
+        var next = modes[(idx + 1) % modes.length];
+        window.switchViewMode(next);
+      }
+
+      // Bookmark (B key on artwork)
+      if (e.key === 'b' || e.key === 'B') {
+        var url = new URL(window.location);
+        var workId = url.searchParams.get('id');
+        if (workId) window.toggleBookmark(workId);
+      }
+
+      // Show shortcuts (? key)
+      if (e.shiftKey && e.key === '?') {
+        e.preventDefault();
+        var modal = document.getElementById('shortcuts-modal');
+        if (modal) modal.style.display = 'block';
+      }
+    });
+  }
+
+  /* ─── Phase 7: Touch Gestures ────────────────────────────────────────────── */
+  function setupTouchGestures() {
+    var touchStartX = 0;
+    var touchEndX = 0;
+
+    document.addEventListener('touchstart', function(e) {
+      touchStartX = e.changedTouches[0].screenX;
+    }, false);
+
+    document.addEventListener('touchend', function(e) {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, false);
+
+    function handleSwipe() {
+      var diff = touchStartX - touchEndX;
+      if (Math.abs(diff) < 50) return; // Minimum swipe distance
+
+      if (diff > 0) {
+        // Swiped left → next
+        var nextLink = document.getElementById('next-link');
+        if (nextLink) nextLink.click();
+      } else {
+        // Swiped right → previous
+        var prevLink = document.getElementById('prev-link');
+        if (prevLink) prevLink.click();
+      }
+    }
+  }
+
+  /* ─── Phase 7: ARIA Live Announcements ──────────────────────────────────── */
+  window.announceToScreenReader = function(message) {
+    var announcement = document.createElement('div');
+    announcement.setAttribute('role', 'status');
+    announcement.setAttribute('aria-live', 'polite');
+    announcement.setAttribute('aria-atomic', 'true');
+    announcement.style.position = 'absolute';
+    announcement.style.left = '-9999px';
+    announcement.textContent = message;
+    document.body.appendChild(announcement);
+
+    setTimeout(function() {
+      document.body.removeChild(announcement);
+    }, 1000);
+  };
+
   /* ─── Initialize All ────────────────────────────────────────────────────── */
   document.addEventListener('DOMContentLoaded', function() {
     setupGridStagger();
@@ -403,6 +513,8 @@
     setupCollapsibleFilters();
     restoreViewMode();
     setupShortcutsHint();
+    setupEnhancedShortcuts();
+    setupTouchGestures();
   });
 
   // Re-setup grid stagger when filter changes
