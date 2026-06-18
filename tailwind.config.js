@@ -87,6 +87,9 @@ module.exports = {
         "body-lg":         ["18px",  { lineHeight: "28px", fontWeight: "400" }],
         "body-md":         ["16px",  { lineHeight: "24px", fontWeight: "400" }],
       },
+      aspectRatio: {
+        "3/4": "3 / 4",
+      },
     },
   },
   plugins: [],

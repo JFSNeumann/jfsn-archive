@@ -1061,10 +1061,10 @@ function renderCard(w, idx) {
   const loadAttr = (idx !== undefined && idx < 8) ? 'eager" fetchpriority="high' : 'lazy';
   return `
     <a href="artwork.html?id=${id}" class="archive-card block no-underline text-on-background bg-background sm:bg-transparent" data-preview-id="${id}" data-preview-title="${title.replace(/"/g, '&quot;')}" data-preview-medium="${med}" data-preview-year="${w.year || '—'}">
-      <div class="archive-card-img archive-card-img-sized sm:mb-md sm:border sm:border-outline-variant bg-surface-container-low">
+      <div class="archive-card-img sm:mb-md sm:border sm:border-outline-variant bg-surface-container-low">
         <img
           alt="${title}"
-          class="w-full h-full object-cover"
+          class="w-full aspect-[3/4] object-cover"
           src="artworks/thumbs/${w.file}"
           loading="${loadAttr}" width="300" height="400"
         />
