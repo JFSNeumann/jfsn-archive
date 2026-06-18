@@ -6294,3 +6294,533 @@ body.focus-mode .works-grid {
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   VISUAL DESIGN SYSTEM v2 — Typography, Color, Spacing, Imagery
+   ═════════════════════════════════════════════════════════════════════════ */
+
+/* ─── 1. TYPOGRAPHY REFINEMENT ────────────────────────────────────────────── */
+
+:root {
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+
+  /* Typography scale — more generous */
+  --text-display-2xl: clamp(3.5rem, 8vw, 4.5rem);
+  --text-display-xl: clamp(2.8rem, 6vw, 3.5rem);
+  --text-display-lg: clamp(2rem, 5vw, 2.5rem);
+  --text-heading-xl: clamp(1.75rem, 4vw, 2rem);
+  --text-heading-lg: 1.5rem;
+  --text-heading: 1.25rem;
+  --text-body-lg: 1.125rem;
+  --text-body: 1rem;
+  --text-body-sm: 0.9375rem;
+  --text-label: 0.875rem;
+  --text-caption: 0.8125rem;
+  --text-micro: 0.75rem;
+
+  /* Line height — more breathing room */
+  --line-relaxed: 1.8;
+  --line-comfortable: 1.6;
+  --line-normal: 1.5;
+  --line-tight: 1.25;
+
+  /* Letter spacing — more refined */
+  --tracking-normal: 0;
+  --tracking-wide: 0.05em;
+  --tracking-wider: 0.1em;
+  --tracking-widest: 0.15em;
+}
+
+/* Page headings — more dramatic */
+h1 {
+  font-family: var(--font-serif);
+  font-size: var(--text-display-xl);
+  font-weight: 700;
+  line-height: var(--line-tight);
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+  color: #0B0B0B;
+}
+
+h2 {
+  font-family: var(--font-serif);
+  font-size: var(--text-heading-xl);
+  font-weight: 700;
+  line-height: var(--line-tight);
+  letter-spacing: -0.01em;
+  margin-bottom: 1.25rem;
+  color: #0B0B0B;
+  margin-top: 2rem;
+}
+
+h3 {
+  font-family: var(--font-serif);
+  font-size: var(--text-heading-lg);
+  font-weight: 600;
+  line-height: var(--line-tight);
+  margin-bottom: 1rem;
+  color: #0B0B0B;
+  margin-top: 1.5rem;
+}
+
+p {
+  line-height: var(--line-comfortable);
+  margin-bottom: 1rem;
+  color: #0B0B0B;
+}
+
+/* Archive page metadata labels — more intentional */
+.metadata-label,
+.page-eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--text-caption);
+  font-weight: 600;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: #8e7164;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+/* ─── 2. COLOR PALETTE ENRICHMENT ──────────────────────────────────────────– */
+
+:root {
+  /* Primaries */
+  --color-bg: #faf8f5;  /* Warmer than #fcf9f3 */
+  --color-text: #0B0B0B;
+  --color-text-secondary: #575757;
+  --color-accent: #FF6600;
+
+  /* Archival palette */
+  --color-border-warm: #8e7164;
+  --color-border-soft: #e3bfb1;
+  --color-divider: #ebe8e2;
+
+  /* Shadows — dimensional, not flat */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.12);
+  --shadow-gallery: 0 0 40px rgba(0, 0, 0, 0.08);
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* Subtle background gradients in sections */
+.page-section {
+  position: relative;
+}
+
+.page-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #8e7164, transparent);
+  opacity: 0.3;
+}
+
+/* ─── 3. SPACING & RHYTHM ──────────────────────────────────────────────────── */
+
+:root {
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+}
+
+/* Generous margins on major sections */
+main > section {
+  padding: var(--space-3xl) var(--space-xl);
+  margin-bottom: var(--space-3xl);
+}
+
+@media (max-width: 768px) {
+  main > section {
+    padding: var(--space-2xl) var(--space-lg);
+    margin-bottom: var(--space-2xl);
+  }
+}
+
+/* Archive grid — more breathing room */
+.medium-grid {
+  column-gap: 1rem;
+  padding: var(--space-xl);
+}
+
+.thumb {
+  margin-bottom: 1rem;
+}
+
+/* ─── 4. IMAGE TREATMENT & FRAMES ──────────────────────────────────────────– */
+
+/* Archival frame treatment */
+.thumb__link img {
+  border: 1px solid var(--color-border-soft);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.thumb__link:hover img,
+.thumb__link:focus-visible img {
+  border-color: var(--color-border-warm);
+  box-shadow: var(--shadow-md);
+  transform: scale(1.01);
+}
+
+/* Gallery image treatment */
+.artwork-display img,
+.hero-image img {
+  border: 1px solid var(--color-border-warm);
+  box-shadow: var(--shadow-gallery);
+}
+
+/* Dominant color backdrop */
+.image-with-backdrop {
+  border: 1px solid var(--color-border-warm);
+}
+
+/* Featured work frames — slightly different */
+.card-featured,
+.work-featured {
+  border: 2px solid var(--color-border-warm);
+}
+
+/* ─── 5. SHADOWS & DEPTH ───────────────────────────────────────────────────── */
+
+/* Card depth — layered, not flat */
+.card,
+.stat-card,
+.story-card,
+.chapter-item {
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-divider);
+  transition: all 0.25s ease;
+}
+
+.card:hover,
+.stat-card:hover,
+.story-card:hover,
+.chapter-item:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-border-warm);
+  transform: translateY(-1px);
+}
+
+/* Modal/overlay depth */
+.modal-backdrop,
+.quick-preview-modal {
+  box-shadow: var(--shadow-xl);
+}
+
+/* ─── 6. MICRO-INTERACTIONS REFINEMENT ────────────────────────────────────── */
+
+/* Slower, more intentional transitions */
+* {
+  --transition-duration: 0.3s;
+  --transition-easing: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    --transition-duration: 0s !important;
+  }
+}
+
+/* Refined loading state */
+.lazy-placeholder {
+  animation: skeleton-slow 2.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-slow {
+  0% { background-position: 200% 0; }
+  50% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Custom cursor hint */
+a, button, .cursor-pointer {
+  transition: color var(--transition-duration) var(--transition-easing);
+}
+
+/* Link underlines more graceful */
+a {
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 102, 0, 0.3);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: text-decoration-color var(--transition-duration) var(--transition-easing);
+}
+
+a:hover {
+  text-decoration-color: var(--color-accent);
+}
+
+/* ─── 7. DARK MODE — DIFFERENT AESTHETIC ──────────────────────────────────– */
+
+html.dark {
+  --color-bg: #1a1a1a;
+  --color-text: #e8e8e8;
+  --color-text-secondary: #b0b0b0;
+  --color-border-warm: #a68b7d;
+  --color-border-soft: #4a3f35;
+  --color-divider: #2a2a2a;
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+
+html.dark body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* Dark mode images get subtle glow */
+html.dark .thumb__link img,
+html.dark .artwork-display img {
+  border-color: var(--color-border-soft);
+  box-shadow: var(--shadow-md), inset 0 0 20px rgba(255, 102, 0, 0.05);
+}
+
+html.dark .card,
+html.dark .stat-card {
+  background-color: #242424;
+  border-color: var(--color-divider);
+}
+
+/* ─── 8. ARCHIVE PAGE VISUAL HIERARCHY ────────────────────────────────────── */
+
+/* Section headers more distinctive */
+.filter-section-header {
+  font-family: var(--font-serif);
+  font-size: var(--text-heading-lg);
+  font-weight: 700;
+  padding-bottom: var(--space-lg);
+  border-bottom: 2px solid var(--color-border-warm);
+  margin-bottom: var(--space-xl);
+  color: #0B0B0B;
+}
+
+/* Medium-specific styling */
+.collage-section .filter-section-header::before {
+  content: '■ ';
+  color: #f0e8e0;
+}
+
+.sculpture-section .filter-section-header::before {
+  content: '▲ ';
+  color: #e8f0f8;
+}
+
+.photography-section .filter-section-header::before {
+  content: '○ ';
+  color: #f0e8f0;
+}
+
+.painting-section .filter-section-header::before {
+  content: '✕ ';
+  color: #e8f8f0;
+}
+
+/* Variable grid sizes — feature some works */
+.thumb:nth-child(5n+1) {
+  column-span: 1;
+}
+
+.thumb:nth-child(13n+1):nth-child(-n+3) {
+  /* Feature first few works larger */
+  break-inside: avoid;
+}
+
+/* ─── 9. ARTWORK PAGE — MUSEUM AESTHETIC ──────────────────────────────────– */
+
+.artwork-page-header {
+  padding: var(--space-3xl) var(--space-xl);
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+.artwork-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-display-lg);
+  font-weight: 700;
+  line-height: var(--line-tight);
+  color: #0B0B0B;
+  margin-bottom: var(--space-lg);
+}
+
+.artwork-metadata {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-xl);
+  padding: var(--space-xl) 0;
+}
+
+.artwork-meta-item {
+  border-left: 2px solid var(--color-border-warm);
+  padding-left: var(--space-md);
+}
+
+.artwork-meta-label {
+  font-family: var(--font-sans);
+  font-size: var(--text-caption);
+  font-weight: 600;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: #8e7164;
+  margin-bottom: var(--space-sm);
+  display: block;
+}
+
+.artwork-meta-value {
+  font-family: var(--font-serif);
+  font-size: var(--text-body-lg);
+  color: var(--color-text);
+  line-height: var(--line-comfortable);
+}
+
+/* Artwork image — generous breathing room */
+.artwork-container {
+  max-width: 900px;
+  margin: var(--space-3xl) auto;
+  padding: 0 var(--space-lg);
+}
+
+.artwork-display {
+  background-color: #fff;
+  padding: var(--space-xl);
+  border: 1px solid var(--color-border-warm);
+  box-shadow: var(--shadow-gallery);
+}
+
+.artwork-display img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+/* Related works — gallery feel */
+.related-works {
+  padding-top: var(--space-3xl);
+  border-top: 1px solid var(--color-divider);
+  margin-top: var(--space-3xl);
+}
+
+.related-works-label {
+  font-family: var(--font-serif);
+  font-size: var(--text-heading-lg);
+  font-weight: 700;
+  margin-bottom: var(--space-xl);
+  color: #0B0B0B;
+}
+
+/* ─── 10. FOCUS MODE — DISTRACTION-FREE ────────────────────────────────────– */
+
+body.focus-mode {
+  background-color: #fdfcfb;
+}
+
+body.focus-mode header,
+body.focus-mode nav {
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+body.focus-mode header:hover,
+body.focus-mode nav:hover {
+  opacity: 1;
+}
+
+body.focus-mode .artwork-display {
+  max-width: 100%;
+  border-radius: 0;
+}
+
+body.focus-mode .artwork-display img {
+  box-shadow: none;
+}
+
+/* ─── 11. TRANSITIONS & ANIMATIONS — INTENTIONAL PACING ───────────────────– */
+
+/* Slower page transitions for contemplation */
+@keyframes page-fade-gentle {
+  from {
+    opacity: 0.95;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.page-transition {
+  animation: page-fade-gentle 0.5s ease-in-out;
+}
+
+/* Grid entrance — staggered but leisurely */
+.thumb {
+  animation: grid-entrance-slow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  animation-fill-mode: both;
+}
+
+@keyframes grid-entrance-slow {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hover lift — more substantial */
+.card:hover,
+.stat-card:hover {
+  transform: translateY(-4px);
+}
+
+/* ─── 12. RESPONSIVE REFINEMENTS ───────────────────────────────────────────– */
+
+@media (max-width: 768px) {
+  :root {
+    --text-display-xl: clamp(2rem, 6vw, 2.5rem);
+    --text-heading-xl: 1.5rem;
+  }
+
+  .artwork-metadata {
+    grid-template-columns: 1fr;
+  }
+
+  main > section {
+    padding: var(--space-2xl) var(--space-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --text-display-xl: 1.75rem;
+    --space-3xl: 2rem;
+  }
+
+  .medium-grid {
+    column-count: 1;
+    padding: var(--space-lg) 0;
+  }
+
+  .artwork-page-header {
+    padding: var(--space-2xl) var(--space-lg);
+  }
+}
