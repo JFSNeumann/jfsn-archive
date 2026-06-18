@@ -28,10 +28,9 @@
   # More-specific rule first.
   # ------------------------------------------
 
-  # artworks/full/ maps to the existing flat artworks/*.avif on the server.
-  # The old site stored full-res as artworks/art####.avif (no subfolder).
-  # This means NO re-upload of full-res images is needed.
-  RewriteRule ^artworks/full/(.+\.avif)$ /artworks/$1 [L]
+  # artworks/full/ — files are organized in subdirectories by size
+  # Serve /artworks/full/ directly (no rewrite needed)
+  RewriteRule ^artworks/full/(.+\.avif)$ /artworks/full/$1 [L]
 
   # Thumbnails: path is identical in both old and new sites
   RewriteRule ^old-site/artworks/thumbs/(.+)$ /artworks/thumbs/$1 [L]
@@ -66,6 +65,13 @@
   ErrorDocument 404 /404.html
   ErrorDocument 500 /404.html
 
+</IfModule>
+
+# ============================================
+# MIME TYPES & FILE SERVING
+# ============================================
+<IfModule mod_mime.c>
+  AddType image/avif .avif
 </IfModule>
 
 # ============================================
