@@ -6889,6 +6889,16 @@ body.focus-mode .artwork-display img {
   color: #575757;
 }
 
+/* Small padding (1482 occurrences) */
+.pad-sm {
+  padding: 8px;
+}
+
+/* Surface container background (1358 occurrences) */
+.bg-surface-high {
+  background-color: #ebe8e2;
+}
+
 /* ─── 13. RESPONSIVE REFINEMENTS ───────────────────────────────────────────– */
 
 @media (max-width: 768px) {
