@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1781811567'; // Session 67: CRITICAL FIX - Remove all old broken shortcuts modals
+const CACHE_V  = 'jfsn-1781813099'; // Session 67: Fix skeleton loader bug - clear grid on first render
 const PRECACHE = [
   '/',
   '/index.html',
