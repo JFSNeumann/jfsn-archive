@@ -6899,6 +6899,16 @@ body.focus-mode .artwork-display img {
   background-color: #ebe8e2;
 }
 
+/* Soft warm border bottom (517 occurrences) */
+.border-bottom-soft {
+  border-bottom: 1px solid #e3bfb1;
+}
+
+/* Prevent flex shrinking (230 occurrences) */
+.flex-no-shrink {
+  flex-shrink: 0;
+}
+
 /* ─── 13. RESPONSIVE REFINEMENTS ───────────────────────────────────────────– */
 
 @media (max-width: 768px) {
