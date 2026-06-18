@@ -1463,6 +1463,84 @@ header.header-hidden{transform:translateY(-100%)}
     </div>
   </section>
 
+  <!-- Phase 4: Curated Collections —探索by Theme ————————————————————————————— -->
+  <section id="curated-collections-d" class="mt-20 md:mt-32 border-t border-outline-variant pt-16">
+    <div class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+      <div class="mb-12">
+        <span class="font-label-caps text-label-caps text-orange-ink" style="display:block;margin-bottom:10px;letter-spacing:0.2em;">Explore by Theme</span>
+        <h2 style="font-family:'Playfair Display',serif;font-size:clamp(26px,3.2vw,42px);line-height:1.1;color:#0B0B0B;font-weight:600;margin:0;">Recurring Obsessions <span style="font-family:Inter,sans-serif;font-size:13px;font-weight:400;color:#575757;letter-spacing:0;">— five decades of motifs</span></h2>
+      </div>
+
+      <!-- Curated collection tiles — Phase 4 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <!-- Guernica Series -->
+        <a href="guernica.html" class="group block" style="text-decoration:none;">
+          <div style="position:relative;overflow:hidden;aspect-ratio:1;background:#e3bfb1;margin-bottom:12px;border:1px solid #8e7164;display:flex;align-items:center;justify-content:center;transition:box-shadow 0.3s ease,transform 0.3s ease;" class="collection-tile">
+            <img src="artworks/medium/art0010.avif" alt="Guernica series representative" style="width:100%;height:100%;object-fit:cover;transition:transform 0.3s ease;" loading="lazy">
+            <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);opacity:0;transition:opacity 0.3s ease;" class="collection-overlay"></div>
+          </div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:#0B0B0B;margin:0 0 4px;">Guernica</h3>
+          <p style="font-family:Inter,sans-serif;font-size:13px;color:#575757;margin:0;">232 works · 1990–present</p>
+        </a>
+
+        <!-- Photography -->
+        <a href="photography.html" class="group block" style="text-decoration:none;">
+          <div style="position:relative;overflow:hidden;aspect-ratio:1;background:#f0e8e0;margin-bottom:12px;border:1px solid #8e7164;display:flex;align-items:center;justify-content:center;transition:box-shadow 0.3s ease,transform 0.3s ease;" class="collection-tile">
+            <img src="artworks/medium/art0200.avif" alt="Photography collection" style="width:100%;height:100%;object-fit:cover;transition:transform 0.3s ease;" loading="lazy">
+            <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);opacity:0;transition:opacity 0.3s ease;" class="collection-overlay"></div>
+          </div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:#0B0B0B;margin:0 0 4px;">Photography</h3>
+          <p style="font-family:Inter,sans-serif;font-size:13px;color:#575757;margin:0;">328 works · Various decades</p>
+        </a>
+
+        <!-- Sculpture -->
+        <a href="sculpture.html" class="group block" style="text-decoration:none;">
+          <div style="position:relative;overflow:hidden;aspect-ratio:1;background:#e8f0f8;margin-bottom:12px;border:1px solid #8e7164;display:flex;align-items:center;justify-content:center;transition:box-shadow 0.3s ease,transform 0.3s ease;" class="collection-tile">
+            <img src="artworks/medium/art0300.avif" alt="Sculpture collection" style="width:100%;height:100%;object-fit:cover;transition:transform 0.3s ease;" loading="lazy">
+            <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);opacity:0;transition:opacity 0.3s ease;" class="collection-overlay"></div>
+          </div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:#0B0B0B;margin:0 0 4px;">Sculpture</h3>
+          <p style="font-family:Inter,sans-serif;font-size:13px;color:#575757;margin:0;">76 works · Various decades</p>
+        </a>
+
+        <!-- Favorites -->
+        <a href="favorites.html" class="group block" style="text-decoration:none;">
+          <div style="position:relative;overflow:hidden;aspect-ratio:1;background:#e8f8f0;margin-bottom:12px;border:1px solid #8e7164;display:flex;align-items:center;justify-content:center;transition:box-shadow 0.3s ease,transform 0.3s ease;" class="collection-tile">
+            <img src="artworks/medium/art0850.avif" alt="Favorite works" style="width:100%;height:100%;object-fit:cover;transition:transform 0.3s ease;" loading="lazy">
+            <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);opacity:0;transition:opacity 0.3s ease;" class="collection-overlay"></div>
+          </div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:#0B0B0B;margin:0 0 4px;">Favorites</h3>
+          <p style="font-family:Inter,sans-serif;font-size:13px;color:#575757;margin:0;">45 works · Personal picks</p>
+        </a>
+
+      </div>
+
+      <style>
+        .collection-tile {
+          cursor: pointer;
+        }
+        .collection-tile:hover,
+        .collection-tile:focus-visible {
+          box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+          transform: translateY(-2px);
+        }
+        .collection-tile:hover img,
+        .collection-tile:focus-visible img {
+          transform: scale(1.05);
+        }
+        .collection-tile:hover .collection-overlay,
+        .collection-tile:focus-visible .collection-overlay {
+          opacity: 1;
+        }
+        a:focus-visible {
+          outline: 2px solid #FF6600;
+          outline-offset: 4px;
+        }
+      </style>
+    </div>
+  </section>
+
   <!-- The Wall band — the mass of the archive on one surface -->
   <section id="wall-section-d" class="border-t border-outline-variant" aria-label="The Wall">
     <div class="px-margin-desktop" style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;padding-top:40px;padding-bottom:18px;">
@@ -1587,7 +1665,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
     if (!grid) return;
     try {
       const [works, chromatic] = await Promise.all([
-        fetch('catalog-home.json?v=20260617232132').then(r => r.json()),
+        fetch('catalog-home.json?v=20260618010330').then(r => r.json()),
         fetch('chromatic.json').then(r => r.json()).catch(() => []),
       ]);
 
