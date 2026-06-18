@@ -161,6 +161,7 @@
     <li><a href="#artwork-grid" class="nav-link">Artwork Grid</a></li>
     <li><a href="#filter-chips" class="nav-link">Filter Chips</a></li>
     <li><a href="#mobile-nav" class="nav-link">Mobile Nav</a></li>
+    <li><a href="#breakpoints" class="nav-link">Breakpoints</a></li>
     <li><a href="#animations" class="nav-link">Animations</a></li>
     <li><a href="#accessibility" class="nav-link">Accessibility</a></li>
   </ul>
@@ -2467,6 +2468,346 @@ document.addEventListener('keydown', (e) => {
     transition: none; /* Remove animation entirely */
   }
 }</code></pre>
+  </div>
+</div>
+
+<!-- RESPONSIVE BREAKPOINTS -->
+<div class="guide-section" id="breakpoints">
+  <h2 class="section-title">Responsive Breakpoints</h2>
+  <p style="font-size: 14px; color: #575757; margin-bottom: 32px;">Unified breakpoint system across all 31 pages. Uses mobile-first approach (base styles on mobile, layer breakpoints upward). Defaults to Tailwind CSS breakpoints with custom additions for specific grid/layout needs.</p>
+
+  <h3 class="subsection-title">Primary Breakpoints (Mobile-First)</h3>
+  <p style="font-size: 12px; color: #575757; margin-bottom: 16px;">These are the core breakpoints used for major layout decisions across the site.</p>
+
+  <table class="token-table">
+    <thead>
+      <tr>
+        <th>Breakpoint</th>
+        <th>Device Type</th>
+        <th>Typical Devices</th>
+        <th>Use Cases</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><code>base</code> (&lt;640px)</td>
+        <td>Mobile (small)</td>
+        <td>iPhone SE, small Android</td>
+        <td>Default styles; single-column layout; hidden nav; touch-friendly spacing</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><code>sm / md</code> (640–767px)</td>
+        <td>Mobile (large)</td>
+        <td>iPhone 12+, large Android</td>
+        <td>Still single-column; increased padding; slightly larger text</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><code>md</code> (≥768px)</td>
+        <td>Tablet / Desktop</td>
+        <td>iPad, small laptops</td>
+        <td>Show desktop nav; grid layouts; increase column counts; expand max-widths</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><code>lg</code> (≥1024px)</td>
+        <td>Desktop</td>
+        <td>Most laptops</td>
+        <td>4-column grids; wider layouts; full navigation; larger imagery</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><code>xl</code> (≥1400px)</td>
+        <td>Large desktop</td>
+        <td>4K monitors, wide screens</td>
+        <td>Maximum width containers; expanded spacing; ultra-wide grids</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 class="subsection-title">Breakpoint Reference Chart</h3>
+  <p style="font-size: 12px; color: #575757; margin-bottom: 16px;">All breakpoints used across the site, organized by pixel value.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr style="background: #fcf9f3;">
+        <th style="padding: 8px; text-align: left; border-bottom: 2px solid #8e7164;">Pixel</th>
+        <th style="padding: 8px; text-align: left; border-bottom: 2px solid #8e7164;">Query Type</th>
+        <th style="padding: 8px; text-align: left; border-bottom: 2px solid #8e7164;">Purpose</th>
+        <th style="padding: 8px; text-align: left; border-bottom: 2px solid #8e7164;">Components Affected</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td style="padding: 8px;"><code>480px</code></td>
+        <td style="padding: 8px;"><code>max-width: 480px</code></td>
+        <td style="padding: 8px;">Very small phones</td>
+        <td style="padding: 8px;">Curatorial map grid (3 cols → 1)</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td style="padding: 8px;"><code>600px</code></td>
+        <td style="padding: 8px;"><code>max-width: 600px</code></td>
+        <td style="padding: 8px;">Large phones, small tablets</td>
+        <td style="padding: 8px;">Grid columns (2 cols); image sizes; padding; hero sizing</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td style="padding: 8px;"><code>640px</code></td>
+        <td style="padding: 8px;"><code>max-width: 640px</code> or <code>min-width: 640px</code></td>
+        <td style="padding: 8px;">Tailwind `sm` breakpoint</td>
+        <td style="padding: 8px;">Archive card layout; usage grid; pagination</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td style="padding: 8px;"><code>767px / 768px</code></td>
+        <td style="padding: 8px;"><code>max-width: 767px` or <code>min-width: 768px</code></td>
+        <td style="padding: 8px;">Mobile ↔ Tablet threshold</td>
+        <td style="padding: 8px;">Nav toggle (hamburger ↔ desktop); footer adjustments; BTT button positioning</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td style="padding: 8px;"><code>800px</code></td>
+        <td style="padding: 8px;"><code>max-width: 800px</code></td>
+        <td style="padding: 8px;">iPad portrait</td>
+        <td style="padding: 8px;">Grid layouts (3 cols); sidebar adjustments</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td style="padding: 8px;"><code>1023px / 1024px</code></td>
+        <td style="padding: 8px;"><code>max-width: 1024px` or <code>min-width: 1024px</code></td>
+        <td style="padding: 8px;">Tablet ↔ Desktop threshold</td>
+        <td style="padding: 8px;">Grid columns (3 → 4); layout shift; page label visibility</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td style="padding: 8px;"><code>1100px</code></td>
+        <td style="padding: 8px;"><code>min-width: 1100px</code></td>
+        <td style="padding: 8px;">Vertical page label appears</td>
+        <td style="padding: 8px;">Vertical "you are here" label on decade pages (fixed left side)</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td style="padding: 8px;"><code>1400px</code></td>
+        <td style="padding: 8px;"><code>max-width: 1400px</code></td>
+        <td style="padding: 8px;">Ultra-wide displays</td>
+        <td style="padding: 8px;">Grid max-width capping; 5-column grids</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 class="subsection-title">Breakpoint Usage by Component</h3>
+
+  <div style="background: white; border: 1px solid #8e7164; padding: 16px; margin-bottom: 16px;">
+    <p style="font-size: 12px; font-weight: 600; color: #0B0B0B; margin: 0 0 8px;">📱 Artwork Grids (medium-grid)</p>
+    <p style="font-size: 11px; color: #575757; margin: 0; line-height: 1.8;">
+      <code>&lt;600px: 2 columns</code> | <code>600–1024px: 3 columns</code> | <code>&gt;1024px: 4 columns</code>
+    </p>
+  </div>
+
+  <div style="background: white; border: 1px solid #8e7164; padding: 16px; margin-bottom: 16px;">
+    <p style="font-size: 12px; font-weight: 600; color: #0B0B0B; margin: 0 0 8px;">🧭 Navigation</p>
+    <p style="font-size: 11px; color: #575757; margin: 0 0 8px; line-height: 1.8;">
+      <code>&lt;768px: Hamburger + drawer</code> | <code>≥768px: Desktop nav (6 links)</code>
+    </p>
+  </div>
+
+  <div style="background: white; border: 1px solid #8e7164; padding: 16px; margin-bottom: 16px;">
+    <p style="font-size: 12px; font-weight: 600; color: #0B0B0B; margin: 0 0 8px;">🏷️ Page Labels</p>
+    <p style="font-size: 11px; color: #575757; margin: 0 0 8px; line-height: 1.8;">
+      <code>&lt;1100px: Hidden</code> | <code>≥1100px: Fixed vertical label (left side)</code>
+    </p>
+  </div>
+
+  <div style="background: white; border: 1px solid #8e7164; padding: 16px;">
+    <p style="font-size: 12px; font-weight: 600; color: #0B0B0B; margin: 0 0 8px;">🔼 Back-to-Top Button</p>
+    <p style="font-size: 11px; color: #575757; margin: 0 0 8px; line-height: 1.8;">
+      <code>&lt;768px: bottom 72px (above mobile nav)</code> | <code>≥768px: bottom normal</code>
+    </p>
+  </div>
+
+  <h3 class="subsection-title">Mobile-First CSS Pattern</h3>
+  <p style="font-size: 12px; color: #575757; margin-bottom: 16px;">Always define base (mobile) styles first, then layer breakpoints upward. This example shows the pattern:</p>
+
+  <div class="snippet-box">
+    <h4>Mobile-First Breakpoint Pattern</h4>
+    <pre><code>/* Base (mobile) — default for all devices */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr; /* 1 column */
+  gap: 16px;
+}
+
+/* Tablet and up */
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  }
+}
+
+/* Desktop and up */
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+  }
+}
+
+/* Large desktop and up */
+@media (min-width: 1400px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr); /* 4 columns */
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+}</code></pre>
+  </div>
+
+  <h3 class="subsection-title">Tailwind Breakpoint Prefixes</h3>
+  <p style="font-size: 12px; color: #575757; margin-bottom: 16px;">When using Tailwind utilities, prefix classes with breakpoint abbreviations. JFSN uses <code>md:</code> (≥768px) most commonly.</p>
+
+  <table class="token-table">
+    <thead>
+      <tr>
+        <th>Prefix</th>
+        <th>Min-Width</th>
+        <th>Usage Example</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><code>sm:</code></td>
+        <td>640px</td>
+        <td><code>sm:flex</code> — show flexbox on sm and up</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><code>md:</code></td>
+        <td>768px</td>
+        <td><code>md:hidden</code>, <code>md:inline</code>, <code>md:w-1/2</code> — common for nav/layout shifts</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><code>lg:</code></td>
+        <td>1024px</td>
+        <td><code>lg:text-xl</code> — increase type on larger screens</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><code>xl:</code></td>
+        <td>1280px</td>
+        <td><code>xl:max-w-container-max</code> — cap width on ultra-wide</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 class="subsection-title">Image Responsiveness with Sizes Attribute</h3>
+  <p style="font-size: 12px; color: #575757; margin-bottom: 16px;">Images use <code>sizes</code> attribute to match layout breakpoints and avoid loading oversized images on mobile.</p>
+
+  <div class="snippet-box">
+    <h4>Responsive Image Sizes</h4>
+    <pre><code>&lt;img
+  srcset="artworks/mini/art0001.avif 200w, artworks/thumbs/art0001.avif 400w"
+  sizes="(max-width:600px) calc(50vw - 1rem),
+          (max-width:1024px) calc(33vw - 1rem),
+          calc(25vw - 1rem)"
+  src="artworks/thumbs/art0001.avif"
+  loading="lazy"
+  alt="Work Title"
+/&gt;</code></pre>
+  </div>
+
+  <p style="font-size: 11px; color: #575757; margin-top: 12px; line-height: 1.8;">
+    <strong>Breakdown:</strong>
+    <br/>• <code>&lt;600px:</code> 2-column grid → 50% width
+    <br/>• <code>600–1024px:</code> 3-column grid → 33% width
+    <br/>• <code>&gt;1024px:</code> 4-column grid → 25% width
+    <br/>• Subtracts gap (1rem) from each to account for column spacing
+  </p>
+
+  <h3 class="subsection-title">Common Customizations</h3>
+
+  <div class="snippet-box">
+    <h4>Add Custom Breakpoint (CSS Only)</h4>
+    <pre><code>/* Add 900px breakpoint for specific component */
+@media (min-width: 900px) {
+  .special-layout {
+    display: flex;
+    gap: 40px;
+  }
+}</code></pre>
+  </div>
+
+  <div class="snippet-box">
+    <h4>Add Custom Breakpoint (Tailwind)</h4>
+    <pre><code>// In tailwind.config.js
+theme: {
+  extend: {
+    screens: {
+      'tablet': '640px',
+      'desktop': '1024px',
+      '2xl': '1536px',
+    }
+  }
+}
+
+// In HTML: class="tablet:text-lg"</code></pre>
+  </div>
+
+  <div class="snippet-box">
+    <h4>Media Query Targeting Tablet Only</h4>
+    <pre><code>/* iPad landscape (768–1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .tablet-only {
+    /* Styles that apply only on tablets */
+  }
+}</code></pre>
+  </div>
+
+  <h3 class="subsection-title">Accessibility & Motion Preferences</h3>
+  <p style="font-size: 12px; color: #575757; margin-bottom: 16px;">Always combine breakpoints with motion preferences to respect user choices:</p>
+
+  <div class="snippet-box">
+    <h4>Responsive + Reduced Motion</h4>
+    <pre><code>/* Animations for users who prefer motion */
+@media (prefers-reduced-motion: no-preference) {
+  .card {
+    transition: transform 0.2s ease;
+  }
+
+  .card:hover {
+    transform: scale(1.05);
+  }
+}
+
+/* No animations for motion-sensitive users */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}</code></pre>
+  </div>
+
+  <h3 class="subsection-title">Performance & Viewport Optimization</h3>
+
+  <div style="background: #f1f8f4; border-left: 4px solid #4CAF50; padding: 16px; margin: 20px 0;">
+    <p style="font-size: 12px; color: #333; margin: 0; line-height: 1.8;">
+      <strong>✅ Mobile-first cascading:</strong> Smaller breakpoints load first, larger overrides pile on. Reduces bloat for mobile users.<br/>
+      <strong>✅ Lazy-loaded images:</strong> Use breakpoint-aware sizes attribute to match viewport and grid layout.<br/>
+      <strong>✅ Container queries:</strong> Consider for future: replace some breakpoints with container-width-based queries for component reusability.<br/>
+      <strong>✅ Test across devices:</strong> Always test at 480px, 600px, 768px, 1024px, and 1400px to catch breakpoint issues.
+    </p>
+  </div>
+
+  <h3 class="subsection-title">Quick Reference: Breakpoint Cheat Sheet</h3>
+
+  <div style="background: #fcf9f3; border: 1px solid #8e7164; padding: 16px; margin: 16px 0;">
+    <pre style="margin: 0; font-size: 11px; font-family: ui-monospace, monospace; color: #575757; line-height: 1.8;"><code>/* Copy-paste breakpoint snippets */
+
+/* Mobile (base) */
+@media (max-width: 599px) { /* small mobile */ }
+@media (max-width: 639px) { /* large mobile */ }
+
+/* Tablet */
+@media (min-width: 600px) and (max-width: 767px) { /* small tablet */ }
+@media (min-width: 768px) and (max-width: 1023px) { /* full tablet */ }
+
+/* Desktop */
+@media (min-width: 1024px) { /* standard desktop */ }
+@media (min-width: 1100px) { /* page label appears */ }
+@media (min-width: 1400px) { /* ultra-wide */ }
+
+/* Using Tailwind prefixes */
+hidden md:block              /* hidden on mobile, show on md and up */
+md:flex lg:grid              /* different display on different sizes */
+text-sm md:text-base lg:text-lg  /* responsive typography */</code></pre>
   </div>
 </div>
 
