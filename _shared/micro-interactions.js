@@ -150,12 +150,157 @@
       });
   }
 
+  /* ─── Phase 5: Scroll-Reveal Animations ────────────────────────────────────── */
+  function setupScrollReveal() {
+    var revealElements = document.querySelectorAll('.reveal-section');
+    if (revealElements.length === 0) return;
+
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    revealElements.forEach(function(el) {
+      observer.observe(el);
+    });
+  }
+
+  /* ─── Phase 5: Hero Parallax Effect ────────────────────────────────────── */
+  function setupHeroParallax() {
+    var heroImages = document.querySelectorAll('.hero-parallax-image');
+    if (heroImages.length === 0) return;
+
+    window.addEventListener('scroll', function() {
+      heroImages.forEach(function(img) {
+        var scrolled = window.pageYOffset;
+        var parent = img.closest('.hero-parallax');
+        if (!parent) return;
+
+        var rect = parent.getBoundingClientRect();
+        var offset = rect.top / 10; // Subtle parallax: 1/10 of scroll
+        img.style.transform = 'translateY(' + offset + 'px) scale(1.05)';
+      });
+    }, { passive: true });
+  }
+
+  /* ─── Phase 5: Search Result Highlighting ────────────────────────────────── */
+  function setupSearchHighlighting() {
+    var searchInput = document.querySelector('.search-input');
+    if (!searchInput) return;
+
+    searchInput.addEventListener('input', function() {
+      var query = this.value.toLowerCase();
+      var results = document.querySelectorAll('[data-searchable]');
+
+      results.forEach(function(result) {
+        var text = result.textContent.toLowerCase();
+        if (query && !text.includes(query)) {
+          result.classList.add('search-result-nomatch');
+          result.classList.remove('search-result-glow');
+        } else if (query) {
+          result.classList.remove('search-result-nomatch');
+          result.classList.add('search-result-glow');
+        } else {
+          result.classList.remove('search-result-nomatch', 'search-result-glow');
+        }
+      });
+    });
+  }
+
+  /* ─── Phase 5: Page Transition Fade ────────────────────────────────────── */
+  function setupPageTransitions() {
+    var navLinks = document.querySelectorAll('a[href*=".html"]');
+    navLinks.forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        if (link.target === '_blank' || link.hasAttribute('download')) return;
+
+        var href = this.href;
+        if (href.includes('#')) return; // Skip anchor links
+
+        e.preventDefault();
+        document.documentElement.classList.add('page-transition');
+
+        setTimeout(function() {
+          window.location.href = href;
+        }, 300);
+      });
+    });
+  }
+
+  /* ─── Phase 5: Lazy Load Image Fade-In ────────────────────────────────── */
+  function setupLazyLoadFadeIn() {
+    var images = document.querySelectorAll('img[loading="lazy"]');
+
+    images.forEach(function(img) {
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            var image = entry.target;
+            image.classList.add('lazy-loaded');
+
+            // Fade in on load
+            image.addEventListener('load', function() {
+              this.style.opacity = '0';
+              this.style.transition = 'opacity 0.4s ease';
+              setTimeout(function() {
+                image.style.opacity = '1';
+              }, 50);
+            }, { once: true });
+
+            observer.unobserve(image);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      observer.observe(img);
+    });
+  }
+
+  /* ─── Phase 5: Bookmark Management (LocalStorage) ────────────────────────── */
+  window.toggleBookmark = function(workId) {
+    var bookmarks = JSON.parse(localStorage.getItem('jfsn-bookmarks') || '[]');
+    var idx = bookmarks.indexOf(workId);
+
+    if (idx > -1) {
+      bookmarks.splice(idx, 1);
+      showToast('Removed from bookmarks');
+    } else {
+      bookmarks.push(workId);
+      showToast('Added to bookmarks');
+    }
+
+    localStorage.setItem('jfsn-bookmarks', JSON.stringify(bookmarks));
+    updateBookmarkUI(workId);
+  };
+
+  function updateBookmarkUI(workId) {
+    var bookmarks = JSON.parse(localStorage.getItem('jfsn-bookmarks') || '[]');
+    var btn = document.querySelector('[data-bookmark-id="' + workId + '"]');
+    if (btn) {
+      if (bookmarks.includes(workId)) {
+        btn.classList.add('bookmarked');
+        btn.innerHTML = '♥';
+      } else {
+        btn.classList.remove('bookmarked');
+        btn.innerHTML = '♡';
+      }
+    }
+  }
+
   /* ─── Initialize All ────────────────────────────────────────────────────── */
   document.addEventListener('DOMContentLoaded', function() {
     setupGridStagger();
     setupFilterChipFeedback();
     setupArtworkShare();
     setupRelatedWorks();
+    setupScrollReveal();
+    setupHeroParallax();
+    setupSearchHighlighting();
+    setupPageTransitions();
+    setupLazyLoadFadeIn();
   });
 
   // Re-setup grid stagger when filter changes
