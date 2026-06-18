@@ -157,6 +157,7 @@
     <li><a href="#components" class="nav-link">Components</a></li>
     <li><a href="#typography" class="nav-link">Typography</a></li>
     <li><a href="#colors" class="nav-link">Colors</a></li>
+    <li><a href="#utility-classes" class="nav-link">Utility Classes</a></li>
     <li><a href="#animations" class="nav-link">Animations</a></li>
     <li><a href="#accessibility" class="nav-link">Accessibility</a></li>
   </ul>
@@ -755,6 +756,310 @@
       <li><strong>High contrast:</strong> Orange on bone-white background</li>
     </ul>
   </div>
+</div>
+
+<!-- UTILITY CLASSES -->
+<div class="guide-section" id="utility-classes">
+  <h2 class="section-title">Utility Classes (Session 65)</h2>
+  <p style="font-size: 14px; color: #575757; margin-bottom: 32px;">Reusable CSS utility classes added in Session 65. Use these classes instead of inline styles to reduce HTML size and improve maintainability. All classes are defined in <code>_shared/ui.css</code>.</p>
+
+  <h3 class="subsection-title">Typography & Text</h3>
+
+  <!-- label-caps -->
+  <div class="component" style="margin-bottom: 24px;">
+    <div style="margin-bottom: 16px;">
+      <p class="type-label">label-caps</p>
+      <p style="font-size: 12px; color: #575757; margin: 0 0 8px;">Uppercase label text (293 instances replaced)</p>
+      <pre style="background: #fcf9f3; border: 1px solid #c4c7c7; padding: 12px; font-family: ui-monospace, monospace; font-size: 11px; margin: 0; overflow-x: auto;"><code>font-family: Inter, sans-serif;
+font-size: 11px;
+font-weight: 700;
+letter-spacing: 0.1em;
+text-transform: uppercase;</code></pre>
+      <p style="font-size: 11px; color: #8e7164; margin: 8px 0 0;"><strong>Usage:</strong> Page eyebrows, section labels, UI text</p>
+    </div>
+    <div>
+      <span class="label-caps" style="display: inline-block;">Example Label</span>
+    </div>
+  </div>
+
+  <!-- heading-6 -->
+  <div class="component" style="margin-bottom: 24px;">
+    <div style="margin-bottom: 16px;">
+      <p class="type-label">heading-6</p>
+      <p style="font-size: 12px; color: #575757; margin: 0 0 8px;">Section heading style (304 instances replaced)</p>
+      <pre style="background: #fcf9f3; border: 1px solid #c4c7c7; padding: 12px; font-family: ui-monospace, monospace; font-size: 11px; margin: 0; overflow-x: auto;"><code>font-family: 'Playfair Display', serif;
+font-size: 24px;
+font-weight: 600;
+margin: 0 0 20px;
+color: #0B0B0B;</code></pre>
+      <p style="font-size: 11px; color: #8e7164; margin: 8px 0 0;"><strong>Usage:</strong> Subsection headings, component titles</p>
+    </div>
+    <div>
+      <h6 class="heading-6" style="margin-bottom: 0;">Example Heading</h6>
+    </div>
+  </div>
+
+  <!-- color-warm -->
+  <div class="component" style="margin-bottom: 24px;">
+    <div style="margin-bottom: 16px;">
+      <p class="type-label">color-warm</p>
+      <p style="font-size: 12px; color: #575757; margin: 0 0 8px;">Warm brown label color (228 instances replaced)</p>
+      <pre style="background: #fcf9f3; border: 1px solid #c4c7c7; padding: 12px; font-family: ui-monospace, monospace; font-size: 11px; margin: 0; overflow-x: auto;"><code>color: #8e7164;
+font-size: 9px;</code></pre>
+      <p style="font-size: 11px; color: #8e7164; margin: 8px 0 0;"><strong>Usage:</strong> Secondary labels, muted text, borders</p>
+    </div>
+    <div>
+      <span class="color-warm">Warm label example</span>
+    </div>
+  </div>
+
+  <!-- mono-text -->
+  <div class="component" style="margin-bottom: 24px;">
+    <div style="margin-bottom: 16px;">
+      <p class="type-label">mono-text</p>
+      <p style="font-size: 12px; color: #575757; margin: 0 0 8px;">Monospace text for code/metadata (114 instances replaced)</p>
+      <pre style="background: #fcf9f3; border: 1px solid #c4c7c7; padding: 12px; font-family: ui-monospace, monospace; font-size: 11px; margin: 0; overflow-x: auto;"><code>font-family: ui-monospace, monospace;
+font-size: 11px;
+color: #575757;</code></pre>
+      <p style="font-size: 11px; color: #8e7164; margin: 8px 0 0;"><strong>Usage:</strong> File paths, hex codes, data values</p>
+    </div>
+    <div>
+      <code class="mono-text">#8e7164</code>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">Spacing & Layout</h3>
+
+  <!-- pad-sm -->
+  <div class="component" style="margin-bottom: 24px;">
+    <div style="margin-bottom: 16px;">
+      <p class="type-label">pad-sm</p>
+      <p style="font-size: 12px; color: #575757; margin: 0 0 8px;">Small padding utility (1,482 instances replaced)</p>
+      <pre style="background: #fcf9f3; border: 1px solid #c4c7c7; padding: 12px; font-family: ui-monospace, monospace; font-size: 11px; margin: 0; overflow-x: auto;"><code>padding: 8px;</code></pre>
+      <p style="font-size: 11px; color: #8e7164; margin: 8px 0 0;"><strong>Usage:</strong> Table cells, button padding, compact spacing</p>
+    </div>
+    <div>
+      <div class="pad-sm" style="background: #fcf9f3; border: 1px solid #c4c7c7; display: inline-block;">Example with pad-sm</div>
+    </div>
+  </div>
+
+  <!-- scroll-anchor -->
+  <div class="component" style="margin-bottom: 24px;">
+    <div style="margin-bottom: 16px;">
+      <p class="type-label">scroll-anchor</p>
+      <p style="font-size: 12px; color: #575757; margin: 0 0 8px;">Scroll target spacing (304 instances replaced)</p>
+      <pre style="background: #fcf9f3; border: 1px solid #c4c7c7; padding: 12px; font-family: ui-monospace, monospace; font-size: 11px; margin: 0; overflow-x: auto;"><code>margin-bottom: 60px;
+scroll-margin-top: 20px;</code></pre>
+      <p style="font-size: 11px; color: #8e7164; margin: 8px 0 0;"><strong>Usage:</strong> Named anchors, section links, keyboard navigation targets</p>
+    </div>
+  </div>
+
+  <!-- flex-no-shrink -->
+  <div class="component" style="margin-bottom: 24px;">
+    <div style="margin-bottom: 16px;">
+      <p class="type-label">flex-no-shrink</p>
+      <p style="font-size: 12px; color: #575757; margin: 0 0 8px;">Prevent flex item shrinking (230 instances replaced)</p>
+      <pre style="background: #fcf9f3; border: 1px solid #c4c7c7; padding: 12px; font-family: ui-monospace, monospace; font-size: 11px; margin: 0; overflow-x: auto;"><code>flex-shrink: 0;</code></pre>
+      <p style="font-size: 11px; color: #8e7164; margin: 8px 0 0;"><strong>Usage:</strong> Icons, buttons in flex containers, fixed-width elements</p>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">Colors & Borders</h3>
+
+  <!-- bg-surface-high -->
+  <div class="component" style="margin-bottom: 24px;">
+    <div style="margin-bottom: 16px;">
+      <p class="type-label">bg-surface-high</p>
+      <p style="font-size: 12px; color: #575757; margin: 0 0 8px;">Surface container background (1,358 instances replaced)</p>
+      <pre style="background: #fcf9f3; border: 1px solid #c4c7c7; padding: 12px; font-family: ui-monospace, monospace; font-size: 11px; margin: 0; overflow-x: auto;"><code>background-color: #ebe8e2;</code></pre>
+      <p style="font-size: 11px; color: #8e7164; margin: 8px 0 0;"><strong>Usage:</strong> Footer, footer blocks, elevated surfaces</p>
+    </div>
+    <div class="bg-surface-high" style="padding: 16px; border: 1px solid #c4c7c7;">
+      Example background
+    </div>
+  </div>
+
+  <!-- border-warm -->
+  <div class="component" style="margin-bottom: 24px;">
+    <div style="margin-bottom: 16px;">
+      <p class="type-label">border-warm</p>
+      <p style="font-size: 12px; color: #575757; margin: 0 0 8px;">Warm brown border wrapper (228 instances replaced)</p>
+      <pre style="background: #fcf9f3; border: 1px solid #c4c7c7; padding: 12px; font-family: ui-monospace, monospace; font-size: 11px; margin: 0; overflow-x: auto;"><code>border: 1px solid #8e7164;
+overflow: hidden;</code></pre>
+      <p style="font-size: 11px; color: #8e7164; margin: 8px 0 0;"><strong>Usage:</strong> Card containers, content boxes, component borders</p>
+    </div>
+    <div class="border-warm" style="padding: 16px;">
+      Example bordered content
+    </div>
+  </div>
+
+  <!-- border-bottom-soft -->
+  <div class="component" style="margin-bottom: 24px;">
+    <div style="margin-bottom: 16px;">
+      <p class="type-label">border-bottom-soft</p>
+      <p style="font-size: 12px; color: #575757; margin: 0 0 8px;">Soft warm divider line (517 instances replaced)</p>
+      <pre style="background: #fcf9f3; border: 1px solid #c4c7c7; padding: 12px; font-family: ui-monospace, monospace; font-size: 11px; margin: 0; overflow-x: auto;"><code>border-bottom: 1px solid #e3bfb1;</code></pre>
+      <p style="font-size: 11px; color: #8e7164; margin: 8px 0 0;"><strong>Usage:</strong> Section dividers, table rows, list separators</p>
+    </div>
+    <div style="padding: 12px 0;" class="border-bottom-soft">
+      Content above divider
+    </div>
+    <div style="padding: 12px 0;">
+      Content below divider
+    </div>
+  </div>
+
+  <h3 class="subsection-title">Data & Code</h3>
+
+  <!-- data-table -->
+  <div class="component" style="margin-bottom: 24px;">
+    <div style="margin-bottom: 16px;">
+      <p class="type-label">data-table</p>
+      <p style="font-size: 12px; color: #575757; margin: 0 0 8px;">Table styling (114 instances replaced)</p>
+      <pre style="background: #fcf9f3; border: 1px solid #c4c7c7; padding: 12px; font-family: ui-monospace, monospace; font-size: 11px; margin: 0; overflow-x: auto;"><code>width: 100%;
+border-collapse: collapse;
+font-family: Inter, sans-serif;
+font-size: 13px;</code></pre>
+      <p style="font-size: 11px; color: #8e7164; margin: 8px 0 0;"><strong>Usage:</strong> Data tables, token tables, metadata tables</p>
+    </div>
+    <table class="data-table" style="margin-top: 12px;">
+      <thead>
+        <tr style="background: #fcf9f3;">
+          <th style="padding: 8px; text-align: left; border-bottom: 2px solid #8e7164;">Column 1</th>
+          <th style="padding: 8px; text-align: left; border-bottom: 2px solid #8e7164;">Column 2</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom: 1px solid #e3bfb1;">
+          <td style="padding: 8px;">Data A</td>
+          <td style="padding: 8px;">Data B</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="subsection-title">Migration Guide: Inline to Classes</h3>
+  <p style="font-size: 12px; color: #575757; margin: 0 0 16px;">Session 65 replaced <strong>5,172 inline style attributes</strong> across 40 pages with utility classes, saving ~178 KB of HTML.</p>
+
+  <div class="snippet-box">
+    <h4>Before (Inline Style)</h4>
+    <pre><code>&lt;h6 style="font-family:'Playfair Display',serif;font-size:24px;font-weight:600;margin:0 0 20px;color:#0B0B0B;"&gt;
+  My Heading
+&lt;/h6&gt;</code></pre>
+  </div>
+
+  <div class="snippet-box">
+    <h4>After (Utility Class)</h4>
+    <pre><code>&lt;h6 class="heading-6"&gt;
+  My Heading
+&lt;/h6&gt;</code></pre>
+  </div>
+
+  <h3 class="subsection-title">Benefits of Utility Classes</h3>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin: 20px 0;">
+    <div style="background: white; border: 1px solid #8e7164; padding: 16px;">
+      <p style="font-size: 12px; font-weight: 600; color: #0B0B0B; margin: 0 0 8px;">📦 Smaller HTML</p>
+      <p style="font-size: 11px; color: #575757; margin: 0; line-height: 1.6;">Reusing class names is more efficient than repeating inline styles. Session 65 saved 178 KB.</p>
+    </div>
+    <div style="background: white; border: 1px solid #8e7164; padding: 16px;">
+      <p style="font-size: 12px; font-weight: 600; color: #0B0B0B; margin: 0 0 8px;">🎨 Consistent Design</p>
+      <p style="font-size: 11px; color: #575757; margin: 0; line-height: 1.6;">Single source of truth in _shared/ui.css. Change once, update everywhere.</p>
+    </div>
+    <div style="background: white; border: 1px solid #8e7164; padding: 16px;">
+      <p style="font-size: 12px; font-weight: 600; color: #0B0B0B; margin: 0 0 8px;">🔧 Maintainability</p>
+      <p style="font-size: 11px; color: #575757; margin: 0; line-height: 1.6;">Update styles in CSS, not in 50+ HTML files. Less error-prone.</p>
+    </div>
+    <div style="background: white; border: 1px solid #8e7164; padding: 16px;">
+      <p style="font-size: 12px; font-weight: 600; color: #0B0B0B; margin: 0 0 8px;">⚡ Performance</p>
+      <p style="font-size: 11px; color: #575757; margin: 0; line-height: 1.6;">Smaller CSS file when gzipped. Faster parse and render times.</p>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">Class Summary Table</h3>
+  <table class="token-table" style="margin-top: 20px;">
+    <thead>
+      <tr>
+        <th>Class Name</th>
+        <th>Instances</th>
+        <th>Primary Use Case</th>
+        <th>CSS Properties</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><code>.label-caps</code></td>
+        <td>293</td>
+        <td>UI labels, eyebrows</td>
+        <td>Playfair, 11px, 700, uppercase</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><code>.heading-6</code></td>
+        <td>304</td>
+        <td>Subsections</td>
+        <td>Playfair 24px, 600 weight</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><code>.color-warm</code></td>
+        <td>228</td>
+        <td>Labels, muted text</td>
+        <td>#8e7164, 9px</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><code>.mono-text</code></td>
+        <td>114</td>
+        <td>Code, data</td>
+        <td>Monospace, 11px</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><code>.pad-sm</code></td>
+        <td>1,482</td>
+        <td>Padding</td>
+        <td>8px</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><code>.scroll-anchor</code></td>
+        <td>304</td>
+        <td>Link targets</td>
+        <td>Margin + scroll-margin</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><code>.flex-no-shrink</code></td>
+        <td>230</td>
+        <td>Flex layout</td>
+        <td>flex-shrink: 0</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><code>.bg-surface-high</code></td>
+        <td>1,358</td>
+        <td>Backgrounds</td>
+        <td>#ebe8e2</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><code>.border-warm</code></td>
+        <td>228</td>
+        <td>Cards, boxes</td>
+        <td>#8e7164 border + overflow</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><code>.border-bottom-soft</code></td>
+        <td>517</td>
+        <td>Dividers</td>
+        <td>#e3bfb1 bottom border</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><code>.data-table</code></td>
+        <td>114</td>
+        <td>Tables</td>
+        <td>Full width, collapsed</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #e3bfb1;">
+        <td><code>.nav-link</code></td>
+        <td>304</td>
+        <td>Navigation</td>
+        <td>Padding, color, border</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 <!-- ACCESSIBILITY -->
@@ -2110,10 +2415,9 @@
   <h3 class="subsection-title" style="color: #8e7164; margin-top: 32px;">What's Complete</h3>
   <div style="background: #f1f8f4; border-left: 4px solid #4CAF50; padding: 16px;">
     <p style="font-size: 12px; color: #333; margin: 0; line-height: 1.8;">
-      <strong>✅ Tier 1 Complete:</strong> Design Principles · Component States Gallery · Typography Specimens · Animation Showcase Looping<br/>
-      <strong>✅ Tier 2 Complete:</strong> Spacing & Grid System · Real-World Patterns · Color Contrast Data · Responsive Breakpoints<br/>
-      <strong>✅ Tier 3 Complete:</strong> Dark Mode Exploration · Design Vocabulary · Voice & Tone Guide<br/>
-      <strong>✅ Session 57 Complete:</strong> 30 UX/UI improvements shipped, style guide applied to all 40 pages
+      <strong>✅ Session 65:</strong> 5,172 inline styles replaced with 13 utility classes (178 KB HTML saved), Utility Classes section added to style guide<br/>
+      <strong>✅ Session 57:</strong> 30 UX/UI improvements shipped, style guide applied to all 40 pages<br/>
+      <strong>✅ Tier 1–3 Complete:</strong> Design Principles · Component States · Typography · Spacing · Colors · Animations · Accessibility · Voice & Tone
     </p>
   </div>
 </div>
@@ -2129,7 +2433,7 @@ document.getElementById('demo-shortcuts-btn').addEventListener('click', function
 <!-- FOOTER -->
 <div class="guide-section" style="text-align: center; padding: 60px 20px;">
   <p style="font-size: 12px; color: #8e7164;">
-    JFSN Archive Design System · Last updated 2026-06-17 (Session 57 complete)<br/>
+    JFSN Archive Design System · Last updated 2026-06-18 (Session 65 complete)<br/>
     <a href="DESIGN-SYSTEM.md" style="color: #B84700; text-decoration: none; border-bottom: 1px solid #B84700;">Full Documentation</a>
   </p>
 </div>
