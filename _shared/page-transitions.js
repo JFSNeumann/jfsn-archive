@@ -12,6 +12,7 @@ const PageTransitions = {
   setupPageLoad() {
     // Add fade-in animation to page on load
     document.addEventListener('DOMContentLoaded', () => {
+      document.body.classList.remove('page-loading');
       document.body.classList.add('page-loaded');
 
       // Trigger initial elements to fade in

@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1781804798'; // Session 67: Fix analytics error, analytics.js, remove broken preload
+const CACHE_V  = 'jfsn-1781807899'; // Session 67: Fix page-loading opacity bug in page-transitions.js
 const PRECACHE = [
   '/',
   '/index.html',
