@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1787206800'; // Session 75: Remove saturation overlay from homepage featured cards
+const CACHE_V  = 'jfsn-1787207400'; // Session 75: Homepage full-color + masonry layout fixes
 const PRECACHE = [
   '/',
   '/index.html',
