@@ -132,39 +132,10 @@
         @media (min-width: 640px) {
           .archive-card-img { box-shadow: 0 0 20px rgba(0,0,0,0.05); }
         }
-        /* Archive card micro-interactions — Tier 1 + 3 */
+        /* Archive card micro-interactions */
         .archive-card { cursor: zoom-in; }
-        .archive-card h4 {
-          transition: color 0.3s ease, transform 0.3s ease;
-          position: relative;
-        }
-        .archive-card h4::after {
-          content: '';
-          position: absolute;
-          bottom: -4px;
-          left: 0;
-          height: 2px;
-          background: #FF6600;
-          width: 0;
-          transition: width 0.3s ease;
-        }
-        .archive-card:hover h4,
-        .archive-card:focus-visible h4 {
-          color: #e05900;
-          transform: translateY(-2px);
-        }
-        .archive-card:hover h4::after,
-        .archive-card:focus-visible h4::after {
-          width: 40%;
-        }
-        .archive-card [class*="text-secondary"] {
-          transition: opacity 0.3s ease, color 0.3s ease;
-        }
-        .archive-card:hover [class*="text-secondary"],
-        .archive-card:focus-visible [class*="text-secondary"] {
-          opacity: 0.9;
-          color: #0B0B0B;
-        }
+        .archive-card h4 { transition: color 0.2s ease; }
+        .archive-card:hover h4, .archive-card:focus-visible h4 { color: #e05900; }
         /* Grid stagger fade-in on filter change (Phase 4.2) */
         .thumb {
           --delay: 0s;
