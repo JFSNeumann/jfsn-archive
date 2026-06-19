@@ -274,7 +274,7 @@ px-20 / py-20      = 80px (3xl)
 ## Interactions & Animations
 
 ### Hover States
-- **Images:** Outline animates in, saturation overlay fades out, color revealed
+- **Images:** Outline animates in orange, caption title turns orange
 - **Links:** Underline draws in (transform: scaleX)
 - **Buttons:** Opacity/color transition, no scale
 - **Cards:** Soft shadow may intensify (optional enhancement)

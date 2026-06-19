@@ -31,7 +31,7 @@
 Here are some areas to consider:
 - **Homepage:** Hero, featured works flow, entry points to the archive
 - **Archive.html:** 1,084 works, filters, search, grid layout, responsiveness
-- **Thumbnail design:** Current full-color treatment + saturation overlay. Could be enhanced?
+- **Thumbnail design:** Full-color treatment with orange outline on hover
 - **Interactions:** Hover states, transitions, feedback, polish
 - **Typography:** Sizes, weights, spacing, hierarchy on any page
 - **Navigation:** Current Stitch nav works; any UX improvements?

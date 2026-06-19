@@ -6,7 +6,7 @@ Transform JFSN archive from a clean, fast experience into a museum-grade interfa
 
 **Scope:** 17 items across 4 phases (12–16 hours total)  
 **Constraint vocabulary:** fade · slide · color · lift (perspective depth only) · stagger · delay  
-**Design tokens:** Warm-brown borders + orange accent + saturation overlay system (existing)  
+**Design tokens:** Warm-brown borders + orange accent + full-color image display (existing)  
 **Entry point:** Phase A quick wins (2–4h) establish patterns; Phases B–D refine.
 
 ---
