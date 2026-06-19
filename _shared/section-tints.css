@@ -194,6 +194,128 @@ body.section-start [class*="card"] {
   margin-left: -2px;
 }
 
+/* ========== THEME PAGES ========== */
+
+/* Guernica — red/bold */
+body.section-guernica {
+  background: linear-gradient(
+    to bottom,
+    rgba(224, 89, 0, 0.08) 0%,
+    transparent 320px
+  ), #fcf9f3;
+}
+
+body.section-guernica .grid [class*="card"],
+body.section-guernica [class*="thumb"] {
+  border-left: 3px solid rgba(224, 89, 0, 0.25);
+  margin-left: -2px;
+}
+
+/* Targets — geometric/structured */
+body.section-targets {
+  background: linear-gradient(
+    to bottom,
+    rgba(200, 170, 150, 0.1) 0%,
+    transparent 320px
+  ), #fcf9f3;
+}
+
+body.section-targets .grid [class*="card"],
+body.section-targets [class*="thumb"] {
+  border-left: 3px solid rgba(200, 170, 150, 0.3);
+  margin-left: -2px;
+}
+
+/* Framed — contained/bordered */
+body.section-framed {
+  background: linear-gradient(
+    to bottom,
+    rgba(180, 160, 150, 0.1) 0%,
+    transparent 320px
+  ), #fcf9f3;
+}
+
+body.section-framed .grid [class*="card"],
+body.section-framed [class*="thumb"] {
+  border-left: 3px solid rgba(142, 113, 100, 0.28);
+  margin-left: -2px;
+}
+
+/* Torsos & Faces — figurative */
+body.section-torsos {
+  background: linear-gradient(
+    to bottom,
+    rgba(190, 170, 160, 0.11) 0%,
+    transparent 320px
+  ), #fcf9f3;
+}
+
+body.section-torsos .grid [class*="card"],
+body.section-torsos [class*="thumb"] {
+  border-left: 3px solid rgba(190, 170, 160, 0.32);
+  margin-left: -2px;
+}
+
+/* Crosses — spiritual */
+body.section-crosses {
+  background: linear-gradient(
+    to bottom,
+    rgba(210, 190, 170, 0.09) 0%,
+    transparent 320px
+  ), #fcf9f3;
+}
+
+body.section-crosses .grid [class*="card"],
+body.section-crosses [class*="thumb"] {
+  border-left: 3px solid rgba(210, 190, 170, 0.28);
+  margin-left: -2px;
+}
+
+/* Mr. SNOWmann — playful */
+body.section-snowmann {
+  background: linear-gradient(
+    to bottom,
+    rgba(200, 210, 220, 0.09) 0%,
+    transparent 320px
+  ), #fcf9f3;
+}
+
+body.section-snowmann .grid [class*="card"],
+body.section-snowmann [class*="thumb"] {
+  border-left: 3px solid rgba(200, 210, 220, 0.3);
+  margin-left: -2px;
+}
+
+/* Gallery Images — photographic */
+body.section-gallery-images {
+  background: linear-gradient(
+    to bottom,
+    rgba(160, 150, 140, 0.1) 0%,
+    transparent 320px
+  ), #fcf9f3;
+}
+
+body.section-gallery-images .grid [class*="card"],
+body.section-gallery-images [class*="thumb"] {
+  border-left: 3px solid rgba(160, 150, 140, 0.3);
+  margin-left: -2px;
+}
+
+/* Collaboration — warm/connected */
+body.section-collaboration {
+  background: linear-gradient(
+    to bottom,
+    rgba(220, 190, 170, 0.1) 0%,
+    transparent 320px
+  ), #fcf9f3;
+}
+
+body.section-collaboration .grid [class*="card"],
+body.section-collaboration [class*="thumb"] {
+  border-left: 3px solid rgba(220, 190, 170, 0.3);
+  margin-left: -2px;
+}
+
 /* ========== RESPONSIVE: MOBILE/TABLET ========== */
 /* Fade off on smaller screens — reduce visual noise on mobile */
 @media (max-width: 1199px) {
