@@ -1,0 +1,126 @@
+/* Section Tint Color System — Session 68 */
+/* Subtle background fades + left-border accents for page-specific wayfinding */
+
+/* ========== ARCHIVE PAGE ========== */
+body.section-archive {
+  background: linear-gradient(
+    to bottom,
+    rgba(227, 191, 177, 0.15) 0%,
+    transparent 320px
+  ), #fcf9f3;
+}
+
+body.section-archive .archive-card,
+body.section-archive .thumb {
+  border-left: 3px solid #8e7164;
+  margin-left: -2px;
+}
+
+/* ========== ABOUT PAGE ========== */
+body.section-about {
+  background: linear-gradient(
+    to bottom,
+    rgba(245, 240, 235, 0.2) 0%,
+    transparent 320px
+  ), #fcf9f3;
+}
+
+body.section-about .content-block,
+body.section-about .about-section,
+body.section-about [class*="section"] {
+  border-left: 3px solid rgba(11, 11, 11, 0.15);
+  margin-left: -2px;
+  padding-left: calc(1rem + 2px);
+}
+
+body.section-about h2,
+body.section-about h3 {
+  border-left: 3px solid rgba(11, 11, 11, 0.1);
+  margin-left: -2px;
+  padding-left: calc(1rem + 2px);
+}
+
+/* ========== COLLECTIONS/SERIES PAGES ========== */
+body.section-collections {
+  background: linear-gradient(
+    to bottom,
+    rgba(200, 180, 160, 0.08) 0%,
+    transparent 320px
+  ), #fcf9f3;
+}
+
+body.section-collections .series-card,
+body.section-collections .collection-item,
+body.section-collections .theme-card {
+  border-left: 3px solid rgba(142, 113, 100, 0.3);
+  margin-left: -2px;
+}
+
+body.section-collections .grid [class*="card"],
+body.section-collections .masonry [class*="card"] {
+  border-left: 3px solid rgba(142, 113, 100, 0.2);
+  margin-left: -2px;
+}
+
+/* ========== DECADE PAGES (1970s–2020s) ========== */
+body.section-decades {
+  background: linear-gradient(
+    to bottom,
+    rgba(227, 191, 177, 0.12) 0%,
+    transparent 300px
+  ), #fdf8f8;
+}
+
+body.section-decades .decade-card,
+body.section-decades [role="article"] {
+  border-left: 3px solid rgba(142, 113, 100, 0.25);
+  margin-left: -2px;
+}
+
+/* ========== RESPONSIVE: MOBILE/TABLET ========== */
+/* Fade off on smaller screens — reduce visual noise on mobile */
+@media (max-width: 1199px) {
+  body.section-archive,
+  body.section-about,
+  body.section-collections,
+  body.section-decades {
+    background: #fcf9f3 !important;
+    background: #fdf8f8 !important;
+  }
+}
+
+/* Reduce border width on mobile to avoid clutter */
+@media (max-width: 768px) {
+  body.section-archive .archive-card,
+  body.section-archive .thumb,
+  body.section-about .content-block,
+  body.section-about .about-section,
+  body.section-collections .series-card,
+  body.section-collections .collection-item,
+  body.section-decades .decade-card,
+  body.section-decades [role="article"] {
+    border-left-width: 2px;
+    margin-left: -1px;
+  }
+}
+
+/* Fade out heading accents on very small screens */
+@media (max-width: 640px) {
+  body.section-about h2,
+  body.section-about h3 {
+    border-left: none;
+    margin-left: 0;
+    padding-left: 0;
+  }
+}
+
+/* ========== REDUCED MOTION ========== */
+@media (prefers-reduced-motion: reduce) {
+  body.section-archive,
+  body.section-about,
+  body.section-collections,
+  body.section-decades {
+    background: #fcf9f3;
+    background: #fdf8f8;
+  }
+}
