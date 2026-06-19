@@ -70,6 +70,7 @@
 /* CSS Columns layout: Natural whitespace balancing across columns
    Fills top-to-bottom, left-to-right; each column auto-balances height */
 #works-grid {
+  display: block;
   column-count: 4;
   column-gap: 0.75rem;
   padding-bottom: 60px;
