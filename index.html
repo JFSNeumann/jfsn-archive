@@ -92,10 +92,7 @@
   /* Card 1 gets more typographic weight to match its 7-col scale */
   #featured-grid > a:first-child .card-title { font-size: 17px; letter-spacing: 0.04em; }
 
-  /* Saturation overlay: grey at top, fades to full colour at bottom.
-     The mat (dominant-color blend) deepens on hover — set per card via
-     --mat / --mat-hover custom properties; background lives here so the
-     hover rule can win without !important. */
+  /* Card image container — full color, no overlay */
   .card-img {
     isolation: isolate;
     background: var(--mat, #ebe8e2);
@@ -105,23 +102,6 @@
   #featured-grid a:focus-visible .card-img,
   #featured-grid-small a:hover .card-img,
   #featured-grid-small a:focus-visible .card-img { background: var(--mat-hover, #ebe8e2); }
-  .card-img::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: #808080;
-    mix-blend-mode: saturation;
-    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 40%, transparent 100%);
-    mask-image: linear-gradient(to bottom, black 0%, black 40%, transparent 100%);
-    opacity: 1;
-    transition: opacity 0.25s ease;
-    pointer-events: none;
-    z-index: 1;
-  }
-  #featured-grid a:hover .card-img::after,
-  #featured-grid a:focus-visible .card-img::after,
-  #featured-grid-small a:hover .card-img::after,
-  #featured-grid-small a:focus-visible .card-img::after { opacity: 0; }
 
   /* Orange frame overlay (image only — .card-frame sits inside .card-img) */
   .card-frame {
