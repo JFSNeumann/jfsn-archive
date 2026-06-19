@@ -189,7 +189,7 @@
 
 .card:hover,
 .theme-card:hover,
-[class*='card']:hover,
+[class*='card']:not(.archive-card):hover,
 .quote-card:hover,
 .component:hover {
   background: linear-gradient(135deg, #fcf9f3 0%, #f5eee5 100%);
