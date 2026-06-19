@@ -10,6 +10,30 @@
   --dark-text-secondary: #a8a8a8;
   --dark-text-muted: #707070;
   --dark-border: #404040;
+  color-scheme: dark;
+}
+
+/* Override inline styles with hardcoded light colors */
+.dark [style*="color:#0B0B0B"] {
+  color: #e8e8e8 !important;
+}
+
+.dark [style*="color:#575757"] {
+  color: #b8b8b8 !important;
+}
+
+.dark [style*="color:#8e7164"] {
+  color: #a0a0a0 !important;
+}
+
+.dark [style*="background:#fcf9f3"],
+.dark [style*="background:#fff"] {
+  background-color: #242424 !important;
+}
+
+.dark [style*="border-color:#c4c7c7"],
+.dark [style*="border:#c4c7c7"] {
+  border-color: #404040 !important;
 }
 
 .dark {
