@@ -195,6 +195,10 @@ header.header-hidden{transform:translateY(-100%)}
   #mobile-menu-drawer a.drawer-stagger-3 { animation-delay: 0.15s; }
   #mobile-menu-drawer a.drawer-stagger-4 { animation-delay: 0.2s; }
 }
+/* Butterfly mark — orange default, black on hover */
+.jfsn-wordmark img{filter:brightness(0) saturate(100%) invert(61%) sepia(81%) saturate(2260%) hue-rotate(1deg) brightness(101%) contrast(103%);transition:filter 0.2s ease}
+.jfsn-wordmark:hover img{filter:none}
+@media(prefers-reduced-motion:reduce){.jfsn-wordmark img{transition:none}}
 </style>
 <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-deep-ink focus:text-bone-white focus:font-label-caps focus:text-label-caps">Skip to content</a>
 <header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16">
