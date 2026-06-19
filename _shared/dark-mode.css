@@ -305,6 +305,34 @@
   border-color: #404040;
 }
 
+/* ========== START-HERE PAGE SPECIFIC ========== */
+.dark .prose p {
+  color: #d0d0d0 !important;
+}
+
+.dark .section-label {
+  color: #a8a8a8 !important;
+}
+
+/* Character illustration — invert for dark mode */
+.dark .sidebar-portrait img,
+.dark img[src*="portrait"],
+.dark img[src*="character"],
+.dark img[src*="figure"] {
+  filter: invert(1) hue-rotate(180deg) brightness(0.95);
+}
+
+/* Quote cards in dark mode */
+.dark .quote-card {
+  background-color: #242424 !important;
+  border-color: #505050 !important;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.dark .quote-card:hover {
+  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.6);
+}
+
 /* ========== MISC ELEMENTS ========== */
 .dark .breadcrumb {
   color: #b8b8b8;
