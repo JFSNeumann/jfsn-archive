@@ -50,16 +50,15 @@
     position: relative;
     padding: 0 20px;
   }
-  /* Featured grid layout — editorial top 3 cards */
+  /* Featured grid layout — uniform like archive.html */
   @media (min-width: 768px) {
-    /* min-height reserves the editorial grid's footprint (6×80px rows + 5×32px
-       gaps) so content below doesn't shift when the cards populate */
-    #featured-grid { grid-auto-rows: 80px; min-height: 640px; }
-    #featured-grid > a:nth-child(1) { grid-column: span 7; grid-row: span 6; display: flex; flex-direction: column; }
-    #featured-grid > a:nth-child(2) { grid-column: span 5; grid-row: span 3; display: flex; flex-direction: column; }
-    #featured-grid > a:nth-child(3) { grid-column: span 5; grid-row: span 3; display: flex; flex-direction: column; }
-    #featured-grid > a > .card-img { flex: 1; aspect-ratio: auto; }
-    #featured-grid > a > .card-meta { flex-shrink: 0; }
+    #featured-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+  @media (max-width: 1024px) {
+    #featured-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 600px) {
+    #featured-grid { grid-template-columns: repeat(2, 1fr); }
   }
   /* Text selection — orange highlight site-wide */
   ::selection { background: #FF6600; color: #fff; }
