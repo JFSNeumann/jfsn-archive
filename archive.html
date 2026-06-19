@@ -152,9 +152,9 @@
         .filter-chip-clear:hover { color: #FF6600; }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        /* Archive card shadow only on image, never on text */
+        /* Archive card - no shadows, only scale and brightness on hover */
         @media (min-width: 640px) {
-          .archive-card-img { box-shadow: 0 0 20px rgba(0,0,0,0.05); }
+          .archive-card-img { box-shadow: none; }
         }
         /* Archive card micro-interactions */
         .archive-card { cursor: zoom-in; }
@@ -251,7 +251,6 @@
         .archive-card:focus-visible .archive-card-img {
           outline-color: #e05900;
           transform: scale(1.03);
-          box-shadow: 0 8px 32px rgba(0,0,0,0.12);
           filter: brightness(1.04);
         }
         @media (prefers-reduced-motion: reduce) {
