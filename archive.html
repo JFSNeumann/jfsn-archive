@@ -133,12 +133,21 @@
           .archive-card-img { box-shadow: 0 0 20px rgba(0,0,0,0.05); }
         }
         /* Archive card micro-interactions */
-        .archive-card { cursor: zoom-in; }
+        .archive-card {
+          cursor: zoom-in;
+          background: transparent !important;
+        }
+        .archive-card:hover,
+        .archive-card:focus-visible {
+          background: transparent !important;
+        }
         .archive-card h4 { transition: color 0.2s ease; }
         .archive-card:hover h4, .archive-card:focus-visible h4 { color: #e05900; }
-        /* Remove any background on text area hover */
-        .archive-card:hover > div:last-child,
-        .archive-card:focus-visible > div:last-child {
+        .archive-card > * {
+          background: transparent !important;
+        }
+        .archive-card:hover > *,
+        .archive-card:focus-visible > * {
           background: transparent !important;
         }
         /* Grid stagger fade-in on filter change (Phase 4.2) */
