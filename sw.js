@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1781889924'; // Session 73: Tightened grid masonry - reduced row heights for denser packing
+const CACHE_V  = 'jfsn-1781890125'; // Session 73: Archive columns layout matching collaboration.html
 const PRECACHE = [
   '/',
   '/index.html',
