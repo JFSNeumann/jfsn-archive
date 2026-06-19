@@ -152,14 +152,27 @@
         .filter-chip-clear:hover { color: #FF6600; }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        /* Archive card shadow only */
+        /* Archive card shadow only on image, never on text */
         @media (min-width: 640px) {
           .archive-card-img { box-shadow: 0 0 20px rgba(0,0,0,0.05); }
         }
         /* Archive card micro-interactions */
         .archive-card { cursor: zoom-in; }
-        .archive-card h4 { transition: color 0.2s ease; }
-        .archive-card:hover h4, .archive-card:focus-visible h4 { color: #e05900; }
+        .archive-card h4 {
+          transition: color 0.2s ease;
+          box-shadow: none;
+        }
+        .archive-card h4:hover,
+        .archive-card:hover h4,
+        .archive-card:focus-visible h4 {
+          color: #e05900;
+          box-shadow: none;
+        }
+        /* Text wrapper has no shadow */
+        .archive-card .space-y-1 {
+          box-shadow: none;
+          text-shadow: none;
+        }
         /* Grid stagger fade-in on filter change (Phase 4.2) */
         .thumb {
           --delay: 0s;
