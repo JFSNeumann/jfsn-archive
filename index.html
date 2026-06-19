@@ -92,7 +92,10 @@
   /* Card 1 gets more typographic weight to match its 7-col scale */
   #featured-grid > a:first-child .card-title { font-size: 17px; letter-spacing: 0.04em; }
 
-  /* Card image container — full color, no overlay */
+  /* Saturation overlay: grey at top, fades to full colour at bottom.
+     The mat (dominant-color blend) deepens on hover — set per card via
+     --mat / --mat-hover custom properties; background lives here so the
+     hover rule can win without !important. */
   .card-img {
     isolation: isolate;
     background: var(--mat, #ebe8e2);
@@ -102,6 +105,23 @@
   #featured-grid a:focus-visible .card-img,
   #featured-grid-small a:hover .card-img,
   #featured-grid-small a:focus-visible .card-img { background: var(--mat-hover, #ebe8e2); }
+  .card-img::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #808080;
+    mix-blend-mode: saturation;
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 40%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 0%, black 40%, transparent 100%);
+    opacity: 1;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+    z-index: 1;
+  }
+  #featured-grid a:hover .card-img::after,
+  #featured-grid a:focus-visible .card-img::after,
+  #featured-grid-small a:hover .card-img::after,
+  #featured-grid-small a:focus-visible .card-img::after { opacity: 0; }
 
   /* Orange frame overlay (image only — .card-frame sits inside .card-img) */
   .card-frame {
@@ -174,50 +194,9 @@
     #folio-rail, .folio-rail-dot span[aria-hidden] { transition: none; }
   }
 
-  /* Featured grid masonry — CSS Columns for natural height balancing */
-  #featured-grid-small {
-    display: block !important;
-    columns: 4;
-    column-gap: 0.75rem;
-  }
-  #featured-grid-small > a {
-    display: block;
-    margin-bottom: 0.75rem;
-    break-inside: avoid;
-  }
-  /* Featured-grid-small: no aspect ratio, transparent bg, tight spacing like archive.html */
-  #featured-grid-small .card-img {
-    background: transparent !important;
-    display: flex !important;
-    flex-direction: column !important;
-  }
-  #featured-grid-small img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-  #featured-grid-small .card-caption {
-    display: none;
-  }
-  #featured-grid-small .card-frame {
-    display: none;
-  }
-  #featured-grid-small .card-meta {
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  /* Tablet: 3-col featured grid masonry */
+  /* Tablet: 3-col featured grid (4-col starts at 1024px) */
   @media (min-width: 768px) and (max-width: 1023px) {
-    #featured-grid-small { columns: 3; }
-  }
-
-  /* Mobile: single column */
-  @media (max-width: 767px) {
-    #featured-grid-small {
-      display: block !important;
-      columns: 1;
-    }
+    #featured-grid-small { grid-template-columns: repeat(3, 1fr) !important; }
   }
 
   /* ── Chromatic River band — fifty years of color in one line ── */
@@ -1764,11 +1743,11 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
               <span style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10px;letter-spacing:0.06em;color:rgba(255,255,255,0.65);">${w.year} · ${medium}</span>
             </div>
             <div class="card-frame" aria-hidden="true"></div>
-            <div class="card-meta">
-              <div class="flex items-center justify-between">
-                <span class="card-mono" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;letter-spacing:0.04em;color:#575757;">${w.year} · ${medium}</span>
-                <span class="bracket text-orange-ink" style="font-size:10px;letter-spacing:0.08em;">[ View &rarr; ]</span>
-              </div>
+          </div>
+          <div class="card-meta mt-3 pb-4">
+            <div class="flex items-center justify-between">
+              <span class="card-mono" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;letter-spacing:0.04em;color:#575757;">${w.year} · ${medium}</span>
+              <span class="bracket text-orange-ink" style="font-size:10px;letter-spacing:0.08em;">[ View &rarr; ]</span>
             </div>
           </div>`;
         if (i < 3) {
