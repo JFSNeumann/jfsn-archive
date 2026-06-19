@@ -185,9 +185,9 @@
     margin-bottom: 0.75rem;
     break-inside: avoid;
   }
-  /* Remove fixed aspect ratio to match natural image proportions */
+  /* Keep aspect ratio for featured-grid-small but use 1:1.2 (shorter than 3:4) */
   #featured-grid-small .card-img {
-    aspect-ratio: auto !important;
+    aspect-ratio: 1 / 1.2 !important;
   }
 
   /* Tablet: 3-col featured grid masonry */
