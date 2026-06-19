@@ -1,6 +1,21 @@
 /* Section Tint Color System — Session 68 */
 /* Subtle background fades + left-border accents for page-specific wayfinding */
 
+/* ========== PAGE LOAD ANIMATION ========== */
+@keyframes tint-fade-in {
+  from {
+    opacity: 0;
+    background: #fcf9f3;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+body[class*="section-"] {
+  animation: tint-fade-in 0.8s ease-out forwards;
+}
+
 /* ========== ARCHIVE PAGE ========== */
 body.section-archive {
   background: linear-gradient(
@@ -316,8 +331,9 @@ body.section-collaboration [class*="thumb"] {
   margin-left: -2px;
 }
 
-/* ========== PAGE TRANSITIONS ========== */
-body { transition: background 0.6s ease-out; }
+/* ========== PAGE TRANSITIONS (Navigation) ========== */
+/* After animation, enable transition for navigation */
+body[class*="section-"] { transition: background 0.6s ease-out; }
 
 /* ========== EXTENDED HOVER STATES ========== */
 /* All grid cards - hover with accent border highlight */
@@ -404,12 +420,10 @@ body.section-sculpture #mobile-menu-drawer {
 
 /* ========== REDUCED MOTION ========== */
 @media (prefers-reduced-motion: reduce) {
-  body.section-archive,
-  body.section-about,
-  body.section-collections,
-  body.section-decades {
+  body[class*="section-"] {
+    animation: none;
+    transition: none;
     background: #fcf9f3;
-    background: #fdf8f8;
   }
 }
 
