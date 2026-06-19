@@ -187,7 +187,7 @@
             background-color: #ebe8e2;
           }
         }
-        /* Image wrapper: outline + saturation overlay */
+        /* Image wrapper: outline only */
         .archive-card-img {
           position: relative;
           overflow: hidden;
@@ -198,21 +198,6 @@
         }
         .archive-card:hover .archive-card-img,
         .archive-card:focus-visible .archive-card-img { outline-color: #e05900; }
-        .archive-card-img::after {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: #808080;
-          mix-blend-mode: saturation;
-          -webkit-mask-image: linear-gradient(to bottom, black 0%, black 40%, transparent 100%);
-          mask-image: linear-gradient(to bottom, black 0%, black 40%, transparent 100%);
-          opacity: 1;
-          transition: opacity 0.3s ease;
-          pointer-events: none;
-          z-index: 1;
-        }
-        .archive-card:hover .archive-card-img::after,
-        .archive-card:focus-visible .archive-card-img::after { opacity: 0; }
         @media (prefers-reduced-motion: reduce) {
           .archive-card h4 { transition: none; }
           .archive-card-img { transition: none; }
