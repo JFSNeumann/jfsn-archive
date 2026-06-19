@@ -64,14 +64,16 @@
             outline: 2px solid #FF6600;
             outline-offset: 2px;
         }
-        /* Filter sidebar alignment: flush left + perfect vertical centering */
+        /* Filter sidebar alignment: checkbox (14px) + text baseline perfect match */
         #filter-medium label,
         #filter-decade label,
         #filter-series label,
         #filter-orientation label {
             margin: 0;
             padding: 0;
+            display: flex;
             align-items: center;
+            gap: 8px;
         }
         #filter-medium .custom-checkbox,
         #filter-decade .custom-checkbox,
@@ -80,6 +82,8 @@
             margin: 0;
             padding: 0;
             flex-shrink: 0;
+            width: 14px;
+            height: 14px;
         }
         #filter-medium label > span,
         #filter-decade label > span,
@@ -87,7 +91,8 @@
         #filter-orientation label > span {
             margin: 0;
             padding: 0;
-            line-height: 1;
+            line-height: 14px;
+            display: block;
         }
         #sort-select {
             transition: background-color 0.2s ease, transform 0.2s ease;
