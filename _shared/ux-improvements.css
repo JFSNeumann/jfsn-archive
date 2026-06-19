@@ -89,25 +89,6 @@
   }
 }
 
-/* Featured/favorite items are larger (2x2) */
-.archive-card[data-favorite="true"] {
-  grid-column: span 1;
-}
-
-/* Pattern: every 13th item is 2x2 (creates visual rhythm) */
-@media (min-width: 641px) {
-  #works-grid > :nth-child(13n) {
-    grid-column: span 2;
-    grid-row: span 2;
-  }
-}
-
-@media (min-width: 1024px) {
-  #works-grid > :nth-child(17n + 15) {
-    grid-column: span 2;
-    grid-row: span 2;
-  }
-}
 
 /* ═══════════════════════════════════════════════════════════
    #3: Enhanced Card Shadows & Borders
