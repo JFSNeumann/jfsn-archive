@@ -318,6 +318,82 @@ button:hover:not(:disabled) svg {
   button:hover:not(:disabled) { transform: none; }
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* THEME, TAG & KEYWORD LINK REFINEMENTS */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Metadata theme/motif/keyword links (artwork pages, series pages) */
+a.underline,
+a[class*="underline"],
+.metadata a,
+.info-row a {
+  transition: all 0.2s ease;
+  position: relative;
+  display: inline-block;
+}
+
+a.underline:hover,
+a[class*="underline"]:hover,
+.metadata a:hover,
+.info-row a:hover {
+  transform: translateY(-1px);
+  text-shadow: 0 2px 4px rgba(255, 102, 0, 0.15);
+}
+
+a.underline-offset-4 {
+  text-decoration-thickness: 1px;
+  transition: all 0.2s ease;
+}
+
+a.underline-offset-4:hover {
+  text-decoration-thickness: 2px;
+  text-decoration-color: #e05900;
+}
+
+/* Series/theme tag links */
+a[href*="series.html"],
+a[href*="theme="],
+a[href*="guernica"],
+a[href*="targets"],
+a[href*="crosses"] {
+  transition: all 0.2s ease;
+}
+
+a[href*="series.html"]:hover,
+a[href*="theme="]:hover,
+a[href*="guernica"]:hover,
+a[href*="targets"]:hover,
+a[href*="crosses"]:hover {
+  padding: 0 2px;
+  background: rgba(255, 102, 0, 0.05);
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a.underline,
+  a[class*="underline"],
+  .metadata a,
+  .info-row a,
+  a[href*="series.html"],
+  a[href*="theme="],
+  a[href*="guernica"],
+  a[href*="targets"],
+  a[href*="crosses"] {
+    transition: none;
+  }
+  a.underline:hover,
+  a[class*="underline"]:hover,
+  .metadata a:hover,
+  .info-row a:hover,
+  a[href*="series.html"]:hover,
+  a[href*="theme="]:hover,
+  a[href*="guernica"]:hover,
+  a[href*="targets"]:hover,
+  a[href*="crosses"]:hover {
+    transform: none;
+  }
+}
+
 /* Keyboard users benefit from all enhancements */
 @media (prefers-reduced-motion: reduce) {
   * {
