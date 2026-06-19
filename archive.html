@@ -136,6 +136,11 @@
         .archive-card { cursor: zoom-in; }
         .archive-card h4 { transition: color 0.2s ease; }
         .archive-card:hover h4, .archive-card:focus-visible h4 { color: #e05900; }
+        /* Remove any background on text area hover */
+        .archive-card:hover > div:last-child,
+        .archive-card:focus-visible > div:last-child {
+          background: transparent !important;
+        }
         /* Grid stagger fade-in on filter change (Phase 4.2) */
         .thumb {
           --delay: 0s;
