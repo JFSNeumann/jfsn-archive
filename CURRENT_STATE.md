@@ -2,7 +2,7 @@
 **Updated:** 2026-06-17 17:32
 
 ## ✅ SESSION 47 (2026-06-16) — Decade-page artwork grid migration + index.html audio indicator (DEPLOYED)
-- **Decade pages (1970s–2020s) migrated to modern `.thumb__link` system.** All 6 pages (1,084 total thumbnails across 6 files) converted from the old `div.break-inside-avoid / div.thumb-frame / a.group.block` masonry markup to `figure.thumb / a.thumb__link / figcaption.thumb__caption` — identical to collage.html, sculpture.html, photography.html. Closes the last visual-system split on the site: decade pages now get the same saturation-overlay hover treatment (grey-at-top at rest → full color + orange outline on hover, caption title turns orange).
+- **Decade pages (1970s–2020s) migrated to modern `.thumb__link` system.** All 6 pages (1,084 total thumbnails across 6 files) converted from the old `div.break-inside-avoid / div.thumb-frame / a.group.block` masonry markup to `figure.thumb / a.thumb__link / figcaption.thumb__caption` — identical to collage.html, sculpture.html, photography.html. Decade pages display full-color thumbnails with orange outline on hover, caption title turns orange.
 - **`.medium-grid` + `.thumb` rules moved to `_shared/ui.css`** so decade pages (which load ui.css but not site.min.css) get the grid layout. Previously only defined inline in the medium-page `<style>` blocks.
 - **index.html audio indicator:** `[ Audio recording available ↓ ]` label in archival brown before the `<audio>` element in both desktop and mobile "In His Own Words" sections.
 - No CSS rebuild needed (no new Tailwind utilities). No CACHE_V bump needed (ui.css is network-first in SW).
@@ -409,7 +409,7 @@ Sessions 25–32 **deployed** to HostGator (session 32 HTML verified live 2026-0
 - Mobile jump nav: collapsible "JUMP TO SECTION ↓" bar between page header and content; chevron rotates on open; collapses on link tap; hidden on md+ (sidebar TOC handles desktop)
 
 **about.html:**
-- Portrait photo: saturation overlay treatment matching artwork thumbnails — grey-at-top at rest, full colour on hover; inline `<style>` scoped to page
+- Portrait photo: full color display; inline `<style>` scoped to page
 
 **collage.html / sculpture.html / photography.html / painting.html:**
 - "Browse with filters →" extracted from `<p>` and promoted to full-width bordered button on mobile; reverts to inline link on 768px+

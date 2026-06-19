@@ -105,26 +105,6 @@ header nav a.nav-underline-active::after {
   outline-color: #FF6600;
 }
 
-/* Saturation overlay: grey at top, fades to full colour at bottom */
-.thumb__link::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: #808080;
-  mix-blend-mode: saturation;
-  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 40%, transparent 100%);
-  mask-image: linear-gradient(to bottom, black 0%, black 40%, transparent 100%);
-  opacity: 1;
-  transition: opacity 0.25s ease;
-  pointer-events: none;
-  z-index: 1;
-  border-radius: inherit;
-}
-
-.thumb__link:hover::before,
-.thumb__link:focus-visible::before {
-  opacity: 0;
-}
 
 /* Title turns orange when hovering anywhere on the card */
 .thumb__caption a {

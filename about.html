@@ -758,9 +758,6 @@ header.header-hidden{transform:translateY(-100%)}
     <div class="md:col-span-5">
       <style>
       .about-portrait-wrap{position:relative;isolation:isolate;}
-      .about-portrait-wrap::after{content:'';position:absolute;inset:0;background:#808080;mix-blend-mode:saturation;-webkit-mask-image:linear-gradient(to bottom,black 0%,black 40%,transparent 100%);mask-image:linear-gradient(to bottom,black 0%,black 40%,transparent 100%);opacity:1;transition:opacity 0.3s ease;pointer-events:none;}
-      .about-portrait-wrap:hover::after{opacity:0;}
-      @media(prefers-reduced-motion:reduce){.about-portrait-wrap::after{transition:none;}}
       </style>
       <div class="about-portrait-card aspect-[4/5] overflow-hidden bg-surface-container about-portrait-wrap">
         <img
