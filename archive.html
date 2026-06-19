@@ -138,11 +138,15 @@
           background: transparent !important;
           background-color: transparent !important;
           text-decoration: none !important;
+          user-select: none;
+          -webkit-user-select: none;
+          -moz-user-select: none;
         }
         a.archive-card:hover {
           background: transparent !important;
           background-color: transparent !important;
           text-decoration: none !important;
+          -webkit-text-fill-color: inherit;
         }
         a.archive-card:focus-visible {
           background: transparent !important;
@@ -154,6 +158,9 @@
           background: transparent !important;
           background-color: transparent !important;
           text-decoration: none !important;
+        }
+        a.archive-card *:hover {
+          background: transparent !important;
         }
         .archive-card h4 { transition: color 0.2s ease; }
         .archive-card:hover h4, .archive-card:focus-visible h4 { color: #e05900; }
