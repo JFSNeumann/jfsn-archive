@@ -108,25 +108,6 @@
   transform: translateY(-2px);
 }
 
-/* Larger cards get more prominent shadows */
-/* Archive cards: NO box-shadows - text stays clean */
-.archive-card[data-favorite="true"],
-#works-grid > :nth-child(13n):not(:has(img[alt*="—"])),
-#works-grid > :nth-child(17n + 15) {
-  /* shadow removed */
-}
-
-.archive-card[data-favorite="true"]:hover,
-#works-grid > :nth-child(13n):hover,
-#works-grid > :nth-child(17n + 15):hover {
-  /* shadow removed */
-}
-
-/* ═══════════════════════════════════════════════════════════
-   #5: Hover Metadata Preview (DISABLED)
-   ═══════════════════════════════════════════════════════════ */
-/* Removed dark overlay - user preference for clean hover effect */
-
 /* ═══════════════════════════════════════════════════════════
    #3 (Continued): Breadcrumb Navigation (Artwork Page)
    ═══════════════════════════════════════════════════════════ */
