@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1781889600'; // Session 73: CSS Grid masonry layout - dense auto-flow + consistent row heights
+const CACHE_V  = 'jfsn-1781889924'; // Session 73: Tightened grid masonry - reduced row heights for denser packing
 const PRECACHE = [
   '/',
   '/index.html',
