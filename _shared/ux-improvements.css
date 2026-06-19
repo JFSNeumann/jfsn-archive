@@ -134,16 +134,17 @@
 }
 
 /* Larger cards get more prominent shadows */
+/* Archive cards: NO box-shadows - text stays clean */
 .archive-card[data-favorite="true"],
 #works-grid > :nth-child(13n):not(:has(img[alt*="—"])),
 #works-grid > :nth-child(17n + 15) {
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  /* shadow removed */
 }
 
 .archive-card[data-favorite="true"]:hover,
 #works-grid > :nth-child(13n):hover,
 #works-grid > :nth-child(17n + 15):hover {
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+  /* shadow removed */
 }
 
 /* ═══════════════════════════════════════════════════════════
