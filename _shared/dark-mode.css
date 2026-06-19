@@ -48,22 +48,50 @@
 
 /* ========== NAV & HEADER ========== */
 .dark header {
-  background-color: rgba(26, 26, 26, 0.85) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: rgba(26, 26, 26, 0.92) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .dark header::after {
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 0%, transparent 100%);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 0%, transparent 100%);
 }
 
 .dark nav a,
 .dark header a {
-  color: #e8e8e8;
+  color: #e8e8e8 !important;
 }
 
 .dark nav a:hover,
 .dark header a:hover {
-  color: #FF6600;
+  color: #FF6600 !important;
+}
+
+/* Mobile menu drawer */
+.dark #mobile-menu-drawer {
+  background: #1a1a1a !important;
+  border-left-color: #404040 !important;
+}
+
+.dark #mobile-menu-drawer a {
+  color: #e8e8e8 !important;
+  border-bottom-color: #404040 !important;
+}
+
+.dark #mobile-menu-drawer a:hover {
+  color: #FF6600 !important;
+}
+
+.dark #mobile-menu-drawer span {
+  color: #e8e8e8 !important;
+}
+
+.dark #mobile-menu-drawer button {
+  color: #e8e8e8 !important;
+  border-color: #404040 !important;
+}
+
+.dark #mobile-menu-drawer button:hover {
+  color: #FF6600 !important;
 }
 
 /* JFSN wordmark tooltip */
@@ -318,8 +346,10 @@
 .dark .sidebar-portrait img,
 .dark img[src*="portrait"],
 .dark img[src*="character"],
-.dark img[src*="figure"] {
-  filter: invert(1) hue-rotate(180deg) brightness(0.95);
+.dark img[src*="figure"],
+.dark img[src*="me black"],
+.dark img[alt*="Jeffrey F. S. Neumann"] {
+  filter: invert(1) hue-rotate(180deg) brightness(0.9) !important;
 }
 
 /* Quote cards in dark mode */
