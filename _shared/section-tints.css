@@ -25,12 +25,6 @@ body.section-archive {
   ), #fcf9f3;
 }
 
-body.section-archive .archive-card,
-body.section-archive .thumb {
-  border-left: 3px solid #8e7164;
-  margin-left: -2px;
-}
-
 /* ========== ABOUT PAGE ========== */
 body.section-about {
   background: linear-gradient(
