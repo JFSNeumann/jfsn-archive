@@ -337,7 +337,6 @@ a[class*="underline"]:hover,
 .metadata a:hover,
 .info-row a:hover {
   transform: translateY(-1px);
-  text-shadow: 0 2px 4px rgba(255, 102, 0, 0.15);
 }
 
 a.underline-offset-4 {
