@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1787207400'; // Session 75: Homepage full-color + masonry layout fixes
+const CACHE_V  = 'jfsn-1787208900'; // Session 75: Homepage full-color images + archive-style masonry (no mats)
 const PRECACHE = [
   '/',
   '/index.html',
