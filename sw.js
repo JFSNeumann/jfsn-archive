@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1781813099'; // Session 67: Fix skeleton loader bug - clear grid on first render
+const CACHE_V  = 'jfsn-1781874578'; // Session 70: Add section tinting + load animations to 9 pages
 const PRECACHE = [
   '/',
   '/index.html',
