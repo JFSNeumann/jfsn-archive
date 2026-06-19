@@ -181,7 +181,7 @@
 /* Apply to archive cards, theme cards, and card containers */
 .card,
 .theme-card,
-[class*='card'],
+[class*='card']:not(.archive-card),
 .quote-card,
 .component {
   transition: background 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
