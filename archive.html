@@ -36,9 +36,18 @@
             position: relative;
             cursor: pointer;
             flex-shrink: 0;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+        .custom-checkbox:hover {
+            background-color: rgba(255, 102, 0, 0.08);
+            border-color: #FF6600;
         }
         .custom-checkbox:checked {
             background-color: #000000;
+            border-color: #000000;
+        }
+        .custom-checkbox:checked:hover {
+            background-color: #1a1a1a;
         }
         .custom-checkbox:checked::after {
             content: '';
@@ -54,6 +63,13 @@
         .custom-checkbox:focus-visible {
             outline: 2px solid #FF6600;
             outline-offset: 2px;
+        }
+        #sort-select {
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+        #sort-select:hover {
+            background-color: rgba(255, 102, 0, 0.05);
+            transform: scale(1.01);
         }
         #sort-select:focus-visible {
             outline: 2px solid #FF6600;
@@ -116,8 +132,16 @@
           display: flex; align-items: center;
           position: relative;
           z-index: 1;
+          transition: color 0.2s ease, transform 0.2s ease;
         }
-        .filter-chip button:hover { color: #FF6600; }
+        .filter-chip button:hover {
+          color: #FF6600;
+          transform: rotate(5deg) scale(1.15);
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .filter-chip button { transition: color 0.2s ease; }
+          .filter-chip button:hover { transform: none; }
+        }
         .filter-chip-clear {
           font-family: Inter, sans-serif; font-size: 11px; font-weight: 500;
           letter-spacing: 0.08em; text-transform: uppercase;
@@ -143,11 +167,22 @@
           animation-delay: var(--delay);
         }
         @keyframes grid-fade-in {
-          from { opacity: 0; }
-          to { opacity: 1; }
+          from { opacity: 0; transform: translateY(2px); }
+          to { opacity: 1; transform: translateY(0); }
         }
         @media(prefers-reduced-motion:reduce){
           .thumb { animation: none; }
+        }
+        /* Result count pulse animation on filter change */
+        @keyframes count-pulse {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.08); }
+        }
+        #work-count.pulse {
+          animation: count-pulse 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @media(prefers-reduced-motion:reduce){
+          #work-count.pulse { animation: none; }
         }
         /* Empty state fade-in animation (Phase 4.7) */
         #empty-state {
@@ -1239,6 +1274,12 @@ function renderPage() {
   const total = filtered.length;
   workCount.textContent = total.toLocaleString();
   workCountLabel.textContent = total === allWorks.length ? 'CATALOGED WORKS' : 'WORKS';
+
+  // Trigger pulse animation on count update
+  workCount.classList.remove('pulse');
+  void workCount.offsetWidth; // Force reflow to restart animation
+  workCount.classList.add('pulse');
+  setTimeout(() => workCount.classList.remove('pulse'), 400);
 
   // Update result count feedback
   const resultCountFeedback = document.getElementById('result-count-feedback');
