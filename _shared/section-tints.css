@@ -77,13 +77,138 @@ body.section-decades [role="article"] {
   margin-left: -2px;
 }
 
+/* ========== MEDIUM PAGES (Collage, Sculpture, Photography, etc.) ========== */
+body.section-collage {
+  background: linear-gradient(
+    to bottom,
+    rgba(210, 185, 165, 0.12) 0%,
+    transparent 320px
+  ), #fcf9f3;
+}
+
+body.section-collage .grid [class*="card"],
+body.section-collage [class*="thumb"] {
+  border-left: 3px solid rgba(210, 185, 165, 0.4);
+  margin-left: -2px;
+}
+
+body.section-sculpture {
+  background: linear-gradient(
+    to bottom,
+    rgba(180, 170, 160, 0.1) 0%,
+    transparent 320px
+  ), #fcf9f3;
+}
+
+body.section-sculpture .grid [class*="card"],
+body.section-sculpture [class*="thumb"] {
+  border-left: 3px solid rgba(180, 170, 160, 0.35);
+  margin-left: -2px;
+}
+
+body.section-photography {
+  background: linear-gradient(
+    to bottom,
+    rgba(170, 165, 155, 0.13) 0%,
+    transparent 320px
+  ), #fcf9f3;
+}
+
+body.section-photography .grid [class*="card"],
+body.section-photography [class*="thumb"] {
+  border-left: 3px solid rgba(170, 165, 155, 0.35);
+  margin-left: -2px;
+}
+
+body.section-painting {
+  background: linear-gradient(
+    to bottom,
+    rgba(220, 200, 180, 0.1) 0%,
+    transparent 320px
+  ), #fcf9f3;
+}
+
+body.section-painting .grid [class*="card"],
+body.section-painting [class*="thumb"] {
+  border-left: 3px solid rgba(220, 200, 180, 0.3);
+  margin-left: -2px;
+}
+
+body.section-lost {
+  background: linear-gradient(
+    to bottom,
+    rgba(195, 185, 175, 0.12) 0%,
+    transparent 320px
+  ), #fcf9f3;
+}
+
+body.section-lost .grid [class*="card"],
+body.section-lost [class*="ghost-tile"] {
+  border-left: 3px solid rgba(195, 185, 175, 0.35);
+  margin-left: -2px;
+}
+
+/* ========== SERIES & THEME PAGES ========== */
+body.section-series {
+  background: linear-gradient(
+    to bottom,
+    rgba(200, 190, 180, 0.1) 0%,
+    transparent 320px
+  ), #fcf9f3;
+}
+
+body.section-series .series-card,
+body.section-series .theme-card,
+body.section-series [class*="card"] {
+  border-left: 3px solid rgba(142, 113, 100, 0.25);
+  margin-left: -2px;
+}
+
+/* ========== FAVORITES PAGE ========== */
+body.section-favorites {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 200, 150, 0.08) 0%,
+    transparent 320px
+  ), #fcf9f3;
+}
+
+body.section-favorites .grid [class*="card"],
+body.section-favorites [class*="thumb"] {
+  border-left: 3px solid rgba(255, 152, 0, 0.2);
+  margin-left: -2px;
+}
+
+/* ========== START HERE PAGE ========== */
+body.section-start {
+  background: linear-gradient(
+    to bottom,
+    rgba(220, 210, 200, 0.12) 0%,
+    transparent 320px
+  ), #fcf9f3;
+}
+
+body.section-start .content-block,
+body.section-start [class*="card"] {
+  border-left: 3px solid rgba(220, 210, 200, 0.3);
+  margin-left: -2px;
+}
+
 /* ========== RESPONSIVE: MOBILE/TABLET ========== */
 /* Fade off on smaller screens — reduce visual noise on mobile */
 @media (max-width: 1199px) {
   body.section-archive,
   body.section-about,
   body.section-collections,
-  body.section-decades {
+  body.section-decades,
+  body.section-collage,
+  body.section-sculpture,
+  body.section-photography,
+  body.section-painting,
+  body.section-lost,
+  body.section-series,
+  body.section-favorites,
+  body.section-start {
     background: #fcf9f3 !important;
     background: #fdf8f8 !important;
   }
