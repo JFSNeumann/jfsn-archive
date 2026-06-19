@@ -64,6 +64,31 @@
             outline: 2px solid #FF6600;
             outline-offset: 2px;
         }
+        /* Filter sidebar alignment: flush left + perfect vertical centering */
+        #filter-medium label,
+        #filter-decade label,
+        #filter-series label,
+        #filter-orientation label {
+            margin: 0;
+            padding: 0;
+            align-items: center;
+        }
+        #filter-medium .custom-checkbox,
+        #filter-decade .custom-checkbox,
+        #filter-series .custom-checkbox,
+        #filter-orientation .custom-checkbox {
+            margin: 0;
+            padding: 0;
+            flex-shrink: 0;
+        }
+        #filter-medium label > span,
+        #filter-decade label > span,
+        #filter-series label > span,
+        #filter-orientation label > span {
+            margin: 0;
+            padding: 0;
+            line-height: 1;
+        }
         #sort-select {
             transition: background-color 0.2s ease, transform 0.2s ease;
         }
