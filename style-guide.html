@@ -124,6 +124,80 @@
     .snippet-box pre { background: white; border: 1px solid #c4c7c7; padding: 12px; overflow-x: auto; margin: 0; font-size: 11px; line-height: 1.5; }
     .snippet-box code { font-family: ui-monospace, 'SF Mono', Menlo, monospace; }
 
+    /* ─── INTERACTIVE HERO SECTION ─── */
+    .design-hero { background: linear-gradient(135deg, #fcf9f3 0%, #f3f0ea 100%); border-bottom: 2px solid #8e7164; padding: 40px; margin: 0 0 40px; }
+    .hero-tabs { display: flex; gap: 0; border-bottom: 2px solid #8e7164; margin-bottom: 32px; }
+    .hero-tab-btn { background: transparent; border: none; padding: 16px 24px; font-size: 14px; font-weight: 600; color: #575757; cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.25s ease; text-transform: uppercase; letter-spacing: 0.04em; font-family: Inter, sans-serif; }
+    .hero-tab-btn:hover { color: #0B0B0B; }
+    .hero-tab-btn.active { color: #B84700; border-bottom-color: #B84700; }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Patterns Demo */
+    .patterns-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; }
+    .pattern-card { border: 2px solid #8e7164; padding: 20px; background: white; }
+    .pattern-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #8e7164; margin-bottom: 12px; }
+    .pattern-name { font-size: 18px; font-weight: 600; color: #0B0B0B; margin-bottom: 20px; }
+    .pattern-demo { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+    .demo-thumb { aspect-ratio: 3/4; background: #ebe8e2; border: 1px solid #c4c7c7; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px; font-size: 10px; color: #575757; position: relative; overflow: hidden; cursor: zoom-in; transition: all 0.25s ease; }
+    .demo-thumb::after { content: ''; position: absolute; inset: 0; border: 2px solid rgba(255,102,0,0); transition: border-color 0.25s ease; pointer-events: none; }
+    .demo-thumb:hover { background: #ddd; }
+    .demo-thumb:hover::after { border-color: #FF6600; }
+    .pattern-specs { font-size: 11px; color: #575757; line-height: 1.6; }
+    .pattern-specs strong { color: #0B0B0B; }
+
+    /* Colors Demo */
+    .colors-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; }
+    .color-demo { border: 1px solid #c4c7c7; overflow: hidden; cursor: pointer; transition: transform 0.2s ease; }
+    .color-demo:hover { transform: translateY(-4px); box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+    .color-sample { height: 80px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 12px; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
+    .color-info { padding: 12px; background: white; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 10px; }
+    .color-name { font-weight: 600; margin-bottom: 4px; color: #0B0B0B; }
+    .color-hex { color: #575757; }
+    .color-use { font-size: 9px; color: #8e7164; margin-top: 4px; }
+
+    /* Components Demo */
+    .components-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; }
+    .comp-demo { border: 1px solid #8e7164; padding: 24px; background: white; }
+    .comp-name { font-size: 14px; font-weight: 600; color: #0B0B0B; margin-bottom: 16px; }
+    .comp-preview { margin-bottom: 16px; padding: 16px; background: #fcf9f3; border: 1px solid #e3bfb1; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .comp-states { font-size: 11px; color: #575757; line-height: 1.6; }
+
+    /* Button Demos */
+    .btn-demo { background: #FF6600; color: white; border: 2px solid #FF6600; padding: 10px 16px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.25s ease; }
+    .btn-demo:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255,102,0,0.3); }
+    .btn-demo:focus { outline: 2px solid #0B0B0B; outline-offset: 2px; }
+
+    .btn-secondary-demo { background: transparent; color: #0B0B0B; border: 2px solid #c4c7c7; padding: 10px 16px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.25s ease; }
+    .btn-secondary-demo:hover { border-color: #FF6600; color: #FF6600; }
+    .btn-secondary-demo:focus { outline: 2px solid #FF6600; outline-offset: 2px; }
+
+    /* Link Demos */
+    .link-demo { color: #B84700; text-decoration: none; border-bottom: 1px solid #B84700; padding-bottom: 2px; cursor: pointer; transition: all 0.25s ease; }
+    .link-demo:hover { color: #FF6600; border-bottom-color: #FF6600; }
+    .link-demo:focus { outline: 2px solid #FF6600; outline-offset: 2px; }
+
+    /* Animations Demo */
+    .animations-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+    .anim-card { border: 1px solid #8e7164; padding: 20px; background: white; }
+    .anim-name { font-size: 13px; font-weight: 600; color: #0B0B0B; margin-bottom: 16px; }
+    .anim-preview { height: 120px; background: #fcf9f3; border: 1px solid #e3bfb1; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; overflow: hidden; }
+    .anim-box { width: 40px; height: 40px; background: #FF6600; border: 2px solid #8e7164; }
+    .anim-specs { font-size: 11px; color: #575757; }
+
+    @keyframes fadeInDemo { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUpDemo { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    @keyframes scaleDemo { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    .anim-preview.playing .anim-box { animation: fadeInDemo 0.6s ease forwards; }
+    .anim-preview.playing.slide .anim-box { animation: slideUpDemo 0.6s ease forwards; }
+    .anim-preview.playing.scale .anim-box { animation: scaleDemo 0.6s ease forwards; }
+
+    .anim-play-btn { background: #8e7164; color: white; border: none; padding: 8px 12px; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+    .anim-play-btn:hover { background: #FF6600; }
+
     /* Mobile Responsive */
     @media (max-width: 768px) {
       .guide-nav { display: none; }
@@ -132,6 +206,9 @@
       .section-title { font-size: 28px; }
       .color-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
       .component-grid { grid-template-columns: 1fr; }
+      .design-hero { padding: 20px; }
+      .hero-tab-btn { padding: 12px 16px; font-size: 12px; }
+      .patterns-grid { grid-template-columns: 1fr; }
     }
   </style>
   <!-- Phase 1 Enhancement Stylesheets -->
@@ -198,6 +275,280 @@
     Interactive demonstration of the JFSN Archive design system. Use the sidebar to jump to sections or search components.
   </p>
 </div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- INTERACTIVE DESIGN SYSTEM HERO                                      -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+
+<div class="design-hero">
+  <h2 style="margin: 0 0 32px; font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: #0B0B0B;">Everything You Need to Build</h2>
+
+  <!-- Tab Navigation -->
+  <div class="hero-tabs">
+    <button class="hero-tab-btn active" data-tab="patterns">Patterns</button>
+    <button class="hero-tab-btn" data-tab="colors">Colors</button>
+    <button class="hero-tab-btn" data-tab="components">Components</button>
+    <button class="hero-tab-btn" data-tab="animations">Animations</button>
+  </div>
+
+  <!-- PATTERNS TAB -->
+  <div id="patterns" class="tab-content active">
+    <div class="patterns-grid">
+      <!-- Masonry Pattern -->
+      <div class="pattern-card">
+        <div class="pattern-label">CSS Columns Masonry</div>
+        <div class="pattern-name">Natural Heights</div>
+        <div class="pattern-demo">
+          <div class="demo-thumb">Img 1</div>
+          <div class="demo-thumb">Img 2</div>
+          <div class="demo-thumb">Img 3</div>
+          <div class="demo-thumb">Img 4</div>
+        </div>
+        <div class="pattern-specs">
+          <strong>Used on:</strong> collage.html, sculpture.html, all theme pages<br>
+          <strong>Spacing:</strong> Image to caption = 0px<br>
+          <strong>Card gap:</strong> 0.75rem (12px)<br>
+          <strong>Hover:</strong> Outline #FF6600 (0.25s)<br>
+          <strong>Layout:</strong> column-count: 4, break-inside: avoid
+        </div>
+      </div>
+
+      <!-- Editorial Grid Pattern -->
+      <div class="pattern-card">
+        <div class="pattern-label">CSS Grid with Spans</div>
+        <div class="pattern-name">Editorial Control</div>
+        <div class="pattern-demo">
+          <div class="demo-thumb" style="grid-column: span 2; grid-row: span 2;">Hero (7c×6r)</div>
+          <div class="demo-thumb">Card 2</div>
+        </div>
+        <div class="pattern-specs">
+          <strong>Used on:</strong> index.html featured cards<br>
+          <strong>Top 3:</strong> Explicit row/column spans<br>
+          <strong>Grid:</strong> 12-col desktop, responsive<br>
+          <strong>Hover:</strong> Outline + background transition<br>
+          <strong>Purpose:</strong> Featured/hero presentation
+        </div>
+      </div>
+
+      <!-- Archive Pattern -->
+      <div class="pattern-card">
+        <div class="pattern-label">Dynamic JS Grid</div>
+        <div class="pattern-name">Filter & Search</div>
+        <div class="pattern-demo">
+          <div class="demo-thumb">1,084 works</div>
+          <div class="demo-thumb">Sorted</div>
+          <div class="demo-thumb">Filtered</div>
+          <div class="demo-thumb">Dynamic</div>
+        </div>
+        <div class="pattern-specs">
+          <strong>Used on:</strong> archive.html<br>
+          <strong>Grid:</strong> Tailwind responsive (2–4 cols)<br>
+          <strong>Load:</strong> JS-rendered on scroll<br>
+          <strong>Hover:</strong> Preview tooltip + outline<br>
+          <strong>State:</strong> Maintains scroll position
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COLORS TAB -->
+  <div id="colors" class="tab-content">
+    <div class="colors-grid">
+      <div class="color-demo">
+        <div class="color-sample" style="background: #0B0B0B; color: white;">Deep Ink</div>
+        <div class="color-info">
+          <div class="color-name">#0B0B0B</div>
+          <div class="color-hex">Deep Ink</div>
+          <div class="color-use">Primary text, 18:1 contrast</div>
+        </div>
+      </div>
+      <div class="color-demo">
+        <div class="color-sample" style="background: #575757; color: white;">Archive Gray</div>
+        <div class="color-info">
+          <div class="color-name">#575757</div>
+          <div class="color-hex">Archive Gray</div>
+          <div class="color-use">Secondary text, 7.2:1</div>
+        </div>
+      </div>
+      <div class="color-demo">
+        <div class="color-sample" style="background: #B84700; color: white;">Orange Ink</div>
+        <div class="color-info">
+          <div class="color-name">#B84700</div>
+          <div class="color-hex">Orange Ink</div>
+          <div class="color-use">Persistent text, 5.07:1 AA</div>
+        </div>
+      </div>
+      <div class="color-demo">
+        <div class="color-sample" style="background: #FF6600; color: white;">International Orange</div>
+        <div class="color-info">
+          <div class="color-name">#FF6600</div>
+          <div class="color-hex">Int. Orange</div>
+          <div class="color-use">Hover states, 6.7:1 on dark</div>
+        </div>
+      </div>
+      <div class="color-demo">
+        <div class="color-sample" style="background: #8e7164; color: white;">Archival Outline</div>
+        <div class="color-info">
+          <div class="color-name">#8e7164</div>
+          <div class="color-hex">Warm Brown</div>
+          <div class="color-use">Borders, cards, 6.5:1</div>
+        </div>
+      </div>
+      <div class="color-demo">
+        <div class="color-sample" style="background: #fcf9f3; color: #0B0B0B; border: 1px solid #c4c7c7;">Bone White</div>
+        <div class="color-info">
+          <div class="color-name">#fcf9f3</div>
+          <div class="color-hex">Bone White</div>
+          <div class="color-use">Page background</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPONENTS TAB -->
+  <div id="components" class="tab-content">
+    <div class="components-grid">
+      <div class="comp-demo">
+        <div class="comp-name">Primary Button</div>
+        <div class="comp-preview">
+          <button class="btn-demo">Explore</button>
+          <button class="btn-demo" style="opacity: 0.9;">Hover</button>
+          <button class="btn-demo" style="outline: 2px solid #0B0B0B; outline-offset: 2px;">Focus</button>
+        </div>
+        <div class="comp-states">
+          <strong>Fill:</strong> #FF6600<br>
+          <strong>Text:</strong> White, 600 weight<br>
+          <strong>Hover:</strong> opacity 0.9, translateY(-2px)<br>
+          <strong>Focus:</strong> 2px outline #0B0B0B
+        </div>
+      </div>
+
+      <div class="comp-demo">
+        <div class="comp-name">Secondary Button</div>
+        <div class="comp-preview">
+          <button class="btn-secondary-demo">Browse</button>
+          <button class="btn-secondary-demo" style="border-color: #FF6600; color: #FF6600;">Hover</button>
+          <button class="btn-secondary-demo" style="outline: 2px solid #FF6600; outline-offset: 2px;">Focus</button>
+        </div>
+        <div class="comp-states">
+          <strong>Border:</strong> #c4c7c7<br>
+          <strong>Hover:</strong> #FF6600<br>
+          <strong>Focus:</strong> 2px outline #FF6600<br>
+          <strong>Transition:</strong> 0.25s ease
+        </div>
+      </div>
+
+      <div class="comp-demo">
+        <div class="comp-name">Link (Bracket)</div>
+        <div class="comp-preview">
+          <a class="link-demo">[ View → ]</a><br>
+          <a class="link-demo" style="color: #FF6600; border-bottom-color: #FF6600;">[ Hover ]</a>
+        </div>
+        <div class="comp-states">
+          <strong>Text:</strong> #B84700 (orange-ink)<br>
+          <strong>Border:</strong> Bottom 1px<br>
+          <strong>Hover:</strong> #FF6600<br>
+          <strong>Focus:</strong> 2px outline, 2px offset
+        </div>
+      </div>
+
+      <div class="comp-demo">
+        <div class="comp-name">Image Card Hover</div>
+        <div class="comp-preview" style="flex-direction: column;">
+          <div style="width: 100%; height: 80px; background: #ebe8e2; border: 2px solid #c4c7c7; position: relative; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #575757;">Image</div>
+          <div style="font-size: 11px; color: #575757; text-align: center; margin-top: 6px;">Hover: outline #FF6600</div>
+        </div>
+        <div class="comp-states">
+          <strong>Border:</strong> 2px solid rgba(255,102,0,0)<br>
+          <strong>On Hover:</strong> #FF6600<br>
+          <strong>Duration:</strong> 0.25s ease<br>
+          <strong>Cursor:</strong> zoom-in
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ANIMATIONS TAB -->
+  <div id="animations" class="tab-content">
+    <div class="animations-grid">
+      <div class="anim-card">
+        <div class="anim-name">Fade In</div>
+        <div class="anim-preview" id="fadePreview">
+          <div class="anim-box"></div>
+        </div>
+        <button class="anim-play-btn" onclick="playAnimation('fadePreview', 'fade')">Play</button>
+        <div class="anim-specs">
+          Opacity 0 → 1<br>
+          Duration: 0.6s<br>
+          Easing: ease
+        </div>
+      </div>
+
+      <div class="anim-card">
+        <div class="anim-name">Slide Up</div>
+        <div class="anim-preview" id="slidePreview">
+          <div class="anim-box"></div>
+        </div>
+        <button class="anim-play-btn" onclick="playAnimation('slidePreview', 'slide')">Play</button>
+        <div class="anim-specs">
+          TranslateY 20px → 0<br>
+          Duration: 0.6s<br>
+          + fade in
+        </div>
+      </div>
+
+      <div class="anim-card">
+        <div class="anim-name">Scale</div>
+        <div class="anim-preview" id="scalePreview">
+          <div class="anim-box"></div>
+        </div>
+        <button class="anim-play-btn" onclick="playAnimation('scalePreview', 'scale')">Play</button>
+        <div class="anim-specs">
+          Scale 0.8 → 1<br>
+          Duration: 0.6s<br>
+          + fade in
+        </div>
+      </div>
+
+      <div class="anim-card">
+        <div class="anim-name">Stagger</div>
+        <div class="anim-preview" style="flex-wrap: wrap; gap: 6px;">
+          <div class="anim-box" style="animation: fadeInDemo 0.6s ease 0s forwards;"></div>
+          <div class="anim-box" style="animation: fadeInDemo 0.6s ease 0.05s forwards;"></div>
+          <div class="anim-box" style="animation: fadeInDemo 0.6s ease 0.1s forwards;"></div>
+        </div>
+        <div class="anim-specs" style="margin-top: 8px;">
+          Delay: 0s, 0.05s, 0.1s<br>
+          Used on: grids, cards<br>
+          Respects: prefers-reduced-motion
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Tab switching
+  document.querySelectorAll('.hero-tab-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      document.querySelectorAll('.hero-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      e.target.classList.add('active');
+      const tabName = e.target.getAttribute('data-tab');
+      document.getElementById(tabName).classList.add('active');
+    });
+  });
+
+  // Animation player
+  window.playAnimation = function(elementId, animType) {
+    const preview = document.getElementById(elementId);
+    preview.classList.remove('playing', 'fade', 'slide', 'scale');
+    // Trigger reflow to restart animation
+    void preview.offsetWidth;
+    preview.classList.add('playing', animType);
+    setTimeout(() => preview.classList.remove('playing', animType), 600);
+  };
+</script>
 
 <!-- QUICK START -->
 <div class="guide-section" id="quick-start">
