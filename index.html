@@ -185,10 +185,22 @@
     margin-bottom: 0.75rem;
     break-inside: avoid;
   }
-  /* Featured-grid-small: no colored backgrounds, tight spacing like archive.html */
+  /* Featured-grid-small: no aspect ratio, transparent bg, tight spacing like archive.html */
   #featured-grid-small .card-img {
-    aspect-ratio: 2 / 3 !important;
     background: transparent !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  #featured-grid-small img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  #featured-grid-small .card-caption {
+    display: none;
+  }
+  #featured-grid-small .card-frame {
+    display: none;
   }
   #featured-grid-small .card-meta {
     margin: 0 !important;
