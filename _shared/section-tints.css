@@ -316,6 +316,47 @@ body.section-collaboration [class*="thumb"] {
   margin-left: -2px;
 }
 
+/* ========== PAGE TRANSITIONS ========== */
+body { transition: background 0.6s ease-out; }
+
+/* ========== EXTENDED HOVER STATES ========== */
+/* All grid cards - hover with accent border highlight */
+.grid [class*="card"]:hover,
+.grid [class*="thumb"]:hover,
+[class*="card"]:hover {
+  border-left-color: currentColor;
+  opacity: 0.95;
+}
+
+/* ========== BREADCRUMB COLORING ========== */
+.breadcrumb, [class*="breadcrumb"] {
+  color: inherit;
+}
+.breadcrumb a, [class*="breadcrumb"] a {
+  color: #B84700;
+  transition: color 0.2s ease;
+}
+.breadcrumb a:hover, [class*="breadcrumb"] a:hover {
+  color: #FF6600;
+}
+
+/* ========== MOBILE NAV DRAWER TINTING ========== */
+#mobile-menu-drawer {
+  background: linear-gradient(to bottom, rgba(252, 249, 243, 0.98) 0%, #fcf9f3 80%);
+}
+body.section-archive #mobile-menu-drawer {
+  background: linear-gradient(to bottom, rgba(227, 191, 177, 0.08) 0%, #fcf9f3 80%);
+}
+body.section-about #mobile-menu-drawer {
+  background: linear-gradient(to bottom, rgba(245, 240, 235, 0.12) 0%, #fcf9f3 80%);
+}
+body.section-collage #mobile-menu-drawer {
+  background: linear-gradient(to bottom, rgba(210, 185, 165, 0.08) 0%, #fcf9f3 80%);
+}
+body.section-sculpture #mobile-menu-drawer {
+  background: linear-gradient(to bottom, rgba(180, 170, 160, 0.08) 0%, #fcf9f3 80%);
+}
+
 /* ========== RESPONSIVE: MOBILE/TABLET ========== */
 /* Fade off on smaller screens — reduce visual noise on mobile */
 @media (max-width: 1199px) {
@@ -369,5 +410,21 @@ body.section-collaboration [class*="thumb"] {
   body.section-decades {
     background: #fcf9f3;
     background: #fdf8f8;
+  }
+}
+
+/* ========== DARK MODE SUPPORT ========== */
+@media (prefers-color-scheme: dark) {
+  body.section-archive {
+    background: linear-gradient(to bottom, rgba(227, 191, 177, 0.2) 0%, transparent 320px), #1a1a1a;
+  }
+  body.section-about {
+    background: linear-gradient(to bottom, rgba(245, 240, 235, 0.25) 0%, transparent 320px), #1a1a1a;
+  }
+  body.section-collage {
+    background: linear-gradient(to bottom, rgba(210, 185, 165, 0.15) 0%, transparent 320px), #1a1a1a;
+  }
+  #mobile-menu-drawer {
+    background: linear-gradient(to bottom, rgba(100, 90, 80, 0.3) 0%, #2a2a2a 80%);
   }
 }
