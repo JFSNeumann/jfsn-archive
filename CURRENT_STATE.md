@@ -1,5 +1,30 @@
 # Current State
-**Updated:** 2026-06-17 17:32
+**Updated:** 2026-06-20 14:45
+
+## ✅ SESSION 75 (2026-06-20) — Featured Works masonry layout + series-index header/overlay fixes (DEPLOYED)
+- **Selected Works section on index.html completely redesigned to match archive.html exactly.**
+  - Removed editorial grid layout (asymmetric 7-5-5 column spans) → replaced with CSS Columns masonry (4 columns responsive, 3 on tablet, 2 on mobile)
+  - Simplified card structure: removed card-caption overlay (white text on gradient), removed card-frame border overlay, removed duplicate metadata
+  - Unified with archive.html's structure: simple image (3:4 aspect ratio) + clean metadata below (title + year|medium)
+  - Hover effects match archive exactly: orange outline (#e05900), scale 1.03, brightness 1.04, 0.3s cubic-bezier timing
+  - All 30 featured works now flow naturally through columns with break-inside: avoid, eliminating white space issues
+  - Fixed .featured-grid container to use CSS display: grid with responsive column counts instead of Tailwind grid classes conflicting with CSS Columns
+- **series-index.html improvements:**
+  - Added responsive horizontal padding to header (`px-4 md:px-0`) — text no longer cramped on mobile edges
+  - Removed overlay gradient on series card images (`.series-card > div:first-child::after`) — cleaner, less visual noise
+- **Colors standardized:** Featured cards now use Material Design `#e05900` (on-tertiary-container) for all hover/focus states, matching archive.html exactly instead of site's `#FF6600`
+- **Spacing verified:** Featured card gaps (0.75rem), metadata padding (0.5rem), match archive throughout
+- **No new Tailwind utilities** — CSS-only changes
+- **CACHE_V bumped** to `jfsn-1787210200` in sw.js
+- **DEPLOYED to HostGator** via deploy-hostgator.sh; changes live at jfsn.com
+- **Commits:** 78e333e9 (featured grid setup), 3fe56b8c (color/spacing match), f38f1669 (series-index fixes)
+
+## ✅ SESSION 74 (2026-06-19) — Saturation overlay removal + archive grid masonry fix + series page cleanup (DEPLOYED)
+- **Archive grid masonry layout fixed:** CSS Columns layout was being overridden by Tailwind `display: grid`. Added `display: block` override to `#works-grid` to enable proper CSS Columns natural height balancing across 4 columns
+- **Saturation overlay removed sitewide:** Found hidden `.thumb__link::before` pseudo-element using `mix-blend-mode: saturation` with grey color, desaturating top 40% of thumbnail images. Removed entire rule — all images now display in true vibrant full color
+- **Series/theme page cleanup:** Removed hover-preview tooltips from 8 pages (targets, guernica, framed, torsos-faces, crosses, mr-snowmann, gallery-images, collaboration); removed grey background from cards
+- **Documentation updates:** 4 files updated to remove saturation overlay references
+- **CACHE_V bumped**, all changes deployed
 
 ## ✅ SESSION 47 (2026-06-16) — Decade-page artwork grid migration + index.html audio indicator (DEPLOYED)
 - **Decade pages (1970s–2020s) migrated to modern `.thumb__link` system.** All 6 pages (1,084 total thumbnails across 6 files) converted from the old `div.break-inside-avoid / div.thumb-frame / a.group.block` masonry markup to `figure.thumb / a.thumb__link / figcaption.thumb__caption` — identical to collage.html, sculpture.html, photography.html. Decade pages display full-color thumbnails with orange outline on hover, caption title turns orange.

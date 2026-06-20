@@ -130,7 +130,8 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 | `favorites.html` | 45 personally significant works from favorites.txt. Fetches catalog-lite.json. In stamp-nav.sh. |
 
 ### Interactions (live)
-- Orange outline on hover: `_shared/ui.css` `.thumb__link` — `outline-color` transition from `rgba(255,102,0,0)` → `#FF6600`. Homepage cards use `.card-frame` overlay div instead (image is `absolute inset-0` and covers CSS outline)
+- **Homepage Selected Works (index.html):** CSS Columns masonry grid (4→3→2 columns responsive). Featured cards use `.featured-card` + `.featured-card-img` + `.featured-metadata` structure — matches archive.html exactly. Hover: orange outline (#e05900, Material Design), scale(1.03), brightness(1.04). Title turns #e05900 on hover. No overlays, clean image display.
+- Orange outline on hover: `_shared/ui.css` `.thumb__link` — `outline-color` transition from `rgba(255,102,0,0)` → `#FF6600`. Archive cards + decade pages use `.archive-card-img` with `#e05900` (Material Design orange)
 - Keyboard ← / → between decade pages: `_shared/ui.js`
 - Vertical "you are here" margin label: `_shared/ui.js` + `data-page-label` on `<body>`
 - Hero heading zoom-out on scroll: `_shared/ui.js` `.decade-hero` / `.decade-heading`
@@ -143,8 +144,10 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 2. **Material Design nav** (inline on decade pages) — `font-label-lg`, uppercase, `text-on-tertiary-container` active. Used by 1970s–2020s.
 
 ### Deployment
+- `.claude/launch.json` configured with `autoPort: true` for flexible dev server assignment (no hardcoded port 9000)
 - `bash end-session.sh` — git commit, push to GitHub, rsync backup to external drive
-- Deploy to HostGator via desktop JFSN.app (not deploy.sh)
+- `bash deploy-hostgator.sh` — CLI deployment script (replaces JFSN.app, Session 70+). Reads .ftp.env, mirrors files via lftp, runs smoke test
+- Deploy to HostGator via `bash deploy-hostgator.sh` (primary) or desktop JFSN.app (legacy)
 - Deploy the **Netlify mirror** via `bash deploy-netlify.sh` (`--check` = dry safety scan → default = draft/preview → `--prod` = live). It builds a curated staging copy + refuses to deploy if any `docs/`/`.ftp.env`/`*.py`/`*.sh`/`*.pdf`/`*.md` slipped in — the guardrail against the 2026-06 credential-exposure failure mode. Netlify has NO git integration.
 - `build_catalog.py` writes the api JSON + feed.xml through `_write_stable` — they are NOT rewritten when only the `generated`/date timestamp would change. If you see those files *not* updating on a no-content build, that's intentional (kills git churn / end-session residuals), not a bug.
 - Service worker: `sw.js` — bump `CACHE_V` whenever deploy may be cached by old SW
