@@ -353,6 +353,148 @@
     background: rgba(255,102,0,0.06);
     padding-left: 28px;
   }
+
+  /* ═══════════════════════════════════════════════════════════════════════════
+     NEXT-LEVEL FEATURES: Section Nav, Parallax, Tilt, Transitions, Masonry
+     ═══════════════════════════════════════════════════════════════════════════ */
+
+  /* 1. SECTION JUMP NAVIGATION — Sticky dot rail on right side */
+  .section-nav-rail {
+    position: fixed;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 40;
+    display: none;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .section-nav-rail.visible {
+    display: flex;
+    animation: rail-fade-in 0.4s ease;
+  }
+  @keyframes rail-fade-in {
+    from { opacity: 0; transform: translateY(-50%) translateX(20px); }
+    to { opacity: 1; transform: translateY(-50%) translateX(0); }
+  }
+  .section-nav-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid #c4c7c7;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+  .section-nav-dot:hover {
+    border-color: #FF6600;
+    background: rgba(255,102,0,0.1);
+    width: 16px;
+    height: 16px;
+    margin-left: -2px;
+  }
+  .section-nav-dot.active {
+    border-color: #FF6600;
+    background: #FF6600;
+    width: 14px;
+    height: 14px;
+  }
+  .section-nav-dot::before {
+    content: '';
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #FF6600);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    margin-right: 8px;
+  }
+  .section-nav-dot:hover::before,
+  .section-nav-dot.active::before {
+    opacity: 1;
+  }
+  @media (max-width: 1200px) { .section-nav-rail { display: none !important; } }
+  @media (prefers-reduced-motion: reduce) {
+    .section-nav-rail { animation: none; }
+    .section-nav-dot { transition: none; }
+  }
+
+  /* 2. HERO PARALLAX — Background moves slower than scroll */
+  .hero-parallax-bg {
+    will-change: transform;
+    transition: transform 0.1s ease-out;
+  }
+
+  /* 3. FEATURED CARD TILT — 3D perspective on hover */
+  .featured-card {
+    perspective: 1000px;
+  }
+  .featured-card-img {
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+  @media (hover: hover) {
+    .featured-card-img {
+      transition: transform 0.6s cubic-bezier(0.23, 1, 0.320, 1), outline 0.25s ease;
+    }
+    .featured-card:hover .featured-card-img {
+      transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .featured-card-img { transition: outline 0.25s ease; }
+    .featured-card:hover .featured-card-img { transform: none; }
+  }
+
+  /* 4. PAGE TRANSITION STAGGER — Enhanced reveal animations */
+  .reveal-section {
+    opacity: 0;
+    transform: translateY(24px) blur(4px);
+    transition: opacity 0.7s cubic-bezier(0.23, 1, 0.320, 1), transform 0.7s cubic-bezier(0.23, 1, 0.320, 1);
+    will-change: opacity, transform;
+  }
+  .reveal-section.is-visible {
+    opacity: 1;
+    transform: translateY(0) blur(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.15s; }
+  .reveal-delay-2 { transition-delay: 0.3s; }
+  .reveal-delay-3 { transition-delay: 0.45s; }
+  .reveal-delay-4 { transition-delay: 0.6s; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-section {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
+  /* 5. FEATURED GRID MASONRY — CSS Grid with dense packing */
+  #featured-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.75rem;
+    grid-auto-flow: dense;
+  }
+  @media (max-width: 1024px) {
+    #featured-grid {
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+  }
+  @media (max-width: 768px) {
+    #featured-grid {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+  }
+  @media (max-width: 600px) {
+    #featured-grid {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>
   <!-- Phase 1 Enhancement Stylesheets -->
   <link rel="stylesheet" href="/_shared/lightbox.css"/>
@@ -1187,6 +1329,14 @@ header.header-hidden{transform:translateY(-100%)}
      ═══════════════════════════════════════════════ -->
 <main class="hidden md:block pt-16">
 
+  <!-- Section jump navigation rail -->
+  <nav class="section-nav-rail" id="section-nav-rail" aria-label="Page sections">
+    <button class="section-nav-dot" data-section="featured-section" aria-label="Jump to Featured Works"></button>
+    <button class="section-nav-dot" data-section="explore-section" aria-label="Jump to Explore Paths"></button>
+    <button class="section-nav-dot" data-section="wall-section-d" aria-label="Jump to The Wall"></button>
+    <button class="section-nav-dot" data-section="lost-section" aria-label="Jump to Lost Works"></button>
+  </nav>
+
   <!-- Hero -->
   <section id="hero-d" class="hero-section relative w-full overflow-hidden" style="height: 100dvh; background-color: #1a1814;">
     <div id="hero-slides-d" style="position:absolute;inset:0;width:100%;height:100%;"><!-- HERO_SLIDE0_D:START --><img class="hero-slide hero-slide-d is-active" src="artworks/full/art1010-hero.avif" alt="Untitled (Cassette Torso) · 2020 · COLLAGE — Jeffrey F. S. Neumann" style="width:100%;height:100%;object-fit:cover;object-position:center center" fetchpriority="high"><!-- HERO_SLIDE0_D:END --></div>
@@ -1457,7 +1607,7 @@ header.header-hidden{transform:translateY(-100%)}
   @media(prefers-reduced-motion:reduce){.zoom-img{transition:none}.card-caption{transition:none}}
   </style>
   <!-- How to Explore — 4 clear paths -->
-  <section class="border-b border-outline-variant px-margin-desktop" style="padding-top:80px;padding-bottom:80px;">
+  <section id="explore-section" class="border-b border-outline-variant px-margin-desktop" style="padding-top:80px;padding-bottom:80px;">
     <div class="max-w-container-max mx-auto">
       <div class="mb-12 reveal-section">
         <h2 style="font-family:'Playfair Display',serif;font-size:clamp(28px,3.4vw,44px);line-height:1.1;color:#0B0B0B;font-weight:600;margin:0;">How to Explore</h2>
@@ -1543,7 +1693,7 @@ header.header-hidden{transform:translateY(-100%)}
   </section>
 
   <!-- Featured Works -->
-  <section class="px-margin-desktop max-w-container-max mx-auto" style="padding-top:80px;padding-bottom:96px;">
+  <section id="featured-section" class="px-margin-desktop max-w-container-max mx-auto" style="padding-top:80px;padding-bottom:96px;">
     <div class="mb-8 border-b border-outline-variant pb-5 reveal-section">
       <span class="font-label-caps text-label-caps text-orange-ink" style="display:block;margin-bottom:10px;letter-spacing:0.2em;">Curated Selection</span>
       <h2 style="font-family:'Playfair Display',serif;font-size:clamp(28px,3.4vw,44px);line-height:1.1;color:#0B0B0B;font-weight:600;margin:0;">Selected Works <span style="font-family:Inter,sans-serif;font-size:14px;font-weight:400;color:#575757;letter-spacing:0;">&mdash; 30 of 1,084</span></h2>
@@ -1583,7 +1733,7 @@ header.header-hidden{transform:translateY(-100%)}
     <div class="wall-band-grid" id="wall-band-d" data-rows="4" data-tile="56"></div>
   </section>
 
-  <section style="background:#0B0B0B;" class="py-16 md:py-24 px-4 md:px-margin-desktop">
+  <section id="lost-section" style="background:#0B0B0B;" class="py-16 md:py-24 px-4 md:px-margin-desktop">
     <div class="max-w-container-max mx-auto" style="text-align:center;position:relative;z-index:1;">
       <span class="reveal-section font-label-caps text-label-caps text-international-orange" style="display:block;margin-bottom:20px;letter-spacing:0.24em;">The Void in the Record</span>
       <h2 class="reveal-section reveal-delay-1" style="font-family:'Playfair Display',serif;font-size:clamp(26px,5vw,40px);line-height:1.2;color:#F3F0EA;font-weight:600;max-width:20ch;margin:0 auto 22px;">An estimated 500&ndash;1,000 works lost to water damage.</h2>
@@ -2137,5 +2287,147 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
   <script src="/_shared/search-highlight.js" defer></script>
   <script src="/_shared/search-breadcrumb.js" defer></script>
   <script src="/_shared/image-prefetch.js" defer></script>
+
+  <script>
+  /* ═══════════════════════════════════════════════════════════════════════════
+     NEXT-LEVEL FEATURES: Section Nav, Parallax, Tilt, Transitions, Mastery Grid
+     ═══════════════════════════════════════════════════════════════════════════ */
+
+  (function() {
+    // 1. SECTION JUMP NAVIGATION
+    const rail = document.getElementById('section-nav-rail');
+    const dots = Array.from(document.querySelectorAll('.section-nav-dot'));
+    const sections = {
+      'featured-section': document.getElementById('featured-section'),
+      'explore-section': document.getElementById('explore-section'),
+      'wall-section-d': document.getElementById('wall-section-d'),
+      'lost-section': document.getElementById('lost-section')
+    };
+
+    let heroHeight = 0;
+    function updateHeroHeight() {
+      const hero = document.getElementById('hero-d');
+      if (hero) heroHeight = hero.offsetHeight;
+    }
+    updateHeroHeight();
+    window.addEventListener('resize', updateHeroHeight);
+
+    // Show/hide rail based on scroll position
+    window.addEventListener('scroll', function() {
+      const heroBottom = heroHeight + 200;
+      const shouldShow = window.scrollY > heroBottom;
+      rail.classList.toggle('visible', shouldShow);
+
+      // Highlight active section
+      let activeSection = null;
+      let closestDistance = Infinity;
+
+      dots.forEach(dot => {
+        const sectionId = dot.dataset.section;
+        const el = sections[sectionId];
+        if (!el) return;
+
+        const rect = el.getBoundingClientRect();
+        const distance = Math.abs(rect.top - 200);
+
+        if (rect.top <= 200 && distance < closestDistance) {
+          closestDistance = distance;
+          activeSection = dot;
+        }
+      });
+
+      dots.forEach(d => d.classList.remove('active'));
+      if (activeSection) activeSection.classList.add('active');
+    }, { passive: true });
+
+    // Click handlers for dots
+    dots.forEach(dot => {
+      dot.addEventListener('click', function() {
+        const sectionId = this.dataset.section;
+        const el = sections[sectionId];
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // 2. HERO PARALLAX
+    const heroBg = document.getElementById('hero-slides-d');
+    if (heroBg && window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+      window.addEventListener('scroll', function() {
+        const scrollY = window.scrollY;
+        const parallaxOffset = scrollY * 0.3;
+        heroBg.style.transform = `translateY(${parallaxOffset}px)`;
+      }, { passive: true });
+    }
+
+    // 3. FEATURED CARD TILT (3D perspective)
+    const featuredCards = document.querySelectorAll('.featured-card');
+    featuredCards.forEach(card => {
+      const img = card.querySelector('.featured-card-img');
+      if (!img || !window.matchMedia('(hover: hover)').matches) return;
+
+      card.addEventListener('mousemove', function(e) {
+        const rect = this.getBoundingClientRect();
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const x = e.clientX - rect.left - centerX;
+        const y = e.clientY - rect.top - centerY;
+
+        const rotateX = (y / centerY) * -8;
+        const rotateY = (x / centerX) * 8;
+
+        img.style.setProperty('--tilt-x', `${rotateX}deg`);
+        img.style.setProperty('--tilt-y', `${rotateY}deg`);
+      });
+
+      card.addEventListener('mouseleave', function() {
+        img.style.setProperty('--tilt-x', '0deg');
+        img.style.setProperty('--tilt-y', '0deg');
+      });
+    });
+
+    // 4. PAGE TRANSITION STAGGER (enhance existing reveal-section)
+    if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+      const revealElements = document.querySelectorAll('.reveal-section');
+      const observerOptions = {
+        threshold: 0.12,
+        rootMargin: '0px 0px -40px 0px'
+      };
+
+      const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          }
+        });
+      }, observerOptions);
+
+      revealElements.forEach(el => observer.observe(el));
+    }
+
+    // 5. FEATURED GRID MASONRY (CSS Grid is already set up via CSS)
+    // This ensures the grid displays correctly with the new grid-auto-flow: dense
+    const featuredGrid = document.getElementById('featured-grid');
+    if (featuredGrid) {
+      // The grid layout is handled entirely by CSS now, but we can add resize observer
+      // to ensure responsive behavior
+      function updateGridColumns() {
+        const width = window.innerWidth;
+        if (width > 1024) {
+          featuredGrid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(200px, 1fr))';
+        } else if (width > 768) {
+          featuredGrid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(180px, 1fr))';
+        } else if (width > 600) {
+          featuredGrid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(150px, 1fr))';
+        } else {
+          featuredGrid.style.gridTemplateColumns = '1fr';
+        }
+      }
+      updateGridColumns();
+      window.addEventListener('resize', updateGridColumns);
+    }
+  })();
+  </script>
 </body>
 </html>
