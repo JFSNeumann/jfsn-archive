@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1787300100'; // Session 76: metadata alignment + spacing fix (box aligned to image, info left padding, image bottom gap)
+const CACHE_V  = 'jfsn-1787300200'; // Session 76: hover off-white now fades to transparent toward card bottom (no hard rectangle)
 const PRECACHE = [
   '/',
   '/index.html',
