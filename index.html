@@ -747,6 +747,18 @@
   }
   .fc-modal-close:hover { background: rgba(255, 255, 255, 0.25); transform: rotate(90deg); }
 
+  /* Metadata alignment + spacing fix — box was overhanging the image 8px each
+     side (visible once the hover frosted panel was added). Align box to the
+     image, give the info comfortable left padding, and keep a clear gap below
+     the image so nothing crowds the divider/next row. */
+  @media (min-width: 640px) {
+    #featured-grid .featured-metadata {
+      margin: 0;
+      padding: 14px 10px 10px 10px;
+    }
+    #featured-grid .featured-card-img { margin-bottom: 18px; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .featured-card-img { transition: none; }
     .featured-card:hover .featured-card-img { filter: none; transform: none; }
