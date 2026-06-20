@@ -2529,10 +2529,15 @@ a svg,
   color: currentColor;
 }
 
-button:hover svg,
+button:not(.scroll-to-top):hover svg,
 a:hover svg,
 [role="button"]:hover svg {
   color: #FF6600;
+}
+
+/* Keep scroll-to-top arrow white on hover */
+.scroll-to-top:hover svg {
+  color: white;
 }
 
 button:focus-visible svg,

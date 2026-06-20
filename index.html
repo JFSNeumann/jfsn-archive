@@ -53,7 +53,8 @@
   /* Featured grid — CSS Columns masonry like .medium-grid */
   #featured-grid { column-count: 4; column-gap: 0.75rem; }
   @media (max-width: 1024px) { #featured-grid { column-count: 3; } }
-  @media (max-width: 600px) { #featured-grid { column-count: 2; } }
+  @media (max-width: 768px) { #featured-grid { column-count: 2; } }
+  @media (max-width: 600px) { #featured-grid { column-count: 1; } }
 
   /* Featured cards — match archive-card styling exactly */
   .featured-card { cursor: zoom-in; display: block; text-decoration: none; break-inside: avoid; margin: 0 0 0.75rem; }
@@ -63,8 +64,8 @@
   .featured-card:focus-visible .featured-card-img { outline-color: #e05900; transform: scale(1.03); filter: brightness(1.04); }
 
   .featured-metadata { padding-top: 0.5rem; }
-  .featured-metadata h4 { font-family: Inter, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin: 0 0 4px; color: #0B0B0B; transition: color 0.25s ease; }
-  .featured-metadata span { display: block; font-family: Inter, sans-serif; font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: #575757; }
+  .featured-metadata h4 { font-family: Inter, sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 6px; color: #0B0B0B; transition: color 0.25s ease; }
+  .featured-metadata span { display: flex; align-items: center; gap: 8px; font-family: Inter, sans-serif; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #B84700; font-weight: 500; }
 
   .featured-card:hover .featured-metadata h4,
   .featured-card:focus-visible .featured-metadata h4 { color: #e05900; }
@@ -281,13 +282,11 @@ header.header-hidden{transform:translateY(-100%)}
     </a>
   </div>
   <div class="flex items-center gap-6">
-    <nav class="hidden md:flex gap-8 items-center" aria-label="Primary">
-      <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="start-here.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Start Here</a>
-      <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="about.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">About Jeff</a>
-      <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="archive.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Explore</a>
-      <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="series-index.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Collections</a>
-      <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="api.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">For Researchers</a>
-      <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="lost.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Archive Info</a>
+    <nav class="hidden md:flex items-center" aria-label="Primary" style="gap: 32px;">
+      <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="archive.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;white-space:nowrap;">Archive</a>
+      <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="series-index.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;white-space:nowrap;">Series</a>
+      <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="about.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;white-space:nowrap;">About</a>
+      <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="lost.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;white-space:nowrap;">Lost Works</a>
     </nav>
     <!-- Dark mode toggle (Phase 2) -->
     <button class="flex items-center gap-1.5 text-orange-ink hover:text-deep-ink transition-colors" style="padding:10px;" aria-label="Toggle dark mode" id="theme-toggle-btn" title="Toggle dark mode">
@@ -317,12 +316,10 @@ header.header-hidden{transform:translateY(-100%)}
     </div>
     <!-- Links -->
     <div style="flex:1;overflow-y:auto;padding:8px 0;">
-      <a href="start-here.html" style="display:flex;align-items:center;gap:14px;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="flex-no-shrink"><path d="M3 12a9 9 0 1 0 18 0A9 9 0 0 0 3 12Z"/><path d="M12 7v5l3 2"/></svg>Start Here</a>
-      <a href="about.html"      style="display:flex;align-items:center;gap:14px;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="flex-no-shrink"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>About Jeff</a>
-      <a href="archive.html"    style="display:flex;align-items:center;gap:14px;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="flex-no-shrink"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Explore</a>
-      <a href="series-index.html" style="display:flex;align-items:center;gap:14px;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="flex-no-shrink"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>Collections</a>
-      <a href="api.html"        style="display:flex;align-items:center;gap:14px;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="flex-no-shrink"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M12 6v6m0 0v3"/></svg>For Researchers</a>
-      <a href="lost.html"       style="display:flex;align-items:center;gap:14px;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="flex-no-shrink"><rect x="3" y="3" width="18" height="18" stroke-dasharray="4 4"/></svg>Archive Info</a>
+      <a href="archive.html"    style="display:flex;align-items:center;gap:14px;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="flex-no-shrink"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Archive</a>
+      <a href="series-index.html" style="display:flex;align-items:center;gap:14px;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="flex-no-shrink"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>Series</a>
+      <a href="about.html"      style="display:flex;align-items:center;gap:14px;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="flex-no-shrink"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>About</a>
+      <a href="lost.html"       style="display:flex;align-items:center;gap:14px;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="flex-no-shrink"><rect x="3" y="3" width="18" height="18" stroke-dasharray="4 4"/></svg>Lost Works</a>
     </div>
     <!-- Portrait -->
     <div style="padding:16px 24px;">
@@ -764,7 +761,7 @@ header.header-hidden{transform:translateY(-100%)}
     <!-- Snap 1: Hero -->
     <section id="hero-m" class="hero-section folio-section justify-start p-0 overflow-hidden" style="background-color: #1a1814;">
       <div id="hero-slides-m"><!-- HERO_SLIDE0_M:START --><img class="hero-slide hero-slide-m is-active" src="artworks/full/art1010-hero-m.avif" alt="Untitled (Cassette Torso) · 2020 · COLLAGE — Jeffrey F. S. Neumann" style="object-position:center center" fetchpriority="high"><!-- HERO_SLIDE0_M:END --></div>
-      <div class="absolute inset-0 z-10 flex flex-col justify-end p-7" style="background:radial-gradient(ellipse at 30% 60%, rgba(200,80,0,0.16) 0%, transparent 60%), linear-gradient(to top, rgba(11,11,11,0.88) 0%, rgba(11,11,11,0.35) 45%, transparent 72%)">
+      <div class="absolute inset-0 z-10 flex flex-col justify-end p-7">
         <span class="font-label-caps text-label-caps" style="color:rgba(255,255,255,0.85);letter-spacing:0.26em;display:block;margin-bottom:14px;">Established 1974</span>
         <h1 style="font-family:'Playfair Display',serif;font-weight:700;font-size:38px;line-height:1.05;letter-spacing:-0.01em;color:#ffffff;margin:0;text-shadow:0 3px 20px rgba(0,0,0,0.5);">Jeffrey F. S.<br>Neumann</h1>
         <span style="display:block;font-family:'Playfair Display',serif;font-weight:600;font-size:18px;color:#ffffff;margin-top:6px;text-shadow:0 2px 12px rgba(0,0,0,0.4);">— Personal Archive</span>
@@ -951,21 +948,6 @@ header.header-hidden{transform:translateY(-100%)}
     </div>
   </section>
 
-  <!-- Mobile: Today from the archive -->
-  <section id="today-section-m" class="border-t border-outline-variant px-4" aria-label="Today from the archive" style="padding-top:18px;padding-bottom:18px;">
-    <a id="today-strip-m" href="archive.html" class="group" style="display:flex;align-items:center;gap:14px;text-decoration:none;min-height:56px;">
-      <img class="today-img" src="" alt="" width="56" height="56" loading="lazy" style="width:56px;height:56px;object-fit:cover;flex-shrink:0;border:1px solid #0B0B0B;background:#ebe8e2;">
-      <span style="flex:1;min-width:0;">
-        <span class="font-label-caps text-label-caps text-archive-gray" style="display:block;font-size:10px;">TODAY FROM THE ARCHIVE</span>
-        <span style="display:flex;align-items:baseline;gap:8px;margin-top:4px;">
-          <span class="today-title group-hover:text-international-orange transition-colors" style="font-family:'Playfair Display',serif;font-size:17px;font-weight:600;color:#0B0B0B;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
-          <span class="today-year" style="font-family:Inter,sans-serif;font-size:11px;letter-spacing:0.08em;color:#575757;flex-shrink:0;"></span>
-        </span>
-      </span>
-      <span class="font-label-caps text-label-caps text-archive-gray group-hover:text-international-orange transition-colors" style="white-space:nowrap;">VIEW &rarr;</span>
-    </a>
-  </section>
-
   <!-- Mobile: Where To Begin -->
   <style>
     .wtb-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
@@ -1061,7 +1043,6 @@ header.header-hidden{transform:translateY(-100%)}
         <a href="archive.html" class="hero-cta-ghost btn-active" style="text-shadow:0 2px 12px rgba(0,0,0,0.5);">Browse all 1,084 works</a>
       </div>
     </div>
-    <div aria-hidden="true" style="position:absolute;left:0;right:0;bottom:0;height:50%;z-index:15;pointer-events:none;background:linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 100%);"></div>
     <a id="hero-caption-d" href="artwork.html?id=art1010" aria-live="polite" class="font-label-caps text-label-caps no-underline" style="position:absolute;left:40px;bottom:26px;z-index:20;color:rgba(255,255,255,0.75);">Untitled (Cassette Torso) · 2020 · COLLAGE</a>
     <div class="font-label-caps text-label-caps" style="position:absolute;right:40px;bottom:26px;z-index:20;color:rgba(255,255,255,0.75);letter-spacing:0.1em;display:flex;gap:28px;">
       <span>1,084 Works Cataloged</span>
@@ -1128,21 +1109,11 @@ header.header-hidden{transform:translateY(-100%)}
             A personal record, not a gallery.
           </p>
           <p style="font-family:Inter,sans-serif;font-size:16px;line-height:1.75;color:#575757;">
-            Jeffrey F. S. Neumann has been making things since the early 1970s — collage, assemblage, sculpture, painting, and experiments that resist easy category. This archive documents 1,084 of those works, spanning five decades of practice in Cleveland, Ohio.
+            Jeffrey F. S. Neumann has been making things since the early 1970s — collage, assemblage, sculpture, painting, and experiments. This archive documents 1,084 of those works spanning five decades in Cleveland, Ohio. An estimated 500–1,000 earlier pieces were lost to water damage; what survived is here in full.
           </p>
           <p style="font-family:Inter,sans-serif;font-size:16px;line-height:1.75;color:#575757;margin-top:1em;">
-            The works here were made because making is the point. An estimated 500–1,000 earlier pieces were lost to water damage; what survived is here in full.
+            This is a place for family, friends, researchers, and anyone curious about a lifetime of looking and making. For more on why Jeff made things, <a href="why-i-made-things.html" class="text-orange-ink hover:underline">read his full story in his own words</a>.
           </p>
-          <p style="font-family:Inter,sans-serif;font-size:16px;line-height:1.75;color:#575757;margin-top:1em;">
-            This is a place for family, friends, and anyone curious about a lifetime of looking and making.
-          </p>
-          <div style="margin-top:40px;padding-left:24px;border-left:4px solid #FF6600;">
-            <p style="font-family:'Playfair Display',serif;font-size:22px;font-style:italic;line-height:1.5;color:#0B0B0B;margin:0 0 14px;">&ldquo;Something that still had a life left in it.&rdquo;</p>
-            <cite style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#575757;font-style:normal;">— Jeff, on his materials. <a href="why-i-made-things.html" class="text-orange-ink hover:underline" style="margin-left:8px;">[ Why I Made Things &rarr; ]</a></cite>
-            <p style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10px;letter-spacing:0.08em;color:#8e7164;text-transform:uppercase;margin:16px 0 0;">[ Audio recording available &darr; ]</p>
-            <audio controls preload="none" src="audio/who-i-am.m4a" style="width:100%;margin-top:8px;"></audio>
-            <p style="font-family:Inter,sans-serif;font-size:12px;color:#575757;margin:8px 0 0;">Jeff, in his own voice.</p>
-          </div>
         </div>
         <!-- Stat card — boxed 2×2 -->
         <div class="hidden md:block reveal-section reveal-delay-2" style="padding-top:52px;width:340px;">
@@ -1192,21 +1163,6 @@ header.header-hidden{transform:translateY(-100%)}
     obs.observe(el);
   })();
   </script>
-
-  <!-- Today from the archive — date-seeded daily pick, same work for everyone -->
-  <section id="today-section-d" class="border-b border-outline-variant px-margin-desktop" aria-label="Today from the archive">
-    <div class="max-w-container-max mx-auto">
-      <a id="today-strip-d" href="archive.html" class="group reveal-section" style="display:flex;align-items:center;gap:20px;text-decoration:none;padding:18px 0;min-height:60px;">
-        <img class="today-img" src="" alt="" width="60" height="60" loading="lazy" style="width:60px;height:60px;object-fit:cover;flex-shrink:0;border:1px solid #0B0B0B;background:#ebe8e2;">
-        <span style="flex:1;min-width:0;display:flex;align-items:baseline;gap:16px;">
-          <span class="font-label-caps text-label-caps text-archive-gray" style="white-space:nowrap;">TODAY FROM THE ARCHIVE</span>
-          <span class="today-title group-hover:text-international-orange transition-colors" style="font-family:'Playfair Display',serif;font-size:20px;font-weight:600;color:#0B0B0B;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
-          <span class="today-year" style="font-family:Inter,sans-serif;font-size:12px;letter-spacing:0.08em;color:#575757;flex-shrink:0;"></span>
-        </span>
-        <span class="font-label-caps text-label-caps text-archive-gray group-hover:text-international-orange transition-colors" style="white-space:nowrap;">VIEW TODAY'S WORK &rarr;</span>
-      </a>
-    </div>
-  </section>
 
   <!-- Explore Paths -->
   <style>
@@ -1342,63 +1298,88 @@ header.header-hidden{transform:translateY(-100%)}
   .group:hover .card-caption { opacity:1;transform:translateY(0); }
   @media(prefers-reduced-motion:reduce){.zoom-img{transition:none}.card-caption{transition:none}}
   </style>
+  <!-- How to Explore — 4 clear paths -->
   <section class="border-b border-outline-variant px-margin-desktop" style="padding-top:80px;padding-bottom:80px;">
     <div class="max-w-container-max mx-auto">
-      <div class="mb-8 reveal-section">
-        <span class="font-label-caps text-label-caps text-orange-ink" style="display:block;margin-bottom:10px;letter-spacing:0.2em;">Navigate the Studio</span>
-        <h2 style="font-family:'Playfair Display',serif;font-size:clamp(28px,3.4vw,44px);line-height:1.1;color:#0B0B0B;font-weight:600;margin:0;">Where To Begin</h2>
+      <div class="mb-12 reveal-section">
+        <h2 style="font-family:'Playfair Display',serif;font-size:clamp(28px,3.4vw,44px);line-height:1.1;color:#0B0B0B;font-weight:600;margin:0;">How to Explore</h2>
       </div>
-      <div class="bento">
-        <a href="start-here.html" class="bento-card bento-feature group reveal-section reveal-delay-1">
-          <span class="bento-iconwrap text-orange-ink"><svg class="wtb-svg" style="width:30px;height:30px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></span>
-          <div>
-            <p class="bento-h" style="font-size:34px;margin-bottom:10px;">Start Here</p>
-            <p style="font-family:Inter,sans-serif;font-size:15px;line-height:1.6;color:#575757;max-width:40ch;margin-bottom:22px;">Who Jeff is and why this archive exists — the formative years and the philosophy of making.</p>
-            <span class="bracket text-orange-ink group-hover:pl-1 transition-all duration-200">[ Explore the origins &rarr; ]</span>
-          </div>
+
+      <style>
+        .explore-card {
+          display: flex;
+          flex-direction: column;
+          padding: 32px;
+          border: 1px solid #c4c7c7;
+          background: #ffffff;
+          text-decoration: none;
+          transition: border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease;
+        }
+        .explore-card:hover {
+          border-color: #FF6600;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+          transform: translateY(-2px);
+        }
+        .explore-icon {
+          font-size: 28px;
+          margin-bottom: 16px;
+          display: block;
+        }
+        .explore-card h3 {
+          font-family: 'Playfair Display', serif;
+          font-size: 22px;
+          font-weight: 600;
+          color: #0B0B0B;
+          margin: 0 0 12px;
+          line-height: 1.2;
+        }
+        .explore-card p {
+          font-family: Inter, sans-serif;
+          font-size: 14px;
+          color: #575757;
+          line-height: 1.6;
+          margin: 0;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .explore-card {
+            transition: none;
+          }
+          .explore-card:hover {
+            transform: none;
+          }
+        }
+      </style>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px;">
+
+        <!-- All Works -->
+        <a href="archive.html" class="explore-card reveal-section reveal-delay-1">
+          <span class="explore-icon">🗂</span>
+          <h3>All 1,084 Works</h3>
+          <p>Browse everything. Filter by decade, medium, series, or theme.</p>
         </a>
-        <a href="stories.html" class="bento-card bento-dark group reveal-section reveal-delay-2">
-          <span class="bento-iconwrap text-bone-white"><svg class="wtb-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span>
-          <div>
-            <p class="bento-h" style="font-size:24px;color:#F3F0EA;margin-bottom:8px;">Stories</p>
-            <p style="font-family:Inter,sans-serif;font-size:13px;line-height:1.6;color:rgba(243,240,234,0.6);margin-bottom:16px;">Specific things that happened. In his own words.</p>
-            <span class="bracket group-hover:text-international-orange transition-colors duration-200" style="color:rgba(243,240,234,0.55);">[ Read &rarr; ]</span>
-          </div>
+
+        <!-- By Theme -->
+        <a href="series-index.html" class="explore-card reveal-section reveal-delay-2">
+          <span class="explore-icon">🎨</span>
+          <h3>Explore by Theme</h3>
+          <p>Guernica series, photography, sculpture, and eight recurring obsessions.</p>
         </a>
-        <a href="why-i-made-things.html" class="bento-card group reveal-section reveal-delay-1">
-          <span class="bento-iconwrap text-archive-gray group-hover:text-international-orange transition-colors duration-200"><svg class="wtb-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg></span>
-          <div>
-            <p class="bento-h" style="font-size:22px;margin-bottom:8px;">Why I Made Things</p>
-            <p style="font-family:Inter,sans-serif;font-size:13px;line-height:1.6;color:#575757;margin-bottom:16px;">Fifty years of making. In Jeff's own words.</p>
-            <span class="bracket text-orange-ink">[ Read &rarr; ]</span>
-          </div>
+
+        <!-- Who Jeff Is -->
+        <a href="start-here.html" class="explore-card reveal-section reveal-delay-1">
+          <span class="explore-icon">👤</span>
+          <h3>Who Jeff Is</h3>
+          <p>50 years of making, in his own words and voice.</p>
         </a>
-        <a href="favorites.html" class="bento-card group reveal-section reveal-delay-2">
-          <span class="bento-iconwrap text-archive-gray group-hover:text-international-orange transition-colors duration-200"><svg class="wtb-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
-          <div>
-            <p class="bento-h" style="font-size:22px;margin-bottom:8px;">Favorites</p>
-            <p style="font-family:Inter,sans-serif;font-size:13px;line-height:1.6;color:#575757;margin-bottom:16px;">Works Jeff has marked as personally significant.</p>
-            <span class="bracket text-orange-ink">[ View &rarr; ]</span>
-          </div>
+
+        <!-- Lost Works -->
+        <a href="lost.html" class="explore-card reveal-section reveal-delay-2">
+          <span class="explore-icon">📋</span>
+          <h3>Lost Works</h3>
+          <p>What was lost to water damage. What survived. A memory.</p>
         </a>
-        <a href="guernica.html" class="bento-card group reveal-section reveal-delay-3">
-          <span class="bento-iconwrap text-archive-gray group-hover:text-international-orange transition-colors duration-200"><svg class="wtb-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
-          <div>
-            <p class="bento-h" style="font-size:22px;margin-bottom:8px;">Guernica</p>
-            <p style="font-family:Inter,sans-serif;font-size:13px;line-height:1.6;color:#575757;margin-bottom:16px;">232 works. The longest-running series in the archive.</p>
-            <span class="bracket text-orange-ink">[ View &rarr; ]</span>
-          </div>
-        </a>
-        <a href="archive.html" class="bento-card bento-wide group reveal-section reveal-delay-3">
-          <span style="display:flex;align-items:center;gap:18px;">
-            <span class="text-archive-gray group-hover:text-international-orange transition-colors duration-200" class="flex-no-shrink"><svg class="wtb-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>
-            <span>
-              <span class="bento-h" style="font-size:22px;display:block;">Full Archive</span>
-              <span style="font-family:Inter,sans-serif;font-size:13px;line-height:1.6;color:#575757;">All 1,084 works. Filter by medium, decade, or series.</span>
-            </span>
-          </span>
-          <span class="bracket text-orange-ink group-hover:pl-1 transition-all duration-200" class="flex-no-shrink">[ Browse all &rarr; ]</span>
-        </a>
+
       </div>
     </div>
   </section>
@@ -1417,87 +1398,15 @@ header.header-hidden{transform:translateY(-100%)}
     <div class="hidden md:grid md:grid-cols-4 gap-6 mt-16" id="featured-grid-small">
       <!-- populated by JS -->
     </div>
-    <!-- Archive CTA -->
-    <div class="mt-12 pt-8 border-t border-outline-variant">
-      <a href="archive.html" class="font-label-caps text-label-caps text-archive-gray hover:text-international-orange transition-colors duration-200">[ Browse with filters &rarr; ]</a>
-    </div>
-  </section>
-
-  <!-- Phase 4: Curated Collections —探索by Theme ————————————————————————————— -->
-  <section id="curated-collections-d" class="mt-20 md:mt-32 border-t border-outline-variant pt-16">
-    <div class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
-      <div class="mb-12">
-        <span class="font-label-caps text-label-caps text-orange-ink" style="display:block;margin-bottom:10px;letter-spacing:0.2em;">Explore by Theme</span>
-        <h2 style="font-family:'Playfair Display',serif;font-size:clamp(26px,3.2vw,42px);line-height:1.1;color:#0B0B0B;font-weight:600;margin:0;">Recurring Obsessions <span style="font-family:Inter,sans-serif;font-size:13px;font-weight:400;color:#575757;letter-spacing:0;">— five decades of motifs</span></h2>
+    <!-- Next Steps CTA -->
+    <div class="mt-16 pt-12 border-t border-outline-variant reveal-section">
+      <h3 style="font-family:Inter,sans-serif;font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#0B0B0B;margin:0 0 16px;">Want to explore further?</h3>
+      <div style="display:flex;gap:24px;flex-wrap:wrap;">
+        <a href="archive.html" style="font-family:Inter,sans-serif;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;padding:10px 0;border-bottom:1px solid #c4c7c7;transition:border-color 0.2s ease,color 0.2s ease;text-decoration:none;" onmouseover="this.style.borderColor='#FF6600';this.style.color='#FF6600';" onmouseout="this.style.borderColor='#c4c7c7';this.style.color='#0B0B0B';">All Works (1,084)</a>
+        <a href="1970s.html" style="font-family:Inter,sans-serif;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;padding:10px 0;border-bottom:1px solid #c4c7c7;transition:border-color 0.2s ease,color 0.2s ease;text-decoration:none;" onmouseover="this.style.borderColor='#FF6600';this.style.color='#FF6600';" onmouseout="this.style.borderColor='#c4c7c7';this.style.color='#0B0B0B';">By Decade</a>
+        <a href="series-index.html" style="font-family:Inter,sans-serif;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;padding:10px 0;border-bottom:1px solid #c4c7c7;transition:border-color 0.2s ease,color 0.2s ease;text-decoration:none;" onmouseover="this.style.borderColor='#FF6600';this.style.color='#FF6600';" onmouseout="this.style.borderColor='#c4c7c7';this.style.color='#0B0B0B';">By Theme</a>
+        <button onclick="if(window.openSiteSearch)window.openSiteSearch()" style="font-family:Inter,sans-serif;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;padding:10px 0;border:none;border-bottom:1px solid #c4c7c7;background:none;cursor:pointer;transition:border-color 0.2s ease,color 0.2s ease;" onmouseover="this.style.borderColor='#FF6600';this.style.color='#FF6600';" onmouseout="this.style.borderColor='#c4c7c7';this.style.color='#0B0B0B';">Search</button>
       </div>
-
-      <!-- Curated collection tiles — Phase 4 -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-
-        <!-- Guernica Series -->
-        <a href="guernica.html" class="group block" style="text-decoration:none;">
-          <div style="position:relative;overflow:hidden;aspect-ratio:1;background:#e3bfb1;margin-bottom:12px;border:1px solid #8e7164;display:flex;align-items:center;justify-content:center;transition:box-shadow 0.3s ease,transform 0.3s ease;" class="collection-tile">
-            <img src="artworks/medium/art0010.avif" alt="Guernica series representative" style="width:100%;height:100%;object-fit:cover;transition:transform 0.3s ease;" loading="lazy">
-            <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);opacity:0;transition:opacity 0.3s ease;" class="collection-overlay"></div>
-          </div>
-          <h3 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:#0B0B0B;margin:0 0 4px;">Guernica</h3>
-          <p style="font-family:Inter,sans-serif;font-size:13px;color:#575757;margin:0;">232 works · 1990–present</p>
-        </a>
-
-        <!-- Photography -->
-        <a href="photography.html" class="group block" style="text-decoration:none;">
-          <div style="position:relative;overflow:hidden;aspect-ratio:1;background:#f0e8e0;margin-bottom:12px;border:1px solid #8e7164;display:flex;align-items:center;justify-content:center;transition:box-shadow 0.3s ease,transform 0.3s ease;" class="collection-tile">
-            <img src="artworks/medium/art0200.avif" alt="Photography collection" style="width:100%;height:100%;object-fit:cover;transition:transform 0.3s ease;" loading="lazy">
-            <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);opacity:0;transition:opacity 0.3s ease;" class="collection-overlay"></div>
-          </div>
-          <h3 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:#0B0B0B;margin:0 0 4px;">Photography</h3>
-          <p style="font-family:Inter,sans-serif;font-size:13px;color:#575757;margin:0;">328 works · Various decades</p>
-        </a>
-
-        <!-- Sculpture -->
-        <a href="sculpture.html" class="group block" style="text-decoration:none;">
-          <div style="position:relative;overflow:hidden;aspect-ratio:1;background:#e8f0f8;margin-bottom:12px;border:1px solid #8e7164;display:flex;align-items:center;justify-content:center;transition:box-shadow 0.3s ease,transform 0.3s ease;" class="collection-tile">
-            <img src="artworks/medium/art0300.avif" alt="Sculpture collection" style="width:100%;height:100%;object-fit:cover;transition:transform 0.3s ease;" loading="lazy">
-            <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);opacity:0;transition:opacity 0.3s ease;" class="collection-overlay"></div>
-          </div>
-          <h3 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:#0B0B0B;margin:0 0 4px;">Sculpture</h3>
-          <p style="font-family:Inter,sans-serif;font-size:13px;color:#575757;margin:0;">76 works · Various decades</p>
-        </a>
-
-        <!-- Favorites -->
-        <a href="favorites.html" class="group block" style="text-decoration:none;">
-          <div style="position:relative;overflow:hidden;aspect-ratio:1;background:#e8f8f0;margin-bottom:12px;border:1px solid #8e7164;display:flex;align-items:center;justify-content:center;transition:box-shadow 0.3s ease,transform 0.3s ease;" class="collection-tile">
-            <img src="artworks/medium/art0850.avif" alt="Favorite works" style="width:100%;height:100%;object-fit:cover;transition:transform 0.3s ease;" loading="lazy">
-            <div style="position:absolute;inset:0;background:rgba(0,0,0,0.2);opacity:0;transition:opacity 0.3s ease;" class="collection-overlay"></div>
-          </div>
-          <h3 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:#0B0B0B;margin:0 0 4px;">Favorites</h3>
-          <p style="font-family:Inter,sans-serif;font-size:13px;color:#575757;margin:0;">45 works · Personal picks</p>
-        </a>
-
-      </div>
-
-      <style>
-        .collection-tile {
-          cursor: pointer;
-        }
-        .collection-tile:hover,
-        .collection-tile:focus-visible {
-          box-shadow: 0 4px 24px rgba(0,0,0,0.12);
-          transform: translateY(-2px);
-        }
-        .collection-tile:hover img,
-        .collection-tile:focus-visible img {
-          transform: scale(1.05);
-        }
-        .collection-tile:hover .collection-overlay,
-        .collection-tile:focus-visible .collection-overlay {
-          opacity: 1;
-        }
-        a:focus-visible {
-          outline: 2px solid #FF6600;
-          outline-offset: 4px;
-        }
-      </style>
     </div>
   </section>
 
@@ -1543,17 +1452,7 @@ footer a::after{content:'';position:absolute;bottom:-1px;left:0;width:100%;heigh
 footer a:hover::after{transform:scaleX(1)}
 footer .hover\:border-international-orange::after{display:none}
 @media(prefers-reduced-motion:reduce){footer a::after{transition:none}}
-#back-to-top{background:none;border:none;cursor:pointer;font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;display:flex;align-items:center;gap:5px;padding:0;transition:color 0.15s ease}
-#back-to-top:hover{color:#0B0B0B}
-#back-to-top::after{display:none}
-/* Floating back-to-top button */
-#btt-float{position:fixed;bottom:28px;right:28px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:#fcf9f3;border:1px solid #c4c7c7;cursor:pointer;font-size:16px;color:#575757;z-index:400;opacity:0;transform:translateY(8px);transition:opacity 0.22s ease,transform 0.22s ease,color 0.15s ease,border-color 0.15s ease;pointer-events:none;}
-#btt-float.btt-visible{opacity:1;transform:translateY(0);pointer-events:auto;}
-#btt-float:hover{color:#FF6600;border-color:#FF6600;}
-#btt-float::after{display:none}
-@media(prefers-reduced-motion:reduce){#btt-float{transition:none;}}
-/* On mobile, sit above the bottom nav bar */
-@media(max-width:767px){#btt-float{bottom:72px;right:16px;}}
+.scroll-to-top:hover svg{color:white}
 </style>
 <footer class="bg-surface-container-high py-16 px-margin-desktop border-t border-outline-variant">
   <div class="max-w-container-max mx-auto">
@@ -1569,16 +1468,9 @@ footer .hover\:border-international-orange::after{display:none}
     </div>
   </div>
 </footer>
-<!-- Floating back-to-top -->
-<button id="btt-float" aria-label="Back to top">↑</button>
 <script>
 document.getElementById('footer-year').textContent = new Date().getFullYear();
 (function(){
-  // Footer text button
-  var btn = document.getElementById('back-to-top');
-  if (btn) btn.addEventListener('click', function(){
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
   // Design system button
   var dsBtn = document.getElementById('ds-footer-btn');
   if (dsBtn) dsBtn.addEventListener('click', function(){
@@ -1590,15 +1482,6 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
       if (searchInput) searchInput.focus();
     }
   });
-  // Floating button
-  var floatBtn = document.getElementById('btt-float');
-  if (!floatBtn) return;
-  floatBtn.addEventListener('click', function(){
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-  window.addEventListener('scroll', function(){
-    floatBtn.classList.toggle('btt-visible', window.scrollY > 300);
-  }, { passive: true });
 })();
 </script>
 <script data-goatcounter="https://jfsn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
@@ -1675,7 +1558,10 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
           </div>
           <div class="featured-metadata space-y-1 px-3 pt-2 pb-3 sm:px-0 sm:pt-0 sm:pb-0">
             <h4>${w.title}</h4>
-            <span>${w.year || '—'} | ${medium}</span>
+            <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+              <span>${w.year || '—'}</span>
+              <span>${medium}</span>
+            </div>
           </div>`;
         grid.appendChild(card);
       });
@@ -2041,7 +1927,6 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
       });
       renderAll();
       placeHeroMarkers(); /* hero fired before this script's listener existed */
-      buildToday();
       wireRiver('d'); wireRiver('m');
       wireWall('d'); wireWall('m');
       /* "Open one at random" — any of the 1,084, fresh pick per click */
@@ -2062,8 +1947,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
     })
     .catch(function () {
       /* No data — remove the bands rather than show empty strips */
-      ['river-section-d', 'river-section-m', 'wall-section-d', 'wall-section-m',
-       'today-section-d', 'today-section-m'].forEach(function (id) {
+      ['river-section-d', 'river-section-m', 'wall-section-d', 'wall-section-m'].forEach(function (id) {
         var el = document.getElementById(id);
         if (el) el.style.display = 'none';
       });
