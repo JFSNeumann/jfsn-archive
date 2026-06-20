@@ -495,6 +495,118 @@
       grid-template-columns: 1fr;
     }
   }
+
+  /* ═══════════════════════════════════════════════════════════════════════════
+     SELECTED WORKS MICRO-INTERACTIONS (Top 5)
+     ═══════════════════════════════════════════════════════════════════════════ */
+
+  /* 1. Image Brightness Lift on hover */
+  .featured-card-img {
+    transition: filter 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .featured-card:hover .featured-card-img {
+    filter: brightness(1.05) saturate(1.1);
+  }
+
+  /* 2. "View Work" CTA Overlay on hover */
+  .featured-card-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: white;
+    text-transform: uppercase;
+  }
+  .featured-card:hover .featured-card-overlay {
+    opacity: 1;
+  }
+  @media (hover: none) {
+    .featured-card-overlay { display: none; }
+  }
+
+  /* 3. Metadata Color Shift on hover */
+  .featured-metadata span {
+    transition: color 0.3s ease;
+  }
+  .featured-card:hover .featured-metadata span {
+    color: #e05900;
+  }
+
+  /* 4. Card Shadow Elevation on hover */
+  .featured-card {
+    transition: box-shadow 0.3s ease;
+  }
+  .featured-card:hover {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  /* 5. Staggered Image Load Animation */
+  .featured-card img {
+    opacity: 0;
+    transform: scale(0.95);
+    animation: image-load-fade 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    animation-delay: inherit;
+  }
+  @keyframes image-load-fade {
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════
+     ADDITIONAL FEATURE ENHANCEMENTS
+     ═══════════════════════════════════════════════════════════════════════════ */
+
+  /* 1. Section Divider Lines with Color Progression */
+  section {
+    position: relative;
+  }
+  section.border-b::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #FF6600 20%, #8e7164 50%, #FF6600 80%, transparent);
+  }
+
+  /* 2. Image Loading Skeleton States */
+  .featured-card-img.skeleton {
+    background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+  }
+  @keyframes skeleton-loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* 3. Featured Card "Pin" Animation */
+  .featured-card-img {
+    transform-style: preserve-3d;
+  }
+  .featured-card:hover .featured-card-img {
+    transform: perspective(1000px) rotateZ(-1deg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .featured-card-img { transition: none; }
+    .featured-card:hover .featured-card-img { filter: none; transform: none; }
+    .featured-metadata span { transition: none; }
+    .featured-card { transition: none; }
+    .featured-card img { animation: none; }
+  }
 </style>
   <!-- Phase 1 Enhancement Stylesheets -->
   <link rel="stylesheet" href="/_shared/lightbox.css"/>
@@ -1853,6 +1965,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
         const card = document.createElement('a');
         card.href = `artwork.html?id=${id}`;
         card.className = 'featured-card';
+        card.style.animationDelay = `${i * 0.08}s`;
         card.innerHTML = `
           <div class="featured-card-img sm:mb-md bg-surface-container-low">
             <img
@@ -1863,6 +1976,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
               width="300" height="400"
               ${isFirst ? '' : 'onload="this.classList.add(\'is-loaded\')"'}
             />
+            <div class="featured-card-overlay" aria-hidden="true">View Work →</div>
           </div>
           <div class="featured-metadata space-y-1 px-3 pt-2 pb-3 sm:px-0 sm:pt-0 sm:pb-0">
             <h4>${w.title}</h4>
