@@ -942,11 +942,6 @@ button:active {
   animation: fade-in 0.2s ease;
 }
 
-/* Theme color transitions (Phase 2 #8) */
-header nav a::after {
-  transition: transform 0.2s ease, background-color 0.2s ease;
-}
-
 /* Favorite heart rotation (Phase 2 #9) */
 .favorite-btn.rotating {
   animation: rotation-pulse 0.3s ease;
