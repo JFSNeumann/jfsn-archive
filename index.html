@@ -220,6 +220,139 @@
   a[href="archive.html"][data-no-hint="true"]:hover::after {
     transform: scaleX(1) !important;
   }
+
+  /* ═══════════════════════════════════════════════════════════════════════════
+     UX/UI IMPROVEMENTS — Session N
+     ═══════════════════════════════════════════════════════════════════════════ */
+
+  /* 1. Hero scroll cue pulse animation */
+  @keyframes scroll-cue-pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
+  }
+  #hero-scroll-cue { animation: scroll-cue-pulse 2s ease-in-out infinite; }
+
+  /* 2. Hero CTA button distinction — primary vs secondary */
+  .hero-cta-fill {
+    position: relative;
+    transition: all 0.25s ease;
+  }
+  .hero-cta-fill:hover {
+    transform: scale(1.04);
+    filter: brightness(1.1);
+  }
+  .hero-cta-ghost {
+    transition: all 0.25s ease;
+  }
+  .hero-cta-ghost:hover {
+    transform: scale(1.02);
+    opacity: 0.9;
+  }
+
+  /* 3. Search button subtle glow indicator for first-time users */
+  #nav-search-btn {
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  @keyframes search-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,102,0,0.2); }
+    50% { box-shadow: 0 0 0 6px rgba(255,102,0,0); }
+  }
+  /* Only pulse on load, not constantly */
+  #nav-search-btn.pulse-hint { animation: search-pulse 2s ease-out 1; }
+
+  /* 4. Mobile drawer link hover states */
+  #mobile-menu-drawer a {
+    transition: all 0.15s ease;
+  }
+  #mobile-menu-drawer a:hover {
+    background: rgba(255,102,0,0.06);
+    padding-left: 28px;
+  }
+
+  /* 5. Featured cards — visual frame on hover */
+  .featured-card-img:hover,
+  .featured-card-img:focus-visible {
+    outline: 1px solid #e05900;
+    outline-offset: 2px;
+  }
+
+  /* 6. Featured card metadata styling — subtle container */
+  .featured-metadata {
+    background: rgba(244,241,237,0.5);
+    border-top: 1px solid #e3bfb1;
+    padding: 0.5rem !important;
+    margin: 0 -0.5rem -0.5rem;
+  }
+
+  /* 7. Explore link styles — replace inline handlers */
+  .explore-link {
+    transition: border-color 0.2s ease, color 0.2s ease;
+    border-bottom: 1px solid #c4c7c7;
+    color: #0B0B0B;
+    padding: 10px 0;
+    text-decoration: none;
+  }
+  .explore-link:hover {
+    border-color: #FF6600;
+    color: #FF6600;
+  }
+
+  /* 8. Explore cards accent left borders */
+  .explore-card.explore-all { border-left: 4px solid #FF6600; padding-left: 28px; }
+  .explore-card.explore-theme { border-left: 4px solid #8e7164; padding-left: 28px; }
+  .explore-card.explore-start { border-left: 4px solid #e05900; padding-left: 28px; }
+  .explore-card.explore-lost { border-left: 4px solid #B84700; padding-left: 28px; }
+
+  /* 9. "Void in the Record" button enhancement */
+  .lost-btn {
+    transition: all 0.25s ease;
+  }
+  .lost-btn:hover {
+    transform: scale(1.05);
+  }
+
+  /* 10. Featured works "Next Steps" visual group */
+  .next-steps-group {
+    padding: 24px;
+    background: rgba(224,89,0,0.03);
+    border-left: 3px solid #e05900;
+    border-radius: 2px;
+  }
+
+  /* 11. Mobile folio metadata softer border */
+  .folio-metadata-divider {
+    border-color: #c4c7c7 !important;
+  }
+
+  /* 12. Scroll-to-top animation */
+  .scroll-to-top {
+    animation: scroll-to-top-enter 0.3s ease;
+  }
+  @keyframes scroll-to-top-enter {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* 13. Hero caption link affordance */
+  #hero-caption-d,
+  #hero-caption-m {
+    position: relative;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    padding-bottom: 2px;
+    transition: all 0.2s ease;
+  }
+  #hero-caption-d:hover,
+  #hero-caption-m:hover {
+    border-color: rgba(255,255,255,0.7);
+    color: rgba(255,255,255,1);
+  }
+
+  /* 14. Drawer links hover state (CSS-based) */
+  .drawer-link:hover {
+    background: rgba(255,102,0,0.06);
+    padding-left: 28px;
+  }
 </style>
   <!-- Phase 1 Enhancement Stylesheets -->
   <link rel="stylesheet" href="/_shared/lightbox.css"/>
@@ -314,7 +447,7 @@ header.header-hidden{transform:translateY(-100%)}
       <svg id="theme-icon-sun" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="display:none;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
       <svg id="theme-icon-moon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
     </button>
-    <button class="flex items-center gap-1.5 text-orange-ink hover:text-deep-ink transition-colors" style="padding:10px;" aria-label="Search" id="nav-search-btn">
+    <button class="flex items-center gap-1.5 text-orange-ink hover:text-deep-ink transition-colors pulse-hint" style="padding:10px;" aria-label="Search" id="nav-search-btn">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><line x1="20.4" y1="20.4" x2="16" y2="16"/></svg>
       <span class="hidden md:inline" style="font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.05em;color:#575757;border:1px solid #c4c7c7;padding:1px 5px;pointer-events:none;">⌘K</span>
     </button>
@@ -337,10 +470,10 @@ header.header-hidden{transform:translateY(-100%)}
     </div>
     <!-- Links -->
     <div style="flex:1;overflow-y:auto;padding:8px 0;">
-      <a href="archive.html"    style="display:flex;align-items:center;gap:14px;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="flex-no-shrink"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Archive</a>
-      <a href="series-index.html" style="display:flex;align-items:center;gap:14px;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="flex-no-shrink"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>Series</a>
-      <a href="about.html"      style="display:flex;align-items:center;gap:14px;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="flex-no-shrink"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>About</a>
-      <a href="lost.html"       style="display:flex;align-items:center;gap:14px;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="flex-no-shrink"><rect x="3" y="3" width="18" height="18" stroke-dasharray="4 4"/></svg>Lost Works</a>
+      <a href="archive.html"    style="display:flex;align-items:center;gap:14px;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;transition:all 0.15s ease;" class="drawer-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="flex-no-shrink"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Archive</a>
+      <a href="series-index.html" style="display:flex;align-items:center;gap:14px;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;transition:all 0.15s ease;" class="drawer-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="flex-no-shrink"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>Series</a>
+      <a href="about.html"      style="display:flex;align-items:center;gap:14px;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;transition:all 0.15s ease;" class="drawer-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="flex-no-shrink"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>About</a>
+      <a href="lost.html"       style="display:flex;align-items:center;gap:14px;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;transition:all 0.15s ease;" class="drawer-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="flex-no-shrink"><rect x="3" y="3" width="18" height="18" stroke-dasharray="4 4"/></svg>Lost Works</a>
     </div>
     <!-- Portrait -->
     <div style="padding:16px 24px;">
@@ -812,7 +945,7 @@ header.header-hidden{transform:translateY(-100%)}
             />
           </a>
         </div>
-        <div class="mt-4 border-b border-deep-ink pb-5">
+        <div class="mt-4 pb-5 folio-metadata-divider">
           <p class="text-[18px] leading-snug text-deep-ink">Devo at WHK Auditorium</p>
           <p class="font-label-caps text-label-caps text-archive-gray mt-2">1977 · PHOTOGRAPH</p>
         </div>
@@ -834,7 +967,7 @@ header.header-hidden{transform:translateY(-100%)}
             />
           </a>
         </div>
-        <div class="mt-4 border-b border-deep-ink pb-5">
+        <div class="mt-4 pb-5 folio-metadata-divider">
           <p class="text-[18px] leading-snug text-deep-ink">Reliquary</p>
           <p class="font-label-caps text-label-caps text-archive-gray mt-2">1990 · COLLAGE</p>
         </div>
@@ -856,7 +989,7 @@ header.header-hidden{transform:translateY(-100%)}
             />
           </a>
         </div>
-        <div class="mt-4 border-b border-deep-ink pb-5">
+        <div class="mt-4 pb-5 folio-metadata-divider">
           <p class="text-[18px] leading-snug text-deep-ink">Yellow Figure on Black Wall</p>
           <p class="font-label-caps text-label-caps text-archive-gray mt-2">2010 · PHOTOGRAPH</p>
         </div>
@@ -1113,7 +1246,7 @@ header.header-hidden{transform:translateY(-100%)}
   <section id="river-section-d" class="border-b border-outline-variant" aria-label="Fifty years of color">
     <div class="river-band-wrap" id="river-wrap-d">
       <canvas id="river-canvas-d" class="river-band-canvas" height="72" data-h="72" role="img" tabindex="0"
-        aria-label="Fifty years of color: all 1,084 works in chronological order, each shown as a vertical slice of its dominant color. Click a slice to open that work."></canvas>
+        aria-label="Fifty years of color: all 1,084 works in chronological order, each shown as a vertical slice of its dominant color. Click a slice to view that work."></canvas>
       <div class="river-band-cursorline" id="river-cursor-d"></div>
     </div>
     <div id="river-labels-d" style="position:relative;height:16px;margin-top:4px;"></div>
@@ -1378,28 +1511,28 @@ header.header-hidden{transform:translateY(-100%)}
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px;">
 
         <!-- All Works -->
-        <a href="archive.html" class="explore-card reveal-section reveal-delay-1">
+        <a href="archive.html" class="explore-card explore-all reveal-section reveal-delay-1">
           <span class="explore-icon">🗂</span>
           <h3>All 1,084 Works</h3>
           <p>Browse everything. Filter by decade, medium, series, or theme.</p>
         </a>
 
         <!-- By Theme -->
-        <a href="series-index.html" class="explore-card reveal-section reveal-delay-2">
+        <a href="series-index.html" class="explore-card explore-theme reveal-section reveal-delay-2">
           <span class="explore-icon">🎨</span>
           <h3>Explore by Theme</h3>
           <p>Guernica series, photography, sculpture, and eight recurring obsessions.</p>
         </a>
 
         <!-- Who Jeff Is -->
-        <a href="start-here.html" class="explore-card reveal-section reveal-delay-1">
+        <a href="start-here.html" class="explore-card explore-start reveal-section reveal-delay-1">
           <span class="explore-icon">👤</span>
           <h3>Who Jeff Is</h3>
           <p>50 years of making, in his own words and voice.</p>
         </a>
 
         <!-- Lost Works -->
-        <a href="lost.html" class="explore-card reveal-section reveal-delay-2">
+        <a href="lost.html" class="explore-card explore-lost reveal-section reveal-delay-2">
           <span class="explore-icon">📋</span>
           <h3>Lost Works</h3>
           <p>What was lost to water damage. What survived. A memory.</p>
@@ -1424,13 +1557,13 @@ header.header-hidden{transform:translateY(-100%)}
       <!-- populated by JS -->
     </div>
     <!-- Next Steps CTA -->
-    <div class="mt-16 pt-12 border-t border-outline-variant reveal-section">
+    <div class="next-steps-group reveal-section">
       <h3 style="font-family:Inter,sans-serif;font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#0B0B0B;margin:0 0 16px;">Want to explore further?</h3>
       <div style="display:flex;gap:24px;flex-wrap:wrap;">
-        <a href="archive.html" style="font-family:Inter,sans-serif;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;padding:10px 0;border-bottom:1px solid #c4c7c7;transition:border-color 0.2s ease,color 0.2s ease;text-decoration:none;" onmouseover="this.style.borderColor='#FF6600';this.style.color='#FF6600';" onmouseout="this.style.borderColor='#c4c7c7';this.style.color='#0B0B0B';">All Works (1,084)</a>
-        <a href="1970s.html" style="font-family:Inter,sans-serif;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;padding:10px 0;border-bottom:1px solid #c4c7c7;transition:border-color 0.2s ease,color 0.2s ease;text-decoration:none;" onmouseover="this.style.borderColor='#FF6600';this.style.color='#FF6600';" onmouseout="this.style.borderColor='#c4c7c7';this.style.color='#0B0B0B';">By Decade</a>
-        <a href="series-index.html" style="font-family:Inter,sans-serif;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;padding:10px 0;border-bottom:1px solid #c4c7c7;transition:border-color 0.2s ease,color 0.2s ease;text-decoration:none;" onmouseover="this.style.borderColor='#FF6600';this.style.color='#FF6600';" onmouseout="this.style.borderColor='#c4c7c7';this.style.color='#0B0B0B';">By Theme</a>
-        <button onclick="if(window.openSiteSearch)window.openSiteSearch()" style="font-family:Inter,sans-serif;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;padding:10px 0;border:none;border-bottom:1px solid #c4c7c7;background:none;cursor:pointer;transition:border-color 0.2s ease,color 0.2s ease;" onmouseover="this.style.borderColor='#FF6600';this.style.color='#FF6600';" onmouseout="this.style.borderColor='#c4c7c7';this.style.color='#0B0B0B';">Search</button>
+        <a href="archive.html" class="explore-link">All Works (1,084)</a>
+        <a href="1970s.html" class="explore-link">By Decade</a>
+        <a href="series-index.html" class="explore-link">By Theme</a>
+        <button onclick="if(window.openSiteSearch)window.openSiteSearch()" class="explore-link" style="background:none;border:none;cursor:pointer;">Search</button>
       </div>
     </div>
   </section>
