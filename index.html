@@ -199,6 +199,14 @@
     ::view-transition-old(*),
     ::view-transition-new(*) { animation: none !important; }
   }
+
+  /* Archive nav link — hide keyboard shortcut hint, show orange underline instead */
+  a[href="archive.html"][data-no-hint="true"][data-shortcut-hint]::after {
+    content: none !important;
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
 </style>
   <!-- Phase 1 Enhancement Stylesheets -->
   <link rel="stylesheet" href="/_shared/lightbox.css"/>
@@ -283,7 +291,7 @@ header.header-hidden{transform:translateY(-100%)}
   </div>
   <div class="flex items-center gap-6">
     <nav class="hidden md:flex items-center" aria-label="Primary" style="gap: 32px;">
-      <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="archive.html" style="position:relative;font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;white-space:nowrap;">Archive</a>
+      <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="archive.html" style="position:relative;font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;white-space:nowrap;" data-no-hint="true">Archive</a>
       <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="series-index.html" style="position:relative;font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;white-space:nowrap;">Series</a>
       <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="about.html" style="position:relative;font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;white-space:nowrap;">About</a>
       <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="lost.html" style="position:relative;font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;white-space:nowrap;">Lost Works</a>
