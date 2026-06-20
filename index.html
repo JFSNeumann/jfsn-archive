@@ -200,12 +200,25 @@
     ::view-transition-new(*) { animation: none !important; }
   }
 
-  /* Archive nav link — hide keyboard shortcut hint, show orange underline instead */
-  a[href="archive.html"][data-no-hint="true"][data-shortcut-hint]::after {
-    content: none !important;
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
+  /* Archive nav link — override hint styling with nav underline styling */
+  a[href="archive.html"][data-no-hint="true"]::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: 10px !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 1.5px !important;
+    background-color: #FF6600 !important;
+    transform: scaleX(0) !important;
+    transform-origin: left center !important;
+    transition: transform 0.2s ease !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 1px !important;
+  }
+
+  a[href="archive.html"][data-no-hint="true"]:hover::after {
+    transform: scaleX(1) !important;
   }
 </style>
   <!-- Phase 1 Enhancement Stylesheets -->
