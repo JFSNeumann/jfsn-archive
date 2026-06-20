@@ -2860,13 +2860,6 @@ img[loading="lazy"].loaded {
   opacity: 1;
 }
 
-/* Hide shortcut hints for marked elements */
-[data-no-hint="true"][data-shortcut-hint]::after {
-  content: none !important;
-  display: none !important;
-  visibility: hidden !important;
-}
-
 /* Tier 2.4: Archive filter presets animation */
 .filter-preset-btn {
   padding: 8px 12px;

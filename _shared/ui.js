@@ -732,22 +732,4 @@
     });
   })();
 
-  // ─── CLEANUP: Remove hint from Archive nav link ──────────────────────
-  // Archive nav link uses orange underline hover instead of hint tooltip
-  const cleanup = () => {
-    const archiveNav = document.querySelector('header nav a[href="archive.html"]');
-    if (archiveNav && archiveNav.hasAttribute('data-shortcut-hint')) {
-      archiveNav.removeAttribute('data-shortcut-hint');
-    }
-  };
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', cleanup);
-  } else {
-    cleanup();
-  }
-
-  // Also clean up after a brief delay to catch any late-added hints
-  setTimeout(cleanup, 100);
-
 })();
