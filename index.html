@@ -50,16 +50,30 @@
     position: relative;
     padding: 0 20px;
   }
-  /* Featured grid layout — uniform like archive.html */
-  @media (min-width: 768px) {
-    #featured-grid { grid-template-columns: repeat(4, 1fr); }
+  /* Featured grid — match archive.html layout */
+  #featured-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+  @media (min-width: 600px) { #featured-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 768px) { #featured-grid { grid-template-columns: repeat(4, 1fr); } }
+
+  /* Featured cards — match archive-card styling */
+  .featured-card { cursor: zoom-in; display: block; text-decoration: none; }
+  .featured-card-img { position: relative; overflow: hidden; isolation: isolate; outline: 2px solid rgba(255,102,0,0); outline-offset: 0; transition: outline-color 0.25s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease; }
+  .featured-card-img img { display: block; width: 100%; height: auto; }
+  .featured-card:hover .featured-card-img,
+  .featured-card:focus-visible .featured-card-img { outline-color: #FF6600; transform: scale(1.03); filter: brightness(1.04); }
+
+  .featured-metadata { padding-top: 0.5rem; }
+  .featured-metadata h4 { font-family: Inter, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin: 0 0 4px; color: #0B0B0B; transition: color 0.25s ease; }
+  .featured-metadata span { display: block; font-family: Inter, sans-serif; font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: #575757; }
+
+  .featured-card:hover .featured-metadata h4,
+  .featured-card:focus-visible .featured-metadata h4 { color: #FF6600; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .featured-card-img { transition: none; }
+    .featured-metadata h4 { transition: none; }
   }
-  @media (max-width: 1024px) {
-    #featured-grid { grid-template-columns: repeat(3, 1fr); }
-  }
-  @media (max-width: 600px) {
-    #featured-grid { grid-template-columns: repeat(2, 1fr); }
-  }
+
   /* Text selection — orange highlight site-wide */
   ::selection { background: #FF6600; color: #fff; }
 
@@ -68,62 +82,6 @@
   #hero-caption-m { text-decoration: none; }
   #hero-caption-d:hover,
   #hero-caption-m:hover { color: rgba(255,255,255,0.95); text-decoration: underline; text-underline-offset: 3px; }
-
-  /* Featured grid — lazy load settle */
-  #featured-grid img,
-  #featured-grid-small img {
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-  #featured-grid img.is-loaded,
-  #featured-grid-small img.is-loaded {
-    opacity: 1;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    #featured-grid img,
-    #featured-grid-small img { opacity: 1; transition: none; }
-  }
-
-  /* Card micro-interactions */
-  #featured-grid > a,
-  #featured-grid-small > a { cursor: zoom-in; }
-
-  /* Card 1 gets more typographic weight to match its 7-col scale */
-  #featured-grid > a:first-child .card-title { font-size: 17px; letter-spacing: 0.04em; }
-
-  /* Card image container — full color, no overlay */
-  .card-img {
-    isolation: isolate;
-  }
-  #featured-grid a:hover .card-img,
-  #featured-grid a:focus-visible .card-img,
-  #featured-grid-small a:hover .card-img,
-  #featured-grid-small a:focus-visible .card-img { }
-
-  /* Orange frame overlay (image only — .card-frame sits inside .card-img) */
-  .card-frame {
-    position: absolute;
-    inset: 0;
-    border: 2px solid rgba(255,102,0,0);
-    transition: border-color 0.25s ease;
-    pointer-events: none;
-    z-index: 2;
-  }
-  #featured-grid > a:hover .card-frame,
-  #featured-grid > a:focus-visible .card-frame,
-  #featured-grid-small > a:hover .card-frame,
-  #featured-grid-small > a:focus-visible .card-frame { border-color: #FF6600; }
-
-  /* Title turns orange on card hover */
-  .card-title { transition: color 0.25s ease; }
-  #featured-grid a:hover .card-title,
-  #featured-grid a:focus-visible .card-title,
-  #featured-grid-small a:hover .card-title,
-  #featured-grid-small a:focus-visible .card-title { color: #FF6600; }
-
-  @media (prefers-reduced-motion: reduce) {
-    .card-img, .card-img::after, .card-frame, .card-title { transition: none; }
-  }
 
   /* Lost banner ghost tiles — the empty frames join the link's hover */
   .ghost-tile {
@@ -1703,29 +1661,21 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
         const isFirst = i === 0;
         const card = document.createElement('a');
         card.href = `artwork.html?id=${id}`;
-        card.className = 'group no-underline';
+        card.className = 'featured-card';
         card.innerHTML = `
-          <div class="card-img aspect-[3/4] relative overflow-hidden" style="--mat:${matColor(colorMap[id], 0.3)};--mat-hover:${matColor(colorMap[id], 0.55)};">
+          <div class="featured-card-img">
             <img
-              alt="${w.title} — Jeffrey F. S. Neumann, ${w.year}"
-              class="zoom-img absolute inset-0 w-full h-full object-cover${isFirst ? ' is-loaded' : ''}"
-              src="artworks/${i < 3 ? 'medium' : 'thumbs'}/${w.file}"
-              ${i < 3 ? `srcset="artworks/thumbs/${w.file} 400w, artworks/medium/${w.file} 900w" sizes="(max-width:767px) 92vw, (max-width:1023px) 480px, 620px"` : ''}
+              alt="${w.title}"
+              class="w-full aspect-[3/4] object-cover${isFirst ? ' is-loaded' : ''}"
+              src="artworks/thumbs/${w.file}"
               loading="${isFirst ? 'eager' : 'lazy'}"${isFirst ? ' fetchpriority="high"' : ''}
-              width="900" height="1200"
+              width="300" height="400"
               ${isFirst ? '' : 'onload="this.classList.add(\'is-loaded\')"'}
             />
-            <div class="card-caption" aria-hidden="true">
-              <p style="font-family:'Playfair Display',serif;font-size:14px;font-style:italic;line-height:1.4;color:#ffffff;margin:0 0 6px;">${w.title}</p>
-              <span style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10px;letter-spacing:0.06em;color:rgba(255,255,255,0.65);">${w.year} · ${medium}</span>
-            </div>
-            <div class="card-frame" aria-hidden="true"></div>
           </div>
-          <div class="card-meta mt-1 pb-4">
-            <div class="flex items-center justify-between">
-              <span class="card-mono" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;letter-spacing:0.04em;color:#575757;">${w.year} · ${medium}</span>
-              <span class="bracket text-orange-ink" style="font-size:10px;letter-spacing:0.08em;">[ View &rarr; ]</span>
-            </div>
+          <div class="featured-metadata">
+            <h4>${w.title}</h4>
+            <span>${w.year || '—'} | ${medium}</span>
           </div>`;
         if (i < 3) {
           grid.appendChild(card);
