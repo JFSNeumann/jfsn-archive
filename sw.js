@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1787210200'; // Session 75: Homepage fixed — natural aspect ratios, archive-style layout
+const CACHE_V  = 'jfsn-1787300000'; // Session 76: Selected Works Tier 2-4 interactions (swatch, badge, peek modal, ripple, meta slide-in)
 const PRECACHE = [
   '/',
   '/index.html',
