@@ -1663,7 +1663,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
         card.href = `artwork.html?id=${id}`;
         card.className = 'featured-card';
         card.innerHTML = `
-          <div class="featured-card-img">
+          <div class="featured-card-img sm:mb-md bg-surface-container-low">
             <img
               alt="${w.title}"
               class="w-full aspect-[3/4] object-cover${isFirst ? ' is-loaded' : ''}"
@@ -1673,7 +1673,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
               ${isFirst ? '' : 'onload="this.classList.add(\'is-loaded\')"'}
             />
           </div>
-          <div class="featured-metadata">
+          <div class="featured-metadata space-y-1 px-3 pt-2 pb-3 sm:px-0 sm:pt-0 sm:pb-0">
             <h4>${w.title}</h4>
             <span>${w.year || '—'} | ${medium}</span>
           </div>`;
