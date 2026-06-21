@@ -2,12 +2,12 @@
 
 > **Primary guiding document:** `JFSN-MISSION.md` — read it before making any significant development or content decision.
 
-> **The litmus** — before adding any interaction, animation, dependency, or page, all three must be true:
-> 1. It helps a future grandchild understand Jeff and his work.
-> 2. It's the most restrained way to do that — the page couldn't be as clear with less.
-> 3. A maintainer in 20 years will thank you for it.
+> **The litmus** — before adding any interaction, animation, dependency, or page:
+> 1. Does it help someone understand Jeff and his work — *or* is it Jeff's own craft? (He is a web/motion designer and animator with 40 years of practice. Motion is part of who he is, not decoration bolted on.)
+> 2. **Is the work itself still shown honestly?** Never filter, recolour, crop-distort, or tilt the artwork; never hide its title/year/medium behind a hover (it vanishes on touch and for screen readers); no fabricated provenance, badges, or composites-as-real.
+> 3. Will a maintainer in 20 years thank you for it — one considered move, not five sloppy ones?
 >
-> If not all three, don't. The bar is **high-end restraint** — fewer elements, impeccably executed; the work given room and shown honestly. Refine before you add. Craft shows in what you leave out.
+> **Point 2 is the hard rail, and it is about the *work and the viewer* — that line does not move.** Points 1 and 3 are craft, and the craft is Jeff's: animate *around* and *between* works freely; just don't animate away the truth of a piece. "Restraint" here means a motion designer's restraint — impeccable timing, one gesture that earns its place — **not** minimalism, not an empty page, not "default to removal." When Jeff is directing the design, his intent is the brief. This document is the floor that protects the *work*; it is not a cap on the *design*.
 
 ## Project
 Personal archive site for Jeffrey F. S. Neumann — 1,084 works spanning 1974–present.
@@ -66,12 +66,15 @@ colors: {
 - **Accessibility:** WCAG AA contrast minimum on all persistent text. Test text/background pairs before shipping.
 - **Data integrity clause (NON-NEGOTIABLE):** Never ship fabricated provenance / accession numbers, invented badges, fake DPI/resolution, fabricated quotes, or composite images presented as real exhibitions. Years stay decade estimates; composites stay flagged. Design can evolve; data stays honest.
 
-### Design is open — in service of the mission
-The full toolkit is available — gradients, shadows, filters, transforms, overlays, scroll-reveals, typography, spacing, layering, colour. None of it is forbidden.
+### Design is open — Jeff's craft, with the work protected
+Jeff is a web/motion designer and animator with 40 years of practice. Motion and design are part of how the maker of this archive thinks — not ornament added after the fact. The full toolkit is his: timelines, staggers, transitions, scroll-reveals, parallax, transforms, type, colour. **anime.js** (https://animejs.com) is the chosen library for choreographed motion.
 
-But **capability is not a reason to use it.** Every creative tool must answer the litmus above and **default to removal**. The aim is a high-end, considered result — and at this level that almost always means *fewer, better* moves, not more of them: impeccable type and spacing, generous room around the work, honest presentation. Restraint is the craft, not a limitation on it. Resist decoration, novelty for its own sake, and engagement mechanics; when in doubt, refine what exists before adding something new.
+Two things stay true no matter how expressive the design gets:
 
-**Apply judgment:** Does it help someone understand Jeff and his work? Is it the most restrained way to do so? If yes, ship it. The only non-negotiable rule is data integrity — no fabricated provenance, badges, or composites-as-real.
+1. **The work is shown honestly.** Never filter, recolour, crop-distort, or tilt the artwork itself; never gate its title/year/medium behind a hover; never fake provenance, badges, or composites-as-real. Animate *around* and *between* works freely — don't animate away the truth of a piece. (This is why Session 78 was right to cut the brightness/saturate filter and the hover-only captions — both touched the *work* and the *viewer*. It was wrong only where it read those cuts as a mandate for minimalism everywhere.)
+2. **One move that earns its place.** Restraint here is a craftsman's, not a minimalist's — prefer the single well-timed gesture to a pile of effects. This guards against AI sessions (or anyone) accreting novelty; it is **not** a cap on Jeff's own direction.
+
+When Jeff is directing the design, his intent is the brief. Earlier versions of this file read "default to removal / the most restrained way" as minimalism and walked back legitimate motion work (Session 78 on the homepage, Session 76–77 enhancements). **That over-correction is retired.** The floor protects the *work*; it does not flatten the *design*. The only non-negotiable is point 1 above — data and the honest presentation of the work.
 
 ---
 

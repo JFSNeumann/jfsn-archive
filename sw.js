@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1782063281'; // Session 78: homepage Selected Works simplified (removed ripple/badge/swatch/peek-modal/filter/tilt) + CLAUDE.md design-governance litmus
+const CACHE_V  = 'jfsn-1782120000'; // Session 79: anime.js adopted — hero rotation through 10 curated works + on-load title timeline; new _shared/anime.min.js precached
 const PRECACHE = [
   '/',
   '/index.html',
@@ -51,6 +51,7 @@ const PRECACHE = [
   '/_shared/ui.css',
   '/_shared/ui.js',
   '/_shared/nav-active.js',
+  '/_shared/anime.min.js',
 ];
 
 /* ── Install: precache core shell ─────────────────────────────────────────── */

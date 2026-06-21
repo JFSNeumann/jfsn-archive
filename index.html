@@ -68,6 +68,11 @@
   .featured-metadata { padding-top: 0.5rem; }
   .featured-metadata h4 { font-family: Inter, sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 6px; color: #0B0B0B; transition: color 0.25s ease; }
   .featured-metadata span { display: flex; align-items: center; gap: 8px; font-family: Inter, sans-serif; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #B84700; font-weight: 500; }
+  /* #B84700 (orange-ink) is only AA-accessible on light backgrounds (5.07:1).
+     dark-mode.css promotes the same role to full #FF6600 everywhere else
+     (.text-orange-ink, .text-international-orange) — this caption never
+     picked that up, so it sat under 4.5:1 against the dark ground. */
+  .dark .featured-metadata span { color: #FF6600; }
 
   @media (prefers-reduced-motion: reduce) {
     .featured-card-img { transition: none; }
@@ -147,7 +152,7 @@
   .river-hero-marker {
     position: absolute; top: 0; bottom: 0; width: 2px;
     background: #FF6600; pointer-events: none; display: none;
-    transition: left 0.45s ease;
+    transition: left 0.7s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .river-hero-marker span {
     position: absolute; top: 3px; left: 5px;
@@ -156,6 +161,28 @@
     white-space: nowrap;
   }
   @media (prefers-reduced-motion: reduce) { .river-hero-marker { transition: none; } }
+
+  /* Hero "ticks" on the river — the 10 curated hero works, clickable to drive
+     the hero (the two become one instrument). A small caret at the band's top
+     edge; bone-white so it reads on any colour, orange on hover/active. */
+  .river-hero-tick {
+    position: absolute; top: 0; transform: translateX(-50%);
+    width: 22px; height: 18px; padding: 0; margin: 0; border: 0; background: none;
+    cursor: pointer; z-index: 4; -webkit-tap-highlight-color: transparent;
+    display: flex; align-items: flex-start; justify-content: center;
+  }
+  .river-hero-tick span {
+    width: 0; height: 0;
+    border-left: 5px solid transparent; border-right: 5px solid transparent;
+    border-top: 7px solid rgba(252,249,243,0.9);
+    filter: drop-shadow(0 0 1px rgba(11,11,11,0.7));
+    transition: border-top-color 0.2s ease, transform 0.2s ease;
+  }
+  .river-hero-tick:hover span,
+  .river-hero-tick:focus-visible span { border-top-color: #FF6600; transform: scale(1.3); }
+  .river-hero-tick.is-current span { border-top-color: #FF6600; transform: scale(1.15); }
+  .river-hero-tick:focus-visible { outline: 2px solid #FF6600; outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { .river-hero-tick span { transition: none; } }
 
   /* ── Wall band — the mass of the archive on one surface ── */
   /* min-heights reserve the band's final footprint (rows × tile + gaps) so the
@@ -730,6 +757,7 @@ header.header-hidden{transform:translateY(-100%)}
 </script>
 
 <script src="search.js" defer></script>
+<script src="_shared/anime.min.js" defer></script>
 <script src="_shared/jfsn-interactions.js" defer></script>
 <script>
 (function(){
@@ -1124,7 +1152,7 @@ header.header-hidden{transform:translateY(-100%)}
       <a href="chromatic.html" class="hero-cta-fill btn-active">[ Explore the river &rarr; ]</a>
       <a href="archive.html" class="hero-cta-ghost btn-active">Browse all 1,084 works</a>
     </div>
-    <a id="hero-caption-m" href="artwork.html?id=art1010" aria-live="polite" class="font-label-caps text-label-caps no-underline" style="color:rgba(255,255,255,0.6);margin-top:18px;">Untitled (Cassette Torso) · 2020 · COLLAGE</a>
+    <a id="hero-caption-m" href="artwork.html?id=art1010" class="font-label-caps text-label-caps no-underline" style="color:rgba(255,255,255,0.6);margin-top:18px;">Untitled (Cassette Torso) · 2020 · COLLAGE</a>
   </div>
 </section>
 
@@ -1410,7 +1438,7 @@ header.header-hidden{transform:translateY(-100%)}
         <a href="archive.html" class="hero-cta-ghost btn-active" style="text-shadow:0 2px 12px rgba(0,0,0,0.5);">Browse all 1,084 works</a>
       </div>
     </div>
-    <a id="hero-caption-d" href="artwork.html?id=art1010" aria-live="polite" class="font-label-caps text-label-caps no-underline" style="position:absolute;left:40px;bottom:26px;z-index:20;color:rgba(255,255,255,0.75);">Untitled (Cassette Torso) · 2020 · COLLAGE</a>
+    <a id="hero-caption-d" href="artwork.html?id=art1010" class="font-label-caps text-label-caps no-underline" style="position:absolute;left:40px;bottom:26px;z-index:20;color:rgba(255,255,255,0.75);">Untitled (Cassette Torso) · 2020 · COLLAGE</a>
     <div class="font-label-caps text-label-caps" style="position:absolute;right:40px;bottom:26px;z-index:20;color:rgba(255,255,255,0.75);letter-spacing:0.1em;display:flex;gap:28px;">
       <span>1,084 Works Cataloged</span>
       <span>Cleveland, Ohio</span>
@@ -1441,13 +1469,87 @@ header.header-hidden{transform:translateY(-100%)}
       cue.style.opacity = y > 40 ? '0' : '1';
     }, { passive: true });
   })();
-  // Hero text entrance — fire on next frame (elements are always in viewport on load)
+  // Hero text entrance — anime.js timeline (Session 79). Eyebrow → word-stagger
+  // headline → subhead → CTAs, overlapping on easeOutExpo. Falls back to the
+  // CSS reveal if anime is unavailable or the visitor prefers reduced motion.
   (function(){
-    requestAnimationFrame(function(){
-      requestAnimationFrame(function(){
-        document.querySelectorAll('.hero-reveal').forEach(function(el){ el.classList.add('is-visible'); });
+    var hero = document.getElementById('hero-d');
+    if (!hero) return;
+    var els = hero.querySelectorAll('.hero-reveal');
+    if (!els.length) return;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function fallback(){
+      requestAnimationFrame(function(){ requestAnimationFrame(function(){
+        els.forEach(function(el){ el.classList.add('is-visible'); });
+      }); });
+    }
+
+    function run(){
+      if (typeof anime === 'undefined' || reduce) { fallback(); return; }
+      var started = false;
+      function go(){ if (started) return; started = true; animate(); }
+      /* If a hero intro (mosaic / unveil) is going to play, let the title rise
+         once it finishes; otherwise go now. The safety timeout guarantees the
+         title is never left hidden if the intro stalls. */
+      if (window.__heroIntroPending) {
+        document.addEventListener('hero-entrance', go, { once: true });
+        setTimeout(go, 2400);
+      } else {
+        go();
+      }
+    }
+
+    function animate(){
+      var eyebrow = hero.querySelector('.hero-stagger-1');
+      var head    = hero.querySelector('.hero-stagger-2');
+      var sub     = hero.querySelector('.hero-stagger-3');
+      var ctas    = hero.querySelector('.hero-stagger-4');
+
+      /* Take over from the CSS reveal: drop its transition + mark visible so the
+         end-state is right, then drive opacity/transform from anime. */
+      els.forEach(function(el){
+        el.style.transition = 'none';
+        el.classList.add('is-visible');
+        el.style.opacity = '0';
+        el.style.transform = 'none';
       });
-    });
+
+      /* Split the headline into word spans for a staggered rise. */
+      var words = [];
+      if (head) {
+        var txt = head.textContent.trim();
+        head.textContent = '';
+        head.style.opacity = '1';          /* words carry the fade now */
+        txt.split(/\s+/).forEach(function(w){
+          var s = document.createElement('span');
+          s.className = 'hero-word';
+          s.textContent = w;
+          s.style.display = 'inline-block';
+          s.style.willChange = 'transform, opacity';
+          head.appendChild(s);
+          head.appendChild(document.createTextNode(' '));
+          words.push(s);
+        });
+      }
+
+      /* On a hidden tab anime can't tick — snap to the final state so the
+         headline is never left invisible (the preview panel runs hidden). */
+      if (document.hidden) {
+        els.forEach(function(el){ el.style.opacity = '1'; });
+        words.forEach(function(s){ s.style.opacity = '1'; });
+        return;
+      }
+
+      var tl = anime.timeline({ easing: 'easeOutExpo' });
+      if (eyebrow)      tl.add({ targets: eyebrow, opacity:[0,1], translateY:[14,0], duration:700 }, 80);
+      if (words.length) tl.add({ targets: words,   opacity:[0,1], translateY:['0.5em',0], duration:900, delay: anime.stagger(45) }, '-=450');
+      if (sub)          tl.add({ targets: sub,     opacity:[0,1], translateY:[12,0], duration:700 }, '-=560');
+      if (ctas)         tl.add({ targets: ctas,    opacity:[0,1], translateY:[12,0], duration:650 }, '-=450');
+    }
+
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
+    else run();
   })();
   </script>
 
@@ -1596,9 +1698,21 @@ header.header-hidden{transform:translateY(-100%)}
   /* Hero primary CTA — filled so it reads over any artwork */
   .hero-cta-fill { display:inline-block; background:#FF6600; color:#fff; padding:16px 36px; font-family:Inter,sans-serif; font-size:11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; text-decoration:none; transition:background 0.25s ease, transform 0.2s ease; }
   .hero-cta-fill:hover, .hero-cta-fill:focus-visible { background:#0B0B0B; transform:translateY(-2px); }
+  /* Filled CTA: white label in BOTH themes. dark-mode.css's generic `.dark a`
+     rule was repainting the text #FF6600 — identical to the orange fill, so the
+     label vanished. A filled button always needs white text; force it. */
+  .hero-cta-fill, .hero-cta-fill:hover, .hero-cta-fill:focus-visible,
+  .dark .hero-cta-fill, .dark .hero-cta-fill:hover, .dark .hero-cta-fill:focus-visible {
+    color:#fff !important; -webkit-text-fill-color:#fff !important;
+  }
   @media (prefers-reduced-motion: reduce) { .hero-cta-fill { transition: none; } }
   /* Hero secondary CTA — underline style */
   .hero-cta-ghost { display:inline-block; color:#fff; font-family:Inter,sans-serif; font-size:11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; text-decoration:none; border-bottom:1px solid rgba(255,255,255,0.45); padding-bottom:3px; transition:border-color 0.2s ease; }
+  /* White label in BOTH themes — same `.dark a` repaint that hit the fill CTA. */
+  .hero-cta-ghost, .hero-cta-ghost:hover, .hero-cta-ghost:focus-visible,
+  .dark .hero-cta-ghost, .dark .hero-cta-ghost:hover, .dark .hero-cta-ghost:focus-visible {
+    color:#fff !important; -webkit-text-fill-color:#fff !important;
+  }
   .hero-cta-ghost:hover, .hero-cta-ghost:focus-visible { border-color:rgba(255,255,255,1); }
   @media (prefers-reduced-motion: reduce) { .hero-cta-ghost { transition: none; } }
   /* Hero text entrance */
@@ -1658,12 +1772,6 @@ header.header-hidden{transform:translateY(-100%)}
   .bento-dark { background: #0B0B0B; border-color: #0B0B0B; transition: background-color 0.3s ease, border-color 0.22s ease, box-shadow 0.22s ease; }
   .bento-dark:hover { background-color: #FF6600; border-color: #FF6600; box-shadow: 0 0 20px rgba(0,0,0,0.18); }
   .bento-dark:hover .bracket { color: #ffffff; }
-  /* Featured Works — image zoom + caption reveal */
-  .zoom-img { transition: transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94); will-change: transform; }
-  .group:hover .zoom-img { transform: scale(1.07); }
-  .card-caption { position:absolute;bottom:0;left:0;right:0;padding:24px 14px 14px;background:linear-gradient(to top,rgba(11,11,11,0.72) 0%,transparent 100%);opacity:0;transform:translateY(6px);transition:opacity 0.3s ease,transform 0.3s ease;pointer-events:none; }
-  .group:hover .card-caption { opacity:1;transform:translateY(0); }
-  @media(prefers-reduced-motion:reduce){.zoom-img{transition:none}.card-caption{transition:none}}
   </style>
   <!-- How to Explore — 4 clear paths -->
   <section id="explore-section" class="border-b border-outline-variant px-margin-desktop" style="padding-top:80px;padding-bottom:80px;">
@@ -1901,7 +2009,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
         card.innerHTML = `
           <div class="featured-card-img sm:mb-md bg-surface-container-low">
             <img
-              alt="${w.title}"
+              alt=""
               class="w-full aspect-[3/4] object-cover"
               src="artworks/thumbs/${w.file}"
               loading="${isFirst ? 'eager' : 'lazy'}"${isFirst ? ' fetchpriority="high"' : ''}
@@ -1936,6 +2044,343 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
   }, true);
 </script>
 
+<!-- ═══════════════════════════════════════════════
+     Hero rotation — choreographed crossfade through the 10 curated POOL works.
+     Motion BETWEEN works (the connective tissue), never ON the work: a clean
+     dissolve, no filter/scale/tilt of the artwork itself. anime.js timelines
+     keep the image, caption, and chromatic-river "you are here" marker in sync.
+     Honours prefers-reduced-motion (stays on the single static hero) and pauses
+     when the tab is hidden.  (Session 79 — first anime.js move.)
+     ═══════════════════════════════════════════════ -->
+<script>
+(function () {
+  'use strict';
+  /* Set synchronously (at parse, before the title timeline's DOMContentLoaded
+     handler runs) so the title knows to wait for the hero intro to finish. */
+  window.__heroIntroPending = true;
+  /* anime.js is deferred, so it isn't ready at parse time — wait for the
+     deferred scripts to finish (they run before DOMContentLoaded). */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+  function init() {
+  if (typeof anime === 'undefined') return;                 // library missing → static hero
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var pool = window.__HERO_POOL;
+  if (!pool || pool.length < 2) return;
+
+  var INTERVAL = 7000;   // dwell per work
+  var FADE     = 1200;   // crossfade duration
+
+  function heroFile(id, kind) {
+    return 'artworks/full/' + id + (kind === 'm' ? '-hero-m' : '-hero') + '.avif';
+  }
+
+  /* Turn a single-image hero container into a two-layer crossfade stage. */
+  function makeStage(containerId, kind) {
+    var c = document.getElementById(containerId);
+    if (!c) return null;
+    var a = c.querySelector('img');
+    if (!a) return null;
+    a.style.position = 'absolute'; a.style.inset = '0';
+    a.style.opacity = '1'; a.style.zIndex = '1';
+    a.alt = '';                                              // decorative; caption link carries the info
+    var b = a.cloneNode(false);
+    b.removeAttribute('fetchpriority'); b.removeAttribute('loading');
+    b.classList.remove('is-active');
+    b.style.opacity = '0'; b.style.zIndex = '2';
+    b.alt = ''; b.src = '';
+    c.appendChild(b);
+    return { layers: [a, b], front: 0, kind: kind, currentEl: a, container: c };
+  }
+
+  /* Slice count for a stage — enough to read as the river's vertical slices,
+     never noisy. Scales with width. */
+  function sliceCount(W) { return Math.max(10, Math.min(22, Math.round(W / 80))); }
+
+  /* Transient overlay of vertical strips, each an exact cover-fit WINDOW onto
+     `work`'s hero image (the strips together reconstruct it pixel-for-pixel —
+     no scale or squash of the art). Returns the strips (hidden at opacity 0) or
+     null if the stage has no size (hidden at this breakpoint). */
+  function buildImageSlices(stage, work) {
+    var c = stage.container;
+    var old = c.querySelector('.hero-slices'); if (old) old.remove();
+    var rect = c.getBoundingClientRect();
+    var W = rect.width, H = rect.height;
+    if (!W || !H) return null;
+    var N = sliceCount(W), sw = W / N;
+    var url = heroFile(work.id, stage.kind), pos = work.pos || 'center center';
+    /* Edge-light colour = the incoming work's own dominant colour (from the
+       chromatic data); falls back to brand orange before that JSON has loaded.
+       Peak opacity is luminance-scaled so a light/neutral dominant colour never
+       blows the artwork out (screen blend) — the light stays a hint, not a haze. */
+    var light = (window.__CHROMA_BG && window.__CHROMA_BG[work.id]) || '#FF6600';
+    var flashPeak = 0.30 * (1 - 0.62 * hexLum(light));
+    var cont = document.createElement('div');
+    cont.className = 'hero-slices';
+    cont.style.cssText = 'position:absolute;inset:0;z-index:3;overflow:hidden;pointer-events:none;';
+    var strips = [], flashes = [];
+    for (var i = 0; i < N; i++) {
+      var strip = document.createElement('div');
+      strip.style.cssText = 'position:absolute;top:0;height:100%;left:' + (i * sw) +
+        'px;width:' + (sw + 0.6) + 'px;overflow:hidden;opacity:0;will-change:opacity;';
+      var inner = document.createElement('div');
+      inner.style.cssText = 'position:absolute;top:0;left:' + (-i * sw) + 'px;width:' + W +
+        'px;height:' + H + 'px;background-image:url(' + url + ');background-size:cover;background-position:' + pos + ';';
+      var flash = document.createElement('div');   /* transient light that rides the reveal front */
+      flash.style.cssText = 'position:absolute;inset:0;background:' + light +
+        ';opacity:0;mix-blend-mode:screen;pointer-events:none;will-change:opacity;';
+      strip.appendChild(inner); strip.appendChild(flash);
+      cont.appendChild(strip); strips.push(strip); flashes.push(flash);
+    }
+    c.appendChild(cont);
+    return { container: cont, strips: strips, flashes: flashes, flashPeak: flashPeak };
+  }
+
+  /* Relative luminance (0 dark → 1 light) of a #hex colour, for scaling the
+     edge-light so pale dominant colours don't wash the artwork. */
+  function hexLum(hex) {
+    hex = String(hex).replace('#', '');
+    if (hex.length === 3) hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+    var r = parseInt(hex.substr(0, 2), 16) / 255,
+        g = parseInt(hex.substr(2, 2), 16) / 255,
+        b = parseInt(hex.substr(4, 2), 16) / 255;
+    if (isNaN(r) || isNaN(g) || isNaN(b)) return 0.5;
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  }
+
+  /* Transition to `work` with a left→right slice wipe (the river motif), over the
+     previous work held visible underneath (black-safe: a real artwork is always
+     painting, so a throttled rAF can never blank the hero). Falls back to a plain
+     dissolve if the stage can't be sliced. */
+  function sliceTo(stage, work, sweep) {
+    sweep = sweep || { from: 'first' };
+    var inc = stage.layers[1 - stage.front];
+    var out = stage.layers[stage.front];
+    stage.front = 1 - stage.front;
+    stage.currentEl = inc;
+    out.style.opacity = '1'; out.style.zIndex = '1';        // held visible underneath
+    inc.style.objectPosition = work.pos || 'center center';
+    inc.style.zIndex = '2'; inc.style.opacity = '0';        // rests here; shown when slices finish
+    inc.src = heroFile(work.id, stage.kind);
+    var ready = inc.decode ? inc.decode().catch(function () {}) : Promise.resolve();
+    ready.then(function () {
+      if (stage.currentEl !== inc) return;                  // superseded by a newer advance
+      var s = buildImageSlices(stage, work);
+      if (!s) {                                             // no size → plain dissolve
+        anime.remove(inc);
+        anime({ targets: inc, opacity: [0, 1], duration: FADE, easing: 'easeInOutSine' });
+        return;
+      }
+      /* Reveal the slices on the per-work sweep, and ride a tinted light along
+         the same front (flash up, then settle) so each transition is composed. */
+      anime({
+        targets: s.strips, opacity: [0, 1], duration: 520,
+        delay: anime.stagger(26, sweep), easing: 'easeOutQuad',
+        complete: function () {
+          if (stage.currentEl === inc) inc.style.opacity = '1';  // identical image now rests under the strips
+          s.container.remove();
+        }
+      });
+      anime({
+        targets: s.flashes, opacity: [s.flashPeak, 0], duration: 560,
+        delay: anime.stagger(26, sweep), easing: 'easeOutQuad'
+      });
+    });
+  }
+
+  /* First-load unveil: dark panels (matching the hero letterbox) lift off the
+     already-painted hero, slice by slice, L→R. The artwork is fully rendered the
+     whole time — LCP-friendly and flicker-free; the panels only uncover it. */
+  function loadUnveil(stage) {
+    var c = stage.container;
+    var rect = c.getBoundingClientRect();
+    var W = rect.width, H = rect.height;
+    if (!W || !H) return;
+    var N = sliceCount(W), sw = W / N;
+    var cont = document.createElement('div');
+    cont.className = 'hero-slices';
+    cont.style.cssText = 'position:absolute;inset:0;z-index:4;overflow:hidden;pointer-events:none;';
+    var strips = [];
+    for (var i = 0; i < N; i++) {
+      var strip = document.createElement('div');
+      strip.style.cssText = 'position:absolute;top:0;height:100%;left:' + (i * sw) +
+        'px;width:' + (sw + 0.6) + 'px;background:#1a1814;will-change:opacity;';
+      cont.appendChild(strip); strips.push(strip);
+    }
+    c.appendChild(cont);
+    anime({
+      targets: strips, opacity: [1, 0], duration: 620,
+      delay: anime.stagger(34, { from: 'center' }), easing: 'easeInOutQuad',
+      complete: function () { cont.remove(); }
+    });
+  }
+
+  /* Mosaic intro: a grid of real archive thumbnails assembles from the centre,
+     holds, then dissolves outward to reveal the hero (painted underneath the
+     whole time — LCP-safe, no flicker). `done` fires when the hero is clear. */
+  function mosaicIntro(stage, ids, done) {
+    var c = stage.container;
+    var rect = c.getBoundingClientRect();
+    var W = rect.width, H = rect.height;
+    if (!W || !H || !ids.length) { done(); return; }
+    var cols = Math.max(4, Math.min(8, Math.round(W / 200)));
+    var rows = Math.max(3, Math.min(7, Math.round(H / 200)));
+    var n = cols * rows;
+    var cont = document.createElement('div');
+    cont.className = 'hero-slices';
+    cont.style.cssText = 'position:absolute;inset:0;z-index:5;overflow:hidden;background:#1a1814;display:grid;' +
+      'grid-template-columns:repeat(' + cols + ',1fr);grid-template-rows:repeat(' + rows + ',1fr);gap:2px;';
+    var tiles = [];
+    for (var i = 0; i < n; i++) {
+      var id = ids[i % ids.length];
+      var t = document.createElement('div');
+      t.style.cssText = 'background:#1a1814 center/cover no-repeat;background-image:url(artworks/mini/' + id +
+        '.avif);opacity:0;will-change:opacity,transform;';
+      cont.appendChild(t); tiles.push(t);
+    }
+    c.appendChild(cont);
+    var tl = anime.timeline({ complete: function () { cont.remove(); done(); } });
+    tl.add({ targets: tiles, opacity: [0, 1], scale: [0.6, 1], duration: 560,
+             delay: anime.stagger(16, { grid: [cols, rows], from: 'center' }), easing: 'easeOutQuad' });
+    tl.add({ targets: cont, opacity: [1, 0], scale: [1, 1.08], duration: 720, easing: 'easeInQuad' }, '+=240');
+  }
+
+  /* Play the first-load intro on the visible stage(s): mosaic of real works →
+     hero. Falls back to the dark-panel unveil if the work list can't be fetched.
+     Releases the title timeline (`hero-entrance`) and starts rotation when done. */
+  function startIntro() {
+    var released = false;
+    function release() { if (released) return; released = true; document.dispatchEvent(new CustomEvent('hero-entrance')); start(); }
+    var visible = stages.filter(function (s) { var r = s.container.getBoundingClientRect(); return r.width && r.height; });
+    if (!visible.length) { release(); return; }
+    /* The mosaic is a grand entrance — play it once per session; later loads in
+       the same session get the quieter unveil so navigation isn't theatrical. */
+    var firstThisSession = true;
+    try { firstThisSession = !sessionStorage.getItem('jfsn-hero-intro'); sessionStorage.setItem('jfsn-hero-intro', '1'); } catch (e) {}
+    if (!firstThisSession) { visible.forEach(loadUnveil); release(); return; }
+    var safety = setTimeout(function () { if (!released) { visible.forEach(loadUnveil); release(); } }, 1600);
+    fetch('catalog-home.json').then(function (r) { return r.ok ? r.json() : Promise.reject(); }).then(function (works) {
+      if (released) return;
+      clearTimeout(safety);
+      var ids = works.map(function (w) { return String(w.file || '').replace('.avif', ''); }).filter(Boolean);
+      for (var i = ids.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = ids[i]; ids[i] = ids[j]; ids[j] = t; }
+      if (!ids.length) { visible.forEach(loadUnveil); release(); return; }
+      var pending = visible.length;
+      visible.forEach(function (s) { mosaicIntro(s, ids, function () { if (--pending === 0) release(); }); });
+    }).catch(function () { clearTimeout(safety); if (!released) { visible.forEach(loadUnveil); release(); } });
+  }
+
+  /* Hero work years (parsed from the caption "Title · YEAR · MEDIUM"). Used to
+     give each transition a direction that ENCODES time — see showWork. */
+  var years = (window.__HERO_POOL || []).map(function (w) {
+    return parseInt(String(w.caption).split(' · ')[1], 10) || 0;
+  });
+  var prevShownIdx = 0;
+
+  /* Self-heal: guarantee the current work is fully visible right now, with no
+     dependence on an in-flight rAF animation. Called on tab-return so a fade
+     that was frozen mid-flight (rAF pauses on hidden tabs) can never leave the
+     hero blank. */
+  function snapVisible() {
+    stages.forEach(function (s) {
+      [].forEach.call(s.container.querySelectorAll('.hero-slices'), function (n) { n.remove(); });
+      if (!s.currentEl) return;
+      s.layers.forEach(function (l) { l.style.opacity = (l === s.currentEl) ? '1' : '0'; });
+    });
+  }
+
+  var stages = [ makeStage('hero-slides-d', 'd'), makeStage('hero-slides-m', 'm') ].filter(Boolean);
+  if (!stages.length) return;
+
+  var captions = [ document.getElementById('hero-caption-d'),
+                   document.getElementById('hero-caption-m') ].filter(Boolean);
+  /* The caption now changes every ~7s. Drop aria-live so screen readers aren't
+     announced at on every rotation — the caption is still a focusable link that
+     reads its work on focus. */
+  captions.forEach(function (el) { el.removeAttribute('aria-live'); });
+
+  /* Typeset reveal: fade the old caption out, then stagger the new
+     title / year / medium segments up into place — choreographed to overlap the
+     image cross-dissolve so the whole change reads as one composed move. */
+  function setCaption(el, work) {
+    anime.remove(el);
+    anime({
+      targets: el, opacity: [1, 0], translateY: [0, 4], duration: 300, easing: 'easeInQuad',
+      complete: function () {
+        el.setAttribute('href', 'artwork.html?id=' + work.id);
+        el.style.opacity = '1'; el.style.transform = 'none';
+        el.innerHTML = '';
+        var parts = String(work.caption).split(' · ');
+        var segs = [];
+        parts.forEach(function (p, i) {
+          var sp = document.createElement('span');
+          sp.style.display = 'inline-block';
+          sp.textContent = p;
+          el.appendChild(sp);
+          segs.push(sp);
+          if (i < parts.length - 1) {
+            var d = document.createElement('span');
+            d.setAttribute('aria-hidden', 'true');
+            d.textContent = ' · ';
+            d.style.opacity = '0.5';
+            el.appendChild(d);
+          }
+        });
+        anime({ targets: segs, opacity: [0, 1], translateY: ['0.4em', 0],
+                duration: 520, delay: anime.stagger(90), easing: 'easeOutExpo' });
+      }
+    });
+  }
+
+  var idx = 0, timer = null;
+
+  function showWork() {
+    var work = pool[idx];
+    /* Direction encodes chronology, matching the river axis (left = 1974, right
+       = today): moving to a later work wipes L→R, going back wipes R→L. */
+    var sweep = (years[idx] < years[prevShownIdx]) ? { from: 'last' } : { from: 'first' };
+    stages.forEach(function (s) { sliceTo(s, work, sweep); });
+    captions.forEach(function (el) { setCaption(el, work); });
+    /* Slide the river "you are here" marker to the new work (CSS handles the ease). */
+    window.__heroWorkId = work.id;
+    document.dispatchEvent(new CustomEvent('herowork'));
+    prevShownIdx = idx;
+  }
+
+  function advance() { idx = (idx + 1) % pool.length; showWork(); }
+
+  /* Played from the river: jump the hero straight to a chosen work, then reset
+     the dwell so it holds full-length before auto-advancing again. */
+  window.__heroGoTo = function (id) {
+    var found = -1;
+    for (var i = 0; i < pool.length; i++) { if (pool[i].id === id) { found = i; break; } }
+    if (found < 0) return;
+    idx = found; showWork();
+    stop(); if (!document.hidden) start();
+  };
+
+  function start() { if (!timer) timer = setInterval(advance, INTERVAL); }
+  function stop()  { if (timer) { clearInterval(timer); timer = null; } }
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) { stop(); } else { snapVisible(); start(); }
+  });
+  /* Only run while visible. On a hidden/backgrounded tab (the embedded preview
+     panel is one) anime can't tick, so we leave the static first hero in place,
+     release the title immediately, and begin rotating once the tab is shown. */
+  if (!document.hidden) {
+    startIntro();
+  } else {
+    document.dispatchEvent(new CustomEvent('hero-entrance'));
+  }
+  }
+})();
+</script>
+
 <!-- GoatCounter — privacy-first analytics -->
 <script src="_shared/nav-active.js" defer></script>
 <script>
@@ -1948,6 +2393,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
   /* HERO_POOL:END */
   var heroWork = POOL[0];
   window.__heroWorkId = heroWork.id;
+  window.__HERO_POOL = POOL;   /* exposed for the hero rotation (anime.js) */
   document.dispatchEvent(new CustomEvent('herowork'));
 
   /* LCP optimization: swap hero from lightweight to full-quality after LCP completes */
@@ -2181,8 +2627,50 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
     else          { sp.style.left = '5px';  sp.style.right = 'auto'; }
     m.style.display = 'block';
   }
-  function placeHeroMarkers() { placeHeroMarker('d'); placeHeroMarker('m'); }
+  function placeHeroMarkers() { placeHeroMarker('d'); placeHeroMarker('m'); markActiveTick(); }
   document.addEventListener('herowork', placeHeroMarkers);
+
+  /* Mark the 10 curated hero works as clickable carets on the river. Positions
+     are percentage-based, so they survive resize with no recompute. Clicking one
+     plays the hero to that work (or, if motion is off, opens the work). */
+  function placeHeroTicks(suffix) {
+    var wrap = document.getElementById('river-wrap-' + suffix);
+    if (!wrap || !DATA || !window.__HERO_POOL) return;
+    [].forEach.call(wrap.querySelectorAll('.river-hero-tick'), function (n) { n.remove(); });
+    window.__HERO_POOL.forEach(function (hw) {
+      var di = -1;
+      for (var i = 0; i < DATA.length; i++) { if (DATA[i].id === hw.id) { di = i; break; } }
+      if (di < 0) return;
+      var pct = ((di + 0.5) / DATA.length) * 100;
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'river-hero-tick';
+      b.dataset.id = hw.id;
+      b.style.left = pct + '%';
+      b.setAttribute('aria-label', 'Show in the hero: ' + (DATA[di].title || hw.id) + ', ' + DATA[di].year);
+      b.innerHTML = '<span aria-hidden="true"></span>';
+      b.addEventListener('click', function (e) {
+        e.preventDefault(); e.stopPropagation();
+        if (window.__heroGoTo) {
+          window.__heroGoTo(hw.id);
+          var hero = document.getElementById(suffix === 'm' ? 'hero-m' : 'hero-d');
+          if (hero && hero.getBoundingClientRect().top < -40) {
+            hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        } else {
+          window.location.href = 'artwork.html?id=' + hw.id;
+        }
+      });
+      wrap.appendChild(b);
+    });
+    markActiveTick();
+  }
+  function markActiveTick() {
+    var id = window.__heroWorkId;
+    [].forEach.call(document.querySelectorAll('.river-hero-tick'), function (b) {
+      b.classList.toggle('is-current', b.dataset.id === id);
+    });
+  }
 
   /* ── Today from the archive ── */
 
@@ -2274,12 +2762,15 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
       data.sort(function (a, b) { return a.year - b.year; });
       DATA = data;
       DECADE_IDX = {};
+      window.__CHROMA_BG = {};   /* id → dominant colour, for the hero edge-light */
       data.forEach(function (w, i) {
         var dec = Math.floor(w.year / 10) * 10;
         if (!(dec in DECADE_IDX)) DECADE_IDX[dec] = i;
+        window.__CHROMA_BG[w.id] = w.bg;
       });
       renderAll();
       placeHeroMarkers(); /* hero fired before this script's listener existed */
+      placeHeroTicks('d'); placeHeroTicks('m');  /* clickable hero works on the river */
       wireRiver('d'); wireRiver('m');
       wireWall('d'); wireWall('m');
       /* "Open one at random" — any of the 1,084, fresh pick per click */
