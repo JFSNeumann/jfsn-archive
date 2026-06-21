@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1782046650'; // Session 77: archive Tier 2-4 interactions (ripple/badge/swatch/peek modal) + homepage hover fade strengthen/dark-aware
+const CACHE_V  = 'jfsn-1782046998'; // Session 77: archive Tier 2-4 interactions + remove dead ?-key shortcutsModal handler (ReferenceError fix)
 const PRECACHE = [
   '/',
   '/index.html',

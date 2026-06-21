@@ -1780,19 +1780,10 @@ function renderSavedFilters() {
 document.getElementById('save-filter-btn').addEventListener('click', saveFilter);
 renderSavedFilters();
 
-// Keyboard shortcuts modal - disabled
-// Elements removed; feature disabled due to duplicate implementations
-// See Session 66 final summary for details
-
-document.addEventListener('keydown', (e) => {
-  if (e.key === '?') {
-    e.preventDefault();
-    shortcutsModal.classList.toggle('hidden');
-  }
-  if (e.key === 'Escape' && !shortcutsModal.classList.contains('hidden')) {
-    shortcutsModal.classList.add('hidden');
-  }
-});
+// Keyboard shortcuts modal removed (disabled in Session 66 — element deleted
+// due to duplicate implementations). The old keydown handler that referenced
+// the now-undefined `shortcutsModal` was removed in Session 77 because it threw
+// a ReferenceError on every `?` / Escape keypress.
 
 // Dark mode is owned by the shared nav toggle (#theme-toggle-btn in
 // _shared/top-nav.html): it reads/writes the same `jfsn-theme` key and toggles
