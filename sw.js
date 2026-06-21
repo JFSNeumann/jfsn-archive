@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1782046998'; // Session 77: archive Tier 2-4 interactions + remove dead ?-key shortcutsModal handler (ReferenceError fix)
+const CACHE_V  = 'jfsn-1782063281'; // Session 78: homepage Selected Works simplified (removed ripple/badge/swatch/peek-modal/filter/tilt) + CLAUDE.md design-governance litmus
 const PRECACHE = [
   '/',
   '/index.html',
