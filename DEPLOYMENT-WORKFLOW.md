@@ -1,5 +1,7 @@
 # Improved Deployment Workflow
 
+> ⚠️ **Scope:** This doc covers the **Netlify mirror** only. The **primary live site (jfsn.com) is HostGator** — deploy it with `bash deploy-hostgator.sh` (see CLAUDE.md → Deployment). "Production" / `--prod` below means *Netlify production*, NOT jfsn.com.
+
 ## Overview
 
 Three new scripts have been added to streamline the deployment process:
@@ -113,13 +115,12 @@ bash session-end.sh --deploy --prod    # + Production deploy
 
 **Steps:**
 1. Check git status (prompts if uncommitted changes)
-2. Commit with Co-Authored-By footer
+2. Commit with Co-Authored-By footer (uses `--no-verify` so the `site.min.css` pre-commit hook doesn't block HTML-only sessions)
 3. Push to origin/main
-4. Rsync backup to external drive
-5. Optional: Deploy to Netlify
+4. Cold backup via `backup.sh` (→ `/Volumes/JEFFS-4TB/JFSN-backup`, with its own drive-mounted/writable checks + source/dest file-count verification)
+5. Optional: Deploy to the **Netlify mirror** — NOT jfsn.com. The live site is deployed separately via `bash deploy-hostgator.sh`.
 
-**Environment:**
-- `BACKUP_DIR` — custom backup path (default: `/Volumes/Backup-JFSN`)
+**Backup:** delegates to `backup.sh` (no `BACKUP_DIR` env var). If `JEFFS-4TB` isn't mounted, the step warns and continues — run `bash backup.sh` manually once the drive is available.
 
 ## Common Issues & Solutions
 
