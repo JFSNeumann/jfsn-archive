@@ -2,6 +2,13 @@
 
 > **Primary guiding document:** `JFSN-MISSION.md` — read it before making any significant development or content decision.
 
+> **The litmus** — before adding any interaction, animation, dependency, or page, all three must be true:
+> 1. It helps a future grandchild understand Jeff and his work.
+> 2. It's the most restrained way to do that — the page couldn't be as clear with less.
+> 3. A maintainer in 20 years will thank you for it.
+>
+> If not all three, don't. The bar is **high-end restraint** — fewer elements, impeccably executed; the work given room and shown honestly. Refine before you add. Craft shows in what you leave out.
+
 ## Project
 Personal archive site for Jeffrey F. S. Neumann — 1,084 works spanning 1974–present.
 Collage, sculpture, photography. This is a personal record, not a promotional platform.
@@ -59,14 +66,12 @@ colors: {
 - **Accessibility:** WCAG AA contrast minimum on all persistent text. Test text/background pairs before shipping.
 - **Data integrity clause (NON-NEGOTIABLE):** Never ship fabricated provenance / accession numbers, invented badges, fake DPI/resolution, fabricated quotes, or composite images presented as real exhibitions. Years stay decade estimates; composites stay flagged. Design can evolve; data stays honest.
 
-### Design is open
-All visual constraints have been removed. You now have full creative control:
-- ✅ Gradients, rounded corners, shadows, filters — all available
-- ✅ Hover scales, transforms, overlays, scroll-reveals — all available
-- ✅ Grayscale, sibling dim, skeleton loaders, particles — all available
-- ✅ Typography, spacing, layering, color — experiment freely
+### Design is open — in service of the mission
+The full toolkit is available — gradients, shadows, filters, transforms, overlays, scroll-reveals, typography, spacing, layering, colour. None of it is forbidden.
 
-**Apply judgment:** Does it serve the work? Does it help users navigate or understand the archive? If yes, ship it. The only non-negotiable rule is data integrity.
+But **capability is not a reason to use it.** Every creative tool must answer the litmus above and **default to removal**. The aim is a high-end, considered result — and at this level that almost always means *fewer, better* moves, not more of them: impeccable type and spacing, generous room around the work, honest presentation. Restraint is the craft, not a limitation on it. Resist decoration, novelty for its own sake, and engagement mechanics; when in doubt, refine what exists before adding something new.
+
+**Apply judgment:** Does it help someone understand Jeff and his work? Is it the most restrained way to do so? If yes, ship it. The only non-negotiable rule is data integrity — no fabricated provenance, badges, or composites-as-real.
 
 ---
 
@@ -130,7 +135,7 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 | `favorites.html` | 45 personally significant works from favorites.txt. Fetches catalog-lite.json. In stamp-nav.sh. |
 
 ### Interactions (live)
-- **Homepage Selected Works (index.html):** CSS Columns masonry grid (4→3→2 columns responsive). Featured cards use `.featured-card` + `.featured-card-img` + `.featured-metadata` structure — matches archive.html exactly. Hover: orange outline (#e05900, Material Design), scale(1.03), brightness(1.04). Title turns #e05900 on hover. No overlays, clean image display.
+- **Homepage Selected Works (index.html):** CSS Columns masonry grid (4→3→2 columns responsive). Featured cards use `.featured-card` + `.featured-card-img` + `.featured-metadata` structure. The image is shown **faithfully (no filter)** with an **always-visible** title/year/medium caption beneath it; the whole card links to the artwork page. Hover/focus shows only a quiet orange outline (#e05900) — **no** scale, brightness, title colour-shift, overlay, medium badge, colour swatch, click ripple, 3D tilt, or quick-preview modal (all removed in the 2026-06-21 simplicity pass — see `docs/archive/README.md`). NOTE: the structure still matches archive.html, but archive.html *still carries* the Session-77 interaction layer (ripple/badge/swatch/peek-modal) and is a candidate for the same simplification.
 - Orange outline on hover: `_shared/ui.css` `.thumb__link` — `outline-color` transition from `rgba(255,102,0,0)` → `#FF6600`. Archive cards + decade pages use `.archive-card-img` with `#e05900` (Material Design orange)
 - Keyboard ← / → between decade pages: `_shared/ui.js`
 - Vertical "you are here" margin label: `_shared/ui.js` + `data-page-label` on `<body>`
