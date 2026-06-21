@@ -683,9 +683,17 @@
     #featured-grid .featured-card:hover { background: none !important; box-shadow: none !important; }
     #featured-grid .featured-card:hover .featured-metadata {
       background: linear-gradient(to bottom,
-        rgba(252, 249, 243, 0.72) 0%,
-        rgba(252, 249, 243, 0.72) 55%,
-        rgba(252, 249, 243, 0) 100%);
+        rgba(245, 239, 229, 0.96) 0%,
+        rgba(245, 239, 229, 0.92) 50%,
+        rgba(245, 239, 229, 0) 100%);
+    }
+    /* Dark-mode-aware variant — a light-on-dark lift instead of an off-white
+       panel, fading to transparent at the card bottom like the light version. */
+    html.dark #featured-grid .featured-card:hover .featured-metadata {
+      background: linear-gradient(to bottom,
+        rgba(255, 255, 255, 0.12) 0%,
+        rgba(255, 255, 255, 0.09) 50%,
+        rgba(255, 255, 255, 0) 100%);
     }
   }
 

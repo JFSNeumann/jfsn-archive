@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1787300200'; // Session 76: hover off-white now fades to transparent toward card bottom (no hard rectangle)
+const CACHE_V  = 'jfsn-1782046650'; // Session 77: archive Tier 2-4 interactions (ripple/badge/swatch/peek modal) + homepage hover fade strengthen/dark-aware
 const PRECACHE = [
   '/',
   '/index.html',
