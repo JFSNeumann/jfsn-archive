@@ -2,6 +2,12 @@
 
 > **Primary guiding document:** `JFSN-MISSION.md` — read it before making any significant development or content decision.
 
+> **The guiding question** (from JFSN-MISSION.md):
+>
+> *"Will this help a future grandchild understand Jeff and his life better?"*
+>
+> Every addition, improvement, or change is tested against that question first. If the answer is yes, it's likely worth doing. If the answer is no, it's lower priority. The litmus below is the operational test the guiding question expects you to run.
+
 > **The litmus** — before adding any interaction, animation, dependency, or page:
 > 1. Does it help someone understand Jeff and his work — *or* is it Jeff's own craft? (He is a web/motion designer and animator with 40 years of practice. Motion is part of who he is, not decoration bolted on.)
 > 2. **Is the work itself still shown honestly?** Never filter, recolour, crop-distort, or tilt the artwork; never hide its title/year/medium behind a hover (it vanishes on touch and for screen readers); no fabricated provenance, badges, or composites-as-real.
@@ -161,7 +167,15 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 - Service worker: `sw.js` — bump `CACHE_V` whenever deploy may be cached by old SW
 - **Hero AVIF upload path:** `.htaccess` rewrites `artworks/full/*.avif` → `/artworks/*.avif` (legacy flat dir). New hero crops (`artNNNN-hero.avif`) must be uploaded to `/artworks/` on HostGator — NOT `/artworks/full/`. Use lftp: `put artNNNN-hero.avif -o /artworks/artNNNN-hero.avif`
 - **`api/.htaccess` is auto-generated:** `build_catalog.py` overwrites it on every run. Edit the `htaccess` template string in that script — never the file directly. Do NOT add `SecFilterEngine`/`SecRuleEngine` — they cause HTTP 500 on HostGator.
-- **`catalog-lite.json` fields:** `file, title, year, work_type, themes, keywords, motifs, description, series, favorite, featured, orientation, composite, year_precision, year_display` (`orientation` = vertical/horizontal/square from `dims.json`, session 35; `composite`/`year_precision`/`year_display` = provenance fields, session 36). Source of truth is `LITE_FIELDS` in `build_catalog.py`. Don't add fields without checking what `search.js` and the Netlify edge function actually use.
+- **`catalog-lite.json` fields:** `file, title, year, work_type, themes, keywords, motifs, description, series, favorite, featured, orientation, composite, year_precision, year_display` (`orientation` = vertical/horizontal/square from `dims.json`, session 35; `composite`/`year_precision`/`year_display` = provenance fields, session 36). Source of truth is `LITE_FIELDS` in `build_catalog.py`.
+
+  **Adding a field is a multi-file change, NOT just an edit to `LITE_FIELDS`.** Consumers don't validate; they ignore unknown fields and break when expected fields disappear. Before adding or renaming any field, check:
+  1. `_shared/search.js` — does it index this field? read it?
+  2. `netlify/functions/artwork-meta.js` (and `companion-*.js` if relevant) — does the edge function rely on this field?
+  3. `gen-artwork-pages.py` — does the artwork-page template render this field?
+  4. `api.html` — is the field documented for API users?
+
+  If any consumer needs to know about it, update that consumer in the same commit. If you're removing or renaming a field, the same four locations need updates first.
 - **Provenance fields (session 36, set in `build_catalog.py` after the records sort):** `year_precision` is `'estimated'` for ALL works and `year_display` is the decade-bucket form `"1990s (est.)"` — every catalog year is a decade estimate (creator-confirmed), so artwork pages + API show "1990s (est.)", never a hard year. `composite` is `True` for the ~250 "imagined placement" works (rule: Gallery theme OR Studio theme OR a placement-language title via `PLACEMENT_RE`) — these are Photoshop composites, NOT real single works/exhibitions (master-notes §22/§25); artwork pages show an "Image — Photoshop composite — imagined placement" meta row. To change the composite set, edit the rule/`PLACEMENT_RE` and rerun `build_catalog.py` + `gen-artwork-pages.py`. NOTE: grid/search/favorites captions still show the bare decade year (e.g. "1990"); only the artwork detail pages + API carry the "(est.)" label.
 - **`artworks/pages/` regen:** `python3 gen-artwork-pages.py` rebuilds all 1,084 static pages. All include `search.js` + `nav-active.js` as of session 11. Use `--limit 5` to test template changes first.
 - **New page checklist:** When adding any new public `.html` page: (1) add to sitemap entries list in `build_catalog.py`, (2) run `python3 artworks/build_catalog.py` to rebuild sitemap, (3) add to TARGETS array in `stamp-nav.sh` so future nav updates propagate to it, (4) run `bash audit-nav.sh` — the reverse sitemap check will catch if it's missing from the sitemap.

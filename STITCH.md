@@ -33,7 +33,7 @@ Design system:
 - UI / labels: Inter (400–600), ALL CAPS, letter-spacing 0.1em
 - Body: Inter 16px / 18px
 - No rounded corners (border-radius: 0)
-- No drop shadows
+- No heavy or hard-edged shadows (soft diffused shadow `0 0 20px rgba(0,0,0,0.05)` is OK on UI cards — NEVER on artwork thumbnails)
 - No gradients
 - Borders: 1px solid #c4c7c7
 - Artwork thumbnails: full color always — no grayscale, ever
@@ -49,10 +49,15 @@ Mark the top nav exactly like this so stamp-nav.sh can replace it:
   [nav HTML]
   <!-- NAV:END -->
 
-The nav contains: JFSN wordmark (links to index.html) + Archive · Series ·
-Companion · About · Lost links + search icon + mobile menu icon.
-Mobile bottom nav: fixed bottom, bg #F3F0EA, border-top 1px solid #0B0B0B,
-5 items: Archive / Series / Companion / About / Lost.
+Top nav contains: JFSN wordmark (links to index.html) + 4 nav links
+(Archive · About · Stories · Lost) + ⌘K search trigger.
+
+Series and Companion are footer-only — NOT in the top nav.
+
+Mobile nav is a hamburger button (mobile only) that opens a slide-in
+drawer (#mobile-menu-drawer) — NOT a fixed bottom tab bar.
+Drawer links carry inline feather-style SVG icons (24-viewBox,
+1.8 stroke, currentColor — no icon fonts).
 ```
 
 ---
@@ -119,7 +124,8 @@ Mobile: [Describe mobile layout specifically — snap scroll? single column? hid
 Desktop: [Describe desktop layout — sidebar + main? full-bleed? grid?]
 
 Nav: Mark top nav <!-- NAV:START --> / <!-- NAV:END --> for stamp-nav.sh.
-Mobile bottom nav: bg #F3F0EA, border-top 1px solid #0B0B0B.
+Top nav has 4 items: Archive · About · Stories · Lost (Series + Companion are footer-only).
+Mobile nav is a hamburger button → slide-in drawer (#mobile-menu-drawer), NOT a bottom bar.
 
 Content philosophy: personal archive, not promotional. No CTAs. No engagement patterns.
 The image is the primary object. UI recedes.
@@ -147,10 +153,10 @@ no external component libraries, loading="lazy" on artwork images.
 
 | Page | Notes |
 |------|-------|
-| `collage.html` | Masonry grid, full color always, no scroll reveal |
+| `collage.html` | Masonry grid, full color always |
 | `photography.html` | Same structure as collage |
-| `index.html` | Desktop: full-bleed hero + featured grid. Mobile: snap-scroll folio |
-| `archive.html` | Sidebar filters + main grid, mobile sticky filter ledger |
+| `index.html` | Desktop + mobile: CSS Columns masonry Selected Works grid (4→3→2 cols). Image + always-visible caption + link — no hover overlays/badges/swatches (2026-06-21 simplicity pass) |
+| `archive.html` | Sidebar filters + main grid, mobile sticky filter ledger. Still carries Session-77 fc-* interaction layer — flagged in IMPROVEMENTS.md |
 | `about.html` | Multi-section: bio → contact → Lost Works bar → exhibition record |
 | `lost.html` | Essay + ghost grid — sparse, no CTAs, memorial tone |
 | `series-index.html` | Card grid, 8 series, Playfair Display titles |
@@ -158,4 +164,7 @@ no external component libraries, loading="lazy" on artwork images.
 | `wall.html` | 1,084 mini tiles, all full color |
 | `guernica.html` | Static theme page — 232 works, full static grid |
 | `api.html` | Developer docs — expandable endpoint cards, code blocks, light bg |
+| `stories.html` | In nav. Long-form story/context entries. |
+| `start-here.html` | Orientation page — who Jeff is, major themes, how to explore. Stamped. |
+| `favorites.html` | 45 personally significant works from favorites.txt. Stamped. |
 | **DELETED** | `constellation.html`, `timeline.html`, `for-artists.html`, `mosaic.html` — do not recreate |

@@ -1,15 +1,19 @@
 # JFSN Archive — Design System
 
 **Living design documentation**  
-Last updated: 2026-06-17  
+Last meaningfully updated: 2026-06-22  
 Framework: Tailwind CSS + vanilla HTML/CSS/JS  
-Philosophy: Artwork first. UI recedes. Light, minimal, archival aesthetic.
+Philosophy: Artwork first. UI recedes. Light, archival aesthetic.
+
+> Tokens, typography, and visual rules are canonically defined in `CLAUDE.md` § "Design System (current — Stitch/Tailwind, light)". This document is the implementation-level reference (component specs, accessibility patterns, interaction behavior, JSON export for automation). Where the two overlap, CLAUDE.md wins.
 
 ---
 
 ## Overview
 
-This design system formalizes the JFSN Archive visual language across 1,084 works and 31 public pages. It serves three personas: **first-time visitors** (visual, narrative entry), **researchers** (data, analysis, patterns), and **family** (legacy, inheritance, personal context).
+This design system documents the JFSN Archive visual language across 1,084 works and 31+ public pages.
+
+The archive welcomes a range of visitors — first-time arrivals coming for the work, family encountering personal history, researchers and collectors interested in a specific theme. The design serves *the work and its honest presentation*, not a user-type optimization. JFSN-MISSION.md is the authority on who this archive exists for and why.
 
 **Core principle:** The work is the primary object. Everything else supports discovery and understanding.
 
@@ -17,51 +21,18 @@ This design system formalizes the JFSN Archive visual language across 1,084 work
 
 ## Color System
 
-### Token Reference
+Token definitions (Stitch light + Material Design light) live in `CLAUDE.md` § "Token reference (two configs in use)". This document does not duplicate them; reference CLAUDE.md when implementing.
 
-All colors are defined in two systems: **Stitch light** (primary UI pages) and **Material Design light** (decade/archive pages). Both converge on the same visual language.
+### Contrast rule (load-bearing — repeated here because component specs depend on it)
 
-#### Stitch Light (Primary)
-Used on: collage.html, sculpture.html, photography.html, painting.html, lost.html, series index, start-here, favorites, api, stories, etc.
-
-```
-background:             #fcf9f3   (bone-white, page bg)
-deep-ink:               #0B0B0B   (primary text — dark gray)
-archive-gray:           #575757   (secondary text, labels)
-orange-ink:             #B84700   (persistent orange text — 5.07:1 AA contrast on light bg)
-international-orange:   #FF6600   (accent orange — only for hover/active/fills on dark sections — 6.7:1 on dark)
-outline-variant:        #c4c7c7   (neutral border)
-archival-outline:       #8e7164   (warm-brown archival border — Stitch June-2026)
-archival-outline-soft:  #e3bfb1   (warm-brown soft divider — Stitch June-2026)
-surface-container-high: #ebe8e2   (footer bg)
-bone-white:             #F3F0EA   (mobile nav bg)
-```
-
-#### Material Design Light (Archive/Decade Pages)
-Used on: archive.html, 1970s–2020s decade pages
-
-```
-background:             #fdf8f8   (warm off-white)
-primary:                #000000   (deep black text)
-secondary:              #5e5e5e   (gray secondary)
-on-tertiary-container:  #e05900   (orange accent)
-outline-variant:        #c4c7c7   (neutral border)
-surface-container-high: #ebe7e6   (footer bg)
-on-surface:             #1c1b1b   (text)
-on-surface-variant:     #444748   (secondary text)
-```
-
-### Contrast Requirements
-
-**WCAG AA compliance:**
-- `#FF6600` (international-orange): **6.7:1** on dark backgrounds only. FAILS (2.79:1) on light bone-white.
+- `#FF6600` (international-orange): **6.7:1** on dark backgrounds only. **FAILS** (2.79:1) on light bone-white.
 - `#B84700` (orange-ink): **5.07:1** on light backgrounds. Use for persistent text (labels, links, active states).
 - `#0B0B0B` (deep-ink): **20:1** on light backgrounds. Highest contrast.
 - `#575757` (archive-gray): **8.59:1** on light backgrounds. Good for secondary text.
 
-**Rule:** Orange text on light backgrounds must use `orange-ink` (#B84700). Hover/active states, fills, and sections on dark bg can use `international-orange` (#FF6600).
+**Operative rule:** Orange text on light backgrounds must use `orange-ink` (#B84700). Hover/active states, fills, and sections on dark backgrounds can use `international-orange` (#FF6600).
 
-### Soft Shadows (Stitch June-2026)
+### Soft shadows
 Card shadow for UI elements only (NOT artwork thumbnails):
 ```css
 box-shadow: 0 0 20px rgba(0,0,0,0.05);  /* soft, diffused — never hard-edged */
@@ -162,9 +133,8 @@ px-20 / py-20      = 80px (3xl)
 ```
 **Styling:**
 - Image wrapper: relative, overflow hidden, border `#8e7164`, soft shadow (desktop only)
+- Image: full color always — no overlays, no filters, no mix-blend-mode. The saturation overlay that lived here was removed sitewide in Session 74.
 - Hover: image outline animates to `#e05900`, title text turns `#e05900`
-- Overlay: `::after` pseudo-element with `background:#808080; mix-blend-mode:saturation` on top 40% of image (desaturated top, fades to color at bottom)
-- On hover: overlay opacity→0 (full color revealed)
 
 ### Links
 
@@ -290,19 +260,17 @@ px-20 / py-20      = 80px (3xl)
 
 ### Animations
 
-#### Entrance Animations (Phase 1 & 2, shipped)
-- **Fade-in:** opacity 0→1, 0.6s
+#### Entrance Animations
+- **Fade-in:** opacity 0→1, 0.6s (when used; respect `prefers-reduced-motion`)
 - **Slide-up:** transform translateY(20px→0), 0.6s
 - **Stagger:** 50ms between items in grid/list
 - **Reduced motion:** No animation, instant appearance
 
-#### Loading States
-- **Skeleton:** ~~pulse animation~~ (REMOVED — use static placeholder)
-- **Progress bar:** #FF6600 width animation (archive-progress bar)
+Per CLAUDE.md's "Design is open" stance: entrance motion is part of Jeff's craft and may be used or omitted per page. The Don'ts list below names motion patterns that should not be reintroduced.
 
-#### Page Transitions
-- **View Transition API:** Morph hero card on navigation (if supported)
-- **Fallback:** Fade-in 0.3s
+#### Loading States
+- **Progress bar:** `#FF6600` width animation (archive-progress bar)
+- **No skeleton shimmer** — see Don'ts.
 
 #### Drawer Animation (Mobile nav)
 - **Stagger entrance:** Each link fades in with 50ms delay
@@ -388,28 +356,6 @@ px-20 / py-20      = 80px (3xl)
 
 ---
 
-## Polishing Opportunities (Future Iterations)
-
-### High Priority
-1. **Decade page navigation visibility** — Links to 1980s–2020s are not discoverable; consider adding to explore.html or nav
-2. **Search UX** — No visual feedback during filter loading; consider subtle loading state
-3. **Mobile breadcrumbs** — Truncate long breadcrumb paths on small screens (e.g., "Archive › ... › Guernica")
-4. **Hover state enhancement** — Card shadow could intensify on hover (optional, maintain restraint)
-
-### Medium Priority
-5. **Dark mode** — Consider optional dark theme for researchers doing night-time analysis
-6. **Data table** — Researcher CSV/API results could benefit from styled table component
-7. **Related works sidebar** — On artwork pages, suggest next/previous in series (if present)
-8. **Print styles** — Optimize artwork pages for printing (hide nav, optimize image sizing)
-
-### Low Priority
-9. **Animations on scroll** — Gentle fade-in as sections come into view (if motion not reduced)
-10. **Micro-interactions** — Button press feedback, success confirmations
-11. **Custom scrollbar** — Match design system (optional, low UX impact)
-12. **Loading skeleton** — Placeholder while images load (if bandwidth warrants)
-
----
-
 ## Performance & Constraints
 
 ### Image Optimization
@@ -418,14 +364,14 @@ px-20 / py-20      = 80px (3xl)
 - **Preload:** Hero images only (fetchpriority="high")
 - **Lazy loading:** All grid/archive images (`loading="lazy"`)
 
-### LCP Target
-- **Goal:** 3-4s (good range per Web Vitals)
-- **Current:** 3.9s (homepage), 5.1s (archive)
-- **Optimization:** Hero image swap (preload lightweight, swap to full after LCP fires)
+### LCP
+- **Goal:** Web Vitals "good" range
+- **Live numbers move** — capture current Lighthouse mobile baseline at end of each performance pass; do not bake numbers into this document.
+- **Optimization pattern:** Hero image swap (preload lightweight, swap to full after LCP fires); `srcset` on top-3 homepage cards; self-host fonts to avoid render-blocking Google Fonts.
 
 ### Cache & SW
 - **Service Worker:** Cache-first for AVIF, network-first for JSON/HTML/CSS/JS
-- **Cache version:** Bump CACHE_V in sw.js after CSS rebuild or major deployment
+- **Cache version:** Bump `CACHE_V` in `sw.js` after CSS rebuild or major deployment
 - **TTL:** AVIF images cached for 1 year; HTML/CSS/JS always fresh
 
 ---
@@ -474,6 +420,8 @@ px-20 / py-20      = 80px (3xl)
 ---
 
 ## Changelog
+
+**2026-06-22** — Doc-vs-reality sync. Removed the saturation-overlay spec from Archive Card (the overlay was removed sitewide in Session 74). Deleted "Polishing Opportunities" section (contradicted the Don'ts list above it; live items moved to IMPROVEMENTS.md). Removed duplicated token tables — CLAUDE.md is now the canonical source for tokens. Softened the "three personas" framing to match JFSN-MISSION.md (visitors welcomed, not user-types optimized). Removed stale LCP numbers; performance section now points to live measurement instead.
 
 **2026-06-17** — Initial formalization from CLAUDE.md. Added breadcrumb component, polishing opportunities, performance notes.
 
