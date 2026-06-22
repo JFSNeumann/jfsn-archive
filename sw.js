@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1782130000'; // Session 79: hero pause-on-attention (pause autoplay on hover / off-screen)
+const CACHE_V  = 'jfsn-1782140000'; // Session 79: hero contrast pass — stronger vignette + text-shadows so text stays legible over the lightest works
 const PRECACHE = [
   '/',
   '/index.html',
