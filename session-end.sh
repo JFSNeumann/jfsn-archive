@@ -115,9 +115,9 @@ if [ "$DEPLOY_MODE" != "none" ]; then
   log "Deploying to Netlify ($DEPLOY_MODE)..."
 
   if [ "$DEPLOY_MODE" = "prod" ]; then
-    bash deploy-netlify-improved.sh --prod
+    bash deploy-netlify.sh --prod
   else
-    bash deploy-netlify-improved.sh
+    bash deploy-netlify.sh
   fi
 fi
 
@@ -128,5 +128,5 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 
 if [ "$DEPLOY_MODE" = "draft" ]; then
   echo "Next: Review preview, then run:"
-  echo "  bash deploy-netlify-improved.sh --prod"
+  echo "  bash deploy-netlify.sh --prod"
 fi

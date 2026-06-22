@@ -1,9 +1,11 @@
 # Workflow Improvements — IMPLEMENTED Session 63
 
 **Date Implemented:** 2026-06-18  
-**Status:** ✅ Ready to use starting Session 64  
-**Total Overhead:** ~30 minutes per session  
-**Value:** Prevents major production regressions
+**Status:** ⚠️ Mixed — see note below (corrected 2026-06-22)  
+**Total Overhead:** ~30 minutes per session, when actually followed  
+**Value:** Prevents major production regressions, when actually followed
+
+> **2026-06-22 correction:** Of the three improvements below, only #2 and #3's underlying habits (preview-checking, feature checklists) appear to have stuck. #1 (performance baseline tracking) did not — `PERF_BASELINE.md` was never updated past its initial Session 65 entry, and that entry's own "Post-Deployment Baseline" section was never filled in either. Read this file as a record of what was *set up*, not proof of what's *still running*.
 
 ---
 

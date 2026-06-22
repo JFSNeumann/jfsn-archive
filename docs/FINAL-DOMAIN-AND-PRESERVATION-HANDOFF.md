@@ -35,14 +35,12 @@
 - Archive contents present: **Local Mac** — catalog 1,084 works, 1,092 medium + 1,098 full + 1,084 mini images, old-site 12,914 files. **Backblaze B2** — full-res ~402 MiB, old-site 12,216 objects / 1.475 GiB. **GitHub** — code, catalog, docs, 1,092 medium images, full git history. The site is **fully static** (zero PHP; one optional serverless function).
 
 **Probable — strong but not proven this session:**
-- jfsn.com is recoverable by Jeff via the friend or via Gandi registrant recovery (registrant status is strong; recovery not yet attempted).
-- The friend who holds the Gandi account is reachable (the 2026-02-10 update implies an active account).
+- ~~jfsn.com is recoverable by Jeff via the friend or via Gandi registrant recovery~~ **RESOLVED 2026-06-16, simpler than expected:** Jeff produced his own Gandi invoice — he already holds the account directly. No friend, no transfer, no recovery process was ever needed.
 - Copies of the leaked credential exist beyond the known URLs (forks, archive caches) — unenumerable.
 - HostGator hosting will eventually lapse on its own once unmanaged, which would end the FTP exposure by attrition.
 
 **Unknown — not determined this session:**
-- The registrant contact email value, and whether Jeff controls it (this would strongly speed recovery).
-- The friend's current reachability (not yet contacted).
+- ~~The friend's current reachability (not yet contacted).~~ Moot — see above.
 - The full set of external locations that may have cached the credential.
 - HostGator account/cPanel access is **assumed unavailable** (treated as a given; not re-tested this session).
 
@@ -68,7 +66,7 @@
 
 - **Registrar:** Gandi SAS (gandi.net; whois.gandi.net; IANA 81).
 - **Registrant (legal owner):** **Jeff Neumann, Ohio, US** — the decisive recovery fact.
-- **Managing account:** a friend of Jeff's Gandi account (not Jeff's own login).
+- **Managing account:** ~~a friend of Jeff's Gandi account~~ **Jeff's own login, directly (corrected 2026-06-16 — see header note).**
 - **Nameservers:** ns31/ns32.websitewelcome.com (HostGator's).
 - **Ownership findings:** Jeff is the owner of record; the domain is unlocked (`status: ok`), DNSSEC unsigned, paid through 2027-03-05, account active as of 2026-02-10.
 - **Recovery findings:** recovery is favorable. Best path — the friend initiates a Gandi Change of Owner to a Jeff-controlled account, or supplies the transfer code. Backup path — Gandi registrant-identity recovery using Jeff's ID and the domain's ownership record. Last resort — ICANN registrant-rights complaint. Full procedure is in the recovery document set (§7).
@@ -82,22 +80,22 @@
 
 ## 7. Documents Created This Session
 
-- `docs/DOMAIN-RECOVERY-DOCUMENT-PACK.md` — fill-in checklist and evidence template for recovering jfsn.com (known facts pre-filled, blanks for the custodian).
-- `docs/DOMAIN-RECOVERY-LOG.md` — append-only action log, pre-populated with the completed 2026 investigation rows (HostGator chat, FTP, registrar, DNS, ownership).
-- `docs/DOMAIN-RECOVERY-HANDOFF.md` — plain-language explanation of the domain situation for a non-technical custodian.
+- `docs/DOMAIN-RECOVERY-DOCUMENT-PACK.md` — fill-in checklist and evidence template for recovering jfsn.com (known facts pre-filled, blanks for the custodian). **Now in `docs/archive/domain-recovery/` — closed 2026-06-16, never needed.**
+- `docs/DOMAIN-RECOVERY-LOG.md` — append-only action log, pre-populated with the completed 2026 investigation rows (HostGator chat, FTP, registrar, DNS, ownership). Still active in `docs/`.
+- `docs/DOMAIN-RECOVERY-HANDOFF.md` — plain-language explanation of the domain situation for a non-technical custodian. **Now in `docs/archive/domain-recovery/` — closed 2026-06-16, never needed.**
 - `docs/FINAL-DOMAIN-AND-PRESERVATION-HANDOFF.md` — this document.
 - **Site work (session 32, also this period):** homepage features (chromatic-river band, wall band, hero detail-reveal, expanded hero pool, "in his own words" card, mobile About section), the favorites.html duplicate-footer fix, the hero caption truth correction, six new hero image files, and the corresponding `CURRENT_STATE.md` / `IMPROVEMENTS.md` updates.
 
 ## 8. Open Items (genuinely unresolved only)
 
-1. **jfsn.com is not yet in a Jeff-controlled account** — recovery prepared but not started.
-2. **The FTP password is live, leaked, and unrotatable** with current access — resolved only by HostGator action or by the hosting lapsing.
-3. **The friend has not yet been contacted**, and the registrant contact email is not yet confirmed.
-4. **The site still depends on HostGator's nameservers** until DNS is moved (which requires domain recovery first).
+1. ~~jfsn.com is not yet in a Jeff-controlled account~~ **RESOLVED 2026-06-16** — it already was; no recovery was needed.
+2. **The FTP password is live, leaked, and unrotatable** with current access — rotation is on hold (Jeff's call); resolved only by HostGator action, Jeff deciding to pursue it, or the hosting lapsing.
+3. ~~The friend has not yet been contacted~~ Moot — there was no friend. Registrant contact email still not separately confirmed, but no longer blocking anything.
+4. **The site still depends on HostGator's nameservers** until DNS is moved — this no longer requires any recovery process first; Jeff can change it himself whenever he chooses to.
 
-## 9. Recommended Next Action (exactly one)
+## 9. Recommended Next Action (corrected 2026-06-16 — the original action below is obsolete)
 
-**Contact the friend who holds the Gandi account and ask them to either start a Gandi "Change of Owner" to a Jeff-controlled account or provide the domain's transfer code.** This is the single highest-value action: it is the keystone that secures jfsn.com as the permanent archive identity *and* the path that ultimately lets the archive move off the compromised HostGator server, neutralizing the credential exposure's impact. Everything needed to do it is in `DOMAIN-RECOVERY-DOCUMENT-PACK.md`.
+~~Contact the friend who holds the Gandi account...~~ **No longer applicable — there was no friend.** Jeff already controls the Gandi account directly (invoice confirmed 2026-06-16). If the site ever needs to move off HostGator, the actual next action is simply: log into Gandi with Jeff's own credentials and update the nameservers/DNS. `DOMAIN-RECOVERY-DOCUMENT-PACK.md` (now in `docs/archive/domain-recovery/`) was a fill-in-the-blanks recovery template built for a problem that turned out not to exist — kept for historical record only.
 
 ## 10. Future Custodian Briefing (if Jeff is unavailable)
 
@@ -107,12 +105,12 @@
 
 **What must be preserved:** the four copies of the archive (Mac, the black "JEFFS-4TB" drive, the Backblaze online backup, and the public GitHub copy) — never let them fall below three; and the domain name jfsn.com.
 
-**Where to start:** read `DOMAIN-RECOVERY-HANDOFF.md` (written in plain language for exactly this moment), then work through `DOMAIN-RECOVERY-DOCUMENT-PACK.md`, logging each step in `DOMAIN-RECOVERY-LOG.md`. The first move is the single action in §9 above: contact the friend.
+**Where to start (corrected 2026-06-16):** the domain situation that made this section necessary turned out not to exist — Jeff owns the Gandi account directly. `docs/DOMAIN-RECOVERY-LOG.md` (still in `docs/`, active) has the closing entry; `DOMAIN-RECOVERY-HANDOFF.md` and `DOMAIN-RECOVERY-DOCUMENT-PACK.md` are now in `docs/archive/domain-recovery/`, kept for historical record only. If the domain ever needs attention, it's a normal one-person Gandi-account task — see `SUCCESSION.md` for current account/contact details.
 
 ## 11. Session Summary (for preservation records)
 
-This session verified, from live evidence, that the JFSN archive (1,084 works + creator history) is safely replicated across four independent stores and is fully recoverable; that the previously reported FTP credential exposure is real, the credential is live, weak, and cannot be rotated without HostGator access, but its impact is bounded because the content is replicated and the two worst-case secrets (master password, API key) are not publicly exposed; and that jfsn.com is **recoverable** because Jeff Neumann is the unlocked domain's registrant of record at Gandi, paid through 2027-03-05. A complete, plain-language domain-recovery document set was produced. The one outstanding keystone action is to contact the friend who holds the Gandi account to move the domain into Jeff's control. Preservation is secure; continuity now depends on domain recovery, not on any infrastructure repair.
+This session verified, from live evidence, that the JFSN archive (1,084 works + creator history) is safely replicated across four independent stores and is fully recoverable; that the previously reported FTP credential exposure is real, the credential is live, weak, and cannot be rotated without HostGator access, but its impact is bounded because the content is replicated and the two worst-case secrets (master password, API key) are not publicly exposed; and that jfsn.com is **recoverable** because Jeff Neumann is the unlocked domain's registrant of record at Gandi, paid through 2027-03-05. A complete, plain-language domain-recovery document set was produced. ~~The one outstanding keystone action is to contact the friend who holds the Gandi account to move the domain into Jeff's control.~~ **Correction, 2026-06-16: there was no friend and no recovery needed — Jeff already held the account directly.** Preservation is secure; continuity now depends on routine domain renewal (March 5 yearly), not on any recovery process.
 
 ---
 
-*Companion files: `DOMAIN-RECOVERY-DOCUMENT-PACK.md`, `DOMAIN-RECOVERY-LOG.md`, `DOMAIN-RECOVERY-HANDOFF.md`. Archive of record: `catalog.json` (1,084 works). Testimony of record: `docs/oral-history/master-notes.md`. The works are safe; keep the name, and keep the copies.*
+*Companion files (moved to `docs/archive/domain-recovery/` 2026-06-22, closed): `DOMAIN-RECOVERY-DOCUMENT-PACK.md`, `DOMAIN-RECOVERY-HANDOFF.md`. Still active in `docs/`: `DOMAIN-RECOVERY-LOG.md`. Archive of record: `catalog.json` (1,084 works). Testimony of record: `docs/oral-history/master-notes.md`. The works are safe; keep the name, and keep the copies.*

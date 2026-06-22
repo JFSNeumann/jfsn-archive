@@ -758,7 +758,7 @@ Read the six rows aloud. For each: *"Did this happen?"* Whatever survives become
 
 ### Note on the catalog's installation-view titles
 
-Related, for completeness: 87 works carry machine-written titles containing "Installation/Gallery View/Crowd," and 93 catalog descriptions use the phrase "installation view." Under §25's blanket rule these depict composites. These titles appear on theme/medium/decade grid pages and in catalog data (api/v1, catalog-lite, JSON-LD) with no composite marker. Inventory and remediation options: docs/SESSION-31-PRESERVATION-HANDOFF.md.
+Related, for completeness: 87 works carry machine-written titles containing "Installation/Gallery View/Crowd," and 93 catalog descriptions use the phrase "installation view." Under §25's blanket rule these depict composites. These titles appear on theme/medium/decade grid pages and in catalog data (api/v1, catalog-lite, JSON-LD) with no composite marker. Inventory and remediation options: `docs/archive/session-checkpoints/SESSION-31-PRESERVATION-HANDOFF.md`.
 
 ---
 

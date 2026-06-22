@@ -1,267 +1,143 @@
 # JFSN Deployment Guide
 
-Complete workflow for deploying changes to production (HostGator) and staging (Netlify).
+Complete workflow for deploying changes to production (HostGator) and the secondary mirror (Netlify).
 
 ---
 
 ## Quick Deploy (TL;DR)
 
 ```bash
-# When you're done working:
-bash session-end.sh --deploy --prod
+# 1. Commit, push, and back up
+bash session-end.sh
 
-# That's it. Script handles:
-# ✓ Git commit + push
-# ✓ Backup
-# ✓ Netlify staging deploy
-# ✓ Instructions for HostGator FTP
+# 2. Deploy the live site
+bash deploy-hostgator.sh
 ```
+
+`session-end.sh` (no `--deploy` flag) handles git commit + push + local 4TB backup only. It does **not** touch jfsn.com — that's a separate, deliberate step.
 
 ---
 
 ## Before You Deploy
 
-### 1. **Verify Your Changes**
+### 1. Verify your changes
 
 ```bash
-# Option A: Quick visual check
 bash preview-verify.sh
-# Opens local server, walks through key pages
-
-# Option B: Full pre-deploy checklist
-bash pre-deploy-check.sh
-# Runs: CSS rebuild, nav audit, Lighthouse, 404 checks, etc.
+# Opens a local server, walks through a visual checklist of key pages
 ```
 
-### 2. **Ensure Code is Clean**
+### 2. Ensure code is clean
 
 ```bash
 git status
-# Should show: "On branch main, nothing to commit, working tree clean"
-# If not, run: git add . && git commit -m "..."
+# Should show: "nothing to commit, working tree clean"
 ```
 
-### 3. **Check Performance Baseline** (optional)
+### 3. Optional — run the full pre-deploy checklist
 
 ```bash
-cat PERF_BASELINE.md
-# Compare this session's metrics to last session
-# If LCP increased >10% or Perf dropped >5 points: investigate before deploying
+bash pre-deploy-check.sh
+# CSS rebuild check, nav audit, CACHE_V format, file-size sanity, uncommitted-changes check
 ```
 
 ---
 
 ## Deploy Workflow
 
-### Step 1: Commit & Backup
+### Step 1: Commit & local backup
 
 ```bash
 bash session-end.sh
-# Prompts for:
-# 1. Commit message
-# 2. Auto-bumps CACHE_V if CSS changed
-# 3. Commits to git
-# 4. Pushes to GitHub
-# 5. Backs up to local rsync + B2 cloud
 ```
 
-**What it does:**
-- Stages all changes (`git add .`)
-- Creates commit with your message
-- Bumps service worker cache version if `site.min.css` changed
+What it does:
+- Stages and commits all changes
 - Pushes to `origin/main`
-- Backs up site to external drive + B2
+- Backs up to JEFFS-4TB via `backup.sh`
 
-**Stop here if you want to:**
-- Review on staging first (Netlify mirror)
-- Deploy later to production
+**This step never touches the live site or Netlify.** Deployment is always a separate, explicit step below.
 
----
-
-### Step 2: Deploy to Netlify (Staging Mirror)
+### Step 2: Deploy to HostGator (production — jfsn.com)
 
 ```bash
-bash deploy-netlify.sh --prod
+bash deploy-hostgator.sh
 ```
 
-**What it does:**
-- Deploys curated copy to `jfsn-archive.netlify.app` (staging)
-- Filters out: `docs/`, `.ftp.env`, `*.py`, `*.sh`, `*.md`, `.git`
-- Prevents credential/build-file leaks
-- Takes ~30 seconds
+This is the **primary deploy path** as of Session 70 (replaces the old JFSN.app desktop tool, which is no longer used). It:
+- Reads FTP credentials from `.ftp.env`
+- Mirrors changed files via `lftp`
+- Runs a smoke test against jfsn.com
 
-**Verify:**
-```bash
-# Visit https://jfsn-archive.netlify.app
-# Check: homepage, archive, artwork page, mobile
-# If anything looks broken: fix locally, commit, re-deploy
-```
+The legacy full-mirror script `deploy.sh` still exists in the repo but is superseded by `deploy-hostgator.sh` — don't use it unless `deploy-hostgator.sh` is broken.
 
----
+**Hero AVIFs need a separate upload:** `artworks/full/*.avif` is excluded from the normal mirror (`.htaccess` rewrites it to a flat `/artworks/` path on the server). New or recompressed hero crops (`artNNNN-hero.avif`, `artNNNN-hero-m.avif`) must be uploaded flat via `lftp` directly — see `CLAUDE.md` § Deployment.
 
-### Step 3: Deploy to HostGator (Production)
+### Step 3: Deploy to Netlify (secondary mirror — optional)
 
-Currently **manual FTP only** (Netlify has no git integration).
-
-#### Option A: Desktop JFSN.app (recommended)
-```bash
-# Open the JFSN.app (macOS app you have locally)
-# Click "Deploy to HostGator"
-# Watches for local file changes, uploads via FTP automatically
-```
-
-#### Option B: Manual FTP (if JFSN.app unavailable)
-```bash
-# Credentials in: ~/.ftp.env (keep PRIVATE)
-# Use your FTP client to upload changed files to jfsn.com root
-
-# Or via lftp command line:
-lftp -u $FTP_USER,$FTP_PASS jfsn.com <<< "
-  mirror -R --parallel=4 --delete . /public_html
-  quit
-"
-```
-
-**⚠️ IMPORTANT:** Only new/changed files. Never do full replace.
-
----
-
-### Step 4: Verify Production
+**Netlify has no git integration.** Pushing to GitHub does **not** deploy it. Deploy manually:
 
 ```bash
-# Visit https://jfsn.com
-# Spot-check:
-# ✓ Homepage loads
-# ✓ Archive grid appears
-# ✓ Click an artwork → loads
-# ✓ Mobile layout responsive
-# ✓ CSS is fresh (not cached old version)
+bash deploy-netlify.sh --check   # dry safety scan — refuses to deploy if docs/.ftp.env/*.py/*.sh/*.md slipped in
+bash deploy-netlify.sh           # draft deploy
+bash deploy-netlify.sh --prod    # production deploy to jfsn-archive.netlify.app
 ```
 
-**Verify CSS is fresh:**
+`session-end.sh --deploy` / `--deploy --prod` calls `deploy-netlify.sh` to handle this. (Found and fixed during the 2026-06-22 documentation audit — it previously pointed at a nonexistent `deploy-netlify-improved.sh` and would have failed.)
+
+### Step 4: Verify production
+
 ```bash
-# Open DevTools → Network → Find site.min.css
-# Check the response header: "cache-control: max-age=2592000" (30 days)
-# If you see old CSS, refresh hard: Cmd+Shift+R (macOS) or Ctrl+Shift+R (Windows)
-# If still old after hard refresh: service worker has stale cache
-#   → Try: DevTools → Application → Clear storage → Full reload
+curl -I https://jfsn.com/
+# Check: homepage, archive, an artwork page, mobile layout, CSS freshness
 ```
 
-**Verify service worker updated:**
-```bash
-# DevTools → Application → Service Workers
-# Should show latest CACHE_V version (e.g., jfsn-1718888888)
-# If old version shown: user has stale cache, will refresh on next visit
-```
+**If CSS looks stale:** hard refresh (Cmd+Shift+R). If still stale, the service worker has a cached copy — DevTools → Application → Clear storage → reload, and confirm `CACHE_V` in `sw.js` was bumped before this deploy.
 
 ---
 
 ## Automated Pre-Deploy Checklist
 
-Run before deploying to catch issues:
-
 ```bash
 bash pre-deploy-check.sh
 ```
 
-**Checks:**
-1. ✓ CSS file rebuilt (`site.min.css` is current)
-2. ✓ Navigation audit passed (`audit-nav.sh`)
-3. ✓ Performance baseline captured (Lighthouse)
-4. ✓ No broken links (curl all pages)
-5. ✓ CSS file size OK (<30 KB minified)
-6. ✓ CACHE_V format valid
-7. ✓ No uncommitted changes in git
-8. ✓ Service worker cache version bumped (if CSS changed)
-
-**If any check fails:**
-- Script reports which checks failed
-- Fix locally
-- Re-run `bash pre-deploy-check.sh`
-- Then deploy
+Checks: CSS rebuilt, `audit-nav.sh` passes, CACHE_V format valid, no uncommitted changes, CSS file size sane. Fix anything it flags, re-run, then deploy.
 
 ---
 
 ## Troubleshooting
 
 ### "CSS is old/cached"
-```bash
-# Option 1: Hard refresh in browser (Cmd+Shift+R)
-# Option 2: Clear service worker cache
-#   → DevTools → Application → Storage → Clear site data
-# Option 3: Check CACHE_V was bumped
-#   → grep "CACHE_V" sw.js
-#   → If unchanged: run auto-cache-bump.sh manually
-```
+1. Hard refresh (Cmd+Shift+R).
+2. If still old: DevTools → Application → Clear storage → reload.
+3. Confirm `CACHE_V` was bumped: `grep CACHE_V sw.js`.
 
-### "One target updated, other didn't"
-```bash
-# If Netlify is live but HostGator isn't:
-bash deploy-netlify.sh --prod  # Re-deploy Netlify
-# Then: Open JFSN.app and upload to HostGator
+### "Pushed to GitHub but nothing changed live"
+GitHub ≠ production. Neither HostGator nor Netlify auto-deploys on push. Run `bash deploy-hostgator.sh` (and `bash deploy-netlify.sh --prod` if you also want the mirror current).
 
-# If HostGator is live but Netlify isn't:
-bash deploy-netlify.sh --prod  # Deploy to Netlify
-```
-
-### "Pre-deploy check failed"
-```bash
-# Example: CSS file size too large (>30 KB)
-# 1. Run: npm run build:css
-# 2. Check size: ls -lh site.min.css
-# 3. If still large: review recent CSS additions
-# 4. Commit changes and re-run check
-```
-
-### "Changes pushed to GitHub but not deployed anywhere"
-```bash
-# GitHub ≠ Production
-# Netlify watches: manual deploy-netlify.sh
-# HostGator watches: manual JFSN.app upload
-# 
-# To deploy after pushing:
-bash deploy-netlify.sh --prod        # Netlify
-# Then open JFSN.app and click Deploy  # HostGator
-```
+### "One target updated, the other didn't"
+HostGator and Netlify are deployed independently — running one never triggers the other. Re-run the one that's behind.
 
 ---
 
 ## Deployment Targets
 
-| Target | Type | URL | Auto? | Deploy Cmd |
-|--------|------|-----|-------|-----------|
-| GitHub | Repo | github.com/JFSNeumann/jfsn-archive | Manual git push | `git push` |
-| Netlify | Staging | jfsn-archive.netlify.app | Manual script | `bash deploy-netlify.sh` |
-| HostGator | Production | jfsn.com | Manual JFSN.app | JFSN.app UI |
+| Target | Type | URL | Auto? | Deploy command |
+|--------|------|-----|-------|-----------------|
+| GitHub | Repo | github.com/JFSNeumann/jfsn-archive | Manual `git push` (via `session-end.sh`) | — |
+| HostGator | **Production** | jfsn.com | Manual | `bash deploy-hostgator.sh` |
+| Netlify | Secondary mirror | jfsn-archive.netlify.app | Manual, no git integration | `bash deploy-netlify.sh --prod` |
 
 ---
 
-## Sessions & Deployment Cadence
+## Never deploy
 
-**Typical session workflow:**
-1. 📝 Work (code, test, verify with preview-verify.sh)
-2. ✅ End session: `bash session-end.sh` (commit + backup)
-3. 🌐 Review on Netlify: `bash deploy-netlify.sh --prod`
-4. 📦 If OK, deploy HostGator (JFSN.app)
-5. ✔️ Spot-check production
-
-**Never deploy:**
 - With uncommitted changes
-- Without running pre-deploy-check.sh
-- If pre-deploy checks fail
-- If performance baseline shows regression
-- If any feature is broken
+- Without running `pre-deploy-check.sh` (or at least `audit-nav.sh`)
+- If a pre-deploy check fails
+- If a Lighthouse run shows a performance regression you haven't investigated
 
 ---
 
-## Next: Upcoming Improvements
-
-**Planned (Session 66+):**
-- [ ] Master deploy script (one command: `bash deploy.sh --prod`)
-- [ ] Git pre-commit hook (auto-validates before commits)
-- [ ] Auto smoke tests (post-deploy verification)
-- [ ] Session start script (auto-setup baseline + checklist)
-
----
-
-**Questions?** See CLAUDE.md or SESSION_START_PROCEDURES.md for more context.
+**Questions?** See `CLAUDE.md` or `SESSION_START_PROCEDURES.md` for more context.

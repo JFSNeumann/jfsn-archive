@@ -23,12 +23,11 @@ jfsn.com preserves 1,084 artworks by Jeffrey F. S. Neumann — about fifty years
 - **Apple Digital Legacy** is set up — it gives Allison access to Jeff's Apple account and therefore the Mac.
 - **Credential warning (2026-06):** the old FTP password was publicly exposed and is being rotated — see `CREDENTIAL-EXPOSURE-REPORT.md`. If the site is ever defaced, that's the likely cause; restore from backups and change the FTP password at HostGator.
 
-## ⚠️ The domain — the most fragile thing Jeff doesn't control
+## The domain — renewal is the #1 recurring duty
 
-**jfsn.com is registered at Gandi (gandi.net) in an account belonging to a friend of Jeff's — not to Jeff.** It expires **2027-03-05** and must be renewed (by that friend, or after transfer) or every link to the archive dies and the domain will likely be bought by a squatter.
+**jfsn.com is registered at Gandi (gandi.net) directly in Jeff's own account** (confirmed by invoice, 2026-06-16 — an earlier version of this document incorrectly said a friend held it; that was never true). It expires **2027-03-05** and must be renewed or every link to the archive dies and the domain will likely be bought by a squatter.
 
-- **TODO for Jeff (or whoever reads this): write the friend's name and contact info here: ______________________**
-- Best fix: ask the friend to transfer the domain to an account in the family's control (Gandi → any registrar; cheap and routine).
+- Renewal is a normal Gandi account action — whoever has Jeff's Bitwarden/Gandi access (see "The keys" above) can do it directly, no third party needed.
 - If the domain is ever lost, the archive still exists at **jfsn-archive.netlify.app** and in all four copies — but printed URLs and links break, so treat domain renewal as the #1 recurring custodial duty. One renewal per year, roughly $20.
 
 ## If the website goes down
@@ -52,6 +51,6 @@ Don't panic; nothing is lost. In order of ease:
 
 1. The images and catalog (the works themselves) — four copies; keep them four.
 2. The oral history (`docs/oral-history/master-notes.md` — Jeff's own words; quotes are verbatim; treat as primary source. Note: catalog titles/descriptions are machine-written, NOT Jeff's words, and gallery/installation images are Photoshop composites, not real exhibitions — Jeff's corrections, 2026).
-3. The domain (see above).
+3. The domain (see above — Jeff's own Gandi account, renew yearly).
 4. `old-site/` — Jeff's earlier websites, resume, and design career; family material from the grandchildren. Inventory: `OLD-SITE-PRESERVATION-INVENTORY.md`.
 5. The live service — nice to have running, painless to rebuild.

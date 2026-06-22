@@ -1,47 +1,15 @@
-/* scroll-to-top.js — Floating button that appears on scroll */
+/* DISABLED 2026-06-22 (documentation/code audit): this injected its own
+   floating "#scroll-to-top" button at bottom:24px/right:24px, 48px circle —
+   nearly identical position and size to "#btt-float", the floating
+   back-to-top button already built into _shared/footer.html
+   (bottom:28px/right:28px, 44px circle). Both showed after 300px of scroll,
+   so every page rendered two overlapping scroll-to-top buttons stacked on
+   top of each other. _shared/footer.html's #btt-float is the one actually
+   wired into the canonical, stamped footer template — keep that one.
+   Following the same disable pattern already used for keyboard-shortcuts.js:
+   leave the <script> tags in the 40 pages that reference this file (removing
+   them individually is a bigger, more error-prone change for the same
+   result), just make this file a no-op.
+*/
 
-const ScrollToTop = {
-  button: null,
-  threshold: 300, // Show after scrolling past 300px
-
-  init() {
-    this.createButton();
-    window.addEventListener('scroll', () => this.handleScroll(), { passive: true });
-    this.button.addEventListener('click', () => this.scrollToTop());
-  },
-
-  createButton() {
-    const html = `
-      <button id="scroll-to-top" class="scroll-to-top" aria-label="Scroll to top">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="12" y1="19" x2="12" y2="5"></line>
-          <polyline points="5 12 12 5 19 12"></polyline>
-        </svg>
-      </button>
-    `;
-    document.body.insertAdjacentHTML('beforeend', html);
-    this.button = document.getElementById('scroll-to-top');
-  },
-
-  handleScroll() {
-    if (window.pageYOffset > this.threshold) {
-      this.button.classList.add('scroll-to-top-show');
-    } else {
-      this.button.classList.remove('scroll-to-top-show');
-    }
-  },
-
-  scrollToTop() {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  }
-};
-
-// Initialize when DOM ready
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => ScrollToTop.init());
-} else {
-  ScrollToTop.init();
-}
+// Intentionally empty - duplicate of _shared/footer.html's #btt-float

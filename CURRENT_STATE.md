@@ -15,10 +15,10 @@ This file describes what's currently true about the site. For ranked work, see `
 
 ## Backup
 Four redundant stores, listed in update order at end-session:
-1. GitHub (`origin/main`)
+1. GitHub (`origin/main`) — last known commit as of this writing: `a9e8bf09` (uncommitted doc-audit work sits on top of this as of 2026-06-22)
 2. Local Mac (working tree)
 3. JEFFS-4TB external drive (rsync, nightly LaunchAgent at 11 PM)
-4. Backblaze B2 cloud (LaunchAgent at 9 PM nightly; rides `end-session.sh` / manual `cloud-backup.sh` when capped — daily cap resets ~midnight GMT / ~8 PM EDT)
+4. Backblaze B2 cloud (LaunchAgent at 9 PM nightly; rides `session-end.sh` / manual `cloud-backup.sh` when capped — daily cap resets ~midnight GMT / ~8 PM EDT) — **last B2 timestamp not verifiable from this session:** `~/Library/Logs/jfsn-cloud-backup.log` is empty and last modified 2026-06-15. Worth checking the LaunchAgent is still actually firing, not just assuming it is because it's scheduled.
 
 Refresh this section at the end of each session with the latest commit hash + last B2 backup timestamp.
 
@@ -26,7 +26,7 @@ Refresh this section at the end of each session with the latest commit hash + la
 
 ## 🔴 Critical open items
 
-**FTP password publicly exposed, still active, cannot be rotated.** cPanel/HostGator account access is unavailable and Pure-FTPd has no self-service password change (proven by live test 2026-06-12). Do NOT chase cPanel rotation. Impact is bounded: the archive is replicated 4× and only live-site defacement is at risk. Durable fix: recover jfsn.com (Jeff contacts the friend holding the Gandi account), move serving off HostGator, let the hosting lapse. Authoritative record: `docs/FINAL-DOMAIN-AND-PRESERVATION-HANDOFF.md`. Every public copy of the credential is now removed or blocked (see `CREDENTIAL-EXPOSURE-REPORT.md`, session 34).
+**FTP password publicly exposed, still active, cannot be rotated.** cPanel/HostGator account access is unavailable and Pure-FTPd has no self-service password change (proven by live test 2026-06-12). Do NOT chase cPanel rotation. Impact is bounded: the archive is replicated 4× and only live-site defacement is at risk. Rotation is **ON HOLD by Jeff** — every public copy of the credential is now removed or blocked (see `CREDENTIAL-EXPOSURE-REPORT.md`, session 34). **Domain note (corrected 2026-06-16):** Jeff owns and pays for the jfsn.com Gandi account directly (invoice confirmed) — there is no friend in the loop, and migrating off HostGator does not require contacting anyone else. Authoritative record: `docs/FINAL-DOMAIN-AND-PRESERVATION-HANDOFF.md` §5 (closed).
 
 ---
 

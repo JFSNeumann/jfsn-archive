@@ -9,9 +9,20 @@ const Lightbox = {
   isOpen: false,
 
   init() {
-    // Collect all zoomable images: thumbnails + artwork heroes
-    const thumbLinks = Array.from(document.querySelectorAll('.thumb__link'));
-    const heroImages = Array.from(document.querySelectorAll('[data-zoomable], .artwork-hero img'));
+    // NOTE (2026-06-22 audit): this used to also hijack .thumb__link grid
+    // thumbnails into this bare modal (no title/year/medium shown), which
+    // actively fought _shared/page-transitions.js's click handler — both
+    // called preventDefault() on the same click, so every thumbnail click
+    // sitewide briefly flashed this image-only modal before the real
+    // page-transition navigation won a moment later. .thumb__link grids
+    // already navigate correctly to the full artwork page (with all
+    // metadata) on their own; this script no longer touches them.
+    //
+    // Only genuinely opt-in zoom targets remain: [data-zoomable]. As of
+    // this audit nothing in the live site sets that attribute, so this is
+    // dormant scaffolding for a future feature, not active code — left in
+    // place rather than deleted since it does nothing now and isn't broken.
+    const heroImages = Array.from(document.querySelectorAll('[data-zoomable]'));
 
     // Create virtual links for hero images
     const heroLinks = heroImages.map(img => {
@@ -30,21 +41,13 @@ const Lightbox = {
       return { link, img };
     });
 
-    this.images = thumbLinks;
+    this.images = [];
     this.heroImages = heroLinks;
 
     if (this.images.length === 0 && this.heroImages.length === 0) return;
 
     // Inject modal HTML
     this.createModal();
-
-    // Attach click listeners to thumbnails
-    this.images.forEach((link, index) => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        this.open(index);
-      });
-    });
 
     // Attach click listeners to hero images
     this.heroImages.forEach(({ img }, index) => {

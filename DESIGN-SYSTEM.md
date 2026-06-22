@@ -266,11 +266,11 @@ px-20 / py-20      = 80px (3xl)
 - **Stagger:** 50ms between items in grid/list
 - **Reduced motion:** No animation, instant appearance
 
-Per CLAUDE.md's "Design is open" stance: entrance motion is part of Jeff's craft and may be used or omitted per page. The Don'ts list below names motion patterns that should not be reintroduced.
+Per CLAUDE.md's "Design is open" stance: entrance motion, scroll-reveals, parallax, and transforms are all part of Jeff's craft and may be used per page — that restriction was retired in CLAUDE.md and the Don'ts list below has been corrected to match (2026-06-22). The only non-negotiable motion rule is `prefers-reduced-motion` support, always.
 
 #### Loading States
 - **Progress bar:** `#FF6600` width animation (archive-progress bar)
-- **No skeleton shimmer** — see Don'ts.
+- Skeleton/shimmer loading states are no longer categorically banned — see the Don'ts correction below. Use judgment per page.
 
 #### Drawer Animation (Mobile nav)
 - **Stagger entrance:** Each link fades in with 50ms delay
@@ -310,9 +310,8 @@ Per CLAUDE.md's "Design is open" stance: entrance motion is part of Jeff's craft
 - Sufficient contrast ratios (see above)
 
 ### Motion & Vestibular
-- Respect `prefers-reduced-motion: reduce`
-- No parallax, no auto-playing animations
-- Users should always control motion
+- **Respect `prefers-reduced-motion: reduce` — this is the actual non-negotiable rule, not a ban on any specific motion technique.** Parallax, auto-playing hero rotation, and other motion are allowed (per CLAUDE.md's "Design is open" stance) as long as a reduced-motion fallback exists.
+- Users should always have a way to stop or skip auto-playing motion that runs longer than ~5s (the hero rotation already supports pause-on-attention — see Session 79).
 
 ### Touch Targets
 - Minimum 44×44px (mobile tap targets)
@@ -331,22 +330,24 @@ Per CLAUDE.md's "Design is open" stance: entrance motion is part of Jeff's craft
 - **Typography:** Use Playfair for headlines (elegant), Inter for body (readable)
 - **Borders:** Warm-brown archival (#8e7164) for intentional sections, neutral (#c4c7c7) for general UI
 - **Shadows:** Soft, diffused only — `0 0 20px rgba(0,0,0,0.05)` for cards
-- **Interactions:** Fade, slide, color shifts — no scale/transform
-- **Animation:** Fade-in, stagger on grids, reduced-motion support required
+- **Interactions:** Fade, slide, color shifts, scale/transform — all fair game on UI chrome; reduced-motion support required
+- **Animation:** Fade-in, stagger, scroll-reveal, parallax — Jeff's craft, used per page; reduced-motion support required
 - **Focus:** Always visible, high-contrast outline
 
-### Don'ts ❌
+### Don'ts ❌ — corrected 2026-06-22 to match CLAUDE.md's actual current stance
 
-- **Grayscale filter** on thumbnails (removed session 18 — keep full color)
-- **Mask-image gradient** hiding parts of images
-- **Scroll-reveal** (opacity 0 on intersection) — items visible by default
-- **Scale/transform** on hover (`scale(1.05)`, `scale(1.02)`)
-- **Sibling dim** (`.grid:has(:hover) .thumb { opacity:0.5 }`)
-- **Hover overlays** on artwork cards
-- **Hero text labels** over artwork ("PERSONAL ARCHIVE")
-- **Particle/canvas effects** over artwork (dust, grain)
-- **Skeleton loading** animations
-- **International-orange text** on light backgrounds (use orange-ink instead)
+**This list previously banned several generic motion patterns (scroll-reveal, scale/transform on hover, sibling dim, skeleton loading) as a blanket restraint policy. CLAUDE.md explicitly retired that policy** ("Earlier versions of this file read 'default to removal' as minimalism and walked back legitimate motion work... That over-correction is retired"). The only non-negotiable category is **honest treatment of the artwork itself** — that's what actually belongs in a Don'ts list:
+
+- **Grayscale filter, recolor, or any color/saturation filter on the artwork image itself** (removed session 18 — keep full color, always)
+- **Mask-image gradient or crop-distort hiding parts of an artwork image**
+- **Tilting or transforming the artwork image itself** (transforms on surrounding UI chrome are fine; the work stays undistorted)
+- **Hiding a work's title/year/medium behind a hover-only state** — it vanishes on touch and is invisible to screen readers
+- **Hero text labels printed directly over artwork** (covers the work)
+- **Particle/canvas effects rendered over artwork** (dust, grain — obscures the work)
+- **Fabricated provenance, badges, DPI, accession numbers, or composites presented as real exhibitions** — see Archive Integrity below
+- **International-orange text** on light backgrounds (use orange-ink instead — this one's an accessibility/contrast rule, unrelated to the motion-restraint reversal above)
+
+**No longer banned (Jeff's craft, not a violation):** scroll-reveal, scale/transform on hover (on UI chrome, not the artwork), sibling dim, skeleton loading, parallax, auto-playing hero motion. Use judgment; the litmus in `CLAUDE.md` is the test, not this list.
 
 ### Archive Integrity
 - **Dimensions:** Leave blank if unknown (don't guess)
@@ -420,6 +421,8 @@ Per CLAUDE.md's "Design is open" stance: entrance motion is part of Jeff's craft
 ---
 
 ## Changelog
+
+**2026-06-22 (later same day)** — Corrected the Don'ts list, which still banned scroll-reveal/scale-transform-on-hover/sibling-dim/skeleton-loading/parallax as a blanket restraint policy — directly contradicting CLAUDE.md's "Design is open" reversal of exactly that policy. Rewrote Don'ts to contain only what's actually non-negotiable: honest treatment of the artwork itself (no filter/recolor/distort/tilt, no metadata hidden behind hover, no fabricated provenance) plus the orange-ink contrast rule. Also fixed the Motion & Vestibular section, which banned parallax outright instead of stating the real rule (respect `prefers-reduced-motion`).
 
 **2026-06-22** — Doc-vs-reality sync. Removed the saturation-overlay spec from Archive Card (the overlay was removed sitewide in Session 74). Deleted "Polishing Opportunities" section (contradicted the Don'ts list above it; live items moved to IMPROVEMENTS.md). Removed duplicated token tables — CLAUDE.md is now the canonical source for tokens. Softened the "three personas" framing to match JFSN-MISSION.md (visitors welcomed, not user-types optimized). Removed stale LCP numbers; performance section now points to live measurement instead.
 

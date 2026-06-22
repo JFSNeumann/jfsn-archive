@@ -33,6 +33,21 @@ git log --oneline -1 | grep -i cache  # Cache bump in latest commit?
 ```
 ✅ **PASS:** CACHE_V is new timestamp, auto-incremented by linter
 
+### Fact Propagation Check (added 2026-06-22)
+**If this session corrected a previously-documented fact** (a credential status, an
+account-ownership claim, a deploy method, anything stated as true elsewhere in the repo),
+grep for the *old* fact across all `.md` files before closing the item — don't assume
+fixing it in one place is enough:
+```bash
+grep -rln "the old wording" --include="*.md" .
+```
+This exists because the 2026-06-16 domain-ownership correction was recorded accurately in
+one place but propagated to zero of the six other files that stated the old "friend holds
+the domain" claim — including `CURRENT_STATE.md`, the first file read at every session
+start. Found and fixed in the 2026-06-22 documentation audit; don't let it recur with the
+next fact that changes.
+✅ **PASS:** No other file in the repo still states the corrected fact's old version
+
 ---
 
 ## PHASE 2: DEPLOYMENT VERIFICATION (5 min)

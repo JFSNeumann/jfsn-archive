@@ -50,7 +50,7 @@ Mark the top nav exactly like this so stamp-nav.sh can replace it:
   <!-- NAV:END -->
 
 Top nav contains: JFSN wordmark (links to index.html) + 4 nav links
-(Archive · About · Stories · Lost) + ⌘K search trigger.
+(Archive · Series · About · Lost Works) + ⌘K search trigger.
 
 Series and Companion are footer-only — NOT in the top nav.
 
@@ -124,7 +124,7 @@ Mobile: [Describe mobile layout specifically — snap scroll? single column? hid
 Desktop: [Describe desktop layout — sidebar + main? full-bleed? grid?]
 
 Nav: Mark top nav <!-- NAV:START --> / <!-- NAV:END --> for stamp-nav.sh.
-Top nav has 4 items: Archive · About · Stories · Lost (Series + Companion are footer-only).
+Top nav has 4 items: Archive · Series · About · Lost Works (Companion is footer-only).
 Mobile nav is a hamburger button → slide-in drawer (#mobile-menu-drawer), NOT a bottom bar.
 
 Content philosophy: personal archive, not promotional. No CTAs. No engagement patterns.

@@ -158,17 +158,32 @@ from datetime import datetime, timezone
 with open('sw.js') as f:
     content = f.read()
 
-m = re.search(r"CACHE_V\s*=\s*'jfsn-(\d{8})(\d{6})'", content)
+m = re.search(r"CACHE_V\s*=\s*'jfsn-(\d+)'", content)
 if not m:
     print('⚠  sw.js: could not parse CACHE_V')
 else:
-    stamp_str = m.group(1) + m.group(2)
-    stamp = datetime.strptime(stamp_str, '%Y%m%d%H%M%S').replace(tzinfo=timezone.utc)
-    age_days = (datetime.now(timezone.utc) - stamp).days
-    if age_days > 7:
-        print(f'⚠  sw.js: CACHE_V is {age_days} days old — consider bumping before deploy')
+    digits = m.group(1)
+    stamp = None
+    if len(digits) == 14:
+        # early-session format: jfsn-YYYYMMDDHHMMSS
+        try:
+            stamp = datetime.strptime(digits, '%Y%m%d%H%M%S').replace(tzinfo=timezone.utc)
+        except ValueError:
+            stamp = None
+    if stamp is None:
+        # current format (since ~session 75): jfsn-<unix-epoch-seconds>
+        try:
+            stamp = datetime.fromtimestamp(int(digits), tz=timezone.utc)
+        except (ValueError, OverflowError):
+            stamp = None
+    if stamp is None:
+        print('⚠  sw.js: could not parse CACHE_V')
     else:
-        print(f'✅  sw.js: CACHE_V is current ({age_days}d old)')
+        age_days = (datetime.now(timezone.utc) - stamp).days
+        if age_days > 7:
+            print(f'⚠  sw.js: CACHE_V is {age_days} days old — consider bumping before deploy')
+        else:
+            print(f'✅  sw.js: CACHE_V is current ({age_days}d old)')
 PYEOF
 
 

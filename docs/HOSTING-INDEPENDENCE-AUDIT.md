@@ -34,8 +34,8 @@ Can the JFSN archive survive the loss of HostGator, cPanel/FTP access, the curre
 |---|---|---|---|
 | Full-res images + thumbs/minis | B2, 4TB, Mac, HostGator (not git) | Loss of print-quality record if all four die | 4 copies — adequate |
 | old-site (resume, design career, fine-art-2000) | B2, 4TB, Mac, HostGator | Biographical record | 4 copies — adequate |
-| **Domain jfsn.com** | Registrar **Gandi SAS** — account held by **a friend of Jeff's**, not by Jeff. Registered 2001. **Expires 2027-03-05** | Every URL, QR code, printed reference, and inbound link dies; a 25-year-old domain would likely be sniped on expiry | ⚠️ **UNMITIGATED — SPOF #1** |
-| **DNS zone** | ns31/ns32.websitewelcome.com = **HostGator's own nameservers** | If HostGator dies, DNS dies with it; only the friend (Gandi) can repoint | ⚠️ Tied to SPOF #1 |
+| **Domain jfsn.com** | Registrar **Gandi SAS** — account held **directly by Jeff** (confirmed by invoice 2026-06-16; an earlier version of this audit incorrectly said a friend held it). Registered 2001. **Expires 2027-03-05** | Every URL, QR code, printed reference, and inbound link dies if renewal is missed; a 25-year-old domain would likely be sniped on expiry | ⚠️ Mitigated by direct ownership, but **still unmitigated against missed renewal** — no calendar reminder exists yet |
+| **DNS zone** | ns31/ns32.websitewelcome.com = **HostGator's own nameservers** | If HostGator dies, DNS dies with it until repointed | Mitigated — Jeff can repoint directly via his own Gandi account, no third party needed |
 | **jeff@jfsn.com email** | MX → HostGator itself | Site contact address dies with the host | Account-recovery email everywhere should be jfsneumann@gmail.com (Gmail, independent) — spot-verified for HostGator |
 | B2 access | rclone config on the Mac only; account login via Bitwarden | Can't pull cloud backup until account login recovered | Acceptable — document in handoff |
 | Netlify account + `ANTHROPIC_API_KEY` env var | Netlify dashboard (not in repo) | Companion AI stops; mirror site stops updating | Degradable — site works without Companion |
@@ -46,7 +46,7 @@ Can the JFSN archive survive the loss of HostGator, cPanel/FTP access, the curre
 
 ## 3. Single points of failure, ranked by preservation impact
 
-1. **The domain.** jfsn.com's registrar account belongs to a friend; its nameservers belong to HostGator; it expires **2027-03-05**. The archive's permanent identity — every stable URL the preservation philosophy is built on — depends on one unnamed person renewing one account. *Fix that costs nothing today: record the friend's name/contact and the renewal plan in the handoff; ideally transfer the domain into an account Jeff or Allison controls (Gandi-to-anywhere transfer, ~$15).* 
+1. **The domain.** jfsn.com's registrar account is Jeff's own (corrected 2026-06-16 — no friend involved); its nameservers belong to HostGator; it expires **2027-03-05**. The archive's permanent identity — every stable URL the preservation philosophy is built on — depends on that one renewal happening on time each year. *Fix that costs nothing today: a calendar reminder + confirming Allison/the named technical successor has Gandi access via Bitwarden.*
 2. **The Bitwarden master password** exists only handwritten on the printed handoff sheet. If the sheet is lost before Allison receives it, every account behind Bitwarden needs individual recovery flows. *Fix: confirm the sheet's location; consider a second sealed copy.*
 3. **jeff@jfsn.com email on HostGator** — dies with the host while looking like a permanent address. *Fix: prefer jfsneumann@gmail.com as the canonical recovery/contact address everywhere; site already shows jeff@jfsn.com — decision for Jeff.*
 4. **The Companion's API key** (Netlify env var) — single env var, no documentation of which Anthropic account funds it. Degradable; document only.

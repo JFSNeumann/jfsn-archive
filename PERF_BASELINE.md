@@ -1,7 +1,12 @@
 # Performance Baseline — Session 65 (UX/UI Enhancement Suite)
 
 **Date:** 2026-06-18  
-**Status:** Pre-Deployment Baseline  
+**Status:** ⚠️ **Historical, incomplete — never followed up.** This was meant to be a living
+tracker (capture baseline → deploy → capture post-deploy → compare). The "Post-Deployment
+Baseline" section below was never filled in, and no later session resumed this file. Treat
+the numbers above the line as a record of what was *expected*, not what was *measured*.
+If perf tracking is wanted again, start a fresh dated entry rather than completing this one
+4 days disconnected from session reality (found during the 2026-06-22 documentation audit).
 **Note:** Full enhancement suite (Phases 1-4 + Extras) integrated
 
 ## Key Metrics (Target Ranges)

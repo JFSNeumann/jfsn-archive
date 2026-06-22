@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1782140000'; // Session 79: hero contrast pass — stronger vignette + text-shadows so text stays legible over the lightest works
+const CACHE_V  = 'jfsn-1782171994'; // Session 80 code audit: fixed lightbox.js hijacking .thumb__link clicks (raced page-transitions.js, flashed a bare modal before real nav won), disabled scroll-to-top.js (duplicate of footer.html's #btt-float, nearly identical position)
 const PRECACHE = [
   '/',
   '/index.html',

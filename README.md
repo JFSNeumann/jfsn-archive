@@ -32,11 +32,20 @@ A static, no-CMS archive on a $5/month shared host (HostGator/cPanel). No databa
 | Photography | `/photography.html` | Medium page — 328 works |
 | Painting | `/painting.html` | Medium page — 42 works |
 | 1970s–2020s | `/1970s.html` etc. | 6 decade pages, ← → keyboard nav |
-| Guernica | `/guernica.html` | 232 Guernica works |
+| Series/theme pages | `/guernica.html`, `/targets.html`, `/framed.html`, `/torsos-faces.html`, `/crosses.html`, `/mr-snowmann.html`, `/gallery-images.html`, `/collaboration.html` | 8 named series/theme pages (Guernica is the largest at 232 works) |
+| Start Here | `/start-here.html` | Orientation — who Jeff is, how to explore |
+| Favorites | `/favorites.html` | 45 personally significant works |
+| Curatorial Map | `/curatorial-map.html` | Decade × medium grid, theme filter chips |
+| Stories | `/stories.html` | Oral-history stories, verbatim quotes |
+| Why I Made Things | `/why-i-made-things.html` | First-person essay, Jeff-confirmed |
+| Timeline | `/timeline.html` | Decade skeleton 1950s–2020s |
+| Style Guide | `/style-guide.html` | Standalone design-system reference page |
 | Changes | `/changes.html` | Git log feed |
 | Privacy | `/privacy.html` | Privacy policy |
 
-**Deleted (do not recreate):** `timeline.html`, `constellation.html`, `mosaic.html`, `for-artists.html`
+**Deleted (do not recreate):** `constellation.html`, `mosaic.html`, `for-artists.html`
+
+**Note:** an earlier version of `timeline.html` was deleted in an early session, but a new `timeline.html` (decade skeleton, 1950s–2020s) was built in session 23 and is live today — it's in `stamp-nav.sh`'s TARGETS. Don't confuse the two; the current one should not be deleted.
 
 ---
 
@@ -62,7 +71,7 @@ sw.js                 Service worker — cache-first AVIF, network-first HTML/CS
 | Stitch nav (`_shared/top-nav.html`) | All pages except decade pages | `font-nav-link`, `deep-ink`, `international-orange` hover |
 | Material Design nav (inline) | `1970s.html`–`2020s.html` | `font-label-lg`, uppercase, `on-tertiary-container` active |
 
-`stamp-nav.sh` stamps the Stitch nav into ~30 pages. **Decade pages are NOT stamped — edit them directly.**
+`stamp-nav.sh` stamps the Stitch nav into 38 pages (confirmed 2026-06-22 — includes the decade pages too, migrated to the canonical nav/footer in an earlier session; only their hero/grid chrome stays on the separate Material Design token system).
 
 ---
 
@@ -121,10 +130,10 @@ Tailwind is compiled to `site.min.css` — the CDN is not used in production. An
 npm run build:css
 ```
 
-After rebuilding, **always bump `CACHE_V` in `sw.js`** before deploying. Format: `jfsn-YYYYMMDDHHMMSS`. If you skip this, users with an active service worker will be served stale CSS for days.
+After rebuilding, **always bump `CACHE_V` in `sw.js`** before deploying. Any unique string works as long as it changes — early sessions used `jfsn-YYYYMMDDHHMMSS`; since around session 75 it's been a Unix-epoch-style numeric string (e.g. `jfsn-1782140000`). The format itself doesn't matter to the service worker, just that the value is different from the last deploy. If you skip bumping it, users with an active service worker will be served stale CSS for days.
 
 ```js
-const CACHE_V = 'jfsn-20260606163000';  // bump this
+const CACHE_V = 'jfsn-1782140000';  // bump this — any new unique value works
 ```
 
 ---
@@ -138,7 +147,7 @@ Read CURRENT_STATE.md and IMPROVEMENTS.md. Summarize open items by priority, fla
 
 ### End (in order)
 ```bash
-bash end-session.sh   # git commit + push to GitHub + rsync to JEFFS-4TB + Backblaze B2 cloud backup
+bash session-end.sh   # git commit + push to GitHub + rsync to JEFFS-4TB + Backblaze B2 cloud backup
 ```
 Then deploy via **JFSN.app** (desktop app → FTP to HostGator). Don't use `deploy.sh` — JFSN.app is the deploy path now.  
 Then update Claude memory: "Update memory. Today we: [1–2 sentences]."
@@ -192,12 +201,12 @@ Edit `featured.txt` (one ID per line, e.g. `art0075`), then run `build_catalog.p
 
 | Step | Command / Tool |
 |------|---------------|
-| Commit + push + local backup | `bash end-session.sh` |
-| Deploy to HostGator | JFSN.app desktop app |
-| Netlify | Auto-deploys on GitHub push |
+| Commit + push + local backup | `bash session-end.sh` |
+| Deploy to HostGator (production) | `bash deploy-hostgator.sh` (primary, Session 70+) — JFSN.app desktop is legacy, no longer used |
+| Deploy to Netlify (secondary mirror) | `bash deploy-netlify.sh --prod` — manual only, **no git integration** |
 
 **HostGator:** FTP home = webroot (`/`). `FTP_REMOTE=/` in `.ftp.env` — must stay `/`.  
-**Netlify:** Companion function requires Netlify. Auto-deploys `main` branch.
+**Netlify:** Companion function requires Netlify. Has **no git integration** — pushing to GitHub does not deploy it; must be deployed manually via `deploy-netlify.sh`.
 
 ---
 
@@ -237,7 +246,9 @@ Edit `featured.txt` (one ID per line, e.g. `art0075`), then run `build_catalog.p
 | `artworks/validate_catalog.py` | Schema QA — run before build | After cataloging |
 | `artworks/build_catalog.py` | Publishes catalog.json + api/v1/ | After validation |
 | `artworks/build_dims.py` | Rebuilds dims.json from thumbnails | After new thumbs |
-| `end-session.sh` | git commit + push + rsync to JEFFS-4TB + Backblaze B2 (does NOT deploy) | End of session |
+| `session-end.sh` | git commit + push + rsync to JEFFS-4TB + Backblaze B2 (does NOT deploy) | End of session |
+| `deploy-hostgator.sh` | Primary HostGator deploy — reads `.ftp.env`, mirrors via lftp, smoke-tests | Deploying to jfsn.com |
+| `deploy-netlify.sh` | Netlify mirror deploy — `--check`/draft/`--prod` | Deploying to Netlify (manual, no git integration) |
 | `stamp-nav.sh` | Stamps `_shared/top-nav.html` into ~30 Stitch pages | After nav changes |
 | `make_handoff.py` | Regenerates Allison handoff PDF | After credential changes |
 
@@ -273,8 +284,8 @@ Does not work on plain cPanel (no server-side function support).
 ## Gotchas
 
 - **CSS build:** After `npm run build:css`, bump `CACHE_V` in `sw.js` before deploying.
-- **Decade pages:** NOT in `stamp-nav.sh` — edit `1970s.html`–`2020s.html` directly for nav/footer changes.
-- **index.html:** Has no FOOTER:START/END markers — custom footer, edit directly.
+- **Decade pages:** ARE in `stamp-nav.sh`'s TARGETS (corrected 2026-06-22 — migrated to the canonical nav/footer in an earlier session). Only their hero/grid/prev-next chrome stays on the separate Material Design token system.
+- **index.html — real drift risk, not a documentation gap (corrected 2026-06-22):** it DOES have `NAV:START/END` and `FOOTER:START/END` markers and IS in `stamp-nav.sh`'s TARGETS — an earlier version of this doc incorrectly said otherwise. The actual risk: `index.html` is the page most likely to organically drift *ahead* of `_shared/top-nav.html`/`_shared/footer.html` (new hero/animation work lands there first), so a routine `stamp-nav.sh` run can silently delete features the shared template hasn't caught up to yet — it already did this twice in one session (stripped the `anime.min.js` hero script both times). **Always check `git diff --stat` after running `stamp-nav.sh` and look specifically at `index.html`'s line count** — if it's a noticeably bigger diff than the other targets, inspect before trusting it.
 - **Homepage card hover frame:** Uses `.card-frame` overlay (`z-index:2`), not CSS `outline`. Outline is hidden behind the absolutely-positioned image. Any hardcoded featured card needs the `.card-frame` div inside `.card-img`.
 - **sw.js auto-bump:** `build_catalog.py` auto-bumps `CACHE_V` on every run. Check `git diff sw.js` before committing after any script run.
 - **Hero AVIF upload path:** `.htaccess` rewrites `artworks/full/*.avif` → `/artworks/*.avif` (legacy flat path). New hero crops (`artNNNN-hero.avif`) must be uploaded to `/artworks/` on the HostGator server — NOT `/artworks/full/`. Upload via lftp to `/artworks/artNNNN-hero.avif`.
@@ -292,11 +303,11 @@ Does not work on plain cPanel (no server-side function support).
 | | HostGator (primary) | Netlify (secondary) |
 |-|---------------------|---------------------|
 | URL | jfsn.com | jfsn-archive.netlify.app |
-| Deploy | JFSN.app desktop | Auto on GitHub push |
+| Deploy | `bash deploy-hostgator.sh` (primary, Session 70+) or desktop JFSN.app (legacy) | Manual curated CLI only — `bash deploy-netlify.sh` (`--check` → draft → `--prod`). **No git integration exists** — pushing to GitHub does NOT deploy Netlify. |
 | Companion | ✗ | ✓ |
 | Cost | ~$5/mo | Free |
 
-DNS is managed by a friend — nameservers cannot be changed.
+Domain (jfsn.com) is registered at Gandi, owned and paid for directly by Jeff (invoice confirmed 2026-06-16) — not held by a friend. Nameservers currently point to HostGator (ns31/32.websitewelcome.com); that's a hosting choice Jeff can change himself.
 
 ---
 

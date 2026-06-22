@@ -37,17 +37,20 @@ cat /Documents/JFSN/PERF_BASELINE.md
 # @media (max-width: 768px)  # Mobile adjustments
 ```
 
-### JavaScript (All interactions)
+### JavaScript (interactions)
 ```bash
-# File: /Users/jeffreyneumann/Documents/JFSN/_shared/micro-interactions.js
+# _shared/jfsn-interactions.js   — cursor ring, film grain, letter-settle, view transitions (the file CLAUDE.md/README.md document as canonical)
+# _shared/micro-interactions.js  — separate file, also loaded sitewide, not documented in CLAUDE.md/README.md's architecture section
 # - Event listeners, DOM manipulation, state management
-# - Add your functions before the initialization section
 # - No rebuild needed (separate from CSS)
 
-# Common patterns:
-# function setupFeature() { ... }
-# document.addEventListener('click', ...)
-# localStorage.setItem/getItem(key, value)
+# ⚠️ Found during the 2026-06-22 documentation audit: there are actually 17 separate
+# Session-65 interaction scripts loaded on all 40 HTML pages (lightbox.js, toast.js,
+# parallax.js, infinite-scroll.js, scroll-reveal.js, swipe-gestures.js, and more — see
+# docs/archive/README.md for the full list). Several of these implement patterns
+# CLAUDE.md's current Don'ts list explicitly bans (skeleton loading, scale/transform
+# hover, parallax). This is a real, unresolved discrepancy between live code and
+# current design philosophy — not yet decided one way or the other. See IMPROVEMENTS.md.
 ```
 
 ### After Any CSS Change
