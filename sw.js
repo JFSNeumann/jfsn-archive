@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1782120000'; // Session 79: anime.js adopted — hero rotation through 10 curated works + on-load title timeline; new _shared/anime.min.js precached
+const CACHE_V  = 'jfsn-1782130000'; // Session 79: hero pause-on-attention (pause autoplay on hover / off-screen)
 const PRECACHE = [
   '/',
   '/index.html',

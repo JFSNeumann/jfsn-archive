@@ -2254,7 +2254,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
      Releases the title timeline (`hero-entrance`) and starts rotation when done. */
   function startIntro() {
     var released = false;
-    function release() { if (released) return; released = true; document.dispatchEvent(new CustomEvent('hero-entrance')); start(); }
+    function release() { if (released) return; released = true; document.dispatchEvent(new CustomEvent('hero-entrance')); introReleased = true; maybeRun(); }
     var visible = stages.filter(function (s) { var r = s.container.getBoundingClientRect(); return r.width && r.height; });
     if (!visible.length) { release(); return; }
     /* The mosaic is a grand entrance — play it once per session; later loads in
@@ -2360,18 +2360,49 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
     for (var i = 0; i < pool.length; i++) { if (pool[i].id === id) { found = i; break; } }
     if (found < 0) return;
     idx = found; showWork();
-    stop(); if (!document.hidden) start();
+    stop(); maybeRun();   // reset the dwell, but stay paused if they're still hovering
   };
 
   function start() { if (!timer) timer = setInterval(advance, INTERVAL); }
   function stop()  { if (timer) { clearInterval(timer); timer = null; } }
 
+  /* Pause-on-attention: autoplay runs only when the tab is visible, the hero is
+     on-screen, and the viewer isn't hovering the hero or the river — so studying
+     a work (or exploring the river) is never cut off by the 7s timer. */
+  var introReleased = false, hovering = false, onscreen = true;
+  function maybeRun() {
+    if (!introReleased) return;
+    if (document.hidden || hovering || !onscreen) stop(); else start();
+  }
+
   document.addEventListener('visibilitychange', function () {
-    if (document.hidden) { stop(); } else { snapVisible(); start(); }
+    if (document.hidden) { stop(); } else { snapVisible(); maybeRun(); }
   });
-  /* Only run while visible. On a hidden/backgrounded tab (the embedded preview
-     panel is one) anime can't tick, so we leave the static first hero in place,
-     release the title immediately, and begin rotating once the tab is shown. */
+
+  /* Hover the hero or the river → pause; leave → resume. Hover-only: touch
+     devices have no hover and keep autoplaying, which is right for them. */
+  ['hero-d', 'hero-m', 'river-wrap-d', 'river-wrap-m'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('mouseenter', function () { hovering = true;  maybeRun(); });
+    el.addEventListener('mouseleave', function () { hovering = false; maybeRun(); });
+  });
+
+  /* Pause while the hero is scrolled off-screen — don't spend transitions nobody
+     is watching (and a small perf win). */
+  if ('IntersectionObserver' in window) {
+    var onView = {};
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { onView[e.target.id] = e.isIntersecting; });
+      onscreen = Object.keys(onView).some(function (k) { return onView[k]; });
+      maybeRun();
+    }, { threshold: 0.2 });
+    ['hero-d', 'hero-m'].forEach(function (id) { var el = document.getElementById(id); if (el) io.observe(el); });
+  }
+
+  /* On a hidden/backgrounded tab (the embedded preview panel is one) anime can't
+     tick, so we leave the static first hero in place and release the title
+     immediately; otherwise play the intro, which arms autoplay when it finishes. */
   if (!document.hidden) {
     startIntro();
   } else {
