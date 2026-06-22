@@ -5,25 +5,23 @@
  */
 (function () {
   const PAGE_NAV = {
-    'start-here.html':          'start-here.html', // START HERE
-    'about.html':               'about.html',      // ABOUT JEFF
+    'about.html':               'about.html',      // ABOUT
     'stories.html':             'about.html',      // About cluster
     'why-i-made-things.html':   'about.html',      // About cluster
     'timeline.html':            'about.html',      // About cluster
-    'archive.html':             'archive.html',    // EXPLORE
-    'favorites.html':           'archive.html',    // Explore cluster
+    'archive.html':             'archive.html',    // ARCHIVE
+    'favorites.html':           'archive.html',    // Archive cluster
     'chromatic.html':           'archive.html',
     'wall.html':                'archive.html',
     'curatorial-map.html':      'archive.html',
-    'series-index.html':        'series-index.html', // COLLECTIONS
-    'guernica.html':            'series-index.html', // Series/theme — COLLECTIONS
-    'collage.html':             'archive.html',   // Medium page — EXPLORE
+    'series-index.html':        'series-index.html', // SERIES
+    'guernica.html':            'series-index.html', // Series/theme
+    'collage.html':             'archive.html',   // Medium page — ARCHIVE
     'sculpture.html':           'archive.html',
     'photography.html':         'archive.html',
     'painting.html':            'archive.html',
-    'collaboration.html':       'series-index.html', // Series — COLLECTIONS
-    'api.html':                 'api.html',        // FOR RESEARCHERS
-    'lost.html':                'lost.html',       // ARCHIVE INFO
+    'collaboration.html':       'series-index.html', // Series
+    'lost.html':                'lost.html',       // LOST WORKS
   };
 
   const file = location.pathname.split('/').pop() || 'index.html';
