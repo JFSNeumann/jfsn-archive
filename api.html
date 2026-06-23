@@ -204,8 +204,8 @@ header.header-hidden{transform:translateY(-100%)}
   #mobile-menu-drawer a.drawer-stagger-3 { animation-delay: 0.15s; }
   #mobile-menu-drawer a.drawer-stagger-4 { animation-delay: 0.2s; }
 }
-/* Butterfly mark — orange default, black on hover */
-.jfsn-wordmark img{filter:brightness(0) saturate(100%) invert(61%) sepia(81%) saturate(2260%) hue-rotate(1deg) brightness(101%) contrast(103%);transition:filter 0.2s ease}
+/* Butterfly mark — core orange (#FF6600) default, black on hover */
+.jfsn-wordmark img{filter:invert(63%) sepia(72%) saturate(1500%) hue-rotate(-30deg) brightness(105%) contrast(101%);transition:filter 0.2s ease}
 .jfsn-wordmark:hover img{filter:none}
 @media(prefers-reduced-motion:reduce){.jfsn-wordmark img{transition:none}}
 </style>
@@ -391,6 +391,7 @@ header.header-hidden{transform:translateY(-100%)}
 })();
 </script>
 <script src="/_shared/micro-interactions.js"></script>
+<script src="/_shared/scroll-choreography.js" defer></script>
 <!-- NAV:END -->
 
 <main id="main" class="pt-16">
