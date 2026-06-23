@@ -64,6 +64,9 @@
         transition: opacity 0.4s ease;
     }
     .ghost-tile-wrap.visible { opacity: 1; }
+    /* Ghost tile: slow scroll drift + a slow "breathing" morph on hover —
+       absence given a quiet pulse, not a shape-shifting gimmick */
+    .ghost-tile { transition: transform 0.15s ease-out, border-radius 0.9s ease-in-out; }
 
     @media (prefers-reduced-motion: reduce) {
         *, *::before, *::after { transition: none !important; animation: none !important; }
@@ -520,6 +523,34 @@ header.header-hidden{transform:translateY(-100%)}
   }, { threshold: 0 });
 
   gridObserver.observe(grid);
+
+  // ── Subtle scroll-linked drift + hover "breathing" morph ──
+  // Each tile drifts a few px against scroll at its own depth, and rounds
+  // gently on hover — absence given a quiet pulse, never a gimmick.
+  // Skipped entirely under reduced-motion.
+  if (!reduced) {
+    var depths = allWraps.map(function (o, idx) { return (idx % 3 === 0) ? 0.05 : (idx % 3 === 1 ? 0.09 : 0.13); });
+    var ticking = false;
+    function updateDrift() {
+      ticking = false;
+      var vh = window.innerHeight;
+      allWraps.forEach(function (o, idx) {
+        var rect = o.wrap.getBoundingClientRect();
+        var centerOffset = (rect.top + rect.height / 2) - vh / 2;
+        var drift = Math.max(-10, Math.min(10, -centerOffset * depths[idx]));
+        o.tile.style.transform = 'translateY(' + drift.toFixed(1) + 'px)';
+      });
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(updateDrift); }
+    }, { passive: true });
+
+    allWraps.forEach(function (o) {
+      o.tile.classList.add('ghost-tile');
+      o.tile.addEventListener('mouseenter', function () { o.tile.style.borderRadius = '34%'; });
+      o.tile.addEventListener('mouseleave', function () { o.tile.style.borderRadius = '0%'; });
+    });
+  }
 })();
 </script>
 
