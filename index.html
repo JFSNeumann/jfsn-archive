@@ -59,14 +59,21 @@
 
   /* Featured cards — match archive-card styling exactly */
   .featured-card { cursor: pointer; display: block; text-decoration: none; break-inside: avoid; margin: 0 0 0.75rem; }
-  .featured-card-img { position: relative; overflow: hidden; isolation: isolate; outline: 2px solid rgba(224,89,0,0); outline-offset: 0; transition: outline-color 0.25s ease; }
-  .featured-card-img img { display: block; width: 100%; height: auto; }
-  /* Honest hover/focus affordance: a quiet outline only — the work is never
-     scaled, brightened, or recoloured. (Simplicity pass 2026-06-21.) */
+  .featured-card-img { position: relative; overflow: hidden; isolation: isolate; outline: 2px solid rgba(224,89,0,0); outline-offset: 0; transition: outline-color 0.25s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+  .featured-card-image { display: block; width: 100%; height: auto; }
+  .featured-card-accent { transition: none !important; }
+  /* Hover: lift image + reveal metadata */
   .featured-card:hover .featured-card-img,
-  .featured-card:focus-visible .featured-card-img { outline-color: #e05900; }
+  .featured-card:focus-visible .featured-card-img {
+    outline-color: #e05900;
+    transform: translateY(-8px);
+  }
+  .featured-card:hover .featured-card-image,
+  .featured-card:focus-visible .featured-card-image { opacity: 1 !important; }
+  .featured-card:hover .featured-metadata,
+  .featured-card:focus-visible .featured-metadata { opacity: 1 !important; }
 
-  .featured-metadata { padding-top: 0.5rem; }
+  .featured-metadata { padding-top: 0.5rem; transition: opacity 0.3s ease; }
   .featured-metadata h4 { font-family: Inter, sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 6px; color: #0B0B0B; transition: color 0.25s ease; }
   .featured-metadata span { display: flex; align-items: center; gap: 8px; font-family: Inter, sans-serif; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #B84700; font-weight: 500; }
   /* #B84700 (orange-ink) is only AA-accessible on light backgrounds (5.07:1).
@@ -74,6 +81,11 @@
      (.text-orange-ink, .text-international-orange) — this caption never
      picked that up, so it sat under 4.5:1 against the dark ground. */
   .dark .featured-metadata span { color: #FF6600; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .featured-card-img { transition: outline-color 0.25s ease; }
+    .featured-metadata { transition: none; }
+  }
 
   @media (prefers-reduced-motion: reduce) {
     .featured-card-img { transition: none; }
@@ -1721,17 +1733,20 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
         const card = document.createElement('a');
         card.href = `artwork.html?id=${id}`;
         card.className = 'featured-card';
+        card.dataset.cardIndex = i;
         card.innerHTML = `
-          <div class="featured-card-img sm:mb-md bg-surface-container-low">
+          <div class="featured-card-img sm:mb-md bg-surface-container-low" style="position:relative;">
+            <div class="featured-card-accent" style="position:absolute;top:0;left:0;width:5px;height:0;background:#FF6600;z-index:10;will-change:height;"></div>
             <img
               alt=""
-              class="w-full aspect-[3/4] object-cover"
+              class="featured-card-image w-full aspect-[3/4] object-cover"
               src="artworks/thumbs/${w.file}"
               loading="${isFirst ? 'eager' : 'lazy'}"${isFirst ? ' fetchpriority="high"' : ''}
               width="300" height="400"
+              style="opacity:0;will-change:opacity;"
             />
           </div>
-          <div class="featured-metadata space-y-1 px-3 pt-2 pb-3 sm:px-0 sm:pt-0 sm:pb-0">
+          <div class="featured-metadata space-y-1 px-3 pt-2 pb-3 sm:px-0 sm:pt-0 sm:pb-0" style="opacity:0;will-change:opacity;">
             <h4>${w.title}</h4>
             <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
               <span>${w.year || '—'}</span>
@@ -1741,6 +1756,54 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
         frag.appendChild(card);
       });
       grid.appendChild(frag);
+
+      // ─── MICRO-INTERACTIONS: Staggered fade-in + hover animations ───
+      if (typeof anime !== 'undefined' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        // 1. Staggered image fade-in on load
+        const images = grid.querySelectorAll('.featured-card-image');
+        anime({
+          targets: images,
+          opacity: [0, 1],
+          duration: 600,
+          delay: anime.stagger(45, { start: 200 }),
+          easing: 'easeOutQuad'
+        });
+
+        // 2. Metadata fade-in with slight delay (appears after images)
+        const metadataElements = grid.querySelectorAll('.featured-metadata');
+        anime({
+          targets: metadataElements,
+          opacity: [0, 1],
+          duration: 500,
+          delay: anime.stagger(45, { start: 400 }),
+          easing: 'easeOutQuad'
+        });
+
+        // 3. Hover accent bar animation
+        grid.querySelectorAll('.featured-card').forEach(card => {
+          const accent = card.querySelector('.featured-card-accent');
+          if (!accent) return;
+
+          card.addEventListener('mouseenter', () => {
+            anime.set(accent, { height: '0px' });
+            anime({
+              targets: accent,
+              height: '100%',
+              duration: 280,
+              easing: 'easeOutQuad'
+            });
+          });
+
+          card.addEventListener('mouseleave', () => {
+            anime({
+              targets: accent,
+              height: '0px',
+              duration: 200,
+              easing: 'easeInQuad'
+            });
+          });
+        });
+      }
     } catch(e) {
       console.error('catalog-home load failed', e);
     }
