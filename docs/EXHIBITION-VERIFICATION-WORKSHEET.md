@@ -1,5 +1,11 @@
 # Exhibition Verification Worksheet
 
+> ✅ **RESOLVED 2026-06-12.** Jeff answered this worksheet that session — see
+> `docs/oral-history/master-notes.md` §27 for his verbatim corrections and the
+> permanent six-row exhibition record now live on about.html (re-verified
+> byte-for-byte against §27 during the 2026-06-23 audit). Kept here as a record
+> of the method, not as an open question — do not re-ask these six rows.
+
 **Created:** 2026-06-11 · **Time needed: ~5 minutes** · Factual clarification only — no stories required.
 
 ## Why this exists
