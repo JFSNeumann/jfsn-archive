@@ -169,6 +169,33 @@
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll(); // init
+
+      // One-time orange light-sweep over the heading on load. A duplicate
+      // of the heading, colored orange, is layered exactly on top of the
+      // real heading and revealed left-to-right via clip-path, then swept
+      // onward until fully hidden again — the real heading underneath is
+      // untouched throughout, so this can only ever sit on top of it, never
+      // replace or blank it. Independent of the scroll transform above
+      // (that animates `transform`/`opacity` on the real heading; this
+      // animates `clip-path` on a separate absolutely-positioned clone).
+      if (window.anime) {
+        const sweep = heading.cloneNode(true);
+        sweep.classList.add('decade-heading-sweep');
+        sweep.removeAttribute('id');
+        heading.insertAdjacentElement('afterend', sweep);
+        anime({
+          targets: sweep,
+          clipPath: [
+            'inset(0% 100% 0% 0%)',
+            'inset(0% 0% 0% 0%)',
+            'inset(0% 0% 0% 100%)'
+          ],
+          easing: 'easeInOutQuad',
+          duration: 1100,
+          delay: 150,
+          complete: () => sweep.remove()
+        });
+      }
     }
   }
 

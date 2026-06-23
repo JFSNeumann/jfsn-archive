@@ -6908,3 +6908,24 @@ body.focus-mode .artwork-display img {
     padding: var(--space-2xl) var(--space-lg);
   }
 }
+
+/* Decade hero heading — one-time orange light-sweep on page load (anime.js
+   driven in ui.js). An orange duplicate of the heading sits exactly on top
+   of the real (ink-colored) heading, fully clipped out of view; the sweep
+   reveals it left-to-right then hides it again. The real heading is always
+   underneath at full opacity, so there is never a moment of missing or
+   mis-colored text — this only ever adds a transient orange pass over it. */
+.decade-hero { position: relative; }
+.decade-heading-sweep {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  color: #FF6600;
+  clip-path: inset(0 100% 0 0);
+  pointer-events: none;
+  user-select: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .decade-heading-sweep { display: none; }
+}

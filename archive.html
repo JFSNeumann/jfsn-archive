@@ -1319,6 +1319,31 @@ document.querySelectorAll('.custom-checkbox').forEach(cb => {
   cb.addEventListener('change', applyFilters);
 });
 
+/* Filter select ripple — a quiet orange pulse confirms a checkbox just
+   applied, without changing layout. Fires on check, not uncheck. The
+   window.anime / reduced-motion check happens inside the handler (not as
+   an attach-time gate) because anime.min.js loads via `defer` and is not
+   guaranteed to exist yet when this inline script runs during parsing. */
+document.querySelectorAll('.custom-checkbox').forEach(cb => {
+  cb.addEventListener('change', function () {
+    if (!this.checked) return;
+    if (!window.anime || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const ripple = document.createElement('span');
+    ripple.style.cssText = 'position:absolute;left:50%;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:#FF6600;pointer-events:none;z-index:5;';
+    const parent = this.parentElement;
+    if (getComputedStyle(parent).position === 'static') parent.style.position = 'relative';
+    parent.appendChild(ripple);
+    anime({
+      targets: ripple,
+      scale: [0.4, 2.2],
+      opacity: [0.55, 0],
+      easing: 'easeOutQuad',
+      duration: 420,
+      complete: () => ripple.remove()
+    });
+  });
+});
+
 loadMoreBtn.addEventListener('click', () => {
   renderPage();
 });
