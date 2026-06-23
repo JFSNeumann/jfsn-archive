@@ -52,8 +52,6 @@ Mark the top nav exactly like this so stamp-nav.sh can replace it:
 Top nav contains: JFSN wordmark (links to index.html) + 4 nav links
 (Archive · Series · About · Lost Works) + ⌘K search trigger.
 
-Series and Companion are footer-only — NOT in the top nav.
-
 Mobile nav is a hamburger button (mobile only) that opens a slide-in
 drawer (#mobile-menu-drawer) — NOT a fixed bottom tab bar.
 Drawer links carry inline feather-style SVG icons (24-viewBox,
@@ -124,7 +122,7 @@ Mobile: [Describe mobile layout specifically — snap scroll? single column? hid
 Desktop: [Describe desktop layout — sidebar + main? full-bleed? grid?]
 
 Nav: Mark top nav <!-- NAV:START --> / <!-- NAV:END --> for stamp-nav.sh.
-Top nav has 4 items: Archive · Series · About · Lost Works (Companion is footer-only).
+Top nav has 4 items: Archive · Series · About · Lost Works.
 Mobile nav is a hamburger button → slide-in drawer (#mobile-menu-drawer), NOT a bottom bar.
 
 Content philosophy: personal archive, not promotional. No CTAs. No engagement patterns.
@@ -160,11 +158,10 @@ no external component libraries, loading="lazy" on artwork images.
 | `about.html` | Multi-section: bio → contact → Lost Works bar → exhibition record |
 | `lost.html` | Essay + ghost grid — sparse, no CTAs, memorial tone |
 | `series-index.html` | Card grid, 8 series, Playfair Display titles |
-| `companion.html` | AI Companion — chat UI, Netlify Function |
 | `wall.html` | 1,084 mini tiles, all full color |
 | `guernica.html` | Static theme page — 232 works, full static grid |
 | `api.html` | Developer docs — expandable endpoint cards, code blocks, light bg |
 | `stories.html` | In nav. Long-form story/context entries. |
 | `start-here.html` | Orientation page — who Jeff is, major themes, how to explore. Stamped. |
 | `favorites.html` | 45 personally significant works from favorites.txt. Stamped. |
-| **DELETED** | `constellation.html`, `timeline.html`, `for-artists.html`, `mosaic.html` — do not recreate |
+| **DELETED** | `constellation.html`, `for-artists.html`, `mosaic.html`, `companion.html` (AI chat feature, removed 2026-06-22 with Netlify) — do not recreate. Note: an earlier `timeline.html` was also deleted long ago, but a *new* `timeline.html` (decade skeleton) was built in session 23 and is live today — don't confuse the two. |

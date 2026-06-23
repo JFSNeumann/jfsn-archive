@@ -2,38 +2,23 @@
 # ─────────────────────────────────────────────────────────────────────────────
 # session-end.sh — Complete end-of-session workflow
 #
-# Combines: git commit/push, backup, and optional Netlify deployment
+# Combines: git commit, push, and cold backup.
 #
 # Usage:
-#   bash session-end.sh                    # commit + push + backup (no deploy)
-#   bash session-end.sh --deploy           # + deploy to Netlify draft
-#   bash session-end.sh --deploy --prod    # + deploy to Netlify production
+#   bash session-end.sh
 #
 # This script coordinates the full release workflow:
 # 1. Verify no uncommitted changes in critical files
 # 2. Git commit with Co-Authored-By footer
 # 3. Git push to origin/main
 # 4. Cold backup via backup.sh (→ JEFFS-4TB, with file-count verification)
-# 5. Optional: Deploy to the Netlify MIRROR (draft or prod) — NOT jfsn.com.
-#    The live site (jfsn.com) is deployed separately via deploy-hostgator.sh.
+#
+# Deploying the live site (jfsn.com) is separate — run bash deploy-hostgator.sh.
+# (Netlify mirror + deploy-netlify.sh removed — Netlify is no longer used.)
 #
 # ─────────────────────────────────────────────────────────────────────────────
 set -euo pipefail
 cd "$(dirname "$0")"
-
-DEPLOY_MODE="none"
-
-# Parse args
-for arg in "$@"; do
-  case "$arg" in
-    --deploy)
-      DEPLOY_MODE="draft"
-      ;;
-    --prod)
-      DEPLOY_MODE="prod"
-      ;;
-  esac
-done
 
 # Colors
 GREEN='\033[0;32m'
@@ -109,24 +94,8 @@ else
   warning "Run 'bash backup.sh' manually once JEFFS-4TB is available"
 fi
 
-# Step 5: Optional deployment
-if [ "$DEPLOY_MODE" != "none" ]; then
-  echo ""
-  log "Deploying to Netlify ($DEPLOY_MODE)..."
-
-  if [ "$DEPLOY_MODE" = "prod" ]; then
-    bash deploy-netlify.sh --prod
-  else
-    bash deploy-netlify.sh
-  fi
-fi
-
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 success "Session end workflow complete!"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-
-if [ "$DEPLOY_MODE" = "draft" ]; then
-  echo "Next: Review preview, then run:"
-  echo "  bash deploy-netlify.sh --prod"
-fi
+echo "Next: deploy the live site with bash deploy-hostgator.sh"

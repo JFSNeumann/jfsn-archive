@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1782171994'; // Session 80 code audit: fixed lightbox.js hijacking .thumb__link clicks (raced page-transitions.js, flashed a bare modal before real nav won), disabled scroll-to-top.js (duplicate of footer.html's #btt-float, nearly identical position)
+const CACHE_V  = 'jfsn-1782203785'; // Session 80: removed Netlify + Companion entirely (companion.html deleted, nav/footer/sitemap/CSS rebuilt without it)
 const PRECACHE = [
   '/',
   '/index.html',
@@ -18,7 +18,6 @@ const PRECACHE = [
   '/artwork.html',
   '/about.html',
   '/series-index.html',
-  '/companion.html',
   '/lost.html',
   '/collage.html',
   '/photography.html',

@@ -165,9 +165,8 @@ def page1(c):
         ('GitHub',           'github.com/JFSNeumann/jfsn-archive'),
         ('Code on Mac',      '/Users/jeffreyneumann/Documents/JFSN/'),
         ('HostGator support','1-866-96-GATOR'),
-        ('Domain registrar', 'Gandi — held by Jeff’s friend (name: ___________) — renews each March 5'),
+        ('Domain registrar', 'Gandi — Jeff’s own account (jeff@jfsn.com) — renews each March 5'),
         ('Cloud backup',     'Backblaze B2, bucket jfsn-archive — login jfsneumann@gmail.com (pw in Bitwarden)'),
-        ('Mirror site',      'jfsn-archive.netlify.app — Netlify login in Bitwarden'),
         ('Recovery guide',   'docs/CUSTODIAN-RECOVERY-PLAN.md (in the code folder and on GitHub)'),
     ]
     for key, val in rows:

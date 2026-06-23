@@ -28,21 +28,20 @@ jfsn.com preserves 1,084 artworks by Jeffrey F. S. Neumann — about fifty years
 **jfsn.com is registered at Gandi (gandi.net) directly in Jeff's own account** (confirmed by invoice, 2026-06-16 — an earlier version of this document incorrectly said a friend held it; that was never true). It expires **2027-03-05** and must be renewed or every link to the archive dies and the domain will likely be bought by a squatter.
 
 - Renewal is a normal Gandi account action — whoever has Jeff's Bitwarden/Gandi access (see "The keys" above) can do it directly, no third party needed.
-- If the domain is ever lost, the archive still exists at **jfsn-archive.netlify.app** and in all four copies — but printed URLs and links break, so treat domain renewal as the #1 recurring custodial duty. One renewal per year, roughly $20.
+- If the domain is ever lost, the archive still exists in all four backup copies — but printed URLs and links break, so treat domain renewal as the #1 recurring custodial duty. One renewal per year, roughly $20.
 
 ## If the website goes down
 
 Don't panic; nothing is lost. In order of ease:
-1. The archive is mirrored at **jfsn-archive.netlify.app** (minus the newest updates).
-2. Call HostGator: **1-866-96-GATOR** — account email jfsneumann@gmail.com. Most outages are billing or support issues.
-3. If HostGator is gone for good → `DISASTER-RECOVERY-CHECKLIST.md`, scenario B (move to a new host — it's a folder-copy job; the site is plain files, no database).
+1. Call HostGator: **1-866-96-GATOR** — account email jfsneumann@gmail.com. Most outages are billing or support issues.
+2. If HostGator is gone for good → `DISASTER-RECOVERY-CHECKLIST.md`, scenario B (move to a new host — it's a folder-copy job; the site is plain files, no database). There's no longer a standing live mirror to fall back on while that happens (Netlify, which used to serve that role, was removed 2026-06-22) — the site will be offline for the duration of the move.
 
 ## Recurring custodial duties (the whole job)
 
 | When | What |
 |---|---|
 | Yearly, before March 5 | Confirm jfsn.com was renewed (whois jfsn.com → "Registry Expiry Date" should move out a year) |
-| Yearly | Confirm HostGator hosting is paid (or accept the site moving to Netlify-only) |
+| Yearly | Confirm HostGator hosting is paid (or pick a new host — see `DISASTER-RECOVERY-CHECKLIST.md` scenario B) |
 | Yearly | Log into backblaze.com once — confirm the `jfsn-archive` bucket is alive and billed (~$1/month) |
 | Whenever the Mac is replaced | Copy `~/Documents/JFSN/` to the new machine; keep the 4TB drive |
 | Never | Delete anything from the 4TB drive, the B2 bucket, or `old-site/` |

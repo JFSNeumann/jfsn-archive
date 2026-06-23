@@ -21,7 +21,7 @@ Can the JFSN archive survive the loss of HostGator, cPanel/FTP access, the curre
 | **HostGator** (live) | ✅ | ✅ | ✅ | ✅ | ✅ (original) | ❌ | ❌ (excluded from deploy) | — |
 
 **Verdict per scenario:**
-- Lose HostGator → nothing of substance is lost; the public site goes down until DNS is repointed (see SPOF #1) or visitors use jfsn-archive.netlify.app.
+- Lose HostGator → nothing of substance is lost; the public site goes down until a new host is stood up and DNS is repointed (see SPOF #1) — there's no longer a standing live mirror to fall back on in the meantime (Netlify, which used to serve that role, was removed 2026-06-22).
 - Lose the Mac → restore from 4TB (complete + history) or B2 (complete, no history; pull history from GitHub). Credentials restored via Bitwarden + the printed handoff sheet.
 - Lose the 4TB drive → B2 + GitHub + Mac still cover everything.
 - Lose B2 → 4TB + GitHub + Mac still cover everything.
@@ -38,25 +38,22 @@ Can the JFSN archive survive the loss of HostGator, cPanel/FTP access, the curre
 | **DNS zone** | ns31/ns32.websitewelcome.com = **HostGator's own nameservers** | If HostGator dies, DNS dies with it until repointed | Mitigated — Jeff can repoint directly via his own Gandi account, no third party needed |
 | **jeff@jfsn.com email** | MX → HostGator itself | Site contact address dies with the host | Account-recovery email everywhere should be jfsneumann@gmail.com (Gmail, independent) — spot-verified for HostGator |
 | B2 access | rclone config on the Mac only; account login via Bitwarden | Can't pull cloud backup until account login recovered | Acceptable — document in handoff |
-| Netlify account + `ANTHROPIC_API_KEY` env var | Netlify dashboard (not in repo) | Companion AI stops; mirror site stops updating | Degradable — site works without Companion |
 | GitHub account (JFSNeumann) | Login via Bitwarden | Repo orphaned (still clonable — public) | Acceptable |
 | GoatCounter analytics | external account | Analytics lost | Expendable |
 | Google Fonts CDN | external | Fonts fall back to system serif/sans | Degradable by design |
-| Apache `.htaccess` behavior | HostGator-specific | Hero-image rewrite (`artworks/full/*.avif` → flat `/artworks/`), CSP headers, file blocks don't transfer to non-Apache hosts | Documented in DISASTER-RECOVERY-CHECKLIST §migration; Netlify mirror proves the site runs without Apache |
+| Apache `.htaccess` behavior | HostGator-specific | Hero-image rewrite (`artworks/full/*.avif` → flat `/artworks/`), CSP headers, file blocks don't transfer to non-Apache hosts | Documented in DISASTER-RECOVERY-CHECKLIST §migration |
 
 ## 3. Single points of failure, ranked by preservation impact
 
 1. **The domain.** jfsn.com's registrar account is Jeff's own (corrected 2026-06-16 — no friend involved); its nameservers belong to HostGator; it expires **2027-03-05**. The archive's permanent identity — every stable URL the preservation philosophy is built on — depends on that one renewal happening on time each year. *Fix that costs nothing today: a calendar reminder + confirming Allison/the named technical successor has Gandi access via Bitwarden.*
 2. **The Bitwarden master password** exists only handwritten on the printed handoff sheet. If the sheet is lost before Allison receives it, every account behind Bitwarden needs individual recovery flows. *Fix: confirm the sheet's location; consider a second sealed copy.*
 3. **jeff@jfsn.com email on HostGator** — dies with the host while looking like a permanent address. *Fix: prefer jfsneumann@gmail.com as the canonical recovery/contact address everywhere; site already shows jeff@jfsn.com — decision for Jeff.*
-4. **The Companion's API key** (Netlify env var) — single env var, no documentation of which Anthropic account funds it. Degradable; document only.
-5. **rclone config** (B2 keys) on one Mac — recoverable via the B2 account; document only.
+4. **rclone config** (B2 keys) on one Mac — recoverable via the B2 account; document only.
 
-Items 4–5 are operational, not preservation. Items 1–2 are the only ones that can permanently damage the archive's continuity.
+Item 4 is operational, not preservation. Items 1–2 are the only ones that can permanently damage the archive's continuity.
 
 ## 4. What is deliberately NOT a problem
 
 - Git history not on B2: it exists on GitHub, the 4TB, and the Mac — three stores.
 - Credentials not in backups: correct behavior; they live in Bitwarden + the printed sheet.
-- Netlify staleness/decoupling: the live archive is HostGator; Netlify is a bonus mirror.
 - The archive's open-source nature: GitHub being public is itself a survivability feature — anyone can clone the code, catalog, and medium-res corpus without any credentials at all.

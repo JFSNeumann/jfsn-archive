@@ -57,11 +57,6 @@
   - **KNOWN ISSUE:** cPanel access is currently unavailable; the FTP password is publicly exposed and rotation is on hold (Jeff's call). See `CURRENT_STATE.md` "Critical open items." Migrating hosting off HostGator does **not** require contacting anyone else — Jeff owns the Gandi domain account directly (corrected 2026-06-16).
   - FTP credentials in repo: `.ftp.env` (gitignored — never commit)
 
-- **Netlify (jfsn-archive.netlify.app mirror)** — manual CLI deploys
-  - Account email / login: likely `jfsneumann@gmail.com` (same pattern as every other account in this list) — _[CONFIRM]_
-  - Credentials: Bitwarden
-  - Includes the Companion Netlify Function + artwork-meta edge function
-
 - **Gandi (domain registrar)**
   - Account holder: Jeffrey F. S. Neumann, directly (see "Named people" → Domain holder above)
   - This is the durable recovery path for jfsn.com if HostGator becomes unreachable. Jeff (or anyone with his Bitwarden access) can change DNS to point elsewhere — no third party needs to be contacted.
@@ -88,7 +83,7 @@
 1. **Confirm the archive is safe.** Check that GitHub is accessible, JEFFS-4TB is in known physical custody, and Backblaze B2 still has recent backups (login → check Last Modified on the bucket).
 2. **Decide if the live site needs to keep running.** It does not. jfsn.com going dark does not lose the archive; it just makes it temporarily inaccessible to visitors. Take time to make the right decision rather than rush a deploy.
 3. **If site must stay live:** the deploy commands are in `DEPLOY.md`. The credentials for HostGator are in `.ftp.env` in the local repo (or in the vault).
-4. **If migrating off HostGator:** Jeff (or whoever has his Bitwarden/Gandi access) can point DNS at a new host directly — no third party needs to be contacted. Netlify can serve as a long-term home; the staging mirror already runs there.
+4. **If migrating off HostGator:** Jeff (or whoever has his Bitwarden/Gandi access) can point DNS at a new host directly — no third party needs to be contacted. (Netlify was previously kept as a standing mirror for exactly this scenario; it was removed 2026-06-22 — a new host would need to be stood up from scratch, e.g. Netlify, Cloudflare Pages, or any static host, using the deploy steps in `DEPLOY.md` as a starting template.)
 5. **If the archive needs to find a new permanent home:** contact a regional archive, library, or museum. The JFSN-MISSION.md document explains what the archive is and what it preserves; lead with that. The Cleveland Museum of Art, Cleveland Public Library Special Collections, and Case Western Reserve University Archives are reasonable starting points to inquire. _[Jeff to confirm/refine this list.]_
 
 ---

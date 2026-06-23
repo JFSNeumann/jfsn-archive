@@ -18,11 +18,11 @@
 
 *Nothing of substance is lost — the server held nothing unique except `old-site/`, which was preserved to all four stores on 2026-06-11.*
 
-1. **Immediately:** the mirror at jfsn-archive.netlify.app keeps the archive publicly reachable. (To bring it current: **Netlify has no git integration** — pushing to GitHub does NOT redeploy it. Run `bash deploy-netlify.sh --prod` manually; see `DEPLOY.md`. Pre-deployment checklist: `docs/archive/session-checkpoints/SESSION-30-FINAL-REMEDIATION-REPORT.md` §6.)
-2. **Pick a new permanent host.** Requirements: static files only (no database, no server code needed), ~3 GB storage, custom domain + SSL. Netlify itself, Cloudflare Pages, or any Apache shared host all work.
-3. **Upload the site** — the working tree minus internal files. If using an Apache host, `deploy.sh` works as-is after editing `.ftp.env`. If not Apache, note these `.htaccess` behaviors that must be reproduced or worked around:
+1. **There is no longer a standing live mirror.** (Netlify was kept as exactly this fallback until it was removed 2026-06-22, along with the Companion AI chat feature it hosted — no git integration was its main liability.) The site goes dark until step 2–3 below stand up a new host. The archive itself is not at risk — it's intact in all 4 backup copies — only the *live URL* goes down.
+2. **Pick a new permanent host.** Requirements: static files only (no database, no server code needed), ~3 GB storage, custom domain + SSL. Netlify, Cloudflare Pages, or any Apache shared host all work.
+3. **Upload the site** — the working tree minus internal files. `deploy-hostgator.sh` is HostGator-specific (it shells out to `lftp`) and won't work against a new host as-is, but its file-exclusion list (gitignored/internal files it skips) is a good template for what NOT to upload. If using a non-Apache host, reproduce or work around these `.htaccess` behaviors:
    - Rewrite `artworks/full/*.avif` → `/artworks/*.avif` (on HostGator, full-res images live flat in `/artworks/`; simplest fix on a new host: upload `artworks/full/` as a real directory and the rewrite becomes unnecessary)
-   - Security headers / CSP (copy from `.htaccess` into the host's header config — see `netlify.toml` for the Netlify translation)
+   - Security headers / CSP (copy from `.htaccess` into the new host's own header config — there's no longer a `netlify.toml` example to translate from; check the new host's docs for the equivalent)
    - Blocking of `.py/.sh/.env/.md` etc. (FilesMatch block — translate or rely on not uploading those files)
    - `api/.htaccess` (CORS for the JSON API)
 4. **Point the domain:** Jeff owns the Gandi account directly (corrected 2026-06-16 — no friend/third party involved) — log in and change jfsn.com's nameservers/DNS to the new host. Until DNS moves, the archive lives at the new host's subdomain.
@@ -42,7 +42,7 @@
 
 1. Before expiry: whoever has Bitwarden/Gandi access can renew directly — routine, ~$20/year.
 2. If expiry passes: registrars hold domains in grace/redemption for ~30–75 days — log into Gandi (or call their support) immediately; redemption is expensive but possible.
-3. If truly gone: the archive continues at jfsn-archive.netlify.app (or any new domain). Update the `siteUrl` in `artist-config.json`, rebuild (`python3 artworks/build_catalog.py`), redeploy, and accept that printed/inbound jfsn.com links are dead. This is the one loss money can't always fix — which is why renewal is custodial duty #1.
+3. If truly gone: register a new domain (or use a free host's subdomain — see Scenario B for picking a new host now that Netlify is no longer the standing fallback). Update the `siteUrl` in `artist-config.json`, rebuild (`python3 artworks/build_catalog.py`), redeploy, and accept that printed/inbound jfsn.com links are dead. This is the one loss money can't always fix — which is why renewal is custodial duty #1.
 
 ## Scenario E — Total digital loss except ONE backup
 

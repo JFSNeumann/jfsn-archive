@@ -18,7 +18,7 @@ fi
 
 TARGETS=(
   index.html archive.html artwork.html series-index.html
-  companion.html about.html
+  about.html
   lost.html
   collage.html sculpture.html photography.html painting.html
   changes.html chromatic.html

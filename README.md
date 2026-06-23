@@ -2,7 +2,7 @@
 
 Personal archive of Jeffrey Francis Stanley Neumann — 1,084 works, 1974–present.  
 Collage · Sculpture · Photography · Painting.  
-**Live:** [jfsn.com](https://jfsn.com) · **Secondary:** [jfsn-archive.netlify.app](https://jfsn-archive.netlify.app)
+**Live:** [jfsn.com](https://jfsn.com) — the only host. (Netlify secondary mirror + Companion AI chat feature removed 2026-06-22.)
 
 ---
 
@@ -21,7 +21,6 @@ A static, no-CMS archive on a $5/month shared host (HostGator/cPanel). No databa
 | Artwork | `/artwork.html?id=artNNNN` | Single work, lightbox |
 | Series Index | `/series-index.html` | 8 themes/series |
 | Series | `/series.html` | Single series deep-dive |
-| Companion | `/companion.html` | AI assistant (Netlify function) |
 | About | `/about.html` | Bio, exhibitions, contact |
 | Lost | `/lost.html` | Essay + ghost grid (~750 lost works) |
 | Chromatic River | `/chromatic.html` | HiDPI canvas, 1,084 color slices by year |
@@ -43,7 +42,7 @@ A static, no-CMS archive on a $5/month shared host (HostGator/cPanel). No databa
 | Changes | `/changes.html` | Git log feed |
 | Privacy | `/privacy.html` | Privacy policy |
 
-**Deleted (do not recreate):** `constellation.html`, `mosaic.html`, `for-artists.html`
+**Deleted (do not recreate):** `constellation.html`, `mosaic.html`, `for-artists.html`, `companion.html` (AI chat feature, removed 2026-06-22 along with Netlify — it only ran as a Netlify Function)
 
 **Note:** an earlier version of `timeline.html` was deleted in an early session, but a new `timeline.html` (decade skeleton, 1950s–2020s) was built in session 23 and is live today — it's in `stamp-nav.sh`'s TARGETS. Don't confuse the two; the current one should not be deleted.
 
@@ -87,7 +86,7 @@ sw.js                 Service worker — cache-first AVIF, network-first HTML/CS
 | `orange-ink` | `#B84700` | Accessible orange for persistent text on light bg (eyebrow labels, bracket links) — 5.07:1 AA, added session 46 |
 | `archive-gray` | `#575757` | Secondary text / labels |
 | `outline-variant` | `#c4c7c7` | Borders |
-| Headings | Playfair Display | Decade heroes, about name/bio, series heroes, Companion title |
+| Headings | Playfair Display | Decade heroes, about name/bio, series heroes |
 | UI / labels | Inter ALL CAPS | Everything else |
 
 **Hard rules:** No rounded corners · No drop shadows on images · No gradients · Artwork always full color (no grayscale, ever) · No scale/transform on hover · No scroll-reveal opacity:0 · No sibling dim · No hover overlays on artwork
@@ -202,11 +201,11 @@ Edit `featured.txt` (one ID per line, e.g. `art0075`), then run `build_catalog.p
 | Step | Command / Tool |
 |------|---------------|
 | Commit + push + local backup | `bash session-end.sh` |
-| Deploy to HostGator (production) | `bash deploy-hostgator.sh` (primary, Session 70+) — JFSN.app desktop is legacy, no longer used |
-| Deploy to Netlify (secondary mirror) | `bash deploy-netlify.sh --prod` — manual only, **no git integration** |
+| Deploy to HostGator (the only host) | `bash deploy-hostgator.sh` (primary, Session 70+) — JFSN.app desktop is legacy, no longer used |
 
-**HostGator:** FTP home = webroot (`/`). `FTP_REMOTE=/` in `.ftp.env` — must stay `/`.  
-**Netlify:** Companion function requires Netlify. Has **no git integration** — pushing to GitHub does not deploy it; must be deployed manually via `deploy-netlify.sh`.
+**HostGator:** FTP home = webroot (`/`). `FTP_REMOTE=/` in `.ftp.env` — must stay `/`.
+
+(Netlify secondary mirror + `deploy-netlify.sh` removed 2026-06-22 — Netlify had no git integration and was the only place the Companion AI chat feature could run; dropping Netlify meant dropping Companion too.)
 
 ---
 
@@ -247,8 +246,7 @@ Edit `featured.txt` (one ID per line, e.g. `art0075`), then run `build_catalog.p
 | `artworks/build_catalog.py` | Publishes catalog.json + api/v1/ | After validation |
 | `artworks/build_dims.py` | Rebuilds dims.json from thumbnails | After new thumbs |
 | `session-end.sh` | git commit + push + rsync to JEFFS-4TB + Backblaze B2 (does NOT deploy) | End of session |
-| `deploy-hostgator.sh` | Primary HostGator deploy — reads `.ftp.env`, mirrors via lftp, smoke-tests | Deploying to jfsn.com |
-| `deploy-netlify.sh` | Netlify mirror deploy — `--check`/draft/`--prod` | Deploying to Netlify (manual, no git integration) |
+| `deploy-hostgator.sh` | Deploy to jfsn.com (the only host) — reads `.ftp.env`, mirrors via lftp, smoke-tests | Deploying |
 | `stamp-nav.sh` | Stamps `_shared/top-nav.html` into ~30 Stitch pages | After nav changes |
 | `make_handoff.py` | Regenerates Allison handoff PDF | After credential changes |
 
@@ -272,15 +270,6 @@ License: CC BY 4.0 (metadata only — artwork images belong to the artist).
 
 ---
 
-## Companion (AI assistant)
-
-`/companion.html` — Claude-powered chat with full archive knowledge.  
-Requires Netlify function: `netlify/functions/companion.mjs` + `ANTHROPIC_API_KEY` in Netlify dashboard.  
-Models: `claude-haiku-4-5` (fast) / `claude-sonnet-4-6` (deep). **No extended thinking** — deep mode is Sonnet without thinking (session 35); adaptive thinking + the multi-turn tool loop blew past Netlify's hard 30s function timeout, so deep = "Sonnet instead of Haiku," `max_tokens` 1024. Reviving deeper reasoning needs a streaming/background function.  
-Does not work on plain cPanel (no server-side function support).
-
----
-
 ## Gotchas
 
 - **CSS build:** After `npm run build:css`, bump `CACHE_V` in `sw.js` before deploying.
@@ -290,9 +279,9 @@ Does not work on plain cPanel (no server-side function support).
 - **sw.js auto-bump:** `build_catalog.py` auto-bumps `CACHE_V` on every run. Check `git diff sw.js` before committing after any script run.
 - **Hero AVIF upload path:** `.htaccess` rewrites `artworks/full/*.avif` → `/artworks/*.avif` (legacy flat path). New hero crops (`artNNNN-hero.avif`) must be uploaded to `/artworks/` on the HostGator server — NOT `/artworks/full/`. Upload via lftp to `/artworks/artNNNN-hero.avif`.
 - **`api/.htaccess` is auto-generated:** `build_catalog.py` overwrites it on every run from a template string inside the script. Edit the template there — never edit the file directly. Do NOT add `SecFilterEngine`/`SecRuleEngine` mod_security directives — they cause HTTP 500 on HostGator.
-- **`catalog-lite.json` fields:** `file, title, year, work_type, themes, keywords, motifs, description, series, favorite, featured, orientation` — what `search.js`, archive filters (incl. the orientation filter), `series.html`, and the Netlify edge function read. `orientation` (vertical/horizontal/square, from `dims.json`) added session 35. Don't bloat it; LITE_FIELDS is the source of truth in `build_catalog.py`.
+- **`catalog-lite.json` fields:** `file, title, year, work_type, themes, keywords, motifs, description, series, favorite, featured, orientation` — what `search.js`, archive filters (incl. the orientation filter), and `series.html` read. `orientation` (vertical/horizontal/square, from `dims.json`) added session 35. Don't bloat it; LITE_FIELDS is the source of truth in `build_catalog.py`.
 - **`mt-3` / new Tailwind classes:** Classes not in the build are silently ignored. If a spacing or layout class isn't applying, run `npm run build:css`.
-- **Playfair Display:** Only on decade page heroes, `about.html` name h1 + bio paragraph, series heroes, `companion.html` title. Everything else is Inter.
+- **Playfair Display:** Only on decade page heroes, `about.html` name h1 + bio paragraph, series heroes. Everything else is Inter.
 - **analytics:** GoatCounter on all public pages via `_shared/footer.html` → `jfsn.goatcounter.com`.
 - **New page sitemap rule:** When adding any new public `.html` page — add it to the `entries[]` list in `artworks/build_catalog.py`, run `python3 artworks/build_catalog.py`, then run `bash audit-nav.sh`. The reverse sitemap check will warn if you missed it. Intentionally excluded: `artwork.html`, `series.html` (both dynamic), `404.html`, and dev tools (`curate`, `dedupe`, `jeff`, `qa`).
 
@@ -300,12 +289,13 @@ Does not work on plain cPanel (no server-side function support).
 
 ## Hosting
 
-| | HostGator (primary) | Netlify (secondary) |
-|-|---------------------|---------------------|
-| URL | jfsn.com | jfsn-archive.netlify.app |
-| Deploy | `bash deploy-hostgator.sh` (primary, Session 70+) or desktop JFSN.app (legacy) | Manual curated CLI only — `bash deploy-netlify.sh` (`--check` → draft → `--prod`). **No git integration exists** — pushing to GitHub does NOT deploy Netlify. |
-| Companion | ✗ | ✓ |
-| Cost | ~$5/mo | Free |
+| | HostGator (the only host) |
+|-|---------------------------|
+| URL | jfsn.com |
+| Deploy | `bash deploy-hostgator.sh` (primary, Session 70+) or desktop JFSN.app (legacy) |
+| Cost | ~$5/mo |
+
+(Netlify secondary mirror removed 2026-06-22 along with the Companion AI chat feature it hosted.)
 
 Domain (jfsn.com) is registered at Gandi, owned and paid for directly by Jeff (invoice confirmed 2026-06-16) — not held by a friend. Nameservers currently point to HostGator (ns31/32.websitewelcome.com); that's a hosting choice Jeff can change himself.
 

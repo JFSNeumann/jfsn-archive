@@ -103,12 +103,11 @@ Monitor these after deployment. Check weekly for first month.
 
 **Site is down:**
 - Check uptime-check.sh logs: `/tmp/jfsn-uptime-log.txt`
-- Check HostGator cPanel status
-- Check Netlify mirror at jfsn-archive.netlify.app (should still work)
+- Check HostGator cPanel status — it's the only host now (Netlify mirror removed 2026-06-22)
 
 **Keyboard shortcuts not working:**
-- Verify monitor.js is loaded: DevTools > Sources > check for monitor.js
 - Check browser console for JS errors
+- (`monitor.js`, referenced here previously, was deleted in Session 52 as unused — don't expect to find it)
 
 **Favorites not persisting:**
 - Check localStorage: DevTools > Application > localStorage

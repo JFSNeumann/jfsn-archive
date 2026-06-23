@@ -20,7 +20,7 @@ Personal archive site for Jeffrey F. S. Neumann — 1,084 works spanning 1974–
 Collage, sculpture, photography. This is a personal record, not a promotional platform.
 Making is the point.
 
-Live: jfsn.com (cPanel/HostGator) and jfsn-archive.netlify.app (Netlify, has Companion Netlify Function + artwork-meta edge function)
+Live: jfsn.com (cPanel/HostGator) — the only host. Netlify (secondary mirror) and the Companion AI chat feature it hosted were removed 2026-06-22.
 
 ---
 
@@ -116,7 +116,6 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 | `archive.html` | 1,084 works, filters by medium/decade/series |
 | `artwork.html` | Single work, loaded by `?id=artNNNN` |
 | `series-index.html` | Guernica + 7 themes |
-| `companion.html` | AI companion (Netlify Function — `netlify/functions/companion.mjs`) |
 | `about.html` | Bio, exhibitions, contact |
 | `lost.html` | Essay + ghost grid of 10 tiles |
 | `chromatic.html` | Color-slice canvas of all works by year |
@@ -158,15 +157,14 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 - Wall (wall.html): 1,084 tiles, all color, no sibling dim (removed session 10)
 
 ### Nav systems (two, keep separate)
-1. **Stitch nav** (`_shared/top-nav.html`) — `font-nav-link`, `text-deep-ink`, `international-orange` hover. Used by collage, sculpture, photography, painting, lost, etc. Nav links: Archive · Series · About · Lost. (Companion is footer-only — not in nav.)
+1. **Stitch nav** (`_shared/top-nav.html`) — `font-nav-link`, `text-deep-ink`, `international-orange` hover. Used by collage, sculpture, photography, painting, lost, etc. Nav links: Archive · Series · About · Lost Works.
 2. **Material Design nav** (inline on decade pages) — `font-label-lg`, uppercase, `text-on-tertiary-container` active. Used by 1970s–2020s.
 
 ### Deployment
 - `.claude/launch.json` configured with `autoPort: true` for flexible dev server assignment (no hardcoded port 9000)
 - `bash session-end.sh` — git commit, push to GitHub, rsync backup to external drive
 - `bash deploy-hostgator.sh` — CLI deployment script (replaces JFSN.app, Session 70+). Reads .ftp.env, mirrors files via lftp, runs smoke test
-- Deploy to HostGator via `bash deploy-hostgator.sh` (primary) or desktop JFSN.app (legacy)
-- Deploy the **Netlify mirror** via `bash deploy-netlify.sh` (`--check` = dry safety scan → default = draft/preview → `--prod` = live). It builds a curated staging copy + refuses to deploy if any `docs/`/`.ftp.env`/`*.py`/`*.sh`/`*.pdf`/`*.md` slipped in — the guardrail against the 2026-06 credential-exposure failure mode. Netlify has NO git integration.
+- Deploy to HostGator via `bash deploy-hostgator.sh` (primary) or desktop JFSN.app (legacy) — the only host. (Netlify secondary mirror + `deploy-netlify.sh` removed 2026-06-22.)
 - `build_catalog.py` writes the api JSON + feed.xml through `_write_stable` — they are NOT rewritten when only the `generated`/date timestamp would change. If you see those files *not* updating on a no-content build, that's intentional (kills git churn / end-session residuals), not a bug.
 - Service worker: `sw.js` — bump `CACHE_V` whenever deploy may be cached by old SW
 - **Hero AVIF upload path:** `.htaccess` rewrites `artworks/full/*.avif` → `/artworks/*.avif` (legacy flat dir). New hero crops (`artNNNN-hero.avif`) must be uploaded to `/artworks/` on HostGator — NOT `/artworks/full/`. Use lftp: `put artNNNN-hero.avif -o /artworks/artNNNN-hero.avif`
@@ -175,9 +173,8 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 
   **Adding a field is a multi-file change, NOT just an edit to `LITE_FIELDS`.** Consumers don't validate; they ignore unknown fields and break when expected fields disappear. Before adding or renaming any field, check:
   1. `_shared/search.js` — does it index this field? read it?
-  2. `netlify/functions/artwork-meta.js` (and `companion-*.js` if relevant) — does the edge function rely on this field?
-  3. `gen-artwork-pages.py` — does the artwork-page template render this field?
-  4. `api.html` — is the field documented for API users?
+  2. `gen-artwork-pages.py` — does the artwork-page template render this field?
+  3. `api.html` — is the field documented for API users?
 
   If any consumer needs to know about it, update that consumer in the same commit. If you're removing or renaming a field, the same four locations need updates first.
 - **Provenance fields (session 36, set in `build_catalog.py` after the records sort):** `year_precision` is `'estimated'` for ALL works and `year_display` is the decade-bucket form `"1990s (est.)"` — every catalog year is a decade estimate (creator-confirmed), so artwork pages + API show "1990s (est.)", never a hard year. `composite` is `True` for the ~250 "imagined placement" works (rule: Gallery theme OR Studio theme OR a placement-language title via `PLACEMENT_RE`) — these are Photoshop composites, NOT real single works/exhibitions (master-notes §22/§25); artwork pages show an "Image — Photoshop composite — imagined placement" meta row. To change the composite set, edit the rule/`PLACEMENT_RE` and rerun `build_catalog.py` + `gen-artwork-pages.py`. NOTE: grid/search/favorites captions still show the bare decade year (e.g. "1990"); only the artwork detail pages + API carry the "(est.)" label.

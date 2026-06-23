@@ -117,9 +117,8 @@ if [ "$CHECKS_FAILED" -eq 0 ]; then
   echo -e "${GREEN}✓ All checks passed!${NC}"
   echo ""
   echo "Ready to deploy:"
-  echo "  1. bash session-end.sh --deploy"
-  echo "  2. bash deploy-netlify.sh --prod"
-  echo "  3. Open JFSN.app, click Deploy (HostGator)"
+  echo "  1. bash session-end.sh"
+  echo "  2. bash deploy-hostgator.sh"
   echo ""
   exit 0
 else

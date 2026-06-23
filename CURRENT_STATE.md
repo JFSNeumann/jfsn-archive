@@ -6,8 +6,7 @@ This file describes what's currently true about the site. For ranked work, see `
 ---
 
 ## Site is live at
-- **jfsn.com** — primary, cPanel/HostGator
-- **jfsn-archive.netlify.app** — secondary, Netlify, has the Companion function + artwork-meta edge function
+- **jfsn.com** — cPanel/HostGator, the only host. Netlify (secondary mirror) and the Companion AI chat feature were removed 2026-06-22.
 
 ## Archive stats
 - 1,084 works cataloged, 0 errors

@@ -64,7 +64,7 @@ def leak_check():
     global errors
     root = Path(__file__).parent.parent
     KNOWN_PUBLIC = {"_shared", "api", "artworks"}
-    HIDDEN_OR_VCS = {".git", ".claude", ".netlify", "node_modules"}
+    HIDDEN_OR_VCS = {".git", ".claude", "node_modules"}
     found_any = False
     for entry in sorted(root.iterdir()):
         if not entry.is_dir() or entry.name in KNOWN_PUBLIC or entry.name in HIDDEN_OR_VCS:
@@ -91,7 +91,6 @@ check("archive.html",        "/archive.html")
 check("about.html",          "/about.html")
 check("lost.html",           "/lost.html")
 check("api.html",            "/api.html")
-check("companion.html",      "/companion.html")
 
 # Catalog
 check("catalog-home.json — exists",   "/catalog-home.json",

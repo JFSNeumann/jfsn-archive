@@ -299,8 +299,8 @@ def generate_page(work, idx, all_works, colors):
     <nav class="hidden md:flex gap-6" aria-label="Primary">
       <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="../../archive.html">Archive</a>
       <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="../../series-index.html">Series</a>
-      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="../../companion.html">Companion</a>
       <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="../../about.html">About</a>
+      <a class="font-nav-link text-nav-link text-deep-ink hover:text-international-orange transition-colors duration-200" href="../../lost.html">Lost Works</a>
     </nav>
   </div>
   <div class="flex items-center gap-4">
@@ -319,8 +319,8 @@ def generate_page(work, idx, all_works, colors):
     <div style="flex:1;overflow-y:auto;padding:8px 0;">
       <a href="../../archive.html"      style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Archive</a>
       <a href="../../series-index.html" style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Series</a>
-      <a href="../../companion.html"    style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">Companion</a>
-      <a href="../../about.html"        style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;">About</a>
+      <a href="../../about.html"        style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;">About</a>
+      <a href="../../lost.html"         style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;">Lost Works</a>
     </div>
   </nav>
 </div>
@@ -421,7 +421,6 @@ def generate_page(work, idx, all_works, colors):
       <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
         <li><a class="hover:text-international-orange transition-colors" href="../../chromatic.html">Chromatic River</a></li>
         <li><a class="hover:text-international-orange transition-colors" href="../../wall.html">The Wall</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="../../companion.html">AI Companion</a></li>
       </ul>
     </div>
     <div>
@@ -452,9 +451,9 @@ def generate_page(work, idx, all_works, colors):
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="9" y="9" width="11.5" height="11.5"/><path d="M5.8 17.2V5.8h11.4"/><path d="M3 14V3h11"/></svg>
     <span class="font-label-md text-[10px] uppercase">Series</span>
   </a>
-  <a href="../../companion.html" class="flex flex-col items-center justify-center text-secondary">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 4H3v13h5v4l5-4h8z"/></svg>
-    <span class="font-label-md text-[10px] uppercase">Companion</span>
+  <a href="../../about.html" class="flex flex-col items-center justify-center text-secondary">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <span class="font-label-md text-[10px] uppercase">About</span>
   </a>
 </nav>
 
