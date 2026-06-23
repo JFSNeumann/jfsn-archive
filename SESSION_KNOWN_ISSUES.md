@@ -27,5 +27,13 @@ Format: `[ ]` open / `[x]` resolved · description · status
 - [ ] **`SUCCESSION.md` is still ~70% unfilled blanks** (named contacts, account emails, vault locations) — partially filled in 2026-06-22 with facts confirmable elsewhere in the repo; the rest needs Jeff's direct input. See `IMPROVEMENTS.md`.
 - [x] Caught and fixed a 6-day-old fact-propagation gap: `docs/KNOWLEDGE-AT-RISK-INVENTORY.md` still listed "the domain-friend's name" as an open to-do item from before the 2026-06-16 domain-ownership correction. Closed it.
 
+## Session 87 (2026-06-23)
+
+- [x] **Real bug found and fixed:** `artwork-animations.js`'s motion-path entrance used a hidden `<svg>` sized `width:0;height:0` for `anime.path()` sampling — anime's internal scale factor became `0/0 = NaN`, silently dropping every `translateX`/`translateY` frame (image only ever faded/scaled, never actually moved along the path, even in a real browser). Fixed by giving the SVG a real off-screen size; confirmed via `timeline.seek()` showing correct `22px→0px` interpolation.
+- [x] Extended the homepage's existing (and previously undiscovered-by-memory) native cross-document View Transition setup to archive.html — same `view-transition-name:artwork-hero` stamping pattern, paired with `artwork.html`'s `#work-image`. Added a `pagereveal`-based flag so the JS entrance timeline doesn't re-animate an image the browser already morphed in.
+- [ ] **Carry forward:** river/wall/timeline-thread animations (Session 87) are rAF/IntersectionObserver-dependent and were verified via direct `anime(...).seek()` math, not real-time playback — the preview tab used this session had `document.hidden===true` and measured **zero** `requestAnimationFrame` ticks over 4 seconds (full suspension, not throttling). Worth a visual pass in a real foreground tab next session.
+- [ ] **Carry forward, not fixed (out of scope, flagged via spawn_task):** archive.html has three overlapping breadcrumb sources rendering simultaneously (`breadcrumb-navigation.js` fixed bar, `breadcrumb.js` inline element, a static `.breadcrumb` element). Pre-existing, not introduced this session.
+- [ ] Lighthouse/Performance baseline not captured this session.
+
 ## Carryover from prior sessions
 - See `IMPROVEMENTS.md` (living backlog) for the full prioritized list.
