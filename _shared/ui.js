@@ -794,4 +794,146 @@
     });
   })();
 
+  // ─── Background Color Fade Animation (Option 1 + 2: Scroll + Hero) ─────────
+  // Subtle page-specific background color animation: hero fade + scroll fade.
+  // As hero exits viewport, background fades from neutral to theme color.
+  // As user scrolls, background color intensity increases then decreases.
+  // Respects dark mode (darker tints) and prefers-reduced-motion.
+  (function() {
+    if (!window.anime || !('IntersectionObserver' in window)) return;
+
+    const isDarkMode = document.documentElement.classList.contains('dark');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Theme colors: light mode (subtle tints) and dark mode (darker tints)
+    const themeMap = {
+      'guernica.html': { light: '#fef5f0', dark: '#3a3335' },     // warm red
+      'crosses.html': { light: '#f8f3fa', dark: '#3a3338' },      // purple
+      'targets.html': { light: '#fef9f0', dark: '#3a3830' },      // gold/yellow
+      'framed.html': { light: '#faf9f7', dark: '#3a3a3a' },       // neutral gray
+      'torsos-faces.html': { light: '#fef6f3', dark: '#3a3537' }, // warm pink
+      'mr-snowmann.html': { light: '#f3f8fc', dark: '#333a3d' },  // cool blue
+      'gallery-images.html': { light: '#fef9f5', dark: '#3a3a37' }, // warm mixed
+      'collaboration.html': { light: '#fef6f2', dark: '#3a3835' }, // warm earth
+      'collage.html': { light: '#fef9f0', dark: '#3a3830' },      // warm gold
+      'sculpture.html': { light: '#f3f8fc', dark: '#333a3d' },    // cool gray/blue
+      'photography.html': { light: '#f3f8fc', dark: '#333a3d' },  // cool blue/white
+      'painting.html': { light: '#fef6f0', dark: '#3a3735' }      // warm terra/brown
+    };
+
+    // Detect current page from document title or body class
+    const getCurrentPageColor = () => {
+      for (const [page, colors] of Object.entries(themeMap)) {
+        if (document.location.pathname.includes(page)) {
+          return isDarkMode ? colors.dark : colors.light;
+        }
+      }
+      return null;
+    };
+
+    const themeColor = getCurrentPageColor();
+    if (!themeColor) return; // Not a theme page
+
+    const baseColor = isDarkMode ? '#1a1a1a' : '#fcf9f3';
+    let currentBg = baseColor;
+
+    // Option 2: Hero fade — background transitions as hero exits viewport
+    const hero = document.querySelector('.medium-page__head, [class*="hero"]');
+    if (hero && !reducedMotion) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          // Hero exits top of viewport
+          if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
+            if (currentBg === baseColor) {
+              anime({
+                targets: document.documentElement.style,
+                backgroundColor: [baseColor, themeColor],
+                easing: 'easeOutQuad',
+                duration: 700,
+                update: () => {
+                  currentBg = window.getComputedStyle(document.documentElement).backgroundColor;
+                }
+              });
+            }
+          }
+          // Hero re-enters viewport (scrolling back up)
+          else if (entry.isIntersecting) {
+            if (currentBg !== baseColor) {
+              anime({
+                targets: document.documentElement.style,
+                backgroundColor: [themeColor, baseColor],
+                easing: 'easeOutQuad',
+                duration: 700,
+                update: () => {
+                  currentBg = window.getComputedStyle(document.documentElement).backgroundColor;
+                }
+              });
+            }
+          }
+        });
+      }, { threshold: 0.05 });
+
+      observer.observe(hero);
+    }
+
+    // Option 1: Scroll fade — background shifts based on scroll progress
+    if (!reducedMotion) {
+      const main = document.querySelector('main');
+      if (!main) return;
+
+      let scrollAnimationActive = false;
+
+      window.addEventListener('scroll', () => {
+        const scrollProgress = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+
+        // Fade in from scroll start (0) to midpoint (0.3), then fade out to scroll end
+        let intensity = 0;
+        if (scrollProgress < 0.3) {
+          intensity = scrollProgress / 0.3; // Ramp up to 30% scroll
+        } else if (scrollProgress > 0.7) {
+          intensity = (1 - scrollProgress) / 0.3; // Ramp down from 70% to 100%
+        } else {
+          intensity = 1; // Stay at max between 30-70%
+        }
+
+        // Blend: base color + theme color based on intensity
+        const blendedColor = blendColors(baseColor, themeColor, Math.max(0, Math.min(1, intensity)));
+        document.documentElement.style.backgroundColor = blendedColor;
+      }, { passive: true });
+    }
+
+    // Helper: blend two RGB colors by percentage
+    function blendColors(color1, color2, t) {
+      const rgb1 = parseRGB(color1);
+      const rgb2 = parseRGB(color2);
+      if (!rgb1 || !rgb2) return color1;
+
+      const r = Math.round(rgb1[0] + (rgb2[0] - rgb1[0]) * t);
+      const g = Math.round(rgb1[1] + (rgb2[1] - rgb1[1]) * t);
+      const b = Math.round(rgb1[2] + (rgb2[2] - rgb1[2]) * t);
+
+      return `rgb(${r}, ${g}, ${b})`;
+    }
+
+    // Helper: parse RGB string to array [r, g, b]
+    function parseRGB(color) {
+      const match = color.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+      if (match) return [parseInt(match[1]), parseInt(match[2]), parseInt(match[3])];
+
+      // Handle hex colors (#RRGGBB)
+      if (color.startsWith('#')) {
+        const hex = color.slice(1);
+        return [
+          parseInt(hex.substring(0, 2), 16),
+          parseInt(hex.substring(2, 4), 16),
+          parseInt(hex.substring(4, 6), 16)
+        ];
+      }
+      return null;
+    }
+
+    // Apply base color immediately (no animation on load)
+    document.documentElement.style.backgroundColor = baseColor;
+  })();
+
 })();
