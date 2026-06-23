@@ -191,7 +191,7 @@ The in-page ⌘Shift+D modal (and its footer button) was removed 2026-06-23 — 
 - `loading="lazy"` on all artwork images
 - `prefers-reduced-motion` respected in all transitions (in `_shared/ui.css`)
 - `aria-current="page"` on active nav link (set by nav-active.js)
-- Mobile nav is a **hamburger button → slide-in drawer** (`#mobile-menu-drawer` in `_shared/top-nav.html`), NOT a fixed bottom tab bar. Drawer links (Archive/Series/About/Lost Works, corrected Session 80 — was Archive/About/Stories/Lost) carry inline feather-SVG icons as of session 35; edit the source then run `bash stamp-nav.sh` to propagate to all 38 pages.
+- Mobile nav is a **hamburger button → slide-in drawer** (`#mobile-menu-drawer` in `_shared/top-nav.html`), NOT a fixed bottom tab bar. Drawer links (Archive/Series/About/Lost Works, corrected Session 80 — was Archive/About/Stories/Lost) carry inline feather-SVG icons as of session 35; edit the source then run `bash stamp-nav.sh` to propagate to all 37 pages.
 
 ---
 

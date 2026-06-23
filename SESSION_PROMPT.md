@@ -31,7 +31,7 @@ JFSN Archive — personal archive site for Jeffrey F. S. Neumann, 1,084 works. A
 - Close session: `bash session-end.sh` (git commit + push + 4TB rsync + Backblaze B2)
 - Deploy: `bash deploy-hostgator.sh` (the only deploy target — Netlify removed 2026-06-22)
 - Hero AVIFs (`artNNNN-hero*.avif`) need a separate flat lftp upload to `/artworks/`
-- Footer/nav: edit `_shared/top-nav.html` / `_shared/footer.html`, then `bash stamp-nav.sh` (38 pages)
+- Footer/nav: edit `_shared/top-nav.html` / `_shared/footer.html`, then `bash stamp-nav.sh` (37 pages)
 - CSS rebuild: `npm run build:css` after any new Tailwind utility, then bump `CACHE_V` in `sw.js`. `build_catalog.py` auto-bumps `CACHE_V` only when catalog content changes — check `git diff sw.js`.
 
 ---
