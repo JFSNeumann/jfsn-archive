@@ -22,7 +22,7 @@ A static, no-CMS archive on a $5/month shared host (HostGator/cPanel). No databa
 | Series Index | `/series-index.html` | 8 themes/series |
 | Series | `/series.html` | Single series deep-dive |
 | About | `/about.html` | Bio, exhibitions, contact |
-| Lost | `/lost.html` | Essay + ghost grid (~750 lost works) |
+| Lost | `/lost.html` | Essay + ghost grid (10 generated empty tiles, representing an estimated 500–1,000 undocumented lost works per Jeff's testimony) |
 | Chromatic River | `/chromatic.html` | HiDPI canvas, 1,084 color slices by year |
 | The Wall | `/wall.html` | All 1,084 works as mini grid |
 | API | `/api.html` | Open Archive API docs |
@@ -158,7 +158,7 @@ Read CURRENT_STATE.md and IMPROVEMENTS.md. Summarize open items by priority, fla
 ```bash
 bash session-end.sh   # git commit + push to GitHub + rsync to JEFFS-4TB + Backblaze B2 cloud backup
 ```
-Then deploy via **JFSN.app** (desktop app → FTP to HostGator). Don't use `deploy.sh` — JFSN.app is the deploy path now.  
+Then deploy via `bash deploy-hostgator.sh` (primary, Session 70+; JFSN.app desktop is legacy and `deploy.sh` no longer exists — re-verified 2026-06-23, this line was stale).  
 Then update Claude memory: "Update memory. Today we: [1–2 sentences]."
 
 ### Living backlog

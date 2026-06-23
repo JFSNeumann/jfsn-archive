@@ -17,7 +17,7 @@ from pathlib import Path
 
 # ── Stable writes — skip rewriting a generated file when only a timestamp would
 #    change, so no-op builds don't churn git (api `generated`, feed dates). This
-#    is what left end-session.sh with post-commit residuals every run. ─────────
+#    is what left session-end.sh with post-commit residuals every run. ────────
 _GEN_TS  = [r'"generated":\s*"[^"]*"']
 _FEED_TS = [r'<lastBuildDate>[^<]*</lastBuildDate>', r'<pubDate>[^<]*</pubDate>']
 

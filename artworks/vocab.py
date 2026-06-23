@@ -47,9 +47,12 @@ VALID_THEMES = [t["name"] for t in _cfg.get("themes", [])] or [
     "Tracings", "Art School",
 ]
 
-# DEPRECATED: "installation_view" — migrate existing records with
-#   python3 artworks/repass_installation_view.py --run
-# New records: use work_type "photograph" + theme "Gallery" or "Studio".
+# DEPRECATED: "installation_view" — the one-time migration script
+# (repass_installation_view.py) already ran (6 records, 2026) and was
+# removed afterward; catalog.json has zero remaining occurrences as of
+# 2026-06-23. If this value ever reappears (e.g. a hand-edited sidecar),
+# fix it manually: set work_type to "photograph" + theme "Gallery" or
+# "Studio". New records: use work_type "photograph" directly.
 _work_types = set(_cfg.get("work_types") or ["collage", "sculpture", "painting", "photograph"])
 VALID_WORK_TYPES = _work_types | {"installation_view"}
 

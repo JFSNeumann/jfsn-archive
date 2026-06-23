@@ -69,7 +69,7 @@ This is the **primary deploy path** as of Session 70 (replaces the old JFSN.app 
 - Mirrors changed files via `lftp`
 - Runs a smoke test against jfsn.com
 
-The legacy full-mirror script `deploy.sh` still exists in the repo but is superseded by `deploy-hostgator.sh` — don't use it unless `deploy-hostgator.sh` is broken.
+The legacy full-mirror script `deploy.sh` no longer exists in the repo (re-verified 2026-06-23 — several docs still pointed to it as a live fallback, which was wrong since at least the 2026-06-22 Netlify-removal pass, possibly earlier). `deploy-hostgator.sh` is the only deploy script now; if it breaks, fix it rather than reaching for a deleted fallback.
 
 **Hero AVIFs need a separate upload:** `artworks/full/*.avif` is excluded from the normal mirror (`.htaccess` rewrites it to a flat `/artworks/` path on the server). New or recompressed hero crops (`artNNNN-hero.avif`, `artNNNN-hero-m.avif`) must be uploaded flat via `lftp` directly — see `CLAUDE.md` § Deployment.
 

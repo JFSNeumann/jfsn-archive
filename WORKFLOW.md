@@ -190,6 +190,6 @@ Open `qa.html` locally (via `python3 server.py` then http://localhost:8000/qa.ht
 - `themes`: 10 terms  
 - `series`: Guernica · null  (XXIII and Squadron retired — use Guernica or null)
 - `work_type`: collage · sculpture · painting · photograph  
-  _(installation_view deprecated — run `repass_installation_view.py`)_
+  _(installation_view deprecated — the migration script already ran and was removed; catalog.json has zero remaining occurrences as of 2026-06-23. If it ever reappears, fix by hand: work_type "photograph" + theme "Gallery" or "Studio")_
 
 For photograph records: `motifs`, `materials`, `composition` are optional. Use theme "Gallery" for exhibition views, "Studio" for studio shots.

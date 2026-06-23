@@ -51,7 +51,7 @@ def validate(name: str, rec: dict, legacy_ok: bool = False) -> tuple[list[str], 
     if wt not in VALID_WORK_TYPES:
         errors.append(f"invalid work_type: {wt!r}")
     elif wt == "installation_view":
-        warnings.append("installation_view is deprecated — run repass_installation_view.py")
+        warnings.append("installation_view is deprecated — the migration script that fixed this already ran and was removed; fix this record by hand: work_type 'photograph' + theme 'Gallery' or 'Studio'")
 
     # Required fields
     missing = REQUIRED_ALWAYS - rec.keys()

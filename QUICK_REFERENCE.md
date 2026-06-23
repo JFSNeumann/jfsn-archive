@@ -107,7 +107,7 @@ git push origin main
 # Should show new timestamp
 
 # 4. Deploy to production
-bash deploy.sh  # FTP upload to jfsn.com
+bash deploy-hostgator.sh  # FTP upload to jfsn.com (deploy.sh no longer exists)
 
 # 5. Verify live
 curl -I https://jfsn.com/
@@ -210,7 +210,7 @@ git push origin main        # Push to GitHub
 
 # Production
 curl -I https://jfsn.com/   # Verify site up
-bash deploy.sh              # Deploy to jfsn.com
+bash deploy-hostgator.sh    # Deploy to jfsn.com (deploy.sh no longer exists)
 
 # Performance
 # Open Chrome DevTools → Lighthouse → Run
