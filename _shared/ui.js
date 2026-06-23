@@ -936,4 +936,82 @@
     document.documentElement.style.backgroundColor = baseColor;
   })();
 
+  // ─── Footer Gradient Fade with Parallax (Tall animated fade above footer) ──
+  // Vertical gradient fade (3x taller = 180px) from transparent → theme color.
+  // Parallax effect: moves up as you scroll, creating depth sensation.
+  (function() {
+    const isDarkMode = document.documentElement.classList.contains('dark');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Same theme colors as background
+    const themeMap = {
+      'guernica.html': { light: '#f5ccc0', dark: '#5a2018' },
+      'crosses.html': { light: '#e6d5f5', dark: '#3a2a45' },
+      'targets.html': { light: '#fce4c5', dark: '#5a4410' },
+      'framed.html': { light: '#eee9e5', dark: '#4a4a4a' },
+      'torsos-faces.html': { light: '#f5d0c8', dark: '#5a2835' },
+      'mr-snowmann.html': { light: '#d8ebf8', dark: '#1a3847' },
+      'gallery-images.html': { light: '#f5d0c0', dark: '#5a3820' },
+      'collaboration.html': { light: '#f5c8b8', dark: '#5a2818' },
+      'collage.html': { light: '#fce4c5', dark: '#5a4410' },
+      'sculpture.html': { light: '#d8ebf8', dark: '#1a3847' },
+      'photography.html': { light: '#d8ebf8', dark: '#1a3847' },
+      'painting.html': { light: '#f5d0c0', dark: '#5a3820' }
+    };
+
+    const getCurrentPageColor = () => {
+      for (const [page, colors] of Object.entries(themeMap)) {
+        if (document.location.pathname.includes(page)) {
+          return isDarkMode ? colors.dark : colors.light;
+        }
+      }
+      return null;
+    };
+
+    const themeColor = getCurrentPageColor();
+    if (!themeColor) return;
+
+    // Find or create footer gradient fade (positioned ABOVE footer, in white area)
+    const footer = document.querySelector('footer');
+    if (!footer) return;
+
+    let gradientFade = document.querySelector('.footer-gradient-fade');
+    if (!gradientFade) {
+      gradientFade = document.createElement('div');
+      gradientFade.className = 'footer-gradient-fade';
+      gradientFade.style.cssText = `
+        display: block;
+        height: 180px;
+        background: linear-gradient(to bottom, transparent, ${themeColor});
+        width: 100%;
+        position: relative;
+        z-index: 1;
+        pointer-events: none;
+        transform: translateY(0);
+        transition: none;
+        opacity: 0.5;
+        margin-bottom: -30px;
+      `;
+      footer.parentNode.insertBefore(gradientFade, footer);
+    }
+
+    // Subtle parallax effect: moves up (negative transform) when footer enters viewport
+    if (!reducedMotion) {
+      window.addEventListener('scroll', () => {
+        const footerRect = footer.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+
+        // Only animate when footer is entering viewport (0 to viewportHeight)
+        // Subtle upward movement, stays in white area above grey footer
+        if (footerRect.top < viewportHeight) {
+          const parallaxOffset = Math.min(30, (viewportHeight - footerRect.top) * 0.15);
+          gradientFade.style.transform = `translateY(-${parallaxOffset}px)`;
+        } else {
+          // Reset when footer is below viewport
+          gradientFade.style.transform = `translateY(0)`;
+        }
+      }, { passive: true });
+    }
+  })();
+
 })();
