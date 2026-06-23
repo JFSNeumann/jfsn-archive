@@ -17,5 +17,15 @@ Format: `[ ]` open / `[x]` resolved · description · status
 - [ ] **Gotcha (carry forward):** the archive peek button lives inside the card's `<a href="artwork.html…">`. Two site-wide handlers navigate on any artwork-link click (inline page-transition + deferred `_shared/page-transitions.js`). The peek click is handled in CAPTURE phase with `stopImmediatePropagation` so the modal wins. If you add similar in-`<a>` controls elsewhere, use the same pattern.
 - [ ] Separate dead code (pre-existing, NOT touched): the `?`-key handler in `archive.html` references an undefined `shortcutsModal` and will throw on `?` keypress. Low priority; out of scope for Session 77.
 
+## Session 80 (2026-06-22/23)
+
+- [ ] **Decision needed from Jeff:** ~8 of the 17 Session-65 interaction scripts are confirmed 100% dead (zero matching attributes/classes anywhere in live HTML) — `advanced-interactions.js`, `infinite-scroll.js`, `parallax.js`, `scroll-reveal.js`, `swipe-gestures.js`, `form-validation.js`, `search-highlight.js`, `search-breadcrumb.js`, plus most of `micro-interactions.js`. Left in place as dormant scaffolding, not deleted — see `IMPROVEMENTS.md`.
+- [x] Two real bugs found in that same audit, both fixed: `lightbox.js` was hijacking every `.thumb__link` click (raced `page-transitions.js`); `scroll-to-top.js` duplicated `_shared/footer.html`'s `#btt-float` button. Both fixed and verified live.
+- [x] **Netlify + Companion AI chat feature removed entirely.** HostGator is now the only host. Verified live (companion.html 404s, nav correct, zero console errors).
+- [ ] **Lighthouse/Performance baseline NOT captured this session** — today was audit/infra-removal work, not a perf session. `PERF_BASELINE.md` is still stale from session 65. Next session touching CSS/JS should capture a fresh baseline.
+- [ ] **JEFFS-4TB drive threw real I/O errors mid-transfer this session** (not just the log-file hiccup seen previously) — resolved by physically reseating the cable, backup then succeeded with matching file counts. Recurring enough now (twice documented) that it may be worth checking the cable/port itself rather than treating each occurrence as a one-off.
+- [ ] **`SUCCESSION.md` is still ~70% unfilled blanks** (named contacts, account emails, vault locations) — partially filled in 2026-06-22 with facts confirmable elsewhere in the repo; the rest needs Jeff's direct input. See `IMPROVEMENTS.md`.
+- [x] Caught and fixed a 6-day-old fact-propagation gap: `docs/KNOWLEDGE-AT-RISK-INVENTORY.md` still listed "the domain-friend's name" as an open to-do item from before the 2026-06-16 domain-ownership correction. Closed it.
+
 ## Carryover from prior sessions
 - See `IMPROVEMENTS.md` (living backlog) for the full prioritized list.

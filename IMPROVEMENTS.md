@@ -1,5 +1,5 @@
 # JFSN — Improvement List
-**Updated:** 2026-06-22
+**Updated:** 2026-06-23
 
 A living list. Add to it. Cross things off. This is the backlog.
 
@@ -45,6 +45,7 @@ A living list. Add to it. Cross things off. This is the backlog.
 
 History lives in `git log` — `git log --oneline --all` for the full record. A few recent highlights for orientation:
 
+- **2026-06-22/23** — Full documentation/preservation audit (every `.md` file reviewed) followed by **Netlify and the Companion AI chat feature removed entirely** — Netlify had no git integration and was a recurring source of deploy friction; Companion only ran as a Netlify Function, so dropping one meant dropping the other. HostGator is now the only host. Touched: `companion.html` + `netlify/` deleted, `gen-artwork-pages.py`'s static-page template fixed (all 1,084 pages regenerated), `session-end.sh`/`stamp-nav.sh`/`build_catalog.py`/`verify_deploy.py`/`make_handoff.py` cleaned up, 10 active docs corrected (including rewriting `DISASTER-RECOVERY-CHECKLIST.md`'s Scenario B, which depended on the now-gone Netlify mirror as the "immediately reachable" fallback). Also caught and fixed a 6-day-old propagation gap from the 2026-06-16 domain-ownership correction (`docs/KNOWLEDGE-AT-RISK-INVENTORY.md` still listed "the domain-friend's name" as an open to-do). Committed `047aab54` + `139a2ce9`, pushed, deployed to jfsn.com (verified live), 4TB backup verified (file counts matched after a drive reseat).
 - **2026-06-21** (sessions 76–78) — Homepage Selected Works simplification: removed Session-77 interaction layer (ripple/badge/swatch/peek-modal); kept image + always-visible caption + link. CLAUDE.md updated to retire the "default to removal" framing as an over-correction (motion designer's craft restored as the design stance).
 - **2026-06-20** (session 75) — Selected Works masonry redesign to match archive.html (CSS Columns 4→3→2, simplified card structure). series-index.html responsive padding + image overlay removal.
 - **2026-06-19** (session 74) — Archive grid masonry fix (CSS Columns), saturation overlay removed sitewide (true vibrant color revealed), series page tooltip cleanup.

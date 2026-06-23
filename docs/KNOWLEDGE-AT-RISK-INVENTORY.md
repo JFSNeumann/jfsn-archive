@@ -30,7 +30,7 @@
 ## One-line context items (worth one sentence each, any time)
 
 - Whether `sample.wav` is his voice (#1 shortcut).
-- The domain-friend's name for the recovery plan (one blank to fill; custodial, not creative).
+- ~~The domain-friend's name for the recovery plan~~ — **moot, 2026-06-16:** Jeff owns the Gandi account directly (invoice confirmed); there was never a friend in the loop. Nothing to capture here.
 - Any single favorite-work note, any single family-context sentence (§25 priorities 4–5) — strictly when he feels like it.
 
 *Rule of use: pick the top undone item that fits the day's energy. "Next" moves down the list or ends the sitting; both are fine. Cross items off here as they're captured, with a pointer to where the capture lives.*
