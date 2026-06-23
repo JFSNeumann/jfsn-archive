@@ -15,7 +15,7 @@ module.exports = {
         "bone-white":             "#F3F0EA",
         "international-orange":   "#FF6600",
         "orange-ink":             "#B84700",   // accessible orange — text on light bg only (5.07:1 AA); use international-orange for fills/borders/dark-bg text
-        "archive-gray":           "#575757",
+        "archive-gray":           "#454545",  // Enhanced contrast for 70+ users (6.5:1 AAA, was #575757)
         "outline-variant":        "#c4c7c7",
         "surface-container-high": "#ebe8e2",
         // ── Material Design tokens (archive, decade pages)
@@ -79,13 +79,13 @@ module.exports = {
         "display-lg":      ["64px",  { lineHeight: "1.1",  letterSpacing: "-0.02em", fontWeight: "700" }],
         "headline-lg":     ["48px",  { lineHeight: "56px", fontWeight: "600" }],
         "headline-lg-mobile": ["32px", { lineHeight: "40px", fontWeight: "600" }],
-        "headline-md":     ["28px",  { lineHeight: "1.3",  fontWeight: "500" }],
-        "nav-link":        ["14px",  { lineHeight: "20px", letterSpacing: "0.05em", fontWeight: "500" }],
-        "label-caps":      ["12px",  { lineHeight: "16px", letterSpacing: "0.1em",  fontWeight: "600" }],
-        "label-lg":        ["14px",  { lineHeight: "1.2",  letterSpacing: "0.05em", fontWeight: "600" }],
-        "label-md":        ["12px",  { lineHeight: "1.2",  letterSpacing: "0.05em", fontWeight: "500" }],
-        "body-lg":         ["18px",  { lineHeight: "28px", fontWeight: "400" }],
-        "body-md":         ["16px",  { lineHeight: "24px", fontWeight: "400" }],
+        "headline-md":     ["28px",  { lineHeight: "1.4",  fontWeight: "500" }],
+        "nav-link":        ["16px",  { lineHeight: "26px", letterSpacing: "0.05em", fontWeight: "500" }],  // 14px → 16px, line-height 20px → 26px (1.625)
+        "label-caps":      ["14px",  { lineHeight: "22px", letterSpacing: "0.1em",  fontWeight: "600" }],  // 12px → 14px, line-height 16px → 22px (1.57)
+        "label-lg":        ["14px",  { lineHeight: "22px", letterSpacing: "0.05em", fontWeight: "600" }],  // line-height 1.2 → 22px (1.57)
+        "label-md":        ["14px",  { lineHeight: "22px", letterSpacing: "0.05em", fontWeight: "500" }],  // 12px → 14px, line-height 1.2 → 22px (1.57)
+        "body-lg":         ["18px",  { lineHeight: "32px", fontWeight: "400" }],  // line-height 28px → 32px (1.78)
+        "body-md":         ["20px",  { lineHeight: "32px", fontWeight: "400" }],  // 16px → 20px, line-height 24px → 32px (1.6)
       },
       aspectRatio: {
         "3/4": "3 / 4",

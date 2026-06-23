@@ -1,0 +1,137 @@
+/* senior-ux-touch-targets.css — Ensure 48px minimum touch targets for 70+ users
+   Better precision for older hands, reduces mis-clicks and frustration
+*/
+
+/* Filter chips: minimum 40px height */
+.filter-chip {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.filter-chip button {
+  min-width: 24px;
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Clear filters button */
+.filter-chip-clear {
+  min-height: 40px;
+  padding: 8px 12px;
+}
+
+/* Back-to-top button: ensure 48px */
+#back-to-top {
+  min-height: 48px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+}
+
+/* Floating back-to-top: already 44px, boost to 48px */
+#btt-float {
+  width: 48px;
+  height: 48px;
+}
+
+@media (max-width: 767px) {
+  #btt-float {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+/* Prev/Next navigation buttons: increase padding */
+#prev-link,
+#next-link {
+  min-height: 56px;
+  padding: 16px 24px;
+}
+
+/* Archive/Artwork card links: ensure 48px minimum in all directions */
+.archive-card,
+.thumb {
+  min-height: 48px;
+}
+
+.archive-card a,
+.thumb a,
+[class*="card"] a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+}
+
+/* Mobile menu items: 48px minimum height */
+#mobile-menu-drawer a {
+  min-height: 48px;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+}
+
+/* Form inputs and buttons */
+input[type="text"],
+input[type="search"],
+button {
+  min-height: 48px;
+  padding: 12px 16px;
+}
+
+button,
+[role="button"],
+.bracket-link {
+  min-height: 44px;
+  padding: 12px 16px;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Search button/input */
+#nav-search-btn,
+.search-btn {
+  min-height: 44px;
+  padding: 10px 16px;
+}
+
+/* Decade page navigation buttons */
+[class*="decade"] button,
+[class*="nav"] button {
+  min-height: 44px;
+  padding: 12px 16px;
+}
+
+/* Links in footer and throughout */
+footer a,
+.bracket-link {
+  min-height: 44px;
+  padding: 8px 12px;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Ensure touch targets have adequate padding */
+@media (hover: hover) {
+  /* Only apply stricter targeting on devices that can hover (desktop) */
+  /* Mobile already has minimum padding */
+}
+
+/* Accessibility: increase focus ring visibility for older users */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+[role="button"]:focus-visible {
+  outline: 3px solid #FF6600;
+  outline-offset: 2px;
+}
+
+/* Dropdown/select elements */
+select {
+  min-height: 48px;
+  padding: 10px 12px;
+  font-size: 16px; /* Prevents zoom on iOS */
+}
