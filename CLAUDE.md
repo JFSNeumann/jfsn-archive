@@ -144,7 +144,7 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 | `stories.html` | Oral-history stories — 8 documented + named placeholders, verbatim quotes. In stamp-nav.sh. |
 | `why-i-made-things.html` | First-person essay built from oral-history sessions, Jeff-confirmed. In stamp-nav.sh. |
 | `timeline.html` | Decade skeleton 1950s–2020s, gaps named honestly. Recreated session 23 after an earlier version was deleted — don't confuse with that one. In stamp-nav.sh. |
-| `style-guide.html` | Standalone design-system reference page. Live, in sitemap.xml — not yet otherwise documented. |
+| `style-guide.html` | Standalone design-system reference page, with its own page-local section TOC (`.guide-nav`). Wired into `stamp-nav.sh`'s TARGETS as of 2026-06-23 — it previously had a `NAV:START` marker with no matching `NAV:END`, so it carried a bespoke, never-updated header for months. |
 
 ### Interactions (live)
 - **Homepage Selected Works (index.html):** CSS Columns masonry grid (4→3→2 columns responsive). Featured cards use `.featured-card` + `.featured-card-img` + `.featured-metadata` structure. The image is shown **faithfully (no filter)** with an **always-visible** title/year/medium caption beneath it; the whole card links to the artwork page. Hover/focus shows only a quiet orange outline (#e05900) — **no** scale, brightness, title colour-shift, overlay, medium badge, colour swatch, click ripple, 3D tilt, or quick-preview modal (all removed in the 2026-06-21 simplicity pass — see `docs/archive/README.md`). NOTE: the structure still matches archive.html, but archive.html *still carries* the Session-77 interaction layer (ripple/badge/swatch/peek-modal) and is a candidate for the same simplification.
@@ -191,7 +191,7 @@ The in-page ⌘Shift+D modal (and its footer button) was removed 2026-06-23 — 
 - `loading="lazy"` on all artwork images
 - `prefers-reduced-motion` respected in all transitions (in `_shared/ui.css`)
 - `aria-current="page"` on active nav link (set by nav-active.js)
-- Mobile nav is a **hamburger button → slide-in drawer** (`#mobile-menu-drawer` in `_shared/top-nav.html`), NOT a fixed bottom tab bar. Drawer links (Archive/Series/About/Lost Works, corrected Session 80 — was Archive/About/Stories/Lost) carry inline feather-SVG icons as of session 35; edit the source then run `bash stamp-nav.sh` to propagate to all 37 pages.
+- Mobile nav is a **hamburger button → slide-in drawer** (`#mobile-menu-drawer` in `_shared/top-nav.html`), NOT a fixed bottom tab bar. Drawer links (Archive/Series/About/Lost Works, corrected Session 80 — was Archive/About/Stories/Lost) carry inline feather-SVG icons as of session 35; edit the source then run `bash stamp-nav.sh` to propagate to all 38 pages.
 
 ---
 

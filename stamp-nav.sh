@@ -29,6 +29,7 @@ TARGETS=(
   stories.html why-i-made-things.html timeline.html
   1970s.html 1980s.html 1990s.html 2000s.html 2010s.html 2020s.html
   curatorial-map.html
+  style-guide.html
 )
 # Note: decade pages migrated to the canonical Stitch nav/footer 2026-06-16
 # (global review) — they now carry NAV:START/FOOTER:END markers like every

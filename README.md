@@ -70,7 +70,7 @@ sw.js                 Service worker — cache-first AVIF, network-first HTML/CS
 | Stitch nav (`_shared/top-nav.html`) | All pages except decade pages | `font-nav-link`, `deep-ink`, `international-orange` hover |
 | Material Design nav (inline) | `1970s.html`–`2020s.html` | `font-label-lg`, uppercase, `on-tertiary-container` active |
 
-`stamp-nav.sh` stamps the Stitch nav into 37 pages (re-verified 2026-06-23 by running it directly — includes the decade pages too, migrated to the canonical nav/footer in an earlier session; only their hero/grid chrome stays on the separate Material Design token system).
+`stamp-nav.sh` stamps the Stitch nav into 38 pages (re-verified 2026-06-23 by running it directly — includes the decade pages too, migrated to the canonical nav/footer in an earlier session; only their hero/grid chrome stays on the separate Material Design token system).
 
 ---
 
