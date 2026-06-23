@@ -41,11 +41,10 @@ Monitor these after deployment. Check weekly for first month.
 
 ## 🔴 Critical (watch closely)
 
-**Keyboard shortcuts on artwork pages (P/N)**
-- Test: Press P → should go to PREVIOUS work
-- Risk: May conflict with browser shortcuts or assistive tech
-- Watch for: Users reporting "P" doesn't work
-- Solution: Could add UI button as fallback
+**Keyboard shortcuts on artwork pages (P/N) — DISABLED, not a live risk**
+- Status: `_shared/keyboard-shortcuts.js` is an intentionally-empty stub (disabled in Session 66). The script tag is still included sitewide but does nothing.
+- Verified 2026-06-23: contents are just a disable comment, no listener code.
+- Action: none needed unless the feature is reintroduced — if so, update this entry back to active and re-test P/N.
 
 **Favorite localStorage could fill up**
 - Status: Unlikely (1084 * 4 bytes = ~4KB max)
@@ -77,7 +76,7 @@ Monitor these after deployment. Check weekly for first month.
 - [ ] jfsn.com homepage loads
 - [ ] Click 5 random artwork links → all pages load
 - [ ] Favorite a work → heart fills + persists refresh
-- [ ] Press P/N on artwork page → navigate correctly
+- [ ] ~~Press P/N on artwork page → navigate correctly~~ (feature disabled, skip)
 - [ ] On mobile: hamburger menu animates to X
 - [ ] On Lighthouse: Performance score vs. baseline (was 77)
 - [ ] GoatCounter dashboard: any errors or spike in 404s?
