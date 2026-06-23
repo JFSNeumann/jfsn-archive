@@ -1529,6 +1529,70 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
   obs.observe(grid);
 })();
 </script>
+<script>
+/* Wall developing wave — each row of tiles arrives left-to-right as it
+   scrolls into view, echoing the "developing photograph" filter already
+   used on artwork.html's full-res image, instead of 1,084 images just
+   popping in independently as the browser happens to lazy-load them. */
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var grid = document.querySelector('.wall-grid');
+  if (!grid) return;
+  var imgs = Array.prototype.slice.call(grid.querySelectorAll('.wall-tile img'));
+  if (!imgs.length) return;
+
+  imgs.forEach(function (img) {
+    img.style.opacity = '0';
+    img.style.filter = 'saturate(0) brightness(1.08)';
+  });
+
+  var pending = [];
+  var flushTimer = null;
+
+  function flush() {
+    flushTimer = null;
+    if (!pending.length) return;
+    var batch = pending;
+    pending = [];
+    var gridRect = grid.getBoundingClientRect();
+    batch.forEach(function (img) {
+      var r = img.getBoundingClientRect();
+      img._col = Math.round((r.left - gridRect.left) / (r.width || 56));
+    });
+    batch.sort(function (a, b) { return a._col - b._col; });
+    if (window.anime) {
+      anime({
+        targets: batch,
+        opacity: [0, 1],
+        filter: ['saturate(0) brightness(1.08)', 'saturate(1) brightness(1)'],
+        duration: 500,
+        easing: 'easeOutQuad',
+        delay: anime.stagger(16)
+      });
+    } else {
+      batch.forEach(function (img) {
+        img.style.transition = 'opacity 0.4s ease, filter 0.4s ease';
+        img.style.opacity = '1';
+        img.style.filter = 'saturate(1) brightness(1)';
+      });
+    }
+  }
+
+  var obs2 = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        pending.push(entry.target);
+        obs2.unobserve(entry.target);
+      }
+    });
+    // Batch tiles that cross the threshold within the same scroll tick so
+    // the stagger reads as one sweeping row, not 1,084 isolated triggers.
+    if (!flushTimer) flushTimer = setTimeout(flush, 40);
+  }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+
+  imgs.forEach(function (img) { obs2.observe(img); });
+})();
+</script>
 
 <script src="_shared/ui.js" defer></script>
 <script src="_shared/nav-active.js" defer></script>

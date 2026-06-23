@@ -448,7 +448,15 @@ header.header-hidden{transform:translateY(-100%)}
     <div class="grid grid-cols-1 md:grid-cols-12 gap-16">
 
       <!-- Main content: timeline -->
-      <div class="md:col-span-8">
+      <div class="md:col-span-8" style="position:relative;">
+
+        <!-- Thread — a line running through the decade labels, with a marker
+             that eases to whichever decade is currently in view. Falters
+             through the 1980s, the one stretch of the record that's still
+             missing, instead of traveling it the same as everywhere else. -->
+        <div id="timeline-thread-line" style="position:absolute;top:0;bottom:0;width:2px;background:#c4c7c7;z-index:0;" aria-hidden="true"></div>
+        <div id="timeline-thread-gap" style="position:absolute;width:2px;border-left:2px dashed #c4c7c7;background:none;z-index:0;display:none;" aria-hidden="true"></div>
+        <div id="timeline-thread-marker" style="position:absolute;width:10px;height:10px;border-radius:50%;background:#FF6600;transform:translate(-5px,-5px);z-index:1;transition:background 0.25s ease, box-shadow 0.25s ease;display:none;" aria-hidden="true"></div>
 
         <!-- 1950s -->
         <div class="decade-block" id="1950s">
@@ -710,6 +718,90 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
   window.addEventListener('scroll', function(){
     floatBtn.classList.toggle('btt-visible', window.scrollY > 300);
   }, { passive: true });
+})();
+</script>
+<script>
+/* Timeline thread — a marker that eases from decade to decade as you scroll,
+   instead of a static list of labels. Falters through the 1980s specifically:
+   the one stretch of the record this archive can't yet account for. */
+(function () {
+  var col = document.querySelector('.md\\:col-span-8');
+  var line = document.getElementById('timeline-thread-line');
+  var gapEl = document.getElementById('timeline-thread-gap');
+  var marker = document.getElementById('timeline-thread-marker');
+  var blocks = Array.prototype.slice.call(document.querySelectorAll('.decade-block'));
+  if (!col || !line || !marker || !blocks.length) return;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var THREAD_LEFT = 140; // gutter between the 120px label column and the prose column
+  var GAP_DECADE_ID = '1980s';
+
+  function layout() {
+    var colTop = col.getBoundingClientRect().top + window.scrollY;
+    var first = blocks[0].getBoundingClientRect();
+    var last = blocks[blocks.length - 1].getBoundingClientRect();
+    line.style.left = THREAD_LEFT + 'px';
+    line.style.top = (first.top + window.scrollY - colTop) + 'px';
+    line.style.height = (last.bottom - first.top) + 'px';
+    marker.style.left = THREAD_LEFT + 'px';
+
+    var gapBlock = document.getElementById(GAP_DECADE_ID);
+    if (gapBlock) {
+      var gr = gapBlock.getBoundingClientRect();
+      gapEl.style.left = THREAD_LEFT + 'px';
+      gapEl.style.top = (gr.top + window.scrollY - colTop) + 'px';
+      gapEl.style.height = gr.height + 'px';
+      gapEl.style.display = 'block';
+    }
+    return colTop;
+  }
+
+  var colTop = layout();
+  window.addEventListener('resize', function () { colTop = layout(); }, { passive: true });
+
+  var activeId = null;
+  function moveMarkerTo(block) {
+    var label = block.querySelector('.decade-label');
+    var rect = label.getBoundingClientRect();
+    var targetTop = rect.top + window.scrollY - colTop + rect.height / 2;
+    var isGap = block.id === GAP_DECADE_ID;
+    var wasGap = activeId === GAP_DECADE_ID;
+    marker.style.display = 'block';
+
+    if (reduced || typeof anime === 'undefined') {
+      marker.style.top = targetTop + 'px';
+      marker.style.background = isGap ? 'transparent' : '#FF6600';
+      marker.style.boxShadow = isGap ? 'inset 0 0 0 2px #c4c7c7' : 'none';
+      return;
+    }
+
+    // CSS transition (declared inline on the marker) handles the color/ring
+    // swap smoothly — plain assignment here, no need to fight it with anime.
+    marker.style.background = isGap ? 'transparent' : '#FF6600';
+    marker.style.boxShadow = isGap ? 'inset 0 0 0 2px #c4c7c7' : 'none';
+
+    if (isGap || wasGap) {
+      // The one decade with nothing documented — the marker hesitates and
+      // dims partway through instead of arriving the same as every other
+      // smooth, confident transition between decades.
+      var current = parseFloat(marker.style.top) || targetTop;
+      var midpoint = current + (targetTop - current) * 0.55;
+      anime.timeline({ easing: 'easeInOutQuad' })
+        .add({ targets: marker, top: midpoint, duration: 260 })
+        .add({ targets: marker, opacity: [1, 0.3, 1], duration: 260 })
+        .add({ targets: marker, top: targetTop, duration: 240 });
+    } else {
+      anime({ targets: marker, top: targetTop, duration: 480, easing: 'easeOutCubic' });
+    }
+    activeId = block.id;
+  }
+
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) moveMarkerTo(entry.target);
+    });
+  }, { rootMargin: '-88px 0px -60% 0px', threshold: 0 });
+  blocks.forEach(function (b) { obs.observe(b); });
 })();
 </script>
 <script data-goatcounter="https://jfsn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>

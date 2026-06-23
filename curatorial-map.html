@@ -483,13 +483,13 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
     });
 
     // Medium rows
-    MEDIUMS.forEach(function (m) {
+    MEDIUMS.forEach(function (m, mi) {
       var rowLabel = document.createElement('div');
       rowLabel.className = 'map-cell-label';
       rowLabel.textContent = m.label;
       grid.appendChild(rowLabel);
 
-      DECADES.forEach(function (d) {
+      DECADES.forEach(function (d, di) {
         var cell = document.createElement('div');
         cell.className = 'map-cell';
         var items = cells[cellKey(d, m.key)];
@@ -501,6 +501,10 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
           sw.dataset.title = w.title;
           sw.dataset.year = w.year;
           sw.dataset.themes = w.themes.join('|');
+          // Grid coordinate (decade column, medium row) — used to ripple the
+          // filter highlight outward by actual position rather than DOM order.
+          sw.dataset.di = di;
+          sw.dataset.mi = mi;
           cell.appendChild(sw);
         });
         grid.appendChild(cell);
@@ -527,10 +531,29 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
           chipsWrap.querySelectorAll('.theme-chip').forEach(function (c) { c.classList.remove('is-active'); });
           chip.classList.add('is-active');
           grid.classList.add('is-filtering');
+          var matchedEls = [];
           grid.querySelectorAll('.map-swatch').forEach(function (el) {
             var matches = (el.dataset.themes || '').split('|').indexOf(t) !== -1;
             el.classList.toggle('is-match', matches);
+            if (matches) matchedEls.push(el);
           });
+          // Pulse the matches outward from the grid's center, by actual
+          // decade/medium position — not DOM order — so the highlight reads
+          // as a ripple across the map rather than a flat color swap.
+          if (window.anime && matchedEls.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            var totalCells = DECADES.length * MEDIUMS.length;
+            var rippleDelay = anime.stagger(70, { grid: [DECADES.length, MEDIUMS.length], from: 'center' });
+            matchedEls.forEach(function (el) {
+              var flatIndex = parseInt(el.dataset.mi, 10) * DECADES.length + parseInt(el.dataset.di, 10);
+              anime({
+                targets: el,
+                scale: [1, 1.6, 1],
+                duration: 380,
+                easing: 'easeOutQuad',
+                delay: rippleDelay(el, flatIndex, totalCells)
+              });
+            });
+          }
         }
       });
       chipsWrap.appendChild(chip);
