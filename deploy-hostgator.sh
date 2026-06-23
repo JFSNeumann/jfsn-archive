@@ -85,7 +85,7 @@ set ftp:ssl-allow/all yes
 set ssl:verify-certificate no
 open -u $FTP_USER,$FTP_PASS $FTP_HOST
 set ftp:passive-mode on
-mirror --reverse --delete --exclude-glob=.git/* --exclude-glob=.DS_Store --exclude-glob=node_modules/* .
+mirror --reverse --delete --exclude-glob=.git/* --exclude-glob=.DS_Store --exclude-glob=node_modules/* --exclude-glob=qa.html --exclude-glob=curate.html --exclude-glob=dedupe.html --exclude-glob=curate-session.json .
 quit
 FTPSCRIPT
 
@@ -98,7 +98,7 @@ set ftp:ssl-allow/all yes
 set ssl:verify-certificate no
 open -u $FTP_USER:$FTP_PASS $FTP_HOST
 set ftp:passive-mode on
-mirror --reverse --delete --exclude-glob=.git/* --exclude-glob=.DS_Store --exclude-glob=node_modules/* .
+mirror --reverse --delete --exclude-glob=.git/* --exclude-glob=.DS_Store --exclude-glob=node_modules/* --exclude-glob=qa.html --exclude-glob=curate.html --exclude-glob=dedupe.html --exclude-glob=curate-session.json .
 quit
 "); then
   echo ""
