@@ -201,12 +201,17 @@
           color: #e05900;
           box-shadow: none;
         }
+        /* Hover: accent bar animation + subtle scale */
+        .archive-card:hover .archive-card-img,
+        .archive-card:focus-visible .archive-card-img {
+          transform: scale(1.01);
+        }
         /* Text wrapper has no shadow */
         .archive-card .space-y-1 {
           box-shadow: none;
           text-shadow: none;
         }
-        /* Grid stagger fade-in on filter change (Phase 4.2) */
+        /* Grid stagger fade-in on load + filter change (Phase 4.2 + micro-interactions) */
         .thumb {
           --delay: 0s;
           animation: grid-fade-in 0.4s ease forwards;
@@ -1027,8 +1032,9 @@ function renderCard(w, idx) {
   const dom = colorMap[id] || '#8e7164';
   const loadAttr = (idx !== undefined && idx < 8) ? 'eager" fetchpriority="high' : 'lazy';
   return `
-    <a href="artwork.html?id=${id}" class="archive-card block no-underline text-on-background">
-      <div class="archive-card-img sm:mb-md bg-surface-container-low">
+    <a href="artwork.html?id=${id}" class="archive-card block no-underline text-on-background thumb" style="opacity:0;will-change:opacity;">
+      <div class="archive-card-img sm:mb-md bg-surface-container-low" style="position:relative;transition:transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
+        <div class="archive-card-accent" style="position:absolute;top:0;left:0;width:0;height:3px;background:${dom};z-index:10;will-change:width;"></div>
         <img
           alt="${titleAttr}"
           class="w-full aspect-[3/4] object-cover"
@@ -1062,6 +1068,20 @@ function sortWorks(arr) {
 
 function applyFilters() {
   syncURL();
+
+  // Animate out current grid cards before clearing (filter result animation)
+  if (typeof anime !== 'undefined' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const currentCards = document.querySelectorAll('.thumb');
+    if (currentCards.length > 0) {
+      anime({
+        targets: currentCards,
+        opacity: [1, 0],
+        duration: 200,
+        easing: 'easeOutQuad'
+      });
+    }
+  }
+
   document.getElementById('filter-loading').style.display = 'block';
   const mediums = [...document.querySelectorAll('#filter-medium input:checked')].map(i => i.value);
   const decades = [...document.querySelectorAll('#filter-decade input:checked')].map(i => i.value);
@@ -1144,6 +1164,36 @@ function staggerGridItems() {
   });
 }
 
+// Micro-interactions: Hover accent bar animation + scroll-reveal stagger
+function setupMicroInteractions() {
+  if (typeof anime === 'undefined' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  // Hover accent bar animation
+  document.querySelectorAll('.archive-card').forEach(card => {
+    const accent = card.querySelector('.archive-card-accent');
+    if (!accent) return;
+
+    card.addEventListener('mouseenter', () => {
+      anime.set(accent, { width: '0%' });
+      anime({
+        targets: accent,
+        width: '100%',
+        duration: 250,
+        easing: 'easeOutQuad'
+      });
+    });
+
+    card.addEventListener('mouseleave', () => {
+      anime({
+        targets: accent,
+        width: '0%',
+        duration: 180,
+        easing: 'easeInQuad'
+      });
+    });
+  });
+}
+
 function renderPage() {
   const slice = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
   const html = slice.map((w, i) => renderCard(w, page * PAGE_SIZE + i)).join('');
@@ -1151,6 +1201,7 @@ function renderPage() {
   if (page === 0) grid.innerHTML = '';
   grid.insertAdjacentHTML('beforeend', html);
   staggerGridItems(); // Phase B 6: Apply stagger to all grid items
+  setupMicroInteractions(); // Setup hover accent bar animations
   page++;
 
   const total = filtered.length;
