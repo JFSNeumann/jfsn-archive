@@ -6929,3 +6929,20 @@ body.focus-mode .artwork-display img {
 @media (prefers-reduced-motion: reduce) {
   .decade-heading-sweep { display: none; }
 }
+
+/* Medium/series page title accent — a thin bar that draws in under the
+   page title (Guernica, Crosses, Collage, etc.) once it scrolls into view.
+   Inserted as a sibling of .medium-page__title by ui.js; width/opacity
+   animated by anime.js. Static fallback (3-7-3 below) keeps the bar fully
+   drawn and visible if JS never runs or motion is reduced — it never
+   depends on script for its resting, readable state. */
+.medium-page__title-accent {
+  display: block;
+  height: 3px;
+  width: 56px;
+  margin-top: 16px;
+  background: #FF6600;
+}
+@media (prefers-reduced-motion: reduce) {
+  .medium-page__title-accent { width: 56px !important; opacity: 1 !important; }
+}

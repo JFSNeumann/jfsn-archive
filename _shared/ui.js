@@ -590,6 +590,41 @@
     });
   }
 
+  // ─── Medium/series page title accent — draws in on scroll into view ──────
+  // .medium-page__title is shared by Guernica/Crosses/etc. theme pages and
+  // the medium browse pages (collage/sculpture/photography/painting). The
+  // bar is fully visible by default (see ui.css) so it never depends on JS
+  // for a correct resting state — this only adds a draw-in entrance.
+  (function () {
+    const title = document.querySelector('.medium-page__title');
+    if (!title) return;
+
+    const bar = document.createElement('span');
+    bar.className = 'medium-page__title-accent';
+    title.insertAdjacentElement('afterend', bar);
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced || !window.anime || !('IntersectionObserver' in window)) return; // CSS keeps it fully visible
+
+    bar.style.width = '0px';
+    bar.style.opacity = '0';
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        observer.unobserve(entry.target);
+        anime({
+          targets: bar,
+          width: ['0px', '56px'],
+          opacity: [0, 1],
+          easing: 'easeOutQuad',
+          duration: 500,
+          delay: 150
+        });
+      });
+    }, { threshold: 0.1 });
+    observer.observe(title);
+  })();
+
   // Artwork thumbnails are full color always — no mask-image, no scroll-reveal.
   // (Removed session 8; banned — do not re-add.)
 
