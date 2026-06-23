@@ -1606,6 +1606,18 @@ document.addEventListener('click', (e) => {
   openPeek(peek.dataset);
 }, true);
 
+// Stamp the clicked card so it morphs into artwork.html's hero image via the
+// same cross-document view transition the homepage already uses (same static
+// name 'artwork-hero' — see artwork.html's #work-image rule). Stamping only
+// the clicked image keeps the name unique on the page; ignored harmlessly in
+// browsers without support.
+document.addEventListener('click', (e) => {
+  const card = e.target.closest('.archive-card');
+  if (!card) return;
+  const img = card.querySelector('img');
+  if (img) img.style.viewTransitionName = 'artwork-hero';
+}, true);
+
 function ensurePeekModal() {
   if (document.getElementById('fc-modal')) return;
   const m = document.createElement('div');

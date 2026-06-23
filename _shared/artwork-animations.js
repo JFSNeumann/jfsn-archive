@@ -55,7 +55,11 @@
       tl.add({ targets: backLink, opacity: [0, 1], translateX: [-4, 0], duration: 280 });
     }
 
-    if (image) {
+    // The browser's own cross-document view transition already morphed the
+    // clicked card into this image — re-running opacity/scale/path on top of
+    // that would yank it back to a "fresh fade" mid-morph. Skip just the
+    // image step; everything else still gets its calm entrance.
+    if (image && !window.__incomingViewTransition) {
       const pathEl = buildEntryPath();
       const pathFn = anime.path(pathEl);
       // anime.set() can't resolve path-function values (only the real tween
