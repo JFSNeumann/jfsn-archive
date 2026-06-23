@@ -818,7 +818,9 @@
       'collage.html': { light: '#fce4c5', dark: '#5a4410' },      // warm gold — BOLD
       'sculpture.html': { light: '#d8ebf8', dark: '#1a3847' },    // cool gray/blue — BOLD
       'photography.html': { light: '#d8ebf8', dark: '#1a3847' },  // cool blue — BOLD
-      'painting.html': { light: '#f5d0c0', dark: '#5a3820' }      // warm terra — BOLD
+      'painting.html': { light: '#f5d0c0', dark: '#5a3820' },     // warm terra — BOLD
+      'about.html': { light: '#ffe4cc', dark: '#664400' },         // warm orange — BOLD
+      'archive.html': { light: '#ffe4cc', dark: '#664400' }        // warm orange — BOLD
     };
 
     // Detect current page from document title or body class
@@ -956,7 +958,9 @@
       'collage.html': { light: '#fce4c5', dark: '#5a4410' },
       'sculpture.html': { light: '#d8ebf8', dark: '#1a3847' },
       'photography.html': { light: '#d8ebf8', dark: '#1a3847' },
-      'painting.html': { light: '#f5d0c0', dark: '#5a3820' }
+      'painting.html': { light: '#f5d0c0', dark: '#5a3820' },
+      'about.html': { light: '#ffe4cc', dark: '#664400' },
+      'archive.html': { light: '#ffe4cc', dark: '#664400' }
     };
 
     const getCurrentPageColor = () => {
@@ -989,7 +993,7 @@
         pointer-events: none;
         transform: translateY(0);
         transition: none;
-        opacity: 0.5;
+        opacity: 0.75;
         margin-bottom: -30px;
       `;
       footer.parentNode.insertBefore(gradientFade, footer);
