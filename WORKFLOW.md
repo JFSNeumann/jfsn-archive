@@ -123,6 +123,19 @@ Documentation page: `api.html` — upload alongside the other HTML files.
 
 ---
 
+## Git hooks (one-time setup after cloning)
+
+Run `bash setup-hooks.sh` once after cloning this repo. It copies `hooks/pre-commit`
+into `.git/hooks/pre-commit` — git never installs hooks automatically, and anything
+placed directly in `.git/hooks/` is local to that one clone and invisible to everyone
+else (this is how the pre-commit checks below went uninstalled on a fresh machine
+until this script existed, 2026-06-23). The hook runs on every `git commit`:
+navigation audit (`audit-nav.sh`), a real CSS rebuild-and-diff check when HTML/JS
+changed (not just "is site.min.css staged" — a content-free edit legitimately
+produces no CSS diff and shouldn't be blocked), and a CACHE_V-bump check when
+`site.min.css` changed. Edit `hooks/pre-commit` (the tracked copy, not `.git/hooks/`)
+and re-run `setup-hooks.sh` to update it.
+
 ## Scripts reference
 
 | Script | Purpose | When to run |

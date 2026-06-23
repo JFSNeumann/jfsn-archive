@@ -121,6 +121,16 @@ If you ever hardcode a featured card in HTML, add the `.card-frame` div manually
 
 ---
 
+## Git hooks (run once after cloning)
+
+```bash
+bash setup-hooks.sh
+```
+
+Installs the tracked `hooks/pre-commit` into `.git/hooks/` — git doesn't do this
+automatically, and a hook left only in `.git/hooks/` is invisible to anyone who
+clones the repo fresh. See WORKFLOW.md → "Git hooks" for what it checks.
+
 ## CSS build
 
 Tailwind is compiled to `site.min.css` — the CDN is not used in production. Any new utility class added to HTML must be rebuilt:
