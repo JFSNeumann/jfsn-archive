@@ -144,7 +144,7 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 | `stories.html` | Oral-history stories — 8 documented + named placeholders, verbatim quotes. In stamp-nav.sh. |
 | `why-i-made-things.html` | First-person essay built from oral-history sessions, Jeff-confirmed. In stamp-nav.sh. |
 | `timeline.html` | Decade skeleton 1950s–2020s, gaps named honestly. Recreated session 23 after an earlier version was deleted — don't confuse with that one. In stamp-nav.sh. |
-| `style-guide.html` | Standalone design-system reference page (separate from the in-page ⌘Shift+D modal). Live, in sitemap.xml — not yet otherwise documented. |
+| `style-guide.html` | Standalone design-system reference page. Live, in sitemap.xml — not yet otherwise documented. |
 
 ### Interactions (live)
 - **Homepage Selected Works (index.html):** CSS Columns masonry grid (4→3→2 columns responsive). Featured cards use `.featured-card` + `.featured-card-img` + `.featured-metadata` structure. The image is shown **faithfully (no filter)** with an **always-visible** title/year/medium caption beneath it; the whole card links to the artwork page. Hover/focus shows only a quiet orange outline (#e05900) — **no** scale, brightness, title colour-shift, overlay, medium badge, colour swatch, click ripple, 3D tilt, or quick-preview modal (all removed in the 2026-06-21 simplicity pass — see `docs/archive/README.md`). NOTE: the structure still matches archive.html, but archive.html *still carries* the Session-77 interaction layer (ripple/badge/swatch/peek-modal) and is a candidate for the same simplification.
@@ -182,13 +182,7 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 - **New page checklist:** When adding any new public `.html` page: (1) add to sitemap entries list in `build_catalog.py`, (2) run `python3 artworks/build_catalog.py` to rebuild sitemap, (3) add to TARGETS array in `stamp-nav.sh` so future nav updates propagate to it, (4) run `bash audit-nav.sh` — the reverse sitemap check will catch if it's missing from the sitemap.
 
 ### Global Design System Reference
-- **Keyboard shortcut:** ⌘Shift+D (Mac) or Ctrl+Shift+D (Windows/Linux) opens a full-screen modal with the complete design system
-- **Footer button:** All pages show ⌘SHIFT+D in the footer — click to open the modal
-- **Contents:** Colors with contrast ratios, typography (Playfair/Inter), spacing scale, animation timing, design tokens, z-index scale, copy-paste code snippets, accessibility rules
-- **Search:** Sidebar search filters sections in real-time (Principles, Colors, Typography, Spacing, Animations, Design Tokens, Code Snippets, Accessibility)
-- **Navigation:** Click a sidebar link to jump to that section; active link highlights on scroll
-- **Esc to close:** Press Esc or click the backdrop to close
-- **Always stamped:** The modal is built into `_shared/top-nav.html` and stamped to all 38 pages by `stamp-nav.sh`, so it's available everywhere for continuous UX/UI reference and refinement
+The in-page ⌘Shift+D modal (and its footer button) was removed 2026-06-23 — it was a developer reference panel that didn't serve the archive's mission and was duplicated across every page. `style-guide.html` remains as the standalone design-system reference page.
 
 ### Conventions
 - Vanilla HTML/CSS/JS. Production uses `site.min.css` (23,071 bytes compiled Tailwind — not CDN). Stitch exports start with Tailwind CDN and get swapped to `site.min.css` during post-export cleanup.

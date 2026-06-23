@@ -2418,13 +2418,11 @@ footer a:hover::after,
   }
 }
 
-#design-system-modal,
 #lr-overlay {
   animation: modal-slide-up 0.3s ease-out forwards;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  #design-system-modal,
   #lr-overlay {
     animation: none;
   }
@@ -5165,16 +5163,6 @@ html.dark code {
 html.dark .surface-container-high,
 html.dark .bg-ebe7e6 {
   background-color: #252525 !important;
-  border-color: #404040 !important;
-}
-
-/* Dark mode design system modal */
-html.dark #design-system-modal {
-  background: rgba(26, 26, 26, 0.85) !important;
-}
-
-html.dark #design-system-modal > div {
-  background-color: #1a1a1a !important;
   border-color: #404040 !important;
 }
 

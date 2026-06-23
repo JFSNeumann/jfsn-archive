@@ -339,36 +339,6 @@
   color: #FF6600;
 }
 
-/* ========== DESIGN SYSTEM MODAL ========== */
-.dark #design-system-modal {
-  background-color: #1a1a1a;
-}
-
-.dark .ds-nav {
-  background-color: #242424;
-  border-color: #404040;
-}
-
-.dark .ds-nav-link {
-  color: #b8b8b8;
-}
-
-.dark .ds-nav-link:hover, .dark .ds-nav-link.active {
-  color: #FF6600;
-}
-
-.dark .ds-section {
-  color: #d0d0d0;
-}
-
-.dark .ds-section h3 {
-  color: #e8e8e8;
-}
-
-.dark .ds-color-chip {
-  border-color: #404040;
-}
-
 /* ========== START-HERE PAGE SPECIFIC ========== */
 .dark .prose p {
   color: #d0d0d0 !important;

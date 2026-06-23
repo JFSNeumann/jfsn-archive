@@ -292,13 +292,11 @@ button:hover:not(:disabled) svg {
 }
 
 /* Modal & close buttons */
-#ds-modal-close,
 [aria-label*="Close"],
 [aria-label*="close"] {
   transition: all 0.2s ease;
 }
 
-#ds-modal-close:hover,
 [aria-label*="Close"]:hover,
 [aria-label*="close"]:hover {
   background-color: rgba(255, 102, 0, 0.1);
@@ -309,12 +307,10 @@ button:hover:not(:disabled) svg {
 @media (prefers-reduced-motion: reduce) {
   button,
   button svg,
-  #ds-modal-close,
   [aria-label*="Close"],
   [aria-label*="close"] {
     transition: none;
   }
-  #ds-modal-close:hover { transform: none; }
   button:hover:not(:disabled) { transform: none; }
 }
 
