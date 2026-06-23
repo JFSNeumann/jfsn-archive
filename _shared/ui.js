@@ -805,20 +805,20 @@
     const isDarkMode = document.documentElement.classList.contains('dark');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Theme colors: light mode (subtle tints) and dark mode (darker tints)
+    // Theme colors: light mode (VERY VISIBLE, strong tints) and dark mode (darker variants)
     const themeMap = {
-      'guernica.html': { light: '#fef5f0', dark: '#3a3335' },     // warm red
-      'crosses.html': { light: '#f8f3fa', dark: '#3a3338' },      // purple
-      'targets.html': { light: '#fef9f0', dark: '#3a3830' },      // gold/yellow
-      'framed.html': { light: '#faf9f7', dark: '#3a3a3a' },       // neutral gray
-      'torsos-faces.html': { light: '#fef6f3', dark: '#3a3537' }, // warm pink
-      'mr-snowmann.html': { light: '#f3f8fc', dark: '#333a3d' },  // cool blue
-      'gallery-images.html': { light: '#fef9f5', dark: '#3a3a37' }, // warm mixed
-      'collaboration.html': { light: '#fef6f2', dark: '#3a3835' }, // warm earth
-      'collage.html': { light: '#fef9f0', dark: '#3a3830' },      // warm gold
-      'sculpture.html': { light: '#f3f8fc', dark: '#333a3d' },    // cool gray/blue
-      'photography.html': { light: '#f3f8fc', dark: '#333a3d' },  // cool blue/white
-      'painting.html': { light: '#fef6f0', dark: '#3a3735' }      // warm terra/brown
+      'guernica.html': { light: '#f5ccc0', dark: '#5a2018' },     // warm red/salmon — BOLD
+      'crosses.html': { light: '#e6d5f5', dark: '#3a2a45' },      // purple — BOLD
+      'targets.html': { light: '#fce4c5', dark: '#5a4410' },      // gold/yellow — BOLD
+      'framed.html': { light: '#eee9e5', dark: '#4a4a4a' },       // neutral gray — BOLD
+      'torsos-faces.html': { light: '#f5d0c8', dark: '#5a2835' }, // warm pink — BOLD
+      'mr-snowmann.html': { light: '#d8ebf8', dark: '#1a3847' },  // cool blue — BOLD
+      'gallery-images.html': { light: '#f5d0c0', dark: '#5a3820' }, // warm mixed — BOLD
+      'collaboration.html': { light: '#f5c8b8', dark: '#5a2818' }, // warm earth — BOLD
+      'collage.html': { light: '#fce4c5', dark: '#5a4410' },      // warm gold — BOLD
+      'sculpture.html': { light: '#d8ebf8', dark: '#1a3847' },    // cool gray/blue — BOLD
+      'photography.html': { light: '#d8ebf8', dark: '#1a3847' },  // cool blue — BOLD
+      'painting.html': { light: '#f5d0c0', dark: '#5a3820' }      // warm terra — BOLD
     };
 
     // Detect current page from document title or body class
