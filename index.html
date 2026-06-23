@@ -2677,55 +2677,9 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
     }
   })();
 
-  /* ═══════════════════════════════════════════════════════════════════════════
-     FIRST-TIME VISITOR EXPERIENCE
-     ═══════════════════════════════════════════════════════════════════════════ */
-
-  <!-- First-visit welcome overlay -->
-  <div id="first-visit-overlay" style="display:none;position:fixed;inset:0;background:rgba(11,11,11,0.6);z-index:100;backdrop-filter:blur(2px);">
-    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#fcf9f3;border:1px solid #c4c7c7;border-radius:4px;padding:48px;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,0.15);">
-      <h2 style="font-family:'Playfair Display',serif;font-size:28px;font-weight:600;color:#0B0B0B;margin:0 0 16px;line-height:1.2;">Welcome to Jeff's Archive</h2>
-      <p style="font-family:Inter,sans-serif;font-size:14px;color:#575757;line-height:1.6;margin:0 0 24px;">Explore 1,084 works spanning five decades—by decade, medium, theme, or search. Click below to begin.</p>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
-        <a href="archive.html" style="display:block;padding:12px;background:#FF6600;color:#fff;text-align:center;text-decoration:none;font-family:Inter,sans-serif;font-size:13px;font-weight:600;border-radius:2px;transition:background 0.2s ease;cursor:pointer;" onmouseover="this.style.background='#E84F0B'" onmouseout="this.style.background='#FF6600'">Browse All</a>
-        <a href="start-here.html" style="display:block;padding:12px;background:#fff;color:#0B0B0B;text-align:center;text-decoration:none;font-family:Inter,sans-serif;font-size:13px;font-weight:600;border:1px solid #c4c7c7;border-radius:2px;transition:border-color 0.2s ease;cursor:pointer;" onmouseover="this.style.borderColor='#FF6600'" onmouseout="this.style.borderColor='#c4c7c7'">Who is Jeff</a>
-      </div>
-      <button id="first-visit-close" style="width:100%;padding:8px;background:none;border:1px solid #c4c7c7;color:#575757;font-family:Inter,sans-serif;font-size:13px;font-weight:500;cursor:pointer;border-radius:2px;transition:border-color 0.2s;background:#f9f9f9;" onmouseover="this.style.borderColor='#FF6600';this.style.background='#fff'" onmouseout="this.style.borderColor='#c4c7c7';this.style.background='#f9f9f9'">Not now</button>
-    </div>
-  </div>
-
-  <script>
-  (function () {
-    // First-time visitor detection — shows welcome overlay once per session
-    const FIRST_VISIT_KEY = 'jfsn_visited_2026';
-    const overlay = document.getElementById('first-visit-overlay');
-    const closeBtn = document.getElementById('first-visit-close');
-
-    if (!sessionStorage.getItem(FIRST_VISIT_KEY) && overlay) {
-      // Show overlay after hero loads (2s delay)
-      setTimeout(function () {
-        overlay.style.display = 'block';
-        sessionStorage.setItem(FIRST_VISIT_KEY, 'true');
-      }, 2000);
-    }
-
-    if (closeBtn) {
-      closeBtn.addEventListener('click', function () {
-        overlay.style.display = 'none';
-        sessionStorage.setItem(FIRST_VISIT_KEY, 'true');
-      });
-    }
-
-    // Click outside to close
-    if (overlay) {
-      overlay.addEventListener('click', function (e) {
-        if (e.target === overlay) {
-          overlay.style.display = 'none';
-          sessionStorage.setItem(FIRST_VISIT_KEY, 'true');
-        }
-      });
-    }
-  })();
-  </script>
+  <!-- First-time visitor experience — "How to Explore" section reinforced in nav -->
+  <!-- Overlay approach deferred: current "How to Explore" section (4 cards) + hero messaging
+       provides sufficient first-time guidance without JavaScript dependency.
+       Future: Implement via analytics event when user completes first meaningful interaction. -->
 </body>
 </html>
