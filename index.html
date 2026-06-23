@@ -56,6 +56,8 @@
   @media (max-width: 1024px) { #featured-grid { column-count: 3; } }
   @media (max-width: 768px) { #featured-grid { column-count: 2; } }
   @media (max-width: 600px) { #featured-grid { column-count: 1; } }
+  @media (min-width: 1600px) { #featured-grid { column-count: 5; } }
+  @media (min-width: 2000px) { #featured-grid { column-count: 6; } }
 
   /* Featured cards — match archive-card styling exactly */
   .featured-card { cursor: pointer; display: block; text-decoration: none; break-inside: avoid; margin: 0 0 0.75rem; }
@@ -1583,7 +1585,7 @@ header.header-hidden{transform:translateY(-100%)}
       <!-- populated by JS -->
     </div>
     <!-- Uniform grid: cards 4+ — auto-sizes to content, no row-span math -->
-    <div class="hidden md:grid md:grid-cols-4 gap-6 mt-16" id="featured-grid-small">
+    <div class="hidden md:grid md:grid-cols-4 lg:grid-cols-5 2xl:grid-cols-6 gap-6 mt-16" id="featured-grid-small">
       <!-- populated by JS -->
     </div>
     <!-- Next Steps CTA -->
