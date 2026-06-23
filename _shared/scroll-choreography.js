@@ -1,6 +1,11 @@
 /* scroll-choreography.js — Unified navbar/footer scroll orchestration
    Coordinates entrance animations + scroll-responsive header/footer behavior
-   Master timeline system for site-wide motion
+   Master timeline system for site-wide motion + parallax + gesture-responsive animations
+
+   Enhancements:
+   - Parallax choreography: hero/footer layers move at different rates
+   - Gesture-responsive: mobile swipe velocity triggers animations
+   - Scroll-section reveals: nav items + content light up as sections enter viewport
 */
 
 (function() {
@@ -223,6 +228,136 @@
     return colorMap[hexColor] || colorMap.default;
   }
 
+  /* ─── Parallax Choreography ──────────────────────────────────────────────── */
+  function setupParallax() {
+    if (prefersReducedMotion) return;
+
+    const hero = document.querySelector('[class*="hero"]');
+    const heroBg = document.getElementById('hero-slides-d');
+    const footer = document.querySelector('footer');
+
+    // Hero parallax (slower scroll = more depth)
+    if (heroBg) {
+      window.addEventListener('scroll', function() {
+        const scrollY = window.scrollY;
+        const parallaxOffset = scrollY * 0.25; // Slower than default
+        heroBg.style.transform = `translateY(${parallaxOffset}px)`;
+      }, { passive: true });
+    }
+
+    // Footer gradient parallax (drifts upward on scroll)
+    if (footer) {
+      const footerGradient = footer.querySelector('[class*="gradient"], [class*="fade"]');
+      if (footerGradient) {
+        window.addEventListener('scroll', function() {
+          const footerRect = footer.getBoundingClientRect();
+          if (footerRect.top < window.innerHeight) {
+            const visibleProgress = 1 - (footerRect.top / window.innerHeight);
+            const driftOffset = Math.min(visibleProgress * 30, 30);
+            footerGradient.style.transform = `translateY(-${driftOffset}px)`;
+          }
+        }, { passive: true });
+      }
+    }
+  }
+
+  /* ─── Scroll-Section Nav Reveals ──────────────────────────────────────────── */
+  function setupSectionReveals() {
+    if (prefersReducedMotion) return;
+
+    const navLinks = document.querySelectorAll('header nav a');
+    if (navLinks.length === 0) return;
+
+    // Map nav links to sections (by href)
+    const linkMap = {};
+    navLinks.forEach((link, idx) => {
+      const href = link.getAttribute('href');
+      if (href && !href.startsWith('http')) {
+        const page = href.split('/').pop().replace('.html', '');
+        linkMap[page] = link;
+      }
+    });
+
+    // Observe main sections for visibility
+    const sections = document.querySelectorAll('[data-section], main > section, main > article');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const sectionName = entry.target.getAttribute('data-section') ||
+                           entry.target.id ||
+                           entry.target.className.split(' ')[0];
+
+        if (entry.isIntersecting) {
+          // Section entered viewport — highlight corresponding nav link
+          navLinks.forEach(link => {
+            const linkHref = link.getAttribute('href').replace('.html', '');
+            if (linkHref.includes(sectionName) || sectionName.includes('main')) {
+              // Gentle highlight
+              anime({
+                targets: link,
+                color: '#FF6600',
+                duration: 300,
+                easing: 'easeOutQuad'
+              });
+            }
+          });
+        }
+      });
+    }, { threshold: 0.3 });
+
+    sections.forEach(section => observer.observe(section));
+  }
+
+  /* ─── Gesture Velocity Detection (Mobile) ────────────────────────────────── */
+  function setupGestureResponsive() {
+    if (prefersReducedMotion) return;
+
+    let lastTouchY = 0;
+    let lastTouchTime = 0;
+    let swipeVelocity = 0;
+
+    document.addEventListener('touchstart', (e) => {
+      lastTouchY = e.touches[0].clientY;
+      lastTouchTime = Date.now();
+    }, { passive: true });
+
+    document.addEventListener('touchmove', (e) => {
+      const currentY = e.touches[0].clientY;
+      const currentTime = Date.now();
+      const deltaY = currentY - lastTouchY;
+      const deltaTime = currentTime - lastTouchTime;
+
+      swipeVelocity = Math.abs(deltaY / deltaTime);
+      lastTouchY = currentY;
+      lastTouchTime = currentTime;
+
+      // High-velocity swipe (fling): compress header, brighten nav
+      const header = document.querySelector('header');
+      if (header && swipeVelocity > 1.0) {
+        const navLinks = header.querySelectorAll('nav a');
+        anime({
+          targets: navLinks,
+          opacity: [anime.getEasing('easeOutQuad')(swipeVelocity / 2), 0.8],
+          duration: 150,
+          easing: 'easeOutQuad'
+        });
+      }
+    }, { passive: true });
+
+    document.addEventListener('touchend', () => {
+      // Reset nav opacity back to normal on touch end
+      const header = document.querySelector('header');
+      if (header) {
+        const navLinks = header.querySelectorAll('nav a');
+        anime({
+          targets: navLinks,
+          opacity: [0.8, 1],
+          duration: 200,
+          easing: 'easeOutQuad'
+        });
+      }
+    }, { passive: true });
+  }
+
   /* ─── Back-to-Top Pulse Beacon ──────────────────────────────────────────── */
   function setupBTTBeacon() {
     if (prefersReducedMotion) return;
@@ -286,8 +421,11 @@
     // Run entrance animation
     animateEntrance();
 
-    // Setup BTT beacon
+    // Setup enhancements
     setupBTTBeacon();
+    setupParallax();
+    setupSectionReveals();
+    setupGestureResponsive();
 
     // Add scroll listener (passive for performance)
     window.addEventListener('scroll', onScroll, { passive: true });
