@@ -1,0 +1,124 @@
+/* archive-quick-filters.css — Simplified quick-filter buttons for 70+ UX
+   Large, clear buttons instead of complex filter system
+   Reduces decision fatigue and cognitive load
+*/
+
+/* Quick filter button groups */
+.quick-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 32px;
+  padding: 24px;
+  background: #fcf9f3;
+  border: 1px solid #e3bfb1;
+  border-radius: 2px;
+}
+
+.quick-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.quick-filter-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #454545;
+  margin-bottom: 8px;
+}
+
+.quick-filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.quick-filter-btn {
+  background: #ebe8e2;
+  border: 1px solid #8e7164;
+  color: #0B0B0B;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 16px 24px;
+  min-height: 48px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quick-filter-btn:hover {
+  background: #d3d1c7;
+  color: #FF6600;
+  border-color: #FF6600;
+}
+
+.quick-filter-btn.active {
+  background: #FF6600;
+  color: #fcf9f3;
+  border-color: #FF6600;
+  font-weight: 700;
+}
+
+.quick-filter-btn:focus-visible {
+  outline: 3px solid #FF6600;
+  outline-offset: 2px;
+}
+
+/* Mobile: stack buttons vertically */
+@media (max-width: 768px) {
+  .quick-filters {
+    padding: 16px;
+  }
+
+  .quick-filter-buttons {
+    flex-direction: column;
+  }
+
+  .quick-filter-btn {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 13px;
+  }
+}
+
+/* Advanced filters toggle */
+.advanced-filters-toggle {
+  display: inline-block;
+  margin-top: 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #575757;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.advanced-filters-toggle:hover {
+  color: #FF6600;
+}
+
+/* Hide original filters by default, show when advanced is toggled */
+#filter-controls {
+  display: none;
+  margin-top: 24px;
+}
+
+#filter-controls.show {
+  display: block;
+}
