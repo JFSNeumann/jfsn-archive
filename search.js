@@ -25,7 +25,7 @@
 .sse-item:hover{background:rgba(243,240,234,.04);color:var(--sse-text)}
 .sse-item:hover::after{transform:scaleX(1)}
 .sse-item[aria-selected=true]{background:rgba(243,240,234,.08);border-left-color:var(--sse-accent);color:var(--sse-text);font-weight:500}
-.sse-thumb{width:44px;height:44px;object-fit:cover;flex-shrink:0;background:#1e1e1e;display:block}
+#sse-overlay img.sse-thumb{width:44px;height:44px;object-fit:cover;flex-shrink:0;background:#1e1e1e;display:block}
 .sse-info{display:flex;flex-direction:column;gap:.2rem;min-width:0}
 .sse-title{font-size:.875rem;color:var(--sse-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sse-meta{font-size:.625rem;letter-spacing:.1em;text-transform:uppercase;color:var(--sse-muted);opacity:.65}

@@ -8,7 +8,14 @@
 # Checks:
 # 1. Navigation audit (audit-nav.sh)
 # 2. If .html/.js changed but CSS not rebuilt
-# 3. If site.min.css changed but CACHE_V not bumped
+# 3. If any sw.js-precached asset (CSS or JS) changed but CACHE_V not bumped
+#    — .htaccess sets a 1-month browser Expires header on JS/CSS with no
+#    cache-busting filenames anywhere, so for files sw.js explicitly
+#    precaches by name, CACHE_V is the only thing that forces a fresh
+#    fetch (cache.addAll() bypasses HTTP cache per spec, CACHE_V change
+#    is what triggers a fresh install). Originally CSS-only; extended
+#    2026-06-23 after a JS-only fix to search.js sat invisible to this
+#    check even though search.js is itself in sw.js's PRECACHE list.
 #
 # If any check fails:
 #   • Commit is rejected (exit code 1)
@@ -64,12 +71,24 @@ if [ "$HTML_JS_CHANGED" -gt 0 ]; then
   rm -f /tmp/site.min.css.precommit-check
 fi
 
-# CHECK 3: If CSS changed, CACHE_V must be bumped
-if [ "$CSS_CHANGED" -gt 0 ]; then
-  if grep -q "const CACHE_V  = 'jfsn-[0-9]\{10\}'" sw.js; then
+# CHECK 3: If any sw.js-precached asset changed, CACHE_V must be bumped
+# (must match auto-cache-bump.sh's PRECACHE_FILES list)
+PRECACHE_FILES=(site.min.css search.js _shared/ui.css _shared/ui.js _shared/nav-active.js _shared/anime.min.js)
+PRECACHE_CHANGED=0
+for f in "${PRECACHE_FILES[@]}"; do
+  if echo "$STAGED_FILES" | grep -qF "$f"; then
+    PRECACHE_CHANGED=1
+    break
+  fi
+done
+
+if [ "$PRECACHE_CHANGED" -eq 1 ]; then
+  CURRENT_CACHE_V=$(grep "const CACHE_V" sw.js | head -1 | sed "s/.*'\(.*\)'.*/\1/")
+  HEAD_CACHE_V=$(git show HEAD:sw.js 2>/dev/null | grep "const CACHE_V" | head -1 | sed "s/.*'\(.*\)'.*/\1/" || echo "")
+  if echo "$CURRENT_CACHE_V" | grep -q "^jfsn-[0-9]\{10\}$" && [ "$CURRENT_CACHE_V" != "$HEAD_CACHE_V" ]; then
     echo -e "${GREEN}✓ CACHE_V bumped${NC}"
   else
-    echo -e "${RED}✗ CACHE_V not bumped after CSS change${NC}"
+    echo -e "${RED}✗ CACHE_V not bumped after a precached asset changed${NC}"
     echo "    Run: bash auto-cache-bump.sh"
     echo "    Then: git add sw.js && git commit again"
     FAILED=1
