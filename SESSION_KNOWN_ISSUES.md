@@ -19,7 +19,7 @@ Format: `[ ]` open / `[x]` resolved · description · status
 
 ## Session 80 (2026-06-22/23)
 
-- [ ] **Decision needed from Jeff:** ~8 of the 17 Session-65 interaction scripts are confirmed 100% dead (zero matching attributes/classes anywhere in live HTML) — `advanced-interactions.js`, `infinite-scroll.js`, `parallax.js`, `scroll-reveal.js`, `swipe-gestures.js`, `form-validation.js`, `search-highlight.js`, `search-breadcrumb.js`, plus most of `micro-interactions.js`. Left in place as dormant scaffolding, not deleted — see `IMPROVEMENTS.md`.
+- [x] **Decided 2026-06-23: delete the 8 confirmed-dead Session-65 scripts.** `advanced-interactions.js`, `infinite-scroll.js`, `parallax.js`, `scroll-reveal.js`, `swipe-gestures.js`, `form-validation.js`, `search-highlight.js`, `search-breadcrumb.js` + paired CSS, deleted along with their tags on all 39 pages, after independently re-verifying zero live references. `micro-interactions.js` left in place — separate, still-open question. See `IMPROVEMENTS.md`.
 - [x] Two real bugs found in that same audit, both fixed: `lightbox.js` was hijacking every `.thumb__link` click (raced `page-transitions.js`); `scroll-to-top.js` duplicated `_shared/footer.html`'s `#btt-float` button. Both fixed and verified live.
 - [x] **Netlify + Companion AI chat feature removed entirely.** HostGator is now the only host. Verified live (companion.html 404s, nav correct, zero console errors).
 - [ ] **Lighthouse/Performance baseline NOT captured this session** — today was audit/infra-removal work, not a perf session. `PERF_BASELINE.md` is still stale from session 65. Next session touching CSS/JS should capture a fresh baseline.

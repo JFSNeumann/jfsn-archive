@@ -44,13 +44,18 @@ cat /Documents/JFSN/PERF_BASELINE.md
 # - Event listeners, DOM manipulation, state management
 # - No rebuild needed (separate from CSS)
 
-# ⚠️ Found during the 2026-06-22 documentation audit: there are actually 17 separate
-# Session-65 interaction scripts loaded on all 40 HTML pages (lightbox.js, toast.js,
-# parallax.js, infinite-scroll.js, scroll-reveal.js, swipe-gestures.js, and more — see
-# docs/archive/README.md for the full list). Several of these implement patterns
-# CLAUDE.md's current Don'ts list explicitly bans (skeleton loading, scale/transform
-# hover, parallax). This is a real, unresolved discrepancy between live code and
-# current design philosophy — not yet decided one way or the other. See IMPROVEMENTS.md.
+# Found during the 2026-06-22 documentation audit: there were 17 separate Session-65
+# interaction scripts loaded on every page. 8 were confirmed 100% dead (zero matching
+# attributes/classes anywhere in live HTML) — advanced-interactions.js, infinite-scroll.js,
+# parallax.js, scroll-reveal.js, swipe-gestures.js, form-validation.js, search-highlight.js,
+# search-breadcrumb.js, plus their paired .css files — and were deleted 2026-06-23 (Jeff's
+# call, see IMPROVEMENTS.md), along with their <script>/<link> tags on all 39 pages.
+# (The earlier note here about these conflicting with CLAUDE.md's Don'ts list was itself
+# stale by the time it was written — that policy had already been corrected the same day,
+# see DESIGN-SYSTEM.md's 2026-06-22 changelog entry. Generic motion was never actually
+# banned; the scripts were removed because they were dead code, not because they were
+# against policy.) lightbox.js, toast.js, and the other ~9 remaining scripts are still live
+# — see docs/archive/README.md and IMPROVEMENTS.md for current status.
 ```
 
 ### After Any CSS Change

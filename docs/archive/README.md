@@ -33,15 +33,19 @@ wired up — kept for reference if a module ever needs tracing, but not live dir
 - `PHASE4_INTEGRATION.md`
 - `EXTRAS_INTEGRATION.md`
 
-> ⚠️ **Caveat found during the 2026-06-22 documentation audit:** "superseded" above describes
-> the *design-direction docs*, not the actual `_shared/*.js` files they once specified. The
-> homepage Selected Works simplification (2026-06-21) only touched `index.html`'s featured
-> grid. The other ~17 Session-65 interaction scripts these docs describe (`lightbox.js`,
-> `parallax.js`, `infinite-scroll.js`, `toast.js`, `scroll-reveal.js`, etc.) are **still
-> loaded on all 40 HTML pages** and several directly contradict `CLAUDE.md`'s current
-> Don'ts list (skeleton loading, scale/transform on hover, parallax). This is a real,
-> unresolved discrepancy between current design philosophy and live code — not something
-> this archive folder's framing should be read as having already fixed. See `IMPROVEMENTS.md`.
+> ⚠️ **Caveat found during the 2026-06-22 documentation audit, updated 2026-06-23:** "superseded"
+> above describes the *design-direction docs*, not the actual `_shared/*.js` files they once
+> specified. The homepage Selected Works simplification (2026-06-21) only touched `index.html`'s
+> featured grid. Of the ~17 Session-65 interaction scripts these docs describe, a 2026-06-22
+> audit found 8 were confirmed 100% dead code (`advanced-interactions.js`, `infinite-scroll.js`,
+> `parallax.js`, `scroll-reveal.js`, `swipe-gestures.js`, `form-validation.js`,
+> `search-highlight.js`, `search-breadcrumb.js`) — these were deleted 2026-06-23, along with
+> their paired CSS and their `<script>`/`<link>` tags on all 39 pages. The earlier note here
+> claiming several "directly contradict CLAUDE.md's current Don'ts list" was itself stale —
+> that policy had already been corrected the same day it was written (see `DESIGN-SYSTEM.md`'s
+> 2026-06-22 changelog); generic motion was never actually banned, and that was never the real
+> issue with these scripts. `lightbox.js`, `toast.js`, `micro-interactions.js`, and the rest of
+> the original 17 are still live — see `IMPROVEMENTS.md` for current status of each.
 
 ---
 
