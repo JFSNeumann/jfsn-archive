@@ -3,7 +3,7 @@
 **Living design documentation**  
 Last meaningfully updated: 2026-06-22  
 Framework: Tailwind CSS + vanilla HTML/CSS/JS  
-Philosophy: Artwork first. UI recedes. Light, archival aesthetic.
+Philosophy: The work shown straight; the space around it staged (v2, 2026-06-24). Light, archival aesthetic. (See CLAUDE.md § "Design language v2" for the stance.)
 
 > Tokens, typography, and visual rules are canonically defined in `CLAUDE.md` § "Design System (current — Stitch/Tailwind, light)". This document is the implementation-level reference (component specs, accessibility patterns, interaction behavior, JSON export for automation). Where the two overlap, CLAUDE.md wins.
 
@@ -243,6 +243,50 @@ px-20 / py-20      = 80px (3xl)
 
 ## Interactions & Animations
 
+### Motion system (v2 — 2026-06-24) — single source of truth
+
+Per `CLAUDE.md` § "Design language v2", the site is moving to a higher-end, more expressive language: **more** parallax and motion, aimed *around and between* works. Motion uses a small FIXED set of named primitives so "more parallax" stays craft, not noise. `anime.js` is the choreography library.
+
+**House easing**
+- Reveal / staged motion: `cubic-bezier(0.22, 1, 0.36, 1)`
+- UI / affordance: `cubic-bezier(0.4, 0, 0.2, 1)`
+
+**Durations**
+- Load choreography (one staged page reveal): 600–800ms
+- Continuity transition between works: 450–600ms
+- Hover / affordance feedback: 150–200ms
+
+**Parallax rates (scroll multiplier)**
+- Artwork plane: **1.0 — locked.** Always true scroll, never transformed.
+- Environment plate: 0.85–0.92
+- Scrim: 1.05–1.10
+- Display type: 1.10–1.15
+
+Depth is the *spread between layers*, never movement of the work itself.
+
+**Named primitives (use these; don't author one-offs)**
+1. **Depth-hero** — environment plate / scrim / Playfair type parallax within the rates above; artwork sits at 1.0×. Hero artwork may zoom-OUT 108%→100% over ~12–18s, pause-on-hover, resolving to the full work.
+2. **Continuity transition** — leaving a work toward another carries a shared element (thumbnail grows into the next hero), not a generic fade. Motion that teaches relationship.
+3. **River motion** — `chromatic.html` is the showpiece; push hardest there.
+4. **Load choreography** — exactly one staged reveal per page, not a cascade.
+
+**The artwork-plane rule (hard rail):** motion on a piece is allowed ONLY if it resolves to the work shown whole. Zoom-OUT settling on the full image = ok; zoom-IN ending cropped = not ok; pan/tilt/parallax on the artwork node = never.
+
+**Resilience (non-negotiable — both required):**
+- `prefers-reduced-motion: reduce` → all of the above collapses to clean static states (hero at 100%, no parallax/zoom, instant reveals).
+- JavaScript off → every work, title, year, medium still reachable and honest. Motion enhances; it never gates access to the record.
+
+> The older "Entrance Animations" notes below predate this system. Where they conflict, the v2 numbers win; the 50ms stagger is fine as a load-choreography detail.
+
+### Surface treatment (v2 — 2026-06-24) — single source of truth
+
+Part of the same v2 language as the motion system above: the surfaces *around* the work are flat and sharp, so the work is the only thing in the frame with depth. This is what "the space around it is staged" means at the level of the chrome.
+
+- **Dividers / borders:** flat 1px only — `#c4c7c7` (neutral) or `#8e7164` (archival). **No decorative gradient lines** (e.g. the orange→brown→orange section rule that accreted on the homepage). A section's own `border-b` is the divider; don't overlay a coloured `::after`.
+- **Corners:** square. **No `border-radius`** on cards, callouts, metadata blocks, or focus outlines.
+- **Gradients are functional, not decorative:** allowed only as scrims that keep text legible over imagery (hero caption overlays, the header fade). Never as section dividers, skeleton shimmer, or surface fills.
+- Static rules — unaffected by reduced-motion or JS-off.
+
 ### Hover States
 - **Images:** Outline animates in orange, caption title turns orange
 - **Links:** Underline draws in (transform: scaleX)
@@ -348,6 +392,8 @@ Per CLAUDE.md's "Design is open" stance: entrance motion, scroll-reveals, parall
 - **International-orange text** on light backgrounds (use orange-ink instead — this one's an accessibility/contrast rule, unrelated to the motion-restraint reversal above)
 
 **No longer banned (Jeff's craft, not a violation):** scroll-reveal, scale/transform on hover (on UI chrome, not the artwork), sibling dim, skeleton loading, parallax, auto-playing hero motion. Use judgment; the litmus in `CLAUDE.md` is the test, not this list.
+
+> **v2 narrowing (2026-06-24):** the "Surface treatment (v2)" rules above now make *decorative* gradients (gradient dividers, surface fills) and *rounded corners* on staged chrome things to avoid — not for artwork-honesty reasons, but because the v2 language wants flat, square surfaces around the work. Functional scrim gradients and loading skeletons on image-heavy pages remain fine.
 
 ### Archive Integrity
 - **Dimensions:** Leave blank if unknown (don't guess)

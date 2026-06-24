@@ -1,7 +1,27 @@
 # JFSN Current State
-**Last updated:** 2026-06-22
+**Last updated:** 2026-06-24
 
 This file describes what's currently true about the site. For ranked work, see `IMPROVEMENTS.md`. For the design brief and architecture, see `CLAUDE.md`. For the session-by-session historical log, see `docs/sessions-archive.md` or `git log`.
+
+---
+
+## 2026-06-24 — design direction moved to v2 (docs only; live site untouched)
+
+**What changed today:** the design *direction* was clarified and written into the guidance docs. No page was edited — nothing a visitor sees has changed. All edits are in git, reversible.
+- New stance: `CLAUDE.md` § "Design language v2" — *the work is shown straight; the space around it is staged.* More motion/parallax welcome, but every gesture must land (no half-built motion). The hard rail (honest presentation of the work) is unchanged.
+- Motion spec: `DESIGN-SYSTEM.md` § "Motion system (v2)" — house easing, durations, parallax rates, four named primitives (depth-hero / continuity transition / river motion / load choreography), the resolve-to-whole rule, no-JS + reduced-motion resilience.
+- A depth-hero **prototype** (motion feel approved) sits outside the repo at `outputs/depth-hero-prototype.html`. Pilot it on a SIMPLE page first — NOT the 148KB homepage.
+
+**Open threads — next real building work, done deliberately, one at a time:**
+- **Homepage cleanup comes before adding any new motion.** `index.html`'s motion layer accreted over many sessions and parts are broken: an invalid `transform: translateY(24px) blur(4px)` on `.reveal-section` (reveals run opacity-only); two conflicting `#featured-grid` definitions (the column-count block is dead); gradient dividers + skeleton shimmer + a `border-radius:2px` that contradict the no-gradient / no-rounded rules; a leftover `perspective:1000px` from the removed 3D tilt; a duplicated reduced-motion block. Tidy this FIRST, then the new motion can land.
+- Collapse the two homepage orientation modules ("Navigate the Studio" + "How to Explore") into one "where to begin"; consolidate the dual desktop/mobile markup to one source of truth. (Part of the homepage job.)
+- Confirm the homepage "WORKS CATALOGED" number lives in static HTML, not JS-only (honest with JS off).
+- Verify featured-card metadata is genuinely always-visible (this file says yes as of 2026-06-21; current CSS has `:hover`→`opacity:1` rules — confirm that's a load-fade, not a hover gate, per the hard rail).
+
+**Decided 2026-06-24 — do not reopen:**
+- `timeline.html` → **RETIRE** (confirmed). Not done yet: delete the file + delink everywhere (nav/footer, `stamp-nav.sh` TARGETS, `build_catalog.py` sitemap, `CLAUDE.md` + `STITCH.md` rows). `lost.html` stays the home of "honored absence."
+- `curatorial-map.html` → **KEEP as-is** (the earlier "rebuild as a relationship visual" idea is reversed).
+- Voice threading (oral history on the works) → **deferred to the final phase**; not live work now.
 
 ---
 

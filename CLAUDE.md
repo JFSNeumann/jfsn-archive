@@ -84,6 +84,34 @@ When Jeff is directing the design, his intent is the brief. Earlier versions of 
 
 ---
 
+## Design language v2 — Jeff-directed expressiveness (2026-06-24)
+
+Jeff has set a clearer direction: a higher-end, more expressive site that shows off 40 years of animator / Flash / web-design craft — **more** motion and parallax, not less. This *refines* "Design is open" above; it does not contradict it. The "default to removal / minimalism" reading was already retired 2026-06-22 — this goes one step further: the design *around* the work should be **staged**, not merely permitted.
+
+**Stance:** *The work is shown straight. The space around it is staged.* This refines "Artwork first. UI recedes." — the UI no longer recedes apologetically; it is composed and it moves. Expressiveness lives in type, space, and choreography, around and between works.
+
+**Restraint, reframed:** "one considered move, not five" no longer means *prefer fewer effects*. It means **every gesture must land — no half-built motion**. The brake is on sloppiness and on AI sessions accreting novelty, NOT on Jeff's expressiveness when he is directing.
+
+**Motion system:** a small FIXED set of named primitives — depth-hero, continuity transition, river motion, load choreography — with house easing, durations, and parallax-rate rules. Specs live in `DESIGN-SYSTEM.md` § "Motion system (v2)" (single source of truth — do NOT duplicate the values here). `anime.js` remains the choreography library. Artwork plane is locked at 1.0× scroll.
+
+**The one rule for motion on an artwork plane:** motion is allowed on a piece ONLY if it *resolves to the work shown whole* — hero zoom-OUT settling on the full image is fine; a zoom-IN that ends cropped is not; never pan/tilt/parallax the artwork node itself. Depth comes from everything *around* the work. (This is point 2 of the hard rail, extended to motion.)
+
+**Structural decisions (this revision):**
+- Collapse the two homepage orientation modules ("Navigate the Studio" + "How to Explore") into one honest "where to begin."
+- One responsive source of truth per section — retire dual mobile/desktop markup.
+- `curatorial-map.html` → **KEEP AS-IS** (decade×medium grid + theme chips). Jeff finds it interesting; do NOT rebuild it into a relationship visual. (Decision reversed 2026-06-24 after reviewing what the page actually does.)
+- `timeline.html` → **RETIRE** (confirmed 2026-06-24). Delete the file and delink sitewide: nav/footer links, `stamp-nav.sh` TARGETS, sitemap in `build_catalog.py`, and the page-inventory / reference rows in this file + `STITCH.md`. `lost.html` remains the home of "honored absence"; the decade-gap framing is not being rebuilt elsewhere (Jeff's call).
+
+**Preservation principles (weight equal to the hard rail):**
+1. **Voice threading** — Jeff's oral history on the works/series it describes; real clips only, never autoplay or synthesized. **DEFERRED to the final phase** — one of the last things Jeff will do; do NOT treat as live work in the rollout.
+2. **Lost works as honored absence** — never AI-fill, mock, or stand-in for a missing image; the gap stays a gap.
+3. **Resilience** — every work fully reachable AND honest with JavaScript off and with `prefers-reduced-motion`. Motion enhances, never gates. (Extends the existing reduced-motion rule to the no-JS case.)
+4. **A personal record, not a gallery** — rising polish must elevate craft, never imply provenance / exhibition history / market standing (no faux wall labels, accession numbers, "exhibited at," prices, critic quotes).
+
+**Rollout discipline:** pilot the new language on ONE page (index or chromatic) — including its JS-off and reduced-motion states — before propagating to all pages, incl. the 1,084 generated pages via `gen-artwork-pages.py`. The artwork DETAIL page stays quiet (no depth-hero on a single-work view) and is the highest-leverage template.
+
+---
+
 ## Stitch workflow
 
 When Jeff mentions Stitch, a new page, or a design export — read `STITCH.md` first.
