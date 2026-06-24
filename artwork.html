@@ -258,6 +258,11 @@ header.header-hidden{transform:translateY(-100%)}
 <script src="search.js" defer></script>
 <script src="_shared/anime.min.js" defer></script>
 <script src="_shared/jfsn-interactions.js" defer></script>
+<script src="_shared/accent-transition.js" defer></script>
+<script src="_shared/chromatic-accent-wire.js" defer></script>
+<script src="_shared/ambient-chromatic-tint.js" defer></script>
+<script src="_shared/chromatic-position-strip.js" defer></script>
+<script src="_shared/chromatic-lazy-tint.js" defer></script>
 <script>
 (function(){
   var header = document.querySelector('header');
@@ -343,9 +348,6 @@ header.header-hidden{transform:translateY(-100%)}
 <main id="main" class="pt-[100px] pb-xl px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto">
 
   <a href="archive.html" class="bracket-link mb-lg block">[ ← Back to Archive ]</a>
-
-  <!-- Breadcrumb navigation -->
-  <div id="breadcrumb" style="margin-bottom:16px;font-family:Inter,sans-serif;font-size:12px;color:#575757;"></div>
 
   <div id="loading" class="py-xl text-center font-label-lg text-label-lg text-secondary uppercase tracking-widest">Loading…</div>
   <div id="not-found" class="hidden py-xl text-center font-label-lg text-label-lg text-secondary uppercase tracking-widest">Work not found.</div>
@@ -575,23 +577,6 @@ function themeLink(t) {
 // dimensions until those are measured. Links to the matching archive filter.
 const ORIENT_LABELS = { vertical:'Vertical', horizontal:'Horizontal', square:'Square' };
 
-// Generate breadcrumb for artwork page
-function updateArtworkBreadcrumb(work) {
-  const bc = document.getElementById('breadcrumb');
-  let parts = ['<a href="archive.html" style="color:#575757;text-decoration:none;border-bottom:1px solid #575757;">Archive</a>'];
-
-  if (work.series) {
-    parts.push(`<a href="archive.html?series=${work.series}" style="color:#575757;text-decoration:none;border-bottom:1px solid #575757;">${work.series}</a>`);
-  } else if (work.year) {
-    const decade = Math.floor(work.year / 10) * 10 + 's';
-    parts.push(`<a href="archive.html?decade=${decade}" style="color:#575757;text-decoration:none;border-bottom:1px solid #575757;">${decade}</a>`);
-  }
-
-  if (parts.length > 1) {
-    bc.innerHTML = parts.join(' <span style="color:#8e7164;margin:0 4px;">›</span> ');
-  }
-}
-
 fetch('catalog.json')
   .then(r => r.json())
   .then(works => {
@@ -607,7 +592,7 @@ fetch('catalog.json')
 
     const w = works[idx];
     document.getElementById('work-content').classList.remove('hidden');
-    updateArtworkBreadcrumb(w);
+    document.dispatchEvent(new CustomEvent('artwork:loaded', { detail: w }));
 
     // Populate related works in same series
     if (w.series) {
@@ -729,23 +714,14 @@ fetch('catalog.json')
     const nextWork = idx < works.length - 1 ? works[idx + 1] : null;
     const prevEl = document.getElementById('prev-link');
     const nextEl = document.getElementById('next-link');
-    // Tag prev/next with their own accent color (from chromatic.json) once
-    // it's loaded — that fetch runs independently and may resolve before or
-    // after this one, so wait for it rather than assuming it's ready yet.
-    function tagAccentColor(el, workId) {
-      function apply() {
-        var map = window.__chromaticBgById;
-        if (map && map[workId]) el.setAttribute('data-accent-color', map[workId]);
-      }
-      if (window.__chromaticBgById) apply();
-      else document.addEventListener('chromatic:ready', apply, { once: true });
-    }
+    // Accent color tagging (data-accent-color, for accent-transition.js) is
+    // handled sitewide by chromatic-accent-wire.js — it picks up these links
+    // the same as any other artwork.html?id= link on the page.
 
     if (prevWork) {
       _prevHref = `artwork.html?id=${prevWork.file.replace('.avif','')}`;
       prevEl.href = _prevHref;
       document.getElementById('prev-title').textContent = prevWork.title || '';
-      tagAccentColor(prevEl, prevWork.file.replace('.avif',''));
     } else {
       prevEl.classList.add('invisible');
     }
@@ -753,7 +729,6 @@ fetch('catalog.json')
       _nextHref = `artwork.html?id=${nextWork.file.replace('.avif','')}`;
       nextEl.href = _nextHref;
       document.getElementById('next-title').textContent = nextWork.title || '';
-      tagAccentColor(nextEl, nextWork.file.replace('.avif',''));
     } else {
       nextEl.classList.add('invisible');
     }

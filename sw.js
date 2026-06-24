@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1782252613'; // Session 80: removed Netlify + Companion entirely (companion.html deleted, nav/footer/sitemap/CSS rebuilt without it)
+const CACHE_V  = 'jfsn-1782263582'; // Chromatic lazy-load tint + theme-color sync + gap-falter marker on the sitewide position strip
 const PRECACHE = [
   '/',
   '/index.html',

@@ -622,6 +622,11 @@ header.header-hidden{transform:translateY(-100%)}
 <script src="search.js" defer></script>
 <script src="_shared/anime.min.js" defer></script>
 <script src="_shared/jfsn-interactions.js" defer></script>
+<script src="_shared/accent-transition.js" defer></script>
+<script src="_shared/chromatic-accent-wire.js" defer></script>
+<script src="_shared/ambient-chromatic-tint.js" defer></script>
+<script src="_shared/chromatic-position-strip.js" defer></script>
+<script src="_shared/chromatic-lazy-tint.js" defer></script>
 <script>
 (function(){
   var header = document.querySelector('header');
@@ -718,13 +723,6 @@ header.header-hidden{transform:translateY(-100%)}
 </script>
 
 <main id="main" class="pt-[100px] pb-xl px-margin-mobile md:px-margin-desktop max-w-[1200px] mx-auto">
-
-  <!-- Breadcrumbs — Phase 1 UX Enhancement -->
-  <nav class="breadcrumb" role="navigation" aria-label="Breadcrumb">
-    <a href="index.html" class="link-underline">Home</a>
-    <span class="breadcrumb-separator">/</span>
-    <span class="breadcrumb-current">Archive</span>
-  </nav>
 
   <!-- Page Header -->
   <header class="mb-md md:mb-lg pb-md flex justify-between items-end" style="border-bottom:1px solid #8e7164;">
@@ -891,14 +889,6 @@ header.header-hidden{transform:translateY(-100%)}
 
     <!-- Grid -->
     <div class="flex-grow min-w-0">
-      <!-- Breadcrumb navigation (URL-inferred) -->
-      <nav class="breadcrumb-nav" role="navigation" aria-label="Breadcrumb" style="margin-bottom:20px;">
-        <a href="index.html" style="font-family:Inter,sans-serif;font-size:13px;color:#575757;text-decoration:none;transition:color 0.2s ease;">Home</a>
-        <span style="color:#8e7164;margin:0 8px;font-size:13px;">/</span>
-        <span style="font-family:Inter,sans-serif;font-size:13px;font-weight:600;color:#0B0B0B;"><span id="breadcrumb-current">Archive</span></span>
-        <span id="breadcrumb-extra" style="color:#8e7164;font-size:13px;"></span>
-      </nav>
-
       <!-- Active filter chips -->
       <div id="filter-chips" style="display:none;margin-bottom:20px;flex-wrap:wrap;align-items:center;gap:8px;"></div>
 
@@ -1310,41 +1300,7 @@ function syncURL() {
   if (sort && sort !== 'id_desc') p.set('sort', sort); // only persist non-default
   const qs = p.toString();
   history.replaceState(null, '', qs ? '?' + qs : location.pathname);
-  updateBreadcrumb();
 }
-
-// Generate breadcrumb from URL parameters (with mobile truncation)
-function updateBreadcrumb() {
-  const bcExtra = document.getElementById('breadcrumb-extra');
-  const p = new URLSearchParams(location.search);
-  const mediums = p.getAll('medium');
-  const decades = p.getAll('decade');
-  const series = p.getAll('series');
-
-  let lastPart = null;
-
-  if (mediums.length === 1) {
-    const label = { collage:'Collage', photograph:'Photography', sculpture:'Sculpture', painting:'Painting' }[mediums[0]] || mediums[0];
-    lastPart = `<a href="archive.html?medium=${mediums[0]}" style="color:#B84700;text-decoration:none;transition:color 0.2s ease;">${label}</a>`;
-  }
-  if (decades.length === 1) {
-    lastPart = `<a href="archive.html?decade=${decades[0]}" style="color:#B84700;text-decoration:none;transition:color 0.2s ease;">${decades[0]}</a>`;
-  }
-  if (series.length === 1) {
-    lastPart = `<a href="archive.html?series=${series[0]}" style="color:#B84700;text-decoration:none;transition:color 0.2s ease;">${series[0]}</a>`;
-  }
-
-  if (lastPart) {
-    bcExtra.innerHTML = ' <span style="color:#8e7164;margin:0 8px;">›</span> ' + lastPart;
-    bcExtra.style.display = 'inline';
-  } else {
-    bcExtra.innerHTML = '';
-    bcExtra.style.display = 'none';
-  }
-}
-
-// Update breadcrumb on resize (for mobile truncation)
-window.addEventListener('resize', updateBreadcrumb, { passive: true });
 
 document.getElementById('sort-select').addEventListener('change', () => {
   // Phase 6.3: Sort dropdown change animation
@@ -1386,7 +1342,6 @@ Promise.all([
     filtered = sortWorks(data);
     renderPage();
     applyURLParams();
-    updateBreadcrumb();
   })
   .catch(e => console.error('catalog load failed', e));
 

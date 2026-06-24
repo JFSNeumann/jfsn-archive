@@ -6,8 +6,13 @@
 (function() {
   'use strict';
 
+  const MEDIUM_LABELS = { collage: 'Collage', photograph: 'Photography', sculpture: 'Sculpture', painting: 'Painting' };
+
   /* ─── Build Breadcrumb Trail ────────────────────────────────────────────── */
-  function buildBreadcrumb() {
+  // workData (optional): the catalog record for the work shown on artwork.html,
+  // passed via the 'artwork:loaded' event — DOM text isn't ready at init time
+  // since it's populated after an async catalog fetch.
+  function buildBreadcrumb(workData) {
     const path = window.location.pathname;
     const breadcrumbs = [{ label: 'Home', url: '/' }];
 
@@ -15,33 +20,34 @@
     if (path.includes('archive.html')) {
       breadcrumbs.push({ label: 'Archive', url: 'archive.html' });
 
-      // Add active filters if present
-      const mediumChip = document.querySelector('.filter-chip[data-filter-type="medium"]');
-      const decadeChip = document.querySelector('.filter-chip[data-filter-type="decade"]');
-
-      if (mediumChip) {
-        const medium = mediumChip.textContent.trim().replace('✕', '').trim();
-        breadcrumbs.push({ label: medium, url: null });
+      // Add active filters if present (data-filter-type lives on the chip's
+      // remove <button>, not the .filter-chip span itself)
+      function chipLabel(type) {
+        const btn = document.querySelector(`.filter-chip button[data-filter-type="${type}"]`);
+        if (!btn) return null;
+        const chip = btn.closest('.filter-chip');
+        return chip.firstChild.textContent.trim();
       }
 
-      if (decadeChip) {
-        const decade = decadeChip.textContent.trim().replace('✕', '').trim();
-        breadcrumbs.push({ label: decade, url: null });
-      }
+      ['medium', 'decade', 'series', 'orientation'].forEach(type => {
+        const label = chipLabel(type);
+        if (label) breadcrumbs.push({ label, url: null });
+      });
     } else if (path.includes('artwork.html') || path.includes('?id=')) {
       breadcrumbs.push({ label: 'Archive', url: 'archive.html' });
 
-      const titleEl = document.getElementById('work-title');
-      const typeEl = document.getElementById('work-type-subline');
+      if (workData) {
+        if (workData.series) {
+          breadcrumbs.push({ label: workData.series, url: `archive.html?series=${encodeURIComponent(workData.series)}` });
+        } else if (workData.year) {
+          const decade = Math.floor(workData.year / 10) * 10 + 's';
+          breadcrumbs.push({ label: decade, url: `archive.html?decade=${decade}` });
+        }
 
-      if (typeEl) {
-        const medium = typeEl.textContent.trim();
-        breadcrumbs.push({ label: medium, url: null });
-      }
+        const medium = MEDIUM_LABELS[workData.work_type] || workData.work_type;
+        if (medium) breadcrumbs.push({ label: medium, url: null });
 
-      if (titleEl) {
-        const title = titleEl.textContent.trim();
-        breadcrumbs.push({ label: title, url: null, current: true });
+        breadcrumbs.push({ label: workData.title || 'Untitled', url: null, current: true });
       }
     } else if (path.includes('series.html') || path.includes('guernica.html') ||
                path.includes('targets.html') || path.includes('collage.html') ||
@@ -65,10 +71,29 @@
     return breadcrumbs;
   }
 
+  /* ─── Render Breadcrumb HTML ─────────────────────────────────────────────– */
+  function renderCrumbs(breadcrumbs) {
+    let html = '';
+    breadcrumbs.forEach((crumb, idx) => {
+      if (idx > 0) html += ' <span style="margin: 0 6px; color: #c4c7c7;">›</span> ';
+
+      if (crumb.url && !crumb.current) {
+        html += `<a href="${crumb.url}" style="color: #B84700; text-decoration: none; border-bottom: 1px solid #B84700; padding-bottom: 2px; transition: color 0.2s ease;">${crumb.label}</a>`;
+      } else {
+        const fontWeight = crumb.current ? 'font-weight: 600;' : '';
+        html += `<span style="${fontWeight} color: #454545;">${crumb.label}</span>`;
+      }
+    });
+    return html;
+  }
+
+  function updateBreadcrumbBar(breadcrumbs) {
+    const breadcrumb = document.getElementById('breadcrumb-navigation');
+    if (breadcrumb) breadcrumb.innerHTML = renderCrumbs(breadcrumbs);
+  }
+
   /* ─── Create Breadcrumb HTML ─────────────────────────────────────────────– */
   function createBreadcrumbBar() {
-    const breadcrumbs = buildBreadcrumb();
-
     const bar = document.createElement('div');
     bar.id = 'breadcrumb-navigation';
     bar.setAttribute('aria-label', 'Breadcrumb navigation');
@@ -90,20 +115,7 @@
       overflow-x: auto;
       white-space: nowrap;
     `;
-
-    let html = '';
-    breadcrumbs.forEach((crumb, idx) => {
-      if (idx > 0) html += ' <span style="margin: 0 6px; color: #c4c7c7;">›</span> ';
-
-      if (crumb.url && !crumb.current) {
-        html += `<a href="${crumb.url}" style="color: #B84700; text-decoration: none; border-bottom: 1px solid #B84700; padding-bottom: 2px; transition: color 0.2s ease;">${crumb.label}</a>`;
-      } else {
-        const fontWeight = crumb.current ? 'font-weight: 600;' : '';
-        html += `<span style="${fontWeight} color: #454545;">${crumb.label}</span>`;
-      }
-    });
-
-    bar.innerHTML = html;
+    bar.innerHTML = renderCrumbs(buildBreadcrumb());
 
     // Insert after nav
     const header = document.querySelector('header');
@@ -123,31 +135,23 @@
   function watchFilterChanges() {
     if (!window.location.pathname.includes('archive')) return;
 
-    const filterContainer = document.querySelector('[class*="filter"]');
+    const filterContainer = document.getElementById('filter-chips');
     if (!filterContainer) return;
 
-    const observer = new MutationObserver(() => {
-      const breadcrumb = document.getElementById('breadcrumb-navigation');
-      if (breadcrumb) {
-        const newBreadcrumbs = buildBreadcrumb();
-        let html = '';
-
-        newBreadcrumbs.forEach((crumb, idx) => {
-          if (idx > 0) html += ' <span style="margin: 0 6px; color: #c4c7c7;">›</span> ';
-
-          if (crumb.url && !crumb.current) {
-            html += `<a href="${crumb.url}" style="color: #B84700; text-decoration: none; border-bottom: 1px solid #B84700; padding-bottom: 2px; transition: color 0.2s ease;">${crumb.label}</a>`;
-          } else {
-            const fontWeight = crumb.current ? 'font-weight: 600;' : '';
-            html += `<span style="${fontWeight} color: #454545;">${crumb.label}</span>`;
-          }
-        });
-
-        breadcrumb.innerHTML = html;
-      }
-    });
-
+    const observer = new MutationObserver(() => updateBreadcrumbBar(buildBreadcrumb()));
     observer.observe(filterContainer, { childList: true, subtree: true });
+  }
+
+  /* ─── Update Breadcrumb once artwork data loads ─────────────────────────── */
+  // artwork.html fetches the catalog async, then dispatches this with the
+  // work record — DOM text (#work-title etc.) isn't populated at init time.
+  function watchArtworkData() {
+    const path = window.location.pathname;
+    if (!path.includes('artwork.html') && !path.includes('?id=')) return;
+
+    document.addEventListener('artwork:loaded', (e) => {
+      updateBreadcrumbBar(buildBreadcrumb(e.detail));
+    });
   }
 
   /* ─── Init ──────────────────────────────────────────────────────────────── */
@@ -159,6 +163,7 @@
 
     createBreadcrumbBar();
     watchFilterChanges();
+    watchArtworkData();
   }
 
   if (document.readyState === 'loading') {

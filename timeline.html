@@ -342,6 +342,11 @@ header.header-hidden{transform:translateY(-100%)}
 <script src="search.js" defer></script>
 <script src="_shared/anime.min.js" defer></script>
 <script src="_shared/jfsn-interactions.js" defer></script>
+<script src="_shared/accent-transition.js" defer></script>
+<script src="_shared/chromatic-accent-wire.js" defer></script>
+<script src="_shared/ambient-chromatic-tint.js" defer></script>
+<script src="_shared/chromatic-position-strip.js" defer></script>
+<script src="_shared/chromatic-lazy-tint.js" defer></script>
 <script>
 (function(){
   var header = document.querySelector('header');
@@ -720,10 +725,18 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
   }, { passive: true });
 })();
 </script>
+<script data-goatcounter="https://jfsn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
+<script src="/_shared/floating-home-button.js" defer></script>
+<!-- FOOTER:END -->
+
 <script>
 /* Timeline thread — a marker that eases from decade to decade as you scroll,
    instead of a static list of labels. Falters through the 1980s specifically:
-   the one stretch of the record this archive can't yet account for. */
+   the one stretch of the record this archive can't yet account for.
+   (Lives outside the FOOTER:START/END markers on purpose — it's specific to
+   this page and was previously wiped by a stamp-nav.sh re-stamp because it
+   sat inside the stamped block.) */
 (function () {
   var col = document.querySelector('.md\\:col-span-8');
   var line = document.getElementById('timeline-thread-line');
@@ -804,10 +817,6 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
   blocks.forEach(function (b) { obs.observe(b); });
 })();
 </script>
-<script data-goatcounter="https://jfsn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-<script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
-<script src="/_shared/floating-home-button.js" defer></script>
-<!-- FOOTER:END -->
 
 <script src="_shared/nav-active.js" defer></script>
 <script src="_shared/ui.js" defer></script>
