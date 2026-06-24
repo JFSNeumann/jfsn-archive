@@ -100,7 +100,6 @@ Jeff has set a clearer direction: a higher-end, more expressive site that shows 
 - Collapse the two homepage orientation modules ("Navigate the Studio" + "How to Explore") into one honest "where to begin."
 - One responsive source of truth per section — retire dual mobile/desktop markup.
 - `curatorial-map.html` → **KEEP AS-IS** (decade×medium grid + theme chips). Jeff finds it interesting; do NOT rebuild it into a relationship visual. (Decision reversed 2026-06-24 after reviewing what the page actually does.)
-- `timeline.html` → **RETIRE** (confirmed 2026-06-24). Delete the file and delink sitewide: nav/footer links, `stamp-nav.sh` TARGETS, sitemap in `build_catalog.py`, and the page-inventory / reference rows in this file + `STITCH.md`. `lost.html` remains the home of "honored absence"; the decade-gap framing is not being rebuilt elsewhere (Jeff's call).
 
 **Preservation principles (weight equal to the hard rail):**
 1. **Voice threading** — Jeff's oral history on the works/series it describes; real clips only, never autoplay or synthesized. **DEFERRED to the final phase** — one of the last things Jeff will do; do NOT treat as live work in the rollout.
@@ -171,7 +170,6 @@ real HTML. Key rule: nav must be marked `<!-- NAV:START -->` / `<!-- NAV:END -->
 | `favorites.html` | 45 personally significant works from favorites.txt. Fetches catalog-lite.json. In stamp-nav.sh. |
 | `stories.html` | Oral-history stories — 8 documented + named placeholders, verbatim quotes. In stamp-nav.sh. |
 | `why-i-made-things.html` | First-person essay built from oral-history sessions, Jeff-confirmed. In stamp-nav.sh. |
-| `timeline.html` | Decade skeleton 1950s–2020s, gaps named honestly. Recreated session 23 after an earlier version was deleted — don't confuse with that one. In stamp-nav.sh. |
 | `style-guide.html` | Standalone design-system reference page, with its own page-local section TOC (`.guide-nav`). Wired into `stamp-nav.sh`'s TARGETS as of 2026-06-23 — it previously had a `NAV:START` marker with no matching `NAV:END`, so it carried a bespoke, never-updated header for months. |
 
 ### Interactions (live)

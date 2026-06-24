@@ -37,7 +37,6 @@ A static, no-CMS archive on a $5/month shared host (HostGator/cPanel). No databa
 | Curatorial Map | `/curatorial-map.html` | Decade × medium grid, theme filter chips |
 | Stories | `/stories.html` | Oral-history stories, verbatim quotes |
 | Why I Made Things | `/why-i-made-things.html` | First-person essay, Jeff-confirmed |
-| Timeline | `/timeline.html` | Decade skeleton 1950s–2020s |
 | Style Guide | `/style-guide.html` | Standalone design-system reference page |
 | Changes | `/changes.html` | Git log feed |
 | Privacy | `/privacy.html` | Privacy policy |

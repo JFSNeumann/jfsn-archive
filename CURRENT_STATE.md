@@ -19,7 +19,6 @@ This file describes what's currently true about the site. For ranked work, see `
 - Verify featured-card metadata is genuinely always-visible (this file says yes as of 2026-06-21; current CSS has `:hover`→`opacity:1` rules — confirm that's a load-fade, not a hover gate, per the hard rail).
 
 **Decided 2026-06-24 — do not reopen:**
-- `timeline.html` → **RETIRE** (confirmed). Not done yet: delete the file + delink everywhere (nav/footer, `stamp-nav.sh` TARGETS, `build_catalog.py` sitemap, `CLAUDE.md` + `STITCH.md` rows). `lost.html` stays the home of "honored absence."
 - `curatorial-map.html` → **KEEP as-is** (the earlier "rebuild as a relationship visual" idea is reversed).
 - Voice threading (oral history on the works) → **deferred to the final phase**; not live work now.
 

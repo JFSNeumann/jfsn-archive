@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1782265013'; // Sitewide click-feedback pulse (bracket-links, back-to-top, floating home button)
+const CACHE_V  = 'jfsn-1782379165'; // Sitewide click-feedback pulse (bracket-links, back-to-top, floating home button)
 const PRECACHE = [
   '/',
   '/index.html',

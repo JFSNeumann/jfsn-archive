@@ -164,4 +164,4 @@ no external component libraries, loading="lazy" on artwork images.
 | `stories.html` | In nav. Long-form story/context entries. |
 | `start-here.html` | Orientation page — who Jeff is, major themes, how to explore. Stamped. |
 | `favorites.html` | 45 personally significant works from favorites.txt. Stamped. |
-| **DELETED** | `constellation.html`, `for-artists.html`, `mosaic.html`, `companion.html` (AI chat feature, removed 2026-06-22 with Netlify) — do not recreate. Note: an earlier `timeline.html` was also deleted long ago, but a *new* `timeline.html` (decade skeleton) was built in session 23 and is live today — don't confuse the two. |
+| **DELETED** | `constellation.html`, `for-artists.html`, `mosaic.html`, `companion.html` (AI chat feature, removed 2026-06-22 with Netlify) — do not recreate. |
