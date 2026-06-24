@@ -51,14 +51,6 @@
     position: relative;
     padding: 0 20px;
   }
-  /* Featured grid — CSS Columns masonry like .medium-grid */
-  #featured-grid { column-count: 4; column-gap: 0.75rem; }
-  @media (max-width: 1024px) { #featured-grid { column-count: 3; } }
-  @media (max-width: 768px) { #featured-grid { column-count: 2; } }
-  @media (max-width: 600px) { #featured-grid { column-count: 1; } }
-  @media (min-width: 1600px) { #featured-grid { column-count: 5; } }
-  @media (min-width: 2000px) { #featured-grid { column-count: 6; } }
-
   /* Featured cards — match archive-card styling exactly */
   .featured-card { cursor: pointer; display: block; text-decoration: none; break-inside: avoid; margin: 0 0 0.75rem; }
   .featured-card-img { position: relative; overflow: hidden; isolation: isolate; outline: 2px solid rgba(224,89,0,0); outline-offset: 0; transition: outline-color 0.25s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
@@ -87,10 +79,6 @@
   @media (prefers-reduced-motion: reduce) {
     .featured-card-img { transition: outline-color 0.25s ease; }
     .featured-metadata { transition: none; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .featured-card-img { transition: none; }
   }
 
   /* Text selection — orange highlight site-wide */
@@ -357,7 +345,6 @@
     padding: 24px;
     background: rgba(224,89,0,0.03);
     border-left: 3px solid #e05900;
-    border-radius: 2px;
   }
 
   /* 11. Mobile folio metadata softer border */
@@ -448,7 +435,7 @@
     transform: translateY(-50%);
     width: 24px;
     height: 1px;
-    background: linear-gradient(to right, transparent, #FF6600);
+    background: #FF6600;
     opacity: 0;
     transition: opacity 0.3s ease;
     margin-right: 8px;
@@ -469,36 +456,7 @@
     transition: transform 0.1s ease-out;
   }
 
-  /* 3. FEATURED CARD TILT — 3D perspective on hover */
-  .featured-card {
-    perspective: 1000px;
-  }
-  /* (3D mouse-tilt on featured cards removed — simplicity pass 2026-06-21.) */
-
-  /* 4. PAGE TRANSITION STAGGER — Enhanced reveal animations */
-  .reveal-section {
-    opacity: 0;
-    transform: translateY(24px) blur(4px);
-    transition: opacity 0.7s cubic-bezier(0.23, 1, 0.320, 1), transform 0.7s cubic-bezier(0.23, 1, 0.320, 1);
-    will-change: opacity, transform;
-  }
-  .reveal-section.is-visible {
-    opacity: 1;
-    transform: translateY(0) blur(0);
-  }
-  .reveal-delay-1 { transition-delay: 0.15s; }
-  .reveal-delay-2 { transition-delay: 0.3s; }
-  .reveal-delay-3 { transition-delay: 0.45s; }
-  .reveal-delay-4 { transition-delay: 0.6s; }
-  @media (prefers-reduced-motion: reduce) {
-    .reveal-section {
-      opacity: 1;
-      transform: none;
-      transition: none;
-    }
-  }
-
-  /* 5. FEATURED GRID MASONRY — CSS Grid with dense packing */
+  /* FEATURED GRID MASONRY — CSS Grid with dense packing */
   #featured-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -534,29 +492,11 @@
      ADDITIONAL FEATURE ENHANCEMENTS
      ═══════════════════════════════════════════════════════════════════════════ */
 
-  /* 1. Section Divider Lines with Color Progression */
+  /* Sections are positioning contexts for absolutely-placed children.
+     The flat 1px divider comes from each section's own border-b
+     (border-outline-variant / #c4c7c7) — no decorative gradient overlay (v2). */
   section {
     position: relative;
-  }
-  section.border-b::after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(to right, transparent, #FF6600 20%, #8e7164 50%, #FF6600 80%, transparent);
-  }
-
-  /* 2. Image Loading Skeleton States */
-  .featured-card-img.skeleton {
-    background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
-    background-size: 200% 100%;
-    animation: skeleton-loading 1.5s infinite;
-  }
-  @keyframes skeleton-loading {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
   }
 
   /* Featured-card "pin" rotate, click ripple, medium badge, dominant-colour
@@ -565,8 +505,6 @@
 
   /* Caption is ALWAYS visible — never revealed or faded in on hover, so it
      reads on touch devices and to screen readers too. */
-  .featured-metadata { border-radius: 2px; }
-
   /* Neutralise the card-wide off-white + box-shadow from enhancements.css so a
      stretched masonry cell never paints a filled/shadowed rectangle on hover. */
   #featured-grid .featured-card:hover { background: none !important; box-shadow: none !important; }
@@ -575,7 +513,6 @@
   .featured-card:focus-visible {
     outline: 2px solid #FF6600;
     outline-offset: 4px;
-    border-radius: 2px;
   }
 
   /* (Quick-preview modal removed — clicking a card opens the full artwork page,
@@ -602,7 +539,6 @@
   <link rel="stylesheet" href="/_shared/enhancements.css"/>
   <!-- Phase 2 Enhancement Stylesheets -->
   <link rel="stylesheet" href="/_shared/toast.css"/>
-  <link rel="stylesheet" href="/_shared/skeleton.css"/>
   <link rel="stylesheet" href="/_shared/hover-preview.css"/>
   <!-- Phase 3 Enhancement Stylesheets -->
   <link rel="stylesheet" href="/_shared/page-transitions.css"/>
@@ -2707,47 +2643,12 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
     }
 
     // 3. (Featured-card 3D mouse-tilt removed — simplicity pass 2026-06-21.)
-
-    // 4. PAGE TRANSITION STAGGER (enhance existing reveal-section)
-    if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
-      const revealElements = document.querySelectorAll('.reveal-section');
-      const observerOptions = {
-        threshold: 0.12,
-        rootMargin: '0px 0px -40px 0px'
-      };
-
-      const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-          }
-        });
-      }, observerOptions);
-
-      revealElements.forEach(el => observer.observe(el));
-    }
-
-    // 5. FEATURED GRID MASONRY (CSS Grid is already set up via CSS)
-    // This ensures the grid displays correctly with the new grid-auto-flow: dense
-    const featuredGrid = document.getElementById('featured-grid');
-    if (featuredGrid) {
-      // The grid layout is handled entirely by CSS now, but we can add resize observer
-      // to ensure responsive behavior
-      function updateGridColumns() {
-        const width = window.innerWidth;
-        if (width > 1024) {
-          featuredGrid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(200px, 1fr))';
-        } else if (width > 768) {
-          featuredGrid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(180px, 1fr))';
-        } else if (width > 600) {
-          featuredGrid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(150px, 1fr))';
-        } else {
-          featuredGrid.style.gridTemplateColumns = '1fr';
-        }
-      }
-      updateGridColumns();
-      window.addEventListener('resize', updateGridColumns);
-    }
+    // 4. Scroll-reveal is handled by the single standalone IntersectionObserver
+    //    (search "Scroll-reveal observer"); the duplicate that lived here was
+    //    removed in the 2026-06-24 homepage cleanup.
+    // 5. Featured-grid responsive columns come entirely from the CSS media
+    //    queries on #featured-grid; the redundant JS resize handler that set
+    //    inline grid-template-columns was removed in the same cleanup.
   })();
 
   <!-- First-time visitor experience — "How to Explore" section reinforced in nav -->
