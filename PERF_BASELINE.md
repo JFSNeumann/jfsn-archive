@@ -1,3 +1,38 @@
+# Performance Baseline — 2026-06-25 (fresh, measured)
+
+**Measured** with Lighthouse 12.8.0, desktop preset, headless Chrome, against the
+local preview server (`http://localhost:8099`). These are real numbers, not expectations.
+The Session-65 entry below is kept for history but was never measured — ignore it.
+
+## Lighthouse scores
+
+| Page | Perf | A11y | Best-Pract. | SEO | LCP | TBT | CLS |
+|------|------|------|-------------|-----|-----|-----|-----|
+| `index.html` (homepage) | **54** | 90 | 81 | 100 | 2.2s | **1,180ms** | 0 |
+| `lost.html` (depth-hero pilot) | **97** | **100** | — | — | 1.3s | 50ms | 0 |
+
+### Reading this
+- **CLS is 0 everywhere** — no layout shift. Good.
+- **The depth-hero costs nothing.** lost.html scores 97/100 *with* the new v2 motion —
+  the pattern is just a passive scroll handler + one anime timeline. Safe to roll out.
+- **The homepage's 54 is its own JS weight, not the motion pattern.** Total Blocking
+  Time of 1,180ms is the single biggest drag: the homepage loads the hero rotation,
+  the chromatic river canvas, the wall band, and ~12 `_shared/*.js` files. FCP (0.7s)
+  and LCP (2.2s) are fine; the main thread is just busy. This is the next real perf
+  project — defer/trim homepage JS — but it's a focused effort, out of scope for the
+  motion work.
+
+### Homepage accessibility findings (90 — 4 fixable issues)
+1. Contrast ratio fails on some text/background pair (find + fix).
+2. Heading elements not in sequentially-descending order (h1→h3 skip somewhere).
+3. Visible text labels don't match accessible names (bracket-link `aria-label`
+   mismatch — the visible "[ Explore → ]" text vs a differently-worded aria-label).
+4. Touch targets below 44×44px (some controls too small/close on the homepage).
+
+lost.html scores 100 on accessibility, so these are homepage-specific, not sitewide.
+
+---
+
 # Performance Baseline — Session 65 (UX/UI Enhancement Suite)
 
 **Date:** 2026-06-18  
