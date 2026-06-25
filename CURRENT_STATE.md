@@ -12,15 +12,17 @@ This file describes what's currently true about the site. For ranked work, see `
 - **Homepage orientation consolidated ✅** — the two modules ("Navigate the Studio" mobile + "How to Explore" desktop) are now one responsive **"Where to Begin"** section (2 cols mobile, 4 cols desktop), single source of truth.
 - **Homepage data integrity ✅** — "WORKS CATALOGED" was a hardcoded `0` with an unused `data-counter`; now a static `1,084` (honest with JS off). Featured-card metadata had `opacity:0` inline (a hover/JS gate); now always-visible (anime.js fade-in still runs as load choreography).
 - **`timeline.html` retired ✅** — file deleted; delinked from 3 HTML pages, `stamp-nav.sh`, `build_catalog.py` sitemap, and 4 docs.
-- **Depth-hero piloted on TWO pages ✅** — `lost.html` and `chromatic.html`. Same named primitive: display-type parallax (the big Playfair word drifts up faster than scroll, capped 64px) + a load-choreography stagger; the artwork plane (photo / river canvas) stays locked at 1.0×. Gated for `prefers-reduced-motion` (early-return) and JS-off (no hidden initial state). **Lighthouse: lost.html scored 97 perf / 100 a11y WITH the motion — the pattern costs ~nothing.** Ready to roll out to more pages.
+- **Depth-hero — shared primitive, now on 12 pages ✅** — extracted to `_shared/depth-hero.js` (single source of truth; pages opt in with `.dh-rise` on hero layers + `id="dh-word"` on the display headline). Live on: `lost.html`, `chromatic.html`, `about.html`, `start-here.html`, and all 8 theme pages (guernica, targets, framed, torsos-faces, crosses, mr-snowmann, gallery-images, collaboration). Display-type parallax (the big Playfair word drifts up faster than scroll, capped 64px) + load-choreography stagger; the artwork/photo/canvas plane stays locked at 1.0×. Gated for `prefers-reduced-motion` (skip) and JS-off (no hidden initial state). Added to `sw.js` precache. **Lighthouse: lost.html scored 97 perf / 100 a11y WITH the motion — the pattern costs ~nothing.**
 - **`archive.html` simplified ✅** — removed the Session-77 interaction layer (fc-ripple/badge/swatch/peek + quick-preview modal: ~120 CSS + ~80 JS lines). Now matches the homepage's "image + always-visible caption" model. Kept the accent bar, view-transition morph, filters, sort.
-- **Fresh perf baseline ✅** — `PERF_BASELINE.md` now has real Lighthouse 12.8.0 numbers (was never measured before).
+- **Homepage a11y fixes ✅** — heading-order (h4→h3), label/name mismatch (⌘K aria-hidden, lost-fragment alt), the real contrast fail (lost-stat #c4c7c7→#8e7164), and touch targets (river ticks 24px). Remaining Lighthouse contrast flag is a confirmed false-positive (axe measuring stat text mid-fade through the shared reveal animation). See `PERF_BASELINE.md`.
+- **Homepage JS hygiene ✅** — deferred the 1,326-line render-blocking `micro-interactions.js`, removed a duplicate `nav-active.js`, idle-built the below-fold wall. Re-measured: Perf 88–90 / TBT 0–30ms (the earlier 54/1,180ms was a CPU-contended outlier).
+- **Fresh perf baseline ✅** — `PERF_BASELINE.md` now has real, corrected Lighthouse 12.8.0 numbers.
 
 **Open threads — next real building work:**
-- **Homepage performance is the next real project.** Lighthouse perf **54**, dragged down by **TBT 1,180ms** — the homepage loads hero rotation + river canvas + wall band + ~12 `_shared/*.js`. FCP/LCP/CLS are fine (0.7s / 2.2s / 0); the main thread is just busy. Defer/trim homepage JS. Focused effort.
-- **4 homepage-specific a11y issues** (it scores 90; lost.html scores 100, so not sitewide): a contrast pair, non-sequential heading order, a visible-label/aria-label mismatch on bracket links, and sub-44px touch targets. See `PERF_BASELINE.md`.
-- **Roll the depth-hero out to more pages** — about.html, start-here.html, the theme pages. The artwork DETAIL page stays quiet (no depth-hero on a single-work view).
-- **Deploy when ready** — none of today's work is live on jfsn.com yet.
+- **Deploy when ready** — NONE of the 2026-06-25 work is live on jfsn.com yet (12+ commits sit on `origin/main`). A `deploy-hostgator.sh` run ships it.
+- **The two-reveal-systems tangle** (`_shared/ui.css` auto-animation vs per-page IntersectionObserver) — flagged as a background task; causes the contrast false-positive. Cross-page shared-CSS cleanup, own session.
+- **Homepage depth-hero** — deliberately NOT added; the homepage hero is already its own animated instrument (mosaic/slice/river). Revisit only if the two should be reconciled.
+- Optional: extend depth-hero to `series-index.html` / `series.html` if their heroes fit the pattern.
 
 **Decided 2026-06-24 — do not reopen:**
 - `curatorial-map.html` → **KEEP as-is** (the earlier "rebuild as a relationship visual" idea is reversed).
