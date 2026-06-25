@@ -1,3 +1,58 @@
+# Performance Baseline — 2026-06-25 Session 94 (dedicated pass, local + live)
+
+**Measured** with Lighthouse 12.8.0 against both the local preview server
+(`http://localhost:8099`) and the live site (`https://jfsn.com`) — local mobile numbers
+have been flagged as pessimistic outliers since Session 91; this pass adds the missing
+**live mobile** numbers to settle that question with real data instead of assumption.
+
+## Local (localhost:8099)
+
+| Page | Viewport | Perf | A11y | LCP | TBT | CLS | FCP |
+|------|----------|------|------|-----|-----|-----|-----|
+| `index.html` | desktop | 88 | ERR* | 2.0s | 0ms | 0 | 0.6s |
+| `index.html` | mobile | 69 | ERR* | 12.7s | 0ms | 0 | 3.0s |
+| `archive.html` | desktop | 80 | 100 | 3.1s | 0ms | 0.081 | 0.7s |
+| `archive.html` | mobile | 66 | 100 | 13.6s | 20ms | 0.086 | 3.0s |
+
+\* `index.html`'s accessibility category still reports an error, same root cause logged
+since the 2026-06-25 mobile baseline below: the `target-size` axe-core audit throws
+`Reduce of empty array with no initial value` on this page and voids the category
+roll-up. Not a real regression — confirmed stable across sessions, same single
+underlying axe-core bug each time. The one real (and known, intentional) failing audit
+underneath it is `color-contrast` on `.lost-fragment-cap`.
+
+## Live (jfsn.com) — the numbers that matter for real visitors
+
+| Page | Viewport | Perf | LCP | TBT | CLS | FCP |
+|------|----------|------|-----|-----|-----|-----|
+| `index.html` | desktop | 94 | 1.3s | 0ms | 0.02 | 0.5s |
+| `index.html` | mobile | **75** | **6.6s** | 0ms | 0 | 1.5s |
+| `archive.html` | desktop | 88 | 2.0s | 0ms | 0.078 | 0.4s |
+| `archive.html` | mobile | **76** | **6.2s** | 10ms | 0 | 1.5s |
+
+### What this settles
+The ~13s local mobile LCP is confirmed a **local headless-throttling artifact** — live
+mobile LCP is 6.2–6.6s, roughly half the local number. But 6.2–6.6s is still well outside
+Google's "good" 2.5s threshold, so **mobile LCP is a real, moderate issue**, not purely a
+measurement artifact like previously assumed. Desktop is fine everywhere (1.3–2.0s).
+
+**What's driving it (index.html mobile, checked directly):** the LCP element is the hero
+image itself (`art1010-hero-m.avif`, already `fetchpriority="high"`), so this isn't a
+missing-priority-hint bug. Lighthouse's own opportunities point at:
+- `render-blocking-resources`: `_shared/ui.css` (48KB) + `_shared/lightbox.css` (1.7KB),
+  ~450ms combined estimated savings — these block first paint sitewide.
+- `uses-responsive-images`: ~314KB estimated savings, mostly from below-the-fold folio
+  thumbnails (`art0002.avif` etc.) serving a 900w source into a ~372px box — not the LCP
+  image itself, but still real wasted mobile bytes.
+
+Neither alone explains 6+ seconds — the gap is most likely simulated mobile
+network/CPU throttling compounding with `ui.css`'s render-blocking 48KB on a slow
+connection. **Not fixed this pass** — this is genuinely the "dedicated investigation"
+flagged as open since Session 91, and deserves a focused session of its own (candidates:
+split/defer non-critical `ui.css` rules, or inline critical CSS for above-the-fold hero).
+
+---
+
 # Performance Baseline — 2026-06-25 (fresh, measured)
 
 **Measured** with Lighthouse 12.8.0, desktop preset, headless Chrome, against the
