@@ -8,8 +8,17 @@ The Session-65 entry below is kept for history but was never measured — ignore
 
 | Page | Perf | A11y | Best-Pract. | SEO | LCP | TBT | CLS |
 |------|------|------|-------------|-----|-----|-----|-----|
-| `index.html` (homepage) | **54** | 90 | 81 | 100 | 2.2s | **1,180ms** | 0 |
+| `index.html` (homepage) | **88–90** | 90→ | 81 | 100 | ~2.1s | **0–30ms** | 0 |
 | `lost.html` (depth-hero pilot) | **97** | **100** | — | — | 1.3s | 50ms | 0 |
+
+> **Homepage Perf corrected (2026-06-25, same day):** the first run read 54 with
+> TBT 1,180ms — that was a **CPU-contended outlier** (Lighthouse running while other
+> work churned). Three clean repeat runs after the JS-hygiene commit read **88–90 /
+> TBT 0–30ms / FCP 0.6s / LCP ~2.1s** consistently. Lesson: take 3 runs and use the
+> median; never trust a single headless perf number. The JS-hygiene changes
+> (deferring the 1,326-line render-blocking `micro-interactions.js`, deduping
+> `nav-active.js`, idle-building the below-fold wall) are good hygiene regardless and
+> keep TBT near zero.
 
 ### Reading this
 - **CLS is 0 everywhere** — no layout shift. Good.
