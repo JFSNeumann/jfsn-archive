@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1782423847'; // add Phase 5 load animations: hero-zoom-settle, section-reveal-stagger, stat-card-entrance, filter-slide-in, image-fade-load
+const CACHE_V  = 'jfsn-1782426847'; // fix hero text overflow (mobile) and centering (desktop)
 const PRECACHE = [
   '/',
   '/index.html',
