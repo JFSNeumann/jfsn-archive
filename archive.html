@@ -307,125 +307,6 @@
           .archive-card-img::after { transition: none; }
         }
 
-        /* ═══ Tier 2–4 interactions (ported from homepage Selected Works) ═══ */
-        /* Click ripple — spawned on press, radiates from cursor */
-        .fc-ripple {
-          position: absolute;
-          border-radius: 50%;
-          background: rgba(255, 102, 0, 0.35);
-          transform: translate(-50%, -50%) scale(0);
-          pointer-events: none;
-          z-index: 7;
-          animation: fc-ripple 0.6s ease-out forwards;
-        }
-        @keyframes fc-ripple {
-          to { transform: translate(-50%, -50%) scale(1); opacity: 0; }
-        }
-        /* Medium badge — glass chip, bottom-left, fades in on hover */
-        .fc-badge {
-          position: absolute;
-          left: 8px; bottom: 8px;
-          z-index: 5;
-          font-family: Inter, sans-serif;
-          font-size: 10px; font-weight: 700;
-          letter-spacing: 0.1em; text-transform: uppercase;
-          color: #fff;
-          background: rgba(11, 11, 11, 0.7);
-          backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
-          padding: 4px 8px; border-radius: 2px;
-          opacity: 0; transform: translateY(6px) scale(0.92);
-          transition: opacity 0.25s ease, transform 0.25s ease;
-        }
-        .archive-card:hover .fc-badge,
-        .archive-card:focus-visible .fc-badge { opacity: 1; transform: translateY(0) scale(1); }
-        /* Dominant-color swatch — from chromatic.json */
-        .fc-swatch {
-          position: absolute;
-          top: 8px; left: 8px;
-          z-index: 5;
-          width: 14px; height: 14px; border-radius: 50%;
-          box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.85), 0 1px 3px rgba(0, 0, 0, 0.3);
-          opacity: 0.6;
-          transition: opacity 0.25s ease, transform 0.25s ease;
-        }
-        .archive-card:hover .fc-swatch { opacity: 1; transform: scale(1.15); }
-        /* Quick-preview (magnifier) — top-right, hover only */
-        .fc-peek {
-          position: absolute;
-          top: 8px; right: 8px;
-          z-index: 6;
-          width: 30px; height: 30px;
-          display: flex; align-items: center; justify-content: center;
-          background: rgba(11, 11, 11, 0.6);
-          backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
-          border: none; border-radius: 50%;
-          color: #fff; cursor: zoom-in;
-          opacity: 0; transform: scale(0.85);
-          transition: opacity 0.25s ease, transform 0.25s ease, background 0.2s ease;
-        }
-        .archive-card:hover .fc-peek { opacity: 1; transform: scale(1); }
-        .fc-peek:hover { background: #FF6600; }
-        .fc-peek svg { width: 15px; height: 15px; pointer-events: none; }
-        @media (hover: none) { .fc-peek, .fc-badge { display: none; } }
-        /* Keyboard focus pop — complements the existing image outline */
-        @keyframes fc-focus-pop {
-          from { transform: scale(0.97); }
-          to { transform: scale(1.03); }
-        }
-        .archive-card:focus-visible .archive-card-img { animation: fc-focus-pop 0.25s ease; }
-        /* Quick-preview modal */
-        .fc-modal {
-          position: fixed; inset: 0; z-index: 200;
-          display: none; align-items: center; justify-content: center;
-          background: rgba(11, 11, 11, 0.82);
-          backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-          padding: 24px; opacity: 0;
-          transition: opacity 0.25s ease;
-        }
-        .fc-modal.open { display: flex; opacity: 1; }
-        .fc-modal-inner {
-          position: relative;
-          max-width: min(90vw, 720px); max-height: 90vh;
-          display: flex; flex-direction: column;
-          transform: scale(0.96);
-          transition: transform 0.25s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-        .fc-modal.open .fc-modal-inner { transform: scale(1); }
-        .fc-modal-inner > img {
-          display: block; max-width: 100%; max-height: 72vh;
-          object-fit: contain; background: #0B0B0B;
-        }
-        .fc-modal-meta {
-          background: #fdf8f8; padding: 16px 20px;
-          display: flex; align-items: center; justify-content: space-between;
-          gap: 16px; flex-wrap: wrap;
-        }
-        .fc-modal-meta h3 { font-family: 'Playfair Display', serif; font-size: 20px; color: #0B0B0B; margin: 0; font-weight: 600; }
-        .fc-modal-meta p { font-family: Inter, sans-serif; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #B84700; margin: 4px 0 0; }
-        .fc-modal-meta p.fc-modal-id { font-family: ui-monospace, monospace; font-size: 10px; color: #8e7164; letter-spacing: 0; text-transform: none; }
-        .fc-modal-view {
-          font-family: Inter, sans-serif; font-size: 11px; font-weight: 700;
-          letter-spacing: 0.1em; text-transform: uppercase;
-          color: #fff; background: #FF6600; padding: 10px 16px; border-radius: 2px;
-          text-decoration: none; white-space: nowrap; transition: background 0.2s ease;
-        }
-        .fc-modal-view:hover { background: #e05900; }
-        .fc-modal-close {
-          position: absolute; top: -44px; right: 0;
-          width: 36px; height: 36px;
-          background: rgba(255, 255, 255, 0.12); border: none; border-radius: 50%;
-          color: #fff; font-size: 22px; line-height: 1; cursor: pointer;
-          display: flex; align-items: center; justify-content: center;
-          transition: background 0.2s ease, transform 0.2s ease;
-        }
-        .fc-modal-close:hover { background: rgba(255, 255, 255, 0.25); transform: rotate(90deg); }
-        .dark .fc-modal-meta { background: #242424; }
-        .dark .fc-modal-meta h3 { color: #e8e8e8; }
-        @media (prefers-reduced-motion: reduce) {
-          .fc-ripple, .fc-badge, .fc-swatch, .fc-peek,
-          .fc-modal, .fc-modal-inner { transition: none !important; animation: none !important; }
-          .archive-card:focus-visible .archive-card-img { animation: none; }
-        }
 
         /* Load More Button Enhancement */
         #load-more {
@@ -1054,13 +935,6 @@ function renderCard(w, idx) {
           src="artworks/thumbs/${w.file}"
           loading="${loadAttr}" width="300" height="400"
         />
-        <span class="fc-swatch" style="background:${dom}" title="Dominant color" aria-hidden="true"></span>
-        <span class="fc-badge" aria-hidden="true">${med}</span>
-        <span class="fc-peek" role="button" tabindex="-1" aria-label="Quick preview of ${titleAttr}"
-              data-src="artworks/medium/${w.file}" data-title="${titleAttr}"
-              data-year="${w.year || ''}" data-medium="${med}" data-id="${id}" data-href="artwork.html?id=${id}">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
-        </span>
       </div>
       <div class="space-y-1 px-3 pt-2 pb-3 sm:px-0 sm:pt-0 sm:pb-0">
         <h4 class="font-label-lg text-label-lg uppercase leading-snug">${title}</h4>
@@ -1430,7 +1304,6 @@ document.querySelectorAll('.mobile-medium-btn').forEach(btn => {
 
 // Phase B 5: Page transitions (archive ↔ artwork fade-through-color)
 document.addEventListener('click', function(e) {
-  if (e.target.closest('.fc-peek')) return; // let the quick-preview modal handle it
   const link = e.target.closest('a[href*="artwork.html"]');
   if (!link || link.target === '_blank') return;
 
@@ -1532,36 +1405,6 @@ renderSavedFilters();
 // a #dark-mode-toggle button that no longer exists on this page — it threw on
 // load and silently halted the rest of this script — so it was removed.
 
-// ─── Tier 2–4: click ripple + quick-preview modal (ported from homepage) ───
-grid.addEventListener('pointerdown', (e) => {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  if (e.target.closest('.fc-peek')) return;
-  const imgWrap = e.target.closest('.archive-card-img');
-  if (!imgWrap) return;
-  const rect = imgWrap.getBoundingClientRect();
-  const r = document.createElement('span');
-  r.className = 'fc-ripple';
-  const size = Math.max(rect.width, rect.height) * 1.4;
-  r.style.width = r.style.height = size + 'px';
-  r.style.left = (e.clientX - rect.left) + 'px';
-  r.style.top = (e.clientY - rect.top) + 'px';
-  imgWrap.appendChild(r);
-  setTimeout(() => r.remove(), 650);
-});
-
-ensurePeekModal();
-// Capture phase + stopImmediatePropagation so the quick-preview wins over the
-// site-wide artwork-link navigation handlers (the inline one above and the
-// deferred _shared/page-transitions.js), since the peek button lives inside the
-// card's <a href="artwork.html…">.
-document.addEventListener('click', (e) => {
-  const peek = e.target.closest('.fc-peek');
-  if (!peek) return;
-  e.preventDefault();
-  e.stopImmediatePropagation();
-  openPeek(peek.dataset);
-}, true);
-
 // Stamp the clicked card so it morphs into artwork.html's hero image via the
 // same cross-document view transition the homepage already uses (same static
 // name 'artwork-hero' — see artwork.html's #work-image rule). Stamping only
@@ -1574,43 +1417,6 @@ document.addEventListener('click', (e) => {
   if (img) img.style.viewTransitionName = 'artwork-hero';
 }, true);
 
-function ensurePeekModal() {
-  if (document.getElementById('fc-modal')) return;
-  const m = document.createElement('div');
-  m.id = 'fc-modal';
-  m.className = 'fc-modal';
-  m.innerHTML = `
-    <div class="fc-modal-inner" role="dialog" aria-modal="true" aria-label="Artwork preview">
-      <button class="fc-modal-close" aria-label="Close preview">&times;</button>
-      <img alt="" />
-      <div class="fc-modal-meta">
-        <div><h3></h3><p></p><p class="fc-modal-id"></p></div>
-        <a class="fc-modal-view" href="#">View full work &rarr;</a>
-      </div>
-    </div>`;
-  document.body.appendChild(m);
-  m.addEventListener('click', (e) => { if (e.target === m) closePeek(); });
-  m.querySelector('.fc-modal-close').addEventListener('click', closePeek);
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePeek(); });
-}
-function openPeek(d) {
-  const m = document.getElementById('fc-modal');
-  if (!m) return;
-  const img = m.querySelector('img');
-  img.src = d.src; img.alt = d.title || '';
-  m.querySelector('h3').textContent = d.title || '';
-  m.querySelector('.fc-modal-meta p:not(.fc-modal-id)').textContent = [d.year, d.medium].filter(Boolean).join(' · ');
-  m.querySelector('.fc-modal-id').textContent = d.id ? 'ID: ' + d.id : '';
-  m.querySelector('.fc-modal-view').href = d.href || '#';
-  m.classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closePeek() {
-  const m = document.getElementById('fc-modal');
-  if (!m) return;
-  m.classList.remove('open');
-  document.body.style.overflow = '';
-}
 </script>
 
 <script src="_shared/ui.js" defer></script>
