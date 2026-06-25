@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1782397374'; // depth-hero.js precached — shared motion primitive on 12 pages
+const CACHE_V  = 'jfsn-1782399600'; // timeline.html retired — removed from precache + nav-active.js
 const PRECACHE = [
   '/',
   '/index.html',
@@ -42,7 +42,6 @@ const PRECACHE = [
   '/favorites.html',
   '/stories.html',
   '/why-i-made-things.html',
-  '/timeline.html',
   '/site.min.css',
   '/search.js',
   '/catalog-home.json',

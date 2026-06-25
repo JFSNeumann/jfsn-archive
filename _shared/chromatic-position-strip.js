@@ -121,10 +121,10 @@
       label.classList.add('cps-label--visible');
     }
 
-    // The one decade with nothing documented (master-notes §20/§23/§24) —
-    // same device as timeline.html's thread marker: instead of arriving the
-    // same as every other smooth, confident transition, the marker hesitates
-    // and dims partway through whenever it crosses into or out of the gap.
+    // The one decade with nothing documented (master-notes §20/§23/§24):
+    // instead of arriving the same as every other smooth, confident
+    // transition, the marker hesitates and dims partway through whenever
+    // it crosses into or out of the gap.
     var GAP_DECADE = 1980;
     var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var activeDecade = null;

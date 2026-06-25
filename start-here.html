@@ -66,18 +66,6 @@
   }
   .bracket-link:hover { color: #0B0B0B; }
   @media (prefers-reduced-motion: reduce) { .bracket-link { transition: none; } }
-  /* Scroll-reveal — section level */
-  @media (prefers-reduced-motion: no-preference) {
-    .reveal-section {
-      opacity: 0;
-      transform: translateY(18px);
-      transition: opacity 0.55s ease, transform 0.55s ease;
-    }
-    .reveal-section.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
   /* Sidebar quote cards */
   .quote-card {
     border: 1px solid #8e7164;
@@ -180,7 +168,7 @@ header.header-hidden{transform:translateY(-100%)}
     </button>
     <button class="flex items-center gap-1.5 text-orange-ink hover:text-deep-ink transition-colors" style="padding:10px;" aria-label="Search" id="nav-search-btn">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><line x1="20.4" y1="20.4" x2="16" y2="16"/></svg>
-      <span class="hidden md:inline" style="font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.05em;color:#575757;border:1px solid #c4c7c7;padding:1px 5px;pointer-events:none;">⌘K</span>
+      <span class="hidden md:inline" aria-hidden="true" style="font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.05em;color:#575757;border:1px solid #c4c7c7;padding:1px 5px;pointer-events:none;">⌘K</span>
     </button>
     <button class="md:hidden text-deep-ink" style="padding:10px;" aria-label="Open menu" id="nav-menu-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
   </div>
@@ -261,7 +249,6 @@ header.header-hidden{transform:translateY(-100%)}
 
 <script src="search.js" defer></script>
 <script src="_shared/anime.min.js" defer></script>
-<script src="_shared/depth-hero.js" defer></script>
 <script src="_shared/jfsn-interactions.js" defer></script>
 <script src="_shared/accent-transition.js" defer></script>
 <script src="_shared/chromatic-accent-wire.js" defer></script>
@@ -346,7 +333,7 @@ header.header-hidden{transform:translateY(-100%)}
   });
 })();
 </script>
-<script src="/_shared/micro-interactions.js"></script>
+<script src="/_shared/micro-interactions.js" defer></script>
 <script src="/_shared/scroll-choreography.js" defer></script>
 <!-- NAV:END -->
 
@@ -550,7 +537,6 @@ header.header-hidden{transform:translateY(-100%)}
               <li class="border-bottom-soft"><a href="stories.html" class="bracket-link" style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;font-size:12px;"><span style="color:#0B0B0B;font-family:Inter,sans-serif;font-weight:500;font-size:13px;letter-spacing:0;">Stories</span><span>[ Read → ]</span></a></li>
               <li class="border-bottom-soft"><a href="why-i-made-things.html" class="bracket-link" style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;font-size:12px;"><span style="color:#0B0B0B;font-family:Inter,sans-serif;font-weight:500;font-size:13px;letter-spacing:0;">Why I Made Things</span><span>[ Read → ]</span></a></li>
               <li class="border-bottom-soft"><a href="curatorial-map.html" class="bracket-link" style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;font-size:12px;"><span style="color:#FF6600;font-family:Inter,sans-serif;font-weight:600;font-size:13px;letter-spacing:0;">⭐ Discover Patterns Map</span><span>[ Explore → ]</span></a></li>
-              <li class="border-bottom-soft"><a href="timeline.html" class="bracket-link" style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;font-size:12px;"><span style="color:#0B0B0B;font-family:Inter,sans-serif;font-weight:500;font-size:13px;letter-spacing:0;">A Life in Time</span><span>[ View → ]</span></a></li>
               <li class="border-bottom-soft"><a href="chromatic.html" class="bracket-link" style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;font-size:12px;"><span style="color:#0B0B0B;font-family:Inter,sans-serif;font-weight:500;font-size:13px;letter-spacing:0;">Chromatic River</span><span>[ Explore → ]</span></a></li>
               <li class="border-bottom-soft"><a href="wall.html" class="bracket-link" style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;font-size:12px;"><span style="color:#0B0B0B;font-family:Inter,sans-serif;font-weight:500;font-size:13px;letter-spacing:0;">The Wall</span><span>[ View → ]</span></a></li>
             </ul>
@@ -654,22 +640,6 @@ header.header-hidden{transform:translateY(-100%)}
   }
 })();
 </script>
-<script>
-(function(){
-  var els = document.querySelectorAll('.reveal-section');
-  if (!els.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('is-visible'); io.unobserve(e.target); } });
-  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-  els.forEach(function(el){ io.observe(el); });
-  window.addEventListener('load', function(){
-    els.forEach(function(el){
-      if(el.getBoundingClientRect().top < window.innerHeight) el.classList.add('is-visible');
-    });
-  });
-})();
-</script>
-
 <!-- FOOTER:START -->
 <style>
 footer a{position:relative;text-decoration:none}

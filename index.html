@@ -1019,8 +1019,8 @@ header.header-hidden{transform:translateY(-100%)}
 
   <!-- Section jump navigation rail -->
   <nav class="section-nav-rail" id="section-nav-rail" aria-label="Page sections">
-    <button class="section-nav-dot" data-section="featured-section" aria-label="Jump to Featured Works"></button>
     <button class="section-nav-dot" data-section="explore-section" aria-label="Jump to Explore Paths"></button>
+    <button class="section-nav-dot" data-section="featured-section" aria-label="Jump to Featured Works"></button>
     <button class="section-nav-dot" data-section="wall-section-d" aria-label="Jump to The Wall"></button>
     <button class="section-nav-dot" data-section="lost-section" aria-label="Jump to Lost Works"></button>
   </nav>
@@ -1309,30 +1309,6 @@ header.header-hidden{transform:translateY(-100%)}
       </div>
     </div>
   </section>
-  <script>
-  /* Animate the "1,084" works stat on scroll */
-  (function () {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    var el = document.getElementById('about-stat-works');
-    if (!el) return;
-    var done = false;
-    var obs = new IntersectionObserver(function (entries) {
-      if (!entries[0].isIntersecting || done) return;
-      done = true; obs.disconnect();
-      var start = null, TARGET = 1084, DUR = 1400;
-      function ease(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
-      function frame(ts) {
-        if (!start) start = ts;
-        var p = Math.min((ts - start) / DUR, 1);
-        el.textContent = Math.round(ease(p) * TARGET).toLocaleString();
-        if (p < 1) requestAnimationFrame(frame);
-        else el.textContent = TARGET.toLocaleString();
-      }
-      requestAnimationFrame(frame);
-    }, { threshold: 0.6 });
-    obs.observe(el);
-  })();
-  </script>
 
   <!-- Explore Paths -->
   <style>
@@ -1453,21 +1429,6 @@ header.header-hidden{transform:translateY(-100%)}
 
   /* Button press feedback — :active only, not hover */
   .btn-active:active { transform: scale(0.97); }
-
-  /* Scroll reveal — section headers + text blocks fade up into view */
-  .reveal-section {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .reveal-section.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .reveal-delay-1 { transition-delay: 0.10s; }
-  .reveal-delay-2 { transition-delay: 0.20s; }
-  .reveal-delay-3 { transition-delay: 0.32s; }
-  @media (prefers-reduced-motion: reduce) { .reveal-section { opacity: 1; transform: none; transition: none; } }
 
   /* Stories bento card — bg flips to orange on hover */
   .bento-dark { background: #0B0B0B; border-color: #0B0B0B; transition: background-color 0.3s ease, border-color 0.22s ease, box-shadow 0.22s ease; }
@@ -1595,19 +1556,6 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
 <!-- FOOTER:END -->
 
 
-<script>
-/* Scroll-reveal observer for .reveal-section elements */
-(function(){
-  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-    document.querySelectorAll('.reveal-section').forEach(function(el){ el.classList.add('is-visible'); });
-    return;
-  }
-  var obs = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('is-visible'); });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.reveal-section').forEach(function(el){ obs.observe(el); });
-})();
-</script>
 <script>
   // Desktop: populate featured grid — image + always-visible caption, one link.
   // (Simplicity pass 2026-06-21: removed chromatic.json fetch/colour swatch,
@@ -2536,8 +2484,8 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
     const rail = document.getElementById('section-nav-rail');
     const dots = Array.from(document.querySelectorAll('.section-nav-dot'));
     const sections = {
-      'featured-section': document.getElementById('featured-section'),
       'explore-section': document.getElementById('explore-section'),
+      'featured-section': document.getElementById('featured-section'),
       'wall-section-d': document.getElementById('wall-section-d'),
       'lost-section': document.getElementById('lost-section')
     };
@@ -2600,9 +2548,10 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
     }
 
     // 3. (Featured-card 3D mouse-tilt removed — simplicity pass 2026-06-21.)
-    // 4. Scroll-reveal is handled by the single standalone IntersectionObserver
-    //    (search "Scroll-reveal observer"); the duplicate that lived here was
-    //    removed in the 2026-06-24 homepage cleanup.
+    // 4. Scroll-reveal needs no JS at all — _shared/ui.css's .reveal-section
+    //    rule is a pure CSS animation (animation-fill-mode: forwards). The
+    //    page-local transition+IntersectionObserver duplicate was removed
+    //    2026-06-25 (it raced the CSS animation instead of gating it).
     // 5. Featured-grid responsive columns come entirely from the CSS media
     //    queries on #featured-grid; the redundant JS resize handler that set
     //    inline grid-template-columns was removed in the same cleanup.

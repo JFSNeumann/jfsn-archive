@@ -8,7 +8,6 @@
     'about.html':               'about.html',      // ABOUT
     'stories.html':             'about.html',      // About cluster
     'why-i-made-things.html':   'about.html',      // About cluster
-    'timeline.html':            'about.html',      // About cluster
     'archive.html':             'archive.html',    // ARCHIVE
     'favorites.html':           'archive.html',    // Archive cluster
     'chromatic.html':           'archive.html',

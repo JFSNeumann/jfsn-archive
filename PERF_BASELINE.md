@@ -47,8 +47,74 @@ The Session-65 entry below is kept for history but was never measured — ignore
      colour. Real users see full contrast. Silencing it means touching the shared
      reveal system (see below); not worth it for an artifact.
 4. **Touch targets — FIXED ✅** `.river-hero-tick` bumped 22×18 → 24×24px.
+5. **`.hero-cta-fill` button — FIXED ✅ (caught end-of-session, against LIVE jfsn.com)**
+   white text on `#FF6600` (~2.9:1, fails AA) → `#B84700` ("orange-ink," the same
+   accessible-orange token already used elsewhere) → ~5.3:1. This is a genuinely
+   different element from the false-positive below (no animation involved — it's a
+   static filled button), confirmed via live `getComputedStyle`.
 
 lost.html scores 100 on accessibility, so these were homepage-specific, not sitewide.
+
+### Live re-check, 2026-06-25 (post-deploy, against jfsn.com — not localhost)
+Performance **95**, LCP **1.3s**, TBT **0ms**, CLS **0.011**. Faster than the
+localhost numbers above (real CDN/HostGator response is quick). Accessibility
+category score itself came back `null` (a known Lighthouse flake when one audit
+errors mid-run — see Session-history note on this) but the 5 specific audits above
+were checked individually and directly.
+
+### Mobile + archive.html baseline (2026-06-25, same session — Top-10 item #5)
+
+Captured with Lighthouse 12.8.0 against `localhost:8099`, mobile = default emulation
+(no `--preset` flag), desktop = `--preset=desktop`. `--preset=mobile` is **not a valid
+flag** — Lighthouse's only presets are `perf`, `experimental`, `desktop`; mobile is what
+you get when you omit `--preset` entirely.
+
+| Page | Viewport | Perf | A11y | LCP | TBT | CLS |
+|------|----------|------|------|-----|-----|-----|
+| `index.html` | desktop | 90 | null* | 1.9s | 0ms | 0 |
+| `index.html` | mobile | 68 | null* | 12.5s | 0ms | 0 |
+| `archive.html` | desktop | 82 | **100** | 3.0s | 0ms | 0.07 |
+| `archive.html` | mobile | 49 | **100** | 13.0s | 30ms | 0.09–0.46 (noisy) |
+
+\* `index.html`'s accessibility category score reports `null`, not a number — this is an
+**axe-core crash**, not a site bug: the `target-size` audit throws `Reduce of empty
+array with no initial value` mid-run on this page, which voids the category roll-up
+score. The other accessibility audits still ran and reported individually; the only
+real failure on either viewport is `color-contrast` on `.lost-fragment-cap` (Item 7 —
+confirmed intentional, not touched).
+
+**Two real bugs found and fixed on archive.html, both confirmed via re-run (now scores
+100/100 accessibility on both viewports):**
+
+1. **`heading-order` (mobile only).** The filter sidebar (`<aside class="hidden
+   md:block">`, containing the only `<h2>`s on the page — MEDIUM/DECADE/SERIES/
+   ORIENTATION) is `display:none` below the `md` breakpoint, so on mobile axe sees
+   `<h1>THE ARCHIVE</h1>` followed directly by the grid's `<h3>` card titles — a level
+   skip that doesn't exist on desktop. (This is distinct from — and was found *after* —
+   the earlier desktop-only h3/h4 heading-order fix shipped earlier this session.) Fixed
+   by changing the card-title tag from `<h3>` to `<h2>` (`archive.html:940`, plus the
+   three `.archive-card h3` CSS selectors at lines 205/209-211/305) — same level as the
+   sidebar headings, which is correct on both viewports since reusing a heading level
+   is never a skip, whether or not the sidebar is actually visible.
+2. **`select-name`.** `#sort-select`'s only accessible name came from a
+   `<label for="sort-select">` that is itself `class="hidden md:inline"` — so on mobile
+   the label doesn't exist in the accessibility tree and the dropdown has no name at
+   all. Fixed by adding `aria-label="Sort"` directly on the `<select>`
+   (`archive.html:621`), which holds regardless of viewport while leaving the visible
+   label's mobile-hidden behavior untouched for sighted users.
+
+**Not fixed, flagged only (out of scope for this pass):**
+- **Mobile LCP ~12.5–13s on both pages** is far outside the "good" 2.5s threshold. This
+  is against the unthrottled-by-anything-but-Lighthouse local dev server — real-world
+  HostGator/CDN delivery is faster (see the 2026-06-25 live re-check above: index.html
+  scored 95/1.3s LCP against jfsn.com). Still, a 12s+ local mobile LCP is large enough
+  that it's worth a dedicated investigation (likely hero/river canvas + the ~12
+  `_shared/*.js` files noted in the homepage Perf section above), not a quick fix
+  bundled into this session.
+- **archive.html mobile CLS** swung from 0.07 to 0.46 across consecutive runs with no
+  code change in between — noisy/throttling-related on this local setup, not a
+  reproducible regression. Worth re-measuring against the live site rather than chasing
+  on localhost.
 
 ### Known tangle (flagged 2026-06-25, NOT yet fixed)
 Two scroll-reveal systems coexist and fight on every page that loads `_shared/ui.css`:

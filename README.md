@@ -41,9 +41,7 @@ A static, no-CMS archive on a $5/month shared host (HostGator/cPanel). No databa
 | Changes | `/changes.html` | Git log feed |
 | Privacy | `/privacy.html` | Privacy policy |
 
-**Deleted (do not recreate):** `constellation.html`, `mosaic.html`, `for-artists.html`, `companion.html` (AI chat feature, removed 2026-06-22 along with Netlify — it only ran as a Netlify Function)
-
-**Note:** an earlier version of `timeline.html` was deleted in an early session, but a new `timeline.html` (decade skeleton, 1950s–2020s) was built in session 23 and is live today — it's in `stamp-nav.sh`'s TARGETS. Don't confuse the two; the current one should not be deleted.
+**Deleted (do not recreate):** `constellation.html`, `mosaic.html`, `for-artists.html`, `companion.html` (AI chat feature, removed 2026-06-22 along with Netlify — it only ran as a Netlify Function), `timeline.html` (decade-skeleton page, retired 2026-06-25 — its content overlapped the Chromatic River + sitewide position strip; delinked from start-here.html, `sw.js`, `nav-active.js`, and `sitemap.xml`)
 
 ---
 

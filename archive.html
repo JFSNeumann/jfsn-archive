@@ -202,13 +202,13 @@
         }
         /* Archive card micro-interactions */
         .archive-card { cursor: zoom-in; }
-        .archive-card h4 {
+        .archive-card h2 {
           transition: color 0.2s ease;
           box-shadow: none;
         }
-        .archive-card h4:hover,
-        .archive-card:hover h4,
-        .archive-card:focus-visible h4 {
+        .archive-card h2:hover,
+        .archive-card:hover h2,
+        .archive-card:focus-visible h2 {
           color: #e05900;
           box-shadow: none;
         }
@@ -302,7 +302,7 @@
           filter: brightness(1.04);
         }
         @media (prefers-reduced-motion: reduce) {
-          .archive-card h4 { transition: none; }
+          .archive-card h2 { transition: none; }
           .archive-card-img { transition: none; }
           .archive-card-img::after { transition: none; }
         }
@@ -421,7 +421,7 @@ header.header-hidden{transform:translateY(-100%)}
     </button>
     <button class="flex items-center gap-1.5 text-orange-ink hover:text-deep-ink transition-colors" style="padding:10px;" aria-label="Search" id="nav-search-btn">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><line x1="20.4" y1="20.4" x2="16" y2="16"/></svg>
-      <span class="hidden md:inline" style="font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.05em;color:#575757;border:1px solid #c4c7c7;padding:1px 5px;pointer-events:none;">⌘K</span>
+      <span class="hidden md:inline" aria-hidden="true" style="font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.05em;color:#575757;border:1px solid #c4c7c7;padding:1px 5px;pointer-events:none;">⌘K</span>
     </button>
     <button class="md:hidden text-deep-ink" style="padding:10px;" aria-label="Open menu" id="nav-menu-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
   </div>
@@ -586,7 +586,7 @@ header.header-hidden{transform:translateY(-100%)}
   });
 })();
 </script>
-<script src="/_shared/micro-interactions.js"></script>
+<script src="/_shared/micro-interactions.js" defer></script>
 <script src="/_shared/scroll-choreography.js" defer></script>
 <!-- NAV:END -->
 
@@ -618,7 +618,7 @@ header.header-hidden{transform:translateY(-100%)}
     </div>
     <div class="flex items-center gap-2 pb-1">
       <label for="sort-select" class="hidden md:inline font-label-md text-label-md text-secondary uppercase tracking-widest whitespace-nowrap">Sort:</label>
-      <select id="sort-select" class="font-label-md text-label-md uppercase tracking-widest bg-background border border-outline-variant px-2 py-1 text-on-surface cursor-pointer">
+      <select id="sort-select" aria-label="Sort" class="font-label-md text-label-md uppercase tracking-widest bg-background border border-outline-variant px-2 py-1 text-on-surface cursor-pointer">
         <option value="id_desc">Recently Added</option>
         <option value="id_asc">Default</option>
         <option value="year_asc">Oldest first</option>
@@ -661,7 +661,7 @@ header.header-hidden{transform:translateY(-100%)}
 
         <!-- Medium -->
         <div class="pb-md" class="border-bottom-soft">
-          <h3 class="font-label-lg text-label-lg uppercase mb-4 tracking-widest">MEDIUM</h3>
+          <h2 class="font-label-lg text-label-lg uppercase mb-4 tracking-widest">MEDIUM</h2>
           <div class="space-y-3" id="filter-medium">
             <label class="flex items-center gap-2 cursor-pointer">
               <input class="custom-checkbox" type="checkbox" value="collage"/>
@@ -684,7 +684,7 @@ header.header-hidden{transform:translateY(-100%)}
 
         <!-- Decade -->
         <div class="pb-md" class="border-bottom-soft">
-          <h3 class="font-label-lg text-label-lg uppercase mb-4 tracking-widest">DECADE</h3>
+          <h2 class="font-label-lg text-label-lg uppercase mb-4 tracking-widest">DECADE</h2>
           <div class="space-y-3" id="filter-decade">
             <div class="flex items-center justify-between gap-2">
               <label class="flex items-center gap-2 cursor-pointer">
@@ -733,7 +733,7 @@ header.header-hidden{transform:translateY(-100%)}
 
         <!-- Series -->
         <div class="pb-md" class="border-bottom-soft">
-          <h3 class="font-label-lg text-label-lg uppercase mb-4 tracking-widest">SERIES</h3>
+          <h2 class="font-label-lg text-label-lg uppercase mb-4 tracking-widest">SERIES</h2>
           <div class="space-y-3" id="filter-series">
             <label class="flex items-center gap-2 cursor-pointer">
               <input class="custom-checkbox" type="checkbox" value="Guernica"/>
@@ -744,7 +744,7 @@ header.header-hidden{transform:translateY(-100%)}
 
         <!-- Orientation (image proportions — stand-in for physical dimensions) -->
         <div>
-          <h3 class="font-label-lg text-label-lg uppercase mb-4 tracking-widest">ORIENTATION</h3>
+          <h2 class="font-label-lg text-label-lg uppercase mb-4 tracking-widest">ORIENTATION</h2>
           <div class="space-y-3" id="filter-orientation">
             <label class="flex items-center gap-2 cursor-pointer">
               <input class="custom-checkbox" type="checkbox" value="vertical"/>
@@ -937,7 +937,7 @@ function renderCard(w, idx) {
         />
       </div>
       <div class="space-y-1 px-3 pt-2 pb-3 sm:px-0 sm:pt-0 sm:pb-0">
-        <h4 class="font-label-lg text-label-lg uppercase leading-snug">${title}</h4>
+        <h2 class="font-label-lg text-label-lg uppercase leading-snug">${title}</h2>
         <span class="block font-label-md text-label-md uppercase text-secondary">${w.year || '—'} | ${med}</span>
         ${w.series ? `<span class="block font-label-md text-label-md text-secondary uppercase">${w.series}</span>` : ''}
       </div>
