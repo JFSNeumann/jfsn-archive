@@ -72,15 +72,24 @@
   }
 
   function spawnDrone(container, config, tiles) {
-    const wallGrid = document.getElementById('wall-band-d');
+    const wallGrid = document.getElementById('wall-band-d') || document.querySelector('.wall-grid');
+
+    // Ensure container has position: relative for absolute positioning
+    if (container.style.position !== 'absolute' && container.style.position !== 'fixed') {
+      container.style.position = 'relative';
+    }
+
     const droneWrap = document.createElement('div');
     droneWrap.className = 'drone-survey-wrap';
     droneWrap.setAttribute('data-drone', config.id);
     droneWrap.style.cssText = `
-      position: relative;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       pointer-events: none;
-      margin-bottom: 16px;
-      min-height: 120px;
+      z-index: -1;
     `;
 
     const droneSvg = createDroneSvg(config);
