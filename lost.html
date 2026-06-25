@@ -423,13 +423,17 @@ header.header-hidden{transform:translateY(-100%)}
 </main>
 
 <!-- Alternative views -->
+<style>
+.lost-alt-link { font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#B84700;text-decoration:none;border-bottom:1px solid rgba(184,71,0,0.3);padding-bottom:2px;transition:border-color 0.15s ease,color 0.15s ease; }
+.lost-alt-link:hover { border-color:rgba(184,71,0,1);color:#FF6600; }
+</style>
 <section style="padding:60px 20px;text-align:center;border-top:1px solid #c4c7c7;background:rgba(255,102,0,0.01);">
   <div class="max-w-container-max mx-auto">
     <p style="font-family:Inter,sans-serif;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#575757;margin:0 0 24px;">Explore the archive</p>
     <div style="display:flex;flex-direction:column;align-items:center;gap:12px;justify-content:center;">
-      <a href="archive.html" style="font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#B84700;text-decoration:none;border-bottom:1px solid rgba(184,71,0,0.3);padding-bottom:2px;transition:border-color 0.15s ease,color 0.15s ease;" onmouseover="this.style.borderColor='rgba(184,71,0,1)';this.style.color='#FF6600';" onmouseout="this.style.borderColor='rgba(184,71,0,0.3)';this.style.color='#B84700';">[ The Archive — Browse all 1,084 ]</a>
-      <a href="wall.html" style="font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#B84700;text-decoration:none;border-bottom:1px solid rgba(184,71,0,0.3);padding-bottom:2px;transition:border-color 0.15s ease,color 0.15s ease;" onmouseover="this.style.borderColor='rgba(184,71,0,1)';this.style.color='#FF6600';" onmouseout="this.style.borderColor='rgba(184,71,0,0.3)';this.style.color='#B84700';">[ The Wall — All 1,084 at once ]</a>
-      <a href="curatorial-map.html" style="font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#B84700;text-decoration:none;border-bottom:1px solid rgba(184,71,0,0.3);padding-bottom:2px;transition:border-color 0.15s ease,color 0.15s ease;" onmouseover="this.style.borderColor='rgba(184,71,0,1)';this.style.color='#FF6600';" onmouseout="this.style.borderColor='rgba(184,71,0,0.3)';this.style.color='#B84700';">[ Curatorial Map — Patterns by decade × medium ]</a>
+      <a href="archive.html" class="lost-alt-link">[ The Archive — Browse all 1,084 ]</a>
+      <a href="wall.html" class="lost-alt-link">[ The Wall — All 1,084 at once ]</a>
+      <a href="curatorial-map.html" class="lost-alt-link">[ Curatorial Map — Patterns by decade × medium ]</a>
     </div>
   </div>
 </section>
