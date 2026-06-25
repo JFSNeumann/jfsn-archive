@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1782379165'; // Sitewide click-feedback pulse (bracket-links, back-to-top, floating home button)
+const CACHE_V  = 'jfsn-1782397374'; // depth-hero.js precached — shared motion primitive on 12 pages
 const PRECACHE = [
   '/',
   '/index.html',
