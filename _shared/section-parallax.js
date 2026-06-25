@@ -14,7 +14,13 @@
 
   var sections = Array.prototype.slice.call(
     document.querySelectorAll('main > section, .prose, main > article')
-  );
+  ).filter(function (el) {
+    // Skip elements already carrying their own load-time entrance treatment
+    // (hero-zoom-settle.js) — both scripts write to el.style.transform
+    // directly, so layering them on the same element would fight rather
+    // than compose. Same non-overlap rule depth-hero.js already follows.
+    return !el.hasAttribute('data-hero');
+  });
   var footer = document.querySelector('footer');
 
   if (!sections.length) return;
