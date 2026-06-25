@@ -30,10 +30,12 @@
   setTimeout(() => clearInterval(waitForGrid), 5000);
 
   function initDrones(tiles) {
-    const container = wallGrid.closest('section');
+    // index.html: grid is in section, wall.html: grid is in main
+    let container = wallGrid.closest('section');
+    if (!container) container = wallGrid.closest('main');
     if (!container) return;
 
-    // Drone configs: different patterns, timings, colors
+    // Start with just 1 drone for testing
     const droneConfigs = [
       {
         id: 'scout',
@@ -42,25 +44,7 @@
         pattern: 'horizontal-sweeps',
         rotorColor: '#FF6600',
         bodyColor: '#0B0B0B',
-        hoverCount: 2,
-      },
-      {
-        id: 'patrol',
-        name: 'Patrol Drone',
-        delay: 1200,
-        pattern: 'vertical-columns',
-        rotorColor: '#FF6600',
-        bodyColor: '#575757',
-        hoverCount: 3,
-      },
-      {
-        id: 'inspector',
-        name: 'Inspector Drone',
-        delay: 2400,
-        pattern: 'perimeter-orbit',
-        rotorColor: '#FF9933',
-        bodyColor: '#0B0B0B',
-        hoverCount: 2,
+        hoverCount: 1,
       },
     ];
 
