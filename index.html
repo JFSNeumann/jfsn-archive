@@ -68,7 +68,7 @@
   .featured-card:focus-visible .featured-metadata { opacity: 1 !important; }
 
   .featured-metadata { padding-top: 0.5rem; transition: opacity 0.3s ease; }
-  .featured-metadata h4 { font-family: Inter, sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 6px; color: #0B0B0B; transition: color 0.25s ease; }
+  .featured-metadata h3 { font-family: Inter, sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 6px; color: #0B0B0B; transition: color 0.25s ease; }
   .featured-metadata span { display: flex; align-items: center; gap: 8px; font-family: Inter, sans-serif; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #B84700; font-weight: 500; }
   /* #B84700 (orange-ink) is only AA-accessible on light backgrounds (5.07:1).
      dark-mode.css promotes the same role to full #FF6600 everywhere else
@@ -170,7 +170,7 @@
      edge; bone-white so it reads on any colour, orange on hover/active. */
   .river-hero-tick {
     position: absolute; top: 0; transform: translateX(-50%);
-    width: 22px; height: 18px; padding: 0; margin: 0; border: 0; background: none;
+    width: 24px; height: 24px; padding: 0; margin: 0; border: 0; background: none;
     cursor: pointer; z-index: 4; -webkit-tap-highlight-color: transparent;
     display: flex; align-items: flex-start; justify-content: center;
   }
@@ -620,7 +620,7 @@ header.header-hidden{transform:translateY(-100%)}
     </button>
     <button class="flex items-center gap-1.5 text-orange-ink hover:text-deep-ink transition-colors" style="padding:10px;" aria-label="Search" id="nav-search-btn">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><line x1="20.4" y1="20.4" x2="16" y2="16"/></svg>
-      <span class="hidden md:inline" style="font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.05em;color:#575757;border:1px solid #c4c7c7;padding:1px 5px;pointer-events:none;">⌘K</span>
+      <span class="hidden md:inline" aria-hidden="true" style="font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.05em;color:#575757;border:1px solid #c4c7c7;padding:1px 5px;pointer-events:none;">⌘K</span>
     </button>
     <button class="md:hidden text-deep-ink" style="padding:10px;" aria-label="Open menu" id="nav-menu-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
   </div>
@@ -1003,8 +1003,8 @@ header.header-hidden{transform:translateY(-100%)}
         <span class="ghost-tile"></span>
         <span class="ghost-tile"></span>
       </div>
-      <a href="artwork.html?id=art0585" class="lost-fragment" aria-label="Untitled (Cube Grid), 1970 — a surviving early work, shown faded">
-        <img src="artworks/medium/art0585.avif" alt="" loading="lazy" width="340" height="425">
+      <a href="artwork.html?id=art0585" class="lost-fragment">
+        <img src="artworks/medium/art0585.avif" alt="Untitled (Cube Grid), 1970 — a surviving early work, shown faded" loading="lazy" width="340" height="425">
         <span class="lost-fragment-cap">art0585 · 1970 · a surviving fragment</span>
       </a>
     </div>
@@ -1293,7 +1293,7 @@ header.header-hidden{transform:translateY(-100%)}
               <span class="font-label-caps text-label-caps text-archive-gray" style="font-size:10px;display:block;margin-top:10px;">Years Active</span>
             </div>
             <div style="background:#f6f3ed;padding:24px 26px;">
-              <span id="about-stat-lost" style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#c4c7c7;line-height:1.1;display:block;white-space:nowrap;">~500–1,000</span>
+              <span id="about-stat-lost" style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#8e7164;line-height:1.1;display:block;white-space:nowrap;">~500–1,000</span>
               <span class="font-label-caps text-label-caps text-archive-gray" style="font-size:10px;display:block;margin-top:10px;">Lost to Water</span>
             </div>
             <div style="background:#f6f3ed;padding:24px 26px;">
@@ -1522,8 +1522,8 @@ header.header-hidden{transform:translateY(-100%)}
         <span class="ghost-tile"></span>
         <span class="ghost-tile"></span>
       </div>
-      <a href="artwork.html?id=art0585" class="lost-fragment" aria-label="Untitled (Cube Grid), 1970 — a surviving early work, shown faded">
-        <img src="artworks/medium/art0585.avif" alt="" loading="lazy" width="340" height="425">
+      <a href="artwork.html?id=art0585" class="lost-fragment">
+        <img src="artworks/medium/art0585.avif" alt="Untitled (Cube Grid), 1970 — a surviving early work, shown faded" loading="lazy" width="340" height="425">
         <span class="lost-fragment-cap">art0585 · 1970 · a surviving fragment</span>
       </a>
     </div>
@@ -1646,7 +1646,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
             />
           </div>
           <div class="featured-metadata space-y-1 px-3 pt-2 pb-3 sm:px-0 sm:pt-0 sm:pb-0" style="will-change:opacity;">
-            <h4>${w.title}</h4>
+            <h3>${w.title}</h3>
             <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
               <span>${w.year || '—'}</span>
               <span>${medium}</span>
