@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1782409215'; // extend continuity-transition to 10 more pages
+const CACHE_V  = 'jfsn-1782411264'; // add chromatic-river-parallax.js for showpiece layering
 const PRECACHE = [
   '/',
   '/index.html',
@@ -53,6 +53,7 @@ const PRECACHE = [
   '/_shared/depth-hero.js',
   '/_shared/essay-parallax.js',
   '/_shared/continuity-transition.js',
+  '/_shared/chromatic-river-parallax.js',
 ];
 
 /* ── Install: precache core shell ─────────────────────────────────────────── */
