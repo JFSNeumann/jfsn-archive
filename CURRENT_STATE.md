@@ -5,18 +5,22 @@ This file describes what's currently true about the site. For ranked work, see `
 
 ---
 
-## 2026-06-24 — design direction moved to v2 (docs only; live site untouched)
+## 2026-06-25 — v2 rollout begun: homepage cleaned, depth-hero piloted, archive simplified
 
-**What changed today:** the design *direction* was clarified and written into the guidance docs. No page was edited — nothing a visitor sees has changed. All edits are in git, reversible.
-- New stance: `CLAUDE.md` § "Design language v2" — *the work is shown straight; the space around it is staged.* More motion/parallax welcome, but every gesture must land (no half-built motion). The hard rail (honest presentation of the work) is unchanged.
-- Motion spec: `DESIGN-SYSTEM.md` § "Motion system (v2)" — house easing, durations, parallax rates, four named primitives (depth-hero / continuity transition / river motion / load choreography), the resolve-to-whole rule, no-JS + reduced-motion resilience.
-- A depth-hero **prototype** (motion feel approved) sits outside the repo at `outputs/depth-hero-prototype.html`. Pilot it on a SIMPLE page first — NOT the 148KB homepage.
+**What changed (all committed + pushed to GitHub; NOT yet deployed to jfsn.com):**
+- **Homepage cleanup ✅** — stripped the accreted broken motion from `index.html`: invalid `translateY(24px) blur(4px)` reveal, dead `#featured-grid` column-count block, leftover `perspective:1000px`, duplicate reduced-motion block, unused skeleton shimmer + its stylesheet link, three stray `border-radius:2px`, gradient section divider + nav-dot connector, a duplicate scroll-reveal observer, and a redundant JS grid-resize handler. Encoded the v2 "Surface treatment" rule (flat dividers, square corners, gradients only as functional scrims) in `DESIGN-SYSTEM.md`.
+- **Homepage orientation consolidated ✅** — the two modules ("Navigate the Studio" mobile + "How to Explore" desktop) are now one responsive **"Where to Begin"** section (2 cols mobile, 4 cols desktop), single source of truth.
+- **Homepage data integrity ✅** — "WORKS CATALOGED" was a hardcoded `0` with an unused `data-counter`; now a static `1,084` (honest with JS off). Featured-card metadata had `opacity:0` inline (a hover/JS gate); now always-visible (anime.js fade-in still runs as load choreography).
+- **`timeline.html` retired ✅** — file deleted; delinked from 3 HTML pages, `stamp-nav.sh`, `build_catalog.py` sitemap, and 4 docs.
+- **Depth-hero piloted on TWO pages ✅** — `lost.html` and `chromatic.html`. Same named primitive: display-type parallax (the big Playfair word drifts up faster than scroll, capped 64px) + a load-choreography stagger; the artwork plane (photo / river canvas) stays locked at 1.0×. Gated for `prefers-reduced-motion` (early-return) and JS-off (no hidden initial state). **Lighthouse: lost.html scored 97 perf / 100 a11y WITH the motion — the pattern costs ~nothing.** Ready to roll out to more pages.
+- **`archive.html` simplified ✅** — removed the Session-77 interaction layer (fc-ripple/badge/swatch/peek + quick-preview modal: ~120 CSS + ~80 JS lines). Now matches the homepage's "image + always-visible caption" model. Kept the accent bar, view-transition morph, filters, sort.
+- **Fresh perf baseline ✅** — `PERF_BASELINE.md` now has real Lighthouse 12.8.0 numbers (was never measured before).
 
-**Open threads — next real building work, done deliberately, one at a time:**
-- **Homepage cleanup comes before adding any new motion.** `index.html`'s motion layer accreted over many sessions and parts are broken: an invalid `transform: translateY(24px) blur(4px)` on `.reveal-section` (reveals run opacity-only); two conflicting `#featured-grid` definitions (the column-count block is dead); gradient dividers + skeleton shimmer + a `border-radius:2px` that contradict the no-gradient / no-rounded rules; a leftover `perspective:1000px` from the removed 3D tilt; a duplicated reduced-motion block. Tidy this FIRST, then the new motion can land.
-- Collapse the two homepage orientation modules ("Navigate the Studio" + "How to Explore") into one "where to begin"; consolidate the dual desktop/mobile markup to one source of truth. (Part of the homepage job.)
-- Confirm the homepage "WORKS CATALOGED" number lives in static HTML, not JS-only (honest with JS off).
-- Verify featured-card metadata is genuinely always-visible (this file says yes as of 2026-06-21; current CSS has `:hover`→`opacity:1` rules — confirm that's a load-fade, not a hover gate, per the hard rail).
+**Open threads — next real building work:**
+- **Homepage performance is the next real project.** Lighthouse perf **54**, dragged down by **TBT 1,180ms** — the homepage loads hero rotation + river canvas + wall band + ~12 `_shared/*.js`. FCP/LCP/CLS are fine (0.7s / 2.2s / 0); the main thread is just busy. Defer/trim homepage JS. Focused effort.
+- **4 homepage-specific a11y issues** (it scores 90; lost.html scores 100, so not sitewide): a contrast pair, non-sequential heading order, a visible-label/aria-label mismatch on bracket links, and sub-44px touch targets. See `PERF_BASELINE.md`.
+- **Roll the depth-hero out to more pages** — about.html, start-here.html, the theme pages. The artwork DETAIL page stays quiet (no depth-hero on a single-work view).
+- **Deploy when ready** — none of today's work is live on jfsn.com yet.
 
 **Decided 2026-06-24 — do not reopen:**
 - `curatorial-map.html` → **KEEP as-is** (the earlier "rebuild as a relationship visual" idea is reversed).
