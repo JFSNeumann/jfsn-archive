@@ -74,22 +74,17 @@
   function spawnDrone(container, config, tiles) {
     const wallGrid = document.getElementById('wall-band-d') || document.querySelector('.wall-grid');
 
-    // Ensure container has position: relative for absolute positioning
-    if (container.style.position !== 'absolute' && container.style.position !== 'fixed') {
-      container.style.position = 'relative';
-    }
-
+    // Create drone container in the whitespace above the grid (not overlaying images)
     const droneWrap = document.createElement('div');
     droneWrap.className = 'drone-survey-wrap';
     droneWrap.setAttribute('data-drone', config.id);
     droneWrap.style.cssText = `
-      position: absolute;
-      top: 0;
-      left: 0;
+      position: relative;
       width: 100%;
-      height: 100%;
+      height: 180px;
       pointer-events: none;
-      z-index: -1;
+      margin-bottom: 24px;
+      background: transparent;
     `;
 
     const droneSvg = createDroneSvg(config);
@@ -112,6 +107,7 @@
     `;
     droneWrap.appendChild(spotlight);
 
+    // Insert before the grid (in the whitespace above)
     wallGrid.parentNode.insertBefore(droneWrap, wallGrid);
 
     animateDrone(droneSvg, spotlight, config, tiles, droneWrap);
@@ -178,21 +174,18 @@
   }
 
   function animateDrone(droneSvg, spotlight, config, tiles, container) {
-    const wallGrid = document.getElementById('wall-band-d');
-    const gridRect = wallGrid.getBoundingClientRect();
-    const containerRect = container.getBoundingClientRect();
-    const gridWidth = wallGrid.offsetWidth;
-    const gridHeight = wallGrid.offsetHeight;
     const droneSize = 60;
+    const containerWidth = container.offsetWidth;
+    const containerHeight = container.offsetHeight; // 180px for whitespace area
 
     let passes = [];
 
     if (config.pattern === 'horizontal-sweeps') {
-      passes = generateHorizontalPasses(gridWidth, gridHeight, droneSize, config, tiles, containerRect);
+      passes = generateHorizontalPasses(containerWidth, containerHeight, droneSize, config, tiles, container);
     } else if (config.pattern === 'vertical-columns') {
-      passes = generateVerticalPasses(gridWidth, gridHeight, droneSize, config, tiles, containerRect);
+      passes = generateVerticalPasses(containerWidth, containerHeight, droneSize, config, tiles, container);
     } else if (config.pattern === 'perimeter-orbit') {
-      passes = generatePerimeterPasses(gridWidth, gridHeight, droneSize, config, tiles, containerRect);
+      passes = generatePerimeterPasses(containerWidth, containerHeight, droneSize, config, tiles, container);
     }
 
     let timeline = anime.timeline({ autoplay: false });
@@ -267,37 +260,37 @@
     observer.observe(container);
   }
 
-  function generateHorizontalPasses(gridWidth, gridHeight, droneSize, config, tiles, containerRect) {
+  function generateHorizontalPasses(containerWidth, containerHeight, droneSize, config, tiles, container) {
     const passes = [];
-    const passHeights = [60, 30, 80];
+    const passHeights = [40, 60, 50];
+    const usableWidth = containerWidth;
+    const usableHeight = Math.min(containerHeight - droneSize, 120); // Keep within whitespace
 
     for (let p = 0; p < 3; p++) {
       const isRightBound = p % 2 === 0;
       const height = passHeights[p % passHeights.length];
-      const startX = isRightBound ? -droneSize : gridWidth;
-      const endX = isRightBound ? gridWidth : -droneSize;
+      const startX = isRightBound ? -droneSize : usableWidth;
+      const endX = isRightBound ? usableWidth : -droneSize;
 
       passes.push({
         x: endX,
         y: height,
-        duration: 3000,
+        duration: 4000,
         easing: 'linear',
       });
 
-      const hoverCount = config.hoverCount;
+      // Hover pauses at random x positions (no tile references in whitespace)
+      const hoverCount = 1;
       for (let h = 0; h < hoverCount; h++) {
-        const randomTile = tiles[Math.floor(Math.random() * tiles.length)];
-        const tileRect = randomTile.getBoundingClientRect();
-        const tileX = tileRect.left - containerRect.left + tileRect.width / 2 - droneSize / 2;
-        const tileY = tileRect.top - containerRect.top - droneSize - 20;
+        const hoverX = Math.random() * (usableWidth - droneSize);
+        const hoverY = 30 + Math.random() * 60;
 
         passes.push({
-          x: tileX,
-          y: tileY,
-          duration: 400,
+          x: hoverX,
+          y: hoverY,
+          duration: 500,
           easing: 'easeInOutQuad',
           isHover: true,
-          tile: randomTile,
         });
       }
     }
@@ -305,38 +298,34 @@
     return passes;
   }
 
-  function generateVerticalPasses(gridWidth, gridHeight, droneSize, config, tiles, containerRect) {
+  function generateVerticalPasses(containerWidth, containerHeight, droneSize, config, tiles, container) {
     const passes = [];
-    const colCount = 3;
-    const colWidth = gridWidth / colCount;
+    const colCount = 2;
+    const colWidth = containerWidth / colCount;
+    const usableHeight = Math.min(containerHeight - droneSize, 120);
 
     for (let col = 0; col < colCount; col++) {
       const isDownward = col % 2 === 0;
       const colCenterX = col * colWidth + colWidth / 2 - droneSize / 2;
-      const startY = isDownward ? -droneSize : gridHeight;
-      const endY = isDownward ? gridHeight : -droneSize;
+      const startY = isDownward ? -droneSize : usableHeight;
+      const endY = isDownward ? usableHeight : -droneSize;
 
       passes.push({
         x: colCenterX,
         y: endY,
-        duration: 2500,
+        duration: 3000,
         easing: 'linear',
       });
 
-      const hoverCount = config.hoverCount;
+      const hoverCount = 1;
       for (let h = 0; h < hoverCount; h++) {
-        const randomTile = tiles[Math.floor(Math.random() * tiles.length)];
-        const tileRect = randomTile.getBoundingClientRect();
-        const tileX = tileRect.left - containerRect.left + tileRect.width / 2 - droneSize / 2;
-        const tileY = tileRect.top - containerRect.top - droneSize - 20;
-
+        const hoverY = Math.random() * (usableHeight - droneSize);
         passes.push({
-          x: tileX,
-          y: tileY,
-          duration: 350,
+          x: colCenterX,
+          y: hoverY,
+          duration: 400,
           easing: 'easeInOutQuad',
           isHover: true,
-          tile: randomTile,
         });
       }
     }
@@ -344,15 +333,16 @@
     return passes;
   }
 
-  function generatePerimeterPasses(gridWidth, gridHeight, droneSize, config, tiles, containerRect) {
+  function generatePerimeterPasses(containerWidth, containerHeight, droneSize, config, tiles, container) {
     const passes = [];
-    const padding = 40;
+    const padding = 20;
+    const usableHeight = Math.min(containerHeight - droneSize, 120);
     const points = [
-      { x: padding, y: padding, duration: 1500 },
-      { x: gridWidth - padding, y: padding, duration: 1500 },
-      { x: gridWidth - padding, y: gridHeight - padding, duration: 1500 },
-      { x: padding, y: gridHeight - padding, duration: 1500 },
-      { x: padding, y: padding, duration: 1500 },
+      { x: padding, y: padding, duration: 1200 },
+      { x: containerWidth - padding, y: padding, duration: 1200 },
+      { x: containerWidth - padding, y: usableHeight - padding, duration: 1200 },
+      { x: padding, y: usableHeight - padding, duration: 1200 },
+      { x: padding, y: padding, duration: 1200 },
     ];
 
     points.forEach((point, idx) => {
@@ -364,18 +354,15 @@
       });
 
       if (idx < points.length - 1) {
-        const randomTile = tiles[Math.floor(Math.random() * tiles.length)];
-        const tileRect = randomTile.getBoundingClientRect();
-        const tileX = tileRect.left - containerRect.left + tileRect.width / 2 - droneSize / 2;
-        const tileY = tileRect.top - containerRect.top - droneSize - 20;
+        const hoverX = Math.random() * (containerWidth - droneSize);
+        const hoverY = Math.random() * (usableHeight - droneSize);
 
         passes.push({
-          x: tileX,
-          y: tileY,
-          duration: 300,
+          x: hoverX,
+          y: hoverY,
+          duration: 400,
           easing: 'easeInOutQuad',
           isHover: true,
-          tile: randomTile,
         });
       }
     });
