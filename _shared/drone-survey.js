@@ -14,7 +14,9 @@
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if (!window.anime) return;
 
-  const wallGrid = document.getElementById('wall-band-d');
+  // Support both index.html (#wall-band-d) and wall.html (.wall-grid)
+  let wallGrid = document.getElementById('wall-band-d');
+  if (!wallGrid) wallGrid = document.querySelector('.wall-grid');
   if (!wallGrid) return;
 
   const waitForGrid = setInterval(() => {
