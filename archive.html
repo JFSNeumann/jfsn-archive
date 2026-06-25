@@ -339,19 +339,32 @@
           #load-more:hover { transform: none; }
         }
     </style>
-  <!-- Phase 1 Enhancement Stylesheets -->
-  <link rel="stylesheet" href="/_shared/lightbox.css"/>
-  <link rel="stylesheet" href="/_shared/enhancements.css"/>
-  <!-- Phase 2 Enhancement Stylesheets -->
-  <link rel="stylesheet" href="/_shared/toast.css"/>
-  <link rel="stylesheet" href="/_shared/skeleton.css"/>
-  <link rel="stylesheet" href="/_shared/hover-preview.css"/>
-  <!-- Phase 3 Enhancement Stylesheets -->
-  <link rel="stylesheet" href="/_shared/page-transitions.css"/>
-  <link rel="stylesheet" href="/_shared/lazy-load.css"/>
-  <!-- Phase 4 Enhancement Stylesheets -->
-  <!-- Enhancement Extras (Keyboard Shortcuts, Search, Breadcrumb) -->
-  <link rel="stylesheet" href="/_shared/keyboard-shortcuts.css"/>
+  <!-- Phase 1-4 Enhancement Stylesheets — not needed for first paint. Their actual
+       fetch (not just application) is deferred to window 'load' via JS injection,
+       so they stop competing on the wire with the hero image/fonts/core CSS during
+       the critical mobile LCP window (a <link media=print> swap alone still fetches
+       eagerly — measured no LCP improvement; this does). noscript preserves no-JS resilience. -->
+  <script>
+    window.addEventListener('load', function () {
+      ['/_shared/lightbox.css', '/_shared/enhancements.css', '/_shared/toast.css',
+       '/_shared/skeleton.css', '/_shared/hover-preview.css', '/_shared/page-transitions.css',
+       '/_shared/lazy-load.css', '/_shared/keyboard-shortcuts.css'].forEach(function (href) {
+        var l = document.createElement('link');
+        l.rel = 'stylesheet'; l.href = href;
+        document.head.appendChild(l);
+      });
+    });
+  </script>
+  <noscript>
+    <link rel="stylesheet" href="/_shared/lightbox.css"/>
+    <link rel="stylesheet" href="/_shared/enhancements.css"/>
+    <link rel="stylesheet" href="/_shared/toast.css"/>
+    <link rel="stylesheet" href="/_shared/skeleton.css"/>
+    <link rel="stylesheet" href="/_shared/hover-preview.css"/>
+    <link rel="stylesheet" href="/_shared/page-transitions.css"/>
+    <link rel="stylesheet" href="/_shared/lazy-load.css"/>
+    <link rel="stylesheet" href="/_shared/keyboard-shortcuts.css"/>
+  </noscript>
 </head>
 <body class="font-body-md text-body-md bg-background text-on-background section-archive">
 

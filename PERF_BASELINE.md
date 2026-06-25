@@ -1,3 +1,66 @@
+# Performance Baseline — 2026-06-25 Session 95 (mobile LCP investigation)
+
+**Goal:** root-cause the 6.2–6.6s live mobile LCP flagged by Session 94 (below).
+Two real fixes shipped; root cause for the remaining gap identified but **not**
+fixed this session — it's a design tradeoff, not a code bug.
+
+**Live re-check after fixes (Lighthouse 12.8.0, default/simulated mobile throttling,
+median of 3 runs):** `index.html` Perf 75–77, LCP 6.2–7.9s. **No material change**
+from the Session 94 baseline (75 / 6.6s) — see "what actually moved" below for why.
+
+## Shipped this session (both kept — real hygiene, harmless even though LCP didn't move)
+1. **Deferred 7–8 non-critical enhancement stylesheets** (lightbox, enhancements,
+   toast, hover-preview, page-transitions, lazy-load, keyboard-shortcuts, +
+   skeleton on archive.html) on `index.html` + `archive.html`. First pass used the
+   `<link media=print onload>` swap trick (didn't help — that trick only defers
+   *application*, the browser still fetches the bytes immediately, so it doesn't
+   reduce network contention). Second pass: moved the actual `<link>` creation into
+   a `window.addEventListener('load', ...)` handler that injects the tags via JS,
+   so the fetch itself doesn't start until after the page has loaded. `<noscript>`
+   fallback preserves the no-JS-resilience rule in CLAUDE.md. Verified locally
+   (no console errors, all 7 stylesheets present and applied after load) before
+   each deploy.
+2. **Skipped the first-load "mosaic intro" on the mobile hero stage.** The Session
+   79 mosaic (fetch `catalog-home.json` → build a grid of thumbnail tiles → anime.js
+   timeline assembling/dissolving them over the hero) was firing on every fresh
+   session — including every Lighthouse run — and was costing real main-thread time
+   (`mainthread-work-breakdown` "Other" was 1.2–1.4s, Style&Layout 700–750ms).
+   `startIntro()` in `index.html` now only runs the mosaic on the desktop stage
+   (`stage.kind === 'd'`); the mobile stage always gets the cheaper `loadUnveil`
+   (dark panels lifting off — no fetch, ~12 div fades). **Confirmed with the user
+   first** since this touches Jeff's Session-79 motion design, not just perf code —
+   he chose "mobile gets the quieter unveil, desktop keeps the mosaic" explicitly.
+   Verified locally on a 375×812 mobile viewport: hero shows directly, no mosaic
+   tiles, no console errors.
+
+## What actually moved the number (and why neither fix above did)
+Lighthouse's *default* run uses **simulated ("lantern") throttling** — it estimates
+timings from a dependency graph rather than measuring real throttled network/CPU.
+That model didn't react to either fix above, which made both initially look like
+failures. Switching to `lighthouse --throttling-method=devtools` (real trace-based
+throttling, not estimated) showed the *actual* picture:
+
+- LCP under real devtools throttling: **4.4–4.6s** (vs 4.4s before either fix — also
+  unmoved, but for a different, now-legible reason).
+- The LCP phase breakdown under devtools throttling puts **82–83% of LCP time in
+  "Load Time"** — literally just downloading the hero image. `network-requests`
+  confirms it directly: `art1010-hero-m.avif` (125KB, 1080×950px) takes **3.6–3.8s**
+  to download alone, start to finish, under Lighthouse's mobile throttling profile —
+  with or without the competing-CSS-requests fix, because deferring *other* requests
+  doesn't change how long *this* request takes once it has the bandwidth.
+
+**Root cause: this is bytes-over-wire for the hero image vs. Lighthouse's mobile
+bandwidth model, not render-blocking resources, not main-thread JS, not the mosaic.**
+The image is sized for the iPhone 15 Pro (CLAUDE.md's primary test device — 393pt
+× 3 DPR ≈ 1180px, close to the current 1080px crop), so shrinking it is a real
+quality-vs-speed tradeoff on Jeff's own device, not a free win. **Not fixed this
+session — flagged for Jeff to decide**, options being (a) accept current size, since
+real-world mobile connections are typically far faster than Lighthouse's "Slow 4G"
+preset and this may be substantially a benchmark artifact, or (b) ship a smaller/
+lower-quality hero-m crop and judge the visual cost directly on an iPhone 15 Pro.
+
+---
+
 # Performance Baseline — 2026-06-25 Session 94 (dedicated pass, local + live)
 
 **Measured** with Lighthouse 12.8.0 against both the local preview server

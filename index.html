@@ -535,18 +535,31 @@
     .featured-card-img { transition: none; }
   }
 </style>
-  <!-- Phase 1 Enhancement Stylesheets -->
-  <link rel="stylesheet" href="/_shared/lightbox.css"/>
-  <link rel="stylesheet" href="/_shared/enhancements.css"/>
-  <!-- Phase 2 Enhancement Stylesheets -->
-  <link rel="stylesheet" href="/_shared/toast.css"/>
-  <link rel="stylesheet" href="/_shared/hover-preview.css"/>
-  <!-- Phase 3 Enhancement Stylesheets -->
-  <link rel="stylesheet" href="/_shared/page-transitions.css"/>
-  <link rel="stylesheet" href="/_shared/lazy-load.css"/>
-  <!-- Phase 4 Enhancement Stylesheets -->
-  <!-- Enhancement Extras (Keyboard Shortcuts, Search, Breadcrumb) -->
-  <link rel="stylesheet" href="/_shared/keyboard-shortcuts.css"/>
+  <!-- Phase 1-4 Enhancement Stylesheets — not needed for first paint. Their actual
+       fetch (not just application) is deferred to window 'load' via JS injection,
+       so they stop competing on the wire with the hero image/fonts/core CSS during
+       the critical mobile LCP window (a <link media=print> swap alone still fetches
+       eagerly — measured no LCP improvement; this does). noscript preserves no-JS resilience. -->
+  <script>
+    window.addEventListener('load', function () {
+      ['/_shared/lightbox.css', '/_shared/enhancements.css', '/_shared/toast.css',
+       '/_shared/hover-preview.css', '/_shared/page-transitions.css',
+       '/_shared/lazy-load.css', '/_shared/keyboard-shortcuts.css'].forEach(function (href) {
+        var l = document.createElement('link');
+        l.rel = 'stylesheet'; l.href = href;
+        document.head.appendChild(l);
+      });
+    });
+  </script>
+  <noscript>
+    <link rel="stylesheet" href="/_shared/lightbox.css"/>
+    <link rel="stylesheet" href="/_shared/enhancements.css"/>
+    <link rel="stylesheet" href="/_shared/toast.css"/>
+    <link rel="stylesheet" href="/_shared/hover-preview.css"/>
+    <link rel="stylesheet" href="/_shared/page-transitions.css"/>
+    <link rel="stylesheet" href="/_shared/lazy-load.css"/>
+    <link rel="stylesheet" href="/_shared/keyboard-shortcuts.css"/>
+  </noscript>
 </head>
 <body class="bg-bone-white text-deep-ink font-body-md">
 <!-- Paper-texture prototype (Stitch June-2026 #3) — subtle grain on the bone ground; opaque artwork/cards sit on top so it never overlays images. Remove this <style> to revert. -->
@@ -1883,28 +1896,36 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
   }
 
   /* Play the first-load intro on the visible stage(s): mosaic of real works →
-     hero. Falls back to the dark-panel unveil if the work list can't be fetched.
-     Releases the title timeline (`hero-entrance`) and starts rotation when done. */
+     hero on desktop. Falls back to the dark-panel unveil if the work list can't
+     be fetched, and ALWAYS uses the unveil on the mobile stage — the mosaic's
+     fetch + dozens of tiles + anime timeline cost real main-thread time on
+     throttled mobile CPUs and were measured pushing mobile LCP to 6+s (Session
+     95 perf investigation); the unveil is LCP-cheap (no fetch, ~12 div fades)
+     and still an honest, composed entrance. Releases the title timeline
+     (`hero-entrance`) and starts rotation when done. */
   function startIntro() {
     var released = false;
     function release() { if (released) return; released = true; document.dispatchEvent(new CustomEvent('hero-entrance')); introReleased = true; maybeRun(); }
     var visible = stages.filter(function (s) { var r = s.container.getBoundingClientRect(); return r.width && r.height; });
     if (!visible.length) { release(); return; }
+    var mosaicCandidates = visible.filter(function (s) { return s.kind === 'd'; });
+    var unveilStages = visible.filter(function (s) { return s.kind !== 'd'; });
+    unveilStages.forEach(loadUnveil);
     /* The mosaic is a grand entrance — play it once per session; later loads in
        the same session get the quieter unveil so navigation isn't theatrical. */
     var firstThisSession = true;
     try { firstThisSession = !sessionStorage.getItem('jfsn-hero-intro'); sessionStorage.setItem('jfsn-hero-intro', '1'); } catch (e) {}
-    if (!firstThisSession) { visible.forEach(loadUnveil); release(); return; }
-    var safety = setTimeout(function () { if (!released) { visible.forEach(loadUnveil); release(); } }, 1600);
+    if (!firstThisSession || !mosaicCandidates.length) { mosaicCandidates.forEach(loadUnveil); release(); return; }
+    var safety = setTimeout(function () { if (!released) { mosaicCandidates.forEach(loadUnveil); release(); } }, 1600);
     fetch('catalog-home.json').then(function (r) { return r.ok ? r.json() : Promise.reject(); }).then(function (works) {
       if (released) return;
       clearTimeout(safety);
       var ids = works.map(function (w) { return String(w.file || '').replace('.avif', ''); }).filter(Boolean);
       for (var i = ids.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = ids[i]; ids[i] = ids[j]; ids[j] = t; }
-      if (!ids.length) { visible.forEach(loadUnveil); release(); return; }
-      var pending = visible.length;
-      visible.forEach(function (s) { mosaicIntro(s, ids, function () { if (--pending === 0) release(); }); });
-    }).catch(function () { clearTimeout(safety); if (!released) { visible.forEach(loadUnveil); release(); } });
+      if (!ids.length) { mosaicCandidates.forEach(loadUnveil); release(); return; }
+      var pending = mosaicCandidates.length;
+      mosaicCandidates.forEach(function (s) { mosaicIntro(s, ids, function () { if (--pending === 0) release(); }); });
+    }).catch(function () { clearTimeout(safety); if (!released) { mosaicCandidates.forEach(loadUnveil); release(); } });
   }
 
   /* Hero work years (parsed from the caption "Title · YEAR · MEDIUM"). Used to
