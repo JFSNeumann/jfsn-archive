@@ -22,14 +22,34 @@ The Session-65 entry below is kept for history but was never measured — ignore
   project — defer/trim homepage JS — but it's a focused effort, out of scope for the
   motion work.
 
-### Homepage accessibility findings (90 — 4 fixable issues)
-1. Contrast ratio fails on some text/background pair (find + fix).
-2. Heading elements not in sequentially-descending order (h1→h3 skip somewhere).
-3. Visible text labels don't match accessible names (bracket-link `aria-label`
-   mismatch — the visible "[ Explore → ]" text vs a differently-worded aria-label).
-4. Touch targets below 44×44px (some controls too small/close on the homepage).
+### Homepage accessibility findings (was 90) — status after 2026-06-25 fixes
+1. **Heading order — FIXED ✅** featured-card titles were `<h4>` under the section
+   `<h2>` (skipped h3); now `<h3>`. Audit PASSes.
+2. **Label/name mismatch — FIXED ✅** search button's visible "⌘K" is now
+   `aria-hidden`; the lost-fragment moved its description to `<img alt>` and
+   dropped the conflicting `aria-label`. Audit PASSes.
+3. **Contrast — partly real, partly false-positive.**
+   - *Real, fixed ✅:* the "Lost to Water ~500–1,000" stat was `#c4c7c7` on cream
+     (1.53:1, near-invisible); now `#8e7164` (archival brown, passes AA large-text).
+   - *False-positive (not fixed, not a real issue):* Lighthouse keeps flagging the
+     desktop stat card's other numbers/labels. Their colors are `#0B0B0B` / `#575757`
+     (fully AA-compliant) — axe measures them **mid-fade** through the auto-playing
+     `_shared/ui.css` `.reveal-section` animation, so it sees a washed, opacity-blended
+     colour. Real users see full contrast. Silencing it means touching the shared
+     reveal system (see below); not worth it for an artifact.
+4. **Touch targets — FIXED ✅** `.river-hero-tick` bumped 22×18 → 24×24px.
 
-lost.html scores 100 on accessibility, so these are homepage-specific, not sitewide.
+lost.html scores 100 on accessibility, so these were homepage-specific, not sitewide.
+
+### Known tangle (flagged 2026-06-25, NOT yet fixed)
+Two scroll-reveal systems coexist and fight on every page that loads `_shared/ui.css`:
+an **auto-playing CSS animation** (`ui.css`: `.reveal-section { animation: scroll-reveal
+forwards }`, uses a `.revealed` class) **and** per-page **IntersectionObserver** code
+(`.is-visible`). The ui.css animation happens to double as the no-JS fallback (it
+auto-plays to opacity:1 without JS), which is why JS-off content isn't actually invisible.
+But the overlap is confusing and is the source of the contrast false-positive above.
+A `.js`-gated consolidation was prototyped and reverted — it's a focused, cross-page
+cleanup, not a mid-session change to shared CSS.
 
 ---
 
