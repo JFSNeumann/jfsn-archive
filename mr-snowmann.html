@@ -213,9 +213,14 @@
 
 <!-- NAV:START -->
 <style>
-  @view-transition { navigation: auto; }
+/* --nav-accent defaults to brand orange; chromatic-position-strip.js and
+   archive-river.js set it live to whatever decade is in view (their own
+   chromatic.json data, never invented) so the nav reads as part of the
+   instrument rather than fixed chrome. Transitions slowly so it never reads
+   as a glitch. */
+:root{--nav-accent:#FF6600;}
 header nav a{position:relative}
-header nav a::after{content:'';position:absolute;bottom:10px;left:0;width:100%;height:1.5px;background:#FF6600;transform:scaleX(0);transform-origin:left center;transition:transform 0.2s ease}
+header nav a::after{content:'';position:absolute;bottom:10px;left:0;width:100%;height:1.5px;background:var(--nav-accent);transform:scaleX(0);transform-origin:left center;transition:transform 0.2s ease,background-color 1.2s ease}
 header nav a:hover::after{transform:scaleX(1)}
 header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
 @media(prefers-reduced-motion:reduce){header nav a::after{transition:none}}
@@ -359,8 +364,6 @@ header.header-hidden{transform:translateY(-100%)}
 
 <script src="search.js" defer></script>
 <script src="_shared/anime.min.js" defer></script>
-<script src="_shared/continuity-transition.js" defer></script>
-<script src="_shared/depth-hero.js" defer></script>
 <script src="_shared/jfsn-interactions.js" defer></script>
 <script src="_shared/accent-transition.js" defer></script>
 <script src="_shared/chromatic-accent-wire.js" defer></script>
@@ -564,7 +567,6 @@ header.header-hidden{transform:translateY(-100%)}
 
 <!-- FOOTER:START -->
 <style>
-  @view-transition { navigation: auto; }
 footer a{position:relative;text-decoration:none}
 footer a::after{content:'';position:absolute;bottom:-1px;left:0;width:100%;height:1px;background:#FF6600;transform:scaleX(0);transform-origin:left center;transition:transform 0.2s ease}
 footer a:hover::after{transform:scaleX(1)}
@@ -581,13 +583,37 @@ footer .hover\:border-international-orange::after{display:none}
 @media(prefers-reduced-motion:reduce){#btt-float{transition:none;}}
 /* On mobile, sit above the bottom nav bar */
 @media(max-width:767px){#btt-float{bottom:72px;right:16px;}}
+/* Ambient chromatic backdrop — built from the archive's own decade colors
+   (chromatic.json), never an invented palette. Sits behind the footer
+   content at low opacity, drifting very slowly. Static neutral gradient
+   until JS supplies the real stops, so no-JS/slow-network visitors still
+   get a calm backdrop, never a flash of raw color. */
+footer{position:relative;overflow:hidden;}
+footer::before{
+  content:'';position:absolute;inset:0;z-index:0;opacity:0.10;
+  background:linear-gradient(120deg,#8e7164,#c4c7c7,#8e7164);
+  background-size:200% 200%;
+}
+footer.fcg-ready::before{
+  animation:fcg-drift 90s linear infinite;
+}
+@keyframes fcg-drift{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+@media(prefers-reduced-motion:reduce){footer.fcg-ready::before{animation:none;}}
+footer .footer-inner{position:relative;z-index:1;}
+.footer-stat-strip{font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#8e7164;margin:0 0 14px;text-align:center;}
+.footer-last-updated{font-family:Inter,sans-serif;font-size:9px;font-weight:500;letter-spacing:0.06em;color:#8d8d8d;margin:6px 0 0;}
+@media(max-width:767px){.footer-stat-strip{text-align:left;}}
 </style>
 <footer class="bg-surface-container-high py-16 px-margin-desktop border-t border-outline-variant">
-  <div class="max-w-container-max mx-auto">
+  <div class="max-w-container-max mx-auto footer-inner">
+  <p class="footer-stat-strip">1,084 Works &middot; 50 Years &middot; 1974&ndash;Present &middot; Cleveland, OH</p>
   <div style="padding-top:16px;border-top:1px solid #c4c7c7;display:flex;flex-direction:column;md:flex-direction:row;justify-content:space-between;align-items:center;gap:16px;">
-    <div style="display:flex;align-items:center;gap:8px;">
-      <img src="_shared/butterfly-mark.png" alt="" width="12" height="12" style="opacity:0.6;" aria-hidden="true"/>
-      <p style="font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;margin:0;">© <span id="footer-year">2026</span> JEFFREY F. S. NEUMANN. ALL RIGHTS RESERVED.</p>
+    <div style="display:flex;flex-direction:column;gap:2px;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <img src="_shared/butterfly-mark.png" alt="" width="12" height="12" style="opacity:0.6;" aria-hidden="true"/>
+        <p style="font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;margin:0;">© <span id="footer-year">2026</span> JEFFREY F. S. NEUMANN. ALL RIGHTS RESERVED.</p>
+      </div>
+      <p class="footer-last-updated" id="footer-last-updated"></p>
     </div>
     <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:center;">
       <button id="back-to-top" style="background:none;border:none;cursor:pointer;font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;padding:0;transition:color 0.15s ease;" aria-label="Back to top">↑ BACK TO TOP</button>
@@ -615,6 +641,60 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
   window.addEventListener('scroll', function(){
     floatBtn.classList.toggle('btt-visible', window.scrollY > 300);
   }, { passive: true });
+})();
+
+/* Ambient footer gradient — decade-average colors from chromatic.json,
+   never invented. Reuses window.__chromaticBgById if another script on
+   the page already fetched it (archive.html, index.html, etc.). */
+(function () {
+  var footerEl = document.querySelector('footer.bg-surface-container-high');
+  if (!footerEl) return;
+
+  function decadeOf(year) { return Math.floor(year / 10) * 10; }
+
+  function applyGradient(works) {
+    var sums = {}, counts = {};
+    works.forEach(function (w) {
+      if (!w.year || !w.bg) return;
+      var d = decadeOf(w.year);
+      var hex = String(w.bg).replace('#', '');
+      if (hex.length !== 6) return;
+      var r = parseInt(hex.substr(0, 2), 16), g = parseInt(hex.substr(2, 2), 16), b = parseInt(hex.substr(4, 2), 16);
+      var s = sums[d] || (sums[d] = [0, 0, 0]);
+      s[0] += r; s[1] += g; s[2] += b;
+      counts[d] = (counts[d] || 0) + 1;
+    });
+    var decades = Object.keys(sums).sort();
+    if (decades.length < 2) return;
+    var stops = decades.map(function (d) {
+      var s = sums[d], n = counts[d];
+      return 'rgb(' + Math.round(s[0] / n) + ',' + Math.round(s[1] / n) + ',' + Math.round(s[2] / n) + ')';
+    });
+    stops.push(stops[0]); // loop back to start so the drift has no seam
+    footerEl.style.setProperty('--fcg-stops', stops.join(','));
+    var style = document.createElement('style');
+    style.textContent = 'footer.bg-surface-container-high::before{background:linear-gradient(120deg,' + stops.join(',') + ');background-size:200% 200%;}';
+    document.head.appendChild(style);
+    footerEl.classList.add('fcg-ready');
+  }
+
+  if (window.__chromaticBgById) {
+    // already a map keyed by id → bg only; need year too, so fetch fresh below
+  }
+  fetch('/chromatic.json').then(function (r) { return r.json(); }).then(applyGradient).catch(function () {});
+})();
+
+/* "Last updated" — most recent entry from changes.json (the same feed
+   changes.html reads), so the footer reflects real activity, not a guess. */
+(function () {
+  var el = document.getElementById('footer-last-updated');
+  if (!el) return;
+  fetch('/changes.json').then(function (r) { return r.json(); }).then(function (data) {
+    if (!Array.isArray(data) || !data.length) return;
+    var date = data[0].date;
+    if (!date) return;
+    el.textContent = 'Site last updated ' + date;
+  }).catch(function () {});
 })();
 </script>
 <script data-goatcounter="https://jfsn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>

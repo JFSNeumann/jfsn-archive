@@ -77,6 +77,9 @@
         });
       }
       if (range.decade != null && range.decade !== currentLabelDecade) showLabel(range.decade, pct);
+      // Live nav accent — same data, no invented color. CSS eases the change.
+      var repColor = sorted[range.start] && sorted[range.start].bg;
+      if (repColor) document.documentElement.style.setProperty('--nav-accent', repColor);
     }
 
     // ── Click-to-filter: clicking a point on the river toggles that decade ──
