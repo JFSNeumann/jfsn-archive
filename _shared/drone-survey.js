@@ -35,7 +35,7 @@
     if (!container) container = wallGrid.closest('main');
     if (!container) return;
 
-    // Start with just 1 drone for testing
+    // Three drones with distinct patterns
     const droneConfigs = [
       {
         id: 'scout',
@@ -43,6 +43,24 @@
         delay: 0,
         pattern: 'horizontal-sweeps',
         rotorColor: '#FF6600',
+        bodyColor: '#0B0B0B',
+        hoverCount: 1,
+      },
+      {
+        id: 'patrol',
+        name: 'Patrol Drone',
+        delay: 1200,
+        pattern: 'vertical-columns',
+        rotorColor: '#FF6600',
+        bodyColor: '#575757',
+        hoverCount: 1,
+      },
+      {
+        id: 'inspector',
+        name: 'Inspector Drone',
+        delay: 2400,
+        pattern: 'perimeter-orbit',
+        rotorColor: '#FF9933',
         bodyColor: '#0B0B0B',
         hoverCount: 1,
       },
