@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1782407391'; // add essay-parallax.js + restore depth-hero.js to 12 pages
+const CACHE_V  = 'jfsn-1782409215'; // extend continuity-transition to 10 more pages
 const PRECACHE = [
   '/',
   '/index.html',
@@ -52,6 +52,7 @@ const PRECACHE = [
   '/_shared/anime.min.js',
   '/_shared/depth-hero.js',
   '/_shared/essay-parallax.js',
+  '/_shared/continuity-transition.js',
 ];
 
 /* ── Install: precache core shell ─────────────────────────────────────────── */
