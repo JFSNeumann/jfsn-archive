@@ -785,7 +785,7 @@ header.header-hidden{transform:translateY(-100%)}
   });
 })();
 </script>
-<script src="/_shared/micro-interactions.js"></script>
+<script src="/_shared/micro-interactions.js" defer></script>
 <script src="/_shared/scroll-choreography.js" defer></script>
 <!-- NAV:END -->
 
@@ -2089,8 +2089,6 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
 })();
 </script>
 
-<!-- GoatCounter — privacy-first analytics -->
-<script src="_shared/nav-active.js" defer></script>
 <script>
 (function () {
   'use strict';
@@ -2454,14 +2452,16 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
   /* ── Init ── */
 
   function renderAll() {
-    /* Defer chromatic river canvas drawing to after FCP completes to reduce LCP blocking.
-       The canvas is render-heavy; deferring it improves FCP without visual impact. */
+    /* Defer the render-heavy work to idle time — both the chromatic river canvas
+       AND the wall tile build sit below the fold, so building them off the
+       critical path improves FCP/LCP/TBT without any visible change (both
+       sections reserve their height via CSS min-height, so no layout shift). */
+    function heavy() { drawRiver('d'); drawRiver('m'); buildWall('d'); buildWall('m'); }
     if ('requestIdleCallback' in window) {
-      requestIdleCallback(function() { drawRiver('d'); drawRiver('m'); }, { timeout: 2000 });
+      requestIdleCallback(heavy, { timeout: 2000 });
     } else {
-      setTimeout(function() { drawRiver('d'); drawRiver('m'); }, 100);
+      setTimeout(heavy, 100);
     }
-    buildWall('d'); buildWall('m');
   }
 
   fetch('chromatic.json')
