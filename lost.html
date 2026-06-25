@@ -236,6 +236,7 @@ header.header-hidden{transform:translateY(-100%)}
 
 <script src="search.js" defer></script>
 <script src="_shared/anime.min.js" defer></script>
+<script src="_shared/depth-hero.js" defer></script>
 <script src="_shared/jfsn-interactions.js" defer></script>
 <script src="_shared/accent-transition.js" defer></script>
 <script src="_shared/chromatic-accent-wire.js" defer></script>
@@ -437,47 +438,6 @@ header.header-hidden{transform:translateY(-100%)}
     });
     bar.style.backgroundColor = colors[currentColorIdx % colors.length];
   }, { passive: true });
-})();
-</script>
-
-<!-- ═══ Depth-hero (v2 motion pilot) ═══
-     The display word "Lost." drifts up faster than scroll (display-type
-     parallax); the documentary photo stays locked at 1.0×. Honest: the
-     image is never transformed. Entrance choreography staggers the layers
-     in on load. Both gated by prefers-reduced-motion; content is fully
-     visible with JS off (no hidden initial state in the HTML). -->
-<script>
-(function(){
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduce) return;
-
-  var rises = Array.prototype.slice.call(document.querySelectorAll('#lost-hero .dh-rise'));
-  var word  = document.getElementById('dh-word');
-
-  // 1. Load choreography — one staged reveal (only if anime.js is present).
-  if (window.anime && rises.length) {
-    rises.forEach(function(el){ el.style.opacity = '0'; });
-    anime.timeline({ easing: 'cubicBezier(0.22, 1, 0.36, 1)' })
-      .add({ targets: rises, opacity: [0,1], translateY: [18,0], duration: 700,
-             delay: anime.stagger(90) });
-  }
-
-  // 2. Display-type parallax — the word lifts away as you scroll.
-  //    rate ~1.12× → coefficient 0.12; capped so it never drifts too far.
-  if (word) {
-    var ticking = false;
-    function onScroll(){
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(function(){
-        var y = window.scrollY || window.pageYOffset || 0;
-        var shift = Math.min(y * 0.12, 64);   // cap at 64px
-        word.style.transform = 'translateY(' + (-shift) + 'px)';
-        ticking = false;
-      });
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
-  }
 })();
 </script>
 
