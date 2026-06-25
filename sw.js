@@ -51,6 +51,7 @@ const PRECACHE = [
   '/_shared/ui.js',
   '/_shared/nav-active.js',
   '/_shared/anime.min.js',
+  '/_shared/depth-hero.js',
 ];
 
 /* ── Install: precache core shell ─────────────────────────────────────────── */
