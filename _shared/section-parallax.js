@@ -27,18 +27,28 @@
 
   var ticking = false;
 
+  // Per-element, position-relative-to-viewport offset (not raw scrollY) —
+  // a global scrollY-based offset caps out after one screen of scrolling and
+  // then freezes for the rest of the page, since every section would be
+  // pinned to the same capped number. Computing each section's own distance
+  // from viewport-center instead means every section gets its moment of
+  // depth as it passes through, for as long as the page scrolls.
   function updateParallax() {
-    var y = window.scrollY || window.pageYOffset || 0;
+    var viewportCenter = window.innerHeight / 2;
 
     // Sections: environment-plate rate (0.95×)
-    var sectionOffset = -Math.min(y * 0.05, 40);
     sections.forEach(function (el) {
-      el.style.transform = 'translateY(' + sectionOffset + 'px)';
+      var rect = el.getBoundingClientRect();
+      var delta = (rect.top + rect.height / 2) - viewportCenter;
+      var offset = Math.max(-40, Math.min(40, -delta * 0.05));
+      el.style.transform = 'translateY(' + offset + 'px)';
     });
 
-    // Footer: scrim rate (1.05×) — pulls forward
+    // Footer: scrim rate (1.05×) — pulls forward as it enters view
     if (footer) {
-      var footerOffset = Math.min(y * 0.05, 60);
+      var fRect = footer.getBoundingClientRect();
+      var fDelta = (fRect.top + fRect.height / 2) - viewportCenter;
+      var footerOffset = Math.max(-60, Math.min(60, -fDelta * 0.05));
       footer.style.transform = 'translateY(' + footerOffset + 'px)';
     }
 
