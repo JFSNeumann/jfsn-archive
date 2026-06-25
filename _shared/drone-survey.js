@@ -72,9 +72,13 @@
   }
 
   function spawnDrone(container, config, tiles) {
-    const wallGrid = document.getElementById('wall-band-d') || document.querySelector('.wall-grid');
+    const wallGridId = document.getElementById('wall-band-d');
+    const wallGridClass = document.querySelector('.wall-grid');
+    const wallGrid = wallGridId || wallGridClass;
 
-    // Create drone container in the whitespace above the grid (not overlaying images)
+    if (!wallGrid) return;
+
+    // Create drone container in the whitespace above the grid
     const droneWrap = document.createElement('div');
     droneWrap.className = 'drone-survey-wrap';
     droneWrap.setAttribute('data-drone', config.id);
@@ -85,6 +89,7 @@
       pointer-events: none;
       margin-bottom: 24px;
       background: transparent;
+      overflow: hidden;
     `;
 
     const droneSvg = createDroneSvg(config);
@@ -107,8 +112,15 @@
     `;
     droneWrap.appendChild(spotlight);
 
-    // Insert before the grid (in the whitespace above)
-    wallGrid.parentNode.insertBefore(droneWrap, wallGrid);
+    // For wall.html (.wall-grid), insert inside <main> before the grid
+    // For index.html (#wall-band-d), wallGrid.parentNode is the section
+    if (wallGridClass && !wallGridId) {
+      // wall.html structure: insert right before .wall-grid
+      wallGrid.parentNode.insertBefore(droneWrap, wallGrid);
+    } else {
+      // index.html structure: insert before grid
+      wallGrid.parentNode.insertBefore(droneWrap, wallGrid);
+    }
 
     animateDrone(droneSvg, spotlight, config, tiles, droneWrap);
   }
