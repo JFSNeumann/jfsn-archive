@@ -232,18 +232,13 @@
   function setupParallax() {
     if (prefersReducedMotion) return;
 
-    const hero = document.querySelector('[class*="hero"]');
-    const heroBg = document.getElementById('hero-slides-d');
     const footer = document.querySelector('footer');
 
-    // Hero parallax (slower scroll = more depth)
-    if (heroBg) {
-      window.addEventListener('scroll', function() {
-        const scrollY = window.scrollY;
-        const parallaxOffset = scrollY * 0.25; // Slower than default
-        heroBg.style.transform = `translateY(${parallaxOffset}px)`;
-      }, { passive: true });
-    }
+    // NOTE: this used to also parallax #hero-slides-d (the hero artwork image
+    // container) at 0.25x scroll — removed because it violated CLAUDE.md's
+    // hard rail that the artwork plane must stay locked at 1.0x scroll.
+    // depth-hero.js now carries the index.html hero's motion budget instead,
+    // via the surrounding headline (#dh-word), never the artwork itself.
 
     // Footer gradient parallax (drifts upward on scroll)
     if (footer) {
