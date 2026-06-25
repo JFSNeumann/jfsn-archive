@@ -1011,102 +1011,6 @@ header.header-hidden{transform:translateY(-100%)}
   </section>
 </div>
 
-<!-- Where To Begin — orientation module (responsive) -->
-<section id="explore-section" class="border-b border-outline-variant px-4 md:px-margin-desktop" style="padding-top:60px;padding-bottom:60px;">
-  <div class="max-w-container-max mx-auto">
-    <div class="mb-12 reveal-section">
-      <h2 style="font-family:'Playfair Display',serif;font-size:clamp(28px,3.4vw,44px);line-height:1.1;color:#0B0B0B;font-weight:600;margin:0;">Where to Begin</h2>
-    </div>
-
-    <style>
-      .explore-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 24px;
-      }
-      @media (min-width: 768px) {
-        .explore-grid {
-          grid-template-columns: repeat(4, 1fr);
-        }
-      }
-      .explore-card {
-        display: flex;
-        flex-direction: column;
-        padding: 32px;
-        border: 1px solid #c4c7c7;
-        background: #ffffff;
-        text-decoration: none;
-        transition: border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease;
-      }
-      .explore-card:hover {
-        border-color: #FF6600;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        transform: translateY(-2px);
-      }
-      .explore-icon {
-        font-size: 28px;
-        margin-bottom: 16px;
-        display: block;
-      }
-      .explore-card h3 {
-        font-family: 'Playfair Display', serif;
-        font-size: 22px;
-        font-weight: 600;
-        color: #0B0B0B;
-        margin: 0 0 12px;
-        line-height: 1.2;
-      }
-      .explore-card p {
-        font-family: Inter, sans-serif;
-        font-size: 14px;
-        color: #575757;
-        line-height: 1.6;
-        margin: 0;
-      }
-      @media (prefers-reduced-motion: reduce) {
-        .explore-card {
-          transition: none;
-        }
-        .explore-card:hover {
-          transform: none;
-        }
-      }
-    </style>
-
-    <div class="explore-grid">
-
-      <!-- All Works -->
-      <a href="archive.html" class="explore-card explore-all reveal-section reveal-delay-1">
-        <span class="explore-icon">🗂</span>
-        <h3>All 1,084 Works</h3>
-        <p>Browse everything. Filter by decade, medium, series, or theme.</p>
-      </a>
-
-      <!-- By Theme -->
-      <a href="series-index.html" class="explore-card explore-theme reveal-section reveal-delay-2">
-        <span class="explore-icon">🎨</span>
-        <h3>Explore by Theme</h3>
-        <p>Guernica series, photography, sculpture, and eight recurring obsessions.</p>
-      </a>
-
-      <!-- Who Jeff Is -->
-      <a href="start-here.html" class="explore-card explore-start reveal-section reveal-delay-1">
-        <span class="explore-icon">👤</span>
-        <h3>Who Jeff Is</h3>
-        <p>50 years of making, in his own words and voice.</p>
-      </a>
-
-      <!-- Lost Works -->
-      <a href="lost.html" class="explore-card explore-lost reveal-section reveal-delay-2">
-        <span class="explore-icon">📋</span>
-        <h3>Lost Works</h3>
-        <p>What was lost to water damage. What survived. A memory.</p>
-      </a>
-
-    </div>
-  </div>
-</section>
-
 <!-- ═══════════════════════════════════════════════
      DESKTOP
      Hidden on mobile
@@ -1249,7 +1153,107 @@ header.header-hidden{transform:translateY(-100%)}
     else run();
   })();
   </script>
+</main>
 
+<!-- Where To Begin — orientation module (responsive). Lives between the two
+     "hidden md:block" wrappers so it renders right after EITHER hero variant
+     (mobile hero/folio above, hero-d here) without duplicating the markup. -->
+<section id="explore-section" class="border-b border-outline-variant px-4 md:px-margin-desktop" style="padding-top:60px;padding-bottom:60px;">
+  <div class="max-w-container-max mx-auto">
+    <div class="mb-12 reveal-section">
+      <h2 style="font-family:'Playfair Display',serif;font-size:clamp(28px,3.4vw,44px);line-height:1.1;color:#0B0B0B;font-weight:600;margin:0;">Where to Begin</h2>
+    </div>
+
+    <style>
+      .explore-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+      }
+      @media (min-width: 768px) {
+        .explore-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+      .explore-card {
+        display: flex;
+        flex-direction: column;
+        padding: 32px;
+        border: 1px solid #c4c7c7;
+        background: #ffffff;
+        text-decoration: none;
+        transition: border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease;
+      }
+      .explore-card:hover {
+        border-color: #FF6600;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        transform: translateY(-2px);
+      }
+      .explore-icon {
+        font-size: 28px;
+        margin-bottom: 16px;
+        display: block;
+      }
+      .explore-card h3 {
+        font-family: 'Playfair Display', serif;
+        font-size: 22px;
+        font-weight: 600;
+        color: #0B0B0B;
+        margin: 0 0 12px;
+        line-height: 1.2;
+      }
+      .explore-card p {
+        font-family: Inter, sans-serif;
+        font-size: 14px;
+        color: #575757;
+        line-height: 1.6;
+        margin: 0;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .explore-card {
+          transition: none;
+        }
+        .explore-card:hover {
+          transform: none;
+        }
+      }
+    </style>
+
+    <div class="explore-grid">
+
+      <!-- All Works -->
+      <a href="archive.html" class="explore-card explore-all reveal-section reveal-delay-1">
+        <span class="explore-icon">🗂</span>
+        <h3>All 1,084 Works</h3>
+        <p>Browse everything. Filter by decade, medium, series, or theme.</p>
+      </a>
+
+      <!-- By Theme -->
+      <a href="series-index.html" class="explore-card explore-theme reveal-section reveal-delay-2">
+        <span class="explore-icon">🎨</span>
+        <h3>Explore by Theme</h3>
+        <p>Guernica series, photography, sculpture, and eight recurring obsessions.</p>
+      </a>
+
+      <!-- Who Jeff Is -->
+      <a href="start-here.html" class="explore-card explore-start reveal-section reveal-delay-1">
+        <span class="explore-icon">👤</span>
+        <h3>Who Jeff Is</h3>
+        <p>50 years of making, in his own words and voice.</p>
+      </a>
+
+      <!-- Lost Works -->
+      <a href="lost.html" class="explore-card explore-lost reveal-section reveal-delay-2">
+        <span class="explore-icon">📋</span>
+        <h3>Lost Works</h3>
+        <p>What was lost to water damage. What survived. A memory.</p>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<div class="hidden md:block">
   <!-- Chromatic River band — fifty years of color in one line -->
   <section id="river-section-d" class="border-b border-outline-variant" aria-label="Fifty years of color">
     <div class="river-band-wrap" id="river-wrap-d">
@@ -1529,7 +1533,7 @@ header.header-hidden{transform:translateY(-100%)}
     </div>
   </section>
 
-</main>
+</div>
 
 <!-- FOOTER:START -->
 <style>
