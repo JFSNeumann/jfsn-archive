@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1782415847'; // add top 5 micro-interactions & parallax: grid-entrance, section-parallax, counter-animate, hover-scale, ambient-tint-parallax
+const CACHE_V  = 'jfsn-1782423847'; // add Phase 5 load animations: hero-zoom-settle, section-reveal-stagger, stat-card-entrance, filter-slide-in, image-fade-load
 const PRECACHE = [
   '/',
   '/index.html',
@@ -59,6 +59,11 @@ const PRECACHE = [
   '/_shared/counter-animate.js',
   '/_shared/hover-scale.js',
   '/_shared/ambient-tint-parallax.js',
+  '/_shared/hero-zoom-settle.js',
+  '/_shared/section-reveal-stagger.js',
+  '/_shared/stat-card-entrance.js',
+  '/_shared/filter-slide-in.js',
+  '/_shared/image-fade-load.js',
 ];
 
 /* ── Install: precache core shell ─────────────────────────────────────────── */
