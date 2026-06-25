@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1782403254'; // scroll-reveal consolidation: js-gated ui.css .reveal-section + micro-interactions.js trigger
+const CACHE_V  = 'jfsn-1782407391'; // add essay-parallax.js + restore depth-hero.js to 12 pages
 const PRECACHE = [
   '/',
   '/index.html',
@@ -51,6 +51,7 @@ const PRECACHE = [
   '/_shared/nav-active.js',
   '/_shared/anime.min.js',
   '/_shared/depth-hero.js',
+  '/_shared/essay-parallax.js',
 ];
 
 /* ── Install: precache core shell ─────────────────────────────────────────── */
