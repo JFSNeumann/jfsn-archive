@@ -36,17 +36,23 @@
 
   var ticking = false;
 
+  // Per-element, position-relative-to-viewport offset (not raw scrollY) —
+  // see section-parallax.js for why a global scrollY-based offset freezes
+  // after one screen of scrolling. Each layer gets its own depth wave as it
+  // passes through the viewport instead.
+  function layerOffset(el, rate, cap) {
+    var rect = el.getBoundingClientRect();
+    var delta = (rect.top + rect.height / 2) - (window.innerHeight / 2);
+    return Math.max(-cap, Math.min(cap, -delta * rate));
+  }
+
   function updateParallax() {
-    var y = window.scrollY || window.pageYOffset || 0;
     // Decade labels: environment plate rate (0.90×)
-    var decadeOffset = -Math.min(y * 0.10, 60);
-    decadeLabels.style.transform = 'translateY(' + decadeOffset + 'px)';
+    decadeLabels.style.transform = 'translateY(' + layerOffset(decadeLabels, 0.10, 60) + 'px)';
     // Count strip: middle layer (0.95×)
-    var countsOffset = -Math.min(y * 0.05, 40);
-    counts.style.transform = 'translateY(' + countsOffset + 'px)';
+    counts.style.transform = 'translateY(' + layerOffset(counts, 0.05, 40) + 'px)';
     // Footer: scrim rate (1.05×) — pulls forward
-    var footerOffset = Math.min(y * 0.05, 60);
-    footer.style.transform = 'translateY(' + footerOffset + 'px)';
+    footer.style.transform = 'translateY(' + (-layerOffset(footer, 0.05, 60)) + 'px)';
     ticking = false;
   }
 
