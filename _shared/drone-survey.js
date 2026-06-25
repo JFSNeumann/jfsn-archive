@@ -87,12 +87,16 @@
       width: 100%;
       height: 180px;
       pointer-events: none;
-      margin-bottom: 24px;
+      margin: 0 0 24px 0;
+      padding: 0;
       background: transparent;
-      overflow: hidden;
+      overflow: visible;
+      display: block;
     `;
 
     const droneSvg = createDroneSvg(config);
+    // Ensure SVG is positioned within the container
+    droneSvg.style.zIndex = '10';
     droneWrap.appendChild(droneSvg);
 
     const spotlight = document.createElement('div');
