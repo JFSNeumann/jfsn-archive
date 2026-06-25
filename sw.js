@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1782399600'; // timeline.html retired — removed from precache + nav-active.js
+const CACHE_V  = 'jfsn-1782403254'; // scroll-reveal consolidation: js-gated ui.css .reveal-section + micro-interactions.js trigger
 const PRECACHE = [
   '/',
   '/index.html',

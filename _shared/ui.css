@@ -3565,16 +3565,25 @@ a[role="button"]:active,
 
 /* ─── Phase 5: Scroll-Reveal Animations ────────────────────────────────────── */
 
-.reveal-section {
+/* JS-gated: the hidden initial state only applies when JS is active (the <head>
+   inline script adds `js` to <html>). With JS off, no hidden state → content is
+   fully visible. The single trigger is the `.revealed` class, added by
+   _shared/micro-interactions.js's IntersectionObserver when an element scrolls
+   into view. The animation lives on `.revealed`, so it NO LONGER auto-plays on
+   load — that auto-play was the cause of the index.html stat-card contrast
+   false-positive and doubled up against the observer. */
+.js .reveal-section {
   opacity: 0;
   transform: translateY(16px);
-  animation: scroll-reveal 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-.reveal-section.revealed {
-  animation: none;
-  opacity: 1;
-  transform: translateY(0);
+/* Longhand (not the `animation` shorthand) so it does not reset animation-delay
+   to 0 and clobber the lower-specificity .reveal-delay-* stagger below. */
+.js .reveal-section.revealed {
+  animation-name: scroll-reveal;
+  animation-duration: 0.6s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-fill-mode: forwards;
 }
 
 @keyframes scroll-reveal {
@@ -3592,7 +3601,8 @@ a[role="button"]:active,
 .reveal-delay-5 { animation-delay: 0.5s; }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal-section {
+  .js .reveal-section,
+  .js .reveal-section.revealed {
     opacity: 1;
     transform: none;
     animation: none;

@@ -155,10 +155,19 @@
     var revealElements = document.querySelectorAll('.reveal-section');
     if (revealElements.length === 0) return;
 
+    // Resilience fallback: the hidden state is JS-gated (.js .reveal-section in
+    // ui.css), so if IntersectionObserver is unavailable we must reveal
+    // everything immediately or the content would stay permanently hidden.
+    if (!('IntersectionObserver' in window)) {
+      revealElements.forEach(function(el) { el.classList.add('revealed'); });
+      return;
+    }
+
     var observer = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
         if (entry.isIntersecting) {
           entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
         }
       });
     }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });

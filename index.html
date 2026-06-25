@@ -2,6 +2,7 @@
 <html class="scroll-smooth" lang="en">
 <head>
 <meta charset="utf-8"/>
+<script>document.documentElement.classList.add('js')</script><!-- JS-on flag: gates the .reveal-section hidden state so content stays visible with JS off -->
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta name="theme-color" content="#fcf9f3"/>
 <title>Jeffrey F. S. Neumann — Archive</title>
@@ -2548,10 +2549,13 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
     }
 
     // 3. (Featured-card 3D mouse-tilt removed — simplicity pass 2026-06-21.)
-    // 4. Scroll-reveal needs no JS at all — _shared/ui.css's .reveal-section
-    //    rule is a pure CSS animation (animation-fill-mode: forwards). The
-    //    page-local transition+IntersectionObserver duplicate was removed
-    //    2026-06-25 (it raced the CSS animation instead of gating it).
+    // 4. Scroll-reveal is ONE system, defined sitewide: ui.css JS-gates the
+    //    hidden state (.js .reveal-section) and _shared/micro-interactions.js is
+    //    the single IntersectionObserver, adding `.revealed` (which plays the
+    //    animation) as elements scroll in. No page-local reveal code here. The
+    //    `js` flag in <head> keeps content visible with JS off. The old auto-
+    //    playing ui.css animation + page-local duplicate were both removed
+    //    2026-06-25 (they raced each other and caused a contrast false-positive).
     // 5. Featured-grid responsive columns come entirely from the CSS media
     //    queries on #featured-grid; the redundant JS resize handler that set
     //    inline grid-template-columns was removed in the same cleanup.
