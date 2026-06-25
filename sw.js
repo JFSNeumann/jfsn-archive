@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1782411264'; // add chromatic-river-parallax.js for showpiece layering
+const CACHE_V  = 'jfsn-1782415847'; // add top 5 micro-interactions & parallax: grid-entrance, section-parallax, counter-animate, hover-scale, ambient-tint-parallax
 const PRECACHE = [
   '/',
   '/index.html',
@@ -54,6 +54,11 @@ const PRECACHE = [
   '/_shared/essay-parallax.js',
   '/_shared/continuity-transition.js',
   '/_shared/chromatic-river-parallax.js',
+  '/_shared/grid-entrance.js',
+  '/_shared/section-parallax.js',
+  '/_shared/counter-animate.js',
+  '/_shared/hover-scale.js',
+  '/_shared/ambient-tint-parallax.js',
 ];
 
 /* ── Install: precache core shell ─────────────────────────────────────────── */

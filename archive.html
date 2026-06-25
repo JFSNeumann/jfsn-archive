@@ -502,6 +502,7 @@ header.header-hidden{transform:translateY(-100%)}
 
 <script src="search.js" defer></script>
 <script src="_shared/anime.min.js" defer></script>
+<script src="_shared/counter-animate.js" defer></script>
 <script src="_shared/jfsn-interactions.js" defer></script>
 <script src="_shared/accent-transition.js" defer></script>
 <script src="_shared/chromatic-accent-wire.js" defer></script>
@@ -509,6 +510,7 @@ header.header-hidden{transform:translateY(-100%)}
 <script src="_shared/chromatic-position-strip.js" defer></script>
 <script src="_shared/chromatic-lazy-tint.js" defer></script>
 <script src="_shared/click-feedback.js" defer></script>
+<script src="_shared/hover-scale.js" defer></script>
 <script>
 (function(){
   var header = document.querySelector('header');
@@ -613,7 +615,7 @@ header.header-hidden{transform:translateY(-100%)}
       <h1 class="font-label-caps text-label-caps tracking-widest mb-1">THE ARCHIVE</h1>
       <p style="font-family:'Playfair Display',Georgia,serif;font-size:15px;font-style:italic;color:#575757;margin-bottom:6px;">Collage, sculpture, photography.</p>
       <p class="font-label-md text-label-md text-secondary tracking-widest uppercase">
-        <span id="work-count">1,084</span> <span id="work-count-label">CATALOGED WORKS</span>
+        <span id="work-count" data-count-target="1084">1,084</span> <span id="work-count-label">CATALOGED WORKS</span>
       </p>
     </div>
     <div class="flex items-center gap-2 pb-1">
@@ -1419,6 +1421,7 @@ document.addEventListener('click', (e) => {
 
 </script>
 
+<script src="_shared/grid-entrance.js" defer></script>
 <script src="_shared/ui.js" defer></script>
 <script src="_shared/nav-active.js" defer></script>
   <!-- Phase 1 Enhancement Scripts -->
