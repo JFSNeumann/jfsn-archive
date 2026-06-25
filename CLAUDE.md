@@ -221,6 +221,41 @@ The in-page ⌘Shift+D modal (and its footer button) was removed 2026-06-23 — 
 
 ---
 
+## Working notes for Claude
+
+**Decisions: design vs. process.** Design and motion calls on this site are Jeff's
+— he's the 40-year motion designer directing it (see the litmus above). Code,
+performance, and process calls are not — make those directly, don't ask. The
+distinguishing question: would changing this alter what the *site does or looks
+like* (ask Jeff), or just *how reliably/quickly it does it* (just fix it)? Session
+95's mobile-LCP work is the model: deferred CSS fetch timing was fixed without
+asking; skipping the mosaic-intro animation on mobile was confirmed with Jeff first
+because it touches a deliberate Session-79 design choice.
+
+**Verify by execution, not by reading.** Every high-value bug or stale-fact catch
+in this project's history came from running a script, `curl`, grep, or browser
+click and comparing real output to a claim — never from trusting doc prose or a
+prior session's "fixed" note at face value. Treat your own past session summaries
+the same way: re-check before relying on a specific file/line/number they cite.
+
+**Lighthouse: don't trust the default mode for "did this fix work?"** Lighthouse's
+default run uses *simulated* ("lantern") throttling — it estimates timings from a
+dependency graph rather than measuring real throttled network/CPU. It can be
+completely insensitive to a real fix (Session 95: two genuine improvements showed
+zero score change under default mode). Before concluding a perf fix worked or
+didn't, re-check with `lighthouse <url> --throttling-method=devtools`, which runs
+real trace-based throttling instead. Always take 3 runs and use the median — single
+runs have shown CPU-contention outliers as low as 54 on a normally-90 page.
+
+**`stamp-nav.sh` can clobber drift.** It overwrites the NAV+FOOTER blocks verbatim
+from `_shared/top-nav.html`/`footer.html` on every TARGET page. `index.html`
+specifically tends to drift *ahead* of those shared templates (new hero/animation
+work lands there first). After any `stamp-nav.sh` run, check `git diff --stat` —
+if `index.html` shows a noticeably bigger diff than the other targets, inspect it
+before trusting it; a past run silently deleted a live script tag this way.
+
+---
+
 ## Content philosophy
 - Archive first — every decision serves the work, not the designer
 - No calls to action, no newsletter signups, no engagement patterns
