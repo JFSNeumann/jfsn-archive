@@ -1,12 +1,12 @@
-/* ambient-tint-parallax.js — scroll-coupled background color tint
+/* ambient-tint-parallax.js — scroll-coupled background color tint + static page identity
 
-   Applies subtle, scroll-coupled background color tint to main content
-   sections on about.html and lost.html. As you scroll, the page tint
-   shifts from warm to cool (archival brown → soft blue → back).
+   Applies two-layer background to main content sections:
+   1. Static base tint (page identity) — set via data-ambient-base attribute
+   2. Dynamic scroll-coupled parallax shift (motion) — cycles through page-specific colors
 
-   No opt-in markup needed. Targets main > section elements. Respects
-   prefers-reduced-motion. JS-off safe (no color applied via JS, subtle
-   effect only). */
+   Each page defines its color palette via data-ambient-colors JSON on <main>.
+   No palette → uses default. Respects prefers-reduced-motion.
+   JS-off safe (static tint visible via CSS, parallax just JS enhancement). */
 (function () {
   'use strict';
 
@@ -15,12 +15,13 @@
   var mainContent = document.querySelector('main');
   if (!mainContent) return;
 
-  // Define color palette for tinting: warm → cool → neutral
-  // Using very subtle alpha values to preserve readability
-  var colors = [
-    { h: 28, s: 25, l: 92, a: 0.02 },   // Warm brown tint
-    { h: 200, s: 30, l: 88, a: 0.015 }, // Cool blue tint
-    { h: 28, s: 20, l: 93, a: 0.01 }    // Neutral warm
+  // Parse page-specific color palette from data attribute
+  // Format: data-ambient-colors='[{"h":28,"s":25,"l":92,"a":0.02},...]'
+  var colorsJson = mainContent.getAttribute('data-ambient-colors');
+  var colors = colorsJson ? JSON.parse(colorsJson) : [
+    { h: 28, s: 25, l: 92, a: 0.02 },   // Default: warm brown
+    { h: 200, s: 30, l: 88, a: 0.015 }, // Default: cool blue
+    { h: 28, s: 20, l: 93, a: 0.01 }    // Default: neutral warm
   ];
 
   var ticking = false;
@@ -57,8 +58,10 @@
     requestAnimationFrame(updateTint);
   }
 
-  // Set initial background
-  mainContent.style.backgroundColor = 'hsla(28, 25%, 92%, 0.02)';
+  // Set initial background (first color in palette)
+  var initialColor = colors[0];
+  var initialBg = 'hsla(' + initialColor.h + ', ' + initialColor.s + '%, ' + initialColor.l + '%, ' + initialColor.a.toFixed(3) + ')';
+  mainContent.style.backgroundColor = initialBg;
 
   window.addEventListener('scroll', onScroll, { passive: true });
 })();
