@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1782426847'; // fix hero text overflow (mobile) and centering (desktop)
+const CACHE_V  = 'jfsn-1782431265'; // wow-factor parallax/motion rollout + restore wiped scripts
 const PRECACHE = [
   '/',
   '/index.html',
