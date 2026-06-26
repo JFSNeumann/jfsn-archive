@@ -34,12 +34,21 @@
 
   var ticking = false;
 
+  // Per-element, position-relative-to-viewport offset (not raw scrollY) —
+  // a global scrollY-based offset caps out after one screen of scrolling and
+  // then freezes for the rest of the page (same bug found and fixed in
+  // section-parallax.js / chromatic-river-parallax.js this session). With 18
+  // blockquotes on stories.html, a global offset would freeze nearly all of
+  // them at the same capped value well before the page ends. Computing each
+  // quote's own distance from viewport-center instead gives every quote its
+  // own drift as it passes through, for the full length of the page.
   function updateParallax() {
-    var y = window.scrollY || window.pageYOffset || 0;
+    var viewportCenter = window.innerHeight / 2;
     quotes.forEach(function (el, i) {
       var rate = rates[i % 3];
-      // Parallax is capped at 80px so it doesn't drift too far off-screen
-      var offset = -Math.min(y * (1 - rate), 80);
+      var rect = el.getBoundingClientRect();
+      var delta = (rect.top + rect.height / 2) - viewportCenter;
+      var offset = Math.max(-80, Math.min(80, -delta * (1 - rate)));
       el.style.transform = 'translateY(' + offset + 'px)';
     });
     ticking = false;

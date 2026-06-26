@@ -14,6 +14,16 @@
   // Check if animations are disabled
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // anime.js (this bundled build) doesn't expose `anime.getEasing` — calling
+  // it threw on every scroll event, silently aborting updateHeaderOnScroll()
+  // before it ever animated anything. This is a standalone easeOutQuad
+  // clamped to [0,1], used the same way the missing helper would have been:
+  // as a velocity-responsive starting opacity.
+  function easeOutQuad(t) {
+    t = Math.min(Math.max(t, 0), 1);
+    return 1 - (1 - t) * (1 - t);
+  }
+
   // Color palette per page section — maps section class/data-* to accent color
   const sectionAccents = {
     'archive': '#e05900',      // Archive orange
@@ -177,7 +187,7 @@
       if (navLinks.length > 0) {
         anime({
           targets: navLinks,
-          opacity: [anime.getEasing('easeOutQuad')(state.scrollVel / 0.5), 0.6],
+          opacity: [easeOutQuad(state.scrollVel / 0.5), 0.6],
           duration: 200,
           easing: 'easeOutQuad'
         });
@@ -187,7 +197,7 @@
       if (navLinks.length > 0) {
         anime({
           targets: navLinks,
-          opacity: [anime.getEasing('easeOutQuad')(state.scrollVel / 0.5), 1],
+          opacity: [easeOutQuad(state.scrollVel / 0.5), 1],
           duration: 200,
           easing: 'easeOutQuad'
         });
@@ -331,7 +341,7 @@
         const navLinks = header.querySelectorAll('nav a');
         anime({
           targets: navLinks,
-          opacity: [anime.getEasing('easeOutQuad')(swipeVelocity / 2), 0.8],
+          opacity: [easeOutQuad(swipeVelocity / 2), 0.8],
           duration: 150,
           easing: 'easeOutQuad'
         });
