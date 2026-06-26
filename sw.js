@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1782434374'; // shrink mobile hero AVIF 125KB->94KB for mobile LCP
+const CACHE_V  = 'jfsn-1782435642'; // shrink mobile hero AVIF 125KB->94KB for mobile LCP
 const PRECACHE = [
   '/',
   '/index.html',

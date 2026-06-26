@@ -13,6 +13,7 @@ artworks/logs/
 artworks/.asset_hash
 *.pyc
 .DS_Store
+*.report.html
 
 # ── Node / Tailwind build ─────────────────────────────────────────────────────
 node_modules/
