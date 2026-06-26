@@ -3,30 +3,12 @@
 (function () {
   'use strict';
 
-  // ─── CRITICAL: Disable keyboard shortcuts modal (Session 66 bug) ───────────
-  // Multiple broken implementations cause modal to auto-open and not close.
-  // Blanket disable until properly consolidated and fixed (Session 67+).
-  (function() {
-    function hideKeyboardShortcutsModal() {
-      var selectors = ['#keyboard-shortcuts-overlay', '.keyboard-shortcuts-overlay', '#keyboard-shortcuts-modal', '.keyboard-shortcuts-modal', '.shortcuts-dialog'];
-      selectors.forEach(function(sel) {
-        document.querySelectorAll(sel).forEach(function(el) {
-          el.style.display = 'none !important';
-          el.style.visibility = 'hidden !important';
-          el.style.opacity = '0 !important';
-          el.style.pointerEvents = 'none !important';
-          el.remove();
-        });
-      });
-    }
-    hideKeyboardShortcutsModal();
-    setTimeout(hideKeyboardShortcutsModal, 10);
-    setTimeout(hideKeyboardShortcutsModal, 100);
-    setTimeout(hideKeyboardShortcutsModal, 500);
-    document.addEventListener('keydown', function(e) {
-      if (e.key === '?') { e.preventDefault(); e.stopPropagation(); hideKeyboardShortcutsModal(); }
-    }, true);
-  })();
+  // NOTE (Phase 1 cleanup): The old "disable keyboard-shortcuts modal" block
+  // was removed here. The modal markup it suppressed no longer exists on any
+  // page, its `el.style.x = '... !important'` lines were no-ops (the CSSOM
+  // property setter ignores `!important`), and its capture-phase `?` handler
+  // called stopPropagation() — which silently prevented search.js's real
+  // shortcuts overlay (bubble-phase, search.js:284) from ever opening.
 
   // ─── Vertical "you are here" label ───────────────────────────────────────
   const label = document.body.dataset.pageLabel;
@@ -37,30 +19,18 @@
     document.body.appendChild(el);
   }
 
-  // ─── Mobile menu button state ───────────────────────────────────────────
-  const menuBtn = document.getElementById('nav-menu-btn');
-  const menuDrawer = document.getElementById('mobile-menu-drawer');
-  const menuBackdrop = document.getElementById('mobile-menu-backdrop');
-  const menuClose = document.getElementById('nav-menu-close');
-
-  if (menuBtn && menuDrawer) {
-    const toggleMenu = function(open) {
-      menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-      menuDrawer.parentElement.style.display = open ? 'block' : 'none';
-    };
-
-    menuBtn.addEventListener('click', () => {
-      const isOpen = menuBtn.getAttribute('aria-expanded') === 'true';
-      toggleMenu(!isOpen);
-    });
-
-    if (menuClose) {
-      menuClose.addEventListener('click', () => toggleMenu(false));
-    }
-    if (menuBackdrop) {
-      menuBackdrop.addEventListener('click', () => toggleMenu(false));
-    }
-  }
+  // NOTE (Phase 1 cleanup): A duplicate mobile-menu open/close handler lived
+  // here. It bound the SAME #nav-menu-btn / #nav-menu-close / #mobile-menu-backdrop
+  // elements as the canonical handler in _shared/top-nav.html, and opened the
+  // drawer a different way (toggling parentElement display vs. the translateX
+  // slide + body-scroll-lock + focus management in top-nav.html). The two
+  // fought each other. The top-nav.html handler is the single source of truth.
+  //
+  // The removed block was also the only code keeping the hamburger's
+  // aria-expanded in sync. That is now handled directly by the canonical
+  // handler in _shared/top-nav.html: the button ships aria-expanded="false" in
+  // markup, and openMenu()/closeMenu() set it to 'true'/'false'. No mirroring
+  // needed here. (Phase 1 review regression fix.)
 
   // ─── Phase C 14: Mobile swipe gesture feedback ──────────────────────────
   // Decade pages: swipe left/right to navigate, haptic on slide-end
@@ -314,38 +284,12 @@
   }
   */
 
-  document.addEventListener('keydown', function(e) {
-    // Don't fire when user is typing in input/textarea
-    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-    if (e.metaKey || e.ctrlKey || e.altKey) return;
-
-    // P = previous work
-    if (e.key === 'p' || e.key === 'P') {
-      var prevLink = document.querySelector('a[href$=".html"][href*="art"][href*="../"]');
-      if (prevLink && prevLink.textContent.includes('PREVIOUS')) {
-        e.preventDefault();
-        prevLink.click();
-      }
-    }
-
-    // N = next work
-    if (e.key === 'n' || e.key === 'N') {
-      var nextLink = document.querySelector('a[href$=".html"][href*="art"][href*="../"]');
-      if (nextLink && nextLink.textContent.includes('NEXT')) {
-        e.preventDefault();
-        var allLinks = Array.from(document.querySelectorAll('a[href$=".html"][href*="art"][href*="../"]'));
-        nextLink = allLinks[allLinks.length - 1];
-        if (nextLink) nextLink.click();
-      }
-    }
-
-    // ? = show keyboard shortcuts help
-    // DISABLED: using keyboard-shortcuts.js implementation instead
-    // if (e.key === '?') {
-    //   e.preventDefault();
-    //   showKeyboardShortcuts();
-    // }
-  });
+  // NOTE (Phase 1 cleanup): A P/N keydown handler lived here that called
+  // prevLink.click()/nextLink.click() with no transition. It duplicated the
+  // richer handler further below (Session 52 #7) that adds the page-fade-out
+  // transition before navigating. Because this earlier copy navigated
+  // immediately, it pre-empted the fade version entirely. Removed; the
+  // transition-aware handler below is the single source of truth.
 
   // ─── Number counter animation (homepage hero) ─────────────────────────
   // Count up "1,084 works" on page load
@@ -542,33 +486,11 @@
   // ─── Phase 2: Theme color transitions (Session 52 #8) ─────────────────
   // Already CSS-driven via header nav a::after with background-color transition
 
-  // ─── Header collapse on scroll (Session 52 Enhancement) ────────────────
-  // Hide header on scroll down, show on scroll up
-  var header = document.querySelector('header');
-  if (header) {
-    var lastScrollY = 0;
-    var ticking = false;
-
-    window.addEventListener('scroll', function() {
-      if (!ticking) {
-        requestAnimationFrame(function() {
-          var currentScrollY = window.scrollY;
-
-          if (currentScrollY > lastScrollY && currentScrollY > 100) {
-            // Scrolling down, hide header
-            header.classList.add('header-hidden');
-          } else {
-            // Scrolling up or near top, show header
-            header.classList.remove('header-hidden');
-          }
-
-          lastScrollY = currentScrollY;
-          ticking = false;
-        });
-        ticking = true;
-      }
-    }, { passive: true });
-  }
+  // NOTE (Phase 1 cleanup): A duplicate header-collapse scroll handler lived
+  // here. _shared/top-nav.html already toggles `.header-hidden` on scroll AND
+  // suppresses the hide while the mobile drawer is open (its `menuOpen` guard).
+  // This copy lacked that guard, so it could hide the header with the drawer
+  // open. The top-nav.html handler is the single source of truth.
 
   // ─── Scroll-Reveal: Fade-in sections as they enter viewport ──────────────
   // Elements with .reveal-on-scroll animate in when they scroll into view
@@ -651,23 +573,14 @@
     }, true);
   })();
 
-  // ─── TIER 2: Lazy-Load Image Fade-In Enhancement ──────────────────────────
-  // Fade in images as they load
-  (function() {
-    if ('IntersectionObserver' in window) {
-      const lazyImages = document.querySelectorAll('img[loading="lazy"]');
-      lazyImages.forEach(img => {
-        const originalSrc = img.src;
-        img.addEventListener('load', function() {
-          this.classList.add('loaded');
-        });
-        // Mark as loaded if already cached
-        if (img.complete) {
-          img.classList.add('loaded');
-        }
-      });
-    }
-  })();
+  // NOTE (Phase 1 cleanup): A second lazy-image fade-in loop lived here. It
+  // added a `.loaded` class to the same images the block above already marks
+  // with `.jfsn-loaded`. Both fades are also redundant with ui.css's
+  // `img[loading="lazy"] { animation: image-fade-in … forwards }`, which fades
+  // images in on its own. FOLLOW-UP (Phase 2 CSS pass): ui.css defines
+  // `img[loading="lazy"]` twice with conflicting base rules (lines ~1685 and
+  // ~2815, one transition-driven `.jfsn-loaded`, one animation-driven
+  // `.loaded`); consolidate to one after visual verification.
 
   // ─── TIER 2: Keyboard Shortcut Hints ─────────────────────────────────────
   // Add hints to interactive elements showing keyboard shortcuts
@@ -794,6 +707,34 @@
     });
   })();
 
+  // ─── Shared theme-page color map (used by the two background/footer fades) ──
+  // Per-page tint, light + dark variants. Single source of truth — was
+  // previously duplicated verbatim inside both IIFEs below (Phase 1 dedup).
+  const JFSN_THEME_MAP = {
+    'guernica.html':      { light: '#f5ccc0', dark: '#5a2018' }, // warm red/salmon
+    'crosses.html':       { light: '#e6d5f5', dark: '#3a2a45' }, // purple
+    'targets.html':       { light: '#fce4c5', dark: '#5a4410' }, // gold/yellow
+    'framed.html':        { light: '#eee9e5', dark: '#4a4a4a' }, // neutral gray
+    'torsos-faces.html':  { light: '#f5d0c8', dark: '#5a2835' }, // warm pink
+    'mr-snowmann.html':   { light: '#d8ebf8', dark: '#1a3847' }, // cool blue
+    'gallery-images.html':{ light: '#f5d0c0', dark: '#5a3820' }, // warm mixed
+    'collaboration.html': { light: '#f5c8b8', dark: '#5a2818' }, // warm earth
+    'collage.html':       { light: '#fce4c5', dark: '#5a4410' }, // warm gold
+    'sculpture.html':     { light: '#d8ebf8', dark: '#1a3847' }, // cool gray/blue
+    'photography.html':   { light: '#d8ebf8', dark: '#1a3847' }, // cool blue
+    'painting.html':      { light: '#f5d0c0', dark: '#5a3820' }, // warm terra
+    'about.html':         { light: '#ffe4cc', dark: '#664400' }, // warm orange
+    'archive.html':       { light: '#ffe4cc', dark: '#664400' }  // warm orange
+  };
+  function jfsnThemeColor(isDark) {
+    for (const [page, colors] of Object.entries(JFSN_THEME_MAP)) {
+      if (document.location.pathname.includes(page)) {
+        return isDark ? colors.dark : colors.light;
+      }
+    }
+    return null;
+  }
+
   // ─── Background Color Fade Animation (Option 1 + 2: Scroll + Hero) ─────────
   // Subtle page-specific background color animation: hero fade + scroll fade.
   // As hero exits viewport, background fades from neutral to theme color.
@@ -805,35 +746,7 @@
     const isDarkMode = document.documentElement.classList.contains('dark');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Theme colors: light mode (VERY VISIBLE, strong tints) and dark mode (darker variants)
-    const themeMap = {
-      'guernica.html': { light: '#f5ccc0', dark: '#5a2018' },     // warm red/salmon — BOLD
-      'crosses.html': { light: '#e6d5f5', dark: '#3a2a45' },      // purple — BOLD
-      'targets.html': { light: '#fce4c5', dark: '#5a4410' },      // gold/yellow — BOLD
-      'framed.html': { light: '#eee9e5', dark: '#4a4a4a' },       // neutral gray — BOLD
-      'torsos-faces.html': { light: '#f5d0c8', dark: '#5a2835' }, // warm pink — BOLD
-      'mr-snowmann.html': { light: '#d8ebf8', dark: '#1a3847' },  // cool blue — BOLD
-      'gallery-images.html': { light: '#f5d0c0', dark: '#5a3820' }, // warm mixed — BOLD
-      'collaboration.html': { light: '#f5c8b8', dark: '#5a2818' }, // warm earth — BOLD
-      'collage.html': { light: '#fce4c5', dark: '#5a4410' },      // warm gold — BOLD
-      'sculpture.html': { light: '#d8ebf8', dark: '#1a3847' },    // cool gray/blue — BOLD
-      'photography.html': { light: '#d8ebf8', dark: '#1a3847' },  // cool blue — BOLD
-      'painting.html': { light: '#f5d0c0', dark: '#5a3820' },     // warm terra — BOLD
-      'about.html': { light: '#ffe4cc', dark: '#664400' },         // warm orange — BOLD
-      'archive.html': { light: '#ffe4cc', dark: '#664400' }        // warm orange — BOLD
-    };
-
-    // Detect current page from document title or body class
-    const getCurrentPageColor = () => {
-      for (const [page, colors] of Object.entries(themeMap)) {
-        if (document.location.pathname.includes(page)) {
-          return isDarkMode ? colors.dark : colors.light;
-        }
-      }
-      return null;
-    };
-
-    const themeColor = getCurrentPageColor();
+    const themeColor = jfsnThemeColor(isDarkMode);
     if (!themeColor) return; // Not a theme page
 
     const baseColor = isDarkMode ? '#1a1a1a' : '#fcf9f3';
@@ -945,34 +858,8 @@
     const isDarkMode = document.documentElement.classList.contains('dark');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Same theme colors as background
-    const themeMap = {
-      'guernica.html': { light: '#f5ccc0', dark: '#5a2018' },
-      'crosses.html': { light: '#e6d5f5', dark: '#3a2a45' },
-      'targets.html': { light: '#fce4c5', dark: '#5a4410' },
-      'framed.html': { light: '#eee9e5', dark: '#4a4a4a' },
-      'torsos-faces.html': { light: '#f5d0c8', dark: '#5a2835' },
-      'mr-snowmann.html': { light: '#d8ebf8', dark: '#1a3847' },
-      'gallery-images.html': { light: '#f5d0c0', dark: '#5a3820' },
-      'collaboration.html': { light: '#f5c8b8', dark: '#5a2818' },
-      'collage.html': { light: '#fce4c5', dark: '#5a4410' },
-      'sculpture.html': { light: '#d8ebf8', dark: '#1a3847' },
-      'photography.html': { light: '#d8ebf8', dark: '#1a3847' },
-      'painting.html': { light: '#f5d0c0', dark: '#5a3820' },
-      'about.html': { light: '#ffe4cc', dark: '#664400' },
-      'archive.html': { light: '#ffe4cc', dark: '#664400' }
-    };
-
-    const getCurrentPageColor = () => {
-      for (const [page, colors] of Object.entries(themeMap)) {
-        if (document.location.pathname.includes(page)) {
-          return isDarkMode ? colors.dark : colors.light;
-        }
-      }
-      return null;
-    };
-
-    const themeColor = getCurrentPageColor();
+    // Theme color from the shared JFSN_THEME_MAP defined above (Phase 1 dedup).
+    const themeColor = jfsnThemeColor(isDarkMode);
     if (!themeColor) return;
 
     // Find or create footer gradient fade (positioned ABOVE footer, in white area)

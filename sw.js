@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1782436319'; // fix SW fetch() honoring stale 1mo browser HTTP cache on JS/CSS
+const CACHE_V  = 'jfsn-1782700000'; // Phase 1 cleanup: head theme-init (FOUC fix), ui.js dedup, drop dead keyboard-shortcuts/scroll-to-top assets
 const PRECACHE = [
   '/',
   '/index.html',
