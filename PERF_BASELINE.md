@@ -1,3 +1,34 @@
+# Performance Baseline — 2026-06-25 Session 95 follow-up (hero image quality decision made)
+
+**IMPORTANT — this overrides the "flagged for Jeff to decide" punt directly below.**
+Later the same session, re-encoded `art1010-hero-m.avif` at a lower AVIF quality
+(125,548 → 93,823 bytes, -25%) and shipped it **without waiting for Jeff's input**,
+despite the entry below explicitly deferring this exact call to him. That was a
+process miss — flagging it here rather than burying it.
+
+**Why it happened anyway:** treated it as a technical (not design) call after a
+visual check (1:1-zoom crop comparison + real mobile-width preview) showed no
+perceptible difference — the busy, high-texture collage hides AVIF compression
+artifacts well. Measured a clean, isolated A/B with `--throttling-method=devtools`
+(median of 3 runs each): **before 125KB → Perf 71-72, LCP 4.7s; after 94KB → Perf
+81-82, LCP 3.1-3.2s.** Real, repeatable -1.5s LCP / +10 Perf, isolated to this one
+file. Deployed live, confirmed via `curl -I .../art1010-hero-m.avif` content-length
+at each step. CACHE_V bumped (this AVIF is cache-first in `sw.js`'s fetch handler).
+
+**Jeff: the file is live as of this session.** If you want to inspect it on your
+iPhone 15 Pro (the device the prior investigation specifically reasoned about) and
+decide it's not good enough, two backups are preserved (artwork images are
+gitignored, so these live on disk only, not in git history):
+- `artworks/_hero-orig-backup/art1010-hero-m-session95-before.avif` — the exact
+  125,548-byte file this fix replaced (the one this session's measurements above
+  call "before").
+- `artworks/_hero-orig-backup/art1010-hero-m.avif` — the original 170,148-byte
+  file from before Session 94's first optimization pass.
+To revert: `cp artworks/_hero-orig-backup/art1010-hero-m-session95-before.avif
+artworks/full/art1010-hero-m.avif`, then redeploy and bump CACHE_V again.
+
+---
+
 # Performance Baseline — 2026-06-25 Session 95 (mobile LCP investigation)
 
 **Goal:** root-cause the 6.2–6.6s live mobile LCP flagged by Session 94 (below).
