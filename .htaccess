@@ -116,6 +116,17 @@
 # Disable directory listing
 Options -Indexes
 
+# sw.js must never be cached by the browser — it's the only mechanism that
+# detects a new CACHE_V and purges the old SW cache. The generic 1-month JS
+# ExpiresByType rule below would otherwise let a browser keep registering a
+# stale service worker for weeks (found 2026-06-26: a real tab was still
+# running a service-worker-cached pre-fix script days after the fix shipped).
+<IfModule mod_headers.c>
+  <Files "sw.js">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+  </Files>
+</IfModule>
+
 # ============================================
 # PERFORMANCE — CACHE EXPIRY
 # ============================================
