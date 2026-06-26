@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1782435642'; // shrink mobile hero AVIF 125KB->94KB for mobile LCP
+const CACHE_V  = 'jfsn-1782436319'; // fix SW fetch() honoring stale 1mo browser HTTP cache on JS/CSS
 const PRECACHE = [
   '/',
   '/index.html',
@@ -146,9 +146,14 @@ self.addEventListener('fetch', e => {
     return;
   }
 
-  /* HTML / CSS / JS — network-first; cache as offline fallback */
+  /* HTML / CSS / JS — network-first; cache as offline fallback.
+     {cache:'reload'} bypasses the browser's own HTTP cache (.htaccess sets a
+     1-month Expires on JS/CSS) — without it, "network-first" silently
+     resolved from that stale disk cache instead of hitting the origin, so a
+     shipped bugfix could stay invisible to a returning visitor for 30 days
+     even after CACHE_V was bumped and the SW's own cache was purged. */
   e.respondWith(
-    fetch(e.request)
+    fetch(e.request, { cache: 'reload' })
       .then(res => {
         if (res.ok) {
           const clone = res.clone();
