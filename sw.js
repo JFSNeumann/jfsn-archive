@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1782431265'; // wow-factor parallax/motion rollout + restore wiped scripts
+const CACHE_V  = 'jfsn-1782433297'; // fix sitewide anime.getEasing scroll bug + essay-parallax freeze
 const PRECACHE = [
   '/',
   '/index.html',
