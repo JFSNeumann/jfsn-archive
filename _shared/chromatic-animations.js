@@ -11,6 +11,14 @@
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // anime.js (this bundled build) doesn't expose `anime.getEasing` — calling
+  // it threw on every high-velocity touch swipe, silently aborting the hint
+  // animation. Standalone easeOutQuad clamped to [0,1], used the same way.
+  function easeOutQuad(t) {
+    t = Math.min(Math.max(t, 0), 1);
+    return 1 - (1 - t) * (1 - t);
+  }
+
   // Decade color palette
   const decadePalettes = {
     '1970s': { label: '1970s', color: '#8B4513', hue: 30 },
@@ -132,7 +140,7 @@
         if (hint) {
           anime({
             targets: hint,
-            opacity: [anime.getEasing('easeOutQuad')(swipeVelocity / 20), 0.6],
+            opacity: [easeOutQuad(swipeVelocity / 20), 0.6],
             duration: 150,
             easing: 'easeOutQuad'
           });
