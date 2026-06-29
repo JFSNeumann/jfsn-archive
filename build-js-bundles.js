@@ -26,7 +26,6 @@ const ROOT = __dirname;
 
 const CORE_FILES = [
   '_shared/ui.js',
-  '_shared/nav-active.js',
   '_shared/lightbox.js',
   '_shared/toast.js',
   '_shared/page-transitions.js',
@@ -34,6 +33,13 @@ const CORE_FILES = [
   '_shared/analytics.js',
   '_shared/image-prefetch.js',
 ];
+// nav-active.js is deliberately excluded: it has a duplicate <script> tag on
+// 8 of the 38 pages (404, artwork, changes, chromatic, curatorial-map,
+// gallery-images, style-guide, wall — discovered while wiring up this
+// bundle). Folding it into a single universal bundle would collapse that
+// duplicate to a single execution everywhere — a real behavior change, not
+// just packaging. Left as its own individual tag, unchanged, exactly as it
+// is on every page today (single tag on 30 pages, duplicate on 8).
 
 const NAV_FILES = [
   'search.js',
