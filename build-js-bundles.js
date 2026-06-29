@@ -7,13 +7,18 @@
  * is preserved deliberately:
  *   - CORE_FILES: today's relative tag order on a representative page
  *     (index.html / qa.html), confirmed identical across samples.
- *   - NAV_FILES: today's literal order inside _shared/top-nav.html's
- *     NAV:START/NAV:END span, plus floating-home-button.js from
- *     _shared/footer.html's FOOTER span (folded in here to avoid loading it
- *     twice once its standalone tag is removed).
+ *   - NAV_EARLY_FILES / NAV_LATE_FILES: today, 9 of the 11 nav-span files
+ *     execute BEFORE two inline <script> blocks (header-scroll-hide,
+ *     dark-mode toggle) that live inside _shared/top-nav.html, and 2 of them
+ *     (micro-interactions.js, scroll-choreography.js) execute AFTER those
+ *     same inline blocks. A single merged nav bundle would flip that
+ *     relative order for whichever group didn't get the bundle's tag
+ *     position — so this is deliberately TWO bundles, each placed at the
+ *     exact tag position its members occupy today, preserving the existing
+ *     execution order exactly rather than just approximately.
  * Do not reorder either list without re-checking BUNDLE_PLAN.md §1 and §6 —
  * anime.min.js (loaded separately, NOT bundled) must still execute before
- * nav.bundle.js, and nav.bundle.js's tag must still execute before
+ * nav-early.bundle.js, and both nav bundles' tags must still execute before
  * core.bundle.js's tag, to preserve the existing window.showToast outcome
  * (ui.js's definition must keep winning over micro-interactions.js's).
  *
@@ -41,7 +46,7 @@ const CORE_FILES = [
 // just packaging. Left as its own individual tag, unchanged, exactly as it
 // is on every page today (single tag on 30 pages, duplicate on 8).
 
-const NAV_FILES = [
+const NAV_EARLY_FILES = [
   'search.js',
   '_shared/jfsn-interactions.js',
   '_shared/accent-transition.js',
@@ -50,6 +55,9 @@ const NAV_FILES = [
   '_shared/chromatic-position-strip.js',
   '_shared/chromatic-lazy-tint.js',
   '_shared/click-feedback.js',
+];
+
+const NAV_LATE_FILES = [
   '_shared/micro-interactions.js',
   '_shared/scroll-choreography.js',
   '_shared/floating-home-button.js',
@@ -77,4 +85,5 @@ function buildBundle(files, outPath, label) {
 }
 
 buildBundle(CORE_FILES, '_shared/core.bundle.js', 'core.bundle.js — universal, all 38 pages');
-buildBundle(NAV_FILES, '_shared/nav.bundle.js', 'nav.bundle.js — sitewide nav block, 37 stamped pages');
+buildBundle(NAV_EARLY_FILES, '_shared/nav-early.bundle.js', 'nav-early.bundle.js — runs before the inline header/dark-mode scripts, 37 stamped pages');
+buildBundle(NAV_LATE_FILES, '_shared/nav-late.bundle.js', 'nav-late.bundle.js — runs after the inline header/dark-mode scripts, 37 stamped pages');
