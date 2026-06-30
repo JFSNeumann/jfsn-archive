@@ -254,20 +254,14 @@ work lands there first). After any `stamp-nav.sh` run, check `git diff --stat` �
 if `index.html` shows a noticeably bigger diff than the other targets, inspect it
 before trusting it; a past run silently deleted a live script tag this way.
 
-**The `NAV:START`/`NAV:END` span is bigger than it looks — it includes the
-standard script bundle, not just markup.** `_shared/top-nav.html`'s own content
-runs all the way through the sitewide `<script>` tags (search.js, anime.min.js,
-jfsn-interactions.js, accent-transition.js, chromatic-accent-wire.js,
-ambient-chromatic-tint.js, chromatic-position-strip.js, chromatic-lazy-tint.js,
-micro-interactions.js, scroll-choreography.js) before `<!-- NAV:END -->` closes.
-Session 95 (wow-factor rollout) added several new page-specific script tags
-right next to that block, assuming it was past the nav — `stamp-nav.sh`'s regex
-(`<!-- NAV:START -->.*?<!-- NAV:END -->`) replaces that *entire* span verbatim,
-so every one of those new tags was silently deleted on the next re-stamp, and it
-went unnoticed until a live-site `curl` check caught it. **Any new page-specific
-script include must go immediately *after* `<!-- NAV:END -->`** (or be added to
-`_shared/top-nav.html` itself if it's meant to be sitewide) — never adjacent to
-the existing per-page script list, which is actually still inside the nav span.
+**`stamp-nav.sh` uses three independently-stamped spans** (H2 fix, 2026-06-30):
+- `<!-- NAV:START -->` … `<!-- NAV:END -->` — nav markup only (header, mobile menu, inline mobile-menu script)
+- `<!-- SCRIPTS:START -->` … `<!-- SCRIPTS:END -->` — sitewide script bundle (anime.min.js, nav-early.bundle.js, header-scroll + dark-mode inline scripts, nav-late.bundle.js)
+- `<!-- FOOTER:START -->` … `<!-- FOOTER:END -->` — footer markup
+
+Each span is stamped independently from `_shared/top-nav.html` (NAV + SCRIPTS) and `_shared/footer.html` (FOOTER). **Page-specific scripts must go immediately after `<!-- SCRIPTS:END -->`** — or be added to `_shared/top-nav.html`'s SCRIPTS block if they should appear on every page.
+
+Prior to this fix the NAV span included the entire sitewide script bundle. Session 95 lost 25+ page-specific scripts across 16 pages when a re-stamp deleted scripts placed inside that span. That class of error is now eliminated by construction.
 
 ---
 

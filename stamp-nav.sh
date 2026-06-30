@@ -59,21 +59,34 @@ html_path    = sys.argv[1]
 nav_path     = sys.argv[2]
 footer_path  = sys.argv[3]
 
-content      = open(html_path).read()
-nav_block    = open(nav_path).read().strip()
-footer_block = open(footer_path).read().strip()
+nav_src      = open(nav_path).read()
+footer_src   = open(footer_path).read()
 
+# Extract each block from the source files rather than using the full file,
+# so NAV, SCRIPTS, and FOOTER are stamped independently and page-specific
+# scripts placed after <!-- SCRIPTS:END --> are never touched.
+nav_block = re.search(
+    r'<!-- NAV:START -->.*?<!-- NAV:END -->', nav_src, re.DOTALL
+).group()
+scripts_block = re.search(
+    r'<!-- SCRIPTS:START -->.*?<!-- SCRIPTS:END -->', nav_src, re.DOTALL
+).group()
+footer_block = re.search(
+    r'<!-- FOOTER:START -->.*?<!-- FOOTER:END -->', footer_src, re.DOTALL
+).group()
+
+content = open(html_path).read()
 new_content = re.sub(
     r'<!-- NAV:START -->.*?<!-- NAV:END -->',
-    nav_block,
-    content,
-    flags=re.DOTALL
+    nav_block, content, flags=re.DOTALL
+)
+new_content = re.sub(
+    r'<!-- SCRIPTS:START -->.*?<!-- SCRIPTS:END -->',
+    scripts_block, new_content, flags=re.DOTALL
 )
 new_content = re.sub(
     r'<!-- FOOTER:START -->.*?<!-- FOOTER:END -->',
-    footer_block,
-    new_content,
-    flags=re.DOTALL
+    footer_block, new_content, flags=re.DOTALL
 )
 
 if new_content != content:
