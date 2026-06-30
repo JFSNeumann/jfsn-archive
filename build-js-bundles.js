@@ -35,7 +35,6 @@ const CORE_FILES = [
   '_shared/toast.js',
   '_shared/page-transitions.js',
   '_shared/lazy-load.js',
-  '_shared/analytics.js',
   '_shared/image-prefetch.js',
 ];
 // nav-active.js is deliberately excluded: it has a duplicate <script> tag on
@@ -58,7 +57,6 @@ const NAV_EARLY_FILES = [
 ];
 
 const NAV_LATE_FILES = [
-  '_shared/micro-interactions.js',
   '_shared/scroll-choreography.js',
   '_shared/floating-home-button.js',
 ];

@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1782824794'; // Phase 2C: Dead CSS removal — 1,943 lines / 19.1% gzip reduction
+const CACHE_V  = 'jfsn-1782827955'; // H1+M1: Removed micro-interactions.js (50KB) + analytics.js (5KB) from bundles — 55KB dead code eliminated
 const PRECACHE = [
   '/',
   '/index.html',
