@@ -1,7 +1,24 @@
 # JFSN Current State
-**Last updated:** 2026-06-24
+**Last updated:** 2026-06-29
 
 This file describes what's currently true about the site. For ranked work, see `IMPROVEMENTS.md`. For the design brief and architecture, see `CLAUDE.md`. For the session-by-session historical log, see `docs/sessions-archive.md` or `git log`.
+
+---
+
+## 2026-06-29 — Phase 2A: JS Bundling ✅ (committed, deployed, frozen)
+
+**Tag:** `phase2a-freeze` → `e938db90`
+
+**What changed:**
+- Introduced three JS bundles: `_shared/core.bundle.js` (7 files), `_shared/nav-early.bundle.js` (8 files), `_shared/nav-late.bundle.js` (3 files)
+- Reduced JS requests by **15 per stamped page** (e.g. index.html: 46 → 31 script tags)
+- Added `npm run build:js` script (`node build-js-bundles.js`) — mirrors the existing `npm run build:css` pattern
+- Bumped `CACHE_V` to `jfsn-1782767971` and deployed to jfsn.com
+- No behavior changes; no source files deleted; 1,084 generated artwork pages untouched
+
+**Deferred to a future phase:** pre-commit hook bundle freshness check, audit-nav.sh search.js false positive on 30 pages, pre-existing duplicate script executions (nav-active.js × 8 pages, etc.), ui.css 158KB render-blocking, stamp-nav.sh fragility.
+
+See `SESSION-END-PHASE2A.md` for full detail.
 
 ---
 
@@ -39,7 +56,7 @@ This file describes what's currently true about the site. For ranked work, see `
 
 ## Backup
 Four redundant stores, listed in update order at end-session:
-1. GitHub (`origin/main`) — last known commit as of this writing: `a9e8bf09` (uncommitted doc-audit work sits on top of this as of 2026-06-22)
+1. GitHub (`origin/main`) — last known commit: `e938db90` (Phase 2A freeze, 2026-06-29); tag `phase2a-freeze` pushed
 2. Local Mac (working tree)
 3. JEFFS-4TB external drive (rsync, nightly LaunchAgent at 11 PM)
 4. Backblaze B2 cloud (LaunchAgent at 9 PM nightly; rides `session-end.sh` / manual `cloud-backup.sh` when capped — daily cap resets ~midnight GMT / ~8 PM EDT) — **last B2 timestamp not verifiable from this session:** `~/Library/Logs/jfsn-cloud-backup.log` is empty and last modified 2026-06-15. Worth checking the LaunchAgent is still actually firing, not just assuming it is because it's scheduled.
