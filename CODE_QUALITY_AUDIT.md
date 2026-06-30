@@ -25,7 +25,7 @@ Everything else identified in the original audit — JS bundling, CSS splitting,
 | Maintainability | 4 → 5 | `ui.js` dedup helps; 38-page hand-maintenance + `stamp-nav.sh` fragility unchanged |
 | Architecture | 4 | No bundling; dual artwork system; ~60-module sprawl — unchanged |
 | Performance | 5 | Unminified 158 KB `ui.css` still render-blocking; ~21–33 scripts/page unchanged |
-| Accessibility | 7 → 7.5 | FOUC fixed; `aria-expanded` regression caught and fixed; rest unchanged |
+| Accessibility | 7 → 8 | FOUC fixed sitewide (Phase 1: 38 root pages; Phase 2B: 1,084 generated pages); `aria-expanded` regression caught and fixed |
 | Consistency | 5 | Inline-style sprawl, per-page asset drift — unchanged |
 | Technical debt | 3 → 4 | Phase 1 removed real debt; the larger structural items are still ahead |
 
@@ -67,7 +67,7 @@ Ordered by current status, not by original severity — this reflects what's act
 - `_shared/ui.css` defines `img[loading="lazy"]` **twice** with two different mechanisms (one transition-driven keyed to `.jfsn-loaded`, one animation-driven keyed to `.loaded`, around lines 1685 and 2815). The JS side feeding the second one was removed in Phase 1; the redundant CSS rule itself was deliberately left in place, flagged inline, pending visual verification.
 - The kept P/N (prev/next artwork) keyboard-shortcut handler in `ui.js` still locates adjacent-work links via `a[href$=".html"][href*="art"][href*="../"]` + `textContent.includes('PREVIOUS'/'NEXT')` — fragile string matching, not an explicit `data-direction` attribute. Pre-existing; works today; not touched.
 - Per-page script/stylesheet drift: `search.js`, `nav-active.js`, `ui.js`, `floating-home-button.js` etc. are not included on a fully consistent subset of pages — verified via script-tag census; pages have silently diverged over prior sessions.
-- The **dark-mode FOUC fix was applied only to the 38 hand-maintained root pages — not to the 1,084 generated artwork detail pages.** They still flash light-then-dark. This is the explicitly recommended next-phase objective (see below).
+- ~~The **dark-mode FOUC fix was applied only to the 38 hand-maintained root pages — not to the 1,084 generated artwork detail pages.**~~ **Fixed in Phase 2B (FOUC):** `gen-artwork-pages.py` template updated; all 1,084 pages regenerated and deployed 2026-06-29 (commit `0f2d1fbe`, tag `phase2-fouc-freeze`). FOUC fix is now sitewide.
 - Remaining (non-duplicate) `scroll` listeners are still scattered across roughly a dozen `_shared/*.js` files plus `ui.js` itself (4 single-purpose listeners: hero zoom-out, background-color fade, footer-gradient parallax, and one more) and `top-nav.html`/`footer.html` (1 each) — Phase 1 removed *duplicates*, but the broader recommendation to consolidate into one shared rAF-throttled scroll dispatcher is still undone.
 
 ### Still open — small / cosmetic
@@ -110,7 +110,7 @@ Ordered by current status, not by original severity — this reflects what's act
 | P/N artwork-nav selector relies on brittle `textContent` string matching | **Open** — works today, not hardened |
 | Filename with a literal space (`me black.gif`) | **Open** — low risk, not fixed |
 | Background-color-fade and footer-gradient-parallax scroll handlers in `ui.js` run on every scroll event without throttling beyond their own internal logic | **Open** — not consolidated into a shared rAF dispatcher |
-| Dark-mode FOUC fix not yet applied to the 1,084 generated artwork detail pages | **Open** — recommended Phase 2 objective |
+| Dark-mode FOUC fix not yet applied to the 1,084 generated artwork detail pages | **Fixed** (Phase 2B, commit `0f2d1fbe`, 2026-06-29) |
 
 ---
 
@@ -126,7 +126,7 @@ Ordered by current status, not by original severity — this reflects what's act
 
 ## Accessibility Findings
 
-- **Dark-mode FOUC** disproportionately affected the stated audience (the site explicitly targets a 70+ demographic per its own UX priorities) — **fixed** in Phase 1 for the 38 root pages; **still open** for the 1,084 generated artwork pages.
+- **Dark-mode FOUC** disproportionately affected the stated audience (the site explicitly targets a 70+ demographic per its own UX priorities) — **fixed sitewide**: Phase 1 covered the 38 root pages; Phase 2B (FOUC, 2026-06-29) extended the fix to all 1,084 generated artwork pages. Every page on jfsn.com now loads in the correct theme with no flash.
 - **`aria-expanded` on the mobile-menu hamburger** — found missing during the Phase 1 regression review (a side effect of removing a duplicate handler, not a pre-existing defect), and **fixed** at the root: the canonical handler now owns it directly, with a correct default in static markup.
 - The site's stated accessibility intent is otherwise strong by design: skip-to-content link, `prefers-reduced-motion` respected broadly across `ui.css` and the animation modules, WCAG AA-tuned color tokens (with an explicit `orange-ink` accessible variant for persistent text), and `aria-current="page"` nav-state handling. This audit did not re-verify every individual claim (e.g., did not run a full contrast or screen-reader pass) — that remains a reasonable Phase 2+ candidate if accessibility is prioritized further.
 - No other accessibility regressions were introduced or found during Phase 1 beyond the one caught and fixed.
@@ -160,9 +160,9 @@ Ordered by current status, not by original severity — this reflects what's act
 
 In priority order, consistent with the "Remaining Technical Debt" section above:
 
-1. **Phase 2 (recommended next, see below):** Extend the FOUC fix to the 1,084 generated artwork detail pages.
-2. **JS bundling** — collapse the 21–33 per-page script requests into a single built bundle.
-3. **CSS split/minify** — get `ui.css` out of the render-blocking critical path; minify it regardless.
+1. ~~**Phase 2 (FOUC):** Extend the FOUC fix to the 1,084 generated artwork detail pages.~~ **COMPLETE** — Phase 2B (FOUC), 2026-06-29 (tag `phase2-fouc-freeze`).
+2. ~~**JS bundling** — collapse the 21–33 per-page script requests into a single built bundle.~~ **COMPLETE** — Phase 2A, 2026-06-29 (tag `phase2a-freeze`).
+3. **CSS split/minify** — get `ui.css` out of the render-blocking critical path; minify it regardless. **(Recommended next phase.)**
 4. **`stamp-nav.sh` marker-scheme redesign** — separate the nav-markup span from the sitewide script-bundle span (or replace with a real build-time partial system) so routine nav changes stop carrying clobber risk.
 5. **Single rAF-throttled scroll dispatcher** — consolidate the dozen-plus independent `scroll` listeners.
 6. **Dual artwork-renderer unification** — requires site-owner input on which system (`artwork.html` vs. generated pages) is canonical.
@@ -171,11 +171,13 @@ In priority order, consistent with the "Remaining Technical Debt" section above:
 
 ---
 
-## Recommended Phase 2
+## ~~Recommended Phase 2~~ COMPLETE ✅
 
-**Objective:** Bring the dark-mode FOUC fix to full sitewide parity by extending it to the 1,084 generated artwork detail pages, so that every page on jfsn.com — not only the 38 hand-maintained ones — loads in the correct theme with no flash.
+**Closed 2026-06-29** — Phase 2B (FOUC), commit `0f2d1fbe`, tag `phase2-fouc-freeze`.
 
-This is the single most isolated, lowest-risk, highest-symmetry next step: it closes a gap Phase 1 explicitly and deliberately left open (the fix only reached hand-maintained pages because the generated pages require touching `gen-artwork-pages.py` and a full regeneration, which was out of scope for a same-day, no-regeneration phase). No implementation approach is prescribed here — that decision belongs to whoever executes Phase 2, informed by reading `gen-artwork-pages.py` and the generated-page workflow notes in `SESSION-END-PHASE1.md`'s "Known Risks" section first.
+The FOUC fix now covers all 1,084 generated artwork detail pages. `gen-artwork-pages.py`'s template was updated with the THEME_INIT script; all future regeners inherit it automatically. See `SESSION-END-PHASE2B-FOUC.md` and `PHASE2-FOUC-PREDEPLOY-REVIEW.md` for the full implementation and review record.
+
+**Recommended next phase: CSS Architecture Cleanup** — `_shared/ui.css` (158KB, render-blocking) is the highest remaining performance item. See "Remaining Roadmap" item 3 above.
 
 ---
 
