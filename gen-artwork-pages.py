@@ -255,6 +255,7 @@ def generate_page(work, idx, all_works, colors):
 <html class="light" lang="en">
 <head>
 <meta charset="utf-8"/>
+<script>try{{var t=localStorage.getItem('jfsn-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}}catch(e){{}}</script><!-- THEME_INIT: head-blocking, prevents dark-mode FOUC -->
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta name="theme-color" content="#fcf9f3"/>
 <title>{e(title)} — Jeffrey F. S. Neumann</title>

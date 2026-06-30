@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1782767971'; // Phase 2A: JS bundling (core/nav-early/nav-late bundles)
+const CACHE_V  = 'jfsn-1782782983'; // Phase 2: FOUC fix extended to 1,084 generated artwork pages
 const PRECACHE = [
   '/',
   '/index.html',
