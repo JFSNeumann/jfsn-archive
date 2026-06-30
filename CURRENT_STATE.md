@@ -5,6 +5,20 @@ This file describes what's currently true about the site. For ranked work, see `
 
 ---
 
+## 2026-06-29 — Phase 2 (FOUC): Dark-mode fix on 1,084 artwork pages ✅ (committed, deployed, frozen)
+
+**Tag:** `phase2-fouc-freeze` → `0f2d1fbe`
+
+**What changed:**
+- THEME_INIT head-blocking script added to all 1,084 generated artwork pages in `artworks/pages/`
+- One line added to `gen-artwork-pages.py` template — all future regeners inherit the fix automatically
+- `CACHE_V` bumped to `jfsn-1782782983` and deployed to jfsn.com
+- Every page on jfsn.com now prevents dark-mode FOUC (Phase 1 covered the 38 root pages; this closes the gap)
+
+See `SESSION-END-PHASE2-FOUC.md` and `PHASE2-FOUC-PREDEPLOY-REVIEW.md` for full detail.
+
+---
+
 ## 2026-06-29 — Phase 2A: JS Bundling ✅ (committed, deployed, frozen)
 
 **Tag:** `phase2a-freeze` → `e938db90`
@@ -36,7 +50,7 @@ See `SESSION-END-PHASE2A.md` for full detail.
 - **Fresh perf baseline ✅** — `PERF_BASELINE.md` now has real, corrected Lighthouse 12.8.0 numbers.
 
 **Open threads — next real building work:**
-- **Deploy when ready** — NONE of the 2026-06-25 work is live on jfsn.com yet (12+ commits sit on `origin/main`). A `deploy-hostgator.sh` run ships it.
+- ~~**Deploy when ready**~~ — **DEPLOYED** as part of Phase 2A (2026-06-29). All 2026-06-25 work is live on jfsn.com.
 - **The two-reveal-systems tangle** (`_shared/ui.css` auto-animation vs per-page IntersectionObserver) — flagged as a background task; causes the contrast false-positive. Cross-page shared-CSS cleanup, own session.
 - **Homepage depth-hero** — deliberately NOT added; the homepage hero is already its own animated instrument (mosaic/slice/river). Revisit only if the two should be reconciled.
 - Optional: extend depth-hero to `series-index.html` / `series.html` if their heroes fit the pattern.
@@ -56,7 +70,7 @@ See `SESSION-END-PHASE2A.md` for full detail.
 
 ## Backup
 Four redundant stores, listed in update order at end-session:
-1. GitHub (`origin/main`) — last known commit: `e938db90` (Phase 2A freeze, 2026-06-29); tag `phase2a-freeze` pushed
+1. GitHub (`origin/main`) — last known commit: `0f2d1fbe` (Phase 2 FOUC freeze, 2026-06-29); tags `phase2a-freeze` + `phase2-fouc-freeze` pushed
 2. Local Mac (working tree)
 3. JEFFS-4TB external drive (rsync, nightly LaunchAgent at 11 PM)
 4. Backblaze B2 cloud (LaunchAgent at 9 PM nightly; rides `session-end.sh` / manual `cloud-backup.sh` when capped — daily cap resets ~midnight GMT / ~8 PM EDT) — **last B2 timestamp not verifiable from this session:** `~/Library/Logs/jfsn-cloud-backup.log` is empty and last modified 2026-06-15. Worth checking the LaunchAgent is still actually firing, not just assuming it is because it's scheduled.
