@@ -1,8 +1,146 @@
-# SESSION-START — 2026-06-29
+# SESSION-START — 2026-06-30 (Phase 2C)
 
-**Written by:** Claude Code, session start  
-**Verified against:** live repository (not trusted from docs alone)  
-**Method:** Read all key docs, then independently verified claims via git log, grep, and file inspection.
+**Written by:** Claude Code, session start
+**Verified against:** live repository (not trusted from docs alone)
+**Method:** Read all key docs in prescribed order, then independently verified claims via git log, grep, curl, and file inspection.
+
+---
+
+## Current Repository State
+
+| Item | Value |
+|---|---|
+| Branch | `main` |
+| Latest commit | `6c2d8873` "Phase 2B FOUC: session-end doc + audit updates" |
+| Remote | `origin/main` at `6c2d8873` — **in sync** |
+| Working tree | **Clean** — no uncommitted changes |
+| Latest tag | `phase2-fouc-freeze` → `0f2d1fbe` |
+| All prior tags | `phase1-freeze` → `13ed191a`, `phase2a-freeze` → `e938db90` |
+
+---
+
+## Deployment Status
+
+| Item | Value |
+|---|---|
+| Live host | jfsn.com (HostGator/cPanel — the only host) |
+| Live status | ✅ Confirmed up (HTTP 200 on `/` and `/sw.js`) |
+| CACHE_V live | `jfsn-1782782983` (Phase 2B: FOUC fix, 2026-06-29) |
+| Last deployed | 2026-06-29 (Phase 2B FOUC + Phase 2A JS bundling) |
+
+All three phases (Phase 1, Phase 2A, Phase 2B) are committed, tagged, deployed, and verified live.
+
+---
+
+## Architecture Summary
+
+### Pages
+- **38** hand-maintained root HTML pages (the engineering surface for this session)
+- **1,084** machine-generated artwork detail pages (`artworks/pages/`) — not touched in CSS phases; `gen-artwork-pages.py`'s template does not currently load `ui.css`
+
+### Shared CSS layer (this session's target)
+| File | Size | Role |
+|---|---|---|
+| `_shared/ui.css` | **158 KB / 6,958 lines** | Render-blocking on all 38 root pages — loaded in `<head>` |
+| `site.min.css` | 22.5 KB | Compiled Tailwind — also in `<head>`, loaded after `ui.css` |
+
+### Shared JS layer (Phase 2A — complete)
+| File | Size | Role |
+|---|---|---|
+| `_shared/nav-early.bundle.js` | 67 KB | 8 nav scripts (incl. search.js) — inside NAV span |
+| `_shared/core.bundle.js` | 62 KB | 7 universal scripts — outside NAV span |
+| `_shared/nav-late.bundle.js` | 71 KB | 3 nav scripts (incl. micro-interactions.js) — inside NAV span |
+| `anime.min.js` | standalone | Animation library |
+| `nav-active.js` | standalone | Orange active link |
+
+### Nav/footer propagation
+`stamp-nav.sh` stamps `_shared/top-nav.html` into all 38 root pages via `NAV:START`/`NAV:END` markers. The NAV span covers the full sitewide script bundle (not just markup) — page-specific scripts must go **after** `<!-- NAV:END -->`.
+
+---
+
+## Build Pipeline Summary
+
+| Step | Command | Output |
+|---|---|---|
+| Compile CSS | `npm run build:css` | `site.min.css` |
+| Build JS bundles | `npm run build:js` | `_shared/*.bundle.js` |
+| Rebuild catalog | `python3 artworks/build_catalog.py` | `catalog.json`, `catalog-lite.json`, `api/`, `sitemap.xml` |
+| Rebuild artwork pages | `python3 gen-artwork-pages.py` | `artworks/pages/art*.html` |
+| Propagate nav | `bash stamp-nav.sh` | Stamps 38 root pages |
+| End session | `bash session-end.sh` | `git commit` + push + rsync backup (does NOT deploy) |
+| Deploy | `bash deploy-hostgator.sh` | FTP mirror to HostGator |
+
+Pre-commit hook: runs `audit-nav.sh`, rebuilds+diffs `site.min.css`, verifies `CACHE_V` when precached assets change. Currently exits with a non-fatal warning on 30 bundled pages (`search.js` false positive from Phase 2A — non-blocking).
+
+**CACHE_V rule:** After any CSS change that affects rendering, bump `CACHE_V` in `sw.js` before deploying.
+
+---
+
+## Open Technical Debt
+
+From `CODE_QUALITY_AUDIT.md`, in priority order:
+
+| # | Item | Phase |
+|---|---|---|
+| 1 | `_shared/ui.css` — 158KB, render-blocking, 6,958 lines | **2C — this session** |
+| 2 | `micro-interactions.js` — 1,326 lines of confirmed-dead code in `nav-late.bundle.js` | 2D |
+| 3 | Pre-commit hook doesn't check bundle freshness (JS bundles) | — |
+| 4 | `audit-nav.sh` false positive on 30 bundled pages (`search.js` check) | — |
+| 5 | Dual artwork renderer (`artwork.html` vs. `artworks/pages/`) | — |
+| 6 | Pre-existing duplicate script execution (`nav-active.js` ×8, etc.) | — |
+| 7 | `stamp-nav.sh` marker-scheme fragility | Phase 3 |
+| 8 | `analytics.js` silent no-op | 2D |
+| 9 | 106 TODO/FIXME comments | — |
+| 10 | Redundant `img[loading="lazy"]` CSS rule pair in `ui.css` | 2C candidate |
+
+---
+
+## Current Risks
+
+1. **`ui.css` is the primary active risk.** 158KB unminified and render-blocking on every page. 7× the size of the compiled Tailwind output. Highest-ROI remaining engineering item.
+
+2. **Scope risk in CSS cleanup.** `ui.css` has accreted ~90 sessions of additions. Sections labeled "Phase 10 / 11 / 12" (lines 5247–6275, ~1,000 lines) appear to be speculative AI-generated CSS proposals (Timeline Interactive View, Audio Player, Fullscreen Gallery Mode) that may never have had corresponding HTML. These are the most likely dead-code candidates — but they must be verified by grep against all HTML, not assumed. Any visual regression is user-facing.
+
+3. **`stamp-nav.sh` clobber risk** — standing risk, unchanged. Phase 2C does not involve `stamp-nav.sh`.
+
+4. **B2 cloud backup unverified.** `CURRENT_STATE.md` notes the B2 LaunchAgent log was empty as of 2026-06-15. Not a blocker but worth checking before deploying.
+
+---
+
+## Documentation Drift Found
+
+| Location | Claim | Reality |
+|---|---|---|
+| `CURRENT_STATE.md` (backup section) | "Latest commit: `0f2d1fbe`" | Actual latest is `6c2d8873` — two docs-only commits on top of the tagged code commit; same code state, different docs |
+| `CURRENT_STATE.md` (backup section) | B2 last confirmed 2026-06-15 | Unverified — the log was empty and the LaunchAgent firing status is unknown |
+
+Neither item affects code behavior. The `phase2-fouc-freeze` tag correctly points to the code freeze commit (`0f2d1fbe`).
+
+---
+
+## Session Objective: Phase 2C — CSS Architecture Cleanup
+
+**Target:** `_shared/ui.css` has three distinct problems:
+1. **Size**: 158KB unminified — whitespace and comments alone are a significant fraction
+2. **Render-blocking**: Loaded in `<head>` before first paint; a large portion is non-critical (hover animations, page-specific styles for rarely-visited pages)
+3. **Suspected dead code**: Phase 10/11/12 sections (lines 5247–6275, ~1,000 lines) reference components that may not exist in any current HTML page
+
+**Constraints (from session brief):**
+- Do not change layout, colors, typography, animation timing, accessibility, URLs, or JavaScript behavior
+- Do not change the build pipeline
+- Preserve appearance exactly
+
+**Next step (pending your approval of this document):** Produce `CSS_ARCHITECTURE_PLAN.md` — a full analysis of the current CSS architecture, critical vs. non-critical CSS, dead code candidates, modularization opportunities, performance estimates, risks, rollback strategy, and validation plan. No code will be written until you approve that plan.
+
+---
+
+## Questions
+
+None blocking. The objective and constraints are clear. The one open judgment call — which specific CSS to inline vs. defer vs. remove — will be analyzed and presented in `CSS_ARCHITECTURE_PLAN.md` for approval before any code is touched.
+
+---
+
+*No code changes made. Awaiting approval to proceed to CSS_ARCHITECTURE_PLAN.md.*
 
 ---
 

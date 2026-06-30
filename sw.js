@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1782782983'; // Phase 2: FOUC fix extended to 1,084 generated artwork pages
+const CACHE_V  = 'jfsn-1782824794'; // Phase 2C: Dead CSS removal — 1,943 lines / 19.1% gzip reduction
 const PRECACHE = [
   '/',
   '/index.html',
