@@ -1,7 +1,24 @@
 # JFSN Current State
-**Last updated:** 2026-06-29
+**Last updated:** 2026-06-30
 
 This file describes what's currently true about the site. For ranked work, see `IMPROVEMENTS.md`. For the design brief and architecture, see `CLAUDE.md`. For the session-by-session historical log, see `docs/sessions-archive.md` or `git log`.
+
+---
+
+## 2026-06-30 — Phase 2C: Dead CSS removal ✅ (committed, deployed, frozen)
+
+**Tag:** `phase2c-freeze` (recommended) → `06f3c6a0`
+
+**What changed:**
+- `_shared/ui.css`: 6,958 → 5,015 lines; 158KB → 118KB raw; 28.3KB → 22.9KB gzip (−19.1%)
+- 1,943 net lines removed: Phases 9–12 prototype CSS (never had HTML infrastructure), V2 design-system override blocks with zero live references, 4 orphaned dark-mode/responsive variants found in independent review
+- `.thumb` animation fixed: V2 `grid-entrance-slow` was silently overriding the Phase 3 stagger animation AND bypassing the `prefers-reduced-motion` accessibility guard via cascade order — both restored
+- Two architectural annotation comments added: `.thumb` stagger anomaly, load-bearing `h1/h2/h3` rules
+- V2 section numbering corrected from gapped (1–4, 6, 7, 11–13) to sequential (1–9)
+- `CACHE_V` bumped to `jfsn-1782824794`
+- All 1,084 generated artwork pages: zero code changes (CSS loaded by `<link>` — no regen needed)
+
+See `SESSION-END-PHASE2C.md`, `CSS_ARCHITECTURE_AUDIT.md`, and `PHASE2C-REMOVAL-MAP.md` for full detail.
 
 ---
 
@@ -70,7 +87,7 @@ See `SESSION-END-PHASE2A.md` for full detail.
 
 ## Backup
 Four redundant stores, listed in update order at end-session:
-1. GitHub (`origin/main`) — last known commit: `0f2d1fbe` (Phase 2 FOUC freeze, 2026-06-29); tags `phase2a-freeze` + `phase2-fouc-freeze` pushed
+1. GitHub (`origin/main`) — last known commit: `06f3c6a0` (Phase 2C docs, 2026-06-30); tags `phase2a-freeze`, `phase2-fouc-freeze` pushed; `phase2c-freeze` pending push
 2. Local Mac (working tree)
 3. JEFFS-4TB external drive (rsync, nightly LaunchAgent at 11 PM)
 4. Backblaze B2 cloud (LaunchAgent at 9 PM nightly; rides `session-end.sh` / manual `cloud-backup.sh` when capped — daily cap resets ~midnight GMT / ~8 PM EDT) — **last B2 timestamp not verifiable from this session:** `~/Library/Logs/jfsn-cloud-backup.log` is empty and last modified 2026-06-15. Worth checking the LaunchAgent is still actually firing, not just assuming it is because it's scheduled.
