@@ -5,6 +5,67 @@ This file describes what's currently true about the site. For ranked work, see `
 
 ---
 
+## 2026-06-30 — R2 decision + R1 fix: dual artwork-page system ✅ (committed, deployed)
+
+**R2 decision (architectural, Jeff-confirmed):** `artwork.html` (dynamic, `?id=artNNNN`, full
+animation/interaction stack) and the 1,084 static generated `artworks/pages/artNNNN.html`
+pages (lightweight, no bundles, no animation layer) are a **permanent, intentional split**,
+not a migration-in-progress. The generated pages stay deliberately minimal — fast load, no
+animation budget, good for SEO/crawlers/no-JS resilience. `artwork.html` stays the rich
+interactive view. **The contract:** generated pages get their own small, self-contained JS for
+any interactive feature they expose (see `_shared/artwork-page-min.js`) — they do not load
+`core.bundle.js` or any part of the animation layer. If a feature is added to one template, it
+is not automatically expected on the other; each template's interactivity is scoped to what
+that template intentionally supports.
+
+**R1 fix (shipped as R2's first concrete output):**
+- Root cause was two-fold, not one: (1) the generated pages' `onclick` handlers called
+  `window.showToast`/`window.toggleFavorite`, which were never defined on those pages (only
+  shipped via `core.bundle.js`, which they don't load); (2) independently, `gen-artwork-pages.py`
+  was emitting malformed `onclick` attributes — literal backslash-escaped quotes
+  (`onclick="...(\"art0001\")"`) inside an HTML attribute, which is invalid outside a JS string
+  context and silently broke attribute parsing even where the JS itself was correct.
+- Fixed both: added `_shared/artwork-page-min.js` (a minimal, hand-maintained toast +
+  favorite implementation, ~50 lines, reusing the existing `.toast`/`.favorite-btn` CSS already
+  shipped in `ui.css`) and corrected the attribute quoting in `gen-artwork-pages.py` to use
+  single quotes inside the double-quoted HTML attribute.
+- Regenerated all 1,084 pages via `python3 gen-artwork-pages.py`. Verified live in-browser on
+  `art0001.html`: Favorite button toggles `is-favorited` + localStorage + toast; Copy-ID toast
+  fires; no console errors.
+- `audit-nav.sh` run clean except pre-existing, unrelated "missing search.js" warnings on
+  six theme/essay pages — not touched by this change.
+
+---
+
+## 2026-06-30 — H1+M1+H2: Dead JS removal + stamp-nav.sh fix ✅ (committed, deployed)
+
+**Commits:** `5fcedd17` (H1+M1), `1b429181` (H2), `dfcf00c0` (roadmap)
+
+**H1+M1 — Dead JS removed from bundles:**
+- `_shared/micro-interactions.js` (50KB, 1,335 lines, 40+ null-guarded dead functions) deleted from `nav-late.bundle.js` and repo
+- `_shared/analytics.js` (5KB, sent to non-existent `/analytics` endpoint) deleted from `core.bundle.js` and repo
+- `nav-late.bundle.js`: 71,447 → 19,702 bytes; `core.bundle.js`: 62,552 → 56,002 bytes
+- Total sitewide JS parse budget reduction: ~58KB
+- CACHE_V bumped to `jfsn-1782827955`
+
+**H2 — stamp-nav.sh NAV:END scope fixed:**
+- `<!-- NAV:END -->` moved to before sitewide script bundle in `_shared/top-nav.html`
+- New `<!-- SCRIPTS:START -->` / `<!-- SCRIPTS:END -->` span wraps sitewide bundle
+- `stamp-nav.sh` updated to stamp all three spans (NAV, SCRIPTS, FOOTER) independently
+- All 37 stamped pages migrated in one pass; idempotent on second pass
+- Page-specific scripts (after SCRIPTS:END) are now safe from re-stamp deletion by construction
+- `CLAUDE.md` updated with new three-span structure and retired stale NAV-span warning
+
+**Backup situation (H3):**
+- B2 cloud backup: manually synced (9,506 objects / 683MB current). LaunchAgent had been
+  failing for 15 days: macOS Full Disk Access blocks launchd from running scripts in ~/Documents.
+  **User action required:** System Settings → Privacy & Security → Full Disk Access → add /bin/bash
+- JEFFS-4TB: corrupted APFS container superblock (`diskutil verifyVolume` returned exit 8 / "Container
+  superblock is invalid"). rsync writes fail. B2 is the only off-site backup.
+  **User action required:** Open Disk Utility → JEFFS-4TB → First Aid. If it fails, reformat and repopulate with `bash backup.sh`.
+
+---
+
 ## 2026-06-30 — Phase 2C: Dead CSS removal ✅ (committed, deployed, frozen)
 
 **Tag:** `phase2c-freeze` (recommended) → `06f3c6a0`
