@@ -125,13 +125,40 @@ echo ""
 echo "Testing jfsn.com..."
 sleep 3
 
-if curl -s https://jfsn.com/index.html | grep -q "Jeffrey F. S. Neumann"; then
-  echo -e "${GREEN}✓ jfsn.com homepage live${NC}"
-  TEST_PASSED=true
-else
-  echo -e "${YELLOW}⚠ jfsn.com not responding yet (may still be syncing)${NC}"
-  TEST_PASSED=false
-fi
+TEST_PASSED=true
+SMOKE_FAILURES=()
+
+smoke_check() {
+  local url="$1"
+  local pattern="$2"
+  local label="$3"
+  local body
+  body=$(curl -s --max-time 10 "$url")
+  local http_code
+  http_code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "$url")
+  if [ "$http_code" != "200" ]; then
+    echo -e "${RED}✗ $label — HTTP $http_code${NC}"
+    SMOKE_FAILURES+=("$label (HTTP $http_code)")
+    TEST_PASSED=false
+  elif ! echo "$body" | grep -q "$pattern"; then
+    echo -e "${RED}✗ $label — pattern not found: $pattern${NC}"
+    SMOKE_FAILURES+=("$label (missing: $pattern)")
+    TEST_PASSED=false
+  else
+    echo -e "${GREEN}✓ $label${NC}"
+  fi
+}
+
+smoke_check "https://jfsn.com/index.html"                    "Jeffrey F. S. Neumann"  "Homepage"
+smoke_check "https://jfsn.com/archive.html"                  "catalog-lite.json"      "Archive"
+smoke_check "https://jfsn.com/artwork.html"                  "site.min.css"           "Artwork page"
+smoke_check "https://jfsn.com/artworks/pages/art0001.html"  "art0001"                "Generated artwork page"
+smoke_check "https://jfsn.com/catalog-lite.json"            "\"file\""               "catalog-lite.json"
+smoke_check "https://jfsn.com/_shared/core.bundle.js"       "showToast"              "core.bundle.js"
+smoke_check "https://jfsn.com/sw.js"                        "CACHE_V"                "Service worker"
+smoke_check "https://jfsn.com/site.min.css"                 "font-family"            "site.min.css"
+smoke_check "https://jfsn.com/404.html"                     "404"                    "404 page"
+smoke_check "https://jfsn.com/about.html"                   "Jeffrey"                "About page"
 
 # ─────────────────────────────────────────────────────────────────────────────
 # FINAL REPORT
@@ -148,9 +175,14 @@ if [ "$UPLOAD_SUCCESS" = true ]; then
   echo "✓ jfsn.com deployment initiated"
   echo ""
   if [ "$TEST_PASSED" = true ]; then
-    echo -e "${GREEN}✓ Homepage is live${NC}"
+    echo -e "${GREEN}✓ All smoke checks passed${NC}"
   else
-    echo -e "${YELLOW}ℹ Changes may take a few minutes to propagate${NC}"
+    echo -e "${RED}✗ Smoke check failures:${NC}"
+    for f in "${SMOKE_FAILURES[@]}"; do
+      echo -e "  ${RED}• $f${NC}"
+    done
+    echo -e "${YELLOW}ℹ The site may still be syncing — recheck in 2 minutes.${NC}"
+    echo -e "${YELLOW}ℹ If failures persist, the deploy may be incomplete.${NC}"
   fi
   echo ""
   echo "Visit: https://jfsn.com"
