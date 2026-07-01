@@ -224,30 +224,6 @@
         easing: pass.easing || 'linear',
       }, `-=${idx === 0 ? 0 : pass.duration * 0.1}`);
 
-      if (pass.isHover && pass.tile) {
-        const tileRect = pass.tile.getBoundingClientRect();
-        const spotX = tileRect.left - containerRect.left + tileRect.width / 2 - 60;
-        const spotY = tileRect.top - containerRect.top + tileRect.height / 2 - 60;
-
-        timeline.add({
-          targets: spotlight,
-          left: spotX,
-          top: spotY,
-          opacity: [0, 1, 0],
-          duration: 600,
-          easing: 'easeInOutQuad',
-        }, `-=${pass.duration * 0.5}`);
-
-        timeline.add({
-          targets: spotlight,
-          boxShadow: [
-            '0 0 30px rgba(255,102,0,0.2)',
-            '0 0 60px rgba(255,102,0,0.5)',
-            '0 0 30px rgba(255,102,0,0.2)',
-          ],
-          duration: 200,
-        }, `-=${600}`);
-      }
     });
 
     timeline.add({

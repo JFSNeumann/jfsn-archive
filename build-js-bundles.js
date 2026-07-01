@@ -7,20 +7,18 @@
  * is preserved deliberately:
  *   - CORE_FILES: today's relative tag order on a representative page
  *     (index.html / qa.html), confirmed identical across samples.
- *   - NAV_EARLY_FILES / NAV_LATE_FILES: today, 9 of the 11 nav-span files
- *     execute BEFORE two inline <script> blocks (header-scroll-hide,
- *     dark-mode toggle) that live inside _shared/top-nav.html, and 2 of them
- *     (micro-interactions.js, scroll-choreography.js) execute AFTER those
- *     same inline blocks. A single merged nav bundle would flip that
- *     relative order for whichever group didn't get the bundle's tag
- *     position — so this is deliberately TWO bundles, each placed at the
- *     exact tag position its members occupy today, preserving the existing
- *     execution order exactly rather than just approximately.
+ *   - NAV_EARLY_FILES / NAV_LATE_FILES: the nav-span files split into two
+ *     bundles because scroll-choreography.js must execute AFTER two inline
+ *     <script> blocks (header-scroll-hide, dark-mode toggle) that live inside
+ *     _shared/top-nav.html. A single merged nav bundle would place all files
+ *     at one tag position, flipping that relative order — so TWO bundles,
+ *     each at the exact tag position its members occupy, preserves execution
+ *     order exactly. (micro-interactions.js was previously in NAV_LATE_FILES
+ *     for the same reason; it was deleted in H1 2026-06-30.)
  * Do not reorder either list without re-checking BUNDLE_PLAN.md §1 and §6 —
  * anime.min.js (loaded separately, NOT bundled) must still execute before
  * nav-early.bundle.js, and both nav bundles' tags must still execute before
- * core.bundle.js's tag, to preserve the existing window.showToast outcome
- * (ui.js's definition must keep winning over micro-interactions.js's).
+ * core.bundle.js's tag.
  *
  * Run: node build-js-bundles.js   (or: npm run build:js)
  */
@@ -35,7 +33,6 @@ const CORE_FILES = [
   '_shared/toast.js',
   '_shared/page-transitions.js',
   '_shared/lazy-load.js',
-  '_shared/image-prefetch.js',
 ];
 // nav-active.js is deliberately excluded: it has a duplicate <script> tag on
 // 8 of the 38 pages (404, artwork, changes, chromatic, curatorial-map,

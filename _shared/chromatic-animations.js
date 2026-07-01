@@ -19,16 +19,6 @@
     return 1 - (1 - t) * (1 - t);
   }
 
-  // Decade color palette
-  const decadePalettes = {
-    '1970s': { label: '1970s', color: '#8B4513', hue: 30 },
-    '1980s': { label: '1980s', color: '#CD853F', hue: 25 },
-    '1990s': { label: '1990s', color: '#DAA520', hue: 45 },
-    '2000s': { label: '2000s', color: '#FF8C00', hue: 38 },
-    '2010s': { label: '2010s', color: '#FF6347', hue: 9 },
-    '2020s': { label: '2020s', color: '#DC143C', hue: 0 }
-  };
-
   /* ─── Scroll-Driven Wave Animation ──────────────────────────────────────── */
   function setupScrollWaves() {
     if (prefersReducedMotion) return;
@@ -38,7 +28,6 @@
     if (!canvas || !wrap) return;
 
     let scrollProgress = 0;
-    const originalDrawFunction = window.__drawRiver; // Assumes river has a draw function
 
     window.addEventListener('scroll', function() {
       const wrapRect = wrap.getBoundingClientRect();

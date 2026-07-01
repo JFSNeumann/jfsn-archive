@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1782827955'; // H1+M1: Removed micro-interactions.js (50KB) + analytics.js (5KB) from bundles — 55KB dead code eliminated
+const CACHE_V  = 'jfsn-1782872000'; // R6: Removed image-prefetch.js (inert) from core.bundle.js
 const PRECACHE = [
   '/',
   '/index.html',
