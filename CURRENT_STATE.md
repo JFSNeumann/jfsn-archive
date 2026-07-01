@@ -5,6 +5,18 @@ This file describes what's currently true about the site. For ranked work, see `
 
 ---
 
+## 2026-07-01 — Creative Brief 001 prototype committed (not yet deployed)
+
+**Commit:** `81e27365`
+
+**Bug fixed:** All `.reveal-section` elements were permanently invisible to JS users. `micro-interactions.js` (deleted Session B, H1) was the sole IntersectionObserver adding `.revealed`. IntersectionObserver restored to `_shared/ui.js` — its logical home as companion to `ui.css`'s `.reveal-section` system. `core.bundle.js` rebuilt.
+
+**Brief 001 — Crossing the Threshold:** The "Where to Begin" heading now lands before its four explore cards. Removed `reveal-section` from the heading wrapper; bumped card animation delays from 0.1s/0.2s to 0.4s/0.5s. The heading is ground. The cards are figure. The room introduces itself before it fills.
+
+**Status:** Committed, not deployed. The prototype will be experienced in context before any further iteration or deployment decision.
+
+---
+
 ## 2026-07-01 — Engineering phase complete. Project transitions to Creative Brief–driven phase.
 
 The engineering roadmap is complete. All high- and medium-priority items from `ENGINEERING_ROADMAP.md` have been resolved. The remaining open item (R8: image fade-in consolidation) is intentionally deferred — it carries no active correctness risk and no Creative Brief is blocked by it today. It should be resolved immediately before the first Brief that materially changes image-loading behavior.
@@ -189,6 +201,36 @@ See `SESSION-END-PHASE2A.md` for full detail.
 
 ---
 
+## Creative Phase Status
+
+### What we learned from Creative Brief 001
+
+The most important lesson is methodological, not visual: the philosophy comes before the implementation. Creative Brief 001 began with a philosophical exploration — museum thresholds, antechambers, stillness, obligation, permission — and that exploration produced both the 7 Canonical Experience Principles and the specific insight that shaped the change. Without that groundwork, the implementation would have been one of three reasonable ideas rather than one obvious one.
+
+The insight itself: when heading and content reveal simultaneously, the heading is subordinate to its own contents. Separating them — making the heading ground and the cards figure — creates the experience of a room that introduces itself. The implementation required three HTML attribute changes.
+
+The discipline of asking "what is the single highest-value improvement" before touching anything, and then building the smallest possible thing, is the right method for this phase. It should govern every future Brief.
+
+### What remains uncertain
+
+Whether the prototype earns its place in the actual experience — as opposed to in a dev browser. The effect is subtle. On a slow scroll it is legible as intentional; on a fast scroll it is invisible. It has not been seen at real viewport sizes in a real browsing context. The remaining question is whether it creates a moment of stillness or a moment of waiting. Those are not the same thing.
+
+The card delays (0.4s/0.5s) may need adjustment once experienced in context. They may be right, slightly long, or (less likely) too short. This is a judgment call that requires observation, not analysis.
+
+### Why we are pausing before further refinement
+
+The prototype has been built and committed. The correct next step is to experience it, not to iterate on it. Continued iteration from within a dev environment risks optimizing for a context that doesn't resemble how real visitors experience the site. The philosophy requires living with the work before deciding whether it earns its place.
+
+The possible next-session outcomes are intentionally left open:
+- Continue refining Brief 001 (delays, scope to other sections)
+- Accept it as complete and deploy
+- Remove it (a valid outcome — the Experience Test is a gate, not a promise)
+- Move on to the Artwork page
+
+All four outcomes are consistent with the Experience Philosophy. The goal is not to accumulate refinements. The goal is to serve the work.
+
+---
+
 ## Site is live at
 - **jfsn.com** — cPanel/HostGator, the only host. Netlify (secondary mirror) and the Companion AI chat feature were removed 2026-06-22.
 
@@ -198,7 +240,7 @@ See `SESSION-END-PHASE2A.md` for full detail.
 
 ## Backup
 Four redundant stores, listed in update order at end-session:
-1. GitHub (`origin/main`) — last known commit: `c7966edb` (session-end, 2026-07-01); tags `phase2a-freeze`, `phase2-fouc-freeze`, `phase2c-freeze` pushed
+1. GitHub (`origin/main`) — last known commit: `81e27365` (Creative Brief 001, 2026-07-01); tags `phase2a-freeze`, `phase2-fouc-freeze`, `phase2c-freeze` pushed
 2. Local Mac (working tree)
 3. JEFFS-4TB external drive (rsync, nightly LaunchAgent at 11 PM) — **corrupted APFS superblock; rsync writes failing. Needs First Aid or reformat. See pending user actions above.**
 4. Backblaze B2 cloud (LaunchAgent at 9 PM nightly) — **LaunchAgent silently failing** due to macOS Full Disk Access blocking `/bin/bash` in launchd context. B2 was manually synced 2026-07-01 (9,506 objects / 683MB). LaunchAgent will resume once Full Disk Access is granted. See pending user actions above.
