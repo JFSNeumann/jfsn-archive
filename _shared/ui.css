@@ -854,11 +854,6 @@ a[data-link-title]:hover::after {
   }
 }
 
-@keyframes underline-draw {
-  from { transform: scaleX(0); }
-  to { transform: scaleX(1); }
-}
-
 /* Hero text stagger (Phase 1 #1) */
 .decade-hero h1,
 .decade-hero p {
@@ -913,10 +908,7 @@ textarea:focus-visible {
   50% { box-shadow: inset 0 0 5px rgba(255, 102, 0, 0.3); }
 }
 
-@keyframes color-transition {
-  from { color: inherit; }
-  to { color: #FF6600; }
-}
+
 
 @keyframes rotation-pulse {
   0%, 100% { transform: rotate(0deg); }
@@ -979,13 +971,13 @@ button:active {
   100% { transform: translateX(-20px); opacity: 0; }
 }
 
-@keyframes chip-pulse {
+@keyframes chip-pulse-remove {
   0%, 100% { background-color: #ebe8e2; }
   50% { background-color: #FFB366; }
 }
 
 .filter-chip.removing {
-  animation: chip-pulse 0.15s ease, chip-remove 0.2s ease-out forwards;
+  animation: chip-pulse-remove 0.15s ease, chip-remove 0.2s ease-out forwards;
 }
 
 /* 4.2 Data table row hover state */
@@ -2817,10 +2809,6 @@ img[loading="lazy"] {
   opacity: 0;
 }
 
-img[loading="lazy"].loaded {
-  opacity: 1;
-}
-
 @keyframes image-fade-in {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -3829,25 +3817,6 @@ textarea:focus-visible {
   border-bottom: 1px solid #e3bfb1;
   padding-bottom: 16px;
   margin-bottom: 16px;
-}
-
-.filter-section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-  padding: 8px 0;
-  user-select: none;
-}
-
-.filter-section-header h3 {
-  font-family: Inter, sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  color: #0B0B0B;
-  text-transform: uppercase;
-  margin: 0;
-  letter-spacing: 0.08em;
 }
 
 .filter-section-toggle {

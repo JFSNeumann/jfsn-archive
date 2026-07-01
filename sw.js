@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1782872000'; // R6: Removed image-prefetch.js (inert) from core.bundle.js
+const CACHE_V  = 'jfsn-1782873000'; // M2: Dead CSS removed (duplicate keyframes, orphaned selectors)
 const PRECACHE = [
   '/',
   '/index.html',
