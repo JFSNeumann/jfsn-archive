@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1782873000'; // M2: Dead CSS removed (duplicate keyframes, orphaned selectors)
+const CACHE_V  = 'jfsn-20260701010000'; // R4/R5: Toast consolidated, redundant signposting removed
 const PRECACHE = [
   '/',
   '/index.html',

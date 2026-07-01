@@ -146,13 +146,12 @@ const Lightbox = {
 
     if (workId) {
       navigator.clipboard.writeText(workId).then(() => {
-        // Show toast if available
-        if (typeof Toast !== 'undefined') {
-          Toast.success(`Copied: ${workId}`);
+        if (typeof window.showToast !== 'undefined') {
+          window.showToast(`Copied: ${workId}`, 3000, 'success');
         }
       }).catch(() => {
-        if (typeof Toast !== 'undefined') {
-          Toast.error('Failed to copy');
+        if (typeof window.showToast !== 'undefined') {
+          window.showToast('Failed to copy', 4000, 'error');
         }
       });
     }
