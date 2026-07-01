@@ -62,9 +62,11 @@ ARTIST_SHORT = _cfg.get("artist_short") or ARTIST_NAME
 # Fields kept in the lite catalog.
 # Consumers: search.js (file,title,year,work_type,themes,keywords,motifs)
 #            series.html (series — needed for ?series= named-series filter)
-#            artwork-meta.js edge function (adds description for social meta)
 # Stripped: palette, composition — not read by any consumer
-LITE_FIELDS = {'file', 'title', 'work_type', 'year', 'themes', 'keywords', 'motifs', 'description', 'favorite', 'featured', 'series', 'orientation', 'composite', 'year_precision', 'year_display'}
+# Stripped: description — search.js does not index it; no consumer reads it from
+#            catalog-lite.json (gen-artwork-pages.py reads catalog.json directly).
+#            Removing it cuts the gzipped wire payload from ~153KB to ~66KB (57%).
+LITE_FIELDS = {'file', 'title', 'work_type', 'year', 'themes', 'keywords', 'motifs', 'favorite', 'featured', 'series', 'orientation', 'composite', 'year_precision', 'year_display'}
 
 # Title language that marks an image as a staged "imagined placement" composite
 # even when it isn't tagged Gallery/Studio (master-notes §22/§25).
