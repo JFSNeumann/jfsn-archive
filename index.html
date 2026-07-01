@@ -1663,7 +1663,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
     const grid = document.getElementById('featured-grid');
     if (!grid) return;
     try {
-      const works = await fetch('catalog-home.json?v=20260623081621').then(r => r.json());
+      const works = await fetch('catalog-home.json?v=20260701003511').then(r => r.json());
 
       /* Shuffle cards 4–30 so repeat visitors see variety; keep top 3 editorial */
       const editorial = works.slice(0, 3);

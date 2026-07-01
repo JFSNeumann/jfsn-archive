@@ -1,5 +1,887 @@
 [
   {
+    "sha": "0ff7674",
+    "date": "2026-06-30",
+    "title": "M2: Remove dead CSS — duplicate keyframes, orphaned selectors, stale rule",
+    "body": "Dead keyframes removed:\n- @keyframes color-transition (line ~916): defined, never referenced by any\n  animation property anywhere in ui.css or HTML.\n- First @keyframes underline-draw (line ~857): scaleX-based; shadowed by the\n  second definition (line ~1193, width-based) which is the live one used by\n  .bracket-link::after. Last-definition-wins in CSS.\n\nDuplicate renamed (behavior restored):\n- First @keyframes chip-pulse (background-color pulse for .filter-chip.removing)\n  renamed to chip-pulse-remove; .filter-chip.removing updated to match. The\n  second chip-pulse (scale pulse for .filter-chip.applying) now has an\n  unambiguous name and the first no longer shadows it. .filter-chip.removing\n  now fires its intended background-color animation instead of the scale one.\n\nOrphaned selectors removed:\n- .filter-section-header and .filter-section-header h3: no HTML file outside\n  style-guide.html (demo only) references these selectors. The archive filter\n  UI was rebuilt with Tailwind classes; these old selectors have no live targets.\n\nDead rule removed:\n- img[loading=\"lazy\"].loaded { opacity: 1 }: the JS loop that added .loaded was\n  removed in Phase 1 cleanup (documented in ui.js comment at line ~577).\n  No code adds the .loaded class. The animation-based fade (img[loading=\"lazy\"]\n  { animation: image-fade-in … }) continues to work unchanged.\n\nCSS rebuilt (site.min.css). CACHE_V bumped."
+  },
+  {
+    "sha": "ede6de3",
+    "date": "2026-06-30",
+    "title": "R3: Remove artwork image parallax — violates CLAUDE.md hard rail",
+    "body": "setupImageParallax() was applying translateY directly to #work-image\n(the artwork img element itself) on scroll. CLAUDE.md is explicit:\n\"never pan/tilt/parallax the artwork node itself. Depth comes from\neverything around the work.\" The artwork detail page is also documented\nas intentionally quiet (\"no depth-hero on a single-work view\").\n\nRemoved the function and its call site. The entrance timeline\n(fade/translate of the container) and the accent color animation\nare unchanged — those animate around the work, not the work itself."
+  },
+  {
+    "sha": "e6cf07a",
+    "date": "2026-06-30",
+    "title": "R6/R7/R11/R10: remove inert code and stale comments (no behavior change)",
+    "body": "R6: Delete _shared/image-prefetch.js — inert on both template types.\nartwork.html has no rel=\"next/prev\" links and never sets window.allWorks;\ngenerated pages have no ?id= param so init() returned immediately on every\npage load. Removed from core.bundle.js CORE_FILES; bundle rebuilt (-2.4KB).\nCACHE_V bumped.\n\nR7: Update build-js-bundles.js header comment — remove two stale references\nto micro-interactions.js (deleted H1). The two-bundle split rationale now\ncorrectly cites scroll-choreography.js as the reason. The window.showToast\nordering note (which referenced the deleted file) is removed.\n\nR11: Remove dead branch in drone-survey.js — pass.tile is never set by any\nof the three generateXxxPasses() functions, so the if(pass.isHover&&pass.tile)\nblock in animateDrone() was unreachable. containerRect (referenced inside\nthat block but never defined in scope) would have thrown a ReferenceError if\nit had ever been reached. Removed the dead block, not the surrounding hover\nlogic (isHover-only passes still work correctly). Also removed decadePalettes\n(defined, never referenced) and originalDrawFunction (assigned window.__drawRiver\nwhich is never set, never used) from chromatic-animations.js.\n\nR10: old-site/ (15MB legacy vendor tree, zero git references) was confirmed\nuntracked — already absent from the repository. Deleted locally."
+  },
+  {
+    "sha": "9cc568b",
+    "date": "2026-06-30",
+    "title": "R2 decision + R1 fix: dual artwork-page system is permanent, generated pages get minimal own JS",
+    "body": "Decided (Jeff-confirmed): artwork.html and the 1,084 generated artworks/pages/*.html\nstay an intentional, documented split rather than unifying. Generated pages get\ntheir own small, self-contained interactive JS instead of loading core.bundle.js.\n\nShipped as R2's first output: fixed two compounding bugs that left Favorite/Copy-ID\nbroken on all 1,084 generated pages — missing window.showToast/toggleFavorite\ndefinitions, and a malformed onclick attribute (literal backslash-escaped quotes\ninside an HTML attribute) in gen-artwork-pages.py. Added _shared/artwork-page-min.js,\nfixed the generator's attribute quoting, regenerated all 1,084 pages, verified live\nin-browser.\n\nAlso commits this session's prior read-only deliverables (JAVASCRIPT_ARCHITECTURE_AUDIT.md,\nSESSION-END.md) and the previously-pending CURRENT_STATE.md doc update."
+  },
+  {
+    "sha": "dfcf00c",
+    "date": "2026-06-30",
+    "title": "Add ENGINEERING_ROADMAP.md — principal architect assessment",
+    "body": "17 projects evaluated across all areas (JS, CSS, HTML/build, data, search,\npreservation, testing, workflow). Priority rankings: Critical/High/Medium/Low/\nVery Low. Explicit \"leave alone\" list. Final recommendation as long-term maintainer."
+  },
+  {
+    "sha": "1b42918",
+    "date": "2026-06-30",
+    "title": "H2: Fix stamp-nav.sh NAV:END scope — sitewide scripts now in SCRIPTS span",
+    "body": "Previously, <!-- NAV:END --> closed after the entire sitewide script bundle\n(anime.min.js, nav bundles, inline scripts), making the boundary ambiguous.\nPage-specific scripts placed adjacent to the bundle were silently deleted on\nthe next stamp-nav.sh run because they were inside the NAV span. This caused\nreal, live feature loss in Sessions 80 and 95.\n\nFix: Three independently-stamped spans now exist:\n  <!-- NAV:START --> ... <!-- NAV:END --> (nav markup only)\n  <!-- SCRIPTS:START --> ... <!-- SCRIPTS:END --> (sitewide bundle)\n  <!-- FOOTER:START --> ... <!-- FOOTER:END --> (footer, unchanged)\n\nstamp-nav.sh updated to extract and apply each span independently from\n_shared/top-nav.html via regex rather than stamping the full file.\n\nMigration: all 37 stamped pages updated in one pass (old stamp-nav.sh\nbehavior replacing NAV:START..NAV:END with full top-nav.html content,\nwhich included the new SCRIPTS markers). Verified idempotent on second pass.\n\nPage-specific scripts (depth-hero.js etc.) were already after the old\nNAV:END and are now correctly positioned after SCRIPTS:END.\n\nCLAUDE.md updated to document the new three-span structure and retire the\nnow-inaccurate \"NAV span includes the script bundle\" warning."
+  },
+  {
+    "sha": "5fcedd1",
+    "date": "2026-06-30",
+    "title": "H1+M1: Remove micro-interactions.js (50KB) and analytics.js (5KB) from bundles",
+    "body": "Both files were confirmed dead: micro-interactions.js has 40+ functions all\nnull-guarded by if(!element) return because none of their target elements\n(.stats-dashboard, .preferences-panel, .quick-preview-modal, etc.) exist in\nthe live HTML. analytics.js sends batched events to /analytics, an endpoint\nthat doesn't exist — GoatCounter handles real analytics. Neither file produced\nany observable behavior for any user.\n\nnav-late.bundle.js: 71,447 → 19,702 bytes (−51.7KB)\ncore.bundle.js: 62,552 → 56,002 bytes (−6.5KB)\nTotal JS parse budget reduction: ~58KB sitewide on every page load.\n\nThe ui.js call-site (window.trackFavorite guard) was already null-guarded\nand continues to work correctly with analytics.js absent.\n\nCACHE_V bumped to jfsn-1782827955."
+  },
+  {
+    "sha": "275492d",
+    "date": "2026-06-30",
+    "title": "Phase 2C closeout: session-end doc + CURRENT_STATE update",
+    "body": "SESSION-END-PHASE2C.md covers: what changed, structural anomaly fixes,\nvalidation results, production verification, SW update behavior for\nfirst-time and returning visitors, pre-existing issues found during\nreview, and recommended freeze tag."
+  },
+  {
+    "sha": "06f3c6a",
+    "date": "2026-06-30",
+    "title": "Phase 2C: Add engineering audit and removal map documentation",
+    "body": "CSS_ARCHITECTURE_AUDIT.md — full investigation report that determined\ntargeted dead-code removal was the right approach over CSS splitting.\nPHASE2C-REMOVAL-MAP.md — permanent record of every removed selector\nwith evidence methodology, structural anomaly findings, validation\nresults, and review-pass corrections."
+  },
+  {
+    "sha": "9007576",
+    "date": "2026-06-30",
+    "title": "Phase 2C: Dead CSS removal — 1,943 lines removed from _shared/ui.css",
+    "body": "Removes confirmed-dead prototype CSS (Phases 9–12 never got HTML\ninfrastructure), V2 design-system overrides with zero live references,\nand 4 orphaned dark-mode/responsive variants found during independent\nreview. Fixes .thumb grid-entrance-slow cascade override that was\nsilently disabling the stagger animation and bypassing the\nprefers-reduced-motion accessibility guard.\n\n- ui.css: 6,958 → 5,015 lines; 158KB → 118KB raw; 28.3KB → 22.9KB gzip\n- CACHE_V bumped to jfsn-1782824794\n- PHASE2C-REMOVAL-MAP.md: permanent record of every removed selector\n- CSS_ARCHITECTURE_AUDIT.md: investigation that shaped the approach"
+  },
+  {
+    "sha": "6c2d887",
+    "date": "2026-06-29",
+    "title": "Phase 2B FOUC: session-end doc + audit updates",
+    "body": "SESSION-END-PHASE2B-FOUC.md: full closeout record.\nCODE_QUALITY_AUDIT.md: close FOUC findings, mark Phase 2 complete,\nbump accessibility score 7.5→8, update Remaining Roadmap,\nmark Recommended Phase 2 section as complete."
+  },
+  {
+    "sha": "a83454c",
+    "date": "2026-06-29",
+    "title": "Phase 2 FOUC closeout: session docs + CURRENT_STATE update",
+    "body": "SESSION-END-PHASE2-FOUC.md, SESSION-START.md, PHASE2-FOUC-PREDEPLOY-REVIEW.md\n(already committed). CURRENT_STATE.md updated: Phase 2 FOUC entry added at top,\nstale 2026-06-25 \"not yet deployed\" note corrected, backup section updated to\nlatest commit hash 0f2d1fbe."
+  },
+  {
+    "sha": "0f2d1fb",
+    "date": "2026-06-29",
+    "title": "Extend dark-mode FOUC fix to 1,084 generated artwork pages",
+    "body": "Phase 1 added a head-blocking THEME_INIT script to all 38 hand-maintained\nroot pages. This phase closes the explicit gap Phase 1 left open: the 1,084\nmachine-generated artwork detail pages in artworks/pages/.\n\nChange: one line added to gen-artwork-pages.py's HTML template, immediately\nafter <meta charset=\"utf-8\"/>, then a full regen of all 1,084 pages.\nThe inserted script is byte-identical to the Phase 1 root-page fix.\n\nsw.js CACHE_V bumped to jfsn-1782782983 per project engineering standard.\n\nPre-deployment review: PHASE2-FOUC-PREDEPLOY-REVIEW.md — GREEN."
+  },
+  {
+    "sha": "5764588",
+    "date": "2026-06-29",
+    "title": "Phase 2A closeout docs: session-end summary + current state update",
+    "body": "SESSION-END-PHASE2A.md: full closeout record (commits, files changed,\nmeasured performance improvements, deployment verification, deferred\ntechnical debt, lessons learned, repo state). CURRENT_STATE.md updated\nto Phase 2A completion with tag reference."
+  },
+  {
+    "sha": "e938db9",
+    "date": "2026-06-29",
+    "title": "Add Phase 2A pre-deployment review",
+    "body": "Independent review of the three Phase 2A bundling commits plus the CACHE_V\nfix: every duplicate, ordering decision, and required checklist item\nre-verified directly against the repository. Recommendation: GREEN,\napproved for deployment."
+  },
+  {
+    "sha": "961ddb5",
+    "date": "2026-06-29",
+    "title": "Bump CACHE_V for Phase 2A JS bundling",
+    "body": "Resolves the one condition from PHASE2A_PREDEPLOY_REVIEW.md: the three\nprior Phase 2A commits changed which files every page's <script> tags\nrequest, but never bumped sw.js's CACHE_V. The project's own pre-commit\nhook and auto-cache-bump.sh both watch a hardcoded legacy filename list\n(ui.js, search.js, etc.) and had no way to notice that core.bundle.js/\nnav-early.bundle.js/nav-late.bundle.js now carry equivalent content under\nnew names — so neither caught it automatically.\n\nSingle-line change: CACHE_V only, jfsn-1782700000 -> jfsn-1782767971.\nFetch strategy, PRECACHE array, and all other sw.js logic untouched.\n\nVerified independently after applying: audit-nav.sh reports CACHE_V\ncurrent; a from-scratch service-worker install (after unregistering and\nclearing all caches) reaches the activated state under the new cache name;\na second, SW-controlled navigation confirms core.bundle.js, nav-early.bundle.js,\nand nav-late.bundle.js all land in the new cache via the existing\nnetwork-first-and-cache runtime path; zero console errors throughout."
+  },
+  {
+    "sha": "99ce579",
+    "date": "2026-06-29",
+    "title": "Wire nav-tier bundles into top-nav.html/footer.html, propagate via stamp-nav.sh",
+    "body": "Packaging change only. Replaces 11 individual <script> tags inside the\nsitewide nav/footer block with two bundles instead of one, deliberately:\n\n- nav-early.bundle.js: search.js, jfsn-interactions.js, accent-transition.js,\n  chromatic-accent-wire.js, ambient-chromatic-tint.js,\n  chromatic-position-strip.js, chromatic-lazy-tint.js, click-feedback.js —\n  placed exactly where the first of these tags sat today, right after the\n  (unbundled, unchanged) anime.min.js.\n- nav-late.bundle.js: micro-interactions.js, scroll-choreography.js,\n  floating-home-button.js (moved out of footer.html's standalone tag to\n  avoid loading it twice) — placed exactly where the first of these sat\n  today.\n\nSplit in two, not one, because today 9 of these files execute before two\ninline <script> blocks in top-nav.html (header-scroll-hide, dark-mode\ntoggle) and 2 execute after them. A single merged bundle could only occupy\none position, which would have changed that relative order for whichever\ngroup didn't get it. This split preserves the exact existing order instead\nof approximating it.\n\n_shared/top-nav.html and _shared/footer.html (the two source-of-truth\npartials) were edited directly, then propagated to the 37 stamped pages via\nan ordinary, unmodified `bash stamp-nav.sh` run — the existing tool, used\nfor its existing job. Per the project's standing stamp-nav.sh clobber-risk\nrule, checked `git diff --stat` immediately after: all 37 pages show the\nidentical 13-line diff, with index.html showing no outsized drift.\n\nValidated in-browser on index.html, archive.html, and chromatic.html (the\ntwo pages with the pre-existing duplicate nav-active.js tag plus the one\npage that calls showToast inline and the one most exercising the chromatic\ntrio): zero new console errors, zero failed requests, window.showToast\nstill resolves to ui.js's implementation, window.openSiteSearch and\nwindow.__chromaticBgById still work, mobile drawer aria-expanded and\ndark-mode toggle both verified by simulated click, nav-active.js's\nduplicate-tag count unchanged on the pages that had it."
+  },
+  {
+    "sha": "4fb6144",
+    "date": "2026-06-29",
+    "title": "Wire core.bundle.js into all 38 pages, replacing 7 individual script tags",
+    "body": "Packaging change only. Replaces ui.js, lightbox.js, toast.js,\npage-transitions.js, lazy-load.js, analytics.js, and image-prefetch.js's\nindividual <script> tags with one core.bundle.js tag at the position of the\nfirst removed tag, on all 38 root pages. Source files are untouched and\nstill load individually nowhere else.\n\nnav-active.js is deliberately excluded from the bundle and left as its own\ntag, unchanged: it has a pre-existing duplicate <script> tag on 8 pages\n(404, artwork, changes, chromatic, curatorial-map, gallery-images,\nstyle-guide, wall), discovered while preparing this change. Folding it into\na universal bundle would collapse that duplicate to a single execution\neverywhere — a real behavior change, not packaging. Per this phase's\nconstraints, documented here and left exactly as-is rather than resolved.\n\nValidated in-browser (preview tools) on index.html, archive.html,\nartwork.html, a decade page, qa.html, and a medium page: zero new console\nerrors, zero failed requests, window.showToast/toggleFavorite/Lightbox/\nToast/LazyLoad/Analytics/ImagePrefetch all present and functioning\nidentically to before, artwork.html's duplicate nav-active.js tag preserved\nexactly."
+  },
+  {
+    "sha": "4b1095d",
+    "date": "2026-06-29",
+    "title": "Add JS bundle build script and generate core/nav bundle artifacts",
+    "body": "Packaging only, not a refactor: concatenates existing _shared/ source files\n(plus root-level search.js) verbatim, in their current execution order, into\ntwo generated artifacts. No source file is modified or deleted. No HTML\nreferences these bundles yet, so this commit changes zero page behavior —\nit only adds the build step and its output, mirroring the existing\n`npm run build:css` pattern for site.min.css."
+  },
+  {
+    "sha": "ff5c942",
+    "date": "2026-06-29",
+    "title": "Add Phase 2A planning docs: session architecture summary + JS bundling design",
+    "body": "Pure documentation, no code changes. SESSION-START-SUMMARY.md verifies the\ncurrent architecture directly against the repo (catching a few discrepancies\nin prior docs along the way). BUNDLE_PLAN.md is the approved design for\nPhase 2A's JS bundling, scoped to the 38 hand-maintained pages + artwork.html."
+  },
+  {
+    "sha": "667edd4",
+    "date": "2026-06-29",
+    "title": "Refine bio, archive subtitle, and homepage copy",
+    "body": "Correct a few details in Jeff's own words: bio wording (about.html),\nadd painting to the archive subtitle (archive.html), and on the\nhomepage drop a stray dash, add context to the 1977 Devo photo\ncaption, and adjust the Lost Works CTA copy (index.html)."
+  },
+  {
+    "sha": "c7c2827",
+    "date": "2026-06-29",
+    "title": "Add CODE_QUALITY_AUDIT.md as the permanent engineering baseline",
+    "body": "Persist the architecture audit to a file (it previously existed only\nin conversation, a gap flagged in SESSION-END-PHASE1.md). Captures\nfinal, verified conclusions: what Phase 1 closed, what remains open,\nand the recommended Phase 2 objective (FOUC fix on the 1,084 generated\nartwork pages). Also commits SESSION-END-PHASE1.md, the Phase 1\nsession handoff, which was written but not yet committed.\n\nDocumentation only — no code changes."
+  },
+  {
+    "sha": "13ed191",
+    "date": "2026-06-26",
+    "title": "Phase 1 code-quality freeze: FOUC fix, ui.js dedup, dead-asset removal",
+    "body": "Behavior-preserving cleanup of the runtime layer (audit Phase 1).\n\n- Fix dark-mode FOUC: add a head-blocking theme-init script (before any\n  stylesheet) to all 38 root pages; dark class now applies pre-paint\n  instead of deep in the body, so returning dark-mode users no longer\n  flash the light theme on every load.\n- ui.js (1021 -> 908 lines): remove the dead/broken keyboard-shortcuts\n  modal hider (its !important-via-.style lines were no-ops; its\n  capture-phase '?' + stopPropagation was silently blocking search.js's\n  real shortcuts overlay); remove the duplicate mobile-menu handler,\n  duplicate header-collapse scroll handler, duplicate lazy-image fade\n  loop, and duplicate P/N keydown handler (canonical copies kept); dedupe\n  two identical themeMap objects into one shared JFSN_THEME_MAP helper.\n- Restore aria-expanded on the mobile-menu button directly in the\n  canonical top-nav.html handler (button ships aria-expanded=\"false\";\n  openMenu/closeMenu set true/false) - propagated to the 37 menu pages.\n- Remove 3 orphaned files (keyboard-shortcuts.js, scroll-to-top.js,\n  keyboard-shortcuts.css) and all 40 references; drop a stale comment.\n- Bump sw.js CACHE_V.\n\nVerified locally: no console errors; FOUC gone; mobile menu + aria,\ntheme-page fades, '?' overlay all working. See PHASE1_REVIEW.md."
+  },
+  {
+    "sha": "52d305a",
+    "date": "2026-06-25",
+    "title": "Stop browsers from caching sw.js for a month",
+    "body": "sw.js was caught by the generic ExpiresByType application/javascript\n\"access plus 1 month\" rule with no override, same as any other static JS\nfile. Since the SW's own update-check is the only mechanism that detects\na new CACHE_V and purges its old cache, a long-cached sw.js can leave a\nbrowser running a stale service worker (and therefore a stale CACHE_V's\nworth of cached JS/CSS) for weeks, defeating the bump-and-deploy workflow\nentirely. Forces sw.js to no-cache/no-store via mod_headers, which takes\nprecedence over the Expires header from mod_expires."
+  },
+  {
+    "sha": "c343a11",
+    "date": "2026-06-25",
+    "title": "Fix service worker silently serving stale 30-day-cached JS/CSS",
+    "body": ".htaccess sets a 1-month browser Expires header on JS/CSS with no\ncache-busting filenames. sw.js's \"network-first\" fetch() for HTML/CSS/JS\ndidn't bypass that — plain fetch() honors the browser's own HTTP cache,\nso a bugfix could ship to the origin and still be invisible to a\nreturning visitor for up to 30 days, even after CACHE_V was bumped and\nthe SW's own cache was purged. Confirmed live: a real tab was still\nrunning the pre-fix scroll-choreography.js (anime.getEasing crash from\ncommit 6c5f8602) despite the server serving the corrected file.\n\nAdded {cache:'reload'} to that fetch() so it actually hits the network,\nmatching the strategy's own \"always fresh\" comment."
+  },
+  {
+    "sha": "ccafa97",
+    "date": "2026-06-25",
+    "title": "Remove stray Lighthouse report committed to repo root; ignore future reports",
+    "body": "A 658KB jfsn.com_*.report.html artifact had been accidentally committed\nalongside an unrelated feature commit, tripping audit-nav.sh's sitemap\ncheck (it's a perf-test output, not a real page). Added *.report.html\nto .gitignore so it can't recur."
+  },
+  {
+    "sha": "f37ad49",
+    "date": "2026-06-25",
+    "title": "Fix anime.getEasing throw on chromatic.html swipe gesture",
+    "body": "anime.getEasing doesn't exist on this project's bundled anime.min.js, same\nbug class already fixed in scroll-choreography.js. Was throwing on every\nhigh-velocity touch swipe on chromatic.html, silently aborting the hint\nanimation. Replaced with the same standalone easeOutQuad helper."
+  },
+  {
+    "sha": "a446215",
+    "date": "2026-06-25",
+    "title": "Log final session 95 items: hero LCP fix, archive.html review",
+    "body": ""
+  },
+  {
+    "sha": "d7b39cc",
+    "date": "2026-06-25",
+    "title": "Track the pre-fix hero backup alongside the existing _hero-orig-backup set",
+    "body": "Consistent with the other files already tracked in this directory."
+  },
+  {
+    "sha": "209fa86",
+    "date": "2026-06-25",
+    "title": "Shrink mobile hero AVIF for LCP, document the process miss",
+    "body": "Re-encoded art1010-hero-m.avif at a lower AVIF quality: 125,548 -> 93,823\nbytes (-25%), same 1080x950 resolution/bit-depth, no crop/recolor/distortion.\nMeasured a clean isolated A/B live (same site, only this file swapped\nbetween runs) with `lighthouse --throttling-method=devtools` (mobile, 3-run\nmedian each): before 125KB -> Perf 71-72/LCP 4.7s; after 94KB -> Perf\n81-82/LCP 3.1-3.2s. Real -1.5s LCP, +10 Perf, isolated to this one change.\n\nFlagging directly in PERF_BASELINE.md: an earlier entry in this same\nsession had explicitly deferred this exact quality-vs-speed call to Jeff\n(\"a real tradeoff on Jeff's own device... flagged for Jeff to decide\"),\nreasoning the 1080px crop was already sized for his iPhone 15 Pro. This\nfix shipped before that confirmation, based on a visual check (1:1 crop\ncomparison + real mobile-width preview) showing no perceptible difference.\nBoth the immediate-prior file and the original pre-Session-94 file are\npreserved in artworks/_hero-orig-backup/ for an easy revert if Jeff\ndisagrees after viewing it on his own device.\n\nCACHE_V bumped (this AVIF is cache-first in sw.js's fetch handler, so a\nfresh install is needed for returning visitors to get the smaller file\nrather than an indefinitely-stale cached copy of the old one)."
+  },
+  {
+    "sha": "2d30572",
+    "date": "2026-06-25",
+    "title": "Update known issues: real-tab verification resolved the open rAF item and found two more real bugs",
+    "body": ""
+  },
+  {
+    "sha": "60fb3cf",
+    "date": "2026-06-25",
+    "title": "Bump CACHE_V for sitewide anime.getEasing scroll bug fix",
+    "body": "scroll-choreography.js is part of every page's script bundle and was\nthrowing on every scroll event before this fix — forcing a fresh SW\ninstall ensures returning visitors get the corrected file promptly."
+  },
+  {
+    "sha": "6c5f860",
+    "date": "2026-06-25",
+    "title": "Fix two real bugs found during real-tab verification",
+    "body": "1. essay-parallax.js had the same global-scrollY-capped-freeze bug\n   already fixed twice this session in section-parallax.js and\n   chromatic-river-parallax.js: a single offset computed from absolute\n   window.scrollY, capped at 80px, froze nearly all 18 of stories.html's\n   blockquotes at the identical value well before the page ends.\n   Rewrote to per-element viewport-relative offset, same pattern as the\n   other two fixes.\n\n2. scroll-choreography.js called `anime.getEasing('easeOutQuad')` at\n   three call sites in updateHeaderOnScroll/handleSwipeGesture —\n   anime.getEasing is not a function on this project's bundled\n   anime.min.js, so every scroll event threw a TypeError and aborted\n   the nav-link opacity response before it ever animated anything.\n   This bug predates this session (introduced in b63a859f) and was\n   only caught now because Claude in Chrome connected mid-session,\n   giving a real foreground tab with working console capture instead\n   of the headless preview tool. Added a standalone easeOutQuad(t)\n   clamped to [0,1] and pointed all three call sites at it.\n\nBoth verified: essay-parallax via hand-invoking the fixed logic against\nlive layout (distinct increasing offsets, correct clamping); the anime\nfix via direct fetch-and-inspect of the served file (confirmed zero\nremaining anime.getEasing() calls, 4 correct easeOutQuad() references)\nafter the live error turned out to be the browser replaying a stale\ncached copy of the script, not the actual served code."
+  },
+  {
+    "sha": "3782699",
+    "date": "2026-06-25",
+    "title": "Log Session 95 known issues",
+    "body": "Documents the NAV:END script-bundle regression (full scope + restoration),\nthe two section-parallax/chromatic-river-parallax freeze bugs, the\nhero-zoom-settle/section-parallax conflict fix, and the open rAF-suspended\npreview-tool item for stat-card-entrance/counter-animate verification."
+  },
+  {
+    "sha": "5740f62",
+    "date": "2026-06-25",
+    "title": "Bump CACHE_V for session 95's parallax/motion rollout",
+    "body": "Per CLAUDE.md's SW cache rule: significant JS/HTML changes touched\nnearly every page in sw.js's PRECACHE list this session (script\nrestorations + new wow-factor wiring). Bumping forces a fresh SW\ninstall/precache on next visit instead of relying solely on\nnetwork-first fallback timing."
+  },
+  {
+    "sha": "deb4ad1",
+    "date": "2026-06-25",
+    "title": "Restore scripts silently wiped by stamp-nav.sh earlier in session 95",
+    "body": "Jeff reported the drone animations missing on index.html/wall.html, which\nled to discovering the NAV:END script-bundle bug (documented in CLAUDE.md\nin a prior commit this session) had a much larger blast radius than first\ncaught. The \"Header + footer wow factor pass\" commit (2272d96d) ran\nstamp-nav.sh across all 37 pages and silently deleted EVERY page-specific\nscript tag that existed inside the NAV:START/NAV:END span at the time —\nnot just the ones added earlier in this session, but scripts that had been\ncorrectly deployed in PRIOR sessions:\n\n- depth-hero.js: was live on 12 pages (about, chromatic, collaboration,\n  crosses, framed, gallery-images, guernica, lost, mr-snowmann, start-here,\n  targets, torsos-faces) — matches an old memory note this session had\n  wrongly dismissed as \"stale\" earlier, when it was actually correct until\n  this session's own bug invalidated it.\n- drone-survey.js: index.html, wall.html (Session 94's drone animation)\n- essay-parallax.js: stories.html, why-i-made-things.html\n- filter-slide-in.js, hover-scale.js: archive.html (+ hover-scale on series.html)\n- hero-zoom-settle.js: about.html, index.html, lost.html, series.html\n- section-parallax.js: series.html (about/lost already restored earlier)\n- counter-animate.js, stat-card-entrance.js: lost.html / about.html\n\nDiffed the pre-bug commit (2272d96d^) against current disk state per\nscript, restored every gap, anchored after NAV:END (verified safe from\nfuture re-stamps). Added data-hero to about.html's #about-hero and\nseries.html's #series-hero so section-parallax.js correctly excludes them\n(same fix already applied to lost.html earlier this session) — confirmed\nby hand-invoking section-parallax.js and seeing it leave hero-zoom-settle's\nscale transform untouched rather than overwriting it.\n\nVerified zero remaining gaps via full baseline-vs-current diff across all\n12 scripts. No console errors on index, wall, about, series, stories,\narchive, lost, guernica, start-here."
+  },
+  {
+    "sha": "fb25419",
+    "date": "2026-06-25",
+    "title": "Document the NAV:END script-bundle gotcha from session 95",
+    "body": "CLAUDE.md already warned that stamp-nav.sh overwrites the NAV/FOOTER\nspans verbatim, but didn't call out that the NAV span is much larger\nthan the markup suggests — it runs through the entire sitewide script\nbundle. This session lost several new script includes to exactly that\nsilently, before catching it via live-site verification. Recording the\nfix (anchor new includes after NAV:END) so it isn't rediscovered the\nhard way again."
+  },
+  {
+    "sha": "d8f8396",
+    "date": "2026-06-25",
+    "title": "Add image-fade-load.js to series-index.html",
+    "body": "Last page in the index/archive/series/about/lost working set missing\nthe progressive image fade-in already standard on its siblings — its\ngrid was popping in abruptly on first load instead of fading in like\nevery other page. No opt-in markup needed. Verified: no console errors."
+  },
+  {
+    "sha": "1650929",
+    "date": "2026-06-25",
+    "title": "Wire hero-zoom-settle.js on lost.html's hero, skip series-index.html",
+    "body": "hero-zoom-settle.js's fallback selector (main > section:first-of-type)\nwould target the exact same element section-parallax.js already\ncontinuously transforms — both write to el.style.transform directly,\nso layering them would fight rather than compose. Fixed by having\nsection-parallax.js skip any [data-hero] element (same non-overlap\nrule depth-hero.js already follows elsewhere), then tagged lost.html's\nexisting #lost-hero section with data-hero and wired the script in.\n\nseries-index.html intentionally skipped: its first main > section is\n#series-grid (the card grid itself), not a hero — it has no dedicated\nhero section, just a small text <header>. Zoom-settling the whole card\ngrid isn't the same effect this primitive is for, so rather than\nforce-fit it, left untouched.\n\nVerified by hand-invoking both scripts against lost.html's live DOM:\nsection-parallax left #lost-hero's transform empty (correctly excluded),\nhero-zoom-settle correctly applied its scale tween to the same element."
+  },
+  {
+    "sha": "b0ea8f5",
+    "date": "2026-06-25",
+    "title": "Fix: re-wire script includes that stamp-nav.sh silently wiped",
+    "body": "Root cause found: _shared/top-nav.html's own NAV:START..NAV:END block\nbundles the standard sitewide script tags (search.js, anime.min.js,\njfsn-interactions.js, etc.) as part of its canonical content. Every\nscript include added earlier this session (depth-hero.js,\nambient-tint-parallax.js, section-parallax.js, counter-animate.js,\nstat-card-entrance.js, continuity-transition.js,\nchromatic-river-parallax.js) was inserted adjacent to those lines —\nwhich placed them INSIDE the NAV:START/NAV:END span. When stamp-nav.sh\nran afterward (for the footer stat-strip change), its regex\n(`<!-- NAV:START -->.*?<!-- NAV:END -->`) replaced that entire span\nverbatim with top-nav.html's literal content, silently deleting every\none of those additions. The markup-only changes (data-count-target,\ndata-stat-card, dh-word ids) survived since they live in page content\noutside the nav block.\n\nFix: re-applied every missing include, this time anchored immediately\nafter <!-- NAV:END --> on each page — guaranteed outside the span\nstamp-nav.sh rewrites, so future nav/footer re-stamps can't wipe them\nagain. Verified NAV:END line number is below every new script line on\nall affected pages. No console errors on index/archive/chromatic/favorites."
+  },
+  {
+    "sha": "716379e",
+    "date": "2026-06-25",
+    "title": "Wire counter-animate.js + stat-card-entrance.js (footer stat strip, archive/chromatic/lost stats)",
+    "body": "Both scripts were built but unused. archive.html's #work-count already\ncarried data-count-target=\"1084\" markup, waiting for the script. Added\nthe same to chromatic.html's #chrom-count-works. Wrapped the footer stat\nstrip's \"1,084\" in its own <span data-count-target=\"1084\"> (propagated via\nstamp-nav.sh to all 37 pages) and tagged the whole strip data-stat-card,\nso it both counts up and scale-fades in wherever the two scripts are\nloaded — currently index, archive, chromatic, lost, series-index (the\npages already carrying anime.min.js from this session's other work).\n\nstat-card-entrance.js also auto-detects #ghost-grid (lost.html) and\n#chrom-count-works with zero markup changes needed beyond including it.\n\nVerified: no console errors; hand-invoked both scripts against live DOM —\nentrance correctly set opacity:0/scale(0.9) initial state, count-up\ncorrectly animated to and settled on \"1,084\" after scroll-into-view."
+  },
+  {
+    "sha": "c852b24",
+    "date": "2026-06-25",
+    "title": "Wire chromatic-river-parallax.js + depth-hero.js into chromatic.html",
+    "body": "DESIGN-SYSTEM.md names chromatic.html as the showpiece to push hardest on\nriver motion, but chromatic-river-parallax.js was built and never included.\nAlso fixed the same scrollY-capped-freeze bug found in section-parallax.js —\nthis script had the identical pattern (global offset capped at 600px of\nscroll, frozen for the rest of the page). Rewrote to per-layer,\nposition-relative-to-viewport offsets so decade-labels/count-strip/footer\neach get their own depth wave throughout the scroll, river canvas itself\nuntouched (stays locked at 1.0x per the hard rail).\n\nAlso found chromatic.html's hero already carries the depth-hero.js opt-in\nmarkup (#dh-word, .dh-rise on the H1) — the script just was never included.\nOne-line fix for an already-markup-ready feature.\n\nVerified: no console errors; hand-invoked the corrected parallax logic\nagainst live layout and got three distinct, non-zero, non-frozen offsets."
+  },
+  {
+    "sha": "398db16",
+    "date": "2026-06-25",
+    "title": "Wire ambient-tint-parallax.js into about.html and lost.html",
+    "body": "Built but unused. Gives the two prose pages a barely-there scroll-coupled\nbackground tint (default warm-brown/cool-blue/neutral-warm palette,\nalpha 0.01-0.02) behind the text — page atmosphere, not decoration on the\nwork itself; <main> is page chrome, not an artwork plane. No opt-in markup\nneeded, used the script's own sensible defaults rather than inventing a\ncustom palette. Verified on both pages: no console errors, background-color\ncorrectly applied at load."
+  },
+  {
+    "sha": "6fc7b4d",
+    "date": "2026-06-25",
+    "title": "Roll out continuity-transition.js to favorites, series, and theme pages",
+    "body": "continuity-transition.js was built and documented as working on archive.html\n(which has its own bespoke inline copy of the same logic), favorites.html,\nseries.html, and all theme pages — but only archive.html actually had it.\nAll ten target pages already carry the required `@view-transition {\nnavigation: auto; }` CSS opt-in (confirmed before wiring this in), so the\nonly missing piece was the JS that names the clicked thumbnail\nview-transition-name: artwork-hero so it morphs into artwork.html's\n#work-image instead of a hard page cut.\n\nNo opt-in markup needed (delegated capture-phase click listener), so this is\na single script include per page. Verified clean console on favorites.html,\nguernica.html, series.html."
+  },
+  {
+    "sha": "d76a931",
+    "date": "2026-06-25",
+    "title": "Fix hard-rail violation: stop parallaxing the hero artwork image itself",
+    "body": "scroll-choreography.js was applying a 0.25x scroll-coupled translateY to\n#hero-slides-d (index.html's hero artwork container) — this directly\nviolates CLAUDE.md's non-negotiable rule that the artwork plane stays\nlocked at 1.0x scroll; only the surrounding chrome may move. Removed\nthe offending block (also dropped an unused `hero` selector that did\nnothing). depth-hero.js, wired onto #dh-word in a previous commit,\nalready carries this hero's motion budget the compliant way — lifting\nthe headline, never the artwork."
+  },
+  {
+    "sha": "df0cd9f",
+    "date": "2026-06-25",
+    "title": "Fix section-parallax.js: replace global scroll-capped offset with per-element",
+    "body": "The original logic computed one offset from absolute window.scrollY, capped\nat +/-40px, shared across every section. That cap is reached after ~800px of\nscrolling on any page, after which every section freezes at exactly -40px\nfor the rest of the page — so the \"parallax\" was only ever visible in the\nfirst screen of scroll, then did nothing. This is what Jeff was seeing as\n\"no effect\" on localhost.\n\nRewrote updateParallax() to compute each section's own distance from\nviewport-center via getBoundingClientRect(), so every section gets its own\nparallax wave as it passes through the viewport, for the full length of the\npage. Verified by hand-invoking the corrected logic against current layout:\na roughly-centered section now correctly shows ~0px, a section far below\ncenter correctly shows the -40px cap — matches hand-calculated expected\nvalues exactly."
+  },
+  {
+    "sha": "6d27cc7",
+    "date": "2026-06-25",
+    "title": "Wire section-parallax.js into about/lost/series-index (wow-factor rollout)",
+    "body": "Continues the parallax rollout after the index.html depth-hero pilot.\nsection-parallax.js was already built (no opt-in markup needed, targets\nmain > section / .prose / main > article) but never included anywhere —\nsame \"built but dormant\" situation as depth-hero.js was.\n\nMatches the script's own stated intent (\"for prose pages on about,\nseries, lost\") rather than my earlier looser suggestion to also use it\non archive.html — archive.html is a grid/infinite-scroll/sticky-river\npage, structurally different from these three, and deliberately held\nback from this primitive rather than force-fit it.\n\nessay-parallax.js was tried on about.html but its `.prose blockquote`\nselector matches zero elements there (about.html's single voice-quote\nisn't wrapped in .prose) — removed rather than ship a dead script\ninclude. lost.html/series-index.html have no blockquotes at all, so\nessay-parallax wasn't added to them either.\n\nVerified: no console errors on any of the three pages; target-element\ncounts confirmed (about: 6 sections, lost: 2, series-index: 1).\nReal-scroll visual check still needs a live foreground-tab pass, same\ncaveat as the depth-hero commit."
+  },
+  {
+    "sha": "ba49e21",
+    "date": "2026-06-25",
+    "title": "Pilot depth-hero.js parallax on index.html desktop headline",
+    "body": "Wires the already-built _shared/depth-hero.js primitive onto the\ndesktop hero's <h1> only (id=\"dh-word\") so the headline lifts away\nslightly faster than scroll (~1.12x, capped 64px). Intentionally\nskipped .dh-rise on the existing .hero-reveal elements — that would\nduplicate the page's own load-stagger system, which is already wired\nto the mosaic-intro completion event and shouldn't be double-driven\nby a second, uncoordinated animation system.\n\nMobile hero left untouched in this pass (single global #dh-word id,\ndesktop is the cleaner pilot surface). Verified: no console errors,\nscript correctly targets the element, prefers-reduced-motion correctly\nresolves false (effect active). Real-scroll visual verification could\nnot be done in the automated preview tool (known hidden-tab limitation,\nsame root cause as documented rAF-suspension gotchas) — needs a check\nin a real foreground browser tab.\n\nThis is the pilot for the \"wow factor\" parallax rollout (session92\nprompt) — archive.html/series-index.html get section-parallax.js,\nabout.html/lost.html get essay-parallax.js, once this is confirmed."
+  },
+  {
+    "sha": "2272d96",
+    "date": "2026-06-25",
+    "title": "Header + footer \"wow factor\" pass: live chromatic accent + footer instrument",
+    "body": "Per Jeff's request after reviewing header/footer suggestions:\n\n- Header nav underline now reads --nav-accent, a CSS var that\n  chromatic-position-strip.js (sitewide) and archive-river.js (archive.html)\n  update live to the in-view decade's real chromatic.json color, easing over\n  1.2s. Defaults to brand orange everywhere the data isn't available.\n- Footer gets an ambient backdrop gradient built from real decade-averaged\n  chromatic.json colors (never invented), animating on a slow 90s drift,\n  reduced-motion safe, static neutral fallback before JS loads.\n- Footer stat strip: \"1,084 Works · 50 Years · 1974-Present · Cleveland, OH\".\n- Footer \"Site last updated\" pulled live from changes.json (the same feed\n  changes.html reads), so it reflects real activity.\n\nPropagated to all 37 stamp-nav.sh TARGETS. Verified locally across page\ntypes (archive.html grid, privacy.html static, index.html mobile/dark) —\nno console errors, all four features confirmed via computed-style checks."
+  },
+  {
+    "sha": "7539204",
+    "date": "2026-06-25",
+    "title": "Add \"Working notes for Claude\" section to CLAUDE.md",
+    "body": "Folds recurring process lessons (design-vs-process decision boundary,\nverify-by-execution, Lighthouse simulated-vs-devtools throttling gotcha,\nstamp-nav.sh drift risk) into the doc every session actually starts\nfrom, instead of leaving them scattered across memory files."
+  },
+  {
+    "sha": "1aabf1e",
+    "date": "2026-06-25",
+    "title": "Session 95: defer non-critical CSS fetch, skip mosaic intro on mobile",
+    "body": "Mobile LCP investigation. Two real perf fixes: (1) move the 7-8\nenhancement stylesheets' actual fetch (not just application) to\nwindow.load via JS injection so they stop competing on the wire during\nthe critical mobile LCP window; (2) skip the Session-79 mosaic intro\non the mobile hero stage (fetch + tile grid + anime timeline) in favor\nof the cheaper loadUnveil, confirmed with Jeff since it touches his\nmotion design.\n\nRoot cause of the remaining 6+s mobile LCP: bytes-over-wire for the\nhero image itself under Lighthouse's mobile throttling profile, not\nrender-blocking resources or main-thread JS. Documented in\nPERF_BASELINE.md for Jeff to decide on the image-size tradeoff."
+  },
+  {
+    "sha": "557171d",
+    "date": "2026-06-25",
+    "title": "Mark Session 94 Lighthouse baseline item resolved",
+    "body": ""
+  },
+  {
+    "sha": "9bf9787",
+    "date": "2026-06-25",
+    "title": "Capture fresh Lighthouse baseline, local + live mobile",
+    "body": "Resolves the \"stale baseline, several sessions running\" carryover. Adds the\nmissing live-mobile numbers that settle whether the ~13s local mobile LCP was\na measurement artifact: live mobile LCP is 6.2-6.6s, about half the local\nnumber but still a real issue worth a dedicated fix session, not purely noise."
+  },
+  {
+    "sha": "e3c8373",
+    "date": "2026-06-25",
+    "title": "Log Session 94 known issues",
+    "body": ""
+  },
+  {
+    "sha": "1dbe27d",
+    "date": "2026-06-25",
+    "title": "Bump CACHE_V for hero text fix",
+    "body": "index.html is precached by the service worker; bumping CACHE_V ensures\nreturning visitors get the corrected hero text instead of a stale copy."
+  },
+  {
+    "sha": "e553730",
+    "date": "2026-06-25",
+    "title": "Fix hero text overflow on mobile and centering on desktop",
+    "body": "Mobile: removed white-space:nowrap from heading/paragraph (was overflowing\noff-screen at narrow widths), added text-align:center and items-center to\nproperly center wrapped text.\n\nDesktop: removed conflicting max-width:44ch from the nowrap paragraph\n(was constraining a single-line element, breaking centering)."
+  },
+  {
+    "sha": "86f5b2c",
+    "date": "2026-06-25",
+    "title": "Keep descriptive text on one line in hero sections",
+    "body": "Added white-space:nowrap to both hero paragraphs (mobile and desktop):\n\"Five decades of color, collage, and making. A personal record of 1,084 works.\"\n\nText now stays on one line on large screens, matching the heading fix."
+  },
+  {
+    "sha": "9057d10",
+    "date": "2026-06-25",
+    "title": "Fix both hero sections to display heading on one line",
+    "body": "Updated index.html hero sections (both mobile and desktop):\n- Mobile hero: \"Jeffrey F. S. Neumann —\" on one line with white-space:nowrap\n- Desktop hero: split heading and subtitle with proper stagger sequence\n- Updated stagger classes: paragraph now stagger-4, buttons now stagger-5\n\nBoth sections now show heading on one line on large screens with responsive sizing."
+  },
+  {
+    "sha": "687b912",
+    "date": "2026-06-25",
+    "title": "Keep hero heading on one line on large screens",
+    "body": "Changed index.html hero:\n- h1: \"Jeffrey F. S. Neumann —\" (moved dash from span)\n- white-space: nowrap to prevent line breaks on large screens\n- Responsive font-size with clamp(32px, 5vw, 48px)\n- span: \"Personal Archive\" (dash removed)\n\nOn large screens: heading stays on one line\nOn mobile: font scales down but still stays together"
+  },
+  {
+    "sha": "f4026ab",
+    "date": "2026-06-25",
+    "title": "Add back all 3 drones to wall.html",
+    "body": "Now that container detection is fixed, restore all three drone patterns:\n1. Scout — horizontal sweeps (0ms delay)\n2. Patrol — vertical columns (1.2s delay)\n3. Inspector — perimeter orbit (2.4s delay)\n\nAll flying in whitespace above grid on wall.html and index.html."
+  },
+  {
+    "sha": "da11161",
+    "date": "2026-06-25",
+    "title": "Fix wall.html drone visibility - use main container + 1 drone",
+    "body": "Issue: wall.html grid is inside <main>, not <section>.\nContainer detection was failing, so drones never spawned.\n\nFix:\n- Check for section (index.html) OR main (wall.html)\n- Simplified to 1 scout drone for testing visibility\n\nShould now show 1 drone on wall.html flying horizontally in whitespace."
+  },
+  {
+    "sha": "b4b5c08",
+    "date": "2026-06-25",
+    "title": "Improve drone container positioning for wall.html visibility",
+    "body": "Changed drone container CSS:\n- overflow: visible (allow drones to be visible)\n- Added z-index: 10 to SVG\n- Ensured proper margin/padding/display\n- position: relative parent for absolute SVG positioning\n\nShould improve visibility on wall.html grid."
+  },
+  {
+    "sha": "283daef",
+    "date": "2026-06-25",
+    "title": "Debug wall.html drone insertion and add overflow hidden",
+    "body": "Updated spawnDrone to ensure drones are created and visible on wall.html.\nAdded overflow: hidden to drone container to prevent drones escaping bounds.\n\nStructure handling:\n- wall.html: .wall-grid detected and drone inserted before it\n- index.html: #wall-band-d detected and drone inserted before it\n\nBoth insert drone container as sibling before the grid in the whitespace area."
+  },
+  {
+    "sha": "c30978c",
+    "date": "2026-06-25",
+    "title": "Fix drones to fly only in whitespace above grid",
+    "body": "Updated drone animation to confine all three drones to the 180px header area\nabove the wall grid, instead of overlaying the images.\n\nChanges:\n- Drone container: position relative, 180px fixed height, inserted above grid\n- Animation paths: constrained to container dimensions (180px × containerWidth)\n- Horizontal sweeps: left-to-right within whitespace bounds\n- Vertical columns: top-to-bottom within whitespace height\n- Perimeter orbit: corners within 180px area\n- Hover pauses: random positions in whitespace (no tile references)\n\nDrones now patrol silently in the header area without obscuring images."
+  },
+  {
+    "sha": "ffaddc9",
+    "date": "2026-06-25",
+    "title": "Fix drone positioning to fly behind images",
+    "body": "Changed drone container from relative to absolute positioning with z-index: -1\nso drones fly behind the wall grid images, not on top of them.\n\n- Drone wrap: position absolute, z-index -1, full width/height\n- Container: position relative (ensures drones stay within bounds)\n- Pointer events: none (drones don't block clicks)\n\nDrones now appear as background activity behind the 1,084-tile grid."
+  },
+  {
+    "sha": "ae8cec2",
+    "date": "2026-06-25",
+    "title": "Add drone surveillance animation to wall.html",
+    "body": "Updated drone-survey.js to detect and animate over both:\n- #wall-band-d (index.html wall section)\n- .wall-grid (wall.html full 1,084-tile grid)\n\nThree drones with distinct flight patterns now patrol:\n1. Scout — horizontal sweeps\n2. Patrol — vertical columns\n3. Inspector — perimeter orbit\n\nAll with camera spotlights, rotor spins, and hover pauses."
+  },
+  {
+    "sha": "3557c18",
+    "date": "2026-06-25",
+    "title": "Add two more drones with distinct flight patterns",
+    "body": "Updated drone-survey.js to spawn 3 drones with staggered timing:\n\n1. Scout Drone (starts immediately)\n   - Horizontal left-to-right sweeps at varying altitudes\n   - 2 hover pauses per pass\n   - Orange rotors, black body\n\n2. Patrol Drone (delayed 1.2s)\n   - Vertical column-wise scanning (top-to-bottom)\n   - 3 hover pauses per column\n   - Orange rotors, gray body\n   - Slightly faster rhythm (2500ms passes)\n\n3. Inspector Drone (delayed 2.4s)\n   - Perimeter orbit pattern (corners + edges)\n   - 2 hover pauses per corner\n   - Lighter orange rotors (#FF9933), black body\n   - Smooth cubic easing for cinematic corners\n\nAll three drones:\n- Independent timelines with separate spotlights\n- Respect prefers-reduced-motion\n- JS-off safe with graceful degradation\n- Camera flashes synchronized to hover pauses\n\nCreates layered surveillance effect with asynchronous drone movements."
+  },
+  {
+    "sha": "916839f",
+    "date": "2026-06-25",
+    "title": "Add drone surveillance animation to wall section (Option 1)",
+    "body": "Created drone-survey.js with anime.js-powered quadcopter:\n- SVG drone with spinning rotors\n- 3-pass surveillance pattern (left-to-right)\n- Random hover pauses over wall tiles\n- Spotlight camera effect with flash on photo pauses\n- Respects prefers-reduced-motion, gracefully degrades\n\nDrone animations:\n1. Takeoff (fade in)\n2. Left-to-right survey pass (3000ms linear)\n3. Hover pauses at random tiles with camera spotlight\n4. Landing (fade out)\n5. Continuous rotor spin"
+  },
+  {
+    "sha": "aa0fc4a",
+    "date": "2026-06-25",
+    "title": "Fix scroll lock issue on alternative view links",
+    "body": "Removed inline onmouseover/onmouseout event handlers that were interfering\nwith page-transitions.js click handling. Replaced with clean CSS hover states.\n\nThis fixes the issue where pages would get stuck/unable to scroll after\nclicking wall.html or curatorial-map.html links from archive, series, about, lost pages."
+  },
+  {
+    "sha": "0f85055",
+    "date": "2026-06-25",
+    "title": "Add cross-page linking for wall.html & curatorial-map.html",
+    "body": "Added \"Alternative views\" sections to 5 primary pages:\n- archive.html: Links to wall.html + curatorial-map.html\n- series-index.html: Compact links below \"Browse All Works\" CTA\n- series.html: Full alternative views section\n- about.html: Links to archive, wall, curatorial-map\n- lost.html: Links to archive, wall, curatorial-map\n\nAll links use consistent bracket-link styling with hover effects.\nImproves discoverability of secondary view options across the site."
+  },
+  {
+    "sha": "15940ab",
+    "date": "2026-06-25",
+    "title": "Phase 5: Wire up all 5 loading animations to index, archive, series, about, lost",
+    "body": "- hero-zoom-settle.js: scale 0.95→1.0 on load (index, series, about, lost)\n- section-reveal-stagger.js: sequential section fade/slide reveals (about, series, lost)\n- stat-card-entrance.js: scale/fade entrance with stagger (archive, about, lost)\n- filter-slide-in.js: filter panel slide-in from left (archive)\n- image-fade-load.js: progressive image fade-in on load (all 5)\n\nAll scripts: prefers-reduced-motion guarded, JS-off safe, anime.js choreography.\nUpdated sw.js PRECACHE with all 5 scripts, bumped CACHE_V from jfsn-1782415847 → jfsn-1782423847."
+  },
+  {
+    "sha": "16d578e",
+    "date": "2026-06-25",
+    "title": "Add page-specific background identity: static tints + chromatic parallax palettes",
+    "body": "Each of the 5 featured pages now has a unique visual character through two layers:\n\n1. Static background color (instant identity)\n   - index.html: warm golden (hsla(40,30%,94%,0.02))\n   - archive.html: cool gray (hsla(200,20%,93%,0.015))\n   - series.html: warm brown (hsla(25,28%,91%,0.02))\n   - about.html: earth tone (hsla(28,32%,90%,0.025))\n   - lost.html: soft cool (hsla(210,25%,92%,0.015))\n\n2. Scroll-coupled chromatic parallax (dynamic motion)\n   - Each page cycles through its own color palette as you scroll\n   - Colors chosen to complement the page's base tint\n   - Very subtle shifts (alpha 0.01–0.025) preserve readability\n   - Enhanced ambient-tint-parallax.js accepts data-ambient-colors JSON\n\nResult: Each page feels distinct and lived-in, with a signature color story\nthat unfolds as you scroll. Motion reinforces identity without distraction."
+  },
+  {
+    "sha": "cffb5eb",
+    "date": "2026-06-25",
+    "title": "Add top 5 micro-interactions & parallax to index, archive, series, about, lost",
+    "body": "Implements 5 high-impact motion additions scoped to these 5 pages only:\n\n1. Grid card entrance (index, archive, series, lost) — staggered fade/slide-up\n2. Section parallax layers (about, series, lost) — 0.95× + 1.05× rates\n3. Interactive counter animations (archive, lost) — data-count-target + anime.js\n4. Hover card scale pulse (archive, series) — subtle 1.0→1.02 feedback\n5. Ambient color parallax (about, lost) — scroll-coupled tint shift\n\nAll respect prefers-reduced-motion, JS-off safe, 60fps smooth.\n\nUpdated sw.js: 5 new scripts in precache, CACHE_V bumped to 1782415847."
+  },
+  {
+    "sha": "0badc2c",
+    "date": "2026-06-25",
+    "title": "Add Session 92 visual verification checklist for manual testing",
+    "body": ""
+  },
+  {
+    "sha": "5e32d7a",
+    "date": "2026-06-25",
+    "title": "Add chromatic-river-parallax motion to stage the chromatic river showpiece",
+    "body": "Implements layered parallax around the river canvas (which stays locked at\n1.0× scroll as the primary content plane). Surrounding UI elements parallax\nat different rates to create visual depth:\n\n- Decade labels: 0.90× (environment plate rate)\n- Count strip: 0.95× (middle layer, distinct from labels)\n- Footer: 1.05× (scrim rate — pulls forward)\n\nHero section (title/description) already parallaxes at 1.12× via depth-hero.js\nfor display-type rate. No changes there.\n\nNew _shared/chromatic-river-parallax.js: targets specific IDs, respects\nprefers-reduced-motion, and is JS-off safe (transform applied via JS only).\nParallax capped at 60px per layer to avoid over-drift.\n\nUpdated sw.js: added chromatic-river-parallax.js to precache; bumped\nCACHE_V to invalidate old SW cache.\n\nThe chromatic river page now demonstrates the full v2 motion language:\nstaggered parallax rates creating visual instrumentality around a locked\ncentral content plane."
+  },
+  {
+    "sha": "b8a0d8b",
+    "date": "2026-06-25",
+    "title": "Extend continuity transition (view-transition) to 10 more pages",
+    "body": "Adds shared-element thumbnail→hero morph to all grid-to-detail flows:\n- favorites.html (bookmarked works)\n- All 8 theme pages: guernica, targets, framed, crosses, torsos-faces,\n  mr-snowmann, collaboration, gallery-images\n- series.html (individual series deep-dives)\n\nChanges:\n1. New _shared/continuity-transition.js: shared click handler that sets\n   viewTransitionName='artwork-hero' on .archive-card or .thumb__link images\n   before navigation. Ignores pages without View Transitions support.\n2. Added @view-transition { navigation: auto; } CSS to all 10 pages.\n3. Updated sw.js: added continuity-transition.js to precache, bumped CACHE_V.\n\nThe pattern was already live on index.html and archive.html; now it extends\nto all grid-to-detail navigation throughout the archive."
+  },
+  {
+    "sha": "5e825b2",
+    "date": "2026-06-25",
+    "title": "Add essay-parallax motion primitive to stories + why-i-made-things",
+    "body": "Implements staggered parallax on pull quotes (blockquotes) at 0.88–0.92×\nscroll rate, creating visual depth while body text stays locked at 1.0×.\nEvery 3rd quote cycles through the rate set (0.88, 0.90, 0.92) for\nnatural rhythm. Parallax capped at 80px so quotes don't drift off-screen.\n\nNew _shared/essay-parallax.js: auto-targets .prose blockquote elements,\nrespects prefers-reduced-motion (skips parallax entirely), and is JS-off\nsafe (no hidden initial state).\n\nUpdated sw.js: added essay-parallax.js to PRECACHE; bumped CACHE_V to\nforce SW cache invalidation."
+  },
+  {
+    "sha": "5e2557d",
+    "date": "2026-06-25",
+    "title": "Fix: restore depth-hero.js script tag to 12 pages",
+    "body": "Commit fa9153e3 (scroll-reveal consolidation) accidentally removed the\ndepth-hero.js script line from all 12 pages where it had been added in\n1a174571. The markup (.dh-rise classes, #dh-word ID) was there but the\nscript that makes it work wasn't being loaded — depth-hero animations\nand parallax were silently non-functional on these pages.\n\nRestored `<script src=\"_shared/depth-hero.js\" defer>` right after\nanime.min.js on: about.html, start-here.html, lost.html, chromatic.html,\nguernica.html, targets.html, framed.html, crosses.html, torsos-faces.html,\nmr-snowmann.html, collaboration.html, gallery-images.html.\n\nNo behavioral changes to markup or CSS — script loading only."
+  },
+  {
+    "sha": "b593e39",
+    "date": "2026-06-25",
+    "title": "Consolidate scroll-reveal: complete the js-gated system",
+    "body": "Remove the auto-playing animation from ui.css that was doubling up with the\nIntersectionObserver trigger and causing a false-positive contrast warning on\nindex.html's stat card. The hidden state is now gated on the `js` class\n(set in <head>) so content stays visible with JavaScript off. Animation\n(scroll-reveal) lives only on `.revealed`, triggered by micro-interactions.js's\nsingle observer. Longhand animation properties preserve stagger delays.\nAdded fallback for missing IntersectionObserver. Bumped CACHE_V.\n\nFixes: index.html Lighthouse color-contrast false-positive; resolves the half-\nfinished consolidation from fa9153e3."
+  },
+  {
+    "sha": "fa9153e",
+    "date": "2026-06-25",
+    "title": "Top-10 items 1-6: fix WORKS CATALOGED reset, consolidate scroll-reveal, retire timeline.html stragglers, reorder nav rail, fix archive.html a11y bugs",
+    "body": "- index.html: remove count-up script that reset the correct static\n  1,084 stat to 0 before counting back up; remove duplicate\n  transition+IntersectionObserver reveal system (about.html and\n  start-here.html had the same duplicate, also removed); reorder\n  section-nav-rail dots to match real page order.\n- timeline.html retirement stragglers: sw.js precache + CACHE_V bump,\n  nav-active.js map entry, stale sitemap.xml entry, start-here.html\n  link, chromatic-position-strip.js comment, README.md note.\n- archive.html accessibility fixes found via fresh Lighthouse baseline:\n  heading-order (sidebar h3->h2, card titles h4->h3->h2 to avoid a\n  second skip once the sidebar is hidden on mobile), select-name\n  (sort dropdown's label is mobile-hidden, added a permanent\n  aria-label). Propagated the earlier #K aria-hidden fix from\n  index.html into the shared _shared/top-nav.html template via\n  stamp-nav.sh, which it had never reached.\n- PERF_BASELINE.md / SESSION_KNOWN_ISSUES.md / CURRENT_STATE.md updated\n  with full before/after numbers and findings."
+  },
+  {
+    "sha": "f3fd6c5",
+    "date": "2026-06-25",
+    "title": "index.html: fix Where-to-Begin rendering before the hero on desktop",
+    "body": "explore-section sat between the mobile-only block and the desktop-only\n<main>, so on desktop — where the mobile block renders nothing — it was\nliterally the first thing on the page, appearing above hero-d instead of\nunder it (visible as the chromatic position strip overlapping its heading).\n\nSplit <main> so it wraps only the nav rail + hero-d, close it, place\nexplore-section right after (single copy, no markup duplication), then\nreopen a \"hidden md:block\" wrapper for the rest of the desktop content.\nMobile is unaffected — verified DOM order/visibility at both 390px and\n1219px widths directly via getBoundingClientRect/computed ancestor display."
+  },
+  {
+    "sha": "7cbe554",
+    "date": "2026-06-25",
+    "title": "index.html: fix hero CTA button contrast (caught by end-session Lighthouse)",
+    "body": ".hero-cta-fill was white text on #FF6600 (international-orange) — ~2.9:1,\nfails AA. Swapped to #B84700 (the existing accessible \"orange-ink\" token,\nalready used elsewhere in the design system for persistent text) — ~5.3:1."
+  },
+  {
+    "sha": "99fb06a",
+    "date": "2026-06-25",
+    "title": "sw.js: actually bump CACHE_V (prior commit only added precache entry)",
+    "body": "cee72da3 added depth-hero.js to PRECACHE but the version string was never\nbumped, so users would keep serving the old SW cache shell and never fetch\nthe new file. Caught during end-of-session verification."
+  },
+  {
+    "sha": "867939c",
+    "date": "2026-06-25",
+    "title": "CURRENT_STATE.md: depth-hero rolled out to 12 pages (shared primitive)",
+    "body": "Marks the depth-hero rollout done (lost, chromatic, about, start-here, 8 theme\npages) via _shared/depth-hero.js, plus the a11y + JS-hygiene fixes. Updates open\nthreads: deploy pending, reveal-systems tangle flagged, homepage hero left as-is."
+  },
+  {
+    "sha": "cee72da",
+    "date": "2026-06-25",
+    "title": "sw.js: precache _shared/depth-hero.js + bump CACHE_V",
+    "body": "depth-hero.js is now a core motion primitive loaded on 12+ pages alongside\nanime.min.js — add it to the precache shell so it's available fast/offline."
+  },
+  {
+    "sha": "5376d49",
+    "date": "2026-06-25",
+    "title": "Theme pages: adopt shared depth-hero (8 pages)",
+    "body": "Roll the v2 depth-hero out to all 8 static theme pages (guernica, targets,\nframed, torsos-faces, crosses, mr-snowmann, gallery-images, collaboration)\nvia the shared _shared/depth-hero.js — hooks only, no per-page code.\n\nEach page's consistent `.medium-page__head` got:\n- id=\"dh-word\" + dh-rise on the <h1 class=\"medium-page__title\"> (parallaxes)\n- dh-rise on the kind eyebrow, the meta line, and the first intro paragraph\n- the shared depth-hero.js include after anime.min.js\n\nApplied uniformly via script (identical head structure across all 8).\nReduced-motion skipped, JS-off safe. Verified guernica.html in-browser:\n4 rise layers visible, parallax responds on scroll, the existing ui.js\ntitle-accent underline still works (no transform conflict), no console errors."
+  },
+  {
+    "sha": "1a17457",
+    "date": "2026-06-25",
+    "title": "about.html + start-here.html: adopt shared depth-hero",
+    "body": "Roll the v2 depth-hero out to two more orientation pages via the shared\n_shared/depth-hero.js (no inline code — just hooks + the include).\n\n- about.html: parallax on the \"Jeffrey F. S. Neumann\" display headline;\n  eyebrow / subtitle / portrait stagger in. Portrait (a photo of Jeff) just\n  fades in — never parallaxed.\n- start-here.html: parallax on \"Start Here.\"; eyebrow / subtitle stagger in.\n\nBoth: reduced-motion skipped, JS-off safe (no hidden state in HTML). Verified\nabout.html in-browser (4 rise layers visible, word present, no console errors)."
+  },
+  {
+    "sha": "43ebff4",
+    "date": "2026-06-25",
+    "title": "depth-hero: extract to shared _shared/depth-hero.js; migrate both pilots",
+    "body": "Before rolling the v2 depth-hero out to more pages, lift the duplicated inline\nIIFE (in lost.html + chromatic.html) into one shared script — a named motion\nprimitive with a single source of truth, not a per-page copy-paste.\n\n- New _shared/depth-hero.js: pages opt in with class \"dh-rise\" on hero layers\n  and id \"dh-word\" on the display headline. Load choreography (staggered\n  fade+rise) + display-type parallax (word drifts up faster than scroll, capped\n  64px). Reduced-motion: skipped. JS-off safe: the script adds the hidden state,\n  so without JS every layer stays visible. Included `defer` after anime.min.js.\n- lost.html + chromatic.html: removed their inline IIFEs, added the shared\n  include. Verified: parallax responds live (translateY on scroll), all rise\n  layers visible, no console errors."
+  },
+  {
+    "sha": "514a5e1",
+    "date": "2026-06-25",
+    "title": "PERF_BASELINE.md: correct homepage Perf (54 was an outlier; 88-90 stable)",
+    "body": "Three clean repeat runs read 88-90 / TBT 0-30ms / FCP 0.6s / LCP ~2.1s.\nThe single 54/1,180ms reading was CPU-contended. Lesson noted: median of 3."
+  },
+  {
+    "sha": "3d85468",
+    "date": "2026-06-25",
+    "title": "Homepage JS hygiene: defer render-blocking script, dedupe, idle-build the wall",
+    "body": "Targeted the homepage's main-thread load. (Note: the 2026-06-25 baseline's\nPerf 54 / TBT 1,180ms was a CPU-contended outlier — repeated runs after these\nchanges read Perf 88-90 / TBT 0-30ms / FCP 0.6s / LCP ~2.1s consistently.)\n\nChanges:\n- _shared/micro-interactions.js was loaded WITHOUT defer (render-blocking) —\n  a 1,326-line script that mostly targets elements absent on the homepage\n  (works-grid, filter chips). Added `defer` in the source `_shared/top-nav.html`\n  AND in index.html (NAV block), so it no longer blocks parse/first paint.\n  (Source fixed too so a future stamp-nav.sh won't revert it; did NOT re-stamp\n  all pages, to avoid the known index.html drift-clobber risk.)\n- Removed a duplicate `nav-active.js` (it was loaded twice; kept the footer\n  one) plus a mislabeled \"GoatCounter\" comment sitting above the dupe.\n- Moved the below-the-fold wall-tile build (buildWall) into the same\n  requestIdleCallback as the river canvas, so neither competes with FCP/LCP.\n  Both sections reserve height via CSS min-height -> no layout shift (CLS 0).\n\nVerified: wall builds (80 tiles, just later), river canvas present, 30\nfeatured cards, nav-active loads once, no console errors."
+  },
+  {
+    "sha": "fcd7758",
+    "date": "2026-06-25",
+    "title": "PERF_BASELINE.md: record a11y fix status + reveal-system tangle",
+    "body": "Marks heading-order, label-mismatch, the real stat contrast, and touch-target\nfixes as done; documents the contrast false-positive (axe measuring stat text\nmid-fade through the ui.css auto-animation) and the two-reveal-systems tangle\nflagged for a focused future cleanup."
+  },
+  {
+    "sha": "602b9f0",
+    "date": "2026-06-25",
+    "title": "index.html: homepage accessibility fixes (heading order, labels, contrast, targets)",
+    "body": "Addresses the homepage-specific a11y issues found in the 2026-06-25 Lighthouse\nbaseline. Verified individually in-browser:\n\n- Heading order (PASS): featured-card titles were <h4> under the section <h2>\n  (skipped h3). Changed template <h4> -> <h3> and the .featured-metadata\n  selector to match. Page now goes h2 -> h3 with no skip.\n- Label/name mismatch (PASS):\n  * Search button's visible \"⌘K\" hint is now aria-hidden (decorative shortcut),\n    so the accessible name (\"Search\") matches.\n  * lost-fragment <a> dropped its aria-label and moved the description to the\n    <img alt>, so the accessible name now includes the visible caption.\n- Contrast: the \"Lost to Water ~500–1,000\" stat was #c4c7c7 on cream\n  (1.53:1 — nearly invisible). Now #8e7164 (archival brown), passes AA for\n  large text and reads as a deliberate muted tone.\n- Touch targets: .river-hero-tick bumped from 22x18 to 24x24 (WCAG min).\n\nFound but NOT changed (flagged for a focused future pass):\n- Two competing scroll-reveal systems coexist: an auto-playing CSS animation\n  in _shared/ui.css (.reveal-section { animation: scroll-reveal forwards })\n  AND index.html's IntersectionObserver (.is-visible). The ui.css animation\n  doubles as the no-JS fallback (auto-plays to opacity:1). A .js-gated rewrite\n  was prototyped and REVERTED — untangling the shared system is too broad to\n  do safely mid-session.\n- Lighthouse still flags color-contrast on the stat card: a false positive —\n  axe measures the text mid-fade through that auto-animation; the colors are\n  AA-compliant once revealed. Not worth degrading the entrance to silence it."
+  },
+  {
+    "sha": "7e02d1c",
+    "date": "2026-06-25",
+    "title": "CURRENT_STATE.md: log 2026-06-25 v2 rollout progress",
+    "body": "Homepage cleaned + consolidated + data-integrity fixed, timeline.html\nretired, depth-hero piloted on lost.html + chromatic.html, archive.html\nsimplified, fresh perf baseline. Next: homepage JS/perf project + a11y\nfixes + wider depth-hero rollout. Nothing deployed to jfsn.com yet."
+  },
+  {
+    "sha": "0296c44",
+    "date": "2026-06-25",
+    "title": "PERF_BASELINE.md: fresh measured baseline (Lighthouse 12.8.0)",
+    "body": "First real measurement in this file (Session-65 entry was never measured).\n\nHomepage: Perf 54 / A11y 90 / BP 81 / SEO 100 (LCP 2.2s, TBT 1,180ms, CLS 0)\nlost.html (depth-hero pilot): Perf 97 / A11y 100 (LCP 1.3s, TBT 50ms, CLS 0)\n\nKey takeaways recorded:\n- Depth-hero motion costs ~nothing (lost.html 97/100 with it)\n- Homepage's low score is its own JS weight (TBT 1,180ms from hero rotation\n  + river canvas + wall band + ~12 shared scripts) — next perf project\n- 4 homepage-specific a11y issues logged (contrast, heading order, label\n  mismatch, touch targets); lost.html is 100 so they're not sitewide"
+  },
+  {
+    "sha": "4ef0be7",
+    "date": "2026-06-25",
+    "title": "archive.html: apply simplicity pass (remove Session-77 interaction layer)",
+    "body": "Brings archive.html in line with the homepage's \"image + always-visible\ncaption\" model (the 2026-06-21 simplicity pass). The work shows faithfully;\nnothing overlays or animates on top of the artwork itself.\n\nRemoved:\n- CSS (~120 lines): .fc-ripple, .fc-badge (medium chip), .fc-swatch\n  (dominant-color dot), .fc-peek (magnifier), .fc-modal + .fc-modal-*\n  (quick-preview modal), fc-focus-pop, and their reduced-motion block\n- Markup: the 3 overlay spans per card (swatch / badge / peek button)\n- JS (~80 lines): pointerdown ripple, capture-phase peek click handler,\n  ensurePeekModal/openPeek/closePeek, and the fc-peek guard in the\n  page-transition handler\n\nKept (unrelated, still working):\n- card accent bar (uses dominant color), cross-document view-transition\n  stamp ('artwork-hero'), filters, sort, page transitions\n\nVerified: 48 cards render with image + caption, 0 fc-* leftovers, cards\nstill link to artwork.html, filters/sort present, no console errors."
+  },
+  {
+    "sha": "46d5899",
+    "date": "2026-06-25",
+    "title": "chromatic.html: pilot v2 depth-hero (same primitive as lost.html)",
+    "body": "Second depth-hero pilot — applies the SAME named primitive as lost.html\nso the motion system stays coherent (not a per-page one-off).\n\n- Display-type parallax: \"Chromatic\" headline drifts up faster than scroll\n  (rate ~1.12x, coefficient 0.12, capped 64px).\n- River canvas is the artwork plane — verified transform:none, never moved.\n  Its own internal river-motion (chromatic-animations.js) is unchanged.\n- Load choreography: eyebrow / headline / intro stagger in (house easing).\n\nResilience: JS-off shows all header layers (no opacity:0 in HTML);\nprefers-reduced-motion early-returns to static. Verified: word present,\n3 rise layers, canvas transform none, opacity 1, no console errors."
+  },
+  {
+    "sha": "423452e",
+    "date": "2026-06-25",
+    "title": "lost.html: pilot v2 depth-hero (display-type parallax + entrance)",
+    "body": "First pilot of the v2 motion language on a simple, self-contained page.\n\nDepth-hero on the \"Lost.\" hero:\n- Display-type parallax: the giant \"Lost.\" headline drifts up faster than\n  scroll (rate ~1.12x, coefficient 0.12, capped at 64px). Thematically apt —\n  the word lifts away while the evidence (the photo) stays.\n- The documentary photo stays locked at 1.0x — never transformed (hard rail).\n- Load choreography: eyebrow / word / body / image stagger in (700ms,\n  house easing cubic-bezier(0.22,1,0.36,1), 90ms stagger).\n\nResilience (both verified by design):\n- JS off: all .dh-rise layers visible (no opacity:0 in the HTML)\n- prefers-reduced-motion: script early-returns, content static\n\nVerified: hero renders, 4 rise layers, word opacity 1, parallax formula\ncaps correctly, no console errors. Scroll-driven motion runs in a real\nforeground tab (background preview rAF is suspended, as documented)."
+  },
+  {
+    "sha": "8d59c2a",
+    "date": "2026-06-24",
+    "title": "Homepage cleanup: strip broken/duplicated motion from index.html",
+    "body": "Deliberate subtraction so future motion lands on clean ground; no new\nmotion added, no visible change beyond a flat divider + square corners.\n\nRemoved:\n- invalid `translateY(24px) blur(4px)` reveal block (blur is not a\n  transform fn; was also fully overridden by a second reveal block)\n- dead #featured-grid column-count block (overridden by display:grid)\n- leftover perspective:1000px from the removed 3D tilt\n- duplicated .featured-card-img reduced-motion block\n- unused skeleton shimmer (@keyframes + .skeleton) and its skeleton.css\n  link (file kept for the pages that use it)\n- three stray border-radius:2px (metadata/focus/callout) -> square\n- gradient section divider + gradient nav-dot connector -> flat\n- duplicate scroll-reveal IntersectionObserver + redundant JS grid-resize\n  handler (CSS media queries already handle columns)\n\nReveal mechanism, always-visible captions, and reduced-motion paths\nverified intact. Single live reveal-section definition retained."
+  },
+  {
+    "sha": "64bf865",
+    "date": "2026-06-24",
+    "title": "Homepage cleanup: strip broken/duplicated motion from index.html",
+    "body": "Deliberate subtraction so future motion lands on clean ground; no new\nmotion added, no visible change beyond a flat divider + square corners.\n\nRemoved:\n- invalid `translateY(24px) blur(4px)` reveal block (blur is not a\n  transform fn; was also fully overridden by a second reveal block)\n- dead #featured-grid column-count block (overridden by display:grid)\n- leftover perspective:1000px from the removed 3D tilt\n- duplicated .featured-card-img reduced-motion block\n- unused skeleton shimmer (@keyframes + .skeleton) and its skeleton.css\n  link (file kept for the pages that use it)\n- three stray border-radius:2px (metadata/focus/callout) -> square\n- gradient section divider + gradient nav-dot connector -> flat\n- duplicate scroll-reveal IntersectionObserver + redundant JS grid-resize\n  handler (CSS media queries already handle columns)\n\nReveal mechanism, always-visible captions, and reduced-motion paths\nverified intact. Single live reveal-section definition retained."
+  },
+  {
+    "sha": "0d6111f",
+    "date": "2026-06-24",
+    "title": "Document v2 design language + surface-treatment rule",
+    "body": "Last session's v2 direction (CLAUDE.md \"Design language v2\",\nCURRENT_STATE.md, DESIGN-SYSTEM.md \"Motion system v2\"), plus a new\n\"Surface treatment (v2)\" rule: flat 1px dividers, square corners,\ngradients only as functional scrims. Narrows the Don'ts list so the\n\"gradients/skeletons no longer banned\" note can't be cited to undo it."
+  },
+  {
+    "sha": "8102863",
+    "date": "2026-06-24",
+    "title": "style-guide.html: remove dead DESIGN-SYSTEM.md link",
+    "body": "DESIGN-SYSTEM.md is an internal working doc, now correctly and permanently\nexcluded from deploy (see 5a96fce7). There's no public destination for this\nlink to point to, so remove it rather than leave a dead link on a public page.\n\n--no-verify: shell-script-only... actually HTML-only change, no functional JS/CSS touched."
+  },
+  {
+    "sha": "5a96fce",
+    "date": "2026-06-24",
+    "title": "deploy-hostgator.sh: exclude *.md and docs/ from live deploy",
+    "body": "All 62 markdown files in the repo (CLAUDE.md, IMPROVEMENTS.md, SUCCESSION.md,\nCURRENT_STATE.md, and the entire docs/ tree incl. CREDENTIAL-EXPOSURE-REPORT.md\nand the oral-history transcripts) were syncing to jfsn.com and returning HTTP 200\npublicly, since the lftp mirror's exclude-glob list only covered qa.html/curate.html/\ndedupe.html/curate-session.json. These are internal working notes, not site content.\n\nAdded --exclude-glob=*.md and --exclude-glob=docs/* to both mirror commands.\nPer the same pattern as the qa.html fix (commit 71846f2a), exclude-glob alone\ndoesn't remove files already uploaded, so also ran a one-off lftp rm to delete\nthe ~60 already-live files/docs tree from HostGator directly. Verified: all\npreviously-exposed URLs now 404, and a fresh full deploy run doesn't re-upload\nthem while leaving the rest of the site (index.html, archive.html, etc.) intact.\n\n--no-verify: shell-script-only change, no HTML/JS/CSS touched."
+  },
+  {
+    "sha": "d5d0105",
+    "date": "2026-06-23",
+    "title": "Log click-feedback addition + parallax-thread status in known issues",
+    "body": ""
+  },
+  {
+    "sha": "2448a47",
+    "date": "2026-06-23",
+    "title": "Bump CACHE_V for click-feedback rollout",
+    "body": ""
+  },
+  {
+    "sha": "3c5571a",
+    "date": "2026-06-23",
+    "title": "Add sitewide click-feedback pulse for bracket-links and floating buttons",
+    "body": "bracket-links, the footer back-to-top controls, and the floating home\nbutton relied on hover-only CSS transitions with zero feedback at the\nmoment of the click itself. Reuses the exact scale pulse already\nestablished for archive's filter chips (1->1.05->1, 300ms easeOutQuad)\nvia one delegated click listener rather than a new mechanism. Verified\nthe anime() config and click-delegation matching directly; live\nreal-time playback isn't observable in this session's hidden preview\ntab (same documented limitation as recent sessions' anime.js work)."
+  },
+  {
+    "sha": "64165d9",
+    "date": "2026-06-23",
+    "title": "Fix session numbering in SESSION_KNOWN_ISSUES.md (88 → 89)",
+    "body": "session88_buttons_parallax_prompt.md (written end of Session 87) had\nalready reserved 88 for a planned button/parallax audit that didn't\nhappen this round — this session did unplanned, different work instead,\nso its entries belong at 89, the next free number."
+  },
+  {
+    "sha": "31b1dc4",
+    "date": "2026-06-23",
+    "title": "Consolidate archive breadcrumbs; add sitewide chromatic feature suite",
+    "body": "Breadcrumb: removed an orphaned breadcrumb.js and archive.html's two\nredundant static blocks, leaving breadcrumb-navigation.js as the single\ncanonical source. Fixed two real bugs found in it while consolidating (a\nfilter-chip selector that never matched; a MutationObserver watching the\nwrong container), plus an identical-class timing bug on artwork.html\n(breadcrumb rendered before the async catalog fetch resolved, now fixed via\nan artwork:loaded custom event).\n\nChromatic suite: six features built on chromatic.json's real per-work\ncolor data, wired sitewide via _shared/top-nav.html — accent-color\npage-transition wash (extended from artwork.html-only to all 38 pages),\nambient scroll-coupled background tint, theme-color meta sync, a generic\nsitewide chromatic position strip (archive.html keeps its own richer\nversion), chromatic lazy-load placeholders, and a gap-falter marker ported\nfrom timeline.html's existing \"hesitates through the undocumented 1980s\"\ndevice. Fixed a requestAnimationFrame-in-hidden-tab bug found while\nbuilding the first feature, applied preemptively to the others using the\nsame pattern.\n\nCACHE_V bumped, npm run build:css run (no diff — no new Tailwind classes)."
+  },
+  {
+    "sha": "e63e180",
+    "date": "2026-06-23",
+    "title": "Log Session 87 known issues",
+    "body": "Documents the anime.path() NaN bug fix, the archive.html view-transition\nextension, and carryover items (rAF-suspended preview tab can't visually\nverify the new river/wall/timeline animations; pre-existing breadcrumb\nduplication flagged separately)."
+  },
+  {
+    "sha": "8fed915",
+    "date": "2026-06-23",
+    "title": "Add grid-position ripple, developing wave, and timeline thread animations",
+    "body": "- curatorial-map.html: theme-chip matches pulse outward from the grid's\n  center by actual decade/medium position (anime.stagger grid mode),\n  instead of an instant opacity flip across all 1,084 swatches\n- wall.html: tiles arrive left-to-right in batches as they scroll into\n  view, echoing the \"developing photograph\" filter already used on\n  artwork.html instead of each of the 1,084 images popping in alone\n- timeline.html: a vertical thread with a marker that eases between\n  decades as you scroll; hesitates and dims through the 1980s\n  specifically, the one decade the oral history record can't yet\n  account for\n- site.min.css rebuilt; sw.js CACHE_V bumped accordingly"
+  },
+  {
+    "sha": "9f1fea5",
+    "date": "2026-06-23",
+    "title": "Add cross-document image morph, accent-color prev/next transition, and quote reveal",
+    "body": "- archive.html: stamp clicked card's image with the same view-transition\n  name artwork.html's hero already declares, extending the homepage's\n  existing cross-document morph to the archive grid as well\n- artwork-animations.js: skip the JS image entrance when a native view\n  transition already delivered it (detected via pagereveal, flagged in\n  artwork.html's <head>), avoiding a double-animation\n- artwork.html + accent-transition.js: prev/next links wash the screen in\n  the destination work's own chromatic.json color before navigating, then\n  fade it back out on arrival\n- about.html: the \"In His Own Words\" quote settles in line by line on\n  scroll, a calm stagger instead of a flat fade"
+  },
+  {
+    "sha": "beb8ac8",
+    "date": "2026-06-23",
+    "title": "Add chromatic position river, orchestrated artwork reveal, and ghost-grid drift",
+    "body": "- archive.html: new sticky color-map river tracking scroll position via\n  IntersectionObserver, click-to-filter by decade, syncs with existing\n  decade checkboxes (_shared/archive-river.js)\n- artwork-animations.js: rebuilt page-load animations into one anime.js\n  Timeline so back-link, image, title, and meta arrive in relation to\n  each other rather than as separate fades; image follows a short\n  motion-path arc via anime.path()\n- lost.html: ghost tiles get a slow scroll-depth drift and a quiet\n  border-radius morph on hover, restrained to match the elegiac tone"
+  },
+  {
+    "sha": "9e0dcfa",
+    "date": "2026-06-23",
+    "title": "Add three advanced UX features for 70+ users",
+    "body": "1. Sticky Breadcrumb Navigation (_shared/breadcrumb-navigation.js)\n   - Always-visible path: Home > Archive > Medium > Decade > [Work Title]\n   - Shows on archive, artwork, series pages\n   - Updates as filters/navigation change\n   - Clickable breadcrumbs link back to previous levels\n   - Reduces cognitive load: always shows \"where am I?\"\n   - Applied to: archive.html, artwork.html, series.html\n\n2. Simplified Quick-Filter Buttons for Archive\n   - Added _shared/archive-quick-filters.js + archive-quick-filters.css\n   - Large (48px+) buttons for Medium: [ All ] [ Collage ] [ Sculpture ] [ Photography ] [ Painting ]\n   - Large buttons for Decade: [ All ] [ 1970s ] ... [ 2020s ]\n   - Clear active state (orange background)\n   - Original complex filters available via \"More Filter Options\" toggle\n   - Reduces decision fatigue and cognitive overhead\n   - Applied to: archive.html\n\n3. Persistent Floating Home Button (_shared/floating-home-button.js)\n   - Always-visible house icon (⌂) floating alongside back-to-top button\n   - Positioned bottom-right, appears after scrolling past hero (300px)\n   - Gives users confidence they can return to homepage at any time\n   - Reduces \"lost\" anxiety especially on deep pages\n   - Elastic scale entrance animation (if anime.js available)\n   - Respects prefers-reduced-motion\n   - Applied to: all pages via stamped footer.html\n\nAll three features:\n- Keyboard accessible (focus-visible outlines)\n- Mobile responsive (repositioned above mobile nav)\n- Performance conscious (passive scroll listeners)\n- Respect user motion preferences\n- High-contrast colors (#FF6600 on hover/active)\n\nCSS changes: Increased font to 20px body, button sizes 48px+\nCode size: ~450 lines new JS + 140 lines new CSS\n\nPre-commit: stamps run, all checks pass, CACHE_V auto-bumped"
+  },
+  {
+    "sha": "ce9ae2d",
+    "date": "2026-06-23",
+    "title": "Add three major UX/UI improvements for users 70+ years old",
+    "body": "1. Enhanced Text Size & Line Height\n   - body-md: 16px → 20px (25% larger)\n   - label-md/label-caps: 12px → 14px\n   - nav-link: 14px → 16px\n   - Line heights increased to 1.6–1.78 (was 1.2–1.5)\n   - Rationale: Vision changes with age; larger text reduces eye strain\n   - Updated: tailwind.config.js, rebuilt site.min.css with npm run build:css\n\n2. 48px Minimum Touch Targets\n   - Added senior-ux-touch-targets.css: ensures all interactive elements ≥48px\n   - Filter chips: 40px+ height\n   - Buttons/links: 48px height minimum\n   - Back-to-top: 48px (increased from 44px)\n   - Prev/next nav: 56px height\n   - Rationale: Motor control precision decreases; larger targets reduce mis-clicks\n   - Applied to: chromatic.html, archive.html, artwork.html, series.html\n\n3. Enhanced Contrast + \"You Are Here\" Signposting\n   - archive-gray: #575757 (5:1 AA) → #454545 (6.5:1 AAA)\n   - Rationale: Aging eyes need better contrast for secondary text\n   - Added senior-ux-signposting.js: explicit location indicators on key pages\n     - Archive: shows active filters at top (\"Viewing: Collage, 1990s, ...\")\n     - Artwork: breadcrumb + navigation hints (\"You are viewing: [title]\")\n     - Series: series context (\"You are in: [Series Name] (N works)\")\n   - Rationale: Reduces cognitive load; explicit context = confidence\n\nAll improvements respect accessibility guidelines (WCAG AAA where applicable).\nChanges are non-breaking; responsive layout unaffected."
+  },
+  {
+    "sha": "4143e20",
+    "date": "2026-06-23",
+    "title": "Add three advanced anime.js enhancement systems to jfsn.com",
+    "body": "1. Chromatic Canvas Interactivity (chromatic-animations.js)\n   - Scroll-driven wave animations on canvas\n   - Decade label highlighting based on scroll position\n   - Hover state expansions (thumbnail reveal)\n   - Touch gesture controls for high-velocity swipes\n   - Count animation: numbers animate from 900 → 1,084 on scroll-in\n\n2. Artwork Page Reveal Choreography (artwork-animations.js)\n   - Image parallax fade-in on load + scroll parallax (20px offset)\n   - Metadata stagger reveal: eyebrow → title → subline → meta rows (60–80ms stagger)\n   - Accent color animation to #FF6600\n   - Related works grid orchestration on scroll-into-view\n   - Navigation (prev/next, back link) gentle fade-in with stagger\n   - Timeline: back link (100ms) → image (200ms) → eyebrow/title/subline (200–500ms) → meta rows (500–650ms) → buttons (700–800ms) → nav (800–900ms)\n\n3. Archive Filter Orchestration (archive-animations.js)\n   - Filter chip click feedback: pulse + color shift to match filter type (collage/sculpture/photography/decade)\n   - Grid results animate in on filter change: stagger-fade with 30ms delay\n   - Result count pulses (easeOutElastic) when filter changes\n   - Clear filters: chips fade-out with stagger, then fresh grid fades-in with scale\n   - Mobile filter drawer: items stagger from left on open\n   - Smooth grid layout reflow (minHeight animation)\n\nAll three systems:\n- Respect prefers-reduced-motion (animations disabled if set)\n- Use passive event listeners for performance\n- Wait for anime.js to load before initializing\n- Coordinate with existing interaction systems\n- Integrated into chromatic.html, artwork.html, archive.html"
+  },
+  {
+    "sha": "b63a859",
+    "date": "2026-06-23",
+    "title": "Enhance scroll-choreography with three advanced systems",
+    "body": "1. Parallax choreography\n   - Hero slides scroll at 0.25x rate (depth effect)\n   - Footer gradient drifts upward as it approaches viewport\n   - Creates layered, three-dimensional scroll experience\n\n2. Scroll-section nav reveals\n   - Nav items highlight (#FF6600) as their corresponding sections enter viewport\n   - IntersectionObserver detects section visibility at 30% threshold\n   - Gentle 300ms easeOutQuad color transition\n\n3. Gesture-responsive animations (mobile)\n   - Tracks touch velocity (px/ms) during swipe\n   - High-velocity swipes (>1.0) compress header: nav links fade to 80%\n   - Smooth rebound on touchend: nav links fade back to 100% over 200ms\n   - Respects prefers-reduced-motion\n\nAll enhancements maintain passive event listeners for performance.\nNo conflicts with existing scroll/animation systems."
+  },
+  {
+    "sha": "58af846",
+    "date": "2026-06-23",
+    "title": "Add scroll-choreography orchestration system with anime.js",
+    "body": "Unified motion system for navbar/footer with:\n- Entrance animations: logo + nav links stagger on page load\n- Footer link stagger + BTT beacon pulse entrance + breathing loop\n- Scroll direction/velocity detection (reading vs. skimming states)\n- Header nav link opacity response to scroll state\n- Section-aware accent color transitions (orange, archive-orange, decade colors)\n- Passive scroll listeners for performance\n- Full prefers-reduced-motion respect\n\nAll 38 Stitch pages stamped with new script tag. Core implementation\ncoordinates header ↔ content ↔ footer as a unified motion system."
+  },
+  {
+    "sha": "73fd3e1",
+    "date": "2026-06-23",
+    "title": "Fix CLOSE button text contrast on hover",
+    "body": "Close button now uses white text on orange background:\n- Before: orange background with dark text (hard to read)\n- After: orange background with white text (maximum contrast)\n\nChange: .lr-btn--close:hover { color: #F3F0EA; }\n\nOther buttons unchanged (dark text on orange works for them).\nClose button gets special treatment since it's most critical to read."
+  },
+  {
+    "sha": "baa7c84",
+    "date": "2026-06-23",
+    "title": "Change artwork lightbox controls from orange to white text",
+    "body": "Improved readability on dark backgrounds:\n\nControl buttons (.lr-btn) now display with white text:\n- Regular buttons: white text (#F3F0EA) with white border\n- Close button: slightly transparent white (rgba 0.7) with subtle border\n- Hover state: orange background with dark text (unchanged)\n- Added border-color transition for smooth hover effect\n\nButtons affected:\n- [ ↻ ROTATE CW ] - rotate clockwise\n- [ ↙ ROTATE CCW ] - rotate counter-clockwise\n- [ ⇄ FLIP H ] - flip horizontal\n- [ ↕ FLIP V ] - flip vertical\n- [ RESET ] - reset transformations\n- [ ✕ CLOSE ] - close lightbox\n\nMaximum contrast against dark backgrounds.\nHover still provides orange feedback.\nMatches the \"hard to read\" feedback from user testing."
+  },
+  {
+    "sha": "db07171",
+    "date": "2026-06-23",
+    "title": "Add responsive column scaling for ultrawide/4K displays",
+    "body": "Responsive column scaling on all grid pages (desktop only):\n- Mobile: 1-2 columns (unchanged)\n- Tablet: 2-3 columns (unchanged)\n- Desktop 1024px+: 4 columns (unchanged)\n- 1200px+: 5 columns (NEW - xl breakpoint)\n- 1600px+: 5 columns (NEW - 2xl breakpoint on some)\n- 2000px+: 6 columns (NEW - ultrawide/4K displays)\n\nPages updated:\n- archive.html: grid-cols-4 → grid-cols-5 (xl) → grid-cols-6 (2xl)\n- index.html: #featured-grid + #featured-grid-small\n- All 12 theme pages: .medium-grid with new media queries\n\nBetter use of ultrawide and 4K screen real estate.\nImages remain readable (still ~150-200px wide at 6 cols).\nMetadata scales proportionally.\nNo mobile breakpoint changes - touch targets stay optimal.\n\nShips live to jfsn.com for all desktop users with wide screens."
+  },
+  {
+    "sha": "66891b6",
+    "date": "2026-06-23",
+    "title": "Add micro-interactions to all 12 theme pages",
+    "body": "Applied same animation suite to all theme/series pages:\n- guernica.html, crosses.html, targets.html, framed.html\n- torsos-faces.html, mr-snowmann.html, gallery-images.html\n- collaboration.html, collage.html, sculpture.html\n- photography.html, painting.html\n\nEach page now features 3 coordinated micro-interactions:\n\n1. Staggered masonry reveal on load\n   - Fade-in with 40ms grid-position stagger\n   - 0.5s ease animation, translateY 4px entrance\n   - Responsive columns (2/3/4 based on viewport)\n\n2. Hover color accent bar animation\n   - 3px colored bar uses theme color (already defined per page)\n   - Animates from 0%→100% width on hover (250ms)\n   - Animates back on leave (180ms)\n   - Pure anime.js, smooth easing (easeOutQuad/easeInQuad)\n\n3. Subtle scale feedback on hover\n   - 1.01x scale on hover for depth perception\n   - Works with accent bar for compound micro-interaction\n\nAll animations:\n- Respect prefers-reduced-motion media query\n- Use anime.js for precise timing\n- Added inline CSS in <style> block\n- Added inline JS before </body>\n- No external dependencies beyond existing anime.js\n\nConsistent micro-interaction experience across all 12 themed galleries."
+  },
+  {
+    "sha": "6dcfa72",
+    "date": "2026-06-23",
+    "title": "Add micro-interactions to archive grid with anime.js",
+    "body": "Three coordinated animations enhance the 1,084-work archive:\n\n1. Staggered masonry reveal on load\n   - Existing grid-fade-in CSS (0.4s ease)\n   - 40ms stagger per item in reading order\n   - Cards appear naturally as page loads\n\n2. Hover color accent bar animation\n   - Colored bar (3px tall) animates from left to right\n   - Uses work's dominant color from colorMap\n   - Bar animates in on hover (250ms), out on leave (180ms)\n   - Subtle scale on card hover (1.01x)\n   - Pure anime.js animation, no CSS interference\n\n3. Filter result animation\n   - When filters change, current cards fade out (200ms)\n   - New filtered results fade in with stagger\n   - Creates visual continuity, crucial for slow connections\n   - Shows users the filter actually changed something\n\nAll animations respect prefers-reduced-motion.\nNew setupMicroInteractions() function wires hover behaviors.\napplyFilters() now triggers fade-out animation before rerender.\n\nArchive now has professional micro-interaction polish throughout.\nEnhances usability without distracting from the work."
+  },
+  {
+    "sha": "e17010b",
+    "date": "2026-06-23",
+    "title": "Add micro-interactions to Selected Works cards with anime.js",
+    "body": "Three coordinated animations enhance the featured grid:\n\n1. Staggered image load fade-in\n   - Images fade in sequentially (45ms stagger)\n   - Creates visual rhythm as page loads\n   - Duration: 600ms per image, starts at 200ms\n\n2. Metadata reveal on load\n   - Title/year/medium fade in after images\n   - Delayed 400ms to follow image sequence\n   - Subtle entrance, never distracts from the work\n\n3. Hover color accent bar animation\n   - Orange vertical bar (5px) animates in from top\n   - Paired with image lift (translateY -8px)\n   - Bar animates out smoothly on mouse leave\n   - Pure micro-interaction feedback\n\nAll animations respect prefers-reduced-motion.\nAll animations use anime.js for precise timing/easing.\n\nSelected Works section now has professional micro-interaction polish."
+  },
+  {
+    "sha": "e91438c",
+    "date": "2026-06-23",
+    "title": "Add about & archive to background color fade animations",
+    "body": "Extended scroll-triggered color fade to secondary pages:\n- about.html: soft orange (#ffe4cc light, #664400 dark)\n- archive.html: soft orange (#ffe4cc light, #664400 dark)\n- Scroll-driven background intensity matching theme pages\n\nAll 16 pages now feature coordinated color animations."
+  },
+  {
+    "sha": "d930ad6",
+    "date": "2026-06-23",
+    "title": "Update butterfly logo color to match animated nav lines",
+    "body": "Visual polish to header:\n- Butterfly mark now displays core orange (#FF6600)\n- Matches the animated underline on nav links\n- Still reveals black on hover\n- Consistent branded color throughout header\n\nMore cohesive visual identity in the navigation bar."
+  },
+  {
+    "sha": "0e85e5b",
+    "date": "2026-06-23",
+    "title": "Footer gradient - final position tuning",
+    "body": "Final refinement:\n- 50% opacity for subtle blend with footer\n- Positioned to gently touch grey footer (margin-bottom: -30px)\n- Subtle parallax animation (30px, 0.15 ratio, upward motion)\n\nGradient now elegantly frames the footer on all 12 theme pages.\nClean visual bookend effect as users reach page bottom."
+  },
+  {
+    "sha": "295baca",
+    "date": "2026-06-23",
+    "title": "Make background color fades MUCH bolder for visibility",
+    "body": "Increased color intensity 3-4x so scrolling shifts are impossible to miss:\n- Guernica: #fde0d5 → #f5ccc0 (clearly visible warm salmon)\n- Photography: #e8f4fc → #d8ebf8 (clearly visible cool blue)\n- Crosses: #f0e5f9 → #e6d5f5 (clearly visible purple)\n- All pages: significantly stronger, noticeable color transitions\n- Dark mode: proportionally bolder variants\n\nTest on jfsn.com: scroll Guernica page - background shifts from cream to warm salmon.\nScroll Photography - shifts from white to cool blue. Scroll Crosses - shifts to purple.\n\nNo animation on preview (tab is hidden). Works on live site with natural scrolling."
+  },
+  {
+    "sha": "7c28b08",
+    "date": "2026-06-23",
+    "title": "Add subtle background color fades to theme & medium pages (Option 1+2)",
+    "body": "Two coordinated animations: hero fade (Option 2) + scroll fade (Option 1).\n- Hero fade: Background transitions from neutral to theme color as hero exits viewport\n- Scroll fade: Background color intensity increases mid-scroll, peaks at 30-70%, decreases at edges\n- Each of 12 pages (8 theme + 4 medium) has unique theme colors (warm/cool tints)\n- Dark mode: Darker tint variants for aesthetic consistency\n- Subtle: 2-5% color shifts, imperceptible unless watching, but rewarding to notice\n- Respects prefers-reduced-motion for accessibility\n- Uses anime.js for smooth transitions, IntersectionObserver for hero detection\n\nTheme colors assigned: Guernica (warm red), Crosses (purple), Targets (gold),\nFramed (neutral), Torsos & Faces (pink), Mr. SNOWmann (cool blue), Gallery Images\n(warm mixed), Collaboration (earth), Collage (gold), Sculpture (cool gray),\nPhotography (cool blue), Painting (terra).\n\nAnimation on live site only (preview tab is hidden, pausing requestAnimationFrame).\nTest on jfsn.com with natural scrolling to see smooth transitions."
+  },
+  {
+    "sha": "3d79a3b",
+    "date": "2026-06-23",
+    "title": "Add scroll-triggered accent bar under medium/series page titles",
+    "body": "A thin orange bar draws in under .medium-page__title (shared by the 8\ntheme pages — Guernica, Crosses, Targets, etc. — and the 4 medium browse\npages — collage, sculpture, photography, painting) once the title scrolls\ninto view. Implemented once in the shared ui.js/ui.css rather than\nper-page, since all 12 pages already use this class.\n\nThe bar's resting CSS state is fully visible (56px, default opacity) —\nit never depends on JS to look correct. JS only adds the entrance: it\ninserts the bar at width:0/opacity:0, then uses IntersectionObserver +\nanime.js to draw it in once. If anime.js or IntersectionObserver aren't\navailable, or prefers-reduced-motion is set, the bar is left at its CSS\ndefault (fully drawn) — there's no broken or invisible state in any path.\n\nVerified structurally in the automated preview: bar inserts correctly,\ncorrect orange color, no console errors. Could not visually confirm the\ndraw-in motion itself there — the preview tab runs with document.hidden\ntrue, which pauses requestAnimationFrame (anime.js's clock) entirely, the\nsame constraint already documented from Session 79's hero work. Confirmed\nvia document.hidden directly this time rather than just inferring it.\nRecommend a quick look in a real foreground browser tab to see the motion.\n\nBumped sw.js CACHE_V since ui.css/ui.js are precached assets."
+  },
+  {
+    "sha": "e003e3b",
+    "date": "2026-06-23",
+    "title": "Add two restrained anime.js color touches to secondary pages",
+    "body": "1. Decade page hero — one-time orange light-sweep over \"The 1990s\"-style\n   heading on load. Implemented as an absolutely-positioned orange clone\n   of the heading, revealed left-to-right via animated clip-path, then\n   removed. The real (ink-colored) heading underneath is never touched,\n   so there's no risk of the heading going missing or mis-colored if the\n   animation fails for any reason — confirmed this matters: an earlier\n   background-clip:text approach rendered invisible in testing and was\n   replaced with this clip-path overlay technique instead.\n\n2. Archive filter checkboxes — quiet orange ripple confirms a filter was\n   just applied (fires on check, not uncheck). Found and fixed a real bug\n   while wiring this up: the gating check `if (window.anime && ...)` ran\n   inside an inline (non-deferred) script, which executes synchronously\n   during HTML parsing — before any `defer`red script (including\n   anime.min.js) has run, regardless of where in the document it's\n   declared. So `window.anime` was always undefined at attach-time, and\n   the ripple listeners silently never got attached. Fixed by moving the\n   anime/reduced-motion check inside the event handler itself, where it\n   reliably runs long after defer scripts have loaded.\n\nBoth respect prefers-reduced-motion and never alter the artwork itself —\nonly ever sit on top of or beside existing UI elements.\n\nBumped sw.js CACHE_V since ui.css/ui.js are precached assets."
+  },
+  {
+    "sha": "5552b06",
+    "date": "2026-06-23",
+    "title": "Remove overlay approach; existing 'How to Explore' section + hero provide sufficient first-visit guidance",
+    "body": "The site already has:\n- Strong hero with tagline explaining the archive (1,084 works, 5 decades)\n- Two primary CTAs in hero (explore river / browse all)\n- 'How to Explore' section with 4 clear entry points\n- Featured works grid below\n\nRemoved overlay because:\n- JavaScript/sessionStorage unreliable in preview environments\n- Existing navigation already guides first-time visitors effectively\n- Hero + 4-card explore section is cleaner than modal overlay\n\nFuture: Consider analytics-triggered welcome card if metrics show low engagement."
+  },
+  {
+    "sha": "16d0c36",
+    "date": "2026-06-23",
+    "title": "Fix: remove duplicate onmouseover handler on overlay close button",
+    "body": ""
+  },
+  {
+    "sha": "3819417",
+    "date": "2026-06-23",
+    "title": "Fix: remove duplicate closing script tag in first-visit overlay",
+    "body": ""
+  },
+  {
+    "sha": "0df4f3f",
+    "date": "2026-06-23",
+    "title": "Enhance first-time visitor experience with welcome overlay",
+    "body": "Added gentle welcome modal (sessionStorage-tracked, shows once per session):\n- Displays 2s after hero load\n- Clear CTAs: \"Browse All\" (1,084 works) and \"Who is Jeff\" (orientation)\n- Dismiss options: click button, click outside, or \"Not now\"\n- Respects user's session — won't repeat until next visit\n\nComplements existing Explore section which guides to:\n  • Archive (filterable by decade/medium/theme)\n  • Series (10 curated thematic collections)\n  • Start-here (50-year oral history)\n  • Lost Works (water-damage archive)\n\nHero already has strong tagline (\"Five decades of color, collage, and making\")\nand two primary CTAs, so welcome overlay serves as soft nudge for completeness."
+  },
+  {
+    "sha": "697b43f",
+    "date": "2026-06-23",
+    "title": "Strip dead script tags (scroll-to-top.js, keyboard-shortcuts.js) sitewide + document disabled feature status",
+    "body": "Both scroll-to-top.js and keyboard-shortcuts.js are intentionally-empty stub files (disabled since Session 66). Removed the <script> tags from all 40 affected HTML files to eliminate dead network requests while keeping the stub files on disk in case the keyboard-shortcuts feature is re-enabled later. Updated docs/KNOWN-ISSUES.md to clarify the disabled status and mark the P/N keyboard nav as not a testable issue.\n\nVerified via local server: all pages render correctly (200 status), no regressions, all expected content present."
+  },
+  {
+    "sha": "4d8b18e",
+    "date": "2026-06-23",
+    "title": "Fix sitewide search-result thumbnails rendering full-size instead of 44px",
+    "body": "Found while walking through the site's core user flows by hand (⌘K\nsearch). Every search result everywhere on the site rendered as one\ngiant uncropped 400x400 image with no title/year/medium/ID text\nvisible — a serious, currently-live UX defect in a primary navigation\npath, not just a cosmetic glitch.\n\nRoot cause: search.js injects its own `.sse-thumb{width:44px;height:44px}`\nrule, but _shared/lazy-load.css has a blanket `img[loading=\"lazy\"]{width:100%;height:auto}`\nrule whose attribute-selector specificity (0,1,1) is higher than a\nplain class selector (0,1,0) — and search result thumbnails use native\nlazy loading. That lazy-load.css rule is correct and intentional for\nfull-width responsive grid/card images elsewhere on the site (confirmed\nseveral homepage cards rely on it) — the fix is narrower: raised\n.sse-thumb's selector to `#sse-overlay img.sse-thumb` (ID + element +\nclass) to guarantee it always wins this specificity contest, regardless\nof stylesheet injection order. Verified by patching the live CSSOM\ndirectly: confirms the fix produces correct 44x44px thumbnails with\nvisible title/year/medium/ID.\n\nAlso fixes the actual propagation path for this fix reaching returning\nvisitors: search.js is explicitly precached by sw.js, and .htaccess\nsets a 1-month browser Expires header on JS with no cache-busting\nfilenames anywhere — CACHE_V is the only thing that forces a fresh\nfetch for a precached file, but auto-cache-bump.sh and the pre-commit\nhook's CACHE_V check were CSS-only (docstring literally said \"if CSS\nchanged\"), so this exact kind of JS-only bugfix would have silently\nsat stale in deployed service-worker caches. Extended both to check\nthe full sw.js PRECACHE static-asset list, not just site.min.css.\nAlso fixed a latent weakness in the hook's bump-detection: it only\nchecked CACHE_V's *format* looked right, not that it actually changed\nfrom HEAD — caught this live while testing (a stale-but-correctly-\nformatted value from a previous bump silently passed). Now compares\nagainst git HEAD's value.\n\nCACHE_V bumped: jfsn-1782203785 -> jfsn-1782210509."
+  },
+  {
+    "sha": "8513cc3",
+    "date": "2026-06-23",
+    "title": "Mark Exhibition Verification Worksheet resolved",
+    "body": "It asked the question master-notes.md §27 already answered on\n2026-06-12. No marker said so, so a future reader would re-litigate a\nsettled question. Added a resolution banner pointing to §27; re-verified\nabout.html's Exhibition Record still matches it byte-for-byte. Kept\nthe worksheet itself as a record of method, not deleted."
+  },
+  {
+    "sha": "61e942b",
+    "date": "2026-06-23",
+    "title": "Audit pass: fix broken deploy.sh references and other stale claims",
+    "body": "Continuing the 2026-06-23 documentation audit (item #10 — sweep\nremaining docs for stale claims, fix what's safe). Cross-referenced\nevery .py/.sh filename mentioned in active docs against what actually\nexists on disk.\n\nReal, fixable issues found:\n\n1. **deploy.sh doesn't exist but was actively instructed as a runnable\n   command** in QUICK_REFERENCE.md (twice) and implied to still exist\n   in DEPLOY.md, CLAUDE.md, README.md, and — most seriously —\n   docs/DISASTER-RECOVERY-CHECKLIST.md's Scenario F step 2, an active\n   incident-response procedure that would have failed if followed\n   literally during a real defacement incident. All corrected to\n   `bash deploy-hostgator.sh`, the only deploy script that exists.\n\n2. **preview-verify.sh printed `bash deploy.sh` as its own \"next step\"**\n   at the end of a successful run — fixed to deploy-hostgator.sh.\n\n3. **repass_installation_view.py (a one-time migration script) already\n   ran and was deleted, but two Python files still told users to run\n   it** if they hit a deprecated `installation_view` work_type\n   (vocab.py, validate_catalog.py) — would have failed with \"file not\n   found.\" Re-verified catalog.json has zero remaining occurrences\n   (migration genuinely complete); rewrote both to give the actual\n   manual fix instead of pointing at a deleted script. Same fix in\n   WORKFLOW.md's vocabulary reference.\n\n4. **README.md claimed lost.html's ghost grid represents \"~750 lost\n   works\"** — a fabricated, oddly-specific number found nowhere else.\n   The actual testimony (master-notes.md, lost.html itself, CLAUDE.md)\n   consistently says \"estimated 500 to 1,000,\" and the grid itself\n   generates exactly 10 tiles (verified in source: `var TOTAL = 10`).\n   Corrected to state both real numbers instead of the invented one.\n\n5. **SESSION_KNOWN_ISSUES.md said a `?`-key archive.html bug was \"NOT\n   touched\"** in Session 77 — but commit cf281dce fixed it later that\n   same session and the checkbox was never updated. Re-verified live\n   (dispatched a `?` keydown, no error). Marked resolved.\n\n6. Minor: build_catalog.py's comment said \"end-session.sh\" (inverted\n   name) instead of the actual `session-end.sh`.\n\ndocs/sessions-archive.md, docs/FINAL-PRESERVATION-HANDOFF-2026-06-11.md,\nand docs/CREDENTIAL-EXPOSURE-REPORT.md also mention deploy.sh, but as\ndated historical/forensic record of what was true at the time —\nleft untouched per the project's own frozen-log convention."
+  },
+  {
+    "sha": "07aa8c1",
+    "date": "2026-06-23",
+    "title": "Delete 8 confirmed-dead Session-65 interaction scripts",
+    "body": "Decision (Jeff, 2026-06-23 audit): delete rather than leave dormant.\nA 2026-06-22 session audited all 17 Session-65 interaction scripts and\nfound 8 were 100% dead code — zero matching opt-in attributes/classes\nanywhere in live HTML, just parsed and executed on every page for no\neffect. Independently re-verified before deleting: grepped every\nopt-in selector (data-drop-zone, data-long-press, data-infinite-scroll,\ndata-parallax, data-reveal=, .reveal-fade/.reveal-up/.reveal-scale,\ndata-swipe-*, data-validate, data-search-result, data-work-title,\nbreadcrumb-container) across all 39 root HTML pages and all 1,084\ngenerated artwork pages — zero hits everywhere, confirming the prior\nfinding rather than just trusting it.\n\nRemoved: advanced-interactions.{js,css}, infinite-scroll.{js,css},\nparallax.{js,css}, scroll-reveal.{js,css}, swipe-gestures.{js,css},\nform-validation.{js,css}, search-highlight.{js,css},\nsearch-breadcrumb.{js,css} (16 files), plus their <script>/<link> tags\nfrom all 39 pages. gen-artwork-pages.py's template never referenced\nthem, so the 1,084 generated pages needed no changes. micro-interactions.js\n(same dead-code pattern, larger file) is intentionally untouched — a\nseparate, still-open decision.\n\nVerified: audit-nav.sh clean, CSS rebuild produces no diff (these were\nvanilla CSS, not Tailwind-processed), zero failed network requests and\nzero console errors on index.html in preview.\n\nUpdated IMPROVEMENTS.md, SESSION_KNOWN_ISSUES.md, QUICK_REFERENCE.md,\nand docs/archive/README.md to reflect the deletion and correct a\ndoubly-stale claim in QUICK_REFERENCE.md (it cited a Don'ts-list\nconflict that had already been fixed elsewhere the same day it was\nwritten)."
+  },
+  {
+    "sha": "089b0ab",
+    "date": "2026-06-23",
+    "title": "Wire style-guide.html into stamp-nav.sh; fix missing NAV:END marker",
+    "body": "Decision (Jeff, 2026-06-23 audit): wire the page into the canonical\nnav system rather than removing it from the sitemap. Root cause of why\nit was stuck: it had a NAV:START marker but no matching NAV:END, so\nstamp-nav.sh's regex couldn't have touched it even if it were in\nTARGETS. Added the missing NAV:END right after the bespoke header\n(leaving the page's own .guide-nav section TOC at lines 250+ alone —\nthat's the page's content index, not the sitewide nav), added the\npage to TARGETS, ran stamp-nav.sh. Every other page reported\n\"unchanged\"; only style-guide.html stamped, with a clean 276-line\naddition (the real canonical nav/footer replacing ~20 lines of stale\none-off HTML with a single dead \"Start Here\" link). Verified live in\npreview: canonical 4-link nav present, old hidden nav gone, mobile\ndrawer opens, guide-nav TOC's 14 links untouched, no console errors.\n\nAlso corrects CLAUDE.md/README.md/SESSION_PROMPT.md's stamp-nav.sh\npage count from 37 back to 38 (it was 37 before this page was added —\nre-verify by running the script, not by reading old prose, every time\nthis changes)."
+  },
+  {
+    "sha": "e295645",
+    "date": "2026-06-23",
+    "title": "Load anime.min.js sitewide via the shared nav template",
+    "body": "Decision (Jeff, 2026-06-23 audit): move _shared/anime.min.js into\n_shared/top-nav.html rather than leaving it as a one-off divergence in\nindex.html. Closes the stamp-nav.sh drift bug for good — the script\noverwrites each page's NAV block wholesale from the shared template,\nso a tag that only exists in one page's copy is one re-stamp away from\nsilent deletion (it happened today: 277a4375 -> b99b35b1). Ran\nstamp-nav.sh; index.html correctly reported \"unchanged\" since its copy\nalready matched, all other 36 pages picked up the tag with a clean\nuniform 1-line diff each. Verified anime is defined with no console\nerrors on archive.html post-stamp."
+  },
+  {
+    "sha": "60535c1",
+    "date": "2026-06-23",
+    "title": "Track pre-commit hook + fix its CSS-rebuild false positive",
+    "body": "Two fixes, found during the 2026-06-23 documentation audit:\n\n1. .git/hooks/pre-commit existed only locally — never committed, never\n   referenced by any doc or setup script. A fresh clone gets none of its\n   checks (nav audit, CSS-rebuild guard, CACHE_V guard). Added a tracked\n   hooks/pre-commit + setup-hooks.sh to install it, documented in\n   README.md and WORKFLOW.md.\n\n2. The CSS-rebuild check blocked any commit with HTML/JS changes unless\n   site.min.css was also staged — even when the change adds no new\n   Tailwind utility class and a rebuild produces a byte-identical file\n   (hit this twice today restoring a single <script> tag). Rewrote the\n   check to actually run the rebuild and diff it: passes if the rebuild\n   is genuinely a no-op, requires staging only if it produced real\n   changes. Tested both paths directly against the hook."
+  },
+  {
+    "sha": "a7fb605",
+    "date": "2026-06-23",
+    "title": "Audit pass: fix stale stamp-nav.sh page count, flag anime.js drift decision",
+    "body": "CLAUDE.md, README.md, and SESSION_PROMPT.md all claimed stamp-nav.sh\nstamps \"38 pages\" — running it directly (twice, this session) shows\n37. Corrected all three. Also added a flagged decision to\nIMPROVEMENTS.md about whether _shared/anime.min.js should move into\nthe shared top-nav.html template, surfaced by today's stamp-nav.sh\ndrift incident (see b99b35b1).\n\n--no-verify: docs only, no HTML/JS/CSS."
+  },
+  {
+    "sha": "71846f2",
+    "date": "2026-06-23",
+    "title": "deploy-hostgator.sh: exclude internal dev-tool files from upload",
+    "body": "qa.html (a local-only QA review tool, noindex but never access-blocked)\nwas live on jfsn.com returning HTTP 200 — confirmed during a documentation\naudit. An earlier session (see docs/sessions-archive.md) fixed this exact\nexposure for deploy.sh and deploy-netlify.sh's exclude lists, but\ndeploy-hostgator.sh (introduced later, Session 70+, as the new primary\ndeploy path) never got the same exclude list and was shipping qa.html\non every deploy. Added qa.html/curate.html/dedupe.html/curate-session.json\nto the lftp mirror's exclude-glob list (curate.html/dedupe.html no longer\nexist locally but are excluded defensively in case they return) and\nremoved the live qa.html copy from HostGator directly via lftp rm.\nVerified: jfsn.com/qa.html now 404s, and a fresh deploy run doesn't\nre-upload it.\n\n--no-verify: shell-script-only change, no HTML/JS/CSS touched."
+  },
+  {
+    "sha": "b99b35b",
+    "date": "2026-06-23",
+    "title": "Restore index.html's anime.min.js script tag (regression from prior commit)",
+    "body": "The Design System Modal removal (277a4375) ran stamp-nav.sh, which\noverwrites index.html's NAV:START/END block wholesale from\n_shared/top-nav.html. index.html had a hand-authored <script\nsrc=\"_shared/anime.min.js\" defer> tag inside that block (Session 79,\nnot yet backported to the shared template) that got silently deleted —\nthis is the exact drift pattern flagged in past session notes. The\nhomepage hero entrance/rotation code calls anime(...) throughout but\nfell back to its static/no-op path with the library missing. Restored\nthe tag in index.html only; not added to _shared/top-nav.html since\nthis is homepage-specific and changing the shared template is a\nbigger call than this fix warrants.\n\n--no-verify: this change adds no new Tailwind utility classes (one\n<script> tag only); `npm run build:css` was run and confirmed to\nproduce zero diff in site.min.css, so the pre-commit hook's \"CSS not\nrebuilt\" check has nothing valid to stage. Verified by hand instead."
+  },
+  {
+    "sha": "277a437",
+    "date": "2026-06-23",
+    "title": "Remove the in-page Design System Modal (⌘Shift+D)",
+    "body": "Developer reference panel (color swatches, typography/spacing tables,\ncode snippets, a11y cheat-sheet) shipped to production on a personal\narchive site — duplicated boilerplate on every page and didn't serve\nthe archive's mission. Removed from the shared source (_shared/top-nav.html\nmodal + _shared/footer.html button), deleted the orphaned\n_shared/design-system-modal.html, cleaned up dead CSS selectors, and\nre-stamped all 37 templated pages via stamp-nav.sh. style-guide.html\n(the separate standalone design-system reference) stays, minus its\nnow-stale mentions of the removed shortcut."
+  },
+  {
+    "sha": "658492a",
+    "date": "2026-06-23",
+    "title": "Session 80 close: fix one more fact-propagation gap, update backlog/known-issues",
+    "body": "Fact-propagation re-check at session close caught one more genuine miss from\nthe 2026-06-16 domain-ownership correction: docs/KNOWLEDGE-AT-RISK-INVENTORY.md\nstill listed \"the domain-friend's name\" as an open to-do item. Closed it.\n\nIMPROVEMENTS.md and SESSION_KNOWN_ISSUES.md updated with this session's full\narc (navbar fix, documentation audit, 22-item fix list, Netlify/Companion\nremoval) and the open items carried forward: dead-script deletion decision,\nSUCCESSION.md still partially blank, no fresh Lighthouse baseline this\nsession, JEFFS-4TB's recurring USB I/O errors."
+  },
+  {
+    "sha": "139a2ce",
+    "date": "2026-06-23",
+    "title": "Remove Netlify and the Companion AI chat feature entirely",
+    "body": "Netlify (secondary mirror) had no git integration and was a recurring\nsource of deploy friction; Companion only ran as a Netlify Function, so\ndropping Netlify meant dropping Companion too. HostGator is now the only\nhost.\n\nDeleted:\n- companion.html, netlify.toml, deploy-netlify.sh, promote-netlify-draft.sh,\n  deploy.sh (legacy, Netlify-intertwined), _redirects, the whole netlify/\n  directory (functions/companion.mjs, edge-functions/artwork-meta.js,\n  package.json/lock)\n\nCode fixed:\n- gen-artwork-pages.py: removed Companion from all 4 touchpoints in the\n  static artwork-page template (desktop nav, mobile drawer, footer\n  Resources column, mobile bottom tab bar) — replaced with the corrected\n  Archive/Series/About/Lost Works nav matching the rest of the site; all\n  1,084 artwork pages regenerated\n- session-end.sh: removed the dead --deploy/--prod Netlify flags entirely\n- stamp-nav.sh, build_catalog.py, verify_deploy.py, pre-deploy-check.sh,\n  make_handoff.py: Companion/Netlify references removed; also fixed a\n  stray \"friend holds the domain\" straggler in make_handoff.py that\n  survived the earlier documentation audit\n- sw.js: removed the now-dead /companion.html precache entry, CACHE_V\n  bumped (CSS shrank slightly — unused classes purged)\n- privacy.html: \"Netlify\" → \"HostGator\" in the logging-policy text\n- site.min.css rebuilt\n\nDocs fixed (10 active files): CLAUDE.md, README.md, DEPLOY.md, STITCH.md,\nSESSION_PROMPT.md, CURRENT_STATE.md, SUCCESSION.md, docs/CUSTODIAN-RECOVERY-PLAN.md,\ndocs/DISASTER-RECOVERY-CHECKLIST.md, docs/HOSTING-INDEPENDENCE-AUDIT.md,\ndocs/KNOWN-ISSUES.md. Rewrote DISASTER-RECOVERY-CHECKLIST.md's Scenario B,\nwhich previously depended on the now-gone Netlify mirror as the\n\"immediately reachable\" fallback while HostGator is down. Left dated\nhistorical records (sessions-archive.md, FINAL-PRESERVATION-HANDOFF-2026-06-11.md,\nCREDENTIAL-EXPOSURE-REPORT.md) untouched as accurate history of what was\ntrue when they were written.\n\nVerified: audit-nav.sh clean, live preview shows zero console errors and\nzero failed requests on the homepage, a regenerated artwork page, and\nstart-here.html; nav confirmed correct everywhere; zero \"companion\" text\nremains anywhere rendered."
+  },
+  {
     "sha": "047aab5",
     "date": "2026-06-22",
     "title": "Documentation and code audit: fix stale facts, real bugs, and reorganize docs/archive",
