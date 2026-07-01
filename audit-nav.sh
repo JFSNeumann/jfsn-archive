@@ -44,7 +44,7 @@ for fname in files:
 
     # Assets
     if 'cdn.tailwindcss' in content:                          issues.append('Tailwind CDN in use (should be site.min.css)')
-    if 'search.js' not in content:                            issues.append('missing search.js')
+    if 'search.js' not in content and 'nav-early.bundle.js' not in content:  issues.append('missing search.js (or nav-early.bundle.js)')
     if 'nav-active.js' not in content:                        issues.append('missing nav-active.js')
 
     # Accessibility
