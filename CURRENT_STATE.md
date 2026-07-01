@@ -1,7 +1,57 @@
 # JFSN Current State
-**Last updated:** 2026-06-30
+**Last updated:** 2026-07-01
 
 This file describes what's currently true about the site. For ranked work, see `IMPROVEMENTS.md`. For the design brief and architecture, see `CLAUDE.md`. For the session-by-session historical log, see `docs/sessions-archive.md` or `git log`.
+
+---
+
+## 2026-07-01 — Engineering phase complete. Project transitions to Creative Brief–driven phase.
+
+The engineering roadmap is complete. All high- and medium-priority items from `ENGINEERING_ROADMAP.md` have been resolved. The remaining open item (R8: image fade-in consolidation) is intentionally deferred — it carries no active correctness risk and no Creative Brief is blocked by it today. It should be resolved immediately before the first Brief that materially changes image-loading behavior.
+
+**From this point forward, engineering work is initiated only when:**
+- it supports an approved Creative Brief,
+- fixes a defect,
+- improves reliability, or
+- materially reduces unnecessary complexity.
+
+Future sessions begin with Creative Briefs, not engineering tasks.
+
+---
+
+## 2026-07-01 — Session B: JS cleanup, CSS cleanup, catalog optimization, smoke test ✅ (committed, deployed)
+
+**Latest commit:** `1fc1ab8e` (M6 smoke test) → session-end `c7966edb`
+
+| Item | What | Result |
+|------|------|--------|
+| **R3** | Removed `setupImageParallax()` from `artwork-animations.js` — was applying `translateY` directly to `#work-image`, violating the artwork-plane hard rail | ✅ |
+| **R4** | Consolidated two toast systems — redirected `toast.js`'s 2 call sites in `lightbox.js` to `window.showToast`, deleted `toast.js`. `core.bundle.js` −3.7KB | ✅ |
+| **R5** | Removed `senior-ux-signposting.js` from `artwork.html`/`archive.html`/`series.html` — both signposting systems were rendering simultaneously; breadcrumb is the single "where am I" system | ✅ |
+| **R6** | Deleted `_shared/image-prefetch.js` — inert on all templates (no `rel=next/prev` links, no `window.allWorks`, no `?id=` param). Removed from `core.bundle.js` | ✅ |
+| **R7** | Fixed stale comments in `build-js-bundles.js` referencing deleted `micro-interactions.js` | ✅ |
+| **R10** | Deleted `old-site/` (15MB) — was already untracked, never in git | ✅ |
+| **R11** | Removed dead `if (pass.isHover && pass.tile)` block in `drone-survey.js` (branch always false, `containerRect` undefined in scope); removed `decadePalettes` + `originalDrawFunction` from `chromatic-animations.js` | ✅ |
+| **M2** | Dead CSS removed from `ui.css`: orphaned `@keyframes color-transition`, duplicate `@keyframes underline-draw`, renamed first `chip-pulse` to `chip-pulse-remove` (restores intended behavior), dead `.filter-section-header` block, dead `img.loaded` rule. CSS rebuilt | ✅ |
+| **M3** | Removed `description` field from `catalog-lite.json` — search.js never indexed it; no consumer reads it from lite. **152KB → 66KB gzipped (57% reduction)** on every search overlay open | ✅ |
+| **M4** | Removed redundant standalone `search.js` tags from 7 root pages — `search.js` is bundled into `nav-early.bundle.js` and was loading twice. Fixed `audit-nav.sh` false "missing search.js" warnings | ✅ |
+| **M6** | Deploy smoke test expanded from 1 check to 10 — homepage, archive, artwork, generated artwork page, catalog-lite.json, core.bundle.js, sw.js, site.min.css, 404, about. Each verifies HTTP 200 + content pattern | ✅ |
+
+**Files deleted this session:** `_shared/image-prefetch.js`, `_shared/toast.js`, `_shared/senior-ux-signposting.js` (parallax function only removed from `artwork-animations.js`, file kept)
+
+**Net JS removed from bundles:** ~10KB. Plus `old-site/` 15MB local cleanup.
+
+**Deferred (intentional):**
+- **R8** — Consolidate 4–5 image fade-in-on-load systems (`ui.js` ×2, `lazy-load.js`, `image-fade-load.js`, CSS). No active correctness risk; no Brief blocked today. Trigger: resolve before the first Creative Brief that materially changes image-loading behavior.
+- **R9** — Shared observer-dispatch utility for the chromatic family. Lower priority; defer until the animation layer is otherwise being touched.
+
+---
+
+## 2026-07-01 — Pending user actions (not engineering — requires physical action)
+
+- **macOS Full Disk Access for `/bin/bash`** — System Settings → Privacy & Security → Full Disk Access → add `/bin/bash`. Fixes B2 cloud backup LaunchAgent and rsync LaunchAgent (both silently failing without it).
+- **JEFFS-4TB corrupted APFS container superblock** — Disk Utility → JEFFS-4TB → First Aid. If First Aid fails, reformat and repopulate with `bash backup.sh`. B2 is the only verified off-site backup until this is resolved.
+- **`_shared/ui.css.phase2c-backup`** — untracked leftover from Phase 2C. Safe to delete: `rm _shared/ui.css.phase2c-backup`.
 
 ---
 
@@ -148,10 +198,10 @@ See `SESSION-END-PHASE2A.md` for full detail.
 
 ## Backup
 Four redundant stores, listed in update order at end-session:
-1. GitHub (`origin/main`) — last known commit: `06f3c6a0` (Phase 2C docs, 2026-06-30); tags `phase2a-freeze`, `phase2-fouc-freeze` pushed; `phase2c-freeze` pending push
+1. GitHub (`origin/main`) — last known commit: `c7966edb` (session-end, 2026-07-01); tags `phase2a-freeze`, `phase2-fouc-freeze`, `phase2c-freeze` pushed
 2. Local Mac (working tree)
-3. JEFFS-4TB external drive (rsync, nightly LaunchAgent at 11 PM)
-4. Backblaze B2 cloud (LaunchAgent at 9 PM nightly; rides `session-end.sh` / manual `cloud-backup.sh` when capped — daily cap resets ~midnight GMT / ~8 PM EDT) — **last B2 timestamp not verifiable from this session:** `~/Library/Logs/jfsn-cloud-backup.log` is empty and last modified 2026-06-15. Worth checking the LaunchAgent is still actually firing, not just assuming it is because it's scheduled.
+3. JEFFS-4TB external drive (rsync, nightly LaunchAgent at 11 PM) — **corrupted APFS superblock; rsync writes failing. Needs First Aid or reformat. See pending user actions above.**
+4. Backblaze B2 cloud (LaunchAgent at 9 PM nightly) — **LaunchAgent silently failing** due to macOS Full Disk Access blocking `/bin/bash` in launchd context. B2 was manually synced 2026-07-01 (9,506 objects / 683MB). LaunchAgent will resume once Full Disk Access is granted. See pending user actions above.
 
 Refresh this section at the end of each session with the latest commit hash + last B2 backup timestamp.
 
