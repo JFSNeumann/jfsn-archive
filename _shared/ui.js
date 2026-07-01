@@ -492,6 +492,25 @@
   // This copy lacked that guard, so it could hide the header with the drawer
   // open. The top-nav.html handler is the single source of truth.
 
+  // ─── Scroll-Reveal: .reveal-section → .revealed on scroll into view ─────
+  // Companion to ui.css's .reveal-section system (opacity:0 → scroll-reveal
+  // keyframe). Previously owned by micro-interactions.js; restored here when
+  // that file was removed (Session B, 2026-07-01).
+  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var revealSections = document.querySelectorAll('.reveal-section');
+    if (revealSections.length) {
+      var sectionObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            sectionObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      revealSections.forEach(function(el) { sectionObserver.observe(el); });
+    }
+  }
+
   // ─── Scroll-Reveal: Fade-in sections as they enter viewport ──────────────
   // Elements with .reveal-on-scroll animate in when they scroll into view
   if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
