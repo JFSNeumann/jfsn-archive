@@ -115,24 +115,6 @@
     }
   }
 
-  /* ─── Persistent scroll parallax on the image (independent of load timeline) ── */
-  function setupImageParallax() {
-    if (prefersReducedMotion) return;
-
-    const imageWrap = document.getElementById('work-image-wrap');
-    const image = document.getElementById('work-image');
-    if (!imageWrap || !image) return;
-
-    window.addEventListener('scroll', function() {
-      const rect = imageWrap.getBoundingClientRect();
-      const scrollProgress = Math.max(0, Math.min(1,
-        (window.innerHeight - rect.top) / (window.innerHeight + rect.height)
-      ));
-      const parallaxOffset = scrollProgress * 20; // 20px max parallax
-      image.style.transform = `translateY(${parallaxOffset}px)`;
-    }, { passive: true });
-  }
-
   /* ─── Accent Color Animation ────────────────────────────────────────────── */
   function setupAccentColor() {
     if (prefersReducedMotion) return;
@@ -192,7 +174,6 @@
     }
 
     runEntranceTimeline();
-    setupImageParallax();
     setupAccentColor();
     setupRelatedWorksStagger();
   }
