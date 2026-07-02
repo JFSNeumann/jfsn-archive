@@ -818,7 +818,7 @@ header.header-hidden{transform:translateY(-100%)}
      ═══════════════════════════════════════════════ -->
 <!-- Mobile Hero — full viewport, outside folio -->
 <section id="hero-m" class="md:hidden relative overflow-hidden" style="height:100dvh;background-color:#1a1814;">
-  <div id="hero-slides-m" style="position:absolute;inset:0;width:100%;height:100%;"><!-- HERO_SLIDE0_M:START --><img class="hero-slide hero-slide-m is-active" src="artworks/full/art1010-hero-m.avif" alt="Untitled (Cassette Torso) · 2020 · COLLAGE — Jeffrey F. S. Neumann" style="object-position:center center" fetchpriority="high"><!-- HERO_SLIDE0_M:END --></div>
+  <div id="hero-slides-m" style="position:absolute;inset:0;width:100%;height:100%;"><!-- HERO_SLIDE0_M:START --><img class="hero-slide hero-slide-m is-active" src="artworks/full/art1010-hero-m.avif" alt="Untitled (Cassette Torso) · 2020 · COLLAGE — Jeffrey F. S. Neumann" style="width:100%;height:100%;object-fit:cover;object-position:center center" fetchpriority="high"><!-- HERO_SLIDE0_M:END --></div>
   <!-- Dark fade at bottom for readability -->
   <div aria-hidden="true" style="position:absolute;left:0;right:0;bottom:0;height:22.5%;z-index:8;pointer-events:none;background:linear-gradient(to bottom,rgba(0,0,0,0) 0%,rgba(0,0,0,0.9) 100%);"></div>
   <div class="absolute inset-0 z-10 flex flex-col items-center justify-end p-6" style="gap:12px;">
@@ -1047,7 +1047,7 @@ header.header-hidden{transform:translateY(-100%)}
 
   <!-- Hero -->
   <section id="hero-d" class="hero-section relative w-full overflow-hidden" style="height: 100dvh; background-color: #1a1814;">
-    <div id="hero-slides-d" style="position:absolute;inset:0;width:100%;height:100%;"><!-- HERO_SLIDE0_D:START --><img class="hero-slide hero-slide-d is-active" src="artworks/full/art1010-hero.avif" alt="Untitled (Cassette Torso) · 2020 · COLLAGE — Jeffrey F. S. Neumann" style="object-position:center center" fetchpriority="high"><!-- HERO_SLIDE0_D:END --></div>
+    <div id="hero-slides-d" style="position:absolute;inset:0;width:100%;height:100%;"><!-- HERO_SLIDE0_D:START --><img class="hero-slide hero-slide-d is-active" src="artworks/full/art1010-hero.avif" alt="Untitled (Cassette Torso) · 2020 · COLLAGE — Jeffrey F. S. Neumann" style="width:100%;height:100%;object-fit:cover;object-position:center center" fetchpriority="high"><!-- HERO_SLIDE0_D:END --></div>
     <!-- Dark fade at bottom for readability -->
     <div aria-hidden="true" style="position:absolute;left:0;right:0;bottom:0;height:20%;z-index:8;pointer-events:none;background:linear-gradient(to bottom,rgba(0,0,0,0) 0%,rgba(0,0,0,0.9) 100%);"></div>
     <div class="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-margin-desktop" style="background:radial-gradient(ellipse 80% 74% at 50% 46%, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.46) 36%, rgba(0,0,0,0.15) 64%, transparent 86%);">
@@ -1126,7 +1126,8 @@ header.header-hidden{transform:translateY(-100%)}
       var eyebrow = hero.querySelector('.hero-stagger-1');
       var head    = hero.querySelector('.hero-stagger-2');
       var sub     = hero.querySelector('.hero-stagger-3');
-      var ctas    = hero.querySelector('.hero-stagger-4');
+      var para    = hero.querySelector('.hero-stagger-4');
+      var ctas    = hero.querySelector('.hero-stagger-5');
 
       /* Take over from the CSS reveal: drop its transition + mark visible so the
          end-state is right, then drive opacity/transform from anime. */
@@ -1167,6 +1168,7 @@ header.header-hidden{transform:translateY(-100%)}
       if (eyebrow)      tl.add({ targets: eyebrow, opacity:[0,1], translateY:[14,0], duration:700 }, 80);
       if (words.length) tl.add({ targets: words,   opacity:[0,1], translateY:['0.5em',0], duration:900, delay: anime.stagger(45) }, '-=450');
       if (sub)          tl.add({ targets: sub,     opacity:[0,1], translateY:[12,0], duration:700 }, '-=560');
+      if (para)         tl.add({ targets: para,    opacity:[0,1], translateY:[12,0], duration:650 }, '-=450');
       if (ctas)         tl.add({ targets: ctas,    opacity:[0,1], translateY:[12,0], duration:650 }, '-=450');
     }
 
@@ -1663,7 +1665,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
     const grid = document.getElementById('featured-grid');
     if (!grid) return;
     try {
-      const works = await fetch('catalog-home.json?v=20260701003511').then(r => r.json());
+      const works = await fetch('catalog-home.json?v=20260702202614').then(r => r.json());
 
       /* Shuffle cards 4–30 so repeat visitors see variety; keep top 3 editorial */
       const editorial = works.slice(0, 3);
@@ -1813,6 +1815,11 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
     var a = c.querySelector('img');
     if (!a) return null;
     a.style.position = 'absolute'; a.style.inset = '0';
+    /* Full-bleed cover is load-bearing: without it the slide renders at natural
+       size (Tailwind's img{max-width:100%;height:auto}), letterboxing the work
+       and exposing the held-underneath outgoing layer. Set here so both layers
+       (b is cloned from a) stay covered even if a restamp drops the inline style. */
+    a.style.width = '100%'; a.style.height = '100%'; a.style.objectFit = 'cover';
     a.style.opacity = '1'; a.style.zIndex = '1';
     a.alt = '';                                              // decorative; caption link carries the info
     var b = a.cloneNode(false);
@@ -2153,7 +2160,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
 
   /* Set initial hero work for chromatic river "you are here" marker */
   /* HERO_POOL:START — auto-generated, do not edit by hand */
-  var POOL = [{"id": "art1010", "caption": "Untitled (Cassette Torso) · 2020 · COLLAGE", "pos": "center center"}, {"id": "art0953", "caption": "XXXIII Días — imagined installation (Photoshop composite) · 2022 · COLLAGE", "pos": "center 20%"}, {"id": "art1008", "caption": "Pubiern Robodt 365 · 1990 · SCULPTURE", "pos": "center center"}, {"id": "art1009", "caption": "Untitled (Machine Assemblage) · 2020 · SCULPTURE", "pos": "center center"}, {"id": "art0392", "caption": "Art Machine · 2010 · COLLAGE", "pos": "center center", "origin": "72% 45%"}, {"id": "art0585", "caption": "Untitled (Cube Grid) · 1970 · PAINTING", "pos": "center center", "origin": "35% 35%"}, {"id": "art0250", "caption": "Crown Tower with Discs · 1990 · SCULPTURE", "pos": "center 60%", "origin": "50% 65%"}, {"id": "art0779", "caption": "The Defining Years · 2000 · COLLAGE", "pos": "center center", "origin": "30% 40%"}, {"id": "art0663", "caption": "XXXIII Aunt Mary · 2010 · COLLAGE", "pos": "center 35%", "origin": "50% 30%"}, {"id": "art1020", "caption": "Clockwork Targets Formation · 2020 · PAINTING", "pos": "center center", "origin": "35% 60%"}];
+  var POOL = [{"id": "art1010", "caption": "Untitled (Cassette Torso) · 2020 · COLLAGE", "pos": "center center"}, {"id": "art1008", "caption": "Pubiern Robodt 365 · 1990 · SCULPTURE", "pos": "center center"}, {"id": "art1009", "caption": "Untitled (Machine Assemblage) · 2020 · SCULPTURE", "pos": "center center"}, {"id": "art0392", "caption": "Art Machine · 2010 · COLLAGE", "pos": "center center", "origin": "72% 45%"}, {"id": "art1041", "caption": "Chromatic Block Grid · 1970 · SCULPTURE", "pos": "center center"}, {"id": "art0250", "caption": "Crown Tower with Discs · 1990 · SCULPTURE", "pos": "center 60%", "origin": "50% 65%"}, {"id": "art0779", "caption": "The Defining Years · 2000 · COLLAGE", "pos": "center center", "origin": "30% 40%"}, {"id": "art0663", "caption": "XXXIII Aunt Mary · 2010 · COLLAGE", "pos": "center 35%", "origin": "50% 30%"}, {"id": "art1020", "caption": "Clockwork Targets Formation · 2020 · PAINTING", "pos": "center center", "origin": "35% 60%"}];
   /* HERO_POOL:END */
   var heroWork = POOL[0];
   window.__heroWorkId = heroWork.id;
@@ -2410,7 +2417,8 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
       b.type = 'button';
       b.className = 'river-hero-tick';
       b.dataset.id = hw.id;
-      b.style.left = pct + '%';
+      /* clamp so the 24px button (translateX(-50%)) never hangs past the band edge */
+      b.style.left = 'clamp(12px, ' + pct + '%, calc(100% - 12px))';
       b.setAttribute('aria-label', 'Show in the hero: ' + (DATA[di].title || hw.id) + ', ' + DATA[di].year);
       b.innerHTML = '<span aria-hidden="true"></span>';
       b.addEventListener('click', function (e) {

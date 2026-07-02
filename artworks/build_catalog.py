@@ -510,7 +510,7 @@ if INDEX.exists():
                     f"<!-- HERO_SLIDE0_{suf}:START -->"
                     f'<img class="{cls}" src="artworks/full/{lcp_id}{var}.avif" '
                     f'alt="{cap0} — Jeffrey F. S. Neumann" '
-                    f'style="object-position:{pos0}" fetchpriority="high">'
+                    f'style="width:100%;height:100%;object-fit:cover;object-position:{pos0}" fetchpriority="high">'
                     f"<!-- HERO_SLIDE0_{suf}:END -->")
                 stamped, s0n = re.subn(
                     rf'<!-- HERO_SLIDE0_{suf}:START -->.*?<!-- HERO_SLIDE0_{suf}:END -->',
