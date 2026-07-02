@@ -42,16 +42,6 @@
   .sidebar-card { transition: box-shadow 0.2s ease, transform 0.2s ease; }
   .sidebar-card:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.09); transform: translateY(-2px); }
   @media (prefers-reduced-motion: reduce) { .sidebar-card { transition: none; } }
-  /* Quote hover pulse (Phase 3) */
-  @keyframes color-pulse {
-    0%, 100% { color: #0B0B0B; }
-    50% { color: #FF6600; }
-  }
-  @media (prefers-reduced-motion: no-preference) {
-    .prose blockquote p { transition: color 0.15s ease; }
-    .prose blockquote p:hover { animation: color-pulse 0.4s ease 2; }
-  }
-  @media (prefers-reduced-motion: reduce) { .prose blockquote p { animation: none; } }
   .prose p {
     font-family: Inter, sans-serif;
     font-size: 17px;

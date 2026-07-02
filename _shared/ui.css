@@ -304,20 +304,6 @@ button[class*="filter"]:hover svg {
 .theme-tag[data-theme-tag="crosses"]::before { color: #5B6B7B; }
 .theme-tag[data-theme-tag="collaboration"]::before { color: #5A6B5B; }
 
-/* Phase 5.5: Metadata badge pulse on themed pages */
-@keyframes badge-glow {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.6; }
-}
-
-.theme-tag::before {
-  animation: badge-glow 2s ease infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .theme-tag::before { transition: none; animation: none; }
-}
-
 /* ─── Disabled state styling ───────────────────────────────────────────────── */
 
 button:disabled,
@@ -3155,21 +3141,6 @@ select:invalid:focus {
   to {
     background-color: rgba(142, 113, 100, 0.04);
   }
-}
-
-/* Phase 3.2: Quote hover pulse (blockquote text color) */
-blockquote {
-  position: relative;
-  transition: color 0.2s ease;
-}
-
-blockquote:hover {
-  animation: quote-color-pulse 0.4s ease 2;
-}
-
-@keyframes quote-color-pulse {
-  0%, 100% { color: #575757; }
-  50% { color: #FF6600; }
 }
 
 /* Phase 3.3: Search result underline draw animation */
