@@ -4,6 +4,8 @@ Personal archive of Jeffrey Francis Stanley Neumann — 1,084 works, 1974–pres
 Collage · Sculpture · Photography · Painting.  
 **Live:** [jfsn.com](https://jfsn.com) — the only host. (Netlify secondary mirror + Companion AI chat feature removed 2026-06-22.)
 
+> **If Jeff is unavailable:** see `SUCCESSION.md` — the continuity and recovery entry point (backups, hosting, domain, contacts). This README is a technical reference, not a succession plan.
+
 ---
 
 ## What the site is

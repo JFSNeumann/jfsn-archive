@@ -1,5 +1,7 @@
 # JFSN Archive — Claude Code Design Brief
 
+> **If Jeff is unavailable:** stop here and read `SUCCESSION.md` first. It is the entry point for continuity, backups, hosting, and domain matters when Jeff cannot be reached — this file is not.
+
 > **Primary guiding document:** `JFSN-MISSION.md` — read it before making any significant development or content decision.
 
 > **The guiding question** (from JFSN-MISSION.md):
