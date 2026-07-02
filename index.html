@@ -642,7 +642,7 @@ header.header-hidden{transform:translateY(-100%)}
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><line x1="20.4" y1="20.4" x2="16" y2="16"/></svg>
       <span class="hidden md:inline" aria-hidden="true" style="font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.05em;color:#575757;border:1px solid #c4c7c7;padding:1px 5px;pointer-events:none;">⌘K</span>
     </button>
-    <button class="md:hidden text-deep-ink" style="padding:10px;" aria-label="Open menu" aria-expanded="false" id="nav-menu-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    <button class="md:hidden text-deep-ink" style="padding:10px;" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu-drawer" id="nav-menu-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
   </div>
 </header>
 
@@ -2651,9 +2651,11 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
 
     // 3. (Featured-card 3D mouse-tilt removed — simplicity pass 2026-06-21.)
     // 4. Scroll-reveal is ONE system, defined sitewide: ui.css JS-gates the
-    //    hidden state (.js .reveal-section) and _shared/micro-interactions.js is
+    //    hidden state (.js .reveal-section) and _shared/core.bundle.js is
     //    the single IntersectionObserver, adding `.revealed` (which plays the
-    //    animation) as elements scroll in. No page-local reveal code here. The
+    //    animation) as elements scroll in. (micro-interactions.js was removed
+    //    in Session H1+M1; the observer was restored to core.bundle.js.)
+    //    No page-local reveal code here. The
     //    `js` flag in <head> keeps content visible with JS off. The old auto-
     //    playing ui.css animation + page-local duplicate were both removed
     //    2026-06-25 (they raced each other and caused a contrast false-positive).

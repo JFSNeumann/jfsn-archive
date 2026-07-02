@@ -92,7 +92,7 @@
           <line x1="12.5" y1="12.5" x2="17" y2="17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
         <input id="sse-input" type="search" placeholder="Search works, themes, year…"
-               autocomplete="off" spellcheck="false" aria-autocomplete="list" aria-controls="sse-results">
+               autocomplete="off" spellcheck="false" aria-label="Search works, themes, year…" aria-autocomplete="list" aria-controls="sse-results">
         <button id="sse-close" aria-label="Close search">✕</button>
       </div>
       <div id="sse-results" role="listbox" aria-label="Search results"></div>
@@ -1300,7 +1300,7 @@ body.jfsn-custom-cursor,body.jfsn-custom-cursor *{cursor:none!important;}
     bar.id = 'cps-bar';
     bar.innerHTML =
       '<div id="cps-wrap" role="img" aria-label="Chromatic position map of works on this page across 1974 to present. Click a point to view that decade in the archive.">' +
-        '<canvas id="cps-canvas"></canvas>' +
+        '<canvas id="cps-canvas" aria-hidden="true"></canvas>' +
         '<div id="cps-marker"></div>' +
         '<div id="cps-label"></div>' +
       '</div>';
