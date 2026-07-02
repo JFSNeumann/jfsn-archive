@@ -92,7 +92,7 @@
       margin: 0 0 24px 0;
       padding: 0;
       background: transparent;
-      overflow: visible;
+      overflow: hidden; /* drones sweep past the edges; don't widen the page */
       display: block;
     `;
 
