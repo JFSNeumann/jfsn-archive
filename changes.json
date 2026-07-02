@@ -1,5 +1,11 @@
 [
   {
+    "sha": "02a055e",
+    "date": "2026-07-02",
+    "title": "Hero: fix presentation/CTA reveal bugs, adopt curated collection",
+    "body": "Restore full-bleed hero presentation (object-fit: cover was dropped\nfrom the stamped slide-0 template, letterboxing every rotation and\nexposing the held-underneath outgoing slide during transitions).\nFix the desktop CTA reveal timeline, which pointed both its \"sub\"\nand \"ctas\" targets at the wrong elements, leaving the entrance\nbuttons permanently invisible.\n\nAdopt the approved Hero Collection: remove the XXXIII Días imagined-\ninstallation composite (implies exhibition history the piece never\nhad), and replace the soft/upscaled Cube Grid painting with\nChromatic Block Grid, a sharp 1970s sculpture on the same chromatic-\ngrid theme. New hero crops generated for art1041 matching the\nexisting pipeline (full-res desktop copy, 1080px-wide mobile crop\nvia avifenc at quality 82). Pool goes from 10 works to 9; anchor,\nrotation timing, and all other entries unchanged."
+  },
+  {
     "sha": "ddf9f15",
     "date": "2026-07-02",
     "title": "Add session-end records",
