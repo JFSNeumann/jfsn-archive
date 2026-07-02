@@ -127,9 +127,6 @@
         }
         #work-count { font-variant-numeric: tabular-nums; }
         @media (max-width: 767px) { #work-count-label { display: none; } }
-        /* Reading progress bar */
-        #archive-progress{position:fixed;top:0;left:0;width:0%;height:2px;background:#FF6600;z-index:9999;pointer-events:none;transition:width 0.1s linear;}
-        @media(prefers-reduced-motion:reduce){#archive-progress{transition:none;}}
         /* Chromatic position river — sticky color map of where you are in the archive */
         #archive-river-bar{position:sticky;top:112px;z-index:35;background:#fcf9f3;border-bottom:1px solid #c4c7c7;margin-bottom:16px;}
         #archive-river-wrap{position:relative;cursor:pointer;}
@@ -608,19 +605,6 @@ header.header-hidden{transform:translateY(-100%)}
 <script src="_shared/counter-animate.js" defer></script>
 <script src="_shared/stat-card-entrance.js" defer></script>
 
-<div id="archive-progress" aria-hidden="true"></div>
-<script>
-(function(){
-  var bar = document.getElementById('archive-progress');
-  if (!bar) return;
-  function update() {
-    var h = document.documentElement.scrollHeight - window.innerHeight;
-    bar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
-  }
-  window.addEventListener('scroll', update, { passive: true });
-  window.addEventListener('resize', update, { passive: true });
-})();
-</script>
 
 <main id="main" class="pt-[100px] pb-xl px-margin-mobile md:px-margin-desktop max-w-[1200px] mx-auto" data-ambient-colors='[{"h":200,"s":20,"l":93,"a":0.015},{"h":35,"s":22,"l":91,"a":0.01},{"h":200,"s":18,"l":93,"a":0.015}]' style="background-color:hsla(200,20%,93%,0.015);">
 
@@ -1005,7 +989,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
      proper consolidation and fix in Session 67+. -->
 
 <script>
-const PAGE_SIZE = 48;
+const PAGE_SIZE = 96;
 let allWorks = [];
 let colorMap = {};
 let filtered = [];
