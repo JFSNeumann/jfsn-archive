@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-20260703081534'; // drone-fleet.js added to 7 pages
+const CACHE_V  = 'jfsn-20260703090919'; // archive caption/sort padding + Imagined Museum links
 const PRECACHE = [
   '/',
   '/index.html',

@@ -220,6 +220,14 @@
           box-shadow: none;
           text-shadow: none;
         }
+        /* The card has a visible background + shadow (ux-improvements.css),
+           but the caption utilities go sm:px-0/sm:pb-0 — leaving title and
+           series text flush against the card edge on desktop. Inset them. */
+        @media (min-width: 640px) {
+          .archive-card .space-y-1 {
+            padding: 0 12px 12px;
+          }
+        }
         /* Grid stagger fade-in on load + filter change (Phase 4.2 + micro-interactions) */
         .thumb {
           --delay: 0s;
@@ -620,7 +628,7 @@ header.header-hidden{transform:translateY(-100%)}
     </div>
     <div class="flex items-center gap-2 pb-1">
       <label for="sort-select" class="hidden md:inline font-label-md text-label-md text-secondary uppercase tracking-widest whitespace-nowrap">Sort:</label>
-      <select id="sort-select" aria-label="Sort" class="font-label-md text-label-md uppercase tracking-widest bg-background border border-outline-variant px-2 py-1 text-on-surface cursor-pointer">
+      <select id="sort-select" aria-label="Sort" class="font-label-md text-label-md uppercase tracking-widest bg-background border border-outline-variant text-on-surface cursor-pointer" style="padding:6px 12px;">
         <option value="id_desc">Recently Added</option>
         <option value="id_asc">Default</option>
         <option value="year_asc">Oldest first</option>
