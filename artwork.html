@@ -651,7 +651,7 @@ function metaRow(label, value, mono) {
   const valStyle = mono
     ? 'font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:10px;letter-spacing:0.06em;color:#8e7164;'
     : '';
-  return `<div class="grid grid-cols-3 gap-xs items-baseline py-sm" class="border-bottom-soft">
+  return `<div class="grid grid-cols-3 gap-xs items-baseline py-sm" style="column-gap:16px;">
     <span class="font-label-md text-label-md text-secondary uppercase">${label}</span>
     <span class="col-span-2 font-body-md text-body-md" style="${valStyle}">${value}</span>
   </div>`;
