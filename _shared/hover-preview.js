@@ -64,10 +64,18 @@ const HoverPreview = {
     const workData = this.getWorkData(workId);
     if (!workData) return;
 
-    // Update preview content
-    this.preview.querySelector('.hover-preview-title').textContent = workData.title || 'Untitled';
-    this.preview.querySelector('.hover-preview-medium').textContent = workData.work_type || '';
-    this.preview.querySelector('.hover-preview-year').textContent = workData.year_display || workData.year || '';
+    // Update preview content. The title is already visible beneath every
+    // thumbnail, so the card never repeats it — it shows medium/year when
+    // known, otherwise only the ID. Empty rows collapse entirely so no
+    // stray separators render.
+    const titleEl = this.preview.querySelector('.hover-preview-title');
+    titleEl.textContent = '';
+    titleEl.style.display = 'none';
+    const medium = workData.work_type || '';
+    const year = workData.year_display || workData.year || '';
+    this.preview.querySelector('.hover-preview-medium').textContent = medium;
+    this.preview.querySelector('.hover-preview-year').textContent = year;
+    this.preview.querySelector('.hover-preview-meta').style.display = (medium || year) ? '' : 'none';
     this.preview.querySelector('.hover-preview-id').textContent = `ID: ${workId}`;
 
     // Position near cursor
