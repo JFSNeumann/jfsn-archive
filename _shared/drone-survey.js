@@ -87,7 +87,7 @@
     droneWrap.style.cssText = `
       position: relative;
       width: 100%;
-      height: 180px;
+      height: 240px;
       pointer-events: none;
       margin: 0 0 24px 0;
       padding: 0;
@@ -134,8 +134,8 @@
   function createDroneSvg(config) {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('viewBox', '0 0 80 80');
-    svg.setAttribute('width', '60');
-    svg.setAttribute('height', '60');
+    svg.setAttribute('width', '120');
+    svg.setAttribute('height', '120');
     svg.setAttribute('class', `drone-svg drone-${config.id}`);
     svg.style.cssText = `
       position: absolute;
@@ -192,7 +192,7 @@
   }
 
   function animateDrone(droneSvg, spotlight, config, tiles, container) {
-    const droneSize = 60;
+    const droneSize = 120;
     const containerWidth = container.offsetWidth;
     const containerHeight = container.offsetHeight; // 180px for whitespace area
 

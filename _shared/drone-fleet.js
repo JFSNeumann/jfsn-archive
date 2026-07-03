@@ -15,8 +15,6 @@
 (function () {
   'use strict';
 
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
   var page = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
 
   /* Each entry: how the drone is summoned (trigger) and who it is (drone).
@@ -30,10 +28,10 @@
     'start-here.html': {
       trigger: { scroll: 0.25, time: 10000 },
       drone: {
-        size: 34, body: '#575757', rotor: '#FF6600', peak: 0.85, rotorMs: 600,
+        size: 68, body: '#575757', rotor: '#FF6600', peak: 0.85, rotorMs: 600,
         path: function (w, h) {
           return {
-            duration: 1600, easing: 'linear',
+            duration: 3000, easing: 'linear',
             frames: [
               { x: -60, y: 96 },
               { x: w + 60, y: 108 }
@@ -50,14 +48,14 @@
       trigger: { footer: true },
       oncePerSession: 'jfsn-drone-stories',
       drone: {
-        size: 24, body: '#0B0B0B', rotor: '#B84700', peak: 0.5, rotorMs: 1100,
+        size: 48, body: '#0B0B0B', rotor: '#B84700', peak: 0.5, rotorMs: 1100,
         path: function (w, h) {
           return {
             duration: 2400, easing: 'easeInOutSine',
             frames: [
               { x: w - 80, y: h + 40 },
               { x: w - 96, y: h - 130 },
-              { x: w - 96, y: h - 130, hold: 500 },
+              { x: w - 96, y: h - 130, hold: 2000 },
               { x: w - 60, y: h + 40 }
             ]
           };
@@ -71,14 +69,14 @@
     'why-i-made-things.html': {
       trigger: { scroll: 0.6 },
       drone: {
-        size: 28, body: '#0B0B0B', rotor: '#B84700', peak: 0.6, rotorMs: 950,
+        size: 56, body: '#0B0B0B', rotor: '#B84700', peak: 0.6, rotorMs: 950,
         path: function (w, h) {
           return {
             duration: 2200, easing: 'easeInOutQuad',
             frames: [
               { x: 20, y: -50 },
               { x: 26, y: h * 0.3 },
-              { x: 26, y: h * 0.3, hold: 400 },
+              { x: 26, y: h * 0.3, hold: 1900 },
               { x: 20, y: -50 }
             ]
           };
@@ -92,16 +90,16 @@
     'imagined-museum.html': {
       trigger: { scroll: 0.3, time: 14000 },
       drone: {
-        size: 38, body: '#8e7164', rotor: '#FF9933', peak: 0.9, rotorMs: 750,
+        size: 76, body: '#8e7164', rotor: '#FF9933', peak: 0.9, rotorMs: 750,
         path: function (w, h) {
           return {
             duration: 2600, easing: 'easeInOutQuad',
             frames: [
               { x: w + 60, y: 120 },
               { x: w * 0.68, y: 88 },
-              { x: w * 0.68, y: 88, hold: 450 },
+              { x: w * 0.68, y: 88, hold: 1200 },
               { x: w * 0.3, y: 132 },
-              { x: w * 0.3, y: 132, hold: 450 },
+              { x: w * 0.3, y: 132, hold: 1200 },
               { x: -60, y: 100 }
             ]
           };
@@ -115,7 +113,7 @@
     'about.html': {
       trigger: { scroll: 0.4, time: 12000 },
       drone: {
-        size: 32, body: '#575757', rotor: '#B84700', peak: 0.8, rotorMs: 850,
+        size: 64, body: '#575757', rotor: '#B84700', peak: 0.8, rotorMs: 850,
         path: function (w, h) {
           var y = h - 170;
           return {
@@ -123,7 +121,7 @@
             frames: [
               { x: w + 60, y: y },
               { x: w * 0.5, y: y },
-              { x: w * 0.5, y: y, hold: 600 },
+              { x: w * 0.5, y: y, hold: 2000 },
               { x: -60, y: y }
             ]
           };
@@ -137,11 +135,11 @@
     'archive.html': {
       trigger: { footer: true, minDwell: 20000 },
       drone: {
-        size: 30, body: '#0B0B0B', rotor: '#FF6600', peak: 0.7, rotorMs: 700,
+        size: 60, body: '#0B0B0B', rotor: '#FF6600', peak: 0.7, rotorMs: 700,
         path: function (w, h) {
           var y = h - 140;
           return {
-            duration: 1800, easing: 'linear',
+            duration: 3200, easing: 'linear',
             frames: [
               { x: -60, y: y },
               { x: w + 60, y: y - 12 }
@@ -158,7 +156,7 @@
     'artwork.html': {
       trigger: { element: '#related-works-section' },
       drone: {
-        size: 30, body: '#575757', rotor: '#FF9933', peak: 0.7, rotorMs: 800,
+        size: 60, body: '#575757', rotor: '#FF9933', peak: 0.7, rotorMs: 800,
         path: function (w, h) {
           var y = h * 0.42;
           return {
@@ -166,7 +164,7 @@
             frames: [
               { x: w + 60, y: y },
               { x: w * 0.55, y: y - 16 },
-              { x: w * 0.55, y: y - 16, hold: 400 },
+              { x: w * 0.55, y: y - 16, hold: 1600 },
               { x: -60, y: y + 8 }
             ]
           };
@@ -180,11 +178,11 @@
     'chromatic.html': {
       trigger: { scroll: 0.2, time: 8000 },
       drone: {
-        size: 32, body: '#0B0B0B', rotor: '#FF6600', peak: 0.8, rotorMs: 800,
+        size: 64, body: '#0B0B0B', rotor: '#FF6600', peak: 0.8, rotorMs: 800,
         bob: false,
         path: function (w, h) {
           return {
-            duration: 2000, easing: 'linear',
+            duration: 3500, easing: 'linear',
             frames: [
               { x: -60, y: 84 },
               { x: w + 60, y: 84 }
@@ -251,6 +249,8 @@
 
   function fire() {
     if (fired || !window.anime || document.visibilityState !== 'visible') return;
+    /* Checked at fire time (not load) so a mid-session toggle is honored. */
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     fired = true;
     cleanups.forEach(function (fn) { fn(); });
     if (entry.oncePerSession) {

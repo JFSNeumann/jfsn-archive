@@ -182,25 +182,34 @@ sleep 3
 TEST_PASSED=true
 SMOKE_FAILURES=()
 
+SMOKE_RETRIES=3      # attempts per check (HostGator can still be syncing right after upload)
+SMOKE_RETRY_WAIT=25  # seconds between attempts
+
 smoke_check() {
   local url="$1"
   local pattern="$2"
   local label="$3"
-  local body
-  body=$(curl -s --max-time 10 "$url")
-  local http_code
-  http_code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "$url")
+  local body http_code attempt
+  for attempt in $(seq 1 "$SMOKE_RETRIES"); do
+    body=$(curl -s --max-time 10 "$url")
+    http_code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "$url")
+    if [ "$http_code" = "200" ] && echo "$body" | grep -q "$pattern"; then
+      echo -e "${GREEN}✓ $label${NC}"
+      return 0
+    fi
+    if [ "$attempt" -lt "$SMOKE_RETRIES" ]; then
+      echo -e "${YELLOW}… $label — not ready (attempt $attempt/$SMOKE_RETRIES), retrying in ${SMOKE_RETRY_WAIT}s${NC}"
+      sleep "$SMOKE_RETRY_WAIT"
+    fi
+  done
   if [ "$http_code" != "200" ]; then
     echo -e "${RED}✗ $label — HTTP $http_code${NC}"
     SMOKE_FAILURES+=("$label (HTTP $http_code)")
-    TEST_PASSED=false
-  elif ! echo "$body" | grep -q "$pattern"; then
+  else
     echo -e "${RED}✗ $label — pattern not found: $pattern${NC}"
     SMOKE_FAILURES+=("$label (missing: $pattern)")
-    TEST_PASSED=false
-  else
-    echo -e "${GREEN}✓ $label${NC}"
   fi
+  TEST_PASSED=false
 }
 
 smoke_check "https://jfsn.com/index.html"                    "Jeffrey F. S. Neumann"  "Homepage"
