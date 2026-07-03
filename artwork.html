@@ -94,11 +94,11 @@ window.addEventListener('pagereveal', function (e) {
   /* Full resolution is the page's primary action — same bracket idiom,
      one step up in scale, weight, and tracking. Color/hover unchanged. */
   #full-res-btn {
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 700;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    padding: 8px 0;
+    white-space: nowrap;
   }
   .reveal-on-scroll { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
   .reveal-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
@@ -378,10 +378,12 @@ header.header-hidden{transform:translateY(-100%)}
             <p id="artwork-mobile-year-text" style="font-family:Inter,sans-serif;font-size:11px;font-weight:400;letter-spacing:0.06em;color:#c4c7c7;margin-top:3px;"></p>
           </div>
         </div>
-        <div class="p-sm" style="border-top:1px solid #e3bfb1;">
+        <div style="border-top:1px solid #8e7164;padding:18px 16px;display:flex;align-items:center;gap:16px;">
+          <span aria-hidden="true" style="flex:1;height:1px;background:#e3bfb1;"></span>
           <button id="full-res-btn" class="bracket-link bg-transparent border-0 cursor-pointer p-0">
             [ Full resolution → ]
           </button>
+          <span aria-hidden="true" style="flex:1;height:1px;background:#e3bfb1;"></span>
         </div>
       </section>
 
