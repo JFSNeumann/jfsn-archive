@@ -311,7 +311,7 @@
   .featured-metadata {
     background: rgba(244,241,237,0.5);
     border-top: 1px solid #e3bfb1;
-    padding: 0.5rem !important;
+    padding: 0.5rem 0.875rem !important;
     margin: 0 -0.5rem -0.5rem;
   }
 
@@ -527,7 +527,9 @@
   @media (min-width: 640px) {
     #featured-grid .featured-metadata {
       margin: 0;
-      padding: 14px 10px 10px 10px;
+      /* !important needed: the base .featured-metadata padding above is
+         !important and was silently overriding this desktop value. */
+      padding: 14px 16px 10px 16px !important;
     }
     #featured-grid .featured-card-img { margin-bottom: 18px; }
   }

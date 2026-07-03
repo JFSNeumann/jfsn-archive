@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-20260702202614'; // R4/R5: Toast consolidated, redundant signposting removed
+const CACHE_V  = 'jfsn-20260703081534'; // drone-fleet.js added to 7 pages
 const PRECACHE = [
   '/',
   '/index.html',

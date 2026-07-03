@@ -79,7 +79,16 @@
         .ledger-row {
             border-bottom: 1px solid #c4c7c7;
             border-left: 0px solid #FF6600;
+            /* Horizontal inset so the hover tint + orange rule never touch
+               the year/venue text; .ledger-head carries the same inset to
+               keep the column headings aligned. */
+            padding-left: 12px;
+            padding-right: 12px;
             transition: background-color 0.25s ease, border-left-width 0.2s ease;
+        }
+        .ledger-head {
+            padding-left: 12px;
+            padding-right: 12px;
         }
         .ledger-row:hover {
             background-color: #f7f3f2;
@@ -373,6 +382,7 @@ header.header-hidden{transform:translateY(-100%)}
 </script>
 <script src="_shared/nav-late.bundle.js" defer></script>
 <!-- SCRIPTS:END -->
+<script src="_shared/drone-fleet.js" defer></script>
 <script src="_shared/depth-hero.js" defer></script>
 <script src="_shared/hero-zoom-settle.js" defer></script>
 <script src="_shared/stat-card-entrance.js" defer></script>
@@ -518,7 +528,7 @@ header.header-hidden{transform:translateY(-100%)}
       </div>
     </div>
     <div>
-      <div class="hidden md:grid grid-cols-12 py-sm border-b border-outline font-label-md text-label-md text-secondary uppercase tracking-widest">
+      <div class="ledger-head hidden md:grid grid-cols-12 py-sm border-b border-outline font-label-md text-label-md text-secondary uppercase tracking-widest">
         <div class="col-span-2">Year</div>
         <div class="col-span-6">Exhibition</div>
         <div class="col-span-4 text-right">Venue</div>
