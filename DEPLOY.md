@@ -65,9 +65,13 @@ bash deploy-hostgator.sh
 ```
 
 This is the **primary deploy path** as of Session 70 (replaces the old JFSN.app desktop tool, which is no longer used). It:
+- Refuses to run if the working tree is dirty (`git status --porcelain`) — prints the modified/untracked files and aborts with a non-zero exit. Override with `--force` or `DEPLOY_FORCE=1` for an intentional dirty deploy.
+- Prints a short deployment summary first (branch, commit hash + subject, tree status, destination host, timestamp)
 - Reads FTP credentials from `.ftp.env`
 - Mirrors changed files via `lftp`
 - Runs a smoke test against jfsn.com
+
+The dirty-tree guard exists because `deploy-hostgator.sh` mirrors the working tree, not git — an uncommitted file ships exactly as it sits on disk, whether or not that was the intent. Commit or discard changes before deploying; use `--force` only when you deliberately want to test something live before it's committed.
 
 The legacy full-mirror script `deploy.sh` no longer exists in the repo (re-verified 2026-06-23 — several docs still pointed to it as a live fallback, which was wrong since at least the 2026-06-22 Netlify-removal pass, possibly earlier). `deploy-hostgator.sh` is the only deploy script now; if it breaks, fix it rather than reaching for a deleted fallback.
 
@@ -117,7 +121,7 @@ GitHub ≠ production. HostGator does not auto-deploy on push. Run `bash deploy-
 
 ## Never deploy
 
-- With uncommitted changes
+- With uncommitted changes — `deploy-hostgator.sh` enforces this automatically now (aborts unless `--force`/`DEPLOY_FORCE=1` is set); this line is the reason the guard exists, not just a reminder
 - Without running `pre-deploy-check.sh` (or at least `audit-nav.sh`)
 - If a pre-deploy check fails
 - If a Lighthouse run shows a performance regression you haven't investigated
