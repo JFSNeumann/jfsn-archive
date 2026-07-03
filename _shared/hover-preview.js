@@ -76,6 +76,7 @@ const HoverPreview = {
     this.preview.querySelector('.hover-preview-medium').textContent = medium;
     this.preview.querySelector('.hover-preview-year').textContent = year;
     this.preview.querySelector('.hover-preview-meta').style.display = (medium || year) ? '' : 'none';
+    this.preview.querySelector('.hover-preview-content').classList.toggle('has-meta', !!(medium || year));
     this.preview.querySelector('.hover-preview-id').textContent = `ID: ${workId}`;
 
     // Position near cursor

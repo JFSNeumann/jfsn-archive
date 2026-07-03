@@ -353,7 +353,7 @@
   <script>
     window.addEventListener('load', function () {
       ['/_shared/lightbox.css', '/_shared/enhancements.css', '/_shared/toast.css',
-       '/_shared/skeleton.css', '/_shared/hover-preview.css', '/_shared/page-transitions.css',
+       '/_shared/skeleton.css', '/_shared/hover-preview.css?v=20260703T4', '/_shared/page-transitions.css',
        '/_shared/lazy-load.css'].forEach(function (href) {
         var l = document.createElement('link');
         l.rel = 'stylesheet'; l.href = href;
@@ -366,7 +366,7 @@
     <link rel="stylesheet" href="/_shared/enhancements.css"/>
     <link rel="stylesheet" href="/_shared/toast.css"/>
     <link rel="stylesheet" href="/_shared/skeleton.css"/>
-    <link rel="stylesheet" href="/_shared/hover-preview.css"/>
+    <link rel="stylesheet" href="/_shared/hover-preview.css?v=20260703T4"/>
     <link rel="stylesheet" href="/_shared/page-transitions.css"/>
     <link rel="stylesheet" href="/_shared/lazy-load.css"/>
   </noscript>
@@ -617,7 +617,7 @@ header.header-hidden{transform:translateY(-100%)}
 <main id="main" class="pt-[100px] pb-xl px-margin-mobile md:px-margin-desktop max-w-[1200px] mx-auto" data-ambient-colors='[{"h":200,"s":20,"l":93,"a":0.015},{"h":35,"s":22,"l":91,"a":0.01},{"h":200,"s":18,"l":93,"a":0.015}]' style="background-color:hsla(200,20%,93%,0.015);">
 
   <!-- Page Header -->
-  <header class="mb-md md:mb-lg pb-md flex justify-between items-end" style="border-bottom:1px solid #8e7164;">
+  <header class="mb-md md:mb-lg pb-md flex justify-between items-end" style="border-bottom:1px solid #8e7164;padding-left:14px;padding-right:14px;">
     <div>
       <p style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;letter-spacing:0.1em;color:#B84700;text-transform:uppercase;margin-bottom:6px;">Jeffrey F. S. Neumann · 1974–Present</p>
       <h1 class="font-label-caps text-label-caps tracking-widest mb-1">THE ARCHIVE</h1>
@@ -1527,7 +1527,7 @@ document.addEventListener('click', (e) => {
 <script src="_shared/nav-active.js" defer></script>
   <!-- Phase 1 Enhancement Scripts -->
   <!-- Phase 2 Enhancement Scripts -->
-  <script src="/_shared/hover-preview.js?v=20260703T2" defer></script>
+  <script src="/_shared/hover-preview.js?v=20260703T4" defer></script>
   <!-- Phase 3 Enhancement Scripts -->
   <script src="/_shared/archive-animations.js" defer></script>
   <script src="/_shared/breadcrumb-navigation.js" defer></script>

@@ -19,8 +19,8 @@
   background: #fcf9f3;
   border: 1px solid #8e7164;
   border-radius: 4px;
-  padding: 12px 14px;
-  min-width: 200px;
+  padding: 6px 10px;
+  width: max-content;
   max-width: 280px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(8px);
@@ -63,7 +63,12 @@
 .hover-preview-id {
   font-family: ui-monospace, monospace;
   font-size: 10px;
+  line-height: 1.4;
   color: #8e7164;
+}
+
+/* Divider above the ID only when metadata rows are visible above it */
+.hover-preview-content.has-meta .hover-preview-id {
   margin-top: 6px;
   padding-top: 6px;
   border-top: 1px solid #e3bfb1;
