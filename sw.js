@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-20260703090919'; // archive caption/sort padding + Imagined Museum links
+const CACHE_V  = 'jfsn-20260703094049'; // related-works restored + registrar drone
 const PRECACHE = [
   '/',
   '/index.html',

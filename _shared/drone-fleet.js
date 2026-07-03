@@ -151,6 +151,29 @@
       }
     },
 
+    /* Artwork pages — the registrar. Appears only when the visitor reaches
+       the "You Might Also Like" wall, crosses it in one considered pass
+       with a single brief stop — as if checking the neighboring works are
+       properly hung — and leaves. Never over the artwork itself. */
+    'artwork.html': {
+      trigger: { element: '#related-works-section' },
+      drone: {
+        size: 30, body: '#575757', rotor: '#FF9933', peak: 0.7, rotorMs: 800,
+        path: function (w, h) {
+          var y = h * 0.42;
+          return {
+            duration: 2800, easing: 'easeInOutQuad',
+            frames: [
+              { x: w + 60, y: y },
+              { x: w * 0.55, y: y - 16 },
+              { x: w * 0.55, y: y - 16, hold: 400 },
+              { x: -60, y: y + 8 }
+            ]
+          };
+        }
+      }
+    },
+
     /* Chromatic (the site's timeline) — the chronicler. Moving steadily
        forward, left to right like the years themselves: constant velocity,
        perfectly level, no pauses, no drift. */
@@ -197,6 +220,17 @@
     if (t.time) {
       var timer = setTimeout(fire, t.time);
       cleanups.push(function () { clearTimeout(timer); });
+    }
+
+    if (t.element) {
+      var target = document.querySelector(t.element);
+      if (target && 'IntersectionObserver' in window) {
+        var elObs = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) { if (en.isIntersecting) fire(); });
+        }, { threshold: 0.25 });
+        elObs.observe(target);
+        cleanups.push(function () { elObs.disconnect(); });
+      }
     }
 
     if (t.footer) {
