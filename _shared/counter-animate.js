@@ -50,6 +50,12 @@
   }, { threshold: 0.5 });
 
   targets.forEach(function (el) {
+    // Elements already in view at load (e.g. an above-the-fold header count)
+    // aren't a "scroll reveal" — animating them resets the visible number to
+    // 0 on page load instead. Leave those showing their static HTML value.
+    var rect = el.getBoundingClientRect();
+    var alreadyVisible = rect.top < window.innerHeight && rect.bottom > 0;
+    if (alreadyVisible) return;
     observer.observe(el);
   });
 })();
