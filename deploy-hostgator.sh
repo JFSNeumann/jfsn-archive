@@ -20,6 +20,17 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m'
 
+# --force (or DEPLOY_FORCE=1) overrides the dirty-working-tree guard below.
+FORCE_DEPLOY=false
+for arg in "$@"; do
+  if [ "$arg" = "--force" ]; then
+    FORCE_DEPLOY=true
+  fi
+done
+if [ "${DEPLOY_FORCE:-}" = "1" ]; then
+  FORCE_DEPLOY=true
+fi
+
 echo "╔════════════════════════════════════════════════════════════╗"
 echo "║ HostGator Deployment (FTP)                                 ║"
 echo "╚════════════════════════════════════════════════════════════╝"
@@ -70,6 +81,49 @@ echo -e "${GREEN}✓ Credentials loaded${NC}"
 echo "  Host: $FTP_HOST"
 echo "  User: $FTP_USER"
 echo ""
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PHASE 2.5: Dirty working tree guard + deployment summary
+# ─────────────────────────────────────────────────────────────────────────────
+
+echo -e "${BLUE}PHASE 2.5: Pre-Deploy Check${NC}"
+echo ""
+
+GIT_STATUS="$(git status --porcelain)"
+GIT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+GIT_HASH="$(git rev-parse --short HEAD)"
+GIT_SUBJECT="$(git log -1 --pretty=%s)"
+
+if [ -n "$GIT_STATUS" ]; then
+  TREE_STATE="Dirty"
+else
+  TREE_STATE="Clean"
+fi
+
+echo "Deployment Summary"
+echo "  Branch:       $GIT_BRANCH"
+echo "  Commit:       $GIT_HASH ($GIT_SUBJECT)"
+echo "  Tree status:  $TREE_STATE"
+echo "  Destination:  $FTP_HOST"
+echo "  Timestamp:    $(date '+%Y-%m-%d %H:%M:%S %Z')"
+echo ""
+
+if [ -n "$GIT_STATUS" ]; then
+  echo -e "${RED}✗ Working tree is not clean${NC}"
+  echo "$GIT_STATUS"
+  echo ""
+  if [ "$FORCE_DEPLOY" = true ]; then
+    echo -e "${YELLOW}⚠ --force set — deploying dirty working tree anyway${NC}"
+    echo ""
+  else
+    echo "Deployment aborted: uncommitted changes would be shipped to production."
+    echo "Commit, stash, or discard these changes, or re-run with --force to deploy anyway."
+    exit 1
+  fi
+else
+  echo -e "${GREEN}✓ Working tree clean${NC}"
+  echo ""
+fi
 
 # ─────────────────────────────────────────────────────────────────────────────
 # PHASE 3: Upload via FTP
