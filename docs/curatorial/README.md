@@ -1,0 +1,1 @@
+This folder contains secondary curatorial scholarship about the JFSN Archive — editorial synthesis such as the Curatorial Companion — and is kept separate from `docs/oral-history/` (primary testimony and source material) and from the archive's engineering/preservation documentation elsewhere in `docs/`.
