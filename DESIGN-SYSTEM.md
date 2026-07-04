@@ -27,8 +27,8 @@ Token definitions (Stitch light + Material Design light) live in `CLAUDE.md` § 
 
 - `#FF6600` (international-orange): **6.7:1** on dark backgrounds only. **FAILS** (2.79:1) on light bone-white.
 - `#B84700` (orange-ink): **5.07:1** on light backgrounds. Use for persistent text (labels, links, active states).
-- `#0B0B0B` (deep-ink): **20:1** on light backgrounds. Highest contrast.
-- `#575757` (archive-gray): **8.59:1** on light backgrounds. Good for secondary text.
+- `#0B0B0B` (deep-ink): **18.73:1** on bone-white. Highest contrast.
+- `#575757` (archive-gray): **6.88:1** on bone-white. Good for secondary text.
 
 **Operative rule:** Orange text on light backgrounds must use `orange-ink` (#B84700). Hover/active states, fills, and sections on dark backgrounds can use `international-orange` (#FF6600).
 
@@ -134,7 +134,7 @@ px-20 / py-20      = 80px (3xl)
 **Styling:**
 - Image wrapper: relative, overflow hidden, border `#8e7164`, soft shadow (desktop only)
 - Image: full color always — no overlays, no filters, no mix-blend-mode. The saturation overlay that lived here was removed sitewide in Session 74.
-- Hover: image outline animates to `#e05900`, title text turns `#e05900`
+- Hover: image outline animates to `#e05900`, image scales to 1.03 and brightens slightly (`filter: brightness(1.04)`), title text turns `#e05900`
 
 ### Links
 
@@ -147,7 +147,7 @@ px-20 / py-20      = 80px (3xl)
 ```
 **Styling:**
 - `display: flex; justify-content: space-between`
-- Text: `orange-ink` (#B84700)
+- Text: `deep-ink` (#0B0B0B) default, `orange-ink` (#B84700) on hover
 - Underline: 1px on `<a>`, animates in on hover
 - No transform, no scale
 
