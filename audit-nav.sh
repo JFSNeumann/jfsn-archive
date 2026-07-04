@@ -5,7 +5,7 @@ cd "$(dirname "$0")"
 python3 << 'PYEOF'
 import re, glob
 
-files = [f for f in glob.glob('*.html') if not any(x in f for x in ['old-site','curate','jeff.html','qa.html','dedupe'])]
+files = [f for f in glob.glob('*.html') if not any(x in f for x in ['old-site','curate.html','curator.html','jeff.html','qa.html','dedupe'])]
 files.sort()
 
 issues_found = False
@@ -93,7 +93,7 @@ PYEOF
 python3 << 'PYEOF'
 import re, glob
 
-files = [f for f in glob.glob('*.html') if not any(x in f for x in ['old-site','curate','jeff.html','qa.html','dedupe'])]
+files = [f for f in glob.glob('*.html') if not any(x in f for x in ['old-site','curate.html','curator.html','jeff.html','qa.html','dedupe'])]
 files.sort()
 
 issues_found = False
@@ -195,7 +195,7 @@ STYLE_WARN_BYTES = 33000  # warn if inline <style> block exceeds 33KB
 CDN_PATTERNS = ['cdn.tailwindcss', 'unpkg.com']
 CDN_EXCEPTIONS = {}
 
-files = [f for f in glob.glob('*.html') if not any(x in f for x in ['old-site','curate','jeff.html','qa.html','dedupe'])]
+files = [f for f in glob.glob('*.html') if not any(x in f for x in ['old-site','curate.html','curator.html','jeff.html','qa.html','dedupe'])]
 files.sort()
 
 issues_found = False
@@ -289,7 +289,7 @@ PYEOF
 python3 << 'PYEOF'
 import re, glob, os
 
-files = [f for f in glob.glob('*.html') if not any(x in f for x in ['old-site','curate','jeff.html','qa.html','dedupe'])]
+files = [f for f in glob.glob('*.html') if not any(x in f for x in ['old-site','curate.html','curator.html','jeff.html','qa.html','dedupe'])]
 
 issues_found = False
 for fname in files:
@@ -317,13 +317,12 @@ import re, glob
 #   artwork.html   — dynamic (?id=), covered by artworks/pages/*.html
 #   series.html    — dynamic (?theme= / ?series=), covered by those param URLs
 #   404.html       — error page, not indexable
-#   curate.html    — dev tool (noindex)
-#   dedupe.html    — dev tool (noindex)
-#   jeff.html      — dev tool (noindex)
-#   qa.html        — dev tool (noindex)
+#   qa.html        — dev tool (noindex, deploy-excluded)
+#   curator.html   — back-of-house curator index (noindex, deliberately unlinked)
+#   (curate.html / dedupe.html / jeff.html — deleted, dropped from this list 2026-07-03)
 EXCLUDED = {
     'artwork.html', 'series.html', '404.html',
-    'curate.html', 'dedupe.html', 'jeff.html', 'qa.html',
+    'qa.html', 'curator.html',
 }
 
 with open('sitemap.xml') as f:

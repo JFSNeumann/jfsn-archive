@@ -1,5 +1,119 @@
 [
   {
+    "sha": "f184ae6",
+    "date": "2026-07-03",
+    "title": "Summary copy: \"1,000+ works\"; hero dash removed; \"making art\"",
+    "body": "- Hero h1 loses the trailing em-dash; subtitle now \"...making art. A\n  personal record of 1,000+ works.\"\n- All visitor-facing summary references to the exact count (hero CTAs,\n  footer stat strip incl. _shared/footer.html source, page prose,\n  meta/og descriptions, aria labels) now say 1,000+.\n- Untouched by design: archive.html live counter + results readout,\n  chromatic.html animated works stat, style-guide.html, api.html,\n  catalog data and IDs."
+  },
+  {
+    "sha": "01b0fd3",
+    "date": "2026-07-03",
+    "title": "Artwork metadata rows: 16px label-to-value column gap",
+    "body": "Long labels (Orientation) were touching their values. Also removes a\nduplicate class attribute the row template carried."
+  },
+  {
+    "sha": "3ae49a3",
+    "date": "2026-07-03",
+    "title": "Full resolution CTA label: \"View full resolution image\"",
+    "body": "Longer label overflowed the plaque at phone widths, so it steps to\n12px/0.12em under 480px; hairlines and hierarchy unchanged."
+  },
+  {
+    "sha": "49c1db7",
+    "date": "2026-07-03",
+    "title": "Full resolution CTA as museum plaque (Balanced version, Jeff-approved)",
+    "body": "Centered under the artwork with flanking hairlines out to the frame\nedges, top rule strengthened to the frame brown, label 15px/0.18em.\nSame bracket idiom, colors, and hover; viewer behavior verified."
+  },
+  {
+    "sha": "c63d5b2",
+    "date": "2026-07-03",
+    "title": "Mobile hero gets the desktop's dark radial scrim",
+    "body": "The mobile hero had only the bottom fade, so hero text and CTAs lost\ncontrast over bright artworks. It now carries the same radial overlay\nas desktop, anchored low where the bottom-aligned text block sits.\nDesktop hero untouched."
+  },
+  {
+    "sha": "09dbff4",
+    "date": "2026-07-03",
+    "title": "Full resolution CTA reads as the artwork page's primary action",
+    "body": "Page-local rule for #full-res-btn only: 11px->13px, weight 700,\n0.14em tracking, uppercase, 8px vertical padding. Same bracket\nidiom, colors, and hover; secondary bracket links unchanged."
+  },
+  {
+    "sha": "f61a54e",
+    "date": "2026-07-03",
+    "title": "Hover card sized to content; archive header breathing room",
+    "body": "- hover-preview.css: card hugs its content (width:max-content, was\n  min-width:200px), padding 12/14 -> 6/10, ID line-height pinned to\n  1.4 (was inheriting ~32px from the page), divider above the ID only\n  when metadata rows are present. ID-only card is now 88x28.\n- archive.html: page header gets 14px horizontal padding so the\n  eyebrow text and Sort control sit off the container edges."
+  },
+  {
+    "sha": "c4b5cdf",
+    "date": "2026-07-03",
+    "title": "Hover card: drop duplicated title, collapse empty metadata rows",
+    "body": "The tooltip repeated the title already visible under every thumbnail\nand rendered a stray separator dot when medium/year were unknown.\nIt now shows medium/year only when known, otherwise just \"ID: art####\".\nhover-preview.js references version-stamped (?v=) across 31 pages so\nthe 30-day browser cache picks up the change."
+  },
+  {
+    "sha": "029efeb",
+    "date": "2026-07-03",
+    "title": "Drones 2x larger, longer on-screen; registrar on artwork pages",
+    "body": "- drone-fleet.js: all sizes doubled (48-76px); transit drones fly\n  1.2-1.5s slower instead of pausing (courier/closer/chronicler);\n  pausing drones hold 1.2-1.6s longer (listener/companion/docent/\n  steward/registrar). Reduced-motion now checked at fire time.\n- artwork.html: registrar drone crosses the You Might Also Like wall\n  when it enters view; element-trigger support added to the fleet.\n- drone-survey.js (index/wall crews): drones 60->120px, flight band\n  180->240px so rotors don't clip.\n- All drone script tags now carry ?v= stamps so the 30-day browser\n  HTTP cache can't serve a stale fleet after deploys.\n- sw.js: CACHE_V bump."
+  },
+  {
+    "sha": "b18e56d",
+    "date": "2026-07-03",
+    "title": "Restore Related Works population; add artwork-page registrar drone",
+    "body": "- _shared/related-works.js: \"You Might Also Like\" has rendered an\n  empty section since 5fcedd17 removed micro-interactions.js, which\n  carried the populate code (cc30a3cf). Restored as a standalone\n  script with two fixes: catalog-lite `file` is \"artNNNN.avif\" so ids\n  are normalized before matching, and same-series works now rank\n  first. Section hides itself when there is nothing to show.\n- _shared/drone-fleet.js: element-visibility trigger; artwork.html\n  gets the registrar — one 2.8s pass with a brief stop, appearing\n  only when the Similar Works wall scrolls into view.\n- artwork.html: include both scripts after SCRIPTS:END.\n- sw.js: CACHE_V bump."
+  },
+  {
+    "sha": "1fd5923",
+    "date": "2026-07-03",
+    "title": "Archive caption/sort padding; link The Imagined Museum from 3 pages",
+    "body": "- archive.html: card captions get 12px horizontal inset on desktop\n  (utilities went sm:px-0 leaving text flush against the visible card\n  edge); sort select padding 4x8 -> 6x12.\n- series-index.html: [ The Imagined Museum -> ] added to the bracket\n  link row.\n- about.html: quiet footnote after the exhibition ledger pointing to\n  the 250 imagined exhibitions.\n- gallery-images.html: companion-essay bracket link above the grid.\n- sw.js: CACHE_V bump."
+  },
+  {
+    "sha": "49a7d59",
+    "date": "2026-07-03",
+    "title": "Drone fleet, Imagined Museum curatorial links, padding refinements",
+    "body": "- _shared/drone-fleet.js: one custodian drone per page with distinct\n  personality (path/speed/altitude/pauses/palette), once per visit,\n  ~1.5-2.6s, margins only, reduced-motion + no-JS safe. Wired on\n  start-here, stories, why-i-made-things, imagined-museum, about,\n  archive, chromatic. index/wall keep drone-survey.js crews.\n- imagined-museum.html: three museum-footnote references (exhibition\n  record on About, the 232 Guernica works, Why I Made Things).\n- index.html: featured caption panels 8px -> 14px/16px horizontal\n  (also fixes !important silently killing the desktop padding rule).\n- stories.html: quote rule padding 20px -> 24px, matching the idiom\n  on why-i-made-things and imagined-museum.\n- about.html: exhibition ledger rows + header get 12px horizontal\n  inset so the hover tint/rule never touch the text.\n- imagined-museum.html: .im-note 16px -> 20px.\n- sw.js: CACHE_V bump."
+  },
+  {
+    "sha": "a490db1",
+    "date": "2026-07-02",
+    "title": "Link imagined-museum.html from start-here.html",
+    "body": "The Imagined Museum essay (companion piece for the ~250 composite/\nstaged-placement works) was live on the server but had no inbound\nlink anywhere on the site — an orphan page, unreachable by browsing.\nAdd it to the First-Time Visitor reading list alongside Stories and\nWhy I Made Things, where it belongs."
+  },
+  {
+    "sha": "a5b28aa",
+    "date": "2026-07-02",
+    "title": "Fix three small visual defects flagged in Experience Studio review",
+    "body": "- counter-animate.js: skip the count-up animation for elements already\n  in view at load (archive.html's above-the-fold header count was\n  flashing 1,084 -> 0 -> 1,084 since the observer fired almost\n  immediately; below-the-fold reveal counters are unaffected)\n- lost.html: breadcrumb read \"Archive Info\" instead of the page's own\n  name; now reads \"Lost Works\", matching the convention on other pages\n- 1980s.html/1990s.html: decade eyebrow and meta description showed a\n  degenerate \"1980-1980\"/\"1990-1990\" range (every catalogued work in\n  each of these decades genuinely shares one representative year);\n  now renders \"1980s\"/\"1990s\""
+  },
+  {
+    "sha": "b5788ae",
+    "date": "2026-07-02",
+    "title": "Document deploy-hostgator.sh's dirty-tree guard and deploy summary in DEPLOY.md",
+    "body": "Documentation previously stated \"never deploy with uncommitted changes\" as a\nmanual discipline rule. deploy-hostgator.sh now enforces this automatically;\nupdate the guide to describe the actual behavior (abort + --force/DEPLOY_FORCE=1\noverride) so the doc matches the code."
+  },
+  {
+    "sha": "18c8c96",
+    "date": "2026-07-02",
+    "title": "Add dirty-working-tree guard and deploy summary to deploy-hostgator.sh",
+    "body": "deploy-hostgator.sh mirrors the working tree rather than git, which let an\nuncommitted, previously-rejected prototype (archive.html decade-density-bars)\nship to production silently. Add a pre-upload check that aborts on any\nuncommitted change (git status --porcelain), with --force / DEPLOY_FORCE=1\nas the only intentional override, plus a concise summary (branch, commit,\ntree status, destination, timestamp) printed before every deploy."
+  },
+  {
+    "sha": "416dc56",
+    "date": "2026-07-02",
+    "title": "Fix tablet horizontal overflow: contain drone-survey animation",
+    "body": "At 768px the drone SVG swept past the viewport edge and widened the\npage (~52px overflow together with the river tick buttons). The tick\nclamp half of this fix already shipped in 02a055e7 (index.html);\nthis commits the remaining half: the drone container now clips its\nsweep instead of widening the page.\n\nVerified at 375/768/1024 on index.html and wall.html: overflow gone,\ndrones still animate, no console errors. Already live on jfsn.com via\nthe 2026-07-02 mirror deploy."
+  },
+  {
+    "sha": "da69826",
+    "date": "2026-07-02",
+    "title": "Fix imagined-museum page label (inherited WHY I MADE THINGS from template)",
+    "body": ""
+  },
+  {
+    "sha": "aa4eb40",
+    "date": "2026-07-02",
+    "title": "Creative Brief 002: The Imagined Museum — companion essay on the 250 composites",
+    "body": "Curatorial essay-exhibition reading the composite works as one body:\nThe Wall / The Crowd / XXXIII Días / The Studio / A Genre of One.\n8 curated works, each labeled 'Photoshop composite — imagined placement'.\nAll factual claims from Jeff's June 2026 corrections; interpretive text\nconfirmed by Jeff 2026-07-02. Added to sitemap + stamp-nav TARGETS."
+  },
+  {
     "sha": "02a055e",
     "date": "2026-07-02",
     "title": "Hero: fix presentation/CTA reveal bugs, adopt curated collection",

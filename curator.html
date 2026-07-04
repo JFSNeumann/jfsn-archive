@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Curator&rsquo;s Index &mdash; JFSN Archive</title>
+<meta name="robots" content="noindex,nofollow"/>
+<script>try{var t=localStorage.getItem('jfsn-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script><!-- THEME_INIT: same snippet as every other page -->
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml"/>
+<link rel="stylesheet" href="fonts/fonts.css"/>
+<!-- Back-of-house index. Deliberately unlinked from the public site,
+     absent from sitemap.xml, and exempt in audit-nav.sh.
+     Never place credentials or sensitive information on this page. -->
+<style>
+  body{margin:0;background:#fcf9f3;color:#0B0B0B;font-family:Inter,-apple-system,sans-serif;font-size:15px;line-height:1.6;}
+  main{max-width:560px;margin:0 auto;padding:72px 24px 96px;}
+  .eyebrow{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#B84700;margin:0 0 6px;}
+  h1{font-family:'Playfair Display',Georgia,serif;font-size:34px;font-weight:700;letter-spacing:-0.02em;margin:0 0 8px;}
+  .note{font-size:12px;color:#575757;margin:0 0 10px;}
+  .status{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;letter-spacing:0.04em;color:#8e7164;margin:0 0 48px;min-height:17px;font-variant-numeric:tabular-nums;}
+  h2{font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#8e7164;margin:40px 0 12px;border-bottom:1px solid #e3bfb1;padding-bottom:8px;}
+  ul{list-style:none;margin:0;padding:0;}
+  li{padding:7px 0;}
+  a{color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;transition:color 0.15s ease,border-color 0.15s ease;}
+  a:hover,a:focus-visible{color:#B84700;border-color:#B84700;}
+  .tag{font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#8d8d8d;margin-left:8px;}
+  .return{margin-top:64px;font-size:12px;letter-spacing:0.06em;}
+  /* Dark mode — follows the sitewide jfsn-theme convention (THEME_INIT in head) */
+  html.dark body{background:#1a1a1a;color:#e8e8e8;}
+  html.dark .note,html.dark .tag{color:#a8a8a8;}
+  html.dark .status{color:#b39588;}
+  html.dark .eyebrow{color:#FF6600;}
+  html.dark h2{color:#b39588;border-bottom-color:#404040;}
+  html.dark a{color:#e8e8e8;border-bottom-color:#404040;}
+  html.dark a:hover,html.dark a:focus-visible{color:#FF6600;border-color:#FF6600;}
+</style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">Back of House</p>
+  <h1>Curator&rsquo;s Index</h1>
+  <p class="note">Pages and tools used in the stewardship of the archive.</p>
+  <p class="status" id="status"></p>
+
+  <h2>Unlisted public pages</h2>
+  <ul>
+    <li><a href="changes.html">Changes</a><span class="tag">changelog</span></li>
+    <li><a href="style-guide.html">Design System</a><span class="tag">reference</span></li>
+    <li><a href="api.html">Open API</a><span class="tag">docs</span></li>
+    <li><a href="curatorial-map.html">Curatorial Map</a><span class="tag">decade &times; medium</span></li>
+  </ul>
+
+  <h2>Local tools</h2>
+  <ul>
+    <li><a href="qa.html">QA</a><span class="tag">404s on jfsn.com</span></li>
+  </ul>
+
+  <h2>External</h2>
+  <ul>
+    <li><a href="https://jfsn.goatcounter.com" rel="noopener">GoatCounter</a><span class="tag">analytics</span></li>
+    <li><a href="https://github.com/JFSNeumann/jfsn-archive" rel="noopener">GitHub</a><span class="tag">source</span></li>
+    <li><a href="https://search.google.com/search-console" rel="noopener">Search Console</a><span class="tag">indexing</span></li>
+  </ul>
+
+  <p class="return"><a href="index.html">&larr; Return to jfsn.com</a></p>
+</main>
+<script>
+/* Status line — existing public data only (meta.json count, changes.json
+   latest revision), plus which copy of the site is being viewed. Fails
+   silently to an empty line; this page must never depend on it. */
+(function () {
+  var el = document.getElementById('status');
+  if (!el) return;
+  var env = /^(localhost|127\.)/.test(location.hostname) ? 'local' : location.hostname;
+  var parts = { env: env, works: null, updated: null };
+  function render() {
+    var bits = [parts.env];
+    if (parts.works) bits.push(parts.works.toLocaleString('en-US') + ' works cataloged');
+    if (parts.updated) bits.push('last change ' + parts.updated);
+    el.textContent = bits.join(' · ');
+  }
+  render();
+  fetch('api/v1/meta.json', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (m) {
+    if (m && m.counts && m.counts.cataloged) { parts.works = m.counts.cataloged; render(); }
+  }).catch(function () {});
+  fetch('changes.json', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (d) {
+    if (Array.isArray(d) && d.length && d[0].date) { parts.updated = d[0].date; render(); }
+  }).catch(function () {});
+})();
+</script>
+</body>
+</html>
