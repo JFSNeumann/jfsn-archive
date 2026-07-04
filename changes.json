@@ -1,5 +1,47 @@
 [
   {
+    "sha": "067553e",
+    "date": "2026-07-04",
+    "title": "Publish Curatorial Companion v1.0",
+    "body": ""
+  },
+  {
+    "sha": "0006f75",
+    "date": "2026-07-04",
+    "title": "Recover Curatorial Companion v1.0 source document",
+    "body": ""
+  },
+  {
+    "sha": "19f9008",
+    "date": "2026-07-04",
+    "title": "Rename Curatorial Companion scaffold to v1.0, add folder README",
+    "body": "Renames docs/curatorial/CURATORIAL-COMPANION.md to\nCURATORIAL-COMPANION-v1.0.md to match versioning convention, reserves\ndocs/curatorial/versions/ for future revisions, and documents the\nfolder's scope (secondary curatorial scholarship, separate from\noral-history and engineering/preservation docs)."
+  },
+  {
+    "sha": "f0dc096",
+    "date": "2026-07-04",
+    "title": "Scaffold Curatorial Companion doc (placeholders only)",
+    "body": "Prepares docs/curatorial/ as the permanent home for the Curatorial\nCompanion, to be populated later from the ChatGPT export."
+  },
+  {
+    "sha": "eb87804",
+    "date": "2026-07-04",
+    "title": "Lost works register: add the paper snowmen series",
+    "body": "Creator Context Session 002, 2026-07-04. First lost work Jeff recalled\nthis session — a group of colored-paper and spray-paint snowmen, various\nsizes ~6ft tall, possibly made for an early-1980s Christmas art show.\nWhat happened to them is unknown."
+  },
+  {
+    "sha": "9db555a",
+    "date": "2026-07-04",
+    "title": "deploy-hostgator.sh: exclude the credential-bearing handoff PDF",
+    "body": "Root cause: this script mirrors the local filesystem via lftp, entirely\nindependent of git tracking status — .gitignore has zero effect on what\ngets deployed. JFSN-Archive-Handoff-Allison.pdf (containing plaintext\nFTP credentials) was being uploaded to production on every deploy despite\nbeing untracked in git, because nothing in the exclude-glob list named it.\n\nExcludes the exact filename rather than a broad *.pdf pattern — repo has\nno legitimate public-facing PDF (the only other PDF lives under docs/*,\nalready excluded; no HTML page links to any .pdf)."
+  },
+  {
+    "sha": "2b3acbd",
+    "date": "2026-07-04",
+    "title": "Regenerate changes.json — sync changelog with last 3 commits",
+    "body": "Living changelog had drifted 3 commits behind HEAD (last synced at\nc0d9106b). Mechanical regen via artworks/build_changes.py, no code change."
+  },
+  {
     "sha": "1a80b89",
     "date": "2026-07-04",
     "title": "DESIGN-SYSTEM.md: correct contrast ratios and two component specs",

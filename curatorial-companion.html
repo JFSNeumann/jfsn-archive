@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<!--
+  GENERATED FILE — do not hand-edit.
+  Source of truth: docs/curatorial/CURATORIAL-COMPANION-v1.0.md
+  Regenerate with: python3 gen-curatorial-companion.py && bash stamp-nav.sh
+  (stamp-nav.sh restamps the real NAV/SCRIPTS/FOOTER blocks after generation)
+-->
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<script>try{var t=localStorage.getItem('jfsn-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script><!-- THEME_INIT: head-blocking, prevents dark-mode FOUC -->
+<script>document.documentElement.classList.add('js')</script><!-- JS-on flag: gates the .reveal-section hidden state so content stays visible with JS off -->
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="theme-color" content="#fcf9f3"/>
+<title>Curatorial Companion — Jeffrey F. S. Neumann</title>
+<meta name="description" content="A museum-style companion volume to the JFSN Archive — curatorial methodology, a chief curator's essay, seven gallery panels, and twenty-five verified works, read across fifty years of Jeffrey F. S. Neumann's practice."/>
+<link rel="canonical" href="https://jfsn.com/curatorial-companion.html"/>
+<link rel="icon" href="favicon.svg" type="image/svg+xml"/>
+<link rel="alternate" type="application/rss+xml" title="Jeffrey F. S. Neumann — Archive" href="https://jfsn.com/feed.xml"/>
+<link rel="manifest" href="manifest.json"/>
+<link rel="apple-touch-icon" href="icon-192.png"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Curatorial Companion — Jeffrey F. S. Neumann"/>
+<meta property="og:description" content="A museum-style companion volume to the JFSN Archive — methodology, essay, gallery panels, and twenty-five verified works."/>
+<meta property="og:image" content="https://jfsn.com/og-card.jpg"/>
+<meta property="og:url" content="https://jfsn.com/curatorial-companion.html"/>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"CreativeWork","name":"JFSN Archive — Curatorial Companion","url":"https://jfsn.com/curatorial-companion.html","description":"A museum-style companion volume to the JFSN Archive.","creator":{"@type":"Person","name":"Jeffrey F. S. Neumann","url":"https://jfsn.com"}}
+</script>
+<link rel="preload" as="font" type="font/woff2" href="/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2" crossorigin/>
+<link rel="preload" as="font" type="font/woff2" href="/fonts/nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgEM86xQ.woff2" crossorigin/>
+<link rel="stylesheet" href="_shared/ui.css"/>
+<link rel="stylesheet" href="_shared/dark-mode.css"/>
+<link rel="stylesheet" href="site.min.css"/>
+<link rel="stylesheet" href="_shared/section-tints.css"/>
+<style>
+  body { -webkit-font-smoothing: antialiased; }
+  #reading-progress { position:fixed;top:0;left:0;width:0%;height:2px;background:#FF6600;z-index:200;transition:width 0.1s linear;pointer-events:none; }
+  @media(prefers-reduced-motion:reduce){ #reading-progress { transition:none; } }
+  .mobile-toc-link{display:block;padding:9px 0;font-family:Inter,sans-serif;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#575757;text-decoration:none;border-bottom:1px solid #f0ede7;}
+  .mobile-toc-link:hover,.mobile-toc-link:active{color:#FF6600;}
+  .mobile-toc-link.toc-active{color:#B84700;font-weight:600;}
+  .section-label {
+    font-family: Inter, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #8e7164;
+    margin-bottom: 20px;
+    display: block;
+  }
+  .bracket-link {
+    font-family: Inter, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #B84700;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .bracket-link:hover { color: #0B0B0B; }
+  @media (prefers-reduced-motion: reduce) { .bracket-link { transition: none; } }
+
+  /* Companion typography — museum-publication register */
+  #cc-article {
+    font-family: Inter, sans-serif;
+    font-size: 17px;
+    line-height: 1.8;
+    color: #575757;
+    max-width: 680px;
+  }
+  #cc-article p { margin: 1.25em 0 0; }
+  #cc-article p:first-of-type { margin-top: 0; }
+  #cc-article em { color: #0B0B0B; }
+  #cc-article strong { color: #0B0B0B; font-weight: 600; }
+  .dark #cc-article strong { color: #f0f0f0; }
+  .dark #cc-article .cc-quote p { color: #f0f0f0; }
+  #cc-article code { font-family: ui-monospace,'SF Mono',Menlo,monospace; font-size: 0.9em; background: #f0ede7; padding: 0.1em 0.35em; }
+  #cc-article .cc-art-link { color: #B84700; text-decoration: none; border-bottom: 1px dotted #B84700; }
+  #cc-article .cc-art-link:hover { color: #0B0B0B; border-bottom-color: #0B0B0B; }
+  .dark #cc-article .cc-art-link { color: #FF6600; border-bottom-color: #FF6600; }
+  .dark #cc-article .cc-art-link:hover { color: #f0f0f0; border-bottom-color: #f0f0f0; }
+  .dark #cc-article code { background: #2a2a2a; color: #d0d0d0; }
+  #cc-article .cc-heading { font-family: 'Playfair Display', Georgia, serif; color: #0B0B0B; scroll-margin-top: 96px; }
+  #cc-article .cc-h2 { font-size: clamp(28px,4vw,36px); font-weight: 700; margin: 2.4em 0 0.6em; letter-spacing: -0.01em; }
+  #cc-article .cc-h2:first-child { margin-top: 0; }
+  #cc-article .cc-h3 { font-size: 22px; font-weight: 600; margin: 1.8em 0 0.5em; }
+  #cc-article .cc-h3:first-child { margin-top: 0.4em; }
+  #cc-article .cc-rule { border: none; border-top: 1px solid #e3bfb1; margin: 2.4em 0; }
+  #cc-article ul { margin: 1em 0 0; padding-left: 1.4em; }
+  #cc-article li { margin-top: 0.6em; }
+  #cc-article .cc-quote { border-left: 3px solid #8e7164; margin: 1.4em 0; padding: 0.2em 0 0.2em 20px; }
+  #cc-article .cc-quote p { font-style: italic; color: #0B0B0B; }
+
+  /* Desktop sticky TOC */
+  #cc-toc { position: sticky; top: 96px; }
+  #cc-toc-list { display: flex; flex-direction: column; }
+  .cc-toc-link {
+    font-family: Inter, sans-serif;
+    text-decoration: none;
+    color: #575757;
+    padding: 8px 0 8px 14px;
+    border-left: 2px solid #e3bfb1;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .cc-toc-l2 { font-size: 12px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+  .cc-toc-l3 { font-size: 12px; padding-left: 26px; color: #8e7164; }
+  .cc-toc-link:hover { color: #FF6600; }
+  .cc-toc-link.cc-toc-active { color: #B84700; border-left-color: #FF6600; }
+  .dark .cc-toc-link.cc-toc-active { color: #FF6600; }
+  .dark .mobile-toc-link.toc-active { color: #FF6600; }
+  @media (prefers-reduced-motion: reduce) { .cc-toc-link { transition: none; } }
+</style>
+  <link rel="stylesheet" href="/_shared/lightbox.css"/>
+  <link rel="stylesheet" href="/_shared/enhancements.css"/>
+  <link rel="stylesheet" href="/_shared/toast.css"/>
+  <link rel="stylesheet" href="/_shared/skeleton.css"/>
+  <link rel="stylesheet" href="/_shared/hover-preview.css?v=20260703T4"/>
+  <link rel="stylesheet" href="/_shared/page-transitions.css"/>
+  <link rel="stylesheet" href="/_shared/lazy-load.css"/>
+</head>
+<body class="bg-background text-deep-ink font-body-md" data-page-label="CURATORIAL COMPANION">
+
+<!-- NAV:START -->
+<style>
+/* --nav-accent defaults to brand orange; chromatic-position-strip.js and
+   archive-river.js set it live to whatever decade is in view (their own
+   chromatic.json data, never invented) so the nav reads as part of the
+   instrument rather than fixed chrome. Transitions slowly so it never reads
+   as a glitch. */
+:root{--nav-accent:#FF6600;}
+header nav a{position:relative}
+header nav a::after{content:'';position:absolute;bottom:10px;left:0;width:100%;height:1.5px;background:var(--nav-accent);transform:scaleX(0);transform-origin:left center;transition:transform 0.2s ease,background-color 1.2s ease}
+header nav a:hover::after{transform:scaleX(1)}
+header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
+@media(prefers-reduced-motion:reduce){header nav a::after{transition:none}}
+/* JFSN wordmark tooltip */
+.jfsn-wordmark{position:relative}
+.jfsn-wordmark::before{content:'Jeffrey Francis Stanley Neumann';position:absolute;top:calc(100% + 10px);left:0;white-space:nowrap;font-family:'Inter',sans-serif;font-size:11px;font-weight:400;letter-spacing:0.06em;color:#575757;background:#fcf9f3;border:1px solid #c4c7c7;padding:4px 8px;pointer-events:none;opacity:0;transform:translateY(-4px);transition:opacity 0.15s ease,transform 0.15s ease}
+.jfsn-wordmark:hover::before{opacity:1;transform:translateY(0)}
+@media(prefers-reduced-motion:reduce){.jfsn-wordmark::before{transition:none}}
+/* Fade below navbar */
+header::after{content:'';position:absolute;top:100%;left:0;width:100%;height:40px;background:linear-gradient(to bottom,rgba(11,11,11,0.07) 0%,transparent 100%);pointer-events:none;z-index:0;}
+/* Glassmorphism nav (Stitch June-2026): always-on translucent + blur; intensifies on scroll */
+header{transition:transform 0.3s ease,background-color 0.2s ease;background-color:rgba(252,249,243,0.80);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+header.header-scrolled{background-color:rgba(252,249,243,0.92)}
+header.header-hidden{transform:translateY(-100%)}
+@media(prefers-reduced-motion:reduce){header{transition:background-color 0.2s ease}}
+/* Mobile drawer — underline draw + active state */
+#mobile-menu-drawer a{position:relative;overflow:hidden}
+#mobile-menu-drawer a::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;background:#FF6600;transform:scaleX(0);transform-origin:left center;transition:transform 0.2s ease}
+#mobile-menu-drawer a:hover::after,#mobile-menu-drawer a:active::after{transform:scaleX(1)}
+#mobile-menu-drawer a:active{background:#f0ece6}
+#mobile-menu-drawer a.drawer-active{color:#B84700 !important;border-left:3px solid #FF6600;padding-left:21px !important}
+#mobile-menu-drawer a.drawer-active::after{transform:scaleX(1);transition:none}
+@media(prefers-reduced-motion:reduce){#mobile-menu-drawer a::after{transition:none}}
+/* Drawer item stagger on open (Phase 3) */
+@keyframes drawer-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  #mobile-menu-drawer a { animation: drawer-fade-in 0s ease forwards; }
+  #mobile-menu-drawer a.drawer-stagger-1 { animation-delay: 0.05s; }
+  #mobile-menu-drawer a.drawer-stagger-2 { animation-delay: 0.1s; }
+  #mobile-menu-drawer a.drawer-stagger-3 { animation-delay: 0.15s; }
+  #mobile-menu-drawer a.drawer-stagger-4 { animation-delay: 0.2s; }
+}
+/* Butterfly mark — core orange (#FF6600) default, black on hover */
+.jfsn-wordmark img{filter:invert(63%) sepia(72%) saturate(1500%) hue-rotate(-30deg) brightness(105%) contrast(101%);transition:filter 0.2s ease}
+.jfsn-wordmark:hover img{filter:none}
+@media(prefers-reduced-motion:reduce){.jfsn-wordmark img{transition:none}}
+</style>
+<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-deep-ink focus:text-bone-white focus:font-label-caps focus:text-label-caps">Skip to content</a>
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16">
+  <div class="flex items-center">
+    <a href="index.html" class="jfsn-wordmark text-deep-ink flex items-center gap-2" style="font-family:'Playfair Display',Georgia,serif;font-size:22px;font-weight:700;letter-spacing:-0.02em;line-height:1;text-decoration:none;">
+      <img src="_shared/butterfly-mark.png" alt="" width="24" height="24" style="flex-shrink:0;" aria-hidden="true"/>
+      JFSN
+    </a>
+  </div>
+  <div class="flex items-center gap-6">
+    <nav class="hidden md:flex gap-8 items-center" aria-label="Primary">
+      <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="archive.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Archive</a>
+      <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="series-index.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Series</a>
+      <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="about.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">About</a>
+      <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="lost.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Lost Works</a>
+    </nav>
+    <!-- Dark mode toggle (Phase 2) -->
+    <button class="flex items-center gap-1.5 text-orange-ink hover:text-deep-ink transition-colors" style="padding:10px;" aria-label="Toggle dark mode" id="theme-toggle-btn" title="Toggle dark mode">
+      <svg id="theme-icon-sun" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="display:none;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg id="theme-icon-moon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <button class="flex items-center gap-1.5 text-orange-ink hover:text-deep-ink transition-colors" style="padding:10px;" aria-label="Search" id="nav-search-btn">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><line x1="20.4" y1="20.4" x2="16" y2="16"/></svg>
+      <span class="hidden md:inline" aria-hidden="true" style="font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.05em;color:#575757;border:1px solid #c4c7c7;padding:1px 5px;pointer-events:none;">⌘K</span>
+    </button>
+    <button class="md:hidden text-deep-ink" style="padding:10px;" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu-drawer" id="nav-menu-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+  </div>
+</header>
+
+<!-- Mobile menu overlay -->
+<div id="mobile-menu" aria-hidden="true" style="display:none;position:fixed;inset:0;z-index:60;">
+  <!-- Backdrop -->
+  <div id="mobile-menu-backdrop" style="position:absolute;inset:0;background:rgba(11,11,11,0.5);"></div>
+  <!-- Drawer -->
+  <nav id="mobile-menu-drawer" aria-label="Mobile menu"
+    style="position:absolute;top:0;right:0;width:min(280px,85vw);height:100%;background:#fcf9f3;border-left:1px solid #0B0B0B;display:flex;flex-direction:column;transform:translateX(100%);transition:transform 0.25s ease;">
+    <!-- Header -->
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:0 20px;height:64px;border-bottom:1px solid #0B0B0B;">
+      <span style="font-family:Inter,sans-serif;font-size:18px;font-weight:600;letter-spacing:-0.02em;color:#0B0B0B;">JFSN</span>
+      <button id="nav-menu-close" aria-label="Close menu"
+        style="background:none;border:none;cursor:pointer;color:#0B0B0B;padding:10px 14px;margin-right:-14px;line-height:1;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button>
+    </div>
+    <!-- Links -->
+    <div style="flex:1;overflow-y:auto;padding:8px 0;">
+      <a href="archive.html"    style="display:flex;align-items:center;gap:14px;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="flex-no-shrink"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Archive</a>
+      <a href="series-index.html" style="display:flex;align-items:center;gap:14px;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="flex-no-shrink"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>Series</a>
+      <a href="about.html"      style="display:flex;align-items:center;gap:14px;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="flex-no-shrink"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>About</a>
+      <a href="lost.html"       style="display:flex;align-items:center;gap:14px;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="flex-no-shrink"><rect x="3" y="3" width="18" height="18" stroke-dasharray="4 4"/></svg>Lost Works</a>
+    </div>
+    <!-- Portrait -->
+    <div style="padding:16px 24px;">
+      <img src="me black.gif" alt="Jeffrey F. S. Neumann" style="display:block;width:30%;margin:0 auto;opacity:0.85;">
+    </div>
+    <!-- Search shortcut -->
+    <div style="padding:0 24px 16px;border-top:1px solid #c4c7c7;">
+      <button id="mobile-menu-search"
+        style="width:100%;display:flex;align-items:center;gap:10px;background:none;border:1px solid #c4c7c7;padding:12px 14px;cursor:pointer;color:#575757;font-family:Inter,sans-serif;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><line x1="20.4" y1="20.4" x2="16" y2="16"/></svg>
+        Search archive
+      </button>
+    </div>
+  </nav>
+</div>
+
+<script>
+(function(){
+  var menu    = document.getElementById('mobile-menu');
+  var drawer  = document.getElementById('mobile-menu-drawer');
+  var openBtn = document.getElementById('nav-menu-btn');
+  var closeBtn= document.getElementById('nav-menu-close');
+  var backdrop= document.getElementById('mobile-menu-backdrop');
+  var menuSearchBtn = document.getElementById('mobile-menu-search');
+
+  function openMenu(){
+    menu.style.display = 'block';
+    menu.setAttribute('aria-hidden','false');
+    openBtn.setAttribute('aria-expanded','true');
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(function(){
+      drawer.style.transform = 'translateX(0)';
+    });
+    closeBtn.focus();
+  }
+  function closeMenu(){
+    drawer.style.transform = 'translateX(100%)';
+    openBtn.setAttribute('aria-expanded','false');
+    document.body.style.overflow = '';
+    setTimeout(function(){ menu.style.display = 'none'; menu.setAttribute('aria-hidden','true'); }, 260);
+    openBtn.focus();
+  }
+
+  if(openBtn)  openBtn.addEventListener('click', openMenu);
+  if(closeBtn) closeBtn.addEventListener('click', closeMenu);
+  if(backdrop) backdrop.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && menu.style.display==='block') closeMenu(); });
+
+  // Wire search button in menu to open search overlay
+  if(menuSearchBtn) menuSearchBtn.addEventListener('click', function(){
+    closeMenu();
+    setTimeout(function(){ if(window.openSiteSearch) window.openSiteSearch(); }, 280);
+  });
+})();
+</script>
+<!-- NAV:END -->
+<!-- SCRIPTS:START -->
+<script src="_shared/anime.min.js" defer></script>
+<script src="_shared/nav-early.bundle.js" defer></script>
+<script>
+(function(){
+  var header = document.querySelector('header');
+  if (!header) return;
+  var lastY = window.scrollY;
+  var menuOpen = false;
+  var openBtn = document.getElementById('nav-menu-btn');
+  var closeBtn = document.getElementById('nav-menu-close');
+  var backdrop = document.getElementById('mobile-menu-backdrop');
+  if (openBtn)  openBtn.addEventListener('click',  function(){ menuOpen = true; });
+  if (closeBtn) closeBtn.addEventListener('click', function(){ menuOpen = false; });
+  if (backdrop) backdrop.addEventListener('click', function(){ menuOpen = false; });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') menuOpen = false; });
+  window.addEventListener('scroll', function(){
+    var y = window.scrollY;
+    header.classList.toggle('header-scrolled', y > 8);
+    if (!menuOpen) {
+      if (y > lastY && y > 80) {
+        header.classList.add('header-hidden');
+      } else {
+        header.classList.remove('header-hidden');
+      }
+    }
+    lastY = y;
+  }, { passive: true });
+})();
+</script>
+
+<script>
+/* ─── Dark Mode Toggle (Phase 2) ─────────────────────────────────────────── */
+(function() {
+  var themeToggle = document.getElementById('theme-toggle-btn');
+  var sunIcon = document.getElementById('theme-icon-sun');
+  var moonIcon = document.getElementById('theme-icon-moon');
+
+  // Detect preference: localStorage > prefers-color-scheme
+  function getTheme() {
+    var saved = localStorage.getItem('jfsn-theme');
+    if (saved) return saved;
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
+    return 'light';
+  }
+
+  function setTheme(theme) {
+    localStorage.setItem('jfsn-theme', theme);
+    var html = document.documentElement;
+    if (theme === 'dark') {
+      html.classList.add('dark');
+      sunIcon.style.display = 'block';
+      moonIcon.style.display = 'none';
+    } else {
+      html.classList.remove('dark');
+      sunIcon.style.display = 'none';
+      moonIcon.style.display = 'block';
+    }
+  }
+
+  // Initialize theme on page load
+  var currentTheme = getTheme();
+  setTheme(currentTheme);
+
+  // Toggle on button click
+  if (themeToggle) {
+    themeToggle.addEventListener('click', function() {
+      var newTheme = getTheme() === 'dark' ? 'light' : 'dark';
+      setTheme(newTheme);
+    });
+  }
+
+  // Listen for system theme changes
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+    if (!localStorage.getItem('jfsn-theme')) {
+      setTheme(e.matches ? 'dark' : 'light');
+    }
+  });
+})();
+</script>
+<script src="_shared/nav-late.bundle.js" defer></script>
+<!-- SCRIPTS:END -->
+<script src="_shared/drone-fleet.js?v=20260703131542" defer></script>
+
+<div id="reading-progress" aria-hidden="true"></div>
+<div id="main" tabindex="-1" style="outline:none;"></div>
+
+<main class="pt-16">
+
+  <!-- Hero -->
+  <div class="px-margin-desktop py-16" style="border-bottom:1px solid #8e7164;">
+    <div class="max-w-container-max mx-auto">
+      <span style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#B84700;display:block;margin-bottom:16px;">A Companion Volume to the JFSN Archive — Version 1.0</span>
+      <h1 style="font-family:'Playfair Display',serif;font-size:clamp(40px,6vw,72px);font-weight:700;line-height:1.05;letter-spacing:-0.02em;color:#0B0B0B;">Curatorial Companion</h1>
+      <p style="font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:20px;color:#575757;margin-top:14px;line-height:1.4;max-width:640px;">A companion volume to the JFSN Archive — methodology, a chief curator's essay, seven gallery panels, and twenty-five verified works, read across fifty years of practice.</p>
+      <p style="margin-top:24px;">
+        <a href="archive.html" class="bracket-link">[ ← Back to the Archive ]</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- Mobile jump nav -->
+  <div class="md:hidden border-b border-outline-variant px-margin-mobile">
+    <button id="cc-mobile-toc-btn" aria-expanded="false" aria-controls="cc-mobile-toc-list"
+      style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:14px 0;background:none;border:none;cursor:pointer;font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#575757;">
+      <span>Jump to Section</span><span id="cc-mobile-toc-chevron" style="transition:transform 0.2s ease;">↓</span>
+    </button>
+    <div id="cc-mobile-toc-list" style="display:none;padding-bottom:12px;">
+      <a href="#cc-curatorial-methodology" class="mobile-toc-link">1. Curatorial Methodology</a>
+      <a href="#cc-the-eye-that-stayed" class="mobile-toc-link">2. The Eye That Stayed</a>
+      <a href="#cc-chief-curators-essay" class="mobile-toc-link">&nbsp;&nbsp;Chief Curator's Essay</a>
+      <a href="#cc-seven-gallery-panels" class="mobile-toc-link">3. Seven Gallery Panels</a>
+      <a href="#cc-i-first-eye-cleveland-the-seventies" class="mobile-toc-link">&nbsp;&nbsp;I. First Eye — Cleveland, the Seventies</a>
+      <a href="#cc-ii-the-silent-decade" class="mobile-toc-link">&nbsp;&nbsp;II. The Silent Decade</a>
+      <a href="#cc-iii-never-finished" class="mobile-toc-link">&nbsp;&nbsp;III. Never Finished</a>
+      <a href="#cc-iv-the-war-room-guernicas-long-shadow" class="mobile-toc-link">&nbsp;&nbsp;IV. The War Room — Guernica's Long Shadow</a>
+      <a href="#cc-v-buy-me-the-wanting-in-the-work" class="mobile-toc-link">&nbsp;&nbsp;V. Buy Me — The Wanting in the Work</a>
+      <a href="#cc-vi-nothing-wasted-the-shipping-works" class="mobile-toc-link">&nbsp;&nbsp;VI. Nothing Wasted — The Shipping Works</a>
+      <a href="#cc-vii-changing-hands" class="mobile-toc-link">&nbsp;&nbsp;VII. Changing Hands</a>
+      <a href="#cc-hidden-masterpieces-verified-edition" class="mobile-toc-link">4. Hidden Masterpieces — Verified Edition</a>
+      <a href="#cc-corrections-from-verification-as-originally-recorded" class="mobile-toc-link">&nbsp;&nbsp;Corrections from verification (as originally recorded)</a>
+      <a href="#cc-the-25-verified" class="mobile-toc-link">&nbsp;&nbsp;The 25, verified</a>
+      <a href="#cc-the-seven-chapters-as-verified" class="mobile-toc-link">&nbsp;&nbsp;The Seven Chapters (as verified)</a>
+      <a href="#cc-sources-method" class="mobile-toc-link">5. Sources &amp; Method</a>
+      <a href="#cc-version-history" class="mobile-toc-link">6. Version History</a>
+      <a href="#cc-editorial-note" class="mobile-toc-link">7. Editorial Note</a>
+    </div>
+  </div>
+  <script>
+  (function(){
+    var btn=document.getElementById('cc-mobile-toc-btn');
+    var list=document.getElementById('cc-mobile-toc-list');
+    var chev=document.getElementById('cc-mobile-toc-chevron');
+    if(!btn)return;
+    btn.addEventListener('click',function(){
+      var open=list.style.display==='block';
+      list.style.display=open?'none':'block';
+      btn.setAttribute('aria-expanded',String(!open));
+      chev.style.transform=open?'rotate(0deg)':'rotate(180deg)';
+    });
+    list.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click',function(){
+        list.style.display='none';
+        btn.setAttribute('aria-expanded','false');
+        chev.style.transform='rotate(0deg)';
+      });
+    });
+  })();
+  </script>
+
+  <!-- Two-column body -->
+  <div class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto" style="padding-top:64px;padding-bottom:96px;">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+
+      <!-- Sticky desktop TOC -->
+      <div class="hidden md:block md:col-span-3">
+        <nav id="cc-toc" aria-label="Table of contents">
+          <span class="section-label" style="margin-bottom:16px;">Contents</span>
+          <div id="cc-toc-list">
+<a href="#cc-curatorial-methodology" class="cc-toc-link cc-toc-l2">1. Curatorial Methodology</a>
+<a href="#cc-the-eye-that-stayed" class="cc-toc-link cc-toc-l2">2. The Eye That Stayed</a>
+<a href="#cc-chief-curators-essay" class="cc-toc-link cc-toc-l3">Chief Curator's Essay</a>
+<a href="#cc-seven-gallery-panels" class="cc-toc-link cc-toc-l2">3. Seven Gallery Panels</a>
+<a href="#cc-i-first-eye-cleveland-the-seventies" class="cc-toc-link cc-toc-l3">I. First Eye — Cleveland, the Seventies</a>
+<a href="#cc-ii-the-silent-decade" class="cc-toc-link cc-toc-l3">II. The Silent Decade</a>
+<a href="#cc-iii-never-finished" class="cc-toc-link cc-toc-l3">III. Never Finished</a>
+<a href="#cc-iv-the-war-room-guernicas-long-shadow" class="cc-toc-link cc-toc-l3">IV. The War Room — Guernica's Long Shadow</a>
+<a href="#cc-v-buy-me-the-wanting-in-the-work" class="cc-toc-link cc-toc-l3">V. Buy Me — The Wanting in the Work</a>
+<a href="#cc-vi-nothing-wasted-the-shipping-works" class="cc-toc-link cc-toc-l3">VI. Nothing Wasted — The Shipping Works</a>
+<a href="#cc-vii-changing-hands" class="cc-toc-link cc-toc-l3">VII. Changing Hands</a>
+<a href="#cc-hidden-masterpieces-verified-edition" class="cc-toc-link cc-toc-l2">4. Hidden Masterpieces — Verified Edition</a>
+<a href="#cc-corrections-from-verification-as-originally-recorded" class="cc-toc-link cc-toc-l3">Corrections from verification (as originally recorded)</a>
+<a href="#cc-the-25-verified" class="cc-toc-link cc-toc-l3">The 25, verified</a>
+<a href="#cc-the-seven-chapters-as-verified" class="cc-toc-link cc-toc-l3">The Seven Chapters (as verified)</a>
+<a href="#cc-sources-method" class="cc-toc-link cc-toc-l2">5. Sources &amp; Method</a>
+<a href="#cc-version-history" class="cc-toc-link cc-toc-l2">6. Version History</a>
+<a href="#cc-editorial-note" class="cc-toc-link cc-toc-l2">7. Editorial Note</a>
+          </div>
+        </nav>
+      </div>
+
+      <!-- Companion text -->
+      <div class="md:col-span-9">
+        <article id="cc-article">
+<hr class="cc-rule"/>
+<h2 id="cc-curatorial-methodology" class="cc-heading cc-h2">1. Curatorial Methodology</h2>
+<p><em>Assembled from recovered source material produced during the curatorial phase of this session.</em></p>
+<p>The selections and readings in this companion were built from a full survey of the archive's catalog (1,084 works — themes, motifs, keywords, composite flags, favorites and featured status, decade-bucket distributions, and the small set of precisely dated works) cross-read against the project's oral-history record (<code>docs/oral-history/master-notes.md</code>) and the lost-works register (<code>docs/lost-works-register.md</code>).</p>
+<p>Two governing rules were applied throughout:</p>
+<ul>
+<li><strong>Years are decade estimates unless a work carries one of the rare precise dates.</strong> Only nine of the 1,084 catalog records carry an exact year; the rest are decade-bucket approximations. Any claim built from bucket arithmetic is treated as an estimate, not a fact.</li>
+<li><strong>Composite images are excluded from evidentiary claims about real exhibitions or events</strong>, per the artist's own corrections to the archive's record (creator corrections of 2026-06-10 and 2026-06-11): gallery, installation, and crowd images throughout the archive are Photoshop composites — imagined placements, not documentation of events that occurred.</li>
+</ul>
+<p>Within the fact-checked selection (Section 5, below), every claim about a work is separated into three categories:</p>
+<blockquote class="cc-quote">
+<p><strong>Observation</strong> — a catalog or testimony fact, independently checkable.</p>
+<p><strong>Interpretation</strong> — a reading that follows from the observed evidence, but is not itself fact.</p>
+<p><strong>Speculation</strong> — clearly labeled as such; unproven, offered only as a question worth asking.</p>
+</blockquote>
+<p>This companion does not resolve open questions on the artist's behalf. Where the evidence supports a pattern but not a meaning, the pattern is stated and the meaning is left open.</p>
+<hr class="cc-rule"/>
+<h2 id="cc-the-eye-that-stayed" class="cc-heading cc-h2">2. The Eye That Stayed</h2>
+<h3 id="cc-chief-curators-essay" class="cc-heading cc-h3">Chief Curator's Essay</h3>
+<p><strong>I.</strong></p>
+<p>There is a fact about this archive that every visitor should hold before looking at a single work: it is the record of what survived, not of what was made.</p>
+<p>An estimated five hundred to one thousand works — over half of a lifetime's output — were destroyed by water damage in a storage facility. There was no inventory. Most had never been photographed. The artist, kept away from the site by circumstance, watched what remained of his life's work from the sidewalk, waiting for the garbage truck. Asked about it later, he gave the archive its most compressed piece of testimony, three words that this exhibition treats as a primary source:</p>
+<p><em>"Sad. Enough."</em></p>
+<p>The 1,084 works catalogued here — collage, sculpture, photography, painting, spanning roughly 1970 to the present — are therefore not a corpus. They are a remnant. The archive's own documentation is unusually honest about this, and the exhibition follows its lead. What you will see in these seven chapters is what the water didn't reach. What you will not see is larger, and almost entirely undocumented, and its absence is part of the story being told.</p>
+<p>This is worth stating so plainly because it inverts the usual logic of the retrospective. Museums typically assemble the best of what exists. This exhibition assembles the <em>evidence</em> — twenty-five works selected not because they are the most beautiful (though some are), but because each one carries information about a fifty-year practice that exists nowhere else. Several carry information that exists nowhere else <em>at all</em>: the artist is living, the questions attached to these works are still answerable, and this catalog will be candid about which ones remain open.</p>
+<p><strong>II.</strong></p>
+<p>Jeffrey F. S. Neumann was born in Cleveland, Ohio, in 1955. He attended the Cleveland Institute of Art intending to become a fine artist. That was the plan, in his words, and the plan did not survive contact with an ordinary life: a design career of several decades, marriage, children, bills — what his own account calls "the ordinary weight of a life." The studio work moved to the edges. Evenings. Weekends. It did not stop.</p>
+<p>That it did not stop is the central historical fact of this archive, and the central mystery. Neumann discovered, gradually, over decades of research and exposure, that Robert Rauschenberg had already explored much of the territory he had thought was his own. The realization did not arrive as a crisis; it "crept in slowly." His account of what he did next is complete in two words: <em>"Kept going."</em> Asked, decades later, whether he would have spent fifty years making the work even if no one had ever seen it, he answered — and the register of the answer matters, emoji and all — <em>"yes, it might be worth it in the end =)"</em>.</p>
+<p>The interviews conducted for this archive circled the question of why. What they captured, in the artist's spare and direct voice, was this: he always believed he had an eye for it. Not from acclaim — there was very little. Not from sales — there were few. <em>"Just knowing yourself."</em> The title of this retrospective is drawn from that answer, because it is the only explanation the primary record supports. Everything else — every reading this catalog offers about war, wanting, family, and late style — is interpretation, and will be labeled as such.</p>
+<p>That labeling is not academic caution. It is the archive's own hard-won methodology. Twice during the cataloguing of this collection, images of gallery installations and exhibition crowds were taken as evidence of an exhibition history — and twice the artist corrected the record: those images are Photoshop composites, his own works placed digitally into venues they never occupied. The archive's documentation now carries the lesson as a standing rule: <em>in this body of work, an image of an event is not evidence the event occurred.</em> The artist works in imagined realities. The real exhibition history, verified with him directly, amounts to six shows across thirty-four years, the most recent in 2012, one of them a solo exhibition at a café. The composites — roughly 250 works — are flagged as such throughout the collection and this exhibition. They are not deceptions to be corrected; they are, read honestly, among the most revealing objects here: exhibitions that existed only as desire, built carefully in software by a man whose spoken account insists he never needed to be seen.</p>
+<p>Hold that tension. It structures everything that follows.</p>
+<p><strong>III.</strong></p>
+<p><strong>The exhibition opens where the archive's own story does not</strong> — because the story the archive tells about itself begins with Rauschenberg, found materials, and permission, and the earliest surviving objects say otherwise.</p>
+<p><em>First Eye</em> (Chapter I) presents the practice of the Cleveland Institute of Art years: painted geometric blocks, stacked, gridded, pyramided, sealed under glass. Fourteen such works survive. This is observation, not reading: the earliest identity in this archive is a formalist one — ordered, chromatic, constructed — and no interview, essay, or page of the artist's own record mentions it. The turn from these blocks toward the scavenged and the found is an undocumented event, one of the genuine turning points this exhibition can point to but not yet explain. One block work, <em>Blocks Under Glass</em>, carries a distinction worth noting: of the forty-five works the artist marked as personal favorites — his only act of self-curation in the entire catalog — this is the sole block piece included. The favorites list is the closest thing we have to the artist's own retrospective judgment, and it reaches back to the beginning.</p>
+<p>One work from this period carries the artist's own testimony: a photograph of two bare bulbs mounted on a painted radiator, which he later described, unprompted, as representative of his found-object method — "old light bulbs, tubes, wires... low budget." It is one of only a handful of objects in the entire archive that the artist has explained in his own words.</p>
+<p>The chapter closes with one of the archive's earliest precisely dated objects: a black-and-white photograph of the band Devo performing at Cleveland's WHK Auditorium in 1977, taken by a twenty-two-year-old art student. It matters twice. It is among only nine works in 1,084 that carry an exact year — the rest are decade estimates, a fact visitors should carry through every wall label in this show. And it is the visible origin of a photographic practice that would eventually constitute nearly a third of the archive while going entirely unmentioned in the artist's own narrative of himself.</p>
+<p><strong>IV.</strong></p>
+<p><em>The Silent Decade</em> (Chapter II) is the smallest room in the exhibition, and deliberately so. Eleven objects survive from the entire 1980s: six photographs, four paintings, one collage. The exhibition presents two — the decade's only surviving collage, <em>Repeated Doll Faces</em>, and one of the neon-city paintings whose flat graphic style appears in this decade and then vanishes, along with painting itself, which the catalog data shows stopping completely for roughly the next three decades.</p>
+<p>We do not know what the 1980s were. The possibilities are starkly different — a decade of work later destroyed, a decade of work dispersed, or a decade in which the making nearly stopped — and the archive's documentation is disciplined enough to say so rather than choose. The near-empty walls of this room are not a curatorial failure. They are the most honest display in the building: this is what an archive looks like where it doesn't know, presented by an institution unwilling to paper the gap. The question is still answerable. It is among the first this catalog would put to the artist.</p>
+<p><strong>V.</strong></p>
+<p><em>Never Finished</em> (Chapter III) contains two modest objects and the exhibition's deepest claim about method. Both works are dated, in the catalog, to the 1970 bucket. Both carry compact discs — a technology that did not exist until 1982.</p>
+<p>The observation is simply that: an impossibility in the dating layer. The interpretation, which we offer with confidence because the artist's own testimony supports it, is that these works were physically reopened decades after they were begun. Asked once whether he ever finished a piece and judged it a failure, Neumann answered: <em>"Always have the option to add/subtract — could be unfinished till the end."</em> Nothing receives a final verdict. The option to return is always open.</p>
+<p>Visitors should let this chapter recalibrate how they read every other object in the exhibition. No work here can be assumed to show its original state. A date on a wall label may mean begun, finished, or last touched — the artist has confirmed he doesn't always know himself. In most collections this would be a provenance problem. In this one it is the practice's signature: the work of a man who, for fifty years, refused every ending.</p>
+<p><strong>VI.</strong></p>
+<p><em>The War Room</em> (Chapter IV) sits at the center of the exhibition, and it is where this catalog must be most careful about the line between what the data shows and what it means.</p>
+<p>What the data shows, verified: over four hundred works carry target imagery; nearly four hundred carry warplane silhouettes; both surge to their peak in the 2000s. The single precisely dated work of that decade — 2004, during the Iraq war — is titled <em>Face of Death V</em>. The thirty-year spine of the whole archive is a series of 232 works made against Picasso's <em>Guernica</em>, which the artist read about, considered the most important painting of the twentieth century, and used — his words — as <em>"a direction, a structure to work against."</em> He made a full-size version, roughly eleven by twenty-five feet, alone in his basement, on rolled flexible material. No one ever saw it. It was lost in the water. Asked why he made it at that scale, he said: <em>"It was about time."</em></p>
+<p>A black-ground Christmas piece from the same period — a fighter approaching a bomber, made as a holiday greeting — and a 2017 collage inscribed with the words "GUERNICA" and "LONDON" extend the pattern across genre and geography: even a season's greeting and a place-name carry the same imagery.</p>
+<p>What the data means is a different question, and the honest answer is that no one has asked the artist. The reading this room's arrangement suggests — a sustained civilian response to war, by a man who was draft-age as Vietnam ended and approaching fifty as the Iraq war began — is interpretation, medium confidence, clearly labeled. The exhibition presents the pattern and leaves the conclusion where it belongs: open, and askable. Here too belongs the archive's strangest private symbol, the numeral XXIII, mutating across two decades of discs and buses into <em>XXXIII Días</em> — a series name the artist has explained (a rumored film about Picasso painting <em>Guernica</em> in thirty-three days) without explaining what the number meant to him for the twenty years before.</p>
+<p><strong>VII.</strong></p>
+<p><em>Buy Me</em> (Chapter V) is the exhibition's smallest argument and its most human. Three works, spanning roughly two decades, carry words the artist physically placed into them: "BUY ME," handwritten across a 1990s collage of targets and planes; "BUY ME" again, in a work self-dated to the day — 3/7/12 — the only object in the archive that timestamps itself; and "HOW TO CREATE," a fragment of found instructional text embedded in a collage by a man who spent fifty years answering that question without instruction.</p>
+<p>Set these against the interviews. Asked whether he wanted money, fame, recognition, Neumann's answer was that those were things you were <em>supposed</em> to want. The spoken record is detached, settled, spare. The objects say something rawer. The archive's own analysts, confronting this gap, wrote a rule this exhibition adopts wholesale: the captured voice is the primary source for who the artist is now; the catalog is the primary source for who he was then. Do not edit either to match the other. Whether "Buy Me" was a joke is a question with one living source. It has not yet been asked. It should be.</p>
+<p><strong>VIII.</strong></p>
+<p><em>Nothing Wasted</em> (Chapter VI) is the chapter with the strongest provenance in the exhibition — the only body of work the artist has explained in his own typed words: <em>"made from different USPS &amp; FedEx package containers, CDs, Targets/ etc."</em></p>
+<p>The materials tell an economic history. <em>"Art supplies were always too expensive,"</em> Neumann has said, and the archive's record of his materials — compact discs, floppy disks, keyboards, dollar-store finds, prism paper, shipping boxes — is the inventory of a working artist's actual economy, a genre of documentation art history almost never receives. The chapter traces the shipping container across the archive's full span: painted as a subject in the 1970s (<em>Benefit Package</em>, a crate rendered in magenta lettering), then physically incorporated decades later — FedEx packaging built into a freestanding totem figure, Priority Mail boxes embedded in a plywood cross. The observation is the continuity; whether the early painting <em>fed</em> the later material choice is speculation, labeled as such.</p>
+<p>The chapter closes with a work that gathers three of the archive's deepest threads into one surface: <em>XXXIII Aunt Mary</em> — a favorite of the artist's, dense with warplanes, targets, and Express Mail labels, and the only title in 1,084 works that names a member of his family. No document explains who Aunt Mary is. The question is flagged in the archive as sole-source: when the artist is gone, the answer is gone. This exhibition exists, in part, to make sure such questions are asked in time.</p>
+<p><strong>IX.</strong></p>
+<p><em>Changing Hands</em> (Chapter VII) ends the exhibition facing forward, because the archive itself does.</p>
+<p>It opens with the camera as witness — a photograph of a political mural, documentary rather than composed — before turning to the ways the work itself began changing hands.</p>
+<p>For roughly the past four years, Neumann has incorporated his grandchildren's drawings into his work — thirty-one collaborative pieces in which, by his own account, <em>"getting hard to tell where they end and I begin. I think that's right."</em> In the same late period, painting — silent for thirty years — returned: twenty-one paintings made after retirement, exactly half of all the paintings that survive. The catalog records one further fact this room is built around: a favorite work from the painting return is <em>also</em> tagged as a collaboration. The two forward-facing stories of the late period intersect in a single object. Whether the grandchildren brought painting back is a question, not a claim — but it is a beautiful question, and it has a living source.</p>
+<p>Here too is the newest method in the archive — the Tracings, a dozen loose ink works, ten of them from the current decade, a late style demonstrably emerging <em>now</em>, the only stylistic shift in fifty years that can still be interviewed in progress. And here is the snowman: the recurring figure called Mr. SNOWmann, photographed on a real brick wall among other artists' graffiti — one of the few street images in the archive verified as an actual photograph rather than a composite — whose ancestry the artist extended just days before this catalog went to press, recalling a group of six-foot snowmen in colored paper and spray paint, made, perhaps, for a Christmas art show in the early 1980s. All of them lost. No one knows what happened to them. The character on that wall may be forty years old.</p>
+<p>The archive's own analysts concluded that in a hundred years, the most likely reason someone will open this collection is to see hands they recognize. This exhibition agrees, and ends there — not with what was made, but with the evidence that the making changes hands and continues.</p>
+<p><strong>X.</strong></p>
+<p>Why does this archive matter historically?</p>
+<p>Not because the work was influential; the honest record shows six exhibitions in thirty-four years and an artist who discovered his territory had been explored before him and <em>kept going anyway</em>. It matters because it is complete in a way almost no artistic record is — not complete in objects (half are gone; the archive says so on its first page) but complete in <em>honesty</em>. The dates admit they are estimates. The composites are flagged as imaginings. The lost works are registered as losses, in the artist's own words, one at a time, only as he chooses to remember them. The doubt is preserved uncorrected: <em>"Getting old / no one really cares or wants to see it"</em> sits in the record alongside the fact that he is still making things most days.</p>
+<p>Art history is overwhelmingly the history of the seen — the exhibited, the sold, the reviewed. What almost never survives is this: the fifty-year practice conducted at the edges of an ordinary life, sustained by nothing but the maker's private conviction that he had an eye. Such practices have always existed. They vanish, statistically, without record — into storage units, onto curbs, six feet from their makers on the sidewalk.</p>
+<p>One of them didn't. That is what this building holds. The work is shown straight; the questions are shown open; and the man who made all of it, asked what it was finally for, has given the answer this exhibition trusts more than any essay, including this one:</p>
+<p><em>"I thought I was always good at it. Had an eye for it."</em></p>
+<p>The eye stayed. The evidence is on the walls.</p>
+<hr class="cc-rule"/>
+<p><em>Works in this exhibition are dated by decade estimate except where noted; the archive's nine precisely dated works are identified on their labels. Approximately 250 works in the broader collection are Photoshop composites depicting imagined placements and are flagged as such wherever shown. The lost-works register remains open, and grows only at the artist's choosing.</em></p>
+<hr class="cc-rule"/>
+<h2 id="cc-seven-gallery-panels" class="cc-heading cc-h2">3. Seven Gallery Panels</h2>
+<h3 id="cc-i-first-eye-cleveland-the-seventies" class="cc-heading cc-h3">I. First Eye — Cleveland, the Seventies</h3>
+<p>Every account this archive gives of itself begins with found materials — the permission, absorbed from Rauschenberg, that anything could become the work. The earliest surviving objects tell a different story.</p>
+<p>Jeffrey F. S. Neumann entered the Cleveland Institute of Art in the 1970s intending to become a fine artist. What survives from those years is largely formalist: painted geometric blocks — stacked, gridded, built into pyramids and walls, sealed beneath glass. Fourteen such works remain. No interview, essay, or page of the artist's own record mentions them. The turn away from this ordered, chromatic practice toward the scavenged and the found is one of the genuine turning points of this fifty-year body of work, and it remains undocumented.</p>
+<p>One work here, <em>Blocks Under Glass</em>, is the only block piece among the forty-five works the artist has marked as personal favorites — his sole act of self-curation across 1,084 objects. His early judgment, it seems, still reaches back to the beginning.</p>
+<p>One photograph from these years — bare bulbs mounted on a painted radiator — is one of the few objects in this archive the artist has explained himself: he later named it as representative of his found-object method, built from what was cheap and at hand.</p>
+<p>The chapter closes with one of the archive's earliest precisely dated objects: a photograph of the band Devo performing in Cleveland in 1977, taken by a twenty-two-year-old student. It is the visible origin of a photographic practice that would grow to nearly a third of this archive — and go entirely unmentioned in the artist's account of himself.</p>
+<h3 id="cc-ii-the-silent-decade" class="cc-heading cc-h3">II. The Silent Decade</h3>
+<p>Eleven objects survive from the entire 1980s.</p>
+<p>Six are photographs, most of them views of the artist's studio rather than artworks. Four are paintings in a flat, neon-lit graphic style that appears in this decade and then vanishes. One is a collage — the only one — from the medium Neumann would practice for the following forty years.</p>
+<p>This room presents two of those survivors. The walls around them are deliberately spare, because the emptiness is the exhibit. We do not know what the 1980s were in this practice. The work of the decade may have been destroyed — much of this archive was lost, undocumented, to water damage in storage. It may have been dispersed, given away before anyone thought to record it. Or the making may have nearly stopped, in the years when a design career, a marriage, and young children pressed the studio to the edges of life. These are very different stories. The archive's own documentation is disciplined enough not to choose among them, and neither will we.</p>
+<p>The catalog data records one certainty: after this decade, painting stopped completely — and did not return for roughly thirty years.</p>
+<p>The question of what happened here is still answerable. The artist is living. It is asked of him gently, and only when he chooses.</p>
+<h3 id="cc-iii-never-finished" class="cc-heading cc-h3">III. Never Finished</h3>
+<p>The two works in this room are dated to the 1970s. Both carry compact discs — a technology that did not exist until 1982.</p>
+<p>The contradiction is not an error to be corrected. It is the clearest physical evidence of this practice's deepest habit. Asked once whether he ever finished a piece and judged it a failure, Neumann answered: <em>"Always have the option to add/subtract — could be unfinished till the end."</em> Nothing in this archive receives a final verdict. Works made in art school could be reopened decades later — new material laid over old decisions, a fifty-year-old surface treated as still in progress.</p>
+<p>Visitors should carry this room's lesson through the rest of the exhibition. No object here can be assumed to show its original state. A date on a label may mean begun, finished, or last touched; the artist has confirmed he does not always know himself. Nearly all dates in this archive are decade estimates, and this room shows why even those must be held loosely.</p>
+<p>In most collections, this would be a problem of provenance. In this one, it is the signature of the practice: the work of a man who, across fifty years, declined every ending that was offered.</p>
+<h3 id="cc-iv-the-war-room-guernicas-long-shadow" class="cc-heading cc-h3">IV. The War Room — Guernica's Long Shadow</h3>
+<p>The pattern is fact. More than four hundred works in this archive carry target imagery; nearly four hundred carry warplane silhouettes; both surge to their peak in the 2000s. The one precisely dated work of that decade — 2004 — is titled <em>Face of Death V</em>. And the longest thread in the entire archive is a series of 232 works made over thirty years against Picasso's <em>Guernica</em>, the painting Neumann considered the most important of the twentieth century. He used it, in his words, as <em>"a direction, a structure to work against."</em></p>
+<p>He also made a full-size version — roughly eleven by twenty-five feet — alone in his basement, on flexible material that could be rolled and stored. No one ever saw it. It was lost, with hundreds of other works, to water damage. Asked why he made it at that scale, he said: <em>"It was about time."</em></p>
+<p>A Christmas piece recast on a black ground, and a collage handwritten with "GUERNICA" and "LONDON," extend this imagery into occasion and travel. The private numeral XXIII, and its later form XXXIII Días, run through this room as well — a symbol repeated for twenty years before the artist ever explained its name.</p>
+<p>What the pattern means is a separate question, and this museum will not answer it for the artist. The reading these walls may suggest — a sustained private response to war, by a man who was draft-age as Vietnam ended and approaching fifty as the Iraq war began — is interpretation, and is labeled as such. He has never been asked.</p>
+<p>The pattern is presented. The conclusion is left open, where it belongs.</p>
+<h3 id="cc-v-buy-me-the-wanting-in-the-work" class="cc-heading cc-h3">V. Buy Me — The Wanting in the Work</h3>
+<p>Asked whether he wanted money, fame, or recognition, Neumann answered that those were things you were <em>supposed</em> to want. The interviews that inform this exhibition record a voice that is spare, settled, and detached from acclaim: <em>"I thought I was always good at it. Had an eye for it."</em></p>
+<p>The three works in this room complicate that record, in the artist's own hand.</p>
+<p>Across roughly two decades, he physically placed words into these surfaces. "BUY ME," handwritten over a field of targets and planes in the 1990s. "BUY ME" again, in a collage that dates itself to the day — 3/7/12 — the only object in the archive that carries its own timestamp. And "HOW TO CREATE," a fragment of found instructional text, embedded in a dense collage by a man who spent fifty years answering that question with no instruction at all.</p>
+<p>The archive's own methodology, developed as these tensions surfaced, governs this room: the spoken record is the primary source for who the artist is now; the objects are the primary source for who he was then. Neither is edited to match the other.</p>
+<p>Whether "Buy Me" was a joke is a question with exactly one living source. It has not yet been asked.</p>
+<h3 id="cc-vi-nothing-wasted-the-shipping-works" class="cc-heading cc-h3">VI. Nothing Wasted — The Shipping Works</h3>
+<p><em>"Art supplies were always too expensive."</em></p>
+<p>The materials in this archive are the inventory of a working artist's actual economy: compact discs, floppy disks, keyboards, dollar-store finds, prism paper — and, everywhere in this room, the packaging of the United States Postal Service and FedEx. This is the only body of work in the archive that the artist has explained in his own written words: <em>"made from different USPS &amp; FedEx package containers, CDs, Targets/ etc."</em></p>
+<p>The room traces that material across the practice's full span. It enters as image in the 1970s — a painted shipping crate lettered "BENEFIT PACKAGE" — and returns decades later as substance: FedEx packaging built into a freestanding totem figure, Priority Mail boxes embedded in a plywood cross. The subject became the material. Things that still had a life left in them, as the artist has put it, became the work.</p>
+<p>The room closes with <em>XXXIII Aunt Mary</em> — a personal favorite of the artist's, layered with warplanes, targets, and Express Mail labels, and the only title among 1,084 works that names a member of his family. No document explains who Aunt Mary is. The answer exists in one living memory, and this archive exists, in part, to ask such questions while they can still be answered.</p>
+<h3 id="cc-vii-changing-hands" class="cc-heading cc-h3">VII. Changing Hands</h3>
+<p>The final room faces forward, because the archive does.</p>
+<p>It opens with the camera as witness — a photograph of a political mural, documentary rather than composed — before turning to the ways the work itself began changing hands.</p>
+<p>For roughly the past four years, Neumann has incorporated his grandchildren's drawings into his work — thirty-one collaborations in which, by his own account, it is <em>"getting hard to tell where they end and I begin. I think that's right."</em> In the same late period, painting — silent in this practice for thirty years — returned: twenty-one paintings made after retirement. The catalog records the two stories crossing in a single object in this room: a favorite work from the painting return that is also a collaboration.</p>
+<p>Here too is the newest method in the archive — the Tracings, loose ink line works, nearly all from the current decade: the only stylistic shift in fifty years that can still be observed in progress. And here is Mr. SNOWmann, the recurring figure photographed on a real Cleveland-area brick wall among other artists' graffiti — a character whose ancestry the artist recently extended by three decades, recalling a group of six-foot snowmen in colored paper and spray paint, made for what may have been a Christmas art show in the early 1980s. All of them lost.</p>
+<p>The archive's analysts concluded that in a hundred years, the most likely reason someone will open this collection is to see hands they recognize. This room agrees. The exhibition ends not with what was made, but with the evidence that making things doesn't end — it changes hands.</p>
+<hr class="cc-rule"/>
+<h2 id="cc-hidden-masterpieces-verified-edition" class="cc-heading cc-h2">4. Hidden Masterpieces — Verified Edition</h2>
+<p><em>Presented unmodified from the fact-checking pass conducted during this session. No Priority 1–3 corrections applied to this section, as none were documented against it in the Editorial Review — corrections identified during review were introduced in the later essay and panel drafts, not in this verified source.</em></p>
+<h3 id="cc-corrections-from-verification-as-originally-recorded" class="cc-heading cc-h3">Corrections from verification (as originally recorded)</h3>
+<ul>
+<li><strong><a href="artwork.html?id=art1026" class="cc-art-link">art1026</a> (Silk Torpedo Intervention) carries <code>composite: True</code> — but this is a flagging artifact, not evidence.</strong> The composite flag is rule-driven (Gallery theme OR Studio theme OR placement-language title, per <code>build_catalog.py</code>); <a href="artwork.html?id=art1026" class="cc-art-link">art1026</a> has the Studio theme, so the rule caught it. The work itself — CDs affixed to an LP sleeve — is not an imagined placement. 24 of 25 works are <code>composite: False</code>, and the 25th is flagged only by rule overreach.</li>
+<li><strong><a href="artwork.html?id=art0503" class="cc-art-link">art0503</a> (Blue Ground Figures 1) carries the Collaboration theme.</strong> Originally presented purely as "the painting return," the catalog shows it is <em>both</em> — the post-retirement painting return and a grandchildren-collaboration work in one object.</li>
+<li><strong><a href="artwork.html?id=art0481" class="cc-art-link">art0481</a>'s "first collaboration work" claim conflicts with testimony.</strong> It sits in the 2010 bucket, but Jeff's testimony dates the grandchildren collaboration to "approximately four years" ago (~2022). Either the bucket estimate is wrong or the Collaboration theme includes pre-grandchildren work. Downgraded from claim to open question.</li>
+<li><strong>"First"/"earliest" claims based on decade buckets are labeled as estimates throughout</strong> — 1,075 of 1,084 years are decade guesses, so bucket-based sequencing is weak evidence by definition.</li>
+</ul>
+<h3 id="cc-the-25-verified" class="cc-heading cc-h3">The 25, verified</h3>
+<p>Format per work: <strong>Observation</strong> (catalog/testimony fact, checkable), <strong>Interpretation</strong> (reading that follows from evidence), <strong>Speculation</strong> (labeled, unproven).</p>
+<p><strong>1. <a href="artwork.html?id=art1046" class="cc-art-link">art1046</a> — Blocks Under Glass — 1970s (est.)</strong> <em>Observation:</em> One of 14 painted-block works in the 1970 bucket; the <strong>only one Jeff marked favorite</strong> among all block works. Art School theme. <code>composite: False</code>. <em>Interpretation:</em> The favorites list is Jeff's only act of self-curation in the archive; favoriting exactly one block work is the closest thing to testimony that this body mattered to him. <em>Speculation — labeled:</em> that the glass layer anticipates the lifelong reflective-surface obsession (CDs, prism paper). Plausible; unconfirmed.</p>
+<p><strong>2. <a href="artwork.html?id=art1044" class="cc-art-link">art1044</a> — Painted Block Pyramid — 1970s (est.)</strong> <em>Observation:</em> The block cluster spans at least 14 works (walls, grids, towers, pyramids) — a sustained series, not an exercise. 51 of 52 Art School–themed works sit in the 1970 bucket. <em>Interpretation:</em> A complete abandoned first practice — formalist, geometric, unmentioned in any narrative page or oral-history answer. <em>Open question:</em> whether any of these objects still physically exist.</p>
+<p><strong>3. <a href="artwork.html?id=art1056" class="cc-art-link">art1056</a> — Untitled (Bulbs and Radiator) — 1970s (est.)</strong> <em>Observation:</em> Jeff favorite. Direct creator testimony exists: sculpture from "old light bulbs, tubes, wires — found objects. Low budget." One of very few works with any first-person commentary. <em>Interpretation:</em> The found-object method's representative object, chosen as such by the maker himself. Strongest-evidenced work on this list.</p>
+<p><strong>4. <a href="artwork.html?id=art1037" class="cc-art-link">art1037</a> — Benefit Package — 1970s (est.), painting</strong> <em>Observation:</em> Painted shipping crate labeled "BENEFIT PACKAGE" (description verified). Thirty years later, Jeff's verbatim materials statement for the fine-art-2000 works: "made from different USPS &amp; FedEx package containers, CDs, Targets/ etc." <em>Interpretation:</em> The packaging motif appears as <em>painted subject</em> decades before it becomes <em>physical material</em> — a documented before/after across the archive's whole span. <em>Speculation — labeled:</em> that the early painting consciously fed the later material choice. The continuity is observable; intent is not.</p>
+<p><strong>5. <a href="artwork.html?id=art0145" class="cc-art-link">art0145</a> — Felix Double Disc — dated 1970 (bucket), physically impossible as dated</strong> <em>Observation:</em> CDs (post-1982) collaged onto a work dated 1970. Two sibling anachronisms verified (<a href="artwork.html?id=art0001" class="cc-art-link">art0001</a>, <a href="artwork.html?id=art1026" class="cc-art-link">art1026</a>). Jeff's method testimony: <em>"always have the option to add/subtract — could be unfinished till the end"</em> (verbatim). <em>Interpretation:</em> Either misdating or physical reworking decades later. Both readings are archivally significant: the first undermines the dating layer, the second confirms the reworking method in object form. <em>Open question:</em> what a catalog year means — begun, finished, or last touched.</p>
+<p><strong>6. <a href="artwork.html?id=art1026" class="cc-art-link">art1026</a> — Silk Torpedo Intervention — dated 1970 (bucket)</strong> <em>Observation:</em> Pretty Things <em>Silk Torpedo</em> LP sleeve with four CDs affixed. Composite flag is a rule artifact (Studio theme), per correction above. <em>Interpretation:</em> Intervention on a found image — the same gesture that recurs in the 41 <code>tag-on-other-work</code> photographs, the catalog's single most common keyword. Earliest instance <em>by bucket estimate only</em>. <em>Speculation — labeled:</em> a deliberate through-line from LP-sleeve intervention to street-image intervention. The gesture's recurrence is fact; the lineage is a reading.</p>
+<p><strong>7. <a href="artwork.html?id=art1052" class="cc-art-link">art1052</a> — Repeated Doll Faces — 1980s (est.)</strong> <em>Observation:</em> Verified — the <strong>only collage in the entire 1980s bucket</strong> (11 works total: 6 photographs, 4 paintings, 1 collage). Featured on the site but absent from every narrative. <em>Interpretation:</em> Sole survivor of his primary medium from the silent decade.</p>
+<p><strong>8. <a href="artwork.html?id=art1067" class="cc-art-link">art1067</a> — City Under Laser Sky — 1980s (est.), painting</strong> <em>Observation:</em> Painting counts by decade, verified: 10 → 4 → <strong>0 → 0</strong> → 7 → 21. This is one of the last four before the thirty-year zero. <em>Interpretation:</em> The neon-city group is a closed micro-style existing nowhere else in the catalog. The medium that stopped completely is the one he trained in. <em>Open question:</em> what ended painting, and what brought it back.</p>
+<p><strong>9. <a href="artwork.html?id=art0380" class="cc-art-link">art0380</a> — Devo at WHK Auditorium — 1977 (precise date)</strong> <em>Observation:</em> One of only nine non-round years in 1,084 records. Description confirms: Devo, WHK Auditorium, Cleveland, 1977. Art School theme. Featured — but featured as image, never discussed as evidence. <em>Interpretation:</em> The origin point of the photographic practice (328 works, 30% of the archive, no narrative page mentions it — verified). Also a true chronological anchor in a decade-bucket catalog.</p>
+<p><strong>10. <a href="artwork.html?id=art0518" class="cc-art-link">art0518</a> — Buy Me (Targets and Planes) — 1990s (est.)</strong> <em>Observation:</em> Buy Me trilogy verified: <a href="artwork.html?id=art0518" class="cc-art-link">art0518</a> (1990 est.), <a href="artwork.html?id=art0762" class="cc-art-link">art0762</a> (2010 est.), <a href="artwork.html?id=art0937" class="cc-art-link">art0937</a> (2012 precise). Handwritten "BUY ME" confirmed in <a href="artwork.html?id=art0937" class="cc-art-link">art0937</a>'s description. Against it, testimony: <em>"you were supposed to want them"</em> (verbatim). <em>Interpretation:</em> The works document wanting that the interviews describe as external expectation. Hold both as true — the voice is who he is now; the catalog is who he was then. <em>Open question:</em> whether "Buy Me" is his hand, and whether it was a joke.</p>
+<p><strong>11. <a href="artwork.html?id=art0056" class="cc-art-link">art0056</a> — XXIII Bus — 1990s (est.)</strong> <em>Observation:</em> Earliest XXIII-titled work <em>by bucket</em> (verified: 1990, then four more across 2000–2010). Carries the <code>text</code> keyword (inscribed words physically present). <em>Interpretation:</em> A private numeral with no external referent, recurring across two decades before the related XXXIII series. <em>Speculation — labeled:</em> any specific meaning of XXIII. Nothing in testimony explains it.</p>
+<p><strong>12. <a href="artwork.html?id=art0993" class="cc-art-link">art0993</a> — XXXIII Dias Formation — 1990s (est.)</strong> <em>Observation:</em> <code>composite: False</code> — a real collage, verified, in a series whose installation views are all composites. Series-title origin has creator testimony: the rumored "33 Days" Picasso/Guernica film. <em>Interpretation:</em> The authentic artifact of XXXIII Días — the works the imagined exhibitions were built around. <em>Caution:</em> the ~2012 film-announcement date vs. this work's 1990 bucket is another dating contradiction — if the title came from the film, either the work or the bucket postdates it. Unresolved.</p>
+<p><strong>13. <a href="artwork.html?id=art0582" class="cc-art-link">art0582</a> — Face of Death V — 2004 (precise)</strong> <em>Observation:</em> Verified as the only precisely-dated work in the 2000s bucket. Title implies a series ("V"); no other Face of Death works exist in the catalog. War-imagery pattern verified: targets and warplane motifs peak in the 2000s bucket (168/142). <em>Interpretation:</em> The strongest single anchor for the war reading — a death's-head made mid-Iraq-war by a man whose 30-year spine was the century's great war painting. <em>Speculation — labeled:</em> the war reading itself. Pattern confidence High, reading confidence Medium. Jeff has never been asked.</p>
+<p><strong>14. <a href="artwork.html?id=art0085" class="cc-art-link">art0085</a> — Merry Christmas 2013, Black — 2000s bucket, internal date 2013</strong> <em>Observation:</em> Description verified: "Companion to the white-ground Christmas piece" (<a href="artwork.html?id=art0083" class="cc-art-link">art0083</a>) — the pairing is cataloged, not inferred. Bucket (2000) contradicts title date (2013) — dating-layer evidence. <em>Interpretation:</em> Occasion pieces with a dark variant. The bucket error is independently useful: it proves title-internal dates outrank bucket estimates. <em>Speculation — labeled:</em> "what was black about Christmas 2013" — an evocative question, nothing more.</p>
+<p><strong>15. <a href="artwork.html?id=art0096" class="cc-art-link">art0096</a> — Yellow Inset, How to Create — 2000s (est.)</strong> <em>Observation:</em> Description verified: printed found text reading "HOW TO CREATE," among warplane diagrams, discs, targets, a chess pawn. <em>Interpretation:</em> Self-reference through found material — instructional text embedded by an autodidact of fifty years. <em>Speculation — labeled:</em> irony vs. accident. Unknowable without asking.</p>
+<p><strong>16. <a href="artwork.html?id=art0253" class="cc-art-link">art0253</a> — FedEx Totem Figure — 1990s (est.), sculpture</strong> <em>Observation:</em> Freestanding figure of FedEx packaging and cardboard tubes (description verified). Materials family has verbatim creator testimony. Sculpture corpus: 76 works, least-represented medium. <em>Interpretation:</em> The scavenger ethic at full three-dimensional ambition.</p>
+<p><strong>17. <a href="artwork.html?id=art0730" class="cc-art-link">art0730</a> — Untitled (USPS Box Grid) — 2000s (est.), sculpture</strong> <em>Observation:</em> USPS Priority Mail flat-rate boxes embedded in a plywood cross formation (verified). Crosses theme. <em>Interpretation:</em> Postal graphics as formal system; closes the observable loop from <em>Benefit Package</em> (#4).</p>
+<p><strong>18. <a href="artwork.html?id=art0663" class="cc-art-link">art0663</a> — XXXIII Aunt Mary — 2010s (est.)</strong> <em>Observation:</em> Jeff favorite (verified). The only work title in 1,084 naming a family member. Description confirms USPS Express Mail labels in the surface. <em>Interpretation:</em> A favorite, family-named work in the war-imagery idiom — three of the archive's deepest threads crossing in one object nobody has asked about.</p>
+<p><strong>19. <a href="artwork.html?id=art0507" class="cc-art-link">art0507</a> — Guernica London Spain — 2017 (precise)</strong> <em>Observation:</em> Precise date; handwritten "GUERNICA," "LONDON" place-text verified in description. Guernica showed at London's Whitechapel (1939) and hangs in Madrid — external facts. <em>Interpretation:</em> The most biographical object in the 232-work Guernica series. <em>Speculation — labeled:</em> pilgrimage. Confidence Low. Open question: "did you ever stand before the real Guernica?"</p>
+<p><strong>20. <a href="artwork.html?id=art0937" class="cc-art-link">art0937</a> — Buy Me (Chess) — inscribed 3/7/12</strong> <em>Observation:</em> Description verified: "dated 3/7/12... handwritten text reading 'BUY ME'." The only work in the catalog self-dated to the day. <em>Interpretation:</em> Double evidence: the trilogy's persistence into his late fifties, and proof that some works carry exact internal dates the bucket system discards.</p>
+<p><strong>21. <a href="artwork.html?id=art0481" class="cc-art-link">art0481</a> — Untitled (Cross and Warplane) — 2010s bucket, Collaboration theme</strong> <em>Observation:</em> Collaboration works verified: 27 in the 2020 bucket, 3 in 2010, 1 in 2000. Testimony says the grandchildren collaboration is ~4 years old (~2022). <em>Interpretation — revised down from original claim:</em> this is <em>not</em> safely "the first grandchild work." Either the bucket is wrong or the Collaboration theme includes something earlier than the grandchildren. That contradiction is itself the finding. <em>Open question:</em> attribution inside all 31 collaboration works — the children can't recover their own hands later.</p>
+<p><strong>22. <a href="artwork.html?id=art0636" class="cc-art-link">art0636</a> — Snowmann on Brick Wall — 2010s (est.), photograph</strong> <em>Observation:</em> <code>composite: False</code> — verified, and this matters: it survives the blanket composite correction that felled the gallery images. A real photograph of a real wall bearing the snowman figure among other artists' graffiti. Mr. SNOWmann theme spike in the 2010s verified (44 of 72). <em>Observation (new, this week):</em> the lost-works register now holds Jeff's testimony of <strong>6-foot colored-paper snowmen, early 1980s, possibly for a Christmas art show</strong> — the character may predate everything on the site by three decades. <em>Interpretation:</em> The strongest physical-world evidence for Mr. SNOWmann in public space. <em>Speculation — labeled (three readings):</em> his paste-up / his photograph of someone else's homage / coincidence. Confidence Low. Only Jeff knows.</p>
+<p><strong>23. <a href="artwork.html?id=art0059" class="cc-art-link">art0059</a> — Occupy Democracy — 2010s (est.), photograph</strong> <em>Observation:</em> Documentary photograph of a political paste-up mural; "occupydemocracy" text verified in description. Part of the unexamined 328-photograph corpus. <em>Interpretation:</em> Together with the war-imagery pattern, evidence that the eye was political in ways no narrative page states. <em>Speculation — labeled:</em> Jeff's own politics. Photographing a mural is witness, not authorship or endorsement.</p>
+<p><strong>24. <a href="artwork.html?id=art0450" class="cc-art-link">art0450</a> — Falling Figures Traced — 2020s (est.)</strong> <em>Observation:</em> Tracings theme verified: 12 works, 10 in the 2020s — the newest and smallest cluster in the catalog. Two Tracings works are Jeff favorites (<a href="artwork.html?id=art0408" class="cc-art-link">art0408</a>, <a href="artwork.html?id=art0510" class="cc-art-link">art0510</a>). <em>Interpretation:</em> A late style demonstrably emerging now — the only method shift in the archive that can still be interviewed in progress. <em>Open question:</em> idea or physical adaptation at 71. Either answer is historically valuable; assuming either is speculation.</p>
+<p><strong>25. <a href="artwork.html?id=art0503" class="cc-art-link">art0503</a> — Untitled (Blue Ground Figures) 1 — 2020s (est.), painting — Jeff favorite</strong> <em>Observation — upgraded by verification:</em> This work is simultaneously (a) part of the painting return (21 paintings post-retirement after two decades of zero), (b) a Jeff favorite, and (c) <strong>tagged Collaboration</strong> — a grandchildren-era work. <em>Interpretation:</em> The two forward-facing stories of the late period — painting's return and the grandchildren — are not parallel tracks; the catalog shows them intersecting in this object. <em>Speculation — labeled:</em> that the grandchildren caused the return to painting. The co-occurrence is verified; causation is a question for Jeff, and a very good one.</p>
+<h3 id="cc-the-seven-chapters-as-verified" class="cc-heading cc-h3">The Seven Chapters (as verified)</h3>
+<p><strong>I. First Eye — Cleveland, the Seventies</strong> Works: <a href="artwork.html?id=art1046" class="cc-art-link">art1046</a> · <a href="artwork.html?id=art1044" class="cc-art-link">art1044</a> · <a href="artwork.html?id=art1056" class="cc-art-link">art1056</a> · <a href="artwork.html?id=art0380" class="cc-art-link">art0380</a> Central idea: Before the scavenger there was a formalist — painted blocks, glass, industrial objects, a camera at a Devo show. Why it matters: Corrects the record that the story began with Rauschenberg-style accumulation.</p>
+<p><strong>II. The Silent Decade</strong> Works: <a href="artwork.html?id=art1052" class="cc-art-link">art1052</a> · <a href="artwork.html?id=art1067" class="cc-art-link">art1067</a> Central idea: Eleven objects survive from the 1980s. One collage. Four paintings in a style that then vanished, along with painting itself, for thirty years. Why it matters: Scarcity is the exhibit — the empty walls are the most honest display of what the archive doesn't know.</p>
+<p><strong>III. Never Finished</strong> Works: <a href="artwork.html?id=art0145" class="cc-art-link">art0145</a> · <a href="artwork.html?id=art1026" class="cc-art-link">art1026</a> Central idea: Works dated 1970 carrying 1982-technology CDs. "Could be unfinished till the end" made physical. Why it matters: Reframes how every other object in the museum is read.</p>
+<p><strong>IV. The War Room — Guernica's Long Shadow</strong> Works: <a href="artwork.html?id=art0056" class="cc-art-link">art0056</a> · <a href="artwork.html?id=art0993" class="cc-art-link">art0993</a> · <a href="artwork.html?id=art0582" class="cc-art-link">art0582</a> · <a href="artwork.html?id=art0085" class="cc-art-link">art0085</a> · <a href="artwork.html?id=art0507" class="cc-art-link">art0507</a> Central idea: Targets, warplanes, a death's-head dated 2004, a black Christmas, a private numerology, and place-names handwritten toward Picasso's painting. Why it matters: The retrospective's interpretive risk, honestly labeled — pattern verified, reading Medium-confidence.</p>
+<p><strong>V. Buy Me — The Wanting in the Work</strong> Works: <a href="artwork.html?id=art0518" class="cc-art-link">art0518</a> · <a href="artwork.html?id=art0937" class="cc-art-link">art0937</a> · <a href="artwork.html?id=art0096" class="cc-art-link">art0096</a> Central idea: Three inscriptions across two decades against the interview record's studied detachment. Why it matters: The tension between testimony and object is the most human thing in the archive.</p>
+<p><strong>VI. Nothing Wasted — The Shipping Works</strong> Works: <a href="artwork.html?id=art1037" class="cc-art-link">art1037</a> · <a href="artwork.html?id=art0253" class="cc-art-link">art0253</a> · <a href="artwork.html?id=art0730" class="cc-art-link">art0730</a> · <a href="artwork.html?id=art0663" class="cc-art-link">art0663</a> Central idea: From a painted crate to totems and crosses built of packaging to a favorite named for an aunt. Why it matters: The strongest provenance on the list — the only material family Jeff has explained in his own words.</p>
+<p><strong>VII. Changing Hands — Witness, Streets, Grandchildren, Return</strong> Works: <a href="artwork.html?id=art0059" class="cc-art-link">art0059</a> · <a href="artwork.html?id=art0636" class="cc-art-link">art0636</a> · <a href="artwork.html?id=art0481" class="cc-art-link">art0481</a> · <a href="artwork.html?id=art0450" class="cc-art-link">art0450</a> · <a href="artwork.html?id=art0503" class="cc-art-link">art0503</a> Central idea: The late period faces outward and forward — witness, streets, grandchildren, and painting's return. Why it matters: In 100 years, the most likely reason someone opens this archive is to see hands they recognize.</p>
+<hr class="cc-rule"/>
+<h2 id="cc-sources-method" class="cc-heading cc-h2">5. Sources &amp; Method</h2>
+<ul>
+<li><strong>Primary data source:</strong> <code>catalog.json</code> — 1,084 cataloged works, including themes, motifs, keywords, composite flags, favorite/featured status, and per-work descriptions.</li>
+<li><strong>Oral-history source:</strong> <code>docs/oral-history/master-notes.md</code> — the project's living record of interview sessions, direct and paraphrased testimony, and prior analytical findings.</li>
+<li><strong>Lost-works source:</strong> <code>docs/lost-works-register.md</code> — testimony-only entries for works destroyed or otherwise lost, including the paper snowmen series referenced in Chapter VII.</li>
+<li><strong>Verification method:</strong> every factual claim in the Verified Edition (Section 4) was checked directly against catalog fields and cross-referenced against oral-history sections before inclusion; claims not independently checkable were labeled as interpretation or speculation rather than presented as fact.</li>
+<li><strong>Editorial review method:</strong> the completed essay and gallery panels were checked against this source material for historical accuracy, internal consistency, and overstatement; accepted corrections (Priority 1–3) are incorporated into the text above.</li>
+</ul>
+<hr class="cc-rule"/>
+<h2 id="cc-version-history" class="cc-heading cc-h2">6. Version History</h2>
+<p><strong>Version 1.0 — this document.</strong></p>
+<ul>
+<li>Hidden Masterpieces (initial 25-work selection) — completed.</li>
+<li>Hidden Masterpieces, Verified Edition — completed; all 25 entries fact-checked against the catalog and oral-history record; observation/interpretation/speculation separated per work; seven-chapter structure established.</li>
+<li>The Eye That Stayed (Chief Curator's Essay) — completed; full-length introduction to the retrospective.</li>
+<li>Seven Gallery Panels — completed; standalone wall text for each chapter.</li>
+<li>Editorial review — completed; findings issued in priority order (Priority 1: factual errors; Priority 2: chapter work-list coverage gaps; Priority 3: overstated precision/interpretation; Priority 4: quote fidelity; Priority 5: optional strengthening).</li>
+<li><strong>Accepted and applied in this version:</strong> all Priority 1–3 corrections — two factual corrections (the Devo photograph's dating superlative; the painting-count fraction), three chapter-coverage insertions (First Eye's bulbs-and-radiator testimony; the War Room's two previously unmentioned works and the XXIII/XXXIII thread; Changing Hands' camera-as-witness opening), and four precision/interpretation softenings (the Buy Me trilogy's time span; the Iraq War date and age framing; the painting hiatus's bucket-derived span; the Rauschenberg-realization timeframe).</li>
+<li><strong>Not applied in this version:</strong> Priority 4 (quote-fidelity normalization of two typed quotations) and Priority 5 (the "Face of Death V" implied-series detail) — both were left as optional in the editorial review rather than mandated, and are deferred to a future revision.</li>
+</ul>
+<hr class="cc-rule"/>
+<h2 id="cc-editorial-note" class="cc-heading cc-h2">7. Editorial Note</h2>
+<p>This companion is built entirely from verified catalog data, the project's oral-history record, and testimony given directly by the artist. Every interpretive claim in this document is labeled as such and distinguished from observation; every piece of speculation is marked and left open rather than resolved. Where the evidence could not settle a question — why the artist kept going after the Rauschenberg realization, what happened in the 1980s, who Aunt Mary is, whether the grandchildren brought painting back — this document says so plainly rather than filling the gap.</p>
+<p>Nothing in this companion should be read as a final account. The artist is living, several of its central questions have exactly one living source, and this document's own methodology exists to keep those questions open and askable rather than to close them. Future revisions should be treated as updates to a living record, not replacements of a finished one — consistent with the standing rule of the archive's oral-history documentation: preserve testimony exactly, mark interpretation clearly, and never fill a gap that only the artist can fill.</p>
+<p>[Recovered source not available in current conversation: no additional editorial commentary beyond the confirmations issued at Session Close was produced during this phase.]</p>
+        </article>
+
+        <!-- Bottom navigation back into the archive -->
+        <div style="margin-top:64px;padding-top:32px;border-top:1px solid #e3bfb1;">
+          <span class="section-label">Continue Exploring</span>
+          <div style="display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:8px;">
+            <a href="archive.html" class="bracket-link">[ Archive → ]</a>
+            <a href="start-here.html" class="bracket-link">[ Start Here → ]</a>
+            <a href="stories.html" class="bracket-link">[ Stories → ]</a>
+            <a href="why-i-made-things.html" class="bracket-link">[ Why I Made Things → ]</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+<script>
+(function(){
+  var links = document.querySelectorAll('#cc-mobile-toc-list .mobile-toc-link, .cc-toc-link');
+  var headings = document.querySelectorAll('#cc-article .cc-heading[id]');
+  if (links.length && headings.length) {
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) {
+          links.forEach(function(l){ l.classList.remove('toc-active','cc-toc-active'); });
+          document.querySelectorAll('a[href="#'+e.target.id+'"]').forEach(function(a){
+            a.classList.add('toc-active');
+            a.classList.add('cc-toc-active');
+          });
+        }
+      });
+    }, { rootMargin: '-10% 0px -75% 0px' });
+    headings.forEach(function(h){ obs.observe(h); });
+  }
+})();
+</script>
+<script>
+(function(){
+  var progressBar = document.getElementById('reading-progress');
+  if (progressBar) {
+    window.addEventListener('scroll', function(){
+      var s = document.documentElement;
+      var pct = (s.scrollTop / (s.scrollHeight - s.clientHeight)) * 100;
+      progressBar.style.width = Math.min(pct, 100) + '%';
+    }, { passive: true });
+  }
+})();
+</script>
+<!-- FOOTER:START -->
+<style>
+footer a{position:relative;text-decoration:none}
+footer a::after{content:'';position:absolute;bottom:-1px;left:0;width:100%;height:1px;background:#FF6600;transform:scaleX(0);transform-origin:left center;transition:transform 0.2s ease}
+footer a:hover::after{transform:scaleX(1)}
+footer .hover\:border-international-orange::after{display:none}
+@media(prefers-reduced-motion:reduce){footer a::after{transition:none}}
+#back-to-top{background:none;border:none;cursor:pointer;font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;display:flex;align-items:center;gap:5px;padding:0;transition:color 0.15s ease}
+#back-to-top:hover{color:#0B0B0B}
+#back-to-top::after{display:none}
+/* Floating back-to-top button */
+#btt-float{position:fixed;bottom:28px;right:28px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:#fcf9f3;border:1px solid #c4c7c7;cursor:pointer;font-size:16px;color:#575757;z-index:400;opacity:0;transform:translateY(8px);transition:opacity 0.22s ease,transform 0.22s ease,color 0.15s ease,border-color 0.15s ease;pointer-events:none;}
+#btt-float.btt-visible{opacity:1;transform:translateY(0);pointer-events:auto;}
+#btt-float:hover{color:#FF6600;border-color:#FF6600;}
+#btt-float::after{display:none}
+@media(prefers-reduced-motion:reduce){#btt-float{transition:none;}}
+/* On mobile, sit above the bottom nav bar */
+@media(max-width:767px){#btt-float{bottom:72px;right:16px;}}
+/* Ambient chromatic backdrop — built from the archive's own decade colors
+   (chromatic.json), never an invented palette. Sits behind the footer
+   content at low opacity, drifting very slowly. Static neutral gradient
+   until JS supplies the real stops, so no-JS/slow-network visitors still
+   get a calm backdrop, never a flash of raw color. */
+footer{position:relative;overflow:hidden;}
+footer::before{
+  content:'';position:absolute;inset:0;z-index:0;opacity:0.10;
+  background:linear-gradient(120deg,#8e7164,#c4c7c7,#8e7164);
+  background-size:200% 200%;
+}
+footer.fcg-ready::before{
+  animation:fcg-drift 90s linear infinite;
+}
+@keyframes fcg-drift{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+@media(prefers-reduced-motion:reduce){footer.fcg-ready::before{animation:none;}}
+footer .footer-inner{position:relative;z-index:1;}
+.footer-stat-strip{font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#8e7164;margin:0 0 14px;text-align:center;}
+.footer-last-updated{font-family:Inter,sans-serif;font-size:9px;font-weight:500;letter-spacing:0.06em;color:#8d8d8d;margin:6px 0 0;}
+@media(max-width:767px){.footer-stat-strip{text-align:left;}}
+</style>
+<footer class="bg-surface-container-high py-16 px-margin-desktop border-t border-outline-variant">
+  <div class="max-w-container-max mx-auto footer-inner">
+  <p class="footer-stat-strip" data-stat-card>1,000+ Works &middot; 50 Years &middot; 1974&ndash;Present &middot; Cleveland, OH</p>
+  <div style="padding-top:16px;border-top:1px solid #c4c7c7;display:flex;flex-direction:column;md:flex-direction:row;justify-content:space-between;align-items:center;gap:16px;">
+    <div style="display:flex;flex-direction:column;gap:2px;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <img src="_shared/butterfly-mark.png" alt="" width="12" height="12" style="opacity:0.6;" aria-hidden="true"/>
+        <p style="font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;margin:0;">© <span id="footer-year">2026</span> JEFFREY F. S. NEUMANN. ALL RIGHTS RESERVED.</p>
+      </div>
+      <p class="footer-last-updated" id="footer-last-updated"></p>
+    </div>
+    <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:center;">
+      <button id="back-to-top" style="background:none;border:none;cursor:pointer;font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;padding:0;transition:color 0.15s ease;" aria-label="Back to top">↑ BACK TO TOP</button>
+      <a style="font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;text-decoration:none;transition:color 0.15s ease;padding:0;border:none;" href="https://github.com/JFSNeumann/jfsn-archive" target="_blank">OPEN SOURCE CODE</a>
+      <a style="font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;text-decoration:none;transition:color 0.15s ease;padding:0;border:none;" href="privacy.html">PRIVACY</a>
+    </div>
+  </div>
+</footer>
+<!-- Floating back-to-top -->
+<button id="btt-float" aria-label="Back to top">↑</button>
+<script>
+document.getElementById('footer-year').textContent = new Date().getFullYear();
+(function(){
+  // Footer text button
+  var btn = document.getElementById('back-to-top');
+  if (btn) btn.addEventListener('click', function(){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  // Floating button
+  var floatBtn = document.getElementById('btt-float');
+  if (!floatBtn) return;
+  floatBtn.addEventListener('click', function(){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  window.addEventListener('scroll', function(){
+    floatBtn.classList.toggle('btt-visible', window.scrollY > 300);
+  }, { passive: true });
+})();
+
+/* Ambient footer gradient — decade-average colors from chromatic.json,
+   never invented. Reuses window.__chromaticBgById if another script on
+   the page already fetched it (archive.html, index.html, etc.). */
+(function () {
+  var footerEl = document.querySelector('footer.bg-surface-container-high');
+  if (!footerEl) return;
+
+  function decadeOf(year) { return Math.floor(year / 10) * 10; }
+
+  function applyGradient(works) {
+    var sums = {}, counts = {};
+    works.forEach(function (w) {
+      if (!w.year || !w.bg) return;
+      var d = decadeOf(w.year);
+      var hex = String(w.bg).replace('#', '');
+      if (hex.length !== 6) return;
+      var r = parseInt(hex.substr(0, 2), 16), g = parseInt(hex.substr(2, 2), 16), b = parseInt(hex.substr(4, 2), 16);
+      var s = sums[d] || (sums[d] = [0, 0, 0]);
+      s[0] += r; s[1] += g; s[2] += b;
+      counts[d] = (counts[d] || 0) + 1;
+    });
+    var decades = Object.keys(sums).sort();
+    if (decades.length < 2) return;
+    var stops = decades.map(function (d) {
+      var s = sums[d], n = counts[d];
+      return 'rgb(' + Math.round(s[0] / n) + ',' + Math.round(s[1] / n) + ',' + Math.round(s[2] / n) + ')';
+    });
+    stops.push(stops[0]); // loop back to start so the drift has no seam
+    footerEl.style.setProperty('--fcg-stops', stops.join(','));
+    var style = document.createElement('style');
+    style.textContent = 'footer.bg-surface-container-high::before{background:linear-gradient(120deg,' + stops.join(',') + ');background-size:200% 200%;}';
+    document.head.appendChild(style);
+    footerEl.classList.add('fcg-ready');
+  }
+
+  if (window.__chromaticBgById) {
+    // already a map keyed by id → bg only; need year too, so fetch fresh below
+  }
+  fetch('/chromatic.json').then(function (r) { return r.json(); }).then(applyGradient).catch(function () {});
+})();
+
+/* "Last updated" — most recent entry from changes.json (the same feed
+   changes.html reads), so the footer reflects real activity, not a guess. */
+(function () {
+  var el = document.getElementById('footer-last-updated');
+  if (!el) return;
+  fetch('/changes.json').then(function (r) { return r.json(); }).then(function (data) {
+    if (!Array.isArray(data) || !data.length) return;
+    var date = data[0].date;
+    if (!date) return;
+    el.textContent = 'Site last updated ' + date;
+  }).catch(function () {});
+})();
+</script>
+<script data-goatcounter="https://jfsn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
+<!-- FOOTER:END -->
+<script src="_shared/nav-active.js" defer></script>
+<script src="_shared/core.bundle.js" defer></script>
+  <script src="/_shared/hover-preview.js?v=20260703T4" defer></script>
+</body>
+</html>

@@ -270,6 +270,7 @@ entries = [
     (SITE_URL + '/stories.html',            '0.8', 'monthly'),
     (SITE_URL + '/why-i-made-things.html',  '0.8', 'monthly'),
     (SITE_URL + '/imagined-museum.html',    '0.8', 'monthly'),
+    (SITE_URL + '/curatorial-companion.html', '0.8', 'monthly'),
     (SITE_URL + '/changes.html',            '0.4', 'weekly'),
     (SITE_URL + '/privacy.html',            '0.3', 'yearly'),
     (SITE_URL + '/style-guide.html',        '0.3', 'monthly'),

@@ -985,6 +985,9 @@ header.header-hidden{transform:translateY(-100%)}
     <p style="font-family:Inter,sans-serif;font-size:15px;line-height:1.7;color:#575757;margin:1em 0 0;">
       The works here were made because making is the point. An estimated 500&ndash;1,000 earlier pieces were lost to water damage; what survived is here in full.
     </p>
+    <p style="font-family:Inter,sans-serif;font-size:15px;line-height:1.7;color:#575757;margin:1em 0 0;">
+      For a museum-style reading of the recurring themes, methodology, and hidden throughlines across the work, <a href="curatorial-companion.html" class="text-orange-ink hover:underline">read the Curatorial Companion</a> — a companion volume, Version 1.0.
+    </p>
     <!-- Stats 2×2 -->
     <div style="display:grid;grid-template-columns:1fr 1fr;margin-top:24px;border-top:1px solid #c4c7c7;">
       <div style="padding:16px 12px 16px 0;border-bottom:1px solid #c4c7c7;">
@@ -1310,6 +1313,9 @@ header.header-hidden{transform:translateY(-100%)}
           </p>
           <p style="font-family:Inter,sans-serif;font-size:16px;line-height:1.75;color:#575757;margin-top:1em;">
             This is a place for family, friends, researchers, and anyone curious about a lifetime of looking and making. For more on why Jeff made things, <a href="why-i-made-things.html" class="text-orange-ink hover:underline">read his full story in his own words</a>.
+          </p>
+          <p style="font-family:Inter,sans-serif;font-size:16px;line-height:1.75;color:#575757;margin-top:1em;">
+            For a museum-style reading of the recurring themes, methodology, and hidden throughlines across the work, <a href="curatorial-companion.html" class="text-orange-ink hover:underline">read the Curatorial Companion</a> — a companion volume, Version 1.0.
           </p>
         </div>
         <!-- Stat card — boxed 2×2 -->
@@ -1669,7 +1675,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
     const grid = document.getElementById('featured-grid');
     if (!grid) return;
     try {
-      const works = await fetch('catalog-home.json?v=20260704000131').then(r => r.json());
+      const works = await fetch('catalog-home.json?v=20260704213850').then(r => r.json());
 
       /* Shuffle cards 4–30 so repeat visitors see variety; keep top 3 editorial */
       const editorial = works.slice(0, 3);
