@@ -33,6 +33,13 @@ Asked which lost works were his best: *"too many lost to consider."* This regist
 - Shown at a student show — sold. Buyer and current whereabouts unknown; Jeff has answered "don't know"; do not re-ask
 - No image exists
 
+## 3. The paper snowmen series
+
+- A group of snowman sculptures, made from colored paper and spray paint
+- Roughly early 1980s — possibly made for a Christmas art show (uncertain — Jeff said "maybe")
+- Various sizes, all approximately 6 feet tall
+- What happened to them: unknown
+
 ---
 
 ## Template for new entries
