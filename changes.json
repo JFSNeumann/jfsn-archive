@@ -1,5 +1,35 @@
 [
   {
+    "sha": "f773778",
+    "date": "2026-07-04",
+    "title": "Fix mobile nav drawer close button hidden under fixed header",
+    "body": "#mobile-menu was z-index:45, below the fixed header's z-index:50, so\nthe drawer's close button sat in a lower stacking context and taps\nresolved to the header instead. Raised to z-index:60. Verified via\nelementFromPoint hit-testing in light and dark mode; propagated to\nall 38 pages via stamp-nav.sh."
+  },
+  {
+    "sha": "b8d7f44",
+    "date": "2026-07-04",
+    "title": "Craftsmanship pass: nav close icon, quote mark, spacing token, skeleton motion, thumb transition sync",
+    "body": "- Mobile drawer close button: replace &times; text glyph with an SVG icon\n  matching the sitewide icon language (22px, 1.8 stroke, round caps),\n  propagated to all pages via stamp-nav.sh\n- Homepage: fix one stray curly-quote pair to match the sitewide straight-quote\n  convention used everywhere else in quoted testimony\n- Homepage: mobile \"Lost to Water Damage\" stat color corrected from the\n  border token (#c4c7c7, 1.5:1 contrast) to the archival-brown token\n  (#8e7164, 4.26:1) already used on desktop — a copy-paste drift between\n  duplicate mobile/desktop markup\n- Homepage: explore-section padding (60px, an undocumented value) corrected\n  to the nearest spacing-scale token (48px)\n- archive.html: removed an animated skeleton-loading shimmer (a banned\n  pattern per CLAUDE.md) in favor of a static placeholder matching\n  series.html's existing convention\n- _shared/ui.css: synced .thumb__link img's hover transition timing/easing\n  to match its parent .thumb__link, so a thumbnail and its image settle\n  together on hover instead of on two different schedules\n- api.html / style-guide.html footers incidentally re-synced to the current\n  shared footer text via the same stamp-nav.sh run (stale \"1,084\" counter\n  spans replaced with \"1,000+\", matching every other page)\n- sw.js: CACHE_V bumped for the precached _shared asset changes above\n\nInvestigated and rejected (no code change): icon stroke-width/viewBox/\nfill/currentColor discipline (100% consistent already), icon size groupings,\nunicode-vs-SVG arrow usage, GitHub/dropdown/audio-control icons (native,\nnot applicable), favicon/butterfly-mark scaling, image upscaling/object-fit/\nCLS-attribute mismatches, thumbnail compression-tier variance (real but\ninvisible to viewers), homepage \"mat\" color system (feature no longer\nexists), mobile hero crop of the pinned slide-0 image, og-image aspect\nratio, line-length/apostrophe typography.\n\nOpen, not fixed: mobile drawer's close button sits fully under the sitewide\nfixed header (z-index stacking) — pre-existing, unrelated to the icon\nchange, real taps at that position hit the header instead of the button;\nkeyboard/screen-reader users unaffected. Tracked for a future session."
+  },
+  {
+    "sha": "4a68420",
+    "date": "2026-07-03",
+    "title": "CLAUDE.md: document curator.html's intentional exceptions",
+    "body": "Page-inventory row + new-page-checklist exception note: no sitemap,\nnoindex, zero public inbound links, no stamp-nav, audit-nav exempt —\nall deliberate (the privacy model), frozen at v1.0. Prevents a future\nsession from \"fixing\" the deviations."
+  },
+  {
+    "sha": "ed9a670",
+    "date": "2026-07-03",
+    "title": "curator.html: tag color #8d8d8d → #6e6e6e (WCAG AA fix)",
+    "body": "Final-audit finding: the 10px .tag labels measured 3.16:1 on\nbone-white, under the site's 4.5:1 AA floor for persistent text.\nNew value measures 4.85:1. Dark-mode tag (#a8a8a8, 7.3:1) unchanged."
+  },
+  {
+    "sha": "8bd7cbd",
+    "date": "2026-07-03",
+    "title": "curator.html v1.0: back-of-house curator index, complete",
+    "body": "New unlinked staff index at /curator.html — Jeff's daily stewardship\nstarting page. Deliberately absent from sitemap, noindex/nofollow, no\ninbound links from any public page. Groups: unlisted public pages,\nlocal tools, external services. Status line (environment · works\ncataloged · last change) from existing public data only. Dark mode via\nthe sitewide jfsn-theme convention. Never place credentials on it.\n\nAlso: qa.html gains a \"← Curator's Index\" bar link (local-only page,\nno public leak); audit-nav.sh exempts curator.html in both checks and\ndrops stale curate/dedupe/jeff.html entries; series-index.html header\nkeeps 16px horizontal padding at desktop widths (CSS rebuild +\nCACHE_V bump).\n\ncurator.html is v1.0 COMPLETE — future changes limited to adding list\nitems for new curator pages."
+  },
+  {
     "sha": "f184ae6",
     "date": "2026-07-03",
     "title": "Summary copy: \"1,000+ works\"; hero dash removed; \"making art\"",
