@@ -81,8 +81,10 @@ body.page-loading .footer {
 }
 
 /* Scroll to top on page transition */
-html {
-  scroll-behavior: smooth;
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 /* Prevent layout shift during fade */

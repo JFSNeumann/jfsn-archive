@@ -325,7 +325,6 @@ a[class*="underline"],
 .info-row a {
   transition: all 0.2s ease;
   position: relative;
-  display: inline-block;
 }
 
 a.underline:hover,

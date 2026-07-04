@@ -4682,7 +4682,9 @@ main > section {
 .thumb__link img {
   border: 1px solid var(--color-border-soft);
   box-shadow: var(--shadow-sm);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  /* Matched to .thumb__link's own hover transition (0.2s, house reveal-easing)
+     so the card and its image settle together on one hover, not two. */
+  transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .thumb__link:hover img,
@@ -4735,6 +4737,51 @@ a {
 
 a:hover {
   text-decoration-color: var(--color-accent);
+}
+
+/* ── Small craft details (2026-07-04) ──────────────────────────────────────
+   Editorial typography + touch/interaction polish. No layout, feature, or
+   content changes — each rule degrades to today's exact behavior in any
+   browser that doesn't support it. */
+
+/* Headings never end on a lonely word */
+h1, h2 {
+  text-wrap: balance;
+}
+
+/* Long-form paragraphs avoid single-word widows */
+.essay-body p, .ch-entry__body, article p {
+  text-wrap: pretty;
+}
+
+/* In-page anchor jumps (TOC links) clear the fixed 64px header */
+html {
+  scroll-padding-top: 80px;
+}
+
+/* Artwork images read as objects on a wall, not draggable web assets */
+img {
+  -webkit-user-drag: none;
+  user-drag: none;
+}
+
+/* Metadata, counts, and dates hold a stable column instead of jittering */
+.meta-value, .footer-stat-strip, .ch-entry__date, .ch-meta, #status,
+[id*="meta-rows"], [id*="stats"] {
+  font-variant-numeric: tabular-nums;
+}
+
+/* A private moment of the brand only while typing a search query */
+input[type="search"] {
+  caret-color: #FF6600;
+}
+
+/* Instant taps on mobile controls — no 300ms delay, no double-tap-zoom.
+   Scoped to discrete controls only; canvases/swipe surfaces (chromatic
+   river, decade-page swipe nav, serendipity overlay) read raw touch
+   coordinates and must keep default touch-action. */
+a, button {
+  touch-action: manipulation;
 }
 
 /* ─── 6. DARK MODE — DIFFERENT AESTHETIC ──────────────────────────────────– */
