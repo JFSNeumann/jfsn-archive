@@ -1,5 +1,23 @@
 [
   {
+    "sha": "1a80b89",
+    "date": "2026-07-04",
+    "title": "DESIGN-SYSTEM.md: correct contrast ratios and two component specs",
+    "body": "- deep-ink/archive-gray contrast ratios were stale (20:1/8.59:1); recomputed\n  via WCAG formula against the real bone-white bg (#fcf9f3): 18.73:1/6.88:1\n- Bracket Link spec listed orange-ink as the base text color; the real\n  default is deep-ink, with orange-ink only on :hover (_shared/ui.css)\n- Archive Card hover spec omitted the real scale(1.03) + brightness(1.04)\n  effects present in archive.html, only documenting the outline/title color"
+  },
+  {
+    "sha": "a450e39",
+    "date": "2026-07-04",
+    "title": "api.html: correct stale example data and controlled-vocab counts",
+    "body": "Docs still reflected the catalog's early state (140/1084 works) and\nfabricated example values that never matched live data: \"Aviation\"\ntheme, \"XXIII\"/\"Squadron\" series, and stale motif/theme counts (30/14\nvs real 33/10). Corrected all counts, enum lists, and JSON examples\nagainst live api/v1/*.json; added the 5 real fields (favorite,\norientation, composite, year_precision, year_display) already\nreferenced in this page's own Researcher's Guide but missing from the\nfield table."
+  },
+  {
+    "sha": "c0d9106",
+    "date": "2026-07-04",
+    "title": "Regenerate changes.json — sync changelog with last 5 commits",
+    "body": "Living changelog had drifted 5 commits behind HEAD (last synced at\n8bd7cbd4). Mechanical regen via artworks/build_changes.py, no code change."
+  },
+  {
     "sha": "f773778",
     "date": "2026-07-04",
     "title": "Fix mobile nav drawer close button hidden under fixed header",
