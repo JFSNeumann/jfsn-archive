@@ -801,3 +801,25 @@ Shown the 14 numbered works from `old-site/old/fine-art-2000/` (his ~2000 websit
 > made from different USPS & Fedex package containers, CDs, Targets/ etc.
 
 **Findings:** (1) All 14 survive in the catalog — they are NOT lost works; the fine-art-2000 lost-works lead is closed. (2) New materials testimony: these cluster collages are made from **USPS & FedEx package containers, CDs, and Targets** — shipping-material provenance for the white/blue strip works, in his own words. First explicit materials statement for this body of work.
+
+---
+
+## 28. Creator Correction — Mr. SNOWmann Street-Art Photographs Are His Own Physical Practice — 2026-07-05
+
+**Source:** Direct testimony from Jeff, 2026-07-05, prompted by review of `street-art.html` inside the historical `Mr_SNOWmann` website (Working History `site002`), which contains photographs captioned "from the late spring and early summer of 2015." This RESOLVES the open question raised in §21 finding 3 and restated in §23 item 10.
+
+### The finding
+
+Asked directly whether the wall photographs are his own street paste-ups, Photoshop composites, or documentation of someone else's work, Jeff's answer, in his own words:
+
+> photos of me tagging over other peoples graffiti
+
+### What this resolves
+
+- **§21 finding 3 ("Mr. SNOWmann appears on city walls"):** confidence was previously downgraded to Low-Medium pending this exact question. **Now confirmed:** these are real photographs of a real, physical street practice — Jeff himself tagging, over existing graffiti by other artists, not a Photoshop composite and not documentation of someone else's character.
+- **§23 item 10 ("The wall snowmen: physical paste-up, Photoshop, or someone else's"):** resolved — physical paste-up/tagging, his own.
+- **`docs/working-history/WORKING-HISTORY-INVENTORY-v1.0.md`, `site002`:** the collection's single highest-flagged open question is now answered; the record should be updated accordingly. (Note: this item was never separately tracked in `docs/KNOWLEDGE-AT-RISK-INVENTORY.md` — only in this document's §21/§23 — so there is nothing to cross off there.)
+
+### What remains open
+
+The general §23 rule still applies to everything this doesn't cover: which specific walls, which city (the Mr_SNOWmann site's own content suggests Cleveland-area, unconfirmed by direct question), and how many separate tagging occasions these 2015 photographs actually document. Not re-asked here — available for a future sitting if Jeff wants to go further, never required.
