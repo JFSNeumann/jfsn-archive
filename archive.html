@@ -1480,7 +1480,7 @@ function renderSavedFilters() {
     <button onclick="loadFilter(${i})" style="font-size:10px;background:#ebe8e2;border:1px solid #8e7164;padding:6px 10px;cursor:pointer;transition:all 0.2s ease;color:#0B0B0B;">
       ${f.name}
     </button>
-    <button onclick="deleteFilter(${i})" style="font-size:10px;background:none;border:1px solid #c4c7c7;padding:4px 8px;cursor:pointer;color:#575757;">×</button>
+    <button onclick="deleteFilter(${i})" aria-label="Remove filter: ${f.name.replace(/"/g, '&quot;')}" style="font-size:10px;background:none;border:1px solid #c4c7c7;padding:4px 8px;cursor:pointer;color:#575757;">×</button>
   `).join('');
 }
 

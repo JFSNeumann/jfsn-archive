@@ -3236,8 +3236,7 @@ select:invalid:focus {
 
 /* Card hover: lift effect with enhanced shadow */
 .archive-card,
-.thumb__link,
-.card-frame {
+.thumb__link {
   transition: box-shadow 0.2s cubic-bezier(0.22, 1, 0.36, 1),
               transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -3245,9 +3244,7 @@ select:invalid:focus {
 .archive-card:hover,
 .archive-card:focus-visible,
 .thumb__link:hover,
-.thumb__link:focus-visible,
-.card-frame:hover,
-.card-frame:focus-visible {
+.thumb__link:focus-visible {
   transform: translateY(-2px);
 }
 
