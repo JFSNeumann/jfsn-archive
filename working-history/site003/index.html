@@ -5,26 +5,26 @@
 <script>try{var t=localStorage.getItem('jfsn-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script><!-- THEME_INIT: head-blocking, prevents dark-mode FOUC -->
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta name="theme-color" content="#fcf9f3"/>
-<title>Working History Collection — Jeffrey F. S. Neumann</title>
-<meta name="description" content="Working History Collection — archival documentation of Jeffrey F. S. Neumann's historical websites as first-class archival artifacts, preserving their evolution and technical heritage."/>
-<link rel="canonical" href="https://jfsn.com/working-history/"/>
-<link rel="icon" href="../favicon.svg" type="image/svg+xml"/>
+<title>Sebastian Website (2018–2020) — Working History — Jeffrey F. S. Neumann</title>
+<meta name="description" content="Archival record: Sebastian Website, 2018–2020. A family collaboration documenting a grandson's creative work alongside grandfather/grandson collaborative pieces."/>
+<link rel="canonical" href="https://jfsn.com/working-history/site003/"/>
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml"/>
 <link rel="alternate" type="application/rss+xml" title="Jeffrey F. S. Neumann — Archive" href="https://jfsn.com/feed.xml"/>
-<link rel="manifest" href="../manifest.json"/>
-<link rel="apple-touch-icon" href="../icon-192.png"/>
+<link rel="manifest" href="../../manifest.json"/>
+<link rel="apple-touch-icon" href="../../icon-192.png"/>
 <meta property="og:type" content="website"/>
-<meta property="og:title" content="Working History Collection — Jeffrey F. S. Neumann"/>
-<meta property="og:description" content="Archival documentation of Jeffrey F. S. Neumann's historical websites, preserved as first-class cultural artifacts."/>
+<meta property="og:title" content="Sebastian Website (2018–2020) — Working History"/>
+<meta property="og:description" content="Archival record: Sebastian Website, a family collaboration documenting a grandson's creative work and shared family projects."/>
 <meta property="og:image" content="https://jfsn.com/og-card.jpg"/>
-<meta property="og:url" content="https://jfsn.com/working-history/"/>
+<meta property="og:url" content="https://jfsn.com/working-history/site003/"/>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","name":"Working History Collection — Jeffrey F. S. Neumann","url":"https://jfsn.com/working-history/","description":"Archival documentation of Jeffrey F. S. Neumann's historical websites as first-class cultural artifacts."}
+{"@context":"https://schema.org","@type":"WebPage","name":"Sebastian Website (2018–2020) — Working History","url":"https://jfsn.com/working-history/site003/","description":"Archival record of a family collaboration website, preserved as a historical artifact."}
 </script>
-<link rel="preload" as="font" type="font/woff2" href="../fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2" crossorigin/>
-<link rel="preload" as="font" type="font/woff2" href="../fonts/nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgEM86xQ.woff2" crossorigin/>
-<link rel="stylesheet" href="../_shared/ui.css"/>
-<link rel="stylesheet" href="../_shared/dark-mode.css"/>
-<link rel="stylesheet" href="../site.min.css"/>
+<link rel="preload" as="font" type="font/woff2" href="../../fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2" crossorigin/>
+<link rel="preload" as="font" type="font/woff2" href="../../fonts/nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgEM86xQ.woff2" crossorigin/>
+<link rel="stylesheet" href="../../_shared/ui.css"/>
+<link rel="stylesheet" href="../../_shared/dark-mode.css"/>
+<link rel="stylesheet" href="../../site.min.css"/>
 <style>
   body { -webkit-font-smoothing: antialiased; }
   #reading-progress{position:fixed;top:0;left:0;height:2px;width:0%;background:#FF6600;z-index:9999;transition:width 0.1s linear;pointer-events:none;}
@@ -46,61 +46,85 @@
     margin-bottom: 12px;
     display: block;
   }
-  .site-record {
-    padding: 20px 0;
-    border-bottom: 1px solid #e3bfb1;
-  }
-  .site-record:last-child {
-    border-bottom: none;
-  }
-  .site-title {
-    font-family: Inter, sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    color: #0B0B0B;
-    margin: 0 0 4px 0;
-  }
-  .site-period {
-    font-family: Inter, sans-serif;
-    font-size: 13px;
-    color: #575757;
-    margin: 0 0 6px 0;
-  }
-  .site-description {
-    font-family: Inter, sans-serif;
-    font-size: 14px;
-    line-height: 1.6;
-    color: #575757;
-    margin: 0;
-  }
-  .site-id {
-    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
-    font-size: 10px;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: #8e7164;
-    margin-top: 4px;
-  }
-  .note-ongoing {
-    font-family: Inter, sans-serif;
-    font-size: 14px;
-    line-height: 1.6;
-    color: #575757;
-    margin-top: 28px;
+  .record-section {
     padding-top: 28px;
+    margin-top: 28px;
     border-top: 1px solid #e3bfb1;
   }
+  .record-section:first-of-type {
+    padding-top: 0;
+    margin-top: 0;
+    border-top: none;
+  }
+  .record-heading {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(18px, 2.5vw, 24px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: #0B0B0B;
+    margin-top: 0;
+    margin-bottom: 12px;
+  }
+  .metadata-row {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    margin-bottom: 1rem;
+    font-size: 14px;
+    color: #575757;
+  }
+  .metadata-row strong {
+    font-weight: 600;
+    color: #0B0B0B;
+  }
+  .record-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    padding-top: 28px;
+    margin-top: 28px;
+    border-top: 1px solid #e3bfb1;
+  }
+  .record-nav a {
+    font-family: Inter, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #575757;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(11,11,11,0.12);
+    padding-bottom: 2px;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+  .record-nav a:hover {
+    color: #FF6600;
+    border-color: #FF6600;
+  }
+  .record-nav-spacer {
+    flex: 1;
+  }
+  .back-link {
+    font-family: Inter, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #575757;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(11,11,11,0.12);
+    padding-bottom: 2px;
+    transition: color 0.2s ease, border-color 0.2s ease;
+    display: inline-block;
+    margin-top: 28px;
+  }
+  .back-link:hover {
+    color: #FF6600;
+    border-color: #FF6600;
+  }
 </style>
-  <!-- Phase 1 Enhancement Stylesheets -->
-  <link rel="stylesheet" href="../_shared/lightbox.css"/>
-  <link rel="stylesheet" href="../_shared/enhancements.css"/>
-  <!-- Phase 2 Enhancement Stylesheets -->
-  <link rel="stylesheet" href="../_shared/toast.css"/>
-  <link rel="stylesheet" href="../_shared/skeleton.css"/>
-  <link rel="stylesheet" href="../_shared/hover-preview.css?v=20260703T4"/>
-  <!-- Phase 3 Enhancement Stylesheets -->
-  <link rel="stylesheet" href="../_shared/page-transitions.css"/>
-  <link rel="stylesheet" href="../_shared/lazy-load.css"/>
 </head>
 <body class="bg-background text-deep-ink font-body-md" data-page-label="WORKING HISTORY">
 
@@ -143,17 +167,17 @@ header.header-hidden{transform:translateY(-100%)}
 <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-deep-ink focus:text-bone-white focus:font-label-caps focus:text-label-caps">Skip to content</a>
 <header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16">
   <div class="flex items-center">
-    <a href="../index.html" class="jfsn-wordmark text-deep-ink flex items-center gap-2" style="font-family:'Playfair Display',Georgia,serif;font-size:22px;font-weight:700;letter-spacing:-0.02em;line-height:1;text-decoration:none;">
-      <img src="../_shared/butterfly-mark.png" alt="" width="24" height="24" style="flex-shrink:0;" aria-hidden="true"/>
+    <a href="../../index.html" class="jfsn-wordmark text-deep-ink flex items-center gap-2" style="font-family:'Playfair Display',Georgia,serif;font-size:22px;font-weight:700;letter-spacing:-0.02em;line-height:1;text-decoration:none;">
+      <img src="../../_shared/butterfly-mark.png" alt="" width="24" height="24" style="flex-shrink:0;" aria-hidden="true"/>
       JFSN
     </a>
   </div>
   <div class="flex items-center gap-6">
     <nav class="hidden md:flex gap-8 items-center" aria-label="Primary">
-      <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="../archive.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Archive</a>
-      <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="../series-index.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Series</a>
-      <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="../about.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">About</a>
-      <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="../lost.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Lost Works</a>
+      <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="../../archive.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Archive</a>
+      <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="../../series-index.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Series</a>
+      <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="../../about.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">About</a>
+      <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="../../lost.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Lost Works</a>
     </nav>
     <button class="flex items-center gap-1.5 text-orange-ink hover:text-deep-ink transition-colors" style="padding:10px;" aria-label="Toggle dark mode" id="theme-toggle-btn" title="Toggle dark mode">
       <svg id="theme-icon-sun" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="display:none;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
@@ -170,76 +194,54 @@ header.header-hidden{transform:translateY(-100%)}
 </header>
 <div id="mobile-menu-drawer" class="hidden md:hidden fixed top-16 left-0 w-full bg-surface-container border-b border-outline-variant" style="max-height:calc(100vh - 64px);overflow-y:auto;z-index:40;">
   <div style="padding:16px 24px;display:flex;flex-direction:column;gap:0;">
-    <a class="text-deep-ink hover:text-international-orange transition-colors py-3 drawer-stagger-1" href="../archive.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;">Archive</a>
-    <a class="text-deep-ink hover:text-international-orange transition-colors py-3 drawer-stagger-2" href="../series-index.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;">Series</a>
-    <a class="text-deep-ink hover:text-international-orange transition-colors py-3 drawer-stagger-3" href="../about.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;">About</a>
-    <a class="text-deep-ink hover:text-international-orange transition-colors py-3 drawer-stagger-4" href="../lost.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;">Lost Works</a>
+    <a class="text-deep-ink hover:text-international-orange transition-colors py-3 drawer-stagger-1" href="../../archive.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;">Archive</a>
+    <a class="text-deep-ink hover:text-international-orange transition-colors py-3 drawer-stagger-2" href="../../series-index.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;">Series</a>
+    <a class="text-deep-ink hover:text-international-orange transition-colors py-3 drawer-stagger-3" href="../../about.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;">About</a>
+    <a class="text-deep-ink hover:text-international-orange transition-colors py-3 drawer-stagger-4" href="../../lost.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;">Lost Works</a>
   </div>
 </div>
 <!-- NAV:END -->
 
 <main id="main" style="padding-top:80px;max-width:720px;margin:0 auto;padding-left:24px;padding-right:24px;padding-bottom:96px;">
-  <h1 style="font-family:'Playfair Display',Georgia,serif;font-size:42px;font-weight:700;letter-spacing:-0.02em;line-height:1.2;color:#0B0B0B;margin:0 0 24px 0;">Working History Collection</h1>
+
+  <span class="section-label">Working History Record</span>
+  <h1 style="font-family:'Playfair Display',Georgia,serif;font-size:42px;font-weight:700;letter-spacing:-0.02em;line-height:1.2;color:#0B0B0B;margin:0 0 24px 0;">Sebastian Website</h1>
 
   <article class="prose">
-    <p>The Working History Collection documents the historical evolution of Jeffrey F. S. Neumann's websites as first-class archival artifacts. Rather than recreating or preserving the sites as living services, this collection records the preservation work itself—archival metadata, technical analysis, and provenance. Nine websites spanning fifty years are examined as cultural records: how they were built, what they reveal about their moment, and how they survive today.</p>
+    <div class="metadata-row">
+      <div><strong>Record ID:</strong> site003</div>
+      <div><strong>Years Active:</strong> 2018–2020</div>
+    </div>
 
-    <p>This page serves as a finding aid for the collection. Complete archival documentation is maintained as part of the preservation project, including a charter governing the collection's scope, a comprehensive inventory of all documented sites, and detailed records for each website examined.</p>
+    <div class="record-section">
+      <h2 class="record-heading">Historical Context</h2>
+      <p>A family collaboration documenting a grandson's creative output — LEGO builds, K'NEX constructions, and Aquabeads pieces — presented across five primary pages. The site also included collaborative work: several pieces captioned "FINE ART" and titled with variations of "with Grandpa" (e.g., "Collage Face with Grandpa," "Funny Grandpa with Grandpa").</p>
+      <p>This record was actively maintained as a live site over a span of years. Content from pages carries dates of 2020 ("Grandpa's version 2020"), while server infrastructure indicates earlier hosting from 2018. This is a living archive of family creative practice, not a single frozen moment.</p>
+    </div>
 
-    <span class="section-label">Documented Sites</span>
+    <div class="record-section">
+      <h2 class="record-heading">Purpose</h2>
+      <p>To present and celebrate a grandson's creative work in multiple media alongside grandfather/grandson collaborative fine art pieces. Each medium — LEGO, K'NEX, Aquabeads, and miscellaneous projects — was organized as a separate gallery section.</p>
+    </div>
 
-    <a href="site001/" class="site-record" style="text-decoration:none;color:inherit;display:block;transition:background-color 0.2s ease;">
-      <div class="site-title">Untitled Fine Art Website (c. 2000)</div>
-      <div class="site-id">Record: site001</div>
-      <div class="site-description">Personal art website using HTML tables without CSS framework; hand-authored presentation of early digital work.</div>
-    </a>
+    <div class="record-section">
+      <h2 class="record-heading">Technologies</h2>
+      <p>Built using Adobe Muse, which generated a responsive design system with variants for phone, tablet, and desktop. Muse's default scripts handle responsive layout and interaction. The record includes the original Muse project file, preserving the full design-system database for this website.</p>
+    </div>
 
-    <a href="site002/" class="site-record" style="text-decoration:none;color:inherit;display:block;transition:background-color 0.2s ease;">
-      <div class="site-title">mR_sNOWmann (2015)</div>
-      <div class="site-id">Record: site002</div>
-      <div class="site-description">Print-sales site for a recurring character; Adobe Muse export with dated photographs of a physical street art practice.</div>
-    </a>
-
-    <a href="site003/" class="site-record" style="text-decoration:none;color:inherit;display:block;transition:background-color 0.2s ease;">
-      <div class="site-title">Sebastian Website (Original) (2018–2020)</div>
-      <div class="site-id">Record: site003</div>
-      <div class="site-description">Family collaboration site documenting a grandson's creative output alongside grandfather/grandson collaborative pieces; Adobe Muse export with responsive breakpoints.</div>
-    </a>
-
-    <a href="site004/" class="site-record" style="text-decoration:none;color:inherit;display:block;transition:background-color 0.2s ease;">
-      <div class="site-title">JFSN Portfolio (2014)</div>
-      <div class="site-id">Record: site004</div>
-      <div class="site-description">Professional portfolio using custom jQuery; earliest confirmed node in the professional portfolio lineage with references to earlier unnamed work.</div>
-    </a>
-
-    <a href="site005/" class="site-record" style="text-decoration:none;color:inherit;display:block;transition:background-color 0.2s ease;">
-      <div class="site-title">JFSN Portfolio (2016)</div>
-      <div class="site-id">Record: site005</div>
-      <div class="site-description">Adobe Muse portfolio with responsive mobile and tablet variants; documents four named client projects and internal references to prior portfolio iterations.</div>
-    </a>
-
-    <a href="site006/" class="site-record" style="text-decoration:none;color:inherit;display:block;transition:background-color 0.2s ease;">
-      <div class="site-title">JFSN Portfolio — Designer Edition (2018)</div>
-      <div class="site-id">Record: site006</div>
-      <div class="site-description">The largest record in the collection; the only site spanning all three archival threads (professional design, family collaboration, fine art) with complete responsive variants and extensive asset caches.</div>
-    </a>
-
-    <a href="site007/" class="site-record" style="text-decoration:none;color:inherit;display:block;transition:background-color 0.2s ease;">
-      <div class="site-title">Sebastian Website (Adobe Portfolio) (captured 2021)</div>
-      <div class="site-id">Record: site007</div>
-      <div class="site-description">Adobe Portfolio platform gallery-style presentation of the grandson's work; captured via website mirror rather than server export, with embedded third-party monitoring code.</div>
-    </a>
-
-    <a href="site008/" class="site-record" style="text-decoration:none;color:inherit;display:block;transition:background-color 0.2s ease;">
-      <div class="site-title">JFSN Portfolio (2020)</div>
-      <div class="site-id">Record: site008</div>
-      <div class="site-description">Bootstrap framework portfolio with minimal customization; preserved in unfinished state with incomplete personalization but complete navigation and content.</div>
-    </a>
-
-    <div class="note-ongoing">
-      <p>Additional Working History records will be added as documentation is completed.</p>
+    <div class="record-section">
+      <h2 class="record-heading">Related Collections</h2>
+      <p>Several collaborative pieces from this site are part of the <a href="../../collaboration.html">Collaboration</a> theme in the main archive, where grandfather/grandson creative work is presented as a distinct body of practice.</p>
+      <p>A later, more developed version of this site exists as <a href="../site007/">site007</a> (Sebastian's Adobe Portfolio), which documents the same subject at a later time.</p>
     </div>
   </article>
+
+  <div class="record-nav">
+    <a href="../" class="back-link">← Back to Collection</a>
+    <div class="record-nav-spacer"></div>
+    <a href="../site004/">Next Record →</a>
+  </div>
+
 </main>
 
 <!-- FOOTER:START -->
@@ -280,7 +282,7 @@ footer .footer-inner{position:relative;z-index:1;}
   <div style="padding-top:16px;border-top:1px solid #c4c7c7;display:flex;flex-direction:column;md:flex-direction:row;justify-content:space-between;align-items:center;gap:16px;">
     <div style="display:flex;flex-direction:column;gap:2px;">
       <div style="display:flex;align-items:center;gap:8px;">
-        <img src="../_shared/butterfly-mark.png" alt="" width="12" height="12" style="opacity:0.6;" aria-hidden="true"/>
+        <img src="../../_shared/butterfly-mark.png" alt="" width="12" height="12" style="opacity:0.6;" aria-hidden="true"/>
         <p style="font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;margin:0;">© <span id="footer-year">2026</span> JEFFREY F. S. NEUMANN. ALL RIGHTS RESERVED.</p>
       </div>
       <p class="footer-last-updated" id="footer-last-updated"></p>
@@ -288,7 +290,7 @@ footer .footer-inner{position:relative;z-index:1;}
     <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:center;">
       <button id="back-to-top" style="background:none;border:none;cursor:pointer;font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;padding:0;transition:color 0.15s ease;" aria-label="Back to top">↑ BACK TO TOP</button>
       <a style="font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;text-decoration:none;transition:color 0.15s ease;padding:0;border:none;" href="https://github.com/JFSNeumann/jfsn-archive" target="_blank">OPEN SOURCE CODE</a>
-      <a style="font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;text-decoration:none;transition:color 0.15s ease;padding:0;border:none;" href="../privacy.html">PRIVACY</a>
+      <a style="font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;text-decoration:none;transition:color 0.15s ease;padding:0;border:none;" href="../../privacy.html">PRIVACY</a>
     </div>
   </div>
 </footer>
@@ -313,7 +315,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
 (function () {
   var el = document.getElementById('footer-last-updated');
   if (!el) return;
-  fetch('../changes.json').then(function (r) { return r.json(); }).then(function (data) {
+  fetch('../../changes.json').then(function (r) { return r.json(); }).then(function (data) {
     if (!Array.isArray(data) || !data.length) return;
     var date = data[0].date;
     if (!date) return;
@@ -322,7 +324,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
 })();
 </script>
 <script data-goatcounter="https://jfsn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-<script>if('serviceWorker'in navigator)navigator.serviceWorker.register('../sw.js').catch(()=>{});</script>
+<script>if('serviceWorker'in navigator)navigator.serviceWorker.register('../../sw.js').catch(()=>{});</script>
 <!-- FOOTER:END -->
 </body>
 </html>
