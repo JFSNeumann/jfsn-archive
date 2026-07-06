@@ -28,7 +28,7 @@ for fname in files:
     hrefs = re.findall(r'href="([^"#?${}]+\.html)"', content)
     import os
     for href in set(hrefs):
-        if not href.startswith('http') and not os.path.exists(href):
+        if not href.startswith('http') and not os.path.exists(href.lstrip('/')):
             issues.append(f'broken link: {href}')
 
     # SEO checks (skip known false positives)

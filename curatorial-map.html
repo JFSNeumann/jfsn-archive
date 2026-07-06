@@ -583,7 +583,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
           sw.style.background = w.color;
           sw.dataset.id = w.id;
           sw.dataset.title = w.title;
-          sw.dataset.year = w.year;
+          sw.dataset.year = w.year_display || w.year;
           sw.dataset.themes = w.themes.join('|');
           // Grid coordinate (decade column, medium row) — used to ripple the
           // filter highlight outward by actual position rather than DOM order.

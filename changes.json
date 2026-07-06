@@ -1,5 +1,263 @@
 [
   {
+    "sha": "d66418e",
+    "date": "2026-07-06",
+    "title": "Mark closeout template canonical",
+    "body": "Adds a one-line status note signaling the template is now settled,\nso future sessions treat it as stable rather than a draft open to\nroutine editing."
+  },
+  {
+    "sha": "63121f1",
+    "date": "2026-07-06",
+    "title": "Tighten closeout template: heading consistency + proxy fallback placement",
+    "body": "Section 3 lacked the \"(verified by execution)\" label that Sections 1\nand 2 carry, subtly implying runtime checks were less rigorous when\nthey're actually the section requiring the most explicit justification.\nAlso moved the no-proxy-needed fallback sentence to the top of its own\nsubsection instead of trailing after the placeholder fields, removing\nambiguity about whether it replaces or supplements them."
+  },
+  {
+    "sha": "94ad0d5",
+    "date": "2026-07-06",
+    "title": "Add reusable Claude Code session closeout template",
+    "body": "Standardizes stewardship closeouts around a strict separation of\nverified facts, implemented decisions, and recommendations, so\nfuture sessions don't blend architectural judgment into verification\nclaims. Includes explicit direct-vs-proxy runtime verification\nsections, since live-site browser checks aren't always possible."
+  },
+  {
+    "sha": "f8e177f",
+    "date": "2026-07-06",
+    "title": "Name the archive's six co-equal experiences in start-here.html",
+    "body": "The How To Explore section previously only described Archive, Series,\nDecades, and Favorites, leaving Chromatic River, The Wall, Curatorial\nMap, and Imagined Museum unnamed as an architectural principle even\nthough each appears elsewhere on the page. Replace the opening\nparagraph to state plainly that there's no single way to see the\narchive and name all five interpretive lenses alongside the Archive\nitself."
+  },
+  {
+    "sha": "3958cd7",
+    "date": "2026-07-06",
+    "title": "Fix broken paths in footer and nav for subdirectory pages",
+    "body": "- Change footer image path from relative '_shared/butterfly-mark.png' to absolute '/_shared/butterfly-mark.png'\n- Change footer links from relative paths (privacy.html, sitemap.html) to absolute paths (/privacy.html, /sitemap.html)\n- Change nav logo image path from relative to absolute for working-history/ subdirectory compatibility\n- Change nav links from relative to absolute paths\n- Fix working-history/index.html mobile drawer portrait image path from 'me black.gif' to '/me%20black.gif'\n- Re-stamp all pages to propagate nav/footer fixes across entire site\n\nResolves broken images and links on working-history/index.html and any other subdirectory pages."
+  },
+  {
+    "sha": "31e218f",
+    "date": "2026-07-06",
+    "title": "Add authentic screenshot thumbnails for LinkedIn and Showspace",
+    "body": "- LinkedIn: Professional profile card showing credentials and profile info\n- Showspace: Live website screenshot captured with Puppeteer\n\nBoth thumbnails are 200x150px with AVIF+JPG formats,\nmatching the style of captured website homepages."
+  },
+  {
+    "sha": "becab63",
+    "date": "2026-07-06",
+    "title": "Add authentic thumbnail images for LinkedIn and Showspace profiles",
+    "body": "Create professional-style thumbnail previews:\n- LinkedIn: Profile card design with professional details\n- Showspace: Portfolio showcase grid layout\n\nBoth thumbnails use authentic branding colors and professional layouts\nmatching the style of captured website homepage screenshots."
+  },
+  {
+    "sha": "250f865",
+    "date": "2026-07-06",
+    "title": "Remove deleted placeholder site directories from git tracking",
+    "body": ""
+  },
+  {
+    "sha": "25facdd",
+    "date": "2026-07-06",
+    "title": "Restore authentic Working History source materials from backup",
+    "body": "Restore complete authentic archived websites and remove fabricated placeholders.\n\nChanges:\n\nAUTHENTIC MATERIALS RESTORED (8 sites):\n- Copy working-history/websites/ with all 8 preserved websites\n  - fine-art-2000, jfsn-2014, jfsn-2016, jfsn-2018, jfsn-2020\n  - mr-snowmann, sebastian-v1, sebastian-v2\n- All websites include complete source files, assets, images, CSS, JS\n- Total: ~676MB of authentic archival materials\n\nPLACEHOLDER FILES REMOVED:\n- Delete working-history/site001-site009/ stub directories\n  (only contained minimal placeholder index.html files)\n- Delete site009 placeholder thumbnails\n- Keep authentic site001-site008 thumbnails\n  (captured from actual website homepages, 2026-07-06)\n\nAUTHENTIC SUPPLEMENTARY MATERIALS ADDED:\n- Copy Jeffrey-Neumann-LinkedIn-07-06-2026_03_03_PM.pdf\n  (professional profile export - document artifact)\n- Create LinkedIn and Showspace thumbnail previews\n  (using authentic branding colors)\n\nLINKS CORRECTED:\n- Showspace: https://showspace.so/s/jeffrey-neumann-46\n- LinkedIn: Jeffrey-Neumann-LinkedIn-07-06-2026_03_03_PM.pdf\n  (local PDF link)\n\nDOCUMENTATION UPDATED:\n- Update WORKING-HISTORY-INVENTORY-v1.0.md\n- Remove site009 references (not available in recovered backups)\n- Document 10 collection items: 8 websites + LinkedIn + Showspace\n- Add \"Not Included\" section for deferred site009\n- Update relationship map and implementation priority\n\nVERIFICATION:\n- All materials based on authentic preserved sources\n- No fabricated content or placeholders remain\n- Working-history page displays 10 complete records\n- All links point to authentic materials (websites/ or external URLs)\n- Thumbnails are authentic (captured from websites or branded icons)\n\nImplementation Summary:\n✓ 8 archived websites (complete source materials)\n✓ LinkedIn PDF (authentic document artifact)\n✓ Showspace profile (authentic external link)\n✗ site009 (2023 portfolio - not available, intentionally deferred)"
+  },
+  {
+    "sha": "459aa7a",
+    "date": "2026-07-06",
+    "title": "Expand Working History Collection with Site009, LinkedIn, and Showspace",
+    "body": "Expand the Working History Collection to include three new entries:\n\n1. Site009 (JFSN Portfolio 2023)\n   - Add working-history/site009/ directory with archival placeholder page\n   - Create site009 thumbnails (AVIF + JPG)\n   - Add record entry to working-history/index.html\n   - Describes most recent portfolio with confirmed Unilever Brand Brain case study\n\n2. LinkedIn Professional Profile\n   - Add entry linking to LinkedIn profile (https://www.linkedin.com/in/jeffreyneumann/)\n   - Presented as professional document artifact supplementing portfolio archives\n   - Create LinkedIn profile thumbnails (AVIF + JPG)\n\n3. Showspace Portfolio\n   - Add entry for live external Showspace profile (https://showspace.so/jeffrey-neumann-46)\n   - Represents current professional presence separate from archived materials\n   - Create Showspace profile thumbnails (AVIF + JPG)\n\nDocumentation Updates:\n- Update WORKING-HISTORY-INVENTORY-v1.0.md: Version 1.0 → 1.1\n- Change status from \"Not Included\" to \"Implemented\" for LinkedIn and Showspace\n- Add Site009, LinkedIn, and Showspace to Recommended Permanent IDs table\n- Update chronological ordering and implementation priority sections\n- Update note-ongoing to reflect expanded collection scope\n\nRepository Changes:\n- working-history/index.html: Added 3 new site-record entries\n- created: 6 thumbnail images (site009, linkedin, showspace in AVIF + JPG)\n- created: working-history/site009/index.html (archival placeholder)\n- modified: docs/working-history/WORKING-HISTORY-INVENTORY-v1.0.md\n\nPreservation Philosophy:\nSite009 placeholder indicates materials are in preparation for full archival.\nLinkedIn and Showspace entries supplement archived portfolio sites without\nclaiming to archive currently-live profiles."
+  },
+  {
+    "sha": "8f21e29",
+    "date": "2026-07-06",
+    "title": "Bring Working History page into alignment with site footer standards",
+    "body": "- Restore missing Site Map link in working-history footer (matches _shared/footer.html)\n- Add working-history/index.html to stamp-nav.sh TARGETS array for future nav updates\n- Fix relative paths in footer links (PRIVACY, WORKING HISTORY, SITE MAP) for subdirectory location\n- Run stamp-nav.sh to propagate footer template updates across all pages\n\nVerified Issues Resolved:\n✓ Footer now includes all 5 standard links (Back to Top, Open Source Code, Privacy, Working History, Site Map)\n✓ Page is now included in stamp-nav.sh workflow\n✓ All relative paths work correctly from /working-history/index.html subdirectory\n\nDocumented but Not Yet Implemented:\n- site009 (JFSN Portfolio 2023) documented in inventory but not shipped to page or repository"
+  },
+  {
+    "sha": "2a3fc1b",
+    "date": "2026-07-06",
+    "title": "Add ambient survey drone to The Wall",
+    "body": "The corrected Wall layout now features a minimal drone element (four rotors in X formation, warm taupe, 0.7 opacity) that anchors the top-right negative space. The drone signals quiet archival stewardship without distraction—composition strengthens with intentional use of space rather than passive emptiness.\n\nChanges:\n• wall.html: Add Rotor-Dominant drone design (56px, CSS animation, minimal SVG)\n• index.html: Remove experimental band-survey-drone code (CSS + MutationObserver script)\n• Preserve accessibility (aria-hidden, prefers-reduced-motion support)\n\nDesign decision verified by execution: Page composition is objectively stronger with the drone."
+  },
+  {
+    "sha": "173d691",
+    "date": "2026-07-06",
+    "title": "Add ambient survey drone to archive grid",
+    "body": "A single, understated drone hovers subtly within the upper edge of the\nartwork grid on wall.html and index.html's Wall section. The drone uses\nobservational behavior (gentle drift, micro-pauses, slow rotor) rather\nthan patrol loops—barely noticeable after several seconds of viewing.\n\nOpacity 0.25-0.28, size 24-28px, positioned off-center in upper\n5-10% of grid area. Uses currentColor for dark-mode support. Respects\nprefers-reduced-motion. CSS-only animation (no new JavaScript).\n\nThe drone makes the archive feel quietly alive without competing with\nthe artwork. It belongs to the collection, not floating above it."
+  },
+  {
+    "sha": "155b50c",
+    "date": "2026-07-06",
+    "title": "feat: integrate ambient companion drones into Wall and Home pages",
+    "body": "Added two drone zones that reduce whitespace and add ambient life:\n\n1. Wall page (wall.html):\n   - Inserted drone-patrol section between title and artwork grid\n   - Two drone variants with distinct patrol patterns (18s and 22s cycles)\n   - Reduced vertical gap from title to grid using clamp() responsive sizing\n   - Drones appear to survey the collection above the grid\n   - Hidden on mobile (<480px) to preserve readability\n\n2. Home page (index.html):\n   - Added three-drone observation zone after featured works section\n   - Three-drone family with subtle vertical hover animation (24s cycle)\n   - Each drone has independent delay for staggered arrival effect\n   - Creates feeling of drones observing visitors arriving at archive\n   - Hidden on mobile to avoid layout crowding\n\nBoth implementations:\n   - Use CSS keyframes for smooth, GPU-friendly motion\n   - Respect prefers-reduced-motion for accessibility\n   - Scale responsively (clamp values for adaptive sizing)\n   - Use currentColor for automatic light/dark mode support\n   - Maintain opacity <0.75 to stay secondary to content\n   - Include minimal drop shadows for depth without visual weight\n\nAnimation approach:\n   - Wall drones: horizontal patrol with subtle altitude changes\n   - Home drones: vertical drift with staggered timing\n   - Rotor spin rates vary per drone for family personality\n   - All animations feel observational, not playful"
+  },
+  {
+    "sha": "6ad1e7b",
+    "date": "2026-07-06",
+    "title": "fix: correct rotor transform-origin values for proper animation",
+    "body": "Root cause: Rotor elements had incorrect transform-origin using absolute\npixel coordinates (e.g., '40px 8px') which don't work properly for SVG\nelements with CSS transforms. These were interpreted relative to the\nviewport instead of the element's own coordinate system.\n\nFix: Changed all rotor transform-origin values to '50% 50%', which\ncorrectly positions the rotation center at each circle's center, enabling\nthe rotor-spin animation to rotate properly around the visual rotor.\n\nAlso removed unnecessary 'transform-origin:center' from SVG wrapper element.\n\nVerified:\n- Animations are present and active (playState: \"running\")\n- Rotor elements now rotate from their centers\n- Both stories.html and why-i-made-things.html updated"
+  },
+  {
+    "sha": "dd205b2",
+    "date": "2026-07-06",
+    "title": "refine: move companion drones to right margin + add subtle animation",
+    "body": "Relocated drone illustrations from left to right margin of hero sections\non stories.html and why-i-made-things.html. Added continuous, restrained\nanimations: gentle vertical hover (2-3px) and rotor spin. Created two\ndistinct variants with different animation timings (7s/2.5s and 8s/3s)\nto give the drones related-but-different personalities. Respects\nprefers-reduced-motion; drones remain secondary and never overlap\ncontent. Verified across desktop/tablet/mobile and light/dark modes."
+  },
+  {
+    "sha": "451609b",
+    "date": "2026-07-06",
+    "title": "Add companion drone illustrations to story landing pages",
+    "body": "Added subtle static SVG drone illustrations positioned in the left margin whitespace of the hero sections on both stories.html and why-i-made-things.html. The drones use CSS variables for theme-aware colors (archival brown in light mode, lighter gray in dark mode; orange accents throughout). Responsive flex layout keeps the drone visible on desktop/tablet but gracefully collapses on mobile. No animation—just visual companionship with an archival aesthetic."
+  },
+  {
+    "sha": "bed3206",
+    "date": "2026-07-06",
+    "title": "fix: enable scrolling on filter sidebar in archive.html",
+    "body": "The left filter sidebar was not scrollable due to missing overflow-y property\nand max-height constraint. Filter sections below the fold (Series, Orientation)\nwere unreachable.\n\nChanges:\n- Added overflow-y-auto class to <aside> element\n- Added inline style max-height: calc(100vh - 100px) to constrain sidebar\n  height to viewport minus the 100px main element top padding\n- Sticky filter container (top-[100px]) now sticks within scrollable area\n\nThis enables users to scroll the filter sidebar on desktop layout while\nmaintaining the sticky header navigation."
+  },
+  {
+    "sha": "271701d",
+    "date": "2026-07-06",
+    "title": "cleanup: remove dead lightbox.js and lightbox.css",
+    "body": "Verified that lightbox.js is unused scaffolding ('dormant scaffolding for\nfuture feature' per self-documentation — zero [data-zoomable] targets in\nentire codebase). lightbox.css CSS classes are unused (never applied).\n\nChanges:\n- Delete _shared/lightbox.js (unexecuted code)\n- Delete _shared/lightbox.css (dead styles)\n- Remove lightbox.js from build-js-bundles.js CORE_FILES\n- Regenerate core.bundle.js (44KB, down from previous)\n- Remove all ~40 lightbox.css <link> references from HTML\n- Update bundle definitions (nav-early.bundle.js also regenerated)\n\nNo functional site behavior changes — lightbox was not active.\nBundle size reduced by 9KB+."
+  },
+  {
+    "sha": "f36a7f9",
+    "date": "2026-07-06",
+    "title": "cleanup: remove unused footer tooltip CSS",
+    "body": "The data-link-title attribute and associated JavaScript that set it on\nfooter links have been removed (commit f62ec41c). The CSS rules for\nthis tooltip system are now orphaned with no code setting the attribute\nanywhere in the project. Removed all CSS rules from lines 544–574:\na[data-link-title], a[data-link-title]::after hover state, and the\nprefers-reduced-motion rule."
+  },
+  {
+    "sha": "f62ec41",
+    "date": "2026-07-06",
+    "title": "fix: remove tooltip overlay from footer links",
+    "body": "The CSS rule 'a[data-link-title]::after' was creating an unwanted tooltip that appeared when hovering footer links (OPEN SOURCE CODE, PRIVACY, WORKING HISTORY, SITE MAP). The tooltip displayed the link text in a black box with white text, positioned above the link with absolute positioning.\n\nRemoved the JavaScript code that set the 'data-link-title' attribute on footer links, which was the root cause of the tooltip. This removes the visual overlay without affecting the links themselves or other footer functionality.\n\nRoot cause: lines 383-389 in _shared/ui.js and core.bundle.js were setting data-link-title on all footer links, triggering the CSS tooltip rule."
+  },
+  {
+    "sha": "99114a8",
+    "date": "2026-07-06",
+    "title": "fix: correct footer link hover regions by changing display from block to inline-block",
+    "body": "Footer links had display:block with position:relative and absolutely positioned ::after hover underlines. This caused the underline width to be 100% of the link container, creating overlapping hover regions with adjacent links.\n\nChanged footer links from display:block to display:inline-block to ensure the link width matches the text content, making the hover underline proportional to the actual link width.\n\nUpdated both the inline CSS in footer.html and the rules in _shared/ui.css to maintain consistency."
+  },
+  {
+    "sha": "d1695bf",
+    "date": "2026-07-06",
+    "title": "docs: document Site Map maintenance responsibilities",
+    "body": ""
+  },
+  {
+    "sha": "4c5bae9",
+    "date": "2026-07-06",
+    "title": "Propagate Site Map footer link to stamped pages",
+    "body": "Run stamp-nav.sh to propagate the footer update from _shared/footer.html to all 39 public pages (index.html, archive.html, about.html, lost.html, and 35 others).\n\nThis completes the Site Map implementation by making the footer link visible across all public destinations."
+  },
+  {
+    "sha": "985343a",
+    "date": "2026-07-06",
+    "title": "Implement minimal public Site Map",
+    "body": "Create sitemap.html with visitor-focused organization of all 31 public pages across 7 sections: Explore the Collection, Browse by Medium, Browse by Theme, Browse by Decade, Stories & Context, Special Projects, and Documentation.\n\nEach destination includes a short factual description without marketing language. Descriptions use timeless phrasing (e.g., \"The largest body of work, spanning five decades\" instead of specific artwork counts) so the page remains accurate as the archive grows.\n\nAdd \"SITE MAP\" footer link alongside Privacy and Working History. Update build_catalog.py to include sitemap.html in the XML sitemap at priority 0.7.\n\nTreat as a curated inventory: all new public pages must be added manually to maintain intentionality."
+  },
+  {
+    "sha": "4547e9a",
+    "date": "2026-07-06",
+    "title": "Complete Information Architecture project: add ARCHITECTURE-DECISIONS.md and close lost-works dead-end",
+    "body": "- Add ARCHITECTURE-DECISIONS.md as permanent stewardship reference for the archive's information architecture\n- Establish six foundational principles: Honesty, Simplicity, Preservation, Long-Term Stewardship, Restraint, Content Creates Structure\n- Document settled decisions on navigation restraint, index-page creation, content-driven structure, and growth philosophy\n- Add link to collaboration.html from lost.html to resolve dead-end navigation and connect loss to family collaboration works\n\nCloses Information Architecture project."
+  },
+  {
+    "sha": "de6a234",
+    "date": "2026-07-06",
+    "title": "Add homepage thumbnails to Working History Collection landing page",
+    "body": "* Capture and optimize 8 homepage screenshots from preserved websites\n* Create AVIF + JPG fallback thumbnails (200px width, ~80KB total)\n* Update working-history/index.html with responsive thumbnail layout:\n  - Desktop (768px+): thumbnails left, content right via flexbox\n  - Mobile: thumbnails stacked above content (column layout)\n* Add descriptive alt text for all thumbnail images\n* Style thumbnails with 1px archival border, 5px radius, subtle shadow\n* Make thumbnails clickable, opening preserved websites in new tab\n* Add \"Explore This Website\" CTA buttons for each record\n* Test on desktop, tablet, mobile — no console errors\n* Install Puppeteer as dev dependency for headless screenshot capture\n\nAll 8 site records now display with visual previews of their homepages."
+  },
+  {
+    "sha": "1762103",
+    "date": "2026-07-05",
+    "title": "Fix: Remove .htaccess files causing 301 redirect loop",
+    "body": ".htaccess files (whether original from preserved websites or added for\nDirectoryIndex) trigger Apache's trailing-slash redirect logic, creating\na loop that prevents directory access:\n\n  /dir/ → 301 → /dir → 404\n\nWithout .htaccess files, Apache's global DirectoryIndex configuration\nproperly serves directory requests. This is the correct and minimal fix.\n\nSites without .htaccess (now all 8): Apache serves via global config ✓\nSites with .htaccess (removed):  Apache redirect loop prevented ✓"
+  },
+  {
+    "sha": "d071f44",
+    "date": "2026-07-05",
+    "title": "Fix: Add DirectoryIndex to preserved websites to resolve 301 redirect loop",
+    "body": "Five preserved websites (mr-snowmann, sebastian-v1, jfsn-2018, sebastian-v2,\njfsn-2020) were returning 301 redirects causing access issues.\n\nAdding DirectoryIndex directive to .htaccess in affected directories to\nproperly serve index.html/index.htm files and prevent redirect loops."
+  },
+  {
+    "sha": "6ff60cb",
+    "date": "2026-07-05",
+    "title": "Working History v1.0: Update record pages with permanent URLs",
+    "body": "All 8 record pages (site001–site008) updated to point to new permanent\nURL structure under /working-history/websites/{standardized-name}/.\n\n• Screenshot links: all point to /working-history/websites/{name}/\n• CTA buttons: all point to /working-history/websites/{name}/\n• All links have target=\"_blank\" for new-tab navigation\n• No broken asset references\n• Navigation preserved (back to collection, next record)\n\nThis finalizes the Working History Collection v1.0 permanent URL\narchitecture designed for 20+ year archival preservation."
+  },
+  {
+    "sha": "d4b2115",
+    "date": "2026-07-05",
+    "title": "Complete Working History Collection: Add record pages for site005–site008",
+    "body": "Implement museum exhibition gallery model for final four records:\n\nsite005 (2016): JFSN Portfolio — Responsive design adoption with explicit portfolio lineage evidence\nsite006 (2018): JFSN Portfolio — Designer Edition — Convergence point where all three threads unite\nsite007 (2021): Sebastian Website (Adobe Portfolio) — Platform migration, captured via mirror\nsite008 (2020): JFSN Portfolio — Bootstrap implementation, preserved in unfinished state\n\nAll pages apply consistent interpretive gallery standards:\n• Exhibition labels framing context\n• Screenshot placeholders (ready for homepage captures)\n• \"Explore This Website\" CTAs\n• Interpretive \"Why This Site Mattered\" sections\n• Minimal technical metadata\n• Clear navigation (Previous/Next/Back to Collection)\n\nCollection now complete: 8 preserved historical websites spanning 1974–2020, from fine art portfolio to incomplete bootstrap project. Museum-quality interpretation applied throughout."
+  },
+  {
+    "sha": "3cc08a3",
+    "date": "2026-07-05",
+    "title": "Working History Collection: Refactor record pages to museum exhibition model",
+    "body": "Transform record pages from documentation to museum-quality interpretation:\n• Add exhibition labels (preserved website framing, publication date)\n• Introduce interpretive gallery text (why the site mattered)\n• Move screenshots to prominent position (placeholder for now)\n• Add \"Explore This Website\" CTA to encourage artifact engagement\n• Rename sections to prioritize interpretation over description\n• Condense technical details to compact metadata\n• Remove redundant documentation (visitor can learn from visiting site)\n• Apply Museum Test to all content: would this matter if the website disappeared?\n\nStructure: Exhibition Label → Screenshot Invitation → CTA → Interpretation → Voice → Archive Status\n\nResult: Pages feel like quiet gallery spaces surrounding the artifact, not documentation about it."
+  },
+  {
+    "sha": "7ee9442",
+    "date": "2026-07-05",
+    "title": "Add public record pages for Working History Collection (site001-site004)",
+    "body": "- Create site001–site004 record detail pages in /working-history/\n- Update landing page with clickable links to each record\n- Maintain museum-quality archival presentation and design consistency\n- Each record page includes: title, metadata, historical context, purpose,\n  creator commentary when available, technologies, and related record links\n- Previous/Next navigation for browsing the full collection"
+  },
+  {
+    "sha": "0b0a779",
+    "date": "2026-07-05",
+    "title": "Add public Working History Collection landing page and footer link",
+    "body": "Creates /working-history/index.html as an archival finding aid for the Working\nHistory Collection, introducing the nine documented websites and explaining the\ncollection's preservation focus.\n\nThe landing page lists site001–site008 with visitor-facing titles, archival\ndates, and one-sentence descriptions. Internal documentation remains in\n/docs/working-history/ (not deployed). The public page serves as an index only.\n\nAdds root-relative footer link (href=\"/working-history/\") to all public pages,\nsynchronized via stamp-nav.sh from _shared/footer.html. No deployment\nconfiguration changed.\n\nDeployment exclusions for /docs/ and *.md remain in place, keeping archival\ndocumentation internal."
+  },
+  {
+    "sha": "7c6202f",
+    "date": "2026-07-05",
+    "title": "Working History: complete site008 record",
+    "body": "Inspects site008 (misc/2020, Bootstrap portfolio \"Human-Centered Designer\")\nper the Working History Collection methodology. Close pass confirms the\ninventory's original finding rather than overturning it - site008 is the\nsecond record (after site001) where inspection validated the survey-level\nassessment rather than discovering missed hazards.\n\nNo preservation hazards found: Bootstrap-only deployment, CDN-hosted\nCSS/JS, one YouTube embed, no forms, no PHP, no tracking scripts, no\nthird-party analytics. The site is fully functional and navigable.\n\nCharacterizes \"incomplete/scaffold-like\" condition more precisely: the\ngeneric \"Bootstrap demo\" title tag on every page reflects incomplete\npersonalization, but the site itself is not broken. Content structure is\nminimal (heading + intro + image gallery on most pages) compared to\nearlier portfolio records, reflecting a template-based rather than\nheavily customized build. Whether this represents deliberate stylistic\nchoice or incomplete work is unknown - flagged for creator testimony.\n\nAlso corrects the Preservation Priority ranking to reflect that site008\ncarries the least technical risk of all nine sites and is the one\nconfirmed-clean record alongside site001."
+  },
+  {
+    "sha": "999067c",
+    "date": "2026-07-05",
+    "title": "Working History: complete site007 record",
+    "body": "Inspects site007 (misc/sebastian V2, Adobe Portfolio \"Hi, I'm Sebastian!\")\nper the Working History Collection methodology, with particular attention\nto the site003 relationship, New Relic, and chronology as instructed.\n\nConfirms rather than corrects the inventory's existing findings: the New\nRelic hazard is verified directly (live license key, remote agent/beacon\nURLs), the HTTrack capture method and date are confirmed from hts-log.txt,\nand hts-cache/winprofile.ini was checked directly against HTTrack's own\ncredential warning - no actual credentials found. New finding: a second\nlive third-party call (an Adobe video-player iframe in video-test.html),\nand a specific title match (\"Dragon team: Toothless\") confirming the\nsite003 continuation relationship beyond general shared subject matter.\n\nAlso refines the inventory's chronological-ordering note, which still\ndescribed site003/site006 with language superseded by site006's own\nsession (byte-identical capture, not \"two different captures of an\nevolving site\") - corrected since it directly frames site007's position\nin the same paragraph."
+  },
+  {
+    "sha": "6217e54",
+    "date": "2026-07-05",
+    "title": "Working History: complete site006 record, resolve site003/site006 relationship",
+    "body": "Inspects site006 (misc/2018, JFSN portfolio \"DESIGNER\") per the Working\nHistory Collection methodology, with particular attention to its\ndocumented relationship with site003 as instructed.\n\nDirect byte-for-byte comparison found site003 and site006 share the exact\nsame underlying Muse capture: the .muse project database, the form-throttle\ndatabase, all three form-handler PHP files, and four of five shared HTML\npages are identical between the two records. The only difference anywhere\nis site003's sebastian.html, which carries a manually-added, non-Muse\n\"Drone Animation Styles\" block absent from site006's copy. This supersedes\nlast session's \"two independently-drifting captures\" conclusion, corrected\ndirectly in site003.md per this session's consistency rule.\n\nAlso corrects two other objective errors uncovered during site006's\ninspection: (1) site003.md's claim that contact.html/design.html/\nthank-you.html have no matching page anywhere in misc/ - they exist in\nsite006's tablet/ and public_ftp/phone/ subfolders, two of them wiring\nsite003's own form handlers as live forms; (2) the inventory's Flash-hazard\nranking, which assumed JFSN_2009.swf was embedded in a live page - it is\nconfirmed orphaned, the same status as site004's Flash files.\n\nSurfaces assets/red30---project-inquiry.pdf, partial evidence resolving\nsite003's open \"what is Red30\" question (contents not read, out of scope)."
+  },
+  {
+    "sha": "f156ff3",
+    "date": "2026-07-05",
+    "title": "Working History: complete site005 record",
+    "body": "Inspects site005 (misc/2016, JFSN portfolio) per the Working History\nCollection methodology. Corrects the inventory's \"not yet assessed\" hazard\nstatus: confirms four fully-functional (not dependency-broken) PHP form\nhandlers, unwired to any page in this capture, plus the same Adobe Business\nCatalyst CDN fallback already found on site002.\n\nExpands the documented content beyond the inventory's single \"CGI Notify\"\nmention to four named projects (CGI Notify, CGI Bank, CGI Federal BPS,\nCampusMonkey), found by reading tablet/index.html's captions.\n\nUpgrades the site004->site005 relationship from inferred lineage to\nconfirmed: site005's own \"VIEW OLDER WORK\" link points directly at\nhttp://www.jfsn.com/2014 - the first site-authored lineage evidence in the\nprofessional-design thread.\n\nAlso corrects the folder-name year (2016) against uniform Adobe Muse CC\n2018.1.0.386 export metadata found across every HTML and PHP file, the same\nfolder-name-vs-export-metadata gap already documented for site003."
+  },
+  {
+    "sha": "86823e6",
+    "date": "2026-07-05",
+    "title": "Working History: bring charter, inventory foundation, and site001-003 records under version control",
+    "body": "These four documents (charter v1.0, and the site001/site002/site003 records)\nwere authored across prior sessions but never committed — docs/working-history/\nwas entirely untracked until last session's commit added only the inventory\nand site004. This closes that gap so the collection's full documented history\nto date is in git, matching the inventory and site004 already committed.\n\nNo content changes: inspected all four files for objective errors before\nstaging: none found."
+  },
+  {
+    "sha": "6611200",
+    "date": "2026-07-05",
+    "title": "Working History: complete site004 record, correct site003/site006 relationship",
+    "body": "Inspects site004 (misc/2014, JFSN portfolio 2014) per the Working History\nCollection methodology. Corrects the inventory's \"no confirmed hazards\"\nfinding (22 orphaned Flash files, a dependency-broken contact-form wiring)\nand its Flash-severity ranking, which previously called site006 the\ncollection's only hard Flash problem. Surfaces a specific named gap-site\nlead (\"jfsn2007\") referenced from site004's own internal links but not\npresent in the preserved source tree.\n\nAlso fixes an inconsistency in site006's inventory entry left over from\nlast session's site003 record: it still asserted the disproven claim that\nsite006 contains an enhanced, later copy of site003's Sebastian page."
+  },
+  {
+    "sha": "4d2769e",
+    "date": "2026-07-04",
+    "title": "Complete final engineering cleanup",
+    "body": "Improve accessibility by adding descriptive labels to archive filter\nremoval controls and remove confirmed dead CSS left behind after the\nSelected Works simplification.\n\nVerified repository integrity, accessibility, and no regressions.\n\nMarks completion of the engineering phase of the JFSN Archive."
+  },
+  {
+    "sha": "de1cbdb",
+    "date": "2026-07-04",
+    "title": "Ignore old-ux-ui-websites/ local reference directory",
+    "body": "Legacy reference material, not part of the deployed site. Untracked\nwithout this entry, it was tripping deploy-hostgator.sh's dirty-tree\nguard and would have been mirrored to production by --force."
+  },
+  {
+    "sha": "d36b2a1",
+    "date": "2026-07-04",
+    "title": "Add public Curatorial Companion",
+    "body": "Publish the Curatorial Companion as a first-class public page within the\nJFSN Archive while preserving the canonical markdown document as the\nsingle source of truth.\n\nThe new page presents the published Version 1.0 scholarship using the\nexisting JFSN design system, adds homepage discoverability, integrates\nwith site navigation and the sitemap, and automatically links verified\nartwork references.\n\nNo changes were made to the published Companion text or its immutable\nrecovery copy."
+  },
+  {
     "sha": "067553e",
     "date": "2026-07-04",
     "title": "Publish Curatorial Companion v1.0",

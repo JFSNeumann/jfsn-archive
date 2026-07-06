@@ -1679,7 +1679,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
     const grid = document.getElementById('featured-grid');
     if (!grid) return;
     try {
-      const works = await fetch('catalog-home.json?v=20260704213850').then(r => r.json());
+      const works = await fetch('catalog-home.json?v=20260706213305').then(r => r.json());
 
       /* Shuffle cards 4–30 so repeat visitors see variety; keep top 3 editorial */
       const editorial = works.slice(0, 3);
@@ -1714,7 +1714,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
           <div class="featured-metadata space-y-1 px-3 pt-2 pb-3 sm:px-0 sm:pt-0 sm:pb-0" style="will-change:opacity;">
             <h3>${w.title}</h3>
             <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-              <span>${w.year || '—'}</span>
+              <span>${w.year_display || w.year || '—'}</span>
               <span>${medium}</span>
             </div>
           </div>`;

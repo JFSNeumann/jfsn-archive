@@ -400,7 +400,7 @@ header.header-hidden{transform:translateY(-100%)}
       </a>
       <figcaption class="thumb__caption">
         <a href="artwork.html?id=${id}">${w.title}</a>
-        <span>${w.year}${medium ? ' · ' + medium : ''}</span>
+        <span>${w.year_display || w.year}${medium ? ' · ' + medium : ''}</span>
       </figcaption>`;
       grid.appendChild(fig);
       if (!reduced) {
