@@ -389,14 +389,6 @@
     }
   }
 
-  // ─── Link destination previews (footer links) ───────────────────────
-  var footerLinks = document.querySelectorAll('footer a[href]:not([href^="#"])');
-  footerLinks.forEach(function(link) {
-    var href = link.getAttribute('href');
-    var title = link.textContent.trim();
-    link.setAttribute('data-link-title', title);
-  });
-
   // ─── Phase 1: Metadata rows stagger (Session 52 #2) ─────────────────────
   var aside = document.querySelector('aside.md\\:col-span-4');
   if (aside) {
