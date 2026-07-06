@@ -38,7 +38,7 @@ happened.
 
 ---
 
-## 3. Runtime Verification
+## 3. Runtime Verification (verified by execution — directly or by proxy)
 
 Separate what was checked directly from what was checked by proxy. Never imply
 direct verification of the live site if direct verification was not possible.
@@ -56,15 +56,14 @@ navigation to the live URL if permitted in this session's environment).
 
 Checks performed against a stand-in for the live site (e.g. a local mirror,
 a byte-identical copy) because direct verification was not possible in this
-session's environment.
+session's environment. If no proxy verification was needed this session, replace
+this entire subsection with: "All runtime checks this session were performed
+directly against the live site." Otherwise, complete every field below.
 
 - **Why proxy verification was used:** [state the concrete blocker — e.g. "browser navigation to the production domain is restricted in this session's environment"]
 - **How equivalence was established:** [state the concrete evidence — e.g. "diff between the live file and the local committed file returned byte-identical"]
 - [item]: [result]
 - [item]: [result]
-
-If no proxy verification was needed this session, state: "All runtime checks this
-session were performed directly against the live site."
 
 ---
 
