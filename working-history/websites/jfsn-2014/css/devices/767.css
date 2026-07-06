@@ -1,0 +1,98 @@
+/*------------------------------------------------------------------*/ 
+/*	2) Note: Design for a width of 480 px
+/*------------------------------------------------------------------*/
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+
+/*------------------------------------------------------------------*/ 
+/*	1) Header
+/*------------------------------------------------------------------*/
+.logo{
+	width:420px;
+	text-align:center;
+	margin:0;
+	float:left;
+}
+.logo a{
+	float:none;
+}
+.logo span{
+	display:none;
+}
+select.mobnav{
+	display:block;
+}
+.menu-toggle{
+	display:block;
+}
+#header{
+	padding-top:125px;
+}
+.slider{
+	width:420px;
+	margin:0;
+}
+.theme-default #slider, .slider-bot, .slider-shadow, .slider-shadow img{
+	width:420px;
+}
+.stunningtext h2{
+	margin:30px 0;
+}
+a.feaser1, a.feaser2, a.feaser3{
+	margin-left:147px;
+}
+.ser-block{
+	margin-left:10px;
+}
+.title-left, .title-right{
+	display:none;
+}
+.team-image{
+	width:220px;
+	height:220px;
+	margin-left:90px;
+}
+.team-image img{
+	width:220px;
+	height:220px;
+}
+.team-social{
+	width:220px;
+	margin-left:90px;
+}
+/*------------------------------------------------------------------*/ 
+/*	2) Nav
+/*------------------------------------------------------------------*/
+#nav ul.menu{
+	margin:13px 0 0 0;
+	display:none;
+}
+
+/*------------------------------------------------------------------*/ 
+/*	3) Work
+/*------------------------------------------------------------------*/
+.project-list li{
+	margin:10px 10px 10px 90px;
+}
+.border-bottom{
+	margin:0;
+}
+.services p{
+	padding-right:0;
+}
+.pricing-table{
+	margin:30px 0 0 0;
+}
+/*------------------------------------------------------------------*/ 
+/*	3) Contact
+/*------------------------------------------------------------------*/
+.map{
+	width:380px;
+	margin-left:0;
+}
+.input-section input, .input-section textarea{
+	width:378px;
+}
+.input-section a.send{
+	width:380px;
+}
+}

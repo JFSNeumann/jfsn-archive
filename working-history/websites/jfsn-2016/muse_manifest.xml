@@ -1,0 +1,237 @@
+<manifest alg="2" build="2018.1.0.386" opt="true" iceEnabled="true" iceMarkupVersion="2" iceEnabledOptions="link,responsive,cachebuster,textStyling" exportTarget="other" domain="www.jfsn.com" resolutions="1x" timestamp="1535557674536">
+  <folder name="css">
+    <file name="site_global.css" crc="4190793083"/>
+    <file name="master_a-master.css" crc="3802958912" ref="index"/>
+    <file name="index.css" crc="472595039" ref="index"/>
+  </folder>
+  <folder name="assets">
+    <file name="jef-neumann-hats-animation-1.gif" crc="247846875" seo="true" mt="1421416435000"/>
+    <file name="meet-ewa-mataya-laurance-at-nada.mp4" crc="463668987" seo="true" mt="1454774257000"/>
+    <file name="meet_ewa_mataya_laurance_at_nada.ogg" crc="103168571" seo="true" mt="1454858569000"/>
+    <file name="meet_ewa_mataya_laurance_at_nada.webm" crc="363235905" seo="true" mt="1454866900000"/>
+    <file name="meet-ewa-mataya-laurance-at-nada-(0-00-02-21).jpg" crc="4068555053" seo="true" mt="1454871147000"/>
+    <file name="jeff_neumann_resume.pdf" crc="4250732463" seo="true" mt="1454368238000"/>
+  </folder>
+  <folder name="scripts">
+    <file name="jquery-1.8.3.min.js" crc="209076791" ref="phone>index:tablet>index:index"/>
+    <file name="museutils.js" crc="340535759" ref="phone>index:tablet>index:index"/>
+    <file name="whatinput.js" crc="86476730" ref="phone>index:tablet>index:index"/>
+    <file name="museconfig.js" crc="310584261" ref="phone>index:tablet>index:index"/>
+    <file name="jquery.watch.js" crc="51536988" ref="phone>index:tablet>index:index"/>
+    <file name="jquery.musepolyfill.bgsize.js" crc="4260645839" ref="phone>index:index"/>
+    <file name="jquery.scrolleffects.js" crc="39568856" ref="phone>index:tablet>index:index"/>
+    <file name="require.js" crc="7928878" ref="phone>index:tablet>index:index"/>
+  </folder>
+  <folder name="images">
+    <file name="favicon.ico" crc="341963906" ref="phone>index:index"/>
+    <file name="wireframe-phone.jpg" crc="159670173" seo="true" ref="phone>index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="phone-side-ade-u2072-fr.png" crc="3800980615" ref="phone>index"/>
+    <file name="bk-triangle-crop-u1942.png" crc="4095712646" seo="true" ref="phone>index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="u2066-4.png" crc="278653548" ref="phone>index"/>
+    <file name="contact.jpg" crc="400995552" seo="true" ref="phone>index:tablet>index:index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="jeff.png" crc="433511999" seo="true" ref="phone>index:tablet>index:index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="smartcities380x228.jpg" crc="53575819" seo="true" ref="phone>index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="oncue-ioa-screens-crop-u7741.jpg" crc="4029692373" seo="true" ref="phone>index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="notify360-splash-screen-ios.gif" crc="21515281" seo="true" ref="phone>index:tablet>index:index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="desktop-message3380x251.jpg" crc="199432993" seo="true" ref="phone>index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="hqs-v2-screen-grabs-1380x434.png" crc="522872968" seo="true" ref="phone>index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="all designs 2377x383.jpg" crc="10326584" seo="true" ref="phone>index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="jef-neumann-hats-animation-1.gif" crc="247846875" seo="true" ref="phone>index:tablet>index:index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="campus-monkey380x214.jpg" crc="4057024187" seo="true" ref="phone>index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="1-hangout-1381x209.jpg" crc="276320259" seo="true" ref="phone>index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="animation345x196.jpg" crc="4242710581" seo="true" ref="phone>index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="1-oncue android specs-crop-u8349.png" crc="219055426" seo="true" ref="phone>index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="android1.png" crc="4215288043" seo="true" ref="phone>index:tablet>index:index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="fc1234188x333.jpg" crc="4168057676" seo="true" ref="phone>index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="1-page_login 3_page 1141x315.jpg" crc="99686620" seo="true" ref="phone>index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="main open301x609.png" crc="3869773683" seo="true" ref="phone>index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="phone-side-ade=2.png" crc="3826478093" ref="phone>index:tablet>index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="bk-triangle-crop-u1947.png" crc="4175730967" seo="true" ref="phone>index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="jeffrey_neumann.gif" crc="433741361" seo="true" ref="phone>index:tablet>index:index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="u7696-4.png" crc="4149529158" ref="phone>index"/>
+    <file name="1-page_login 3_page 1189x422.jpg" crc="129444748" seo="true" ref="tablet>index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="login@1x.jpg" crc="4210140168" seo="true" ref="tablet>index:index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="phone-side-ade.png" crc="4055548556" ref="tablet>index:index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="wt-fade-circle-crop-u6533.png" crc="331043203" seo="true" ref="tablet>index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="bk-triangle-crop-u1232.png" crc="4034176977" seo="true" ref="tablet>index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="u1484-4.png" crc="3787910853" ref="tablet>index"/>
+    <file name="main open.png" crc="268822339" seo="true" ref="tablet>index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="wireframe.jpg" crc="2450717" seo="true" ref="tablet>index:index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="cgi-bps.jpg" crc="4130161983" seo="true" ref="tablet>index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="smartcities768x460.jpg" crc="3820134810" seo="true" ref="tablet>index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="all designs 2.jpg" crc="23212446" seo="true" ref="tablet>index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="oncue-ioa-screens-crop-u7545.jpg" crc="4152884583" seo="true" ref="tablet>index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="desktop-message3769x508.jpg" crc="4169607801" seo="true" ref="tablet>index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="hqs-v2-screen-grabs-1-u7571.png" crc="339378822" ref="tablet>index"/>
+    <file name="campus-monkey769x433.jpg" crc="453821941" seo="true" ref="tablet>index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="1-hangout-1.jpg" crc="248261768" seo="true" ref="tablet>index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="events lists - all screens 768x460.jpg" crc="4166023692" seo="true" ref="tablet>index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="1-oncue android specs768x573.png" crc="3979410123" seo="true" ref="tablet>index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="animation.jpg" crc="442258356" seo="true" ref="tablet>index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="bk-triangle-crop-u3476.png" crc="4252252619" seo="true" ref="tablet>index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="u7473-4.png" crc="142465134" ref="tablet>index"/>
+    <file name="black-background.svg" crc="4220054902" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="black-background_poster_.png" crc="4164217675" ref="index"/>
+    <file name="1-page_login 3_page 1.jpg" crc="4035739620" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="fc1234.jpg" crc="3954792783" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="wt-fade-circle.png" crc="4121058126" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="image-1.jpg" crc="127725327" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="bk-triangle-crop-u5523.png" crc="395161217" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="u5491-4.png" crc="3865585979" ref="index"/>
+    <file name="bk-triangle3-crop-u7310.png" crc="3790631903" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="u5468-6.png" crc="117681824" ref="index"/>
+    <file name="cgi-notify-home-screens-sm.jpg" crc="4173691377" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="u9377-4.png" crc="4209804973" ref="index"/>
+    <file name="u5466-4.png" crc="3907233591" ref="index"/>
+    <file name="blank.gif" crc="4208392903" ref="index"/>
+    <file name="u8992_states.png" crc="220293623" ref="index"/>
+    <file name="u8992_states-r.png" crc="4123424353" ref="index"/>
+    <file name="smartcities.jpg" crc="448153935" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="oncue-ioa-screens-crop-u5615.jpg" crc="4174685587" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="u9394-4.png" crc="68854804" ref="index"/>
+    <file name="desktop-message3.jpg" crc="532722801" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="hqs-v2-screen-grabs-1-u6151.png" crc="4224539129" ref="index"/>
+    <file name="1-oncue android specs.png" crc="476222327" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="u9397-4.png" crc="417953935" ref="index"/>
+    <file name="events lists - all screens .jpg" crc="331968865" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="u9400-4.png" crc="4082670398" ref="index"/>
+    <file name="bk-triangle.png" crc="492322383" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="bottom-patch.png" crc="271548858" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="phone-side-ade=22.png" crc="449771528" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="main open-u8702.png" crc="4229484438" ref="index"/>
+    <file name="ho-home-6 - copy.jpg" crc="481105599" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+  </folder>
+  <folder name="tablet">
+    <folder name="css">
+      <file name="index.css" crc="3804930308" ref="tablet>index"/>
+    </folder>
+    <file name="index.html" crc="483537418" seo="true" mt="1533061131284" redirect="true"/>
+  </folder>
+  <folder name="phone">
+    <folder name="css">
+      <file name="index.css" crc="3907438284" ref="phone>index"/>
+    </folder>
+    <file name="index.html" crc="3862917397" seo="true" mt="1533061678135" redirect="true"/>
+  </folder>
+  <file name="index.html" crc="110399428" seo="true" mt="1535557346003" redirect="true"/>
+</manifest>

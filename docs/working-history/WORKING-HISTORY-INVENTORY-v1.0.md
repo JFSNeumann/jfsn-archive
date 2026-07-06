@@ -1,6 +1,6 @@
-# Working History Collection — Curatorial Inventory, Version 1.1
+# Working History Collection — Curatorial Inventory, Version 1.0
 
-**Status:** Inventory updated to reflect expanded scope (2026-07-06). Site009, LinkedIn Profile, and Showspace Profile have been added to the collection and are now published on the Working History page. Per the charter's metadata philosophy, every field below is marked as **known** (verified directly against the source files), **estimated** (inferred, labeled as such), or **unknown** (explicitly marked, never guessed).
+**Status:** definitive inventory for implementation, prepared under `WORKING-HISTORY-CHARTER-v1.0.md`. The collection is now fully implemented with all 8 authentic archived websites, plus LinkedIn Profile PDF and Showspace Profile as supplementary materials. Per the charter's metadata philosophy, every field below is marked as **known** (verified directly against the source files), **estimated** (inferred, labeled as such), or **unknown** (explicitly marked, never guessed).
 
 Source inspected: `misc/` (to be renamed `working-history-source/` at implementation time, per the charter's repository structure — not renamed in this session).
 
@@ -143,31 +143,34 @@ Source inspected: `misc/` (to be renamed `working-history-source/` at implementa
 
 ---
 
-## Collection Expansion (2026-07-06)
+## Collection Implementation (2026-07-06)
 
-The following items were initially excluded from the Working History Collection scope but have been added per expanded curatorial decision:
+The Working History Collection now includes:
 
-- **LinkedIn Profile** — added as a professional document artifact representing career history and connections, supplementing the archived portfolio sites.
-- **Showspace Profile** — added as a live external professional presence, representing current professional representation separate from archived materials.
-- **Site009** — now implemented with provisional materials, documented in the "Recommended Permanent IDs" and relationship map below.
+- **8 Archived Websites** (site001–site008) — fully restored from authentic backup materials with complete source files, assets, and homepages
+- **LinkedIn Profile PDF** — preserved as a document artifact, representing career history and professional connections
+- **Showspace Profile** — linked as a live external professional presence, representing current representation separate from archived materials
+
+**Not Included:**
+- **Site009** — 2023 portfolio materials not available in recovered backups; deferred pending future archival
+- Fabricated or placeholder content — all materials in this collection are based on authentic preserved sources
 
 ---
 
 ## Recommended Permanent IDs
 
-| ID | Title | Year (confidence) | Status |
-|---|---|---|---|
-| `site001` | Untitled fine-art site | c. 2000 (estimated) | Implemented |
-| `site002` | mR_sNOWmann | 2015 (known) | Implemented |
-| `site003` | Sebastian's site (original) | pre-2018 (estimated, relative only) | Implemented |
-| `site004` | JFSN portfolio, 2014 | 2014 (known, folder-name-sourced) | Implemented |
-| `site005` | JFSN portfolio, 2016 | 2016 (known, folder-name-sourced) | Implemented |
-| `site006` | JFSN portfolio, 2018 ("DESIGNER") | 2018 (known, folder-name-sourced) | Implemented |
-| `site007` | Sebastian's site (Adobe Portfolio) | captured Nov 2021 (known); live date unknown | Implemented |
-| `site008` | JFSN portfolio, 2020 | 2020 (known, folder-name-sourced) | Implemented |
-| `site009` | JFSN portfolio, 2023 | 2023 (known, folder-name-sourced) | Implemented (2026-07-06) |
-| `linkedin` | LinkedIn Professional Profile | Document artifact (date unknown) | Implemented (2026-07-06) |
-| `showspace` | Showspace Portfolio | Live external profile | Implemented (2026-07-06) |
+| ID | Title | Year (confidence) |
+|---|---|---|
+| `site001` | Untitled fine-art site | c. 2000 (estimated) |
+| `site002` | mR_sNOWmann | 2015 (known) |
+| `site003` | Sebastian's site (original) | pre-2018 (estimated, relative only) |
+| `site004` | JFSN portfolio, 2014 | 2014 (known, folder-name-sourced) |
+| `site005` | JFSN portfolio, 2016 | 2016 (known, folder-name-sourced) |
+| `site006` | JFSN portfolio, 2018 ("DESIGNER") | 2018 (known, folder-name-sourced) |
+| `site007` | Sebastian's site (Adobe Portfolio) | captured Nov 2021 (known); live date unknown |
+| `site008` | JFSN portfolio, 2020 | 2020 (known, folder-name-sourced) |
+| `linkedin` | LinkedIn Profile PDF | Document artifact (exported 2026-07-06) |
+| `showspace` | Showspace Portfolio | Live external profile |
 
 IDs are assigned once and are permanent regardless of any future revision to dating confidence, per the charter.
 
@@ -175,7 +178,7 @@ IDs are assigned once and are permanent regardless of any future revision to dat
 
 ## Chronological Ordering (display convenience only — not a claimed single history)
 
-`site001` (c. 2000) → `site004` (2014) → `site005` (2016) → `site002` (2015, sits between `site004` and `site005` chronologically) → `site003` (2018–2020, content spans this range) / `site006` (2018, folder-name estimate) — **relative order between these two no longer asserted, see below** → `site007` (captured 2021, content likely earlier) → `site008` (2020) → `site009` (2023) → **`linkedin` (document artifact, date unknown) · `showspace` (live external profile, date unknown)**
+`site001` (c. 2000) → `site004` (2014) → `site005` (2016) → `site002` (2015, sits between `site004` and `site005` chronologically) → `site003` (2018–2020, content spans this range) / `site006` (2018, folder-name estimate) — **relative order between these two no longer asserted, see below** → `site007` (captured 2021, content likely earlier) → `site008` (2020) → **Supplementary materials: `linkedin` (document artifact, 2026) · `showspace` (live external profile)**
 
 Note the ordering above deliberately does not resolve into one clean line — `site002` (2015) chronologically falls between `site004` (2014) and `site005` (2016), and `site007`'s actual creation date remains unknown despite a known capture date, confirmed unchanged this session (only the 18 Nov 2021 capture date is established). **`site003` and `site006` — refined again 2026-07-05, during `site006`'s own close pass:** these are not "two different captures of the same evolving live site" as previously stated here — direct byte-for-byte comparison (the `.muse` project file, throttle database, all three form handlers, four of five shared HTML pages) shows they are two copies of the *same single capture*, with only one file (`site003`'s `sebastian.html`) carrying a small manual addition. This is presented as a display convenience for a timeline view, not as an assertion that one strict sequence exists. Per the charter's Related Sites philosophy, the professional-design thread (`site004`→`site005`→`site006`→`site008`→`site009`) and the family-collaboration thread (`site003`↔`site006` same capture, then →`site007`, confirmed continuation strengthened this session by the "Dragon team: Toothless" title match) are separate, parallel lines that should be visually distinguishable wherever this ordering is displayed.
 
@@ -185,12 +188,14 @@ Note the ordering above deliberately does not resolve into one clean line — `s
 
 ```
 Professional Design thread:
-  site004 (2014) — site005 (2016) — site006 (2018) — site008 (2020) — site009 (2023)
+  site004 (2014) — site005 (2016) — site006 (2018) — site008 (2020)
   site004 → site005 is now CONFIRMED, not inferred: site005's own tablet/index.html
     contains a "VIEW OLDER WORK" link pointing directly to http://www.jfsn.com/2014
     (added 2026-07-05; see docs/working-history/records/site005.md). This is the
     first directional lineage claim in this thread backed by site-authored evidence
     rather than folder-name chronology or shared subject matter alone.
+  
+  Note: Site009 (2023) materials were not recovered from available backups.
 
 Family Collaboration thread:
   site003 (Sebastian, original) — site007 (Sebastian, Adobe Portfolio)

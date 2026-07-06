@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html class="html" lang="en-US">
+ <head>
+
+  <script type="text/javascript">
+   if(typeof Muse == "undefined") window.Muse = {}; window.Muse.assets = {"required":["jquery-1.8.3.min.js", "museutils.js", "webpro.js", "musewpslideshow.js", "jquery.museoverlay.js", "touchswipe.js", "jquery.musepolyfill.bgsize.js", "jquery.watch.js", "jquery.musemenu.js", "museredirect.js", "index.css"], "outOfDate":[]};
+</script>
+  
+  <script src="scripts/museredirect.js?4117159434" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+   Muse.Redirect.redirect('desktop', '', 'phone/index.html', '');
+</script>
+  
+  <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+  <meta name="generator" content="2014.3.2.295"/>
+  <title>HOME</title>
+  <link media="only screen and (max-device-width: 370px)" rel="alternate" href="http://demo.muse-themes.com/template-mode/phone/index.html"/>
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="css/site_global.css?240230296"/>
+  <link rel="stylesheet" type="text/css" href="css/master_master-1.css?31340269"/>
+  <link rel="stylesheet" type="text/css" href="css/index.css?496996131" id="pagesheet"/>
+  <!-- Drone Animation Styles -->
+  <style>
+    @keyframes droneFly {
+      0% {
+        transform: translateX(-200px) translateY(-100px) rotate(8deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      30% {
+        transform: translateX(30vw) translateY(150px) rotate(2deg);
+      }
+      60% {
+        transform: translateX(65vw) translateY(250px) rotate(-3deg);
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(calc(100vw + 200px)) translateY(300px) rotate(5deg);
+        opacity: 0;
+      }
+    }
+    
+    @keyframes propellerSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    @keyframes droneHover {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
+    }
+    
+    .drone-container {
+      position: fixed;
+      top: 0;
+      left: -200px;
+      z-index: 999999;
+      pointer-events: none;
+      animation: droneFly 20s ease-in-out infinite;
+      animation-delay: 1s;
+      filter: drop-shadow(0 0 20px rgba(0,0,0,0.7));
+    }
+    
+    .drone-body {
+      position: relative;
+      width: 200px;
+      height: 120px;
+      animation: droneHover 1.5s ease-in-out infinite;
+      transform: scale(4.5);
+    }
+    
+    .drone-main {
+      width: 80px;
+      height: 35px;
+      background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #1a252f 100%);
+      border-radius: 8px;
+      position: absolute;
+      top: 40px;
+      left: 60px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.7);
+      border: 3px solid #1a252f;
+    }
+    
+    .drone-main:before {
+      content: '';
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background: linear-gradient(145deg, #34495e, #2c3e50);
+      border-radius: 50%;
+      top: 10px;
+      left: 10px;
+      border: 2px solid #1a252f;
+    }
+    
+    .drone-main:after {
+      content: '';
+      position: absolute;
+      width: 25px;
+      height: 8px;
+      background: rgba(52, 73, 94, 0.8);
+      border-radius: 4px;
+      top: 13px;
+      right: 10px;
+    }
+    
+    .drone-camera {
+      width: 22px;
+      height: 22px;
+      background: linear-gradient(145deg, #e74c3c, #c0392b);
+      border-radius: 50%;
+      position: absolute;
+      bottom: -10px;
+      left: 25px;
+      box-shadow: 0 0 30px rgba(231, 76, 60, 1), 
+                  0 0 60px rgba(231, 76, 60, 0.8),
+                  0 0 90px rgba(231, 76, 60, 0.4);
+      animation: pulse 2s ease-in-out infinite;
+      border: 3px solid #922b21;
+    }
+    
+    .drone-camera:after {
+      content: '';
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 50%;
+      top: 4px;
+      left: 4px;
+      box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+    
+    .propeller {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+    }
+    
+    /* Side view propeller - looks like spinning disc */
+    .propeller-blade {
+      position: absolute;
+      width: 50px;
+      height: 3px;
+      background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(52, 152, 219, 0.4) 10%, 
+        rgba(52, 152, 219, 1) 50%, 
+        rgba(52, 152, 219, 0.4) 90%, 
+        transparent 100%);
+      border-radius: 50%;
+      top: 23px;
+      animation: propellerSpin 0.04s linear infinite;
+      box-shadow: 0 0 20px rgba(52, 152, 219, 0.9),
+                  0 0 40px rgba(52, 152, 219, 0.5);
+      filter: blur(1.5px);
+    }
+    
+    .propeller-blade:nth-child(2) {
+      transform: scaleY(0.6);
+      opacity: 0.7;
+    }
+    
+    .propeller-center {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: #34495e;
+      border-radius: 50%;
+      top: 20px;
+      left: 20px;
+      border: 2px solid #1a252f;
+      z-index: 10;
+    }
+    
+    .propeller-arm {
+      position: absolute;
+      width: 3px;
+      height: 30px;
+      background: linear-gradient(180deg, #7f8c8d, #5a6c7d);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+    
+    .propeller.top-left {
+      top: 0;
+      left: 15px;
+    }
+    
+    .propeller.top-left .propeller-arm {
+      top: 30px;
+      left: 23px;
+    }
+    
+    .propeller.top-right {
+      top: 0;
+      right: 15px;
+    }
+    
+    .propeller.top-right .propeller-arm {
+      top: 30px;
+      right: 23px;
+    }
+    
+    .propeller.bottom-left {
+      bottom: 0;
+      left: 15px;
+    }
+    
+    .propeller.bottom-left .propeller-arm {
+      bottom: 30px;
+      left: 23px;
+    }
+    
+    .propeller.bottom-right {
+      bottom: 0;
+      right: 15px;
+    }
+    
+    .propeller.bottom-right .propeller-arm {
+      bottom: 30px;
+      right: 23px;
+    }
+    
+    .drone-light {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: #2ecc71;
+      border-radius: 50%;
+      box-shadow: 0 0 20px #2ecc71, 
+                  0 0 40px #2ecc71,
+                  0 0 60px rgba(46, 204, 113, 0.5);
+      animation: blink 1s infinite;
+      border: 2px solid rgba(46, 204, 113, 0.5);
+    }
+    
+    .drone-light.left {
+      top: 45px;
+      left: 45px;
+    }
+    
+    .drone-light.right {
+      top: 45px;
+      right: 45px;
+      background: #e74c3c;
+      box-shadow: 0 0 20px #e74c3c, 
+                  0 0 40px #e74c3c,
+                  0 0 60px rgba(231, 76, 60, 0.5);
+      border: 2px solid rgba(231, 76, 60, 0.5);
+      animation-delay: 0.5s;
+    }
+    
+    @keyframes blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0.2; }
+    }
+  </style>
+  
+  <!-- Other scripts -->
+  <script type="text/javascript">
+   document.documentElement.className += ' js';
+var __adobewebfontsappname__ = "muse";
+</script>
+  <!-- JS includes -->
+  <script type="text/javascript">
+   document.write('\x3Cscript src="' + (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//webfonts.creativecloud.com/source-sans-pro:n4:all;josefin-sans:n7:all;sorts-mill-goudy:i5:all;raleway:n1:all.js" type="text/javascript">\x3C/script>');
+</script>
+  <!--[if lt IE 9]>
+  <script src="scripts/html5shiv.js?4241844378" type="text/javascript"></script>
+  <![endif]-->
+   </head>
+ <body>
+
+  <!-- Drone Animation -->
+  <div class="drone-container">
+    <div class="drone-body">
+      <!-- Main drone body -->
+      <div class="drone-main">
+        <div class="drone-camera"></div>
+      </div>
+      
+      <!-- Propellers -->
+      <div class="propeller top-left">
+        <div class="propeller-arm"></div>
+        <div class="propeller-blade"></div>
+        <div class="propeller-blade"></div>
+        <div class="propeller-center"></div>
+      </div>
+      
+      <div class="propeller top-right">
+        <div class="propeller-arm"></div>
+        <div class="propeller-blade"></div>
+        <div class="propeller-blade"></div>
+        <div class="propeller-center"></div>
+      </div>
+      
+      <div class="propeller bottom-left">
+        <div class="propeller-arm"></div>
+        <div class="propeller-blade"></div>
+        <div class="propeller-blade"></div>
+        <div class="propeller-center"></div>
+      </div>
+      
+      <div class="propeller bottom-right">
+        <div class="propeller-arm"></div>
+        <div class="propeller-blade"></div>
+        <div class="propeller-blade"></div>
+        <div class="propeller-center"></div>
+      </div>
+      
+      <!-- Navigation lights -->
+      <div class="drone-light left"></div>
+      <div class="drone-light right"></div>
+    </div>
+  </div>
+
+  <div class="clearfix" id="page"><!-- column -->
+   <div class="SlideShowWidget clearfix colelem" id="slideshowu1295"><!-- none box -->
+    &nbsp;
+    <div class="popup_anchor" id="u1320popup">
+     <div class="SlideShowContentPanel clearfix fullscreen" id="u1320"><!-- stack box -->
+      <div class="SSSlide clip_frame fullscreen" id="u1323"><!-- image -->
+       <img class="ImageInclude" id="u1323_img" data-src="images/mr_snowmann_001.jpg" src="images/blank.gif" alt="" data-width="1160" data-height="774"/>
+      </div>
+      <div class="SSSlide invi clip_frame fullscreen" id="u1321"><!-- image -->
+       <img class="ImageInclude" id="u1321_img" data-src="images/mr_snowmann_012.jpg" src="images/blank.gif" alt="" data-width="1160" data-height="774"/>
+      </div>
+      <div class="SSSlide invi clip_frame fullscreen" id="u1329"><!-- image -->
+       <img class="ImageInclude" id="u1329_img" data-src="images/mr_snowmann_003.jpg" src="images/blank.gif" alt="" data-width="1160" data-height="774"/>
+      </div>
+      <div class="SSSlide invi clip_frame fullscreen" id="u1325"><!-- image -->
+       <img class="ImageInclude" id="u1325_img" data-src="images/mr_snowmann_004.jpg" src="images/blank.gif" alt="" data-width="1160" data-height="774"/>
+      </div>
+      <div class="SSSlide invi clip_frame fullscreen" id="u1331"><!-- image -->
+       <img class="ImageInclude" id="u1331_img" data-src="images/mr_snowmann_005.jpg" src="images/blank.gif" alt="" data-width="1160" data-height="774"/>
+      </div>
+     </div>
+    </div>
+    <div class="popup_anchor" id="u1306popup">
+     <div class="SSSlideLinks clearfix" id="u1306"><!-- none box -->
+      <div class="SSSlideLink clip_frame" id="u1307"><!-- image -->
+       <img class="block" id="u1307_img" src="images/mr_snowmann_001-crop-u1307.jpg" data-hidpi-src="images/mr_snowmann_001-crop-u1307_2x.jpg" alt="" width="88" height="78"/>
+      </div>
+      <div class="SSSlideLink clip_frame" id="u1311"><!-- image -->
+       <img class="block" id="u1311_img" src="images/mr_snowmann_012-crop-u1311.jpg" data-hidpi-src="images/mr_snowmann_012-crop-u1311_2x.jpg" alt="" width="88" height="78"/>
+      </div>
+      <div class="SSSlideLink clip_frame" id="u1313"><!-- image -->
+       <img class="block" id="u1313_img" src="images/mr_snowmann_003-crop-u1313.jpg" data-hidpi-src="images/mr_snowmann_003-crop-u1313_2x.jpg" alt="" width="88" height="78"/>
+      </div>
+      <div class="SSSlideLink clip_frame" id="u1317"><!-- image -->
+       <img class="block" id="u1317_img" src="images/mr_snowmann_004-crop-u1317.jpg" data-hidpi-src="images/mr_snowmann_004-crop-u1317_2x.jpg" alt="" width="88" height="78"/>
+      </div>
+      <div class="SSSlideLink clip_frame" id="u1309"><!-- image -->
+       <img class="block" id="u1309_img" src="images/mr_snowmann_005-crop-u1309.jpg" data-hidpi-src="images/mr_snowmann_005-crop-u1309_2x.jpg" alt="" width="88" height="78"/>
+      </div>
+     </div>
+    </div>
+    <div class="popup_anchor" id="u1296popup">
+     <div class="SlideShowCaptionPanel clearfix" id="u1296"><!-- stack box -->
+      <div class="SSSlideCaption clearfix grpelem" id="u1298-4"><!-- content -->
+       <p class="Gallery-Caption">Get this framed Giclee print and stay in style with my mR_sNOWmann 001</p>
+      </div>
+      <div class="SSSlideCaption invi clearfix grpelem" id="u1297-4"><!-- content -->
+       <p class="Gallery-Caption">My mR_sNOWmann collection makes snowmen synonymous with style</p>
+      </div>
+      <div class="SSSlideCaption invi clearfix grpelem" id="u1302-4"><!-- content -->
+       <p class="Gallery-Caption">Make your walls a little more interesting with a large framed giclee print</p>
+      </div>
+      <div class="SSSlideCaption invi clearfix grpelem" id="u1301-4"><!-- content -->
+       <p class="Gallery-Caption">Get this framed Giclee print and stay in style with my mR_sNOWmann 004</p>
+      </div>
+      <div class="SSSlideCaption invi clearfix grpelem" id="u1299-4"><!-- content -->
+       <p class="Gallery-Caption">Get this framed Giclee print and stay in style with my mR_sNOWmann 005</p>
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="museBGSize rgba-background clearfix pinned-colelem" id="u2572-3"><!-- content -->
+    <p>&nbsp;</p>
+   </div>
+   <div class="clearfix pinned-colelem" id="u319-12"><!-- content -->
+    <p id="u319-2">2015</p>
+    <p id="u319-4">LONDON</p>
+    <p id="u319-6">GRAFFITI</p>
+    <p id="u319-8">INTRODUCING</p>
+    <p id="u319-10">mR_sNOWmann</p>
+   </div>
+   <div class="rgba-background pinned-colelem" id="u349"><!-- simple frame --></div>
+   <nav class="MenuBar clearfix pinned-colelem" id="menuu320"><!-- vertical box -->
+    <div class="MenuItemContainer clearfix colelem" id="u328"><!-- horizontal box -->
+     <a class="nonblock nontext MenuItem MenuItemWithSubMenu MuseMenuActive rgba-background clearfix grpelem" id="u329" href="index.html"><!-- horizontal box --><div class="MenuItemLabel clearfix grpelem" id="u331-4"><!-- content --><p>HOME</p></div></a>
+    </div>
+    <div class="MenuItemContainer clearfix colelem" id="u342"><!-- horizontal box -->
+     <a class="nonblock nontext MenuItem MenuItemWithSubMenu rgba-background clearfix grpelem" id="u345" href="street-art.html"><!-- horizontal box --><div class="MenuItemLabel clearfix grpelem" id="u347-4"><!-- content --><p>STREET ART</p></div></a>
+    </div>
+    <div class="MenuItemContainer clearfix colelem" id="u3675"><!-- horizontal box -->
+     <a class="nonblock nontext MenuItem MenuItemWithSubMenu rgba-background clearfix grpelem" id="u3676" href="portfolio.html"><!-- horizontal box --><div class="MenuItemLabel clearfix grpelem" id="u3679-4"><!-- content --><p>PORTFOLIO</p></div></a>
+    </div>
+    <div class="MenuItemContainer clearfix colelem" id="u335"><!-- horizontal box -->
+     <a class="nonblock nontext MenuItem MenuItemWithSubMenu rgba-background clearfix grpelem" id="u336" href="about.html"><!-- horizontal box --><div class="MenuItemLabel clearfix grpelem" id="u337-4"><!-- content --><p>ABOUT</p></div></a>
+    </div>
+    <div class="MenuItemContainer clearfix colelem" id="u321"><!-- horizontal box -->
+     <a class="nonblock nontext MenuItem MenuItemWithSubMenu rgba-background clearfix grpelem" id="u322" href="contact.html"><!-- horizontal box --><div class="MenuItemLabel clearfix grpelem" id="u324-4"><!-- content --><p>CONTACT</p></div></a>
+    </div>
+   </nav>
+   <div class="clip_frame pinned-colelem" id="u357"><!-- image -->
+    <img class="block" id="u357_img" src="images/home.png" data-hidpi-src="images/home_2x.png" alt="" width="17" height="15"/>
+   </div>
+   <div class="rgba-background pinned-colelem" id="u350"><!-- simple frame --></div>
+   <div class="clip_frame pinned-colelem" id="u359"><!-- image -->
+    <img class="block" id="u359_img" src="images/gallery.png" data-hidpi-src="images/gallery_2x.png" alt="" width="19" height="17"/>
+   </div>
+   <div class="rgba-background pinned-colelem" id="u351"><!-- simple frame --></div>
+   <div class="clip_frame pinned-colelem" id="u3233"><!-- image -->
+    <img class="block" id="u3233_img" src="images/artwork.png" data-hidpi-src="images/artwork_2x.png" alt="" width="16" height="17"/>
+   </div>
+   <div class="rgba-background pinned-colelem" id="u3220"><!-- simple frame --></div>
+   <img class="pinned-colelem" id="u670" alt="" width="21" height="20" src="images/about-u670.png" data-hidpi-src="images/about-u670_2x.png"/><!-- rasterized frame -->
+   <div class="rgba-background pinned-colelem" id="u352"><!-- simple frame --></div>
+   <div class="clip_frame pinned-colelem" id="u355"><!-- image -->
+    <img class="block" id="u355_img" src="images/contact.png" data-hidpi-src="images/contact_2x.png" alt="" width="17" height="14"/>
+   </div>
+   <div class="clearfix pinned-colelem" id="u361"><!-- group -->
+    <a class="nonblock nontext rgba-background rounded-corners clearfix grpelem" id="u362" href="https://www.facebook.com/jeffrey.neumann1"><!-- group --><img class="grpelem" id="u365" alt="" width="7" height="12" src="images/facebook-u365.png" data-hidpi-src="images/facebook-u365_2x.png"/><!-- rasterized frame --></a>
+    <a class="nonblock nontext rgba-background rounded-corners clearfix grpelem" id="u363" href="http://www.twitter.com/musethemes"><!-- group --><img class="grpelem" id="u369" alt="" width="15" height="12" src="images/twitter-u369.png" data-hidpi-src="images/twitter-u369_2x.png"/><!-- rasterized frame --></a>
+    <a class="nonblock nontext rgba-background rounded-corners clearfix grpelem" id="u364" href="https://plus.google.com/u/0/104695206456411626423/about/p/pub"><!-- group --><img class="grpelem" id="u372" alt="" width="12" height="12" src="images/google-u372.png" data-hidpi-src="images/google-u372_2x.png"/><!-- rasterized frame --></a>
+    <a class="nonblock nontext rgba-background rounded-corners clearfix grpelem" id="u371" href="http://#"><!-- group --><img class="grpelem" id="u367" alt="" width="9" height="12" src="images/pinterest-u367.png" data-hidpi-src="images/pinterest-u367_2x.png"/><!-- rasterized frame --></a>
+   </div>
+   <div class="footer-link clearfix pinned-colelem" id="u374-6"><!-- content -->
+    <p id="u374-4"><a class="nonblock" href="http://www.muse-themes.com" target="_blank"><span id="u374">© 2015&nbsp; | JFSN.com/</span><span id="u374-2">mR_sNOWmann</span></a></p>
+   </div>
+   <div class="verticalspacer"></div>
+  </div>
+  <!-- JS includes -->
+  <script type="text/javascript">
+   if (document.location.protocol != 'https:') document.write('\x3Cscript src="http://musecdn2.businesscatalyst.com/scripts/4.0/jquery-1.8.3.min.js" type="text/javascript">\x3C/script>');
+</script>
+  <script type="text/javascript">
+   window.jQuery || document.write('\x3Cscript src="scripts/jquery-1.8.3.min.js" type="text/javascript">\x3C/script>');
+</script>
+  <script src="scripts/museutils.js?521960461" type="text/javascript"></script>
+  <script src="scripts/webpro.js?220831917" type="text/javascript"></script>
+  <script src="scripts/musewpslideshow.js?224651946" type="text/javascript"></script>
+  <script src="scripts/jquery.museoverlay.js?276313855" type="text/javascript"></script>
+  <script src="scripts/touchswipe.js?325405309" type="text/javascript"></script>
+  <script src="scripts/jquery.musepolyfill.bgsize.js?349594875" type="text/javascript"></script>
+  <script src="scripts/jquery.musemenu.js?397543671" type="text/javascript"></script>
+  <script src="scripts/jquery.watch.js?56779320" type="text/javascript"></script>
+  <!-- Other scripts -->
+  <script type="text/javascript">
+   $(document).ready(function() { try {
+(function(){var a={},b=function(a){if(a.match(/^rgb/))return a=a.replace(/\s+/g,"").match(/([\d\,]+)/gi)[0].split(","),(parseInt(a[0])<<16)+(parseInt(a[1])<<8)+parseInt(a[2]);if(a.match(/^\#/))return parseInt(a.substr(1),16);return 0};(function(){$('link[type="text/css"]').each(function(){var b=($(this).attr("href")||"").match(/\/?css\/([\w\-]+\.css)\?(\d+)/);b&&b[1]&&b[2]&&(a[b[1]]=b[2])})})();(function(){$("body").append('<div class="version" style="display:none; width:1px; height:1px;"></div>');
+for(var c=$(".version"),d=0;d<Muse.assets.required.length;){var f=Muse.assets.required[d],g=f.match(/([\w\-\.]+)\.(\w+)$/),k=g&&g[1]?g[1]:null,g=g&&g[2]?g[2]:null;switch(g.toLowerCase()){case "css":k=k.replace(/\W/gi,"_").replace(/^([^a-z])/gi,"_$1");c.addClass(k);var g=b(c.css("color")),h=b(c.css("background-color"));g!=0||h!=0?(Muse.assets.required.splice(d,1),"undefined"!=typeof a[f]&&(g!=a[f]>>>24||h!=(a[f]&16777215))&&Muse.assets.outOfDate.push(f)):d++;c.removeClass(k);break;case "js":k.match(/^jquery-[\d\.]+/gi)&&
+typeof $!="undefined"?Muse.assets.required.splice(d,1):d++;break;default:throw Error("Unsupported file type: "+g);}}c.remove();if(Muse.assets.outOfDate.length||Muse.assets.required.length)c="Some files on the server may be missing or incorrect. Clear browser cache and try again. If the problem persists please contact website author.",(d=location&&location.search&&location.search.match&&location.search.match(/muse_debug/gi))&&Muse.assets.outOfDate.length&&(c+="\nOut of date: "+Muse.assets.outOfDate.join(",")),d&&Muse.assets.required.length&&(c+="\nMissing: "+Muse.assets.required.join(","))})()})();/* body */
+Muse.Utils.transformMarkupToFixBrowserProblemsPreInit();/* body */
+Muse.Utils.detectScreenResolution();/* HiDPI screens */
+Muse.Utils.prepHyperlinks(true);/* body */
+Muse.Utils.initWidget('#slideshowu1295', function(elem) { $(elem).data('widget', new WebPro.Widget.ContentSlideShow(elem, {heroFitting:'fillFrameProportionally',autoPlay:true,displayInterval:3500,slideLinkStopsSlideShow:false,transitionStyle:'vertical',lightboxEnabled_runtime:false,shuffle:false,transitionDuration:600,enableSwipe:true,elastic:'fullScreen',resumeAutoplay:true,resumeAutoplayInterval:3000,playOnce:false})); });/* #slideshowu1295 */
+Muse.Utils.initWidget('.MenuBar', function(elem) { return $(elem).museMenu(); });/* unifiedNavBar */
+Muse.Utils.fullPage('#page');/* 100% height page */
+Muse.Utils.showWidgetsWhenReady();/* body */
+Muse.Utils.transformMarkupToFixBrowserProblems();/* body */
+} catch(e) { if (e && 'function' == typeof e.notify) e.notify(); else Muse.Assert.fail('Error calling selector function:' + e); }});
+</script>
+   </body>
+</html>

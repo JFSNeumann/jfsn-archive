@@ -1,0 +1,93 @@
+/*------------------------------------------------------------------*/ 
+/*	3) Note: Design for a width of 320 px
+/*------------------------------------------------------------------*/
+@media only screen and (min-width: 200px) and (max-width: 479px){
+
+/*------------------------------------------------------------------*/ 
+/*	1) Header
+/*------------------------------------------------------------------*/
+.logo{
+	width:300px;
+	text-align:center;
+	margin:0;
+	float:left;
+}
+.logo a{
+	float:none;
+}
+.logo span{
+	display:none;
+}
+select.mobnav{
+	display:block;
+	width:300px;
+}
+.menu-toggle{
+	display:block;
+}
+#header{
+	padding-top:125px;
+}
+.slider{
+	width:300px;
+	margin:0;
+}
+.ser-block{
+	margin-left:10px;
+}
+.theme-default #slider, .slider-bot, .slider-shadow, .slider-shadow img{
+	width:300px;
+}
+.stunningtext h2{
+	margin:30px 0;
+}
+.title-left, .title-right{
+	display:none;
+}
+.team-image{
+	width:220px;
+	height:220px;
+	margin-left:30px;
+}
+.team-image img{
+	width:220px;
+	height:220px;
+}
+.team-social{
+	width:220px;
+	margin-left:30px;
+}
+/*------------------------------------------------------------------*/ 
+/*	2) Nav
+/*------------------------------------------------------------------*/
+#nav ul.menu{
+	display:none;
+}
+.project-list li{
+	margin:10px 10px 10px 30px;
+}
+.border-bottom{
+	margin:0;
+}
+.services p{
+	padding-right:0;
+}
+.pricing-table{
+	margin:30px 0 0 0;
+}
+
+/*------------------------------------------------------------------*/ 
+/*	3) Contact
+/*------------------------------------------------------------------*/
+.map{
+	width:260px;
+	margin-left:0;
+	height:250px;
+}
+.input-section input, .input-section textarea{
+	width:258px;
+}
+.input-section a.send{
+	width:260px;
+}
+}

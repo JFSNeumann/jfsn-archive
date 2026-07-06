@@ -1,0 +1,86 @@
+/************************************/
+/*	BASE STYLES 
+/************************************/
+body{
+	padding:0;	
+	margin:0;	
+	width:100%;	
+	height:100%;
+	font-size:14px;
+	-webkit-font-smoothing: antialiased; /* Fix for webkit rendering */
+	-webkit-text-size-adjust: 100%;
+	line-height:1.4;
+	font-family:'League', Arial, sans-serif;
+	height:1300px;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+	display: block; }
+*{
+	outline:none;
+	border:none;
+}
+a img{
+	border:none;
+}
+.spacer{
+	clear:both;	
+	width:100%;	
+	height:0;
+}
+.body-wrapper {
+	width:100%;		
+	margin:0 auto;	
+	padding:0;
+}
+.controller {
+	width:940px; 
+	height:auto; 
+	margin:0 auto;	
+	padding:0;
+}
+h1, h2, h4, h5{
+	font-weight:normal;
+	color:#333;
+	margin:0 0 15px 0;
+	font-family:'Museo', Arial, sans-serif;
+	text-shadow:3px 3px 6px #999999;
+}
+
+h6, h3{
+	font-weight:normal;
+	color:#333;
+	margin:0 0 15px 0;
+	font-family:'Museo', Arial, sans-serif;
+}
+
+p{
+	font-size:14px;
+	color:#333;
+	font-family:Arial, Helvetica, sans-serif;
+	margin-top:0;
+	margin-bottom:15px;
+}
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a, a{
+	color:#87B52F;
+}
+a:hover{
+	text-decoration:none;
+}
+a, a > * {
+	text-decoration: none;
+	-webkit-transition: background-color .3s ease, border .3s ease, color .3s ease, opacity .3s ease-in-out;
+	   -moz-transition: background-color .3s ease, border .3s ease, color .3s ease, opacity .3s ease-in-out;
+	    -ms-transition: background-color .3s ease, border .3s ease, color .3s ease, opacity .3s ease-in-out;
+	     -o-transition: background-color .3s ease, border .3s ease, color .3s ease, opacity .3s ease-in-out;
+	        transition: background-color .3s ease, border .3s ease, color .3s ease, opacity .3s ease-in-out;
+}
+
+
+footer#footer h1,
+footer#footer h2,
+footer#footer h3,
+footer#footer h4,
+footer#footer h5,
+footer#footer h6 {color:#FFF;}
+/*footer#footer p{color:#fff;}*/
+footer#footer a{color:#16beef;}
