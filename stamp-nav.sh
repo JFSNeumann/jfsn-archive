@@ -26,7 +26,8 @@ TARGETS=(
   gallery-images.html mr-snowmann.html crosses.html collaboration.html
   privacy.html series.html wall.html 404.html api.html
   start-here.html favorites.html
-  stories.html why-i-made-things.html imagined-museum.html  1970s.html 1980s.html 1990s.html 2000s.html 2010s.html 2020s.html
+  stories.html why-i-made-things.html imagined-museum.html working-history/index.html
+  1970s.html 1980s.html 1990s.html 2000s.html 2010s.html 2020s.html
   curatorial-map.html curatorial-companion.html
   style-guide.html
 )
