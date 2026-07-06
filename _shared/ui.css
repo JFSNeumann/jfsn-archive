@@ -541,38 +541,6 @@ button[data-filter-active="true"],
 
 /* ─── Link destination preview (tooltip) ────────────────────────────────── */
 
-a[data-link-title] {
-  position: relative;
-}
-
-a[data-link-title]::after {
-  content: attr(data-link-title);
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-8px);
-  background: #0B0B0B;
-  color: #fcf9f3;
-  padding: 4px 8px;
-  border-radius: 0;
-  font-size: 11px;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-  z-index: 100;
-  font-family: Inter, sans-serif;
-  letter-spacing: 0.05em;
-}
-
-a[data-link-title]:hover::after {
-  opacity: 1;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  a[data-link-title]::after { transition: none; }
-}
-
 /* ─── Scroll position indicator ────────────────────────────────────────── */
 
 #scroll-indicator {
