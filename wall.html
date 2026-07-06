@@ -31,13 +31,13 @@
     .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;}
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;}}
     .wall-head {
-      padding: clamp(2rem, 4vw, 3rem) 0 clamp(1rem, 2vw, 1.5rem);
+      padding: clamp(2rem, 4vw, 3rem) 0 clamp(0.5rem, 1vw, 0.75rem);
       display: flex;
       align-items: baseline;
       gap: 1.5rem;
       flex-wrap: wrap;
       border-bottom: 1px solid rgba(11,11,11,0.12);
-      margin-bottom: 0;
+      margin-bottom: clamp(60px, 7vw, 100px);
     }
     .wall-head__title {
       font-family: 'Playfair Display', Georgia, serif;
@@ -78,6 +78,46 @@
     }
     @media (max-width: 600px) {
       .wall-grid { grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); }
+    }
+
+    .wall-grid {
+      position: relative;
+    }
+    .wall-survey-drone {
+      position: absolute;
+      top: clamp(6px, 8%, 12px);
+      right: clamp(8px, 4%, 16px);
+      width: 28px;
+      height: 28px;
+      opacity: 0.28;
+      pointer-events: none;
+      z-index: 1;
+      animation: drone-observe 18s ease-in-out infinite;
+    }
+    .wall-survey-drone svg {
+      width: 100%;
+      height: 100%;
+    }
+    .wall-survey-drone .rotor {
+      animation: rotor-gentle 6s linear infinite;
+      transform-origin: 50% 50%;
+    }
+    @keyframes drone-observe {
+      0% { transform: translate(0, 0) scale(1); opacity: 0.28; }
+      15% { transform: translate(-2px, 1px) scale(0.98); opacity: 0.26; }
+      30% { transform: translate(1px, -2px) scale(1.01); opacity: 0.30; }
+      50% { transform: translate(-1px, 0) scale(1); opacity: 0.28; }
+      70% { transform: translate(2px, 1px) scale(0.99); opacity: 0.27; }
+      85% { transform: translate(0, -1px) scale(1); opacity: 0.29; }
+      100% { transform: translate(0, 0) scale(1); opacity: 0.28; }
+    }
+    @keyframes rotor-gentle {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .wall-survey-drone { animation: none !important; }
+      .wall-survey-drone .rotor { animation: none !important; }
     }
   </style>
   <!-- Phase 1 Enhancement Stylesheets -->
@@ -329,7 +369,6 @@ header.header-hidden{transform:translateY(-100%)}
 </script>
 <script src="_shared/nav-late.bundle.js" defer></script>
 <!-- SCRIPTS:END -->
-<script src="_shared/drone-survey.js?v=202607031311" defer></script>
 <main id="main" class="pt-16">
   <div class="container">
     <div class="wall-head">
@@ -337,81 +376,18 @@ header.header-hidden{transform:translateY(-100%)}
       <p class="wall-head__meta">1,000+ works &middot; 1974&ndash;present &middot; Every piece</p>
     </div>
   </div>
-  <style>
-  .wall-drones {
-    position: relative;
-    height: clamp(60px, 12vw, 120px);
-    margin: clamp(1rem, 3vw, 2rem) 0;
-    overflow: hidden;
-  }
-  .wall-drone {
-    position: absolute;
-    opacity: 0.6;
-    width: clamp(40px, 8vw, 64px);
-    height: clamp(40px, 8vw, 64px);
-  }
-  .wall-drone-1 { top: 10%; left: 5%; animation: drone-patrol-1 18s ease-in-out infinite; }
-  .wall-drone-2 { top: 50%; right: 8%; animation: drone-patrol-2 22s ease-in-out infinite; animation-delay: 2s; }
-  @keyframes drone-patrol-1 {
-    0% { transform: translateX(-40px) translateY(0); }
-    25% { transform: translateX(clamp(10vw, 200px, 400px)) translateY(-8px); }
-    50% { transform: translateX(clamp(15vw, 300px, 600px)) translateY(0); }
-    75% { transform: translateX(clamp(5vw, 100px, 200px)) translateY(6px); }
-    100% { transform: translateX(-40px) translateY(0); }
-  }
-  @keyframes drone-patrol-2 {
-    0% { transform: translateX(60px) translateY(0); }
-    20% { transform: translateX(clamp(10vw, 150px, 350px)) translateY(-10px); }
-    40% { transform: translateX(clamp(20vw, 250px, 500px)) translateY(-6px); }
-    60% { transform: translateX(clamp(10vw, 150px, 350px)) translateY(8px); }
-    80% { transform: translateX(0) translateY(4px); }
-    100% { transform: translateX(60px) translateY(0); }
-  }
-  .wall-drone svg { width: 100%; height: 100%; }
-  .wall-drone .rotor { animation: rotor-spin-wall 2.8s linear infinite; }
-  @keyframes rotor-spin-wall { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-  @media (prefers-reduced-motion: reduce) {
-    .wall-drone { animation: none !important; }
-    .wall-drone .rotor { animation: none !important; }
-  }
-  @media (max-width: 768px) {
-    .wall-drones { height: clamp(50px, 10vw, 80px); }
-    .wall-drone-1 { left: 10%; }
-    .wall-drone-2 { right: 12%; }
-  }
-  @media (max-width: 480px) {
-    .wall-drones { display: none; }
-  }
-  </style>
-  <div class="wall-drones" aria-label="Ambient drones surveying the collection" role="presentation">
-    <svg class="wall-drone wall-drone-1" viewBox="0 0 80 80" aria-hidden="true">
-      <defs><filter id="wall-drone-shadow-1" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="1" stdDeviation="1" flood-opacity="0.04" flood-color="#000000"/></filter></defs>
-      <rect x="30" y="35" width="20" height="10" rx="2" fill="currentColor" opacity="0.7" filter="url(#wall-drone-shadow-1)"/>
-      <line x1="40" y1="32" x2="40" y2="12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
-      <circle class="rotor" cx="40" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1.2" style="transform-origin:50% 50%;"/>
-      <line x1="48" y1="40" x2="68" y2="40" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
-      <circle class="rotor" cx="72" cy="40" r="4" fill="none" stroke="currentColor" stroke-width="1.2" style="transform-origin:50% 50%;"/>
-      <line x1="40" y1="48" x2="40" y2="68" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
-      <circle class="rotor" cx="40" cy="72" r="4" fill="none" stroke="currentColor" stroke-width="1.2" style="transform-origin:50% 50%;"/>
-      <line x1="32" y1="40" x2="12" y2="40" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
-      <circle class="rotor" cx="8" cy="40" r="4" fill="none" stroke="currentColor" stroke-width="1.2" style="transform-origin:50% 50%;"/>
-      <circle cx="40" cy="55" r="2.5" fill="currentColor" opacity="0.5"/>
-    </svg>
-    <svg class="wall-drone wall-drone-2" viewBox="0 0 80 80" aria-hidden="true">
-      <defs><filter id="wall-drone-shadow-2" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="1" stdDeviation="1" flood-opacity="0.04" flood-color="#000000"/></filter></defs>
-      <rect x="32" y="34" width="16" height="12" rx="2" fill="currentColor" opacity="0.65" filter="url(#wall-drone-shadow-2)"/>
-      <line x1="40" y1="30" x2="40" y2="8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
-      <circle class="rotor" cx="40" cy="6" r="3.5" fill="none" stroke="currentColor" stroke-width="1" style="transform-origin:50% 50%;"/>
-      <line x1="50" y1="40" x2="72" y2="40" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
-      <circle class="rotor" cx="74" cy="40" r="3.5" fill="none" stroke="currentColor" stroke-width="1" style="transform-origin:50% 50%;"/>
-      <line x1="40" y1="50" x2="40" y2="72" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
-      <circle class="rotor" cx="40" cy="74" r="3.5" fill="none" stroke="currentColor" stroke-width="1" style="transform-origin:50% 50%;"/>
-      <line x1="30" y1="40" x2="8" y2="40" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
-      <circle class="rotor" cx="6" cy="40" r="3.5" fill="none" stroke="currentColor" stroke-width="1" style="transform-origin:50% 50%;"/>
-      <circle cx="40" cy="56" r="2" fill="currentColor" opacity="0.5"/>
-    </svg>
-  </div>
   <div class="wall-grid" aria-label="All 1,000+ works">
+    <svg class="wall-survey-drone" viewBox="0 0 64 64" aria-hidden="true">
+      <g opacity="0.8">
+        <circle cx="32" cy="24" r="6" fill="currentColor"/>
+        <line x1="32" y1="30" x2="32" y2="46" stroke="currentColor" stroke-width="1" opacity="0.6"/>
+        <circle class="rotor" cx="32" cy="48" r="3" fill="none" stroke="currentColor" stroke-width="1"/>
+        <line x1="24" y1="24" x2="12" y2="24" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+        <circle class="rotor" cx="10" cy="24" r="2.5" fill="none" stroke="currentColor" stroke-width="0.8"/>
+        <line x1="40" y1="24" x2="52" y2="24" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+        <circle class="rotor" cx="54" cy="24" r="2.5" fill="none" stroke="currentColor" stroke-width="0.8"/>
+      </g>
+    </svg>
 <a class="wall-tile" href="artwork.html?id=art0001" title="Untitled (Figure, Blue Ground), 1970" style="background:#ff003c;"><img src="artworks/mini/art0001.avif" srcset="artworks/micro/art0001.avif 80w, artworks/mini/art0001.avif 200w" sizes="(max-width:600px) 64px, 56px" alt="Untitled (Figure, Blue Ground), 1970" loading="lazy" width="200" height="200"></a>
 <a class="wall-tile" href="artwork.html?id=art0002" title="Reliquary, 1990" style="background:#c3c3be;"><img src="artworks/mini/art0002.avif" srcset="artworks/micro/art0002.avif 80w, artworks/mini/art0002.avif 200w" sizes="(max-width:600px) 64px, 56px" alt="Reliquary, 1990" loading="lazy" width="200" height="200"></a>
 <a class="wall-tile" href="artwork.html?id=art0003" title="Sortie, 1990" style="background:#1e1e28;"><img src="artworks/mini/art0003.avif" srcset="artworks/micro/art0003.avif 80w, artworks/mini/art0003.avif 200w" sizes="(max-width:600px) 64px, 56px" alt="Sortie, 1990" loading="lazy" width="200" height="200"></a>
