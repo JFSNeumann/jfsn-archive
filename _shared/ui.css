@@ -129,6 +129,7 @@ header nav a.nav-underline-active::after {
 footer a {
   position: relative;
   text-decoration: none;
+  display: inline-block;
 }
 
 footer a::after {
@@ -2349,6 +2350,7 @@ footer a,
 .content a {
   position: relative;
   text-decoration: none;
+  display: inline-block;
 }
 
 main a::after,
