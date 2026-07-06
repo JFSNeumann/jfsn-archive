@@ -425,35 +425,43 @@ header.header-hidden{transform:translateY(-100%)}
     .drone-companion line { stroke: var(--drone-body); }
     .drone-companion .rotor { stroke: var(--drone-rotor); }
     .drone-companion .camera { fill: var(--drone-rotor); }
+    .drone-companion-why { animation: drone-hover-why 8s ease-in-out infinite; }
+    .drone-companion-why .rotor { animation: rotor-spin-why 3s linear infinite; }
+    @keyframes drone-hover-why { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-3px); } }
+    @keyframes rotor-spin-why { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+    @media (prefers-reduced-motion: reduce) {
+      .drone-companion-why { animation: none; }
+      .drone-companion-why .rotor { animation: none; }
+    }
     </style>
     <div class="max-w-container-max mx-auto">
-      <div style="display:flex;align-items:flex-start;gap:clamp(20px,5vw,60px);padding-left:clamp(0,calc((100vw - 1440px) / 2),60px);">
-        <!-- Companion drone illustration (desktop only, left margin space) -->
-        <svg viewBox="0 0 80 80" width="56" height="56" class="drone-companion" style="flex-shrink:0;margin-top:4px;opacity:0.7;" aria-hidden="true">
+      <div style="display:flex;align-items:flex-start;gap:clamp(20px,5vw,60px);justify-content:space-between;">
+        <!-- Text content -->
+        <div style="min-width:0;flex:0 1 60%;">
+          <h1 style="font-family:'Playfair Display',serif;font-size:clamp(44px,6.5vw,80px);font-weight:700;line-height:1.05;letter-spacing:-0.02em;color:#0B0B0B;">Why I Made Things.</h1>
+          <p style="font-family:Inter,sans-serif;font-size:17px;color:#575757;margin-top:16px;max-width:560px;line-height:1.6;">In Jeff's own words — drawn from oral history sessions conducted in 2026. Confirmed by Jeff as accurate in substance.</p>
+        </div>
+        <!-- Companion drone illustration (right margin space) -->
+        <svg viewBox="0 0 80 80" width="56" height="56" class="drone-companion drone-companion-why" style="flex-shrink:0;margin-top:8px;opacity:0.7;transform-origin:center;" aria-hidden="true">
           <defs>
-            <filter id="drone-shadow" x="-50%" y="-50%" width="200%" height="200%">
+            <filter id="drone-shadow-why" x="-50%" y="-50%" width="200%" height="200%">
               <feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-opacity="0.06" flood-color="#000000"/>
             </filter>
           </defs>
           <!-- Main body -->
-          <rect x="30" y="35" width="20" height="10" rx="2" filter="url(#drone-shadow)"/>
+          <rect x="30" y="35" width="20" height="10" rx="2" filter="url(#drone-shadow-why)"/>
           <!-- Arms and rotors (4 quadrants) -->
           <line x1="40" y1="32" x2="40" y2="12" stroke-width="1.5" stroke-linecap="round"/>
-          <circle class="rotor" cx="40" cy="8" r="4" fill="none" stroke-width="1.5"/>
+          <circle class="rotor" cx="40" cy="8" r="4" fill="none" stroke-width="1.5" style="transform-origin:40px 8px;"/>
           <line x1="48" y1="40" x2="68" y2="40" stroke-width="1.5" stroke-linecap="round"/>
-          <circle class="rotor" cx="72" cy="40" r="4" fill="none" stroke-width="1.5"/>
+          <circle class="rotor" cx="72" cy="40" r="4" fill="none" stroke-width="1.5" style="transform-origin:72px 40px;"/>
           <line x1="40" y1="48" x2="40" y2="68" stroke-width="1.5" stroke-linecap="round"/>
-          <circle class="rotor" cx="40" cy="72" r="4" fill="none" stroke-width="1.5"/>
+          <circle class="rotor" cx="40" cy="72" r="4" fill="none" stroke-width="1.5" style="transform-origin:40px 72px;"/>
           <line x1="32" y1="40" x2="12" y2="40" stroke-width="1.5" stroke-linecap="round"/>
-          <circle class="rotor" cx="8" cy="40" r="4" fill="none" stroke-width="1.5"/>
+          <circle class="rotor" cx="8" cy="40" r="4" fill="none" stroke-width="1.5" style="transform-origin:8px 40px;"/>
           <!-- Camera pod -->
           <circle class="camera" cx="40" cy="55" r="3" opacity="0.6"/>
         </svg>
-        <!-- Text content -->
-        <div style="min-width:0;">
-          <h1 style="font-family:'Playfair Display',serif;font-size:clamp(44px,6.5vw,80px);font-weight:700;line-height:1.05;letter-spacing:-0.02em;color:#0B0B0B;">Why I Made Things.</h1>
-          <p style="font-family:Inter,sans-serif;font-size:17px;color:#575757;margin-top:16px;max-width:560px;line-height:1.6;">In Jeff's own words — drawn from oral history sessions conducted in 2026. Confirmed by Jeff as accurate in substance.</p>
-        </div>
       </div>
     </div>
   </div>
