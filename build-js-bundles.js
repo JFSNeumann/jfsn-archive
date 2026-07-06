@@ -29,7 +29,6 @@ const ROOT = __dirname;
 
 const CORE_FILES = [
   '_shared/ui.js',
-  '_shared/lightbox.js',
   '_shared/page-transitions.js',
   '_shared/lazy-load.js',
 ];
