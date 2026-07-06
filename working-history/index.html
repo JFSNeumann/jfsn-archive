@@ -49,9 +49,43 @@
   .site-record {
     padding: 20px 0;
     border-bottom: 1px solid #e3bfb1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  @media(min-width: 768px) {
+    .site-record {
+      flex-direction: row;
+      gap: 20px;
+      align-items: flex-start;
+    }
   }
   .site-record:last-child {
     border-bottom: none;
+  }
+  .site-thumbnail {
+    flex-shrink: 0;
+    width: 200px;
+  }
+  .site-thumbnail img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid #e3bfb1;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .site-thumbnail a {
+    text-decoration: none;
+    display: block;
+  }
+  .site-thumbnail a:hover img {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    border-color: #c4c7c7;
+  }
+  .site-content {
+    flex: 1;
   }
   .site-title {
     font-family: Inter, sans-serif;
@@ -188,53 +222,141 @@ header.header-hidden{transform:translateY(-100%)}
 
     <span class="section-label">Documented Sites</span>
 
-    <a href="site001/" class="site-record" style="text-decoration:none;color:inherit;display:block;transition:background-color 0.2s ease;">
-      <div class="site-title">Untitled Fine Art Website (c. 2000)</div>
-      <div class="site-id">Record: site001</div>
-      <div class="site-description">Personal art website using HTML tables without CSS framework; hand-authored presentation of early digital work.</div>
-    </a>
+    <div class="site-record" style="text-decoration:none;color:inherit;">
+      <div class="site-thumbnail">
+        <a href="websites/fine-art-2000/" target="_blank" style="text-decoration:none;">
+          <picture>
+            <source srcset="../assets/images/working-history/site001.avif" type="image/avif"/>
+            <img src="../assets/images/working-history/site001.jpg" alt="Homepage of the preserved Fine Art Website (c. 2000)" loading="lazy" width="200" height="150"/>
+          </picture>
+        </a>
+      </div>
+      <div class="site-content">
+        <h3 class="site-title">Untitled Fine Art Website (c. 2000)</h3>
+        <div class="site-id">Record: site001</div>
+        <p class="site-description">Personal art website using HTML tables without CSS framework; hand-authored presentation of early digital work.</p>
+        <a href="websites/fine-art-2000/" target="_blank" style="display:inline-block;margin-top:8px;font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#FF6600;text-decoration:none;transition:color 0.2s ease;" onmouseover="this.style.color='#B84700'" onmouseout="this.style.color='#FF6600'">Explore This Website →</a>
+      </div>
+    </div>
 
-    <a href="site002/" class="site-record" style="text-decoration:none;color:inherit;display:block;transition:background-color 0.2s ease;">
-      <div class="site-title">mR_sNOWmann (2015)</div>
-      <div class="site-id">Record: site002</div>
-      <div class="site-description">Print-sales site for a recurring character; Adobe Muse export with dated photographs of a physical street art practice.</div>
-    </a>
+    <div class="site-record" style="text-decoration:none;color:inherit;">
+      <div class="site-thumbnail">
+        <a href="websites/mr-snowmann/" target="_blank" style="text-decoration:none;">
+          <picture>
+            <source srcset="../assets/images/working-history/site002.avif" type="image/avif"/>
+            <img src="../assets/images/working-history/site002.jpg" alt="Homepage of the mR_sNOWmann street art portfolio (2015)" loading="lazy" width="200" height="150"/>
+          </picture>
+        </a>
+      </div>
+      <div class="site-content">
+        <h3 class="site-title">mR_sNOWmann (2015)</h3>
+        <div class="site-id">Record: site002</div>
+        <p class="site-description">Print-sales site for a recurring character; Adobe Muse export with dated photographs of a physical street art practice.</p>
+        <a href="websites/mr-snowmann/" target="_blank" style="display:inline-block;margin-top:8px;font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#FF6600;text-decoration:none;transition:color 0.2s ease;" onmouseover="this.style.color='#B84700'" onmouseout="this.style.color='#FF6600'">Explore This Website →</a>
+      </div>
+    </div>
 
-    <a href="site003/" class="site-record" style="text-decoration:none;color:inherit;display:block;transition:background-color 0.2s ease;">
-      <div class="site-title">Sebastian Website (Original) (2018–2020)</div>
-      <div class="site-id">Record: site003</div>
-      <div class="site-description">Family collaboration site documenting a grandson's creative output alongside grandfather/grandson collaborative pieces; Adobe Muse export with responsive breakpoints.</div>
-    </a>
+    <div class="site-record" style="text-decoration:none;color:inherit;">
+      <div class="site-thumbnail">
+        <a href="websites/sebastian-v1/" target="_blank" style="text-decoration:none;">
+          <picture>
+            <source srcset="../assets/images/working-history/site003.avif" type="image/avif"/>
+            <img src="../assets/images/working-history/site003.jpg" alt="Homepage of the Sebastian Website Original with creative categories (2018–2020)" loading="lazy" width="200" height="150"/>
+          </picture>
+        </a>
+      </div>
+      <div class="site-content">
+        <h3 class="site-title">Sebastian Website (Original) (2018–2020)</h3>
+        <div class="site-id">Record: site003</div>
+        <p class="site-description">Family collaboration site documenting a grandson's creative output alongside grandfather/grandson collaborative pieces; Adobe Muse export with responsive breakpoints.</p>
+        <a href="websites/sebastian-v1/" target="_blank" style="display:inline-block;margin-top:8px;font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#FF6600;text-decoration:none;transition:color 0.2s ease;" onmouseover="this.style.color='#B84700'" onmouseout="this.style.color='#FF6600'">Explore This Website →</a>
+      </div>
+    </div>
 
-    <a href="site004/" class="site-record" style="text-decoration:none;color:inherit;display:block;transition:background-color 0.2s ease;">
-      <div class="site-title">JFSN Portfolio (2014)</div>
-      <div class="site-id">Record: site004</div>
-      <div class="site-description">Professional portfolio using custom jQuery; earliest confirmed node in the professional portfolio lineage with references to earlier unnamed work.</div>
-    </a>
+    <div class="site-record" style="text-decoration:none;color:inherit;">
+      <div class="site-thumbnail">
+        <a href="websites/jfsn-2014/" target="_blank" style="text-decoration:none;">
+          <picture>
+            <source srcset="../assets/images/working-history/site004.avif" type="image/avif"/>
+            <img src="../assets/images/working-history/site004.jpg" alt="Homepage of the JFSN Portfolio (2014)" loading="lazy" width="200" height="150"/>
+          </picture>
+        </a>
+      </div>
+      <div class="site-content">
+        <h3 class="site-title">JFSN Portfolio (2014)</h3>
+        <div class="site-id">Record: site004</div>
+        <p class="site-description">Professional portfolio using custom jQuery; earliest confirmed node in the professional portfolio lineage with references to earlier unnamed work.</p>
+        <a href="websites/jfsn-2014/" target="_blank" style="display:inline-block;margin-top:8px;font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#FF6600;text-decoration:none;transition:color 0.2s ease;" onmouseover="this.style.color='#B84700'" onmouseout="this.style.color='#FF6600'">Explore This Website →</a>
+      </div>
+    </div>
 
-    <a href="site005/" class="site-record" style="text-decoration:none;color:inherit;display:block;transition:background-color 0.2s ease;">
-      <div class="site-title">JFSN Portfolio (2016)</div>
-      <div class="site-id">Record: site005</div>
-      <div class="site-description">Adobe Muse portfolio with responsive mobile and tablet variants; documents four named client projects and internal references to prior portfolio iterations.</div>
-    </a>
+    <div class="site-record" style="text-decoration:none;color:inherit;">
+      <div class="site-thumbnail">
+        <a href="websites/jfsn-2016/" target="_blank" style="text-decoration:none;">
+          <picture>
+            <source srcset="../assets/images/working-history/site005.avif" type="image/avif"/>
+            <img src="../assets/images/working-history/site005.jpg" alt="Homepage of the JFSN Portfolio (2016) with Material Design interface" loading="lazy" width="200" height="150"/>
+          </picture>
+        </a>
+      </div>
+      <div class="site-content">
+        <h3 class="site-title">JFSN Portfolio (2016)</h3>
+        <div class="site-id">Record: site005</div>
+        <p class="site-description">Adobe Muse portfolio with responsive mobile and tablet variants; documents four named client projects and internal references to prior portfolio iterations.</p>
+        <a href="websites/jfsn-2016/" target="_blank" style="display:inline-block;margin-top:8px;font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#FF6600;text-decoration:none;transition:color 0.2s ease;" onmouseover="this.style.color='#B84700'" onmouseout="this.style.color='#FF6600'">Explore This Website →</a>
+      </div>
+    </div>
 
-    <a href="site006/" class="site-record" style="text-decoration:none;color:inherit;display:block;transition:background-color 0.2s ease;">
-      <div class="site-title">JFSN Portfolio — Designer Edition (2018)</div>
-      <div class="site-id">Record: site006</div>
-      <div class="site-description">The largest record in the collection; the only site spanning all three archival threads (professional design, family collaboration, fine art) with complete responsive variants and extensive asset caches.</div>
-    </a>
+    <div class="site-record" style="text-decoration:none;color:inherit;">
+      <div class="site-thumbnail">
+        <a href="websites/jfsn-2018/" target="_blank" style="text-decoration:none;">
+          <picture>
+            <source srcset="../assets/images/working-history/site006.avif" type="image/avif"/>
+            <img src="../assets/images/working-history/site006.jpg" alt="Homepage of the JFSN Portfolio Designer Edition (2018)" loading="lazy" width="200" height="150"/>
+          </picture>
+        </a>
+      </div>
+      <div class="site-content">
+        <h3 class="site-title">JFSN Portfolio — Designer Edition (2018)</h3>
+        <div class="site-id">Record: site006</div>
+        <p class="site-description">The largest record in the collection; the only site spanning all three archival threads (professional design, family collaboration, fine art) with complete responsive variants and extensive asset caches.</p>
+        <a href="websites/jfsn-2018/" target="_blank" style="display:inline-block;margin-top:8px;font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#FF6600;text-decoration:none;transition:color 0.2s ease;" onmouseover="this.style.color='#B84700'" onmouseout="this.style.color='#FF6600'">Explore This Website →</a>
+      </div>
+    </div>
 
-    <a href="site007/" class="site-record" style="text-decoration:none;color:inherit;display:block;transition:background-color 0.2s ease;">
-      <div class="site-title">Sebastian Website (Adobe Portfolio) (captured 2021)</div>
-      <div class="site-id">Record: site007</div>
-      <div class="site-description">Adobe Portfolio platform gallery-style presentation of the grandson's work; captured via website mirror rather than server export, with embedded third-party monitoring code.</div>
-    </a>
+    <div class="site-record" style="text-decoration:none;color:inherit;">
+      <div class="site-thumbnail">
+        <a href="websites/sebastian-v2/" target="_blank" style="text-decoration:none;">
+          <picture>
+            <source srcset="../assets/images/working-history/site007.avif" type="image/avif"/>
+            <img src="../assets/images/working-history/site007.jpg" alt="Homepage of the Sebastian Website Adobe Portfolio (captured 2021)" loading="lazy" width="200" height="150"/>
+          </picture>
+        </a>
+      </div>
+      <div class="site-content">
+        <h3 class="site-title">Sebastian Website (Adobe Portfolio) (captured 2021)</h3>
+        <div class="site-id">Record: site007</div>
+        <p class="site-description">Adobe Portfolio platform gallery-style presentation of the grandson's work; captured via website mirror rather than server export, with embedded third-party monitoring code.</p>
+        <a href="websites/sebastian-v2/" target="_blank" style="display:inline-block;margin-top:8px;font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#FF6600;text-decoration:none;transition:color 0.2s ease;" onmouseover="this.style.color='#B84700'" onmouseout="this.style.color='#FF6600'">Explore This Website →</a>
+      </div>
+    </div>
 
-    <a href="site008/" class="site-record" style="text-decoration:none;color:inherit;display:block;transition:background-color 0.2s ease;">
-      <div class="site-title">JFSN Portfolio (2020)</div>
-      <div class="site-id">Record: site008</div>
-      <div class="site-description">Bootstrap framework portfolio with minimal customization; preserved in unfinished state with incomplete personalization but complete navigation and content.</div>
-    </a>
+    <div class="site-record" style="text-decoration:none;color:inherit;">
+      <div class="site-thumbnail">
+        <a href="websites/jfsn-2020/" target="_blank" style="text-decoration:none;">
+          <picture>
+            <source srcset="../assets/images/working-history/site008.avif" type="image/avif"/>
+            <img src="../assets/images/working-history/site008.jpg" alt="Homepage of the JFSN Portfolio (2020)" loading="lazy" width="200" height="150"/>
+          </picture>
+        </a>
+      </div>
+      <div class="site-content">
+        <h3 class="site-title">JFSN Portfolio (2020)</h3>
+        <div class="site-id">Record: site008</div>
+        <p class="site-description">Bootstrap framework portfolio with minimal customization; preserved in unfinished state with incomplete personalization but complete navigation and content.</p>
+        <a href="websites/jfsn-2020/" target="_blank" style="display:inline-block;margin-top:8px;font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#FF6600;text-decoration:none;transition:color 0.2s ease;" onmouseover="this.style.color='#B84700'" onmouseout="this.style.color='#FF6600'">Explore This Website →</a>
+      </div>
+    </div>
 
     <div class="note-ongoing">
       <p>Additional Working History records will be added as documentation is completed.</p>
