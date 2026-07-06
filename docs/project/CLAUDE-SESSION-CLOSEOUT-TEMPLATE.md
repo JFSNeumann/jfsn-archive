@@ -1,5 +1,8 @@
 # JFSN Archive — Claude Code Session Closeout
 
+**Status:** Canonical session closeout template. Update only when repeated
+stewardship practice demonstrates a clear improvement.
+
 This is the standard closeout for every JFSN Archive stewardship session. Copy this
 template at the end of a session and fill in each section. Do not skip sections —
 if a section has nothing to report, say so explicitly rather than omitting it.
