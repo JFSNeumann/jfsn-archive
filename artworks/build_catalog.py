@@ -274,6 +274,7 @@ entries = [
     (SITE_URL + '/changes.html',            '0.4', 'weekly'),
     (SITE_URL + '/privacy.html',            '0.3', 'yearly'),
     (SITE_URL + '/style-guide.html',        '0.3', 'monthly'),
+    (SITE_URL + '/sitemap.html',            '0.7', 'monthly'),
 ]
 # Theme-based series pages
 for theme in theme_pages:
