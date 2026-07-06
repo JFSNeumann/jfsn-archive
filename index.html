@@ -1493,6 +1493,91 @@ header.header-hidden{transform:translateY(-100%)}
     </div>
   </section>
 
+  <style>
+  .home-drones-zone {
+    position: relative;
+    height: clamp(80px, 14vw, 140px);
+    margin: clamp(2rem, 4vw, 3.5rem) 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .home-drone {
+    position: relative;
+    opacity: 0.55;
+    width: clamp(48px, 9vw, 72px);
+    height: clamp(48px, 9vw, 72px);
+    animation: drone-observe 24s ease-in-out infinite;
+  }
+  .home-drone-1 { animation-delay: 0s; }
+  .home-drone-2 { animation-delay: 4s; }
+  .home-drone-3 { animation-delay: 8s; }
+  @keyframes drone-observe {
+    0%, 100% { transform: translateY(0) scale(1); }
+    20% { transform: translateY(-12px) scale(1.02); }
+    40% { transform: translateY(-8px) scale(0.98); }
+    60% { transform: translateY(-14px) scale(1.01); }
+    80% { transform: translateY(-4px) scale(0.99); }
+  }
+  .home-drone svg { width: 100%; height: 100%; }
+  .home-drone .rotor { animation: rotor-drift 3s linear infinite; }
+  @keyframes rotor-drift { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) {
+    .home-drone { animation: none !important; }
+    .home-drone .rotor { animation: none !important; }
+  }
+  @media (max-width: 768px) {
+    .home-drones-zone { margin: clamp(1.5rem, 3vw, 2.5rem) 0; }
+  }
+  @media (max-width: 480px) {
+    .home-drones-zone { display: none; }
+  }
+  </style>
+
+  <!-- Ambient drones arriving at the archive -->
+  <div class="home-drones-zone px-margin-desktop" aria-label="Drones surveying the archive" role="presentation">
+    <svg class="home-drone home-drone-1" viewBox="0 0 80 80" aria-hidden="true">
+      <defs><filter id="home-drone-shadow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="0.5" stdDeviation="0.8" flood-opacity="0.03" flood-color="#000000"/></filter></defs>
+      <rect x="28" y="36" width="24" height="8" rx="2" fill="currentColor" opacity="0.72" filter="url(#home-drone-shadow)"/>
+      <line x1="40" y1="32" x2="40" y2="10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.55"/>
+      <circle class="rotor" cx="40" cy="8" r="4.5" fill="none" stroke="currentColor" stroke-width="1.3" style="transform-origin:50% 50%;"/>
+      <line x1="50" y1="40" x2="72" y2="40" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.55"/>
+      <circle class="rotor" cx="74" cy="40" r="4.5" fill="none" stroke="currentColor" stroke-width="1.3" style="transform-origin:50% 50%;"/>
+      <line x1="40" y1="48" x2="40" y2="70" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.55"/>
+      <circle class="rotor" cx="40" cy="72" r="4.5" fill="none" stroke="currentColor" stroke-width="1.3" style="transform-origin:50% 50%;"/>
+      <line x1="30" y1="40" x2="8" y2="40" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.55"/>
+      <circle class="rotor" cx="6" cy="40" r="4.5" fill="none" stroke="currentColor" stroke-width="1.3" style="transform-origin:50% 50%;"/>
+      <circle cx="40" cy="54" r="3" fill="currentColor" opacity="0.45"/>
+    </svg>
+    <svg class="home-drone home-drone-2" viewBox="0 0 80 80" aria-hidden="true">
+      <defs><filter id="home-drone-shadow-2" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="0.5" stdDeviation="0.8" flood-opacity="0.03" flood-color="#000000"/></filter></defs>
+      <rect x="26" y="37" width="28" height="6" rx="1.5" fill="currentColor" opacity="0.68" filter="url(#home-drone-shadow-2)"/>
+      <line x1="40" y1="33" x2="40" y2="8" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" opacity="0.52"/>
+      <circle class="rotor" cx="40" cy="6" r="4" fill="none" stroke="currentColor" stroke-width="1.1" style="transform-origin:50% 50%;"/>
+      <line x1="52" y1="40" x2="74" y2="40" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" opacity="0.52"/>
+      <circle class="rotor" cx="76" cy="40" r="4" fill="none" stroke="currentColor" stroke-width="1.1" style="transform-origin:50% 50%;"/>
+      <line x1="40" y1="47" x2="40" y2="72" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" opacity="0.52"/>
+      <circle class="rotor" cx="40" cy="74" r="4" fill="none" stroke="currentColor" stroke-width="1.1" style="transform-origin:50% 50%;"/>
+      <line x1="28" y1="40" x2="6" y2="40" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" opacity="0.52"/>
+      <circle class="rotor" cx="4" cy="40" r="4" fill="none" stroke="currentColor" stroke-width="1.1" style="transform-origin:50% 50%;"/>
+      <circle cx="40" cy="55" r="2.5" fill="currentColor" opacity="0.4"/>
+    </svg>
+    <svg class="home-drone home-drone-3" viewBox="0 0 80 80" aria-hidden="true">
+      <defs><filter id="home-drone-shadow-3" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="0.5" stdDeviation="0.8" flood-opacity="0.03" flood-color="#000000"/></filter></defs>
+      <rect x="32" y="35" width="16" height="10" rx="2.5" fill="currentColor" opacity="0.75" filter="url(#home-drone-shadow-3)"/>
+      <line x1="40" y1="31" x2="40" y2="12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity="0.58"/>
+      <circle class="rotor" cx="40" cy="10" r="5" fill="none" stroke="currentColor" stroke-width="1.4" style="transform-origin:50% 50%;"/>
+      <line x1="48" y1="40" x2="70" y2="40" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity="0.58"/>
+      <circle class="rotor" cx="72" cy="40" r="5" fill="none" stroke="currentColor" stroke-width="1.4" style="transform-origin:50% 50%;"/>
+      <line x1="40" y1="49" x2="40" y2="68" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity="0.58"/>
+      <circle class="rotor" cx="40" cy="70" r="5" fill="none" stroke="currentColor" stroke-width="1.4" style="transform-origin:50% 50%;"/>
+      <line x1="32" y1="40" x2="10" y2="40" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity="0.58"/>
+      <circle class="rotor" cx="8" cy="40" r="5" fill="none" stroke="currentColor" stroke-width="1.4" style="transform-origin:50% 50%;"/>
+      <circle cx="40" cy="56" r="3.2" fill="currentColor" opacity="0.5"/>
+    </svg>
+  </div>
+
   <!-- The Wall band — the mass of the archive on one surface -->
   <section id="wall-section-d" class="border-t border-outline-variant" aria-label="The Wall">
     <div class="px-margin-desktop" style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;padding-top:40px;padding-bottom:18px;">

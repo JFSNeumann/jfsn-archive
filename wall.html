@@ -337,6 +337,80 @@ header.header-hidden{transform:translateY(-100%)}
       <p class="wall-head__meta">1,000+ works &middot; 1974&ndash;present &middot; Every piece</p>
     </div>
   </div>
+  <style>
+  .wall-drones {
+    position: relative;
+    height: clamp(60px, 12vw, 120px);
+    margin: clamp(1rem, 3vw, 2rem) 0;
+    overflow: hidden;
+  }
+  .wall-drone {
+    position: absolute;
+    opacity: 0.6;
+    width: clamp(40px, 8vw, 64px);
+    height: clamp(40px, 8vw, 64px);
+  }
+  .wall-drone-1 { top: 10%; left: 5%; animation: drone-patrol-1 18s ease-in-out infinite; }
+  .wall-drone-2 { top: 50%; right: 8%; animation: drone-patrol-2 22s ease-in-out infinite; animation-delay: 2s; }
+  @keyframes drone-patrol-1 {
+    0% { transform: translateX(-40px) translateY(0); }
+    25% { transform: translateX(clamp(10vw, 200px, 400px)) translateY(-8px); }
+    50% { transform: translateX(clamp(15vw, 300px, 600px)) translateY(0); }
+    75% { transform: translateX(clamp(5vw, 100px, 200px)) translateY(6px); }
+    100% { transform: translateX(-40px) translateY(0); }
+  }
+  @keyframes drone-patrol-2 {
+    0% { transform: translateX(60px) translateY(0); }
+    20% { transform: translateX(clamp(10vw, 150px, 350px)) translateY(-10px); }
+    40% { transform: translateX(clamp(20vw, 250px, 500px)) translateY(-6px); }
+    60% { transform: translateX(clamp(10vw, 150px, 350px)) translateY(8px); }
+    80% { transform: translateX(0) translateY(4px); }
+    100% { transform: translateX(60px) translateY(0); }
+  }
+  .wall-drone svg { width: 100%; height: 100%; }
+  .wall-drone .rotor { animation: rotor-spin-wall 2.8s linear infinite; }
+  @keyframes rotor-spin-wall { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) {
+    .wall-drone { animation: none !important; }
+    .wall-drone .rotor { animation: none !important; }
+  }
+  @media (max-width: 768px) {
+    .wall-drones { height: clamp(50px, 10vw, 80px); }
+    .wall-drone-1 { left: 10%; }
+    .wall-drone-2 { right: 12%; }
+  }
+  @media (max-width: 480px) {
+    .wall-drones { display: none; }
+  }
+  </style>
+  <div class="wall-drones" aria-label="Ambient drones surveying the collection" role="presentation">
+    <svg class="wall-drone wall-drone-1" viewBox="0 0 80 80" aria-hidden="true">
+      <defs><filter id="wall-drone-shadow-1" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="1" stdDeviation="1" flood-opacity="0.04" flood-color="#000000"/></filter></defs>
+      <rect x="30" y="35" width="20" height="10" rx="2" fill="currentColor" opacity="0.7" filter="url(#wall-drone-shadow-1)"/>
+      <line x1="40" y1="32" x2="40" y2="12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+      <circle class="rotor" cx="40" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1.2" style="transform-origin:50% 50%;"/>
+      <line x1="48" y1="40" x2="68" y2="40" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+      <circle class="rotor" cx="72" cy="40" r="4" fill="none" stroke="currentColor" stroke-width="1.2" style="transform-origin:50% 50%;"/>
+      <line x1="40" y1="48" x2="40" y2="68" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+      <circle class="rotor" cx="40" cy="72" r="4" fill="none" stroke="currentColor" stroke-width="1.2" style="transform-origin:50% 50%;"/>
+      <line x1="32" y1="40" x2="12" y2="40" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+      <circle class="rotor" cx="8" cy="40" r="4" fill="none" stroke="currentColor" stroke-width="1.2" style="transform-origin:50% 50%;"/>
+      <circle cx="40" cy="55" r="2.5" fill="currentColor" opacity="0.5"/>
+    </svg>
+    <svg class="wall-drone wall-drone-2" viewBox="0 0 80 80" aria-hidden="true">
+      <defs><filter id="wall-drone-shadow-2" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="1" stdDeviation="1" flood-opacity="0.04" flood-color="#000000"/></filter></defs>
+      <rect x="32" y="34" width="16" height="12" rx="2" fill="currentColor" opacity="0.65" filter="url(#wall-drone-shadow-2)"/>
+      <line x1="40" y1="30" x2="40" y2="8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+      <circle class="rotor" cx="40" cy="6" r="3.5" fill="none" stroke="currentColor" stroke-width="1" style="transform-origin:50% 50%;"/>
+      <line x1="50" y1="40" x2="72" y2="40" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+      <circle class="rotor" cx="74" cy="40" r="3.5" fill="none" stroke="currentColor" stroke-width="1" style="transform-origin:50% 50%;"/>
+      <line x1="40" y1="50" x2="40" y2="72" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+      <circle class="rotor" cx="40" cy="74" r="3.5" fill="none" stroke="currentColor" stroke-width="1" style="transform-origin:50% 50%;"/>
+      <line x1="30" y1="40" x2="8" y2="40" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+      <circle class="rotor" cx="6" cy="40" r="3.5" fill="none" stroke="currentColor" stroke-width="1" style="transform-origin:50% 50%;"/>
+      <circle cx="40" cy="56" r="2" fill="currentColor" opacity="0.5"/>
+    </svg>
+  </div>
   <div class="wall-grid" aria-label="All 1,000+ works">
 <a class="wall-tile" href="artwork.html?id=art0001" title="Untitled (Figure, Blue Ground), 1970" style="background:#ff003c;"><img src="artworks/mini/art0001.avif" srcset="artworks/micro/art0001.avif 80w, artworks/mini/art0001.avif 200w" sizes="(max-width:600px) 64px, 56px" alt="Untitled (Figure, Blue Ground), 1970" loading="lazy" width="200" height="200"></a>
 <a class="wall-tile" href="artwork.html?id=art0002" title="Reliquary, 1990" style="background:#c3c3be;"><img src="artworks/mini/art0002.avif" srcset="artworks/micro/art0002.avif 80w, artworks/mini/art0002.avif 200w" sizes="(max-width:600px) 64px, 56px" alt="Reliquary, 1990" loading="lazy" width="200" height="200"></a>
