@@ -14,11 +14,17 @@
 (function() {
   'use strict';
 
-  // Exit early if anime.js is not loaded
-  if (!window.anime) return;
-
   // Exit early if reduced-motion is preferred
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  // Wait for anime.js to be loaded (it may not be immediately available with defer)
+  function waitForAnime(callback) {
+    if (window.anime) {
+      callback();
+    } else {
+      setTimeout(function() { waitForAnime(callback); }, 50);
+    }
+  }
 
   // Detect page from pathname
   var pagePath = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
@@ -140,12 +146,18 @@
   var config = OPENING_DRONES[pagePath];
   if (!config) return;
 
-  // Initialize on DOM ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
+  // Initialize on DOM ready and anime.js loaded
+  function initWhenReady() {
+    waitForAnime(function() {
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    });
   }
+
+  initWhenReady();
 
   function init() {
     // Create container
