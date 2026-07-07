@@ -48,7 +48,12 @@
       var rate = rates[i % 3];
       var rect = el.getBoundingClientRect();
       var delta = (rect.top + rect.height / 2) - viewportCenter;
-      var offset = Math.max(-80, Math.min(80, -delta * (1 - rate)));
+      // Clamped to 24px (was 80px): the normal-flow gap between a blockquote
+      // and its adjacent siblings is 32px (.prose blockquote margin: 2em 0).
+      // 80px exceeded that gap and let quotes drift into visual overlap with
+      // neighboring body text. 24px preserves the drift while staying inside
+      // the gap it must never close.
+      var offset = Math.max(-24, Math.min(24, -delta * (1 - rate)));
       el.style.transform = 'translateY(' + offset + 'px)';
     });
     ticking = false;

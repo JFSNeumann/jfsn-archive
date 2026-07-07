@@ -335,8 +335,12 @@
   }
 
   // ─── Scroll position indicator on long pages ─────────────────────────
+  // Opt-out via [data-no-scroll-indicator] on <body>: the generic selector
+  // below counts hidden mobile/desktop duplicate sections as separate
+  // "sections" on pages like index.html, and the fixed-position indicator
+  // has no collision-awareness against page content beneath it.
   var sections = document.querySelectorAll('section[id], [id^="section"], [id^="part"]');
-  if (sections.length > 3) {
+  if (sections.length > 3 && !document.body.hasAttribute('data-no-scroll-indicator')) {
     var indicator = document.createElement('div');
     indicator.id = 'scroll-indicator';
     indicator.className = 'visible';
