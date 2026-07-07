@@ -261,6 +261,7 @@ window.__droneScriptLoaded = true;
   }
 
   function animateDrone(cfg, container, wrapper, svg) {
+    __droneDebug.log('ANIMATE_DRONE_CALLED', {});
     var w = window.innerWidth;
     var h = window.innerHeight;
     var route = cfg.path(w, h);
@@ -292,26 +293,24 @@ window.__droneScriptLoaded = true;
     }
     updateTransform();
 
-    __droneDebug.log('TIMELINE_START', { framesCount: route.frames.length, duration: route.duration });
+    __droneDebug.log('FLIGHT_START', { framesCount: route.frames.length });
 
-    var tl = anime.timeline({
-      complete: function() {
-        __droneDebug.log('TIMELINE_COMPLETE', { containerWasInDOM: document.contains(container) });
-        container.remove();
-      }
-    });
-
-    __droneDebug.log('TIMELINE_CREATED', { timelineExists: !!tl });
-
-    // Flight path with easing
+    // Animate sequentially through frames
     var legMs = route.duration / Math.max(route.frames.length - 1, 1);
-    var animationCount = 0;
-    for (var i = 1; i < route.frames.length; i++) {
-      var f = route.frames[i];
+    var frameIndex = 1;
+
+    function animateNextFrame() {
+      if (frameIndex >= route.frames.length) {
+        __droneDebug.log('FLIGHT_COMPLETE', {});
+        container.remove();
+        return;
+      }
+
+      var f = route.frames[frameIndex];
       var frameDuration = f.hold ? f.hold : legMs;
       var frameEasing = f.hold ? 'linear' : 'easeInOutQuad';
 
-      tl.add({
+      anime({
         targets: pos,
         x: f.x,
         y: f.y,
@@ -320,18 +319,15 @@ window.__droneScriptLoaded = true;
         opacity: f.opacity !== undefined ? f.opacity : pos.opacity,
         duration: frameDuration,
         easing: frameEasing,
-        update: updateTransform
+        update: updateTransform,
+        complete: function() {
+          frameIndex++;
+          animateNextFrame();
+        }
       });
-      animationCount++;
     }
-    __droneDebug.log('ANIMATIONS_ADDED', {
-      count: animationCount,
-      timelineDuration: tl.duration
-    });
 
-    // Explicitly ensure timeline plays
-    tl.play();
-    __droneDebug.log('TIMELINE_PLAY_CALLED', {});
+    animateNextFrame();
 
     // Propeller spin
     anime({
