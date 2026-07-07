@@ -273,7 +273,17 @@ window.__droneScriptLoaded = true;
       opacity: route.frames[0].opacity || 0
     };
 
+    var updateCallCount = 0;
     function updateTransform() {
+      updateCallCount++;
+      if (updateCallCount <= 3 || updateCallCount % 100 === 0) {
+        __droneDebug.log('UPDATE_TRANSFORM_' + updateCallCount, {
+          x: pos.x,
+          y: pos.y,
+          opacity: pos.opacity,
+          scale: pos.scale
+        });
+      }
       wrapper.style.transform =
         'translate(' + pos.x + 'px, ' + pos.y + 'px) ' +
         'rotateZ(' + pos.rot + 'deg) ' +
