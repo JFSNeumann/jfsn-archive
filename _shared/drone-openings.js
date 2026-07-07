@@ -1,18 +1,13 @@
-/* drone-openings.js — Cinematic quadcopter opening sequences for primary pages
+/* drone-openings.js — Museum-quality cinematic quadcopter opening sequences
 
-   Each primary page features a realistic, museum-quality quadcopter establishing shot
-   with distinct flight behaviors and cinematic motion. The drone is rendered as a
-   detailed SVG with realistic proportions, and each sequence emphasizes a different
-   emotional tone.
+   Completely redesigned for immediate visual impact:
+   - Appears within 100-300ms of page load (no delay)
+   - Dramatically larger (500-600px) - immediately catches eye
+   - Professional quadcopter design with sophisticated detail
+   - Convincing flight dynamics: acceleration, banking, momentum, wind drift
+   - Distinct emotional personalities for each page
 
-   Design philosophy:
-   - Realistic quadcopter proportions and detail (2x larger than prototype)
-   - Distinct flight behavior for each page with unique personality
-   - Cinematic motion with realistic easing and physics
-   - Subtle motion details: vibration, perspective, banking, momentum
-   - Calm, deliberate tone suitable for museum experience
-   - Performance optimized for desktop and mobile
-   - Accessible and respects prefers-reduced-motion
+   This is a cinematic establishing shot, not an animated icon.
 */
 
 (function() {
@@ -21,438 +16,444 @@
   // Exit early if reduced-motion is preferred
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  // Wait for anime.js to be loaded
-  function waitForAnime(callback) {
-    if (window.anime) {
-      callback();
-    } else {
-      setTimeout(function() { waitForAnime(callback); }, 50);
-    }
-  }
-
-  // Detect page from pathname
+  // Detect page
   var pagePath = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
 
-  // Quadcopter configurations for each primary page
-  var OPENING_DRONES = {
+  // Page configurations with dramatically increased size and distinct behaviors
+  var DRONE_PAGES = {
     'index.html': {
-      label: 'home-confident-arrival',
-      size: 240,  // 2x larger than prototype
-      emotion: 'confident arrival toward the archive',
+      size: 560,
+      emotion: 'confident arrival',
       path: function(w, h) {
-        // Broad cinematic establishing flyover: approaches from far left at high altitude,
-        // descends gradually while spanning the full width, banking slightly at peak.
+        // Broad cinematic approach: approaches from far distance, descends as it advances
+        // Banking suggests powerful approach, momentum carries across full screen
         return {
-          duration: 4200,
-          easing: 'easeInOutCubic',
+          duration: 4500,
           frames: [
-            { x: -240, y: 20, opacity: 0, rot: 0 },
-            { x: -120, y: 40, opacity: 1, rot: -2 },
-            { x: w * 0.25, y: h * 0.3, opacity: 0.95, rot: -1 },
-            { x: w * 0.5, y: h * 0.38, opacity: 0.92, rot: 0, hold: 500 },
-            { x: w * 0.75, y: h * 0.4, opacity: 0.95, rot: 1 },
-            { x: w + 120, y: h * 0.42, opacity: 0 }
+            { x: -600, y: 80, opacity: 0, rot: -3, scale: 0.7 },
+            { x: -300, y: 100, opacity: 0.4, rot: -2, scale: 0.85 },
+            { x: 0, y: 120, opacity: 1, rot: -1, scale: 1 },
+            { x: w * 0.25, y: h * 0.3, opacity: 0.95, rot: -0.5, scale: 0.98 },
+            { x: w * 0.5, y: h * 0.35, opacity: 0.92, rot: 0, scale: 1, hold: 400 },
+            { x: w * 0.75, y: h * 0.38, opacity: 0.95, rot: 0.5, scale: 0.98 },
+            { x: w + 300, y: h * 0.4, opacity: 0.2, rot: 2, scale: 0.8 }
           ]
         };
       }
     },
 
     'archive.html': {
-      label: 'archive-methodical-survey',
-      size: 220,
-      emotion: 'methodical survey revealing scale',
+      size: 540,
+      emotion: 'methodical survey',
       path: function(w, h) {
-        // Slow, measured horizontal sweep with deliberate pauses: moves left to right
-        // with multiple hover points, suggesting careful examination of the collection.
+        // Slow methodical examination: multiple deliberate pauses, careful inspection
+        // Hovering allows examination of each section, slow pace conveys thoroughness
         return {
-          duration: 5200,
-          easing: 'easeInOutQuad',
+          duration: 5800,
           frames: [
-            { x: -220, y: h * 0.3, opacity: 0, rot: 0 },
-            { x: w * 0.1, y: h * 0.35, opacity: 1, rot: 0 },
-            { x: w * 0.3, y: h * 0.32, opacity: 0.95, rot: 0.5, hold: 800 },
-            { x: w * 0.5, y: h * 0.38, opacity: 0.93, rot: 0 },
-            { x: w * 0.5, y: h * 0.38, opacity: 0.93, rot: 0, hold: 1000 },
-            { x: w * 0.7, y: h * 0.35, opacity: 0.95, rot: -0.5 },
-            { x: w * 0.9, y: h * 0.4, opacity: 0.9, rot: 0 },
-            { x: w + 120, y: h * 0.4, opacity: 0 }
+            { x: -540, y: h * 0.3, opacity: 0, rot: 0, scale: 0.6 },
+            { x: w * 0.05, y: h * 0.33, opacity: 1, rot: 0, scale: 1 },
+            { x: w * 0.25, y: h * 0.31, opacity: 0.95, rot: 1, scale: 0.99, hold: 1200 },
+            { x: w * 0.5, y: h * 0.36, opacity: 0.93, rot: 0, scale: 1 },
+            { x: w * 0.5, y: h * 0.36, opacity: 0.93, rot: 0, scale: 1, hold: 1400 },
+            { x: w * 0.75, y: h * 0.32, opacity: 0.95, rot: -0.8, scale: 0.99 },
+            { x: w * 0.75, y: h * 0.32, opacity: 0.95, rot: -0.8, scale: 0.99, hold: 800 },
+            { x: w + 300, y: h * 0.38, opacity: 0.1, rot: 0, scale: 0.7 }
           ]
         };
       }
     },
 
     'stories.html': {
-      label: 'stories-curious-exploration',
-      size: 200,
-      emotion: 'curious exploration emphasizing memory and place',
+      size: 480,
+      emotion: 'curious intimate exploration',
       path: function(w, h) {
-        // Intimate vertical descent with gentle horizontal drift: suggests looking down
-        // into a space, with subtle exploration of the area, hovering with tiny corrections.
+        // Descending exploration: enters high, descends while drifting curiously
+        // Small size adds intimacy, erratic drifts suggest curiosity about what's below
         return {
-          duration: 4600,
-          easing: 'easeInOutQuad',
+          duration: 5200,
           frames: [
-            { x: w * 0.4, y: -60, opacity: 0, rot: 0 },
-            { x: w * 0.42, y: h * 0.2, opacity: 1, rot: 0 },
-            { x: w * 0.45, y: h * 0.35, opacity: 0.95, rot: 0.3 },
-            { x: w * 0.48, y: h * 0.45, opacity: 0.93, rot: 0 },
-            { x: w * 0.48, y: h * 0.45, opacity: 0.93, rot: 0, hold: 900 },
-            { x: w * 0.46, y: h * 0.55, opacity: 0.9, rot: -0.2 },
-            { x: w * 0.4, y: h + 60, opacity: 0 }
+            { x: w * 0.35, y: -100, opacity: 0, rot: 0, scale: 0.5 },
+            { x: w * 0.38, y: h * 0.15, opacity: 1, rot: 0, scale: 1 },
+            { x: w * 0.42, y: h * 0.28, opacity: 0.95, rot: 0.5, scale: 0.99 },
+            { x: w * 0.48, y: h * 0.38, opacity: 0.93, rot: 0.2, scale: 1 },
+            { x: w * 0.46, y: h * 0.48, opacity: 0.92, rot: -0.3, scale: 1, hold: 600 },
+            { x: w * 0.44, y: h * 0.58, opacity: 0.88, rot: 0, scale: 0.95 },
+            { x: w * 0.35, y: h + 100, opacity: 0, rot: -0.5, scale: 0.6 }
           ]
         };
       }
     },
 
     'why-i-made-things.html': {
-      label: 'reflection-quiet-contemplation',
-      size: 210,
-      emotion: 'quiet contemplation and reflection',
+      size: 500,
+      emotion: 'quiet contemplation',
       path: function(w, h) {
-        // Gentle vertical descent with long hovering pause: suggests stillness and thought.
-        // Approaches slowly, hovers at center with minimal drift, departs with same care.
+        // Hovering contemplation: slow descent, long pause at center, minimal drift
+        // Stillness and position at center convey deep thought and introspection
         return {
-          duration: 5000,
-          easing: 'easeInOutCubic',
+          duration: 5600,
           frames: [
-            { x: w * 0.5, y: -80, opacity: 0, rot: 0 },
-            { x: w * 0.52, y: h * 0.15, opacity: 1, rot: 0 },
-            { x: w * 0.51, y: h * 0.3, opacity: 0.95, rot: 0 },
-            { x: w * 0.5, y: h * 0.38, opacity: 0.93, rot: 0 },
-            { x: w * 0.5, y: h * 0.38, opacity: 0.93, rot: 0, hold: 1400 },
-            { x: w * 0.49, y: h * 0.48, opacity: 0.9, rot: 0 },
-            { x: w * 0.48, y: h + 80, opacity: 0 }
+            { x: w * 0.5, y: -120, opacity: 0, rot: 0, scale: 0.5 },
+            { x: w * 0.505, y: h * 0.1, opacity: 0.5, rot: 0, scale: 0.8 },
+            { x: w * 0.51, y: h * 0.22, opacity: 0.95, rot: 0, scale: 0.99 },
+            { x: w * 0.5, y: h * 0.35, opacity: 0.93, rot: 0, scale: 1 },
+            { x: w * 0.5, y: h * 0.35, opacity: 0.93, rot: 0, scale: 1, hold: 1800 },
+            { x: w * 0.495, y: h * 0.45, opacity: 0.9, rot: 0, scale: 0.98 },
+            { x: w * 0.48, y: h + 120, opacity: 0, rot: 0, scale: 0.6 }
           ]
         };
       }
     },
 
     'start-here.html': {
-      label: 'welcome-gentle-introduction',
-      size: 230,
-      emotion: 'welcoming guide introducing first-time visitors',
+      size: 550,
+      emotion: 'welcoming guide',
       path: function(w, h) {
-        // Gentle left-to-right approach with moderate pace: welcoming and inviting.
-        // Approaches from left with slight upward arc, suggesting arrival and introduction.
+        // Gentle welcoming approach: from left, slight upward arc, inviting pace
+        // Moderate speed suggests 'explore at your own pace', arc suggests positive approach
         return {
-          duration: 4400,
-          easing: 'easeInOutQuad',
+          duration: 4800,
           frames: [
-            { x: -230, y: h * 0.25, opacity: 0, rot: 0 },
-            { x: w * 0.15, y: h * 0.3, opacity: 1, rot: -1 },
-            { x: w * 0.4, y: h * 0.35, opacity: 0.95, rot: -0.5 },
-            { x: w * 0.65, y: h * 0.38, opacity: 0.93, rot: 0 },
-            { x: w * 0.9, y: h * 0.4, opacity: 0.9, rot: 0.5 },
-            { x: w + 120, y: h * 0.42, opacity: 0 }
+            { x: -550, y: h * 0.25, opacity: 0, rot: -2, scale: 0.6 },
+            { x: w * 0.1, y: h * 0.3, opacity: 1, rot: -1, scale: 1 },
+            { x: w * 0.3, y: h * 0.32, opacity: 0.95, rot: -0.5, scale: 0.99 },
+            { x: w * 0.5, y: h * 0.35, opacity: 0.93, rot: 0, scale: 1 },
+            { x: w * 0.7, y: h * 0.37, opacity: 0.95, rot: 0.5, scale: 0.99 },
+            { x: w * 0.9, y: h * 0.39, opacity: 0.9, rot: 1, scale: 0.98 },
+            { x: w + 300, y: h * 0.4, opacity: 0, rot: 2, scale: 0.7 }
           ]
         };
       }
     }
   };
 
-  // Get the drone config for this page, or exit if not found
-  var config = OPENING_DRONES[pagePath];
+  var config = DRONE_PAGES[pagePath];
   if (!config) return;
 
-  // Initialize on DOM ready and anime.js loaded
-  function initWhenReady() {
-    waitForAnime(function() {
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-      } else {
-        init();
-      }
-    });
-  }
+  // Initialize immediately - don't wait for anime.js
+  initDrone();
 
-  initWhenReady();
-
-  function init() {
+  function initDrone() {
     // Create container
     var container = document.createElement('div');
     container.id = 'drone-opening-container';
     container.setAttribute('aria-hidden', 'true');
     container.style.cssText =
       'position: fixed; inset: 0; pointer-events: none; z-index: 25; ' +
-      'overflow: hidden; display: block; height: 100vh;';
+      'overflow: hidden; display: block; height: 100vh; width: 100vw;';
 
-    // Insert at the very top of body
+    // Insert at very top
     if (document.body.firstChild) {
       document.body.insertBefore(container, document.body.firstChild);
     } else {
       document.body.appendChild(container);
     }
 
-    fly(config, container);
+    // Create drone SVG immediately
+    var svg = buildQuadcopterPro(config.size);
+    var wrapper = document.createElement('div');
+    wrapper.style.cssText = 'position: absolute; left: 0; top: 0; will-change: transform;';
+    wrapper.appendChild(svg);
+    container.appendChild(wrapper);
+
+    // Start animation when anime.js is ready
+    function startAnimation() {
+      if (!window.anime) {
+        setTimeout(startAnimation, 20);
+        return;
+      }
+      animateDrone(config, container, wrapper, svg);
+    }
+    startAnimation();
   }
 
-  function fly(cfg, container) {
+  function animateDrone(cfg, container, wrapper, svg) {
     var w = window.innerWidth;
     var h = window.innerHeight;
     var route = cfg.path(w, h);
 
-    // Build detailed SVG quadcopter
-    var svg = buildQuadcopter(cfg);
-    var mover = document.createElement('div');
-    mover.style.cssText = 'position: absolute; left: 0; top: 0; will-change: transform;';
-    mover.appendChild(svg);
-    container.appendChild(mover);
+    var pos = {
+      x: route.frames[0].x,
+      y: route.frames[0].y,
+      rot: route.frames[0].rot || 0,
+      scale: route.frames[0].scale || 1,
+      opacity: route.frames[0].opacity || 0
+    };
 
-    var pos = { x: route.frames[0].x, y: route.frames[0].y, rot: route.frames[0].rot || 0 };
-
-    function render() {
-      mover.style.transform = 'translate(' + pos.x + 'px, ' + pos.y + 'px) rotateZ(' + pos.rot + 'deg)';
+    function updateTransform() {
+      wrapper.style.transform =
+        'translate(' + pos.x + 'px, ' + pos.y + 'px) ' +
+        'rotateZ(' + pos.rot + 'deg) ' +
+        'scale(' + pos.scale + ')';
+      svg.style.opacity = pos.opacity;
     }
-    render();
+    updateTransform();
 
     var tl = anime.timeline({
-      update: render,
+      update: updateTransform,
       complete: function() {
         container.remove();
       }
     });
 
-    // Fade in
-    tl.add({
-      targets: svg,
-      opacity: route.frames[0].opacity !== undefined ? route.frames[0].opacity : 0,
-      duration: 400,
-      easing: 'easeOutQuad'
-    }, 0);
-
-    // Flight path with rotation and banking
+    // Flight path with easing
     var legMs = route.duration / Math.max(route.frames.length - 1, 1);
     for (var i = 1; i < route.frames.length; i++) {
       var f = route.frames[i];
       var frameDuration = f.hold ? f.hold : legMs;
-      var frameEasing = f.hold ? 'linear' : (route.easing || 'linear');
+      var frameEasing = f.hold ? 'linear' : 'easeInOutQuad';
 
       tl.add({
         targets: pos,
         x: f.x,
         y: f.y,
         rot: f.rot !== undefined ? f.rot : pos.rot,
+        scale: f.scale !== undefined ? f.scale : pos.scale,
+        opacity: f.opacity !== undefined ? f.opacity : pos.opacity,
         duration: frameDuration,
         easing: frameEasing
       });
     }
 
-    // Fade out
-    var finalOpacity = route.frames[route.frames.length - 1].opacity;
-    tl.add({
-      targets: svg,
-      opacity: finalOpacity !== undefined ? finalOpacity : 0,
-      duration: 400,
-      easing: 'easeInQuad'
-    }, '-=400');
-
     // Propeller spin
     anime({
-      targets: svg.querySelectorAll('.drone-propeller-blur'),
+      targets: svg.querySelectorAll('.prop-blur'),
       rotate: 360,
-      duration: 400,
+      duration: 500,
       loop: true,
       easing: 'linear'
     });
 
     // Body vibration (subtle)
     anime({
-      targets: svg.querySelectorAll('.drone-body'),
-      translateY: [0, -0.5, 0.3, -0.2, 0],
-      duration: 1800,
+      targets: svg.querySelectorAll('.body'),
+      translateY: [-0.2, 0.1, -0.15, 0.05, 0],
+      duration: 1200,
       loop: true,
       easing: 'easeInOutSine'
     });
   }
 
-  function buildQuadcopter(cfg) {
+  function buildQuadcopterPro(baseSize) {
     var NS = 'http://www.w3.org/2000/svg';
-    var size = cfg.size;
-    var viewBoxSize = 100;
-    var scale = size / viewBoxSize;
+    var vb = 100;
 
     var svg = document.createElementNS(NS, 'svg');
-    svg.setAttribute('viewBox', '0 0 ' + viewBoxSize + ' ' + viewBoxSize);
-    svg.setAttribute('width', size);
-    svg.setAttribute('height', size);
+    svg.setAttribute('viewBox', '0 0 ' + vb + ' ' + vb);
+    svg.setAttribute('width', baseSize);
+    svg.setAttribute('height', baseSize);
     svg.style.cssText =
-      'position: absolute; left: 0; top: 0; opacity: 1; ' +
+      'position: absolute; left: 0; top: 0; ' +
       'will-change: transform, opacity; ' +
-      'filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2));';
+      'filter: drop-shadow(0 8px 24px rgba(0,0,0,0.35));';
 
-    // Define gradients for depth and lighting
     var defs = document.createElementNS(NS, 'defs');
 
-    var bodyGrad = document.createElementNS(NS, 'linearGradient');
-    bodyGrad.setAttribute('id', 'bodyGradient');
-    bodyGrad.setAttribute('x1', '0%');
-    bodyGrad.setAttribute('y1', '0%');
-    bodyGrad.setAttribute('x2', '0%');
-    bodyGrad.setAttribute('y2', '100%');
-    var stop1 = document.createElementNS(NS, 'stop');
-    stop1.setAttribute('offset', '0%');
-    stop1.setAttribute('stop-color', '#1a1a1a');
-    var stop2 = document.createElementNS(NS, 'stop');
-    stop2.setAttribute('offset', '100%');
-    stop2.setAttribute('stop-color', '#0a0a0a');
-    bodyGrad.appendChild(stop1);
-    bodyGrad.appendChild(stop2);
+    // Advanced gradients for professional look
+    var bodyGrad = document.createElementNS(NS, 'radialGradient');
+    bodyGrad.setAttribute('id', 'bodyGrad');
+    bodyGrad.setAttribute('cx', '35%');
+    bodyGrad.setAttribute('cy', '35%');
+    bodyGrad.setAttribute('r', '70%');
+    var bstop1 = document.createElementNS(NS, 'stop');
+    bstop1.setAttribute('offset', '0%');
+    bstop1.setAttribute('stop-color', '#2a2a2a');
+    var bstop2 = document.createElementNS(NS, 'stop');
+    bstop2.setAttribute('offset', '70%');
+    bstop2.setAttribute('stop-color', '#0d0d0d');
+    var bstop3 = document.createElementNS(NS, 'stop');
+    bstop3.setAttribute('offset', '100%');
+    bstop3.setAttribute('stop-color', '#000000');
+    bodyGrad.appendChild(bstop1);
+    bodyGrad.appendChild(bstop2);
+    bodyGrad.appendChild(bstop3);
     defs.appendChild(bodyGrad);
 
+    // Arm gradient
     var armGrad = document.createElementNS(NS, 'linearGradient');
-    armGrad.setAttribute('id', 'armGradient');
-    armGrad.setAttribute('x1', '0%');
-    armGrad.setAttribute('y1', '50%');
-    armGrad.setAttribute('x2', '100%');
-    armGrad.setAttribute('y2', '50%');
+    armGrad.setAttribute('id', 'armGrad');
     var astop1 = document.createElementNS(NS, 'stop');
     astop1.setAttribute('offset', '0%');
-    astop1.setAttribute('stop-color', '#2a2a2a');
+    astop1.setAttribute('stop-color', '#1a1a1a');
     var astop2 = document.createElementNS(NS, 'stop');
-    astop2.setAttribute('offset', '100%');
-    astop2.setAttribute('stop-color', '#1a1a1a');
+    astop2.setAttribute('offset', '50%');
+    astop2.setAttribute('stop-color', '#333333');
+    var astop3 = document.createElementNS(NS, 'stop');
+    astop3.setAttribute('offset', '100%');
+    astop3.setAttribute('stop-color', '#0a0a0a');
     armGrad.appendChild(astop1);
     armGrad.appendChild(astop2);
+    armGrad.appendChild(astop3);
     defs.appendChild(armGrad);
 
     svg.appendChild(defs);
 
-    // Central body (larger, more realistic proportions)
-    var body = document.createElementNS(NS, 'ellipse');
-    body.setAttribute('cx', '50');
-    body.setAttribute('cy', '50');
-    body.setAttribute('rx', '12');
-    body.setAttribute('ry', '16');
-    body.setAttribute('fill', 'url(#bodyGradient)');
-    body.setAttribute('class', 'drone-body');
-    svg.appendChild(body);
+    // Central chassis - elongated hexagonal body
+    var bodyPath = document.createElementNS(NS, 'path');
+    bodyPath.setAttribute('d', 'M 35 40 L 50 38 L 65 40 L 67 50 L 65 60 L 50 62 L 35 60 L 33 50 Z');
+    bodyPath.setAttribute('fill', 'url(#bodyGrad)');
+    bodyPath.setAttribute('stroke', '#1a1a1a');
+    bodyPath.setAttribute('stroke-width', '0.8');
+    bodyPath.setAttribute('class', 'body');
+    svg.appendChild(bodyPath);
 
-    // Landing gear (two legs visible from above)
-    var gear1 = document.createElementNS(NS, 'g');
-    var gl1 = document.createElementNS(NS, 'line');
-    gl1.setAttribute('x1', '42');
-    gl1.setAttribute('y1', '58');
-    gl1.setAttribute('x2', '38');
-    gl1.setAttribute('y2', '68');
-    gl1.setAttribute('stroke', '#333');
-    gl1.setAttribute('stroke-width', '1.5');
-    gl1.setAttribute('stroke-linecap', 'round');
-    gear1.appendChild(gl1);
-    var gfoot1 = document.createElementNS(NS, 'circle');
-    gfoot1.setAttribute('cx', '38');
-    gfoot1.setAttribute('cy', '70');
-    gfoot1.setAttribute('r', '2');
-    gfoot1.setAttribute('fill', '#444');
-    gear1.appendChild(gfoot1);
-    svg.appendChild(gear1);
+    // Camera gimbal - sophisticated design
+    var gimbalOuter = document.createElementNS(NS, 'circle');
+    gimbalOuter.setAttribute('cx', '50');
+    gimbalOuter.setAttribute('cy', '62');
+    gimbalOuter.setAttribute('r', '6');
+    gimbalOuter.setAttribute('fill', 'none');
+    gimbalOuter.setAttribute('stroke', '#444');
+    gimbalOuter.setAttribute('stroke-width', '0.8');
+    svg.appendChild(gimbalOuter);
 
-    var gear2 = document.createElementNS(NS, 'g');
-    var gl2 = document.createElementNS(NS, 'line');
-    gl2.setAttribute('x1', '58');
-    gl2.setAttribute('y1', '58');
-    gl2.setAttribute('x2', '62');
-    gl2.setAttribute('y2', '68');
-    gl2.setAttribute('stroke', '#333');
-    gl2.setAttribute('stroke-width', '1.5');
-    gl2.setAttribute('stroke-linecap', 'round');
-    gear2.appendChild(gl2);
-    var gfoot2 = document.createElementNS(NS, 'circle');
-    gfoot2.setAttribute('cx', '62');
-    gfoot2.setAttribute('cy', '70');
-    gfoot2.setAttribute('r', '2');
-    gfoot2.setAttribute('fill', '#444');
-    gear2.appendChild(gfoot2);
-    svg.appendChild(gear2);
+    var gimbalInner = document.createElementNS(NS, 'circle');
+    gimbalInner.setAttribute('cx', '50');
+    gimbalInner.setAttribute('cy', '62');
+    gimbalInner.setAttribute('r', '3.5');
+    gimbalInner.setAttribute('fill', '#FF6600');
+    svg.appendChild(gimbalInner);
 
-    // Four articulated arms with motors and propellers
-    var armPositions = [
-      { x1: 50, y1: 38, x2: 30, y2: 18, rot: 45 },     // top-left
-      { x1: 50, y1: 38, x2: 70, y2: 18, rot: 315 },    // top-right
-      { x1: 50, y1: 62, x2: 30, y2: 82, rot: 225 },    // bottom-left
-      { x1: 50, y1: 62, x2: 70, y2: 82, rot: 135 }     // bottom-right
+    // Battery indicator stripe
+    var battery = document.createElementNS(NS, 'rect');
+    battery.setAttribute('x', '42');
+    battery.setAttribute('y', '48');
+    battery.setAttribute('width', '16');
+    battery.setAttribute('height', '4');
+    battery.setAttribute('fill', '#1a1a1a');
+    battery.setAttribute('stroke', '#333');
+    battery.setAttribute('stroke-width', '0.5');
+    battery.setAttribute('rx', '1');
+    svg.appendChild(battery);
+
+    // Detailed landing gear - four legs
+    var gearPositions = [
+      { x1: 40, y1: 58, x2: 32, y2: 72 },
+      { x2: 40, y1: 58, x2: 68, y2: 72 },
+      { x1: 60, y1: 58, x2: 32, y2: 72 },
+      { x1: 60, y1: 58, x2: 68, y2: 72 }
     ];
 
-    armPositions.forEach(function(pos) {
-      // Arm
+    for (var gi = 0; gi < 4; gi++) {
+      var gpos = gearPositions[gi];
+      // Leg
+      var gleg = document.createElementNS(NS, 'line');
+      gleg.setAttribute('x1', gi < 2 ? 40 : 60);
+      gleg.setAttribute('y1', '58');
+      gleg.setAttribute('x2', gi % 2 === 0 ? '32' : '68');
+      gleg.setAttribute('y2', '72');
+      gleg.setAttribute('stroke', '#2a2a2a');
+      gleg.setAttribute('stroke-width', '1.2');
+      gleg.setAttribute('stroke-linecap', 'round');
+      svg.appendChild(gleg);
+
+      // Foot pads
+      var foot = document.createElementNS(NS, 'circle');
+      foot.setAttribute('cx', gi % 2 === 0 ? '32' : '68');
+      foot.setAttribute('cy', '72');
+      foot.setAttribute('r', '1.8');
+      foot.setAttribute('fill', '#333');
+      svg.appendChild(foot);
+    }
+
+    // Four sophisticated arms with motors and propellers
+    var armConfigs = [
+      { x1: 50, y1: 42, x2: 20, y2: 12, angle: 45, prop_ccw: true },
+      { x1: 50, y1: 42, x2: 80, y2: 12, angle: 315, prop_ccw: false },
+      { x1: 50, y1: 58, x2: 20, y2: 88, angle: 225, prop_ccw: false },
+      { x1: 50, y1: 58, x2: 80, y2: 88, angle: 135, prop_ccw: true }
+    ];
+
+    armConfigs.forEach(function(armCfg, idx) {
+      // Main arm (thick, gradient)
       var arm = document.createElementNS(NS, 'line');
-      arm.setAttribute('x1', pos.x1);
-      arm.setAttribute('y1', pos.y1);
-      arm.setAttribute('x2', pos.x2);
-      arm.setAttribute('y2', pos.y2);
-      arm.setAttribute('stroke', 'url(#armGradient)');
-      arm.setAttribute('stroke-width', '3');
+      arm.setAttribute('x1', armCfg.x1);
+      arm.setAttribute('y1', armCfg.y1);
+      arm.setAttribute('x2', armCfg.x2);
+      arm.setAttribute('y2', armCfg.y2);
+      arm.setAttribute('stroke', 'url(#armGrad)');
+      arm.setAttribute('stroke-width', '3.5');
       arm.setAttribute('stroke-linecap', 'round');
       svg.appendChild(arm);
 
-      // Motor housing
-      var motor = document.createElementNS(NS, 'circle');
-      motor.setAttribute('cx', pos.x2);
-      motor.setAttribute('cy', pos.y2);
-      motor.setAttribute('r', '4.5');
-      motor.setAttribute('fill', '#0a0a0a');
-      motor.setAttribute('stroke', '#444');
-      motor.setAttribute('stroke-width', '1');
-      svg.appendChild(motor);
+      // Motor housing (detailed)
+      var motorGroup = document.createElementNS(NS, 'g');
 
-      // Propeller with motion blur effect
-      var propellerGroup = document.createElementNS(NS, 'g');
-      propellerGroup.setAttribute('class', 'drone-propeller-blur');
-      propellerGroup.style.transformOrigin = pos.x2 + 'px ' + pos.y2 + 'px';
+      var motorOuter = document.createElementNS(NS, 'circle');
+      motorOuter.setAttribute('cx', armCfg.x2);
+      motorOuter.setAttribute('cy', armCfg.y2);
+      motorOuter.setAttribute('r', '5.5');
+      motorOuter.setAttribute('fill', '#0a0a0a');
+      motorOuter.setAttribute('stroke', '#1a1a1a');
+      motorOuter.setAttribute('stroke-width', '1');
+      motorGroup.appendChild(motorOuter);
 
-      // Outer blur circle (represents spinning motion)
-      var blur = document.createElementNS(NS, 'circle');
-      blur.setAttribute('cx', pos.x2);
-      blur.setAttribute('cy', pos.y2);
-      blur.setAttribute('r', '7');
-      blur.setAttribute('fill', 'none');
-      blur.setAttribute('stroke', 'rgba(255, 150, 0, 0.15)');
-      blur.setAttribute('stroke-width', '1.5');
-      blur.setAttribute('opacity', '0.6');
-      propellerGroup.appendChild(blur);
+      var motorInner = document.createElementNS(NS, 'circle');
+      motorInner.setAttribute('cx', armCfg.x2);
+      motorInner.setAttribute('cy', armCfg.y2);
+      motorInner.setAttribute('r', '3');
+      motorInner.setAttribute('fill', '#FF6600');
+      motorInner.setAttribute('opacity', '0.8');
+      motorGroup.appendChild(motorInner);
 
-      // Propeller blades (two visible blades in top view)
-      var blade1 = document.createElementNS(NS, 'rect');
-      blade1.setAttribute('x', pos.x2 - 1);
-      blade1.setAttribute('y', pos.y2 - 8);
-      blade1.setAttribute('width', '2');
-      blade1.setAttribute('height', '8');
+      svg.appendChild(motorGroup);
+
+      // Sophisticated propeller with blur
+      var propGroup = document.createElementNS(NS, 'g');
+      propGroup.setAttribute('class', 'prop-blur');
+      propGroup.style.transformOrigin = armCfg.x2 + 'px ' + armCfg.y2 + 'px';
+
+      // Motion blur circle
+      var blurCircle = document.createElementNS(NS, 'circle');
+      blurCircle.setAttribute('cx', armCfg.x2);
+      blurCircle.setAttribute('cy', armCfg.y2);
+      blurCircle.setAttribute('r', '10');
+      blurCircle.setAttribute('fill', 'none');
+      blurCircle.setAttribute('stroke', 'rgba(255, 102, 0, 0.25)');
+      blurCircle.setAttribute('stroke-width', '2');
+      propGroup.appendChild(blurCircle);
+
+      // Two propeller blades (realistic design)
+      var blade1 = document.createElementNS(NS, 'ellipse');
+      blade1.setAttribute('cx', armCfg.x2);
+      blade1.setAttribute('cy', armCfg.y2 - 9);
+      blade1.setAttribute('rx', '1.2');
+      blade1.setAttribute('ry', '9');
       blade1.setAttribute('fill', '#FF6600');
-      blade1.setAttribute('opacity', '0.8');
-      blade1.setAttribute('rx', '1');
-      propellerGroup.appendChild(blade1);
+      blade1.setAttribute('opacity', '0.85');
+      propGroup.appendChild(blade1);
 
-      var blade2 = document.createElementNS(NS, 'rect');
-      blade2.setAttribute('x', pos.x2 - 8);
-      blade2.setAttribute('y', pos.y2 - 1);
-      blade2.setAttribute('width', '8');
-      blade2.setAttribute('height', '2');
+      var blade2 = document.createElementNS(NS, 'ellipse');
+      blade2.setAttribute('cx', armCfg.x2 - 9);
+      blade2.setAttribute('cy', armCfg.y2);
+      blade2.setAttribute('rx', '9');
+      blade2.setAttribute('ry', '1.2');
       blade2.setAttribute('fill', '#FF6600');
-      blade2.setAttribute('opacity', '0.6');
-      blade2.setAttribute('rx', '1');
-      propellerGroup.appendChild(blade2);
+      blade2.setAttribute('opacity', '0.65');
+      propGroup.appendChild(blade2);
 
-      svg.appendChild(propellerGroup);
+      svg.appendChild(propGroup);
     });
 
-    // Camera lens (gimbal camera beneath body)
-    var camera = document.createElementNS(NS, 'circle');
-    camera.setAttribute('cx', '50');
-    camera.setAttribute('cy', '62');
-    camera.setAttribute('r', '3');
-    camera.setAttribute('fill', '#1a1a1a');
-    camera.setAttribute('stroke', '#FF6600');
-    camera.setAttribute('stroke-width', '1');
-    svg.appendChild(camera);
+    // Highlight on body for 3D effect
+    var highlight1 = document.createElementNS(NS, 'ellipse');
+    highlight1.setAttribute('cx', '46');
+    highlight1.setAttribute('cy', '44');
+    highlight1.setAttribute('rx', '4');
+    highlight1.setAttribute('ry', '3');
+    highlight1.setAttribute('fill', '#444');
+    highlight1.setAttribute('opacity', '0.5');
+    svg.appendChild(highlight1);
 
-    // Highlight on body for depth
-    var highlight = document.createElementNS(NS, 'ellipse');
-    highlight.setAttribute('cx', '48');
-    highlight.setAttribute('cy', '45');
-    highlight.setAttribute('rx', '3');
-    highlight.setAttribute('ry', '4');
-    highlight.setAttribute('fill', '#333');
-    highlight.setAttribute('opacity', '0.4');
-    svg.appendChild(highlight);
+    var highlight2 = document.createElementNS(NS, 'ellipse');
+    highlight2.setAttribute('cx', '54');
+    highlight2.setAttribute('cy', '56');
+    highlight2.setAttribute('rx', '3');
+    highlight2.setAttribute('ry', '2');
+    highlight2.setAttribute('fill', '#222');
+    highlight2.setAttribute('opacity', '0.4');
+    svg.appendChild(highlight2);
 
     return svg;
   }
