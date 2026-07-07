@@ -9,7 +9,7 @@ from http.server import SimpleHTTPRequestHandler, HTTPServer
 from pathlib import Path
 
 ROOT = Path(__file__).parent
-PORT = 3900
+PORT = int(os.environ.get('PORT', 3900))
 
 class Handler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
