@@ -22,7 +22,7 @@
   // Page configurations with dramatically increased size and distinct behaviors
   var DRONE_PAGES = {
     'index.html': {
-      size: 560,
+      size: 280,
       emotion: 'confident arrival',
       path: function(w, h) {
         // Broad cinematic approach: approaches from far distance, descends as it advances
@@ -43,7 +43,7 @@
     },
 
     'archive.html': {
-      size: 540,
+      size: 270,
       emotion: 'methodical survey',
       path: function(w, h) {
         // Slow methodical examination: multiple deliberate pauses, careful inspection
@@ -65,7 +65,7 @@
     },
 
     'stories.html': {
-      size: 480,
+      size: 240,
       emotion: 'curious intimate exploration',
       path: function(w, h) {
         // Descending exploration: enters high, descends while drifting curiously
@@ -86,7 +86,7 @@
     },
 
     'why-i-made-things.html': {
-      size: 500,
+      size: 250,
       emotion: 'quiet contemplation',
       path: function(w, h) {
         // Hovering contemplation: slow descent, long pause at center, minimal drift
@@ -107,7 +107,7 @@
     },
 
     'start-here.html': {
-      size: 550,
+      size: 275,
       emotion: 'welcoming guide',
       path: function(w, h) {
         // Gentle welcoming approach: from left, slight upward arc, inviting pace
