@@ -6,6 +6,8 @@
 
 jfsn.com preserves 1,084 artworks by Jeffrey F. S. Neumann — about fifty years of collage, sculpture, and photography — plus his own words about the work (the oral history), the record of the 500–1,000 works lost to water damage, and his earlier websites. More than half his life's work was destroyed once because it had no backup. This plan exists so that never happens to the rest.
 
+**What must stay true:** this plan keeps the archive alive; `../CONSTITUTION.md` governs what it must remain as it lives on. Read the Constitution before making any change beyond preservation.
+
 **The one rule:** when in doubt, copy first, change later, delete never. Everything below is about keeping copies alive, not about running a website. The website can be down for a year and rebuilt; deleted is forever.
 
 ## Where everything is (the four copies)

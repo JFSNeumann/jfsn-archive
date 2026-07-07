@@ -1,5 +1,7 @@
 # JFSN Mission
 
+> **Governing document:** `CONSTITUTION.md` is the archive's highest authority. This mission animates the *why*; the Constitution binds *what must stay true*. Where they meet, the Constitution governs.
+
 ## Why This Archive Exists
 
 JFSN exists to preserve a creative life.

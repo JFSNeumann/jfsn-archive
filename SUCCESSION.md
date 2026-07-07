@@ -1,6 +1,6 @@
 # JFSN Succession & Recovery
 
-**Purpose:** If Jeff is unavailable, this document is enough to keep the archive intact and the site live (or to migrate it elsewhere). JFSN-MISSION.md frames the *why*; this frames the *how, by whom*.
+**Purpose:** If Jeff is unavailable, this document is enough to keep the archive intact and the site live (or to migrate it elsewhere). `CONSTITUTION.md` governs *what must stay true* under any change; JFSN-MISSION.md frames the *why*; this frames the *how, by whom*.
 
 **Last reviewed:** 2026-06-22  
 **Review cadence:** annually, and any time a credential or contact changes.
