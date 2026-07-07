@@ -365,7 +365,7 @@ header.header-hidden{transform:translateY(-100%)}
   <a href="archive.html" class="bracket-link mb-lg block">[ ← Back to Archive ]</a>
 
   <div id="loading" class="py-xl text-center font-label-lg text-label-lg text-secondary uppercase tracking-widest">Loading…</div>
-  <div id="not-found" class="hidden py-xl text-center font-label-lg text-label-lg text-secondary uppercase tracking-widest">Work not found.</div>
+  <div id="not-found" class="hidden py-xl text-center font-body-md text-body-md text-secondary">This work isn’t in the archive. The link may be mistyped — or the piece may be one of those lost.</div>
 
   <div id="work-content" class="hidden">
     <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-start mb-xl">
@@ -399,7 +399,7 @@ header.header-hidden{transform:translateY(-100%)}
         <div class="flex flex-col gap-sm" id="meta-rows">
           <!-- populated by JS -->
         </div>
-        <button id="copy-link-btn" onclick="(function(btn){btn.classList.add('copying');navigator.clipboard.writeText(window.location.href).then(function(){var orig=btn.textContent;btn.textContent='[ COPIED ]';setTimeout(function(){btn.textContent=orig;btn.classList.remove('copying');},1800);});})(this)"
+        <button id="copy-link-btn" onclick="(function(btn){var orig=btn.textContent;btn.classList.add('copying');function done(msg){btn.textContent=msg;setTimeout(function(){btn.textContent=orig;btn.classList.remove('copying');},1800);}try{var p=navigator.clipboard&&navigator.clipboard.writeText(window.location.href);if(p&&p.then){p.then(function(){done('[ COPIED ]');},function(){done('[ PRESS ⌘C TO COPY ]');});}else{done('[ PRESS ⌘C TO COPY ]');}}catch(e){done('[ PRESS ⌘C TO COPY ]');}})(this)"
           class="bracket-link" style="margin-top:8px;background:none;border:none;cursor:pointer;padding:0;text-align:left;">
           [ Copy link → ]
         </button>
@@ -680,6 +680,7 @@ fetch('catalog.json')
 
     const idx = works.findIndex(w => w.file === workId + '.avif');
     if (idx === -1) {
+      document.getElementById('work-image')?.remove();
       document.getElementById('not-found').classList.remove('hidden');
       return;
     }
@@ -831,6 +832,7 @@ fetch('catalog.json')
   })
   .catch(e => {
     document.getElementById('loading').classList.add('hidden');
+    document.getElementById('work-image')?.remove();
     document.getElementById('not-found').classList.remove('hidden');
     console.error(e);
   });

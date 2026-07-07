@@ -694,11 +694,13 @@ button[data-filter-active="true"],
   margin-top: 6px;
 }
 
-/* Hide native cursor on artwork areas when custom cursor is active */
+/* Hide native cursor on artwork areas ONLY when the custom cursor is active
+   (body.jfsn-custom-cursor is added by jfsn-interactions.js after it initializes;
+   if JS fails, the native cursor is preserved). */
 @media (hover: hover) {
-  .thumb__link,
-  .card-img,
-  [data-cursor-expand] {
+  body.jfsn-custom-cursor .thumb__link,
+  body.jfsn-custom-cursor .card-img,
+  body.jfsn-custom-cursor [data-cursor-expand] {
     cursor: none;
   }
 }
@@ -1151,7 +1153,7 @@ input[type="radio"]:checked {
 .bracket-link {
   position: relative;
   color: #0B0B0B;
-  transition: color 0.2s ease;
+  transition: color var(--transition-duration) var(--transition-easing);
   text-decoration: none;
 }
 
@@ -1165,7 +1167,7 @@ input[type="radio"]:checked {
   background-color: #FF6600;
   animation: underline-draw 0.3s ease forwards;
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition: opacity var(--transition-duration) var(--transition-easing);
 }
 
 .bracket-link:hover {

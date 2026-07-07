@@ -384,7 +384,7 @@ header.header-hidden{transform:translateY(-100%)}
 </main>
 
 <!-- SCRIPTS:START -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script src="_shared/anime.min.js" defer></script>
 <script>
 /* nav-early.bundle.js: header scroll + theme toggle */
 (function(){var t=document.documentElement;try{var e=localStorage.getItem('jfsn-theme');'dark'===e?(t.classList.add('dark'),localStorage.setItem('jfsn-theme','dark')):(t.classList.remove('dark'),localStorage.setItem('jfsn-theme','light'))}catch(e){}function o(){var e=window.scrollY>0;document.querySelector('header').classList.toggle('header-scrolled',e)}window.addEventListener('scroll',o,{passive:!0}),o();var n=document.getElementById('theme-toggle-btn');n&&n.addEventListener('click',function(){t.classList.toggle('dark'),localStorage.setItem('jfsn-theme',t.classList.contains('dark')?'dark':'light')}),document.getElementById('theme-icon-sun')&&document.getElementById('theme-icon-moon')&&function(){function e(){var e=t.classList.contains('dark');document.getElementById('theme-icon-sun').style.display=e?'block':'none',document.getElementById('theme-icon-moon').style.display=e?'none':'block'}e(),document.getElementById('theme-toggle-btn').addEventListener('click',function(){setTimeout(e,0)})}()})();

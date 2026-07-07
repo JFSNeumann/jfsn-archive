@@ -19,6 +19,12 @@
     'sculpture.html':           'archive.html',
     'photography.html':         'archive.html',
     'painting.html':            'archive.html',
+    '1970s.html':               'archive.html',   // Decade pages — ARCHIVE
+    '1980s.html':               'archive.html',
+    '1990s.html':               'archive.html',
+    '2000s.html':               'archive.html',
+    '2010s.html':               'archive.html',
+    '2020s.html':               'archive.html',
     'collaboration.html':       'series-index.html', // Series
     'lost.html':                'lost.html',       // LOST WORKS
   };
@@ -29,7 +35,7 @@
 
   // Desktop nav
   document.querySelectorAll('header nav a').forEach(a => {
-    if (a.getAttribute('href') === target) {
+    if ((a.getAttribute('href') || '').replace(/^\//, '') === target) {
       a.classList.add('text-international-orange', 'nav-underline-active');
       a.classList.remove('text-deep-ink');
       a.setAttribute('aria-current', 'page');
@@ -38,7 +44,7 @@
 
   // Mobile drawer
   document.querySelectorAll('#mobile-menu-drawer a').forEach(a => {
-    if (a.getAttribute('href') === target) {
+    if ((a.getAttribute('href') || '').replace(/^\//, '') === target) {
       a.classList.add('drawer-active');
       a.setAttribute('aria-current', 'page');
     }
