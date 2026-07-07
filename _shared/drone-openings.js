@@ -287,8 +287,9 @@ window.__droneScriptLoaded = true;
     var tl = anime.timeline({
       update: updateTransform,
       complete: function() {
-        __droneDebug.log('TIMELINE_COMPLETE', {});
+        __droneDebug.log('TIMELINE_COMPLETE', { containerWasInDOM: document.contains(container) });
         container.remove();
+        __droneDebug.log('CONTAINER_REMOVED', { containerNowInDOM: document.contains(container) });
       }
     });
 
@@ -314,7 +315,23 @@ window.__droneScriptLoaded = true;
       });
       animationCount++;
     }
-    __droneDebug.log('ANIMATIONS_ADDED', { count: animationCount });
+    __droneDebug.log('ANIMATIONS_ADDED', {
+      count: animationCount,
+      timelineProgress: tl.progress,
+      timelineCurrentTime: tl.currentTime,
+      timelineDuration: tl.duration,
+      timelineAutoplay: tl.autoplay
+    });
+
+    // Verify timeline is actually running
+    setTimeout(function() {
+      __droneDebug.log('TIMELINE_CHECK_100MS', {
+        progress: tl.progress,
+        currentTime: tl.currentTime,
+        duration: tl.duration,
+        playing: tl.paused === false
+      });
+    }, 100);
 
     // Propeller spin
     anime({
