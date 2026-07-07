@@ -10,6 +10,9 @@
    This is a cinematic establishing shot, not an animated icon.
 */
 
+// Mark script load in global scope - synchronous
+window.__droneScriptLoaded = true;
+
 (function() {
   'use strict';
 
