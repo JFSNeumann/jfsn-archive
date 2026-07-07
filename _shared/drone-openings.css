@@ -1,0 +1,18 @@
+/* drone-openings.css — Styling for establishing-shot drone sequences */
+
+#drone-opening-container {
+  /* Already positioned/styled in drone-openings.js via cssText */
+  background: transparent;
+}
+
+/* Ensure drone SVG never interferes with page content */
+#drone-opening-container svg {
+  display: block;
+}
+
+/* Fallback for systems without animation support */
+@media (prefers-reduced-motion: reduce) {
+  #drone-opening-container {
+    display: none !important;
+  }
+}
