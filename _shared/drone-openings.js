@@ -279,15 +279,21 @@
     }
     updateTransform();
 
+    __droneDebug.log('TIMELINE_START', { framesCount: route.frames.length, duration: route.duration });
+
     var tl = anime.timeline({
       update: updateTransform,
       complete: function() {
+        __droneDebug.log('TIMELINE_COMPLETE', {});
         container.remove();
       }
     });
 
+    __droneDebug.log('TIMELINE_CREATED', { timelineExists: !!tl });
+
     // Flight path with easing
     var legMs = route.duration / Math.max(route.frames.length - 1, 1);
+    var animationCount = 0;
     for (var i = 1; i < route.frames.length; i++) {
       var f = route.frames[i];
       var frameDuration = f.hold ? f.hold : legMs;
@@ -303,7 +309,9 @@
         duration: frameDuration,
         easing: frameEasing
       });
+      animationCount++;
     }
+    __droneDebug.log('ANIMATIONS_ADDED', { count: animationCount });
 
     // Propeller spin
     anime({
