@@ -13,11 +13,32 @@
 (function() {
   'use strict';
 
+  // Instrument for debugging - store all state in window object
+  window.__droneDebug = {
+    timeline: [],
+    state: {},
+    log: function(stage, data) {
+      var entry = {
+        stage: stage,
+        timestamp: Date.now(),
+        data: data
+      };
+      this.timeline.push(entry);
+      console.log('[DRONE]', stage, data);
+    }
+  };
+
+  __droneDebug.log('SCRIPT_START', { documentReady: document.readyState });
+
   // Exit early if reduced-motion is preferred
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    __droneDebug.log('REDUCED_MOTION_ENABLED', {});
+    return;
+  }
 
   // Detect page
   var pagePath = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  __droneDebug.log('PAGE_PATH_DETECTED', { pagePath: pagePath, pathname: location.pathname });
 
   // Page configurations with dramatically increased size and distinct behaviors
   var DRONE_PAGES = {
@@ -129,33 +150,78 @@
   };
 
   var config = DRONE_PAGES[pagePath];
-  if (!config) return;
+  __droneDebug.log('CONFIG_LOOKUP', { found: !!config, pagePath: pagePath });
+  if (!config) {
+    __droneDebug.log('NO_CONFIG_FOR_PAGE', {});
+    return;
+  }
 
   // Initialize immediately - don't wait for anime.js
+  __droneDebug.log('CALLING_INITDRONE', {});
   initDrone();
+  __droneDebug.log('INITDRONE_RETURNED', {});
 
   function initDrone() {
+    __droneDebug.log('INITDRONE_START', {
+      bodyExists: !!document.body,
+      bodyFirstChild: !!document.body.firstChild,
+      bodyChildCount: document.body.children.length
+    });
+
     // Create container
     var container = document.createElement('div');
+    __droneDebug.log('CONTAINER_CREATED', { element: 'div', id: 'drone-opening-container' });
+
     container.id = 'drone-opening-container';
     container.setAttribute('aria-hidden', 'true');
     container.style.cssText =
       'position: fixed; inset: 0; pointer-events: none; z-index: 25; ' +
       'overflow: hidden; display: block; height: 100vh; width: 100vw;';
 
+    __droneDebug.log('CONTAINER_STYLED', {
+      id: container.id,
+      display: container.style.display,
+      position: container.style.position,
+      zIndex: container.style.zIndex
+    });
+
     // Insert at very top
+    __droneDebug.log('BEFORE_INSERT', {
+      bodyExists: !!document.body,
+      bodyFirstChild: !!document.body.firstChild,
+      containerInDOM: document.contains(container)
+    });
+
     if (document.body.firstChild) {
       document.body.insertBefore(container, document.body.firstChild);
+      __droneDebug.log('INSERTED_BEFORE_FIRST_CHILD', {});
     } else {
       document.body.appendChild(container);
+      __droneDebug.log('APPENDED_TO_BODY', {});
     }
 
+    __droneDebug.log('AFTER_INSERT', {
+      containerInDOM: document.contains(container),
+      containerInBody: document.body.contains(container),
+      containerParent: container.parentElement ? container.parentElement.tagName : 'none',
+      bodyFirstChild: document.body.firstChild === container ? 'yes' : 'no'
+    });
+
     // Create drone SVG immediately
+    __droneDebug.log('BUILDING_SVG', { size: config.size });
     var svg = buildQuadcopterPro(config.size);
+    __droneDebug.log('SVG_BUILT', { svgExists: !!svg, svgTagName: svg ? svg.tagName : 'none' });
+
     var wrapper = document.createElement('div');
     wrapper.style.cssText = 'position: absolute; left: 0; top: 0; will-change: transform;';
     wrapper.appendChild(svg);
+    __droneDebug.log('WRAPPER_CREATED_WITH_SVG', { wrapperChildCount: wrapper.children.length });
+
     container.appendChild(wrapper);
+    __droneDebug.log('WRAPPER_APPENDED_TO_CONTAINER', {
+      containerChildCount: container.children.length,
+      containerInDOM: document.contains(container)
+    });
 
     // Start animation when anime.js is ready
     function startAnimation() {
@@ -163,9 +229,32 @@
         setTimeout(startAnimation, 20);
         return;
       }
+      __droneDebug.log('ANIME_READY', {});
       animateDrone(config, container, wrapper, svg);
     }
     startAnimation();
+
+    // Persistent monitoring - check container existence over time
+    var checkIntervals = [1, 100, 500, 1000];
+    checkIntervals.forEach(function(ms) {
+      setTimeout(function() {
+        var exists = document.contains(container);
+        var inBody = document.body.contains(container);
+        var visible = container.offsetHeight > 0 && container.offsetWidth > 0;
+        __droneDebug.log('CONTAINER_CHECK_' + ms + 'MS', {
+          exists: exists,
+          inBody: inBody,
+          visible: visible,
+          parentElement: container.parentElement ? container.parentElement.tagName : 'none',
+          display: window.getComputedStyle(container).display,
+          visibility: window.getComputedStyle(container).visibility,
+          opacity: window.getComputedStyle(container).opacity,
+          zIndex: window.getComputedStyle(container).zIndex,
+          offsetWidth: container.offsetWidth,
+          offsetHeight: container.offsetHeight
+        });
+      }, ms);
+    });
   }
 
   function animateDrone(cfg, container, wrapper, svg) {
