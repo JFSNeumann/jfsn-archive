@@ -295,7 +295,6 @@ window.__droneScriptLoaded = true;
     __droneDebug.log('TIMELINE_START', { framesCount: route.frames.length, duration: route.duration });
 
     var tl = anime.timeline({
-      update: updateTransform,
       complete: function() {
         __droneDebug.log('TIMELINE_COMPLETE', { containerWasInDOM: document.contains(container) });
         container.remove();
@@ -321,7 +320,8 @@ window.__droneScriptLoaded = true;
         scale: f.scale !== undefined ? f.scale : pos.scale,
         opacity: f.opacity !== undefined ? f.opacity : pos.opacity,
         duration: frameDuration,
-        easing: frameEasing
+        easing: frameEasing,
+        update: updateTransform
       });
       animationCount++;
     }
