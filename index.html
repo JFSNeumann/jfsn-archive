@@ -189,12 +189,12 @@
   .river-hero-tick:focus-visible { outline: 2px solid #FF6600; outline-offset: 2px; }
   @media (prefers-reduced-motion: reduce) { .river-hero-tick span { transition: none; } }
 
-  /* ── Wall band — the mass of the archive on one surface ── */
-  /* min-heights reserve the band's final footprint (rows × tile + gaps) so the
-     Lost banner and footer don't jump when JS populates the grid */
+  /* ── Wall band — homepage threshold to The Wall (not a preview of it) ── */
+  /* No min-height reserved: the homepage no longer builds a grid into
+     #wall-band-d/#wall-band-m (see renderAll() in the script below), so
+     there is no layout shift to guard against. The real Wall lives at
+     wall.html, built independently via .wall-grid. */
   .wall-band-grid { display: grid; gap: 2px; }
-  #wall-band-d { min-height: 230px; }
-  #wall-band-m { min-height: 136px; }
   .wall-band-grid a {
     position: relative; display: block; aspect-ratio: 1 / 1; overflow: hidden;
     outline: 2px solid rgba(255,102,0,0); outline-offset: -2px;
@@ -2532,11 +2532,16 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
   /* ── Init ── */
 
   function renderAll() {
-    /* Defer the render-heavy work to idle time — both the chromatic river canvas
-       AND the wall tile build sit below the fold, so building them off the
-       critical path improves FCP/LCP/TBT without any visible change (both
-       sections reserve their height via CSS min-height, so no layout shift). */
-    function heavy() { drawRiver('d'); drawRiver('m'); buildWall('d'); buildWall('m'); }
+    /* Defer the render-heavy work to idle time — the chromatic river canvas
+       sits below the fold, so building it off the critical path improves
+       FCP/LCP/TBT without any visible change (the section reserves its
+       height via CSS min-height, so no layout shift).
+       The Wall's own grid is intentionally NOT built here — the homepage
+       band is a threshold to The Wall (wall.html owns the real experience,
+       via its own independent .wall-grid build), not a preview of it.
+       buildWall()/wireWall() are left intact below; only these call sites
+       were removed. */
+    function heavy() { drawRiver('d'); drawRiver('m'); }
     if ('requestIdleCallback' in window) {
       requestIdleCallback(heavy, { timeout: 2000 });
     } else {
@@ -2560,7 +2565,8 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
       placeHeroMarkers(); /* hero fired before this script's listener existed */
       placeHeroTicks('d'); placeHeroTicks('m');  /* clickable hero works on the river */
       wireRiver('d'); wireRiver('m');
-      wireWall('d'); wireWall('m');
+      /* wireWall() intentionally not called here — see renderAll() note above;
+         no grid is built on the homepage for it to wire tooltips onto. */
       /* "Open one at random" — any of the 1,084, fresh pick per click */
       ['random-work-d', 'random-work-m'].forEach(function (id) {
         var link = document.getElementById(id);
