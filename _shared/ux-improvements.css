@@ -35,27 +35,6 @@
   }
 }
 
-/* Search prominence */
-#nav-search-btn {
-  background: #FF6600;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  font-weight: 600;
-  font-size: 13px;
-  transition: all 0.2s ease;
-  cursor: pointer;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-#nav-search-btn:hover {
-  background: #e05900;
-  box-shadow: 0 4px 12px rgba(255, 102, 0, 0.2);
-  transform: translateY(-1px);
-}
-
 /* Result count badge */
 #result-count-number {
   font-weight: 700;

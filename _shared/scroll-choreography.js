@@ -370,35 +370,38 @@
     const bttFloat = document.getElementById('btt-float');
     if (!bttFloat) return;
 
-    // Observe visibility changes
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          // BTT is visible — pulse entrance
-          anime.set(bttFloat, { opacity: 0, scale: 0.8 });
-          anime({
-            targets: bttFloat,
-            opacity: [0, 1],
-            scale: [0.8, 1],
-            duration: 400,
-            easing: 'easeOutElastic(1, 0.6)'
-          });
+    // Trigger once the button has actually crossed the site's real
+    // visibility threshold (scrollY > 300, same value each page's own
+    // inline script uses to toggle .btt-visible). An IntersectionObserver
+    // alone is the wrong signal here: #btt-float is position:fixed, so it
+    // is always geometrically inside the viewport and was firing this
+    // pulse on first paint, before the button was meant to be visible.
+    function checkVisible() {
+      if (window.scrollY <= 300) return;
 
-          // Then start breathing loop
-          anime({
-            targets: bttFloat,
-            scale: [1, 1.08, 1],
-            duration: 3000,
-            easing: 'easeInOutQuad',
-            loop: true
-          });
-
-          observer.unobserve(entry.target);
-        }
+      // BTT is visible — pulse entrance
+      anime.set(bttFloat, { opacity: 0, scale: 0.8 });
+      anime({
+        targets: bttFloat,
+        opacity: [0, 1],
+        scale: [0.8, 1],
+        duration: 400,
+        easing: 'easeOutElastic(1, 0.6)'
       });
-    }, { threshold: 0.5 });
 
-    observer.observe(bttFloat);
+      // Then start breathing loop
+      anime({
+        targets: bttFloat,
+        scale: [1, 1.08, 1],
+        duration: 3000,
+        easing: 'easeInOutQuad',
+        loop: true
+      });
+
+      window.removeEventListener('scroll', checkVisible);
+    }
+
+    window.addEventListener('scroll', checkVisible, { passive: true });
   }
 
   /* ─── Scroll Event Handler ───────────────────────────────────────────────── */
