@@ -186,6 +186,15 @@
   color: #b8d4ff;
 }
 
+/* Inline underlined metadata links (artwork.html Orientation/Series/Themes)
+   have no resting-state color class and were falling through to the generic
+   link-blue above instead of the surrounding body text color they inherit
+   in light mode. Restore that intent using the archive's existing dark-mode
+   body-text token rather than the generic link color. */
+.dark a.underline {
+  color: #e8e8e8;
+}
+
 .dark a:hover {
   color: #FF6600;
 }
@@ -282,7 +291,13 @@
 }
 
 /* ========== SIDEBAR & NAVIGATION ========== */
-.dark .sidebar, .dark nav {
+/* The bare `nav` clause here used to match every <nav> sitewide, including
+   the primary header nav — which only becomes visible at the md breakpoint
+   (tablet+) and already sits inside a header with its own translucent
+   background, producing a visible opaque seam. No <nav> element currently
+   relies on this background (folio-rail/section-nav-rail are transparent
+   dot rails by design), so it's removed rather than rescoped. */
+.dark .sidebar {
   background-color: #242424;
   border-color: #404040;
 }
