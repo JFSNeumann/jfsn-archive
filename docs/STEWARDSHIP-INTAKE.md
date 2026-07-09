@@ -149,3 +149,61 @@ report is `Pending: 0 / Ready: 0`.
 `python3 scripts/test_intake_status.py` (part of `npm test`) covers no-pending,
 one/multiple pending, partial sidecars, malformed sidecars, missing sidecars,
 ready-for-finish, the `validate_catalog.py` interaction, and read-only behavior.
+
+## Phase 2.3 — Intake Orchestration (implemented)
+
+`scripts/intake.py` (wired as `archive intake`) is a thin coordinator that
+prepares new artworks for authorship and then **deliberately stops**:
+
+1. verify prerequisites,
+2. run the existing `artworks/ingest.py` (image tiers, ID reservation, `dims.json`),
+3. scaffold an empty sidecar for each newly assigned ID,
+4. display intake status,
+5. **stop** — at the boundary where curator judgment begins.
+
+It does **not** rebuild catalogs, generate pages, update derived files, run
+deployment checks, or call `archive verify`. Those belong to Phase 2.4.
+
+### Usage
+
+```bash
+archive intake            # ingest inbox → scaffold → status → stop
+archive intake status     # (Phase 2.2) what is waiting for the curator
+archive intake scaffold artNNNN [...]   # (Phase 2.1) sidecars by ID
+```
+
+**Exit codes:** `0` success (including an empty inbox — nothing to do is not a
+failure); `1` a step failed (ingest or scaffolding), stopping before any later
+step.
+
+### How it stays a coordinator
+
+- **New IDs are discovered by diffing `thumbs/` before and after ingest** — so
+  `ingest.py` needs no modification and remains independently runnable.
+- **Reuses the existing tools in-process** (`scaffold_sidecar.write_sidecar`,
+  `intake_status.scan`/`render`) and runs `ingest.py` as a subprocess to isolate
+  its image dependencies and side effects.
+- **Never overwrites** a pre-existing sidecar (collision → reported "left
+  untouched", never clobbered).
+
+### Error handling
+
+Any failing step stops the run immediately, explains what failed on stderr, and
+does not proceed. Ingest failure scaffolds nothing; scaffolding failure reports
+the state to check with `archive intake status`.
+
+### Design decisions
+
+- **`intake finish` is intentionally absent** — the wrapper recognizes it and
+  reports it is Phase 2.4. No stub build/verify logic exists yet.
+- **Empty inbox is a clean no-op** (exit 0), not an error — ingest is not even
+  invoked.
+- **The transition message and the appended status report** together make the
+  automation→authorship handoff unmistakable.
+
+### Tests
+
+`python3 scripts/test_intake.py` (part of `npm test`) mocks ingest and covers
+normal intake, multiple works, empty inbox, ingest failure, scaffold failure,
+existing-sidecar collision, completion messaging, and that no catalog/page/
+deploy work occurs.

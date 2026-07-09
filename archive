@@ -5,6 +5,9 @@
 #   archive verify            read-only integrity inspection
 #   archive verify --full     also decode-check every image tier
 #   archive verify --json     machine-readable output
+#   archive intake            prepare new inbox artworks for authorship, then stop
+#   archive intake status     read-only: what work is waiting for the curator
+#   archive intake scaffold   create empty sidecars for given artwork IDs
 #
 # Each subcommand is a small, independent tool under scripts/. This wrapper
 # only routes; it holds no logic of its own.
@@ -20,6 +23,29 @@ case "$cmd" in
   verify)
     exec python3 "$HERE/scripts/verify.py" "$@"
     ;;
+  intake)
+    sub="${1:-}"
+    case "$sub" in
+      status)
+        shift; exec python3 "$HERE/scripts/intake_status.py" "$@"
+        ;;
+      scaffold)
+        shift; exec python3 "$HERE/scripts/scaffold_sidecar.py" "$@"
+        ;;
+      finish)
+        echo "archive intake finish: not yet available (Phase 2.4)." >&2
+        exit 2
+        ;;
+      ""|--*)
+        exec python3 "$HERE/scripts/intake.py" "$@"
+        ;;
+      *)
+        echo "archive intake: unknown subcommand '$sub'" >&2
+        echo "try: archive intake | archive intake status | archive intake scaffold" >&2
+        exit 2
+        ;;
+    esac
+    ;;
   ""|-h|--help|help)
     cat <<'USAGE'
 archive — JFSN stewardship utilities
@@ -29,9 +55,18 @@ Usage:
       Read-only conservator's inspection: "Can this archive still be trusted?"
       Reports PASS / WARNING / FAIL per integrity category. Modifies nothing.
 
+  archive intake
+      Prepare new inbox artworks for authorship: ingest, scaffold empty
+      sidecars, show status, then STOP. Never authors metadata.
+  archive intake status
+      Read-only: what work is waiting for the curator.
+  archive intake scaffold artNNNN [...]
+      Create empty, schema-correct sidecars for the given artwork IDs.
+
 Exit codes:
-  0  no integrity FAILURES (PASS or WARNING)
-  1  one or more FAIL results
+  0  success (verify: no integrity FAILURES)
+  1  a step failed
+  2  unknown command / not yet available
 USAGE
     ;;
   *)
