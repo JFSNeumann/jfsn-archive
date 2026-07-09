@@ -207,3 +207,66 @@ the state to check with `archive intake status`.
 normal intake, multiple works, empty inbox, ingest failure, scaffold failure,
 existing-sidecar collision, completion messaging, and that no catalog/page/
 deploy work occurs.
+
+## Phase 2.4 — Intake Finish (implemented)
+
+`scripts/intake_finish.py` (wired as `archive intake finish`) turns completed,
+curator-authored metadata into a fully generated, verified archive state. It
+coordinates existing tools in a fixed order and stops the moment any stage
+fails. **It completes the Catalog Intake workflow.**
+
+### Fixed sequence
+
+1. **Validate** authored sidecars — `validate_catalog.py` (+ the `intake status`
+   gate below). Stop immediately on failure.
+2. **Rebuild catalogs** — `build_catalog.py` (catalog.json, -lite, -home, API,
+   sitemap).
+3. **Generate pages** for the newly completed works only —
+   `gen-artwork-pages.py --id …`.
+4. **Update derived artifacts** — `build_changes.py` (changes.json).
+5. **Verify** — `scripts/verify.py`, the always-final gate.
+6. **Report** readiness.
+
+### Usage
+
+```bash
+archive intake finish
+```
+
+**Exit codes:** `0` = READY (verifier passed); `1` = a stage failed or the
+verifier reported integrity FAILURES (NOT READY). An empty intake queue is a
+clean no-op (exit 0).
+
+### Two-layer validation gate
+
+- **`intake status` gate:** if any work is still pending (empty field, malformed,
+  or un-scaffolded), the whole batch is blocked before anything is built — using
+  the state `intake_status` already computed.
+- **`validate_catalog.py --from <min ready>` gate:** the authoritative schema
+  tool, scoped to the ready works, so the 1,084 legacy works are never in play.
+
+Validation always blocks publication; nothing downstream runs until it passes.
+
+### What it never does
+
+No commit, push, deploy, tag, or deployment-script invocation — enforced by a
+test that scans the source for any git/deploy reference. Preparation is
+complete; **publication remains a human decision.**
+
+### Design decisions
+
+- **Pages are generated only for the ready works** (`--id`), not a full
+  1,084-page rebuild — fast and scoped.
+- **`verify.py` is the final gate:** READY is reported only when the verifier
+  exits clean; a FAIL yields NOT READY (exit 1) and prints the verifier's own
+  report so the curator sees exactly why.
+- **Fixed sequence, fail-fast:** each stage stops on failure and names itself;
+  catalog.json is written all-or-nothing by `build_catalog.py`, so a failed run
+  does not leave a half-written catalog.
+
+### Tests
+
+`python3 scripts/test_intake_finish.py` (part of `npm test`) mocks every stage
+and covers successful finish, multiple works, no completed works, validation
+blocking (pending and tool-rejection), build failure, page-generation failure,
+verify failure as the final gate, and the no-git/no-deploy guarantee.
