@@ -56,6 +56,22 @@ FAIL. A `WARNING` never blocks — it is a curator review item, not a failure.
 | **Repository Health** | Expected generated files present & non-empty; `sw.js` `CACHE_V` format; working-tree cleanliness (WARNING — `pre-deploy-check.sh` remains the hard deploy gate). |
 | **Informational** | Vocabulary drift, capitalization/synonym clusters in controlled fields, unusual years. **Report only — never fails.** |
 
+### Report structure — integrity vs. workflow state
+
+The report is deliberately split so repository workflow never dilutes the trust
+answer:
+
+- **Archive Integrity** — Metadata, Image, Catalog, and Generated-Artifact
+  results. These four sections alone determine **Overall Archive Integrity**.
+- **Repository State** — working tree (CLEAN/DIRTY) and deployment readiness.
+  Informational only; it cannot change the integrity verdict. A repository may be
+  intentionally dirty mid-session while the archive is perfectly healthy.
+- **Informational** — curatorial review items (vocabulary drift, unusual years).
+- **Archive Trust Summary** — total Failures/Warnings and the integrity verdict.
+
+The `--json` output is unchanged: it still reports a single `overall` (max across
+all sections) plus per-section levels, for any hook that consumes it.
+
 ### Severity philosophy
 
 - **FAIL** — objective integrity problems: invalid JSON, duplicate IDs, missing

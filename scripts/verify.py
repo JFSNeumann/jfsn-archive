@@ -44,7 +44,8 @@ ROOT = Path(__file__).resolve().parent.parent
 PASS, WARNING, FAIL = "PASS", "WARNING", "FAIL"
 _SEVERITY = {PASS: 0, WARNING: 1, FAIL: 2}
 
-# Report sections, in display order.
+# Report sections, in display order. (Also the JSON output's section set — kept
+# stable so the JSON schema is unchanged.)
 SECTIONS = [
     "Metadata Integrity",
     "Image Integrity",
@@ -53,6 +54,21 @@ SECTIONS = [
     "Repository Health",
     "Informational",
 ]
+
+# Presentation-only groupings for the human report. These decide how sections are
+# DISPLAYED and which ones determine the archive-integrity verdict; they do not
+# change any check, threshold, or the JSON output.
+#
+# Only these four sections determine whether the archive itself can be trusted.
+ARCHIVE_INTEGRITY_SECTIONS = [
+    "Metadata Integrity",
+    "Image Integrity",
+    "Catalog Consistency",
+    "Generated Artifacts",
+]
+# Repository workflow state — reported separately, informational, never dilutes
+# the integrity verdict.
+REPOSITORY_STATE_SECTIONS = ["Repository Health"]
 
 
 class Result:
@@ -683,6 +699,30 @@ def overall_level(results: list[Result]) -> str:
     return max((r.level for r in results), key=lambda l: _SEVERITY[l])
 
 
+def archive_integrity_level(results: list[Result]) -> str:
+    """The trust verdict — computed ONLY from the four integrity sections.
+    Repository workflow state can never change this answer."""
+    levels = [r.level for r in results
+              if r.section in ARCHIVE_INTEGRITY_SECTIONS]
+    if not levels:
+        return PASS
+    return max(levels, key=lambda l: _SEVERITY[l])
+
+
+def _working_tree_state(repo_results: list[Result]) -> str:
+    """Derive a state word for display from the existing working-tree result.
+    Presentation only — reads results already produced, runs no new check."""
+    for r in repo_results:
+        d = r.detail.lower()
+        if "working tree clean" in d:
+            return "CLEAN"
+        if "uncommitted" in d:
+            return "DIRTY"
+        if "not a git repository" in d or "git not available" in d:
+            return "UNKNOWN"
+    return "UNKNOWN"
+
+
 def _color(level: str, text: str, enabled: bool) -> str:
     if not enabled:
         return text
@@ -695,37 +735,74 @@ def print_report(results: list[Result], elapsed: float, color: bool, quiet: bool
     print("  JFSN Archive — Conservator's Inspection")
     print("  " + "─" * 44)
     print()
-    for section in SECTIONS:
+
+    # ── Archive Integrity — the trust question ──────────────────────────────
+    print("  Archive Integrity")
+    print("  " + "-" * 17)
+    for section in ARCHIVE_INTEGRITY_SECTIONS:
         lvl = section_level(results, section)
         dots = "." * max(4, 26 - len(section))
         print(f"  {section} {dots} {_color(lvl, lvl, color)}")
-
-    overall = overall_level(results)
+    integrity = archive_integrity_level(results)
     print()
-    print("  Overall:")
-    print("  " + _color(overall, overall, color))
+    print(f"  Overall Archive Integrity: {_color(integrity, integrity, color)}")
+
+    # Detail for integrity results that are not PASS.
+    integ_issues = [r for r in results
+                    if r.section in ARCHIVE_INTEGRITY_SECTIONS and r.level != PASS]
+    if integ_issues:
+        print()
+        print("  Integrity details:")
+        for r in integ_issues:
+            mark = "FAIL" if r.level == FAIL else "warn"
+            print(f"    [{_color(r.level, mark, color)}] {r.section}: {r.detail}")
     print()
 
-    # Detail for anything not PASS (and, when not quiet, notable INFO warnings).
-    notable = [r for r in results if r.level != PASS]
-    if notable:
-        print("  Details:")
-        for section in SECTIONS:
-            rs = [r for r in notable if r.section == section]
-            if not rs:
-                continue
-            print(f"    {section}:")
-            for r in rs:
-                mark = "FAIL" if r.level == FAIL else "warn"
-                print(f"      [{_color(r.level, mark, color)}] {r.detail}")
+    # ── Repository State — workflow, informational only ─────────────────────
+    repo_results = [r for r in results
+                    if r.section in REPOSITORY_STATE_SECTIONS]
+    print("  Repository State  (informational — does not affect integrity)")
+    print("  " + "-" * 16)
+    working_tree = _working_tree_state(repo_results)
+    # "Ready" here means the deployable artifacts exist; a dirty tree does not
+    # make it "not ready" — pre-deploy-check.sh is the gate that blocks a dirty
+    # deploy. Derived from existing results; no new check is run.
+    deploy = "NOT READY" if any(r.level == FAIL for r in repo_results) else "READY"
+    for label, value in (("Working Tree", working_tree),
+                         ("Deployment Readiness", deploy)):
+        dots = "." * max(4, 26 - len(label))
+        print(f"  {label} {dots} {value}")
+    for r in repo_results:
+        if r.level != PASS:
+            mark = "FAIL" if r.level == FAIL else "note"
+            print(f"    [{_color(r.level, mark, color)}] {r.detail}")
+    print()
+
+    # ── Informational — curatorial review, report-only ──────────────────────
+    info_issues = [r for r in results
+                   if r.section == "Informational" and r.level != PASS]
+    if info_issues:
+        print("  Informational  (curatorial review — never affects integrity)")
+        print("  " + "-" * 15)
+        for r in info_issues:
+            print(f"    [{_color(WARNING, 'note', color)}] {r.detail}")
         print()
 
-    if overall == PASS:
-        print("  No integrity issues detected.")
-        print("  The archive remains internally consistent and suitable for")
+    # ── Archive Trust Summary ───────────────────────────────────────────────
+    fails = sum(1 for r in results if r.level == FAIL)
+    warns = sum(1 for r in results if r.level == WARNING)
+    print("  Archive Trust Summary")
+    print("  " + "-" * 21)
+    print(f"  Failures: {fails}")
+    print(f"  Warnings: {warns}")
+    print(f"  Archive Integrity: {_color(integrity, integrity, color)}")
+    print()
+
+    if integrity == PASS:
+        print("  This archive remains internally consistent and suitable for")
         print("  long-term preservation.")
-    elif overall == WARNING:
-        print("  No integrity failures — but review the warnings above.")
+    elif integrity == WARNING:
+        print("  No integrity failures — but review the integrity warnings above.")
         print("  These are curator items, not corruption of the record.")
     else:
         print("  Integrity FAILURES detected. The archive is NOT verified.")
