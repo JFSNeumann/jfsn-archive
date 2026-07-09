@@ -175,6 +175,26 @@
     .flag--warn { background: rgba(232,200,48,0.14); color: var(--warn); }
     .flag--err  { background: rgba(232,92,16,0.14);  color: var(--err);  }
     .flag--ok   { background: rgba(58,120,56,0.14);  color: var(--ok-color); }
+    .flag--info { background: rgba(87,87,87,0.12);   color: var(--muted); }
+    /* A thumbnail that fails to load is a preservation signal, not dark art. */
+    .card--broken { outline: 2px solid var(--err); outline-offset: -2px; }
+    .card--broken .card__img { background: repeating-linear-gradient(45deg, #2a0a06, #2a0a06 6px, #111 6px, #111 12px); }
+
+    /* ── Search field ── */
+    .bar__search {
+      appearance: none;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font: inherit;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      padding: 0.2rem 0.55rem;
+      width: 12rem;
+      flex-shrink: 0;
+    }
+    .bar__search::placeholder { color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+    .bar__search:focus { outline: none; border-color: var(--accent); }
 
     /* ── Empty state ── */
     .empty {
@@ -204,6 +224,7 @@
 <div class="bar">
   <div class="bar__title">QA — <span>JFSN</span> Archive</div>
   <div class="chips" id="chips"></div>
+  <input type="search" id="search" class="bar__search" placeholder="Find id or title…" autocomplete="off" spellcheck="false" aria-label="Search by artwork id or title">
   <div class="bar__stats" id="stats"></div>
   <a href="curator.html" style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;white-space:nowrap;">&larr; Curator&rsquo;s Index</a>
 </div>
@@ -224,6 +245,7 @@
 
   let catalog = [];
   let active  = 'all';
+  let term    = '';
 
   /* ── QA filter definitions ── */
   const FILTERS = [
@@ -265,6 +287,11 @@
       test: r => !r.title,
     },
     {
+      id: 'composite',
+      label: 'Composite',
+      test: r => r.composite === true,
+    },
+    {
       id: 'keyword-drift',
       label: 'Keyword drift',
       test: r => {
@@ -276,7 +303,7 @@
     {
       id: 'flagged',
       label: 'Any issue',
-      test: r => getFlags(r).some(f => f.cls !== 'ok'),
+      test: r => getFlags(r).some(f => f.cls === 'err' || f.cls === 'warn'),
     },
   ];
 
@@ -310,9 +337,11 @@
     if (!(r.themes && r.themes.length))                                        out.push({ label: 'no themes',   cls: 'warn' });
     if (!r.description)                                                        out.push({ label: 'no desc',     cls: 'err'  });
     else if (r.description.trim().split(/\s+/).length < 15)                   out.push({ label: 'short desc',  cls: 'err'  });
-    const hot = getHotKeywords();
-    if ((r.keywords || []).some(k => hot.has(k)))                             out.push({ label: 'kw drift',    cls: 'err'  });
-    if (out.length === 0 && r.title)                                           out.push({ label: 'ok',          cls: 'ok'   });
+    /* Keyword drift is a vocabulary-level concern, reported in the drift bar —
+       it is not a per-record defect, so no err badge is stamped here. */
+    if (r.composite === true)                                                  out.push({ label: 'composite',   cls: 'info' });
+    if (!out.some(f => f.cls === 'err' || f.cls === 'warn') &&
+        !out.some(f => f.cls === 'info') && r.title)                           out.push({ label: 'ok',          cls: 'ok'   });
     return out;
   }
 
@@ -359,7 +388,15 @@
   /* ── Render grid ── */
   function render() {
     const filterDef = FILTERS.find(f => f.id === active);
-    const visible   = active === 'all' ? catalog : catalog.filter(filterDef.test);
+    let   visible   = active === 'all' ? catalog : catalog.filter(filterDef.test);
+
+    if (term) {
+      visible = visible.filter(r => {
+        const id = (r.file || '').replace('.avif', '');
+        return id.toLowerCase().includes(term) ||
+               (r.title || '').toLowerCase().includes(term);
+      });
+    }
 
     document.getElementById('stats').textContent =
       visible.length.toLocaleString() + ' / ' + catalog.length.toLocaleString() + ' works';
@@ -384,7 +421,7 @@
         .join('');
 
       const wt = r.work_type ? r.work_type.replace('_', ' ') : '';
-      const yr = r.year ? String(r.year) : '';
+      const yr = r.year_display || (r.year ? String(r.year) : '');
       const meta = [yr, wt].filter(Boolean).join(' · ');
 
       card.innerHTML =
@@ -422,6 +459,26 @@
       buildChips(counts);
       buildDriftBar();
       render();
+
+      const search = document.getElementById('search');
+      search.addEventListener('input', () => {
+        term = search.value.trim().toLowerCase();
+        render();
+      });
+
+      /* Preservation guard: an <img> load error does not bubble, so listen in
+         the capture phase. A failed thumbnail is marked visibly rather than
+         painting a silent black box that looks like dark artwork. */
+      document.getElementById('grid').addEventListener('error', e => {
+        const img = e.target;
+        if (!(img.classList && img.classList.contains('card__img'))) return;
+        const card = img.closest('.card');
+        if (!card || card.classList.contains('card--broken')) return;
+        card.classList.add('card--broken');
+        const flags = card.querySelector('.card__flags');
+        if (flags) flags.insertAdjacentHTML('afterbegin',
+          '<span class="flag flag--err">img missing</span>');
+      }, true);
     })
     .catch(() => {
       document.getElementById('grid').innerHTML =
