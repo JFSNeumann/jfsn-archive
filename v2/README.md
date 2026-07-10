@@ -47,12 +47,20 @@ itself — the only one that ever existed. Rooms, not pages.
   in this archive." → door to the Flooded Wing's wall. All wall text verbatim
   from guernica.html. Data: `guernica.json`, emitted by build-current.py.
 
+- **The Hall of Openings** (`hall-of-openings.html`) — the 250 flagged
+  composites hung together for the first time, in three movements sectioned
+  from catalog data (I The Galleries 149 · II The Studio Views 87 · III The
+  Placements 14), salon-style CSS-columns hang, thumbs tier, every caption
+  carrying the composite flag. Wall text verbatim from imagined-museum.html
+  ("rooms that never held it", "a picture of being seen", the coda). Ends on
+  the reveal: "You are standing in one of these pictures now… This building
+  is the composite that came true." Data: `openings.json` (build-current.py,
+  sections via themes Gallery/Studio/placement).
+
 ## Planned rooms (from the 2026-07-10 concept)
 
-1. The Hall of Openings — the composites, flagged, ending on the reveal that
-   this site is the composite that came true.
-2. The Studio — today, the live count, the letter to the future.
-3. More passages — Torsos & Faces, Targets, Working History.
+1. The Studio — today, the live count, the letter to the future.
+2. More passages — Torsos & Faces, Targets, Working History.
 
 ## Resilience rule (learned by execution, keep it)
 

@@ -60,3 +60,25 @@ with open(gout, "w") as f:
     json.dump(guernica, f, separators=(",", ":"))
 
 print(f"{len(guernica)} works → {gout} ({os.path.getsize(gout)//1024} KB)")
+
+# ---- openings.json: the 250 flagged composites, sectioned by what they depict ----
+openings = []
+for w in works:
+    if not w["x"]:
+        continue
+    themes = meta[w["i"]].get("themes") or []
+    o = dict(w)
+    wh = dims.get(w["i"])
+    if wh:
+        o["w"], o["h"] = wh
+    # gallery pictures first (rooms/crowds), then studio views, else placement-titled
+    o["s"] = "gal" if "Gallery" in themes else ("stu" if "Studio" in themes else "plc")
+    openings.append(o)
+
+oout = os.path.join(ROOT, "v2", "openings.json")
+with open(oout, "w") as f:
+    json.dump(openings, f, separators=(",", ":"))
+
+from collections import Counter
+print(f"{len(openings)} works → {oout} ({os.path.getsize(oout)//1024} KB)",
+      dict(Counter(o['s'] for o in openings)))
