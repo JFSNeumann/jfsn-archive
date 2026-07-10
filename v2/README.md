@@ -32,6 +32,15 @@ itself — the only one that ever existed. Rooms, not pages.
   depict nothing and say so. Frame reveal uses scroll position + a heartbeat
   (never IntersectionObserver — throttled/embedded tabs stall it silently).
 
+- **The Guernica Passage** (`guernica-passage.html`) — one structure walked
+  for thirty years. All 232 series works in chronological order (chapters
+  1990s 47 · 2000s 104 · 2010s 57 · 2020s 24, counts computed from data),
+  `thumbs/` tier (~5 MB lazy, first 3 eager), true aspect ratios from
+  dims.json, WORK N OF 232 counter, composite flags. Mid-passage, before the
+  2010s ("the decade is not documented"), the interruption: "That work is not
+  in this archive." → door to the Flooded Wing's wall. All wall text verbatim
+  from guernica.html. Data: `guernica.json`, emitted by build-current.py.
+
 ## Planned rooms (from the 2026-07-10 concept)
 
 1. The Threshold — dark arrival, one line, one work resolving. (Stub lives at

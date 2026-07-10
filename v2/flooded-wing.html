@@ -351,9 +351,11 @@
     window.addEventListener('resize', measure);
     measure();
     // heartbeat: some embedded/throttled contexts drop scroll events entirely
-    let lastY = -1;
+    let lastY = -1, lastH = -1;
     setInterval(() => {
-      if (scrollY !== lastY) { lastY = scrollY; reveal(); }
+      const h = document.documentElement.scrollHeight;
+      if (h !== lastH) { lastH = h; measure(); }      // catches missed resizes / late layout
+      else if (scrollY !== lastY) { lastY = scrollY; reveal(); }
     }, 500);
   }
 

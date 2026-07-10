@@ -43,3 +43,20 @@ with open(out, "w") as f:
     json.dump(works, f, separators=(",", ":"))
 
 print(f"{len(works)} works → {out} ({os.path.getsize(out)//1024} KB)")
+
+# ---- guernica.json: the passage's subset, with true aspect ratios ----
+dims = json.load(open(os.path.join(ROOT, "dims.json")))
+guernica = []
+for w in works:
+    if meta[w["i"]].get("series") == "Guernica":
+        g = dict(w)
+        wh = dims.get(w["i"])
+        if wh:
+            g["w"], g["h"] = wh
+        guernica.append(g)
+
+gout = os.path.join(ROOT, "v2", "guernica.json")
+with open(gout, "w") as f:
+    json.dump(guernica, f, separators=(",", ":"))
+
+print(f"{len(guernica)} works → {gout} ({os.path.getsize(gout)//1024} KB)")
