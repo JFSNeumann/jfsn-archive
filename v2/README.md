@@ -11,7 +11,13 @@ itself — the only one that ever existed. Rooms, not pages.
 
 ## Built so far
 
-- **The Current** (`index.html`) — the spine of the building. All 1,084 works
+- **The Threshold** (`index.html`) — the front door. Staged arrival: name in
+  the dark → "A personal record, not a gallery." → one work (Cassette Torso,
+  art1010) resolving out of black → the museum named, with the honest framing
+  (composites flagged, this building is the one that exists) → doors to the
+  three rooms + the archive vault. Any input skips the wait; reduced-motion
+  shows everything at once.
+- **The Current** (`current.html`) — the spine of the building. All 1,084 works
   as a river of color, 1970s → 2020s, full-viewport canvas. Drag / scroll /
   arrow keys / minimap to move through fifty years. Hover or tap a work to
   raise it out of the water (title, decade-estimate year, medium, composite
@@ -43,15 +49,19 @@ itself — the only one that ever existed. Rooms, not pages.
 
 ## Planned rooms (from the 2026-07-10 concept)
 
-1. The Threshold — dark arrival, one line, one work resolving. (Stub lives at
-   the top of The Current for now.)
-2. The Flooded Wing — 500–1,000 empty frames at estimated scale; the 11×25 ft
-   Guernica wall, empty, at true proportion. Absence as architecture.
-3. The Rooms — Guernica (232 works, thirty years, one continuous passage),
-   Torsos & Faces, Targets, Working History.
-4. The Hall of Openings — the composites, flagged, ending on the reveal that
+1. The Hall of Openings — the composites, flagged, ending on the reveal that
    this site is the composite that came true.
-5. The Studio — today, the live count, the letter to the future.
+2. The Studio — today, the live count, the letter to the future.
+3. More passages — Torsos & Faces, Targets, Working History.
+
+## Resilience rule (learned by execution, keep it)
+
+Throttled/embedded contexts (incl. the Claude preview pane) can stall RAF,
+never fire IntersectionObserver, drop scroll/resize events, and never fetch
+`loading="lazy"` images. Every room therefore runs a ~500ms heartbeat:
+scroll rooms re-reveal from scroll position and re-measure when scrollHeight
+changes; canvas rooms re-render when RAF hasn't ticked in >600ms. Core
+content is never gated on IO/lazy; above-the-fold images load eager.
 
 Blocked on Jeff: audio recordings of him reading fragments (esp. "Sad.
 Enough.") — the voice layer for every room.
