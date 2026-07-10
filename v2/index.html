@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>The Current — Jeffrey F. S. Neumann</title>
+<meta name="description" content="Fifty years of work as one river. 1,084 works, 1970s–2020s, under one finger.">
+<style>
+  :root{
+    --room:#0c0a09;
+    --ink:#e8e2d9;
+    --dim:#7a7168;
+    --faint:#3a332d;
+    --accent:#FF6600;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;overflow:hidden}
+  body{
+    background:var(--room);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overscroll-behavior:none;
+  }
+  ::selection{background:var(--accent);color:#fff}
+
+  #river{
+    position:fixed;inset:0;display:block;
+    cursor:grab;touch-action:none;
+  }
+  #river.dragging{cursor:grabbing}
+
+  /* ---------- HUD ---------- */
+  .hud{position:fixed;z-index:5;pointer-events:none;user-select:none}
+  .hud a{pointer-events:auto}
+  #hud-name{top:calc(env(safe-area-inset-top, 0px) + 22px);left:26px}
+  #hud-name .who{
+    font-size:11px;letter-spacing:.22em;color:var(--ink);font-weight:600;
+  }
+  #hud-name .what{
+    margin-top:6px;font-size:11px;letter-spacing:.18em;color:var(--dim);
+  }
+  #hud-count{
+    top:calc(env(safe-area-inset-top, 0px) + 22px);right:26px;text-align:right;
+    font-size:11px;letter-spacing:.18em;color:var(--dim);
+  }
+  #hud-year{
+    left:50%;top:14%;transform:translateX(-50%);
+    font-size:clamp(90px,17vw,220px);
+    font-weight:100;line-height:1;
+    color:#241e19;
+    font-variant-numeric:tabular-nums;
+    letter-spacing:-0.02em;
+  }
+  #hud-year .est{
+    display:block;text-align:center;font-size:11px;letter-spacing:.3em;
+    color:var(--faint);margin-top:10px;font-weight:400;
+  }
+  #hud-hint{
+    left:50%;bottom:calc(env(safe-area-inset-bottom, 0px) + 66px);transform:translateX(-50%);
+    font-size:10px;letter-spacing:.26em;color:var(--dim);
+    transition:opacity 1.2s ease;white-space:nowrap;
+  }
+  #hud-hint.gone{opacity:0}
+  #hud-exit{
+    left:26px;bottom:calc(env(safe-area-inset-bottom, 0px) + 62px);
+    font-size:10px;letter-spacing:.2em;
+  }
+  #hud-exit a{color:var(--dim);text-decoration:none;transition:color .25s}
+  #hud-exit a:hover{color:var(--accent)}
+
+  /* ---------- work card ---------- */
+  #card{
+    position:fixed;z-index:6;width:216px;
+    transform:translate(-50%,0);
+    opacity:0;pointer-events:none;
+    transition:opacity .28s ease;
+  }
+  #card.on{opacity:1;pointer-events:auto}
+  #card a{display:block;text-decoration:none;color:var(--ink)}
+  #card .mat{
+    padding:10px;background:#171310;
+    border:1px solid #29231e;
+    box-shadow:0 24px 60px rgba(0,0,0,.6);
+  }
+  #card img{
+    display:block;width:100%;height:150px;object-fit:contain;
+    background:var(--matc,#111);
+  }
+  #card .cap{padding:12px 2px 4px}
+  #card .t{
+    font-family:Georgia,'Times New Roman',serif;font-style:italic;
+    font-size:14px;line-height:1.35;
+  }
+  #card .m{
+    margin-top:5px;font-size:10px;letter-spacing:.16em;color:var(--dim);
+    text-transform:uppercase;
+  }
+  #card .x{
+    margin-top:6px;font-size:9px;letter-spacing:.14em;color:var(--accent);
+    text-transform:uppercase;
+  }
+  #card .open{
+    margin-top:8px;font-size:10px;letter-spacing:.18em;color:var(--dim);
+    text-transform:uppercase;transition:color .2s;
+  }
+  #card a:hover .open{color:var(--accent)}
+
+  /* ---------- minimap ---------- */
+  #minimap{
+    position:fixed;left:0;right:0;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 26px);
+    height:22px;z-index:5;display:block;width:100%;
+    cursor:pointer;touch-action:none;opacity:.9;
+  }
+
+  /* ---------- threshold ---------- */
+  #threshold{
+    position:fixed;inset:0;z-index:20;background:var(--room);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:22px;transition:opacity 1.4s ease;
+  }
+  #threshold.gone{opacity:0;pointer-events:none}
+  #threshold .who{
+    font-size:11px;letter-spacing:.3em;color:var(--dim);
+    opacity:0;animation:th-in 1.2s ease .2s forwards;
+  }
+  #threshold .line{
+    font-family:Georgia,'Times New Roman',serif;font-style:italic;
+    font-size:clamp(22px,3.4vw,34px);color:var(--ink);
+    opacity:0;animation:th-in 1.4s ease .9s forwards;
+  }
+  @keyframes th-in{to{opacity:1}}
+
+  .sr-only{
+    position:absolute;width:1px;height:1px;overflow:hidden;
+    clip:rect(0 0 0 0);white-space:nowrap;
+  }
+  @media (max-width:640px){
+    #hud-name .what{display:none}
+    #hud-count{display:none}
+    #card{width:180px}
+    #card img{height:120px}
+  }
+  @media (prefers-reduced-motion: reduce){
+    #threshold .who,#threshold .line{animation:none;opacity:1}
+  }
+</style>
+</head>
+<body>
+
+<canvas id="river" role="img" aria-label="The Current: 1,084 works by Jeffrey F. S. Neumann arranged as a river of color from the 1970s to the 2020s. Drag or use arrow keys to move through time."></canvas>
+<canvas id="minimap" aria-hidden="true"></canvas>
+
+<div class="hud" id="hud-name">
+  <div class="who">JEFFREY&nbsp;F.&nbsp;S.&nbsp;NEUMANN</div>
+  <div class="what">THE CURRENT — A PERSONAL RECORD</div>
+</div>
+<div class="hud" id="hud-count">1,084 WORKS<br>1970s – 2020s</div>
+<div class="hud" id="hud-year" aria-hidden="true"><span id="year-num">1970</span><span class="est" id="year-est">DECADE, ESTIMATED</span></div>
+<div class="hud" id="hud-hint">DRAG&nbsp;&nbsp;·&nbsp;&nbsp;SCROLL&nbsp;&nbsp;·&nbsp;&nbsp;← →</div>
+<div class="hud" id="hud-exit"><a href="/">[ THE ARCHIVE → ]</a></div>
+
+<div id="card">
+  <a id="card-link" href="#">
+    <div class="mat">
+      <img id="card-img" alt="" decoding="async">
+      <div class="cap">
+        <div class="t" id="card-t"></div>
+        <div class="m" id="card-m"></div>
+        <div class="x" id="card-x" hidden>Photoshop composite — imagined placement</div>
+        <div class="open">[ OPEN WORK → ]</div>
+      </div>
+    </div>
+  </a>
+</div>
+
+<div id="threshold">
+  <div class="who">JEFFREY&nbsp;F.&nbsp;S.&nbsp;NEUMANN&nbsp;&nbsp;—&nbsp;&nbsp;A&nbsp;PERSONAL&nbsp;RECORD</div>
+  <div class="line">Fifty years, under one finger.</div>
+</div>
+
+<div class="sr-only" aria-live="polite" id="live"></div>
+
+<script>
+(async function(){
+  'use strict';
+
+  const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canvas = document.getElementById('river');
+  const ctx = canvas.getContext('2d');
+  const mini = document.getElementById('minimap');
+  const mctx = mini.getContext('2d');
+
+  const works = await fetch('current.json').then(r => r.json());
+  const N = works.length;
+
+  // ---------- precompute ----------
+  // orientation → sliver height factor (form is data-honest: vertical works stand taller)
+  const HF = { v: 1.0, s: 0.78, h: 0.58 };
+  const rgb = [];
+  for (const w of works) {
+    const n = parseInt(w.c.slice(1), 16);
+    let r = n >> 16 & 255, g = n >> 8 & 255, b = n & 255;
+    // lift near-black works just enough to read against the room
+    const lum = (0.2126*r + 0.7152*g + 0.0722*b) / 255;
+    if (lum < 0.07) { r += 26; g += 24; b += 22; }
+    rgb.push([r, g, b]);
+    w.fill = `rgb(${r},${g},${b})`;
+    w.hf = HF[w.o] || 1.0;
+  }
+  // decade boundaries: first index of each decade
+  const decades = [];
+  let lastD = -1;
+  works.forEach((w, i) => {
+    const d = Math.floor(w.y / 10) * 10;
+    if (d !== lastD) { decades.push({ label: d + 's', i }); lastD = d; }
+  });
+
+  // ---------- layout ----------
+  let W = 0, H = 0, DPR = 1, SW = 12, GAP = 5, STEP = 17, WORLD = 0, BANDH = 0, MIDY = 0;
+  function layout(){
+    W = window.innerWidth; H = window.innerHeight;
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = W * DPR; canvas.height = H * DPR;
+    canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    SW = Math.max(8, Math.min(15, W / 110));
+    GAP = SW * 0.42;
+    STEP = SW + GAP;
+    WORLD = N * STEP;
+    BANDH = Math.min(H * 0.34, 250);
+    MIDY = H * 0.52;
+    drawMinimap();
+  }
+
+  // ---------- minimap (drawn once per resize) ----------
+  let miniW = 0, miniH = 22;
+  function drawMinimap(){
+    miniW = W;
+    mini.width = W * DPR; mini.height = miniH * DPR;
+    mini.style.height = miniH + 'px';
+    mctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    mctx.clearRect(0, 0, W, miniH);
+    for (let i = 0; i < N; i++) {
+      const x = i / N * W;
+      mctx.fillStyle = works[i].fill;
+      mctx.globalAlpha = 0.55;
+      mctx.fillRect(x, 5, Math.max(1, W / N), 12);
+    }
+    mctx.globalAlpha = 1;
+  }
+
+  // ---------- state ----------
+  let scrollX = 0;          // world px at left edge
+  let vx = 0;               // inertia velocity
+  let dragging = false;
+  let dragMoved = 0;
+  let lastPX = 0, lastT = 0;
+  let pointerX = null, pointerY = null, pointerIn = false;
+  let focusI = -1;          // focused work index
+  let focusAmt = new Float32Array(N); // per-sliver elevation ease
+  let entrance = REDUCED ? 1 : 0;     // 0→1 entrance sweep
+  let hinted = false;
+  const maxScroll = () => Math.max(0, WORLD - W);
+
+  // ---------- card ----------
+  const card = document.getElementById('card');
+  const cardImg = document.getElementById('card-img');
+  const cardT = document.getElementById('card-t');
+  const cardM = document.getElementById('card-m');
+  const cardX = document.getElementById('card-x');
+  const cardLink = document.getElementById('card-link');
+  const live = document.getElementById('live');
+  let cardFor = -1;
+
+  function showCard(i){
+    if (i === cardFor) return;
+    cardFor = i;
+    const w = works[i];
+    cardImg.src = '/artworks/mini/' + w.i + '.avif';
+    cardImg.alt = w.t;
+    cardImg.style.setProperty('--matc', w.fill);
+    cardImg.style.background = 'rgb(20,17,14)';
+    cardT.textContent = w.t;
+    cardM.textContent = w.yd + ' · ' + w.m;
+    cardX.hidden = !w.x;
+    cardLink.href = '/artwork.html?id=' + w.i;
+    card.classList.add('on');
+    live.textContent = w.t + ', ' + w.yd + ', ' + w.m;
+  }
+  function hideCard(){
+    cardFor = -1;
+    card.classList.remove('on');
+  }
+  function placeCard(screenX){
+    const cw = card.offsetWidth || 216;
+    const x = Math.min(W - cw/2 - 14, Math.max(cw/2 + 14, screenX));
+    card.style.left = x + 'px';
+    card.style.top = Math.max(14, MIDY - BANDH/2 - (card.offsetHeight || 260) - 34) + 'px';
+  }
+
+  // ---------- year readout ----------
+  const yearNum = document.getElementById('year-num');
+  const yearEst = document.getElementById('year-est');
+  let shownYear = null;
+  function updateYear(){
+    const ci = Math.min(N - 1, Math.max(0, Math.round((scrollX + W/2) / STEP)));
+    const w = works[ci];
+    const d = Math.floor(w.y / 10) * 10;
+    if (d !== shownYear) {
+      shownYear = d;
+      yearNum.textContent = d + 's';
+      yearEst.textContent = 'YEARS ARE DECADE ESTIMATES';
+    }
+  }
+
+  // ---------- input ----------
+  function beginDrag(px){
+    dragging = true; dragMoved = 0; vx = 0;
+    lastPX = px; lastT = performance.now();
+    canvas.classList.add('dragging');
+    dismissHint();
+  }
+  function moveDrag(px){
+    const now = performance.now();
+    const dx = px - lastPX;
+    dragMoved += Math.abs(dx);
+    scrollX = clampScroll(scrollX - dx);
+    const dt = Math.max(1, now - lastT);
+    vx = -dx / dt * 16;   // px per frame @60
+    lastPX = px; lastT = now;
+  }
+  function endDrag(){
+    dragging = false;
+    canvas.classList.remove('dragging');
+  }
+  function clampScroll(x){ return Math.max(0, Math.min(maxScroll(), x)); }
+  function dismissHint(){
+    if (hinted) return; hinted = true;
+    document.getElementById('hud-hint').classList.add('gone');
+  }
+
+  canvas.addEventListener('pointerdown', e => {
+    try { canvas.setPointerCapture(e.pointerId); } catch (_) {}
+    beginDrag(e.clientX);
+    pointerX = e.clientX; pointerY = e.clientY; pointerIn = true;
+  });
+  canvas.addEventListener('pointermove', e => {
+    pointerX = e.clientX; pointerY = e.clientY; pointerIn = true;
+    if (dragging) moveDrag(e.clientX);
+  });
+  canvas.addEventListener('pointerup', e => {
+    const wasTap = dragMoved < 6;
+    endDrag();
+    if (wasTap) {
+      const i = indexAt(e.clientX);
+      if (i >= 0) {
+        if (e.pointerType === 'touch') {
+          // first tap focuses; tap on the card itself opens
+          focusI = i;
+          showCard(i);
+        } else if (focusI === i && cardFor === i) {
+          window.location.href = '/artwork.html?id=' + works[i].i;
+        }
+      }
+    }
+  });
+  canvas.addEventListener('pointerleave', () => { pointerIn = false; });
+  canvas.addEventListener('pointercancel', endDrag);
+
+  canvas.addEventListener('wheel', e => {
+    e.preventDefault();
+    scrollX = clampScroll(scrollX + e.deltaX + e.deltaY);
+    vx = 0;
+    dismissHint();
+  }, { passive: false });
+
+  window.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') { vx = 34; dismissHint(); }
+    else if (e.key === 'ArrowLeft') { vx = -34; dismissHint(); }
+    else if (e.key === 'Home') { scrollX = 0; vx = 0; }
+    else if (e.key === 'End') { scrollX = maxScroll(); vx = 0; }
+    else if (e.key === 'Enter' && focusI >= 0) {
+      window.location.href = '/artwork.html?id=' + works[focusI].i;
+    }
+  });
+
+  // minimap: click/drag to jump
+  function miniJump(e){
+    const r = mini.getBoundingClientRect();
+    const f = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+    scrollX = clampScroll(f * WORLD - W / 2);
+    vx = 0;
+    dismissHint();
+  }
+  mini.addEventListener('pointerdown', e => {
+    try { mini.setPointerCapture(e.pointerId); } catch (_) {}
+    miniJump(e);
+    const mm = ev => miniJump(ev);
+    const up = () => { mini.removeEventListener('pointermove', mm); mini.removeEventListener('pointerup', up); };
+    mini.addEventListener('pointermove', mm);
+    mini.addEventListener('pointerup', up);
+  });
+
+  function indexAt(screenX){
+    const i = Math.floor((scrollX + screenX) / STEP);
+    return (i >= 0 && i < N) ? i : -1;
+  }
+
+  // ---------- render ----------
+  let t0 = performance.now();
+  let raf = null;
+
+  function frame(now){
+    raf = requestAnimationFrame(frame);
+    const t = (now - t0) / 1000;
+
+    // physics
+    if (!dragging && vx !== 0) {
+      scrollX = clampScroll(scrollX + vx);
+      vx *= 0.94;
+      if (Math.abs(vx) < 0.05) vx = 0;
+      if (scrollX === 0 || scrollX === maxScroll()) vx = 0;
+    }
+    if (entrance < 1) entrance = Math.min(1, entrance + 0.016);
+
+    // focus: pointer on desktop, river centre after motion on touch
+    let want = -1;
+    if (pointerIn && pointerX !== null && Math.abs(pointerY - MIDY) < BANDH * 0.9 && !dragging) {
+      want = indexAt(pointerX);
+    } else if (focusI >= 0 && !dragging) {
+      want = focusI; // keep touch-tapped focus
+    }
+    if (want !== focusI && pointerIn) focusI = want;
+    if (dragging && dragMoved > 6) { focusI = -1; hideCard(); }
+
+    if (focusI >= 0) {
+      showCard(focusI);
+      placeCard(focusI * STEP - scrollX + SW / 2);
+    } else {
+      hideCard();
+    }
+
+    updateYear();
+
+    // draw
+    ctx.clearRect(0, 0, W, H);
+    const amp = REDUCED ? 0 : 2.5 + Math.min(12, Math.abs(vx) * 0.6);
+    const i0 = Math.max(0, Math.floor(scrollX / STEP) - 2);
+    const i1 = Math.min(N - 1, Math.ceil((scrollX + W) / STEP) + 2);
+
+    for (let i = i0; i <= i1; i++) {
+      const w = works[i];
+      // elevation ease toward focus
+      const target = (i === focusI) ? 1 : (Math.abs(i - focusI) === 1 && focusI >= 0 ? 0.35 : 0);
+      focusAmt[i] += (target - focusAmt[i]) * 0.18;
+
+      const x = i * STEP - scrollX;
+      const wave = amp ? Math.sin(t * 1.6 + i * 0.32) * amp : 0;
+      const ent = REDUCED ? 1 : Math.max(0, Math.min(1, entrance * 2.2 - (x / W) * 0.9));
+      const hBase = BANDH * w.hf;
+      const h = (hBase + focusAmt[i] * hBase * 0.22) * (0.15 + 0.85 * ent);
+      const y = MIDY - h / 2 + wave;
+
+      ctx.globalAlpha = 0.92 + focusAmt[i] * 0.08;
+      ctx.fillStyle = w.fill;
+      ctx.fillRect(x, y, SW, h);
+
+      // reflection
+      ctx.globalAlpha = 0.10 * ent;
+      ctx.fillRect(x, MIDY + h / 2 + wave + 12, SW, h * 0.4);
+    }
+    ctx.globalAlpha = 1;
+
+    // water line
+    ctx.fillStyle = 'rgba(232,226,217,0.05)';
+    ctx.fillRect(0, MIDY + BANDH / 2 + 8, W, 1);
+
+    // decade ticks + labels
+    ctx.font = '10px -apple-system, BlinkMacSystemFont, sans-serif';
+    ctx.fillStyle = '#7a7168';
+    for (const d of decades) {
+      const x = d.i * STEP - scrollX;
+      if (x < -80 || x > W + 80) continue;
+      ctx.fillRect(x, MIDY + BANDH / 2 + 8, 1, 12);
+      ctx.save();
+      ctx.translate(x + 6, MIDY + BANDH / 2 + 30);
+      ctx.fillText(d.label.toUpperCase(), 0, 0);
+      ctx.restore();
+    }
+
+    // minimap viewport window
+    mctx.clearRect(0, 0, miniW, miniH);
+    for (let i = 0; i < N; i++) {
+      mctx.fillStyle = works[i].fill;
+      mctx.globalAlpha = 0.5;
+      mctx.fillRect(i / N * miniW, 5, Math.max(1, miniW / N), 12);
+    }
+    mctx.globalAlpha = 1;
+    const vw0 = scrollX / WORLD * miniW;
+    const vw1 = (scrollX + W) / WORLD * miniW;
+    mctx.strokeStyle = '#FF6600';
+    mctx.lineWidth = 1;
+    mctx.strokeRect(vw0, 2.5, Math.max(6, vw1 - vw0), 17);
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) { cancelAnimationFrame(raf); raf = null; }
+    else if (!raf) { raf = requestAnimationFrame(frame); }
+  });
+
+  window.addEventListener('resize', layout);
+
+  // ---------- go ----------
+  layout();
+  raf = requestAnimationFrame(frame);
+
+  const threshold = document.getElementById('threshold');
+  const enter = () => threshold.classList.add('gone');
+  setTimeout(enter, REDUCED ? 400 : 2600);
+  threshold.addEventListener('pointerdown', enter);
+  window.addEventListener('keydown', enter, { once: true });
+})();
+</script>
+</body>
+</html>
