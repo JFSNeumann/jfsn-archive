@@ -6,6 +6,7 @@
 <meta name="robots" content="noindex">
 <title>The Current — Jeffrey F. S. Neumann</title>
 <meta name="description" content="Fifty years of work as one river. 1,084 works, 1970s–2020s, under one finger.">
+<script>document.documentElement.classList.add('js')</script>
 <style>
   :root{
     --room:#0c0a09;
@@ -124,11 +125,19 @@
   }
 
   /* ---------- threshold ---------- */
-  #threshold{
+  #threshold{display:none}
+  .js #threshold{
     position:fixed;inset:0;z-index:20;background:var(--room);
     display:flex;flex-direction:column;align-items:center;justify-content:center;
     gap:22px;transition:opacity 1.4s ease;
   }
+  a:focus-visible{outline:2px solid var(--accent);outline-offset:4px;color:var(--accent)}
+  #noscript-door{padding:24vh clamp(20px,6vw,80px);text-align:center;max-width:44em;margin:0 auto}
+  #noscript-door p{
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:clamp(16px,1.9vw,19px);line-height:1.9;color:#b9b1a6;
+  }
+  #noscript-door a{display:inline-block;margin-top:26px;font-size:11px;letter-spacing:.22em}
   #threshold.gone{opacity:0;pointer-events:none}
   #threshold .who{
     font-size:11px;letter-spacing:.3em;color:var(--dim);
@@ -191,6 +200,15 @@
 </div>
 
 <div class="sr-only" aria-live="polite" id="live"></div>
+
+<noscript>
+  <div id="noscript-door">
+    <p>The Current is a river of all 1,084 works, drawn and steered by
+    script. Without JavaScript the water can&rsquo;t flow — but every work
+    it carries is plainly catalogued:</p>
+    <a href="/archive.html">[ THE ARCHIVE — ALL 1,084 WORKS → ]</a>
+  </div>
+</noscript>
 
 <script>
 (async function(){

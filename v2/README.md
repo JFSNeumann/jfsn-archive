@@ -72,11 +72,21 @@ more passages (Torsos & Faces, Targets, Working History).
 ## Resilience rule (learned by execution, keep it)
 
 Throttled/embedded contexts (incl. the Claude preview pane) can stall RAF,
-never fire IntersectionObserver, drop scroll/resize events, and never fetch
-`loading="lazy"` images. Every room therefore runs a ~500ms heartbeat:
-scroll rooms re-reveal from scroll position and re-measure when scrollHeight
-changes; canvas rooms re-render when RAF hasn't ticked in >600ms. Core
-content is never gated on IO/lazy; above-the-fold images load eager.
+never fire IntersectionObserver, drop scroll/resize events, never fetch
+`loading="lazy"` images, and freeze running CSS transitions at their start
+value (playState stays "running" but the clock never advances). Every room
+therefore runs a ~500ms heartbeat: scroll rooms re-reveal from scroll
+position and re-measure when scrollHeight changes; canvas rooms re-render
+when RAF hasn't ticked in >600ms. Core content is never gated on IO/lazy;
+above-the-fold images load eager.
+
+**No-JS honesty (per CLAUDE.md resilience principle):** every rule that
+pre-hides static content is gated on `html.js` (a one-line head script adds
+the class); with JavaScript off, each room renders honestly static, the
+Guernica wall keeps its 25:11 proportion via a pure-CSS fallback, and the
+four JS-built rooms carry `<noscript>` fallbacks that say plainly what the
+script would have built and door to the catalog equivalent. Keyboard
+walkers get `:focus-visible` orange outlines in every room.
 
 Still wanted from Jeff: more voice recordings (esp. "Sad. Enough." for the
 Flooded Wing) — reserved silent slots exist in every room's head comment.

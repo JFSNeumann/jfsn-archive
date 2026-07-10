@@ -7,6 +7,7 @@
 <title>The Guernica Passage — Jeffrey F. S. Neumann</title>
 <meta name="description" content="232 works, 1990–2020. One structure, thirty years, walked in order.">
 <!-- AUDIO:GUERNICA — reserved for Jeff on the series, e.g. "Nice and big." Do not fabricate a voice. -->
+<script>document.documentElement.classList.add('js')</script>
 <style>
   :root{
     --room:#0c0a09;
@@ -83,11 +84,13 @@
 
   /* ---------- the stream ---------- */
   .stream{max-width:860px;margin:0 auto}
-  .work{
-    margin:0 auto 15vh;opacity:0;transform:translateY(26px);
+  .work{margin:0 auto 15vh}
+  .js .work{
+    opacity:0;transform:translateY(26px);
     transition:opacity 1s ease,transform 1s ease;
   }
-  .work.seen{opacity:1;transform:none}
+  .js .work.seen{opacity:1;transform:none}
+  a:focus-visible{outline:2px solid var(--accent);outline-offset:4px;color:var(--accent)}
   .work a{display:block;color:var(--ink)}
   .work img{
     display:block;width:100%;height:auto;
@@ -170,7 +173,14 @@
   order. Walk.</p>
 </section>
 
-<div id="passage"></div>
+<div id="passage"><noscript>
+  <div style="text-align:center;padding:10vh 20px">
+    <p class="prose">This passage is hung by script from the open catalog
+    data. Without JavaScript the walk can&rsquo;t be built — but the works
+    themselves need nothing built:</p>
+    <p style="margin-top:24px"><a class="caps" href="/guernica.html">[ ALL 232 GUERNICA WORKS IN THE CATALOG → ]</a></p>
+  </div>
+</noscript></div>
 
 <section id="exit">
   <div class="caps">END OF THE PASSAGE</div>

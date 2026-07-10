@@ -7,6 +7,7 @@
 <title>The Museum That Never Existed — Jeffrey F. S. Neumann</title>
 <meta name="description" content="A personal record, not a gallery. 1,084 works, fifty years, one building.">
 <!-- AUDIO:THRESHOLD — reserved for Jeff's voice at the door. Do not fabricate a voice. -->
+<script>document.documentElement.classList.add('js')</script>
 <style>
   :root{
     --room:#0c0a09;
@@ -36,9 +37,11 @@
     gap:0;padding:9vh clamp(20px,6vw,80px) 10vh;
   }
 
-  /* every stage starts unseen; JS (or reduced-motion CSS) reveals in order */
-  .stage{opacity:0;transform:translateY(10px);transition:opacity 2s ease,transform 2s ease}
-  .stage.on{opacity:1;transform:none}
+  /* every stage starts unseen; JS (or reduced-motion CSS) reveals in order.
+     Without JS the page is simply, honestly static — nothing may hide. */
+  .js .stage{opacity:0;transform:translateY(10px);transition:opacity 2s ease,transform 2s ease}
+  .js .stage.on{opacity:1;transform:none}
+  a:focus-visible{outline:2px solid var(--accent);outline-offset:4px;color:var(--accent)}
 
   #who{margin-bottom:26px}
   #creed{
@@ -50,10 +53,10 @@
   #work img{
     display:block;max-width:min(560px,86vw);width:100%;height:auto;
     border:1px solid var(--frame);
-    filter:brightness(0);
     transition:filter 4.5s ease;
   }
-  #work.on img{filter:brightness(1)}
+  .js #work img{filter:brightness(0)}
+  .js #work.on img{filter:brightness(1)}
   #work figcaption{margin-top:14px}
 
   #name{margin-top:11vh}
