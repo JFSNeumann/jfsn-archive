@@ -57,10 +57,17 @@ itself — the only one that ever existed. Rooms, not pages.
   is the composite that came true." Data: `openings.json` (build-current.py,
   sections via themes Gallery/Studio/placement).
 
-## Planned rooms (from the 2026-07-10 concept)
+- **The Studio** (`the-studio.html`) — the last room, the only one that
+  faces forward. Jeff's real voice (audio/who-i-am.m4a, the archive's first
+  recording), the practice today (grandchildren named, "Getting hard to tell
+  where they end and I begin. I think that's right."), the living count read
+  from current.json with today's date, the letter to whoever finds this
+  (curatorial voice, documented facts only, the grandchild quote as pivot:
+  "all the works in one space" → you are standing in that space), and the
+  plaque: "The museum never existed. The record does."
 
-1. The Studio — today, the live count, the letter to the future.
-2. More passages — Torsos & Faces, Targets, Working History.
+**All six rooms of the 2026-07-10 concept are built.** Future possibilities:
+more passages (Torsos & Faces, Targets, Working History).
 
 ## Resilience rule (learned by execution, keep it)
 
@@ -71,8 +78,9 @@ scroll rooms re-reveal from scroll position and re-measure when scrollHeight
 changes; canvas rooms re-render when RAF hasn't ticked in >600ms. Core
 content is never gated on IO/lazy; above-the-fold images load eager.
 
-Blocked on Jeff: audio recordings of him reading fragments (esp. "Sad.
-Enough.") — the voice layer for every room.
+Still wanted from Jeff: more voice recordings (esp. "Sad. Enough." for the
+Flooded Wing) — reserved silent slots exist in every room's head comment.
+The Studio already carries the one real recording (audio/who-i-am.m4a).
 
 ## Ground rules
 
