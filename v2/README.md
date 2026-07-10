@@ -21,6 +21,16 @@ itself — the only one that ever existed. Rooms, not pages.
 - `current.json` — the data spine: id / year / dominant color / title /
   year_display / medium / orientation / composite for all 1,084 works.
   Regenerate with `python3 v2/build-current.py` after any catalog rebuild.
+- **The Flooded Wing** (`flooded-wing.html`) — the room for what is missing.
+  A door ("Lost."), the verbatim account, then 1,000 empty frames — one per
+  work in the estimated range, frames past 500 fading with the certainty of
+  the estimate; milestone counts in the walk. At the far end, the Guernica
+  wall: 11 × 25 ft at true proportion against a 5′9″ scale figure, drag-panned
+  because it doesn't fit a screen, labeled only with what is known. Then the
+  one photograph (artwork-in-trash-can.jpg), and the exit: "Not be careful.
+  Be early." All copy verbatim from lost.html / oral history — the frames
+  depict nothing and say so. Frame reveal uses scroll position + a heartbeat
+  (never IntersectionObserver — throttled/embedded tabs stall it silently).
 
 ## Planned rooms (from the 2026-07-10 concept)
 

@@ -69,6 +69,12 @@
   }
   #hud-exit a{color:var(--dim);text-decoration:none;transition:color .25s}
   #hud-exit a:hover{color:var(--accent)}
+  #hud-wing{
+    right:26px;bottom:calc(env(safe-area-inset-bottom, 0px) + 62px);
+    font-size:10px;letter-spacing:.2em;
+  }
+  #hud-wing a{color:var(--dim);text-decoration:none;transition:color .25s}
+  #hud-wing a:hover{color:var(--accent)}
 
   /* ---------- work card ---------- */
   #card{
@@ -161,6 +167,7 @@
 <div class="hud" id="hud-year" aria-hidden="true"><span id="year-num">1970</span><span class="est" id="year-est">DECADE, ESTIMATED</span></div>
 <div class="hud" id="hud-hint">DRAG&nbsp;&nbsp;·&nbsp;&nbsp;SCROLL&nbsp;&nbsp;·&nbsp;&nbsp;← →</div>
 <div class="hud" id="hud-exit"><a href="/">[ THE ARCHIVE → ]</a></div>
+<div class="hud" id="hud-wing"><a href="flooded-wing.html">[ THE FLOODED WING → ]</a></div>
 
 <div id="card">
   <a id="card-link" href="#">
