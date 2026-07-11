@@ -32,11 +32,14 @@
     position:fixed;top:0;left:0;right:0;z-index:10;
     display:flex;justify-content:space-between;align-items:baseline;
     padding:calc(env(safe-area-inset-top,0px) + 22px) 26px 14px;
-    background:linear-gradient(var(--room) 30%,transparent);
+    background:linear-gradient(var(--room) 55%,rgba(12,10,9,0.82) 78%,transparent);
     pointer-events:none;
   }
   header.hud a{pointer-events:auto}
   header.hud .who{font-size:11px;letter-spacing:.22em;font-weight:600;color:var(--ink)}
+  header.hud a.who:hover{color:var(--accent)}
+  header.hud .room-name{color:var(--faint)}
+  @media (max-width:640px){ header.hud .room-name{display:none} }
 
   section{padding:0 clamp(20px,6vw,80px)}
   .prose{
@@ -130,8 +133,9 @@
 <body>
 
 <header class="hud">
-  <span class="who">JEFFREY&nbsp;F.&nbsp;S.&nbsp;NEUMANN</span>
-  <a class="caps" href="current.html">[ THE CURRENT → ]</a>
+  <a class="who" href="index.html">JEFFREY&nbsp;F.&nbsp;S.&nbsp;NEUMANN</a>
+  <span class="caps room-name">THE STUDIO</span>
+  <a class="caps" href="index.html">[ THE MUSEUM → ]</a>
 </header>
 
 <section id="door">

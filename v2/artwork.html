@@ -34,11 +34,12 @@
     position:fixed;top:0;left:0;right:0;z-index:10;
     display:flex;justify-content:space-between;align-items:baseline;
     padding:calc(env(safe-area-inset-top,0px) + 22px) 26px 14px;
-    background:linear-gradient(var(--room) 30%,transparent);
+    background:linear-gradient(var(--room) 55%,rgba(12,10,9,0.82) 78%,transparent);
     pointer-events:none;
   }
   header.hud a{pointer-events:auto}
   header.hud .who{font-size:11px;letter-spacing:.22em;font-weight:600;color:var(--ink)}
+  header.hud a.who:hover{color:var(--accent)}
 
   main{
     min-height:100vh;
@@ -161,7 +162,7 @@
 <body>
 
 <header class="hud">
-  <span class="who">JEFFREY&nbsp;F.&nbsp;S.&nbsp;NEUMANN</span>
+  <a class="who" href="index.html">JEFFREY&nbsp;F.&nbsp;S.&nbsp;NEUMANN</a>
   <a class="caps" href="archive.html">[ THE ARCHIVE → ]</a>
 </header>
 
