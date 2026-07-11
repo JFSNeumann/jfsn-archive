@@ -72,15 +72,34 @@
   }
   #name .why em{color:var(--ink)}
 
-  #doors{margin-top:9vh;display:flex;flex-direction:column;gap:20px;align-items:center}
+  #doors{
+    margin-top:9vh;display:grid;gap:14px;width:min(560px,100%);
+  }
   #doors a{
+    position:relative;display:flex;flex-direction:column;gap:7px;
+    align-items:flex-start;text-align:left;
+    border:1px solid var(--frame);padding:20px 22px 19px 30px;
     font-size:11px;letter-spacing:.24em;color:var(--ink);
-    display:flex;flex-direction:column;gap:6px;align-items:center;
+    transition:border-color .3s,transform .3s;
+    overflow:hidden;
+  }
+  #doors a::before{
+    content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+    background:var(--key,var(--faint));
+    transform:scaleY(0.35);transform-origin:center;
+    transition:transform .35s ease;
   }
   #doors a .sub{font-size:9px;letter-spacing:.2em;color:var(--dim);transition:color .25s}
-  #doors a:hover{color:var(--accent)}
-  #doors a:hover .sub{color:var(--accent)}
-  #doors .construction{margin-top:16px;color:var(--faint);font-size:9px;letter-spacing:.22em}
+  #doors a .go{
+    position:absolute;right:20px;top:50%;transform:translate(6px,-50%);
+    color:var(--faint);opacity:0;transition:opacity .3s,transform .3s;
+  }
+  #doors a:hover{border-color:var(--dim);transform:translateX(2px)}
+  #doors a:hover::before{transform:scaleY(1)}
+  #doors a:hover .sub{color:var(--ink)}
+  #doors a:hover .go{opacity:1;transform:translate(0,-50%);color:var(--accent)}
+  #doors a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+  #doors .construction{margin-top:16px;color:var(--faint);font-size:9px;letter-spacing:.22em;text-align:center}
 
   #vault{margin-top:8vh}
 
@@ -111,11 +130,11 @@
   </div>
 
   <nav class="stage" id="doors" aria-label="Rooms">
-    <a href="current.html">[ THE CURRENT → ]<span class="sub">FIFTY YEARS AS ONE RIVER — BEGIN HERE</span></a>
-    <a href="guernica-passage.html">[ THE GUERNICA PASSAGE → ]<span class="sub">232 WORKS · ONE STRUCTURE · THIRTY YEARS</span></a>
-    <a href="flooded-wing.html">[ THE FLOODED WING → ]<span class="sub">A ROOM FOR WHAT IS MISSING</span></a>
-    <a href="hall-of-openings.html">[ THE HALL OF OPENINGS → ]<span class="sub">250 IMAGINED EXHIBITIONS — EVERY ONE FLAGGED</span></a>
-    <a href="the-studio.html">[ THE STUDIO → ]<span class="sub">THE LAST ROOM — THE WORK CONTINUES</span></a>
+    <a href="current.html" style="--key:linear-gradient(#b23a3a,#d8c9a8,#5a7d8c,#c8b44a)">THE CURRENT<span class="sub">FIFTY YEARS AS ONE RIVER — BEGIN HERE</span><span class="go">→</span></a>
+    <a href="guernica-passage.html" style="--key:#4a4e5f">THE GUERNICA PASSAGE<span class="sub">232 WORKS · ONE STRUCTURE · THIRTY YEARS</span><span class="go">→</span></a>
+    <a href="flooded-wing.html" style="--key:#2e4451">THE FLOODED WING<span class="sub">A ROOM FOR WHAT IS MISSING</span><span class="go">→</span></a>
+    <a href="hall-of-openings.html" style="--key:rgba(255,102,0,.8)">THE HALL OF OPENINGS<span class="sub">250 IMAGINED EXHIBITIONS — EVERY ONE FLAGGED</span><span class="go">→</span></a>
+    <a href="the-studio.html" style="--key:#d8cfb8">THE STUDIO<span class="sub">THE LAST ROOM — THE WORK CONTINUES</span><span class="go">→</span></a>
   </nav>
 
   <div class="stage caps" id="vault">
