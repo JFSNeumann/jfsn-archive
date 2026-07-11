@@ -142,6 +142,19 @@ addEventListener('DOMContentLoaded', () => {
   }
   .work.right{margin-right:0;margin-left:auto}
   .work.left{margin-left:0;margin-right:auto}
+
+  /* ---------- the held note: a curatorial pause in the walk ---------- */
+  .work.feature{
+    margin-top:9vh;margin-bottom:22vh;
+  }
+  .work.feature .caps.mark{
+    display:block;text-align:center;margin-bottom:20px;color:var(--dim);
+  }
+  .work.feature .t{font-size:19px}
+  .work.feature img{border-color:#4a3d30}
+  @media (min-width:640px){
+    .work.feature{margin-top:11vh;margin-bottom:26vh}
+  }
   @media (prefers-reduced-motion: reduce){
     .work{transition:none;transform:none;opacity:1}
   }
@@ -272,14 +285,17 @@ addEventListener('DOMContentLoaded', () => {
     }
     count++;
     const fig = document.createElement('figure');
-    const side = rnd();
-    fig.className = 'work ' + (side < 0.38 ? 'left' : side < 0.76 ? 'right' : '');
-    // width by orientation; true aspect ratio prevents layout shift
-    const maxW = w.o === 'h' ? 620 : w.o === 's' ? 440 : 360;
+    const side = rnd(); // always advance the sequence, even for featured works
+    const isFeature = !!w.f;
+    fig.className = 'work ' + (isFeature ? 'feature' : (side < 0.38 ? 'left' : side < 0.76 ? 'right' : ''));
+    // width by orientation; a featured work gets room to hold the walk's attention
+    const maxW = isFeature ? (w.o === 'h' ? 820 : w.o === 's' ? 560 : 460)
+                            : (w.o === 'h' ? 620 : w.o === 's' ? 440 : 360);
     fig.style.maxWidth = maxW + 'px';
     fig.dataset.n = count;
     const ar = (w.w && w.h) ? w.w + '/' + w.h : (w.o === 'h' ? '4/3' : w.o === 's' ? '1/1' : '2/3');
     fig.innerHTML =
+      (isFeature ? '<span class="caps mark">— A LONGER LOOK —</span>' : '') +
       '<a href="artwork.html?id=' + w.i + '">' +
         '<img src="/artworks/thumbs/' + w.i + '.avif" ' +
           'srcset="/artworks/thumbs/' + w.i + '.avif 400w, /artworks/medium/' + w.i + '.avif 900w" ' +

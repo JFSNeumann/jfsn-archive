@@ -41,6 +41,8 @@ for c in chromatic:
         rec["w"], rec["h"] = wh
     if m.get("series") == "Guernica":
         rec["g"] = 1
+    if m.get("featured"):
+        rec["f"] = 1
     works.append(rec)
 
 works.sort(key=lambda w: (w["y"], w["i"]))
