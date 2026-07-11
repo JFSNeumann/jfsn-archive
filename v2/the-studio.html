@@ -27,6 +27,7 @@
   a:hover{color:var(--accent)}
   .caps{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim)}
   .serif{font-family:Georgia,'Times New Roman',serif}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;padding:0}
 
   header.hud{
     position:fixed;top:0;left:0;right:0;z-index:10;
@@ -70,9 +71,32 @@
   /* ---------- voice ---------- */
   #voice{text-align:center;padding-bottom:120px}
   #voice .caps{display:block;margin-bottom:26px}
-  #voice audio{
-    width:min(440px,86vw);
-    filter:invert(0.92) hue-rotate(180deg);
+  #player{display:none}
+  .js #player{
+    display:block;
+    width:min(440px,86vw);margin:0 auto;
+    border:1px solid var(--frame);padding:22px 24px 20px;
+    text-align:left;
+  }
+  #play-btn{
+    font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ink);transition:color .25s;
+  }
+  #play-btn:hover{color:var(--accent)}
+  #play-btn:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+  #player .row{display:flex;justify-content:space-between;align-items:baseline;gap:16px}
+  #player time{
+    font-size:10px;letter-spacing:.18em;color:var(--dim);
+    font-variant-numeric:tabular-nums;
+  }
+  #seek{
+    margin-top:16px;height:2px;background:var(--frame);
+    position:relative;cursor:pointer;
+    padding:8px 0;background-clip:content-box;
+  }
+  #seek .fill{
+    position:absolute;left:0;top:8px;height:2px;width:0;
+    background:var(--accent);
   }
   #voice .note{margin-top:18px;color:var(--faint)}
 
@@ -146,7 +170,15 @@
 
 <section id="voice" class="reveal-el">
   <span class="caps">JEFF, IN HIS OWN VOICE</span>
-  <audio controls preload="none" src="/audio/who-i-am.m4a"></audio>
+  <audio id="voice-audio" preload="none" src="/audio/who-i-am.m4a"></audio>
+  <div id="player">
+    <div class="row">
+      <button id="play-btn">[ ▶ LISTEN ]</button>
+      <time id="player-time">0:34</time>
+    </div>
+    <div id="seek" role="slider" aria-label="Seek within the recording" aria-valuemin="0" aria-valuemax="34" aria-valuenow="0"><div class="fill"></div></div>
+  </div>
+  <noscript><audio controls preload="none" src="/audio/who-i-am.m4a" style="width:min(440px,86vw)"></audio></noscript>
   <div class="note caps">RECORDED JUNE 2026 · THIRTY-FOUR SECONDS · THE FIRST RECORDING IN THE ARCHIVE</div>
 </section>
 
@@ -204,6 +236,42 @@
 (function(){
   'use strict';
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---------- the voice: house player over the real recording ----------
+  (function(){
+    const audio = document.getElementById('voice-audio');
+    const btn = document.getElementById('play-btn');
+    const timeEl = document.getElementById('player-time');
+    const seek = document.getElementById('seek');
+    const fill = seek.querySelector('.fill');
+    const fmt = s => Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+    btn.addEventListener('click', () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+    audio.addEventListener('play', () => { btn.textContent = '[ ❚❚ PAUSE ]'; });
+    audio.addEventListener('pause', () => { btn.textContent = '[ ▶ LISTEN ]'; });
+    audio.addEventListener('ended', () => {
+      btn.textContent = '[ ▶ LISTEN AGAIN ]';
+      fill.style.width = '0';
+      timeEl.textContent = fmt(audio.duration || 34);
+    });
+    audio.addEventListener('timeupdate', () => {
+      const d = audio.duration || 34;
+      fill.style.width = (audio.currentTime / d * 100) + '%';
+      timeEl.textContent = fmt(Math.max(0, d - audio.currentTime));
+      seek.setAttribute('aria-valuenow', Math.round(audio.currentTime));
+    });
+    seek.addEventListener('click', e => {
+      const r = seek.getBoundingClientRect();
+      const f = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+      const go = () => { audio.currentTime = f * audio.duration; };
+      if (isNaN(audio.duration)) {
+        audio.addEventListener('loadedmetadata', go, { once: true });
+        audio.load();
+      } else go();
+    });
+  })();
 
   // the living count — read from the same data spine the rooms are built on
   fetch('current.json', {cache:'no-cache'}).then(r => r.json()).then(works => {
