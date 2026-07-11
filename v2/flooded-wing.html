@@ -134,6 +134,9 @@ addEventListener('DOMContentLoaded', () => {
     -webkit-overflow-scrolling:touch;
     cursor:grab;scrollbar-width:none;
   }
+  #strip.fade-r{-webkit-mask-image:linear-gradient(90deg,#000 92%,transparent);mask-image:linear-gradient(90deg,#000 92%,transparent)}
+  #strip.fade-l{-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%);mask-image:linear-gradient(90deg,transparent,#000 8%)}
+  #strip.fade-l.fade-r{-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
   #strip::-webkit-scrollbar{display:none}
   #strip.dragging{cursor:grabbing}
   #strip-inner{
@@ -445,6 +448,26 @@ addEventListener('DOMContentLoaded', () => {
   });
   ['pointerup', 'pointercancel'].forEach(ev =>
     strip.addEventListener(ev, () => { panning = false; strip.classList.remove('dragging'); }));
+
+  // pan affordance: edge fades where the wall continues + a live feet readout
+  const hint = document.getElementById('strip-hint');
+  function updateStrip(){
+    const max = strip.scrollWidth - strip.clientWidth;
+    strip.classList.toggle('fade-l', strip.scrollLeft > 4);
+    strip.classList.toggle('fade-r', strip.scrollLeft < max - 4);
+    if (max > 4) {
+      const ppf = (window.innerHeight * 0.82) / WALL_FT_H;
+      const f0 = Math.max(0, Math.round(strip.scrollLeft / ppf));
+      const f1 = Math.min(WALL_FT_W, Math.round((strip.scrollLeft + strip.clientWidth) / ppf));
+      hint.textContent = 'DRAG ACROSS — SHOWING FT ' + f0 + '\u2013' + f1 + ' OF 25';
+    } else {
+      hint.textContent = 'THE WALL, ALL TWENTY-FIVE FEET';
+    }
+  }
+  strip.addEventListener('scroll', updateStrip, { passive: true });
+  window.addEventListener('resize', updateStrip);
+  setInterval(updateStrip, 500); // scroll events can drop in throttled contexts
+  updateStrip();
 })();
 </script>
 </body>
