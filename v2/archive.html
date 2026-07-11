@@ -8,6 +8,7 @@
 <meta name="description" content="All 1,084 works. Catalog, search, and open data — the vault beneath the museum.">
 <meta name="theme-color" content="#0c0a09">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/playfair-display-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script>document.documentElement.classList.add('js')</script>
 <style>
   /* room-to-room continuity: fade in on arrival, veil out on internal doors */
@@ -44,6 +45,7 @@ addEventListener('DOMContentLoaded', () => {
     --frame:#2b241e;
     --accent:#FF6600;
   }
+  @font-face{font-family:'Playfair Display';src:url('/fonts/playfair-display-italic-latin.woff2') format('woff2');font-style:italic;font-weight:400 900;font-display:swap}
   *{margin:0;padding:0;box-sizing:border-box}
   body{
     background:var(--room);color:var(--ink);
@@ -84,7 +86,7 @@ addEventListener('DOMContentLoaded', () => {
     padding-top:14vh;
   }
   #door h1{
-    font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:400;
+    font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
     font-size:clamp(38px,7vw,76px);line-height:1.15;
   }
   #door .fact{color:var(--dim)}

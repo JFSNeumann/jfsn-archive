@@ -9,6 +9,7 @@
 <!-- AUDIO:LOST — reserved for Jeff reading, esp. "Sad. Enough." Do not fabricate a voice. -->
 <meta name="theme-color" content="#0c0a09">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/playfair-display-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script>document.documentElement.classList.add('js')</script>
 <style>
   /* room-to-room continuity: fade in on arrival, veil out on internal doors */
@@ -45,6 +46,7 @@ addEventListener('DOMContentLoaded', () => {
     --frame:#2b241e;
     --accent:#FF6600;
   }
+  @font-face{font-family:'Playfair Display';src:url('/fonts/playfair-display-italic-latin.woff2') format('woff2');font-style:italic;font-weight:400 900;font-display:swap}
   *{margin:0;padding:0;box-sizing:border-box}
   body{
     background:var(--room);color:var(--ink);
@@ -79,7 +81,7 @@ addEventListener('DOMContentLoaded', () => {
   }
   #door .room-name{color:var(--dim)}
   #door h1{
-    font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:400;
+    font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
     font-size:clamp(64px,14vw,150px);line-height:1;
   }
   #door .facts{
@@ -120,7 +122,7 @@ addEventListener('DOMContentLoaded', () => {
     padding:64px 0 50px;text-align:center;
   }
   .milestone .n{
-    font-family:Georgia,'Times New Roman',serif;font-style:italic;
+    font-family:'Playfair Display',Georgia,serif;font-style:italic;
     font-size:clamp(20px,2.6vw,28px);color:var(--ink);
   }
   .milestone .caps{display:block;margin-top:10px;color:var(--faint)}
@@ -175,7 +177,7 @@ addEventListener('DOMContentLoaded', () => {
   #strip-hint{text-align:center;margin-top:34px}
   #wall-caption{max-width:34em;margin:110px auto 0;padding:0 clamp(20px,6vw,80px);text-align:center}
   #wall-caption blockquote{
-    font-family:Georgia,'Times New Roman',serif;font-style:italic;
+    font-family:'Playfair Display',Georgia,serif;font-style:italic;
     font-size:clamp(26px,4.4vw,44px);color:var(--ink);margin:56px 0 14px;
   }
   #wall-caption .attr{color:var(--faint)}
@@ -195,7 +197,7 @@ addEventListener('DOMContentLoaded', () => {
     padding-bottom:12vh;
   }
   #exit .lesson{
-    font-family:Georgia,'Times New Roman',serif;font-style:italic;
+    font-family:'Playfair Display',Georgia,serif;font-style:italic;
     font-size:clamp(30px,5.5vw,56px);line-height:1.25;
   }
   #exit .lesson em{font-style:italic;color:var(--accent)}

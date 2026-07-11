@@ -9,6 +9,7 @@
 <!-- AUDIO:OPENINGS — reserved for Jeff on the composites (confirmed plainly, 2026). Do not fabricate a voice. -->
 <meta name="theme-color" content="#0c0a09">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/playfair-display-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script>document.documentElement.classList.add('js')</script>
 <style>
   /* room-to-room continuity: fade in on arrival, veil out on internal doors */
@@ -45,6 +46,7 @@ addEventListener('DOMContentLoaded', () => {
     --frame:#2b241e;
     --accent:#FF6600;
   }
+  @font-face{font-family:'Playfair Display';src:url('/fonts/playfair-display-italic-latin.woff2') format('woff2');font-style:italic;font-weight:400 900;font-display:swap}
   *{margin:0;padding:0;box-sizing:border-box}
   body{
     background:var(--room);color:var(--ink);
@@ -78,7 +80,7 @@ addEventListener('DOMContentLoaded', () => {
     justify-content:center;align-items:center;text-align:center;gap:28px;
   }
   #door h1{
-    font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:400;
+    font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
     font-size:clamp(36px,6.6vw,72px);line-height:1.2;max-width:14em;
   }
   #door .fact{color:var(--dim)}
@@ -101,7 +103,7 @@ addEventListener('DOMContentLoaded', () => {
     font-size:clamp(56px,9vw,110px);font-weight:100;line-height:1;color:#3d342b;
   }
   .movement-head h2{
-    font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:400;
+    font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
     font-size:clamp(22px,3.2vw,32px);
   }
   .movement-head .n{color:var(--dim)}
@@ -144,7 +146,7 @@ addEventListener('DOMContentLoaded', () => {
     padding-top:14vh;
   }
   #reveal .line1, #reveal .line2{
-    font-family:Georgia,'Times New Roman',serif;font-style:italic;
+    font-family:'Playfair Display',Georgia,serif;font-style:italic;
     line-height:1.3;max-width:16em;
   }
   .js #reveal .line1, .js #reveal .line2{

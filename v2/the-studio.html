@@ -8,6 +8,7 @@
 <meta name="description" content="The last room. The work continues — the living count, his own voice, and a letter to whoever finds this.">
 <meta name="theme-color" content="#0c0a09">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/playfair-display-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script>document.documentElement.classList.add('js')</script>
 <style>
   /* room-to-room continuity: fade in on arrival, veil out on internal doors */
@@ -44,6 +45,7 @@ addEventListener('DOMContentLoaded', () => {
     --frame:#2b241e;
     --accent:#FF6600;
   }
+  @font-face{font-family:'Playfair Display';src:url('/fonts/playfair-display-italic-latin.woff2') format('woff2');font-style:italic;font-weight:400 900;font-display:swap}
   *{margin:0;padding:0;box-sizing:border-box}
   body{
     background:var(--room);color:var(--ink);
@@ -91,7 +93,7 @@ addEventListener('DOMContentLoaded', () => {
     justify-content:center;align-items:center;text-align:center;gap:28px;
   }
   #door h1{
-    font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:400;
+    font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
     font-size:clamp(40px,7.5vw,84px);line-height:1.15;
   }
   #door .fact{color:var(--dim)}
@@ -131,7 +133,7 @@ addEventListener('DOMContentLoaded', () => {
   /* ---------- today ---------- */
   #today{padding-bottom:40px}
   #today blockquote{
-    font-family:Georgia,'Times New Roman',serif;font-style:italic;
+    font-family:'Playfair Display',Georgia,serif;font-style:italic;
     font-size:clamp(22px,3.4vw,34px);color:var(--ink);
     text-align:center;margin:70px auto 14px;max-width:18em;line-height:1.5;
   }
@@ -156,7 +158,7 @@ addEventListener('DOMContentLoaded', () => {
     padding:clamp(28px,5vw,56px);
   }
   #letter .salutation{
-    font-family:Georgia,'Times New Roman',serif;font-style:italic;
+    font-family:'Playfair Display',Georgia,serif;font-style:italic;
     font-size:clamp(20px,2.6vw,26px);margin-bottom:28px;
   }
   #letter p{
@@ -174,7 +176,7 @@ addEventListener('DOMContentLoaded', () => {
     padding-bottom:10vh;
   }
   #plaque .line{
-    font-family:Georgia,'Times New Roman',serif;font-style:italic;
+    font-family:'Playfair Display',Georgia,serif;font-style:italic;
     font-size:clamp(30px,5.6vw,58px);line-height:1.3;
   }
   #plaque .line em{color:var(--accent);font-style:italic}
