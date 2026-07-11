@@ -8,6 +8,32 @@
 <meta name="description" content="The last room. The work continues — the living count, his own voice, and a letter to whoever finds this.">
 <script>document.documentElement.classList.add('js')</script>
 <style>
+  /* room-to-room continuity: fade in on arrival, veil out on internal doors */
+  @media (prefers-reduced-motion: no-preference){
+    .js body{animation:room-in .4s ease}
+    @keyframes room-in{from{opacity:0}to{opacity:1}}
+  }
+  #room-veil{position:fixed;inset:0;background:#0c0a09;opacity:0;pointer-events:none;transition:opacity .22s ease;z-index:99}
+  #room-veil.on{opacity:1;pointer-events:auto}
+</style>
+<script>
+addEventListener('DOMContentLoaded', () => {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const v = document.createElement('div'); v.id = 'room-veil';
+  document.body.appendChild(v);
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a');
+    if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target === '_blank') return;
+    const h = a.getAttribute('href') || '';
+    if (!h || /^(https?:|#|mailto:)/.test(h)) return;
+    e.preventDefault();
+    v.classList.add('on');
+    setTimeout(() => { location.href = a.href; }, 200);
+  }, true);
+  addEventListener('pageshow', e => { if (e.persisted) v.classList.remove('on'); });
+});
+</script>
+<style>
   :root{
     --room:#0c0a09;
     --ink:#e8e2d9;
