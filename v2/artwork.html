@@ -129,9 +129,28 @@
     font-size:11px;letter-spacing:.2em;color:var(--dim);z-index:31;
   }
   #lb-close:hover{color:var(--accent)}
-  #lb-note{
-    position:fixed;bottom:calc(env(safe-area-inset-bottom,0px) + 20px);
-    left:50%;transform:translateX(-50%);white-space:nowrap;color:var(--faint);
+
+  /* ---------- study controls ---------- */
+  #lb-bar{
+    position:fixed;left:0;right:0;
+    bottom:calc(env(safe-area-inset-bottom,0px) + 0px);
+    z-index:31;display:flex;justify-content:center;gap:10px;
+    padding:16px 14px calc(env(safe-area-inset-bottom,0px) + 16px);
+    background:linear-gradient(transparent,rgba(8,7,6,0.92) 40%);
+    overflow-x:auto;scrollbar-width:none;
+  }
+  #lb-bar::-webkit-scrollbar{display:none}
+  #lb-bar button{
+    font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--dim);border:1px solid var(--frame);
+    padding:10px 13px;white-space:nowrap;flex-shrink:0;
+    transition:color .2s,border-color .2s;
+  }
+  #lb-bar button:hover{color:var(--accent);border-color:var(--accent)}
+  #lb-bar button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  #lb-zoom-label{
+    align-self:center;color:var(--faint);font-size:9px;letter-spacing:.18em;
+    white-space:nowrap;flex-shrink:0;min-width:64px;text-align:center;
   }
 
   #missing{display:none;min-height:70vh;flex-direction:column;justify-content:center;align-items:center;gap:22px;text-align:center;padding:0 20px}
@@ -192,7 +211,16 @@
 <div id="lightbox" role="dialog" aria-label="Full resolution view">
   <img id="lb-img" alt="">
   <button id="lb-close" class="caps">[ CLOSE ✕ ]</button>
-  <span id="lb-note" class="caps">CLICK TO ZOOM · DRAG TO PAN · ESC TO CLOSE</span>
+  <div id="lb-bar" role="toolbar" aria-label="Study controls">
+    <button id="lb-zoom-out" title="Zoom out (−)">[ − ]</button>
+    <span id="lb-zoom-label">FIT</span>
+    <button id="lb-zoom-in" title="Zoom in (+)">[ + ]</button>
+    <button id="lb-rot-ccw" title="Rotate counterclockwise (R)">[ ↺ ROTATE ]</button>
+    <button id="lb-rot-cw" title="Rotate clockwise (r)">[ ↻ ROTATE ]</button>
+    <button id="lb-flip-h" title="Flip horizontal (h)">[ ⇄ FLIP H ]</button>
+    <button id="lb-flip-v" title="Flip vertical (v)">[ ⇅ FLIP V ]</button>
+    <button id="lb-reset" title="Reset view (0)">[ RESET ]</button>
+  </div>
 </div>
 
 <noscript>
@@ -248,9 +276,11 @@
   if (idx < works.length - 1) next.href = 'artwork.html?id=' + works[idx + 1].i;
   else next.style.visibility = 'hidden';
   window.addEventListener('keydown', e => {
-    if (e.key === 'ArrowLeft' && idx > 0) location.href = prev.href;
+    const studying = document.getElementById('lightbox').classList.contains('on');
+    if (e.key === 'Escape') closeLB();
+    else if (studying) return; // arrows stay with the study view
+    else if (e.key === 'ArrowLeft' && idx > 0) location.href = prev.href;
     else if (e.key === 'ArrowRight' && idx < works.length - 1) location.href = next.href;
-    else if (e.key === 'Escape') closeLB();
   });
 
   // ---------- copy link ----------
@@ -288,39 +318,76 @@
   window.addEventListener('resize', drawStrip);
   strip.addEventListener('click', () => { location.href = 'current.html?at=' + w.i; });
 
-  // ---------- full resolution lightbox ----------
+  // ---------- full resolution lightbox + study controls ----------
+  // Viewer-side transforms at the visitor's explicit command — the file
+  // itself is never altered; RESET always returns the work shown straight.
   const lb = document.getElementById('lightbox');
   const lbImg = document.getElementById('lb-img');
-  let zoomed = false, panX = 0, panY = 0;
+  const zoomLabel = document.getElementById('lb-zoom-label');
+  const view = { scale: 1, rot: 0, flipH: false, flipV: false, panX: 0, panY: 0 };
+
+  function applyView(){
+    // translate first = screen-space pan regardless of rotation
+    lbImg.style.transform =
+      'translate(' + view.panX + 'px,' + view.panY + 'px) ' +
+      'rotate(' + view.rot + 'deg) ' +
+      'scale(' + (view.scale * (view.flipH ? -1 : 1)) + ',' +
+                 (view.scale * (view.flipV ? -1 : 1)) + ')';
+    lb.classList.toggle('zoomed', view.scale > 1);
+    zoomLabel.textContent = view.scale === 1 ? 'FIT' : Math.round(view.scale * 100) + '%';
+  }
+  function resetView(){
+    view.scale = 1; view.rot = 0; view.flipH = false; view.flipV = false;
+    view.panX = 0; view.panY = 0;
+    applyView();
+  }
+  function zoomBy(f){
+    view.scale = Math.min(6, Math.max(1, view.scale * f));
+    if (view.scale === 1) { view.panX = 0; view.panY = 0; }
+    applyView();
+  }
+  function rotateBy(deg){ view.rot = (view.rot + deg + 360) % 360; applyView(); }
+
   function openLB(){
     lbImg.src = '/artworks/full/' + w.i + '.avif';
     lbImg.onerror = () => { lbImg.onerror = null; lbImg.src = '/artworks/medium/' + w.i + '.avif'; };
     lbImg.alt = w.t + ' — full resolution';
+    resetView();
     lb.classList.add('on');
     document.body.style.overflow = 'hidden';
   }
   function closeLB(){
     lb.classList.remove('on');
-    setZoom(false);
+    resetView();
     document.body.style.overflow = '';
-  }
-  function setZoom(z){
-    zoomed = z; panX = 0; panY = 0;
-    lb.classList.toggle('zoomed', z);
-    lbImg.style.transform = z ? 'scale(1)' : '';
-    lbImg.style.translate = '0 0';
   }
   img.addEventListener('click', openLB);
   document.getElementById('view-full').addEventListener('click', openLB);
   document.getElementById('lb-close').addEventListener('click', closeLB);
   lb.addEventListener('click', e => { if (e.target === lb) closeLB(); });
-  lbImg.addEventListener('click', e => {
+
+  document.getElementById('lb-zoom-in').addEventListener('click', () => zoomBy(1.5));
+  document.getElementById('lb-zoom-out').addEventListener('click', () => zoomBy(1 / 1.5));
+  document.getElementById('lb-rot-cw').addEventListener('click', () => rotateBy(90));
+  document.getElementById('lb-rot-ccw').addEventListener('click', () => rotateBy(-90));
+  document.getElementById('lb-flip-h').addEventListener('click', () => { view.flipH = !view.flipH; applyView(); });
+  document.getElementById('lb-flip-v').addEventListener('click', () => { view.flipV = !view.flipV; applyView(); });
+  document.getElementById('lb-reset').addEventListener('click', resetView);
+
+  // click the image to toggle fit ↔ 200%; drag to pan when zoomed; wheel zooms
+  lbImg.addEventListener('click', () => {
     if (dragMoved > 5) return;
-    setZoom(!zoomed);
+    if (view.scale === 1) { view.scale = 2; applyView(); }
+    else resetView();
   });
+  lb.addEventListener('wheel', e => {
+    e.preventDefault();
+    zoomBy(e.deltaY < 0 ? 1.18 : 1 / 1.18);
+  }, { passive: false });
+
   let dragging = false, dragMoved = 0, lx = 0, ly = 0;
   lbImg.addEventListener('pointerdown', e => {
-    if (!zoomed) return;
+    if (view.scale === 1) return;
     dragging = true; dragMoved = 0; lx = e.clientX; ly = e.clientY;
     lb.classList.add('dragging');
     try { lbImg.setPointerCapture(e.pointerId); } catch (_) {}
@@ -328,13 +395,25 @@
   });
   lbImg.addEventListener('pointermove', e => {
     if (!dragging) return;
-    panX += e.clientX - lx; panY += e.clientY - ly;
+    view.panX += e.clientX - lx; view.panY += e.clientY - ly;
     dragMoved += Math.abs(e.clientX - lx) + Math.abs(e.clientY - ly);
     lx = e.clientX; ly = e.clientY;
-    lbImg.style.translate = panX + 'px ' + panY + 'px';
+    applyView();
   });
   ['pointerup', 'pointercancel'].forEach(ev =>
     lbImg.addEventListener(ev, () => { dragging = false; lb.classList.remove('dragging'); }));
+
+  // keyboard: + − zoom · r/R rotate · h/v flip · 0 reset (only while open)
+  window.addEventListener('keydown', e => {
+    if (!lb.classList.contains('on')) return;
+    if (e.key === '+' || e.key === '=') zoomBy(1.5);
+    else if (e.key === '-' || e.key === '_') zoomBy(1 / 1.5);
+    else if (e.key === 'r') rotateBy(90);
+    else if (e.key === 'R') rotateBy(-90);
+    else if (e.key === 'h') { view.flipH = !view.flipH; applyView(); }
+    else if (e.key === 'v') { view.flipV = !view.flipV; applyView(); }
+    else if (e.key === '0') resetView();
+  });
 })();
 </script>
 </body>
