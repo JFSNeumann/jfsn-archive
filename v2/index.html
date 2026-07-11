@@ -151,7 +151,7 @@ addEventListener('DOMContentLoaded', () => {
   </figure>
 
   <div class="stage" id="name">
-    <span class="entering caps">YOU ARE ENTERING</span>
+    <span class="entering caps" id="entering-label">YOU ARE ENTERING</span>
     <h1>The Museum<br>That Never Existed.</h1>
     <p class="why">For decades he made pictures of museums showing his work —
     walls, crowds, openings that never happened. Every one of them is flagged
@@ -179,16 +179,33 @@ addEventListener('DOMContentLoaded', () => {
   const stages = ['who', 'creed', 'work', 'name', 'doors', 'vault']
     .map(id => document.getElementById(id));
 
-  if (REDUCED) return; // CSS already shows everything
+  // a returning visitor doesn't need the museum to re-introduce itself —
+  // one honest signal (a prior arrival completed), read once, never assumed
+  let RETURNING = false;
+  try { RETURNING = !!localStorage.getItem('jfsn-v2-arrived'); } catch (_) {}
+  if (RETURNING) {
+    document.getElementById('entering-label').textContent = 'WELCOME BACK';
+  }
+  function markArrived(){
+    try { localStorage.setItem('jfsn-v2-arrived', String(Date.now())); } catch (_) {}
+  }
 
-  // the arrival: each element earns the next; any input skips the wait
-  const delays = [400, 1600, 4200, 9200, 11200, 12400];
+  if (REDUCED) { markArrived(); return; } // CSS already shows everything
+
+  // the arrival: each element earns the next; any input skips the wait.
+  // first visit is the full staged reveal; a returning visitor gets the
+  // same order, compressed to a fraction of the wait — a nod, not a repeat.
+  const FIRST  = [400, 1600, 4200, 9200, 11200, 12400];
+  const RETURN = [80, 260, 520, 780, 980, 1150];
+  const delays = RETURNING ? RETURN : FIRST;
   const timers = stages.map((el, i) =>
     setTimeout(() => el.classList.add('on'), delays[i]));
+  setTimeout(markArrived, delays[delays.length - 1]);
 
   function skip(){
     timers.forEach(clearTimeout);
     stages.forEach(el => el.classList.add('on'));
+    markArrived();
     ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(ev =>
       window.removeEventListener(ev, skip));
   }
