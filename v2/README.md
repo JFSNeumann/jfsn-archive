@@ -75,8 +75,23 @@ itself — the only one that ever existed. Rooms, not pages.
   — wrong page AND wrong look). The v1 archive.html remains untouched at the
   site root; the noscript fallback doors to it.
 
-**All rooms of the 2026-07-10 concept are built, plus the vault.** Future
-possibilities: more passages (Torsos & Faces, Targets, Working History).
+- **The Work room** (`artwork.html?id=artNNNN`) — the single-work view in
+  the house language: work large on the dark room (medium tier), honest
+  ledger (decade-estimate year, medium, orientation, archive no., composite
+  flag), full-resolution lightbox (full/ tier, click-zoom + drag-pan + ESC,
+  falls back to medium if full is missing), copy-link, chronological
+  prev/next with ←/→ keys, Guernica-series door when applicable, and a
+  "where this sits" river strip that opens The Current at that work
+  (current.html now supports `?at=artNNNN`). Honest missing-id state. All
+  work links in every room now point here instead of the v1 artwork page.
+- **Data caching rule:** all rooms fetch their JSON with `{cache:'no-cache'}`
+  — browsers heuristically cache JSON and served a stale current.json (the
+  v1 CACHE_V lesson, reborn); revalidation costs a 304 and is always right.
+  current.json now also carries w/h dims and a `g` (Guernica) flag.
+
+**All rooms of the 2026-07-10 concept are built, plus the vault and the
+work room.** Future possibilities: more passages (Torsos & Faces, Targets,
+Working History).
 
 ## Resilience rule (learned by execution, keep it)
 

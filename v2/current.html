@@ -220,7 +220,7 @@
   const mini = document.getElementById('minimap');
   const mctx = mini.getContext('2d');
 
-  const works = await fetch('current.json').then(r => r.json());
+  const works = await fetch('current.json', {cache:'no-cache'}).then(r => r.json());
   const N = works.length;
 
   // ---------- precompute ----------
@@ -313,7 +313,7 @@
     cardT.textContent = w.t;
     cardM.textContent = w.yd + ' · ' + w.m;
     cardX.hidden = !w.x;
-    cardLink.href = '/artwork.html?id=' + w.i;
+    cardLink.href = 'artwork.html?id=' + w.i;
     card.classList.add('on');
     live.textContent = w.t + ', ' + w.yd + ', ' + w.m;
   }
@@ -389,7 +389,7 @@
           focusI = i;
           showCard(i);
         } else if (focusI === i && cardFor === i) {
-          window.location.href = '/artwork.html?id=' + works[i].i;
+          window.location.href = 'artwork.html?id=' + works[i].i;
         }
       }
     }
@@ -410,7 +410,7 @@
     else if (e.key === 'Home') { scrollX = 0; vx = 0; }
     else if (e.key === 'End') { scrollX = maxScroll(); vx = 0; }
     else if (e.key === 'Enter' && focusI >= 0) {
-      window.location.href = '/artwork.html?id=' + works[focusI].i;
+      window.location.href = 'artwork.html?id=' + works[focusI].i;
     }
   });
 
@@ -548,6 +548,16 @@
 
   // ---------- go ----------
   layout();
+  // ?at=artNNNN — arrive in the river at a specific work (linked from artwork pages)
+  const at = new URLSearchParams(location.search).get('at');
+  if (at) {
+    const ai = works.findIndex(x => x.i === at);
+    if (ai >= 0) {
+      scrollX = clampScroll(ai * STEP - W / 2 + SW / 2);
+      focusI = ai;
+      dismissHint();
+    }
+  }
   raf = requestAnimationFrame(frame);
   // heartbeat: throttled/embedded contexts can stall RAF entirely — keep the
   // room visible (and drags/keys responsive) at a slow pulse until RAF returns

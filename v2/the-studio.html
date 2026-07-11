@@ -202,7 +202,7 @@
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // the living count — read from the same data spine the rooms are built on
-  fetch('current.json').then(r => r.json()).then(works => {
+  fetch('current.json', {cache:'no-cache'}).then(r => r.json()).then(works => {
     document.getElementById('count').textContent = works.length.toLocaleString('en-US');
   }).catch(() => {}); // static 1,084 stands if fetch fails
   document.getElementById('today-date').textContent =

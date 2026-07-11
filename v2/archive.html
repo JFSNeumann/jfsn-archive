@@ -216,7 +216,7 @@
 <script>
 (async function(){
   'use strict';
-  const works = await fetch('current.json').then(r => r.json());
+  const works = await fetch('current.json', {cache:'no-cache'}).then(r => r.json());
   const ORI_LABEL = { v: 'VERTICAL', h: 'HORIZONTAL', s: 'SQUARE' };
   const MEDIA = [...new Set(works.map(w => w.m))].sort();
   const DECADES = [...new Set(works.map(w => Math.floor(w.y / 10) * 10))].sort();
@@ -283,7 +283,7 @@
     const slice = list.slice(0, shown);
     grid.innerHTML = slice.map((w, idx) => `
       <figure class="card">
-        <a href="/artwork.html?id=${w.i}">
+        <a href="artwork.html?id=${w.i}">
           <img src="/artworks/mini/${w.i}.avif" alt="${esc(w.t)}"${idx < 12 ? '' : ' loading="lazy"'} decoding="async"
                style="aspect-ratio:${w.o === 'h' ? '4/3' : w.o === 's' ? '1/1' : '2/3'}">
           <figcaption>

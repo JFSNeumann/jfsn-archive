@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Work — Jeffrey F. S. Neumann</title>
+<meta name="description" content="A single work from the archive, shown whole and described honestly.">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+  :root{
+    --room:#0c0a09;
+    --ink:#e8e2d9;
+    --dim:#7a7168;
+    --faint:#3a332d;
+    --frame:#2b241e;
+    --accent:#FF6600;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    background:var(--room);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--accent);color:#fff}
+  a{color:var(--dim);text-decoration:none;transition:color .25s}
+  a:hover{color:var(--accent)}
+  a:focus-visible{outline:2px solid var(--accent);outline-offset:4px;color:var(--accent)}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+  .caps{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim)}
+  .serif{font-family:Georgia,'Times New Roman',serif}
+
+  header.hud{
+    position:fixed;top:0;left:0;right:0;z-index:10;
+    display:flex;justify-content:space-between;align-items:baseline;
+    padding:calc(env(safe-area-inset-top,0px) + 22px) 26px 14px;
+    background:linear-gradient(var(--room) 30%,transparent);
+    pointer-events:none;
+  }
+  header.hud a{pointer-events:auto}
+  header.hud .who{font-size:11px;letter-spacing:.22em;font-weight:600;color:var(--ink)}
+
+  main{
+    min-height:100vh;
+    display:grid;grid-template-columns:1fr minmax(280px,380px);
+    gap:clamp(30px,5vw,70px);align-items:center;
+    padding:calc(env(safe-area-inset-top,0px) + 90px) clamp(20px,6vw,80px) 120px;
+    max-width:1500px;margin:0 auto;
+  }
+  @media (max-width:900px){
+    main{grid-template-columns:1fr;gap:40px;align-items:start}
+  }
+
+  /* ---------- the work ---------- */
+  #stage{display:flex;justify-content:center}
+  #stage figure{max-width:100%}
+  #stage img{
+    display:block;max-width:100%;max-height:72vh;width:auto;height:auto;
+    border:1px solid var(--frame);background:#171310;
+    cursor:zoom-in;
+  }
+  #stage figcaption{margin-top:12px;text-align:center}
+
+  /* ---------- the label ---------- */
+  #label .no{color:var(--faint);margin-bottom:14px;display:block}
+  #label h1{
+    font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:400;
+    font-size:clamp(26px,3.4vw,40px);line-height:1.25;
+  }
+  #ledger{margin-top:34px;border-top:1px solid var(--frame)}
+  #ledger .row{
+    display:flex;justify-content:space-between;gap:20px;
+    padding:13px 0;border-bottom:1px solid var(--frame);
+    font-size:13px;
+  }
+  #ledger .row .k{font-size:9px;letter-spacing:.22em;color:var(--faint);text-transform:uppercase;padding-top:3px}
+  #ledger .row .v{text-align:right;font-family:Georgia,'Times New Roman',serif;font-style:italic}
+  #flag{
+    display:none;margin-top:16px;font-size:9px;letter-spacing:.14em;
+    color:var(--accent);text-transform:uppercase;
+  }
+  #flag.on{display:block}
+  #label nav{display:flex;flex-direction:column;gap:13px;margin-top:34px}
+  #label nav a,#label nav button{
+    font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--dim);text-align:left;transition:color .25s;
+  }
+  #label nav a:hover,#label nav button:hover{color:var(--accent)}
+  #series-door{display:none}
+  #series-door.on{display:block}
+  #copied{color:var(--accent);margin-left:8px;opacity:0;transition:opacity .3s}
+  #copied.on{opacity:1}
+
+  /* ---------- where this sits ---------- */
+  #sits{margin-top:44px}
+  #sits .caps{display:block;margin-bottom:12px;color:var(--faint)}
+  #strip{display:block;width:100%;height:34px;cursor:pointer}
+
+  /* ---------- prev / next ---------- */
+  #walk{
+    position:fixed;bottom:calc(env(safe-area-inset-bottom,0px) + 22px);
+    left:0;right:0;z-index:9;
+    display:flex;justify-content:space-between;
+    padding:0 26px;pointer-events:none;
+  }
+  #walk a{
+    pointer-events:auto;font-size:10px;letter-spacing:.2em;
+    background:rgba(12,10,9,0.85);padding:8px 4px;
+  }
+  #walk .hint{align-self:center;color:var(--faint);font-size:9px;letter-spacing:.24em}
+  @media (max-width:640px){ #walk .hint{display:none} }
+
+  /* ---------- lightbox ---------- */
+  #lightbox{
+    position:fixed;inset:0;z-index:30;background:rgba(8,7,6,0.97);
+    display:none;align-items:center;justify-content:center;
+    touch-action:none;
+  }
+  #lightbox.on{display:flex}
+  #lightbox img{
+    max-width:96vw;max-height:96vh;
+    transition:transform .18s ease;
+    cursor:zoom-in;user-select:none;-webkit-user-drag:none;
+  }
+  #lightbox.zoomed img{cursor:grab;max-width:none;max-height:none}
+  #lightbox.dragging img{cursor:grabbing;transition:none}
+  #lb-close{
+    position:fixed;top:calc(env(safe-area-inset-top,0px) + 20px);right:24px;
+    font-size:11px;letter-spacing:.2em;color:var(--dim);z-index:31;
+  }
+  #lb-close:hover{color:var(--accent)}
+  #lb-note{
+    position:fixed;bottom:calc(env(safe-area-inset-bottom,0px) + 20px);
+    left:50%;transform:translateX(-50%);white-space:nowrap;color:var(--faint);
+  }
+
+  #missing{display:none;min-height:70vh;flex-direction:column;justify-content:center;align-items:center;gap:22px;text-align:center;padding:0 20px}
+  #missing.on{display:flex}
+  #missing .line{font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:clamp(22px,3.4vw,32px)}
+</style>
+</head>
+<body>
+
+<header class="hud">
+  <span class="who">JEFFREY&nbsp;F.&nbsp;S.&nbsp;NEUMANN</span>
+  <a class="caps" href="archive.html">[ THE ARCHIVE → ]</a>
+</header>
+
+<main id="room" hidden>
+  <div id="stage">
+    <figure>
+      <img id="work-img" alt="" decoding="async">
+      <figcaption class="caps" id="work-cap"></figcaption>
+    </figure>
+  </div>
+
+  <div id="label">
+    <span class="caps no" id="work-no"></span>
+    <h1 id="work-title"></h1>
+    <div id="ledger">
+      <div class="row"><span class="k">YEAR</span><span class="v" id="v-year"></span></div>
+      <div class="row"><span class="k">MEDIUM</span><span class="v" id="v-medium"></span></div>
+      <div class="row"><span class="k">ORIENTATION</span><span class="v" id="v-ori"></span></div>
+      <div class="row"><span class="k">ARCHIVE NO.</span><span class="v" id="v-no"></span></div>
+    </div>
+    <div id="flag">Photoshop composite — imagined placement</div>
+    <nav>
+      <button id="view-full">[ VIEW FULL RESOLUTION → ]</button>
+      <button id="copy-link">[ COPY LINK → ]<span id="copied">COPIED</span></button>
+      <a id="series-door" href="guernica-passage.html">[ PART OF THE GUERNICA PASSAGE → ]</a>
+      <a href="archive.html">[ ← BACK TO THE ARCHIVE ]</a>
+    </nav>
+    <div id="sits">
+      <span class="caps">WHERE THIS SITS — FIFTY YEARS</span>
+      <canvas id="strip" aria-label="This work's position in the river of all 1,084 works. Opens The Current at this work."></canvas>
+    </div>
+  </div>
+</main>
+
+<div id="missing">
+  <div class="line">This work isn&rsquo;t in the record under that number.</div>
+  <p class="caps">THE LINK MAY BE MISTYPED — OR THE PIECE MAY BE ONE OF THOSE LOST</p>
+  <a class="caps" href="archive.html">[ THE ARCHIVE — ALL 1,084 WORKS → ]</a>
+</div>
+
+<div id="walk" hidden>
+  <a id="prev" href="#">[ ← PREVIOUS ]</a>
+  <span class="hint">← → KEYS WALK THE RECORD</span>
+  <a id="next" href="#">[ NEXT → ]</a>
+</div>
+
+<div id="lightbox" role="dialog" aria-label="Full resolution view">
+  <img id="lb-img" alt="">
+  <button id="lb-close" class="caps">[ CLOSE ✕ ]</button>
+  <span id="lb-note" class="caps">CLICK TO ZOOM · DRAG TO PAN · ESC TO CLOSE</span>
+</div>
+
+<noscript>
+  <div style="min-height:70vh;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:20px;text-align:center;padding:0 20px">
+    <p style="font-family:Georgia,serif;font-size:18px;line-height:1.9;color:#b9b1a6;max-width:34em">
+      This room hangs one work at a time, by script. Without JavaScript, every
+      work still has a permanent static page in the catalog:</p>
+    <a class="caps" href="/archive.html">[ THE V1 ARCHIVE → ]</a>
+  </div>
+</noscript>
+
+<script>
+(async function(){
+  'use strict';
+  const ORI_LABEL = { v: 'Vertical', h: 'Horizontal', s: 'Square' };
+  const works = await fetch('current.json', {cache:'no-cache'}).then(r => r.json());
+  const id = new URLSearchParams(location.search).get('id');
+  const idx = works.findIndex(w => w.i === id);
+
+  if (idx < 0) {
+    document.getElementById('missing').classList.add('on');
+    document.title = 'Not in the record — Jeffrey F. S. Neumann';
+    return;
+  }
+
+  const w = works[idx];
+  const room = document.getElementById('room');
+  const walk = document.getElementById('walk');
+  room.hidden = false;
+  walk.hidden = false;
+
+  document.title = w.t + ' — Jeffrey F. S. Neumann';
+  const img = document.getElementById('work-img');
+  img.src = '/artworks/medium/' + w.i + '.avif';
+  img.alt = w.t;
+  if (w.w && w.h) img.style.aspectRatio = w.w + '/' + w.h;
+  document.getElementById('work-cap').textContent =
+    w.t.toUpperCase() + ' · ' + w.yd.toUpperCase() + ' · ' + w.m.toUpperCase();
+  document.getElementById('work-no').textContent = w.i.toUpperCase() + ' — ' + w.yd.toUpperCase();
+  document.getElementById('work-title').textContent = w.t;
+  document.getElementById('v-year').textContent = w.yd;
+  document.getElementById('v-medium').textContent = w.m;
+  document.getElementById('v-ori').textContent = ORI_LABEL[w.o] || '—';
+  document.getElementById('v-no').textContent = w.i.toUpperCase();
+  if (w.x) document.getElementById('flag').classList.add('on');
+  if (w.g) document.getElementById('series-door').classList.add('on');
+
+  // ---------- prev / next walk (chronological, same order as The Current) ----------
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+  if (idx > 0) prev.href = 'artwork.html?id=' + works[idx - 1].i;
+  else prev.style.visibility = 'hidden';
+  if (idx < works.length - 1) next.href = 'artwork.html?id=' + works[idx + 1].i;
+  else next.style.visibility = 'hidden';
+  window.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft' && idx > 0) location.href = prev.href;
+    else if (e.key === 'ArrowRight' && idx < works.length - 1) location.href = next.href;
+    else if (e.key === 'Escape') closeLB();
+  });
+
+  // ---------- copy link ----------
+  document.getElementById('copy-link').addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(location.origin + '/v2/artwork.html?id=' + w.i);
+      const c = document.getElementById('copied');
+      c.classList.add('on');
+      setTimeout(() => c.classList.remove('on'), 1600);
+    } catch (_) {}
+  });
+
+  // ---------- where this sits: the river strip ----------
+  const strip = document.getElementById('strip');
+  const sctx = strip.getContext('2d');
+  function drawStrip(){
+    const W = strip.clientWidth || strip.parentElement.clientWidth;
+    const H = 34;
+    const DPR = Math.min(devicePixelRatio || 1, 2);
+    strip.width = W * DPR; strip.height = H * DPR;
+    sctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    sctx.clearRect(0, 0, W, H);
+    const bw = Math.max(1, W / works.length);
+    for (let i = 0; i < works.length; i++) {
+      sctx.fillStyle = works[i].c;
+      sctx.globalAlpha = 0.55;
+      sctx.fillRect(i / works.length * W, 8, bw, 18);
+    }
+    sctx.globalAlpha = 1;
+    const x = idx / works.length * W;
+    sctx.fillStyle = '#FF6600';
+    sctx.fillRect(x - 1, 0, 3, H);
+  }
+  drawStrip();
+  window.addEventListener('resize', drawStrip);
+  strip.addEventListener('click', () => { location.href = 'current.html?at=' + w.i; });
+
+  // ---------- full resolution lightbox ----------
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lb-img');
+  let zoomed = false, panX = 0, panY = 0;
+  function openLB(){
+    lbImg.src = '/artworks/full/' + w.i + '.avif';
+    lbImg.onerror = () => { lbImg.onerror = null; lbImg.src = '/artworks/medium/' + w.i + '.avif'; };
+    lbImg.alt = w.t + ' — full resolution';
+    lb.classList.add('on');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLB(){
+    lb.classList.remove('on');
+    setZoom(false);
+    document.body.style.overflow = '';
+  }
+  function setZoom(z){
+    zoomed = z; panX = 0; panY = 0;
+    lb.classList.toggle('zoomed', z);
+    lbImg.style.transform = z ? 'scale(1)' : '';
+    lbImg.style.translate = '0 0';
+  }
+  img.addEventListener('click', openLB);
+  document.getElementById('view-full').addEventListener('click', openLB);
+  document.getElementById('lb-close').addEventListener('click', closeLB);
+  lb.addEventListener('click', e => { if (e.target === lb) closeLB(); });
+  lbImg.addEventListener('click', e => {
+    if (dragMoved > 5) return;
+    setZoom(!zoomed);
+  });
+  let dragging = false, dragMoved = 0, lx = 0, ly = 0;
+  lbImg.addEventListener('pointerdown', e => {
+    if (!zoomed) return;
+    dragging = true; dragMoved = 0; lx = e.clientX; ly = e.clientY;
+    lb.classList.add('dragging');
+    try { lbImg.setPointerCapture(e.pointerId); } catch (_) {}
+    e.preventDefault();
+  });
+  lbImg.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    panX += e.clientX - lx; panY += e.clientY - ly;
+    dragMoved += Math.abs(e.clientX - lx) + Math.abs(e.clientY - ly);
+    lx = e.clientX; ly = e.clientY;
+    lbImg.style.translate = panX + 'px ' + panY + 'px';
+  });
+  ['pointerup', 'pointercancel'].forEach(ev =>
+    lbImg.addEventListener(ev, () => { dragging = false; lb.classList.remove('dragging'); }));
+})();
+</script>
+</body>
+</html>

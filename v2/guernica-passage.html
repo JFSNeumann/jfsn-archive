@@ -198,7 +198,7 @@
 (async function(){
   'use strict';
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const works = await fetch('guernica.json').then(r => r.json());
+  const works = await fetch('guernica.json', {cache:'no-cache'}).then(r => r.json());
   const TOTAL = works.length;
 
   function mulberry32(a){
@@ -246,7 +246,7 @@
     fig.dataset.n = count;
     const ar = (w.w && w.h) ? w.w + '/' + w.h : (w.o === 'h' ? '4/3' : w.o === 's' ? '1/1' : '2/3');
     fig.innerHTML =
-      '<a href="/artwork.html?id=' + w.i + '">' +
+      '<a href="artwork.html?id=' + w.i + '">' +
         '<img src="/artworks/thumbs/' + w.i + '.avif" alt="' + esc(w.t) + '" ' +
           (count <= 3 ? '' : 'loading="lazy" ') + 'decoding="async" style="aspect-ratio:' + ar + '">' +
         '<figcaption>' +

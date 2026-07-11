@@ -14,6 +14,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 chromatic = json.load(open(os.path.join(ROOT, "chromatic.json")))
 lite = json.load(open(os.path.join(ROOT, "catalog-lite.json")))
+dims = json.load(open(os.path.join(ROOT, "dims.json")))
 
 meta = {}
 for w in lite:
@@ -25,7 +26,7 @@ for c in chromatic:
     m = meta.get(c["id"])
     if m is None:
         raise SystemExit(f"{c['id']} in chromatic.json but not catalog-lite.json")
-    works.append({
+    rec = {
         "i": c["id"],
         "y": c["year"],
         "c": c["bg"],
@@ -34,7 +35,13 @@ for c in chromatic:
         "m": m["work_type"],
         "o": (m.get("orientation") or "vertical")[0],  # v / h / s
         "x": 1 if m.get("composite") else 0,
-    })
+    }
+    wh = dims.get(c["id"])
+    if wh:
+        rec["w"], rec["h"] = wh
+    if m.get("series") == "Guernica":
+        rec["g"] = 1
+    works.append(rec)
 
 works.sort(key=lambda w: (w["y"], w["i"]))
 
@@ -45,7 +52,6 @@ with open(out, "w") as f:
 print(f"{len(works)} works → {out} ({os.path.getsize(out)//1024} KB)")
 
 # ---- guernica.json: the passage's subset, with true aspect ratios ----
-dims = json.load(open(os.path.join(ROOT, "dims.json")))
 guernica = []
 for w in works:
     if meta[w["i"]].get("series") == "Guernica":

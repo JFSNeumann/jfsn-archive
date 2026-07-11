@@ -195,7 +195,7 @@
 (async function(){
   'use strict';
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const works = await fetch('openings.json').then(r => r.json());
+  const works = await fetch('openings.json', {cache:'no-cache'}).then(r => r.json());
 
   const MOVEMENTS = [
     ['gal', 'I', 'The Galleries', 'Rooms, walls, and crowds that never existed. An empty imagined gallery is a study. An imagined gallery with an audience in it is something else: a picture of being seen.'],
@@ -227,7 +227,7 @@
       const fig = document.createElement('figure');
       fig.className = 'op';
       fig.innerHTML =
-        '<a href="/artwork.html?id=' + w.i + '">' +
+        '<a href="artwork.html?id=' + w.i + '">' +
           '<img src="/artworks/thumbs/' + w.i + '.avif" alt="' + esc(w.t) + '" ' +
             (eager <= 8 ? '' : 'loading="lazy" ') +
             'decoding="async" style="aspect-ratio:' + ar + '">' +
