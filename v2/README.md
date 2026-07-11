@@ -66,8 +66,17 @@ itself — the only one that ever existed. Rooms, not pages.
   "all the works in one space" → you are standing in that space), and the
   plaque: "The museum never existed. The record does."
 
-**All six rooms of the 2026-07-10 concept are built.** Future possibilities:
-more passages (Torsos & Faces, Targets, Working History).
+- **The Archive** (`archive.html`) — the vault beneath the museum, in the
+  same dark room language. All 1,084 works from current.json in a filterable
+  grid: search, medium/decade/orientation chips, three sorts, 60-per-page
+  load-more, honest captions (year_display + composite flags) on every card,
+  links to /api.html and GitHub. Every "[ THE ARCHIVE → ]" door in the
+  building points here now (they previously pointed at `/`, the v1 homepage
+  — wrong page AND wrong look). The v1 archive.html remains untouched at the
+  site root; the noscript fallback doors to it.
+
+**All rooms of the 2026-07-10 concept are built, plus the vault.** Future
+possibilities: more passages (Torsos & Faces, Targets, Working History).
 
 ## Resilience rule (learned by execution, keep it)
 
