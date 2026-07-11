@@ -162,6 +162,12 @@ addEventListener('DOMContentLoaded', () => {
   }
   #reveal nav{display:flex;flex-direction:column;gap:16px;margin-top:24px}
   #reveal nav a{font-size:11px;letter-spacing:.22em}
+  /* the doors hold back until both lines have landed */
+  .js #reveal nav{opacity:0;transition:opacity 1.6s ease}
+  .js #reveal nav.seen{opacity:1}
+  @media (prefers-reduced-motion: reduce){
+    #reveal nav{opacity:1;transition:none}
+  }
 
   #exit-note{padding:16vh 0 14vh;text-align:center}
 </style>
@@ -285,9 +291,19 @@ addEventListener('DOMContentLoaded', () => {
   }
 
   // ---------- reveal-on-walk (scroll position + heartbeat; no IO, no RAF trust) ----------
-  const targets = [...document.querySelectorAll('.op'),
-                   document.querySelector('#reveal .line1'),
-                   document.querySelector('#reveal .line2')];
+  // The reveal itself is STAGED: line 1 lands alone and holds, then line 2,
+  // then the doors — a twist felt, not a paragraph read.
+  const line1 = document.querySelector('#reveal .line1');
+  const line2 = document.querySelector('#reveal .line2');
+  const revealNav = document.querySelector('#reveal nav');
+  let staged = false;
+  function stageReveal(){
+    if (staged) return;
+    staged = true;
+    setTimeout(() => line2.classList.add('seen'), 1700);
+    setTimeout(() => revealNav.classList.add('seen'), 3400);
+  }
+  const targets = [...document.querySelectorAll('.op'), line1];
   let byTop = [], ptr = 0;
   function measure(){
     byTop = targets
@@ -300,11 +316,14 @@ addEventListener('DOMContentLoaded', () => {
     const limit = scrollY + innerHeight * 0.92;
     while (ptr < byTop.length && byTop[ptr][0] < limit) {
       byTop[ptr][1].classList.add('seen');
+      if (byTop[ptr][1] === line1) stageReveal();
       ptr++;
     }
   }
   if (REDUCED) {
     targets.forEach(el => el.classList.add('seen'));
+    line2.classList.add('seen');
+    revealNav.classList.add('seen');
   } else {
     let queued = false;
     window.addEventListener('scroll', () => {
