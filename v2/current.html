@@ -194,11 +194,41 @@ addEventListener('DOMContentLoaded', () => {
     position:absolute;width:1px;height:1px;overflow:hidden;
     clip:rect(0 0 0 0);white-space:nowrap;
   }
+  /* ---------- mobile rooms sheet ---------- */
+  #hud-rooms{
+    display:none;
+    right:26px;bottom:calc(env(safe-area-inset-bottom, 0px) + 62px);
+    font-size:10px;letter-spacing:.2em;
+  }
+  #hud-rooms button{
+    font:inherit;letter-spacing:inherit;color:var(--dim);
+    background:none;border:none;padding:0;cursor:pointer;
+  }
+  #hud-rooms button:hover,#hud-rooms.open button{color:var(--accent)}
+  #rooms-sheet{
+    position:fixed;left:0;right:0;bottom:0;z-index:8;
+    background:rgba(12,10,9,0.97);backdrop-filter:blur(10px);
+    border-top:1px solid var(--frame);
+    padding:22px 26px calc(env(safe-area-inset-bottom, 0px) + 26px);
+    transform:translateY(100%);transition:transform .3s ease;
+    display:flex;flex-direction:column;gap:16px;
+  }
+  #rooms-sheet.open{transform:translateY(0)}
+  #rooms-sheet a{
+    font-size:12px;letter-spacing:.2em;color:var(--ink);
+    text-decoration:none;
+  }
+  #rooms-sheet .sub{display:block;margin-top:3px;font-size:10px;letter-spacing:.14em;color:var(--dim)}
   @media (max-width:640px){
     #hud-name .what{display:none}
     #hud-count{display:none}
     #card{width:180px}
     #card img{height:120px}
+    #hud-exit,#hud-wing{display:none}
+    #hud-rooms{display:block}
+  }
+  @media (min-width:641px){
+    #rooms-sheet{display:none}
   }
   @media (prefers-reduced-motion: reduce){
     #threshold .who,#threshold .line{animation:none;opacity:1}
@@ -220,6 +250,13 @@ addEventListener('DOMContentLoaded', () => {
 <div class="hud" id="hud-end">THE RIVER ENDS AT TODAY&nbsp;&nbsp;—&nbsp;&nbsp;<a href="the-studio.html">[ THE STUDIO → ]</a></div>
 <div class="hud" id="hud-exit"><a href="index.html">[ THE MUSEUM → ]</a><br><a href="archive.html">[ THE ARCHIVE → ]</a></div>
 <div class="hud" id="hud-wing"><a href="guernica-passage.html">[ THE GUERNICA PASSAGE → ]</a><br><a href="flooded-wing.html">[ THE FLOODED WING → ]</a></div>
+<div class="hud" id="hud-rooms"><button id="rooms-toggle" aria-expanded="false" aria-controls="rooms-sheet">[ ROOMS ]</button></div>
+<div id="rooms-sheet" aria-hidden="true">
+  <a href="index.html">[ THE MUSEUM → ]<span class="sub">RETURN TO THE FRONT DOOR</span></a>
+  <a href="archive.html">[ THE ARCHIVE → ]<span class="sub">CATALOG, SEARCH, OPEN DATA</span></a>
+  <a href="guernica-passage.html">[ THE GUERNICA PASSAGE → ]<span class="sub">232 WORKS · ONE STRUCTURE</span></a>
+  <a href="flooded-wing.html">[ THE FLOODED WING → ]<span class="sub">A ROOM FOR WHAT IS MISSING</span></a>
+</div>
 
 <div id="card">
   <a id="card-link" href="#">
@@ -616,6 +653,20 @@ addEventListener('DOMContentLoaded', () => {
   setInterval(() => {
     if (performance.now() - lastTick > 600) render(performance.now());
   }, 400);
+
+  // ---------- mobile rooms sheet ----------
+  const roomsToggle = document.getElementById('rooms-toggle');
+  const roomsSheet = document.getElementById('rooms-sheet');
+  const hudRooms = document.getElementById('hud-rooms');
+  if (roomsToggle) {
+    roomsToggle.addEventListener('click', () => {
+      const open = roomsSheet.classList.toggle('open');
+      hudRooms.classList.toggle('open', open);
+      roomsToggle.setAttribute('aria-expanded', open);
+      roomsSheet.setAttribute('aria-hidden', !open);
+      roomsToggle.textContent = open ? '[ CLOSE ]' : '[ ROOMS ]';
+    });
+  }
 
   const threshold = document.getElementById('threshold');
   const enter = () => threshold.classList.add('gone');
