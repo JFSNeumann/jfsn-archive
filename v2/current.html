@@ -79,7 +79,9 @@ addEventListener('DOMContentLoaded', () => {
     color:#241e19;
     font-variant-numeric:tabular-nums;
     letter-spacing:-0.02em;
+    transition:opacity .5s ease;
   }
+  #hud-year.dim{opacity:.16} /* the numeral yields when a work is raised */
   #hud-year .est{
     display:block;text-align:center;font-size:11px;letter-spacing:.3em;
     color:var(--faint);margin-top:10px;font-weight:400;
@@ -90,6 +92,14 @@ addEventListener('DOMContentLoaded', () => {
     transition:opacity 1.2s ease;white-space:nowrap;
   }
   #hud-hint.gone{opacity:0}
+  #hud-end{
+    left:50%;bottom:calc(env(safe-area-inset-bottom, 0px) + 66px);transform:translateX(-50%);
+    font-size:10px;letter-spacing:.22em;white-space:nowrap;
+    opacity:0;transition:opacity .9s ease;pointer-events:none;
+  }
+  #hud-end.on{opacity:1;pointer-events:auto}
+  #hud-end a{color:var(--ink)}
+  #hud-end a:hover{color:var(--accent)}
   #hud-exit{
     left:26px;bottom:calc(env(safe-area-inset-bottom, 0px) + 62px);
     font-size:10px;letter-spacing:.2em;
@@ -203,6 +213,7 @@ addEventListener('DOMContentLoaded', () => {
 <div class="hud" id="hud-count">1,084 WORKS<br>1970s – 2020s</div>
 <div class="hud" id="hud-year" aria-hidden="true"><span id="year-num">1970</span><span class="est" id="year-est">DECADE, ESTIMATED</span></div>
 <div class="hud" id="hud-hint">DRAG&nbsp;&nbsp;·&nbsp;&nbsp;SCROLL&nbsp;&nbsp;·&nbsp;&nbsp;← →</div>
+<div class="hud" id="hud-end">THE RIVER ENDS AT TODAY&nbsp;&nbsp;—&nbsp;&nbsp;<a href="the-studio.html">[ THE STUDIO → ]</a></div>
 <div class="hud" id="hud-exit"><a href="index.html">[ THE MUSEUM → ]</a><br><a href="archive.html">[ THE ARCHIVE → ]</a></div>
 <div class="hud" id="hud-wing"><a href="guernica-passage.html">[ THE GUERNICA PASSAGE → ]</a><br><a href="flooded-wing.html">[ THE FLOODED WING → ]</a></div>
 
@@ -501,6 +512,12 @@ addEventListener('DOMContentLoaded', () => {
     } else {
       hideCard();
     }
+    document.getElementById('hud-year').classList.toggle('dim', focusI >= 0);
+
+    // the river ends at today — the last room opens
+    const atEnd = scrollX >= maxScroll() - STEP * 2 && maxScroll() > 0;
+    document.getElementById('hud-end').classList.toggle('on', atEnd);
+    if (atEnd) dismissHint();
 
     updateYear();
 
@@ -558,6 +575,11 @@ addEventListener('DOMContentLoaded', () => {
       mctx.fillRect(i / N * miniW, 5, Math.max(1, miniW / N), 12);
     }
     mctx.globalAlpha = 1;
+    // decade ticks on the minimap
+    mctx.fillStyle = 'rgba(232,226,217,0.35)';
+    for (const d of decades) {
+      mctx.fillRect(d.i / N * miniW, 1, 1, 20);
+    }
     const vw0 = scrollX / WORLD * miniW;
     const vw1 = (scrollX + W) / WORLD * miniW;
     mctx.strokeStyle = '#FF6600';
