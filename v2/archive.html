@@ -102,6 +102,20 @@
   #clear-filters:hover{color:var(--accent)}
   #clear-filters[hidden]{display:none}
 
+  /* on phones the chips collapse behind one toggle — the bar was eating 46% of the viewport */
+  #filters-toggle{
+    display:none;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--dim);border:1px solid var(--frame);padding:11px 12px;
+    white-space:nowrap;transition:color .2s,border-color .2s;
+  }
+  #filters-toggle.active{color:var(--accent);border-color:var(--accent)}
+  @media (max-width:700px){
+    #filters-toggle{display:inline-block}
+    #filter-groups{display:none}
+    #filter-groups.open{display:flex}
+    #count-label{flex-basis:100%;order:9}
+  }
+
   /* ---------- grid ---------- */
   #grid-wrap{max-width:1660px;margin:0 auto;padding:46px clamp(20px,6vw,80px) 20vh}
   #grid{
@@ -167,6 +181,7 @@
         <option value="year-asc">OLDEST FIRST</option>
         <option value="title">TITLE, A–Z</option>
       </select>
+      <button id="filters-toggle" aria-expanded="false" aria-controls="filter-groups">[ FILTERS ]</button>
       <span class="caps" id="count-label"></span>
     </div>
     <div id="filter-groups">
@@ -279,6 +294,10 @@
       (list.length === works.length ? ' WORKS' : ' OF ' + works.length.toLocaleString('en-US'));
     const anyActive = state.medium.size || state.decade.size || state.orientation.size || state.q;
     clearBtn.hidden = !anyActive;
+    const nChips = state.medium.size + state.decade.size + state.orientation.size;
+    const ft = document.getElementById('filters-toggle');
+    ft.textContent = nChips ? '[ FILTERS · ' + nChips + ' ]' : '[ FILTERS ]';
+    ft.classList.toggle('active', nChips > 0);
     empty.classList.toggle('on', list.length === 0);
 
     const slice = list.slice(0, shown);
@@ -313,6 +332,10 @@
   }
   clearBtn.addEventListener('click', clearAll);
   document.getElementById('empty-clear').addEventListener('click', clearAll);
+  document.getElementById('filters-toggle').addEventListener('click', function(){
+    const open = document.getElementById('filter-groups').classList.toggle('open');
+    this.setAttribute('aria-expanded', open);
+  });
 
   render();
 })();
