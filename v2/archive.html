@@ -336,7 +336,7 @@ addEventListener('DOMContentLoaded', () => {
     grid.innerHTML = slice.map((w, idx) => `
       <figure class="card">
         <a href="artwork.html?id=${w.i}">
-          <img src="/artworks/mini/${w.i}.avif" alt="${esc(w.t)}"${idx < 12 ? '' : ' loading="lazy"'} decoding="async"
+          <img src="/artworks/thumbs/${w.i}.avif" srcset="/artworks/mini/${w.i}.avif 100w, /artworks/thumbs/${w.i}.avif 400w, /artworks/medium/${w.i}.avif 900w" sizes="min(45vw, 210px)" alt="${esc(w.t)}"${idx < 12 ? '' : ' loading="lazy"'} decoding="async"
                style="aspect-ratio:${w.o === 'h' ? '4/3' : w.o === 's' ? '1/1' : '2/3'}">
           <figcaption>
             <div class="t serif">${esc(w.t)}</div>

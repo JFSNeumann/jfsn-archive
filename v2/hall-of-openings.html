@@ -260,7 +260,9 @@ addEventListener('DOMContentLoaded', () => {
       fig.className = 'op';
       fig.innerHTML =
         '<a href="artwork.html?id=' + w.i + '">' +
-          '<img src="/artworks/thumbs/' + w.i + '.avif" alt="' + esc(w.t) + '" ' +
+          '<img src="/artworks/thumbs/' + w.i + '.avif" ' +
+          'srcset="/artworks/thumbs/' + w.i + '.avif 400w, /artworks/medium/' + w.i + '.avif 900w" ' +
+          'sizes="min(92vw, 360px)" alt="' + esc(w.t) + '" ' +
             (eager <= 8 ? '' : 'loading="lazy" ') +
             'decoding="async" style="aspect-ratio:' + ar + '">' +
           '<figcaption>' +

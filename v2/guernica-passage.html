@@ -279,7 +279,9 @@ addEventListener('DOMContentLoaded', () => {
     const ar = (w.w && w.h) ? w.w + '/' + w.h : (w.o === 'h' ? '4/3' : w.o === 's' ? '1/1' : '2/3');
     fig.innerHTML =
       '<a href="artwork.html?id=' + w.i + '">' +
-        '<img src="/artworks/thumbs/' + w.i + '.avif" alt="' + esc(w.t) + '" ' +
+        '<img src="/artworks/thumbs/' + w.i + '.avif" ' +
+          'srcset="/artworks/thumbs/' + w.i + '.avif 400w, /artworks/medium/' + w.i + '.avif 900w" ' +
+          'sizes="min(92vw, ' + maxW + 'px)" alt="' + esc(w.t) + '" ' +
           (count <= 3 ? '' : 'loading="lazy" ') + 'decoding="async" style="aspect-ratio:' + ar + '">' +
         '<figcaption>' +
           '<div class="t serif">' + esc(w.t) + '</div>' +
