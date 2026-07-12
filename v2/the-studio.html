@@ -170,6 +170,11 @@ addEventListener('DOMContentLoaded', () => {
   #letter .sig{margin-top:34px}
 
   /* ---------- plaque ---------- */
+  /* the river, reprised: The Current's color band at rest, one last time */
+  #river-still{display:none}
+  .js #river-still{
+    display:block;width:min(560px,86vw);height:24px;margin:0 auto 44px;
+  }
   #plaque{
     min-height:88vh;display:flex;flex-direction:column;
     justify-content:center;align-items:center;text-align:center;gap:36px;
@@ -254,6 +259,7 @@ addEventListener('DOMContentLoaded', () => {
 </section>
 
 <section id="plaque">
+  <canvas id="river-still" class="reveal-el" aria-label="The river of all works, drawn once more at rest — fifty years of color, from the 1970s to today."></canvas>
   <div class="line reveal-el">The museum never existed.<br>The record <em>does</em>.</div>
   <nav class="reveal-el">
     <a href="current.html">[ BEGIN AGAIN — THE CURRENT → ]</a>
@@ -304,9 +310,30 @@ addEventListener('DOMContentLoaded', () => {
   })();
 
   // the living count — read from the same data spine the rooms are built on
+  let riverWorks = null;
+  function drawRiver(){
+    if (!riverWorks) return;
+    const cv = document.getElementById('river-still');
+    const W = cv.clientWidth; if (!W) return;
+    const H = 24, DPR = Math.min(devicePixelRatio || 1, 2);
+    cv.width = W * DPR; cv.height = H * DPR;
+    const ctx = cv.getContext('2d');
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    const bw = Math.max(1, W / riverWorks.length);
+    ctx.globalAlpha = 0.62;
+    for (let i = 0; i < riverWorks.length; i++) {
+      ctx.fillStyle = riverWorks[i].c;
+      ctx.fillRect(i / riverWorks.length * W, 2, bw, 20);
+    }
+    ctx.globalAlpha = 1;
+  }
   fetch('current.json', {cache:'no-cache'}).then(r => r.json()).then(works => {
     document.getElementById('count').textContent = works.length.toLocaleString('en-US');
+    riverWorks = works;           // The Current's color spine, reprised at rest
+    drawRiver();
   }).catch(() => {}); // static 1,084 stands if fetch fails
+  window.addEventListener('resize', drawRiver);
   document.getElementById('today-date').textContent =
     new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).toUpperCase();
 
