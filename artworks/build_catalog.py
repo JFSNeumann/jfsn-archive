@@ -228,7 +228,7 @@ if skipped:
 #   artwork.html   — dynamic (?id=artNNNN); covered by artworks/pages/*.html entries below
 #   series.html    — dynamic (?theme= / ?series=); covered by theme/series param entries below
 #   404.html       — error page, not indexable
-#   curate.html, dedupe.html, jeff.html, qa.html — dev tools (noindex)
+#   curator.html, qa.html — dev tools (noindex)
 # When adding a new public page: add it to entries[] AND run audit-nav.sh to verify.
 today       = datetime.date.today().isoformat()
 theme_pages = sorted({t for r in records for t in (r.get('themes') or [])})
@@ -237,6 +237,13 @@ series_pages = sorted({r['series'] for r in records if r.get('series')})
 entries = [
     (SITE_URL + '/',                        '1.0', 'monthly'),
     (SITE_URL + '/archive.html',            '0.9', 'weekly'),
+    # v2 Museum rooms (primary navigation)
+    (SITE_URL + '/current.html',            '0.8', 'monthly'),
+    (SITE_URL + '/flooded-wing.html',       '0.8', 'monthly'),
+    (SITE_URL + '/guernica-passage.html',   '0.8', 'monthly'),
+    (SITE_URL + '/hall-of-openings.html',   '0.8', 'monthly'),
+    (SITE_URL + '/the-studio.html',         '0.8', 'monthly'),
+    (SITE_URL + '/working-history.html',    '0.8', 'monthly'),
     (SITE_URL + '/series-index.html',       '0.8', 'monthly'),
     (SITE_URL + '/about.html',              '0.7', 'monthly'),
     (SITE_URL + '/lost.html',               '0.7', 'monthly'),
