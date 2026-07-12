@@ -119,12 +119,14 @@ addEventListener('DOMContentLoaded', () => {
     background:#191510;
     border:1px solid #453a2f;
     aspect-ratio:var(--ar,3/4);
+    /* The certainty-fade (--o) is the ONLY opacity applied. Frames are visible
+       from the start — no scroll-reveal. A time-based reveal (transition OR
+       animation) is unsafe here: a throttled tab or an iPhone in Low Power Mode
+       stalls the animation clock, pinning the reveal at opacity 0 forever and
+       leaving all 1,000 frames invisible. Absence at architectural scale comes
+       from the sheer length of the scroll, not from a fade. */
+    opacity:var(--o,1);
   }
-  .js .fr{
-    opacity:0;transform:translateY(14px);
-    transition:opacity 1.1s ease,transform 1.1s ease;
-  }
-  .js .fr.seen{opacity:var(--o,1);transform:none}
   a:focus-visible{outline:2px solid var(--accent);outline-offset:4px;color:var(--accent)}
   .milestone{
     padding:64px 0 50px;text-align:center;
@@ -213,7 +215,7 @@ addEventListener('DOMContentLoaded', () => {
   #exit nav a{font-size:11px;letter-spacing:.22em}
 
   @media (prefers-reduced-motion: reduce){
-    .fr{transition:none;transform:none;opacity:var(--o,1)}
+    .fr,.js .fr,.js .fr.seen{animation:none;transition:none;transform:none;opacity:var(--o,1)}
     #door .down{animation:none}
   }
 </style>
@@ -322,7 +324,6 @@ addEventListener('DOMContentLoaded', () => {
 <script>
 (function(){
   'use strict';
-  const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // deterministic RNG so the wing is the same room on every visit
   function mulberry32(a){
@@ -373,44 +374,11 @@ addEventListener('DOMContentLoaded', () => {
     }
   }
   field.appendChild(frag);
-
-  // one-way scroll reveal (no IntersectionObserver — throttled tabs stall it)
-  const allFrames = [...field.querySelectorAll('.fr')];
-  if (REDUCED) {
-    allFrames.forEach(f => f.classList.add('seen'));
-  } else {
-    let byTop = [], ptr = 0;
-    function measure(){
-      byTop = allFrames
-        .map(f => [f.offsetTop, f])
-        .sort((a, b) => a[0] - b[0]);
-      ptr = 0;
-      reveal();
-    }
-    function reveal(){
-      const limit = scrollY + innerHeight * 0.94;
-      while (ptr < byTop.length && byTop[ptr][0] < limit) {
-        byTop[ptr][1].classList.add('seen');
-        ptr++;
-      }
-    }
-    let queued = false;
-    window.addEventListener('scroll', () => {
-      if (queued) return;
-      queued = true;
-      requestAnimationFrame(() => { queued = false; reveal(); });
-      setTimeout(() => { if (queued) { queued = false; reveal(); } }, 120); // rAF can stall in hidden tabs
-    }, { passive: true });
-    window.addEventListener('resize', measure);
-    measure();
-    // heartbeat: some embedded/throttled contexts drop scroll events entirely
-    let lastY = -1, lastH = -1;
-    setInterval(() => {
-      const h = document.documentElement.scrollHeight;
-      if (h !== lastH) { lastH = h; measure(); }      // catches missed resizes / late layout
-      else if (scrollY !== lastY) { lastY = scrollY; reveal(); }
-    }, 500);
-  }
+  // Frames are visible from the start (CSS opacity:var(--o)); no scroll-reveal
+  // machinery — a per-frame reveal here depended on the animation clock (which
+  // stalls under throttling / Low Power Mode) and cost a 1,000-node offsetTop
+  // scan every 500ms. The certainty-fade lives in --o; the scale lives in the
+  // scroll. Nothing to reveal.
 
   // ---------- the wall: 11 × 25 feet, true proportion ----------
   const gwall = document.getElementById('gwall');
