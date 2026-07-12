@@ -1,5 +1,455 @@
 [
   {
+    "sha": "1610132",
+    "date": "2026-07-12",
+    "title": "Production deploy: the museum becomes the site's front door",
+    "body": "The Museum That Never Existed (v2) is promoted from /v2/ staging to\njfsn.com's true root. The prior homepage, archive grid, and single-work\ntemplate move to /archive-v1/ -- fully preserved, nothing deleted.\n\nWhat changed:\n- index.html, archive.html, artwork.html (v1) -> archive-v1/ via git mv,\n  preserving history. Their own internal asset refs (_shared/, site.min.css,\n  favicon.svg, manifest.json) rewritten to root-absolute since those\n  resources stay shared at the true root.\n- v2/'s 9 rooms + 3 data spines (current.json, guernica.json, openings.json)\n  copied to root as the live site. v2/ itself is left intact as the\n  self-contained dev source -- harmless if visited directly at /v2/.\n- 42 v1 pages + search.js had their /archive.html and artwork.html?id=\n  references repointed to /archive-v1/. Verified with a clean tree-wide\n  scan (find -not -path) after the rewrite: zero broken references remain\n  in any live v1 page.\n- Caught and reverted one real mistake before it shipped: the initial sed\n  pass incorrectly rewrote 3 files under working-history/websites/\n  mr-snowmann/ -- these are PRESERVED 2015 Adobe Muse markup, not live\n  navigation, and altering them would have violated the archive's own\n  'preserved exactly as it was' rule. Reverted via git checkout; verified\n  clean across all 8 preserved site mirrors.\n- Shared infrastructure (artworks/, audio/, fonts/, favicon.svg) never\n  moved -- both v1 (now at /archive-v1/) and v2 (now at root) reference\n  the same physical files, exactly as they already did.\n- site.min.css rebuilt, sw.js CACHE_V bumped per the project's own\n  pre-commit checks.\n\nStudio's closing plaque deliberately left unchanged after a final\ncuratorial review -- the connection to Working History is carried by\nthe existing room-to-room doorway, not narration."
+  },
+  {
+    "sha": "f396b86",
+    "date": "2026-07-12",
+    "title": "v2 stewardship: working-history eager/lazy load convention",
+    "body": "Brings the Working History room's thumbnail loading in line with every\nother room in the museum: first 3 records eager, remaining 5 lazy (was\nall 8 lazy unconditionally). Verified by execution — eager thumbnails\nresolve to real pixel dimensions, lazy ones correctly defer.\n\nFinal defect review before production deploy: all internal room links\nresolve, all root-relative assets exist on disk, data spines\n(current.json/guernica.json/openings.json) confirmed byte-identical to\na fresh build-current.py run — not stale. No debug artifacts remain.\n\nStudio's closing plaque deliberately left unchanged after review — see\nsession notes: the connection to Working History is carried by the\nexisting room-to-room doorway, not narration, and stays that way."
+  },
+  {
+    "sha": "c406c48",
+    "date": "2026-07-12",
+    "title": "v2 jury re-run #3: fix the Flooded Wing's invisible frame field",
+    "body": "The single genuine bug the re-run surfaced. Every one of the 1,000 frames\nwas rendering at opacity 0 — the room was blank. Root cause, proven by\nexecution: the scroll-reveal used a CSS transition/animation on opacity, and\na throttled tab (and, critically, a real iPhone in Low Power Mode) STALLS\nthe animation clock — getAnimations() showed playState 'running' with\ncurrentTime pinned at 0 forever, so opacity never left its 0 start. This is\nexactly the failure mode v2/README's resilience rule warns about; the reveal\nviolated it.\n\nFix: remove the time-based reveal entirely. Frames are now visible from the\nstart at their real per-frame --o (the certainty-fade past frame 500 — the\nactual meaningful effect — is preserved: verified frame 700 at 0.63 vs near\nframes at 0.95). Absence at architectural scale comes from the length of the\nscroll, not a fade. Also deletes the 1,000-node offsetTop heartbeat scan that\nran every 500ms (multicol offsetTop was unreliable anyway) and the now-dead\nREDUCED var.\n\nVerified by execution (screenshots return black in the MCP pane for this\nroom — capture artifact on the intentionally near-black empty frames; DOM is\nauthoritative per project rule): 30/30 in-view frames lit at 0.95, all\nhit-testable via elementFromPoint, fill rgb(25,21,16) + hairline border\nrgb(69,58,47) on room rgb(12,10,9) = faint raised panels as intended. No\nregression: Guernica wall still sizes to 1677px (25ft true proportion),\nruler 32 ticks, FT readout live."
+  },
+  {
+    "sha": "8c788ac",
+    "date": "2026-07-12",
+    "title": "v2 jury re-run #2: reprise The Current's river in the Studio's plaque",
+    "body": "The building's signature visual — The Current's fifty-year color band —\nappeared once and was never quoted again at the close. Now a still reprise\nof it sits directly above 'The museum never existed. The record does.':\nthe same per-work color spine, drawn at rest, no motion, no interaction, no\nlabel (the recognition is the point — explaining it would kill the rhyme).\nReuses the current.json the Studio already fetches for the living count, so\nzero new requests; gated on html.js (no empty band without JS); redraws on\nresize; joins the plaque's reveal-on-walk. Verified by execution: 560x24\nband above the line, 5/5 sample points painted with 5 distinct real colors."
+  },
+  {
+    "sha": "ba64aad",
+    "date": "2026-07-12",
+    "title": "v2 jury re-run #1: thumbnail the Working History records",
+    "body": "Re-ran the full jury on the deployed draft. Verdict: 89/100, genuinely\naward-competitive; the Working History wing (built this session, correctly\nplaced as a side wing off the Hall of Openings, closing on 'He never waited\nfor a gallery. He kept building his own.') was the single biggest gap —\neight text-only record cards in a museum that has spent seven rooms proving\nimagery carries the emotion.\n\nFix: real preserved screenshots already existed at\nassets/images/working-history/siteNNN.avif (8 files, 200x125, genuine\ncaptures — confirmed by dimension + non-blank pixel sampling before use,\nnothing fabricated). Each record now carries its site's actual screenshot\nin a house-standard 120x75 frame (border, no filter — same convention as\nevery other image in the building), object-fit cover, lazy below the fold.\nMobile: thumbnail stacks above the body text at 8:5, year sits left,\nverified no horizontal overflow at 390px.\n\nRemaining from the re-run, not yet built: a discovery thread earlier in\nthe walk hinting the wing exists (currently a locked door only reachable\nvia the Hall's end), and a reprise of The Current's river in the Studio's\nclosing plaque."
+  },
+  {
+    "sha": "e1d3d3d",
+    "date": "2026-07-11",
+    "title": "v2: regenerate openings.json with featured flag",
+    "body": "Byproduct of jury #5's build-current.py change (added 'f' featured flag);\nopenings.json now carries it on featured composites too. Data-only."
+  },
+  {
+    "sha": "7f0b76c",
+    "date": "2026-07-11",
+    "title": "v2: The Working History — a side-wing off the Hall of Openings",
+    "body": "The museum silently omitted a whole strand of the lifetime it claims to\ndocument: the eight websites Jeff built to show his work, 2000–2020. Added\nas a side wing, not a main-arc room — it is 8 meta-objects (the containers),\nnot a gallery of works, so main-room pacing would over-inflate it.\n\nPlaced as the doorway at the Hall of Openings' exit — the Hall gathers the\ngalleries he *imagined* (250 flagged composites, 'the composite that came\ntrue'); this wing answers with the galleries that were *real* ('BUT SOME\nGALLERIES WERE REAL →'). Imagined resolves to real. Also a quiet Threshold\ndoor beside the vault (a side wing, not a sixth plate).\n\nThe room itself: dark, editorial, in the house voice (Playfair display),\na chronological index of the 8 preserved sites that traces the web's own\nevolution across a working life (hand HTML tables → jQuery → Muse →\nBootstrap). Each record doors OUT to the preserved site as an artifact\n(new tab: you step in, the museum waits). noscript falls back to the\nexisting /working-history/ index. Verified by execution: 8 records\nchronological, all resolve, both doorways present, reveal + fonts + mobile\ncollapse correct; preserved sites confirmed 200 on the live draft."
+  },
+  {
+    "sha": "f4d3cc0",
+    "date": "2026-07-11",
+    "title": "v2 jury #8: 'where this sits' becomes a legible locator",
+    "body": "The strip was a decorative color band with an orange tick — pretty, but it\nnever told you WHERE in fifty years the work sits. Now it locates: decade\nboundary ticks in the band (echoing The Current's minimap), a labeled\ndecade axis beneath (1970s→2020s) with this work's decade lit, and a real\n'you are here' marker carrying the decade chip. The whole block is now a\nsingle <a> to current.html?at=<id> with a discoverable '[ OPEN IN THE\nCURRENT → ]' affordance and hover/focus feedback (the band brightens).\nVerified by execution across decades: a 2020s work sits at 88.7% with\n2020s lit, a 1970s work at 0% with 1970s lit; href carries ?at= in both."
+  },
+  {
+    "sha": "c5a5776",
+    "date": "2026-07-11",
+    "title": "v2 jury #7: the wing's empty frames at room scale",
+    "body": "The field of 1,000 rendered as 16 columns of 64-226px slivers at 1440px —\nconfetti, not a wall. It now uses the Hall's salon-column hang at room\nscale (columns:clamp(104px,11vw,164px)): each empty frame a picture-\nproportioned panel (varied portrait/square/landscape aspect ratios,\nportrait-leaning like the work), a faint raised fill (#191510) with a\nlifted edge (#453a2f) so absence reads AS frames — a hairline border on\nnear-black vanished on real screens. The certainty-fade past 500 still\nghosts the far frames via --o. Verified on a real desktop capture: ~8\ncolumns of 128px empty frames, unmistakably a wall.\n\nProcess note: the Claude_Browser preview pane returned all-black\nscreenshots for this page (a bright orange test frame at a known position\nalso captured black) — a capture failure, not a render one; every DOM\nmeasurement was accurate. Verified via the Chrome-extension tab instead."
+  },
+  {
+    "sha": "dfc01ce",
+    "date": "2026-07-11",
+    "title": "v2 jury #6: the Hall's reveal becomes a staged moment",
+    "body": "The climax previously arrived as a paragraph — both lines and the exit\ndoors revealed together off scroll position. Now it plays in time: 'You are\nstanding in one of these pictures now.' lands alone and holds ~1.7s, then\nthe came-true line arrives, then (~3.4s) the doors fade in. Timing is the\ndifference between reading a twist and feeling one. Reduced-motion shows\neverything at once, as ever. Verified by execution: line states measured at\n0.9s / 2.3s / 4.1s after the reveal enters view; draft alias redeployed."
+  },
+  {
+    "sha": "a91aab7",
+    "date": "2026-07-11",
+    "title": "v2 jury #5: passage rhythm variation — the held note",
+    "body": "232 works walked at one unvarying beat: same alternating left/right/center,\nsame size-by-orientation, for thirty years straight. No crescendo, no rest\n— a passage that never breathed.\n\nFix uses an existing, real curatorial signal rather than inventing one:\n9 of the 232 Guernica works already carry catalog-lite.json's 'featured'\nflag (someone's prior judgment that these mattered more), now threaded\nthrough build-current.py into guernica.json as a new 'f' field. In the\npassage, a featured work breaks the alternation — centered, ~30-40% larger\n(460-820px by orientation vs 360-620px), preceded by '— A LONGER LOOK —',\nwith double the vertical breathing room before and after. Spread: 3 works\neach in the 1990s/2000s/2010s (none yet in the 24-work 2020s chapter — an\nhonest gap, not filled). Roughly one held note every 20-25 works across\nthe thirty-year walk.\n\nVerified: count intact at 232 works / 9 features via execution; the\naccessibility tree (paint-independent) confirms '— A LONGER LOOK —' lands\ncorrectly after work 8 (Hieroglyph), before work 9 (Disc Crucifix) — exactly\nwhere the featured flag places it. Screenshot capture was stalled in this\nsession's automation pane (a compositor-level stall, survived a fresh\nnavigation) — noted rather than papered over; DOM state (opacity 1, image\nloaded, correct class/width) and the a11y tree both confirm the room\nrenders correctly."
+  },
+  {
+    "sha": "2f072cd",
+    "date": "2026-07-11",
+    "title": "v2 jury #4: the Threshold remembers returning visitors",
+    "body": "Every visit replayed the identical 12.4s staged arrival forever — 'YOU ARE\nENTERING' on the hundredth visit reads as a website that doesn't know you,\nnot a museum with a memory of who has walked through its door.\n\nOne honest signal, read once: a prior arrival stamps localStorage\n(jfsn-v2-arrived) only after it actually completes (full reveal or an\nexplicit skip) — never assumed, never faked. A returning visitor sees the\nsame order of revelation (name, creed, the work resolving, the museum\nnamed, the doors) compressed from 12.4s to 1.15s, and the eyebrow reads\nWELCOME BACK instead of YOU ARE ENTERING. Not a single word of the actual\ncopy changed — only the pacing and one label, both honestly earned by an\nactual prior visit. Reduced-motion visitors are stamped immediately (they\nalready skip the reveal). No change to first-time visitors, verified.\n\nVerified by execution: first load shows YOU ARE ENTERING at the full pace\nand stamps on completion; a genuine second navigation (localStorage\npersisted, not simulated) shows WELCOME BACK immediately and the vault\ndoor is live within 1.4s."
+  },
+  {
+    "sha": "ec77396",
+    "date": "2026-07-11",
+    "title": "v2 jury #3: The Current's mobile HUD collision",
+    "body": "Confirmed on a real 390px viewport: hud-exit (26-153px) and hud-wing\n(162-364px) sat 9px apart, both sharing the same vertical band as the\nDRAG · SCROLL hint (106-284px) — three text elements stacked illegibly on\ntop of each other at the bottom of the primary device's screen. The one\nroom whose signage failed was the spine of the whole building.\n\nFix, mobile-only (desktop's four-corner layout is untouched — verified):\nhud-exit/hud-wing hidden <=640px, replaced by a single [ ROOMS ] toggle\nthat raises a bottom sheet listing all four doors with their epigraphs,\none per line, full width, zero collision. Hint and end-of-river text keep\ntheir center slot alone now that they have no competing neighbors.\n\nVerified by execution: the automation pane's frozen-transition artifact\n(documented in v2/README.md — CSS transitions stall at their start value\nin throttled/embedded contexts) initially made the sheet appear stuck at\ntranslateY(216); bypassing the transition to read the settled layout\nconfirmed top:628/bottom:844, flush on-screen, and the screenshot shows all\nfour doors clean and legible. Toggle round-trips (open to close) confirmed."
+  },
+  {
+    "sha": "57f5216",
+    "date": "2026-07-11",
+    "title": "v2 jury #2: the typographic voice",
+    "body": "The building's display voice was system Georgia — competent, anonymous,\n'the scaffolding never came down' to a jury eye. Now every display moment\n(21 rules across all 8 rooms: door h1s, the creed, the museum's name,\nblockquotes, the interruption, the lesson, the reveal, the plaque, the\nletter salutation, milestone counts, work-room titles) sets in Playfair\nDisplay Italic — the same family the archive already speaks upstairs,\ncarried into the dark. One self-hosted variable woff2 (38KB latin, OFL,\nital 400–900) + preload in every head so the staged arrival never flashes\nthe fallback. Deliberately NOT applied to body prose (Georgia is the better\nbook face at 16–19px) or small captions. Verified by execution\n(fonts.check true, computed families correct, prose untouched) and\nvisually; draft alias redeployed."
+  },
+  {
+    "sha": "a2bf499",
+    "date": "2026-07-11",
+    "title": "v2 jury walkthrough #1: retina-true image fidelity",
+    "body": "The jury's highest-impact finding on the deployed draft: the passage and\nhall served 400px thumbs at up to 620 CSS px (1.8–3.1x soft on retina) and\nthe vault stretched 100px minis into 210px cells — the art itself was\nblurry in the rooms whose whole purpose is looking at art. Native\nsrcset/sizes tiering now enforces one rule: no work renders above ~1.3x its\nsource resolution on the visitor's actual screen. Passage/hall: thumbs 400w\n→ medium 900w with sizes=min(92vw, figure-width); vault: mini/thumbs/medium\nwith sizes=min(45vw,210px); the Current's hover card moves from mini to\nthumbs. sizes uses min() so DPR-1 screens keep the economical tier (cold\npick verified: thumbs at DPR1, medium arithmetic at DPR2/3). Verified by\nexecution and visually (Sortie sharp to the disc numerals); staging redeployed\nto the v2-museum draft alias."
+  },
+  {
+    "sha": "56a3920",
+    "date": "2026-07-11",
+    "title": "v2 jury #10: the 25-foot wall becomes legible while panning",
+    "body": "The wing's Guernica wall strip gains edge fades that appear only where wall\ncontinues off-screen, and the hint becomes a live readout: DRAG ACROSS —\nSHOWING FT 8–18 OF 25. On viewports that fit the whole wall it reads THE\nWALL, ALL TWENTY-FIVE FEET. Driven by scroll + resize + a 500ms heartbeat\n(events drop in throttled contexts). Verified by execution at start, middle,\nand end of the pan."
+  },
+  {
+    "sha": "3cb035b",
+    "date": "2026-07-11",
+    "title": "v2 jury #9: vault interaction grammar",
+    "body": "Card titles take the house accent on hover/focus like every other room;\nfilter chips carry aria-pressed (toggled on click, reset by clear-all) so\nassistive tech hears filter state. Verified by execution."
+  },
+  {
+    "sha": "ad493ed",
+    "date": "2026-07-11",
+    "title": "v2 jury #8: waypoint numerals become legible",
+    "body": "The passage's decade chapters and the hall's movement numerals were\n#241e19 on #0c0a09 (~1.3:1) — imperceptible on lesser panels. Raised to\n#3d342b: present but still recessive. The Current's giant numeral keeps its\ndeliberate faintness (it sits behind the water at 17vw). Verified on screen."
+  },
+  {
+    "sha": "c2164c7",
+    "date": "2026-07-11",
+    "title": "v2 jury #7: mobile browser chrome matches the rooms",
+    "body": "meta theme-color #0c0a09 + favicon link in all eight heads — on the iPhone\n(the primary device) Safari/Chrome bars now sit dark against the rooms\ninstead of glaring white, and tabs carry the butterfly mark."
+  },
+  {
+    "sha": "73717cc",
+    "date": "2026-07-11",
+    "title": "v2 jury #6: The Current — the river ends at today",
+    "body": "Reaching the end of the river (2020s, NOW) reveals THE RIVER ENDS AT TODAY —\n[ THE STUDIO → ], dooring the spine into the last room; it hides again\nupstream. The giant decade numeral now yields (dims to 0.16) whenever a work\nis raised, ending the card/numeral collision — information gives way to the\nwork. Decade ticks added to the minimap so fifty years has landmarks in the\noverview strip. All three verified by execution."
+  },
+  {
+    "sha": "9ef0279",
+    "date": "2026-07-11",
+    "title": "v2 jury #5: room-to-room continuity fades",
+    "body": "All eight rooms: 400ms fade-in on arrival (CSS, gated on html.js) and a\n220ms dark veil on internal door clicks before navigating — walking between\nrooms now feels continuous instead of cutting hard. Modified-clicks,\ntarget=_blank, external/#/mailto links pass through untouched; bfcache\nrestores clear the veil; prefers-reduced-motion skips both directions\nentirely. Verified by execution: veil raises on a door click and navigation\nlands in the next room."
+  },
+  {
+    "sha": "f2584e3",
+    "date": "2026-07-11",
+    "title": "v2 jury #4: archive filters collapse on phones",
+    "body": "Measured: the sticky control bar ate 46% of a 390px viewport. Chips now\ncollapse behind a [ FILTERS ] toggle ≤700px (bar drops to 23%), the toggle\ncarries the active-filter count ([ FILTERS · 2 ]) and turns accent when\nfilters are live, aria-expanded wired. Desktop unchanged. Verified at 390px\nby execution: 152px closed / 358px open, chip filtering still exact\n(COLLAGE → 638)."
+  },
+  {
+    "sha": "ceb7a41",
+    "date": "2026-07-11",
+    "title": "v2 jury #3: house audio player for Jeff's voice",
+    "body": "The native gray OS audio widget was the only foreign object in the building\n— replaced with a framed house player: [ ▶ LISTEN ] bracket button\n(→ ❚❚ PAUSE → ▶ LISTEN AGAIN), tabular countdown from 0:34, and a 2px\norange-fill seek line (click to scrub, ARIA slider). JS-off gets the native\nplayer via noscript; button reset added (Studio lacked the global one).\nPlay/pause/seek state machine verified by execution; media playback itself\ncannot advance in the hidden MCP tab (same stall family as RAF/lazy — the\nfile serves 200 audio/mp4 and plays on live v1), so the sound needs Jeff's\nreal-device tap. Local test server now maps .m4a→audio/mp4 (python's\ndefault mimetype broke Chrome decode locally only)."
+  },
+  {
+    "sha": "77770c7",
+    "date": "2026-07-11",
+    "title": "v2 jury #2: Threshold door plates",
+    "body": "The five room doors become framed plates: 1px house frame, room name +\nepigraph, and a per-room keyline color (the Current a strip of river hues,\nthe Passage steel gray, the Wing flood-water blue, the Hall the flag\norange, the Studio ivory) that extends full-height on hover with an\narriving arrow. First-impression craft on the front door; keyboard focus\noutline included."
+  },
+  {
+    "sha": "0ddad21",
+    "date": "2026-07-11",
+    "title": "v2 jury #1: HUD legibility & wayfinding",
+    "body": "Three observed collisions fixed: taller/stronger header gradient (solid to\n55%) in all six scroll rooms; archive header now scrolls away so the sticky\nfilter bar owns the top cleanly; long rooms (wing/passage/hall/studio) carry\na persistent centered room name (hidden ≤640px) so mid-scroll visitors know\nwhere they stand. Wordmark is now a quiet door home everywhere; the four\nlong rooms' top-right door standardized to [ THE MUSEUM → ] (was THE\nCURRENT). Verified by execution: room name renders, wordmark links home,\narchive header/controls no longer overlap at scroll."
+  },
+  {
+    "sha": "6287d50",
+    "date": "2026-07-10",
+    "title": "v2: study controls on the full-resolution view",
+    "body": "Per Jeff (v1 lightbox parity, 'or something better'): the Work room's\nlightbox gains a study bar — zoom −/+ with FIT/% readout (wheel zooms too,\ncapped 6x), rotate CW/CCW in 90° steps, flip H/V, reset, close. Keyboard:\n+/− r/R h v 0, ESC; prev/next arrows are suspended while the study view is\nopen so a rotation key can't navigate away. All transforms are viewer-side\nat the visitor's command — the file is untouched and RESET always returns\nthe work shown straight. Every control verified by execution (transform\nstate read back per step)."
+  },
+  {
+    "sha": "8f15647",
+    "date": "2026-07-10",
+    "title": "v2: The Work room — single-work pages + full-resolution view",
+    "body": "Per Jeff: artwork pages and full-res views needed the museum treatment.\nv2/artwork.html?id=artNNNN renders the work large on the dark room with an\nhonest ledger (decade-estimate year, medium, orientation, archive no.,\ncomposite flag), full-resolution lightbox (2800px full tier verified on\nart0455; click-zoom, drag-pan, ESC; medium fallback), copy-link,\nchronological prev/next with arrow keys, a Guernica-series door, and a\n'where this sits' river strip that opens The Current at that work — ?at=\ndeep-link support added to current.html. Every work link in every room now\npoints here instead of v1's artwork page. Honest missing-id state. Caught\nand fixed sitewide: browsers heuristically cached stale room JSON — all\ndata fetches now revalidate (cache:'no-cache'); current.json gains w/h dims\nand a Guernica flag (build-current.py)."
+  },
+  {
+    "sha": "6923eb1",
+    "date": "2026-07-10",
+    "title": "v2: The Archive — the vault beneath the museum; fix THE ARCHIVE doors",
+    "body": "Jeff caught both bugs: every '[ THE ARCHIVE ]' door pointed at / (the v1\nhomepage — wrong page), and the destination didn't match the museum's look.\nAll three doors (Threshold vault, Current exit, Studio plaque) now point at\nv2/archive.html — a new vault room in the dark house language: full 1,084-\nwork grid from current.json with search, medium/decade/orientation filter\nchips, three sorts, 60-per-page load-more, honest captions (decade-estimate\nyears + composite flags) on every card, first row eager, noscript fallback\nto the v1 grid. Filter counts verified by execution (COLLAGE → 638 of 1,084).\nv1 archive.html untouched."
+  },
+  {
+    "sha": "9857b22",
+    "date": "2026-07-10",
+    "title": "v2: integrity pass — no-JS honesty, focus-visible, door matrix",
+    "body": "Every pre-hide rule is now gated on html.js (one-line head script in all six\nrooms): with JavaScript off nothing static hides — the Threshold, Studio\nletter, and Hall reveal render plainly, the Guernica wall keeps true 25:11\nvia a CSS aspect-ratio fallback, and the four JS-built rooms carry honest\nnoscript fallbacks dooring to their catalog equivalents. :focus-visible\norange outlines for keyboard walkers in every room. Full door matrix tested:\nevery internal link in the building resolves 200 (incl. audio + artwork\npattern). All six rooms re-verified live under the new gating (250/250,\n232/232, 1000/1000, 11/11 reveals; wall 2.273). New pane finding documented:\nrunning CSS transitions freeze at start value in hidden tabs."
+  },
+  {
+    "sha": "f87f913",
+    "date": "2026-07-10",
+    "title": "v2: The Studio — the last room; the building is complete",
+    "body": "Sixth room, the only one that faces forward. Jeff's real voice (the June 2026\nwho-i-am recording, the archive's first), the practice today with the\ngrandchildren named, the living count read from current.json with today's\ndate, the letter to whoever finds this (documented facts only; the grandchild\nquote 'all the works in one space' pivoting to: you are standing in that\nspace), and the closing plaque: The museum never existed. The record does.\nThreshold now shows all six doors; nothing remains under construction."
+  },
+  {
+    "sha": "9e05685",
+    "date": "2026-07-10",
+    "title": "v2: The Hall of Openings — 250 imagined exhibitions, hung together",
+    "body": "Fifth room. All 250 flagged composites in one salon hang, three movements\nsectioned from catalog themes (The Galleries 149 / The Studio Views 87 / The\nPlacements 14), every caption carrying the composite flag, wall text verbatim\nfrom imagined-museum.html. Ends on the reveal: you are standing in one of\nthese pictures now — this building is the composite that came true.\nopenings.json emitted by build-current.py. Threshold door added; only The\nStudio remains under construction."
+  },
+  {
+    "sha": "4d5d40f",
+    "date": "2026-07-10",
+    "title": "v2: The Threshold — the museum's front door",
+    "body": "Fourth build. index.html is now the arrival: staged sequence (name → 'A\npersonal record, not a gallery.' → Cassette Torso resolving out of black →\nthe museum named with honest composite framing → doors to all three rooms +\narchive vault), any input skips, reduced-motion shows all. The Current moves\nto current.html; every room door rewired, rooms gain [ THE MUSEUM → ] exits.\nThe Current gains the render heartbeat (RAF can stall entirely in throttled/\nhidden contexts — proved by execution, document.visibilityState 'hidden' in\nthe MCP pane); resilience rule documented in v2/README.md."
+  },
+  {
+    "sha": "02df7f3",
+    "date": "2026-07-10",
+    "title": "v2: The Guernica Passage — 232 works, one structure, thirty years",
+    "body": "Third room. Chronological walk of the full Guernica series in decade chapters\n(counts computed from catalog data), thumbs-tier images with true aspect\nratios from dims.json, WORK N OF 232 counter, composite flags on the 7 flagged\nworks. The interruption stands before the 2010s where the record puts it (\"the\ndecade is not documented\"): That work is not in this archive → door to the\nFlooded Wing's wall. All wall text verbatim from guernica.html. guernica.json\nnow emitted by build-current.py. Reveal heartbeat in both scroll rooms now\nre-measures on document-height change (missed resize events, late layout)."
+  },
+  {
+    "sha": "b328c2b",
+    "date": "2026-07-10",
+    "title": "v2: The Flooded Wing — absence at architectural scale",
+    "body": "Second room. Door (Lost. / the verbatim account), 1,000 empty frames one per\nwork in the estimated loss range (opacity fades past the certain 500),\nmilestone counts, then the Guernica wall at true 11×25 ft proportion with a\n5'9\" scale figure and foot ruler, drag-panned because it exceeds any screen.\nThe one photograph, and the exit: Not be careful. Be early. Nothing depicted,\nnothing fabricated — all copy verbatim from lost.html/oral history. Reveal is\nscroll-position + heartbeat, not IntersectionObserver (stalls in throttled\ntabs). Door added from The Current."
+  },
+  {
+    "sha": "d1b4d36",
+    "date": "2026-07-10",
+    "title": "v2 foundation: The Current — 1,084 works as one draggable river of time",
+    "body": "First room of THE MUSEUM THAT NEVER EXISTED (no-limits redesign, branch-only,\nnot deployed). Full-viewport canvas river ordered 1970s→2020s from\nchromatic.json colors; drag/scroll/keys/minimap navigation; hover/tap raises\na work card with honest metadata (decade-estimate years, composite flag);\nreduced-motion + touch + HiDPI safe. v2/current.json data spine generated by\nv2/build-current.py."
+  },
+  {
+    "sha": "ff77bda",
+    "date": "2026-07-09",
+    "title": "Add intake finish — Catalog Intake Phase 2.4 (workflow complete)",
+    "body": "`archive intake finish`: transforms completed curator-authored metadata into\na fully generated, verified archive state, coordinating existing tools in a\nfixed order and stopping the instant any stage fails:\n\n  validate → rebuild catalogs → generate new pages → update changes → verify\n\n- scripts/intake_finish.py: thin coordinator; two-layer validation gate\n  (intake_status for completeness + validate_catalog.py --from for schema,\n  scoped to the ready works so the 1,084 legacy corpus is never in play),\n  build_catalog.py, gen-artwork-pages.py --id per new work, build_changes.py,\n  then verify.py as the always-final readiness gate. Empty queue is a no-op.\n- NEVER commits, pushes, deploys, tags, or invokes deploy scripts — publication\n  stays a human decision (guarded by a source-scan test).\n- archive: wrapper routes `intake finish` to the real command.\n- scripts/test_intake_finish.py: 33 checks incl. success, multiple, empty,\n  validation blocking, build/gen/verify failures, verify-as-final-gate, and\n  the no-git/no-deploy guarantee.\n- docs + npm test updated (5 suites).\n\nThis completes the Catalog Intake workflow. Automate execution; never\nautomate authorship."
+  },
+  {
+    "sha": "b812036",
+    "date": "2026-07-09",
+    "title": "Add intake orchestration — Catalog Intake Phase 2.3",
+    "body": "`archive intake`: one command prepares new artworks for authorship, then\nstops at the automation/authorship boundary. Sequence: verify prerequisites\n→ run existing ingest → scaffold empty sidecars for newly assigned IDs →\nshow intake status → STOP. Does not rebuild catalogs, generate pages, touch\nderived files, run deploy checks, or call `archive verify` (Phase 2.4).\n\n- scripts/intake.py: thin coordinator; discovers new IDs by diffing thumbs/\n  around ingest (no change to ingest.py), reuses scaffold_sidecar and\n  intake_status in-process, runs ingest as an isolated subprocess. Empty\n  inbox is a clean no-op; any step failure stops with an explanation and\n  scaffolds nothing further. Never overwrites an existing sidecar.\n- archive: wrapper now routes `intake`, `intake status`, `intake scaffold`;\n  `intake finish` reports it is Phase 2.4.\n- scripts/test_intake.py: 23 tests (mocked ingest) incl. normal/multiple,\n  empty inbox, ingest failure, scaffold failure, collision, messaging, and\n  no catalog/page/deploy side effects.\n- docs + npm test updated.\n\nThe orchestrator coordinates; it does not replace. It gets out of the\ncurator's way."
+  },
+  {
+    "sha": "23fa259",
+    "date": "2026-07-09",
+    "title": "Add intake status — Catalog Intake Phase 2.2",
+    "body": "Read-only command answering \"what work is waiting for the curator?\" Reports\npending-authorship and ready-for-finish works; modifies nothing, invents\nnothing, suggests nothing.\n\n- scripts/intake_status.py: scopes intake by field-emptiness + publication\n  state so the settled 1,084-work corpus and legacy style debt never surface\n  (clean repo reports 0/0). Delegates validation detail to validate_catalog.py\n  (rules loaded from the fixed install path, independent of data location).\n  --json output; always exits 0 (observation, not a gate).\n- scripts/test_intake_status.py: 15 tests incl. no/one/multiple pending,\n  partial + malformed + missing sidecars, ready-for-finish, validate_catalog\n  interaction, and a read-only mtime guard.\n- docs + npm test updated.\n\nVisibility, not automation."
+  },
+  {
+    "sha": "91c0c71",
+    "date": "2026-07-09",
+    "title": "Add sidecar scaffolder — Catalog Intake Phase 2.1",
+    "body": "Creates empty, schema-correct metadata sidecars (artworks/full/artNNNN.json)\nfor newly assigned artwork IDs. Writes structure only; every curator-authored\nfield is present but intentionally empty. Invents no metadata.\n\n- scripts/scaffold_sidecar.py: deterministic, dependency-free, reversible;\n  never overwrites without --force; atomic input validation (a bad ID refuses\n  the whole batch). schema_version \"1\" and file \"artNNNN.avif\" match the real\n  validate_catalog.py / build_catalog.py contract.\n- scripts/test_scaffold.py: 15 tests incl. existing-sidecar protection,\n  malformed input, and validate_catalog structural-pass / completeness-gate.\n- docs/STEWARDSHIP-INTAKE.md: usage, guarantees, design decisions.\n- npm test now runs both verify and scaffold suites.\n\nAutomate execution. Never automate authorship."
+  },
+  {
+    "sha": "de38183",
+    "date": "2026-07-09",
+    "title": "verify: separate Archive Integrity from Repository State in the report",
+    "body": "Reporting refinement only — no check, threshold, CLI, exit code, JSON\nschema, or test changed. The archive-integrity verdict is now computed\nfrom the four integrity sections alone (archive_integrity_level); a dirty\nworking tree is reported under a separate informational \"Repository State\"\nblock and can no longer dilute the trust answer. Adds an \"Archive Trust\nSummary\" with failure/warning totals."
+  },
+  {
+    "sha": "664bedc",
+    "date": "2026-07-09",
+    "title": "Add `archive verify` — Phase 1 stewardship inspection",
+    "body": "A single read-only utility that answers one question: can this archive\nstill be trusted? Reports PASS/WARNING/FAIL across metadata, image,\ncatalog, generated-artifact, and repository integrity.\n\n- scripts/verify.py: modular, stdlib-only checkers over catalog.json,\n  per-artwork/API projections, dims, image tiers, sitemap, changes.\n- Never modifies/regenerates/repairs; human-authored omissions never FAIL.\n- scripts/test_verify.py: 13 fixture-based tests incl. a read-only guard.\n- `archive` wrapper + `npm run verify` / `npm test`.\n- docs/STEWARDSHIP-VERIFY.md: usage, severity model, standing findings.\n\nFirst run surfaces one WARNING: ~139 artworks/full/*.json use\nportrait/landscape orientation vs master vertical/horizontal/square.\nReported for curatorial decision, not repaired."
+  },
+  {
+    "sha": "8307865",
+    "date": "2026-07-09",
+    "title": "qa.html: search field, composite filter, broken-image guard",
+    "body": "Internal curator QA tool (deploy-excluded). Adds:\n- id/title search box for locating records in the grid\n- a Composite filter and non-defect 'composite' info badge\n- capture-phase img-error guard that marks a failed thumbnail\n  visibly instead of painting a silent black box (a broken image\n  is a preservation signal, not dark artwork)\n- year_display in card meta so estimated years read as '1990s (est.)'\n\nKeyword drift moved to the drift bar only; it is a vocabulary-level\nconcern, not a per-record defect."
+  },
+  {
+    "sha": "ff0dfb9",
+    "date": "2026-07-09",
+    "title": "Add STEWARDSHIP-DECLARATION.md to version control",
+    "body": "The declaration closing the design phase and entering permanent\nstewardship (dated 2026-07-08) existed only on local disk. It is a\ngoverning document and must be protected by version control alongside\nthe Constitution, CANON, mission, and design brief."
+  },
+  {
+    "sha": "d50698f",
+    "date": "2026-07-08",
+    "title": "Footer: two-column layout + catalog wording; drop obsolete drone-openings.js",
+    "body": "Present the two footer link groups as quiet vertical columns instead of\nwrapped horizontal rows (fixing ragged line-wrapping), and finalize the\ngroup wording in catalog register:\n\n  Collection Views     — Wall · Chromatic River · Curatorial Map\n  Curatorial Projects  — The Imagined Museum · Curatorial Companion ·\n                         Working History Collection\n\n(previously \"Special Projects\" / \"Explore the Collection\"). Typography,\ncolors, links, and footer architecture are unchanged.\n\nAlso removes the stale _shared/drone-openings.js <script> reference (the\nfile was deleted in adbdc6ac) from the shared SCRIPTS block, so stamping\nno longer reintroduces a 404'ing script tag.\n\nPropagated to all 40 stamped pages via stamp-nav.sh."
+  },
+  {
+    "sha": "e17adc6",
+    "date": "2026-07-08",
+    "title": "Footer: add Special Projects and Explore the Collection link groups",
+    "body": "Replaces the standalone WORKING HISTORY footer link with two curated\nnavigation groups, added to _shared/footer.html and propagated via\nstamp-nav.sh to all 40 stamped pages:\n\nSpecial Projects:\n- The Imagined Museum\n- Curatorial Companion\n- Working History Collection (moved here from the old standalone link)\n\nExplore the Collection:\n- Wall\n- Chromatic River\n- Curatorial Map\n\nMatches the existing footer link typography and inline-style pattern\nexactly (same font, size, weight, letter-spacing, color, hover\ntransition) — no new visual language introduced. Group labels use the\nsame muted archival-outline token already used elsewhere in this footer\n(.footer-stat-strip, .footer-last-updated).\n\nstamp-nav.sh's normal run also re-stamps the SCRIPTS block from\n_shared/top-nav.html, which still contained a stale reference to\n_shared/drone-openings.js (a file deleted in commit adbdc6ac). Removed\nthat reintroduced dead reference from all 39 affected pages to avoid\nshipping a 404'ing script tag as a side effect of this footer change;\nthe stale reference in _shared/top-nav.html itself is a separate,\npre-existing issue and was not otherwise touched.\n\ncurator.html and sitemap.html are correctly untouched — neither is in\nstamp-nav.sh's TARGETS list."
+  },
+  {
+    "sha": "dea29a0",
+    "date": "2026-07-08",
+    "title": "Fix homepage: restore missing </script> closing tag",
+    "body": "The final inline <script> block on index.html (the \"NEXT-LEVEL FEATURES\"\nIIFE — section-nav-rail, hero parallax, and the featured-grid comment\nblock) had no closing </script> tag. Per the HTML parsing spec, a classic\nscript element's content is not compiled or executed until its closing\ntag is found; since the file ended before one appeared, the browser never\nexecuted this script at all, on any page load.\n\nThis silently disabled:\n- The #section-nav-rail scroll-triggered jump navigation (never appeared)\n- The hero background parallax-on-scroll effect (never initialized)\n\nRoot cause fully isolated in a prior forensic investigation: verified via\ndirect DOM inspection (the script element's textContent extended through\nthe trailing HTML comments to </body></html>), confirmed no console\nerrors or exceptions were being swallowed (a global window.onerror handler\nnever fired), and confirmed the fix by temporarily restoring the tag and\nobserving the feature work end-to-end before reverting for that\ninvestigation. This commit applies that verified, minimal fix permanently."
+  },
+  {
+    "sha": "dce28a3",
+    "date": "2026-07-08",
+    "title": "Fix dark-mode CSS selector bleed: primary nav background, metadata link color",
+    "body": "Two verified defects from the tablet stewardship review, both traced to\noverly broad selectors in _shared/dark-mode.css:\n\n1. `.dark nav` matched every <nav> sitewide, including the primary header\n   nav — which only becomes visible at the md breakpoint (tablet+) and\n   already sits inside a header with its own translucent background. The\n   mismatch (opaque #242424 box vs. translucent header) produced a visible\n   seam. No <nav> element relies on this background (folio-rail and\n   section-nav-rail are transparent dot rails by design), so the clause is\n   removed rather than rescoped. `.dark .sidebar` is untouched.\n\n2. `.dark a` forced every unstyled link to a generic light-blue (#b8d4ff),\n   including artwork.html's inline Orientation/Series/Themes metadata links,\n   which carry no resting-state color class and are meant to inherit the\n   surrounding body text color (as they correctly do in light mode). Added\n   a narrowly-scoped `.dark a.underline` rule using the archive's existing\n   dark-mode body-text token (#e8e8e8) instead of introducing a new color.\n   Hover behavior is unchanged — the existing `.dark a:hover` rule has\n   equal specificity and later source order, so it still wins on hover.\n\nVerified in light/dark mode, tablet portrait/landscape, and desktop; no\nconsole errors, no overflow, no accessibility or visual regressions."
+  },
+  {
+    "sha": "de76680",
+    "date": "2026-07-08",
+    "title": "Fix syntax error in archive.html deferred stylesheet loader",
+    "body": "The window 'load' handler that fetches four non-critical enhancement\nstylesheets (skeleton.css, hover-preview.css, page-transitions.css,\nlazy-load.css) was missing the opening bracket for its array literal.\n.forEach was being called on a bare comma expression, throwing a\nSyntaxError at parse time and halting the entire inline <script> block\nbefore it could run.\n\nRestored the missing '[' — one-character fix, no other changes."
+  },
+  {
+    "sha": "6f444aa",
+    "date": "2026-07-07",
+    "title": "Fix mobile stewardship regressions: search button styling, back-to-top beacon timing",
+    "body": "Two verified mobile-visitor-facing defects found during stewardship review,\nboth fixed with minimal, scoped changes:\n\n1. Archive search button (ux-improvements.css): an orphaned \"Search\n   prominence\" rule applied a solid orange background to #nav-search-btn,\n   only linked from archive.html. This made the search icon render as a\n   flat orange block (self-camouflaged against its own icon color in dark\n   mode) instead of matching its sibling icon buttons. Removed the dead\n   rule; the button now uses its existing plain-icon styling everywhere.\n\n2. Back-to-top beacon (scroll-choreography.js + rebuilt nav-late.bundle.js):\n   the entrance pulse animation used an IntersectionObserver on #btt-float,\n   a position:fixed element that is always geometrically inside the\n   viewport — so the pulse fired on first paint, before any scroll,\n   overlapping hero content on About, Start Here, Series & Themes, and\n   Favorites. Replaced the observer with a scroll listener gated on the\n   same scrollY > 300 threshold every page's own inline script already\n   uses to toggle .btt-visible. Animation timing, easing, and positioning\n   are unchanged — only the trigger condition.\n\nVerified in light/dark mode, mobile/desktop viewports, no console errors."
+  },
+  {
+    "sha": "a3654aa",
+    "date": "2026-07-07",
+    "title": "Add governance infrastructure for long-term stewardship",
+    "body": "- REPOSITORY-VERIFICATION-STANDARD.md: operational procedures for verifying\n  archive integrity, backup health, and restore capability. Includes quick\n  health checks, annual verification protocol, common failure scenarios.\n- BACKUP-LOG.md: operational record of backup status, automation health,\n  known issues, and verification history. Updated annually.\n\nBoth documents integrate with existing CONSTITUTION, CANON, SUCCESSION,\nand DISASTER-RECOVERY-CHECKLIST to form the complete stewardship framework.\n\nCloud backup automation (B2 via launchd) is verified working and current.\nLocal backup (JEFFS-4TB) has expected hardware I/O errors; archive remains\nsafe via B2 + GitHub redundancy."
+  },
+  {
+    "sha": "08b5957",
+    "date": "2026-07-07",
+    "title": "Phase 4: Add authoritative Disaster Recovery Guide",
+    "body": "Created comprehensive recovery documentation for all backup layers:\n- Backblaze B2 (primary, tested)\n- GitHub (secondary)\n- HostGator server (tertiary)\n- JEFFS-4TB (non-functional, documented)\n\nIncludes:\n- Step-by-step recovery procedures with exact commands\n- Prerequisites and authentication requirements\n- Verification checklist (file counts, checksums, Git integrity)\n- Nine failure scenarios with recovery steps\n- Known risks (verified only, no speculation)\n- Stewardship notes for future custodians\n\nTested procedures documented as tested. Untested procedures clearly marked.\nGuide is written for a future custodian with no prior context."
+  },
+  {
+    "sha": "adbdc6a",
+    "date": "2026-07-07",
+    "title": "Phase 1 Decision: Remove drone-openings implementation",
+    "body": "The drone opening animation does not satisfy its intended purpose:\n- Animation stalls after first frame update\n- Drone is not visually rendered on production site\n- Code consumes resources without visitor value\n- Constitution requires honest restraint and verification by execution\n\nRemoved:\n- _shared/drone-openings.js (broken animation implementation)\n- _shared/drone-openings.css (unused styles)\n- All script/link references from 39 HTML pages\n\nDecision: Keep drone-fleet (working custodian drones), remove drone-openings."
+  },
+  {
+    "sha": "2921693",
+    "date": "2026-07-07",
+    "title": "FINAL FIX: Replace timeline with chained anime() calls",
+    "body": "The root cause was that anime.js timeline's update callback on individual\nanimations was not being called during playback. Replacing with sequential\nanime() calls chained via complete callbacks ensures the update function\nruns on every frame and the drone animates properly.\n\nThis is a fundamental fix to the animation architecture that should resolve\nthe drone rendering issue completely."
+  },
+  {
+    "sha": "76f54d0",
+    "date": "2026-07-07",
+    "title": "Fix animation by explicitly calling timeline.play()",
+    "body": "The timeline was being created with autoplay:true by default, but\napparently not actually starting. Explicitly calling tl.play() after\nadding all animations should ensure the timeline actually runs."
+  },
+  {
+    "sha": "5f285b2",
+    "date": "2026-07-07",
+    "title": "FIX: Move update callback from timeline to individual animations",
+    "body": "The root cause was that update: updateTransform on the timeline config\ndoes NOT get called repeatedly during animation. The update callback must\nbe added to EACH individual animation in the tl.add() calls.\n\nThis fixes the drone visibility issue - the SVG opacity and position\nwill now properly animate during the timeline playback."
+  },
+  {
+    "sha": "ba32249",
+    "date": "2026-07-07",
+    "title": "Add updateTransform call logging to track animation updates",
+    "body": "Log the first 3 updateTransform calls and every 100th call after that to see\nif the animation is actually updating the DOM. This will reveal if the timeline\nis running but not calling the update callback, or if it's truly frozen."
+  },
+  {
+    "sha": "d7203ac",
+    "date": "2026-07-07",
+    "title": "Add timeline state logging and completion tracking",
+    "body": "Log the timeline's initial state (progress, currentTime, duration, autoplay)\nand check it again 100ms later to see if it's actually running.\nAdd logging to the complete callback to track if/when it fires."
+  },
+  {
+    "sha": "75eee7b",
+    "date": "2026-07-07",
+    "title": "Add synchronous load marker before IIFE",
+    "body": "Add window.__droneScriptLoaded flag outside IIFE to test if the\nscript file is even being parsed and executed at all."
+  },
+  {
+    "sha": "6ad3914",
+    "date": "2026-07-07",
+    "title": "Add logging to timeline animation creation",
+    "body": "Track whether animations are being added to the timeline and if\nthe timeline completes. This will help identify if the animation\nloop executes and why the drone animation might not be progressing."
+  },
+  {
+    "sha": "bfdc3a7",
+    "date": "2026-07-07",
+    "title": "Instrument drone script for debugging - add comprehensive state tracking",
+    "body": "Added window.__droneDebug object to track execution at each stage:\n- Script start and page path detection\n- Config lookup\n- Container creation and insertion\n- SVG building\n- Wrapper attachment\n- Animation startup\n- Delayed checks at 1ms, 100ms, 500ms, 1000ms\n\nCaptures computed styles, DOM presence, parent references, and visibility metrics\nat each checkpoint to identify where the container disappears or fails to render."
+  },
+  {
+    "sha": "ed27cef",
+    "date": "2026-07-07",
+    "title": "Reduce drone sizes by 50%",
+    "body": "Adjust quadcopter sizes:\n- Home: 560px → 280px\n- Archive: 540px → 270px\n- Stories: 480px → 240px\n- Why I Made Things: 500px → 250px\n- Start Here: 550px → 275px\n\nMaintains all detail and animation quality at smaller scale."
+  },
+  {
+    "sha": "891211f",
+    "date": "2026-07-07",
+    "title": "Refine drones: immediate arrival, 2.5x larger size, museum-quality detail",
+    "body": "Major refinement based on visual observation:\n\nIMMEDIATE APPEARANCE:\n- Removed waitForAnime delay - drone now visible within 100-300ms of page load\n- Initialize container and SVG immediately\n- Start animation when anime.js becomes available\n- Eliminates 'late arrival' feeling\n\nDRAMATICALLY LARGER:\n- 480-560px size (vs 200-240px previous)\n- Drone immediately catches eye before content\n- Occupies significant viewport space\n- Professional visual impact on desktop and mobile\n\nMUSEUM-QUALITY DETAIL:\n- Sophisticated quadcopter geometry\n- Hexagonal elongated body with radial gradient lighting\n- Advanced motor housings with color accents\n- Detailed camera gimbal with orange lens indicator\n- Battery indicator stripe on body\n- Four articulated landing gear with visible foot pads\n- Elliptical propeller blades for realism\n- Professional drop shadow (8px blur, 24px spread)\n- Multiple highlights and depth cues\n- Realistic arm gradients with center-to-edge shading\n\nENHANCED MOTION:\n- Perspective scaling (scale transforms 0.5→1.0)\n- Banking/rotation with momentum\n- Acceleration/deceleration (different easing per frame)\n- Propeller spin with motion blur circles\n- Body vibration for mechanical authenticity\n- Distinct flight curves unique to each page\n\nSTRONGER PAGE PERSONALITIES:\n1. Home (560px): Confident approach - enters from distance with scale-up, banking suggests momentum\n2. Archive (540px): Methodical survey - three deliberate pauses with rotations, slowest duration\n3. Stories (480px): Curious exploration - vertical descent with erratic drift, smallest for intimacy\n4. Why I Made Things (500px): Contemplation - minimal drift during long center hover, stillness dominant\n5. Start Here (550px): Welcoming - moderate pace, gentle upward arc, inviting movement\n\nAll improvements verified for immediate visual impact."
+  },
+  {
+    "sha": "dc6b210",
+    "date": "2026-07-07",
+    "title": "Redesign drones with realistic quadcopter and cinematic animations",
+    "body": "Complete overhaul of drone implementation:\n\nVISUAL DESIGN:\n- Increased size by 2x (240-230px vs 120-104px)\n- Realistic quadcopter proportions with detailed SVG:\n  * Elliptical body with gradient lighting\n  * Landing gear with visible feet\n  * Four articulated arms extending from body\n  * Motor housings at each arm end\n  * Realistic propellers with motion blur circles\n  * Camera gimbal beneath body\n  * Highlight for depth perception\n  * Drop shadow for ground reference\n  * Professional gradients and lighting\n\nFLIGHT BEHAVIORS - Each page has distinct personality:\n- Home: Confident arrival - broad cinematic approach with banking\n- Archive: Methodical survey - measured sweep with multiple pause points\n- Stories: Curious exploration - intimate vertical descent with drift\n- Why I Made Things: Quiet contemplation - gentle hover with minimal movement\n- Start Here: Welcoming guide - gentle left-to-right approach\n\nMOTION ENHANCEMENTS:\n- Rotation and banking for realism (rotateZ transforms)\n- Body vibration for mechanical authenticity\n- Propeller spin with motion blur\n- Realistic easing curves (easeInOutCubic, easeInOutQuad)\n- Perspective scaling via position changes\n- Hold frames for dramatic pauses\n- Smooth fade in/out over 400ms\n\nPOLISH:\n- Museum-quality illustration style\n- Cinematic camera positioning\n- Realistic physics and momentum\n- Subtle visual details (camera lens, gear, highlights)\n- Calm, deliberate tone suitable for archive experience\n- Full accessibility: respects prefers-reduced-motion\n- Performant: smooth on desktop and mobile\n\nThe quadcopter is now immediately recognizable as a real UAV rather than\na schematic diagram, and each page's flight pattern communicates distinct\nemotional intent through carefully choreographed motion."
+  },
+  {
+    "sha": "4a39586",
+    "date": "2026-07-07",
+    "title": "Fix race condition in drone-openings.js: wait for anime.js to load",
+    "body": "Critical fix: The drone script was checking for window.anime immediately,\nbut with both scripts having defer attributes, anime.min.js might not\nhave finished loading when drone-openings.js executed.\n\nAdded waitForAnime() function that polls for window.anime availability\n(50ms intervals) before initializing the drone animation. This ensures\nanime.js is loaded and ready before the drone sequence begins.\n\nThis was the root cause of the drones not rendering on the live site."
+  },
+  {
+    "sha": "b7f6ac0",
+    "date": "2026-07-07",
+    "title": "Stamp drone-openings.js script into all pages via stamp-nav.sh",
+    "body": "The drone-openings.js script was added to _shared/top-nav.html but the\npages were not re-stamped. Running stamp-nav.sh now propagates the\ndrone-openings script to all stamped pages, including the five primary\npages that display the drone opening sequences:\n\n- index.html\n- archive.html\n- stories.html\n- why-i-made-things.html\n- start-here.html\n\nThe script is now in the SCRIPTS:START/SCRIPTS:END block on all 40\nstamped pages."
+  },
+  {
+    "sha": "a840be8",
+    "date": "2026-07-07",
+    "title": "Fix server.py to respect PORT environment variable for preview autoPort",
+    "body": "The server was hardcoded to port 3900, preventing the preview system's\nautoPort feature from assigning alternative ports when the default is\noccupied. Now respects PORT env var while defaulting to 3900 for local\ntesting."
+  },
+  {
+    "sha": "0c866e4",
+    "date": "2026-07-07",
+    "title": "Implement customized drone opening sequences for five primary pages",
+    "body": "Each primary page (Home, Archive, Stories, Why I Made Things, Start Here)\nnow opens with a unique, cinematic drone establishing shot that sets the\nvisitor's arrival mood. Each drone has its own personality, flight pattern,\nand duration:\n\n- Home: Broad establishing approach revealing the archive\n- Archive: Measured survey revealing scale of 1,084 works\n- Stories: Intimate vertical movement emphasizing memory and place\n- Why I Made Things: Contemplative hovering suggesting reflection\n- Start Here: Welcoming gentle approach for first-time visitors\n\nImplementation:\n- New _shared/drone-openings.js module with 5 unique sequences\n- New _shared/drone-openings.css for container styling\n- Script loads via top-nav.html (stamped to all pages)\n- Respects prefers-reduced-motion for accessibility\n- Gracefully absent without anime.js or JavaScript\n- No layout shift; plays on page load and cleans up after\n\nAll sequences are 3–4 seconds, SVG-based, and use anime.js choreography\nto maintain the archive's contemplative, cinematic tone."
+  },
+  {
+    "sha": "4e6c86f",
+    "date": "2026-07-07",
+    "title": "Homepage: reduce The Wall to a threshold, remove the live preview grid",
+    "body": "Curatorial decision (Implementation Stewardship review): the homepage's\nWall band previously rendered a live grid of ~64 real, clickable\nthumbnails via buildWall('d')/wireWall('d') -- prematurely delivering\nthe mass-view experience CANON.md assigns to the Archive's earned\ndestination, before any visitor had crossed that threshold.\n\nChanged: renderAll() no longer calls buildWall('d')/wireWall('d'), so\n#wall-band-d never populates on the homepage. The now-unused CSS\nmin-height reservations for #wall-band-d/#wall-band-m (previously sized\nto prevent layout shift from the grid) are removed along with them.\n\nPreserved exactly as instructed:\n- section position, heading ('The Wall -- all 1,084 on one surface'),\n  explanatory copy, and both links ('Open one at random', 'See every\n  work') -- all unchanged\n- buildWall()/wireWall() function definitions left fully intact --\n  proven still needed: wall.html's real Wall experience is independent\n  (.wall-grid, not #wall-band-d) and verified unaffected (1,084 tiles\n  render there exactly as before)\n\nOne observed side effect, not a regression: _shared/drone-survey.js\npolls #wall-band-d for >=20 tiles to animate homepage custodian drones;\nwith no grid built, it now times out silently after 5s (already\ngracefully handled -- no error, just one fewer decorative flourish on\nthis page).\n\nVerified live: grid child count 0, grid height 0 (was populated with\ntiles + 230px reserved height); heading/links text unchanged; no\nconsole errors; wall.html unaffected (1,084 tiles, independent\nimplementation); checked at desktop (1440px) and mobile (390px)\nviewports."
+  },
+  {
+    "sha": "0ae126d",
+    "date": "2026-07-07",
+    "title": "Fix Stories text overlap and homepage scroll-indicator collision",
+    "body": "Two confirmed rendering-defect bugs from the live visitor walkthrough,\nboth implementation mistakes in otherwise-intentional features:\n\n- essay-parallax.js: blockquote parallax clamp reduced 80px -> 24px.\n  The .prose blockquote/paragraph gap is 32px (margin: 2em 0); an 80px\n  drift bound let quotes overlap adjacent body text (verified: 'Sad.\n  Enough.' rendered translateY(-58.96px), overlapping the preceding\n  paragraph by 27px on stories.html). Parallax intent unchanged, only\n  the unsafe bound corrected.\n\n- core.bundle.js / index.html: the generic 'scroll position indicator'\n  (fires when >3 elements match a page-agnostic selector) is now opt-out\n  via [data-no-scroll-indicator] on <body>, set on index.html only. The\n  homepage matched 10 such elements -- 4 of them hidden mobile/desktop\n  duplicate twins -- and the fixed-position indicator had no collision-\n  awareness against page content. No other primary page crosses the\n  >3 threshold, so this is a no-op everywhere else.\n\nVerified live: zero overlapping rects on stories.html (was 1), zero\nscroll-indicator instances on index.html across normal navigation and\ncache-busted reload. No regressions on archive/artwork/start-here.html\n(essay-parallax.js loads only on stories.html among the five primary\npages; the other three never crossed the indicator's >3 threshold)."
+  },
+  {
+    "sha": "0bc515b",
+    "date": "2026-07-07",
+    "title": "Add ratified canon documents to version control",
+    "body": "CANON.md, DESIGN-STUDY-THE-SAME-HAND.md, EXPERIENCE-STUDIO-VI-CANON-ORCHESTRATION.md,\nand SPEC-THE-SAME-HAND.md, unchanged from prior sessions. No content edits."
+  },
+  {
+    "sha": "a680f24",
+    "date": "2026-07-07",
+    "title": "Correct three blocking canon violations on primary pages",
+    "body": "- artwork.html: remove saturate/brightness recolor from the artwork-develop\n  reveal; opacity-only fade remains (CONSTITUTION.md II.1 - the work is\n  never filtered or recolored)\n- index/archive/artwork/stories/start-here + _shared/footer.html: replace\n  rounded '1,000+' with the true count 1,084 (CONSTITUTION.md III - the true\n  count, not a rounded approximation); lost-works range 500-1,000 untouched (IX)\n- artwork.html: replace commercial 'Similar Works / You Might Also Like' with\n  archive voice 'Elsewhere in the Record / Near this work'\n  (CONSTITUTION.md V - one voice, no commercial vocabulary)"
+  },
+  {
+    "sha": "fc4378f",
+    "date": "2026-07-07",
+    "title": "Ratify Constitution as repository governing document",
+    "body": ""
+  },
+  {
+    "sha": "2477a4b",
+    "date": "2026-07-07",
+    "title": "Add PROJECT-STATUS.md: permanent stewardship snapshot",
+    "body": "Canonical, execution-verified record of the archive's technical,\narchitectural, and operational state at the conclusion of this\ndevelopment phase. Documents project overview, repository status,\ntechnical architecture, completed work, operational procedures,\nremaining items, and stewardship principles for future maintainers."
+  },
+  {
+    "sha": "d18098a",
+    "date": "2026-07-06",
+    "title": "Close interaction refinements and remove last third-party JS dependency",
+    "body": "- nav-active.js: highlight Archive on decade pages (1970s-2020s); tolerate\n  leading-slash hrefs so the decade desktop nav (/archive.html) matches\n- artwork.html: rewrite the \"not found\" message in the archive's quiet voice\n  and drop the unused #work-image element on invalid IDs; recovery link kept\n- artwork.html: give Copy link a failure/no-clipboard fallback and never leave\n  the button stuck in the copying state\n- ui.css: point .bracket-link hover transitions at the --transition-* tokens\n  (was hardcoded 0.2s ease) for consistent link-hover timing\n- ui.css: gate thumbnail cursor:none on body.jfsn-custom-cursor so the native\n  cursor is preserved if the custom-cursor script fails to initialize\n- sitemap.html: replace the stray cdnjs.cloudflare.com anime.js reference with\n  the project's self-hosted _shared/anime.min.js, matching every other page.\n  No public page now depends on third-party JS or CSS.\n- sw.js: CACHE_V bumped (ui.css changed) via auto-cache-bump.sh"
+  },
+  {
+    "sha": "2d6b990",
+    "date": "2026-07-06",
+    "title": "Stewardship pass: honesty fixes, family path, year_display consistency, audit tooling",
+    "body": "Long-term stewardship corrections (verified by execution + browser preview):\n\n- Honesty (P2): correct two live contradictions.\n  - why-i-made-things.html: the grandchildren ARE named elsewhere (Stories,\n    Collaboration); reword the stale \"not named anywhere\" placeholder to flag\n    only the still-undocumented specifics (Jeff-confirmed: names are public).\n  - lost.html: soften the absolute \"There are no images\" — a few lost works\n    survive incidentally in the background of other photographs, matching\n    stories.html (Jeff-confirmed).\n- Family discovery (P3): add the missing Collaboration link to start-here.html's\n  Family list (previously zero inbound links from start-here).\n- year_display consistency (P4): render \"1990s (est.)\" instead of a bare \"1990\"\n  in the archive grid, homepage featured grid, favorites grid, and curatorial-map\n  tooltip — mirroring search.js, the existing honest reference. Data already\n  carried year_display; this is an additive w.year_display || w.year fallback.\n- audit tooling (P5): fix audit-nav.sh broken-link false positives (os.path.exists\n  now strips the leading slash so root-relative hrefs resolve against repo root);\n  regenerate sitemap.xml to include sitemap.html.\n\nGenerated-file churn from build_catalog.py: sitemap.xml (+sitemap.html, lastmod\nrefresh), changes.json, sw.js CACHE_V bump (required for this deploy), index.html\nhero restamp."
+  },
+  {
     "sha": "d66418e",
     "date": "2026-07-06",
     "title": "Mark closeout template canonical",
