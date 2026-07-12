@@ -266,7 +266,9 @@ addEventListener('DOMContentLoaded', () => {
 
   const index = document.getElementById('index');
   const frag = document.createDocumentFragment();
+  let n = 0;
   for (const [yr, title, rn, desc, href, shot] of RECORDS){
+    n++;
     const a = document.createElement('a');
     a.className = 'rec reveal-el';
     a.href = href;
@@ -276,7 +278,7 @@ addEventListener('DOMContentLoaded', () => {
       '<span class="yr">' + yr + '</span>' +
       '<img class="thumb" src="/assets/images/working-history/' + shot + '.avif" ' +
         'alt="Preserved screenshot of the ' + title + ' website, as it appeared when built." ' +
-        'loading="lazy" decoding="async">' +
+        (n <= 3 ? '' : 'loading="lazy" ') + 'decoding="async">' +
       '<span class="body">' +
         '<span class="t">' + title + '</span>' +
         '<span class="d">' + desc + '</span>' +
