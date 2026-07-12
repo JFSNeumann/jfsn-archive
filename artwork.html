@@ -1,1160 +1,503 @@
 <!DOCTYPE html>
-<html class="light" lang="en">
+<html lang="en">
 <head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Work — Jeffrey F. S. Neumann</title>
+<meta name="description" content="A single work from the archive, shown whole and described honestly.">
+<meta name="theme-color" content="#0c0a09">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/playfair-display-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script>document.documentElement.classList.add('js')</script>
+<style>
+  /* room-to-room continuity: fade in on arrival, veil out on internal doors */
+  @media (prefers-reduced-motion: no-preference){
+    .js body{animation:room-in .4s ease}
+    @keyframes room-in{from{opacity:0}to{opacity:1}}
+  }
+  #room-veil{position:fixed;inset:0;background:#0c0a09;opacity:0;pointer-events:none;transition:opacity .22s ease;z-index:99}
+  #room-veil.on{opacity:1;pointer-events:auto}
+</style>
 <script>
-/* Detect an incoming cross-document view transition (card morphing into
-   #work-image) as early as possible — pagereveal fires before any deferred
-   script runs, so artwork-animations.js can check this flag later and skip
-   re-animating the image itself when the browser already morphed it in. */
-window.__incomingViewTransition = false;
-window.addEventListener('pagereveal', function (e) {
-  if (e.viewTransition) window.__incomingViewTransition = true;
+addEventListener('DOMContentLoaded', () => {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const v = document.createElement('div'); v.id = 'room-veil';
+  document.body.appendChild(v);
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a');
+    if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target === '_blank') return;
+    const h = a.getAttribute('href') || '';
+    if (!h || /^(https?:|#|mailto:)/.test(h)) return;
+    e.preventDefault();
+    v.classList.add('on');
+    setTimeout(() => { location.href = a.href; }, 200);
+  }, true);
+  addEventListener('pageshow', e => { if (e.persisted) v.classList.remove('on'); });
 });
 </script>
-<meta charset="utf-8"/>
-<script>try{var t=localStorage.getItem('jfsn-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script><!-- THEME_INIT: head-blocking, prevents dark-mode FOUC -->
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta name="theme-color" content="#fdf8f8"/>
-<title id="page-title">Work — Jeffrey F. S. Neumann</title>
-<meta name="description" id="page-desc" content="A work from the personal archive of Jeffrey F. S. Neumann — 1,084 works spanning collage, sculpture, and photography, 1974–present."/>
-<link rel="canonical" id="page-canonical" href="https://jfsn.com/artwork.html"/>
-<meta property="og:type" content="website"/>
-<meta property="og:title" id="og-title" content="Work — Jeffrey F. S. Neumann"/>
-<meta property="og:description" id="og-desc" content="From the personal archive of Jeffrey F. S. Neumann — 1,084 works spanning collage, sculpture, and photography, 1974–present."/>
-<meta property="og:image" id="og-image" content="https://jfsn.com/og-card.jpg"/>
-<meta property="og:url" id="og-url" content="https://jfsn.com/artwork.html"/>
-<link rel="icon" href="favicon.svg" type="image/svg+xml"/>
-<link rel="preload" as="font" type="font/woff2" href="/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2" crossorigin/>
-<link rel="preload" as="font" type="font/woff2" href="/fonts/nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgEM86xQ.woff2" crossorigin/>
-<link rel="stylesheet" href="_shared/ui.css"/>
-<link rel="stylesheet" href="_shared/section-tints.css"/>
-<link rel="stylesheet" href="_shared/dark-mode.css"/>
-<link rel="stylesheet" href="_shared/senior-ux-touch-targets.css"/>
-<link rel="stylesheet" href="site.min.css"/>
 <style>
-  .material-symbols-outlined {
-    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-    display: inline-block;
-    vertical-align: middle;
+  :root{
+    --room:#0c0a09;
+    --ink:#e8e2d9;
+    --dim:#7a7168;
+    --faint:#3a332d;
+    --frame:#2b241e;
+    --accent:#FF6600;
   }
-  body { -webkit-font-smoothing: antialiased; }
-  /* Lightbox */
-  #lr-overlay { display: none; }
-  #lr-overlay.is-open { display: flex; }
-  .lr-btn {
-    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #F3F0EA;
-    background: none;
-    border: 1px solid #F3F0EA;
-    padding: 8px 14px;
-    cursor: pointer;
-    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  @font-face{font-family:'Playfair Display';src:url('/fonts/playfair-display-italic-latin.woff2') format('woff2');font-style:italic;font-weight:400 900;font-display:swap}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    background:var(--room);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
   }
-  .lr-btn:hover { background: #FF6600; color: #0B0B0B; border-color: #FF6600; }
-  .lr-btn--close { margin-left: 16px; color: rgba(243,240,234,0.7); border-color: rgba(243,240,234,0.3); }
-  .lr-btn--close:hover { background: #FF6600; color: #F3F0EA; border-color: #FF6600; }
-  @media (max-width: 480px) {
-    .lr-btn { font-size: 10px; padding: 8px 10px; letter-spacing: 0.06em; }
-    .lr-btn--close { margin-left: 8px; }
+  ::selection{background:var(--accent);color:#fff}
+  a{color:var(--dim);text-decoration:none;transition:color .25s}
+  a:hover{color:var(--accent)}
+  a:focus-visible{outline:2px solid var(--accent);outline-offset:4px;color:var(--accent)}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+  .caps{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim)}
+  .serif{font-family:Georgia,'Times New Roman',serif}
+
+  header.hud{
+    position:fixed;top:0;left:0;right:0;z-index:10;
+    display:flex;justify-content:space-between;align-items:baseline;
+    padding:calc(env(safe-area-inset-top,0px) + 22px) 26px 14px;
+    background:linear-gradient(var(--room) 55%,rgba(12,10,9,0.82) 78%,transparent);
+    pointer-events:none;
+  }
+  header.hud a{pointer-events:auto}
+  header.hud .who{font-size:11px;letter-spacing:.22em;font-weight:600;color:var(--ink)}
+  header.hud a.who:hover{color:var(--accent)}
+
+  main{
+    min-height:100vh;
+    display:grid;grid-template-columns:1fr minmax(280px,380px);
+    gap:clamp(30px,5vw,70px);align-items:center;
+    padding:calc(env(safe-area-inset-top,0px) + 90px) clamp(20px,6vw,80px) 120px;
+    max-width:1500px;margin:0 auto;
+  }
+  @media (max-width:900px){
+    main{grid-template-columns:1fr;gap:40px;align-items:start}
   }
 
-  /* Cross-document view transition: the artwork image is the shared element —
-     a clicked card on the homepage morphs into this image. Browsers without
-     support ignore both rules — zero change. */
-  @view-transition { navigation: auto; }
-  #work-image { view-transition-name: artwork-hero; }
-  @media (prefers-reduced-motion: reduce) {
-    ::view-transition-group(*),
-    ::view-transition-old(*),
-    ::view-transition-new(*) { animation: none !important; }
+  /* ---------- the work ---------- */
+  #stage{display:flex;justify-content:center}
+  #stage figure{max-width:100%}
+  #stage img{
+    display:block;max-width:100%;max-height:72vh;width:auto;height:auto;
+    border:1px solid var(--frame);background:#171310;
+    cursor:zoom-in;
+  }
+  #stage figcaption{margin-top:12px;text-align:center}
+
+  /* ---------- the label ---------- */
+  #label .no{color:var(--faint);margin-bottom:14px;display:block}
+  #label h1{
+    font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
+    font-size:clamp(26px,3.4vw,40px);line-height:1.25;
+  }
+  #ledger{margin-top:34px;border-top:1px solid var(--frame)}
+  #ledger .row{
+    display:flex;justify-content:space-between;gap:20px;
+    padding:13px 0;border-bottom:1px solid var(--frame);
+    font-size:13px;
+  }
+  #ledger .row .k{font-size:9px;letter-spacing:.22em;color:var(--faint);text-transform:uppercase;padding-top:3px}
+  #ledger .row .v{text-align:right;font-family:Georgia,'Times New Roman',serif;font-style:italic}
+  #flag{
+    display:none;margin-top:16px;font-size:9px;letter-spacing:.14em;
+    color:var(--accent);text-transform:uppercase;
+  }
+  #flag.on{display:block}
+  #label nav{display:flex;flex-direction:column;gap:13px;margin-top:34px}
+  #label nav a,#label nav button{
+    font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--dim);text-align:left;transition:color .25s;
+  }
+  #label nav a:hover,#label nav button:hover{color:var(--accent)}
+  #series-door{display:none}
+  #series-door.on{display:block}
+  #copied{color:var(--accent);margin-left:8px;opacity:0;transition:opacity .3s}
+  #copied.on{opacity:1}
+
+  /* ---------- where this sits ---------- */
+  #sits{margin-top:44px;cursor:pointer;display:block;color:inherit}
+  #sits .sits-title{display:block;margin-bottom:14px;color:var(--faint)}
+  #sits .sits-open{display:block;margin-top:14px;text-align:right;color:var(--dim);transition:color .2s}
+  #sits:hover .sits-open,#sits:focus-visible .sits-open{color:var(--accent)}
+  #sits:focus-visible{outline:2px solid var(--accent);outline-offset:6px}
+  #strip-wrap{position:relative}
+  #strip{display:block;width:100%;height:30px;transition:filter .2s}
+  #sits:hover #strip{filter:brightness(1.25)}
+  #here{
+    position:absolute;top:-7px;bottom:16px;width:0;
+    border-left:1px solid var(--accent);pointer-events:none;
+  }
+  #here .yr{
+    position:absolute;top:-15px;transform:translateX(-50%);white-space:nowrap;
+    font-size:8px;letter-spacing:.16em;color:var(--accent);
+  }
+  #decade-axis{position:relative;height:14px;margin-top:6px}
+  #decade-axis span{
+    position:absolute;transform:translateX(-50%);
+    font-size:8px;letter-spacing:.12em;color:var(--faint);
+  }
+  #decade-axis span.on{color:var(--dim)}
+
+  /* ---------- prev / next ---------- */
+  #walk{
+    position:fixed;bottom:calc(env(safe-area-inset-bottom,0px) + 22px);
+    left:0;right:0;z-index:9;
+    display:flex;justify-content:space-between;
+    padding:0 26px;pointer-events:none;
+  }
+  #walk a{
+    pointer-events:auto;font-size:10px;letter-spacing:.2em;
+    background:rgba(12,10,9,0.85);padding:8px 4px;
+  }
+  #walk .hint{align-self:center;color:var(--faint);font-size:9px;letter-spacing:.24em}
+  @media (max-width:640px){ #walk .hint{display:none} }
+
+  /* ---------- lightbox ---------- */
+  #lightbox{
+    position:fixed;inset:0;z-index:30;background:rgba(8,7,6,0.97);
+    display:none;align-items:center;justify-content:center;
+    touch-action:none;
+  }
+  #lightbox.on{display:flex}
+  #lightbox img{
+    max-width:96vw;max-height:96vh;
+    transition:transform .18s ease;
+    cursor:zoom-in;user-select:none;-webkit-user-drag:none;
+  }
+  #lightbox.zoomed img{cursor:grab;max-width:none;max-height:none}
+  #lightbox.dragging img{cursor:grabbing;transition:none}
+  #lb-close{
+    position:fixed;top:calc(env(safe-area-inset-top,0px) + 20px);right:24px;
+    font-size:11px;letter-spacing:.2em;color:var(--dim);z-index:31;
+  }
+  #lb-close:hover{color:var(--accent)}
+
+  /* ---------- study controls ---------- */
+  #lb-bar{
+    position:fixed;left:0;right:0;
+    bottom:calc(env(safe-area-inset-bottom,0px) + 0px);
+    z-index:31;display:flex;justify-content:center;gap:10px;
+    padding:16px 14px calc(env(safe-area-inset-bottom,0px) + 16px);
+    background:linear-gradient(transparent,rgba(8,7,6,0.92) 40%);
+    overflow-x:auto;scrollbar-width:none;
+  }
+  #lb-bar::-webkit-scrollbar{display:none}
+  #lb-bar button{
+    font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--dim);border:1px solid var(--frame);
+    padding:10px 13px;white-space:nowrap;flex-shrink:0;
+    transition:color .2s,border-color .2s;
+  }
+  #lb-bar button:hover{color:var(--accent);border-color:var(--accent)}
+  #lb-bar button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  #lb-zoom-label{
+    align-self:center;color:var(--faint);font-size:9px;letter-spacing:.18em;
+    white-space:nowrap;flex-shrink:0;min-width:64px;text-align:center;
   }
 
-  /* Stitch June-2026 — artwork page */
-  #reading-progress {
-    position: fixed; top: 0; left: 0; height: 2px;
-    background: #FF6600; width: 0%; z-index: 9999;
-    transition: width 0.1s linear; pointer-events: none;
-  }
-  @keyframes artwork-develop {
-    from { opacity: 0.6; }
-    to   { opacity: 1; }
-  }
-  .artwork-developing { animation: artwork-develop 0.9s ease forwards; }
-  .bracket-link {
-    display: inline-block;
-    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
-    font-size: 11px; font-weight: 500; letter-spacing: 0.06em;
-    color: #0B0B0B; text-decoration: none;
-    transition: color 0.2s ease;
-  }
-  .bracket-link:hover { color: #FF6600; }
-  /* Full resolution is the page's primary action — same bracket idiom,
-     one step up in scale, weight, and tracking. Color/hover unchanged. */
-  #full-res-btn {
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-  @media (max-width: 480px) {
-    #full-res-btn { font-size: 12px; letter-spacing: 0.12em; }
-  }
-  .reveal-on-scroll { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
-  .reveal-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
-  @media (prefers-reduced-motion: reduce) { .reveal-on-scroll { opacity: 1; transform: none; transition: none; } }
+  #missing{display:none;min-height:70vh;flex-direction:column;justify-content:center;align-items:center;gap:22px;text-align:center;padding:0 20px}
+  #missing.on{display:flex}
+  #missing .line{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:clamp(22px,3.4vw,32px)}
 </style>
-  <!-- Phase 1 Enhancement Stylesheets -->
-  <link rel="stylesheet" href="/_shared/enhancements.css"/>
-  <!-- Phase 2 Enhancement Stylesheets -->
-  <link rel="stylesheet" href="/_shared/toast.css"/>
-  <link rel="stylesheet" href="/_shared/skeleton.css"/>
-  <link rel="stylesheet" href="/_shared/hover-preview.css?v=20260703T4"/>
-  <!-- Phase 3 Enhancement Stylesheets -->
-  <link rel="stylesheet" href="/_shared/page-transitions.css"/>
-  <link rel="stylesheet" href="/_shared/lazy-load.css"/>
-  <!-- Phase 4 Enhancement Stylesheets -->
-  <!-- Enhancement Extras (Keyboard Shortcuts, Search, Breadcrumb) -->
 </head>
-<body class="section-archive font-body-md text-body-md bg-bone-white text-deep-ink">
+<body>
 
-<!-- NAV:START -->
-<style>
-/* --nav-accent defaults to brand orange; chromatic-position-strip.js and
-   archive-river.js set it live to whatever decade is in view (their own
-   chromatic.json data, never invented) so the nav reads as part of the
-   instrument rather than fixed chrome. Transitions slowly so it never reads
-   as a glitch. */
-:root{--nav-accent:#FF6600;}
-header nav a{position:relative}
-header nav a::after{content:'';position:absolute;bottom:10px;left:0;width:100%;height:1.5px;background:var(--nav-accent);transform:scaleX(0);transform-origin:left center;transition:transform 0.2s ease,background-color 1.2s ease}
-header nav a:hover::after{transform:scaleX(1)}
-header nav a.nav-underline-active::after{transform:scaleX(1);transition:none}
-@media(prefers-reduced-motion:reduce){header nav a::after{transition:none}}
-/* JFSN wordmark tooltip */
-.jfsn-wordmark{position:relative}
-.jfsn-wordmark::before{content:'Jeffrey Francis Stanley Neumann';position:absolute;top:calc(100% + 10px);left:0;white-space:nowrap;font-family:'Inter',sans-serif;font-size:11px;font-weight:400;letter-spacing:0.06em;color:#575757;background:#fcf9f3;border:1px solid #c4c7c7;padding:4px 8px;pointer-events:none;opacity:0;transform:translateY(-4px);transition:opacity 0.15s ease,transform 0.15s ease}
-.jfsn-wordmark:hover::before{opacity:1;transform:translateY(0)}
-@media(prefers-reduced-motion:reduce){.jfsn-wordmark::before{transition:none}}
-/* Fade below navbar */
-header::after{content:'';position:absolute;top:100%;left:0;width:100%;height:40px;background:linear-gradient(to bottom,rgba(11,11,11,0.07) 0%,transparent 100%);pointer-events:none;z-index:0;}
-/* Glassmorphism nav (Stitch June-2026): always-on translucent + blur; intensifies on scroll */
-header{transition:transform 0.3s ease,background-color 0.2s ease;background-color:rgba(252,249,243,0.80);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
-header.header-scrolled{background-color:rgba(252,249,243,0.92)}
-header.header-hidden{transform:translateY(-100%)}
-@media(prefers-reduced-motion:reduce){header{transition:background-color 0.2s ease}}
-/* Mobile drawer — underline draw + active state */
-#mobile-menu-drawer a{position:relative;overflow:hidden}
-#mobile-menu-drawer a::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;background:#FF6600;transform:scaleX(0);transform-origin:left center;transition:transform 0.2s ease}
-#mobile-menu-drawer a:hover::after,#mobile-menu-drawer a:active::after{transform:scaleX(1)}
-#mobile-menu-drawer a:active{background:#f0ece6}
-#mobile-menu-drawer a.drawer-active{color:#B84700 !important;border-left:3px solid #FF6600;padding-left:21px !important}
-#mobile-menu-drawer a.drawer-active::after{transform:scaleX(1);transition:none}
-@media(prefers-reduced-motion:reduce){#mobile-menu-drawer a::after{transition:none}}
-/* Drawer item stagger on open (Phase 3) */
-@keyframes drawer-fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-@media (prefers-reduced-motion: no-preference) {
-  #mobile-menu-drawer a { animation: drawer-fade-in 0s ease forwards; }
-  #mobile-menu-drawer a.drawer-stagger-1 { animation-delay: 0.05s; }
-  #mobile-menu-drawer a.drawer-stagger-2 { animation-delay: 0.1s; }
-  #mobile-menu-drawer a.drawer-stagger-3 { animation-delay: 0.15s; }
-  #mobile-menu-drawer a.drawer-stagger-4 { animation-delay: 0.2s; }
-}
-/* Butterfly mark — core orange (#FF6600) default, black on hover */
-.jfsn-wordmark img{filter:invert(63%) sepia(72%) saturate(1500%) hue-rotate(-30deg) brightness(105%) contrast(101%);transition:filter 0.2s ease}
-.jfsn-wordmark:hover img{filter:none}
-@media(prefers-reduced-motion:reduce){.jfsn-wordmark img{transition:none}}
-</style>
-<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-deep-ink focus:text-bone-white focus:font-label-caps focus:text-label-caps">Skip to content</a>
-<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16">
-  <div class="flex items-center">
-    <a href="/" class="jfsn-wordmark text-deep-ink flex items-center gap-2" style="font-family:'Playfair Display',Georgia,serif;font-size:22px;font-weight:700;letter-spacing:-0.02em;line-height:1;text-decoration:none;">
-      <img src="/_shared/butterfly-mark.png" alt="" width="24" height="24" style="flex-shrink:0;" aria-hidden="true"/>
-      JFSN
-    </a>
-  </div>
-  <div class="flex items-center gap-6">
-    <nav class="hidden md:flex gap-8 items-center" aria-label="Primary">
-      <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="/archive.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Archive</a>
-      <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="/series-index.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Series</a>
-      <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="/about.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">About</a>
-      <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="/lost.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Lost Works</a>
-    </nav>
-    <!-- Dark mode toggle (Phase 2) -->
-    <button class="flex items-center gap-1.5 text-orange-ink hover:text-deep-ink transition-colors" style="padding:10px;" aria-label="Toggle dark mode" id="theme-toggle-btn" title="Toggle dark mode">
-      <svg id="theme-icon-sun" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="display:none;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-      <svg id="theme-icon-moon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    </button>
-    <button class="flex items-center gap-1.5 text-orange-ink hover:text-deep-ink transition-colors" style="padding:10px;" aria-label="Search" id="nav-search-btn">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><line x1="20.4" y1="20.4" x2="16" y2="16"/></svg>
-      <span class="hidden md:inline" aria-hidden="true" style="font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.05em;color:#575757;border:1px solid #c4c7c7;padding:1px 5px;pointer-events:none;">⌘K</span>
-    </button>
-    <button class="md:hidden text-deep-ink" style="padding:10px;" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu-drawer" id="nav-menu-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
-  </div>
+<header class="hud">
+  <a class="who" href="index.html">JEFFREY&nbsp;F.&nbsp;S.&nbsp;NEUMANN</a>
+  <a class="caps" href="archive.html">[ THE ARCHIVE → ]</a>
 </header>
 
-<!-- Mobile menu overlay -->
-<div id="mobile-menu" aria-hidden="true" style="display:none;position:fixed;inset:0;z-index:60;">
-  <!-- Backdrop -->
-  <div id="mobile-menu-backdrop" style="position:absolute;inset:0;background:rgba(11,11,11,0.5);"></div>
-  <!-- Drawer -->
-  <nav id="mobile-menu-drawer" aria-label="Mobile menu"
-    style="position:absolute;top:0;right:0;width:min(280px,85vw);height:100%;background:#fcf9f3;border-left:1px solid #0B0B0B;display:flex;flex-direction:column;transform:translateX(100%);transition:transform 0.25s ease;">
-    <!-- Header -->
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:0 20px;height:64px;border-bottom:1px solid #0B0B0B;">
-      <span style="font-family:Inter,sans-serif;font-size:18px;font-weight:600;letter-spacing:-0.02em;color:#0B0B0B;">JFSN</span>
-      <button id="nav-menu-close" aria-label="Close menu"
-        style="background:none;border:none;cursor:pointer;color:#0B0B0B;padding:10px 14px;margin-right:-14px;line-height:1;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button>
-    </div>
-    <!-- Links -->
-    <div style="flex:1;overflow-y:auto;padding:8px 0;">
-      <a href="archive.html"    style="display:flex;align-items:center;gap:14px;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="flex-no-shrink"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Archive</a>
-      <a href="series-index.html" style="display:flex;align-items:center;gap:14px;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="flex-no-shrink"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>Series</a>
-      <a href="about.html"      style="display:flex;align-items:center;gap:14px;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="flex-no-shrink"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>About</a>
-      <a href="lost.html"       style="display:flex;align-items:center;gap:14px;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#0B0B0B;text-decoration:none;border-bottom:1px solid #c4c7c7;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="flex-no-shrink"><rect x="3" y="3" width="18" height="18" stroke-dasharray="4 4"/></svg>Lost Works</a>
-    </div>
-    <!-- Portrait -->
-    <div style="padding:16px 24px;">
-      <img src="me black.gif" alt="Jeffrey F. S. Neumann" style="display:block;width:30%;margin:0 auto;opacity:0.85;">
-    </div>
-    <!-- Search shortcut -->
-    <div style="padding:0 24px 16px;border-top:1px solid #c4c7c7;">
-      <button id="mobile-menu-search"
-        style="width:100%;display:flex;align-items:center;gap:10px;background:none;border:1px solid #c4c7c7;padding:12px 14px;cursor:pointer;color:#575757;font-family:Inter,sans-serif;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><line x1="20.4" y1="20.4" x2="16" y2="16"/></svg>
-        Search archive
-      </button>
-    </div>
-  </nav>
-</div>
-
-<script>
-(function(){
-  var menu    = document.getElementById('mobile-menu');
-  var drawer  = document.getElementById('mobile-menu-drawer');
-  var openBtn = document.getElementById('nav-menu-btn');
-  var closeBtn= document.getElementById('nav-menu-close');
-  var backdrop= document.getElementById('mobile-menu-backdrop');
-  var menuSearchBtn = document.getElementById('mobile-menu-search');
-
-  function openMenu(){
-    menu.style.display = 'block';
-    menu.setAttribute('aria-hidden','false');
-    openBtn.setAttribute('aria-expanded','true');
-    document.body.style.overflow = 'hidden';
-    requestAnimationFrame(function(){
-      drawer.style.transform = 'translateX(0)';
-    });
-    closeBtn.focus();
-  }
-  function closeMenu(){
-    drawer.style.transform = 'translateX(100%)';
-    openBtn.setAttribute('aria-expanded','false');
-    document.body.style.overflow = '';
-    setTimeout(function(){ menu.style.display = 'none'; menu.setAttribute('aria-hidden','true'); }, 260);
-    openBtn.focus();
-  }
-
-  if(openBtn)  openBtn.addEventListener('click', openMenu);
-  if(closeBtn) closeBtn.addEventListener('click', closeMenu);
-  if(backdrop) backdrop.addEventListener('click', closeMenu);
-  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && menu.style.display==='block') closeMenu(); });
-
-  // Wire search button in menu to open search overlay
-  if(menuSearchBtn) menuSearchBtn.addEventListener('click', function(){
-    closeMenu();
-    setTimeout(function(){ if(window.openSiteSearch) window.openSiteSearch(); }, 280);
-  });
-})();
-</script>
-<!-- NAV:END -->
-<!-- SCRIPTS:START -->
-<script src="_shared/anime.min.js" defer></script>
-<script src="_shared/nav-early.bundle.js" defer></script>
-<script>
-(function(){
-  var header = document.querySelector('header');
-  if (!header) return;
-  var lastY = window.scrollY;
-  var menuOpen = false;
-  var openBtn = document.getElementById('nav-menu-btn');
-  var closeBtn = document.getElementById('nav-menu-close');
-  var backdrop = document.getElementById('mobile-menu-backdrop');
-  if (openBtn)  openBtn.addEventListener('click',  function(){ menuOpen = true; });
-  if (closeBtn) closeBtn.addEventListener('click', function(){ menuOpen = false; });
-  if (backdrop) backdrop.addEventListener('click', function(){ menuOpen = false; });
-  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') menuOpen = false; });
-  window.addEventListener('scroll', function(){
-    var y = window.scrollY;
-    header.classList.toggle('header-scrolled', y > 8);
-    if (!menuOpen) {
-      if (y > lastY && y > 80) {
-        header.classList.add('header-hidden');
-      } else {
-        header.classList.remove('header-hidden');
-      }
-    }
-    lastY = y;
-  }, { passive: true });
-})();
-</script>
-
-<script>
-/* ─── Dark Mode Toggle (Phase 2) ─────────────────────────────────────────── */
-(function() {
-  var themeToggle = document.getElementById('theme-toggle-btn');
-  var sunIcon = document.getElementById('theme-icon-sun');
-  var moonIcon = document.getElementById('theme-icon-moon');
-
-  // Detect preference: localStorage > prefers-color-scheme
-  function getTheme() {
-    var saved = localStorage.getItem('jfsn-theme');
-    if (saved) return saved;
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
-    return 'light';
-  }
-
-  function setTheme(theme) {
-    localStorage.setItem('jfsn-theme', theme);
-    var html = document.documentElement;
-    if (theme === 'dark') {
-      html.classList.add('dark');
-      sunIcon.style.display = 'block';
-      moonIcon.style.display = 'none';
-    } else {
-      html.classList.remove('dark');
-      sunIcon.style.display = 'none';
-      moonIcon.style.display = 'block';
-    }
-  }
-
-  // Initialize theme on page load
-  var currentTheme = getTheme();
-  setTheme(currentTheme);
-
-  // Toggle on button click
-  if (themeToggle) {
-    themeToggle.addEventListener('click', function() {
-      var newTheme = getTheme() === 'dark' ? 'light' : 'dark';
-      setTheme(newTheme);
-    });
-  }
-
-  // Listen for system theme changes
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
-    if (!localStorage.getItem('jfsn-theme')) {
-      setTheme(e.matches ? 'dark' : 'light');
-    }
-  });
-})();
-</script>
-<script src="_shared/nav-late.bundle.js" defer></script>
-<!-- SCRIPTS:END -->
-<script src="_shared/related-works.js" defer></script>
-<script src="_shared/drone-fleet.js?v=20260703131542" defer></script>
-
-<div id="reading-progress" aria-hidden="true"></div>
-<main id="main" class="pt-[100px] pb-xl px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto">
-
-  <a href="archive.html" class="bracket-link mb-lg block">[ ← Back to Archive ]</a>
-
-  <div id="loading" class="py-xl text-center font-label-lg text-label-lg text-secondary uppercase tracking-widest">Loading…</div>
-  <div id="not-found" class="hidden py-xl text-center font-body-md text-body-md text-secondary">This work isn’t in the archive. The link may be mistyped — or the piece may be one of those lost.</div>
-
-  <div id="work-content" class="hidden">
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-start mb-xl">
-
-      <!-- Image -->
-      <section class="md:col-span-8" style="border:1px solid #8e7164;box-shadow:0 0 20px rgba(0,0,0,0.05);">
-        <div id="work-image-wrap" class="bg-surface-container" style="position:relative;">
-          <img id="work-image" alt="" class="w-full h-auto object-contain" src="" width="1200" height="900" loading="eager"/>
-          <!-- Mobile title overlay — hidden on md+ -->
-          <div id="artwork-mobile-title" class="md:hidden" style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(11,11,11,0.58),transparent);padding:28px 16px 12px;pointer-events:none;">
-            <p id="artwork-mobile-title-text" style="font-family:Inter,sans-serif;font-size:12px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#fff;line-height:1.3;"></p>
-            <p id="artwork-mobile-year-text" style="font-family:Inter,sans-serif;font-size:11px;font-weight:400;letter-spacing:0.06em;color:#c4c7c7;margin-top:3px;"></p>
-          </div>
-        </div>
-        <div style="border-top:1px solid #8e7164;padding:18px 16px;display:flex;align-items:center;gap:16px;">
-          <span aria-hidden="true" style="flex:1;height:1px;background:#e3bfb1;"></span>
-          <button id="full-res-btn" class="bracket-link bg-transparent border-0 cursor-pointer p-0">
-            [ View full resolution image → ]
-          </button>
-          <span aria-hidden="true" style="flex:1;height:1px;background:#e3bfb1;"></span>
-        </div>
-      </section>
-
-      <!-- Metadata -->
-      <aside class="md:col-span-4 flex flex-col gap-md sticky top-[100px]">
-        <div style="border-bottom:1px solid #e3bfb1;padding-bottom:1rem;">
-          <p id="work-eyebrow" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10px;letter-spacing:0.1em;color:#B84700;text-transform:uppercase;margin-bottom:8px;"></p>
-          <h1 id="work-title" class="text-headline-md leading-tight mb-xs"></h1>
-          <p id="work-type-subline" style="font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:15px;color:#575757;margin-top:4px;"></p>
-        </div>
-        <div class="flex flex-col gap-sm" id="meta-rows">
-          <!-- populated by JS -->
-        </div>
-        <button id="copy-link-btn" onclick="(function(btn){var orig=btn.textContent;btn.classList.add('copying');function done(msg){btn.textContent=msg;setTimeout(function(){btn.textContent=orig;btn.classList.remove('copying');},1800);}try{var p=navigator.clipboard&&navigator.clipboard.writeText(window.location.href);if(p&&p.then){p.then(function(){done('[ COPIED ]');},function(){done('[ PRESS ⌘C TO COPY ]');});}else{done('[ PRESS ⌘C TO COPY ]');}}catch(e){done('[ PRESS ⌘C TO COPY ]');}})(this)"
-          class="bracket-link" style="margin-top:8px;background:none;border:none;cursor:pointer;padding:0;text-align:left;">
-          [ Copy link → ]
-        </button>
-        <div class="hidden md:block" style="margin-top:16px;padding-top:16px;border-top:1px solid #e3bfb1;">
-          <p style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#c4c7c7;margin-bottom:10px;">[ ← → Browse Works ]</p>
-          <button id="slideshow-btn" class="bracket-link" style="background:none;border:none;cursor:pointer;padding:0;text-align:left;color:#B84700;">
-            [ ▶ Play sequence → ]
-          </button>
-        </div>
-        <!-- Where this sits — the whole archive as color, this work marked -->
-        <a id="artwork-river" href="chromatic.html" aria-label="See this work's place in the full fifty-year chromatic river"
-           style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid #c4c7c7;text-decoration:none;">
-          <p style="font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:#575757;margin:0 0 8px;">Where this sits — fifty years</p>
-          <span style="position:relative;display:block;">
-            <canvas id="artwork-river-canvas" height="40" aria-hidden="true" style="display:block;width:100%;"></canvas>
-            <span id="artwork-river-notch" aria-hidden="true" style="position:absolute;top:0;bottom:0;width:2px;background:#FF6600;"></span>
-            <span id="artwork-river-year" aria-hidden="true" style="position:absolute;top:3px;font-family:Inter,sans-serif;font-size:9px;letter-spacing:0.1em;color:#FF6600;background:rgba(11,11,11,0.55);padding:1px 4px;white-space:nowrap;"></span>
-          </span>
-        </a>
-
-        <!-- Related works in same series -->
-        <div id="related-works" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid #e3bfb1;">
-          <p style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#8e7164;margin-bottom:10px;">[ More in this series ]</p>
-          <div id="related-works-list" style="display:flex;flex-direction:column;gap:8px;">
-            <!-- populated by JS -->
-          </div>
-        </div>
-      </aside>
-
-    </div>
-
-    <!-- Prev / Next -->
-    <nav class="w-full bg-bone-white grid grid-cols-2 divide-x divide-outline-variant h-[56px] items-center reveal-on-scroll" id="prev-next" aria-label="Adjacent works" style="border-top:1px solid #8e7164;border-bottom:1px solid #8e7164;">
-      <a id="prev-link" href="#" class="group flex items-center px-margin-mobile md:px-md h-full overflow-hidden">
-        <svg class="text-deep-ink group-hover:text-international-orange mr-sm shrink-0" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="20" y1="12" x2="5" y2="12"/><polyline points="11 6 5 12 11 18"/></svg>
-        <div class="flex flex-col overflow-hidden">
-          <span class="font-label-caps text-[10px] text-archive-gray uppercase tracking-widest leading-none mb-[2px]">PREVIOUS</span>
-          <span id="prev-title" class="font-label-caps text-[11px] text-deep-ink uppercase truncate group-hover:text-international-orange"></span>
-        </div>
-      </a>
-      <a id="next-link" href="#" class="group flex items-center justify-end px-margin-mobile md:px-md h-full overflow-hidden">
-        <div class="flex flex-col overflow-hidden text-right">
-          <span class="font-label-caps text-[10px] text-archive-gray uppercase tracking-widest leading-none mb-[2px]">NEXT</span>
-          <span id="next-title" class="font-label-caps text-[11px] text-deep-ink uppercase truncate group-hover:text-international-orange"></span>
-        </div>
-        <svg class="text-deep-ink group-hover:text-international-orange ml-sm shrink-0" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="4" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg>
-      </a>
-    </nav>
-    <p class="hidden md:block text-center" style="font-family:Inter,sans-serif;font-size:10px;letter-spacing:0.1em;color:#c4c7c7;padding:6px 0;">USE ← → KEYS TO BROWSE</p>
-
+<main id="room" hidden>
+  <div id="stage">
+    <figure>
+      <img id="work-img" alt="" decoding="async">
+      <figcaption class="caps" id="work-cap"></figcaption>
+    </figure>
   </div>
 
-  <!-- Phase 4: Related Works Section ———————————————————————————————————————— -->
-  <section id="related-works-section" class="mt-20 md:mt-32 border-t border-outline-variant pt-16">
-    <div class="mb-12">
-      <span class="font-label-caps text-label-caps text-orange-ink" style="display:block;margin-bottom:10px;letter-spacing:0.2em;">Elsewhere in the Record</span>
-      <h2 style="font-family:'Playfair Display',serif;font-size:clamp(26px,3.2vw,42px);line-height:1.1;color:#0B0B0B;font-weight:600;margin:0;">Near this work</h2>
+  <div id="label">
+    <span class="caps no" id="work-no"></span>
+    <h1 id="work-title"></h1>
+    <div id="ledger">
+      <div class="row"><span class="k">YEAR</span><span class="v" id="v-year"></span></div>
+      <div class="row"><span class="k">MEDIUM</span><span class="v" id="v-medium"></span></div>
+      <div class="row"><span class="k">ORIENTATION</span><span class="v" id="v-ori"></span></div>
+      <div class="row"><span class="k">ARCHIVE NO.</span><span class="v" id="v-no"></span></div>
     </div>
-
-    <!-- Related works grid — populated by JS -->
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-px sm:gap-x-gutter sm:gap-y-lg" id="related-works-grid">
-      <!-- Auto-populated from catalog based on: same series, same medium, same decade, similar color -->
-    </div>
-
-    <style>
-      #related-works-grid .thumb {
-        --stagger-index: 0;
-      }
-      #related-works-grid a {
-        text-decoration: none;
-        color: inherit;
-      }
-    </style>
-  </section>
-
+    <div id="flag">Photoshop composite — imagined placement</div>
+    <nav>
+      <button id="view-full">[ VIEW FULL RESOLUTION → ]</button>
+      <button id="copy-link">[ COPY LINK → ]<span id="copied">COPIED</span></button>
+      <a id="series-door" href="guernica-passage.html">[ PART OF THE GUERNICA PASSAGE → ]</a>
+      <a href="archive.html">[ ← BACK TO THE ARCHIVE ]</a>
+    </nav>
+    <a id="sits" href="current.html">
+      <span class="caps sits-title">WHERE THIS SITS IN FIFTY YEARS</span>
+      <span id="strip-wrap">
+        <canvas id="strip" aria-label="This work's position among all 1,084 works across fifty years. Opens The Current at this work."></canvas>
+        <span id="here"><span class="yr" id="here-yr"></span></span>
+      </span>
+      <span id="decade-axis" aria-hidden="true"></span>
+      <span class="caps sits-open">[ OPEN IN THE CURRENT&nbsp;→ ]</span>
+    </a>
+  </div>
 </main>
 
-<!-- FOOTER:START -->
-<style>
-footer a{position:relative;text-decoration:none;display:inline-block}
-footer a::after{content:'';position:absolute;bottom:-1px;left:0;width:100%;height:1px;background:#FF6600;transform:scaleX(0);transform-origin:left center;transition:transform 0.2s ease}
-footer a:hover::after{transform:scaleX(1)}
-footer .hover\:border-international-orange::after{display:none}
-@media(prefers-reduced-motion:reduce){footer a::after{transition:none}}
-#back-to-top{background:none;border:none;cursor:pointer;font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;display:flex;align-items:center;gap:5px;padding:0;transition:color 0.15s ease}
-#back-to-top:hover{color:#0B0B0B}
-#back-to-top::after{display:none}
-/* Floating back-to-top button */
-#btt-float{position:fixed;bottom:28px;right:28px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:#fcf9f3;border:1px solid #c4c7c7;cursor:pointer;font-size:16px;color:#575757;z-index:400;opacity:0;transform:translateY(8px);transition:opacity 0.22s ease,transform 0.22s ease,color 0.15s ease,border-color 0.15s ease;pointer-events:none;}
-#btt-float.btt-visible{opacity:1;transform:translateY(0);pointer-events:auto;}
-#btt-float:hover{color:#FF6600;border-color:#FF6600;}
-#btt-float::after{display:none}
-@media(prefers-reduced-motion:reduce){#btt-float{transition:none;}}
-/* On mobile, sit above the bottom nav bar */
-@media(max-width:767px){#btt-float{bottom:72px;right:16px;}}
-/* Ambient chromatic backdrop — built from the archive's own decade colors
-   (chromatic.json), never an invented palette. Sits behind the footer
-   content at low opacity, drifting very slowly. Static neutral gradient
-   until JS supplies the real stops, so no-JS/slow-network visitors still
-   get a calm backdrop, never a flash of raw color. */
-footer{position:relative;overflow:hidden;}
-footer::before{
-  content:'';position:absolute;inset:0;z-index:0;opacity:0.10;
-  background:linear-gradient(120deg,#8e7164,#c4c7c7,#8e7164);
-  background-size:200% 200%;
-}
-footer.fcg-ready::before{
-  animation:fcg-drift 90s linear infinite;
-}
-@keyframes fcg-drift{0%{background-position:0% 50%}100%{background-position:200% 50%}}
-@media(prefers-reduced-motion:reduce){footer.fcg-ready::before{animation:none;}}
-footer .footer-inner{position:relative;z-index:1;}
-.footer-stat-strip{font-family:Inter,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#8e7164;margin:0 0 14px;text-align:center;}
-.footer-last-updated{font-family:Inter,sans-serif;font-size:9px;font-weight:500;letter-spacing:0.06em;color:#8d8d8d;margin:6px 0 0;}
-@media(max-width:767px){.footer-stat-strip{text-align:left;}}
-</style>
-<footer class="bg-surface-container-high py-16 px-margin-desktop border-t border-outline-variant">
-  <div class="max-w-container-max mx-auto footer-inner">
-  <p class="footer-stat-strip" data-stat-card>1,084 Works &middot; 50 Years &middot; 1974&ndash;Present &middot; Cleveland, OH</p>
-  <div style="padding-top:14px;display:flex;flex-wrap:wrap;justify-content:center;gap:24px 48px;">
-    <div style="display:flex;flex-direction:column;align-items:flex-start;gap:8px;">
-      <span style="font-family:Inter,sans-serif;font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#8e7164;">Collection Views</span>
-      <a style="font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;text-decoration:none;transition:color 0.15s ease;padding:0;border:none;" href="/wall.html">WALL</a>
-      <a style="font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;text-decoration:none;transition:color 0.15s ease;padding:0;border:none;" href="/chromatic.html">CHROMATIC RIVER</a>
-      <a style="font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;text-decoration:none;transition:color 0.15s ease;padding:0;border:none;" href="/curatorial-map.html">CURATORIAL MAP</a>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-start;gap:8px;">
-      <span style="font-family:Inter,sans-serif;font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#8e7164;">Curatorial Projects</span>
-      <a style="font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;text-decoration:none;transition:color 0.15s ease;padding:0;border:none;" href="/imagined-museum.html">THE IMAGINED MUSEUM</a>
-      <a style="font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;text-decoration:none;transition:color 0.15s ease;padding:0;border:none;" href="/curatorial-companion.html">CURATORIAL COMPANION</a>
-      <a style="font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;text-decoration:none;transition:color 0.15s ease;padding:0;border:none;" href="/working-history/">WORKING HISTORY COLLECTION</a>
-    </div>
+<div id="missing">
+  <div class="line">This work isn&rsquo;t in the record under that number.</div>
+  <p class="caps">THE LINK MAY BE MISTYPED — OR THE PIECE MAY BE ONE OF THOSE LOST</p>
+  <a class="caps" href="archive.html">[ THE ARCHIVE — ALL 1,084 WORKS → ]</a>
+</div>
+
+<div id="walk" hidden>
+  <a id="prev" href="#">[ ← PREVIOUS ]</a>
+  <span class="hint">← → KEYS WALK THE RECORD</span>
+  <a id="next" href="#">[ NEXT → ]</a>
+</div>
+
+<div id="lightbox" role="dialog" aria-label="Full resolution view">
+  <img id="lb-img" alt="">
+  <button id="lb-close" class="caps">[ CLOSE ✕ ]</button>
+  <div id="lb-bar" role="toolbar" aria-label="Study controls">
+    <button id="lb-zoom-out" title="Zoom out (−)">[ − ]</button>
+    <span id="lb-zoom-label">FIT</span>
+    <button id="lb-zoom-in" title="Zoom in (+)">[ + ]</button>
+    <button id="lb-rot-ccw" title="Rotate counterclockwise (R)">[ ↺ ROTATE ]</button>
+    <button id="lb-rot-cw" title="Rotate clockwise (r)">[ ↻ ROTATE ]</button>
+    <button id="lb-flip-h" title="Flip horizontal (h)">[ ⇄ FLIP H ]</button>
+    <button id="lb-flip-v" title="Flip vertical (v)">[ ⇅ FLIP V ]</button>
+    <button id="lb-reset" title="Reset view (0)">[ RESET ]</button>
   </div>
-  <div style="margin-top:14px;padding-top:14px;border-top:1px solid #c4c7c7;display:flex;flex-direction:column;md:flex-direction:row;justify-content:space-between;align-items:center;gap:16px;">
-    <div style="display:flex;flex-direction:column;gap:2px;">
-      <div style="display:flex;align-items:center;gap:8px;">
-        <img src="/_shared/butterfly-mark.png" alt="" width="12" height="12" style="opacity:0.6;" aria-hidden="true"/>
-        <p style="font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;margin:0;">© <span id="footer-year">2026</span> JEFFREY F. S. NEUMANN. ALL RIGHTS RESERVED.</p>
-      </div>
-      <p class="footer-last-updated" id="footer-last-updated"></p>
-    </div>
-    <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:center;">
-      <button id="back-to-top" style="background:none;border:none;cursor:pointer;font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;padding:0;transition:color 0.15s ease;" aria-label="Back to top">↑ BACK TO TOP</button>
-      <a style="font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;text-decoration:none;transition:color 0.15s ease;padding:0;border:none;" href="https://github.com/JFSNeumann/jfsn-archive" target="_blank">OPEN SOURCE CODE</a>
-      <a style="font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;text-decoration:none;transition:color 0.15s ease;padding:0;border:none;" href="/privacy.html">PRIVACY</a>
-      <a style="font-family:Inter,sans-serif;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#575757;text-decoration:none;transition:color 0.15s ease;padding:0;border:none;" href="/sitemap.html">SITE MAP</a>
-    </div>
+</div>
+
+<noscript>
+  <div style="min-height:70vh;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:20px;text-align:center;padding:0 20px">
+    <p style="font-family:Georgia,serif;font-size:18px;line-height:1.9;color:#b9b1a6;max-width:34em">
+      This room hangs one work at a time, by script. Without JavaScript, every
+      work still has a permanent static page in the catalog:</p>
+    <a class="caps" href="/archive.html">[ THE V1 ARCHIVE → ]</a>
   </div>
-</footer>
-<!-- Floating back-to-top -->
-<button id="btt-float" aria-label="Back to top">↑</button>
-<script>
-document.getElementById('footer-year').textContent = new Date().getFullYear();
-(function(){
-  // Footer text button
-  var btn = document.getElementById('back-to-top');
-  if (btn) btn.addEventListener('click', function(){
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-  // Floating button
-  var floatBtn = document.getElementById('btt-float');
-  if (!floatBtn) return;
-  floatBtn.addEventListener('click', function(){
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-  window.addEventListener('scroll', function(){
-    floatBtn.classList.toggle('btt-visible', window.scrollY > 300);
-  }, { passive: true });
-})();
-
-/* Ambient footer gradient — decade-average colors from chromatic.json,
-   never invented. Reuses window.__chromaticBgById if another script on
-   the page already fetched it (archive.html, index.html, etc.). */
-(function () {
-  var footerEl = document.querySelector('footer.bg-surface-container-high');
-  if (!footerEl) return;
-
-  function decadeOf(year) { return Math.floor(year / 10) * 10; }
-
-  function applyGradient(works) {
-    var sums = {}, counts = {};
-    works.forEach(function (w) {
-      if (!w.year || !w.bg) return;
-      var d = decadeOf(w.year);
-      var hex = String(w.bg).replace('#', '');
-      if (hex.length !== 6) return;
-      var r = parseInt(hex.substr(0, 2), 16), g = parseInt(hex.substr(2, 2), 16), b = parseInt(hex.substr(4, 2), 16);
-      var s = sums[d] || (sums[d] = [0, 0, 0]);
-      s[0] += r; s[1] += g; s[2] += b;
-      counts[d] = (counts[d] || 0) + 1;
-    });
-    var decades = Object.keys(sums).sort();
-    if (decades.length < 2) return;
-    var stops = decades.map(function (d) {
-      var s = sums[d], n = counts[d];
-      return 'rgb(' + Math.round(s[0] / n) + ',' + Math.round(s[1] / n) + ',' + Math.round(s[2] / n) + ')';
-    });
-    stops.push(stops[0]); // loop back to start so the drift has no seam
-    footerEl.style.setProperty('--fcg-stops', stops.join(','));
-    var style = document.createElement('style');
-    style.textContent = 'footer.bg-surface-container-high::before{background:linear-gradient(120deg,' + stops.join(',') + ');background-size:200% 200%;}';
-    document.head.appendChild(style);
-    footerEl.classList.add('fcg-ready');
-  }
-
-  if (window.__chromaticBgById) {
-    // already a map keyed by id → bg only; need year too, so fetch fresh below
-  }
-  fetch('/chromatic.json').then(function (r) { return r.json(); }).then(applyGradient).catch(function () {});
-})();
-
-/* "Last updated" — most recent entry from changes.json (the same feed
-   changes.html reads), so the footer reflects real activity, not a guess. */
-(function () {
-  var el = document.getElementById('footer-last-updated');
-  if (!el) return;
-  fetch('/changes.json').then(function (r) { return r.json(); }).then(function (data) {
-    if (!Array.isArray(data) || !data.length) return;
-    var date = data[0].date;
-    if (!date) return;
-    el.textContent = 'Site last updated ' + date;
-  }).catch(function () {});
-})();
-</script>
-<script data-goatcounter="https://jfsn.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-<script>if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
-<!-- FOOTER:END -->
-
+</noscript>
 
 <script>
-const params = new URLSearchParams(location.search);
-const workId = params.get('id');
+(async function(){
+  'use strict';
+  const ORI_LABEL = { v: 'Vertical', h: 'Horizontal', s: 'Square' };
+  const works = await fetch('current.json', {cache:'no-cache'}).then(r => r.json());
+  const id = new URLSearchParams(location.search).get('id');
+  const idx = works.findIndex(w => w.i === id);
 
-// Keyboard ← / → navigation
-let _prevHref = null, _nextHref = null;
-let _allWorks = null, _curIdx = -1;
-document.addEventListener('keydown', function(e) {
-  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-  if (e.metaKey || e.ctrlKey || e.altKey) return;
-  if (e.key === 'ArrowLeft'  && _prevHref) { e.preventDefault(); location.href = _prevHref; }
-  if (e.key === 'ArrowRight' && _nextHref) { e.preventDefault(); location.href = _nextHref; }
-});
+  if (idx < 0) {
+    document.getElementById('missing').classList.add('on');
+    document.title = 'Not in the record — Jeffrey F. S. Neumann';
+    return;
+  }
 
-// Swipe left/right (mobile)
-let _tx = 0, _ty = 0;
-document.addEventListener('touchstart', function(e) {
-  _tx = e.changedTouches[0].clientX;
-  _ty = e.changedTouches[0].clientY;
-}, { passive: true });
-document.addEventListener('touchend', function(e) {
-  const dx = e.changedTouches[0].clientX - _tx;
-  const dy = e.changedTouches[0].clientY - _ty;
-  if (Math.abs(dx) < 50 || Math.abs(dy) > Math.abs(dx) * 0.75) return;
-  if (dx < 0 && _nextHref) location.href = _nextHref;
-  if (dx > 0 && _prevHref) location.href = _prevHref;
-}, { passive: true });
+  const w = works[idx];
+  const room = document.getElementById('room');
+  const walk = document.getElementById('walk');
+  room.hidden = false;
+  walk.hidden = false;
 
-function typeLabel(t) {
-  return { collage: 'Collage', photograph: 'Photography', sculpture: 'Sculpture', painting: 'Painting' }[t] || t;
-}
+  document.title = w.t + ' — Jeffrey F. S. Neumann';
+  const img = document.getElementById('work-img');
+  img.src = '/artworks/medium/' + w.i + '.avif';
+  img.alt = w.t;
+  if (w.w && w.h) img.style.aspectRatio = w.w + '/' + w.h;
+  document.getElementById('work-cap').textContent =
+    w.t.toUpperCase() + ' · ' + w.yd.toUpperCase() + ' · ' + w.m.toUpperCase();
+  document.getElementById('work-no').textContent = w.i.toUpperCase() + ' — ' + w.yd.toUpperCase();
+  document.getElementById('work-title').textContent = w.t;
+  document.getElementById('v-year').textContent = w.yd;
+  document.getElementById('v-medium').textContent = w.m;
+  document.getElementById('v-ori').textContent = ORI_LABEL[w.o] || '—';
+  document.getElementById('v-no').textContent = w.i.toUpperCase();
+  if (w.x) document.getElementById('flag').classList.add('on');
+  if (w.g) document.getElementById('series-door').classList.add('on');
 
-function metaRow(label, value, mono) {
-  const valStyle = mono
-    ? 'font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:10px;letter-spacing:0.06em;color:#8e7164;'
-    : '';
-  return `<div class="grid grid-cols-3 gap-xs items-baseline py-sm" style="column-gap:16px;">
-    <span class="font-label-md text-label-md text-secondary uppercase">${label}</span>
-    <span class="col-span-2 font-body-md text-body-md" style="${valStyle}">${value}</span>
-  </div>`;
-}
+  // ---------- prev / next walk (chronological, same order as The Current) ----------
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+  if (idx > 0) prev.href = 'artwork.html?id=' + works[idx - 1].i;
+  else prev.style.visibility = 'hidden';
+  if (idx < works.length - 1) next.href = 'artwork.html?id=' + works[idx + 1].i;
+  else next.style.visibility = 'hidden';
+  window.addEventListener('keydown', e => {
+    const studying = document.getElementById('lightbox').classList.contains('on');
+    if (e.key === 'Escape') closeLB();
+    else if (studying) return; // arrows stay with the study view
+    else if (e.key === 'ArrowLeft' && idx > 0) location.href = prev.href;
+    else if (e.key === 'ArrowRight' && idx < works.length - 1) location.href = next.href;
+  });
 
-// Themes that have a dedicated deep-dive page; everything else uses the generic
-// theme view. Keep in sync with the same map in gen-artwork-pages.py.
-const THEME_PAGES = {
-  'Guernica':'guernica.html', 'Targets':'targets.html', 'Framed':'framed.html',
-  'Torsos & Faces':'torsos-faces.html', 'Gallery':'gallery-images.html',
-  'Mr. Snowmann':'mr-snowmann.html', 'Crosses':'crosses.html', 'Collaboration':'collaboration.html'
-};
-function themeLink(t) {
-  const href = THEME_PAGES[t] || ('series.html?theme=' + encodeURIComponent(t));
-  return `<a href="${href}" class="underline underline-offset-4 hover:text-international-orange">${t}</a>`;
-}
-// Orientation is derived from image proportions — a stand-in for physical
-// dimensions until those are measured. Links to the matching archive filter.
-const ORIENT_LABELS = { vertical:'Vertical', horizontal:'Horizontal', square:'Square' };
-
-fetch('catalog.json')
-  .then(r => r.json())
-  .then(works => {
-    document.getElementById('loading').classList.add('hidden');
-
-    const idx = works.findIndex(w => w.file === workId + '.avif');
-    if (idx === -1) {
-      document.getElementById('work-image')?.remove();
-      document.getElementById('not-found').classList.remove('hidden');
-      return;
-    }
-    _allWorks = works;
-    _curIdx = idx;
-
-    const w = works[idx];
-    document.getElementById('work-content').classList.remove('hidden');
-    document.dispatchEvent(new CustomEvent('artwork:loaded', { detail: w }));
-
-    // Populate related works in same series
-    if (w.series) {
-      const relatedIds = works
-        .filter(x => x.series === w.series && x.file !== w.file)
-        .slice(0, 4)
-        .map(x => x.file.replace('.avif', ''));
-      if (relatedIds.length > 0) {
-        const relatedDiv = document.getElementById('related-works');
-        const list = document.getElementById('related-works-list');
-        list.innerHTML = relatedIds.map(id =>
-          `<a class="related-work-card" href="artwork.html?id=${id}" style="font-size:12px;color:#B84700;text-decoration:none;border-bottom:1px solid #B84700;padding:4px 0;display:block;">→ ${id}</a>`
-        ).join('');
-        // Phase B 7: Stagger entrance (50ms per card)
-        document.querySelectorAll('.related-work-card').forEach((card, i) => {
-          card.style.setProperty('--delay', `${i * 0.05}s`);
-        });
-        relatedDiv.style.display = 'block';
-      }
-    }
-
-    // SEO
-    const titleText = w.title || 'Untitled';
-    document.getElementById('page-title').textContent = `${titleText} — Jeffrey F. S. Neumann`;
-    document.getElementById('page-desc').content = `${titleText}${(w.year_display || w.year) ? ', ' + (w.year_display || w.year) : ''} — ${typeLabel(w.work_type)} by Jeffrey F. S. Neumann.`;
-    document.getElementById('page-canonical').href = `https://jfsn.com/artworks/pages/${workId}.html`;
-    document.getElementById('og-title').content  = `${titleText} — Jeffrey F. S. Neumann`;
-    document.getElementById('og-desc').content   = `${titleText}${(w.year_display || w.year) ? ', ' + (w.year_display || w.year) : ''} — ${typeLabel(w.work_type)} by Jeffrey F. S. Neumann.`;
-    document.getElementById('og-image').content  = `https://jfsn.com/artworks/thumbs/${w.file}`;
-    document.getElementById('og-url').content    = `https://jfsn.com/artwork.html?id=${workId}`;
-
-    // JSON-LD
-    const existingLd = document.getElementById('work-jsonld');
-    if (existingLd) existingLd.remove();
-    const ld = document.createElement('script');
-    ld.id = 'work-jsonld';
-    ld.type = 'application/ld+json';
-    ld.textContent = JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "VisualArtwork",
-      "name": titleText,
-      "url": `https://jfsn.com/artworks/pages/${workId}.html`,
-      "image": `https://jfsn.com/artworks/full/${w.file}`,
-      "dateCreated": w.year ? String(w.year) : undefined,
-      "artMedium": w.materials || w.work_type || undefined,
-      "creator": {
-        "@type": "Person",
-        "name": "Jeffrey F. S. Neumann",
-        "url": "https://jfsn.com/about.html"
-      },
-      "isPartOf": {
-        "@type": "CollectionPage",
-        "name": "The Archive — Jeffrey F. S. Neumann",
-        "url": "https://jfsn.com/archive.html"
-      }
-    });
-    document.head.appendChild(ld);
-
-    // Image — developing animation on load + view-transition-name for morphing
-    const img = document.getElementById('work-image');
-    img.addEventListener('load', function () {
-      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        img.classList.add('artwork-developing');
-      }
-    }, { once: true });
-    img.src = `artworks/full/${w.file}`;
-    img.alt = titleText;
-    /* view-transition-name lives in CSS (#work-image → artwork-hero) so the
-       cross-document morph pairs with the card stamped on the homepage. The
-       old inline 'vt-artwork-<id>' stamp overrode that rule and paired with
-       nothing — the same-document morph it belonged to never survived
-       navigation. */
-    document.getElementById('full-res-btn').dataset.src = `artworks/full/${w.file}`;
-    document.getElementById('full-res-btn').dataset.alt = titleText;
-
-    // Title + Stitch eyebrow + italic subline
-    document.getElementById('work-title').textContent = titleText;
-    var archiveId = (w.file || '').replace('.avif','').toUpperCase();
-    var eyebrow = document.getElementById('work-eyebrow');
-    if (eyebrow) eyebrow.textContent = archiveId + ' — ' + (w.year_display || w.year || '');
-    var subline = document.getElementById('work-type-subline');
-    if (subline) subline.textContent = typeLabel(w.work_type) + (w.series ? ' · ' + w.series : '');
-    // Mobile overlay title
-    var mTitle = document.getElementById('artwork-mobile-title-text');
-    var mYear  = document.getElementById('artwork-mobile-year-text');
-    if (mTitle) mTitle.textContent = titleText;
-    if (mYear)  mYear.textContent  = w.year_display || w.year || '';
-
-    // Recently-viewed — write to localStorage so search overlay can show it
+  // ---------- copy link ----------
+  document.getElementById('copy-link').addEventListener('click', async () => {
     try {
-      const RECENT_KEY = 'jfsn-recently-viewed';
-      let recent = JSON.parse(localStorage.getItem(RECENT_KEY) || '[]');
-      recent = recent.filter(r => r.id !== workId); // remove if already present
-      recent.unshift({ id: workId, title: titleText, year: w.year || null });
-      if (recent.length > 12) recent.length = 12; // keep last 12
-      localStorage.setItem(RECENT_KEY, JSON.stringify(recent));
+      await navigator.clipboard.writeText(location.origin + '/v2/artwork.html?id=' + w.i);
+      const c = document.getElementById('copied');
+      c.classList.add('on');
+      setTimeout(() => c.classList.remove('on'), 1600);
     } catch (_) {}
-
-    // Meta rows
-    const meta = document.getElementById('meta-rows');
-    meta.innerHTML = metaRow('Year', w.year_display || w.year || '—');
-    meta.innerHTML += metaRow('Medium', typeLabel(w.work_type));
-    if (w.composite) {
-      meta.innerHTML += metaRow('Image', '<span class="italic text-archive-gray">Photoshop composite — imagined placement</span>');
-    }
-    if (w.orientation && ORIENT_LABELS[w.orientation]) {
-      meta.innerHTML += metaRow('Orientation', `<a href="archive.html?orientation=${w.orientation}" class="underline underline-offset-4 hover:text-international-orange">${ORIENT_LABELS[w.orientation]}</a>`);
-    }
-    if (w.series) {
-      meta.innerHTML += metaRow('Series', `<a href="series-index.html" class="underline underline-offset-4 hover:text-international-orange">${w.series}</a>`);
-    }
-    if (w.themes && w.themes.length) {
-      meta.innerHTML += metaRow('Themes', w.themes.map(themeLink).join(', '));
-    }
-    meta.innerHTML += metaRow('Archive No.', w.file.replace('.avif', '').toUpperCase(), true);
-
-    // Prev / next
-    const prevWork = idx > 0 ? works[idx - 1] : null;
-    const nextWork = idx < works.length - 1 ? works[idx + 1] : null;
-    const prevEl = document.getElementById('prev-link');
-    const nextEl = document.getElementById('next-link');
-    // Accent color tagging (data-accent-color, for accent-transition.js) is
-    // handled sitewide by chromatic-accent-wire.js — it picks up these links
-    // the same as any other artwork.html?id= link on the page.
-
-    if (prevWork) {
-      _prevHref = `artwork.html?id=${prevWork.file.replace('.avif','')}`;
-      prevEl.href = _prevHref;
-      document.getElementById('prev-title').textContent = prevWork.title || '';
-    } else {
-      prevEl.classList.add('invisible');
-    }
-    if (nextWork) {
-      _nextHref = `artwork.html?id=${nextWork.file.replace('.avif','')}`;
-      nextEl.href = _nextHref;
-      document.getElementById('next-title').textContent = nextWork.title || '';
-    } else {
-      nextEl.classList.add('invisible');
-    }
-  })
-  .catch(e => {
-    document.getElementById('loading').classList.add('hidden');
-    document.getElementById('work-image')?.remove();
-    document.getElementById('not-found').classList.remove('hidden');
-    console.error(e);
   });
-</script>
 
-<div id="lr-overlay" aria-modal="true" role="dialog" aria-label="Full resolution image viewer"
-  style="position:fixed;inset:0;z-index:200;background:rgba(11,11,11,0.96);flex-direction:column;">
+  // ---------- where this sits: a legible locator across fifty years ----------
+  const strip = document.getElementById('strip');
+  const sctx = strip.getContext('2d');
+  // decade landmarks (works is year-sorted), echoing The Current's minimap
+  const decades = [];
+  { let last = -1;
+    works.forEach((wk, i) => {
+      const d = Math.floor(wk.y / 10) * 10;
+      if (d !== last) { decades.push({ d, i }); last = d; }
+    }); }
+  const thisDecade = Math.floor(w.y / 10) * 10;
+  const frac = idx / (works.length - 1);
 
-  <!-- Image area -->
-  <div id="lr-img-wrap"
-    style="flex:1;overflow:auto;display:flex;align-items:center;justify-content:center;padding:24px 24px 0;">
-    <img id="lr-img" src="" alt=""
-      style="max-width:100%;height:auto;display:block;transform-origin:center center;"
-    />
-  </div>
+  // the "you are here" marker + its decade chip (crisp HTML, not canvas text)
+  const here = document.getElementById('here');
+  here.style.left = (frac * 100) + '%';
+  document.getElementById('here-yr').textContent = thisDecade + 's';
 
-  <!-- Controls bar -->
-  <div style="flex-shrink:0;display:flex;align-items:center;justify-content:center;gap:8px;padding:16px 24px;border-top:1px solid rgba(255,255,255,0.12);">
-    <button class="lr-btn" data-action="rcw"  aria-label="Rotate clockwise">[ ↻ ROTATE CW ]</button>
-    <button class="lr-btn" data-action="rccw" aria-label="Rotate counter-clockwise">[ ↺ ROTATE CCW ]</button>
-    <button class="lr-btn" data-action="fh"   aria-label="Flip horizontal">[ ⇄ FLIP H ]</button>
-    <button class="lr-btn" data-action="fv"   aria-label="Flip vertical">[ ⇅ FLIP V ]</button>
-    <button class="lr-btn" data-action="reset" aria-label="Reset">[ RESET ]</button>
-    <button class="lr-btn lr-btn--close" data-action="close" aria-label="Close">[ ✕ CLOSE ]</button>
-  </div>
-</div>
+  // the decade axis beneath the band, this work's decade lit
+  const axis = document.getElementById('decade-axis');
+  axis.innerHTML = decades.map(dd => {
+    const left = dd.i / (works.length - 1) * 100;
+    const on = dd.d === thisDecade ? ' class="on"' : '';
+    return '<span' + on + ' style="left:' + left.toFixed(2) + '%">' + dd.d + 's</span>';
+  }).join('');
 
-<script>
-(function () {
-  var overlay  = document.getElementById('lr-overlay');
-  var lrImg    = document.getElementById('lr-img');
-  var openBtn  = document.getElementById('full-res-btn');
-  var imgWrap  = document.getElementById('lr-img-wrap');
-
-  var state = { rot: 0, fh: 1, fv: 1 };
-
-  function applyTransform() {
-    lrImg.style.transform =
-      'rotate(' + state.rot + 'deg) scaleX(' + state.fh + ') scaleY(' + state.fv + ')';
+  function drawStrip(){
+    const W = strip.clientWidth || strip.parentElement.clientWidth;
+    const H = 30;
+    const DPR = Math.min(devicePixelRatio || 1, 2);
+    strip.width = W * DPR; strip.height = H * DPR;
+    sctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    sctx.clearRect(0, 0, W, H);
+    // the fifty years as a band of color
+    const bw = Math.max(1, W / works.length);
+    for (let i = 0; i < works.length; i++) {
+      sctx.fillStyle = works[i].c;
+      sctx.globalAlpha = 0.5;
+      sctx.fillRect(i / works.length * W, 6, bw, 18);
+    }
+    // decade boundary ticks — landmarks in the fifty years
+    sctx.globalAlpha = 1;
+    sctx.fillStyle = 'rgba(232,226,217,0.28)';
+    for (const dd of decades) {
+      if (dd.i === 0) continue;
+      sctx.fillRect(dd.i / works.length * W, 4, 1, 22);
+    }
   }
+  drawStrip();
+  window.addEventListener('resize', drawStrip);
+  // the whole block is an <a> to ?at= ; keep it a single-history navigation
+  document.getElementById('sits').setAttribute('href', 'current.html?at=' + w.i);
 
-  function openLightbox() {
-    var src = openBtn.dataset.src;
-    var alt = openBtn.dataset.alt || '';
-    if (!src) return;
-    state = { rot: 0, fh: 1, fv: 1 };
-    lrImg.src = src;
-    lrImg.alt = alt;
-    applyTransform();
-    overlay.classList.add('is-open');
+  // ---------- full resolution lightbox + study controls ----------
+  // Viewer-side transforms at the visitor's explicit command — the file
+  // itself is never altered; RESET always returns the work shown straight.
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lb-img');
+  const zoomLabel = document.getElementById('lb-zoom-label');
+  const view = { scale: 1, rot: 0, flipH: false, flipV: false, panX: 0, panY: 0 };
+
+  function applyView(){
+    // translate first = screen-space pan regardless of rotation
+    lbImg.style.transform =
+      'translate(' + view.panX + 'px,' + view.panY + 'px) ' +
+      'rotate(' + view.rot + 'deg) ' +
+      'scale(' + (view.scale * (view.flipH ? -1 : 1)) + ',' +
+                 (view.scale * (view.flipV ? -1 : 1)) + ')';
+    lb.classList.toggle('zoomed', view.scale > 1);
+    zoomLabel.textContent = view.scale === 1 ? 'FIT' : Math.round(view.scale * 100) + '%';
+  }
+  function resetView(){
+    view.scale = 1; view.rot = 0; view.flipH = false; view.flipV = false;
+    view.panX = 0; view.panY = 0;
+    applyView();
+  }
+  function zoomBy(f){
+    view.scale = Math.min(6, Math.max(1, view.scale * f));
+    if (view.scale === 1) { view.panX = 0; view.panY = 0; }
+    applyView();
+  }
+  function rotateBy(deg){ view.rot = (view.rot + deg + 360) % 360; applyView(); }
+
+  function openLB(){
+    lbImg.src = '/artworks/full/' + w.i + '.avif';
+    lbImg.onerror = () => { lbImg.onerror = null; lbImg.src = '/artworks/medium/' + w.i + '.avif'; };
+    lbImg.alt = w.t + ' — full resolution';
+    resetView();
+    lb.classList.add('on');
     document.body.style.overflow = 'hidden';
-    overlay.focus();
   }
-
-  function closeLightbox() {
-    overlay.classList.remove('is-open');
+  function closeLB(){
+    lb.classList.remove('on');
+    resetView();
     document.body.style.overflow = '';
-    lrImg.src = '';
-    openBtn.focus();
   }
+  img.addEventListener('click', openLB);
+  document.getElementById('view-full').addEventListener('click', openLB);
+  document.getElementById('lb-close').addEventListener('click', closeLB);
+  lb.addEventListener('click', e => { if (e.target === lb) closeLB(); });
 
-  if (openBtn) openBtn.addEventListener('click', openLightbox);
+  document.getElementById('lb-zoom-in').addEventListener('click', () => zoomBy(1.5));
+  document.getElementById('lb-zoom-out').addEventListener('click', () => zoomBy(1 / 1.5));
+  document.getElementById('lb-rot-cw').addEventListener('click', () => rotateBy(90));
+  document.getElementById('lb-rot-ccw').addEventListener('click', () => rotateBy(-90));
+  document.getElementById('lb-flip-h').addEventListener('click', () => { view.flipH = !view.flipH; applyView(); });
+  document.getElementById('lb-flip-v').addEventListener('click', () => { view.flipV = !view.flipV; applyView(); });
+  document.getElementById('lb-reset').addEventListener('click', resetView);
 
-  overlay.addEventListener('click', function (e) {
-    if (e.target === overlay || e.target === imgWrap) closeLightbox();
+  // click the image to toggle fit ↔ 200%; drag to pan when zoomed; wheel zooms
+  lbImg.addEventListener('click', () => {
+    if (dragMoved > 5) return;
+    if (view.scale === 1) { view.scale = 2; applyView(); }
+    else resetView();
   });
+  lb.addEventListener('wheel', e => {
+    e.preventDefault();
+    zoomBy(e.deltaY < 0 ? 1.18 : 1 / 1.18);
+  }, { passive: false });
 
-  overlay.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') closeLightbox();
-    if (e.key === 'r' || e.key === 'R') { state.rot = (state.rot + 90) % 360; applyTransform(); }
-    if (e.key === 'f' || e.key === 'F') { state.fh *= -1; applyTransform(); }
+  let dragging = false, dragMoved = 0, lx = 0, ly = 0;
+  lbImg.addEventListener('pointerdown', e => {
+    if (view.scale === 1) return;
+    dragging = true; dragMoved = 0; lx = e.clientX; ly = e.clientY;
+    lb.classList.add('dragging');
+    try { lbImg.setPointerCapture(e.pointerId); } catch (_) {}
+    e.preventDefault();
   });
-
-  document.querySelectorAll('.lr-btn').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      switch (btn.dataset.action) {
-        case 'rcw':   state.rot = (state.rot + 90) % 360; break;
-        case 'rccw':  state.rot = (state.rot - 90 + 360) % 360; break;
-        case 'fh':    state.fh *= -1; break;
-        case 'fv':    state.fv *= -1; break;
-        case 'reset': state = { rot: 0, fh: 1, fv: 1 }; break;
-        case 'close': closeLightbox(); return;
-      }
-      applyTransform();
-    });
+  lbImg.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    view.panX += e.clientX - lx; view.panY += e.clientY - ly;
+    dragMoved += Math.abs(e.clientX - lx) + Math.abs(e.clientY - ly);
+    lx = e.clientX; ly = e.clientY;
+    applyView();
   });
-})();
-</script>
+  ['pointerup', 'pointercancel'].forEach(ev =>
+    lbImg.addEventListener(ev, () => { dragging = false; lb.classList.remove('dragging'); }));
 
-<!-- Slideshow mode — full-archive autoplay sequence -->
-<div id="slideshow-overlay" aria-modal="true" role="dialog" aria-label="Archive slideshow"
-  style="position:fixed;inset:0;z-index:210;background:rgba(11,11,11,0.97);flex-direction:column;display:none;">
-
-  <div id="ss-progress" aria-hidden="true" style="position:absolute;top:0;left:0;height:2px;background:#FF6600;width:0%;transition:width 0.1s linear;"></div>
-
-  <div id="ss-img-wrap" style="flex:1;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:24px 24px 0;position:relative;">
-    <img id="ss-img" src="" alt="" style="max-width:100%;max-height:100%;height:auto;display:block;"/>
-    <div id="ss-caption" aria-hidden="true" style="position:absolute;bottom:24px;left:0;right:0;text-align:center;pointer-events:none;">
-      <p id="ss-caption-title" style="font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:18px;color:#ffffff;margin:0 0 6px;"></p>
-      <p id="ss-caption-meta" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;letter-spacing:0.08em;color:rgba(255,255,255,0.6);margin:0;"></p>
-    </div>
-  </div>
-
-  <div style="flex-shrink:0;display:flex;align-items:center;justify-content:center;gap:8px;padding:16px 24px;border-top:1px solid rgba(255,255,255,0.12);flex-wrap:wrap;">
-    <button class="lr-btn" data-ss-action="prev"  aria-label="Previous work">[ ← PREV ]</button>
-    <button class="lr-btn" id="ss-play-btn" data-ss-action="toggle" aria-label="Play or pause">[ ▶ PLAY ]</button>
-    <button class="lr-btn" data-ss-action="next"  aria-label="Next work">[ NEXT → ]</button>
-    <button class="lr-btn" data-ss-action="view"  aria-label="View this work's full detail page">[ VIEW WORK ]</button>
-    <button class="lr-btn lr-btn--close" data-ss-action="close" aria-label="Close slideshow">[ ✕ CLOSE ]</button>
-  </div>
-</div>
-
-<script>
-(function () {
-  var overlay   = document.getElementById('slideshow-overlay');
-  var ssImg     = document.getElementById('ss-img');
-  var ssTitle   = document.getElementById('ss-caption-title');
-  var ssMeta    = document.getElementById('ss-caption-meta');
-  var ssProgress= document.getElementById('ss-progress');
-  var playBtn   = document.getElementById('ss-play-btn');
-  var openBtn   = document.getElementById('slideshow-btn');
-  var INTERVAL  = 4500;
-
-  var ssIdx = -1, playing = false, timer = null, tickStart = 0, raf = null;
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  function typeLabelLocal(t) {
-    return { collage: 'Collage', photograph: 'Photography', sculpture: 'Sculpture', painting: 'Painting' }[t] || t;
-  }
-
-  function preload(i) {
-    if (!_allWorks || !_allWorks[i]) return;
-    var im = new Image();
-    im.src = 'artworks/medium/' + _allWorks[i].file;
-  }
-
-  function showSlide(i) {
-    if (!_allWorks || !_allWorks.length) return;
-    ssIdx = ((i % _allWorks.length) + _allWorks.length) % _allWorks.length;
-    var w = _allWorks[ssIdx];
-    ssImg.classList.remove('artwork-developing');
-    ssImg.src = 'artworks/medium/' + w.file;
-    ssImg.alt = w.title || 'Untitled';
-    ssTitle.textContent = w.title || 'Untitled';
-    ssMeta.textContent = (w.year_display || w.year || '') + ' · ' + typeLabelLocal(w.work_type);
-    if (!reduceMotion) {
-      void ssImg.offsetWidth; // restart animation
-      ssImg.classList.add('artwork-developing');
-    }
-    preload(ssIdx + 1);
-    preload(ssIdx - 1 < 0 ? _allWorks.length - 1 : ssIdx - 1);
-  }
-
-  function updateProgressBar(ts) {
-    if (!playing) return;
-    var elapsed = ts - tickStart;
-    ssProgress.style.width = Math.min(100, (elapsed / INTERVAL) * 100) + '%';
-    raf = requestAnimationFrame(updateProgressBar);
-  }
-
-  function startPlay() {
-    playing = true;
-    playBtn.textContent = '[ ❙❙ PAUSE ]';
-    tickStart = performance.now();
-    raf = requestAnimationFrame(updateProgressBar);
-    timer = setInterval(function () {
-      showSlide(ssIdx + 1);
-      tickStart = performance.now();
-    }, INTERVAL);
-  }
-
-  function stopPlay() {
-    playing = false;
-    playBtn.textContent = '[ ▶ PLAY ]';
-    clearInterval(timer);
-    if (raf) cancelAnimationFrame(raf);
-    ssProgress.style.width = '0%';
-  }
-
-  function openSlideshow() {
-    if (_curIdx < 0) return;
-    overlay.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-    showSlide(_curIdx);
-    if (!reduceMotion) startPlay();
-    overlay.focus();
-  }
-
-  function closeSlideshow() {
-    stopPlay();
-    overlay.style.display = 'none';
-    document.body.style.overflow = '';
-    ssImg.src = '';
-    if (openBtn) openBtn.focus();
-  }
-
-  if (openBtn) openBtn.addEventListener('click', openSlideshow);
-
-  overlay.addEventListener('click', function (e) {
-    if (e.target === overlay) closeSlideshow();
-  });
-
-  document.addEventListener('keydown', function (e) {
-    if (overlay.style.display !== 'flex') return;
-    if (e.key === 'Escape') { closeSlideshow(); return; }
-    if (e.key === ' ') { e.preventDefault(); playing ? stopPlay() : startPlay(); return; }
-    if (e.key === 'ArrowLeft')  { stopPlay(); showSlide(ssIdx - 1); return; }
-    if (e.key === 'ArrowRight') { stopPlay(); showSlide(ssIdx + 1); return; }
-  });
-
-  document.querySelectorAll('[data-ss-action]').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      switch (btn.dataset.ssAction) {
-        case 'prev':   stopPlay(); showSlide(ssIdx - 1); break;
-        case 'next':   stopPlay(); showSlide(ssIdx + 1); break;
-        case 'toggle': playing ? stopPlay() : startPlay(); break;
-        case 'view':   location.href = 'artwork.html?id=' + _allWorks[ssIdx].file.replace('.avif', ''); break;
-        case 'close':  closeSlideshow(); break;
-      }
-    });
+  // keyboard: + − zoom · r/R rotate · h/v flip · 0 reset (only while open)
+  window.addEventListener('keydown', e => {
+    if (!lb.classList.contains('on')) return;
+    if (e.key === '+' || e.key === '=') zoomBy(1.5);
+    else if (e.key === '-' || e.key === '_') zoomBy(1 / 1.5);
+    else if (e.key === 'r') rotateBy(90);
+    else if (e.key === 'R') rotateBy(-90);
+    else if (e.key === 'h') { view.flipH = !view.flipH; applyView(); }
+    else if (e.key === 'v') { view.flipV = !view.flipV; applyView(); }
+    else if (e.key === '0') resetView();
   });
 })();
 </script>
-
-<script src="_shared/nav-active.js" defer></script>
-<script>
-/* Reading progress bar */
-(function(){
-  var bar = document.getElementById('reading-progress');
-  if (!bar) return;
-  window.addEventListener('scroll', function(){
-    var h = document.documentElement.scrollHeight - window.innerHeight;
-    bar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
-  }, { passive: true });
-})();
-/* Scroll-reveal for prev/next bar */
-(function(){
-  if (!window.IntersectionObserver) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var els = document.querySelectorAll('.reveal-on-scroll');
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('is-visible'); io.unobserve(e.target); } });
-  }, { threshold: 0.15 });
-  els.forEach(function(el){ io.observe(el); });
-})();
-</script>
-<script>
-/* Mini chromatic river — this work's place in fifty years of making */
-(function () {
-  var box = document.getElementById('artwork-river');
-  if (!box) return;
-  var id = new URLSearchParams(location.search).get('id');
-  if (!id) return;
-  fetch('chromatic.json')
-    .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
-    .then(function (data) {
-      data.sort(function (a, b) { return a.year - b.year; });
-      window.__chromaticBgById = {};
-      data.forEach(function (w) { if (w.id && w.bg) window.__chromaticBgById[w.id] = w.bg; });
-      document.dispatchEvent(new Event('chromatic:ready'));
-      var idx = -1;
-      for (var i = 0; i < data.length; i++) { if (data[i].id === id) { idx = i; break; } }
-      if (idx < 0) return;
-      var canvas = document.getElementById('artwork-river-canvas');
-      var sizeRetries = 0;
-      function draw() {
-        var W = box.clientWidth;
-        if (!W) { /* layout not settled yet — retry next frame, bounded */
-          if (sizeRetries++ < 60) requestAnimationFrame(draw);
-          return;
-        }
-        var H = 40, dpr = window.devicePixelRatio || 1;
-        canvas.width = W * dpr; canvas.height = H * dpr;
-        canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
-        var ctx = canvas.getContext('2d');
-        var sliceW = canvas.width / data.length;
-        data.forEach(function (w, i) {
-          ctx.fillStyle = w.bg;
-          ctx.fillRect(Math.floor(i * sliceW), 0, Math.ceil(sliceW) + 1, canvas.height);
-        });
-        var pct = ((idx + 0.5) / data.length) * 100;
-        document.getElementById('artwork-river-notch').style.left = 'calc(' + pct + '% - 1px)';
-        var yr = document.getElementById('artwork-river-year');
-        yr.textContent = data[idx].year;
-        if (pct > 82) { yr.style.left = 'auto'; yr.style.right = (100 - pct) + '%'; yr.style.marginRight = '5px'; }
-        else          { yr.style.right = 'auto'; yr.style.left = pct + '%'; yr.style.marginLeft = '5px'; }
-      }
-      box.style.display = 'block';
-      draw();
-      var rT = null;
-      window.addEventListener('resize', function () {
-        clearTimeout(rT); rT = setTimeout(draw, 200);
-      }, { passive: true });
-    })
-    .catch(function () { /* no data — strip stays hidden */ });
-})();
-</script>
-
-<script src="_shared/core.bundle.js" defer></script>
-<script src="_shared/nav-active.js" defer></script>
-  <!-- Phase 1 Enhancement Scripts -->
-  <!-- Phase 2 Enhancement Scripts -->
-  <script src="/_shared/hover-preview.js?v=20260703T4" defer></script>
-  <!-- Phase 3 Enhancement Scripts -->
-  <!-- Phase 4 Enhancement Scripts -->
-  <!-- Enhancement Extras Scripts -->
-  <script src="/_shared/artwork-animations.js" defer></script>
-  <script src="/_shared/accent-transition.js" defer></script>
-  <script src="/_shared/breadcrumb-navigation.js" defer></script>
-  <script src="/_shared/floating-home-button.js" defer></script>
 </body>
 </html>

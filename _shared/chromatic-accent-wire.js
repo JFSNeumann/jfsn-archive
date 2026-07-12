@@ -5,7 +5,7 @@
    before navigating to it, but only acts on links carrying
    data-accent-color. This script is what sets that attribute: it reads
    chromatic.json (each work's own extracted dominant color — no invented
-   color, ever) and tags every <a href="artwork.html?id=..."> on the page,
+   color, ever) and tags every <a href="/archive-v1/artwork.html?id=..."> on the page,
    so the wash follows from wherever you click into the archive, not just
    artwork.html's prev/next links.
 

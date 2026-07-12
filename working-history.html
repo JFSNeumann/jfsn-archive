@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>The Working History — Jeffrey F. S. Neumann</title>
+<meta name="description" content="The galleries that were real. Eight websites Jeff built to show his work, 2000–2020, preserved as they were.">
+<meta name="theme-color" content="#0c0a09">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/playfair-display-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script>document.documentElement.classList.add('js')</script>
+<style>
+  /* room-to-room continuity: fade in on arrival, veil out on internal doors */
+  @media (prefers-reduced-motion: no-preference){
+    .js body{animation:room-in .4s ease}
+    @keyframes room-in{from{opacity:0}to{opacity:1}}
+  }
+  #room-veil{position:fixed;inset:0;background:#0c0a09;opacity:0;pointer-events:none;transition:opacity .22s ease;z-index:99}
+  #room-veil.on{opacity:1;pointer-events:auto}
+</style>
+<script>
+addEventListener('DOMContentLoaded', () => {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const v = document.createElement('div'); v.id = 'room-veil';
+  document.body.appendChild(v);
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a');
+    if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target === '_blank') return;
+    const h = a.getAttribute('href') || '';
+    if (!h || /^(https?:|#|mailto:)/.test(h)) return;
+    e.preventDefault();
+    v.classList.add('on');
+    setTimeout(() => { location.href = a.href; }, 200);
+  }, true);
+  addEventListener('pageshow', e => { if (e.persisted) v.classList.remove('on'); });
+});
+</script>
+<style>
+  :root{
+    --room:#0c0a09;
+    --ink:#e8e2d9;
+    --dim:#7a7168;
+    --faint:#3a332d;
+    --frame:#2b241e;
+    --accent:#FF6600;
+  }
+  @font-face{font-family:'Playfair Display';src:url('/fonts/playfair-display-italic-latin.woff2') format('woff2');font-style:italic;font-weight:400 900;font-display:swap}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    background:var(--room);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--accent);color:#fff}
+  a{color:var(--dim);text-decoration:none;transition:color .25s}
+  a:hover{color:var(--accent)}
+  a:focus-visible{outline:2px solid var(--accent);outline-offset:4px;color:var(--accent)}
+  .caps{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim)}
+  .serif{font-family:Georgia,'Times New Roman',serif}
+
+  header.hud{
+    position:fixed;top:0;left:0;right:0;z-index:10;
+    display:flex;justify-content:space-between;align-items:baseline;
+    padding:calc(env(safe-area-inset-top,0px) + 22px) 26px 14px;
+    background:linear-gradient(var(--room) 55%,rgba(12,10,9,0.82) 78%,transparent);
+    pointer-events:none;
+  }
+  header.hud a{pointer-events:auto}
+  header.hud .who{font-size:11px;letter-spacing:.22em;font-weight:600;color:var(--ink)}
+  header.hud a.who:hover{color:var(--accent)}
+  header.hud .room-name{color:var(--faint)}
+  @media (max-width:640px){ header.hud .room-name{display:none} }
+
+  section{padding:0 clamp(20px,6vw,80px)}
+  .prose{
+    max-width:34em;margin:0 auto;
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:clamp(16px,1.9vw,19px);line-height:1.9;color:#b9b1a6;
+  }
+  .prose em{color:var(--ink)}
+
+  /* ---------- door ---------- */
+  #door{
+    min-height:100vh;display:flex;flex-direction:column;
+    justify-content:center;align-items:center;text-align:center;gap:28px;
+  }
+  #door h1{
+    font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
+    font-size:clamp(38px,7vw,76px);line-height:1.15;max-width:15em;
+  }
+  #door .fact{color:var(--dim)}
+
+  /* ---------- the counterpoint ---------- */
+  #intro{padding-top:2vh;padding-bottom:80px}
+  #intro .prose + .prose{margin-top:24px}
+
+  /* ---------- the index of built galleries ---------- */
+  #index{max-width:52em;margin:0 auto;padding:0 clamp(20px,6vw,80px) 4vh}
+  #index-head{
+    display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+    border-bottom:1px solid var(--frame);padding-bottom:14px;margin-bottom:6px;
+  }
+  .rec{
+    display:block;color:inherit;
+    border-bottom:1px solid var(--frame);
+    padding:26px 0;
+    display:grid;grid-template-columns:74px 120px 1fr auto;gap:22px;align-items:center;
+  }
+  .rec:hover,.rec:focus-visible{outline:none}
+  .rec .yr{
+    align-self:baseline;
+    font-variant-numeric:tabular-nums;font-size:13px;color:var(--dim);
+    letter-spacing:.06em;
+  }
+  .rec .thumb{
+    display:block;width:120px;height:75px;object-fit:cover;
+    border:1px solid var(--frame);background:#171310;
+    transition:border-color .2s;
+  }
+  .rec:hover .thumb,.rec:focus-visible .thumb{border-color:var(--dim)}
+  .rec .body .t{
+    font-family:'Playfair Display',Georgia,serif;font-style:italic;
+    font-size:clamp(18px,2.3vw,24px);color:var(--ink);line-height:1.25;
+    transition:color .2s;
+  }
+  .rec:hover .t,.rec:focus-visible .t{color:var(--accent)}
+  .rec .body .d{
+    margin-top:8px;font-family:Georgia,'Times New Roman',serif;
+    font-size:14px;line-height:1.7;color:var(--dim);max-width:40em;
+  }
+  .rec .body .rn{
+    display:block;margin-top:10px;font-size:9px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--faint);
+  }
+  .rec .enter{
+    align-self:center;font-size:9px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--dim);white-space:nowrap;transition:color .2s,transform .3s;
+  }
+  .rec:hover .enter,.rec:focus-visible .enter{color:var(--accent);transform:translateX(3px)}
+  @media (max-width:600px){
+    .rec{grid-template-columns:74px 1fr;gap:14px 16px}
+    .rec .thumb{grid-column:2;grid-row:1;width:100%;height:auto;aspect-ratio:8/5}
+    .rec .yr{grid-column:1;grid-row:1;align-self:start}
+    .rec .body{grid-column:1 / -1}
+    .rec .enter{grid-column:1 / -1;justify-self:start;margin-top:2px}
+  }
+
+  /* ---------- supplementary documents ---------- */
+  #docs{max-width:52em;margin:40px auto 0;padding:0 clamp(20px,6vw,80px)}
+  #docs .caps{display:block;margin-bottom:14px;color:var(--faint)}
+  #docs a{font-size:11px;letter-spacing:.14em;text-transform:uppercase;display:inline-block;margin-right:26px;margin-bottom:10px}
+
+  /* ---------- exit ---------- */
+  #exit{
+    min-height:70vh;display:flex;flex-direction:column;
+    justify-content:center;align-items:center;text-align:center;gap:30px;
+    padding-top:12vh;padding-bottom:12vh;
+  }
+  #exit .close-line{
+    font-family:'Playfair Display',Georgia,serif;font-style:italic;
+    font-size:clamp(24px,4.4vw,44px);line-height:1.32;max-width:18em;
+  }
+  #exit nav{display:flex;flex-direction:column;gap:16px;margin-top:12px}
+  #exit nav a{font-size:11px;letter-spacing:.22em}
+
+  .reveal-el{opacity:0;transform:translateY(16px)}
+  .js .reveal-el{transition:opacity 1s ease,transform 1s ease}
+  .reveal-el.seen{opacity:1;transform:none}
+  @media (prefers-reduced-motion: reduce){
+    .reveal-el{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+
+<header class="hud">
+  <a class="who" href="index.html">JEFFREY&nbsp;F.&nbsp;S.&nbsp;NEUMANN</a>
+  <span class="caps room-name">THE WORKING HISTORY</span>
+  <a class="caps" href="index.html">[ THE MUSEUM → ]</a>
+</header>
+
+<section id="door">
+  <div class="caps">THE WORKING HISTORY</div>
+  <h1>The galleries that were real.</h1>
+  <div class="caps fact">EIGHT WEBSITES · 2000 – 2020 · PRESERVED AS THEY WERE</div>
+</section>
+
+<section id="intro">
+  <p class="prose">The Hall of Openings gathered the museums he imagined — the
+  crowds, the walls, the openings that never happened. <em>These are the ones
+  he built.</em></p>
+  <p class="prose">For fifty years the galleries his work reliably lived in
+  were the ones he made himself: portfolio sites, a print shop for a street
+  character, a collaboration page for a grandson. Each is preserved here
+  exactly as it was — framework and all, from hand-authored HTML tables in
+  2000 to a Bootstrap portfolio in 2020. Read together, they are a second
+  archive: <em>fifty years of a maker deciding how to be seen</em>, and the
+  web changing underneath him the whole time.</p>
+</section>
+
+<section id="index">
+  <div id="index-head">
+    <span class="caps">THE BUILT GALLERIES</span>
+    <span class="caps">IN ORDER</span>
+  </div>
+  <!-- records populated below, chronological; each opens the preserved site -->
+  <noscript>
+    <p class="prose" style="padding:6vh 0;text-align:center">The eight built
+    galleries are listed by script from the archive. Without JavaScript, the
+    full collection is preserved at
+    <a href="/working-history/" style="color:var(--accent)">the Working
+    History index →</a>.</p>
+  </noscript>
+</section>
+
+<section id="docs" class="reveal-el">
+  <span class="caps">SUPPLEMENTARY RECORDS</span>
+  <a href="/working-history/Jeffrey-Neumann-LinkedIn-07-06-2026_03_03_PM.pdf" target="_blank" rel="noopener">[ LINKEDIN PROFILE — PDF → ]</a>
+  <a href="https://showspace.so/s/jeffrey-neumann-46" target="_blank" rel="noopener">[ SHOWSPACE — CURRENT, LIVE → ]</a>
+</section>
+
+<section id="exit">
+  <div class="caps">END OF THE WING</div>
+  <div class="close-line">He never waited for a gallery.<br>He kept building his own.</div>
+  <nav>
+    <a href="hall-of-openings.html">[ ← THE HALL OF OPENINGS ]</a>
+    <a href="the-studio.html">[ THE STUDIO → ]</a>
+    <a href="index.html">[ THE MUSEUM → ]</a>
+  </nav>
+</section>
+
+<script>
+(function(){
+  'use strict';
+  const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // The eight built galleries, chronological. Data mirrors the working-history
+  // index verbatim; each record doors OUT to the preserved site as an artifact.
+  const RECORDS = [
+    ['c. 2000', 'Untitled Fine Art Website', 'SITE001',
+      'Personal art website in hand-authored HTML tables, no CSS framework — the earliest surviving presentation of the digital work.',
+      '/working-history/websites/fine-art-2000/', 'site001'],
+    ['2014', 'JFSN Portfolio', 'SITE004',
+      'Professional portfolio built on custom jQuery; the earliest confirmed node in the portfolio lineage.',
+      '/working-history/websites/jfsn-2014/', 'site004'],
+    ['2015', 'mR_sNOWmann', 'SITE002',
+      'A print-sales site for a recurring street character — an Adobe Muse export, with dated photographs of a physical practice.',
+      '/working-history/websites/mr-snowmann/', 'site002'],
+    ['2016', 'JFSN Portfolio', 'SITE005',
+      'An Adobe Muse portfolio with responsive mobile and tablet variants, documenting four named client projects.',
+      '/working-history/websites/jfsn-2016/', 'site005'],
+    ['2018', 'JFSN Portfolio — Designer Edition', 'SITE006',
+      'The largest record in the collection: the only site spanning all three threads at once — professional design, family collaboration, fine art.',
+      '/working-history/websites/jfsn-2018/', 'site006'],
+    ['2018–20', 'Sebastian Website', 'SITE003',
+      'A family collaboration site documenting a grandson’s creative output alongside grandfather-and-grandson pieces.',
+      '/working-history/websites/sebastian-v1/', 'site003'],
+    ['2021', 'Sebastian Website — Adobe Portfolio', 'SITE007',
+      'A gallery-style presentation of the grandson’s work on Adobe Portfolio, captured by mirror rather than server export.',
+      '/working-history/websites/sebastian-v2/', 'site007'],
+    ['2020', 'JFSN Portfolio', 'SITE008',
+      'A Bootstrap portfolio preserved in its unfinished state — complete navigation and content, personalization left incomplete.',
+      '/working-history/websites/jfsn-2020/', 'site008'],
+  ];
+
+  const index = document.getElementById('index');
+  const frag = document.createDocumentFragment();
+  let n = 0;
+  for (const [yr, title, rn, desc, href, shot] of RECORDS){
+    n++;
+    const a = document.createElement('a');
+    a.className = 'rec reveal-el';
+    a.href = href;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.innerHTML =
+      '<span class="yr">' + yr + '</span>' +
+      '<img class="thumb" src="/assets/images/working-history/' + shot + '.avif" ' +
+        'alt="Preserved screenshot of the ' + title + ' website, as it appeared when built." ' +
+        (n <= 3 ? '' : 'loading="lazy" ') + 'decoding="async">' +
+      '<span class="body">' +
+        '<span class="t">' + title + '</span>' +
+        '<span class="d">' + desc + '</span>' +
+        '<span class="rn">RECORD ' + rn + '</span>' +
+      '</span>' +
+      '<span class="enter">[ ENTER THE SITE ↗ ]</span>';
+    frag.appendChild(a);
+  }
+  index.appendChild(frag);
+
+  // reveal-on-walk (scroll position + heartbeat; no IO, no RAF trust)
+  const targets = [...document.querySelectorAll('.reveal-el')];
+  if (REDUCED){ targets.forEach(el => el.classList.add('seen')); return; }
+  let byTop = [], ptr = 0;
+  function measure(){
+    byTop = targets.map(el => [el.getBoundingClientRect().top + scrollY, el]).sort((a,b)=>a[0]-b[0]);
+    ptr = 0; show();
+  }
+  function show(){
+    const limit = scrollY + innerHeight * 0.92;
+    while (ptr < byTop.length && byTop[ptr][0] < limit){ byTop[ptr][1].classList.add('seen'); ptr++; }
+  }
+  let queued = false;
+  addEventListener('scroll', () => {
+    if (queued) return; queued = true;
+    requestAnimationFrame(()=>{ queued=false; show(); });
+    setTimeout(()=>{ if(queued){ queued=false; show(); } }, 120);
+  }, { passive:true });
+  addEventListener('resize', measure);
+  setTimeout(measure, 400); measure();
+  let lastY = -1, lastH = -1;
+  setInterval(() => {
+    const h = document.documentElement.scrollHeight;
+    if (h !== lastH){ lastH = h; measure(); }
+    else if (scrollY !== lastY){ lastY = scrollY; show(); }
+  }, 500);
+})();
+</script>
+</body>
+</html>

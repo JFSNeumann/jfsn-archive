@@ -425,7 +425,7 @@
       const meta = [yr, wt].filter(Boolean).join(' · ');
 
       card.innerHTML =
-        '<a href="artwork.html?id=' + id + '" target="_blank">' +
+        '<a href="/archive-v1/artwork.html?id=' + id + '" target="_blank">' +
           '<img class="card__img" src="artworks/thumbs/' + id + '.avif" alt="" loading="lazy">' +
           '<div class="card__body">' +
             '<div class="card__id">' + id + (meta ? ' &nbsp;· ' + meta : '') + '</div>' +

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>The Flooded Wing — Jeffrey F. S. Neumann</title>
+<meta name="description" content="Five hundred to a thousand works. Water. Then bed bugs. No catalog. A room for what is missing.">
+<!-- AUDIO:LOST — reserved for Jeff reading, esp. "Sad. Enough." Do not fabricate a voice. -->
+<meta name="theme-color" content="#0c0a09">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/playfair-display-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script>document.documentElement.classList.add('js')</script>
+<style>
+  /* room-to-room continuity: fade in on arrival, veil out on internal doors */
+  @media (prefers-reduced-motion: no-preference){
+    .js body{animation:room-in .4s ease}
+    @keyframes room-in{from{opacity:0}to{opacity:1}}
+  }
+  #room-veil{position:fixed;inset:0;background:#0c0a09;opacity:0;pointer-events:none;transition:opacity .22s ease;z-index:99}
+  #room-veil.on{opacity:1;pointer-events:auto}
+</style>
+<script>
+addEventListener('DOMContentLoaded', () => {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const v = document.createElement('div'); v.id = 'room-veil';
+  document.body.appendChild(v);
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a');
+    if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target === '_blank') return;
+    const h = a.getAttribute('href') || '';
+    if (!h || /^(https?:|#|mailto:)/.test(h)) return;
+    e.preventDefault();
+    v.classList.add('on');
+    setTimeout(() => { location.href = a.href; }, 200);
+  }, true);
+  addEventListener('pageshow', e => { if (e.persisted) v.classList.remove('on'); });
+});
+</script>
+<style>
+  :root{
+    --room:#0c0a09;
+    --ink:#e8e2d9;
+    --dim:#7a7168;
+    --faint:#3a332d;
+    --frame:#2b241e;
+    --accent:#FF6600;
+  }
+  @font-face{font-family:'Playfair Display';src:url('/fonts/playfair-display-italic-latin.woff2') format('woff2');font-style:italic;font-weight:400 900;font-display:swap}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    background:var(--room);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--accent);color:#fff}
+  a{color:var(--dim);text-decoration:none;transition:color .25s}
+  a:hover{color:var(--accent)}
+  .caps{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim)}
+  .serif{font-family:Georgia,'Times New Roman',serif}
+
+  header.hud{
+    position:fixed;top:0;left:0;right:0;z-index:10;
+    display:flex;justify-content:space-between;align-items:baseline;
+    padding:calc(env(safe-area-inset-top,0px) + 22px) 26px 14px;
+    background:linear-gradient(var(--room) 55%,rgba(12,10,9,0.82) 78%,transparent);
+    pointer-events:none;
+  }
+  header.hud a{pointer-events:auto}
+  header.hud .who{font-size:11px;letter-spacing:.22em;font-weight:600;color:var(--ink)}
+  header.hud a.who:hover{color:var(--accent)}
+  header.hud .room-name{color:var(--faint)}
+  @media (max-width:640px){ header.hud .room-name{display:none} }
+
+  section{padding:0 clamp(20px,6vw,80px)}
+
+  /* ---------- the door ---------- */
+  #door{
+    min-height:100vh;display:flex;flex-direction:column;
+    justify-content:center;align-items:center;text-align:center;gap:30px;
+  }
+  #door .room-name{color:var(--dim)}
+  #door h1{
+    font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
+    font-size:clamp(64px,14vw,150px);line-height:1;
+  }
+  #door .facts{
+    font-family:Georgia,'Times New Roman',serif;font-size:clamp(17px,2.2vw,22px);
+    line-height:2;color:var(--ink);max-width:34em;
+  }
+  #door .down{margin-top:26px;color:var(--faint);font-size:18px;animation:sink 2.6s ease-in-out infinite}
+  @keyframes sink{0%,100%{transform:translateY(0)}50%{transform:translateY(10px)}}
+
+  .prose{
+    max-width:34em;margin:0 auto;
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:clamp(16px,1.9vw,19px);line-height:1.9;color:#b9b1a6;
+  }
+  .prose em{color:var(--ink)}
+  .rule-note{
+    max-width:34em;margin:110px auto 130px;text-align:center;
+  }
+  .rule-note .caps{color:var(--faint)}
+  .rule-note p{margin-top:18px}
+
+  /* ---------- the field of frames ---------- */
+  /* A wall of empty frames at room scale — same salon-column hang as the Hall,
+     so absence reads as pictures, not a texture of tiles. */
+  #field{max-width:1600px;margin:0 auto}
+  .field-grid{
+    columns:clamp(104px,11vw,164px);
+    column-gap:16px;
+  }
+  .fr{
+    break-inside:avoid;margin:0 0 16px;
+    /* an empty frame must read AS a frame at room scale: a faint raised panel
+       (a hairline on near-black vanishes). The certainty-fade past 500 still
+       ghosts the far ones out via --o on the element. */
+    background:#191510;
+    border:1px solid #453a2f;
+    aspect-ratio:var(--ar,3/4);
+    /* The certainty-fade (--o) is the ONLY opacity applied. Frames are visible
+       from the start — no scroll-reveal. A time-based reveal (transition OR
+       animation) is unsafe here: a throttled tab or an iPhone in Low Power Mode
+       stalls the animation clock, pinning the reveal at opacity 0 forever and
+       leaving all 1,000 frames invisible. Absence at architectural scale comes
+       from the sheer length of the scroll, not from a fade. */
+    opacity:var(--o,1);
+  }
+  a:focus-visible{outline:2px solid var(--accent);outline-offset:4px;color:var(--accent)}
+  .milestone{
+    padding:64px 0 50px;text-align:center;
+  }
+  .milestone .n{
+    font-family:'Playfair Display',Georgia,serif;font-style:italic;
+    font-size:clamp(20px,2.6vw,28px);color:var(--ink);
+  }
+  .milestone .caps{display:block;margin-top:10px;color:var(--faint)}
+  .after-field{margin:140px auto 160px;text-align:center}
+
+  /* ---------- the guernica wall ---------- */
+  #wall-room{padding:0}
+  #wall-room .intro{text-align:center;margin:0 auto 90px;padding:0 clamp(20px,6vw,80px)}
+  #strip{
+    overflow-x:auto;overflow-y:hidden;
+    -webkit-overflow-scrolling:touch;
+    cursor:grab;scrollbar-width:none;
+  }
+  #strip.fade-r{-webkit-mask-image:linear-gradient(90deg,#000 92%,transparent);mask-image:linear-gradient(90deg,#000 92%,transparent)}
+  #strip.fade-l{-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%);mask-image:linear-gradient(90deg,transparent,#000 8%)}
+  #strip.fade-l.fade-r{-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+  #strip::-webkit-scrollbar{display:none}
+  #strip.dragging{cursor:grabbing}
+  #strip-inner{
+    position:relative;
+    padding:40px clamp(40px,10vw,140px) 0;
+    width:max-content;
+  }
+  #gwall{
+    position:relative;
+    border:1px dashed #443a31;
+    display:flex;align-items:flex-end;
+    /* no-JS fallback keeps the true 25:11 proportion; JS refines to exact px */
+    width:186vh;aspect-ratio:25/11;
+  }
+  #gwall .void-label{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    color:var(--faint);font-size:10px;letter-spacing:.3em;text-transform:uppercase;
+  }
+  #figure{
+    position:absolute;bottom:0;left:6vh;height:43vh;
+    display:flex;flex-direction:column;align-items:center;
+  }
+  #figure .head{width:9px;height:9px;border:1px solid var(--dim);border-radius:50%}
+  #figure .body{width:1px;flex:1;background:var(--dim);margin-top:2px}
+  #figure .h-label{
+    position:absolute;top:-22px;left:50%;transform:translateX(-50%);
+    font-size:9px;letter-spacing:.18em;color:var(--dim);white-space:nowrap;
+  }
+  #ruler{position:relative;height:34px;margin-top:10px}
+  #ruler .tick{position:absolute;top:0;width:1px;height:8px;background:var(--faint)}
+  #ruler .tick.major{height:14px;background:var(--dim)}
+  #ruler .num{
+    position:absolute;top:18px;transform:translateX(-50%);
+    font-size:9px;letter-spacing:.16em;color:var(--dim);
+  }
+  #strip-hint{text-align:center;margin-top:34px}
+  #wall-caption{max-width:34em;margin:110px auto 0;padding:0 clamp(20px,6vw,80px);text-align:center}
+  #wall-caption blockquote{
+    font-family:'Playfair Display',Georgia,serif;font-style:italic;
+    font-size:clamp(26px,4.4vw,44px);color:var(--ink);margin:56px 0 14px;
+  }
+  #wall-caption .attr{color:var(--faint)}
+
+  /* ---------- the artifact ---------- */
+  #artifact{margin:200px auto;max-width:520px;text-align:center}
+  #artifact img{
+    width:100%;display:block;filter:grayscale(1);
+    border:1px solid var(--frame);
+  }
+  #artifact figcaption{margin-top:16px}
+
+  /* ---------- the exit ---------- */
+  #exit{
+    min-height:90vh;display:flex;flex-direction:column;
+    justify-content:center;align-items:center;text-align:center;gap:34px;
+    padding-bottom:12vh;
+  }
+  #exit .lesson{
+    font-family:'Playfair Display',Georgia,serif;font-style:italic;
+    font-size:clamp(30px,5.5vw,56px);line-height:1.25;
+  }
+  #exit .lesson em{font-style:italic;color:var(--accent)}
+  #exit nav{display:flex;flex-direction:column;gap:16px;margin-top:20px}
+  #exit nav a{font-size:11px;letter-spacing:.22em}
+
+  @media (prefers-reduced-motion: reduce){
+    .fr,.js .fr,.js .fr.seen{animation:none;transition:none;transform:none;opacity:var(--o,1)}
+    #door .down{animation:none}
+  }
+</style>
+</head>
+<body>
+
+<header class="hud">
+  <a class="who" href="index.html">JEFFREY&nbsp;F.&nbsp;S.&nbsp;NEUMANN</a>
+  <span class="caps room-name">THE FLOODED WING</span>
+  <a class="caps" href="index.html">[ THE MUSEUM → ]</a>
+</header>
+
+<section id="door">
+  <div class="caps room-name">THE FLOODED WING</div>
+  <h1>Lost.</h1>
+  <div class="facts">
+    Five hundred to a thousand works.<br>
+    Water. Then bed bugs.<br>
+    No catalog.
+  </div>
+  <div class="down">↓</div>
+</section>
+
+<section>
+  <div class="prose" style="margin-bottom:70px">
+    <p>The 2000s. Rented space, broken water pipes. Cardboard, paper, canvas —
+    the works that depended on dry storage soaked through. What could be
+    salvaged was salvaged. Then, months later, bed bugs.
+    <em>What had survived the water didn&rsquo;t survive the second event.</em>
+    Everything stored in that space had to be discarded — preventatively,
+    completely.</p>
+  </div>
+  <div class="rule-note">
+    <span class="caps">What this room does not do</span>
+    <p class="prose">No titles, no sizes, no images survive. The number isn&rsquo;t
+    precise because the number never existed — there was no inventory, no scan,
+    no list. The frames below depict nothing. They stand for what is missing,
+    one for one, as far as the estimate reaches.</p>
+  </div>
+</section>
+
+<section>
+  <div id="field" aria-label="One thousand empty frames, one for each work in the estimated range of the loss. Nothing is depicted; nothing survives to depict."><noscript>
+    <p class="prose" style="text-align:center;padding:8vh 0">The field of a
+    thousand empty frames is raised by script. Without JavaScript, hold the
+    number instead: <em>five hundred to a thousand works, and nothing to
+    show for a single one.</em></p>
+  </noscript></div>
+  <div class="after-field">
+    <p class="prose">Every frame above is empty because the record is empty.<br>
+    A few works survive only incidentally, in the background of other
+    photographs. What remains is memory.</p>
+  </div>
+</section>
+
+<section id="wall-room">
+  <div class="intro">
+    <span class="caps">AT THE FAR END OF THE WING, ONE WALL</span>
+  </div>
+  <div id="strip">
+    <div id="strip-inner">
+      <div id="gwall">
+        <div class="void-label">NO RECORD OF ITS APPEARANCE</div>
+        <div id="figure" aria-hidden="true">
+          <span class="h-label">5′9″ — FOR SCALE</span>
+          <div class="head"></div><div class="body"></div>
+        </div>
+      </div>
+      <div id="ruler" aria-hidden="true"></div>
+    </div>
+  </div>
+  <div id="strip-hint" class="caps">DRAG ACROSS — TWENTY-FIVE FEET</div>
+  <div id="wall-caption">
+    <p class="prose">A full-scale interpretation of Picasso&rsquo;s
+    <em>Guernica</em> — approximately 11 × 25 feet, made in the basement studio
+    on flexible material so it could be rolled and stored. It lived there for
+    years. No one else ever saw it. Later moved to storage. Gone with
+    everything else. Never photographed.</p>
+    <p class="prose" style="margin-top:26px">Asked, after more than thirty
+    years of working with <em>Guernica</em> as a reference and structure, why
+    he made something at that scale:</p>
+    <blockquote>&ldquo;It was about time.&rdquo;</blockquote>
+    <div class="attr caps">JEFFREY F. S. NEUMANN, 2026</div>
+  </div>
+</section>
+
+<section>
+  <figure id="artifact">
+    <img src="/artwork-in-trash-can.jpg" alt="A discarded artwork standing in a trash can, photographed in black and white." loading="lazy">
+    <figcaption class="caps">DISCARDED WORK, PHOTOGRAPHED BEFORE THE GARBAGE TRUCK CAME</figcaption>
+  </figure>
+</section>
+
+<section id="exit">
+  <div class="lesson">Not <em>be careful.</em><br>Be early.</div>
+  <p class="prose" style="max-width:30em">The archive on this site exists in
+  part because of that loss. Every surviving piece is photographed, described,
+  and backed up — so the work doesn&rsquo;t disappear twice.</p>
+  <nav>
+    <a href="/archive.html">[ WHAT SURVIVED — 1,084 WORKS → ]</a>
+    <a href="current.html">[ RETURN TO THE CURRENT → ]</a>
+    <a href="index.html">[ THE MUSEUM → ]</a>
+  </nav>
+</section>
+
+<script>
+(function(){
+  'use strict';
+
+  // deterministic RNG so the wing is the same room on every visit
+  function mulberry32(a){
+    return function(){
+      a |= 0; a = a + 0x6D2B79F5 | 0;
+      let t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  const rnd = mulberry32(20000603); // the decade of the loss
+
+  // ---------- the field: 1,000 empty frames ----------
+  const field = document.getElementById('field');
+  const TOTAL = 1000, CERTAIN = 500;
+  const milestones = {
+    100: ['one hundred', ''],
+    250: ['two hundred fifty', ''],
+    500: ['five hundred', 'AT LEAST THIS MANY'],
+    750: ['seven hundred fifty', 'PAST HERE, NO ONE KNOWS'],
+    1000: ['one thousand', 'THE ESTIMATE ENDS HERE'],
+  };
+  // chunked grids so tall frames never bleed into a milestone band
+  const frag = document.createDocumentFragment();
+  let grid = null;
+  for (let n = 1; n <= TOTAL; n++) {
+    if (!grid) {
+      grid = document.createElement('div');
+      grid.className = 'field-grid';
+      frag.appendChild(grid);
+    }
+    const f = document.createElement('div');
+    f.className = 'fr';
+    // picture proportions — portrait-leaning like the work, depicting nothing
+    const AR = ['2/3', '3/4', '3/4', '1/1', '1/1', '4/5', '4/3'];
+    f.style.setProperty('--ar', AR[Math.floor(rnd() * AR.length)]);
+    // certainty fades past the minimum count
+    const o = n <= CERTAIN ? 0.95 : Math.max(0.18, 0.95 - (n - CERTAIN) / (TOTAL - CERTAIN) * 0.8);
+    f.style.setProperty('--o', o.toFixed(2));
+    grid.appendChild(f);
+    if (milestones[n]) {
+      const m = document.createElement('div');
+      m.className = 'milestone';
+      m.innerHTML = '<span class="n serif">' + milestones[n][0] + '</span>' +
+        (milestones[n][1] ? '<span class="caps">' + milestones[n][1] + '</span>' : '');
+      frag.appendChild(m);
+      grid = null; // next frame starts a fresh grid chunk
+    }
+  }
+  field.appendChild(frag);
+  // Frames are visible from the start (CSS opacity:var(--o)); no scroll-reveal
+  // machinery — a per-frame reveal here depended on the animation clock (which
+  // stalls under throttling / Low Power Mode) and cost a 1,000-node offsetTop
+  // scan every 500ms. The certainty-fade lives in --o; the scale lives in the
+  // scroll. Nothing to reveal.
+
+  // ---------- the wall: 11 × 25 feet, true proportion ----------
+  const gwall = document.getElementById('gwall');
+  const figure = document.getElementById('figure');
+  const ruler = document.getElementById('ruler');
+  const strip = document.getElementById('strip');
+  const WALL_FT_W = 25, WALL_FT_H = 11, FIGURE_FT = 5.75;
+
+  function layoutWall(){
+    const ppf = (window.innerHeight * 0.82) / WALL_FT_H;  // wall stands 82vh tall
+    gwall.style.width = (WALL_FT_W * ppf) + 'px';
+    gwall.style.height = (WALL_FT_H * ppf) + 'px';
+    figure.style.height = (FIGURE_FT * ppf) + 'px';
+    figure.style.left = (0.75 * ppf) + 'px';
+    ruler.innerHTML = '';
+    for (let ft = 0; ft <= WALL_FT_W; ft++) {
+      const t = document.createElement('div');
+      t.className = 'tick' + (ft % 5 === 0 ? ' major' : '');
+      t.style.left = (ft * ppf) + 'px';
+      ruler.appendChild(t);
+      if (ft % 5 === 0) {
+        const n = document.createElement('div');
+        n.className = 'num';
+        n.style.left = (ft * ppf) + 'px';
+        n.textContent = ft + ' FT';
+        ruler.appendChild(n);
+      }
+    }
+  }
+  layoutWall();
+  window.addEventListener('resize', layoutWall);
+
+  // drag-to-pan the strip with a mouse (touch scrolls natively)
+  let panning = false, panX = 0, panL = 0;
+  strip.addEventListener('pointerdown', e => {
+    if (e.pointerType !== 'mouse') return;
+    panning = true; panX = e.clientX; panL = strip.scrollLeft;
+    strip.classList.add('dragging');
+    try { strip.setPointerCapture(e.pointerId); } catch (_) {}
+  });
+  strip.addEventListener('pointermove', e => {
+    if (panning) strip.scrollLeft = panL - (e.clientX - panX);
+  });
+  ['pointerup', 'pointercancel'].forEach(ev =>
+    strip.addEventListener(ev, () => { panning = false; strip.classList.remove('dragging'); }));
+
+  // pan affordance: edge fades where the wall continues + a live feet readout
+  const hint = document.getElementById('strip-hint');
+  function updateStrip(){
+    const max = strip.scrollWidth - strip.clientWidth;
+    strip.classList.toggle('fade-l', strip.scrollLeft > 4);
+    strip.classList.toggle('fade-r', strip.scrollLeft < max - 4);
+    if (max > 4) {
+      const ppf = (window.innerHeight * 0.82) / WALL_FT_H;
+      const f0 = Math.max(0, Math.round(strip.scrollLeft / ppf));
+      const f1 = Math.min(WALL_FT_W, Math.round((strip.scrollLeft + strip.clientWidth) / ppf));
+      hint.textContent = 'DRAG ACROSS — SHOWING FT ' + f0 + '\u2013' + f1 + ' OF 25';
+    } else {
+      hint.textContent = 'THE WALL, ALL TWENTY-FIVE FEET';
+    }
+  }
+  strip.addEventListener('scroll', updateStrip, { passive: true });
+  window.addEventListener('resize', updateStrip);
+  setInterval(updateStrip, 500); // scroll events can drop in throttled contexts
+  updateStrip();
+})();
+</script>
+</body>
+</html>

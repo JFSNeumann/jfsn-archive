@@ -130,7 +130,7 @@ header.header-hidden{transform:translateY(-100%)}
   </div>
   <div class="flex items-center gap-6">
     <nav class="hidden md:flex gap-8 items-center" aria-label="Primary">
-      <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="/archive.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Archive</a>
+      <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="/archive-v1/archive.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Archive</a>
       <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="/series-index.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Series</a>
       <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="/about.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">About</a>
       <a class="text-deep-ink hover:text-international-orange transition-colors duration-200 py-3" href="/lost.html" style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Lost Works</a>
@@ -387,7 +387,7 @@ header.header-hidden{transform:translateY(-100%)}
       if (!reduced) {
         fig.style.cssText = 'opacity:0;transform:translateY(10px);transition:opacity 0.35s ease,transform 0.35s ease;';
       }
-      fig.innerHTML = `<a class="thumb__link" href="artwork.html?id=${id}" style="background:${bg};">
+      fig.innerHTML = `<a class="thumb__link" href="/archive-v1/artwork.html?id=${id}" style="background:${bg};">
         <img
           srcset="artworks/mini/${w.file} 200w, artworks/thumbs/${w.file} 400w"
           sizes="(max-width:600px) calc(50vw - 1rem),(max-width:1024px) calc(33vw - 1rem),calc(25vw - 1rem)"
@@ -399,7 +399,7 @@ header.header-hidden{transform:translateY(-100%)}
         />
       </a>
       <figcaption class="thumb__caption">
-        <a href="artwork.html?id=${id}">${w.title}</a>
+        <a href="/archive-v1/artwork.html?id=${id}">${w.title}</a>
         <span>${w.year_display || w.year}${medium ? ' · ' + medium : ''}</span>
       </figcaption>`;
       grid.appendChild(fig);
