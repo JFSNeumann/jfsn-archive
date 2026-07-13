@@ -345,7 +345,7 @@ addEventListener('DOMContentLoaded', () => {
   // ---------- copy link ----------
   document.getElementById('copy-link').addEventListener('click', async () => {
     try {
-      await navigator.clipboard.writeText(location.origin + '/v2/artwork.html?id=' + w.i);
+      await navigator.clipboard.writeText(location.origin + '/artwork.html?id=' + w.i);
       const c = document.getElementById('copied');
       c.classList.add('on');
       setTimeout(() => c.classList.remove('on'), 1600);
