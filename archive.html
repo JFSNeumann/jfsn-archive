@@ -143,6 +143,7 @@ addEventListener('DOMContentLoaded', () => {
     #filter-groups{display:none}
     #filter-groups.open{display:flex}
     #count-label{flex-basis:100%;order:9}
+    #search{font-size:16px}
   }
 
   /* ---------- grid ---------- */
@@ -206,7 +207,7 @@ addEventListener('DOMContentLoaded', () => {
 <div id="controls">
   <div id="controls-inner">
     <div id="search-row">
-      <input id="search" type="search" placeholder="Search titles, motifs, keywords…" autocomplete="off">
+      <input id="search" type="search" placeholder="Search titles, motifs, keywords…" aria-label="Search the archive" autocomplete="off">
       <select id="sort" aria-label="Sort">
         <option value="year-desc">NEWEST FIRST</option>
         <option value="year-asc">OLDEST FIRST</option>

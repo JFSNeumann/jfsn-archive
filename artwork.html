@@ -138,7 +138,7 @@ addEventListener('DOMContentLoaded', () => {
     position:absolute;top:-15px;transform:translateX(-50%);white-space:nowrap;
     font-size:8px;letter-spacing:.16em;color:var(--accent);
   }
-  #decade-axis{position:relative;height:14px;margin-top:6px}
+  #decade-axis{display:block;position:relative;height:14px;margin-top:6px}
   #decade-axis span{
     position:absolute;transform:translateX(-50%);
     font-size:8px;letter-spacing:.12em;color:var(--faint);
@@ -147,17 +147,22 @@ addEventListener('DOMContentLoaded', () => {
 
   /* ---------- prev / next ---------- */
   #walk{
-    position:fixed;bottom:calc(env(safe-area-inset-bottom,0px) + 22px);
+    position:fixed;bottom:0;
     left:0;right:0;z-index:9;
-    display:flex;justify-content:space-between;
-    padding:0 26px;pointer-events:none;
+    display:flex;justify-content:space-between;align-items:flex-end;
+    padding:26px 26px calc(env(safe-area-inset-bottom,0px) + 22px);pointer-events:none;
+    background:linear-gradient(transparent,var(--room) 45%);
   }
   #walk a{
     pointer-events:auto;font-size:10px;letter-spacing:.2em;
-    background:rgba(12,10,9,0.85);padding:8px 4px;
+    background:var(--room);padding:8px 4px;
   }
   #walk .hint{align-self:center;color:var(--faint);font-size:9px;letter-spacing:.24em}
-  @media (max-width:640px){ #walk .hint{display:none} }
+  @media (max-width:640px){
+    #walk .hint{display:none}
+    header.hud{padding-left:16px;padding-right:16px;gap:12px}
+    header.hud .who{letter-spacing:.14em}
+  }
 
   /* ---------- lightbox ---------- */
   #lightbox{
