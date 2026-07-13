@@ -402,7 +402,6 @@ header.header-hidden{transform:translateY(-100%)}
     </button>
     <div id="about-mobile-toc-list" style="display:none;padding-bottom:12px;">
       <a href="#about-hero"         class="mobile-toc-link">Biography</a>
-      <a href="#contact"            class="mobile-toc-link">Contact &amp; Archive</a>
       <a href="#exhibition-record"  class="mobile-toc-link">Exhibition Record</a>
       <a href="#in-his-words"       class="mobile-toc-link">In Jeff's Own Words</a>
     </div>
@@ -478,33 +477,11 @@ header.header-hidden{transform:translateY(-100%)}
     </div>
   </section>
 
-  <!-- Three columns: Contact / Archive / Now -->
-  <section id="contact" class="mt-xl grid grid-cols-1 md:grid-cols-3 gap-lg pt-lg reveal-section" style="border-top:1px solid #e3bfb1;">
-    <div>
-      <p class="font-mono-data text-mono-data text-secondary mb-xs" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10px;letter-spacing:0.08em;color:#8e7164;">CONTACT</p>
-      <span class="font-label-md text-label-md text-secondary uppercase tracking-widest block mb-md">Jeff Neumann</span>
-      <p class="font-body-md text-body-md text-secondary leading-relaxed">
-        <a href="mailto:jeff@jfsn.com" class="border-b border-outline-variant hover:text-international-orange hover:border-international-orange transition-colors">jeff@jfsn.com</a><br/>
-        <a href="https://jfsn.com" class="border-b border-outline-variant hover:text-international-orange hover:border-international-orange transition-colors">jfsn.com</a>
-      </p>
-    </div>
-    <div>
-      <p class="font-mono-data text-mono-data text-secondary mb-xs" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10px;letter-spacing:0.08em;color:#8e7164;">1,000+ WORKS · 1974–PRESENT</p>
-      <span class="font-label-md text-label-md text-secondary uppercase tracking-widest block mb-md">The Archive</span>
-      <p class="font-body-md text-body-md text-secondary leading-relaxed">
-        Collage, assemblage, sculpture, painting.<br/><br/>
-        <a href="archive.html" class="bracket-link">[ Browse all works → ]</a>
-      </p>
-    </div>
-    <div>
-      <p class="font-mono-data text-mono-data text-secondary mb-xs" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10px;letter-spacing:0.08em;color:#8e7164;">CLEVELAND, OHIO</p>
-      <span class="font-label-md text-label-md text-secondary uppercase tracking-widest block mb-md">Now</span>
-      <p class="font-body-md text-body-md text-secondary leading-relaxed">
-        Archiving and digitizing fifty years of studio work. Putting everything in one place turns out to reveal things you couldn't see when the work was scattered — patterns, obsessions, threads that were running all along.<br/><br/>
-        Still making new work. Still Cleveland.<br/><br/>
-        <span id="latest-work-line" style="display:none;">Latest work added: <a id="latest-work-link" href="archive.html" class="border-b border-outline-variant hover:text-international-orange hover:border-international-orange transition-colors"><span id="latest-work-label"></span></a>.</span>
-      </p>
-    </div>
+  <!-- Archival Philosophy Statement -->
+  <section class="py-10 px-0" style="border-top:1px solid #8e7164;">
+    <p class="font-body-lg text-body-lg text-secondary leading-relaxed max-w-xl">
+      This archive documents what survived and honors what was lost. It is a personal record—everything preserved here is kept because it matters, not because it sells. The goal is to ensure that fifty years of unbroken making, and the maker himself, are not lost to time or silence as so many works nearly were.
+    </p>
   </section>
 
   <section class="py-10 px-0" style="border-top:1px solid #8e7164;">
@@ -597,7 +574,7 @@ header.header-hidden{transform:translateY(-100%)}
 (function(){
   var links = document.querySelectorAll('#about-mobile-toc-list .mobile-toc-link');
   if (links.length) {
-    var sectionIds = ['about-hero','contact','exhibition-record','in-his-words'];
+    var sectionIds = ['about-hero','exhibition-record','in-his-words'];
     var sections = sectionIds.map(function(id){ return document.getElementById(id); }).filter(Boolean);
     var obs = new IntersectionObserver(function(entries){
       entries.forEach(function(e){
