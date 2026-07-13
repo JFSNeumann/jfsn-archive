@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-20260713012121'; // flooded wing frames 1/4 size
+const CACHE_V  = 'jfsn-1783958516'; // flooded wing frames 1/4 size
 const PRECACHE = [
   '/',
   '/index.html',
