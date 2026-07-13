@@ -1,5 +1,23 @@
 [
   {
+    "sha": "d063cf8",
+    "date": "2026-07-12",
+    "title": "Documentation: stewardship decision record for retired redundant navigation sections",
+    "body": ""
+  },
+  {
+    "sha": "6d6727d",
+    "date": "2026-07-12",
+    "title": "Stewardship: retire redundant cross-page navigation sections",
+    "body": "The duplicated navigation sections (\"Alternative views\" / \"Explore the archive in other ways\") were introduced to improve discoverability of secondary archive views. During long-term stewardship review, no objective evidence was found demonstrating that the duplicated navigation achieved this purpose beyond what existing footer and header navigation already provide.\n\nThe duplicated sections create an ongoing maintenance obligation and became inconsistent with later-ratified architectural guidance favoring dynamic discovery over duplicate static navigation (ARCHITECTURE-DECISIONS.md).\n\nThis change removes the redundant sections from three pages:\n- about.html\n- lost.html\n- series.html\n\nAll removed navigation links remain available through existing footer navigation (\"Collection Views\" section) and header navigation.\n\nThe removed sections' stated purpose (improve discoverability) is achieved through preserved footer and header links, the smallest justified conservation intervention."
+  },
+  {
+    "sha": "703dbf0",
+    "date": "2026-07-12",
+    "title": "Stewardship: remove noindex policy in favor of long-term discoverability",
+    "body": "Archive mission prioritizes preservation over curation. Removes\nrobots noindex directive from:\n- Curatorial pages (Threshold, Current, 6 rooms, vault, artwork template)\n- Homepage (index.html)\n- Generated artwork pages (not affected by template, already indexable)\n- 404.html\n- Both root and v2/ copies\n\nRetains noindex,nofollow only on:\n- curator.html (internal, zero public inbound links)\n- qa.html (internal testing)\n\nEffect: Search engines now crawl entire site; Wayback Machine can\nsnapshot all pages; scholarly discovery + distributed backup via\nsearch engine caches enabled.\n\nSee STEWARDSHIP-DECISION-2026-07-12-NOINDEX.md for rationale."
+  },
+  {
     "sha": "1610132",
     "date": "2026-07-12",
     "title": "Production deploy: the museum becomes the site's front door",

@@ -245,8 +245,6 @@ entries = [
     (SITE_URL + '/the-studio.html',         '0.8', 'monthly'),
     (SITE_URL + '/working-history.html',    '0.8', 'monthly'),
     (SITE_URL + '/series-index.html',       '0.8', 'monthly'),
-    (SITE_URL + '/about.html',              '0.7', 'monthly'),
-    (SITE_URL + '/lost.html',               '0.7', 'monthly'),
     (SITE_URL + '/api.html',                '0.6', 'monthly'),
     (SITE_URL + '/chromatic.html',          '0.6', 'monthly'),
     (SITE_URL + '/wall.html',               '0.6', 'monthly'),

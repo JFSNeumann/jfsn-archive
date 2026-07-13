@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-20260712204238'; // drones 2x size + longer on-screen time
+const CACHE_V  = 'jfsn-20260713002439'; // drones 2x size + longer on-screen time
 const PRECACHE = [
   '/',
   '/index.html',
