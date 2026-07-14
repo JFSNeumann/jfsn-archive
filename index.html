@@ -519,6 +519,13 @@ addEventListener('DOMContentLoaded', () => {
     // Haptic feedback on click
     hapticPulse(20);
 
+    // Spatial storytelling: veil inherits room color for visual continuity
+    const roomColor = link.style.getPropertyValue('--key') || 'transparent';
+    if (v && roomColor) {
+      v.style.backgroundColor = roomColor;
+      v.style.opacity = '0'; // Veil will fade to opaque with the room color
+    }
+
     // Trigger threshold animation on clicked room
     link.classList.add('threshold-active');
 
