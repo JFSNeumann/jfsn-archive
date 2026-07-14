@@ -126,25 +126,83 @@ addEventListener('DOMContentLoaded', () => {
     align-items:flex-start;text-align:left;
     border:1px solid var(--frame);padding:20px 22px 19px 30px;
     font-size:11px;letter-spacing:.24em;color:var(--ink);
-    transition:border-color .3s,transform .3s;
+    transition:border-color .3s,border-width .3s,transform .3s;
     overflow:hidden;
   }
+
+  /* Room-specific personalities via nth-child stagger and animation */
+  @media (prefers-reduced-motion: no-preference) {
+    /* THE CURRENT (1st): alive, flow, energy */
+    #doors a:nth-child(1){transition-delay:.02s}
+    #doors a:nth-child(1):hover{transform:translateX(2px) translateY(-1px);border-width:1px 1px 1px 6px}
+    #doors a:nth-child(1):hover::before{transform:scaleY(1) scaleX(2)}
+    #doors a:nth-child(1):hover .sub{transform:translateY(2px)}
+
+    /* THE GUERNICA PASSAGE (2nd): dense, weight, focus */
+    #doors a:nth-child(2){transition-delay:.04s}
+    #doors a:nth-child(2):hover{transform:translateX(1px) translateY(2px);border-width:1px 1px 1px 3px}
+    #doors a:nth-child(2):hover::before{transform:scaleY(1) scaleX(0.8)}
+    #doors a:nth-child(2) .sub{transition:transform .25s ease,color .25s}
+    #doors a:nth-child(2):hover .sub{transform:translateX(-2px)}
+
+    /* THE FLOODED WING (3rd): quiet, withdrawn, depth */
+    #doors a:nth-child(3){transition-delay:.06s}
+    #doors a:nth-child(3):hover{transform:translateX(1px) translateY(3px);border-width:2px 1px 1px 1px}
+    #doors a:nth-child(3):hover::before{transform:scaleY(0.5) translateY(8px);opacity:.6}
+    #doors a:nth-child(3):hover .sub{opacity:.7;transform:translateY(1px)}
+
+    /* THE HALL OF OPENINGS (4th): multiplicity, repetition */
+    #doors a:nth-child(4){transition-delay:.03s}
+    #doors a:nth-child(4):hover{transform:translateX(2px) translateY(-0.5px);border-width:1px 1px 1px 4px}
+    #doors a:nth-child(4):hover::before{transform:scaleY(1) scaleX(1.5);opacity:.8}
+    #doors a:nth-child(4):hover .sub{transform:translateX(1px)}
+
+    /* THE STUDIO (5th): warmth, welcome, home */
+    #doors a:nth-child(5){transition-delay:.05s}
+    #doors a:nth-child(5):hover{transform:translateX(3px) translateY(-1.5px);border-width:1px 1px 1px 5px}
+    #doors a:nth-child(5):hover::before{transform:scaleY(1) scaleX(2.2);opacity:1}
+    #doors a:nth-child(5):hover .sub{transform:translateY(-1px);opacity:1}
+  }
+
   #doors a::before{
     content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
     background:var(--key,var(--faint));
     transform:scaleY(0.35);transform-origin:center;
-    transition:transform .35s ease;
+    transition:transform .3s ease,opacity .3s ease;
+    opacity:1;
   }
-  #doors a .sub{font-size:9px;letter-spacing:.2em;color:var(--dim);transition:color .25s}
+  #doors a .sub{font-size:9px;letter-spacing:.2em;color:var(--dim);transition:color .25s,transform .3s ease}
   #doors a .go{
     position:absolute;right:20px;top:50%;transform:translate(6px,-50%);
     color:var(--faint);opacity:0;transition:opacity .3s,transform .3s;
   }
-  #doors a:hover{border-color:var(--dim);transform:translateX(2px)}
-  #doors a:hover::before{transform:scaleY(1)}
+  #doors a:hover{border-color:var(--dim)}
   #doors a:hover .sub{color:var(--ink)}
   #doors a:hover .go{opacity:1;transform:translate(0,-50%);color:var(--accent)}
   #doors a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+
+  /* Focus state receives same room personality as hover (keyboard accessibility) */
+  @media (prefers-reduced-motion: no-preference) {
+    #doors a:nth-child(1):focus-visible{transform:translateX(2px) translateY(-1px);border-width:1px 1px 1px 6px}
+    #doors a:nth-child(1):focus-visible::before{transform:scaleY(1) scaleX(2)}
+    #doors a:nth-child(1):focus-visible .sub{transform:translateY(2px)}
+
+    #doors a:nth-child(2):focus-visible{transform:translateX(1px) translateY(2px);border-width:1px 1px 1px 3px}
+    #doors a:nth-child(2):focus-visible::before{transform:scaleY(1) scaleX(0.8)}
+    #doors a:nth-child(2):focus-visible .sub{transform:translateX(-2px)}
+
+    #doors a:nth-child(3):focus-visible{transform:translateX(1px) translateY(3px);border-width:2px 1px 1px 1px}
+    #doors a:nth-child(3):focus-visible::before{transform:scaleY(0.5) translateY(8px);opacity:.6}
+    #doors a:nth-child(3):focus-visible .sub{opacity:.7;transform:translateY(1px)}
+
+    #doors a:nth-child(4):focus-visible{transform:translateX(2px) translateY(-0.5px);border-width:1px 1px 1px 4px}
+    #doors a:nth-child(4):focus-visible::before{transform:scaleY(1) scaleX(1.5);opacity:.8}
+    #doors a:nth-child(4):focus-visible .sub{transform:translateX(1px)}
+
+    #doors a:nth-child(5):focus-visible{transform:translateX(3px) translateY(-1.5px);border-width:1px 1px 1px 5px}
+    #doors a:nth-child(5):focus-visible::before{transform:scaleY(1) scaleX(2.2);opacity:1}
+    #doors a:nth-child(5):focus-visible .sub{transform:translateY(-1px);opacity:1}
+  }
   #doors .construction{margin-top:16px;color:var(--faint);font-size:9px;letter-spacing:.22em;text-align:center}
 
   #vault{margin-top:8vh;display:flex;flex-direction:column;gap:14px;align-items:center}
