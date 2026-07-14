@@ -94,6 +94,11 @@ addEventListener('DOMContentLoaded', () => {
   }
   #work figcaption{margin-top:16px}
 
+  /* the flankers exist only on the wide desktop wall; everywhere else the
+     entrance is the single-work poster, untouched. */
+  #hang{display:contents}
+  .wing{display:none}
+
   /* the cornerstone — the founder signs at the base, in his own hand.
      Real ink (assets/images/Jeff Neumann.gif is the untouched source);
      rendered in the museum's warm tone on the dark wall. */
@@ -157,6 +162,21 @@ addEventListener('DOMContentLoaded', () => {
     #work figcaption{margin-top:14px;font-size:9px;letter-spacing:.3em}
     #who{margin-top:4.5vh}
     #who img{height:64px}
+
+    /* the hang: one figure across fifty years. Center lit and large; the
+       flankers smaller, lower, and dimmed — works glimpsed deeper in the
+       room. Recession comes from scale, placement, and lighting, never
+       from altering the works themselves. */
+    #hang{display:flex;align-items:flex-end;justify-content:center;
+      gap:clamp(26px,3vw,60px);width:100%}
+    .wing{display:block;margin:0}
+    #work{order:0}
+    #wing-l{order:-1}
+    #wing-r{order:1}
+    .wing img{display:block;width:auto;height:auto;
+      max-height:34vh;max-width:20vw;border:1px solid var(--frame);opacity:.62}
+    .wing figcaption{margin-top:12px;font-size:8px;letter-spacing:.26em;
+      color:var(--dim);opacity:.75}
   }
   /* short desktop windows: the poster scales as one unit — never crops */
   @media (min-width:1200px) and (max-height:820px){
@@ -176,10 +196,24 @@ addEventListener('DOMContentLoaded', () => {
     <h1>The Museum <br>That Never Existed.</h1>
     <p class="creed" id="creed">A personal record, not a gallery.</p>
 
-    <figure id="work">
-      <img src="/artworks/medium/art1010.avif" alt="Untitled (Cassette Torso) — a collage with a cassette tape at the center of a torso form." width="900" height="792" decoding="async">
-      <figcaption class="caps">UNTITLED (CASSETTE TORSO) · 2020S (EST.) · COLLAGE</figcaption>
-    </figure>
+    <!-- the hang: on wide desktop, the figure across fifty years — a 1990s
+         CD torso and a 1970s figure flank the lit 2020s work, receding into
+         the room. Below 1200px only the center work shows (single poster).
+         All three real, shown straight, with honest plaques. -->
+    <div id="hang">
+      <figure id="work">
+        <img src="/artworks/medium/art1010.avif" alt="Untitled (Cassette Torso) — a collage with a cassette tape at the center of a torso form." width="900" height="792" decoding="async" fetchpriority="high">
+        <figcaption class="caps">UNTITLED (CASSETTE TORSO) · 2020S (EST.) · COLLAGE</figcaption>
+      </figure>
+      <figure class="wing" id="wing-l">
+        <img src="/artworks/medium/art0212.avif" alt="Untitled (CD Torso Assemblage) — a torso figure assembled from compact discs and mixed media." width="900" height="1260" decoding="async" fetchpriority="low">
+        <figcaption class="caps">UNTITLED (CD TORSO ASSEMBLAGE) · 1990S (EST.) · COLLAGE</figcaption>
+      </figure>
+      <figure class="wing" id="wing-r">
+        <img src="/artworks/medium/art0001.avif" alt="Untitled (Figure, Blue Ground) — a standing figure against a blue ground." width="900" height="1800" decoding="async" fetchpriority="low">
+        <figcaption class="caps">UNTITLED (FIGURE, BLUE GROUND) · 1970S (EST.) · COLLAGE</figcaption>
+      </figure>
+    </div>
 
     <p id="who"><img src="/assets/images/jfsn-signature.png" alt="Jeffrey F. S. Neumann" width="300" height="180" decoding="async"></p>
   </section>
