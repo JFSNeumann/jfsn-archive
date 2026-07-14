@@ -60,46 +60,63 @@ addEventListener('DOMContentLoaded', () => {
   .caps{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim)}
   .serif{font-family:Georgia,'Times New Roman',serif}
 
-  main{
-    min-height:100vh;display:flex;flex-direction:column;
-    align-items:center;justify-content:center;text-align:center;
-    gap:0;padding:9vh clamp(20px,6vw,80px) 10vh;
-  }
+  main{display:block}
 
-  /* every stage starts unseen; JS (or reduced-motion CSS) reveals in order.
-     Without JS the page is simply, honestly static — nothing may hide. */
-  .js .stage{opacity:0;transform:translateY(10px);transition:opacity 2s ease,transform 2s ease}
-  .js .stage.on{opacity:1;transform:none}
+  /* The First Light: the room is dark; every element is already in place but
+     unseen. One light rises — luminance only, never position — so the name and
+     creed resolve as the lamp warms on the work. Without JS the page is simply,
+     honestly static and fully lit — nothing may hide. */
+  .js .stage{opacity:0;transition:opacity 1.4s ease}
+  .js .stage.on{opacity:1}
   a:focus-visible{outline:2px solid var(--accent);outline-offset:4px;color:var(--accent)}
 
-  #who{margin-bottom:26px}
-  #creed{
-    font-family:'Playfair Display',Georgia,serif;font-style:italic;
-    font-size:clamp(24px,3.8vw,40px);line-height:1.4;
+  /* ── THE THRESHOLD — one still, centered viewport ──
+     the museum's name is the facade; one work hangs lit beneath it.
+     The same centered composition at every width — only scale changes. */
+  .threshold{
+    min-height:100vh;min-height:100svh;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;
+    max-width:1180px;margin:0 auto;
+    padding:5vh clamp(20px,6vw,80px);
   }
+  #who{margin-bottom:clamp(14px,2vh,22px)}
 
-  #work{margin:9vh 0 0}
-  #work img{
-    display:block;max-width:min(560px,86vw);width:100%;height:auto;
-    border:1px solid var(--frame);
-    transition:filter 4.5s ease;
-  }
-  .js #work img{filter:brightness(0)}
-  .js #work.on img{filter:brightness(1)}
-  #work figcaption{margin-top:14px}
-
-  #name{margin-top:11vh}
-  #name .entering{display:block;margin-bottom:20px}
+  #name .entering{display:block;margin-bottom:16px;color:var(--dim)}
   #name h1{
     font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
-    font-size:clamp(34px,6.4vw,68px);line-height:1.2;max-width:13em;
+    font-size:clamp(38px,4.9vw,68px);line-height:1.12;letter-spacing:-.012em;
+    color:var(--ink);max-width:7em;
   }
-  #name .why{
-    max-width:34em;margin:34px auto 0;
+  .creed{
+    margin-top:clamp(16px,2.4vh,24px);
+    font-family:'Playfair Display',Georgia,serif;font-style:italic;
+    font-size:clamp(18px,2.1vw,23px);line-height:1.4;color:#b9b1a6;
+  }
+
+  #work{margin-top:clamp(28px,4vh,44px)}
+  #work img{
+    display:block;width:auto;height:auto;
+    max-width:min(560px,86vw);max-height:42vh;
+    border:1px solid var(--frame);
+  }
+  .js #work img{filter:brightness(0);transition:filter 2.6s ease}
+  .js #work.on img{filter:brightness(1)}
+  .returning #work img{transition:filter .8s ease}
+  #work figcaption{margin-top:16px}
+
+  /* ── BEYOND THE THRESHOLD — the origin story, promoted to its own
+     quiet centered screen, then the doors open. ── */
+  .beyond{
+    display:flex;flex-direction:column;align-items:center;text-align:center;
+    padding:14vh clamp(20px,6vw,80px) 11vh;
+  }
+  .why{
+    max-width:32em;margin:0 auto;
     font-family:Georgia,'Times New Roman',serif;
-    font-size:clamp(15px,1.8vw,18px);line-height:1.9;color:#b9b1a6;
+    font-size:clamp(16px,1.9vw,20px);line-height:1.85;color:#b9b1a6;
   }
-  #name .why em{color:var(--ink)}
+  .why em{color:var(--ink);font-style:normal}
 
   #doors{
     margin-top:9vh;display:grid;gap:14px;width:min(560px,100%);
@@ -133,7 +150,7 @@ addEventListener('DOMContentLoaded', () => {
   #vault{margin-top:8vh;display:flex;flex-direction:column;gap:14px;align-items:center}
 
   @media (prefers-reduced-motion: reduce){
-    .stage{opacity:1;transform:none;transition:none}
+    .stage{opacity:1;transition:none}
     #work img{filter:none;transition:none}
   }
 </style>
@@ -141,22 +158,25 @@ addEventListener('DOMContentLoaded', () => {
 <body>
 
 <main>
-  <div class="stage caps" id="who">JEFFREY&nbsp;F.&nbsp;S.&nbsp;NEUMANN</div>
-  <div class="stage" id="creed">A personal record,<br>not a gallery.</div>
+  <section class="threshold">
+    <p class="stage caps" id="who">JEFFREY&nbsp;F.&nbsp;S.&nbsp;NEUMANN</p>
+    <div class="stage" id="name">
+      <span class="entering caps" id="entering-label">YOU ARE ENTERING</span>
+      <h1>The Museum<br>That Never Existed.</h1>
+    </div>
+    <p class="stage creed" id="creed">A personal record, not a gallery.</p>
 
-  <figure class="stage" id="work">
-    <img src="/artworks/medium/art1010.avif" alt="Untitled (Cassette Torso) — a collage with a cassette tape at the center of a torso form." width="400" height="352" decoding="async">
-    <figcaption class="caps">UNTITLED (CASSETTE TORSO) · 2020S (EST.) · COLLAGE</figcaption>
-  </figure>
+    <figure class="stage" id="work">
+      <img src="/artworks/medium/art1010.avif" alt="Untitled (Cassette Torso) — a collage with a cassette tape at the center of a torso form." width="900" height="792" decoding="async">
+      <figcaption class="caps">UNTITLED (CASSETTE TORSO) · 2020S (EST.) · COLLAGE</figcaption>
+    </figure>
+  </section>
 
-  <div class="stage" id="name">
-    <span class="entering caps" id="entering-label">YOU ARE ENTERING</span>
-    <h1>The Museum<br>That Never Existed.</h1>
-    <p class="why">For decades he made pictures of museums showing his work —
+  <section class="beyond">
+    <p class="why stage" id="why">For decades he made pictures of museums showing his work —
     walls, crowds, openings that never happened. Every one of them is flagged
     in this archive as imagined. This building is the one that exists:
     <em>1,084 works, fifty years, kept and described and open.</em></p>
-  </div>
 
   <nav class="stage" id="doors" aria-label="Rooms">
     <a href="current.html" style="--key:linear-gradient(#b23a3a,#d8c9a8,#5a7d8c,#c8b44a)">THE CURRENT<span class="sub">FIFTY YEARS AS ONE RIVER — BEGIN HERE</span><span class="go">→</span></a>
@@ -171,21 +191,26 @@ addEventListener('DOMContentLoaded', () => {
     <a href="working-history.html">[ THE WORKING HISTORY — THE GALLERIES HE BUILT → ]</a>
     <a href="about.html">[ ABOUT JEFF — THE MAKER → ]</a>
   </div>
+  </section>
 </main>
 
 <script>
 (function(){
   'use strict';
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const stages = ['who', 'creed', 'work', 'name', 'doors', 'vault']
-    .map(id => document.getElementById(id));
+  // one light: nameplate, museum name and the lamp on the work rise together;
+  // the creed settles last. Past the threshold, the story and the doors follow.
+  const stages = ['who', 'name', 'work', 'creed', 'why', 'doors', 'vault']
+    .map(id => document.getElementById(id)).filter(Boolean);
 
   // a returning visitor doesn't need the museum to re-introduce itself —
   // one honest signal (a prior arrival completed), read once, never assumed
   let RETURNING = false;
   try { RETURNING = !!localStorage.getItem('jfsn-v2-arrived'); } catch (_) {}
   if (RETURNING) {
-    document.getElementById('entering-label').textContent = 'WELCOME BACK';
+    document.documentElement.classList.add('returning');
+    const lbl = document.getElementById('entering-label');
+    if (lbl) lbl.textContent = 'WELCOME BACK';
   }
   function markArrived(){
     try { localStorage.setItem('jfsn-v2-arrived', String(Date.now())); } catch (_) {}
@@ -193,15 +218,15 @@ addEventListener('DOMContentLoaded', () => {
 
   if (REDUCED) { markArrived(); return; } // CSS already shows everything
 
-  // the arrival: each element earns the next; any input skips the wait.
-  // first visit is the full staged reveal; a returning visitor gets the
-  // same order, compressed to a fraction of the wait — a nod, not a repeat.
-  const FIRST  = [400, 1600, 4200, 9200, 11200, 12400];
-  const RETURN = [80, 260, 520, 780, 980, 1150];
+  // one light rising: nameplate + name + lamp warm together (~2.6s), the creed
+  // settles last, then — past the threshold — the story and doors. Any input
+  // skips the wait. A returning visitor gets the same order, settled at once.
+  const FIRST  = [200, 250, 300, 900, 2800, 3000, 3200];
+  const RETURN = [40, 60, 80, 160, 280, 360, 440];
   const delays = RETURNING ? RETURN : FIRST;
   const timers = stages.map((el, i) =>
-    setTimeout(() => el.classList.add('on'), delays[i]));
-  setTimeout(markArrived, delays[delays.length - 1]);
+    setTimeout(() => el.classList.add('on'), delays[i] || 0));
+  setTimeout(markArrived, (delays[delays.length - 1] || 0) + 200);
 
   function skip(){
     timers.forEach(clearTimeout);
