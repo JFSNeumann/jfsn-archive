@@ -10,11 +10,35 @@
 <link rel="preload" href="/fonts/playfair-display-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script>document.documentElement.classList.add('js')</script>
 <style>
-  /* room-to-room continuity: fade in on arrival, veil out on internal doors */
+  /* Spatial storytelling: THE CURRENT flows left-to-right (river), entrance choreography */
   @media (prefers-reduced-motion: no-preference){
-    .js body{animation:room-in .4s ease}
-    @keyframes room-in{from{opacity:0}to{opacity:1}}
+    /* Body: main entrance (slide left + fade) */
+    .js body{animation:current-enter .35s cubic-bezier(.25,.46,.45,.94) forwards}
+    @keyframes current-enter{
+      0%{opacity:0;transform:translateX(-40px)}
+      100%{opacity:1;transform:translateX(0)}
+    }
+
+    /* HUD elements stagger in after body */
+    #hud-name{animation:hud-slide .35s ease .1s forwards;opacity:0}
+    #hud-count{animation:hud-slide .35s ease .15s forwards;opacity:0}
+    #hud-year{animation:hud-fade .35s ease .2s forwards;opacity:0}
+    #hud-hint{animation:hud-fade .35s ease .25s forwards;opacity:0}
+
+    @keyframes hud-slide{
+      0%{opacity:0;transform:translateX(-20px)}
+      100%{opacity:1;transform:translateX(0)}
+    }
+    @keyframes hud-fade{
+      0%{opacity:0}
+      100%{opacity:1}
+    }
+
+    /* River/main content fades in */
+    #river{animation:content-fade .4s ease .15s forwards;opacity:0}
+    @keyframes content-fade{from{opacity:0}to{opacity:1}}
   }
+
   #room-veil{position:fixed;inset:0;background:#0c0a09;opacity:0;pointer-events:none;transition:opacity .22s ease;z-index:99}
   #room-veil.on{opacity:1;pointer-events:auto}
 </style>

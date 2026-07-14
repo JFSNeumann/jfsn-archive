@@ -10,11 +10,30 @@
 <link rel="preload" href="/fonts/playfair-display-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script>document.documentElement.classList.add('js')</script>
 <style>
-  /* room-to-room continuity: fade in on arrival, veil out on internal doors */
+  /* Spatial storytelling: THE STUDIO welcomes warmly from right (homecoming) */
   @media (prefers-reduced-motion: no-preference){
-    .js body{animation:room-in .4s ease}
-    @keyframes room-in{from{opacity:0}to{opacity:1}}
+    /* Body: entrance arrives from right (slide right-to-left + fade, warmth) */
+    .js body{animation:studio-enter .35s cubic-bezier(.34,.1,.68,.55) forwards}
+    @keyframes studio-enter{
+      0%{opacity:0;transform:translateX(40px)}
+      100%{opacity:1;transform:translateX(0)}
+    }
+
+    /* HUD stagger in with warm, welcoming timing */
+    #hud-name{animation:hud-warm .35s ease .1s forwards;opacity:0}
+    #hud-count{animation:hud-warm .35s ease .15s forwards;opacity:0}
+    #hud-year{animation:hud-warm .35s ease .2s forwards;opacity:0}
+
+    @keyframes hud-warm{
+      0%{opacity:0;transform:translateX(20px)}
+      100%{opacity:1;transform:translateX(0)}
+    }
+
+    /* Content embraces in (welcoming) */
+    #main{animation:content-warm .4s ease .15s forwards;opacity:0}
+    @keyframes content-warm{from{opacity:0}to{opacity:1}}
   }
+
   #room-veil{position:fixed;inset:0;background:#0c0a09;opacity:0;pointer-events:none;transition:opacity .22s ease;z-index:99}
   #room-veil.on{opacity:1;pointer-events:auto}
 </style>

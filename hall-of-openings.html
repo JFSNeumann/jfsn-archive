@@ -11,11 +11,34 @@
 <link rel="preload" href="/fonts/playfair-display-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script>document.documentElement.classList.add('js')</script>
 <style>
-  /* room-to-room continuity: fade in on arrival, veil out on internal doors */
+  /* Spatial storytelling: THE HALL OF OPENINGS expands outward (multiplicity bursts) */
   @media (prefers-reduced-motion: no-preference){
-    .js body{animation:room-in .4s ease}
-    @keyframes room-in{from{opacity:0}to{opacity:1}}
+    /* Body: entrance expands from center (scaleX up + fade) */
+    .js body{animation:hall-enter .35s cubic-bezier(.33,.66,.66,1) forwards}
+    @keyframes hall-enter{
+      0%{opacity:0;transform:scaleX(1.08)}
+      100%{opacity:1;transform:scaleX(1)}
+    }
+
+    /* HUD stagger in with expansive timing */
+    #hud-name{animation:hud-expand .35s ease .1s forwards;opacity:0}
+    #hud-count{animation:hud-expand .35s ease .15s forwards;opacity:0}
+    #hud-year{animation:hud-fade .35s ease .2s forwards;opacity:0}
+
+    @keyframes hud-expand{
+      0%{opacity:0;transform:scale(1.05)}
+      100%{opacity:1;transform:scale(1)}
+    }
+    @keyframes hud-fade{
+      0%{opacity:0}
+      100%{opacity:1}
+    }
+
+    /* Content expands in (multiplicity) */
+    #grid{animation:content-expand .4s ease .15s forwards;opacity:0}
+    @keyframes content-expand{from{opacity:0}to{opacity:1}}
   }
+
   #room-veil{position:fixed;inset:0;background:#0c0a09;opacity:0;pointer-events:none;transition:opacity .22s ease;z-index:99}
   #room-veil.on{opacity:1;pointer-events:auto}
 </style>
