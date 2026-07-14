@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1784045623'; // doors: ghosted room preview on hover
+const CACHE_V  = 'jfsn-1784046385'; // doors: click cascade animation (room exits)
 const PRECACHE = [
   '/',
   '/index.html',
