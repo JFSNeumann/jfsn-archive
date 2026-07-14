@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1783988410'; // hero: centered threshold, one-light arrival
+const CACHE_V  = 'jfsn-1783992182'; // hero: the poster — still entrance, no choreography
 const PRECACHE = [
   '/',
   '/index.html',
