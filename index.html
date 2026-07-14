@@ -120,6 +120,14 @@ addEventListener('DOMContentLoaded', () => {
 
   #doors{
     margin-top:9vh;display:grid;gap:14px;width:min(560px,100%);
+    position:relative;
+  }
+
+  /* Room Sequencing Arc (#6): wavy path showing journey through rooms */
+  .doors-arc{
+    position:absolute;inset:0;width:100%;height:100%;
+    pointer-events:none;z-index:-1;
+    opacity:.12;
   }
   #doors a{
     position:relative;display:flex;flex-direction:column;gap:7px;
@@ -361,6 +369,11 @@ addEventListener('DOMContentLoaded', () => {
     <em>1,084 works, fifty years, kept and described and open.</em></p>
 
   <nav id="doors" aria-label="Rooms">
+    <!-- Room Sequencing Arc (#6): wavy path showing journey from THE CURRENT to THE STUDIO -->
+    <svg class="doors-arc" viewBox="0 0 560 356" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M 280 20 Q 250 55 280 90 Q 310 125 280 160 Q 250 195 280 230 Q 310 265 280 300 Q 250 330 280 356"
+            stroke="var(--dim)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    </svg>
     <a href="current.html" data-preview-id="art1005" style="--key:linear-gradient(#b23a3a,#d8c9a8,#5a7d8c,#c8b44a)">THE CURRENT<span class="sub">FIFTY YEARS AS ONE RIVER — BEGIN HERE</span><span class="go">→</span></a>
     <a href="guernica-passage.html" data-preview-id="art0023" style="--key:#4a4e5f">THE GUERNICA PASSAGE<span class="sub">232 WORKS · ONE STRUCTURE · THIRTY YEARS</span><span class="go">→</span></a>
     <a href="flooded-wing.html" data-preview-id="art0611" style="--key:#2e4451">THE FLOODED WING<span class="sub">A ROOM FOR WHAT IS MISSING</span><span class="go">→</span></a>
