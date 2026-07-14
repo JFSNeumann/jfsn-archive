@@ -202,6 +202,47 @@ addEventListener('DOMContentLoaded', () => {
   #doors a:hover .go{opacity:1;transform:translate(0,-50%);color:var(--accent)}
   #doors a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 
+  /* Spatial depth layering (#4): cards offset by depth, rise on hover */
+  @media (prefers-reduced-motion: no-preference) {
+    #doors a:nth-child(1){transform:translateY(0px)}
+    #doors a:nth-child(1):hover{transform:translateX(2px) translateY(-4px)}
+
+    #doors a:nth-child(2){transform:translateY(2px)}
+    #doors a:nth-child(2):hover{transform:translateX(1px) translateY(-2px)}
+
+    #doors a:nth-child(3){transform:translateY(4px)}
+    #doors a:nth-child(3):hover{transform:translateX(1px) translateY(1px)}
+
+    #doors a:nth-child(4){transform:translateY(2px)}
+    #doors a:nth-child(4):hover{transform:translateX(2px) translateY(-1px)}
+
+    #doors a:nth-child(5){transform:translateY(0px)}
+    #doors a:nth-child(5):hover{transform:translateX(3px) translateY(-3px)}
+  }
+
+  /* Landing choreography (#9): entrance animation on page load */
+  @keyframes room-entrance {
+    0%{
+      opacity:0;
+      transform:translateX(-20px);
+    }
+    100%{
+      opacity:1;
+      transform:translateX(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    #doors a{
+      animation:room-entrance .5s ease-out backwards;
+    }
+    #doors a:nth-child(1){animation-delay:.1s}
+    #doors a:nth-child(2){animation-delay:.15s}
+    #doors a:nth-child(3){animation-delay:.2s}
+    #doors a:nth-child(4){animation-delay:.25s}
+    #doors a:nth-child(5){animation-delay:.3s}
+  }
+
   /* Cursor transform (#5): thin vertical line indicating passage */
   @media (prefers-reduced-motion: no-preference) {
     #doors a{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><line x1="10" y1="2" x2="10" y2="18" stroke="%23FF6600" stroke-width="1.5" stroke-linecap="round"/><polygon points="10,18 8,14 12,14" fill="%23FF6600"/></svg>') 10 10,auto}
@@ -396,6 +437,20 @@ addEventListener('DOMContentLoaded', () => {
   const doorsNav = document.getElementById('doors');
   if (!doorsNav) return;
 
+  // Haptic feedback helper (#10): subtle vibration on supported devices
+  function hapticPulse(duration) {
+    if (navigator.vibrate) {
+      navigator.vibrate(duration || 15);
+    }
+  }
+
+  // Hover haptic feedback (#10)
+  doorsNav.addEventListener('mouseenter', function(e) {
+    const link = e.target.closest('a[href]');
+    if (!link) return;
+    hapticPulse(10); // Subtle 10ms pulse on hover
+  }, true); // Capture phase to catch hovers on any descendant
+
   doorsNav.addEventListener('click', function(e) {
     const link = e.target.closest('a[href]');
     if (!link) return;
@@ -410,6 +465,9 @@ addEventListener('DOMContentLoaded', () => {
 
     // Prevent default navigation
     e.preventDefault();
+
+    // Haptic feedback on click
+    hapticPulse(20);
 
     // Trigger threshold animation on clicked room
     link.classList.add('threshold-active');
