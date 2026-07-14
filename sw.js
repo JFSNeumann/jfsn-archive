@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1784043236'; // hero triptych: equal-height hang
+const CACHE_V  = 'jfsn-1784043908'; // hero: unify plaque type (9px/.26em)
 const PRECACHE = [
   '/',
   '/index.html',
