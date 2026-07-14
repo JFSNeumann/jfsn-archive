@@ -181,6 +181,51 @@ addEventListener('DOMContentLoaded', () => {
   #doors a:hover .go{opacity:1;transform:translate(0,-50%);color:var(--accent)}
   #doors a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 
+  /* Cursor transform (#5): thin vertical line indicating passage */
+  @media (prefers-reduced-motion: no-preference) {
+    #doors a{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><line x1="10" y1="2" x2="10" y2="18" stroke="%23FF6600" stroke-width="1.5" stroke-linecap="round"/><polygon points="10,18 8,14 12,14" fill="%23FF6600"/></svg>') 10 10,auto}
+  }
+
+  /* Threshold animation (#1): passage effect on click */
+  @media (prefers-reduced-motion: no-preference) {
+    #doors a.threshold-active{
+      pointer-events:none;
+      animation:threshold-passage .4s ease-out forwards;
+    }
+
+    @keyframes threshold-passage {
+      0%{
+        border-width:1px;
+        opacity:1;
+      }
+      30%{
+        border-left-width:12px;
+      }
+      100%{
+        opacity:0;
+        transform:translateX(8px);
+      }
+    }
+
+    #doors a.threshold-active .sub{
+      animation:text-passage .4s ease-out forwards;
+    }
+
+    @keyframes text-passage {
+      0%{
+        opacity:1;
+        transform:translateX(0);
+      }
+      50%{
+        opacity:0.5;
+      }
+      100%{
+        opacity:0;
+        transform:translateX(12px);
+      }
+    }
+  }
+
   /* Focus state receives same room personality as hover (keyboard accessibility) */
   @media (prefers-reduced-motion: no-preference) {
     #doors a:nth-child(1):focus-visible{transform:translateX(2px) translateY(-1px);border-width:1px 1px 1px 6px}
@@ -300,5 +345,39 @@ addEventListener('DOMContentLoaded', () => {
   </div>
   </section>
 </main>
+
+<script>
+/* Threshold animation on click (#1): transforms "clicking" into "entering" */
+(function() {
+  'use strict';
+  const doorsNav = document.getElementById('doors');
+  if (!doorsNav) return;
+
+  doorsNav.addEventListener('click', function(e) {
+    const link = e.target.closest('a[href]');
+    if (!link) return;
+
+    // Check if prefers-reduced-motion is enabled
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReducedMotion) {
+      // Skip animation, navigate immediately
+      return;
+    }
+
+    // Prevent default navigation
+    e.preventDefault();
+
+    // Trigger threshold animation
+    link.classList.add('threshold-active');
+
+    // Navigate after animation completes (400ms)
+    setTimeout(function() {
+      window.location.href = link.href;
+    }, 400);
+  }, false);
+})();
+</script>
+
 </body>
 </html>
