@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1784048745'; // doors complete + research path elevation
+const CACHE_V  = 'jfsn-1784049890'; // spatial storytelling: directional room passages
 const PRECACHE = [
   '/',
   '/index.html',
