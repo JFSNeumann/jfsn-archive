@@ -136,18 +136,56 @@ addEventListener('DOMContentLoaded', () => {
     max-width:1500px;margin:0 auto;
     columns:4 260px;column-gap:20px;
   }
-  .op{break-inside:avoid;margin:0 0 20px}
+
+  /* Hall of Openings: Exhibition Procession — walking through curated spaces */
+  .op{break-inside:avoid;margin:0 0 20px;position:relative}
   .js .op{
     opacity:0;transform:translateY(18px);
     transition:opacity .9s ease,transform .9s ease;
   }
   .js .op.seen{opacity:1;transform:none}
-  a:focus-visible{outline:2px solid var(--accent);outline-offset:4px;color:var(--accent)}
-  .op a{display:block;color:var(--ink)}
+
+  .op a{
+    display:block;color:var(--ink);position:relative;
+    cursor:grab;
+  }
+
+  /* Image: presence & depth activation on hover */
   .op img{
     display:block;width:100%;height:auto;
     border:1px solid var(--frame);background:#171310;
+    transition:border-color .4s ease,box-shadow .4s ease,transform .4s ease;
+    box-shadow:0 4px 12px rgba(0,0,0,0);
   }
+
+  /* Hover: composite activates as you enter the space */
+  @media (prefers-reduced-motion: no-preference){
+    .op a:hover img,.op a:focus-visible img{
+      border-color:var(--accent);
+      box-shadow:0 12px 32px rgba(255,102,0,.16);
+      transform:translateY(-4px);
+    }
+
+    /* Metadata layers in to reveal curation context */
+    .op figcaption{opacity:.55;transform:translateY(6px);transition:opacity .4s ease .08s,transform .4s ease .08s}
+    .op a:hover figcaption,.op a:focus-visible figcaption{opacity:1;transform:none}
+
+    /* Title emphasizes (this work is placed here intentionally) */
+    .op .t{transition:color .4s ease,font-weight .4s ease}
+    .op a:hover .t,.op a:focus-visible .t{color:var(--accent);font-weight:500}
+
+    /* Composite flag: reveals the curation language */
+    .op .x{opacity:.5;transition:opacity .4s ease .12s}
+    .op a:hover .x,.op a:focus-visible .x{opacity:1}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .op a:hover img,.op a:focus-visible img{border-color:var(--accent)}
+    .op a:hover .t,.op a:focus-visible .t{color:var(--accent)}
+    .op figcaption{opacity:1;transform:none}
+  }
+
+  a:focus-visible{outline:2px solid var(--accent);outline-offset:4px;color:var(--accent)}
   .op figcaption{padding:9px 2px 4px}
   .op .t{
     font-family:Georgia,'Times New Roman',serif;font-style:italic;

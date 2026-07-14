@@ -153,15 +153,44 @@ addEventListener('DOMContentLoaded', () => {
     grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
     gap:24px 18px;
   }
-  .card{color:var(--ink)}
+  /* Archive: Study Room Intimacy — leaning in to examine works */
+  .card{color:var(--ink);position:relative}
+  .card a{position:relative;display:block;cursor:crosshair}
   .card img{
     display:block;width:100%;height:auto;
     border:1px solid var(--frame);background:#171310;
-    transition:border-color .2s;
+    transition:border-color .35s ease,box-shadow .35s ease,transform .35s ease;
+    box-shadow:0 2px 8px rgba(0,0,0,0);
   }
-  .card:hover img,.card:focus-visible img{border-color:var(--dim)}
-  .card .t{transition:color .25s}
-  .card a:hover .t,.card a:focus-visible .t{color:var(--accent)}
+
+  /* Hover: frame expands, metadata layers, image elevated */
+  @media (prefers-reduced-motion: no-preference){
+    .card a:hover img,.card a:focus-visible img{
+      border-color:var(--accent);
+      box-shadow:0 8px 24px rgba(255,102,0,.12);
+      transform:translateY(-2px);
+    }
+
+    /* Metadata enters from below on hover */
+    .card figcaption{opacity:0;transform:translateY(8px);transition:opacity .35s ease .05s,transform .35s ease .05s}
+    .card a:hover figcaption,.card a:focus-visible figcaption{opacity:1;transform:none}
+
+    /* Title anchors, gains weight */
+    .card .t{transition:color .35s ease,font-weight .35s ease}
+    .card a:hover .t,.card a:focus-visible .t{color:var(--accent);font-weight:500}
+
+    /* Metadata metadata dims then reveals on hover */
+    .card .m,.card .x{opacity:.6;transition:opacity .35s ease .1s}
+    .card a:hover .m,.card a:focus-visible .m,
+    .card a:hover .x,.card a:focus-visible .x{opacity:1}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .card a:hover img,.card a:focus-visible img{border-color:var(--accent)}
+    .card a:hover .t,.card a:focus-visible .t{color:var(--accent)}
+    .card figcaption{opacity:1;transform:none}
+  }
+
   .card figcaption{padding:9px 1px 0}
   .card .t{
     font-family:Georgia,'Times New Roman',serif;font-style:italic;
