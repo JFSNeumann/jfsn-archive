@@ -130,6 +130,19 @@ addEventListener('DOMContentLoaded', () => {
     overflow:hidden;
   }
 
+  /* Ghosted preview overlay (#2): room essence preview on hover */
+  #doors a::after{
+    content:'';position:absolute;inset:0;
+    background-image:var(--preview-url, none);
+    background-size:cover;background-position:center;background-repeat:no-repeat;
+    opacity:0;pointer-events:none;z-index:-1;
+    transition:opacity .3s ease;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    #doors a:hover::after{opacity:.15}
+    #doors a:focus-visible::after{opacity:.15}
+  }
+
   /* Room-specific personalities via nth-child stagger and animation */
   @media (prefers-reduced-motion: no-preference) {
     /* THE CURRENT (1st): alive, flow, energy */
@@ -331,11 +344,11 @@ addEventListener('DOMContentLoaded', () => {
     <em>1,084 works, fifty years, kept and described and open.</em></p>
 
   <nav id="doors" aria-label="Rooms">
-    <a href="current.html" style="--key:linear-gradient(#b23a3a,#d8c9a8,#5a7d8c,#c8b44a)">THE CURRENT<span class="sub">FIFTY YEARS AS ONE RIVER — BEGIN HERE</span><span class="go">→</span></a>
-    <a href="guernica-passage.html" style="--key:#4a4e5f">THE GUERNICA PASSAGE<span class="sub">232 WORKS · ONE STRUCTURE · THIRTY YEARS</span><span class="go">→</span></a>
-    <a href="flooded-wing.html" style="--key:#2e4451">THE FLOODED WING<span class="sub">A ROOM FOR WHAT IS MISSING</span><span class="go">→</span></a>
-    <a href="hall-of-openings.html" style="--key:rgba(255,102,0,.8)">THE HALL OF OPENINGS<span class="sub">250 IMAGINED EXHIBITIONS — EVERY ONE FLAGGED</span><span class="go">→</span></a>
-    <a href="the-studio.html" style="--key:#d8cfb8">THE STUDIO<span class="sub">THE LAST ROOM — THE WORK CONTINUES</span><span class="go">→</span></a>
+    <a href="current.html" data-preview-id="art1005" style="--key:linear-gradient(#b23a3a,#d8c9a8,#5a7d8c,#c8b44a)">THE CURRENT<span class="sub">FIFTY YEARS AS ONE RIVER — BEGIN HERE</span><span class="go">→</span></a>
+    <a href="guernica-passage.html" data-preview-id="art0023" style="--key:#4a4e5f">THE GUERNICA PASSAGE<span class="sub">232 WORKS · ONE STRUCTURE · THIRTY YEARS</span><span class="go">→</span></a>
+    <a href="flooded-wing.html" data-preview-id="art0611" style="--key:#2e4451">THE FLOODED WING<span class="sub">A ROOM FOR WHAT IS MISSING</span><span class="go">→</span></a>
+    <a href="hall-of-openings.html" data-preview-id="art0611" style="--key:rgba(255,102,0,.8)">THE HALL OF OPENINGS<span class="sub">250 IMAGINED EXHIBITIONS — EVERY ONE FLAGGED</span><span class="go">→</span></a>
+    <a href="the-studio.html" data-preview-id="art0241" style="--key:#d8cfb8">THE STUDIO<span class="sub">THE LAST ROOM — THE WORK CONTINUES</span><span class="go">→</span></a>
   </nav>
 
   <div class="caps" id="vault">
@@ -376,6 +389,41 @@ addEventListener('DOMContentLoaded', () => {
       window.location.href = link.href;
     }, 400);
   }, false);
+})();
+
+/* Ghosted preview on hover (#2): load thumbnails for each room */
+(function() {
+  'use strict';
+  const doorsNav = document.getElementById('doors');
+  if (!doorsNav) return;
+
+  // Pre-load thumbnail images and set as background for ::after pseudo-element
+  const links = doorsNav.querySelectorAll('a[data-preview-id]');
+  links.forEach(function(link) {
+    const artId = link.dataset.previewId;
+    if (!artId) return;
+
+    // Build thumbnail URL (mini size: ~200px)
+    const thumbUrl = '/artworks/mini/' + artId + '.avif';
+
+    // Create a hidden image to preload and verify it exists
+    const img = new Image();
+    img.onload = function() {
+      // Once loaded, set as background-image on the ::after pseudo-element
+      // We use CSS variable to pass data to pseudo-element
+      link.style.setProperty('--preview-url', 'url(' + thumbUrl + ')');
+    };
+    img.onerror = function() {
+      // Fallback: try JPG if AVIF fails
+      const jpgUrl = '/artworks/mini/' + artId + '.jpg';
+      const imgJpg = new Image();
+      imgJpg.onload = function() {
+        link.style.setProperty('--preview-url', 'url(' + jpgUrl + ')');
+      };
+      imgJpg.src = jpgUrl;
+    };
+    img.src = thumbUrl;
+  });
 })();
 </script>
 
