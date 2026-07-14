@@ -329,7 +329,49 @@ addEventListener('DOMContentLoaded', () => {
   }
   #doors .construction{margin-top:16px;color:var(--faint);font-size:9px;letter-spacing:.22em;text-align:center}
 
-  #vault{margin-top:8vh;display:flex;flex-direction:column;gap:14px;align-items:center}
+  /* THE RESEARCH PATH (#7): parallel journey with equal visual hierarchy */
+  #research-path{
+    margin-top:12vh;display:flex;flex-direction:column;gap:24px;
+    align-items:center;text-align:center;
+  }
+  #research-path h2{
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:clamp(14px,2vw,18px);letter-spacing:.18em;
+    color:var(--dim);font-weight:400;margin:0;
+  }
+
+  #vault{margin-top:0;display:flex;flex-direction:column;gap:14px;align-items:center}
+
+  /* Vault link interactions (#7): parallel to doors language */
+  #vault a{
+    position:relative;display:inline-block;
+    font-size:10px;letter-spacing:.22em;color:var(--ink);
+    border:1px solid var(--frame);padding:14px 20px;
+    transition:all .3s ease;
+    overflow:hidden;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    #vault a:hover{
+      border-color:var(--dim);
+      transform:translateY(-2px);
+      box-shadow:0 4px 12px rgba(0,0,0,.08);
+    }
+    #vault a:focus-visible{
+      outline:2px solid var(--accent);outline-offset:4px;
+      transform:translateY(-2px);
+    }
+  }
+
+  #vault a::before{
+    content:'';position:absolute;inset:0;
+    background:var(--accent);opacity:0;z-index:-1;
+    transition:opacity .3s ease;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    #vault a:hover::before{opacity:.04}
+  }
 
   /* ── THE LINTEL — desktop only ──
      wide screens are not a stretched poster; they are a wall. The name sets
@@ -422,10 +464,14 @@ addEventListener('DOMContentLoaded', () => {
     <a href="the-studio.html" data-preview-id="art0241" style="--key:#d8cfb8">THE STUDIO<span class="sub">THE LAST ROOM — THE WORK CONTINUES</span><span class="go">→</span></a>
   </nav>
 
-  <div class="caps" id="vault">
-    <a href="archive.html">[ THE ARCHIVE — CATALOG, SEARCH, DATA → ]</a>
-    <a href="working-history.html">[ THE WORKING HISTORY — THE GALLERIES HE BUILT → ]</a>
-    <a href="about.html">[ ABOUT JEFF — THE MAKER → ]</a>
+  <!-- Vault Path Elevation (#7): THE RESEARCH PATH — parallel journey, equal hierarchy -->
+  <div id="research-path">
+    <h2>THE RESEARCH PATH</h2>
+    <div class="caps" id="vault">
+      <a href="archive.html">[ THE ARCHIVE — CATALOG, SEARCH, DATA → ]</a>
+      <a href="working-history.html">[ THE WORKING HISTORY — THE GALLERIES HE BUILT → ]</a>
+      <a href="about.html">[ ABOUT JEFF — THE MAKER → ]</a>
+    </div>
   </div>
   </section>
 </main>
@@ -444,12 +490,16 @@ addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Hover haptic feedback (#10)
-  doorsNav.addEventListener('mouseenter', function(e) {
-    const link = e.target.closest('a[href]');
-    if (!link) return;
-    hapticPulse(10); // Subtle 10ms pulse on hover
-  }, true); // Capture phase to catch hovers on any descendant
+  // Hover haptic feedback (#10) — also on vault links (#7)
+  const interactiveSections = [doorsNav, document.getElementById('vault')];
+  interactiveSections.forEach(function(section) {
+    if (!section) return;
+    section.addEventListener('mouseenter', function(e) {
+      const link = e.target.closest('a[href]');
+      if (!link) return;
+      hapticPulse(10); // Subtle 10ms pulse on hover
+    }, true);
+  });
 
   doorsNav.addEventListener('click', function(e) {
     const link = e.target.closest('a[href]');
