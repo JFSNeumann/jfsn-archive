@@ -237,6 +237,23 @@ addEventListener('DOMContentLoaded', () => {
         transform:translateX(12px);
       }
     }
+
+    /* Room cascade on click (#8): other rooms fade and retreat as user enters */
+    #doors a.room-exit{
+      pointer-events:none;
+      animation:room-cascade .3s ease-out forwards;
+    }
+
+    @keyframes room-cascade {
+      0%{
+        opacity:1;
+        transform:translateY(0);
+      }
+      100%{
+        opacity:0;
+        transform:translateY(-12px);
+      }
+    }
   }
 
   /* Focus state receives same room personality as hover (keyboard accessibility) */
@@ -381,10 +398,22 @@ addEventListener('DOMContentLoaded', () => {
     // Prevent default navigation
     e.preventDefault();
 
-    // Trigger threshold animation
+    // Trigger threshold animation on clicked room
     link.classList.add('threshold-active');
 
-    // Navigate after animation completes (400ms)
+    // Apply cascade animation to sibling rooms (#8): staggered fade-out + retreat
+    const allLinks = doorsNav.querySelectorAll('a[href]');
+    let delayMs = 0;
+    allLinks.forEach(function(sibling) {
+      if (sibling === link) return; // Skip the clicked room
+
+      // Apply cascade animation with staggered delay
+      sibling.classList.add('room-exit');
+      sibling.style.animationDelay = (delayMs / 1000) + 's';
+      delayMs += 50; // 50ms stagger between each room
+    });
+
+    // Navigate after threshold animation completes (400ms)
     setTimeout(function() {
       window.location.href = link.href;
     }, 400);
