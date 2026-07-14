@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1784051200'; // border grammar: the border is the only interaction language
+const CACHE_V  = 'jfsn-1784052400'; // procession resonance: images rise on hover, acknowledging presence
 const PRECACHE = [
   '/',
   '/index.html',

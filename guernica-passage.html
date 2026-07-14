@@ -151,16 +151,46 @@ addEventListener('DOMContentLoaded', () => {
     display:block;width:100%;height:auto;
     border:1px solid var(--frame);
     background:#171310;
+    transition:border-color .25s ease,box-shadow .25s ease,transform .25s ease;
   }
-  .work figcaption{margin-top:12px}
+  @media (prefers-reduced-motion: no-preference) {
+    .work a:hover img{
+      transform:translateY(-4px);
+      border-color:var(--accent);
+      box-shadow:0 12px 32px rgba(255,102,0,.12);
+    }
+    .work.feature a:hover img{
+      transform:translateY(-8px);
+      box-shadow:0 20px 48px rgba(255,102,0,.16);
+    }
+  }
+  .work figcaption{margin-top:12px;transition:transform .25s ease}
+  @media (prefers-reduced-motion: no-preference) {
+    .work a:hover figcaption{transform:translateY(-2px)}
+    .work.feature a:hover figcaption{transform:translateY(-4px)}
+  }
   .work .t{
     font-family:Georgia,'Times New Roman',serif;font-style:italic;
     font-size:15px;
+    transition:color .25s ease,transform .25s ease;
   }
-  .work .m{margin-top:5px}
+  @media (prefers-reduced-motion: no-preference) {
+    .work a:hover .t{
+      color:var(--accent);
+      transform:scale(1.02);
+    }
+  }
+  .work .m{margin-top:5px;transition:color .25s ease}
+  @media (prefers-reduced-motion: no-preference) {
+    .work a:hover .m{color:var(--accent)}
+  }
   .work .x{
     display:block;margin-top:6px;font-size:9px;letter-spacing:.14em;
     color:var(--accent);text-transform:uppercase;
+    transition:opacity .25s ease;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .work a:hover .x{opacity:.8}
   }
   .work.right{margin-right:0;margin-left:auto}
   .work.left{margin-left:0;margin-right:auto}
