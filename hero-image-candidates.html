@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hall of Openings — Hero Image Candidates</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0c0a09;
+    color: #e8e2d9;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    padding: 40px 20px;
+  }
+  .header {
+    max-width: 1200px;
+    margin: 0 auto 60px;
+    text-align: center;
+  }
+  .header h1 {
+    font-family: Georgia, serif;
+    font-size: 32px;
+    font-style: italic;
+    margin-bottom: 12px;
+  }
+  .header p {
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #7a7168;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .candidates {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 80px;
+  }
+
+  .candidate {
+    border-top: 1px solid #2b241e;
+    padding-top: 60px;
+  }
+
+  .candidate.featured {
+    border: 2px solid #FF6600;
+    padding: 30px;
+    background: rgba(255, 102, 0, 0.05);
+  }
+
+  .candidate:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .candidate-rank {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #FF6600;
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+
+  .candidate-image {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 0 30px 0;
+    display: block;
+    border: 1px solid #2b241e;
+    background: #171310;
+    aspect-ratio: 400/300;
+    object-fit: cover;
+  }
+
+  .candidate-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 30px;
+  }
+
+  .candidate-meta-item {
+    font-size: 11px;
+  }
+
+  .candidate-meta-label {
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #7a7168;
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+
+  .candidate-meta-value {
+    font-family: Georgia, serif;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .candidate-analysis {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  .analysis-section h3 {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #7a7168;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  .analysis-section p {
+    font-size: 13px;
+    line-height: 1.7;
+    color: #b9b1a6;
+  }
+
+  .analysis-section ul {
+    font-size: 13px;
+    line-height: 1.7;
+    color: #b9b1a6;
+    margin-left: 20px;
+  }
+
+  .analysis-section li {
+    margin-bottom: 8px;
+  }
+
+  .strength {
+    color: #e8e2d9;
+    font-weight: 500;
+  }
+
+  .weakness {
+    color: #c8c8c8;
+  }
+
+  @media (max-width: 768px) {
+    .candidate-meta {
+      grid-template-columns: 1fr;
+    }
+    .candidate-analysis {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .footer {
+    max-width: 1200px;
+    margin: 120px auto 0;
+    padding-top: 60px;
+    border-top: 1px solid #2b241e;
+    text-align: center;
+    font-size: 11px;
+    color: #7a7168;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Hall of Openings — Hero Image Candidates</h1>
+  <p>Five finalists for the entrance image. Each candidate is evaluated against: immediacy of presence, representation of the Hall as a whole, curiosity before explanation, mobile responsiveness, and museum-quality restraint. Rank them by your curatorial judgment.</p>
+</div>
+
+<div class="candidates">
+
+  <!-- CANDIDATE 1 -->
+  <div class="candidate featured">
+    <div class="candidate-rank">CANDIDATE 1: CURRENT (for reference)</div>
+    <img src="/artworks/medium/art0028.avif" alt="Installation View, Wall of Works" class="candidate-image">
+    <div class="candidate-meta">
+      <div class="candidate-meta-item">
+        <div class="candidate-meta-label">Title</div>
+        <div class="candidate-meta-value">Installation View, Wall of Works</div>
+      </div>
+      <div class="candidate-meta-item">
+        <div class="candidate-meta-label">ID · Year · Aspect</div>
+        <div class="candidate-meta-value">art0028 · 2000s (est.) · 400×300</div>
+      </div>
+    </div>
+    <div class="candidate-analysis">
+      <div class="analysis-section">
+        <h3>Why it succeeds</h3>
+        <ul>
+          <li><span class="strength">Balanced proportions</span> — Nearly square 400×300 ratio works equally well on desktop and mobile</li>
+          <li><span class="strength">Full gallery wall</span> — Shows multiple works arranged on a single surface, immediately reads as curation</li>
+          <li><span class="strength">Visual richness</span> — Colorful, patterned, invites exploration</li>
+          <li><span class="strength">Represents the Hall</span> — This is what "installation view, wall of works" looks like</li>
+        </ul>
+      </div>
+      <div class="analysis-section">
+        <h3>What it communicates first</h3>
+        <ul>
+          <li>Visual abundance and pattern</li>
+          <li>Intentional curation (works placed deliberately)</li>
+          <li>Aesthetic playfulness (color, composition)</li>
+          <li>A space designed by someone with visual intelligence</li>
+        </ul>
+      </div>
+    </div>
+    <div class="candidate-analysis">
+      <div class="analysis-section">
+        <h3>Weaknesses</h3>
+        <ul>
+          <li><span class="weakness">Possibly too colorful/busy</span> — Might overshadow the narrative of "imagined"</li>
+          <li><span class="weakness">Doesn't signify scale</span> — Doesn't communicate "this is a room" vs. "this is a detail"</li>
+        </ul>
+      </div>
+      <div class="analysis-section">
+        <h3>Support for principle</h3>
+        <p>Visitor encounters visual evidence of imagined curation before being told "these rooms never held it." The image alone suggests sophistication and intention. Text that follows deepens understanding.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CANDIDATE 2 -->
+  <div class="candidate">
+    <div class="candidate-rank">CANDIDATE 2</div>
+    <img src="/artworks/medium/art0827.avif" alt="XXXIII Large-Scale Installation" class="candidate-image">
+    <div class="candidate-meta">
+      <div class="candidate-meta-item">
+        <div class="candidate-meta-label">Title</div>
+        <div class="candidate-meta-value">XXXIII Large-Scale Installation</div>
+      </div>
+      <div class="candidate-meta-item">
+        <div class="candidate-meta-label">ID · Year · Aspect</div>
+        <div class="candidate-meta-value">art0827 · 2000s (est.) · 400×289</div>
+      </div>
+    </div>
+    <div class="candidate-analysis">
+      <div class="analysis-section">
+        <h3>Why it succeeds</h3>
+        <ul>
+          <li><span class="strength">Title explicitly promises scale</span> — "Large-Scale Installation" signals that this is a room-sized imagining</li>
+          <li><span class="strength">Good responsive ratio</span> — Nearly square, works on all screens</li>
+          <li><span class="strength">Part of XXXIII series</span> — Links to Guernica, a central practice over 30 years</li>
+          <li><span class="strength">Serious composition</span> — Suggests intentional, curatorial work</li>
+        </ul>
+      </div>
+      <div class="analysis-section">
+        <h3>What it communicates first</h3>
+        <ul>
+          <li>Scale and ambition</li>
+          <li>Long-term commitment (XXXIII = series)</li>
+          <li>Museum-quality installation thinking</li>
+          <li>A room you could walk through</li>
+        </ul>
+      </div>
+    </div>
+    <div class="candidate-analysis">
+      <div class="analysis-section">
+        <h3>Weaknesses</h3>
+        <ul>
+          <li><span class="weakness">May read as more formal/austere than welcoming</span> — Could signal "research project" rather than "gallery experience"</li>
+          <li><span class="weakness">Less colorful</span> — Might not draw the eye as immediately</li>
+        </ul>
+      </div>
+      <div class="analysis-section">
+        <h3>Support for principle</h3>
+        <p>Visitor sees proof of ambitious imagining before learning the premise. The image alone demonstrates that these are thoughtfully-designed spaces, not idle fantasies. Title deepens understanding.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CANDIDATE 3 -->
+  <div class="candidate">
+    <div class="candidate-rank">CANDIDATE 3</div>
+    <img src="/artworks/medium/art0816.avif" alt="XXXIII Guernica Installation" class="candidate-image">
+    <div class="candidate-meta">
+      <div class="candidate-meta-item">
+        <div class="candidate-meta-label">Title</div>
+        <div class="candidate-meta-value">XXXIII Guernica Installation</div>
+      </div>
+      <div class="candidate-meta-item">
+        <div class="candidate-meta-label">ID · Year · Aspect</div>
+        <div class="candidate-meta-value">art0816 · 2000s (est.) · 400×225</div>
+      </div>
+    </div>
+    <div class="candidate-analysis">
+      <div class="analysis-section">
+        <h3>Why it succeeds</h3>
+        <ul>
+          <li><span class="strength">Guernica reference</span> — Central to Jeff's 30-year practice, immediately signals seriousness</li>
+          <li><span class="strength">Reasonable landscape ratio</span> — Not too compressed, works on mobile with minor cropping</li>
+          <li><span class="strength">Balances formality and accessibility</span> — Professional without being cold</li>
+          <li><span class="strength">Clear installation language</span> — "Installation" in title signals imagined space</li>
+        </ul>
+      </div>
+      <div class="analysis-section">
+        <h3>What it communicates first</h3>
+        <ul>
+          <li>A specific artistic preoccupation</li>
+          <li>Historical/conceptual depth</li>
+          <li>Museum-quality presentation</li>
+          <li>Work that references art history</li>
+        </ul>
+      </div>
+    </div>
+    <div class="candidate-analysis">
+      <div class="analysis-section">
+        <h3>Weaknesses</h3>
+        <ul>
+          <li><span class="weakness">Compressed aspect ratio (400×225)</span> — Might feel cramped on mobile, visible detail may be lost</li>
+          <li><span class="weakness">Signals a specific series rather than the Hall as a whole</span> — Visitors might assume all 250 are Guernica-related</li>
+        </ul>
+      </div>
+      <div class="analysis-section">
+        <h3>Support for principle</h3>
+        <p>Visitor encounters a sophisticated, historically-informed imagining before explanation. The image alone communicates artistic rigor. Aspect ratio is the main trade-off for mobile.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CANDIDATE 4 -->
+  <div class="candidate">
+    <div class="candidate-rank">CANDIDATE 4</div>
+    <img src="/artworks/medium/art0231.avif" alt="Untitled (Installation with Bicycles)" class="candidate-image">
+    <div class="candidate-meta">
+      <div class="candidate-meta-item">
+        <div class="candidate-meta-label">Title</div>
+        <div class="candidate-meta-value">Untitled (Installation with Bicycles)</div>
+      </div>
+      <div class="candidate-meta-item">
+        <div class="candidate-meta-label">ID · Year · Aspect</div>
+        <div class="candidate-meta-value">art0231 · 2020s (est.) · 400×300</div>
+      </div>
+    </div>
+    <div class="candidate-analysis">
+      <div class="analysis-section">
+        <h3>Why it succeeds</h3>
+        <ul>
+          <li><span class="strength">Recent work (2020s)</span> — Shows that imagining continues to the present day</li>
+          <li><span class="strength">Balanced proportions</span> — Full 400×300 square works equally on all screens</li>
+          <li><span class="strength">Material specificity</span> — "Bicycles" suggests real-world objects, makes installation feel tangible</li>
+          <li><span class="strength">Accessible title</span> — Doesn't require art-historical knowledge to appreciate</li>
+        </ul>
+      </div>
+      <div class="analysis-section">
+        <h3>What it communicates first</h3>
+        <ul>
+          <li>Contemporary practice (recent work)</li>
+          <li>Found-object and assemblage thinking</li>
+          <li>A room with real materials</li>
+          <li>Playfulness and exploration</li>
+        </ul>
+      </div>
+    </div>
+    <div class="candidate-analysis">
+      <div class="analysis-section">
+        <h3>Weaknesses</h3>
+        <ul>
+          <li><span class="weakness">Might feel too recent/contemporary</span> — Doesn't signal the 50-year arc of the practice</li>
+          <li><span class="weakness">Less formally curated</span> — May read as more casual than museum-quality</li>
+        </ul>
+      </div>
+      <div class="analysis-section">
+        <h3>Support for principle</h3>
+        <p>Visitor sees living, contemporary imagining. The material specificity (bicycles) makes imagining feel concrete rather than abstract. Recent dating proves the practice continues to now.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CANDIDATE 5 -->
+  <div class="candidate">
+    <div class="candidate-rank">CANDIDATE 5</div>
+    <img src="/artworks/medium/art0181.avif" alt="Untitled (Installation View) 1" class="candidate-image">
+    <div class="candidate-meta">
+      <div class="candidate-meta-item">
+        <div class="candidate-meta-label">Title</div>
+        <div class="candidate-meta-value">Untitled (Installation View) 1</div>
+      </div>
+      <div class="candidate-meta-item">
+        <div class="candidate-meta-label">ID · Year · Aspect</div>
+        <div class="candidate-meta-value">art0181 · 2020s (est.) · 400×300</div>
+      </div>
+    </div>
+    <div class="candidate-analysis">
+      <div class="analysis-section">
+        <h3>Why it succeeds</h3>
+        <ul>
+          <li><span class="strength">Balanced proportions</span> — Perfect 400×300 square, responsive across all devices</li>
+          <li><span class="strength">Recent work</span> — Shows contemporary imagining, practice continues</li>
+          <li><span class="strength">Neutral title</span> — "Installation View" signals curation without thematic burden</li>
+          <li><span class="strength">Simple, elegant composition</span> — Doesn't distract from the concept</li>
+        </ul>
+      </div>
+      <div class="analysis-section">
+        <h3>What it communicates first</h3>
+        <ul>
+          <li>A carefully-considered display</li>
+          <li>Contemporary context</li>
+          <li>Clean, sophisticated curation</li>
+          <li>Museum-quality presentation without elaboration</li>
+        </ul>
+      </div>
+    </div>
+    <div class="candidate-analysis">
+      <div class="analysis-section">
+        <h3>Weaknesses</h3>
+        <ul>
+          <li><span class="weakness">Most generic title</span> — Doesn't signal scale, practice arc, or specific artistic concern</li>
+          <li><span class="weakness">May feel too minimal</span> — Could undersell the ambition of the imagining</li>
+        </ul>
+      </div>
+      <div class="analysis-section">
+        <h3>Support for principle</h3>
+        <p>Visitor encounters clean, recent evidence of imagined curation. The image lets the imagination speak without editorial comment. Title is a simple factual label, doesn't constrain interpretation.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>Curatorial Research Tool — Evaluate each image against: (1) immediacy of museum presence, (2) representation of the Hall as a whole, (3) invitation to curiosity, (4) mobile responsiveness, (5) quiet restraint. Rank by your judgment.</p>
+</div>
+
+</body>
+</html>

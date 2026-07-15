@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1784052400'; // procession resonance: images rise on hover, acknowledging presence
+const CACHE_V  = 'jfsn-1784138800'; // hall-of-openings: image-first hero (art0821) deployed
 const PRECACHE = [
   '/',
   '/index.html',
