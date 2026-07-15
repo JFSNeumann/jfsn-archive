@@ -317,6 +317,15 @@ addEventListener('DOMContentLoaded', () => {
     #work img,.wing img{max-height:42vh}
     #who img{height:52px}
   }
+
+  /* Me overlay in bottom-right corner — desktop only */
+  .me-hero-overlay{display:none}
+  .threshold{position:relative}
+  @media (min-width:1200px){
+    .me-hero-overlay{
+      display:block !important;position:absolute;bottom:20px;right:20px;z-index:999;
+    }
+  }
 </style>
 </head>
 <body>
@@ -345,6 +354,8 @@ addEventListener('DOMContentLoaded', () => {
         <img src="/artworks/medium/art1010.avif" alt="Untitled (Cassette Torso) — a collage with a cassette tape at the center of a torso form." width="900" height="792" decoding="async" fetchpriority="low" style="transform:translateY(-7px) scaleX(-1);filter:brightness(0.3)">
       </figure>
     </div>
+
+    <img src="/assets/images/me-for-website.png" alt="Jeff" class="me-hero-overlay" width="120" height="280" decoding="async">
 
     <p id="who"><img src="/assets/images/jfsn-signature.png" alt="Jeffrey F. S. Neumann" width="300" height="180" decoding="async"></p>
   </section>
