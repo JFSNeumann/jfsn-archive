@@ -69,7 +69,7 @@ addEventListener('DOMContentLoaded', () => {
      composition at every width — only scale changes. Nothing hides, nothing
      moves, nothing greets: printed at two meters it would feel complete. */
   .threshold{
-    min-height:100vh;min-height:100svh;
+    min-height:85vh;min-height:85svh;
     display:flex;flex-direction:column;align-items:center;justify-content:center;
     text-align:center;
     max-width:1180px;margin:0 auto;
@@ -90,7 +90,6 @@ addEventListener('DOMContentLoaded', () => {
   #work img{
     display:block;width:auto;height:auto;
     max-width:min(560px,86vw);max-height:42vh;
-    border:1px solid var(--frame);
   }
   #work figcaption{margin-top:16px}
 
@@ -295,28 +294,27 @@ addEventListener('DOMContentLoaded', () => {
     #who{margin-top:4.5vh}
     #who img{height:64px}
 
-    /* the hang: one figure across fifty years. Center lit and large; the
-       flankers smaller, lower, and dimmed — works glimpsed deeper in the
-       room. Recession comes from scale, placement, and lighting, never
-       from altering the works themselves. */
-    #hang{display:flex;align-items:flex-end;justify-content:center;
-      gap:clamp(26px,3vw,60px);width:100%}
+    /* the hang: one figure across fifty years. Three works at unified scale
+       and brightness, seamlessly joined to form one continuous wall. */
+    #hang{display:flex;align-items:center;justify-content:center;
+      gap:0;width:100%}
     .wing{display:block;margin:0}
     #work{order:0}
     #wing-l{order:-1}
     #wing-r{order:1}
-    /* all three works hang at the same height — an even band; the portrait
-       flankers are simply narrower. Center stays the point through full
-       lighting and its plaque, the flankers dimmed and quietly captioned. */
+    /* all three works hang at equal scale and unified brightness,
+       seamlessly joined as one continuous piece. */
+    #work img{max-height:52vh}
+    .wing{margin-top:45px}
     .wing img{display:block;width:auto;height:auto;
-      max-height:52vh;border:1px solid var(--frame);opacity:.62}
-    .wing figcaption{margin-top:12px;font-size:9px;letter-spacing:.26em;
-      color:var(--dim);opacity:.75}
+      max-height:52vh}
+    .wing figcaption{margin-top:8px;font-size:9px;letter-spacing:.26em;
+      color:var(--dim)}
   }
   /* short desktop windows: the poster scales as one unit — never crops */
   @media (min-width:1200px) and (max-height:820px){
     .threshold h1{font-size:min(6.2vw,78px)}
-    #work img,.wing img{max-height:46vh}
+    #work img,.wing img{max-height:42vh}
     #who img{height:52px}
   }
 </style>
@@ -341,12 +339,10 @@ addEventListener('DOMContentLoaded', () => {
         <figcaption class="caps">UNTITLED (CASSETTE TORSO) · 2020S (EST.) · COLLAGE</figcaption>
       </figure>
       <figure class="wing" id="wing-l">
-        <img src="/artworks/medium/art1010.avif" alt="Untitled (Cassette Torso) — a collage with a cassette tape at the center of a torso form." width="900" height="792" decoding="async" fetchpriority="low" style="transform:scale(-1,-1)">
-        <figcaption class="caps">UNTITLED (CASSETTE TORSO) · 2020S (EST.) · COLLAGE</figcaption>
+        <img src="/artworks/medium/art1010.avif" alt="Untitled (Cassette Torso) — a collage with a cassette tape at the center of a torso form." width="900" height="792" decoding="async" fetchpriority="low" style="transform:translateY(-7px) scaleX(-1)">
       </figure>
       <figure class="wing" id="wing-r">
-        <img src="/artworks/medium/art1010.avif" alt="Untitled (Cassette Torso) — a collage with a cassette tape at the center of a torso form." width="900" height="792" decoding="async" fetchpriority="low" style="transform:scaleY(-1)">
-        <figcaption class="caps">UNTITLED (CASSETTE TORSO) · 2020S (EST.) · COLLAGE</figcaption>
+        <img src="/artworks/medium/art1010.avif" alt="Untitled (Cassette Torso) — a collage with a cassette tape at the center of a torso form." width="900" height="792" decoding="async" fetchpriority="low" style="transform:translateY(-7px) scaleX(-1)">
       </figure>
     </div>
 
