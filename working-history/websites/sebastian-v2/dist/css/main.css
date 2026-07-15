@@ -322,3 +322,25 @@ img.e2e-site-project-module-image,
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Fix white text on light background - override Adobe Portfolio default styling */
+body,
+h1, h2, h3, h4, h5, h6,
+p, a, span, div, li, button,
+.title, .fields, .custom, .description, .date,
+.project-title, .project-meta, .project-description {
+  color: #1a1a1a !important;
+}
+
+/* Ensure good contrast for navigation and interactive elements */
+nav, .nav, .menu {
+  color: #1a1a1a !important;
+}
+
+nav a, .nav a, .menu a {
+  color: #0066cc !important;
+}
+
+nav a:visited, .nav a:visited, .menu a:visited {
+  color: #663399 !important;
+}
