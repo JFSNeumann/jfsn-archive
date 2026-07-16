@@ -20,10 +20,9 @@
   'use strict';
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!REDUCED) {
-    const bg = document.body.parentElement;
-    addEventListener('scroll', () => {
+    window.addEventListener('scroll', () => {
       const y = scrollY * -2.5;
-      bg.style.setProperty('--parallax-y', `${y}px`);
+      document.documentElement.style.setProperty('--parallax-y', `${y}px`);
     }, { passive: true });
   }
 })();
