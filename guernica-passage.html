@@ -19,12 +19,14 @@
 (function(){
   'use strict';
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  console.log('Parallax init - REDUCED:', REDUCED);
   if (!REDUCED) {
     function updateParallax() {
       const y = window.scrollY * -2.5;
       document.documentElement.style.setProperty('--parallax-y', `${y}px`);
       requestAnimationFrame(updateParallax);
     }
+    console.log('Starting parallax loop');
     updateParallax();
   }
 })();
