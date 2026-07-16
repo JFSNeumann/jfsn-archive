@@ -665,6 +665,21 @@
       console.warn('Typekit not loaded.');
     }
     "></script>
+  <style>
+    /* Fix white text on transparent background from Adobe Portfolio CSS */
+    body, h1, h2, h3, h4, h5, h6, p, a, span, div, li, button,
+    .title, .fields, .custom, .description, .date,
+    .project-title, .project-meta, .project-description,
+    nav, .nav, .menu {
+      color: #1a1a1a !important;
+    }
+    nav a, .nav a, .menu a, a {
+      color: #0066cc !important;
+    }
+    nav a:visited, .nav a:visited, .menu a:visited {
+      color: #663399 !important;
+    }
+  </style>
 </head>
   <body class="transition-enabled">
   
