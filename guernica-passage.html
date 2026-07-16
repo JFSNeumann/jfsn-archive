@@ -18,12 +18,11 @@
 <script>
 (function(){
   'use strict';
-  function updateParallax() {
-    const y = window.scrollY * -2.5;
-    document.documentElement.style.setProperty('--parallax-y', `${y}px`);
-    requestAnimationFrame(updateParallax);
-  }
-  updateParallax();
+  const bg = document.body.parentElement;
+  addEventListener('scroll', () => {
+    const y = scrollY * -2.5;
+    bg.style.setProperty('--parallax-y', `${y}px`);
+  }, { passive: true });
 })();
 
 addEventListener('DOMContentLoaded', () => {
