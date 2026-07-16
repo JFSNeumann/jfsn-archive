@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1784138800'; // hall-of-openings: image-first hero (art0821) deployed
+const CACHE_V  = 'jfsn-1784233601'; // flooded-wing: hero much darker (90% overlay, 25% image)
 const PRECACHE = [
   '/',
   '/index.html',

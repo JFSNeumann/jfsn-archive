@@ -30,6 +30,14 @@
       100%{opacity:1}
     }
 
+    /* Hero text animations */
+    #door h1{animation:fadeInUp 0.8s ease 0.4s forwards;opacity:0}
+    #door .facts{animation:fadeInUp 0.8s ease 0.6s forwards;opacity:0}
+    @keyframes fadeInUp{
+      from{opacity:0;transform:translateY(12px)}
+      to{opacity:1;transform:none}
+    }
+
     /* Content fades in with reserve */
     #grid{animation:content-fade-slow .45s ease .2s forwards;opacity:0}
     @keyframes content-fade-slow{from{opacity:0}to{opacity:1}}
@@ -96,7 +104,19 @@ addEventListener('DOMContentLoaded', () => {
   #door{
     min-height:100vh;display:flex;flex-direction:column;
     justify-content:center;align-items:center;text-align:center;gap:30px;
+    position:relative;
+    background:linear-gradient(rgba(12,10,9,0.90),rgba(12,10,9,0.90)),url('/artworks/flooded-hero.avif') center/cover no-repeat fixed;
+    overflow:hidden;
   }
+  #door::before{
+    content:'';position:absolute;inset:0;background:url('/artworks/flooded-hero.avif') center/cover no-repeat;opacity:0.25;z-index:0;pointer-events:none;
+    mask-image:linear-gradient(180deg,rgba(0,0,0,1) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%);
+    -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,1) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%);
+  }
+  #door::after{
+    content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 0%,transparent 70%,rgba(12,10,9,0.5) 85%,var(--room) 100%);z-index:0;pointer-events:none;
+  }
+  #door>*{position:relative;z-index:1}
   #door .room-name{color:var(--dim)}
   #door h1{
     font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
