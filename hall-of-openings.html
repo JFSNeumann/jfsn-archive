@@ -117,6 +117,25 @@ addEventListener('DOMContentLoaded', () => {
 
   section{padding:0 clamp(20px,6vw,80px)}
 
+  #hero-text{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    display:flex;flex-direction:column;
+    justify-content:center;align-items:center;text-align:center;gap:12px;
+    z-index:2;width:auto;
+    background:rgba(0,0,0,0.25);
+    padding:clamp(24px,4vh,48px) clamp(32px,6vw,80px);
+  }
+  #hero-text h1{
+    font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
+    font-size:clamp(48px,8vw,80px);line-height:1.1;color:var(--ink);
+  }
+  .hero-subtitle{
+    font-family:'Playfair Display',Georgia,serif;font-style:italic;
+    font-size:clamp(14px,2vw,18px);letter-spacing:.08em;color:var(--ink);
+    text-transform:uppercase;font-weight:300;
+  }
+  .highlight-devo{background:var(--accent);color:#fff;padding:0 4px;font-style:normal}
+
   /* ---------- door ---------- */
   #door{
     min-height:100vh;display:flex;flex-direction:column;
@@ -269,6 +288,10 @@ addEventListener('DOMContentLoaded', () => {
     loading="eager"
     decoding="async"
   >
+  <div id="hero-text">
+    <h1>The Hall of <span class="highlight-devo">Open</span>ings</h1>
+    <p class="hero-subtitle">250 Imagined Exhibitions — Every One Flagged</p>
+  </div>
 </section>
 
 <!-- Museum-Style Label -->
