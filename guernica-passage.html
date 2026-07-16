@@ -20,10 +20,12 @@
   'use strict';
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!REDUCED) {
-    window.addEventListener('scroll', () => {
-      const y = scrollY * -2.5;
+    function updateParallax() {
+      const y = window.scrollY * -2.5;
       document.documentElement.style.setProperty('--parallax-y', `${y}px`);
-    }, { passive: true });
+      requestAnimationFrame(updateParallax);
+    }
+    updateParallax();
   }
 })();
 
