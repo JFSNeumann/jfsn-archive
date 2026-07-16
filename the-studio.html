@@ -108,16 +108,19 @@ addEventListener('DOMContentLoaded', () => {
   /* ---------- door ---------- */
   #door{
     min-height:100vh;display:flex;flex-direction:column;
-    justify-content:center;align-items:center;text-align:center;gap:28px;
-    position:relative;
+    justify-content:center;align-items:center;text-align:center;
+    position:relative;overflow:hidden;
   }
-  #door::before{
-    content:'';position:fixed;inset:0;
-    background-image:url('/artworks/medium/art0138.avif');
-    background-size:cover;background-position:center;
-    background-color:var(--room);
-    opacity:0.15;z-index:-1;pointer-events:none;
-    height:100vh;
+  .hero-images{
+    position:absolute;inset:0;display:flex;
+    z-index:-1;
+  }
+  .hero-img{
+    flex:1;height:100%;object-fit:cover;opacity:0.15;
+  }
+  .hero-content{
+    display:flex;flex-direction:column;justify-content:center;
+    align-items:center;gap:28px;position:relative;z-index:1;
   }
   #door h1{
     font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
@@ -230,9 +233,15 @@ addEventListener('DOMContentLoaded', () => {
 </header>
 
 <section id="door">
-  <div class="caps">THE STUDIO</div>
-  <h1>The <span class="highlight-work">work</span> continues.</h1>
-  <div class="caps fact">THE LAST ROOM — THE ONLY ONE THAT FACES FORWARD</div>
+  <div class="hero-images">
+    <img src="/artworks/medium/art0138.avif" alt="Studio interior" loading="eager" class="hero-img">
+    <img src="/artworks/medium/art0139.avif" alt="Studio, Forklift and Crosses" loading="eager" class="hero-img">
+  </div>
+  <div class="hero-content">
+    <div class="caps">THE STUDIO</div>
+    <h1>The <span class="highlight-work">work</span> continues.</h1>
+    <div class="caps fact">THE LAST ROOM — THE ONLY ONE THAT FACES FORWARD</div>
+  </div>
 </section>
 
 <section id="voice" class="reveal-el">
