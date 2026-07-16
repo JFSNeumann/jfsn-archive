@@ -245,7 +245,7 @@ addEventListener('DOMContentLoaded', () => {
   if (!REDUCED) {
     const bg = document.body.parentElement;
     addEventListener('scroll', () => {
-      const y = scrollY * 0.5;
+      const y = scrollY * -0.5;
       bg.style.setProperty('--parallax-y', `${y}px`);
     }, { passive: true });
   }
