@@ -38,20 +38,6 @@
   #room-veil.on{opacity:1;pointer-events:auto}
 </style>
 <script>
-(function(){
-  'use strict';
-  const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!REDUCED) {
-    const bg = document.body.parentElement;
-    addEventListener('scroll', () => {
-      const y = scrollY * -2.5;
-      bg.style.setProperty('--parallax-y', `${y}px`);
-    }, { passive: true });
-  }
-})();
-</script>
-
-<script>
 addEventListener('DOMContentLoaded', () => {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const v = document.createElement('div'); v.id = 'room-veil';
@@ -83,16 +69,6 @@ addEventListener('DOMContentLoaded', () => {
     background:var(--room);color:var(--ink);
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     -webkit-font-smoothing:antialiased;
-    position:relative;
-  }
-  body::before{
-    content:'';position:fixed;inset:0;
-    background-image:url('/artworks/medium/art0138.avif');
-    background-size:cover;background-position:center;
-    background-color:var(--room);
-    opacity:0.15;z-index:-1;pointer-events:none;
-    will-change:transform;
-    transform:translateY(var(--parallax-y, 0));
   }
   ::selection{background:var(--accent);color:#fff}
   a{color:var(--dim);text-decoration:none;transition:color .25s}
@@ -133,6 +109,15 @@ addEventListener('DOMContentLoaded', () => {
   #door{
     min-height:100vh;display:flex;flex-direction:column;
     justify-content:center;align-items:center;text-align:center;gap:28px;
+    position:relative;
+  }
+  #door::before{
+    content:'';position:fixed;inset:0;
+    background-image:url('/artworks/medium/art0138.avif');
+    background-size:cover;background-position:center;
+    background-color:var(--room);
+    opacity:0.15;z-index:-1;pointer-events:none;
+    height:100vh;
   }
   #door h1{
     font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
