@@ -286,7 +286,7 @@ html.lightbox-zoomed #lightbox-img-wrap .lightbox-extra {
     opacity: 0; } }
 
 .transition-enabled {
-  opacity: 0; }
+  opacity: 1; }
 
 .transition-in {
   -webkit-animation: fade-in ease-in;
