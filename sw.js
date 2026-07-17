@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1784248452'; // flooded-wing: hero much darker (90% overlay, 25% image)
+const CACHE_V  = 'jfsn-1784248984'; // flooded-wing: hero much darker (90% overlay, 25% image)
 const PRECACHE = [
   '/',
   '/index.html',
