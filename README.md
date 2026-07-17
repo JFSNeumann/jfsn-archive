@@ -1,346 +1,43 @@
-# JFSN Archive — Master Reference
+# JFSN Archive
 
-Personal archive of Jeffrey Francis Stanley Neumann — 1,084 works, 1974–present.  
-Collage · Sculpture · Photography · Painting.  
-**Live:** [jfsn.com](https://jfsn.com) — the only host. (Netlify secondary mirror + Companion AI chat feature removed 2026-06-22.)
+Source repository for a static, personal art archive: image ingestion, AI-assisted cataloging, static site generation, deployment tooling, and project documentation, all in one place. The site itself is live at [jfsn.com](https://jfsn.com); this repository is everything that builds and maintains it.
 
-> **Governing document:** `CONSTITUTION.md` is the archive's highest authority — the principles that survive every redesign, migration, and refresh. Read it before making significant decisions; this README is a technical reference beneath it.
+> **Governing document:** [`docs/governance/CONSTITUTION.md`](docs/governance/CONSTITUTION.md) is this project's highest authority — read it before any significant decision. [`docs/governance/JFSN-MISSION.md`](docs/governance/JFSN-MISSION.md) explains why the archive exists.
+>
+> **If Jeff is unavailable:** start at [`docs/governance/SUCCESSION.md`](docs/governance/SUCCESSION.md) — the continuity plan for backups, hosting, and domain access.
 
-> **If Jeff is unavailable:** see `SUCCESSION.md` — the continuity and recovery entry point (backups, hosting, domain, contacts). This README is a technical reference, not a succession plan.
+## What this is
 
----
+A personal record of Jeffrey F. S. Neumann's work — not a gallery, shop, or brand — built and maintained as an open-source, forkable template ([github.com/JFSNeumann/jfsn-archive](https://github.com/JFSNeumann/jfsn-archive), MIT-licensed; see `scripts/init.sh`) that any artist could adapt for their own archive. The philosophy and non-negotiable principles behind it live in the governance documents above, not here.
 
-## What the site is
+## Repository layout
 
-A static, no-CMS archive on a $5/month shared host (HostGator/cPanel). No database. No framework. Vanilla HTML/CSS/JS + compiled Tailwind. Works are cataloged by AI (Claude) and stored as JSON sidecars. The site is a personal record — not a promotional platform.
+| Path | Contents |
+|------|----------|
+| `*.html`, `_shared/` | The site itself — pages and shared front-end partials |
+| `artworks/` | Image assets plus the ingestion and AI-cataloging pipeline |
+| `config/` | Generated data (catalog, sitemap inputs, etc.) consumed by the site — not hand-edited |
+| `tools/` | Python utilities: page generators, intake workflow, verification |
+| `scripts/` | Shell tooling: deploy, backup, session start/end |
+| `docs/` | All project documentation — see [`docs/README.md`](docs/README.md) for the full map |
 
----
+## Documentation
 
-## Pages
+- **[`CLAUDE.md`](CLAUDE.md)** — working guide for AI coding sessions on this repo.
+- **[`docs/README.md`](docs/README.md)** — documentation index (`governance/`, `current/`, `archive/2026/`, `sources/`).
+- **[`docs/current/WORKFLOW.md`](docs/current/WORKFLOW.md)** — artwork ingestion and cataloging pipeline.
+- **[`docs/current/DEPLOY.md`](docs/current/DEPLOY.md)** — deployment procedure.
+- **[`IMPROVEMENTS.md`](IMPROVEMENTS.md)** — living backlog, read at the start of every work session.
 
-| Page | URL | Notes |
-|------|-----|-------|
-| Homepage | `/` | Hero rotator, 30 featured works |
-| Archive | `/archive.html` | All 1,084 works, filters, search |
-| Artwork | `/artwork.html?id=artNNNN` | Single work, lightbox |
-| Series Index | `/series-index.html` | 8 themes/series |
-| Series | `/series.html` | Single series deep-dive |
-| About | `/about.html` | Bio, exhibitions, contact |
-| Lost | `/lost.html` | Essay + ghost grid (10 generated empty tiles, representing an estimated 500–1,000 undocumented lost works per Jeff's testimony) |
-| Chromatic River | `/chromatic.html` | HiDPI canvas, 1,084 color slices by year |
-| The Wall | `/wall.html` | All 1,084 works as mini grid |
-| API | `/api.html` | Open Archive API docs |
-| Collage | `/collage.html` | Medium page — 638 works |
-| Sculpture | `/sculpture.html` | Medium page — 76 works |
-| Photography | `/photography.html` | Medium page — 328 works |
-| Painting | `/painting.html` | Medium page — 42 works |
-| 1970s–2020s | `/1970s.html` etc. | 6 decade pages, ← → keyboard nav |
-| Series/theme pages | `/guernica.html`, `/targets.html`, `/framed.html`, `/torsos-faces.html`, `/crosses.html`, `/mr-snowmann.html`, `/gallery-images.html`, `/collaboration.html` | 8 named series/theme pages (Guernica is the largest at 232 works) |
-| Start Here | `/start-here.html` | Orientation — who Jeff is, how to explore |
-| Favorites | `/favorites.html` | 45 personally significant works |
-| Curatorial Map | `/curatorial-map.html` | Decade × medium grid, theme filter chips |
-| Stories | `/stories.html` | Oral-history stories, verbatim quotes |
-| Why I Made Things | `/why-i-made-things.html` | First-person essay, Jeff-confirmed |
-| Style Guide | `/style-guide.html` | Standalone design-system reference page |
-| Changes | `/changes.html` | Git log feed |
-| Privacy | `/privacy.html` | Privacy policy |
-
-**Deleted (do not recreate):** `constellation.html`, `mosaic.html`, `for-artists.html`, `companion.html` (AI chat feature, removed 2026-06-22 along with Netlify — it only ran as a Netlify Function), `timeline.html` (decade-skeleton page, retired 2026-06-25 — its content overlapped the Chromatic River + sitewide position strip; delinked from start-here.html, `sw.js`, `nav-active.js`, and `sitemap.xml`)
-
----
-
-## Architecture
-
-```
-site.min.css          Compiled Tailwind (no CDN in production). 22,530 bytes.
-_shared/top-nav.html  Canonical nav for Stitch pages (scripts/stamp-nav.sh)
-_shared/footer.html   Footer + GoatCounter + SW registration
-_shared/ui.css        Structural rules: .thumb__link, .page-label-vert, nav underlines
-_shared/ui.js         Keyboard nav (← → decade pages), vertical page label
-_shared/nav-active.js Sets orange active link by pathname
-catalog.json          All 1,084 works (generated by artworks/build_catalog.py)
-catalog-home.json     30 homepage featured works (from featured.txt)
-chromatic.json        Per-work dominant color hex (used by homepage mats + chromatic.html)
-sw.js                 Service worker — cache-first AVIF, network-first HTML/CSS/JS/JSON
-```
-
-### Two nav systems — keep separate
-
-| System | Used by | Token style |
-|--------|---------|-------------|
-| Stitch nav (`_shared/top-nav.html`) | All pages except decade pages | `font-nav-link`, `deep-ink`, `international-orange` hover |
-| Material Design nav (inline) | `1970s.html`–`2020s.html` | `font-label-lg`, uppercase, `on-tertiary-container` active |
-
-`scripts/stamp-nav.sh` stamps the Stitch nav into 38 pages (re-verified 2026-06-23 by running it directly — includes the decade pages too, migrated to the canonical nav/footer in an earlier session; only their hero/grid chrome stays on the separate Material Design token system).
-
----
-
-## Design system
-
-**Light system throughout** — bone-white ground, deep-ink text, orange accent on interaction only.
-
-| Token | Value | Use |
-|-------|-------|-----|
-| `background` / `bone-white` | `#fcf9f3` / `#F3F0EA` | Page bg |
-| `deep-ink` | `#0B0B0B` | Primary text |
-| `international-orange` | `#FF6600` | Hover, active, focus, fills/borders, and text on dark backgrounds — not persistent text on light bg (fails AA there) |
-| `orange-ink` | `#B84700` | Accessible orange for persistent text on light bg (eyebrow labels, bracket links) — 5.07:1 AA, added session 46 |
-| `archive-gray` | `#575757` | Secondary text / labels |
-| `outline-variant` | `#c4c7c7` | Borders |
-| Headings | Playfair Display | Decade heroes, about name/bio, series heroes |
-| UI / labels | Inter ALL CAPS | Everything else |
-
-**Hard rules:** No rounded corners · No drop shadows on images · No gradients · Artwork always full color (no grayscale, ever) · No scale/transform on hover · No scroll-reveal opacity:0 · No sibling dim · No hover overlays on artwork
-
----
-
-## Image micro-interactions (sitewide)
-
-**Decade / archive / medium pages** — `.thumb__link` in `_shared/ui.css`:
-- `cursor: zoom-in`
-- `outline: 2px solid rgba(255,102,0,0)` → `#FF6600` on hover (transitions on `outline-color`)
-- `filter: brightness(1.04)` on hover
-- `focus-visible` ring matches hover
-
-**Homepage featured cards** — different technique because the image is `absolute inset-0` inside `.card-img` (which covers any CSS outline). Uses a `.card-frame` overlay div:
-```html
-<div class="card-img ... relative overflow-hidden">
-  <img class="absolute inset-0 w-full h-full object-cover" />
-  <div class="card-frame" aria-hidden="true"></div>  ← renders on top of image
-</div>
-```
-```css
-.card-frame {
-  position: absolute; inset: 0;
-  border: 2px solid rgba(255,102,0,0);
-  transition: border-color 0.25s ease;
-  pointer-events: none; z-index: 2;
-}
-a:hover .card-frame { border-color: #FF6600; }
-```
-If you ever hardcode a featured card in HTML, add the `.card-frame` div manually.
-
----
-
-## Git hooks (run once after cloning)
+## Getting started
 
 ```bash
-bash scripts/setup-hooks.sh
+npm install
+npm run build:css   # compile Tailwind -> site.min.css
 ```
 
-Installs the tracked `hooks/pre-commit` into `.git/hooks/` — git doesn't do this
-automatically, and a hook left only in `.git/hooks/` is invisible to anyone who
-clones the repo fresh. See WORKFLOW.md → "Git hooks" for what it checks.
+Everything else — ingesting new work, deploying, and ending a session — is procedural and documented in `docs/current/`; this repo doesn't duplicate those steps here.
 
-## CSS build
+## License
 
-Tailwind is compiled to `site.min.css` — the CDN is not used in production. Any new utility class added to HTML must be rebuilt:
-
-```bash
-npm run build:css
-```
-
-After rebuilding, **always bump `CACHE_V` in `sw.js`** before deploying. Any unique string works as long as it changes — early sessions used `jfsn-YYYYMMDDHHMMSS`; since around session 75 it's been a Unix-epoch-style numeric string (e.g. `jfsn-1782140000`). The format itself doesn't matter to the service worker, just that the value is different from the last deploy. If you skip bumping it, users with an active service worker will be served stale CSS for days.
-
-```js
-const CACHE_V = 'jfsn-1782140000';  // bump this — any new unique value works
-```
-
----
-
-## Session workflow
-
-### Start
-```
-Read CURRENT_STATE.md and IMPROVEMENTS.md. Summarize open items by priority, flag anything stale, then ask what I want to work on.
-```
-
-### End (in order)
-```bash
-bash scripts/session-end.sh   # git commit + push to GitHub + rsync to JEFFS-4TB + Backblaze B2 cloud backup
-```
-Then deploy via `bash scripts/deploy-hostgator.sh` (primary, Session 70+; JFSN.app desktop is legacy and `deploy.sh` no longer exists — re-verified 2026-06-23, this line was stale).  
-Then update Claude memory: "Update memory. Today we: [1–2 sentences]."
-
-### Living backlog
-`/Documents/JFSN/IMPROVEMENTS.md` — source of truth. Cross off when shipped.
-
----
-
-## Adding new works
-
-```bash
-# Drop HEIC/JPG into artworks/inbox/, then:
-bash scripts/add-works.sh
-```
-
-This runs the full pipeline:
-1. `artworks/ingest.py` — converts to AVIF, assigns IDs (`art0001`…), builds full/medium/mini sizes
-2. `artworks/catalog.py` — AI cataloging via Anthropic API (`claude-haiku-4-5`, ~$0.01–0.02/image)
-3. `artworks/validate_catalog.py` — QA gate (exit 0 = clean)
-4. `artworks/artworks/build_catalog.py` — publishes `catalog.json`, `sitemap.xml`, `feed.xml`, `api/v1/`
-
-After ingesting, bump `CACHE_V` in `sw.js` and rebuild CSS if needed, then deploy.
-
----
-
-## Catalog pipeline (manual steps)
-
-```bash
-export ANTHROPIC_API_KEY=sk-ant-...
-
-# Generate sidecars
-python3 artworks/catalog.py --limit 5   # test first
-python3 artworks/catalog.py             # full batch
-
-# Validate
-python3 artworks/validate_catalog.py --legacy-ok --quiet
-
-# Publish
-python3 artworks/artworks/build_catalog.py
-```
-
-Errors: `artworks/logs/catalog_errors.jsonl`. Re-running skips already-processed AVIFs.
-
-### Featured works
-Edit `featured.txt` (one ID per line, e.g. `art0075`), then run `artworks/build_catalog.py`.
-
----
-
-## Deploy
-
-| Step | Command / Tool |
-|------|---------------|
-| Commit + push + local backup | `bash scripts/session-end.sh` |
-| Deploy to HostGator (the only host) | `bash scripts/deploy-hostgator.sh` (primary, Session 70+) — JFSN.app desktop is legacy, no longer used |
-
-**HostGator:** FTP home = webroot (`/`). `FTP_REMOTE=/` in `.ftp.env` — must stay `/`.
-
-(Netlify secondary mirror + `deploy-netlify.sh` removed 2026-06-22 — Netlify had no git integration and was the only place the Companion AI chat feature could run; dropping Netlify meant dropping Companion too.)
-
----
-
-## Service worker
-
-`sw.js` — cache-first for AVIF images, network-first for HTML/CSS/JS/JSON.
-
-`artworks/build_catalog.py` auto-bumps `CACHE_V` on every run. Check `git diff sw.js` before committing after any script run — don't let an auto-bump overwrite a manual bump you already set.
-
----
-
-## Key files reference
-
-| File | Purpose |
-|------|---------|
-| `CLAUDE.md` | Design brief + architecture for Claude Code |
-| `CURRENT_STATE.md` | Last commit hash, session notes, known issues |
-| `IMPROVEMENTS.md` | Living backlog — read at start of every session |
-| `WORKFLOW.md` | Catalog pipeline detail |
-| `STITCH.md` | New page workflow (read before any Stitch work) |
-| `SESSION_PROMPT.md` | Ranked handoff prompt for new sessions |
-| `artist-config.json` | Artist name, themes, series, palette, motifs |
-| `featured.txt` | 30 homepage works (run `artworks/build_catalog.py` after editing) |
-| `.ftp.env` | FTP credentials (gitignored) |
-| `tailwind.config.js` | Color tokens, fonts, spacing scale |
-| `sw.js` | Service worker — bump `CACHE_V` after CSS rebuild |
-
----
-
-## Scripts reference
-
-| Script | Purpose | When |
-|--------|---------|------|
-| `add-works.sh` | Full ingest pipeline (inbox → AVIF → catalog → build) | New artwork |
-| `artworks/ingest.py` | HEIC/JPG → AVIF, ID assignment | New artwork |
-| `artworks/catalog.py` | AI cataloging via Anthropic API | New artwork |
-| `artworks/validate_catalog.py` | Schema QA — run before build | After cataloging |
-| `artworks/artworks/build_catalog.py` | Publishes catalog.json + api/v1/ | After validation |
-| `artworks/build_dims.py` | Rebuilds dims.json from thumbnails | After new thumbs |
-| `session-end.sh` | git commit + push + rsync to JEFFS-4TB + Backblaze B2 (does NOT deploy) | End of session |
-| `deploy-hostgator.sh` | Deploy to jfsn.com (the only host) — reads `.ftp.env`, mirrors via lftp, smoke-tests | Deploying |
-| `scripts/stamp-nav.sh` | Stamps `_shared/top-nav.html` into ~30 Stitch pages | After nav changes |
-| `tools/utils/make_handoff.py` | Regenerates Allison handoff PDF | After credential changes |
-
----
-
-## Open Archive API
-
-Auto-generated by `artworks/build_catalog.py`. Static JSON — no server required.
-
-| Endpoint | Content |
-|----------|---------|
-| `api/v1/meta.json` | Discovery: counts, all endpoint URLs |
-| `api/v1/works.json` | All 1,084 works |
-| `api/v1/works/{id}.json` | Single work + asset URLs |
-| `api/v1/themes.json` | Theme index with work IDs |
-| `api/v1/series.json` | Named series index |
-| `api/v1/motifs.json` | Motif vocabulary index |
-| `api/v1/palette.json` | Palette color index |
-
-License: CC BY 4.0 (metadata only — artwork images belong to the artist).
-
----
-
-## Gotchas
-
-- **CSS build:** After `npm run build:css`, bump `CACHE_V` in `sw.js` before deploying.
-- **Decade pages:** ARE in `scripts/stamp-nav.sh`'s TARGETS (corrected 2026-06-22 — migrated to the canonical nav/footer in an earlier session). Only their hero/grid/prev-next chrome stays on the separate Material Design token system.
-- **index.html — real drift risk, not a documentation gap (corrected 2026-06-22):** it DOES have `NAV:START/END` and `FOOTER:START/END` markers and IS in `scripts/stamp-nav.sh`'s TARGETS — an earlier version of this doc incorrectly said otherwise. The actual risk: `index.html` is the page most likely to organically drift *ahead* of `_shared/top-nav.html`/`_shared/footer.html` (new hero/animation work lands there first), so a routine `scripts/stamp-nav.sh` run can silently delete features the shared template hasn't caught up to yet — it already did this twice in one session (stripped the `anime.min.js` hero script both times). **Always check `git diff --stat` after running `scripts/stamp-nav.sh` and look specifically at `index.html`'s line count** — if it's a noticeably bigger diff than the other targets, inspect before trusting it.
-- **Homepage card hover frame:** Uses `.card-frame` overlay (`z-index:2`), not CSS `outline`. Outline is hidden behind the absolutely-positioned image. Any hardcoded featured card needs the `.card-frame` div inside `.card-img`.
-- **sw.js auto-bump:** `artworks/build_catalog.py` auto-bumps `CACHE_V` on every run. Check `git diff sw.js` before committing after any script run.
-- **Hero AVIF upload path:** `.htaccess` rewrites `artworks/full/*.avif` → `/artworks/*.avif` (legacy flat path). New hero crops (`artNNNN-hero.avif`) must be uploaded to `/artworks/` on the HostGator server — NOT `/artworks/full/`. Upload via lftp to `/artworks/artNNNN-hero.avif`.
-- **`api/.htaccess` is auto-generated:** `artworks/build_catalog.py` overwrites it on every run from a template string inside the script. Edit the template there — never edit the file directly. Do NOT add `SecFilterEngine`/`SecRuleEngine` mod_security directives — they cause HTTP 500 on HostGator.
-- **`catalog-lite.json` fields:** `file, title, year, work_type, themes, keywords, motifs, description, series, favorite, featured, orientation` — what `search.js`, archive filters (incl. the orientation filter), and `series.html` read. `orientation` (vertical/horizontal/square, from `dims.json`) added session 35. Don't bloat it; LITE_FIELDS is the source of truth in `artworks/build_catalog.py`.
-- **`mt-3` / new Tailwind classes:** Classes not in the build are silently ignored. If a spacing or layout class isn't applying, run `npm run build:css`.
-- **Playfair Display:** Only on decade page heroes, `about.html` name h1 + bio paragraph, series heroes. Everything else is Inter.
-- **analytics:** GoatCounter on all public pages via `_shared/footer.html` → `jfsn.goatcounter.com`.
-- **New page sitemap rule:** When adding any new public `.html` page — add it to the `entries[]` list in `artworks/artworks/build_catalog.py`, run `python3 artworks/artworks/build_catalog.py`, then run `bash scripts/audit-nav.sh`. The reverse sitemap check will warn if you missed it. Intentionally excluded: `artwork.html`, `series.html` (both dynamic), `404.html`, and dev tools (`curate`, `dedupe`, `jeff`, `qa`).
-
----
-
-## Hosting
-
-| | HostGator (the only host) |
-|-|---------------------------|
-| URL | jfsn.com |
-| Deploy | `bash scripts/deploy-hostgator.sh` (primary, Session 70+) or desktop JFSN.app (legacy) |
-| Cost | ~$5/mo |
-
-(Netlify secondary mirror removed 2026-06-22 along with the Companion AI chat feature it hosted.)
-
-Domain (jfsn.com) is registered at Gandi, owned and paid for directly by Jeff (invoice confirmed 2026-06-16) — not held by a friend. Nameservers currently point to HostGator (ns31/32.websitewelcome.com); that's a hosting choice Jeff can change himself.
-
----
-
-## Artwork data format
-
-Each work has a JSON sidecar in `artworks/full/`:
-
-```json
-{
-  "file": "art0001.avif",
-  "title": "Effigy in Red",
-  "year": 1987,
-  "work_type": "collage",
-  "description": "Two sentences max. No A/An/The opener.",
-  "palette": ["vermilion", "gold", "ivory"],
-  "motifs": ["compact-disc", "photographic-face"],
-  "materials": ["paper", "paint"],
-  "composition": "axial vertical totem on flat ground",
-  "themes": ["Targets", "Torsos & Faces"],
-  "series": null,
-  "keywords": ["assemblage", "portrait"],
-  "featured": false,
-  "schema_version": "1"
-}
-```
-
-Controlled vocabularies live in `artworks/vocab.py` — edit there only.
-
----
-
-## Handoff / emergency contact
-
-Allison handoff doc: `/Documents/JFSN/JFSN-Archive-Handoff-Allison.pdf`  
-Contains: HostGator login, FTP credentials, GitHub access, support number.  
-Regenerate with `python3 tools/utils/make_handoff.py` after any credential change.
+Code: MIT. Metadata: CC BY 4.0. Artwork images belong to the artist and are not licensed for reuse.
