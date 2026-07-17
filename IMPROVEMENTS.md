@@ -15,7 +15,7 @@ A living list. Add to it. Cross things off. This is the backlog.
 
 ### Content
 - [ ] **Physical artwork dimensions (real measurements)** — orientation stand-in SHIPPED session 35 (vertical/horizontal/square from pixel dims via `dims.json`, shown on artwork pages + an archive filter). Actual inches/cm still need Jeff to measure surviving works; no tooling. Start with the most significant pieces.
-- [ ] **Oral history — unanswered questions** — see `docs/oral-history/master-notes.md` § "Unresolved Questions" for priority list. Top item: why did he keep going after the Rauschenberg realization?
+- [ ] **Oral history — unanswered questions** — see `docs/sources/oral-history/master-notes.md` § "Unresolved Questions" for priority list. Top item: why did he keep going after the Rauschenberg realization?
 - [ ] **start-here.html** — oral history content written in (session 21). Review with Jeff and refine.
 
 ### Technical

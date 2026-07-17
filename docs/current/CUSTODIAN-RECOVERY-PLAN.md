@@ -51,7 +51,7 @@ Don't panic; nothing is lost. In order of ease:
 ## What matters most, in order
 
 1. The images and catalog (the works themselves) — four copies; keep them four.
-2. The oral history (`docs/oral-history/master-notes.md` — Jeff's own words; quotes are verbatim; treat as primary source. Note: catalog titles/descriptions are machine-written, NOT Jeff's words, and gallery/installation images are Photoshop composites, not real exhibitions — Jeff's corrections, 2026).
+2. The oral history (`docs/sources/oral-history/master-notes.md` — Jeff's own words; quotes are verbatim; treat as primary source. Note: catalog titles/descriptions are machine-written, NOT Jeff's words, and gallery/installation images are Photoshop composites, not real exhibitions — Jeff's corrections, 2026).
 3. The domain (see above — Jeff's own Gandi account, renew yearly).
 4. `old-site/` — Jeff's earlier websites, resume, and design career; family material from the grandchildren. Inventory: `OLD-SITE-PRESERVATION-INVENTORY.md`.
 5. The live service — nice to have running, painless to rebuild.

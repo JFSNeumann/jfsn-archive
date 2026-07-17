@@ -34,7 +34,7 @@
 1. Read `CUSTODIAN-RECOVERY-PLAN.md` end to end. It was written for exactly this.
 2. Apple Digital Legacy → access to the Mac. Printed handoff sheet → Bitwarden master password → everything else.
 3. Nothing needs to be done quickly. The site runs unattended; backups only go stale, they don't vanish. The only clock is the **annual domain renewal (March 5)**.
-4. The archive's content rules, in Jeff's absence: creator testimony in `docs/oral-history/master-notes.md` is authoritative; machine-written catalog text is not Jeff's voice; installation/gallery images are composites, not events (his corrections, §22/§25); never delete `old-site/` or anything on the 4TB drive.
+4. The archive's content rules, in Jeff's absence: creator testimony in `docs/sources/oral-history/master-notes.md` is authoritative; machine-written catalog text is not Jeff's voice; installation/gallery images are composites, not events (his corrections, §22/§25); never delete `old-site/` or anything on the 4TB drive.
 
 ## Scenario D — The domain expires unrenewed
 

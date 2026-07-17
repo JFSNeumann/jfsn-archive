@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Generates curatorial-companion.html from the canonical markdown source:
-  docs/curatorial/CURATORIAL-COMPANION-v1.0.md
+  docs/sources/curatorial/CURATORIAL-COMPANION-v1.0.md
 
 The markdown file is the single authoritative source. This script only
 handles presentation (page chrome, TOC, art-ID links) — it must never
@@ -16,7 +16,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).parent
-SRC_MD = ROOT / "docs" / "curatorial" / "CURATORIAL-COMPANION-v1.0.md"
+SRC_MD = ROOT / "docs" / "sources" / "curatorial" / "CURATORIAL-COMPANION-v1.0.md"
 CATALOG = ROOT / "catalog.json"
 OUT_HTML = ROOT / "curatorial-companion.html"
 
@@ -149,7 +149,7 @@ def build_toc_html(toc):
 TEMPLATE = """<!DOCTYPE html>
 <!--
   GENERATED FILE — do not hand-edit.
-  Source of truth: docs/curatorial/CURATORIAL-COMPANION-v1.0.md
+  Source of truth: docs/sources/curatorial/CURATORIAL-COMPANION-v1.0.md
   Regenerate with: python3 gen-curatorial-companion.py && bash scripts/stamp-nav.sh
   (stamp-nav.sh restamps the real NAV/SCRIPTS/FOOTER blocks after generation)
 -->

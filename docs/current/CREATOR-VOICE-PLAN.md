@@ -31,9 +31,9 @@ Open **Voice Memos** on the iPhone. Press record. Talk for about a minute. Press
 AirDrop the memo(s) to the Mac — or just say where they landed. They get filed as:
 
 ```
-docs/oral-history/audio/2026-MM-DD-why-i-make-things.m4a
-docs/oral-history/audio/2026-MM-DD-grandchildren.m4a
-docs/oral-history/audio/2026-MM-DD-one-lost-work.m4a
+docs/sources/oral-history/audio/2026-MM-DD-why-i-make-things.m4a
+docs/sources/oral-history/audio/2026-MM-DD-grandchildren.m4a
+docs/sources/oral-history/audio/2026-MM-DD-one-lost-work.m4a
 ```
 
 …logged in master-notes (date, duration, topic — content never paraphrased; the recording IS the record), and carried into all four backup stores by the normal end-session run. Nothing gets published on the site unless Jeff asks.
