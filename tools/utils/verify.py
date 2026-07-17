@@ -3,7 +3,7 @@
 # verify.py — the JFSN Archive conservator's inspection
 #
 #   Entry point:  archive verify   (see the `archive` wrapper)
-#   Or directly:  python3 scripts/verify.py  [--full] [--json] [--quiet]
+#   Or directly:  python3 tools/utils/verify.py  [--full] [--json] [--quiet]
 #
 # Purpose (and the ONLY purpose): answer one question —
 #
@@ -36,8 +36,8 @@ import sys
 import time
 from pathlib import Path
 
-# Repo root is the parent of this scripts/ directory.
-ROOT = Path(__file__).resolve().parent.parent
+# Repo root is three levels up from tools/utils/verify.py.
+ROOT = Path(__file__).resolve().parent.parent.parent
 
 # ── Result model ─────────────────────────────────────────────────────────────
 
@@ -108,8 +108,8 @@ REQUIRED_FIELDS = ["file", "title", "year", "work_type", "orientation"]
 
 # Files expected to exist and be non-empty for the archive to be deployable.
 EXPECTED_GENERATED = [
-    "catalog.json", "catalog-lite.json", "catalog-home.json",
-    "dims.json", "changes.json", "sitemap.xml",
+    "config/catalog.json", "config/catalog-lite.json", "config/catalog-home.json",
+    "config/dims.json", "config/changes.json", "sitemap.xml",
     "site.min.css", "sw.js", "api/v1/works.json",
 ]
 
@@ -124,11 +124,11 @@ class Context:
         self.full = full
         self.json_errors: list[tuple[str, str]] = []  # (path, message)
 
-        self.catalog = self._load_json("catalog.json", default=[])
-        self.catalog_lite = self._load_json("catalog-lite.json", default=[])
-        self.catalog_home = self._load_json("catalog-home.json", default=[])
-        self.dims = self._load_json("dims.json", default={})
-        self.changes = self._load_json("changes.json", default=[])
+        self.catalog = self._load_json("config/catalog.json", default=[])
+        self.catalog_lite = self._load_json("config/catalog-lite.json", default=[])
+        self.catalog_home = self._load_json("config/catalog-home.json", default=[])
+        self.dims = self._load_json("config/dims.json", default={})
+        self.changes = self._load_json("config/changes.json", default=[])
         self.api_works = self._load_json("api/v1/works.json", default={})
 
         # Master ID set and quick lookup.

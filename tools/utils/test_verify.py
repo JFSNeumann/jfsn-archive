@@ -53,14 +53,16 @@ def write_avif(path: Path, valid=True):
 def build_fixture(root: Path, entries, *, dims=None, lite=None,
                   extra_images=None, corrupt=None):
     """Create a minimal archive tree. `entries` is a list of master records."""
-    (root / "catalog.json").write_text(json.dumps(entries))
+    config = root / "config"
+    config.mkdir(parents=True, exist_ok=True)
+    (config / "catalog.json").write_text(json.dumps(entries))
     lite = entries if lite is None else lite
-    (root / "catalog-lite.json").write_text(json.dumps(lite))
-    (root / "catalog-home.json").write_text(json.dumps(entries[:1]))
-    (root / "changes.json").write_text(json.dumps([]))
+    (config / "catalog-lite.json").write_text(json.dumps(lite))
+    (config / "catalog-home.json").write_text(json.dumps(entries[:1]))
+    (config / "changes.json").write_text(json.dumps([]))
     if dims is None:
         dims = {e["file"].rsplit(".", 1)[0]: [400, 800] for e in entries}
-    (root / "dims.json").write_text(json.dumps(dims))
+    (config / "dims.json").write_text(json.dumps(dims))
 
     api = root / "api" / "v1"
     api.mkdir(parents=True)

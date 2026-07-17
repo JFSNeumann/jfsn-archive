@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────────────────────────
 # intake_finish.py — Catalog Intake finish (Phase 2.4).
 #
-#   python3 scripts/intake_finish.py     (or: archive intake finish)
+#   python3 tools/intake/intake_finish.py     (or: archive intake finish)
 #
 # Transforms completed curator-authored metadata into a fully generated,
 # verified archive state. It coordinates existing tools in a fixed order and
@@ -13,7 +13,7 @@
 #     3. rebuild catalogs                (artworks/build_catalog.py)
 #     4. generate pages for new works    (gen-artwork-pages.py --id …)
 #     5. update derived artifacts        (artworks/build_changes.py)
-#     6. run the archive verifier        (scripts/verify.py)  ← the final gate
+#     6. run the archive verifier        (tools/utils/verify.py)  ← the final gate
 #     7. present a readiness report
 #
 #     Automate execution. Never automate authorship.
@@ -43,7 +43,7 @@ VALIDATE = _ROOT / "artworks" / "validate_catalog.py"
 BUILD_CATALOG = _ROOT / "artworks" / "build_catalog.py"
 GEN_PAGES = _ROOT / "tools" / "generators" / "gen-artwork-pages.py"
 BUILD_CHANGES = _ROOT / "artworks" / "build_changes.py"
-VERIFY = _SCRIPTS / "verify.py"
+VERIFY = _ROOT / "tools" / "utils" / "verify.py"
 
 # What build_catalog.py regenerates — listed for the report, not recomputed here.
 REBUILT = ["catalog.json", "catalog-lite.json", "catalog-home.json",

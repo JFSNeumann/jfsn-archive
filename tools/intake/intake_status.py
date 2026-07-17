@@ -2,8 +2,8 @@
 # ─────────────────────────────────────────────────────────────────────────────
 # intake_status.py — read-only Catalog Intake status.
 #
-#   python3 scripts/intake_status.py          human-readable report
-#   python3 scripts/intake_status.py --json   machine-readable
+#   python3 tools/intake/intake_status.py          human-readable report
+#   python3 tools/intake/intake_status.py --json   machine-readable
 #
 # Phase 2.2 of the Catalog Intake workflow.
 #
@@ -35,13 +35,13 @@ from pathlib import Path
 # Data location (overridable in tests). The validator RULES load from the fixed
 # install path below, not from here, so pointing ROOT at a fixture never changes
 # which schema rules apply.
-_INSTALL_ARTWORKS = Path(__file__).resolve().parent.parent / "artworks"
+_INSTALL_ARTWORKS = Path(__file__).resolve().parent.parent.parent / "artworks"
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent.parent.parent
 FULL = ROOT / "artworks" / "full"
 THUMBS = ROOT / "artworks" / "thumbs"
 PAGES = ROOT / "artworks" / "pages"
-CATALOG = ROOT / "catalog.json"
+CATALOG = ROOT / "config" / "catalog.json"
 
 # The required authored fields whose emptiness means "waiting for the curator".
 # Mirrors validate_catalog.py's content rules (work_type valid, palette >= 1,
