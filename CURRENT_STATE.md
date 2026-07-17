@@ -27,7 +27,7 @@ This file describes what's currently true about the site. For ranked work, see `
 **Hero implementation (2026-07-14 to 2026-07-16):**
 - **The Studio hero** (2026-07-16): art0241 background (15% opacity), NO parallax, contained to hero visual area only. Subtitle fade-in animation retained.
 - **Guernica Passage hero** (2026-07-16): guernica-hero.avif background (15% opacity), parallax scroll (2.5x speed), subtitle fade-in animation. Deployed to `/artworks/guernica-hero.avif` (root, not subdirectory).
-- **Hall of Openings hero** (2026-07-14): Border Grammar interaction redesign (threshold passage) as sole interaction language for doors. See `BORDER-GRAMMAR-ANALYSIS.md` for full rationale.
+- **Hall of Openings hero** (2026-07-14): Border Grammar interaction redesign (threshold passage) as sole interaction language for doors. See `docs/archive-2026/BORDER-GRAMMAR-ANALYSIS.md` for full rationale.
 - **Flooded Wing hero** (2026-07-14): water damage image with fade-to-black + text animations.
 
 **Documentation cleanup (2026-07-16):**
@@ -51,7 +51,7 @@ This file describes what's currently true about the site. For ranked work, see `
 
 ## 2026-07-01 — Engineering phase complete. Project transitions to Creative Brief–driven phase.
 
-The engineering roadmap is complete. All high- and medium-priority items from `ENGINEERING_ROADMAP.md` have been resolved. The remaining open item (R8: image fade-in consolidation) is intentionally deferred — it carries no active correctness risk and no Creative Brief is blocked by it today. It should be resolved immediately before the first Brief that materially changes image-loading behavior.
+The engineering roadmap is complete. All high- and medium-priority items from `docs/archive-2026/ENGINEERING_ROADMAP.md` have been resolved. The remaining open item (R8: image fade-in consolidation) is intentionally deferred — it carries no active correctness risk and no Creative Brief is blocked by it today. It should be resolved immediately before the first Brief that materially changes image-loading behavior.
 
 **From this point forward, engineering work is initiated only when:**
 - it supports an approved Creative Brief,

@@ -2,7 +2,7 @@
 
 **Date:** 2026-06-29
 **Status:** Design document only. No code changed, no files moved, no build step introduced. Waiting for approval before implementation.
-**Method:** Every number in this document comes from a direct measurement against the live repository this session (`grep`, `wc -c`/`ls -la`, `diff`, `curl` against production) — not from `CLAUDE.md`, `CODE_QUALITY_AUDIT.md`, `PHASE1_REVIEW.md`, or `SESSION-START-SUMMARY.md`. Per direction: where the code and the docs disagreed, the code wins; the discrepancy is called out, not silently folded in.
+**Method:** Every number in this document comes from a direct measurement against the live repository this session (`grep`, `wc -c`/`ls -la`, `diff`, `curl` against production) — not from `CLAUDE.md`, `docs/archive-2026/CODE_QUALITY_AUDIT.md`, `docs/archive-2026/PHASE1_REVIEW.md`, or `docs/archive-2026/SESSION-START-SUMMARY.md`. Per direction: where the code and the docs disagreed, the code wins; the discrepancy is called out, not silently folded in.
 
 ## Scope (restated from approval)
 
@@ -128,7 +128,7 @@ None of these are fixed here — bundling must preserve all three exactly as-is 
 
 **Everything in §3's one-offs and §5's "remain independent" list:** unchanged, loaded exactly as today.
 
-**CSS is explicitly out of this plan.** `_shared/ui.css` (158 KB, unminified, render-blocking) is real, already-documented debt, but `CODE_QUALITY_AUDIT.md` already separates "CSS split/minify" from "JS bundling" as its own roadmap item, and this plan's approved scope is JavaScript. Not touched here.
+**CSS is explicitly out of this plan.** `_shared/ui.css` (158 KB, unminified, render-blocking) is real, already-documented debt, but `docs/archive-2026/CODE_QUALITY_AUDIT.md` already separates "CSS split/minify" from "JS bundling" as its own roadmap item, and this plan's approved scope is JavaScript. Not touched here.
 
 ---
 
@@ -191,7 +191,7 @@ No new caching mechanism is needed; the existing one already covers the new file
 
 Because nothing is deleted (§6, §9), rollback is just reverting the `<script>` tag changes:
 
-- **Tier 2 (`core.bundle.js`):** the 9 individual tags it replaces live outside the `NAV:START`/`NAV:END` span, hand-included per page — the same situation Phase 1 faced with the `aria-expanded` fix. `PHASE1_REVIEW.md` documents the precedent for exactly this shape of change: a **surgical, string-identical find-and-replace across all 38 pages**, not a `stamp-nav.sh` run (since these tags aren't in its span). Rollback = re-run the same replacement in reverse, or `git revert` the commit — the 9 source files are untouched on disk either way.
+- **Tier 2 (`core.bundle.js`):** the 9 individual tags it replaces live outside the `NAV:START`/`NAV:END` span, hand-included per page — the same situation Phase 1 faced with the `aria-expanded` fix. `docs/archive-2026/PHASE1_REVIEW.md` documents the precedent for exactly this shape of change: a **surgical, string-identical find-and-replace across all 38 pages**, not a `stamp-nav.sh` run (since these tags aren't in its span). Rollback = re-run the same replacement in reverse, or `git revert` the commit — the 9 source files are untouched on disk either way.
 - **Tier 3 (`nav.bundle.js`):** this *is* inside the nav span, so the correct propagation tool is `stamp-nav.sh` itself, **run unchanged, exactly as it's always been run** — edit `_shared/top-nav.html`'s 9 script lines down to 1 bundle line, then `bash stamp-nav.sh`. This is using the existing tool for its existing documented job, not modifying it. The already-known clobber risk applies (see §11, risk 1) and must be checked with `git diff --stat` immediately after, per the project's own standing rule. Rollback = revert `_shared/top-nav.html` and re-run `stamp-nav.sh` again, or `git revert` the whole commit.
 - Either path leaves the repository deployable at every intermediate step, consistent with the engineering rules — there is no half-migrated state where a page references a bundle file that doesn't exist yet, because the bundle is generated *before* any HTML is touched, and old individual files keep existing throughout.
 
@@ -210,12 +210,12 @@ Because nothing is deleted (§6, §9), rollback is just reverting the `<script>`
 
 ## 12. Validation checklist
 
-Adapted from this project's own already-proven methodology (`PHASE1_REVIEW.md`: static check → live browser check → production verification — not skipped even when a change "feels" safe):
+Adapted from this project's own already-proven methodology (`docs/archive-2026/PHASE1_REVIEW.md`: static check → live browser check → production verification — not skipped even when a change "feels" safe):
 
 - [ ] `node --check` on both generated bundle files.
 - [ ] Diff each bundle's concatenation order against the literal ordered list in §6 — not regenerated from a directory listing or alphabetical sort.
 - [ ] Local server (`python3 -m http.server`) check on one page from every cohort: `index.html`, `archive.html`, `artwork.html`, `about.html`, `chromatic.html`, one decade page, one medium page, one theme page, `qa.html` — zero new console errors on any.
-- [ ] Re-run the exact interactive checks `PHASE1_REVIEW.md` already validated, since this phase's bundles carry the same code: mobile drawer open/close + `aria-expanded`, `?` shortcuts overlay, header hide-on-scroll (and suppressed-while-drawer-open), dark-mode toggle, theme-color background fade, footer gradient.
+- [ ] Re-run the exact interactive checks `docs/archive-2026/PHASE1_REVIEW.md` already validated, since this phase's bundles carry the same code: mobile drawer open/close + `aria-expanded`, `?` shortcuts overlay, header hide-on-scroll (and suppressed-while-drawer-open), dark-mode toggle, theme-color background fade, footer gradient.
 - [ ] Specifically confirm `showToast` still renders `ui.js`'s styling (not `micro-interactions.js`'s) on `archive.html` and `style-guide.html`.
 - [ ] Specifically confirm the chromatic ambient-tint / position-strip / accent-wire trio still cooperate correctly through `window.__chromaticBgById` (no duplicate fetch storms, no missing tint).
 - [ ] DevTools Network tab: confirm the expected request-count drop per §7's table; confirm the *old* individual files still 404-free (they remain on disk per §9/§10, unreferenced but present); confirm no *unexpected* new 404s for the bundle URLs.

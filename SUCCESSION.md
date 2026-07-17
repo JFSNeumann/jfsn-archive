@@ -42,7 +42,7 @@
 4. **Backblaze B2 cloud** — LaunchAgent nightly (9 PM)
    - Account owner: Jeffrey F. S. Neumann (confirmed — `docs/CUSTODIAN-RECOVERY-PLAN.md` names this as Jeff's account)
    - Account email: `jfsneumann@gmail.com` (confirmed in `docs/CUSTODIAN-RECOVERY-PLAN.md`)
-   - Bucket name: `jfsn-archive` (confirmed in `docs/CUSTODIAN-RECOVERY-PLAN.md` and `docs/HOSTING-INDEPENDENCE-AUDIT.md`)
+   - Bucket name: `jfsn-archive` (confirmed in `docs/CUSTODIAN-RECOVERY-PLAN.md` and `docs/archive-2026/HOSTING-INDEPENDENCE-AUDIT.md`)
    - Account credentials: Bitwarden
    - Recovery email/2FA: `jfsneumann@gmail.com` / Bitwarden
    - Estimated monthly cost: ~$1/month (confirmed in `docs/CUSTODIAN-RECOVERY-PLAN.md`)
@@ -65,7 +65,7 @@
 
 ## Other accounts that touch the archive
 
-- **Email at jfsn.com** — `jeff@jfsn.com` — provider: HostGator (MX records point there, confirmed in `docs/HOSTING-INDEPENDENCE-AUDIT.md` — this address dies if HostGator hosting lapses), login: Bitwarden
+- **Email at jfsn.com** — `jeff@jfsn.com` — provider: HostGator (MX records point there, confirmed in `docs/archive-2026/HOSTING-INDEPENDENCE-AUDIT.md` — this address dies if HostGator hosting lapses), login: Bitwarden
 - **Anthropic / Claude account** (for AI sessions) — Bitwarden — _[CONFIRM which account funds the API key; not documented anywhere in this repo]_
 - **Google account** (if Drive, Docs, or Photos hold any source material): _[FILL IN if used]_
 - **Adobe / Creative Cloud** (if source files for composites are in Adobe Cloud): _[FILL IN if used]_

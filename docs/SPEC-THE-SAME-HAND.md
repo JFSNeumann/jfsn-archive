@@ -1,7 +1,7 @@
 # Production Specification — *The Same Hand*
 
 *The build specification for the archive's canonical interaction.*
-*Translates the approved philosophy (docs/DESIGN-STUDY-THE-SAME-HAND.md, Experience Studio Phase V) into implementable behavior. The philosophy is not revisited here; where this spec and the philosophy differ, the philosophy governs, and where either and CONSTITUTION.md differ, the Constitution governs.*
+*Translates the approved philosophy (docs/archive-2026/DESIGN-STUDY-THE-SAME-HAND.md, Experience Studio Phase V) into implementable behavior. The philosophy is not revisited here; where this spec and the philosophy differ, the philosophy governs, and where either and CONSTITUTION.md differ, the Constitution governs.*
 *Written 2026-07-07. Values are defaults chosen to realize the philosophy; those marked TUNABLE may be adjusted by a custodian without changing the idea.*
 
 ---

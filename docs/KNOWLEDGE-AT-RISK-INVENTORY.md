@@ -11,7 +11,7 @@
 
 ## Tier 2 — settles published history; cheap, factual, one sitting each
 
-5. **The exhibition record, row by row.** Six yes/no answers permanently settle the archive's most-citable potential false history. → EXHIBITION-VERIFICATION-WORKSHEET.md.
+5. **The exhibition record, row by row.** Six yes/no answers permanently settle the archive's most-citable potential false history. → docs/archive-2026/EXHIBITION-VERIFICATION-WORKSHEET.md.
 6. **The fine-art-2000 images** (research parked, but the *knowledge* belongs here): 23 artwork JPEGs from his ~2000 website. Only Jeff can say what they were and whether they survived. Some may be the only photograph of a lost work.
 7. **What happened in the 1980s** — destroyed, dispersed, or not made. One sentence would resolve a whole decade.
 
