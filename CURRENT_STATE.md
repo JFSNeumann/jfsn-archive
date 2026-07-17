@@ -173,7 +173,7 @@ that template intentionally supports.
 - `CACHE_V` bumped to `jfsn-1782824794`
 - All 1,084 generated artwork pages: zero code changes (CSS loaded by `<link>` — no regen needed)
 
-See `SESSION-END-PHASE2C.md`, `CSS_ARCHITECTURE_AUDIT.md`, and `PHASE2C-REMOVAL-MAP.md` for full detail.
+See `docs/archive/session-records/SESSION-END-PHASE2C.md`, `docs/archive-2026/CSS_ARCHITECTURE_AUDIT.md`, and `docs/archive-2026/PHASE2C-REMOVAL-MAP.md` for full detail.
 
 ---
 
@@ -187,7 +187,7 @@ See `SESSION-END-PHASE2C.md`, `CSS_ARCHITECTURE_AUDIT.md`, and `PHASE2C-REMOVAL-
 - `CACHE_V` bumped to `jfsn-1782782983` and deployed to jfsn.com
 - Every page on jfsn.com now prevents dark-mode FOUC (Phase 1 covered the 38 root pages; this closes the gap)
 
-See `SESSION-END-PHASE2-FOUC.md` and `PHASE2-FOUC-PREDEPLOY-REVIEW.md` for full detail.
+See `docs/archive/session-records/SESSION-END-PHASE2-FOUC.md` and `docs/archive-2026/PHASE2-FOUC-PREDEPLOY-REVIEW.md` for full detail.
 
 ---
 
@@ -204,7 +204,7 @@ See `SESSION-END-PHASE2-FOUC.md` and `PHASE2-FOUC-PREDEPLOY-REVIEW.md` for full 
 
 **Deferred to a future phase:** pre-commit hook bundle freshness check, audit-nav.sh search.js false positive on 30 pages, pre-existing duplicate script executions (nav-active.js × 8 pages, etc.), ui.css 158KB render-blocking, stamp-nav.sh fragility.
 
-See `SESSION-END-PHASE2A.md` for full detail.
+See `docs/archive/session-records/SESSION-END-PHASE2A.md` for full detail.
 
 ---
 
@@ -283,7 +283,7 @@ Four redundant stores, listed in update order at end-session:
 
 ## 🔴 Critical open items
 
-**FTP password publicly exposed, still active, cannot be rotated.** cPanel/HostGator account access is unavailable and Pure-FTPd has no self-service password change (proven by live test 2026-06-12). Do NOT chase cPanel rotation. Impact is bounded: the archive is replicated 4× and only live-site defacement is at risk. Rotation is **ON HOLD by Jeff** — every public copy of the credential is now removed or blocked (see `CREDENTIAL-EXPOSURE-REPORT.md`, session 34). **Domain note (corrected 2026-06-16):** Jeff owns and pays for the jfsn.com Gandi account directly (invoice confirmed) — there is no friend in the loop, and migrating off HostGator does not require contacting anyone else. Authoritative record: `docs/FINAL-DOMAIN-AND-PRESERVATION-HANDOFF.md` §5 (closed).
+**FTP password publicly exposed, still active, cannot be rotated.** cPanel/HostGator account access is unavailable and Pure-FTPd has no self-service password change (proven by live test 2026-06-12). Do NOT chase cPanel rotation. Impact is bounded: the archive is replicated 4× and only live-site defacement is at risk. Rotation is **ON HOLD by Jeff** — every public copy of the credential is now removed or blocked (see `docs/archive-2026/CREDENTIAL-EXPOSURE-REPORT.md`, session 34). **Domain note (corrected 2026-06-16):** Jeff owns and pays for the jfsn.com Gandi account directly (invoice confirmed) — there is no friend in the loop, and migrating off HostGator does not require contacting anyone else. Authoritative record: `docs/archive-2026/FINAL-DOMAIN-AND-PRESERVATION-HANDOFF.md` §5 (closed).
 
 ---
 
