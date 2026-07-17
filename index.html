@@ -133,7 +133,12 @@ addEventListener('DOMContentLoaded', () => {
     margin-top:9vh;display:grid;gap:14px;width:min(560px,100%);
   }
 
-  /* Border Grammar: the border IS the interaction */
+  /* Border Grammar: the border IS the interaction.
+     Deliberately desktop-only — touch has no hover state to carry this
+     grammar, and a tap-to-preview/tap-to-navigate two-step would fight
+     the direct single-tap navigation touch visitors already expect.
+     Touch relies on the typographic hierarchy (title/sub/numeral) alone;
+     this is an accepted difference, not an unexamined gap. */
   #doors a{
     position:relative;display:flex;flex-direction:column;gap:7px;
     align-items:flex-start;text-align:left;
@@ -474,29 +479,43 @@ addEventListener('DOMContentLoaded', () => {
     }, true);
   });
 
-  doorsNav.addEventListener('click', function(e) {
+  // Registered on document, capture phase — same target/phase as the
+  // sitewide page-transition handler (separate <script> block, top of
+  // <head>), which races this one at 200ms and used to win before this
+  // animation's 400ms could finish. This script runs earlier in parse
+  // order (inline, end of body vs. the other's DOMContentLoaded-deferred
+  // registration), so it registers first; same-phase listeners on the
+  // same element fire in registration order, so stopImmediatePropagation
+  // below reliably beats the sitewide handler for door links specifically.
+  document.addEventListener('click', function(e) {
     const link = e.target.closest('a[href]');
-    if (!link) return;
+    if (!link || !doorsNav.contains(link)) return;
 
     // Check if prefers-reduced-motion is enabled
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (prefersReducedMotion) {
-      // Skip animation, navigate immediately
+      // Skip animation, let the sitewide handler do its normal transition
       return;
     }
 
-    // Prevent default navigation
+    // Prevent default navigation, and stop the sitewide handler from
+    // also claiming this click and racing its own (shorter) navigation
     e.preventDefault();
+    e.stopImmediatePropagation();
 
     // Haptic feedback on click
     hapticPulse(20);
 
-    // Spatial storytelling: veil inherits room color for visual continuity
+    // Spatial storytelling: veil inherits room color for visual continuity.
+    // #room-veil is created by the sitewide page-transition script (separate
+    // <script> block, DOMContentLoaded) — looked up by id rather than shared
+    // via a JS variable, since the two scripts don't share scope.
     const roomColor = link.style.getPropertyValue('--key') || 'transparent';
-    if (v && roomColor) {
-      v.style.backgroundColor = roomColor;
-      v.style.opacity = '0'; // Veil will fade to opaque with the room color
+    const veil = document.getElementById('room-veil');
+    if (veil && roomColor) {
+      veil.style.backgroundColor = roomColor;
+      veil.style.opacity = '0'; // Veil will fade to opaque with the room color
     }
 
     // Trigger threshold animation on clicked room
@@ -518,7 +537,7 @@ addEventListener('DOMContentLoaded', () => {
     setTimeout(function() {
       window.location.href = link.href;
     }, 400);
-  }, false);
+  }, true);
 })();
 
 /* Anticipation: nearest row senses the pointer before hover claims it */
@@ -554,6 +573,40 @@ addEventListener('DOMContentLoaded', () => {
   doorsNav.addEventListener('mouseleave', function() {
     if (current) current.classList.remove('nearing');
     current = null;
+  });
+})();
+
+/* Asymmetric return: the room a visitor just left draws in first */
+(function() {
+  'use strict';
+  const doorsNav = document.getElementById('doors');
+  if (!doorsNav) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!document.referrer) return;
+
+  const roomFiles = ['current.html', 'guernica-passage.html', 'flooded-wing.html', 'hall-of-openings.html', 'the-studio.html'];
+
+  let refPath;
+  try {
+    const ref = new URL(document.referrer);
+    if (ref.origin !== location.origin) return;
+    refPath = ref.pathname.split('/').pop();
+  } catch (e) {
+    return;
+  }
+
+  const idx = roomFiles.indexOf(refPath);
+  if (idx === -1) return;
+
+  const links = doorsNav.querySelectorAll('a[href]');
+  const returning = links[idx];
+  if (!returning) return;
+
+  returning.style.animationDelay = '0s';
+  links.forEach(function(link) {
+    if (link === returning) return;
+    const base = parseFloat(getComputedStyle(link).animationDelay) || 0;
+    link.style.animationDelay = (base + 0.1) + 's';
   });
 })();
 
