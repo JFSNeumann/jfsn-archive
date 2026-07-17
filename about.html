@@ -318,5 +318,29 @@ addEventListener('DOMContentLoaded', () => {
   }, 500);
 })();
 </script>
+
+<script>
+// Back-to-top button
+(function(){
+  var btn = document.createElement('button');
+  btn.id = 'btt-float';
+  btn.setAttribute('aria-label', 'Back to top');
+  btn.textContent = '↑';
+  btn.style.cssText = 'position:fixed;bottom:28px;right:28px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:var(--room);border:1px solid var(--faint);cursor:pointer;font-size:16px;color:var(--dim);z-index:400;opacity:0;transform:translateY(8px);transition:opacity .22s ease,transform .22s ease,color .25s;pointer-events:none;@media(max-width:640px){bottom:16px}';
+  document.body.appendChild(btn);
+  btn.addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+  window.addEventListener('scroll', function(){
+    if(window.scrollY > 300){
+      btn.style.opacity = '1';
+      btn.style.pointerEvents = 'auto';
+      btn.style.transform = 'translateY(0)';
+    } else {
+      btn.style.opacity = '0';
+      btn.style.pointerEvents = 'none';
+      btn.style.transform = 'translateY(8px)';
+    }
+  }, {passive:true});
+})();
+</script>
 </body>
 </html>
