@@ -1,5 +1,5 @@
 # JFSN — Improvement List
-**Updated:** 2026-06-23
+**Updated:** 2026-07-16
 
 A living list. Add to it. Cross things off. This is the backlog.
 
@@ -8,8 +8,9 @@ A living list. Add to it. Cross things off. This is the backlog.
 ## 🔴 Do soon
 
 - [ ] **Ingest new work** — drop photos into `artworks/inbox/`, run `bash add-works.sh`. Pipeline is ready.
-- [ ] **B2 cloud backup** — if capped, run `bash cloud-backup.sh` after ~8 PM EDT reset.
-- [ ] **One more Lighthouse mobile run, after a day of real fixes (not just hope).** Session 45 went through 4 rounds of Jeff's actual Lighthouse runs and fixed something concrete each time — heavy mis-chosen hero image (8.7s → 5.2s worst-case LCP), missing `srcset` on the homepage's top-3 cards, sitewide render-blocking Google Fonts (confirmed gone from the insights list after the fix). Worst-case LCP dropped from 8.7s to ~5.2s; CLS stayed healthy (≤0.087). What's left ("Improve image delivery" ~500KiB) is mostly explained by Jeff's iPhone's high DPR defeating the `srcset` fix — not something to chase without new evidence. One more run will show whether the remaining LCP variance is genuinely settled or still Lighthouse run-to-run noise.
+- [ ] **B2 cloud backup verification** — verify LaunchAgent status (was silently failing 2026-07-01 due to Full Disk Access; may have been resolved). If needed, run `bash cloud-backup.sh` after ~8 PM EDT reset.
+- [ ] **JEFFS-4TB backup verification** — verify drive health (`diskutil verifyVolume JEFFS-4TB`). Was corrupted APFS superblock (2026-07-01); last verified 2026-06-23. Run First Aid if needed.
+- [ ] **One more Lighthouse mobile run, after hero/multimedia work stabilizes.** Previous baseline (2026-06-25): worst-case LCP ~5.2s, CLS ≤0.087. Recent hero implementations may have shifted metrics. One run will show whether changes are cost-neutral or need optimization.
 
 ---
 
@@ -44,6 +45,7 @@ A living list. Add to it. Cross things off. This is the backlog.
 
 History lives in `git log` — `git log --oneline --all` for the full record. A few recent highlights for orientation:
 
+- **2026-07-14 to 2026-07-16** — **Permanent Museum Approved** (curatorial review complete, 2026-07-15; all five main rooms certified without revision required). Hero implementation complete across four rooms (The Studio, Guernica Passage, Hall of Openings, Flooded Wing). Border Grammar analysis + implementation for doors as sole interaction language. Documentation cleanup: renamed duplicate verification-standard file, archived 8 old session closeout docs, deleted orphan assets/files. Commit `d4ad53b6`.
 - **2026-06-22/23** — Full documentation/preservation audit (every `.md` file reviewed) followed by **Netlify and the Companion AI chat feature removed entirely** — Netlify had no git integration and was a recurring source of deploy friction; Companion only ran as a Netlify Function, so dropping one meant dropping the other. HostGator is now the only host. Touched: `companion.html` + `netlify/` deleted, `gen-artwork-pages.py`'s static-page template fixed (all 1,084 pages regenerated), `session-end.sh`/`stamp-nav.sh`/`build_catalog.py`/`verify_deploy.py`/`make_handoff.py` cleaned up, 10 active docs corrected (including rewriting `DISASTER-RECOVERY-CHECKLIST.md`'s Scenario B, which depended on the now-gone Netlify mirror as the "immediately reachable" fallback). Also caught and fixed a 6-day-old propagation gap from the 2026-06-16 domain-ownership correction (`docs/KNOWLEDGE-AT-RISK-INVENTORY.md` still listed "the domain-friend's name" as an open to-do). Committed `047aab54` + `139a2ce9`, pushed, deployed to jfsn.com (verified live), 4TB backup verified (file counts matched after a drive reseat).
 - **2026-06-21** (sessions 76–78) — Homepage Selected Works simplification: removed Session-77 interaction layer (ripple/badge/swatch/peek-modal); kept image + always-visible caption + link. CLAUDE.md updated to retire the "default to removal" framing as an over-correction (motion designer's craft restored as the design stance).
 - **2026-06-20** (session 75) — Selected Works masonry redesign to match archive.html (CSS Columns 4→3→2, simplified card structure). series-index.html responsive padding + image overlay removal.

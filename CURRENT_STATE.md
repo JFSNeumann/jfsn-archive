@@ -1,7 +1,26 @@
 # JFSN Current State
-**Last updated:** 2026-07-01
+**Last updated:** 2026-07-16
 
 This file describes what's currently true about the site. For ranked work, see `IMPROVEMENTS.md`. For the design brief and architecture, see `CLAUDE.md`. For the session-by-session historical log, see `docs/sessions-archive.md` or `git log`.
+
+---
+
+## 2026-07-16 — Permanent Museum Approved; hero implementation complete; documentation cleanup ✅
+
+**Latest commit:** `d4ad53b6` (markdown cleanup + orphan files)
+
+**Museum approval (2026-07-15):** Comprehensive independent curatorial review complete. JFSN Archive approved for permanent preservation without revision required. Five main rooms certified (Current, Guernica Passage, Flooded Wing, Hall of Openings, Studio). Museum earns permanence through honest treatment of loss, clear visitor responsibility, and timeless core understanding. See `project_permanent_museum_approval.md` in MEMORY.md.
+
+**Hero implementation (2026-07-14 to 2026-07-16):**
+- **The Studio hero** (2026-07-16): art0241 background (15% opacity), NO parallax, contained to hero visual area only. Subtitle fade-in animation retained.
+- **Guernica Passage hero** (2026-07-16): guernica-hero.avif background (15% opacity), parallax scroll (2.5x speed), subtitle fade-in animation. Deployed to `/artworks/guernica-hero.avif` (root, not subdirectory).
+- **Hall of Openings hero** (2026-07-14): Border Grammar interaction redesign (threshold passage) as sole interaction language for doors. See `BORDER-GRAMMAR-ANALYSIS.md` for full rationale.
+- **Flooded Wing hero** (2026-07-14): water damage image with fade-to-black + text animations.
+
+**Documentation cleanup (2026-07-16):**
+- Renamed `docs/STEWARDSHIP/REPOSITORY-VERIFICATION-STANDARD.md` → `IMPLEMENTATION-VERIFICATION-STANDARD.md` (eliminated naming confusion with root operational verification doc)
+- Archived 8 old session closeout docs (Phase 1-2C, Conservation, Experience Studio, Hero Prep) to `docs/archive/session-records/` for cleaner root structure
+- Deleted orphan files: `me-white.png`, `_shared/drone-survey.js`, `hall-of-openings-prototype.html`, `hero-image-candidates.html`, `archive-v1/` legacy copies
 
 ---
 
@@ -240,12 +259,12 @@ All four outcomes are consistent with the Experience Philosophy. The goal is not
 
 ## Backup
 Four redundant stores, listed in update order at end-session:
-1. GitHub (`origin/main`) — last known commit: `81e27365` (Creative Brief 001, 2026-07-01); tags `phase2a-freeze`, `phase2-fouc-freeze`, `phase2c-freeze` pushed
+1. GitHub (`origin/main`) — latest commit: `d4ad53b6` (markdown cleanup + orphan file deletion, 2026-07-16); tags `phase2a-freeze`, `phase2-fouc-freeze`, `phase2c-freeze` pushed
 2. Local Mac (working tree)
-3. JEFFS-4TB external drive (rsync, nightly LaunchAgent at 11 PM) — **corrupted APFS superblock; rsync writes failing. Needs First Aid or reformat. See pending user actions above.**
-4. Backblaze B2 cloud (LaunchAgent at 9 PM nightly) — **LaunchAgent silently failing** due to macOS Full Disk Access blocking `/bin/bash` in launchd context. B2 was manually synced 2026-07-01 (9,506 objects / 683MB). LaunchAgent will resume once Full Disk Access is granted. See pending user actions above.
+3. JEFFS-4TB external drive (rsync, nightly LaunchAgent at 11 PM) — **⚠️ Status needs verification:** was corrupted APFS superblock (2026-07-01 report); last verified 2026-06-23. Run `diskutil verifyVolume JEFFS-4TB` to confirm current state before next backup run.
+4. Backblaze B2 cloud (LaunchAgent at 9 PM nightly) — **⚠️ Status needs verification:** LaunchAgent was silently failing (2026-07-01 report) due to macOS Full Disk Access blocking `/bin/bash`. If Full Disk Access has been granted, verify LaunchAgent is active via `launchctl list | grep cloud-backup`. Last manual sync: 2026-07-01 (9,506 objects / 683MB).
 
-Refresh this section at the end of each session with the latest commit hash + last B2 backup timestamp.
+**Action item:** Verify both JEFFS-4TB and B2 backup status at session start. See Session_start_procedures.md.
 
 ---
 
