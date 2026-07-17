@@ -1,13 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta name="theme-color" content="#0c0a09"/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Site Map — Jeffrey F. S. Neumann</title>
-<meta name="description" content="A guide to the destinations in the Jeffrey F. S. Neumann archive."/>
-<link rel="icon" href="favicon.svg" type="image/svg+xml"/>
-<link rel="canonical" href="https://jfsn.com/sitemap.html"/>
+<meta name="description" content="A guide to the destinations in the Jeffrey F. S. Neumann archive.">
+<meta name="theme-color" content="#0c0a09">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/playfair-display-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script>document.documentElement.classList.add('js')</script>
+<style>
+  @media (prefers-reduced-motion: no-preference){
+    .js body{animation:room-in .4s ease}
+    @keyframes room-in{from{opacity:0}to{opacity:1}}
+  }
+  #room-veil{position:fixed;inset:0;background:#0c0a09;opacity:0;pointer-events:none;transition:opacity .22s ease;z-index:99}
+  #room-veil.on{opacity:1;pointer-events:auto}
+</style>
+<script>
+addEventListener('DOMContentLoaded', () => {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const v = document.createElement('div'); v.id = 'room-veil';
+  document.body.appendChild(v);
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a');
+    if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target === '_blank') return;
+    const h = a.getAttribute('href') || '';
+    if (!h || /^(https?:|#|mailto:)/.test(h)) return;
+    e.preventDefault();
+    v.classList.add('on');
+    setTimeout(() => { location.href = a.href; }, 200);
+  }, true);
+  addEventListener('pageshow', e => { if (e.persisted) v.classList.remove('on'); });
+});
+</script>
 <style>
   :root {
     --room: #0c0a09;
@@ -112,7 +138,20 @@
     line-height: 1.7;
     margin-top: 6px;
   }
-  footer {
+  header.hud{
+    position:fixed;top:0;left:0;right:0;z-index:10;
+    display:flex;justify-content:space-between;align-items:baseline;
+    padding:calc(env(safe-area-inset-top,0px) + 22px) 26px 14px;
+    background:linear-gradient(var(--room) 55%,rgba(12,10,9,0.82) 78%,transparent);
+    pointer-events:none;
+  }
+  header.hud a{pointer-events:auto}
+  header.hud .who{font-size:11px;letter-spacing:.22em;font-weight:600;color:var(--ink)}
+  header.hud a.who:hover{color:var(--accent)}
+  header.hud .room-name{color:var(--faint)}
+  @media (max-width:640px){ header.hud .room-name{display:none} }
+
+  footer.site-footer {
     margin-top: 12vh;
     padding-top: 4vh;
     border-top: 1px solid var(--faint);
@@ -122,12 +161,17 @@
     color: var(--faint);
     text-align: center;
   }
-  a { color: var(--dim); }
-  a:hover { color: var(--accent); }
+  footer.site-footer a { color: var(--dim); transition: color 0.25s; }
+  footer.site-footer a:hover { color: var(--accent); }
 </style>
 </head>
 
 <body>
+
+<header class="hud">
+  <a href="/" class="who">JEFFREY F. S. NEUMANN</a>
+  <span class="room-name">[ SITE MAP → ]</span>
+</header>
 
 <main>
   <h1>Site Map</h1>
@@ -217,11 +261,23 @@
     </ul>
   </div>
 
-  <footer>
-    An archive of 1,084 works. Fifty years. One personal record.
+  <footer class="site-footer">
+    <div>1,084 WORKS · 50 YEARS · 1974–PRESENT · CLEVELAND, OH</div>
+    <div style="margin: 2em 0;">
+      <a href="/">[ THE MUSEUM → ]</a>
+      <a href="/archive.html">[ THE ARCHIVE → ]</a>
+      <a href="/about.html">[ ABOUT JEFF → ]</a>
+      <a href="/privacy.html">[ PRIVACY → ]</a>
+    </div>
+    <div>© <span id="footer-year">2026</span> JEFFREY F. S. NEUMANN</div>
   </footer>
 
 </main>
+
+<script>
+document.getElementById('footer-year').textContent = new Date().getFullYear();
+if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
 
 </body>
 </html>

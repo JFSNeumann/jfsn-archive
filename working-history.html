@@ -246,6 +246,22 @@ addEventListener('DOMContentLoaded', () => {
   </nav>
 </section>
 
+<footer class="site-footer">
+  <div class="stat">1,084 WORKS · 50 YEARS · 1974–PRESENT · CLEVELAND, OH</div>
+  <div style="margin: 2em 0;">
+    <a href="/">[ THE MUSEUM → ]</a>
+    <a href="/archive.html">[ THE ARCHIVE → ]</a>
+    <a href="/about.html">[ ABOUT JEFF → ]</a>
+    <a href="/privacy.html">[ PRIVACY → ]</a>
+  </div>
+  <div>© <span id="footer-year">2026</span> JEFFREY F. S. NEUMANN</div>
+</footer>
+
+<script>
+document.getElementById('footer-year').textContent = new Date().getFullYear();
+if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+
 <script>
 (function(){
   'use strict';

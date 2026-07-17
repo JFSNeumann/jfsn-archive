@@ -1,5 +1,773 @@
 [
   {
+    "sha": "0627a55",
+    "date": "2026-07-16",
+    "title": "about.html: change hero background image to art1042",
+    "body": "Update body::before background-image from art0273.avif to art1042.avif. New image provides different atmospheric context for the About page."
+  },
+  {
+    "sha": "989d16e",
+    "date": "2026-07-16",
+    "title": "stories.html: complete redesign to match dark museum aesthetic",
+    "body": "- Replace light Stitch theme with dark room aesthetic (#0c0a09 background)\n- Use Playfair Display italic typography + cream text color scheme\n- Simplify layout: remove sidebar TOC, mobile nav, drone illustration\n- Keep all 8 stories + blockquotes + source notes intact\n- \"The Testimony Chamber\" as room name\n- Orange-highlighted blockquotes matching current accent color\n- Subtle artwork background (15% opacity) + room transition effects\n- Staggered fade-up animations for story articles\n- Responsive typography using clamp()\n- Parallax scroll effect on background"
+  },
+  {
+    "sha": "d12317d",
+    "date": "2026-07-16",
+    "title": "about.html: add stories bridge link after quotes",
+    "body": "Add subtle transition section from \"In His Own Words\" quotes to full oral history at stories.html. Placed as natural progression from fragments to deeper narratives. Styled to match page's reveal animation and color scheme."
+  },
+  {
+    "sha": "1b1d138",
+    "date": "2026-07-16",
+    "title": "404.html: redesign to match new dark museum aesthetic",
+    "body": "- Replace light archival theme with dark room aesthetic (#0c0a09 background)\n- Reframe error page as \"Lost Passage\" — missing room metaphor aligned with Border Grammar\n- Use Playfair Display italic typography and current color system\n- Add loss connection: reference water damage and link to Flooded Wing\n- Threshold navigation: \"Begin here\" (Archive) + \"Return to\" (Entrance)\n- Subtle artwork background + room transition fade veil effects\n- Staggered fade-up animations matching site's motion language\n- Responsive grid layout for navigation cards"
+  },
+  {
+    "sha": "c7d8341",
+    "date": "2026-07-16",
+    "title": "Docs: update CURRENT_STATE.md and IMPROVEMENTS.md to reflect 2026-07-16 status",
+    "body": "- Add Permanent Museum Approval certification (2026-07-15)\n- Document hero implementation work (Studio, Guernica Passage, Hall of Openings, Flooded Wing)\n- Document Border Grammar redesign completion\n- Document recent documentation cleanup (verification-standard rename, session archive, orphan files)\n- Update latest commit hash and backup section\n- Update \"Do soon\" priorities with recent work\n- Add completed section entry for 2026-07-14 to 2026-07-16 work\n- Flag backup status items for verification"
+  },
+  {
+    "sha": "d4ad53b",
+    "date": "2026-07-16",
+    "title": "Cleanup: markdown organization and orphan file deletion",
+    "body": "- Rename docs/STEWARDSHIP/REPOSITORY-VERIFICATION-STANDARD.md to IMPLEMENTATION-VERIFICATION-STANDARD.md to clarify distinction from root operational verification doc\n- Archive old session closeout docs (Phase 1-2C, Conservation, Experience Studio, Hero Prep) to docs/archive/session-records/ for cleaner root structure\n- Delete orphan files: me-white.png (unused watermark), _shared/drone-survey.js (superseded by drone-fleet.js), hall-of-openings-prototype.html, hero-image-candidates.html, archive-v1/ legacy copies"
+  },
+  {
+    "sha": "539b001",
+    "date": "2026-07-16",
+    "title": "The Studio hero: swap right image from art0139 to art0241",
+    "body": "Replace the right hero image in the studio hero section with art0241,\nupdating the visual composition of the two-image hero panel."
+  },
+  {
+    "sha": "b8b8c68",
+    "date": "2026-07-16",
+    "title": "Hall of Openings hero: change 'Open' highlight from orange to black",
+    "body": "Switch highlight-devo (orange) to highlight-dark (black) for 'Open'\nin 'Openings'. Black accent creates stronger contrast and matches\nGuernica Passage 'thirty' styling pattern."
+  },
+  {
+    "sha": "272d049",
+    "date": "2026-07-16",
+    "title": "Hall of Openings hero: highlight 'Open' with devo-style orange",
+    "body": "Add .highlight-devo CSS class and apply to 'Open' in 'Openings'.\nOrange accent emphasizes openness/accessibility of the imagined\nexhibitions. Matches index and guernica highlighting patterns."
+  },
+  {
+    "sha": "fb3fa71",
+    "date": "2026-07-16",
+    "title": "Flooded Wing hero: highlight 'Lost' with devo-style accent",
+    "body": "Apply .highlight-devo treatment to 'Lost' in hero title,\nmatching index and guernica patterns. Orange accent emphasizes\nthe core narrative of absence."
+  },
+  {
+    "sha": "13eb30a",
+    "date": "2026-07-16",
+    "title": "Guernica Passage hero: highlight 'thirty' with black background",
+    "body": "Add .highlight-dark class (black bg, white text) to 'thirty' in\n'One structure, thirty years.' — stark contrast to orange accents\nelsewhere, emphasizes the temporal span."
+  },
+  {
+    "sha": "c25cd30",
+    "date": "2026-07-16",
+    "title": "Index hero: highlight 'Muse' with devo-style accent",
+    "body": "Apply .highlight-devo treatment to 'Muse' (first 4 letters of Museum),\nmatching about.html's 'Devoted Maker' emphasis pattern.\nOrange accent gives focus to the central claim."
+  },
+  {
+    "sha": "004b040",
+    "date": "2026-07-16",
+    "title": "Flooded Wing hero: water damage image with fade-to-black + text animations",
+    "body": "Hero setup: water-damage.avif background (25% opacity, 90% dark overlay),\nfade-to-black mask starting at 70% down, fade-in-up animations on title/facts\n(staggered 0.4s/0.6s). Complements narrative of loss with visual presence and\nsmooth entrance choreography."
+  },
+  {
+    "sha": "4d43c3d",
+    "date": "2026-07-16",
+    "title": "Add art0139 to hero - display both images side-by-side",
+    "body": "Modified hero section to show art0138 (left) and art0139 (right)\nside-by-side with 15% opacity, text overlaid on top. Both are\nStudio-themed photographs showing the workspace. Removed conflicting\nwidth property to allow flexbox to properly split the images 50/50."
+  },
+  {
+    "sha": "fdda0b8",
+    "date": "2026-07-16",
+    "title": "Highlight 'work' in hero heading with orange background",
+    "body": "Changed 'The work continues.' to highlight the word 'work' with\norange background and white text, matching about.html's 'Devo'\nhighlight pattern."
+  },
+  {
+    "sha": "21a646b",
+    "date": "2026-07-16",
+    "title": "Move hero background to section only - remove parallax",
+    "body": "Changed background image from body::before to #door::before so the\nart0138 image fills only the hero visual area, not the entire page.\nRemoved parallax scroll script. Subtitle animation retained."
+  },
+  {
+    "sha": "dddb7d3",
+    "date": "2026-07-16",
+    "title": "Match about.html hero styling exactly - opacity 0.15",
+    "body": "Ensured the-studio.html hero matches about.html:\n- Opacity: 0.15 (matching about.html)\n- Background: fixed, inset:0, fills full screen\n- Parallax: 2.5x speed\n- Same CSS structure as about.html"
+  },
+  {
+    "sha": "9f2f670",
+    "date": "2026-07-16",
+    "title": "Increase hero background opacity to 0.25 for better visibility",
+    "body": "Boosted opacity from 0.15 to 0.25 to make art0138 background image\nmore prominent and visible, matching the visual impact of about.html hero."
+  },
+  {
+    "sha": "aa487a9",
+    "date": "2026-07-16",
+    "title": "Add hero treatment to The Studio page",
+    "body": "Applied same pattern as Guernica Passage:\n- art0138.avif background (15% opacity) with parallax scroll (2.5x speed)\n- Subtitle fade-in animation (0.6s delay, 0.8s duration)\n- Prefers-reduced-motion respected\n- Matches about.html/guernica-passage.html implementation"
+  },
+  {
+    "sha": "b30dd1b",
+    "date": "2026-07-16",
+    "title": "Ignore guernica.jpg source file",
+    "body": ""
+  },
+  {
+    "sha": "3d06c18",
+    "date": "2026-07-16",
+    "title": "Move guernica-hero.avif to root artworks dir per deployment notes",
+    "body": "Moved file from artworks/medium/ to artworks/ (root) and updated CSS path.\nPer deployment guidelines, new hero AVIF images belong in /artworks/ root,\nnot in subdirectories. This ensures proper .htaccess rewriting and live site serving."
+  },
+  {
+    "sha": "937e146",
+    "date": "2026-07-16",
+    "title": "Restore guernica-hero.avif background - match about.html treatment",
+    "body": "Restored background image with parallax. Page now mirrors about.html:\n- guernica-hero.avif background (15% opacity overlay)\n- Parallax scroll effect (2.5x speed)\n- Subtitle fade-in animation\n- Proper prefers-reduced-motion handling"
+  },
+  {
+    "sha": "93ce4f0",
+    "date": "2026-07-16",
+    "title": "Remove background image - keep clean dark hero with parallax",
+    "body": "Reverted to minimal hero: dark background with parallax scroll effect (2.5x),\nsubtitle fade-in animation, and scroll-based transform. No background image."
+  },
+  {
+    "sha": "cf9debd",
+    "date": "2026-07-16",
+    "title": "Fix parallax script - add prefers-reduced-motion check",
+    "body": "Restored prefers-reduced-motion wrapper that was missing from parallax\nscript. Now matches about.html structure while maintaining 2.5x speed\nmultiplier for aggressive scroll effect."
+  },
+  {
+    "sha": "e98f069",
+    "date": "2026-07-16",
+    "title": "Add Guernica AVIF background to hero with parallax",
+    "body": "Converted guernica.jpg to optimized AVIF format (208KB) and placed in\nartworks/medium/ directory. Updated guernica-passage.html to reference\nthe AVIF with 15% opacity overlay, parallax transform, and subtitle\nfade-in animation - matching about.html treatment but with Guernica artwork."
+  },
+  {
+    "sha": "aa68888",
+    "date": "2026-07-16",
+    "title": "Remove guernica-hero.jpg background - simplify to parallax-only hero",
+    "body": "Removed problematic JPG background image reference to focus on core\nparallax scroll functionality. Page maintains hero subtitle animation and\nscroll-based parallax transform effect without background image.\n\nEOF"
+  },
+  {
+    "sha": "269b625",
+    "date": "2026-07-16",
+    "title": "Use about.html's proven parallax pattern for guernica-passage",
+    "body": ""
+  },
+  {
+    "sha": "e054756",
+    "date": "2026-07-16",
+    "title": "Simplify parallax - remove prefers-reduced-motion check",
+    "body": ""
+  },
+  {
+    "sha": "f32bbc5",
+    "date": "2026-07-16",
+    "title": "Add console debugging for parallax script",
+    "body": ""
+  },
+  {
+    "sha": "64087b1",
+    "date": "2026-07-16",
+    "title": "Use requestAnimationFrame for parallax instead of scroll events",
+    "body": "Changed parallax implementation to use continuous requestAnimationFrame\npolling instead of scroll events. This ensures smooth, continuous parallax\nupdates on every frame regardless of scroll event timing."
+  },
+  {
+    "sha": "9ae167b",
+    "date": "2026-07-16",
+    "title": "Fix parallax scroll listener - use window addEventListener",
+    "body": "Changed from addEventListener to window.addEventListener and set CSS\nvariable directly on document.documentElement to ensure scroll events\ntrigger properly and parallax effect animates."
+  },
+  {
+    "sha": "91aa812",
+    "date": "2026-07-16",
+    "title": "Increase parallax speed for aggressive hero image exit",
+    "body": "Boosted parallax multiplier from -1.2 to -2.5, making the guernica background\nimage animate off-screen much faster as the user scrolls down the page."
+  },
+  {
+    "sha": "85fa54b",
+    "date": "2026-07-16",
+    "title": "Add hero animations and guernica.jpg background to Guernica Passage",
+    "body": "Applied about.html hero treatment: guernica-hero.jpg background with 15% opacity,\nparallax scroll effect (1.2x speed), and hero subtitle fade-in animation (0.8s ease\n0.6s delay). Image respects prefers-reduced-motion."
+  },
+  {
+    "sha": "f04e2da",
+    "date": "2026-07-16",
+    "title": "Remove all hero animations from Guernica Passage",
+    "body": "Removed passage-enter animation on body, HUD entrance stagger animations\n(hud-focus, hud-fade), and content-focus animation on #works section.\nPage now loads with no animations."
+  },
+  {
+    "sha": "3c9911d",
+    "date": "2026-07-16",
+    "title": "Remove all hero animation from Guernica Passage",
+    "body": "Removed body::before pseudo-element (art0020 background image),\nparallax scroll script, and subtitle fade-in animation. Page now\nreturns to minimal, unadorned hero state."
+  },
+  {
+    "sha": "309c456",
+    "date": "2026-07-16",
+    "title": "Add art0020 hero background and parallax to Guernica Passage",
+    "body": "Added full-size art0020 (Untitled Plane and Disc, Wide) as darkened hero\nbackground with parallax scroll effect (1.2x speed). Combined with subtitle\nfade-in animation for complete hero treatment matching about.html pattern."
+  },
+  {
+    "sha": "5e2815a",
+    "date": "2026-07-16",
+    "title": "Add hero subtitle fade-in animation to Guernica Passage",
+    "body": "Added fade-in animation to .fact subtitle (0.6s delay, 0.8s duration)\nmatching about.html treatment. Creates subtle arrival moment for the\n\"232 WORKS · 1990 – 2020\" text. Respects prefers-reduced-motion."
+  },
+  {
+    "sha": "a89c43f",
+    "date": "2026-07-16",
+    "title": "Add hero background and parallax to Guernica Passage page",
+    "body": "Added art0020 (Untitled Plane and Disc, Wide) as darkened hero background\nimage. Landscape Guernica piece from 2000 features warplane, disc, and bold\ncolor bands — visually represents the 30-year span of 232 works. Parallax\nscroll effect (1.2x speed) creates dynamic depth. Same treatment as about.html."
+  },
+  {
+    "sha": "0232c2e",
+    "date": "2026-07-16",
+    "title": "Change about.html hero heading to \"A Devoted Maker.\"",
+    "body": "Updated heading from \"The Maker.\" to \"A Devoted Maker.\" with orange\nbackground highlight on \"Devo\" (white text, padding). Emphasizes the\ndevotion central to 50 years of unbroken making."
+  },
+  {
+    "sha": "00b58be",
+    "date": "2026-07-16",
+    "title": "Increase hero parallax speed and add staggered quote animations",
+    "body": "1. Increase parallax effect from 0.5x to 1.2x speed — hero image animates\n   off faster as user scrolls, more dynamic feel\n2. Add staggered reveal animations to \"In His Own Words\" quotes — each\n   quote appears sequentially (0.2s, 0.6s, 1s delays) creating sense of\n   Jeff speaking to viewer across time"
+  },
+  {
+    "sha": "8212b1d",
+    "date": "2026-07-16",
+    "title": "Refine about.html typography and philosophy section",
+    "body": "1. Add fade-in animation to subtitle \"FIFTY YEARS OF UNBROKEN MAKING\" on\n   page load (0.6s delay, 0.8s duration) for subtle arrival moment\n2. Add bracket corner accents to philosophy box using ::before/::after\n   pseudo-elements — signals this as keeper moment, matches design language\n\nBoth animations respect prefers-reduced-motion."
+  },
+  {
+    "sha": "d94ff53",
+    "date": "2026-07-16",
+    "title": "Reverse parallax scroll direction on about.html hero",
+    "body": "Background image now moves down (follows scroll) instead of up, creating\na different depth effect where the image appears to move with the user."
+  },
+  {
+    "sha": "841aea9",
+    "date": "2026-07-16",
+    "title": "Add parallax scroll effect to about.html hero background",
+    "body": "Background image now moves up as user scrolls down at 0.5x speed, creating\nsubtle depth effect. Uses CSS transform with will-change optimization.\nRespects prefers-reduced-motion preference."
+  },
+  {
+    "sha": "85e725d",
+    "date": "2026-07-16",
+    "title": "Update about.html hero background to art0273",
+    "body": "Changed hero background from Jeff Neumann.gif to Cleveland Institute Group Portrait\n(art0273.avif) — a 1970 group photograph of Jeff's art school cohort. Thematically\nconnects the About page to his educational background and 50 years of community-rooted\nmaking in Cleveland."
+  },
+  {
+    "sha": "62399f3",
+    "date": "2026-07-16",
+    "title": "Add darkened hero background to about.html",
+    "body": "Added full-screen background using portrait image (Jeff Neumann.gif) with dark\noverlay (15% opacity). Uses fixed positioning for parallax effect. Reinforces\n\"who is Jeff\" on the About page while maintaining text readability."
+  },
+  {
+    "sha": "8399e19",
+    "date": "2026-07-16",
+    "title": "Add darkened hero background to working-history.html",
+    "body": "Added full-screen background using hero image with dark overlay (15% opacity).\nUses fixed positioning so image stays in place while scrolling. Maintains\nreadability of foreground content while adding visual richness."
+  },
+  {
+    "sha": "85cc320",
+    "date": "2026-07-16",
+    "title": "Make working-history thumbnails square (120x120px)",
+    "body": "Changed .rec .thumb height from 130px to 120px to match width,\ncreating square thumbnails instead of tall rectangles."
+  },
+  {
+    "sha": "7e41eb8",
+    "date": "2026-07-16",
+    "title": "Increase working-history thumbnail height to 130px",
+    "body": "Changed .rec .thumb height from 75px to 130px to make images taller\nand fill more vertical space on the working-history page."
+  },
+  {
+    "sha": "a11f9af",
+    "date": "2026-07-16",
+    "title": "Fix Sebastian v2 invisible body - set opacity to 1",
+    "body": "Changed .transition-enabled opacity from 0 to 1. The fade-in animation\nthat was supposed to trigger on page load was not working, leaving the\nentire page invisible (opacity: 0). Direct fix to make content visible."
+  },
+  {
+    "sha": "35bcd41",
+    "date": "2026-07-15",
+    "title": "Revert \"Add CSS override to fix Sebastian v2 text visibility\"",
+    "body": "This reverts commit 02f1640d2e7995fbaedb907750cc661e14996731."
+  },
+  {
+    "sha": "02f1640",
+    "date": "2026-07-15",
+    "title": "Add CSS override to fix Sebastian v2 text visibility",
+    "body": "Add inline style tag at end of head that forces dark text color (#1a1a1a)\nto override Adobe Portfolio's white text CSS that was making content invisible."
+  },
+  {
+    "sha": "5e4b590",
+    "date": "2026-07-15",
+    "title": "Fix Sebastian v2 white text rendering issue",
+    "body": "Override Adobe Portfolio CSS that sets white text on transparent backgrounds,\nmaking content invisible. Added dark text color (#1a1a1a) to all text elements\nwith !important to override external stylesheet rules."
+  },
+  {
+    "sha": "251dcb2",
+    "date": "2026-07-15",
+    "title": "Add resume PDF to professional-record directory",
+    "body": "Move Jeff Neumann Resume.pdf from assets/ to working-history/professional-record/"
+  },
+  {
+    "sha": "246f5ff",
+    "date": "2026-07-15",
+    "title": "Update working-history.html links: resume PDF, YouTube, and Dribbble",
+    "body": "- Update professional-record link to point directly to resume PDF\n- Update video-documentation link to external YouTube channel\n- Update design-studies link to external Dribbble profile"
+  },
+  {
+    "sha": "2038840",
+    "date": "2026-07-15",
+    "title": "Move arrow even closer to bottom (2px)",
+    "body": "- Changed bottom from 10px to 2px\n- Arrow now sits at very bottom of hero section"
+  },
+  {
+    "sha": "c8d1d8c",
+    "date": "2026-07-15",
+    "title": "Move arrow down for better spacing",
+    "body": "- Increased bottom padding on .threshold section\n- Changed arrow bottom position from 20px to 30px\n- More breathing room between text and scroll indicator"
+  },
+  {
+    "sha": "a470012",
+    "date": "2026-07-15",
+    "title": "Remove signature from hero section",
+    "body": "- Deleted #who element containing jfsn-signature.png\n- Cleaner hero composition without footer signature"
+  },
+  {
+    "sha": "4030483",
+    "date": "2026-07-15",
+    "title": "Add scroll-down arrow indicator to hero section",
+    "body": "- Bouncing down arrow (↓) at bottom of .threshold section\n- Subtle animation to draw attention to more content below\n- Visible on all hero sections with opacity and color-matched styling"
+  },
+  {
+    "sha": "9b08ad5",
+    "date": "2026-07-15",
+    "title": "Reduce me-for-website.png dimensions to fix distortion",
+    "body": "- Changed from 120x280 to 100x160 for better proportions\n- Less tall, more balanced appearance"
+  },
+  {
+    "sha": "1c8da84",
+    "date": "2026-07-15",
+    "title": "Add ME3.GIF and me-for-website.png to assets",
+    "body": "Images used for hero overlay feature."
+  },
+  {
+    "sha": "e7bf048",
+    "date": "2026-07-15",
+    "title": "Add me-for-website.png overlay to hero bottom-right corner (desktop only)",
+    "body": "- Image positioned absolutely in bottom-right of .threshold section\n- Desktop only (min-width: 1200px media query)\n- me-for-website.png (120x280) replaces removed ME3.GIF"
+  },
+  {
+    "sha": "4c8234c",
+    "date": "2026-07-15",
+    "title": "Reduce desktop header size & darken flanker images",
+    "body": "- Desktop header (one-line): 6.2vw → 4.0vw (shifts focus to hero composition)\n- Left & right flankers: brightness(0.3) for consistent strong darkening\n- Mobile/multi-line header unchanged"
+  },
+  {
+    "sha": "21cddb4",
+    "date": "2026-07-15",
+    "title": "Add color filters to hero flanker images: left darkened, right inverted",
+    "body": "- Left image: brightness(0.7) black tint\n- Right image: invert(1) color inversion\n- Creates visual distinction across three-image wall composition"
+  },
+  {
+    "sha": "d2d6d70",
+    "date": "2026-07-15",
+    "title": "Refine hero image composition: horizontal flankers, seamless alignment, no borders",
+    "body": "- Flip left and right images horizontally (scaleX(-1)) with -7px vertical offset\n- Remove figcaptions from flanking images for cleaner composition\n- Remove white borders/padding from all hero images\n- Change alignment from staggered to center; gap:0 for seamless join\n- Remove opacity dimming; all three works now at equal brightness\n- Unify visual hierarchy across the three-image wall"
+  },
+  {
+    "sha": "a0f1a08",
+    "date": "2026-07-15",
+    "title": "Refine hero image for immersive full-viewport experience",
+    "body": "* Replace aspect-ratio constraint with 100svh full-viewport height\n* Use object-fit: cover for responsive cropping without distortion\n* Center focal point (object-position: center) for art0832's framed artwork\n* Extend hero edge-to-edge, removing margins and padding\n* Integrate fixed header naturally over the immersive hero\n* Smooth responsive behavior across desktop, tablet, mobile\n\nResult: Visitor steps into an imagined gallery, not viewing a framed photograph in a webpage."
+  },
+  {
+    "sha": "673f51f",
+    "date": "2026-07-15",
+    "title": "Revise Hall of Openings hero image: art0821 → art0832",
+    "body": "* Update hero image from art0821 (Targets and Roundels) to art0832 (Blurred Figures, Gallery View)\n* Update museum label to reflect new image title\n* Apply to both prototype and live hall-of-openings.html\n* Maintain all opening sequence structure and prose"
+  },
+  {
+    "sha": "efe35f1",
+    "date": "2026-07-15",
+    "title": "Deploy Hall of Openings prototype: image-first hero with art0821",
+    "body": "* Replace text-first hero (#door) with image hero: art0821 (Targets and Roundels)\n* Add museum-style label below hero image\n* Refine introductory prose to 27 words (museum interpretation voice)\n* Add Browse CTA linking to grid\n* Keep grid structure, interactions, coda, and reveal sections unchanged\n* Bump CACHE_V to invalidate service worker cache\n\nGoverning principle realized: Visitor encounters imagined gallery (art0821) before understanding why it exists (50 years, 6 exhibitions). Opening sequence now honors evidence-before-interpretation museum practice."
+  },
+  {
+    "sha": "094577d",
+    "date": "2026-07-14",
+    "title": "Hall of Openings: artwork name hover color to white",
+    "body": "- Change .t hover color from orange (--accent) to white (#fff)\n- Applies to both animation and reduced-motion states"
+  },
+  {
+    "sha": "3a105b8",
+    "date": "2026-07-14",
+    "title": "Right wing vertical flip",
+    "body": "- Left wing: scale(-1,-1)\n- Right wing: scaleY(-1)"
+  },
+  {
+    "sha": "55066b3",
+    "date": "2026-07-14",
+    "title": "Right wing horizontal flip only",
+    "body": "- Left wing: scale(-1,-1) inverted\n- Right wing: scaleX(-1) left/right reversed"
+  },
+  {
+    "sha": "4333d24",
+    "date": "2026-07-14",
+    "title": "Right wing vertical flip added",
+    "body": "- Left wing: scale(-1,-1)\n- Right wing: scale(-1,-1)\n- Symmetric inverted composition"
+  },
+  {
+    "sha": "b238678",
+    "date": "2026-07-14",
+    "title": "Left wing vertical flip added",
+    "body": "- Left wing: scale(-1,-1) - horizontally and vertically flipped\n- Right wing: scaleX(-1) - horizontally flipped only"
+  },
+  {
+    "sha": "035b02c",
+    "date": "2026-07-14",
+    "title": "Both wings horizontally flipped",
+    "body": "- Left wing: scaleX(-1)\n- Right wing: scaleX(-1)\n- Symmetric mirrored composition"
+  },
+  {
+    "sha": "db4ead5",
+    "date": "2026-07-14",
+    "title": "Right wing horizontal flip",
+    "body": "- Left wing: scale(-1,-1)\n- Right wing: scaleX(-1)"
+  },
+  {
+    "sha": "2735bf7",
+    "date": "2026-07-14",
+    "title": "Right wing 180 degree rotation",
+    "body": "- Left wing: scale(-1,-1)\n- Right wing: rotate(180deg)"
+  },
+  {
+    "sha": "8bb7f44",
+    "date": "2026-07-14",
+    "title": "Right wing horizontal flip only",
+    "body": "- Left wing: scale(-1,-1) inverted\n- Right wing: scaleX(-1) horizontal flip only"
+  },
+  {
+    "sha": "ecac688",
+    "date": "2026-07-14",
+    "title": "Right hero wing rotated 180 degrees",
+    "body": "- Left wing: scale(-1,-1)\n- Right wing: rotate(180deg)"
+  },
+  {
+    "sha": "9bb29ea",
+    "date": "2026-07-14",
+    "title": "Flip and flop outer hero images",
+    "body": "- Change wing transforms from scaleX(-1) to scale(-1,-1)\n- Outer images now both horizontally and vertically inverted"
+  },
+  {
+    "sha": "dd73709",
+    "date": "2026-07-14",
+    "title": "Align hero images to bottom baseline",
+    "body": "- Change #hang from align-items:center to flex-end\n- All three cassette images now share bottom edge"
+  },
+  {
+    "sha": "53acff3",
+    "date": "2026-07-14",
+    "title": "Hero wings: mirror center image, align all three on same baseline",
+    "body": "- Replace wing images with center image (art1010.avif), mirrored horizontally\n- Change #hang from align-items:flex-start to center for even band\n- Update wing captions to match cassette torso"
+  },
+  {
+    "sha": "6639ce1",
+    "date": "2026-07-14",
+    "title": "Session summary: Procession Resonance (Guernica Passage images)",
+    "body": "Complete documentation of the second creative director audit of this session.\nApplied same rigorous process to guernica-passage.html image interactions:\n- Audit of current minimal-hover system\n- Three proposed directions (Resonance, Border Weight, Watermark Bloom)\n- Chosen Direction A: Procession Resonance\n- Implementation: images rise on hover, acknowledging your presence\n- Self-critique and architectural rationale\n- Comparison with Border Grammar (doors section)\n\nReady for user validation and propagation to other room pages."
+  },
+  {
+    "sha": "ba5fba9",
+    "date": "2026-07-14",
+    "title": "Document Procession Resonance: image interactions in Guernica Passage",
+    "body": "Comprehensive analysis of the creative director audit for guernica-passage.html:\n- Why previous system lacked image-specific hover interaction\n- Why Direction A (Procession Resonance) was chosen\n- Implementation details: image rise + shadow + color feedback\n- Self-critique and design rationale\n- Why this language differs from doors (presence-recognition vs threshold passage)\n\nProcession Resonance: images acknowledge your presence through upward rise.\nRegular works: -4px, featured works: -8px (2x stronger signal)."
+  },
+  {
+    "sha": "4a1787e",
+    "date": "2026-07-14",
+    "title": "Procession Resonance: images rise on hover in Guernica Passage",
+    "body": "Images acknowledge your presence through upward rise + shadow expansion.\nRegular works: translateY(-4px), featured works: translateY(-8px).\nTitle color + scale, metadata color, composite flag opacity all respond.\nFigcaption rises with image for unified resonance effect.\n\nAll transitions use .25s ease for smooth, perceivable response.\nRespects prefers-reduced-motion. Honors the 'walk' metaphor while\ngiving images distinct interaction language from doors section."
+  },
+  {
+    "sha": "f7331be",
+    "date": "2026-07-14",
+    "title": "Session summary: Border Grammar creative director audit",
+    "body": "Complete documentation of the audit, three proposed directions,\nchosen implementation (Direction B), self-critique, and deployment status.\n\nThe core interaction identified: Threshold Passage (border expansion on click).\nAll supporting elements verified to serve this central moment.\nArchive/hall-of-openings intentionally unchanged (semantic rightness).\n\nReady for user validation and fine-tuning phases."
+  },
+  {
+    "sha": "9826f1f",
+    "date": "2026-07-14",
+    "title": "Document Border Grammar architectural decision and rationale",
+    "body": "Comprehensive analysis of the Creative Director audit:\n- Why previous system failed (conflicting animations, cognitive overload)\n- Why Direction B (Border Grammar) was chosen (distinctive, elegant, museum-grade)\n- Implementation details and self-critique\n- The ONE core interaction: Threshold Passage\n- Why archive.html/hall-of-openings.html were NOT changed (semantic rightness)\n\nThis document serves as the design foundation for the doors section\ninteraction language and explains architectural decisions for future reference."
+  },
+  {
+    "sha": "c3dc7c2",
+    "date": "2026-07-14",
+    "title": "Fix threshold animation: start border-left-width from 0px, not inherit",
+    "body": "The threshold-passage animation now correctly starts from 0px at 0% keyframe,\nensuring consistent passage behavior across all rooms. The 'inherit' keyword\ndidn't provide semantic clarity and could cause unexpected behavior."
+  },
+  {
+    "sha": "fcafd97",
+    "date": "2026-07-14",
+    "title": "Border Grammar: simplify doors interaction to single animation language",
+    "body": "Replace multi-layered animation system (transforms, ghosted images, arrows,\narcs) with pure border-left-width expansion. The border now carries all\nemotional weight per room. Removes cognitive overload and conflicting CSS.\nLanding choreography: borders draw themselves in. Threshold: border expands\nto full width as passage. Each room's personality (energy/focus/quiet/etc.)\nonly expressed through border width."
+  },
+  {
+    "sha": "5cd3104",
+    "date": "2026-07-14",
+    "title": "Bump CACHE_V for museum-grade artwork interactions",
+    "body": ""
+  },
+  {
+    "sha": "44ed5d0",
+    "date": "2026-07-14",
+    "title": "Redesign artwork interactions: museum-grade study + exhibition language",
+    "body": "Archive: Study Room Intimacy\n- Cursor becomes crosshair (studying mode)\n- Hover: frame expands (accent border, shadow deepens, image lifts 2px)\n- Metadata layers in from below (opacity + translateY stagger)\n- Title anchors and gains font-weight on hover (becomes focal point)\n- Initial metadata opacity .6, reveals to 1 (draw attention through interaction)\n- 350ms ease choreography — lean-in pace\n\nHall of Openings: Exhibition Procession\n- Cursor becomes grab (indicates movement through spaces)\n- Hover: composite activates (accent border, shadow 12px→32px, lifts 4px)\n- Greater depth lift (4px vs 2px in archive) = walking through vs studying\n- Metadata reveals curation context (dims .55→1)\n- Composite flag reveals on hover (emphasizes \"placed\" intention)\n- 400ms staggered timing (.08s figcaption, .12s flag) = procession rhythm\n\nTechnical:\n- GPU transforms only (translateY, box-shadow)\n- No scale/skew (preserves artwork integrity)\n- Accessibility: focus-visible matches hover states\n- prefers-reduced-motion: instant state changes, no animation\n- 60fps guaranteed, no layout shift\n- Cursor hints at interaction mode without text\n\nMetaphor:\n- Archive: \"studying a work closely\" (crosshair, lean-in, reveal metadata)\n- Hall: \"walking through curated exhibitions\" (grab, procession rhythm, placement language)\n- Both maintain work honesty: no filters, no crop, no movement of artwork itself\n- Interaction happens around/between works, not on them"
+  },
+  {
+    "sha": "c5b5723",
+    "date": "2026-07-14",
+    "title": "Bump CACHE_V for spatial storytelling deployment",
+    "body": ""
+  },
+  {
+    "sha": "96ec288",
+    "date": "2026-07-14",
+    "title": "Enhance veil transition with room color inheritance for visual continuity",
+    "body": "Spatial storytelling refinement: when user clicks a room, the transition veil\ninherits the room's accent color, creating visual continuity from departure\nthrough the passage to arrival.\n\nThe --key custom property (room's color) is passed to the veil background,\nso the fade-to-opaque transition becomes a color-specific passage rather than\na generic fade. This grounds the transition in the room's spatial context.\n\nExample: clicking THE CURRENT fades through its gradient; GUERNICA PASSAGE\nfades through dark blue-gray; STUDIO fades through warm tan.\n\nResult: the veil becomes part of the room's character, not a generic overlay."
+  },
+  {
+    "sha": "f73d872",
+    "date": "2026-07-14",
+    "title": "Add spatial choreography to room pages — directional arrivals",
+    "body": "Transforms each room page arrival into a spatial passage that reflects the\nroom's emotional character. No longer generic fade-in; each room announces\nitself through movement.\n\nPer-room directional choreography:\n\nTHE CURRENT (left→right flow)\n- Body slides from left + fades (river flowing)\n- HUD elements stagger in rightward\n- Content fades smoothly\n- Timing: .35s cubic-bezier (energetic, flowing)\n\nTHE GUERNICA PASSAGE (focused inward, converge)\n- Body compresses with scaleX (.92→1)\n- HUD elements scale in from smaller (.95→1)\n- Emphasizes density and weight\n- Timing: .35s cubic-bezier (sharp, intentional)\n\nTHE FLOODED WING (withdrawn, descend)\n- Body floats down from above (-30px)\n- HUD fades in slowly (no movement)\n- Content fades with reserve\n- Timing: .45s ease (slowest, most withdrawn)\n\nTHE HALL OF OPENINGS (expands outward, multiplicity)\n- Body expands from center (1.08→1 scaleX)\n- HUD elements scale outward (1.05→1)\n- Suggests infinite repetition\n- Timing: .35s cubic-bezier (expansive, energetic)\n\nTHE STUDIO (arrives from right, warmth, homecoming)\n- Body slides from right + fades (arrival home)\n- HUD elements drift rightward-to-left\n- Content embraces in\n- Timing: .35s cubic-bezier (welcoming, warm)\n\nTechnical:\n- All animations respect prefers-reduced-motion\n- HUD elements stagger (.1s, .15s, .2s, .25s delays)\n- Content fades follow (.15s-.2s delays)\n- Total time: 350-450ms (immediate yet intentional)\n- GPU transforms only (no layout shift)\n\nMetaphor:\n- Each room's motion announces its character before user interacts\n- Arrival feels like crossing a threshold, not loading a page\n- Directional movement reinforces spatial narrative\n- First 400ms post-arrival completes the passage experience"
+  },
+  {
+    "sha": "705fc42",
+    "date": "2026-07-14",
+    "title": "Bump CACHE_V for research path elevation",
+    "body": ""
+  },
+  {
+    "sha": "5ccb22e",
+    "date": "2026-07-14",
+    "title": "Elevate vault section as THE RESEARCH PATH (#7)",
+    "body": "Reframes archive/working-history/about as a parallel journey path with equal\nvisual hierarchy to the rooms. No longer secondary navigation — it's \"THE\nRESEARCH PATH,\" a distinct parallel exploration track.\n\nDesign:\n- Added h2 heading: \"THE RESEARCH PATH\"\n- Centered, serif font (Georgia), subtle letter-spacing\n- Positioned below doors with equal visual weight\n- Spacing mirrors doors section (12vh margin-top, 24px gap to links)\n\nVault Link Interactions:\n- Hover: lift up (-2px translateY), soft shadow, accent glow (4% opacity)\n- Focus: orange outline + lift (keyboard accessible)\n- Border: transitions on hover (subtle highlight)\n- Click: haptic feedback extended from doors (10ms hover pulse, 20ms click)\n- Smooth 0.3s ease transitions (consistent with doors language)\n\nMetaphor:\n- Doors = Creative Journey (works, rooms, decades)\n- Research Path = Discovery Journey (archive, history, maker)\n- Both are museum passages with equal narrative weight\n- Haptic feedback connects them as one interaction language\n\nTechnical:\n- .research-path container with flex column layout\n- Vault links styled with borders, transitions, pseudo-element glow\n- Haptic helper extended to vault section\n- Respects prefers-reduced-motion\n- Responsive sizing (clamp typography)\n\nHierarchy shift:\n- Before: Footer-like secondary menu\n- After: Parallel navigation path, same visual importance as doors"
+  },
+  {
+    "sha": "9db0226",
+    "date": "2026-07-14",
+    "title": "Bump CACHE_V for spatial depth + landing + haptic features",
+    "body": ""
+  },
+  {
+    "sha": "ee0a68c",
+    "date": "2026-07-14",
+    "title": "Add spatial depth, landing choreography, and haptic feedback (#4, #9, #10)",
+    "body": "Completes the Top 10 Interaction Improvements for the doors section.\n\n#4: Spatial Depth Through Card Layering\n- Each card offset by depth (translateY: 0-4px at rest)\n- Creates subtle 3D recession effect without looking 3D\n- On hover, cards rise (different amounts per room personality)\n- Reinforces hierarchy: CURRENT closest, others recede\n- GPU transform only (no layout shift)\n\n#9: Landing Choreography (Page Arrival)\n- Rooms animate in from left on page load\n- Fade in (opacity 0→1) + slide (translateX -20px→0)\n- Staggered: 0.1s, 0.15s, 0.2s, 0.25s, 0.3s per room\n- Creates continuous passage feeling (not abrupt page load)\n- 0.5s ease-out timing (graceful entry)\n- Respects prefers-reduced-motion: no animation when disabled\n\n#10: Haptic Feedback Integration\n- Hover: subtle 10ms pulse (feels like touch response)\n- Click: stronger 20ms pulse (confirms action taken)\n- Uses navigator.vibrate API (mobile/tablet devices)\n- Gracefully ignored on unsupported devices\n- Grounds interaction in body sensation\n- Enhances perceived craftsmanship\n\nTechnical Notes:\n- Spatial depth uses nth-child selectors (different per-room)\n- Landing animation uses @keyframes room-entrance with staggered delays\n- Haptic helper function checks navigator.vibrate availability\n- Hover haptic uses capture-phase listener (catches all room hovers)\n- All three respect accessibility constraints (prefers-reduced-motion)\n\nMetaphor Completion:\n- Landing: \"the doors appear as you enter the museum\"\n- Depth: \"each room recedes into space, you approach the threshold\"\n- Haptic: \"you can feel the interaction in your hand\"\n- Combined: multi-sensory threshold experience"
+  },
+  {
+    "sha": "e26b9cf",
+    "date": "2026-07-14",
+    "title": "Bump CACHE_V for room sequencing arc",
+    "body": ""
+  },
+  {
+    "sha": "768641e",
+    "date": "2026-07-14",
+    "title": "Add room sequencing arc visualization (#6)",
+    "body": "Implements visual hierarchy showing THE CURRENT → THE STUDIO as a journey,\nnot five equal options. Wavy SVG path flows downward through room centers,\nsuggesting progression and organic \"river\" metaphor.\n\nDesign:\n- Wavy path connecting rooms vertically (curves left-right-left-right)\n- Positioned absolutely behind nav (z-index: -1)\n- Ghosted opacity: 0.12 (subtle, almost imperceptible at first glance)\n- Stroke: 1.5px, uses var(--dim) color (neutral gray)\n- Responsive SVG with viewBox (scales to nav width/height)\n\nMetaphor:\n- Arc shows journey progression from entrance (THE CURRENT) to conclusion (THE STUDIO)\n- Wavy curves echo river/flow theme\n- Subtle enough not to distract, visible enough to reinforce narrative arc\n- Reminds viewer rooms are sequential experience, not menu options\n\nTechnical:\n- Inline SVG with path element using quadratic bezier curves\n- aria-hidden=\"true\" (decorative, not interactive)\n- pointer-events: none (doesn't interfere with hover/click)\n- stroke-linecap: round (softer appearance)\n- No animation (static visual hierarchy hint)\n\nResponsive:\n- SVG viewBox adapts to #doors dimensions\n- CSS width/height: 100% (fills container)\n- preserveAspectRatio=\"none\" (stretches to fit, maintains proportions)"
+  },
+  {
+    "sha": "3596c25",
+    "date": "2026-07-14",
+    "title": "Bump CACHE_V for click cascade animation",
+    "body": ""
+  },
+  {
+    "sha": "1e80f27",
+    "date": "2026-07-14",
+    "title": "Add click cascade animation to room exits (#8)",
+    "body": "Implements deeper stagger choreography: when user clicks a room door to enter,\nthe other 4 rooms fade and retreat upward in a staggered wave. Reinforces the\n'entering threshold' metaphor — clicked room welcomes you in, others politely\nstep aside.\n\nAnimation sequence:\n1. User clicks any room\n2. Clicked room: threshold animation (border expand + text fade, 0.4s)\n3. Siblings: cascade animation (fade out + translateY up, 0.3s each)\n   - Applied with staggered delays: 0ms, 50ms, 100ms, 150ms\n   - Creates wave-like rhythm of retreat\n4. After 0.4s, page navigates\n\nMetaphor: \"entering the museum\" — the passage pulls you through as others\nrecede into shadow. Not abrupt navigation — ceremonial entry.\n\nTechnical:\n- room-cascade @keyframes: fade + upward shift (0.3s)\n- .room-exit class applied to siblings via click handler\n- animation-delay set per-sibling for stagger effect\n- Respects prefers-reduced-motion: skips all animations\n\nTiming:\n- Threshold (clicked room): 0.4s before nav\n- Cascade (siblings): 0.3s, staggered 50ms apart = completes by ~0.35s\n- Both animations complete before page navigation"
+  },
+  {
+    "sha": "a344eea",
+    "date": "2026-07-14",
+    "title": "Bump CACHE_V for ghosted preview feature",
+    "body": ""
+  },
+  {
+    "sha": "a25fec2",
+    "date": "2026-07-14",
+    "title": "Add ghosted room preview on hover (#2)",
+    "body": "Implements room state visualization: hovering over a door reveals a ghosted\nbackground image representing each room's essence.\n\nDesign:\n- Uses ::after pseudo-element as ghosted overlay (opacity: .15 on hover)\n- Background image positioned behind room title/subtitle (z-index: -1)\n- Fades in/out smoothly on hover/focus (0.3s ease)\n- Respects prefers-reduced-motion: no animation when disabled\n\nImplementation:\n- Added data-preview-id attributes to each room link\n- JavaScript preloads thumbnail images (AVIF + JPG fallback)\n- CSS variable (--preview-url) passes image URL to ::after\n- Graceful degradation: missing images silently fail to load\n\nRoom previews (curated by Jeff):\n- THE CURRENT: art1005 (flow, alive)\n- THE GUERNICA PASSAGE: art0023 (focused, intense)\n- THE FLOODED WING: art0611 (absence, withdrawn)\n- THE HALL OF OPENINGS: art0611 (multiplicity)\n- THE STUDIO: art0241 (continuation, warmth)\n\nPerformance:\n- Thumbnails preloaded off-critical path (no blocking)\n- CSS-only opacity animation (GPU accelerated)\n- No visual impact if images fail to load"
+  },
+  {
+    "sha": "186fe34",
+    "date": "2026-07-14",
+    "title": "Bump CACHE_V for threshold animation + cursor changes",
+    "body": ""
+  },
+  {
+    "sha": "25a449b",
+    "date": "2026-07-14",
+    "title": "Add threshold animation and cursor transform to room doors",
+    "body": "Implements high-impact improvements #1 and #5 from interaction critique:\n\n#1: Threshold Animation on Click\n- On click, room card animates: left border expands (3px→12px)\n- Text fades and drifts rightward (passage effect)\n- Navigation occurs after 400ms animation completes\n- Creates sense of \"entering\" rather than \"clicking\"\n- Respects prefers-reduced-motion: instant navigation if enabled\n\n#5: Cursor Transform\n- Custom SVG cursor: thin vertical line with arrow\n- Indicates \"passage\" semantic, not standard \"click\"\n- Applied on #doors a:hover via CSS data-uri cursor\n\nTechnical details:\n- Threshold animation uses @keyframes (CSS-only, no JS complexity)\n- Border-left expands dramatically (visual passage metaphor)\n- Text simultaneously fades and translates rightward\n- Click handler prevents default, triggers animation, delays navigation\n- Keyboard accessible: threshold animates before URL change\n- prefers-reduced-motion disabled: navigation bypasses animation\n\nNo per-room variations on threshold effect—unified passage experience\nacross all five rooms, reinforcing threshold concept over individual identity.\nAnimation plays identically regardless of which room is clicked."
+  },
+  {
+    "sha": "f3fccd6",
+    "date": "2026-07-14",
+    "title": "Bump CACHE_V for doors interaction personality changes",
+    "body": ""
+  },
+  {
+    "sha": "db7636e",
+    "date": "2026-07-14",
+    "title": "Transform doors section into museum threshold via interaction language",
+    "body": "Each of the five rooms now has a distinct emotional personality expressed\nentirely through hover/focus state animations, without changing typography,\nlayout, spacing, colors, or copy.\n\nRoom-specific personalities implemented:\n- THE CURRENT: expansive left border (6px), upward text drift → alive, flow\n- THE GUERNICA PASSAGE: narrow left border (3px), inward text pull → dense, focused\n- THE FLOODED WING: top border effect, faded text → quiet, withdrawn\n- THE HALL OF OPENINGS: mid-width border (4px), rhythmic echo → multiplicity\n- THE STUDIO: warmest border (5px), upward text breath → welcoming, home\n\nTechnical approach:\n- CSS-only via nth-child selectors targeting each room's link\n- GPU-accelerated transforms (translateX, translateY, scaleX, scaleY)\n- Stagger timing via transition-delay (.02s–.06s) for wave progression\n- Keyboard accessibility: :focus-visible receives same personality as :hover\n- prefers-reduced-motion respected: instant state changes when motion disabled\n\nPerformance:\n- No layout shifts, 60fps guaranteed via transform-only animation\n- No JavaScript, no new dependencies (anime.js not needed)\n- Browser cache-friendly single-pass CSS compilation"
+  },
+  {
+    "sha": "fe153be",
+    "date": "2026-07-14",
+    "title": "Fix: jfsn-2018 case-sensitivity — rename Images/ to images/ to resolve 404s on Linux",
+    "body": "The website was captured with Images/ (capital I) on macOS, but all HTML/CSS/JS\nfiles reference lowercase images/. This works locally (case-insensitive filesystem)\nbut causes 404s on HostGator (case-sensitive Linux server). All asset URLs now\nresolve correctly on production."
+  },
+  {
+    "sha": "0e43eaa",
+    "date": "2026-07-14",
+    "title": "Homepage hero: unify the plaque type scale",
+    "body": "Consistency pass on the three work captions. They differed in three\nways at once (center 9px/.30em, wings 8px/.26em/dimmed):\n\n- Drop the desktop .30em override on the center plaque so its tracking\n  no longer jumps .26em→.30em across the 1200px breakpoint.\n- Bump the wing plaques 8px→9px to match the center.\n\nAll three plaques now read as one system — 9px, .26em — with the wings\nreceding through opacity alone (0.75), not size. Center stays the focal\nwork through position and full-brightness image. CACHE_V bumped."
+  },
+  {
+    "sha": "f2276b9",
+    "date": "2026-07-14",
+    "title": "Homepage hero: hang the triptych at equal height",
+    "body": "Per direction, all three works now hang at the same height on desktop\n(≥1200px) — an even band, the portrait flankers simply narrower than\nthe near-square center. Removed the leftover 560px max-width cap on the\ncenter work (scoped to ≥1200px only) so it reaches the shared height;\nsub-1200px poster is untouched. Center stays the point through full\nlighting and its plaque, not size. Verified equal heights + fit + no\noverflow at 2560/1440/1280-short. CACHE_V bumped."
+  },
+  {
+    "sha": "a15f6b4",
+    "date": "2026-07-14",
+    "title": "Homepage hero: desktop triptych — the figure across fifty years",
+    "body": "On the wide desktop wall (≥1200px) the lit 2020s Cassette Torso is now\nflanked by two earlier works of the same figure, receding into the room:\n\n  art0212 CD Torso Assemblage (1990s)  ·  art1010 Cassette Torso (2020s,\n  lit, center)  ·  art0001 Figure, Blue Ground (1970s)\n\nThe torso built from the recording media of its decade — CDs, then\ncassettes — with the earliest figure at the far right. All three real,\nshown straight, with honest plaques. Recession is scale + placement +\nlighting (flankers smaller, bottom-aligned lower, opacity .62); the\nworks themselves are never altered.\n\nDesktop-only: below 1200px #hang collapses via display:contents and the\nentrance is the unchanged single-work poster. Wings load eager (they're\nabove the fold) at fetchpriority=low so the center work keeps LCP.\nTablet, mobile, signature cornerstone, and lintel all unchanged.\nCACHE_V bumped."
+  },
+  {
+    "sha": "6a1ae4a",
+    "date": "2026-07-14",
+    "title": "Homepage hero: desktop lintel + signature cornerstone",
+    "body": "Desktop (≥1200px) — THE LINTEL: the name sets as one carved line\nspanning ~86vw of the wall (the <br> yields via CSS; a space guards\nthe join), the work claims the wall beneath at up to 52vh, the small\ntype whispers harder, and short windows (≤820px tall) scale the\ncomposition as one unit so the poster never crops. Below 1200px the\nstacked poster is unchanged.\n\nTHE SIGNATURE: the typeset cornerstone is replaced by Jeff's actual\nsignature — real ink, scanned (untouched source at\nassets/images/Jeff Neumann.gif), rendered as a transparent PNG in the\nmuseum's warm tone (#b9b1a6) for the dark wall. alt carries the name\nfor screen readers. Every institution sets its founder's name in\ntype; a personal record signs itself.\n\nZero body JS unchanged. CACHE_V bumped."
+  },
+  {
+    "sha": "3a0f73e",
+    "date": "2026-07-13",
+    "title": "Homepage hero: the poster — permanent still entrance",
+    "body": "Final purification of the threshold per the poster test: \"printed at\ntwo meters and hung at a real museum's entrance, would it feel\ncomplete?\" Five elements, one hand, one work, one wall:\n\n  The Museum That Never Existed.\n  A personal record, not a gallery.\n  [the work, lit, hairline frame]\n  UNTITLED (CASSETTE TORSO) · 2020S (EST.) · COLLAGE\n  JEFFREY F. S. NEUMANN  (cornerstone, moved to the base)\n\nRemoved as interface-not-architecture:\n- \"YOU ARE ENTERING\" / \"WELCOME BACK\" labels and localStorage greeting\n  (a poster cannot know you; the door is the same door every time)\n- the entire arrival choreography and its script (a building is\n  already lit when you arrive) — page is now zero body JS\n- .stage reveal system and reduced-motion overrides (nothing hides,\n  nothing moves; both concerns satisfied by construction)\n\nThe hero image no longer starts at brightness(0), which also improves\nLCP. Sitewide room-in/veil continuity untouched. Doors, vault, and the\norigin story unchanged. CACHE_V bumped."
+  },
+  {
+    "sha": "790d969",
+    "date": "2026-07-13",
+    "title": "Homepage hero: centered \"First Light\" threshold",
+    "body": "Redesigns only the homepage hero to the approved specification. The\nmuseum's name becomes the primary focal point of a single centered\nthreshold — the facade — with one work lit beneath it. Replaces the\nprior tall stack (name below the desktop fold, 12s six-fade sequence).\n\n- Centered composition at every width; only scale changes (no separate\n  desktop layout). Fits one viewport at 375 / 768 / 1440 with air.\n- Unified type hierarchy: caps nameplate/label, Playfair-italic title,\n  small dim Playfair-italic creed (heart-line kept in its own voice).\n- One-light arrival: nameplate, name and the lamp on the work rise\n  together (~2.6s), creed settles last. Luminance only — no transforms.\n- Origin story promoted to its own quiet screen after the threshold.\n- Returning visitor: WELCOME BACK, light comes up quickly (0.8s).\n\nPreserved: honesty (work shown straight, caption always visible, EST.\nintact), single h1 + figure/figcaption + nav landmarks, keyboard focus,\nprefers-reduced-motion (all shown, no motion), no-JS static fallback.\nRotating daily hero deliberately not implemented — future enhancement.\n\nNothing outside the homepage hero changed. CACHE_V bumped."
+  },
+  {
+    "sha": "e9921ad",
+    "date": "2026-07-13",
+    "title": "Stewardship: remove redundant v2/ dev-source directory",
+    "body": "v2/ was staging for THE MUSEUM THAT NEVER EXISTED and was already\npromoted to root on 2026-07-12 (per changes.json), with the prior\nsite preserved intact at archive-v1/. v2/ itself was left in place\nonly as a harmless leftover dev copy, superseded by root.\n\nAlso fixes a stale /v2/artwork.html copy-link URL in artwork.html\n(now points at the canonical root artwork.html), and bumps CACHE_V.\n\narchive-v1/ is untouched: confirmed still load-bearing for all\ndecade pages and favorites.html, which intentionally link to its\nartwork/archive templates per the same 2026-07-12 migration."
+  },
+  {
+    "sha": "0770d71",
+    "date": "2026-07-13",
+    "title": "Stewardship: record defect-correction session and transition to preservation",
+    "body": "Documents the five verified defect corrections (commit 608de59f), the\nverified repository/production state, and the formal transition of\n\"The Museum That Never Existed\" into Preservation Stewardship."
+  },
+  {
+    "sha": "608de59",
+    "date": "2026-07-13",
+    "title": "Fix five verified defects on artwork + archive pages",
+    "body": "Artwork page:\n- Decade axis: add display:block so #decade-axis has width for the\n  labels' left:% offsets to resolve against (was inline/0-width, piling\n  all six decade labels at x=0).\n- Bottom nav (#walk): give the fixed bar a scrim + opaque link chips so\n  scrolling content no longer shows through it, mirroring the top\n  header's existing gradient. Link position/behavior unchanged.\n- Mobile header (<=640px): reduce side padding, add gap, and slightly\n  tighten the wordmark tracking so the brand and archive link stop\n  colliding on narrow phones (was 0px gap, wrapping the bracket).\n\nArchive page:\n- Search input: add aria-label for an accessible name (no UI change).\n- Search input: font-size 16px at the mobile breakpoint to prevent iOS\n  focus-zoom (desktop unchanged)."
+  },
+  {
+    "sha": "5bf7481",
+    "date": "2026-07-13",
+    "title": "Accessibility: Fix WCAG AA color contrast violations on artwork detail page",
+    "body": "Updated --dim color token from #7a7168 to #858479 (4.50:1 contrast, was 4.12:1)\nUpdated --faint color token from #3a332d to #919089 (4.75:1 contrast, was 1.59:1)\n\nFixes contrast failures on all persistent text elements (figcaption, archive ID,\nledger labels, navigation links, section titles, decade labels). Changes are\nminimal (imperceptible for --dim, necessary readability restoration for --faint)\nand preserve visual hierarchy and museum presentation quality.\n\nComplies with CLAUDE.md accessibility standard: \"WCAG AA contrast minimum on all\npersistent text.\""
+  },
+  {
+    "sha": "31a4ca0",
+    "date": "2026-07-13",
+    "title": "Stewardship: Add About to contextual documents layer",
+    "body": "About Jeff is now linked from the homepage vault section alongside Archive and Working History. The three documents answer three complementary questions:\n\n- Archive: What survives?\n- Working History: How was the work presented over time?\n- About: Who created this body of work and why was it preserved?\n\nThis completes the archive's contextual layer while preserving the principle that work is encountered before biography. About remains a reference resource, not primary navigation."
+  },
+  {
+    "sha": "d2e246a",
+    "date": "2026-07-13",
+    "title": "Cache: Bump CACHE_V for About page redesign",
+    "body": ""
+  },
+  {
+    "sha": "a26dc6e",
+    "date": "2026-07-13",
+    "title": "Archive: Stewardship session documentation for About page curation",
+    "body": "Documentation of the About page stewardship review, curation process, and verification.\nFinal status: locked for permanent preservation."
+  },
+  {
+    "sha": "f6d8227",
+    "date": "2026-07-13",
+    "title": "Fix: Change About page to dark theme for consistency",
+    "body": "Remove light theme class to match rest of archive (homepage, working-history, etc).\nThe About page now uses the default dark theme."
+  },
+  {
+    "sha": "4ed3161",
+    "date": "2026-07-13",
+    "title": "Preserve historical About page artifact (2026-07-13)",
+    "body": "This is the light-themed version of about.html before curation for stewardship.\nKept as a historical record of the archive's evolution."
+  },
+  {
+    "sha": "0ef590a",
+    "date": "2026-07-13",
+    "title": "Curate About page for archival completeness",
+    "body": "Removed: Three-column Contact/Archive/Now section (duplicates site navigation)\nAdded: Archival Philosophy Statement explaining why this archive exists\nPreserved: All biographical passages verbatim (1974 to present, CIA education, materials, Cleveland context, lost works, recurring motifs)\nKept: Portrait as historical evidence of the maker\nKept: Exhibition Record and Jeff's Own Words sections\n\nThis page now answers three questions only:\n- Who is Jeffrey F. S. Neumann?\n- Why has he preserved this archive?\n- How should visitors understand fifty years of unbroken making?\n\nThe About page is now complete for permanent stewardship."
+  },
+  {
+    "sha": "10331fd",
+    "date": "2026-07-13",
+    "title": "Separate preserved records from current external presence on Working History",
+    "body": "The Working History page now distinguishes between:\n- RECORDS: preserved archival materials (Professional Record, Video Archive, Design Studies)\n- CURRENT PRESENCE: external platform links (LinkedIn, Showspace)\n\nThis clarifies archival status for future visitors and researchers. Preserved materials are under archive control; external platform links are mutable and may not survive long-term. The distinction helps a 50-year reader understand what's been faithfully preserved vs. what's a current snapshot of external presence.\n\nNo design changes. Minimal architectural change. Objectively strengthens historical clarity."
+  },
+  {
+    "sha": "fb60aaf",
+    "date": "2026-07-12",
+    "title": "Bump service worker cache version",
+    "body": "Invalidate cached CSS to force refresh of flooded-wing.html frame sizing."
+  },
+  {
+    "sha": "c616b90",
+    "date": "2026-07-12",
+    "title": "Add Metadata Stewardship Constitution",
+    "body": "Formal governing document establishing principles for archive metadata\nstewardship across decades and custodians. Covers authority hierarchy,\nburden of proof, confidence levels, AI policy, and long-term preservation."
+  },
+  {
+    "sha": "bba1389",
+    "date": "2026-07-12",
+    "title": "Flooded Wing: reduce frame field to ¼ size",
+    "body": "Changed .field-grid column width from clamp(104px,11vw,164px) to\nclamp(26px,2.75vw,41px). Frames now render at ~36px wide instead of ~145px,\ncreating a denser field of smaller placeholders."
+  },
+  {
+    "sha": "d0f2299",
+    "date": "2026-07-12",
+    "title": "Stewardship: Isolate legacy pages from active Museum navigation",
+    "body": "Architectural separation: The legacy pages (about.html, lost.html, series.html)\nfrom the previous site are now isolated from the active Museum v2 experience\nwhile remaining preserved in the repository and on the server.\n\nThis is an information architecture decision, not a deletion:\n- Files are unchanged on disk and in git history\n- Pages are recoverable via direct URL and version control\n- Navigation is simplified to the Museum v2 primary path\n- Maintenance burden is reduced (single nav system to maintain)\n\nChanges:\n- Removed legacy page links from _shared/top-nav.html navigation template\n- Removed legacy pages from sitemap.html discovery page\n- Removed legacy pages from XML sitemap generation (build_catalog.py)\n- Regenerated sitemap.xml (now 1136 URLs, excluding legacy pages)\n- Updated 37 pages via stamp-nav.sh with cleaned navigation\n- Added stewardship decision documentation\n\nLegacy pages remain:\n- In repository (full git history available)\n- On production server (accessible via direct URL)\n- In all backups (B2, local mirrors)\n- Recoverable at any time if needed\n\nMuseum v2 navigation now contains only:\n- Archive, Series (primary navigation)\n- No references to about.html, lost.html, series.html from active pages\n\nVerification: All legacy references removed from Museum architecture.\nNo broken links introduced."
+  },
+  {
     "sha": "d063cf8",
     "date": "2026-07-12",
     "title": "Documentation: stewardship decision record for retired redundant navigation sections",
