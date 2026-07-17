@@ -250,6 +250,10 @@ addEventListener('DOMContentLoaded', () => {
     font-size:clamp(30px,5.5vw,56px);line-height:1.25;
   }
   #exit .lesson em{font-style:italic;color:var(--accent)}
+  #exit .lesson .attr{
+    display:block;font-family:'Inter',sans-serif;font-style:normal;
+    font-size:12px;letter-spacing:.14em;color:var(--faint);margin-top:16px;
+  }
   #exit nav{display:flex;flex-direction:column;gap:16px;margin-top:20px}
   #exit nav a{font-size:11px;letter-spacing:.22em}
 
@@ -288,7 +292,7 @@ addEventListener('DOMContentLoaded', () => {
     completely.</p>
   </div>
   <div class="rule-note">
-    <span class="caps">What this room does not do</span>
+    <span class="caps">What is not here</span>
     <p class="prose">No titles, no sizes, no images survive. The number isn&rsquo;t
     precise because the number never existed — there was no inventory, no scan,
     no list. The frames below depict nothing. They stand for what is missing,
@@ -305,8 +309,7 @@ addEventListener('DOMContentLoaded', () => {
   </noscript></div>
   <div class="after-field">
     <p class="prose">Every frame above is empty because the record is empty.<br>
-    A few works survive only incidentally, in the background of other
-    photographs. What remains is memory.</p>
+    What remains is memory.</p>
   </div>
 </section>
 
@@ -328,11 +331,9 @@ addEventListener('DOMContentLoaded', () => {
   </div>
   <div id="strip-hint" class="caps">DRAG ACROSS — TWENTY-FIVE FEET</div>
   <div id="wall-caption">
-    <p class="prose">A full-scale interpretation of Picasso&rsquo;s
-    <em>Guernica</em> — approximately 11 × 25 feet, made in the basement studio
-    on flexible material so it could be rolled and stored. It lived there for
-    years. No one else ever saw it. Later moved to storage. Gone with
-    everything else. Never photographed.</p>
+    <p class="prose">It stood in that basement for years. No one else ever
+    saw it. When the space was cleared, it went with everything else. Never
+    photographed.</p>
     <p class="prose" style="margin-top:26px">Asked, after more than thirty
     years of working with <em>Guernica</em> as a reference and structure, why
     he made something at that scale:</p>
@@ -349,7 +350,7 @@ addEventListener('DOMContentLoaded', () => {
 </section>
 
 <section id="exit">
-  <div class="lesson">Not <em>be careful.</em><br>Be early.</div>
+  <div class="lesson">Not <em>be careful.</em><br>Be early.<span class="attr caps">JEFFREY F. S. NEUMANN, 2026</span></div>
   <p class="prose" style="max-width:30em">The archive on this site exists in
   part because of that loss. Every surviving piece is photographed, described,
   and backed up — so the work doesn&rsquo;t disappear twice.</p>
@@ -477,8 +478,8 @@ addEventListener('DOMContentLoaded', () => {
     const max = strip.scrollWidth - strip.clientWidth;
     strip.classList.toggle('fade-l', strip.scrollLeft > 4);
     strip.classList.toggle('fade-r', strip.scrollLeft < max - 4);
-    if (max > 4) {
-      const ppf = (window.innerHeight * 0.82) / WALL_FT_H;
+    const ppf = (window.innerHeight * 0.82) / WALL_FT_H;
+    if (max > 4 && ppf > 0) {
       const f0 = Math.max(0, Math.round(strip.scrollLeft / ppf));
       const f1 = Math.min(WALL_FT_W, Math.round((strip.scrollLeft + strip.clientWidth) / ppf));
       hint.textContent = 'DRAG ACROSS — SHOWING FT ' + f0 + '\u2013' + f1 + ' OF 25';
