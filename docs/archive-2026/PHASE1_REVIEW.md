@@ -222,7 +222,7 @@ No other regressions found. All remaining changes are behavior-preserving or beh
 ## Deferred (not regressions — flagged for later phases)
 - `ui.css` defines `img[loading="lazy"]` twice with conflicting base rules (Phase 2 CSS pass).
 - P/N shortcut selector is brittle (`textContent.includes('PREVIOUS'/'NEXT')`) — Phase 2 (B8).
-- The 1,084 generated artwork pages still FOUC — needs the head theme-init added to `gen-artwork-pages.py`'s template + a regen (Phase 1 follow-up).
+- The 1,084 generated artwork pages still FOUC — needs the head theme-init added to `tools/generators/gen-artwork-pages.py`'s template + a regen (Phase 1 follow-up).
 
 ## Recommended manual test pass before deploy
 1. Dark-mode reload on `index`, `archive`, `about`, a decade page → no flash.

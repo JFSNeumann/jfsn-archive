@@ -14,8 +14,8 @@ Tested 2026-06-11:
 
 | Exposure point | Test | Result |
 |---|---|---|
-| `make_handoff.py:144` hardcodes the FTP password | grep | **present** |
-| Same file in public GitHub repo | unauthenticated fetch of raw.githubusercontent.com/JFSNeumann/jfsn-archive/main/make_handoff.py | **password readable** |
+| `tools/utils/make_handoff.py:144` hardcodes the FTP password | grep | **present** |
+| Same file in public GitHub repo | unauthenticated fetch of raw.githubusercontent.com/JFSNeumann/jfsn-archive/main/tools/utils/make_handoff.py | **password readable** |
 | `JFSN-Archive-Handoff-Allison.pdf` committed to that public repo | unauthenticated fetch | **200** |
 | Same PDF on the live site | https://jfsn.com/JFSN-Archive-Handoff-Allison.pdf | **200** |
 | Is the exposed password still the active credential? | compared against `.ftp.env` | **yes — identical** |
@@ -26,7 +26,7 @@ Anyone who finds any of the four can log into HostGator FTP and delete or deface
 1. HostGator cPanel → FTP Accounts → change the password for `jeffery@jfsn.com`. (~5 min, Jeff or Allison)
 2. Update `FTP_PASS` in `/Documents/JFSN/.ftp.env` so JFSN.app deploys keep working.
 3. Delete the PDF from the webroot: `lftp` → `rm /JFSN-Archive-Handoff-Allison.pdf`.
-4. Edit `make_handoff.py` to read FTP creds from `.ftp.env` at generation time (never hardcode), then regenerate the PDF for printing only — do not commit it.
+4. Edit `tools/utils/make_handoff.py` to read FTP creds from `.ftp.env` at generation time (never hardcode), then regenerate the PDF for printing only — do not commit it.
 5. `git rm --cached JFSN-Archive-Handoff-Allison.pdf`, add `JFSN-Archive-Handoff-Allison.pdf` and `*.pdf` deploy exclusion to `deploy.sh`, add the PDF to `.gitignore`, commit.
 6. Optional once 1–5 are done: scrub git history (git-filter-repo). With the password rotated, the old history exposes only a dead credential — low urgency.
 
@@ -100,7 +100,7 @@ Authority chain used: creator testimony (§22 verbatim 2026-06-10; §25 paraphra
 - Record one ~1-minute audio (still the standing #1 creator-context priority; no audio of Jeff exists anywhere)
 
 **1-hour:**
-- make_handoff.py reads creds from .ftp.env; regenerate PDF for print only; git rm --cached the committed PDF
+- tools/utils/make_handoff.py reads creds from .ftp.env; regenerate PDF for print only; git rm --cached the committed PDF
 - Re-hide the Exhibition Record pending verification (restore pre-438fb034 hidden state) — only after/with Jeff's go-ahead
 - Jeff-approved one-line rewrite of gallery-images.html intro + meta/og + hero caption marker
 - Decade footer parity via a stamped Material footer block

@@ -11,7 +11,7 @@
 
 ## Executive Summary
 
-The JFSN Archive is a static, vanilla HTML/CSS/JS archive of 1,084 works (1974–present), built and run by its subject as a personal record rather than a commercial site. The data layer and mission discipline are strong: catalog data is honest (composites flagged, years kept as decade estimates), the build pipeline (`build_catalog.py`, `gen-artwork-pages.py`) is coherent, and the service worker / AVIF pipeline reflect real performance engineering effort.
+The JFSN Archive is a static, vanilla HTML/CSS/JS archive of 1,084 works (1974–present), built and run by its subject as a personal record rather than a commercial site. The data layer and mission discipline are strong: catalog data is honest (composites flagged, years kept as decade estimates), the build pipeline (`artworks/build_catalog.py`, `tools/generators/gen-artwork-pages.py`) is coherent, and the service worker / AVIF pipeline reflect real performance engineering effort.
 
 The front-end **runtime layer** — shared JS/CSS, nav scripting, page-level script tags — had accumulated debt across roughly 95 prior sessions: overlapping shared modules, hand-duplicated event handlers that fought each other, a render-blocking unminified stylesheet larger than the entire compiled Tailwind build, and a dark-mode flash-of-wrong-theme bug present on every page.
 
@@ -33,7 +33,7 @@ Everything else identified in the original audit — JS bundling, CSS splitting,
 
 ## Architecture Assessment
 
-**Pages:** 38 hand-maintained root HTML pages + 1,084 machine-generated artwork detail pages (`artworks/pages/*.html`, built by `gen-artwork-pages.py`) + a separate client-side artwork renderer (`artwork.html`, loads by `?id=artNNNN`). **These last two are two independent systems rendering the same content and must be kept in sync by hand** — a structural risk, not yet resolved.
+**Pages:** 38 hand-maintained root HTML pages + 1,084 machine-generated artwork detail pages (`artworks/pages/*.html`, built by `tools/generators/gen-artwork-pages.py`) + a separate client-side artwork renderer (`artwork.html`, loads by `?id=artNNNN`). **These last two are two independent systems rendering the same content and must be kept in sync by hand** — a structural risk, not yet resolved.
 
 **Shared layer:** ~60 files under `_shared/` (JS + CSS), loaded piecemeal per page via individual `<script src>`/`<link>` tags — no bundler, no build step beyond the Tailwind CLI for `site.min.css`. A typical page loads 21–33 separate script files and 9–15 separate stylesheets.
 
@@ -41,7 +41,7 @@ Everything else identified in the original audit — JS bundling, CSS splitting,
 
 **Two parallel design-token systems** coexist by deliberate choice (a Stitch/Tailwind light system for most pages, a Material Design system for the six decade pages + `archive.html`) — this is documented and intentional, not a defect, but it means there is no single source of truth for color/spacing tokens across the whole site.
 
-**Data/build pipeline:** `build_catalog.py` → `catalog.json`/`catalog-lite.json`/`api/`/`sitemap.xml`/`feed.xml`; `gen-artwork-pages.py` → the 1,084 static pages. This pipeline is coherent and well-documented in `CLAUDE.md`; it was read and understood as part of this audit but not modified.
+**Data/build pipeline:** `artworks/build_catalog.py` → `catalog.json`/`catalog-lite.json`/`api/`/`sitemap.xml`/`feed.xml`; `tools/generators/gen-artwork-pages.py` → the 1,084 static pages. This pipeline is coherent and well-documented in `CLAUDE.md`; it was read and understood as part of this audit but not modified.
 
 ---
 
@@ -67,7 +67,7 @@ Ordered by current status, not by original severity — this reflects what's act
 - `_shared/ui.css` defines `img[loading="lazy"]` **twice** with two different mechanisms (one transition-driven keyed to `.jfsn-loaded`, one animation-driven keyed to `.loaded`, around lines 1685 and 2815). The JS side feeding the second one was removed in Phase 1; the redundant CSS rule itself was deliberately left in place, flagged inline, pending visual verification.
 - The kept P/N (prev/next artwork) keyboard-shortcut handler in `ui.js` still locates adjacent-work links via `a[href$=".html"][href*="art"][href*="../"]` + `textContent.includes('PREVIOUS'/'NEXT')` — fragile string matching, not an explicit `data-direction` attribute. Pre-existing; works today; not touched.
 - Per-page script/stylesheet drift: `search.js`, `nav-active.js`, `ui.js`, `floating-home-button.js` etc. are not included on a fully consistent subset of pages — verified via script-tag census; pages have silently diverged over prior sessions.
-- ~~The **dark-mode FOUC fix was applied only to the 38 hand-maintained root pages — not to the 1,084 generated artwork detail pages.**~~ **Fixed in Phase 2B (FOUC):** `gen-artwork-pages.py` template updated; all 1,084 pages regenerated and deployed 2026-06-29 (commit `0f2d1fbe`, tag `phase2-fouc-freeze`). FOUC fix is now sitewide.
+- ~~The **dark-mode FOUC fix was applied only to the 38 hand-maintained root pages — not to the 1,084 generated artwork detail pages.**~~ **Fixed in Phase 2B (FOUC):** `tools/generators/gen-artwork-pages.py` template updated; all 1,084 pages regenerated and deployed 2026-06-29 (commit `0f2d1fbe`, tag `phase2-fouc-freeze`). FOUC fix is now sitewide.
 - Remaining (non-duplicate) `scroll` listeners are still scattered across roughly a dozen `_shared/*.js` files plus `ui.js` itself (4 single-purpose listeners: hero zoom-out, background-color fade, footer-gradient parallax, and one more) and `top-nav.html`/`footer.html` (1 each) — Phase 1 removed *duplicates*, but the broader recommendation to consolidate into one shared rAF-throttled scroll dispatcher is still undone.
 
 ### Still open — small / cosmetic
@@ -175,7 +175,7 @@ In priority order, consistent with the "Remaining Technical Debt" section above:
 
 **Closed 2026-06-29** — Phase 2B (FOUC), commit `0f2d1fbe`, tag `phase2-fouc-freeze`.
 
-The FOUC fix now covers all 1,084 generated artwork detail pages. `gen-artwork-pages.py`'s template was updated with the THEME_INIT script; all future regeners inherit it automatically. See `SESSION-END-PHASE2B-FOUC.md` and `PHASE2-FOUC-PREDEPLOY-REVIEW.md` for the full implementation and review record.
+The FOUC fix now covers all 1,084 generated artwork detail pages. `tools/generators/gen-artwork-pages.py`'s template was updated with the THEME_INIT script; all future regeners inherit it automatically. See `SESSION-END-PHASE2B-FOUC.md` and `PHASE2-FOUC-PREDEPLOY-REVIEW.md` for the full implementation and review record.
 
 **Recommended next phase: CSS Architecture Cleanup** — `_shared/ui.css` (158KB, render-blocking) is the highest remaining performance item. See "Remaining Roadmap" item 3 above.
 

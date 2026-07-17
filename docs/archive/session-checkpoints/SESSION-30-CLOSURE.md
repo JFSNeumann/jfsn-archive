@@ -8,7 +8,7 @@ It began as a routine maintainer review and became the archive's most consequent
 
 ## Security outcomes
 
-- **The FTP password no longer appears anywhere in the current public record** — removed from `make_handoff.py` (now reads `.ftp.env`), from the repo (PDF untracked), and from `jeff.html`, a live page that had carried it in plain HTML and was caught only by a final full-tree sweep during pre-push verification (the lesson is recorded in CREDENTIAL-EXPOSURE-REPORT.md #9: sweep trees, not suspects).
+- **The FTP password no longer appears anywhere in the current public record** — removed from `tools/utils/make_handoff.py` (now reads `.ftp.env`), from the repo (PDF untracked), and from `jeff.html`, a live page that had carried it in plain HTML and was caught only by a final full-tree sweep during pre-push verification (the lesson is recorded in CREDENTIAL-EXPOSURE-REPORT.md #9: sweep trees, not suspects).
 - jfsn.com hardened live: `.py/.toml/.lock` blocked; jeff.html corrected on the server same-day.
 - Hardening pushed to GitHub (`ae3011b4`): class-based deploy excludes, 42 Netlify forced-404 rules covering 55/55 sensitive files, gitignore guard.
 - **Constraint accepted:** password rotation is not currently possible, and git history (which contains the old password) is deliberately not rewritten. Therefore **the credential remains compromised** — every container is sealed, but the key is still copied. CREDENTIAL-EXPOSURE-REPORT.md stays open until rotation happens someday.
@@ -29,8 +29,8 @@ It began as a routine maintainer review and became the archive's most consequent
 
 1. **Password rotation impossible at present** — the standing risk. Mitigations in place are containment only.
 2. **Domain transfer will not happen** — jfsn.com stays in the friend's Gandi account, expiring 2027-03-05; annual renewal verification remains custodial duty #1 (CUSTODIAN-RECOVERY-PLAN.md).
-3. **Netlify deploy pipeline** was found stale since ~June 7; the protections are in the repo and take effect whenever a deploy next succeeds. Until then the stale snapshot persists (including its copy of the old make_handoff.py — contained only by eventual rotation or deploy).
-4. Four leftover files on the HostGator webroot (the PDF, make_handoff.py, gen-artwork-pages.py, curate-session.json) — all 403-blocked or harmless, all preserved elsewhere; deletion deferred.
+3. **Netlify deploy pipeline** was found stale since ~June 7; the protections are in the repo and take effect whenever a deploy next succeeds. Until then the stale snapshot persists (including its copy of the old tools/utils/make_handoff.py — contained only by eventual rotation or deploy).
+4. Four leftover files on the HostGator webroot (the PDF, tools/utils/make_handoff.py, tools/generators/gen-artwork-pages.py, curate-session.json) — all 403-blocked or harmless, all preserved elsewhere; deletion deferred.
 
 ## Deferred items (parked deliberately)
 

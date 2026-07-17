@@ -17,7 +17,8 @@ import tempfile
 from contextlib import redirect_stdout, redirect_stderr
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+_THIS_FILE = Path(__file__).resolve()
+sys.path.insert(0, str(_THIS_FILE.parent))
 import intake  # noqa: E402
 import scaffold_sidecar  # noqa: E402
 import intake_status  # noqa: E402

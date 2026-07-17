@@ -179,7 +179,7 @@ The oral history sessions have started this work but have not finished it. The c
 ## Project Risks
 
 **Technical risks**
-- SW cache must be manually bumped before any deploy that doesn't go through `build_catalog.py`. Risk of serving stale CSS/JS. Mitigation: CLAUDE.md documents this; CURRENT_STATE.md tracks it.
+- SW cache must be manually bumped before any deploy that doesn't go through `artworks/build_catalog.py`. Risk of serving stale CSS/JS. Mitigation: CLAUDE.md documents this; CURRENT_STATE.md tracks it.
 - Decade pages (1970s–2020s) are outside stamp-nav.sh. Any sitewide nav or footer change requires manual edits to all 6 files. Risk of drift.
 - HostGator FTP credentials stored in jeff.html (private, noindex) — not a deployment risk but a security consideration if jeff.html were ever accidentally made public.
 
@@ -193,7 +193,7 @@ The oral history sessions have started this work but have not finished it. The c
 - start-here.html is confirmed "feeling true" by Jeff but has not been read aloud together and approved for publication.
 
 **Maintenance risks**
-- Work count in text (1,084) appears in many places. When new works are ingested, a find-replace pass is needed. `build_catalog.py` handles catalog.json but not HTML text strings.
+- Work count in text (1,084) appears in many places. When new works are ingested, a find-replace pass is needed. `artworks/build_catalog.py` handles catalog.json but not HTML text strings.
 - `favorites.html` list is manually maintained in `favorites.txt` — could become stale if Jeff changes his preferences.
 
 ---

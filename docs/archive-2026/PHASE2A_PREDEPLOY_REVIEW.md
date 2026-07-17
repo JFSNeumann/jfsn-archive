@@ -26,7 +26,7 @@ A second pass of validation specifically prompted by this fix (running `audit-na
 **Removed:** `_shared/nav.bundle.js` (superseded same-session artifact, never referenced by any page — see Commit 1 note below)
 **Modified (source of truth):** `package.json`, `_shared/top-nav.html`, `_shared/footer.html`
 **Modified (propagated, mechanical):** all 38 root `*.html` pages
-**Read for context, confirmed untouched across all 3 commits:** `sw.js`, `stamp-nav.sh`, `gen-artwork-pages.py`, every file under `artworks/`, `deploy-hostgator.sh`, `session-end.sh`, `.htaccess`, `audit-nav.sh`, `hooks/pre-commit`, `auto-cache-bump.sh`
+**Read for context, confirmed untouched across all 3 commits:** `sw.js`, `stamp-nav.sh`, `tools/generators/gen-artwork-pages.py`, every file under `artworks/`, `deploy-hostgator.sh`, `session-end.sh`, `.htaccess`, `audit-nav.sh`, `hooks/pre-commit`, `auto-cache-bump.sh`
 
 ---
 
@@ -79,7 +79,7 @@ A second pass of validation specifically prompted by this fix (running `audit-na
 - **Toast notifications**: live-tested on `index.html` and `archive.html`.
 - **Accessibility (Phase 1 regression surface)**: `THEME_INIT` (the dark-mode FOUC fix) is present and untouched on all 38 pages; `aria-expanded="false"` static default and the `openMenu()`/`closeMenu()` `setAttribute` calls in `top-nav.html` are byte-identical to before.
 - **Deployment script compatibility**: `deploy-hostgator.sh`'s `lftp mirror` exclude list (`.git/*`, `.DS_Store`, `node_modules/*`, `qa.html`, `curate.html`, `dedupe.html`, `curate-session.json`, `*.md`, `docs/*`) does not exclude any new bundle file or `build-js-bundles.js`; all will deploy correctly with no script changes needed.
-- **`sw.js` is byte-for-byte untouched** across all 3 commits (`git diff --stat` empty for the path across the full range). `stamp-nav.sh`, `gen-artwork-pages.py`, and everything under `artworks/` are likewise confirmed untouched.
+- **`sw.js` is byte-for-byte untouched** across all 3 commits (`git diff --stat` empty for the path across the full range). `stamp-nav.sh`, `tools/generators/gen-artwork-pages.py`, and everything under `artworks/` are likewise confirmed untouched.
 - **Rollback safety**: every one of the 18 bundled source files is still present on disk, unmodified, and independently servable.
 
 ### Needs Attention

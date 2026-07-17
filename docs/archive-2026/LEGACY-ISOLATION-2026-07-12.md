@@ -17,7 +17,7 @@ This is an **information architecture separation**, not a deletion. The pages co
 **Remove all references to legacy pages from:**
 - Active navigation (_shared/top-nav.html)
 - Sitemap discovery (sitemap.html)
-- XML sitemaps (build_catalog.py)
+- XML sitemaps (artworks/build_catalog.py)
 - Generated page templates
 - Public-facing discovery mechanisms
 
@@ -83,7 +83,7 @@ The legacy pages are now in "archival status" — preserved for historical docum
 - `sitemap.html` — removed legacy page links from the public sitemap
 
 **Build scripts:**
-- `artworks/build_catalog.py` — removed about.html and lost.html entries from XML sitemap generation
+- `artworks/artworks/build_catalog.py` — removed about.html and lost.html entries from XML sitemap generation
 
 **Stamped pages (37 total):**
 - All pages that receive stamped navigation via stamp-nav.sh were automatically updated when the template was cleaned
@@ -109,8 +109,8 @@ These remain:
 4. sitemap.html — mobile drawer link  
 5. sitemap.html — Stories & Context section (about.html)
 6. sitemap.html — Stories & Context section (lost.html)
-7. artworks/build_catalog.py — XML sitemap entry (about.html)
-8. artworks/build_catalog.py — XML sitemap entry (lost.html)
+7. artworks/artworks/build_catalog.py — XML sitemap entry (about.html)
+8. artworks/artworks/build_catalog.py — XML sitemap entry (lost.html)
 
 **Not removed (intentionally preserved):**
 - Legacy inter-page links within about.html, lost.html, series.html (they may link to each other)
@@ -125,7 +125,7 @@ These remain:
 ✓ Removed from desktop navigation (Archive, Series only; no About, Lost Works)
 ✓ Removed from mobile navigation drawer
 ✓ Removed from sitemap.html discovery
-✓ Removed from XML sitemap generation (build_catalog.py)
+✓ Removed from XML sitemap generation (artworks/build_catalog.py)
 ✓ No links from Museum v2 pages (index.html, current.html, etc.)
 ✓ No links from other active pages (archive.html, artwork.html, etc.)
 ✓ No JavaScript references in active scripts
@@ -138,8 +138,8 @@ This decision is **fully reversible**:
 
 1. **Short-term reversal (one git commit):**
    - Restore about.html and lost.html links to _shared/top-nav.html
-   - Restore sitemap entries to sitemap.html and build_catalog.py
-   - Run stamp-nav.sh and build_catalog.py
+   - Restore sitemap entries to sitemap.html and artworks/build_catalog.py
+   - Run stamp-nav.sh and artworks/build_catalog.py
    - Commit: "Restore legacy page navigation"
 
 2. **Medium-term reversal (via git history):**

@@ -146,7 +146,7 @@ These items were identified during Phase 2A but are explicitly deferred. No solu
 
 6. **Dual artwork renderer divergence.** `artwork.html` (40 script tags) and `artworks/pages/artNNNN.html` (6 script tags) render the same content via independent templates that have drifted materially. Neither was touched in Phase 2A.
 
-7. **1,084 generated artwork pages not bundled.** They're lean (6 script tags: search.js, nav-active.js, and 4 others) and architecturally separate — ROI is low. `gen-artwork-pages.py` was not modified.
+7. **1,084 generated artwork pages not bundled.** They're lean (6 script tags: search.js, nav-active.js, and 4 others) and architecturally separate — ROI is low. `tools/generators/gen-artwork-pages.py` was not modified.
 
 8. **ui.js P/N keyboard shortcut has no delivery path on generated pages.** The handler lives in ui.js (now in core.bundle.js, loaded on the 38 root pages). The prev/next links it targets only exist on the generated artwork pages, which never load core.bundle.js.
 

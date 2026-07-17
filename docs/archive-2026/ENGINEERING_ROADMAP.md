@@ -259,7 +259,7 @@ images are cached.
 **Maintainability impact:** Neutral. One fewer field in `catalog-lite.json` means one fewer
 place to update if `description` changes — but `description` is rarely edited.
 **Implementation complexity:** Low investigation (grep `search.js` for `description`); low
-implementation if confirmed unused (remove from `LITE_FIELDS` in `build_catalog.py`, regen,
+implementation if confirmed unused (remove from `LITE_FIELDS` in `artworks/build_catalog.py`, regen,
 verify search still works).
 **Implementation risk:** Low IF the investigation confirms `description` is not indexed.
 The risk is if some search path (keyword matching, full-text fallback) uses it silently —
@@ -307,19 +307,19 @@ Two independent systems render artwork detail content:
 - `artwork.html` — client-side dynamic renderer, loads by `?id=artNNNN`, fetches
   `catalog-lite.json`, renders in the browser. The "permanent" URL for sharing a work.
 - `artworks/pages/art0001.html` through `art1084.html` — 1,084 static pages, pre-generated
-  by `gen-artwork-pages.py` from `catalog.json`. Each is a complete standalone page.
+  by `tools/generators/gen-artwork-pages.py` from `catalog.json`. Each is a complete standalone page.
   These are the pages linked to from the archive grid and search results.
 
 These two systems can and do diverge. When the artwork page template was updated (FOUC fix,
 related-works section, metadata display), changes had to be made in BOTH `artwork.html`'s
-JS rendering logic AND `gen-artwork-pages.py`'s template. They can get out of sync silently.
+JS rendering logic AND `tools/generators/gen-artwork-pages.py`'s template. They can get out of sync silently.
 
 This is not an engineering decision to make unilaterally — it requires the site owner's input.
 But the decision needs to be made. Options:
 
   **Option A: Make generated pages canonical.** `artwork.html` becomes a thin redirect to the
   appropriate `artworks/pages/artNNNN.html`. Generated pages are the only renderer. Advantage:
-  one source of truth; static pages are SEO-optimal; `gen-artwork-pages.py` is the single place
+  one source of truth; static pages are SEO-optimal; `tools/generators/gen-artwork-pages.py` is the single place
   to update templates. Disadvantage: requires a full regen on any template change.
 
   **Option B: Make `artwork.html` canonical.** Generated pages become thin shells that redirect
@@ -328,7 +328,7 @@ But the decision needs to be made. Options:
 
   **Option C: Keep both, document the sync requirement more explicitly.** Accept the maintenance
   cost; add a checklist item that says "if you change artwork.html's render logic, also update
-  gen-artwork-pages.py and regen." This is the current implicit state.
+  tools/generators/gen-artwork-pages.py and regen." This is the current implicit state.
 
 **Engineering value:** High long-term. Currently the divergence risk is managed by discipline;
 if a future maintainer misses the sync requirement, the two systems drift visibly.
@@ -433,13 +433,13 @@ copy update, redesign), the keyboard shortcut silently breaks.
 **Preservation value:** None.
 **Maintainability impact:** Low positive — a `data-direction="prev"` / `data-direction="next"`
 attribute in the generated page template is a more durable selector.
-**Implementation complexity:** Low. One line in `gen-artwork-pages.py`'s template + one line in
+**Implementation complexity:** Low. One line in `tools/generators/gen-artwork-pages.py`'s template + one line in
 `ui.js`.
 **Implementation risk:** Low. Adding a `data-` attribute doesn't change rendering; updating
 the selector to use it is a strict improvement.
 **Expected benefit:** Keyboard navigation between artworks survives future copy changes.
 
-**Recommended priority: LOW — do it the next time `gen-artwork-pages.py` is opened for any reason**
+**Recommended priority: LOW — do it the next time `tools/generators/gen-artwork-pages.py` is opened for any reason**
 
 ---
 
@@ -526,7 +526,7 @@ a lightweight stories system. The architecture decision belongs to Jeff.
 irreplaceable archival content imaginable. No other format substitutes for it.
 **Maintainability impact:** Adds complexity (audio files need hosting, the template needs
 updating, the catalog may need an `audio_file` field).
-**Implementation complexity:** Moderate, mostly in `gen-artwork-pages.py` template + catalog
+**Implementation complexity:** Moderate, mostly in `tools/generators/gen-artwork-pages.py` template + catalog
 field additions + a new ingest step.
 **Implementation risk:** Moderate. Touches the 1,084-page generated template.
 **Expected benefit:** The archive's most irreplaceable content preserved in a retrievable form.
@@ -602,7 +602,7 @@ fresh. This is sophisticated, correct infrastructure. Do not touch it.
 lazy-load, and hero crop workflow are coherent and documented. The 672MB image library is
 healthy. The only issue is `about-portrait.jpg` (see L6), which is cosmetic.
 
-**`build_catalog.py` / `gen-artwork-pages.py` pipeline**: Correct, stable, and well-documented.
+**`artworks/build_catalog.py` / `tools/generators/gen-artwork-pages.py` pipeline**: Correct, stable, and well-documented.
 `_write_stable` prevents spurious git churn. The provenance fields (composite flag, year_display,
 year_precision) are correctly set and reflect creator-confirmed facts. Don't change field
 semantics without reading `CLAUDE.md` § "Provenance fields" first.

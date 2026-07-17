@@ -14,7 +14,7 @@ The JS architecture is in better shape than its size suggests, but it carries on
 **The one finding that should drive everything else:** JFSN Archive renders "an artwork page" through **two completely independent code paths** that have never been reconciled:
 
 - `artwork.html?id=art0001` — a hand-coded, JS-driven template. Fetches the catalog client-side, builds the DOM at runtime, and carries the full animation/interaction stack: `artwork-animations.js`, `hover-preview.js`, `accent-transition.js`, `senior-ux-signposting.js`, `breadcrumb-navigation.js`, `floating-home-button.js`, plus the universal `core.bundle.js` / `nav-early.bundle.js` / `nav-late.bundle.js`. 25 `<script>` tags.
-- `artworks/pages/art0001.html` (× 1,084) — a statically generated, pre-rendered template from `gen-artwork-pages.py`. Hand-rolled nav markup with its own 4th independent mobile-menu implementation. Loads only `search.js` and `nav-active.js` — none of `core.bundle.js`, none of the nav bundles, none of the animation layer. 7 `<script>` tags.
+- `artworks/pages/art0001.html` (× 1,084) — a statically generated, pre-rendered template from `tools/generators/gen-artwork-pages.py`. Hand-rolled nav markup with its own 4th independent mobile-menu implementation. Loads only `search.js` and `nav-active.js` — none of `core.bundle.js`, none of the nav bundles, none of the animation layer. 7 `<script>` tags.
 
 These two templates render different HTML for the same conceptual page, evolve independently, and have already drifted out of sync in a way that **breaks live functionality on all 1,084 generated pages** (§6). Every recommendation in this report is secondary to the decision of what to do about this dual system — it is the one finding that, left alone, will keep producing this class of bug indefinitely.
 
@@ -102,11 +102,11 @@ All four of these share one fetch-once cache (`window.__chromaticBgById`) and se
 
 ### 2.5 Build tooling / generators
 
-`gen-artwork-pages.py`, `build_catalog.py`, `build_dims.py`, ingest/catalog Python scripts under `artworks/`, `stamp-nav.sh`, `deploy-hostgator.sh`, `backup.sh`, `cloud-backup.sh`, `session-end.sh`, `audit-nav.sh` — read for context this session, not modified. `gen-artwork-pages.py`'s template is the source of the generated-page architecture described throughout this report; confirmed via grep to contain **no reference** to `work-image`, `artwork-animations`, `essay-parallax`, or `continuity-transition` — i.e. the generated-page template was never updated to carry the animation layer that `artwork.html` has.
+`tools/generators/gen-artwork-pages.py`, `artworks/build_catalog.py`, `build_dims.py`, ingest/catalog Python scripts under `artworks/`, `stamp-nav.sh`, `deploy-hostgator.sh`, `backup.sh`, `cloud-backup.sh`, `session-end.sh`, `audit-nav.sh` — read for context this session, not modified. `tools/generators/gen-artwork-pages.py`'s template is the source of the generated-page architecture described throughout this report; confirmed via grep to contain **no reference** to `work-image`, `artwork-animations`, `essay-parallax`, or `continuity-transition` — i.e. the generated-page template was never updated to carry the animation layer that `artwork.html` has.
 
 ### 2.6 Generated (non-source)
 
-The 1,084 files under `artworks/pages/*.html` are themselves generated output, not hand-authored — their JS payload (`search.js` + `nav-active.js`, 7 `<script>` tags) is fixed by `gen-artwork-pages.py`'s template, not edited per-file.
+The 1,084 files under `artworks/pages/*.html` are themselves generated output, not hand-authored — their JS payload (`search.js` + `nav-active.js`, 7 `<script>` tags) is fixed by `tools/generators/gen-artwork-pages.py`'s template, not edited per-file.
 
 ---
 
@@ -201,7 +201,7 @@ The third one is a deliberate, documented override of the first two for a specif
 
 These are the findings with the highest "a future maintainer won't notice until something breaks" cost, in roughly descending severity.
 
-1. **`window.showToast`/`window.toggleFavorite` are undefined on all 1,084 generated artwork pages.** Confirmed by direct comparison: `ui.js` (lines 175, 200, 347) defines both on `window`, but `ui.js` only ships inside `core.bundle.js`, and the generated-page template (`gen-artwork-pages.py` → `artworks/pages/art*.html`) loads only `search.js` and `nav-active.js`. Verified neither function is defined in either of those two files. Live consequence: the Favorite button is a complete no-op on all 1,084 pages (its entire `onclick` handler is `window.toggleFavorite(...)`), and the "Copy ID" control throws a `ReferenceError` in the console after the clipboard write (which itself still succeeds, since it runs first in the promise chain) — so the user sees no toast confirmation and gets silent failure on favoriting. This is the single highest-confidence, highest-impact finding in this audit: a real, currently-shipping break, reachable by any visitor on any of the 1,084 pages, that has likely gone unnoticed because the failure is silent (console-only) rather than visually broken.
+1. **`window.showToast`/`window.toggleFavorite` are undefined on all 1,084 generated artwork pages.** Confirmed by direct comparison: `ui.js` (lines 175, 200, 347) defines both on `window`, but `ui.js` only ships inside `core.bundle.js`, and the generated-page template (`tools/generators/gen-artwork-pages.py` → `artworks/pages/art*.html`) loads only `search.js` and `nav-active.js`. Verified neither function is defined in either of those two files. Live consequence: the Favorite button is a complete no-op on all 1,084 pages (its entire `onclick` handler is `window.toggleFavorite(...)`), and the "Copy ID" control throws a `ReferenceError` in the console after the clipboard write (which itself still succeeds, since it runs first in the promise chain) — so the user sees no toast confirmation and gets silent failure on favoriting. This is the single highest-confidence, highest-impact finding in this audit: a real, currently-shipping break, reachable by any visitor on any of the 1,084 pages, that has likely gone unnoticed because the failure is silent (console-only) rather than visually broken.
 
 2. **`artwork-animations.js`'s `setupImageParallax()` violates CLAUDE.md's hard rail on `artwork.html`.** Lines ~119-134 apply `translateY` directly to `#work-image` on every scroll event (up to 20px). The hard rail — "never pan/tilt/parallax the artwork node itself" — is treated as non-negotiable everywhere else in the codebase (every other parallax module explicitly carves out the artwork/hero-image plane and documents doing so). This module is the one exception, and it's live on the one template (`artwork.html?id=...`) that still has the richer animation layer. Whether this is a pre-existing violation predating the hard rail's adoption, or an oversight, isn't determinable from the code alone — but it is currently live and currently in conflict with a documented, deliberate design constraint.
 
@@ -287,7 +287,7 @@ Why: confirmed live functional break (favoriting silently does nothing; copy-ID 
 Engineering value: high — closes a real correctness gap.
 Preservation value: high — favoriting/saving works is a real feature for someone building a personal relationship with this archive; it should work.
 Complexity: low — either (a) add minimal standalone implementations of both functions to the generated-page template (consistent with its lightweight philosophy), or (b) load `toast.js` + the relevant `ui.js` exports there. Decision depends on R-Dual-System below.
-Risk: low — additive, isolated, testable on a single regenerated page before a full `gen-artwork-pages.py` re-run.
+Risk: low — additive, isolated, testable on a single regenerated page before a full `tools/generators/gen-artwork-pages.py` re-run.
 Benefit: immediate, verifiable, user-visible fix.
 
 ### High

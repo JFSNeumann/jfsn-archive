@@ -14,7 +14,8 @@ import sys
 import tempfile
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+_THIS_FILE = Path(__file__).resolve()
+sys.path.insert(0, str(_THIS_FILE.parent))
 import intake_status as st  # noqa: E402
 
 _failures = []

@@ -26,8 +26,8 @@
 - The FTP credential **authenticates successfully** (a live login connected and listed the webroot). It is **live and valid**, not merely "reported."
 - The leaked password **equals** the active password (cryptographic fingerprint match).
 - The active password is a **short keyboard-pattern string** (weak independent of the leak).
-- The password is **publicly retrievable** from: the handoff PDF on jfsn.com; the stale Netlify mirror (in `make_handoff.py`, the PDF, and `jeff.html`); and at least one GitHub history commit.
-- **Clean / contained:** `jfsn.com/make_handoff.py` returns 403; `jfsn.com/jeff.html` is clean; GitHub current-branch `make_handoff.py` is clean (reads from `.ftp.env`); `.ftp.env` was never committed, is gitignored, and returns 403/404 live.
+- The password is **publicly retrievable** from: the handoff PDF on jfsn.com; the stale Netlify mirror (in `tools/utils/make_handoff.py`, the PDF, and `jeff.html`); and at least one GitHub history commit.
+- **Clean / contained:** `jfsn.com/tools/utils/make_handoff.py` returns 403; `jfsn.com/jeff.html` is clean; GitHub current-branch `tools/utils/make_handoff.py` is clean (reads from `.ftp.env`); `.ftp.env` was never committed, is gitignored, and returns 403/404 live.
 - **Bitwarden master password is NOT in the public PDF**; **Anthropic API key is NOT publicly exposed** (present only in local `.ftp.env`).
 - FTP server is **Pure-FTPd**; its only recognized SITE commands are `ALIAS, CHMOD, IDLE, UTIME` — **no password-change path** without cPanel/root.
 - Registrant of record: **Jeff Neumann, Ohio, US**. Registrar: **Gandi SAS**. Domain status: **ok (unlocked)**. DNSSEC: **unsigned**. Created **2001-03-05**, expiry **2027-03-05**, last updated **2026-02-10**.

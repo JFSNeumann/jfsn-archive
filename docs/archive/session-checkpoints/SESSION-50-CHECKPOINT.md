@@ -83,7 +83,7 @@
 - `_shared/ui.js` (200+ lines added) — All interactions, tracking
 - `_shared/footer.html` — Added monitor.js script tag
 - `index.html` — Added data-counter="1084" to homepage number
-- `gen-artwork-pages.py` — Favorite button, related works, theme tags
+- `tools/generators/gen-artwork-pages.py` — Favorite button, related works, theme tags
 - All 1,084 artwork pages regenerated with new features
 
 ### Commits:

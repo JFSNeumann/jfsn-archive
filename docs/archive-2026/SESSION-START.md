@@ -36,7 +36,7 @@ All three phases (Phase 1, Phase 2A, Phase 2B) are committed, tagged, deployed, 
 
 ### Pages
 - **38** hand-maintained root HTML pages (the engineering surface for this session)
-- **1,084** machine-generated artwork detail pages (`artworks/pages/`) — not touched in CSS phases; `gen-artwork-pages.py`'s template does not currently load `ui.css`
+- **1,084** machine-generated artwork detail pages (`artworks/pages/`) — not touched in CSS phases; `tools/generators/gen-artwork-pages.py`'s template does not currently load `ui.css`
 
 ### Shared CSS layer (this session's target)
 | File | Size | Role |
@@ -64,8 +64,8 @@ All three phases (Phase 1, Phase 2A, Phase 2B) are committed, tagged, deployed, 
 |---|---|---|
 | Compile CSS | `npm run build:css` | `site.min.css` |
 | Build JS bundles | `npm run build:js` | `_shared/*.bundle.js` |
-| Rebuild catalog | `python3 artworks/build_catalog.py` | `catalog.json`, `catalog-lite.json`, `api/`, `sitemap.xml` |
-| Rebuild artwork pages | `python3 gen-artwork-pages.py` | `artworks/pages/art*.html` |
+| Rebuild catalog | `python3 artworks/artworks/build_catalog.py` | `catalog.json`, `catalog-lite.json`, `api/`, `sitemap.xml` |
+| Rebuild artwork pages | `python3 tools/generators/gen-artwork-pages.py` | `artworks/pages/art*.html` |
 | Propagate nav | `bash stamp-nav.sh` | Stamps 38 root pages |
 | End session | `bash session-end.sh` | `git commit` + push + rsync backup (does NOT deploy) |
 | Deploy | `bash deploy-hostgator.sh` | FTP mirror to HostGator |
@@ -173,7 +173,7 @@ This was true when written (June 25) but is stale. Phase 2A was deployed on 2026
 
 **Stack:** Vanilla HTML/CSS/JS. No framework. Static files served from HostGator/cPanel shared hosting.
 
-**Pages:** 38 hand-maintained root HTML pages + 1,084 machine-generated artwork detail pages (`artworks/pages/artNNNN.html`, built by `gen-artwork-pages.py`).
+**Pages:** 38 hand-maintained root HTML pages + 1,084 machine-generated artwork detail pages (`artworks/pages/artNNNN.html`, built by `tools/generators/gen-artwork-pages.py`).
 
 **JS loading (post-Phase-2A):**  
 - `anime.min.js` — standalone (vendor, unchanged)  
@@ -195,7 +195,7 @@ Net reduction: **15 fewer HTTP requests per stamped page** vs. pre-Phase-2A.
 - Stitch/Tailwind light — most pages (bone-white #fcf9f3, deep-ink #0B0B0B, orange-ink #B84700)  
 - Material Design light — decade pages 1970s–2020s (`archive-card-img`, `on-tertiary-container`)
 
-**Service worker:** `sw.js` — cache-first AVIF, network-first HTML/CSS/JS/JSON. Must bump `CACHE_V` after any deploy-affecting change; `build_catalog.py` auto-bumps when catalog changes.
+**Service worker:** `sw.js` — cache-first AVIF, network-first HTML/CSS/JS/JSON. Must bump `CACHE_V` after any deploy-affecting change; `artworks/build_catalog.py` auto-bumps when catalog changes.
 
 ---
 
@@ -205,8 +205,8 @@ Net reduction: **15 fewer HTTP requests per stamped page** vs. pre-Phase-2A.
 |---|---|---|
 | Compile CSS | `npm run build:css` | After adding any new Tailwind utility class |
 | Bundle JS | `npm run build:js` | After editing any of the 18 source files in `_shared/` |
-| Rebuild catalog | `python3 artworks/build_catalog.py` | After catalog/sidecar changes |
-| Regenerate artwork pages | `python3 gen-artwork-pages.py` | After template changes (use `--limit 5` to test first) |
+| Rebuild catalog | `python3 artworks/artworks/build_catalog.py` | After catalog/sidecar changes |
+| Regenerate artwork pages | `python3 tools/generators/gen-artwork-pages.py` | After template changes (use `--limit 5` to test first) |
 | Bump CACHE_V | Edit `sw.js` | After CSS rebuild or any JS/CSS change |
 
 **⚠️ Bundle freshness gap:** The pre-commit hook does NOT check whether JS bundle files are in sync with their source files. Editing any of the 18 bundled `_shared/*.js` files without running `npm run build:js` will commit a stale bundle with no warning. (Deferred since Phase 2A — not yet fixed.)
@@ -231,7 +231,7 @@ Ordered by priority per `CODE_QUALITY_AUDIT.md` + `SESSION-END-PHASE2A.md`.
 
 ### Large / structural (still open)
 
-1. **FOUC fix not on 1,084 generated artwork pages.** Phase 1 fixed the 38 root pages only. The generated `artworks/pages/artNNNN.html` still flash light-then-dark on load for dark-mode users. Recommended Phase 2 objective per `CODE_QUALITY_AUDIT.md`. Fix requires editing `gen-artwork-pages.py`'s template then running a full regen.
+1. **FOUC fix not on 1,084 generated artwork pages.** Phase 1 fixed the 38 root pages only. The generated `artworks/pages/artNNNN.html` still flash light-then-dark on load for dark-mode users. Recommended Phase 2 objective per `CODE_QUALITY_AUDIT.md`. Fix requires editing `tools/generators/gen-artwork-pages.py`'s template then running a full regen.
 
 2. **`_shared/ui.css` is 158KB, unminified, render-blocking.** Larger than the entire Tailwind build (22KB). Render-blocking on every page. Phase 2B per `SESSION-END-PHASE2A.md`: split critical/non-critical, minify. Highest remaining load-time item.
 
@@ -295,7 +295,7 @@ None required before proceeding. The state is fully understood. What would you l
 
 **Recommended candidates (in priority order from the audit):**
 
-1. **FOUC fix to 1,084 generated artwork pages** — lowest-risk, high-symmetry; closes the gap Phase 1 explicitly left open. One file to edit (`gen-artwork-pages.py` template), one command to run, visual verification.
+1. **FOUC fix to 1,084 generated artwork pages** — lowest-risk, high-symmetry; closes the gap Phase 1 explicitly left open. One file to edit (`tools/generators/gen-artwork-pages.py` template), one command to run, visual verification.
 2. **`ui.css` CSS split / minification (Phase 2B)** — highest remaining perf win. More complex; requires page-by-page visual verification.
 3. **Design / motion work** — if Jeff has a specific page or feature in mind.
 4. **New work ingest** — if there are photos in the inbox.

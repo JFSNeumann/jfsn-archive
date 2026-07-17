@@ -11,7 +11,7 @@
 
 Phase 2 extends the dark-mode flash-of-wrong-theme fix (Phase 1) to the 1,084 machine-generated artwork detail pages in `artworks/pages/`. This closes the explicit gap Phase 1 left open: every page on jfsn.com now has the head-blocking THEME_INIT script that prevents dark-mode users from seeing a light flash on page load.
 
-No behavior was changed. No CSS, JS, or bundles were modified. The only change is one line added to `gen-artwork-pages.py`'s HTML template, propagated via a full regen of all 1,084 pages.
+No behavior was changed. No CSS, JS, or bundles were modified. The only change is one line added to `tools/generators/gen-artwork-pages.py`'s HTML template, propagated via a full regen of all 1,084 pages.
 
 ---
 
@@ -19,7 +19,7 @@ No behavior was changed. No CSS, JS, or bundles were modified. The only change i
 
 - THEME_INIT script now present on **all 1,084 generated artwork pages** (previously: only on the 38 root pages from Phase 1)
 - Every page on jfsn.com now prevents dark-mode FOUC — complete sitewide parity
-- `gen-artwork-pages.py` template updated so all future regeners inherit the fix automatically
+- `tools/generators/gen-artwork-pages.py` template updated so all future regeners inherit the fix automatically
 - `sw.js` CACHE_V bumped to `jfsn-1782782983` per project engineering standard
 
 ---
@@ -28,7 +28,7 @@ No behavior was changed. No CSS, JS, or bundles were modified. The only change i
 
 | File | Change |
 |---|---|
-| `gen-artwork-pages.py` | +1 line: THEME_INIT script in HTML template, immediately after `<meta charset="utf-8"/>` |
+| `tools/generators/gen-artwork-pages.py` | +1 line: THEME_INIT script in HTML template, immediately after `<meta charset="utf-8"/>` |
 | `artworks/pages/art0001.html` … `art1084.html` | +1 line each — full regen from updated template |
 | `sw.js` | CACHE_V: `jfsn-1782767971` → `jfsn-1782782983` |
 | `PHASE2-FOUC-PREDEPLOY-REVIEW.md` | New — independent review document (GREEN) |
@@ -37,7 +37,7 @@ No behavior was changed. No CSS, JS, or bundles were modified. The only change i
 
 ## The Change
 
-**Inserted into `gen-artwork-pages.py` template (one line, after `<meta charset="utf-8"/>`):**
+**Inserted into `tools/generators/gen-artwork-pages.py` template (one line, after `<meta charset="utf-8"/>`):**
 
 ```html
 <script>try{var t=localStorage.getItem('jfsn-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script><!-- THEME_INIT: head-blocking, prevents dark-mode FOUC -->

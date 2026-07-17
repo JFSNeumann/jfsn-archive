@@ -8,7 +8,7 @@
 
 ## 1. What happened
 
-A maintainer/preservation review (2026-06-11) found that the live FTP password for jfsn.com was publicly readable — hardcoded in `make_handoff.py` and embedded in a handoff PDF, both published on the primary site, the Netlify mirror, and the public GitHub repo. The same review found the archive's most-citable false history (an unverified six-show "Exhibition Record" on about.html — see master-notes §26), and that several irreplaceable documents existed in exactly one copy.
+A maintainer/preservation review (2026-06-11) found that the live FTP password for jfsn.com was publicly readable — hardcoded in `tools/utils/make_handoff.py` and embedded in a handoff PDF, both published on the primary site, the Netlify mirror, and the public GitHub repo. The same review found the archive's most-citable false history (an unverified six-show "Exhibition Record" on about.html — see master-notes §26), and that several irreplaceable documents existed in exactly one copy.
 
 This session prepared and verified remediation under one rule: **preservation before cleanup**. Nothing was deleted anywhere. Git history was not rewritten (deliberately — it is provenance evidence). The single live change was additive: an `.htaccess` rule that stopped jfsn.com from serving Python source.
 
@@ -29,8 +29,8 @@ This session prepared and verified remediation under one rule: **preservation be
 
 ## 4. What was fixed (and how to undo each)
 
-- **Live:** `.htaccess` — `py|toml|lock` added to the deny block; jfsn.com/make_handoff.py went 200→403 with site/API verified healthy. Rollback: `/tmp/htaccess.rollback`, or git history.
-- **Committed locally (push pending approval):** `make_handoff.py` reads credentials from `.ftp.env` (the hardcoded password is gone from source — never `git checkout` the old version); the credential PDF untracked + gitignored; `deploy.sh` excludes by class (`*.py`, `*.pdf`, `*.md`, `docs/*`, configs) — proven against the real server by dry-run; `_redirects` gained 42 forced-404 rules for Netlify (docs, scripts, configs, the PDF, itself); `cloud-backup.sh` now includes old-site.
+- **Live:** `.htaccess` — `py|toml|lock` added to the deny block; jfsn.com/tools/utils/make_handoff.py went 200→403 with site/API verified healthy. Rollback: `/tmp/htaccess.rollback`, or git history.
+- **Committed locally (push pending approval):** `tools/utils/make_handoff.py` reads credentials from `.ftp.env` (the hardcoded password is gone from source — never `git checkout` the old version); the credential PDF untracked + gitignored; `deploy.sh` excludes by class (`*.py`, `*.pdf`, `*.md`, `docs/*`, configs) — proven against the real server by dry-run; `_redirects` gained 42 forced-404 rules for Netlify (docs, scripts, configs, the PDF, itself); `cloud-backup.sh` now includes old-site.
 - **Verification record:** audit-nav 11/11; Companion answered live; handoff PDF regenerates from `.ftp.env`; API/catalog/images 200 after the live change; Netlify rules cover **47/47** sensitive tracked files and block **0** public pages.
 
 ## 5. What remains unresolved
@@ -47,10 +47,10 @@ This session prepared and verified remediation under one rule: **preservation be
 - [ ] `_redirects` present in the commit, with the forced-404 (`404!`) block rules intact — **never push without it**
 - [ ] Coverage check passes (47/47): sensitive tracked files all covered, zero .html pages blocked (script in session log; re-run: compare `git ls-files` classes vs `_redirects` rules)
 - [ ] `deploy.sh` dry-run shows no `*.py`, `*.pdf`, `*.md`, or `docs/` in the transfer plan
-- [ ] `make_handoff.py` in the commit contains **no literal password** (grep the file for the old and current password strings — both must return zero)
+- [ ] `tools/utils/make_handoff.py` in the commit contains **no literal password** (grep the file for the old and current password strings — both must return zero)
 - [ ] PDF absent from `git ls-files`
-- [ ] After Netlify deploys: spot-check `https://jfsn-archive.netlify.app/make_handoff.py`, `/JFSN-Archive-Handoff-Allison.pdf`, `/docs/oral-history/master-notes.md`, `/CURRENT_STATE.md` → all must be 404; `/`, `/archive.html`, `/companion.html`, Companion function → working
-- [ ] After any HostGator deploy: `/make_handoff.py` 403, `/catalog.json` 200, `/api/v1/works.json` 200
+- [ ] After Netlify deploys: spot-check `https://jfsn-archive.netlify.app/tools/utils/make_handoff.py`, `/JFSN-Archive-Handoff-Allison.pdf`, `/docs/oral-history/master-notes.md`, `/CURRENT_STATE.md` → all must be 404; `/`, `/archive.html`, `/companion.html`, Companion function → working
+- [ ] After any HostGator deploy: `/tools/utils/make_handoff.py` 403, `/catalog.json` 200, `/api/v1/works.json` 200
 
 ## 7. What should happen next, in order
 

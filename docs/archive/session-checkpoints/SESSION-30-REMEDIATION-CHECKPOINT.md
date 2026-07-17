@@ -10,9 +10,9 @@
 
 All evidence gathered fresh on 2026-06-11; nothing assumed from earlier sessions.
 
-### 1.1 make_handoff.py exposure
+### 1.1 tools/utils/make_handoff.py exposure
 - **Description:** The handoff-PDF generator hardcoded the live FTP password at line 144 and was being served publicly.
-- **Evidence:** `curl https://jfsn.com/make_handoff.py` → was 200 with password in body; same file 200 on Netlify; readable unauthenticated via raw.githubusercontent.com (public repo).
+- **Evidence:** `curl https://jfsn.com/tools/utils/make_handoff.py` → was 200 with password in body; same file 200 on Netlify; readable unauthenticated via raw.githubusercontent.com (public repo).
 - **Current status:** jfsn.com now returns **403** (.htaccess hardening, this session). Netlify copy still 200 (stale deploy; blocking rules staged, unpushed). GitHub copy still exposed until the staged fix (password removed from source) is pushed.
 - **Risk level:** was CRITICAL; now HIGH (two of three avenues still open, credential still valid).
 
@@ -29,7 +29,7 @@ All evidence gathered fresh on 2026-06-11; nothing assumed from earlier sessions
 - **Risk level:** CRITICAL until rotation; HIGH after.
 
 ### 1.4 Netlify exposure
-- **Description:** `netlify.toml` uses `publish = "."` with no exclusions — the mirror serves the entire repo: internal docs (CURRENT_STATE.md, IMPROVEMENTS.md, STITCH.md — all verified 200), all tooling (deploy.sh, end-session.sh, artworks/*.py — 200), make_handoff.py, and the PDF.
+- **Description:** `netlify.toml` uses `publish = "."` with no exclusions — the mirror serves the entire repo: internal docs (CURRENT_STATE.md, IMPROVEMENTS.md, STITCH.md — all verified 200), all tooling (deploy.sh, end-session.sh, artworks/*.py — 200), tools/utils/make_handoff.py, and the PDF.
 - **Evidence:** curl probes 2026-06-11. Additionally: **Netlify deploys have been stale since ~June 7** (start-here.html, stories.html, favorites.html → 404 there), so docs/oral-history content committed since then is NOT yet exposed — a time bomb, not a current leak: the next successful deploy publishes everything unless the staged `_redirects` rules ship with it.
 - **Current status:** ACTIVE (stale snapshot still serves the password file). 41 forced-404 rules staged locally, unpushed.
 - **Risk level:** HIGH.
@@ -57,9 +57,9 @@ All evidence gathered fresh on 2026-06-11; nothing assumed from earlier sessions
 
 | File | Purpose | Exact risk addressed | Rollback path |
 |---|---|---|---|
-| `.htaccess` | Added `py\|toml\|lock` to the existing FilesMatch deny block. **Uploaded to HostGator** (the one live change — additive, blocks access, deletes nothing) | Password served as plain text from jfsn.com/make_handoff.py | `/tmp/htaccess.rollback` (pre-change copy) — re-upload via lftp, ~1 min; also in git history |
+| `.htaccess` | Added `py\|toml\|lock` to the existing FilesMatch deny block. **Uploaded to HostGator** (the one live change — additive, blocks access, deletes nothing) | Password served as plain text from jfsn.com/tools/utils/make_handoff.py | `/tmp/htaccess.rollback` (pre-change copy) — re-upload via lftp, ~1 min; also in git history |
 | `deploy.sh` | Excludes added: `*.py`, `*.pdf`, `*.md`, `docs/*`, package.json, tailwind.config.js, deno.lock, netlify.toml | Future deploys re-uploading credentials, handoff PDFs, oral-history docs, internal notes | `/tmp/deploy.sh.rollback` or `git checkout deploy.sh` |
-| `make_handoff.py` | Reads FTP_USER/FTP_PASS from `.ftp.env` at runtime; hardcoded password deleted from source | A live secret sitting in a public GitHub repo | `git checkout make_handoff.py` (restores old version — do NOT, it contains the password) |
+| `tools/utils/make_handoff.py` | Reads FTP_USER/FTP_PASS from `.ftp.env` at runtime; hardcoded password deleted from source | A live secret sitting in a public GitHub repo | `git checkout tools/utils/make_handoff.py` (restores old version — do NOT, it contains the password) |
 | `_redirects` | 41 forced-404 rules (`/docs/*`, all root .md, all .py/.sh tooling, the PDF, config files) ahead of the existing catch-all | Netlify serving internal documentation and tooling; the stale-deploy time bomb | `/tmp/redirects.rollback` or `git checkout _redirects` |
 | `.gitignore` | `JFSN-Archive-Handoff-Allison.pdf` added | Credential artifact ever being committed again | remove the line |
 | git index | `git rm --cached JFSN-Archive-Handoff-Allison.pdf` (staged) — local file kept and regenerated | PDF in the repo tip → on GitHub and in every Netlify deploy | `git restore --staged JFSN-Archive-Handoff-Allison.pdf` |
@@ -75,9 +75,9 @@ Git history was **not** rewritten and will not be (deliberate: history is archiv
 |---|---|---|
 | `audit-nav.sh` | **PASSED** | 11/11 checks clean after all edits |
 | Companion | **PASSED** | Live POST to `/.netlify/functions/companion` returned real matches (art0577, art0053…); `_redirects` rules do not touch function paths |
-| Deployment dry run | **PASSED** | `lftp mirror -R --dry-run` with the new excludes against the real server: modified files (deploy.sh, _redirects, .gitignore, cloud-backup.sh) listed for upload; **zero** occurrences of make_handoff.py, the PDF, docs/, or any .md in the transfer plan |
-| Handoff generation | **PASSED** | `make_handoff.py` runs, reads creds from .ftp.env, emits valid 3-page PDF (6,224 B); output ignored by git |
-| API access | **PASSED** | After live .htaccess change: jfsn.com 200, archive.html 200, catalog.json 200, api/v1/works.json 200, AVIF thumbnails 200; make_handoff.py/gen-artwork-pages.py now 403 |
+| Deployment dry run | **PASSED** | `lftp mirror -R --dry-run` with the new excludes against the real server: modified files (deploy.sh, _redirects, .gitignore, cloud-backup.sh) listed for upload; **zero** occurrences of tools/utils/make_handoff.py, the PDF, docs/, or any .md in the transfer plan |
+| Handoff generation | **PASSED** | `tools/utils/make_handoff.py` runs, reads creds from .ftp.env, emits valid 3-page PDF (6,224 B); output ignored by git |
+| API access | **PASSED** | After live .htaccess change: jfsn.com 200, archive.html 200, catalog.json 200, api/v1/works.json 200, AVIF thumbnails 200; tools/utils/make_handoff.py/tools/generators/gen-artwork-pages.py now 403 |
 | Netlify compatibility | **PASSED (static analysis) / NOT TESTED (live)** | 41 rules: 0 block any .html page; no blocked path appears in sitemap.xml; syntax follows Netlify `_redirects` format (path-segment splats only — extension wildcards deliberately avoided because Netlify doesn't support them). Live behavior untestable until a deploy is permitted |
 | Old-site preservation | **PASSED (download) / verification pass running** | exit 0, 12,914 files, 1.5GB; conclusive dry-run comparison in progress (addendum below) |
 
@@ -86,7 +86,7 @@ Nothing **FAILED**.
 ## 5. Actions Requiring Jeff Approval (will not proceed automatically)
 
 1. **FTP password rotation** — HostGator cPanel → FTP Accounts → change password for jeffery@jfsn.com, then tell Claude (or update `.ftp.env` yourself). *Gates everything below.*
-2. **Deleting server files:** `/JFSN-Archive-Handoff-Allison.pdf`, `/make_handoff.py`, `/gen-artwork-pages.py`, `/curate-session.json` from the HostGator webroot. All four now exist in ≥2 other locations (will be ≥4 after backups run); the .py files are already 403-blocked.
+2. **Deleting server files:** `/JFSN-Archive-Handoff-Allison.pdf`, `/tools/utils/make_handoff.py`, `/tools/generators/gen-artwork-pages.py`, `/curate-session.json` from the HostGator webroot. All four now exist in ≥2 other locations (will be ≥4 after backups run); the .py files are already 403-blocked.
 3. **Committing + pushing the staged changes** — push auto-triggers a Netlify deploy. The deploy *carries the 404 protections* and removes the stale exposed files there, but it is still a deploy and you said not yet.
 4. **Running the backups** (`backup.sh` → 4TB, `cloud-backup.sh` → B2) — both use delete-style sync (mirror semantics); held for your nod even though no local deletions occurred this session.
 5. **Oral-history visibility decision** — does `JFSN-Oral-History.pdf` (and master-notes.md on GitHub) stay public? Your testimony, your call.
@@ -97,17 +97,17 @@ Nothing **FAILED**.
 
 **SAFE NOW (after you review this checkpoint):**
 - Run `backup.sh` + `cloud-backup.sh` → old-site and this checkpoint reach the 4TB drive and B2 (3–4 copies of everything).
-- Commit + push staged hardening → GitHub stops serving the password in current source; Netlify redeploys with 404 rules, un-stales, and stops serving make_handoff.py/PDF.
+- Commit + push staged hardening → GitHub stops serving the password in current source; Netlify redeploys with 404 rules, un-stales, and stops serving tools/utils/make_handoff.py/PDF.
 
 **AFTER PASSWORD ROTATION:**
-- Update `.ftp.env`; rerun `make_handoff.py`; print fresh PDF for Allison's folder.
+- Update `.ftp.env`; rerun `tools/utils/make_handoff.py`; print fresh PDF for Allison's folder.
 - Delete the four server files (§5.2); verify each with curl.
 - Re-verify the full exposure matrix end-to-end (expect: every avenue dead).
 
 **OPTIONAL FUTURE HARDENING:**
 - HSTS — uncomment `.htaccess` line ~93 (SSL verified working).
 - Netlify allowlisted publish dir instead of blocklist.
-- `audit-nav.sh` check asserting make_handoff.py/PDF return non-200 on both hosts (regression tripwire).
+- `audit-nav.sh` check asserting tools/utils/make_handoff.py/PDF return non-200 on both hosts (regression tripwire).
 - Git history scrub — **recommended against**, recorded as a decision: history = provenance evidence; rotation kills the credential.
 
 ## 7. Preservation Handoff (if this session ends unexpectedly)
@@ -120,7 +120,7 @@ Nothing **FAILED**.
 
 **Must never be forgotten:**
 - `old-site/` is gitignored — it exists on the Mac and the server only until `backup.sh`/`cloud-backup.sh` run. **Do not clean it up; it is Jeff's biography in website form.**
-- The staged git changes include the password *removal* — `git checkout make_handoff.py` would put the password back.
+- The staged git changes include the password *removal* — `git checkout tools/utils/make_handoff.py` would put the password back.
 - The next `git push`, whenever it happens, MUST include the new `_redirects` — pushing without it publishes docs/oral-history on Netlify.
 - The exposed password remains live until Jeff rotates it. Everything else is secondary.
 

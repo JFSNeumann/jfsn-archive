@@ -10,13 +10,13 @@
 
 **Recommendation: 🟢 GREEN — APPROVE FOR DEPLOYMENT**
 
-The change is a single-line insertion into `gen-artwork-pages.py`'s f-string template, a full regen of the 1,084 output pages, and a `CACHE_V` bump in `sw.js`. Every claim below was independently verified. No regression was found.
+The change is a single-line insertion into `tools/generators/gen-artwork-pages.py`'s f-string template, a full regen of the 1,084 output pages, and a `CACHE_V` bump in `sw.js`. Every claim below was independently verified. No regression was found.
 
 ---
 
 ## Files Reviewed
 
-**Modified (source of truth):** `gen-artwork-pages.py`, `sw.js`  
+**Modified (source of truth):** `tools/generators/gen-artwork-pages.py`, `sw.js`  
 **Modified (generated, mechanical):** `artworks/pages/art0001.html` through `artworks/pages/art1084.html` (1,084 files)  
 **Confirmed untouched:** all 38 root HTML pages, all `_shared/` files, `catalog.json`, `site.min.css`, bundles, `stamp-nav.sh`, `deploy-hostgator.sh`, `session-end.sh`, `.htaccess`
 
@@ -24,7 +24,7 @@ The change is a single-line insertion into `gen-artwork-pages.py`'s f-string tem
 
 ## Diff Analysis
 
-### `gen-artwork-pages.py` — template change
+### `tools/generators/gen-artwork-pages.py` — template change
 
 ```diff
  <meta charset="utf-8"/>
@@ -32,7 +32,7 @@ The change is a single-line insertion into `gen-artwork-pages.py`'s f-string tem
  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 ```
 
-One line added. The `{{` / `}}` double-braces are correct Python f-string syntax — they render as single `{` / `}` in output. Verified via `python3 gen-artwork-pages.py --limit 5` and direct inspection of the rendered output.
+One line added. The `{{` / `}}` double-braces are correct Python f-string syntax — they render as single `{` / `}` in output. Verified via `python3 tools/generators/gen-artwork-pages.py --limit 5` and direct inspection of the rendered output.
 
 ### `sw.js` — CACHE_V bump
 
@@ -45,7 +45,7 @@ One line changed. New value (`1782782983`) is strictly larger than old (`1782767
 
 ### Artwork pages — mechanical
 
-`git diff --stat HEAD` shows 1,086 files changed: 1,084 artwork pages (+1 each) + `gen-artwork-pages.py` (+1) + `sw.js` (+1/-1) = 1,086. Correct.
+`git diff --stat HEAD` shows 1,086 files changed: 1,084 artwork pages (+1 each) + `tools/generators/gen-artwork-pages.py` (+1) + `sw.js` (+1/-1) = 1,086. Correct.
 
 `git diff --numstat -- 'artworks/pages/*.html'`: every page is exactly `1 0` (+1 insertion, 0 deletions). No page has any other change.
 
@@ -60,12 +60,12 @@ One line changed. New value (`1782782983`) is strictly larger than old (`1782767
 - **`<html class="light">` coexistence is safe.** Pre-analyzed in `PHASE1_REVIEW.md §1`: the only `.light` selector in any stylesheet is `html.dark .light` (targets a nested element, not the html element itself). Adding `dark` to `html.light` produces `html.light.dark`, which already happens on `about.html`, `archive.html`, and 16 other root pages after Phase 1 — this is not a new pattern.
 - **Dark-mode behavior verified in browser.** Set `localStorage.setItem('jfsn-theme', 'dark')`, reloaded `artworks/pages/art0001.html` via local dev server. `document.documentElement.className === "light dark"`. The `dark` class is present before any CSS is applied, which is the definition of the fix working.
 - **No console errors.** `preview_console_logs` with `level: 'error'` returned `No console logs` after loading `artworks/pages/art0001.html`.
-- **No unexpected files changed.** `git diff --name-only HEAD | grep -v 'artworks/pages/' | grep -v 'gen-artwork-pages.py' | grep -v 'sw.js'` returns empty.
+- **No unexpected files changed.** `git diff --name-only HEAD | grep -v 'artworks/pages/' | grep -v 'tools/generators/gen-artwork-pages.py' | grep -v 'sw.js'` returns empty.
 - **Pre-commit hook passes.** `bash hooks/pre-commit` exits 0: navigation audit passed, CSS unchanged (no rebuild needed), CACHE_V current.
 - **All 1,084 pages have THEME_INIT.** `grep -rL 'THEME_INIT' artworks/pages/*.html | wc -l` → `0`. No pages missing it.
 - **No page has a duplicate.** `grep -rc 'THEME_INIT' artworks/pages/*.html | grep -v ':1$' | wc -l` → `0`. Every page has exactly 1.
 - **No JS, CSS, or bundle files changed.** This is an HTML-only change. No bundle rebuild needed, no CSS rebuild needed.
-- **Rollback is trivial.** Revert the one-line template change in `gen-artwork-pages.py`, re-run `python3 gen-artwork-pages.py`, revert the `sw.js` CACHE_V bump. Three actions, no risk of data loss.
+- **Rollback is trivial.** Revert the one-line template change in `tools/generators/gen-artwork-pages.py`, re-run `python3 tools/generators/gen-artwork-pages.py`, revert the `sw.js` CACHE_V bump. Three actions, no risk of data loss.
 
 ### CACHE_V Analysis
 

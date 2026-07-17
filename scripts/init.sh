@@ -157,7 +157,7 @@ echo "  3. Drop artwork images in artworks/inbox/ and run: python3 artworks/inge
 echo "  4. Set up your API key: export ANTHROPIC_API_KEY=sk-ant-..."
 echo "  5. Test cataloging: python3 artworks/catalog.py --limit 5"
 echo "  6. Build: python3 artworks/build_catalog.py"
-echo "  7. Preview: python3 server.py  →  http://localhost:3900"
+echo "  7. Preview: python3 tools/utils/server.py  →  http://localhost:3900"
 echo ""
 echo "See README.md for the full workflow."
 echo ""

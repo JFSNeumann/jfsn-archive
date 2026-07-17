@@ -33,15 +33,15 @@ import subprocess
 import sys
 from pathlib import Path
 
-_SCRIPTS = Path(__file__).resolve().parent
-_ROOT = _SCRIPTS.parent
-sys.path.insert(0, str(_SCRIPTS))
+_THIS_FILE = Path(__file__).resolve()
+_ROOT = _THIS_FILE.parents[2]  # tools/intake/intake_finish.py -> project root
+sys.path.insert(0, str(_THIS_FILE.parent))
 import intake_status  # noqa: E402
 
 # The existing tools this command coordinates (paths, not reimplementations).
 VALIDATE = _ROOT / "artworks" / "validate_catalog.py"
 BUILD_CATALOG = _ROOT / "artworks" / "build_catalog.py"
-GEN_PAGES = _ROOT / "gen-artwork-pages.py"
+GEN_PAGES = _ROOT / "tools" / "generators" / "gen-artwork-pages.py"
 BUILD_CHANGES = _ROOT / "artworks" / "build_changes.py"
 VERIFY = _SCRIPTS / "verify.py"
 

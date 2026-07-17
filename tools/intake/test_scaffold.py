@@ -15,11 +15,13 @@ import sys
 import tempfile
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+_THIS_FILE = Path(__file__).resolve()
+sys.path.insert(0, str(_THIS_FILE.parent))
 import scaffold_sidecar as scaf  # noqa: E402
 
 # Make validate_catalog.py importable (it lives in artworks/ and imports vocab).
-ARTWORKS = Path(__file__).resolve().parent.parent / "artworks"
+_ROOT = _THIS_FILE.parents[2]  # tools/intake/test_scaffold.py -> project root
+ARTWORKS = _ROOT / "artworks"
 sys.path.insert(0, str(ARTWORKS))
 
 _failures = []
