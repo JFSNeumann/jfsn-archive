@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1784292104'; // flooded-wing: hero much darker (90% overlay, 25% image)
+const CACHE_V  = 'jfsn-1784293170'; // flooded-wing: hero much darker (90% overlay, 25% image)
 const PRECACHE = [
   // The 14 live room pages (Museum v2 — the only site that exists today;
   // the old v1 archive, decade pages, and generated theme pages were
@@ -36,10 +36,10 @@ const PRECACHE = [
   '/_shared/artwork-page-min.js',
   '/_shared/ui.css',
   // Data the rooms and catalog pages fetch at runtime.
-  '/current.json',
-  '/guernica.json',
-  '/openings.json',
-  '/catalog-lite.json',
+  '/config/current.json',
+  '/config/guernica.json',
+  '/config/openings.json',
+  '/config/catalog-lite.json',
   '/favicon.svg',
 ];
 

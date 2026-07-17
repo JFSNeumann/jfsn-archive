@@ -326,7 +326,7 @@ addEventListener('DOMContentLoaded', () => {
   const mini = document.getElementById('minimap');
   const mctx = mini.getContext('2d');
 
-  const works = await fetch('current.json', {cache:'no-cache'}).then(r => r.json());
+  const works = await fetch('config/current.json', {cache:'no-cache'}).then(r => r.json());
   const N = works.length;
 
   // ---------- precompute ----------

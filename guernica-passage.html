@@ -303,7 +303,7 @@ addEventListener('DOMContentLoaded', () => {
 (async function(){
   'use strict';
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const works = await fetch('guernica.json', {cache:'no-cache'}).then(r => r.json());
+  const works = await fetch('config/guernica.json', {cache:'no-cache'}).then(r => r.json());
   const TOTAL = works.length;
 
   function mulberry32(a){

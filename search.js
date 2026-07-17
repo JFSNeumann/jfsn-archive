@@ -520,7 +520,7 @@
   // ── Catalog loader ───────────────────────────────────────────────────────
   function loadCatalog() {
     loading = true;
-    var catalogPath = location.origin + '/catalog-lite.json';
+    var catalogPath = location.origin + '/config/catalog-lite.json';
     fetch(catalogPath)
       .then(r => r.ok ? r.json() : null)
       .then(data => {

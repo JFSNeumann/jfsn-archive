@@ -604,7 +604,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
   if (window.__chromaticBgById) {
     // already a map keyed by id → bg only; need year too, so fetch fresh below
   }
-  fetch('/chromatic.json').then(function (r) { return r.json(); }).then(applyGradient).catch(function () {});
+  fetch('/config/chromatic.json').then(function (r) { return r.json(); }).then(applyGradient).catch(function () {});
 })();
 
 /* "Last updated" — most recent entry from changes.json (the same feed
@@ -612,7 +612,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
 (function () {
   var el = document.getElementById('footer-last-updated');
   if (!el) return;
-  fetch('/changes.json').then(function (r) { return r.json(); }).then(function (data) {
+  fetch('/config/changes.json').then(function (r) { return r.json(); }).then(function (data) {
     if (!Array.isArray(data) || !data.length) return;
     var date = data[0].date;
     if (!date) return;

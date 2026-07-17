@@ -295,7 +295,7 @@ addEventListener('DOMContentLoaded', () => {
 (async function(){
   'use strict';
   const ORI_LABEL = { v: 'Vertical', h: 'Horizontal', s: 'Square' };
-  const works = await fetch('current.json', {cache:'no-cache'}).then(r => r.json());
+  const works = await fetch('config/current.json', {cache:'no-cache'}).then(r => r.json());
   const id = new URLSearchParams(location.search).get('id');
   const idx = works.findIndex(w => w.i === id);
 

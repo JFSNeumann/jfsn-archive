@@ -360,7 +360,7 @@ addEventListener('DOMContentLoaded', () => {
 (async function(){
   'use strict';
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const works = await fetch('openings.json', {cache:'no-cache'}).then(r => r.json());
+  const works = await fetch('config/openings.json', {cache:'no-cache'}).then(r => r.json());
 
   const MOVEMENTS = [
     ['gal', 'I', 'The Galleries', 'Rooms, walls, and crowds that never existed. An empty imagined gallery is a study. An imagined gallery with an audience in it is something else: a picture of being seen.'],

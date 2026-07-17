@@ -372,7 +372,7 @@ addEventListener('DOMContentLoaded', () => {
     }
     ctx.globalAlpha = 1;
   }
-  fetch('current.json', {cache:'no-cache'}).then(r => r.json()).then(works => {
+  fetch('config/current.json', {cache:'no-cache'}).then(r => r.json()).then(works => {
     document.getElementById('count').textContent = works.length.toLocaleString('en-US');
     riverWorks = works;           // The Current's color spine, reprised at rest
     drawRiver();
