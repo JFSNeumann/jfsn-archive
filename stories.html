@@ -89,7 +89,10 @@ addEventListener('DOMContentLoaded', () => {
   }
   #hero h1{
     font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
-    font-size:clamp(48px,8vw,72px);line-height:1.15;max-width:14em;
+    font-size:clamp(32px,4.5vw,52px);line-height:1.15;max-width:none;white-space:nowrap;
+  }
+  @media (max-width:640px){
+    #hero h1{white-space:normal;font-size:clamp(28px,6vw,40px)}
   }
   .highlight-devo{background:var(--accent);color:#fff;padding:0 4px;font-style:normal}
   #hero .subtitle{color:var(--dim);font-size:clamp(16px,2vw,20px);max-width:28em;line-height:1.7;margin-top:12px}
@@ -176,7 +179,7 @@ addEventListener('DOMContentLoaded', () => {
 <main>
 
   <section id="hero">
-    <h1>Specific things<br>that <span class="highlight-devo">happened</span>.</h1>
+    <h1>Specific things that <span class="highlight-devo">happened</span>.</h1>
     <p class="subtitle">Stories from fifty years of making — in Jeff's own words where possible. The parts of the record that don't fit in a catalog.</p>
   </section>
 

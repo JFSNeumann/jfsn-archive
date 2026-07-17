@@ -225,10 +225,12 @@ if skipped:
 
 # ── sitemap.xml ──────────────────────────────────────────────────────────────
 # Intentionally excluded from sitemap:
-#   artwork.html   — dynamic (?id=artNNNN); covered by artworks/pages/*.html entries below
+#   artwork.html   — dynamic (?id=artNNNN)
+#   artworks/pages/*.html — 1,084 individual artwork pages (use archive + filter for discovery)
 #   series.html    — dynamic (?theme= / ?series=); covered by theme/series param entries below
 #   404.html       — error page, not indexable
-#   curator.html, qa.html — dev tools (noindex)
+#   curator.html, qa.html, style-guide.html — dev tools (noindex)
+#   start-here.html, favorites.html, stories.html, why-i-made-things.html, imagined-museum.html, curatorial-companion.html — reference pages (not public navigation)
 # When adding a new public page: add it to entries[] AND run audit-nav.sh to verify.
 today       = datetime.date.today().isoformat()
 theme_pages = sorted({t for r in records for t in (r.get('themes') or [])})
@@ -237,15 +239,16 @@ series_pages = sorted({r['series'] for r in records if r.get('series')})
 entries = [
     (SITE_URL + '/',                        '1.0', 'monthly'),
     (SITE_URL + '/archive.html',            '0.9', 'weekly'),
-    # v2 Museum rooms (primary navigation)
+    # Museum rooms (primary navigation)
     (SITE_URL + '/current.html',            '0.8', 'monthly'),
     (SITE_URL + '/flooded-wing.html',       '0.8', 'monthly'),
     (SITE_URL + '/guernica-passage.html',   '0.8', 'monthly'),
     (SITE_URL + '/hall-of-openings.html',   '0.8', 'monthly'),
     (SITE_URL + '/the-studio.html',         '0.8', 'monthly'),
     (SITE_URL + '/working-history.html',    '0.8', 'monthly'),
+    (SITE_URL + '/about.html',              '0.8', 'monthly'),
     (SITE_URL + '/series-index.html',       '0.8', 'monthly'),
-    (SITE_URL + '/api.html',                '0.6', 'monthly'),
+    # Collections & views
     (SITE_URL + '/chromatic.html',          '0.6', 'monthly'),
     (SITE_URL + '/wall.html',               '0.6', 'monthly'),
     (SITE_URL + '/curatorial-map.html',     '0.6', 'monthly'),
@@ -261,7 +264,8 @@ entries = [
     (SITE_URL + '/photography.html',        '0.6', 'monthly'),
     (SITE_URL + '/sculpture.html',          '0.6', 'monthly'),
     (SITE_URL + '/painting.html',           '0.6', 'monthly'),
-    # Theme/series deep-dives
+    (SITE_URL + '/lost.html',               '0.6', 'monthly'),
+    # Theme & series pages
     (SITE_URL + '/guernica.html',           '0.6', 'monthly'),
     (SITE_URL + '/targets.html',            '0.6', 'monthly'),
     (SITE_URL + '/torsos-faces.html',       '0.6', 'monthly'),
@@ -270,15 +274,10 @@ entries = [
     (SITE_URL + '/mr-snowmann.html',        '0.6', 'monthly'),
     (SITE_URL + '/collaboration.html',      '0.6', 'monthly'),
     (SITE_URL + '/gallery-images.html',     '0.6', 'monthly'),
-    (SITE_URL + '/start-here.html',         '0.7', 'monthly'),
-    (SITE_URL + '/favorites.html',          '0.6', 'monthly'),
-    (SITE_URL + '/stories.html',            '0.8', 'monthly'),
-    (SITE_URL + '/why-i-made-things.html',  '0.8', 'monthly'),
-    (SITE_URL + '/imagined-museum.html',    '0.8', 'monthly'),
-    (SITE_URL + '/curatorial-companion.html', '0.8', 'monthly'),
+    # Reference
+    (SITE_URL + '/api.html',                '0.6', 'monthly'),
     (SITE_URL + '/changes.html',            '0.4', 'weekly'),
     (SITE_URL + '/privacy.html',            '0.3', 'yearly'),
-    (SITE_URL + '/style-guide.html',        '0.3', 'monthly'),
     (SITE_URL + '/sitemap.html',            '0.7', 'monthly'),
 ]
 # Theme-based series pages
@@ -293,9 +292,10 @@ for s in series_pages:
         f"{SITE_URL}/series.html?series={urllib.parse.quote(s, safe='')}",
         '0.8', 'monthly',
     ))
-for r in records:
-    art_id = r['file'].replace('.avif', '')
-    entries.append((f"{SITE_URL}/artworks/pages/{art_id}.html", '0.8', 'monthly'))
+# Excluded: 1,084 individual artwork pages — discovery via archive.html + filters instead
+# for r in records:
+#     art_id = r['file'].replace('.avif', '')
+#     entries.append((f"{SITE_URL}/artworks/pages/{art_id}.html", '0.8', 'monthly'))
 
 lines = ['<?xml version="1.0" encoding="UTF-8"?>',
          '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
