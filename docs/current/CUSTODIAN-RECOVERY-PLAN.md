@@ -23,7 +23,7 @@ jfsn.com preserves 1,084 artworks by Jeffrey F. S. Neumann — about fifty years
 
 - **The printed handoff sheet** (regenerate with `python3 make_handoff.py` on the Mac; Jeff has printed copies) — HostGator/FTP details, GitHub, and the hand-written **Bitwarden master password**. Bitwarden (vault.bitwarden.com, login jfsneumann@gmail.com) holds everything else (~16 accounts).
 - **Apple Digital Legacy** is set up — it gives Allison access to Jeff's Apple account and therefore the Mac.
-- **Credential warning (2026-06):** the old FTP password was publicly exposed and is being rotated — see `docs/archive-2026/CREDENTIAL-EXPOSURE-REPORT.md`. If the site is ever defaced, that's the likely cause; restore from backups and change the FTP password at HostGator.
+- **Credential warning (2026-06):** the old FTP password was publicly exposed and is being rotated — see `docs/archive/2026/CREDENTIAL-EXPOSURE-REPORT.md`. If the site is ever defaced, that's the likely cause; restore from backups and change the FTP password at HostGator.
 
 ## The domain — renewal is the #1 recurring duty
 

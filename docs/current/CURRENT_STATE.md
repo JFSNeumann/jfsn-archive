@@ -27,12 +27,12 @@ This file describes what's currently true about the site. For ranked work, see `
 **Hero implementation (2026-07-14 to 2026-07-16):**
 - **The Studio hero** (2026-07-16): art0241 background (15% opacity), NO parallax, contained to hero visual area only. Subtitle fade-in animation retained.
 - **Guernica Passage hero** (2026-07-16): guernica-hero.avif background (15% opacity), parallax scroll (2.5x speed), subtitle fade-in animation. Deployed to `/artworks/guernica-hero.avif` (root, not subdirectory).
-- **Hall of Openings hero** (2026-07-14): Border Grammar interaction redesign (threshold passage) as sole interaction language for doors. See `docs/archive-2026/BORDER-GRAMMAR-ANALYSIS.md` for full rationale.
+- **Hall of Openings hero** (2026-07-14): Border Grammar interaction redesign (threshold passage) as sole interaction language for doors. See `docs/archive/2026/BORDER-GRAMMAR-ANALYSIS.md` for full rationale.
 - **Flooded Wing hero** (2026-07-14): water damage image with fade-to-black + text animations.
 
 **Documentation cleanup (2026-07-16):**
 - Renamed `docs/stewardship/REPOSITORY-VERIFICATION-STANDARD.md` → `IMPLEMENTATION-VERIFICATION-STANDARD.md` (eliminated naming confusion with root operational verification doc)
-- Archived 8 old session closeout docs (Phase 1-2C, Conservation, Experience Studio, Hero Prep) to `docs/archive/session-records/` for cleaner root structure
+- Archived 8 old session closeout docs (Phase 1-2C, Conservation, Experience Studio, Hero Prep) to `docs/archive/2026/session-records/` for cleaner root structure
 - Deleted orphan files: `me-white.png`, `_shared/drone-survey.js`, `hall-of-openings-prototype.html`, `hero-image-candidates.html`, `archive-v1/` legacy copies
 
 ---
@@ -51,7 +51,7 @@ This file describes what's currently true about the site. For ranked work, see `
 
 ## 2026-07-01 — Engineering phase complete. Project transitions to Creative Brief–driven phase.
 
-The engineering roadmap is complete. All high- and medium-priority items from `docs/archive-2026/ENGINEERING_ROADMAP.md` have been resolved. The remaining open item (R8: image fade-in consolidation) is intentionally deferred — it carries no active correctness risk and no Creative Brief is blocked by it today. It should be resolved immediately before the first Brief that materially changes image-loading behavior.
+The engineering roadmap is complete. All high- and medium-priority items from `docs/archive/2026/ENGINEERING_ROADMAP.md` have been resolved. The remaining open item (R8: image fade-in consolidation) is intentionally deferred — it carries no active correctness risk and no Creative Brief is blocked by it today. It should be resolved immediately before the first Brief that materially changes image-loading behavior.
 
 **From this point forward, engineering work is initiated only when:**
 - it supports an approved Creative Brief,
@@ -173,7 +173,7 @@ that template intentionally supports.
 - `CACHE_V` bumped to `jfsn-1782824794`
 - All 1,084 generated artwork pages: zero code changes (CSS loaded by `<link>` — no regen needed)
 
-See `docs/archive/session-records/SESSION-END-PHASE2C.md`, `docs/archive-2026/CSS_ARCHITECTURE_AUDIT.md`, and `docs/archive-2026/PHASE2C-REMOVAL-MAP.md` for full detail.
+See `docs/archive/2026/session-records/SESSION-END-PHASE2C.md`, `docs/archive/2026/CSS_ARCHITECTURE_AUDIT.md`, and `docs/archive/2026/PHASE2C-REMOVAL-MAP.md` for full detail.
 
 ---
 
@@ -187,7 +187,7 @@ See `docs/archive/session-records/SESSION-END-PHASE2C.md`, `docs/archive-2026/CS
 - `CACHE_V` bumped to `jfsn-1782782983` and deployed to jfsn.com
 - Every page on jfsn.com now prevents dark-mode FOUC (Phase 1 covered the 38 root pages; this closes the gap)
 
-See `docs/archive/session-records/SESSION-END-PHASE2-FOUC.md` and `docs/archive-2026/PHASE2-FOUC-PREDEPLOY-REVIEW.md` for full detail.
+See `docs/archive/2026/session-records/SESSION-END-PHASE2-FOUC.md` and `docs/archive/2026/PHASE2-FOUC-PREDEPLOY-REVIEW.md` for full detail.
 
 ---
 
@@ -204,7 +204,7 @@ See `docs/archive/session-records/SESSION-END-PHASE2-FOUC.md` and `docs/archive-
 
 **Deferred to a future phase:** pre-commit hook bundle freshness check, audit-nav.sh search.js false positive on 30 pages, pre-existing duplicate script executions (nav-active.js × 8 pages, etc.), ui.css 158KB render-blocking, stamp-nav.sh fragility.
 
-See `docs/archive/session-records/SESSION-END-PHASE2A.md` for full detail.
+See `docs/archive/2026/session-records/SESSION-END-PHASE2A.md` for full detail.
 
 ---
 
@@ -283,7 +283,7 @@ Four redundant stores, listed in update order at end-session:
 
 ## 🔴 Critical open items
 
-**FTP password publicly exposed, still active, cannot be rotated.** cPanel/HostGator account access is unavailable and Pure-FTPd has no self-service password change (proven by live test 2026-06-12). Do NOT chase cPanel rotation. Impact is bounded: the archive is replicated 4× and only live-site defacement is at risk. Rotation is **ON HOLD by Jeff** — every public copy of the credential is now removed or blocked (see `docs/archive-2026/CREDENTIAL-EXPOSURE-REPORT.md`, session 34). **Domain note (corrected 2026-06-16):** Jeff owns and pays for the jfsn.com Gandi account directly (invoice confirmed) — there is no friend in the loop, and migrating off HostGator does not require contacting anyone else. Authoritative record: `docs/archive-2026/FINAL-DOMAIN-AND-PRESERVATION-HANDOFF.md` §5 (closed).
+**FTP password publicly exposed, still active, cannot be rotated.** cPanel/HostGator account access is unavailable and Pure-FTPd has no self-service password change (proven by live test 2026-06-12). Do NOT chase cPanel rotation. Impact is bounded: the archive is replicated 4× and only live-site defacement is at risk. Rotation is **ON HOLD by Jeff** — every public copy of the credential is now removed or blocked (see `docs/archive/2026/CREDENTIAL-EXPOSURE-REPORT.md`, session 34). **Domain note (corrected 2026-06-16):** Jeff owns and pays for the jfsn.com Gandi account directly (invoice confirmed) — there is no friend in the loop, and migrating off HostGator does not require contacting anyone else. Authoritative record: `docs/archive/2026/FINAL-DOMAIN-AND-PRESERVATION-HANDOFF.md` §5 (closed).
 
 ---
 

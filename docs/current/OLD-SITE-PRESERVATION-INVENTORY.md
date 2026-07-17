@@ -19,7 +19,7 @@
 | Total size | **1,586,489,182 bytes (1.5 GB)** |
 | Integrity | **Conclusively verified** — second `lftp mirror --dry-run` comparison pass returned zero pending transfers (local matches server file-for-file); spot checks passed |
 | 4TB drive (JEFFS-4TB) | ✅ backed up 2026-06-11 14:28 — 12,139 files; verified that the 775-file gap is exactly 698 third-party npm files (`old-site/index/node_modules/`, regenerable) + 78 `.DS_Store` — **zero content files missing** |
-| Backblaze B2 | sync run 2026-06-11 (same node_modules exclusion applies) — see `docs/archive/session-checkpoints/SESSION-30-FINAL-REMEDIATION-REPORT.md` for completion verification |
+| Backblaze B2 | sync run 2026-06-11 (same node_modules exclusion applies) — see `docs/archive/2026/session-checkpoints/SESSION-30-FINAL-REMEDIATION-REPORT.md` for completion verification |
 | Copies of Jeff's actual content | **4** — server, Mac, 4TB, B2 |
 
 ## Historically significant contents
