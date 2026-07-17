@@ -6,8 +6,8 @@
   "scripts": {
     "build:css": "npx tailwindcss -i input.css -o site.min.css --minify",
     "watch:css": "npx tailwindcss -i input.css -o site.min.css --watch",
-    "verify": "python3 scripts/verify.py",
-    "test": "python3 scripts/test_verify.py && python3 scripts/test_scaffold.py && python3 scripts/test_intake_status.py && python3 scripts/test_intake.py && python3 scripts/test_intake_finish.py"
+    "verify": "python3 tools/utils/verify.py",
+    "test": "python3 tools/utils/test_verify.py && python3 tools/intake/test_scaffold.py && python3 tools/intake/test_intake_status.py && python3 tools/intake/test_intake.py && python3 tools/intake/test_intake_finish.py"
   },
   "repository": {
     "type": "git",

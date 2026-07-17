@@ -36,9 +36,9 @@ API_V1  = ROOT / "api" / "v1"
 API_WORKS = API_V1 / "works"
 
 FULL        = Path(__file__).parent / "full"
-OUT         = ROOT / "catalog.json"
-OUT_LITE    = ROOT / "catalog-lite.json"
-OUT_HOME    = ROOT / "catalog-home.json"
+OUT         = ROOT / "config" / "catalog.json"
+OUT_LITE    = ROOT / "config" / "catalog-lite.json"
+OUT_HOME    = ROOT / "config" / "catalog-home.json"
 OUT_SITEMAP = ROOT / "sitemap.xml"
 OUT_FEED    = ROOT / "feed.xml"
 OUT_JS_CFG  = ROOT / "artist-config.js"
@@ -46,7 +46,7 @@ OUT_JS_CFG  = ROOT / "artist-config.js"
 HOME_LIMIT  = 30   # max records served to the homepage
 
 # ── Load artist-config.json ───────────────────────────────────────────────────
-_CFG_PATH = ROOT / "artist-config.json"
+_CFG_PATH = ROOT / "config" / "artist-config.json"
 _cfg: dict = {}
 if _CFG_PATH.exists():
     try:
@@ -94,7 +94,7 @@ favorite_ids = _load_id_file(FAVORITES)
 # archive filter and artwork pages show whether a piece is vertical, horizontal,
 # or square. A 10% tolerance band keeps near-square works out of the tall/wide
 # buckets. Rerun build_dims.py if dims.json is ever missing or stale.
-DIMS = ROOT / "dims.json"
+DIMS = ROOT / "config" / "dims.json"
 _dims = {}
 if DIMS.exists():
     try:
@@ -227,14 +227,10 @@ if skipped:
 # Intentionally excluded from sitemap:
 #   artwork.html   — dynamic (?id=artNNNN)
 #   artworks/pages/*.html — 1,084 individual artwork pages (use archive + filter for discovery)
-#   series.html    — dynamic (?theme= / ?series=); covered by theme/series param entries below
 #   404.html       — error page, not indexable
-#   curator.html, qa.html, style-guide.html — dev tools (noindex)
-#   start-here.html, favorites.html, stories.html, why-i-made-things.html, imagined-museum.html, curatorial-companion.html — reference pages (not public navigation)
-# When adding a new public page: add it to entries[] AND run audit-nav.sh to verify.
+# When adding a new public page: add it to entries[] AND run audit-nav.sh to verify
+# (its reverse-sitemap check reports any public page missing from this list).
 today       = datetime.date.today().isoformat()
-theme_pages = sorted({t for r in records for t in (r.get('themes') or [])})
-series_pages = sorted({r['series'] for r in records if r.get('series')})
 
 entries = [
     (SITE_URL + '/',                        '1.0', 'monthly'),
@@ -247,51 +243,11 @@ entries = [
     (SITE_URL + '/the-studio.html',         '0.8', 'monthly'),
     (SITE_URL + '/working-history.html',    '0.8', 'monthly'),
     (SITE_URL + '/about.html',              '0.8', 'monthly'),
-    (SITE_URL + '/series-index.html',       '0.8', 'monthly'),
-    # Collections & views
-    (SITE_URL + '/chromatic.html',          '0.6', 'monthly'),
-    (SITE_URL + '/wall.html',               '0.6', 'monthly'),
-    (SITE_URL + '/curatorial-map.html',     '0.6', 'monthly'),
-    # Decade pages
-    (SITE_URL + '/1970s.html',              '0.6', 'monthly'),
-    (SITE_URL + '/1980s.html',              '0.6', 'monthly'),
-    (SITE_URL + '/1990s.html',              '0.6', 'monthly'),
-    (SITE_URL + '/2000s.html',              '0.6', 'monthly'),
-    (SITE_URL + '/2010s.html',              '0.6', 'monthly'),
-    (SITE_URL + '/2020s.html',              '0.6', 'monthly'),
-    # Medium pages
-    (SITE_URL + '/collage.html',            '0.6', 'monthly'),
-    (SITE_URL + '/photography.html',        '0.6', 'monthly'),
-    (SITE_URL + '/sculpture.html',          '0.6', 'monthly'),
-    (SITE_URL + '/painting.html',           '0.6', 'monthly'),
-    (SITE_URL + '/lost.html',               '0.6', 'monthly'),
-    # Theme & series pages
-    (SITE_URL + '/guernica.html',           '0.6', 'monthly'),
-    (SITE_URL + '/targets.html',            '0.6', 'monthly'),
-    (SITE_URL + '/torsos-faces.html',       '0.6', 'monthly'),
-    (SITE_URL + '/crosses.html',            '0.6', 'monthly'),
-    (SITE_URL + '/framed.html',             '0.6', 'monthly'),
-    (SITE_URL + '/mr-snowmann.html',        '0.6', 'monthly'),
-    (SITE_URL + '/collaboration.html',      '0.6', 'monthly'),
-    (SITE_URL + '/gallery-images.html',     '0.6', 'monthly'),
+    (SITE_URL + '/stories.html',            '0.7', 'monthly'),
     # Reference
-    (SITE_URL + '/api.html',                '0.6', 'monthly'),
-    (SITE_URL + '/changes.html',            '0.4', 'weekly'),
     (SITE_URL + '/privacy.html',            '0.3', 'yearly'),
     (SITE_URL + '/sitemap.html',            '0.7', 'monthly'),
 ]
-# Theme-based series pages
-for theme in theme_pages:
-    entries.append((
-        f"{SITE_URL}/series.html?theme={urllib.parse.quote(theme, safe='')}",
-        '0.8', 'monthly',
-    ))
-# Named-series pages
-for s in series_pages:
-    entries.append((
-        f"{SITE_URL}/series.html?series={urllib.parse.quote(s, safe='')}",
-        '0.8', 'monthly',
-    ))
 # Excluded: 1,084 individual artwork pages — discovery via archive.html + filters instead
 # for r in records:
 #     art_id = r['file'].replace('.avif', '')

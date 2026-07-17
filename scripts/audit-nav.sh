@@ -120,7 +120,7 @@ PYEOF
 python3 << 'PYEOF'
 import json, os
 
-with open('catalog.json') as f:
+with open('config/catalog.json') as f:
     catalog = json.load(f)
 
 missing_thumb = []
@@ -231,7 +231,7 @@ python3 << 'PYEOF'
 import json
 
 try:
-    with open('catalog.json') as f:
+    with open('config/catalog.json') as f:
         catalog = json.load(f)
 except json.JSONDecodeError as e:
     print(f'❌  catalog.json: invalid JSON — {e}')
