@@ -87,11 +87,11 @@ fi
 # It does its own drive-mounted/writable checks and a source/dest file-count match,
 # so we don't duplicate (or silently skip, as the old inline rsync did — Session 77).
 log "Creating backup (delegating to backup.sh → JEFFS-4TB)..."
-if bash scripts/backup.sh; then
+if bash backup.sh; then
   success "Backup complete (verified by backup.sh)"
 else
   warning "Backup did not complete — see backup.sh output above (drive not mounted, or file counts differ)"
-  warning "Run 'bash scripts/backup.sh' manually once JEFFS-4TB is available"
+  warning "Run 'bash scripts/backup.sh' manually from the repo root once JEFFS-4TB is available"
 fi
 
 echo ""
