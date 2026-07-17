@@ -105,7 +105,7 @@ addEventListener('DOMContentLoaded', () => {
     min-height:100vh;display:flex;flex-direction:column;
     justify-content:center;align-items:center;text-align:center;gap:30px;
     position:relative;
-    background:linear-gradient(rgba(12,10,9,0.90),rgba(12,10,9,0.90)),url('/artworks/flooded-hero.avif') center/cover no-repeat fixed;
+    background:linear-gradient(rgba(12,10,9,0.90),rgba(12,10,9,0.90)),url('/artworks/flooded-hero.avif') center 20%/cover no-repeat fixed;
     overflow:hidden;
   }
   #door::before{
@@ -128,7 +128,7 @@ addEventListener('DOMContentLoaded', () => {
   }
   #door .down{margin-top:26px;color:var(--faint);font-size:18px;animation:sink 2.6s ease-in-out infinite}
   @keyframes sink{0%,100%{transform:translateY(0)}50%{transform:translateY(10px)}}
-  .highlight-devo{background:var(--accent);color:#fff;padding:0 4px;font-style:normal}
+  .highlight-devo{background:var(--room);color:#fff;padding:0 4px;font-style:normal}
 
   .prose{
     max-width:34em;margin:0 auto;
