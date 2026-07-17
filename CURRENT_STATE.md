@@ -5,6 +5,19 @@ This file describes what's currently true about the site. For ranked work, see `
 
 ---
 
+## 2026-07-16 (later) — Homepage LCP fix, room-page polish, backup verification ✅
+
+**Homepage LCP: 5.1s → 1.9s (Lighthouse score 81 → 100).** The hero image (`medium/art1010.avif`, 314KB) was fetched 3× eagerly — once as the LCP element (`fetchpriority="high"`) and twice more as decorative desktop "wing" flankers (`fetchpriority="low"`, same file), all competing for bandwidth. Found pre-built, unused LCP-optimized assets already sitting in `artworks/full/` (`art1010-hero-lcp.avif` / `-m.avif`, ~14x smaller) from an earlier perf pass that never got wired in. Wired them into `index.html` via `srcset`/`sizes` on the hero image and switched the two wing images to `loading="lazy"` + the smaller full-size variant. Verified visually (no quality loss) and via 3-run Lighthouse median before/after.
+
+**Room-page polish:**
+- Hero highlight-box color unified to orange (`var(--accent)`) across all 5 room pages — `flooded-wing.html`, `guernica-passage.html`, and `hall-of-openings.html` had drifted to black during a prior session while `about.html`/`the-studio.html` stayed orange.
+- `archive.html`: tightened the room-links nav padding (8vh→4vh) so the search/filter bar surfaces on the first screen instead of requiring a scroll.
+- `flooded-wing.html`: hero image repositioning synced between `#door` and `#door::before` after Jeff resized the source image externally.
+
+**Backup verification — both LaunchAgents had silently unloaded from launchd.** `com.jfsn.backup` (JEFFS-4TB, 11pm) and `com.jfsn.cloud-backup` (B2, 9pm) hadn't fired — successful or failed — since 2026-07-08, an 8-day gap, because neither showed up in `launchctl list`. Re-loaded both and kickstarted immediate runs: JEFFS-4TB completed clean (13,215/13,215 files matched, `diskutil verifyVolume` clean, manual write/delete test passed — the earlier "I/O error" state from the 2026-07-01/07-06 reports appears resolved, possibly was an FDA-context issue like the B2 one); B2 completed clean (55 stale files deleted, mirroring local deletions from recent page cleanup). **Open question:** what unloaded the LaunchAgents in the first place (reboot, logout, manual unload) is unknown — worth checking Console.app around 2026-07-08/09 if it happens again.
+
+---
+
 ## 2026-07-16 — Permanent Museum Approved; hero implementation complete; documentation cleanup ✅
 
 **Latest commit:** `d4ad53b6` (markdown cleanup + orphan files)
@@ -261,10 +274,10 @@ All four outcomes are consistent with the Experience Philosophy. The goal is not
 Four redundant stores, listed in update order at end-session:
 1. GitHub (`origin/main`) — latest commit: `d4ad53b6` (markdown cleanup + orphan file deletion, 2026-07-16); tags `phase2a-freeze`, `phase2-fouc-freeze`, `phase2c-freeze` pushed
 2. Local Mac (working tree)
-3. JEFFS-4TB external drive (rsync, nightly LaunchAgent at 11 PM) — **⚠️ Status needs verification:** was corrupted APFS superblock (2026-07-01 report); last verified 2026-06-23. Run `diskutil verifyVolume JEFFS-4TB` to confirm current state before next backup run.
-4. Backblaze B2 cloud (LaunchAgent at 9 PM nightly) — **⚠️ Status needs verification:** LaunchAgent was silently failing (2026-07-01 report) due to macOS Full Disk Access blocking `/bin/bash`. If Full Disk Access has been granted, verify LaunchAgent is active via `launchctl list | grep cloud-backup`. Last manual sync: 2026-07-01 (9,506 objects / 683MB).
+3. JEFFS-4TB external drive (rsync, nightly LaunchAgent at 11 PM) — ✅ Verified working 2026-07-16: `diskutil verifyVolume` clean, manual write/delete test passed, kickstarted run completed with matching file counts (13,215/13,215). LaunchAgent was found unloaded from launchd (last real success 2026-07-08) and has been reloaded.
+4. Backblaze B2 cloud (LaunchAgent at 9 PM nightly) — ✅ Verified working 2026-07-16: kickstarted run completed clean (synced + 55 stale files deleted, mirroring local cleanup). LaunchAgent was found unloaded from launchd (last real success 2026-07-08) and has been reloaded.
 
-**Action item:** Verify both JEFFS-4TB and B2 backup status at session start. See Session_start_procedures.md.
+**Action item:** Verify both JEFFS-4TB and B2 backup status at session start — specifically check `launchctl list | grep jfsn` returns both jobs, since they've been found unloaded (not just failing) more than once. See Session_start_procedures.md.
 
 ---
 
