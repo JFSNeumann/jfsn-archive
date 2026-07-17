@@ -213,10 +213,10 @@ smoke_check() {
 }
 
 smoke_check "https://jfsn.com/index.html"                    "Jeffrey F. S. Neumann"  "Homepage"
-smoke_check "https://jfsn.com/archive.html"                  "catalog-lite.json"      "Archive"
+smoke_check "https://jfsn.com/archive.html"                  "current.json"           "Archive"
 smoke_check "https://jfsn.com/artwork.html"                  "site.min.css"           "Artwork page"
 smoke_check "https://jfsn.com/artworks/pages/art0001.html"  "art0001"                "Generated artwork page"
-smoke_check "https://jfsn.com/catalog-lite.json"            "\"file\""               "catalog-lite.json"
+smoke_check "https://jfsn.com/config/catalog-lite.json"     "\"file\""               "catalog-lite.json"
 smoke_check "https://jfsn.com/_shared/core.bundle.js"       "showToast"              "core.bundle.js"
 smoke_check "https://jfsn.com/sw.js"                        "CACHE_V"                "Service worker"
 smoke_check "https://jfsn.com/site.min.css"                 "font-family"            "site.min.css"
