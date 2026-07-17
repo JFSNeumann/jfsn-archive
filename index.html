@@ -161,19 +161,43 @@ addEventListener('DOMContentLoaded', () => {
   #doors a:hover::after,
   #doors a:focus-visible::after{opacity:.1}
 
-  #doors a .sub{font-size:9px;letter-spacing:.2em;color:var(--dim)}
+  #doors a .sub{
+    font-size:9px;letter-spacing:.2em;color:var(--dim);
+    transform:translateY(0);transition:color .3s ease,transform .3s ease;
+  }
   #doors a:hover{border-color:var(--dim)}
-  #doors a:hover .sub{color:var(--ink)}
+  #doors a:hover .sub,
+  #doors a:focus-visible .sub{color:var(--ink);transform:translateY(-1px)}
   #doors a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 
+  /* Arrow: the smallest possible gesture of yielding */
+  #doors a .go{
+    display:inline-block;transform:translateX(0);
+    transition:transform .3s ease;
+  }
+  #doors a:hover .go,
+  #doors a:focus-visible .go{transform:translateX(3px)}
+
   /* Room personalities: rest-state echo + full hover expression.
-     Rest widths are ~1/4 of each room's hover width — felt without
-     touching, confirmed on hover. */
-  #doors a:nth-child(1){--rest-w:1.5px}
-  #doors a:nth-child(2){--rest-w:.75px}
-  #doors a:nth-child(3){--rest-w:.5px}
-  #doors a:nth-child(4){--rest-w:1px}
-  #doors a:nth-child(5){--rest-w:1.25px}
+     Border widths at rest are all 1px (fractional widths get snapped to a
+     device pixel and stop reading as distinct) — the personality shows
+     instead as border-left *color intensity*, which renders with real
+     fractional precision. Roughly proportional to each room's hover width. */
+  #doors a:nth-child(1){--rest-a:.55}
+  #doors a:nth-child(2){--rest-a:.28}
+  #doors a:nth-child(3){--rest-a:.15}
+  #doors a:nth-child(4){--rest-a:.38}
+  #doors a:nth-child(5){--rest-a:.46}
+
+  #doors a{
+    border-left-color:color-mix(in srgb, var(--dim) calc(var(--rest-a, 0) * 100%), transparent);
+    transition:border-left-width .3s ease, border-left-color .4s ease;
+  }
+
+  /* Anticipation: the row nearest the pointer senses it before hover claims it */
+  #doors a.nearing{
+    border-left-color:color-mix(in srgb, var(--dim) calc((var(--rest-a, 0) + .35) * 100%), transparent);
+  }
 
   @media (prefers-reduced-motion: no-preference) {
     /* THE CURRENT (1st): thick left border = energy */
@@ -197,18 +221,18 @@ addEventListener('DOMContentLoaded', () => {
     #doors a:nth-child(5):focus-visible{border-left-width:5px}
   }
 
-  /* Landing choreography: borders draw themselves in, then settle at
-     their resting-state echo width (not back to zero) */
+  /* Landing choreography: borders draw themselves from left to right */
   @keyframes border-draw {
     0%{border-left-width:0}
-    100%{border-left-width:var(--rest-w,1px)}
+    100%{border-left-width:1px}
   }
 
-  /* Static fallback for reduced-motion: skip the draw-in, keep the echo */
-  #doors a{border-left-width:var(--rest-w,0px)}
+  /* Static fallback for reduced-motion: skip the draw-in, still show the
+     1px frame so the color echo above has something to tint */
+  #doors a{border-left-width:1px}
 
   @media (prefers-reduced-motion: no-preference) {
-    #doors a{animation:border-draw .8s ease-out both}
+    #doors a{animation:border-draw .8s ease-out backwards}
     #doors a:nth-child(1){animation-delay:.05s}
     #doors a:nth-child(2){animation-delay:.1s}
     #doors a:nth-child(3){animation-delay:.15s}
@@ -495,6 +519,42 @@ addEventListener('DOMContentLoaded', () => {
       window.location.href = link.href;
     }, 400);
   }, false);
+})();
+
+/* Anticipation: nearest row senses the pointer before hover claims it */
+(function() {
+  'use strict';
+  const doorsNav = document.getElementById('doors');
+  if (!doorsNav) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+  const links = Array.prototype.slice.call(doorsNav.querySelectorAll('a[href]'));
+  let current = null;
+
+  doorsNav.addEventListener('mousemove', function(e) {
+    let nearest = null;
+    let nearestDist = Infinity;
+    links.forEach(function(link) {
+      const r = link.getBoundingClientRect();
+      const midY = r.top + r.height / 2;
+      const dist = Math.abs(e.clientY - midY);
+      if (dist < nearestDist) {
+        nearestDist = dist;
+        nearest = link;
+      }
+    });
+    if (nearest !== current) {
+      if (current) current.classList.remove('nearing');
+      if (nearest) nearest.classList.add('nearing');
+      current = nearest;
+    }
+  });
+
+  doorsNav.addEventListener('mouseleave', function() {
+    if (current) current.classList.remove('nearing');
+    current = null;
+  });
 })();
 
 /* Ghosted preview on hover (#2): load thumbnails for each room */
