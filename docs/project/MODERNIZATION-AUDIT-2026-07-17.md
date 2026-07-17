@@ -46,7 +46,7 @@ Aside from these tooling/documentation drift issues, the repository is well-orga
 
 **Leaf systems:**
 - `working-history/` (design-studies, professional-record, video-documentation, websites, LinkedIn PDF) — self-contained archival content, not code.
-- `docs/oral-history/`, `docs/STEWARDSHIP/` — reference-only documents.
+- `docs/oral-history/`, `docs/stewardship/` — reference-only documents.
 
 **Orphan systems:**
 - `scripts/stamp-nav.sh` — orphaned relative to current site architecture (see Executive Summary #1). Still present, still executable, but would fail on first run.

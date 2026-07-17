@@ -31,7 +31,7 @@ This file describes what's currently true about the site. For ranked work, see `
 - **Flooded Wing hero** (2026-07-14): water damage image with fade-to-black + text animations.
 
 **Documentation cleanup (2026-07-16):**
-- Renamed `docs/STEWARDSHIP/REPOSITORY-VERIFICATION-STANDARD.md` → `IMPLEMENTATION-VERIFICATION-STANDARD.md` (eliminated naming confusion with root operational verification doc)
+- Renamed `docs/stewardship/REPOSITORY-VERIFICATION-STANDARD.md` → `IMPLEMENTATION-VERIFICATION-STANDARD.md` (eliminated naming confusion with root operational verification doc)
 - Archived 8 old session closeout docs (Phase 1-2C, Conservation, Experience Studio, Hero Prep) to `docs/archive/session-records/` for cleaner root structure
 - Deleted orphan files: `me-white.png`, `_shared/drone-survey.js`, `hall-of-openings-prototype.html`, `hero-image-candidates.html`, `archive-v1/` legacy copies
 
