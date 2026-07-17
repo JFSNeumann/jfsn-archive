@@ -150,7 +150,7 @@ TEMPLATE = """<!DOCTYPE html>
 <!--
   GENERATED FILE — do not hand-edit.
   Source of truth: docs/curatorial/CURATORIAL-COMPANION-v1.0.md
-  Regenerate with: python3 gen-curatorial-companion.py && bash stamp-nav.sh
+  Regenerate with: python3 gen-curatorial-companion.py && bash scripts/stamp-nav.sh
   (stamp-nav.sh restamps the real NAV/SCRIPTS/FOOTER blocks after generation)
 -->
 <html class="light" lang="en">
@@ -441,7 +441,7 @@ def main():
     )
     OUT_HTML.write_text(out)
     print(f"Wrote {OUT_HTML} ({len(out):,} bytes), {len(toc)} TOC entries.")
-    print("Run: bash stamp-nav.sh   (to stamp real NAV/SCRIPTS/FOOTER blocks)")
+    print("Run: bash scripts/stamp-nav.sh   (to stamp real NAV/SCRIPTS/FOOTER blocks)")
 
 
 if __name__ == "__main__":

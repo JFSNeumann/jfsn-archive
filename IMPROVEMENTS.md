@@ -7,7 +7,7 @@ A living list. Add to it. Cross things off. This is the backlog.
 
 ## 🔴 Do soon
 
-- [ ] **Ingest new work** — drop photos into `artworks/inbox/`, run `bash add-works.sh`. Pipeline is ready.
+- [ ] **Ingest new work** — drop photos into `artworks/inbox/`, run `bash scripts/add-works.sh`. Pipeline is ready.
 
 ---
 

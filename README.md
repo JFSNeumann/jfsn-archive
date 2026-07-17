@@ -53,7 +53,7 @@ A static, no-CMS archive on a $5/month shared host (HostGator/cPanel). No databa
 
 ```
 site.min.css          Compiled Tailwind (no CDN in production). 22,530 bytes.
-_shared/top-nav.html  Canonical nav for Stitch pages (stamp-nav.sh)
+_shared/top-nav.html  Canonical nav for Stitch pages (scripts/stamp-nav.sh)
 _shared/footer.html   Footer + GoatCounter + SW registration
 _shared/ui.css        Structural rules: .thumb__link, .page-label-vert, nav underlines
 _shared/ui.js         Keyboard nav (← → decade pages), vertical page label
@@ -71,7 +71,7 @@ sw.js                 Service worker — cache-first AVIF, network-first HTML/CS
 | Stitch nav (`_shared/top-nav.html`) | All pages except decade pages | `font-nav-link`, `deep-ink`, `international-orange` hover |
 | Material Design nav (inline) | `1970s.html`–`2020s.html` | `font-label-lg`, uppercase, `on-tertiary-container` active |
 
-`stamp-nav.sh` stamps the Stitch nav into 38 pages (re-verified 2026-06-23 by running it directly — includes the decade pages too, migrated to the canonical nav/footer in an earlier session; only their hero/grid chrome stays on the separate Material Design token system).
+`scripts/stamp-nav.sh` stamps the Stitch nav into 38 pages (re-verified 2026-06-23 by running it directly — includes the decade pages too, migrated to the canonical nav/footer in an earlier session; only their hero/grid chrome stays on the separate Material Design token system).
 
 ---
 
@@ -125,7 +125,7 @@ If you ever hardcode a featured card in HTML, add the `.card-frame` div manually
 ## Git hooks (run once after cloning)
 
 ```bash
-bash setup-hooks.sh
+bash scripts/setup-hooks.sh
 ```
 
 Installs the tracked `hooks/pre-commit` into `.git/hooks/` — git doesn't do this
@@ -157,9 +157,9 @@ Read CURRENT_STATE.md and IMPROVEMENTS.md. Summarize open items by priority, fla
 
 ### End (in order)
 ```bash
-bash session-end.sh   # git commit + push to GitHub + rsync to JEFFS-4TB + Backblaze B2 cloud backup
+bash scripts/session-end.sh   # git commit + push to GitHub + rsync to JEFFS-4TB + Backblaze B2 cloud backup
 ```
-Then deploy via `bash deploy-hostgator.sh` (primary, Session 70+; JFSN.app desktop is legacy and `deploy.sh` no longer exists — re-verified 2026-06-23, this line was stale).  
+Then deploy via `bash scripts/deploy-hostgator.sh` (primary, Session 70+; JFSN.app desktop is legacy and `deploy.sh` no longer exists — re-verified 2026-06-23, this line was stale).  
 Then update Claude memory: "Update memory. Today we: [1–2 sentences]."
 
 ### Living backlog
@@ -171,7 +171,7 @@ Then update Claude memory: "Update memory. Today we: [1–2 sentences]."
 
 ```bash
 # Drop HEIC/JPG into artworks/inbox/, then:
-bash add-works.sh
+bash scripts/add-works.sh
 ```
 
 This runs the full pipeline:
@@ -211,8 +211,8 @@ Edit `featured.txt` (one ID per line, e.g. `art0075`), then run `build_catalog.p
 
 | Step | Command / Tool |
 |------|---------------|
-| Commit + push + local backup | `bash session-end.sh` |
-| Deploy to HostGator (the only host) | `bash deploy-hostgator.sh` (primary, Session 70+) — JFSN.app desktop is legacy, no longer used |
+| Commit + push + local backup | `bash scripts/session-end.sh` |
+| Deploy to HostGator (the only host) | `bash scripts/deploy-hostgator.sh` (primary, Session 70+) — JFSN.app desktop is legacy, no longer used |
 
 **HostGator:** FTP home = webroot (`/`). `FTP_REMOTE=/` in `.ftp.env` — must stay `/`.
 
@@ -258,7 +258,7 @@ Edit `featured.txt` (one ID per line, e.g. `art0075`), then run `build_catalog.p
 | `artworks/build_dims.py` | Rebuilds dims.json from thumbnails | After new thumbs |
 | `session-end.sh` | git commit + push + rsync to JEFFS-4TB + Backblaze B2 (does NOT deploy) | End of session |
 | `deploy-hostgator.sh` | Deploy to jfsn.com (the only host) — reads `.ftp.env`, mirrors via lftp, smoke-tests | Deploying |
-| `stamp-nav.sh` | Stamps `_shared/top-nav.html` into ~30 Stitch pages | After nav changes |
+| `scripts/stamp-nav.sh` | Stamps `_shared/top-nav.html` into ~30 Stitch pages | After nav changes |
 | `make_handoff.py` | Regenerates Allison handoff PDF | After credential changes |
 
 ---
@@ -284,8 +284,8 @@ License: CC BY 4.0 (metadata only — artwork images belong to the artist).
 ## Gotchas
 
 - **CSS build:** After `npm run build:css`, bump `CACHE_V` in `sw.js` before deploying.
-- **Decade pages:** ARE in `stamp-nav.sh`'s TARGETS (corrected 2026-06-22 — migrated to the canonical nav/footer in an earlier session). Only their hero/grid/prev-next chrome stays on the separate Material Design token system.
-- **index.html — real drift risk, not a documentation gap (corrected 2026-06-22):** it DOES have `NAV:START/END` and `FOOTER:START/END` markers and IS in `stamp-nav.sh`'s TARGETS — an earlier version of this doc incorrectly said otherwise. The actual risk: `index.html` is the page most likely to organically drift *ahead* of `_shared/top-nav.html`/`_shared/footer.html` (new hero/animation work lands there first), so a routine `stamp-nav.sh` run can silently delete features the shared template hasn't caught up to yet — it already did this twice in one session (stripped the `anime.min.js` hero script both times). **Always check `git diff --stat` after running `stamp-nav.sh` and look specifically at `index.html`'s line count** — if it's a noticeably bigger diff than the other targets, inspect before trusting it.
+- **Decade pages:** ARE in `scripts/stamp-nav.sh`'s TARGETS (corrected 2026-06-22 — migrated to the canonical nav/footer in an earlier session). Only their hero/grid/prev-next chrome stays on the separate Material Design token system.
+- **index.html — real drift risk, not a documentation gap (corrected 2026-06-22):** it DOES have `NAV:START/END` and `FOOTER:START/END` markers and IS in `scripts/stamp-nav.sh`'s TARGETS — an earlier version of this doc incorrectly said otherwise. The actual risk: `index.html` is the page most likely to organically drift *ahead* of `_shared/top-nav.html`/`_shared/footer.html` (new hero/animation work lands there first), so a routine `scripts/stamp-nav.sh` run can silently delete features the shared template hasn't caught up to yet — it already did this twice in one session (stripped the `anime.min.js` hero script both times). **Always check `git diff --stat` after running `scripts/stamp-nav.sh` and look specifically at `index.html`'s line count** — if it's a noticeably bigger diff than the other targets, inspect before trusting it.
 - **Homepage card hover frame:** Uses `.card-frame` overlay (`z-index:2`), not CSS `outline`. Outline is hidden behind the absolutely-positioned image. Any hardcoded featured card needs the `.card-frame` div inside `.card-img`.
 - **sw.js auto-bump:** `build_catalog.py` auto-bumps `CACHE_V` on every run. Check `git diff sw.js` before committing after any script run.
 - **Hero AVIF upload path:** `.htaccess` rewrites `artworks/full/*.avif` → `/artworks/*.avif` (legacy flat path). New hero crops (`artNNNN-hero.avif`) must be uploaded to `/artworks/` on the HostGator server — NOT `/artworks/full/`. Upload via lftp to `/artworks/artNNNN-hero.avif`.
@@ -294,7 +294,7 @@ License: CC BY 4.0 (metadata only — artwork images belong to the artist).
 - **`mt-3` / new Tailwind classes:** Classes not in the build are silently ignored. If a spacing or layout class isn't applying, run `npm run build:css`.
 - **Playfair Display:** Only on decade page heroes, `about.html` name h1 + bio paragraph, series heroes. Everything else is Inter.
 - **analytics:** GoatCounter on all public pages via `_shared/footer.html` → `jfsn.goatcounter.com`.
-- **New page sitemap rule:** When adding any new public `.html` page — add it to the `entries[]` list in `artworks/build_catalog.py`, run `python3 artworks/build_catalog.py`, then run `bash audit-nav.sh`. The reverse sitemap check will warn if you missed it. Intentionally excluded: `artwork.html`, `series.html` (both dynamic), `404.html`, and dev tools (`curate`, `dedupe`, `jeff`, `qa`).
+- **New page sitemap rule:** When adding any new public `.html` page — add it to the `entries[]` list in `artworks/build_catalog.py`, run `python3 artworks/build_catalog.py`, then run `bash scripts/audit-nav.sh`. The reverse sitemap check will warn if you missed it. Intentionally excluded: `artwork.html`, `series.html` (both dynamic), `404.html`, and dev tools (`curate`, `dedupe`, `jeff`, `qa`).
 
 ---
 
@@ -303,7 +303,7 @@ License: CC BY 4.0 (metadata only — artwork images belong to the artist).
 | | HostGator (the only host) |
 |-|---------------------------|
 | URL | jfsn.com |
-| Deploy | `bash deploy-hostgator.sh` (primary, Session 70+) or desktop JFSN.app (legacy) |
+| Deploy | `bash scripts/deploy-hostgator.sh` (primary, Session 70+) or desktop JFSN.app (legacy) |
 | Cost | ~$5/mo |
 
 (Netlify secondary mirror removed 2026-06-22 along with the Companion AI chat feature it hosted.)

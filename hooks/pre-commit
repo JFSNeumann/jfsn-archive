@@ -40,7 +40,7 @@ STAGED_FILES=$(git diff --cached --name-only)
 
 # CHECK 1: Navigation audit
 echo "   • Navigation audit..."
-if ! bash audit-nav.sh > /tmp/audit.log 2>&1; then
+if ! bash scripts/audit-nav.sh > /tmp/audit.log 2>&1; then
   echo -e "${RED}✗ Navigation audit failed${NC}"
   cat /tmp/audit.log
   FAILED=1
@@ -89,7 +89,7 @@ if [ "$PRECACHE_CHANGED" -eq 1 ]; then
     echo -e "${GREEN}✓ CACHE_V bumped${NC}"
   else
     echo -e "${RED}✗ CACHE_V not bumped after a precached asset changed${NC}"
-    echo "    Run: bash auto-cache-bump.sh"
+    echo "    Run: bash scripts/auto-cache-bump.sh"
     echo "    Then: git add sw.js && git commit again"
     FAILED=1
   fi

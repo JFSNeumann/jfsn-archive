@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # audit-nav.sh — check all public pages for nav/footer consistency
-cd "$(dirname "$0")"
+cd "$(git rev-parse --show-toplevel)"
 
 python3 << 'PYEOF'
 import re, glob
