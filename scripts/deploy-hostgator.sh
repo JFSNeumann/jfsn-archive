@@ -214,7 +214,7 @@ smoke_check() {
 
 smoke_check "https://jfsn.com/index.html"                    "Jeffrey F. S. Neumann"  "Homepage"
 smoke_check "https://jfsn.com/archive.html"                  "current.json"           "Archive"
-smoke_check "https://jfsn.com/artwork.html"                  "site.min.css"           "Artwork page"
+smoke_check "https://jfsn.com/artwork.html"                  "room-veil"              "Artwork page"
 smoke_check "https://jfsn.com/artworks/pages/art0001.html"  "art0001"                "Generated artwork page"
 smoke_check "https://jfsn.com/config/catalog-lite.json"     "\"file\""               "catalog-lite.json"
 smoke_check "https://jfsn.com/_shared/artwork-page-min.js"  "showToast"              "artwork-page-min.js"
