@@ -67,6 +67,22 @@
   let loading     = false;
   let selectedIdx = -1;
   let matches     = [];
+  let catalogMapCache = null;
+
+  // Lazily built, cached map of file-id -> catalog record. Shared by
+  // favsHTML() and recentHTML() so both can resolve saved/recent ids
+  // against the full catalog without rebuilding the map on every render.
+  function getCatalogMap() {
+    if (!catalog) return null;
+    if (!catalogMapCache) {
+      catalogMapCache = {};
+      catalog.forEach(r => {
+        const id = r.file ? r.file.replace('.avif', '') : '';
+        if (id) catalogMapCache[id] = r;
+      });
+    }
+    return catalogMapCache;
+  }
 
   // ── Inject search overlay HTML ───────────────────────────────────────────
   const overlay = document.createElement('div');
@@ -442,12 +458,7 @@
     try {
       const favs = JSON.parse(localStorage.getItem(FAVS_KEY) || '[]');
       if (!favs.length || !catalog) return '';
-      // Resolve IDs against catalog for titles
-      const catalogMap = {};
-      catalog.forEach(r => {
-        const id = r.file ? r.file.replace('.avif', '') : '';
-        if (id) catalogMap[id] = r;
-      });
+      const catalogMap = getCatalogMap();
       const items = favs.slice(0, 4).map(id => {
         const r     = catalogMap[id];
         const title = (r && r.title) || id;
@@ -470,8 +481,9 @@
     try {
       const recent = JSON.parse(localStorage.getItem(RECENT_KEY) || '[]');
       if (!recent.length) return '';
+      const catalogMap = getCatalogMap();
       const items = recent.slice(0, 4).map(item => {
-        const r = catalogMap[item.id]; // Look up in catalog for year_display
+        const r = catalogMap ? catalogMap[item.id] : null; // Look up in catalog for year_display
         const yearDisplay = r && (r.year_display || r.year) ? String(r.year_display || r.year) : item.year || '';
         return `<a class="sse-item" role="option" aria-selected="false"
             data-href="/archive-v1/artwork.html?id=${item.id}" href="/archive-v1/artwork.html?id=${item.id}">

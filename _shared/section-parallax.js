@@ -19,7 +19,13 @@
     // (hero-zoom-settle.js) — both scripts write to el.style.transform
     // directly, so layering them on the same element would fight rather
     // than compose. Same non-overlap rule depth-hero.js already follows.
-    return !el.hasAttribute('data-hero');
+    //
+    // Also skip .reveal-section elements — section-reveal-stagger.js drives
+    // those via a forwards-filling CSS animation on `transform`, which wins
+    // the cascade over this script's inline style.transform writes for the
+    // life of the animation, silently no-opping the parallax on any such
+    // element. Same non-overlap rule as the data-hero case above.
+    return !el.hasAttribute('data-hero') && !el.classList.contains('reveal-section');
   });
   var footer = document.querySelector('footer');
 

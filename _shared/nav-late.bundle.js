@@ -414,12 +414,24 @@
   }
 
   /* ─── Scroll Event Handler ───────────────────────────────────────────────── */
+  // Throttled via requestAnimationFrame — the raw 'scroll' event can fire far
+  // more than once per frame (trackpads especially), and each call below
+  // creates new anime.js tweens on the same nav-link opacity / logo filter
+  // targets. Without this, concurrent competing tweens stack up and cause
+  // visible flicker during scroll. Same ticking-flag pattern as
+  // section-parallax.js.
+  let scrollTicking = false;
   function onScroll() {
     state.scrollY = window.scrollY;
-    updateScrollState();
-    detectCurrentSection();
-    updateHeaderOnScroll();
-    updateAccentColor();
+    if (scrollTicking) return;
+    scrollTicking = true;
+    requestAnimationFrame(function () {
+      updateScrollState();
+      detectCurrentSection();
+      updateHeaderOnScroll();
+      updateAccentColor();
+      scrollTicking = false;
+    });
   }
 
   /* ─── Init ──────────────────────────────────────────────────────────────── */

@@ -26,54 +26,57 @@
   };
 
   /* ─── Filter Chip Click Feedback ────────────────────────────────────────── */
+  // Delegated to `document` rather than bound per-chip: setupGridOrchestration()
+  // below re-renders filter chips dynamically on every filter change (via its
+  // MutationObserver), so any chip present at init time would be a stale
+  // element by the time a visitor actually clicks — a chip bound directly at
+  // setup never receives feedback once the grid/filter UI re-renders it.
   function setupChipFeedback() {
     if (prefersReducedMotion) return;
 
-    const chips = document.querySelectorAll('.filter-chip');
-    if (chips.length === 0) return;
+    document.addEventListener('click', function(e) {
+      const chip = e.target.closest('.filter-chip');
+      if (!chip) return;
 
-    chips.forEach((chip) => {
-      chip.addEventListener('click', function() {
-        // Pulse effect
+      // Pulse effect
+      anime({
+        targets: chip,
+        scale: [1, 1.05, 1],
+        duration: 300,
+        easing: 'easeOutQuad'
+      });
+
+      // Extract filter type from chip text
+      const text = chip.textContent.toLowerCase();
+      let filterType = 'collage';
+      for (let key of Object.keys(filterColors)) {
+        if (text.includes(key)) {
+          filterType = key;
+          break;
+        }
+      }
+
+      // Animate to filter color
+      const color = filterColors[filterType] || '#FF6600';
+      anime({
+        targets: chip,
+        backgroundColor: color,
+        color: '#fff',
+        duration: 400,
+        easing: 'easeOutQuad',
+        delay: 50
+      });
+
+      // Fade back to default after 800ms
+      setTimeout(() => {
         anime({
           targets: chip,
-          scale: [1, 1.05, 1],
+          backgroundColor: '#d3d1c7',
+          color: '#0B0B0B',
           duration: 300,
           easing: 'easeOutQuad'
         });
-
-        // Extract filter type from chip text
-        const text = chip.textContent.toLowerCase();
-        let filterType = 'collage';
-        for (let key of Object.keys(filterColors)) {
-          if (text.includes(key)) {
-            filterType = key;
-            break;
-          }
-        }
-
-        // Animate to filter color
-        const color = filterColors[filterType] || '#FF6600';
-        anime({
-          targets: chip,
-          backgroundColor: color,
-          color: '#fff',
-          duration: 400,
-          easing: 'easeOutQuad',
-          delay: 50
-        });
-
-        // Fade back to default after 800ms
-        setTimeout(() => {
-          anime({
-            targets: chip,
-            backgroundColor: '#d3d1c7',
-            color: '#0B0B0B',
-            duration: 300,
-            easing: 'easeOutQuad'
-          });
-        }, 800);
-      });
+      }, 800);
     });
   }
 
