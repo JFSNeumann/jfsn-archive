@@ -217,10 +217,10 @@ smoke_check "https://jfsn.com/archive.html"                  "current.json"     
 smoke_check "https://jfsn.com/artwork.html"                  "site.min.css"           "Artwork page"
 smoke_check "https://jfsn.com/artworks/pages/art0001.html"  "art0001"                "Generated artwork page"
 smoke_check "https://jfsn.com/config/catalog-lite.json"     "\"file\""               "catalog-lite.json"
-smoke_check "https://jfsn.com/_shared/core.bundle.js"       "showToast"              "core.bundle.js"
+smoke_check "https://jfsn.com/_shared/artwork-page-min.js"  "showToast"              "artwork-page-min.js"
 smoke_check "https://jfsn.com/sw.js"                        "CACHE_V"                "Service worker"
 smoke_check "https://jfsn.com/site.min.css"                 "font-family"            "site.min.css"
-smoke_check "https://jfsn.com/404.html"                     "404"                    "404 page"
+smoke_check "https://jfsn.com/404.html"                     "Not Found"              "404 page"
 smoke_check "https://jfsn.com/about.html"                   "Jeffrey"                "About page"
 
 # ─────────────────────────────────────────────────────────────────────────────
