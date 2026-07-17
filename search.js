@@ -404,8 +404,8 @@
       const yearDisplay = r.year_display || r.year; // Use decade estimates when available
       const meta    = [yearDisplay, typeStr].filter(Boolean).join(' · ');
       return `<a class="sse-item" role="option" aria-selected="false"
-                 data-href="/archive-v1/artwork.html?id=${artId}" data-idx="${i}"
-                 href="/archive-v1/artwork.html?id=${artId}">
+                 data-href="/artwork.html?id=${artId}" data-idx="${i}"
+                 href="/artwork.html?id=${artId}">
         <img class="sse-thumb" src="artworks/thumbs/${artId}.avif" alt="" loading="lazy" width="44" height="44">
         <div class="sse-info">
           <span class="sse-title">${escH(title)}</span>
@@ -445,7 +445,7 @@
     const r     = catalog[Math.floor(Math.random() * catalog.length)];
     const artId = r.file ? r.file.replace('.avif', '') : 'art0001';
     return `<a class="sse-item sse-special" role="option" aria-selected="false"
-               data-href="/archive-v1/artwork.html?id=${artId}" href="/archive-v1/artwork.html?id=${artId}">
+               data-href="/artwork.html?id=${artId}" href="/artwork.html?id=${artId}">
       <span class="sse-surprise-icon" aria-hidden="true">↝</span>
       <div class="sse-info">
         <span class="sse-title">Surprise me</span>
@@ -465,7 +465,7 @@
         const yearDisplay = r && (r.year_display || r.year) ? String(r.year_display || r.year) : ''; // Use decade estimates
         const meta  = yearDisplay;
         return `<a class="sse-item" role="option" aria-selected="false"
-            data-href="/archive-v1/artwork.html?id=${id}" href="/archive-v1/artwork.html?id=${id}">
+            data-href="/artwork.html?id=${id}" href="/artwork.html?id=${id}">
           <img class="sse-thumb" src="artworks/thumbs/${id}.avif" alt="" loading="lazy" width="44" height="44">
           <div class="sse-info">
             <span class="sse-title">${escH(title)}</span>
@@ -486,7 +486,7 @@
         const r = catalogMap ? catalogMap[item.id] : null; // Look up in catalog for year_display
         const yearDisplay = r && (r.year_display || r.year) ? String(r.year_display || r.year) : item.year || '';
         return `<a class="sse-item" role="option" aria-selected="false"
-            data-href="/archive-v1/artwork.html?id=${item.id}" href="/archive-v1/artwork.html?id=${item.id}">
+            data-href="/artwork.html?id=${item.id}" href="/artwork.html?id=${item.id}">
           <img class="sse-thumb" src="artworks/thumbs/${item.id}.avif" alt="" loading="lazy" width="44" height="44">
           <div class="sse-info">
             <span class="sse-title">${escH(item.title || item.id)}</span>
