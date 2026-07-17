@@ -102,5 +102,5 @@ echo "════════════════════════�
 echo ""
 echo "Safe to deploy? All checks passed ✓"
 echo ""
-echo "Next step: npm run build:css && git add ... && git commit && git push && bash deploy-hostgator.sh"
+echo "Next step: npm run build:css && git add ... && git commit && git push && bash scripts/deploy-hostgator.sh"
 echo ""

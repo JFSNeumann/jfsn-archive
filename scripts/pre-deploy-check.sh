@@ -2,7 +2,7 @@
 # ─────────────────────────────────────────────────────────────────────────────
 # pre-deploy-check.sh — comprehensive pre-deployment validation
 #
-# Usage: bash pre-deploy-check.sh
+# Usage: bash scripts/pre-deploy-check.sh
 #   Runs all checks before deploying to production
 #   Fails fast on first error (exit code 1 = not ready to deploy)
 #
@@ -82,7 +82,7 @@ else
 fi
 
 # 5. Run audit-nav.sh
-if bash audit-nav.sh > /tmp/audit-nav.log 2>&1; then
+if bash scripts/audit-nav.sh > /tmp/audit-nav.log 2>&1; then
   echo -e "${GREEN}✓${NC} Navigation audit passed"
   ((CHECKS_PASSED++))
 else
@@ -117,14 +117,14 @@ if [ "$CHECKS_FAILED" -eq 0 ]; then
   echo -e "${GREEN}✓ All checks passed!${NC}"
   echo ""
   echo "Ready to deploy:"
-  echo "  1. bash session-end.sh"
+  echo "  1. bash scripts/session-end.sh"
   echo "  2. bash deploy-hostgator.sh"
   echo ""
   exit 0
 else
   echo -e "${RED}✗ ${CHECKS_FAILED} check(s) failed${NC}"
   echo ""
-  echo "Fix issues and re-run: bash pre-deploy-check.sh"
+  echo "Fix issues and re-run: bash scripts/pre-deploy-check.sh"
   echo "DO NOT DEPLOY until all checks pass"
   echo ""
   exit 1

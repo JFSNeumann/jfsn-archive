@@ -5,7 +5,7 @@
 # Combines: git commit, push, and cold backup.
 #
 # Usage:
-#   bash session-end.sh
+#   bash scripts/session-end.sh
 #
 # This script coordinates the full release workflow:
 # 1. Verify no uncommitted changes in critical files
@@ -13,7 +13,7 @@
 # 3. Git push to origin/main
 # 4. Cold backup via backup.sh (→ JEFFS-4TB, with file-count verification)
 #
-# Deploying the live site (jfsn.com) is separate — run bash deploy-hostgator.sh.
+# Deploying the live site (jfsn.com) is separate — run bash scripts/deploy-hostgator.sh.
 # (Netlify mirror + deploy-netlify.sh removed — Netlify is no longer used.)
 #
 # ─────────────────────────────────────────────────────────────────────────────
@@ -87,15 +87,15 @@ fi
 # It does its own drive-mounted/writable checks and a source/dest file-count match,
 # so we don't duplicate (or silently skip, as the old inline rsync did — Session 77).
 log "Creating backup (delegating to backup.sh → JEFFS-4TB)..."
-if bash backup.sh; then
+if bash scripts/backup.sh; then
   success "Backup complete (verified by backup.sh)"
 else
   warning "Backup did not complete — see backup.sh output above (drive not mounted, or file counts differ)"
-  warning "Run 'bash backup.sh' manually once JEFFS-4TB is available"
+  warning "Run 'bash scripts/backup.sh' manually once JEFFS-4TB is available"
 fi
 
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 success "Session end workflow complete!"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "Next: deploy the live site with bash deploy-hostgator.sh"
+echo "Next: deploy the live site with bash scripts/deploy-hostgator.sh"

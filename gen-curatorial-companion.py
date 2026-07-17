@@ -170,7 +170,7 @@ TEMPLATE = """<!DOCTYPE html>
 <meta property="og:type" content="website"/>
 <meta property="og:title" content="Curatorial Companion — Jeffrey F. S. Neumann"/>
 <meta property="og:description" content="A museum-style companion volume to the JFSN Archive — methodology, essay, gallery panels, and twenty-five verified works."/>
-<meta property="og:image" content="https://jfsn.com/og-card.jpg"/>
+<meta property="og:image" content="https://jfsn.com/assets/og-card.jpg"/>
 <meta property="og:url" content="https://jfsn.com/curatorial-companion.html"/>
 <script type="application/ld+json">
 {{"@context":"https://schema.org","@type":"CreativeWork","name":"JFSN Archive — Curatorial Companion","url":"https://jfsn.com/curatorial-companion.html","description":"A museum-style companion volume to the JFSN Archive.","creator":{{"@type":"Person","name":"Jeffrey F. S. Neumann","url":"https://jfsn.com"}}}}
