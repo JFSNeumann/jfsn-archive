@@ -11,6 +11,36 @@
 <link rel="preload" href="/fonts/playfair-display-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script>document.documentElement.classList.add('js')</script>
 <style>
+  /* Spatial storytelling: THE GUERNICA PASSAGE arrives as a considered
+     still — structure settling into place, not rushing in. Matches the
+     entrance-choreography pattern shared by Flooded Wing / Hall of
+     Openings / The Studio (body fade, staggered HUD, staggered content),
+     previously missing here; #door .fact's existing fade is unchanged. */
+  @media (prefers-reduced-motion: no-preference) {
+    .js body{animation:guernica-enter .35s ease forwards}
+    @keyframes guernica-enter{
+      0%{opacity:0}
+      100%{opacity:1}
+    }
+
+    header.hud .who{animation:hud-fade-slow .35s ease .1s forwards;opacity:0}
+    header.hud .room-name{animation:hud-fade-slow .35s ease .15s forwards;opacity:0}
+    header.hud a.caps{animation:hud-fade-slow .35s ease .2s forwards;opacity:0}
+    #counter{animation:hud-fade-slow .35s ease .25s forwards;opacity:0}
+    @keyframes hud-fade-slow{
+      0%{opacity:0}
+      100%{opacity:1}
+    }
+
+    #door h1{animation:fadeInUp .8s ease .3s forwards;opacity:0}
+    @keyframes fadeInUp{
+      from{opacity:0;transform:translateY(12px)}
+      to{opacity:1;transform:none}
+    }
+
+    #intro{animation:content-fade-slow .45s ease .2s forwards;opacity:0}
+    @keyframes content-fade-slow{from{opacity:0}to{opacity:1}}
+  }
 
   #room-veil{position:fixed;inset:0;background:#0c0a09;opacity:0;pointer-events:none;transition:opacity .22s ease;z-index:99}
   #room-veil.on{opacity:1;pointer-events:auto}

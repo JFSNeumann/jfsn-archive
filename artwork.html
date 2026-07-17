@@ -155,8 +155,16 @@ addEventListener('DOMContentLoaded', () => {
   }
   #walk a{
     pointer-events:auto;font-size:10px;letter-spacing:.2em;
-    background:var(--room);padding:8px 4px;
+    background:var(--room);padding:8px 4px;color:var(--dim);
+    transition:color .25s ease,transform .25s ease;
+    display:inline-block;transform:translateY(0);
   }
+  #walk a:hover,
+  #walk a:focus-visible{color:var(--ink)}
+  #walk a#prev:hover,
+  #walk a#prev:focus-visible{transform:translateX(-2px)}
+  #walk a#next:hover,
+  #walk a#next:focus-visible{transform:translateX(2px)}
   #walk .hint{align-self:center;color:var(--faint);font-size:9px;letter-spacing:.24em}
   @media (max-width:640px){
     #walk .hint{display:none}
@@ -338,8 +346,8 @@ addEventListener('DOMContentLoaded', () => {
     const studying = document.getElementById('lightbox').classList.contains('on');
     if (e.key === 'Escape') closeLB();
     else if (studying) return; // arrows stay with the study view
-    else if (e.key === 'ArrowLeft' && idx > 0) location.href = prev.href;
-    else if (e.key === 'ArrowRight' && idx < works.length - 1) location.href = next.href;
+    else if (e.key === 'ArrowLeft' && idx > 0) prev.click();
+    else if (e.key === 'ArrowRight' && idx < works.length - 1) next.click();
   });
 
   // ---------- copy link ----------
