@@ -152,6 +152,12 @@ addEventListener('DOMContentLoaded', () => {
     display:grid;
     grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
     gap:24px 18px;
+    transition:opacity .15s ease;
+  }
+  #grid.replacing{opacity:.35}
+  @media (prefers-reduced-motion: no-preference){
+    .card.card-enter{animation:card-in .35s ease backwards}
+    @keyframes card-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
   }
   /* Archive: Study Room Intimacy — leaning in to examine works */
   .card{color:var(--ink);position:relative}
@@ -315,6 +321,7 @@ addEventListener('DOMContentLoaded', () => {
   const state = { medium: new Set(), decade: new Set(), orientation: new Set(), q: '', sort: 'year-desc' };
   const PAGE = 60;
   let shown = PAGE;
+  const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function esc(s){
     return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
@@ -364,20 +371,8 @@ addEventListener('DOMContentLoaded', () => {
   const countLabel = document.getElementById('count-label');
   const clearBtn = document.getElementById('clear-filters');
 
-  function render(){
-    const list = filtered();
-    countLabel.textContent = list.length.toLocaleString('en-US') +
-      (list.length === works.length ? ' WORKS' : ' OF ' + works.length.toLocaleString('en-US'));
-    const anyActive = state.medium.size || state.decade.size || state.orientation.size || state.q;
-    clearBtn.hidden = !anyActive;
-    const nChips = state.medium.size + state.decade.size + state.orientation.size;
-    const ft = document.getElementById('filters-toggle');
-    ft.textContent = nChips ? '[ FILTERS · ' + nChips + ' ]' : '[ FILTERS ]';
-    ft.classList.toggle('active', nChips > 0);
-    empty.classList.toggle('on', list.length === 0);
-
-    const slice = list.slice(0, shown);
-    grid.innerHTML = slice.map((w, idx) => `
+  function cardHTML(w, idx){
+    return `
       <figure class="card">
         <a href="artwork.html?id=${w.i}">
           <img src="/artworks/thumbs/${w.i}.avif" srcset="/artworks/mini/${w.i}.avif 100w, /artworks/thumbs/${w.i}.avif 400w, /artworks/medium/${w.i}.avif 900w" sizes="min(45vw, 210px)" alt="${esc(w.t)}"${idx < 12 ? '' : ' loading="lazy"'} decoding="async"
@@ -389,8 +384,62 @@ addEventListener('DOMContentLoaded', () => {
           </figcaption>
         </a>
       </figure>
-    `).join('');
-    loadMore.hidden = shown >= list.length;
+    `;
+  }
+
+  // Marks freshly-added cards to fade+rise in with a short stagger,
+  // capped so a large batch never reads as a delay.
+  function markEntrance(container){
+    if (REDUCED) return;
+    const cards = container.querySelectorAll('.card');
+    cards.forEach((card, i) => {
+      card.classList.add('card-enter');
+      card.style.animationDelay = Math.min(i * 20, 300) + 'ms';
+    });
+  }
+
+  function renderMeta(list){
+    countLabel.textContent = list.length.toLocaleString('en-US') +
+      (list.length === works.length ? ' WORKS' : ' OF ' + works.length.toLocaleString('en-US'));
+    const anyActive = state.medium.size || state.decade.size || state.orientation.size || state.q;
+    clearBtn.hidden = !anyActive;
+    const nChips = state.medium.size + state.decade.size + state.orientation.size;
+    const ft = document.getElementById('filters-toggle');
+    ft.textContent = nChips ? '[ FILTERS · ' + nChips + ' ]' : '[ FILTERS ]';
+    ft.classList.toggle('active', nChips > 0);
+    empty.classList.toggle('on', list.length === 0);
+  }
+
+  // append: true for Load More (only the new slice is added, existing
+  // cards untouched); false for search/filter/sort/clear (the result set
+  // itself changed, so the whole grid cross-fades to the new content).
+  function render(append){
+    const list = filtered();
+    renderMeta(list);
+
+    if (append) {
+      const prevShown = shown - PAGE < 0 ? 0 : shown - PAGE;
+      const slice = list.slice(prevShown, shown);
+      const frag = document.createElement('div');
+      frag.innerHTML = slice.map((w, i) => cardHTML(w, prevShown + i)).join('');
+      markEntrance(frag);
+      while (frag.firstChild) grid.appendChild(frag.firstChild);
+      loadMore.hidden = shown >= list.length;
+      return;
+    }
+
+    const slice = list.slice(0, shown);
+    const swap = () => {
+      grid.innerHTML = slice.map((w, idx) => cardHTML(w, idx)).join('');
+      markEntrance(grid);
+      loadMore.hidden = shown >= list.length;
+    };
+    if (REDUCED) { swap(); return; }
+    grid.classList.add('replacing');
+    setTimeout(() => {
+      swap();
+      requestAnimationFrame(() => grid.classList.remove('replacing'));
+    }, 150);
   }
 
   document.getElementById('search').addEventListener('input', e => {
@@ -399,7 +448,7 @@ addEventListener('DOMContentLoaded', () => {
   document.getElementById('sort').addEventListener('change', e => {
     state.sort = e.target.value; render();
   });
-  loadMore.addEventListener('click', () => { shown += PAGE; render(); });
+  loadMore.addEventListener('click', () => { shown += PAGE; render(true); });
   function clearAll(){
     state.medium.clear(); state.decade.clear(); state.orientation.clear();
     state.q = ''; document.getElementById('search').value = '';
@@ -413,7 +462,7 @@ addEventListener('DOMContentLoaded', () => {
     this.setAttribute('aria-expanded', open);
   });
 
-  render();
+  render(true); // initial load: append into the empty grid, no fade-from-nothing
 })();
 </script>
 
