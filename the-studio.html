@@ -171,10 +171,23 @@ addEventListener('DOMContentLoaded', () => {
     margin-top:16px;height:2px;background:var(--frame);
     position:relative;cursor:pointer;
     padding:8px 0;background-clip:content-box;
+    transition:height .2s ease;
   }
   #seek .fill{
     position:absolute;left:0;top:8px;height:2px;width:0;
     background:var(--accent);
+  }
+  /* A visible scrub handle only on hover/focus — signals "this is
+     draggable" for the archive's first voice recording, which otherwise
+     looks like a static progress line. */
+  #seek .fill::after{
+    content:'';position:absolute;top:50%;right:-4px;
+    width:9px;height:9px;border-radius:50%;background:var(--accent);
+    transform:translateY(-50%) scale(0);transition:transform .2s ease;
+  }
+  @media (prefers-reduced-motion: no-preference){
+    #seek:hover,#seek:focus-within{height:4px}
+    #seek:hover .fill::after,#seek:focus-within .fill::after{transform:translateY(-50%) scale(1)}
   }
   #voice .note{margin-top:18px;color:var(--faint)}
 
@@ -219,10 +232,22 @@ addEventListener('DOMContentLoaded', () => {
 
   /* ---------- plaque ---------- */
   /* the river, reprised: The Current's color band at rest, one last time */
-  #river-still{display:none}
-  .js #river-still{
-    display:block;width:min(560px,86vw);height:24px;margin:0 auto 44px;
+  #river-wrap{display:none}
+  .js #river-wrap{
+    display:block;position:relative;width:min(560px,86vw);margin:0 auto 44px;
   }
+  #river-still{display:block;width:100%;height:24px;cursor:crosshair}
+  /* Hover reveal: which decade a point in the band belongs to — the same
+     live year readout current.html carries while scrolling the river,
+     echoed here now that the river is at rest. */
+  #river-tip{
+    position:absolute;bottom:100%;margin-bottom:8px;
+    transform:translateX(-50%);white-space:nowrap;
+    background:#0c0a09;border:1px solid var(--frame);
+    padding:4px 8px;font-size:9px;color:var(--dim);
+    opacity:0;pointer-events:none;transition:opacity .15s ease;
+  }
+  #river-tip.on{opacity:1}
   #plaque{
     min-height:88vh;display:flex;flex-direction:column;
     justify-content:center;align-items:center;text-align:center;gap:36px;
@@ -234,7 +259,31 @@ addEventListener('DOMContentLoaded', () => {
   }
   #plaque .line em{color:var(--accent);font-style:italic}
   #plaque nav{display:flex;flex-direction:column;gap:16px;margin-top:18px}
-  #plaque nav a{font-size:11px;letter-spacing:.22em}
+  /* Matches the homepage door-nav's #vault language: this is the museum's
+     actual ending — "the museum never existed, the record does" — and
+     shouldn't be the one room where the closing moment is left flat. */
+  #plaque nav a{
+    position:relative;display:inline-block;
+    font-size:11px;letter-spacing:.22em;color:var(--ink);
+    border:1px solid var(--frame);padding:14px 20px;
+    transition:all .3s ease;overflow:hidden;
+  }
+  #plaque nav a::before{
+    content:'';position:absolute;inset:0;
+    background:var(--accent);opacity:0;z-index:-1;
+    transition:opacity .3s ease;
+  }
+  @media (prefers-reduced-motion: no-preference){
+    #plaque nav a:hover{
+      border-color:var(--dim);transform:translateY(-2px);
+      box-shadow:0 4px 12px rgba(0,0,0,.08);
+    }
+    #plaque nav a:hover::before{opacity:.04}
+    #plaque nav a:focus-visible{
+      outline:2px solid var(--accent);outline-offset:4px;transform:translateY(-2px);
+    }
+    #plaque nav a{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><line x1="10" y1="2" x2="10" y2="18" stroke="%23FF6600" stroke-width="1.5" stroke-linecap="round"/><polygon points="10,18 8,14 12,14" fill="%23FF6600"/></svg>') 10 10,auto}
+  }
 </style>
 </head>
 <body>
@@ -311,7 +360,10 @@ addEventListener('DOMContentLoaded', () => {
 </section>
 
 <section id="plaque">
-  <canvas id="river-still" class="reveal-el" aria-label="The river of all works, drawn once more at rest — fifty years of color, from the 1970s to today."></canvas>
+  <div id="river-wrap" class="reveal-el">
+    <canvas id="river-still" aria-label="The river of all works, drawn once more at rest — fifty years of color, from the 1970s to today."></canvas>
+    <div id="river-tip" class="caps" aria-hidden="true"></div>
+  </div>
   <div class="line reveal-el">The museum never existed.<br>The record <em>does</em>.</div>
   <nav class="reveal-el">
     <a href="current.html">[ BEGIN AGAIN — THE CURRENT → ]</a>
@@ -391,6 +443,23 @@ addEventListener('DOMContentLoaded', () => {
     drawRiver();
   }).catch(() => {}); // static 1,084 stands if fetch fails
   window.addEventListener('resize', drawRiver);
+
+  // Hover-to-reveal decade tooltip on the resting river band
+  const riverWrap = document.getElementById('river-wrap');
+  const riverTip = document.getElementById('river-tip');
+  if (riverWrap && riverTip && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    riverWrap.addEventListener('mousemove', e => {
+      if (!riverWorks || !riverWorks.length) return;
+      const r = riverWrap.getBoundingClientRect();
+      const f = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+      const w = riverWorks[Math.min(riverWorks.length - 1, Math.floor(f * riverWorks.length))];
+      const d = Math.floor(w.y / 10) * 10;
+      riverTip.textContent = d + 'S';
+      riverTip.style.left = (f * 100) + '%';
+      riverTip.classList.add('on');
+    });
+    riverWrap.addEventListener('mouseleave', () => riverTip.classList.remove('on'));
+  }
   document.getElementById('today-date').textContent =
     new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).toUpperCase();
 
@@ -405,10 +474,32 @@ addEventListener('DOMContentLoaded', () => {
     ptr = 0;
     show();
   }
+  // Count-up: the record's one number framed as exact, not an estimate
+  // ("THE COUNT IS EXACT") — earns a count from 0 rather than just
+  // appearing, timed to the same reveal-on-walk moment as the rest of
+  // this section.
+  const countEl = document.getElementById('count');
+  const countTarget = countEl ? countEl.closest('.reveal-el') : null;
+  let counted = false;
+  function countUp(){
+    if (counted || !countEl) return;
+    counted = true;
+    const n = (riverWorks && riverWorks.length) || 1084;
+    const dur = 1200, t0 = performance.now();
+    function tick(now){
+      const p = Math.min(1, (now - t0) / dur);
+      const eased = 1 - Math.pow(1 - p, 3);
+      countEl.textContent = Math.round(eased * n).toLocaleString('en-US');
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
   function show(){
     const limit = scrollY + innerHeight * 0.92;
     while (ptr < byTop.length && byTop[ptr][0] < limit) {
       byTop[ptr][1].classList.add('seen');
+      if (byTop[ptr][1] === countTarget) countUp();
       ptr++;
     }
   }

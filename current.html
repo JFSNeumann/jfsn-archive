@@ -248,6 +248,17 @@ addEventListener('DOMContentLoaded', () => {
   #rooms-sheet a{
     font-size:12px;letter-spacing:.2em;color:var(--ink);
     text-decoration:none;
+    display:block;padding:4px 6px;margin:-4px -6px;
+    transition:background-color .15s ease,transform .15s ease;
+  }
+  /* Same touch-feedback vocabulary as the homepage door-nav: this sheet is
+     mobile-only (see the max-width:640px block below), so it needs its
+     own tap response since there's no hover state to carry it. */
+  @media (hover:none) and (pointer:coarse){
+    #rooms-sheet a:active{
+      background-color:color-mix(in srgb, var(--accent) 6%, transparent);
+      transform:scale(.98);
+    }
   }
   #rooms-sheet .sub{display:block;margin-top:3px;font-size:10px;letter-spacing:.14em;color:var(--dim)}
   @media (max-width:640px){
