@@ -144,6 +144,12 @@ addEventListener('DOMContentLoaded', () => {
     max-width:min(560px,86vw);max-height:42vh;
   }
   #work figcaption{margin-top:16px}
+  /* The plaque is the one piece of real information on the poster — worth
+     a small invitation to read it, not just decoration underneath the work. */
+  #work figcaption.caps{transition:color .3s ease}
+  @media (hover:hover){
+    #work:hover figcaption.caps{color:var(--ink)}
+  }
 
   /* the flankers exist only on the wide desktop wall; everywhere else the
      entrance is the single-work poster, untouched. */
@@ -185,8 +191,24 @@ addEventListener('DOMContentLoaded', () => {
     border:1px solid var(--frame);border-left:0px solid transparent;
     padding:20px 22px 19px 30px;
     font-size:11px;letter-spacing:.24em;color:var(--ink);
-    transition:border-left-width .3s ease;
+    transition:border-left-width .3s ease,opacity .3s ease,background-color .15s ease,transform .15s ease;
     overflow:hidden;
+  }
+
+  /* Touch gets its own feedback vocabulary instead of just losing the
+     desktop border-grammar silently: a brief warm tap response confirms
+     the press before navigation, since there's no hover state to carry it. */
+  @media (hover:none) and (pointer:coarse){
+    #doors a:active{
+      background-color:color-mix(in srgb, var(--accent) 6%, transparent);
+      transform:scale(.98);
+    }
+  }
+
+  /* The path, not five buttons: hovering one row dims the rest slightly,
+     rather than each row reacting in isolation. */
+  @media (hover:hover){
+    #doors:has(a:hover) a:not(:hover){opacity:.7}
   }
 
   /* Sequence marker (I–V): the row list is a path, not a menu */
@@ -402,6 +424,14 @@ addEventListener('DOMContentLoaded', () => {
     transition:opacity .3s ease;
   }
 
+  /* Three different depths, not three identical buttons: the archive is a
+     data tool (tightest tracking, most neutral), working history is
+     narrative (a touch more air), about is the person (the widest,
+     warmest tracking — the most human of the three). */
+  #vault a:nth-child(1){letter-spacing:.18em}
+  #vault a:nth-child(2){letter-spacing:.22em}
+  #vault a:nth-child(3){letter-spacing:.26em;color:var(--dim)}
+
   @media (prefers-reduced-motion: no-preference) {
     #vault a:hover::before{opacity:.04}
   }
@@ -544,6 +574,22 @@ addEventListener('DOMContentLoaded', () => {
   const doorsNav = document.getElementById('doors');
   if (!doorsNav) return;
 
+  // Favicon pulse on room-exit: a tiny signal, for anyone glancing at a
+  // backgrounded tab, that something just happened. Restored on bfcache
+  // return (pageshow), same pattern as #room-veil below.
+  const favicon = document.querySelector('link[rel="icon"]');
+  const originalFaviconHref = favicon ? favicon.getAttribute('href') : null;
+  const pulseFaviconHref = 'data:image/svg+xml,' + encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">' +
+    '<circle cx="16" cy="16" r="13" fill="#FF6600"/></svg>'
+  );
+  function pulseFavicon() {
+    if (favicon) favicon.setAttribute('href', pulseFaviconHref);
+  }
+  addEventListener('pageshow', e => {
+    if (e.persisted && favicon && originalFaviconHref) favicon.setAttribute('href', originalFaviconHref);
+  });
+
   // Haptic feedback helper (#10): subtle vibration on supported devices
   function hapticPulse(duration) {
     if (navigator.vibrate) {
@@ -589,6 +635,7 @@ addEventListener('DOMContentLoaded', () => {
 
     // Haptic feedback on click
     hapticPulse(20);
+    pulseFavicon();
 
     // Spatial storytelling: veil inherits room color for visual continuity.
     // #room-veil is created by the sitewide page-transition script (separate
