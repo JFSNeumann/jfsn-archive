@@ -1,5 +1,5 @@
 # JFSN — Improvement List
-**Updated:** 2026-07-18
+**Updated:** 2026-07-18 (later)
 
 A living list. Add to it. Cross things off. This is the backlog.
 
@@ -32,8 +32,7 @@ Nothing currently queued.
 
 ## 🟢 Nice to have, low urgency
 
-### Technical
-- [ ] **series-index.html per-theme icons** — extend the session-35 icon vocabulary (inline feather SVGs) to the 8 series/themes, but ONLY if they read as earned rather than literal. Review with Jeff first.
+Nothing currently queued.
 
 ---
 
