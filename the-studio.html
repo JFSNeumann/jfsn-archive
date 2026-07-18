@@ -135,6 +135,14 @@ addEventListener('DOMContentLoaded', () => {
     display:flex;flex-direction:column;justify-content:center;
     align-items:center;gap:28px;position:relative;z-index:1;
   }
+  /* Elliptical fade behind the text, dark at center fading to fully
+     transparent at the edge — keeps the title readable over the now
+     fully-visible rotating photos without a hard box. */
+  .hero-content::before{
+    content:'';position:absolute;z-index:-1;
+    inset:-12% -18%;
+    background:radial-gradient(ellipse at center, rgba(12,10,9,.75) 0%, rgba(12,10,9,.5) 45%, transparent 75%);
+  }
   #door h1{
     font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
     font-size:clamp(40px,7.5vw,84px);line-height:1.15;
