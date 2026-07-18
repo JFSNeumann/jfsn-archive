@@ -137,11 +137,23 @@ addEventListener('DOMContentLoaded', () => {
   }
   /* Elliptical fade behind the text, dark at center fading to fully
      transparent at the edge — keeps the title readable over the now
-     fully-visible rotating photos without a hard box. */
+     fully-visible rotating photos without a hard box. Scales in from
+     smaller on load rather than just appearing at full size. */
   .hero-content::before{
     content:'';position:absolute;z-index:-1;
     inset:-90% -18%;
-    background:radial-gradient(ellipse at center, rgba(12,10,9,.75) 0%, rgba(12,10,9,.5) 45%, transparent 75%);
+    background:radial-gradient(ellipse at center, rgba(12,10,9,.94) 0%, rgba(12,10,9,.7) 45%, transparent 75%);
+    transform:scale(.5);opacity:0;
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .hero-content::before{animation:hero-fade-in 1.4s cubic-bezier(.2,.8,.3,1) .2s forwards}
+    @keyframes hero-fade-in{
+      0%{transform:scale(.5);opacity:0}
+      100%{transform:scale(1);opacity:1}
+    }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hero-content::before{transform:scale(1);opacity:1}
   }
   #door h1{
     font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
