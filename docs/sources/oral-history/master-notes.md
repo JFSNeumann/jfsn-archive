@@ -2,8 +2,8 @@
 
 **Project:** Jeffrey F. S. Neumann Archive  
 **Purpose:** Preserve memories, stories, and context that exist only in Jeff's mind. This document is a primary source, not a summary. Do not rewrite it into polished prose.  
-**Last updated:** 2026-06-11  
-**Sessions captured:** 2026-06-08, 2026-06-09, 2026-06-09 (session 2), 2026-06-09 (session 3 — analysis + drafts), 2026-06-09 (session 4 — site implementation + checkpoint), 2026-06-10 (analysis, §§20–24), 2026-06-11 (creator corrections, §25)
+**Last updated:** 2026-07-18  
+**Sessions captured:** 2026-06-08, 2026-06-09, 2026-06-09 (session 2), 2026-06-09 (session 3 — analysis + drafts), 2026-06-09 (session 4 — site implementation + checkpoint), 2026-06-10 (analysis, §§20–24), 2026-06-11 (creator corrections, §25), 2026-07-05 (Mr. SNOWmann correction, §28), 2026-07-18 (Creator Decision Recordings, first session, §29)
 
 ---
 
@@ -823,3 +823,65 @@ Asked directly whether the wall photographs are his own street paste-ups, Photos
 ### What remains open
 
 The general §23 rule still applies to everything this doesn't cover: which specific walls, which city (the Mr_SNOWmann site's own content suggests Cleveland-area, unconfirmed by direct question), and how many separate tagging occasions these 2015 photographs actually document. Not re-asked here — available for a future sitting if Jeff wants to go further, never required.
+
+---
+
+## 29. Creator Decision Recordings — First Session — 2026-07-18
+
+**Source:** Direct testimony from Jeff, 2026-07-18, first session of a new format — three cataloged works selected as memory prompts, one concrete question per work ("what happened here," "what were you trying to do," "what made you keep it"), asked one at a time with an optional follow-up. Purpose: recover first-person decision/accident/direction-change memories tied to individual works, which the catalog (machine-written descriptions only) does not and cannot contain. A clarification pass followed in the same session to resolve ambiguity in the initial answers, without resolving the underlying uncertainty itself.
+
+This is a new category of entry in this document: **memory prompted by a specific artwork**, not a general biographical question. Mark clearly, per work, what is Creator Testimony (his words), Creator Context (what those words add without becoming a metadata correction), and Unresolved (what remains genuinely uncertain). Existing Catalog Record is given only where it conflicts with testimony.
+
+### art0585 — Untitled (Cube Grid)
+
+**Existing Catalog Record:** year 1970, work_type "painting," composition "all-over grid of rendered cube forms," no materials listed.
+
+**Creator Testimony (verbatim):**
+> early sculpture work done in art school 76-78? large works - about 6-12 versions and some with large sheets of tempered glass - good stuff
+
+> moved into found materials / mixed media / vacuum forming after that
+
+Clarification, asked whether he recognized this specific photograph as one of those sculptures:
+> brings that sculpture series to mind, not sure this exact one
+
+**Creator Context:** A sculpture series existed — art school, approximately 1976–78, 6–12 versions, some using large sheets of tempered glass — followed by a shift toward found materials, mixed media, and vacuum forming. This is real, dated testimony about a body of work and a transition in method.
+
+**Unresolved:** Whether art0585 (1970, painting, per the catalog) is one of the 1976–78 sculptures is explicitly *not* confirmed. Jeff stated the photograph brought the series to mind but that he was not sure this exact work belongs to it. **The 1976–78 sculpture-series memory is preserved independently of art0585 and must not be treated as describing this specific catalog record.** The catalog's 1970/painting entry and the 1976–78/sculpture memory remain two separate, unconnected facts pending future evidence.
+
+### art0518 — Buy Me (Targets and Planes)
+
+**Existing Catalog Record:** year 1990, work_type "collage," materials paper/tape/ink/paint.
+
+**Creator Testimony (verbatim):**
+> gurenica / football / chess / target practice / war references from tv news
+
+> what made you call it "Buy Me"? - desperate=)
+
+> not selling anything/trying to
+
+Clarification, asked whether he meant he was trying to sell work but nothing was selling:
+> yes
+
+**Creator Context:** The title "Buy Me" reflects an attempt to sell work at a time when nothing was selling — stated plainly, with "desperate=)" as his own characterization, not an interpretation added here. Subject matter named in his own words: Guernica, football, chess, target practice, and war references drawn from television news. This title recurs on two later works (1990s cataloging places this instance first; the title reappears in 2010 and 2012 per the catalog) — this session did not separately probe why he returned to the title beyond the general sales context above.
+
+**Unresolved:** None outstanding on this work beyond what's recorded above.
+
+### art0262 — Suspended Disc Machine
+
+**Existing Catalog Record:** year 1990, work_type "collage," `favorite: true`, `featured: false`. The schema has no field for physical survival/location status — every catalog entry implicitly presumes the work is accounted for.
+
+**Creator Testimony (verbatim):**
+> creative period, i like this piece - football/war/guernica, bombing/overhead view bombers/drones
+
+> wanted to keep everything, not sure what happened to this one/might have been thrown out during massive cleanup
+
+Clarification, asked whether he meant the physical artwork may no longer exist despite its surviving photograph:
+> i might still have this one
+
+**Creator Context:** Subject matter in his own words — football, war, Guernica, bombing, overhead-view bombers and drones. Made during what he calls "a creative period." He states a general disposition ("wanted to keep everything") rather than a specific memory of this piece's fate.
+
+**Unresolved:** **Survival status remains genuinely unresolved.** Jeff does not know whether this specific piece still exists physically or was discarded in a cleanup; his final answer ("i might still have this one") raises the possibility it survives without confirming it. Do not add a survival/status field to the schema on the strength of this one uncertain case — this is a single open question about a single work, not evidence of a broader pattern requiring a schema change.
+
+### Session note
+
+No production files were modified as part of this session: `config/catalog.json`, artwork metadata, HTML, and templates are untouched. This entry is the sole output.
