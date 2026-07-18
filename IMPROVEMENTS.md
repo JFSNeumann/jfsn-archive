@@ -1,5 +1,5 @@
 # JFSN — Improvement List
-**Updated:** 2026-07-17
+**Updated:** 2026-07-18
 
 A living list. Add to it. Cross things off. This is the backlog.
 
@@ -7,7 +7,7 @@ A living list. Add to it. Cross things off. This is the backlog.
 
 ## 🔴 Do soon
 
-- [ ] **Ingest new work** — drop photos into `artworks/inbox/`, run `bash scripts/add-works.sh`. Pipeline is ready.
+Nothing currently queued.
 
 ---
 
