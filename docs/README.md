@@ -20,3 +20,5 @@ The JFSN Archive documentation is organized into four categories, each with a si
 **Understanding the mission?** → [governance/JFSN-MISSION.md](governance/JFSN-MISSION.md)
 
 **Recovery procedures?** → [current/DISASTER-RECOVERY-CHECKLIST.md](current/DISASTER-RECOVERY-CHECKLIST.md)
+
+**Fixing something broken, or proposing something new?** These require different authority. A defect (crash, missing state, broken transition) is fixed directly — see [current/IMPLEMENTATION-VERIFICATION-STANDARD.md](current/IMPLEMENTATION-VERIFICATION-STANDARD.md) for how to verify and report it. A new interaction or design concept is not self-authorizing — see [governance/STEWARDSHIP-DECLARATION.md](governance/STEWARDSHIP-DECLARATION.md) for what's required before it may be implemented.

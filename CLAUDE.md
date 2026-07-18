@@ -28,6 +28,8 @@ This file is operational guidance for AI coding sessions on this repository — 
 
 **Decisions: design vs. process.** Design and motion calls on this site are Jeff's to make — he directs them. Code, performance, and process calls are not — make those directly, don't ask. The distinguishing question: would changing this alter what the site *does or looks like* (ask Jeff), or just *how reliably/quickly it does it* (fix it)?
 
+Fixing a demonstrated defect (a crash, a missing state, a broken transition) is process — verify it and fix it directly, no permission needed. Adding a new interaction concept the site doesn't already have (a new motion, a new affordance, a new choreography) is design, and per [`docs/governance/STEWARDSHIP-DECLARATION.md`](docs/governance/STEWARDSHIP-DECLARATION.md) the design phase is closed: it does not reopen on opinion, however well-argued, including a critique Jeff himself asked for. It reopens only on evidence from real visitor observation, or preservation necessity (a format dying, a link breaking). Before implementing a proposed *addition* rather than a *correction*, name which of those two triggers applies — don't infer authorization from having been asked to propose or critique.
+
 ## Documentation architecture
 
 `docs/` is organized into four categories, each with one rule — see [`docs/README.md`](docs/README.md) for the full map:
