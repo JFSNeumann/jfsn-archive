@@ -106,7 +106,10 @@ addEventListener('DOMContentLoaded', () => {
   }
   #search::placeholder{color:var(--faint)}
   #search:focus{outline:none;border-color:var(--accent)}
-  #count-label{white-space:nowrap}
+  #count-label{white-space:nowrap;transition:color .5s ease}
+  /* A brief flash confirms the count actually responded to the keystroke/
+     filter, rather than the number just silently changing underneath. */
+  #count-label.tick{color:var(--accent);transition:none}
   #sort{
     background:transparent;border:1px solid var(--frame);color:var(--dim);
     padding:11px 12px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
@@ -227,8 +230,33 @@ addEventListener('DOMContentLoaded', () => {
   #load-more[hidden]{display:none}
 
   #exit-note{padding:0 0 14vh;text-align:center}
-  #exit-note nav{margin-top:18px;display:flex;flex-direction:column;gap:12px}
-  #exit-note nav a{font-size:11px;letter-spacing:.2em}
+  #exit-note nav{margin-top:18px;display:flex;flex-direction:column;gap:16px}
+
+  /* Matches the homepage door-nav's #vault language, shared by both of
+     this page's room-exit navs (the one under the door, and the one at
+     the very end) rather than leaving either as flat text links. */
+  #room-nav a,#exit-note nav a{
+    position:relative;display:inline-block;
+    font-size:11px;letter-spacing:.2em;color:var(--ink);
+    border:1px solid var(--frame);padding:14px 20px;
+    transition:all .3s ease;overflow:hidden;
+  }
+  #room-nav a::before,#exit-note nav a::before{
+    content:'';position:absolute;inset:0;
+    background:var(--accent);opacity:0;z-index:-1;
+    transition:opacity .3s ease;
+  }
+  @media (prefers-reduced-motion: no-preference){
+    #room-nav a:hover,#exit-note nav a:hover{
+      border-color:var(--dim);transform:translateY(-2px);
+      box-shadow:0 4px 12px rgba(0,0,0,.08);
+    }
+    #room-nav a:hover::before,#exit-note nav a:hover::before{opacity:.04}
+    #room-nav a:focus-visible,#exit-note nav a:focus-visible{
+      outline:2px solid var(--accent);outline-offset:4px;transform:translateY(-2px);
+    }
+    #room-nav a,#exit-note nav a{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><line x1="10" y1="2" x2="10" y2="18" stroke="%23FF6600" stroke-width="1.5" stroke-linecap="round"/><polygon points="10,18 8,14 12,14" fill="%23FF6600"/></svg>') 10 10,auto}
+  }
 </style>
 </head>
 <body>
@@ -248,12 +276,12 @@ addEventListener('DOMContentLoaded', () => {
   flagged</em> — the same honesty, without the choreography.</p>
 </section>
 
-<nav style="text-align:center;padding:4vh clamp(20px,6vw,80px);display:flex;flex-direction:column;gap:10px;align-items:center">
-  <a href="index.html" style="font-size:11px;letter-spacing:.22em">[ THE MUSEUM → ]</a>
-  <a href="guernica-passage.html" style="font-size:11px;letter-spacing:.22em">[ THE GUERNICA PASSAGE → ]</a>
-  <a href="flooded-wing.html" style="font-size:11px;letter-spacing:.22em">[ THE FLOODED WING → ]</a>
-  <a href="current.html" style="font-size:11px;letter-spacing:.22em">[ THE CURRENT → ]</a>
-  <a href="the-studio.html" style="font-size:11px;letter-spacing:.22em">[ THE STUDIO → ]</a>
+<nav id="room-nav" style="text-align:center;padding:4vh clamp(20px,6vw,80px);display:flex;flex-direction:column;gap:16px;align-items:center">
+  <a href="index.html">[ THE MUSEUM → ]</a>
+  <a href="guernica-passage.html">[ THE GUERNICA PASSAGE → ]</a>
+  <a href="flooded-wing.html">[ THE FLOODED WING → ]</a>
+  <a href="current.html">[ THE CURRENT → ]</a>
+  <a href="the-studio.html">[ THE STUDIO → ]</a>
 </nav>
 
 <div id="controls">
@@ -410,8 +438,15 @@ addEventListener('DOMContentLoaded', () => {
   }
 
   function renderMeta(list){
-    countLabel.textContent = list.length.toLocaleString('en-US') +
+    const newCountText = list.length.toLocaleString('en-US') +
       (list.length === works.length ? ' WORKS' : ' OF ' + works.length.toLocaleString('en-US'));
+    if (newCountText !== countLabel.textContent && countLabel.textContent !== '') {
+      countLabel.classList.remove('tick');
+      void countLabel.offsetWidth; // restart the flash if it's already mid-transition
+      countLabel.classList.add('tick');
+      requestAnimationFrame(() => requestAnimationFrame(() => countLabel.classList.remove('tick')));
+    }
+    countLabel.textContent = newCountText;
     const anyActive = state.medium.size || state.decade.size || state.orientation.size || state.q;
     clearBtn.hidden = !anyActive;
     const nChips = state.medium.size + state.decade.size + state.orientation.size;
