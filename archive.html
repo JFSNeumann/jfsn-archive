@@ -113,7 +113,8 @@ addEventListener('DOMContentLoaded', () => {
   }
   #sort option{background:var(--room);color:var(--ink)}
 
-  #filter-groups{display:flex;flex-wrap:wrap;gap:26px;margin-top:16px}
+  #filter-groups{margin-top:16px}
+  #filter-groups-inner{display:flex;flex-wrap:wrap;gap:26px}
   .fgroup{display:flex;flex-direction:column;gap:8px}
   .fgroup .label{color:var(--faint)}
   .chips{display:flex;flex-wrap:wrap;gap:8px}
@@ -140,10 +141,18 @@ addEventListener('DOMContentLoaded', () => {
   #filters-toggle.active{color:var(--accent);border-color:var(--accent)}
   @media (max-width:700px){
     #filters-toggle{display:inline-block}
-    #filter-groups{display:none}
-    #filter-groups.open{display:flex}
+    #filter-groups{
+      display:grid;grid-template-rows:0fr;margin-top:0;
+      transition:grid-template-rows .22s ease-out,margin-top .22s ease-out;
+    }
+    #filter-groups.open{grid-template-rows:1fr;margin-top:16px}
+    #filter-groups-inner{overflow:hidden}
     #count-label{flex-basis:100%;order:9}
     #search{font-size:16px}
+  }
+  @media (max-width:700px) and (prefers-reduced-motion: reduce){
+    #filter-groups{display:none;transition:none}
+    #filter-groups.open{display:block}
   }
 
   /* ---------- grid ---------- */
@@ -260,19 +269,21 @@ addEventListener('DOMContentLoaded', () => {
       <span class="caps" id="count-label"></span>
     </div>
     <div id="filter-groups">
-      <div class="fgroup" data-key="medium">
-        <span class="caps label">MEDIUM</span>
-        <div class="chips"></div>
+      <div id="filter-groups-inner">
+        <div class="fgroup" data-key="medium">
+          <span class="caps label">MEDIUM</span>
+          <div class="chips"></div>
+        </div>
+        <div class="fgroup" data-key="decade">
+          <span class="caps label">DECADE</span>
+          <div class="chips"></div>
+        </div>
+        <div class="fgroup" data-key="orientation">
+          <span class="caps label">ORIENTATION</span>
+          <div class="chips"></div>
+        </div>
+        <button id="clear-filters" class="caps" hidden>[ CLEAR ALL FILTERS ]</button>
       </div>
-      <div class="fgroup" data-key="decade">
-        <span class="caps label">DECADE</span>
-        <div class="chips"></div>
-      </div>
-      <div class="fgroup" data-key="orientation">
-        <span class="caps label">ORIENTATION</span>
-        <div class="chips"></div>
-      </div>
-      <button id="clear-filters" class="caps" hidden>[ CLEAR ALL FILTERS ]</button>
     </div>
   </div>
 </div>
