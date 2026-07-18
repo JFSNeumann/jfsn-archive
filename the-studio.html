@@ -112,11 +112,24 @@ addEventListener('DOMContentLoaded', () => {
     position:relative;overflow:hidden;
   }
   .hero-images{
-    position:absolute;inset:0;display:flex;
-    z-index:-1;
+    position:absolute;inset:0;z-index:-1;overflow:hidden;
   }
+  /* One image at a time, cross-fading through a rotation of four studio
+     works — replaces the old fixed two-image split. Deliberately no
+     parallax on the container itself (kept from the original hero call);
+     the motion lives entirely in the slow Ken-Burns drift per image. */
   .hero-img{
-    flex:1;height:100%;object-fit:cover;opacity:0.15;
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;opacity:0;
+    transition:opacity 1.8s ease;
+  }
+  .hero-img.active{opacity:0.15}
+  @media (prefers-reduced-motion: no-preference){
+    .hero-img{animation:hero-kb 24s ease-in-out infinite alternate}
+    @keyframes hero-kb{
+      0%{transform:scale(1.04) translate(0,0)}
+      100%{transform:scale(1.1) translate(-1.5%,-1.5%)}
+    }
   }
   .hero-content{
     display:flex;flex-direction:column;justify-content:center;
@@ -295,9 +308,11 @@ addEventListener('DOMContentLoaded', () => {
 </header>
 
 <section id="door">
-  <div class="hero-images">
-    <img src="/artworks/medium/art0138.avif" alt="Studio interior" loading="eager" class="hero-img">
-    <img src="/artworks/medium/art0241.avif" alt="Studio work" loading="eager" class="hero-img">
+  <div class="hero-images" id="hero-images">
+    <img src="/artworks/medium/art0504.avif" alt="Studio work" loading="eager" class="hero-img active">
+    <img src="/artworks/medium/art1009.avif" alt="Studio work" loading="lazy" class="hero-img">
+    <img src="/artworks/medium/art1008.avif" alt="Studio work" loading="lazy" class="hero-img">
+    <img src="/artworks/medium/art1011.avif" alt="Studio work" loading="lazy" class="hero-img">
   </div>
   <div class="hero-content">
     <div class="caps">THE STUDIO</div>
@@ -381,6 +396,20 @@ addEventListener('DOMContentLoaded', () => {
 (function(){
   'use strict';
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---------- hero: rotate through four studio works, cross-fading ----------
+  // Static under reduced motion — the first image (art0504) just stays put.
+  if (!REDUCED) {
+    const heroImgs = document.querySelectorAll('#hero-images .hero-img');
+    if (heroImgs.length > 1) {
+      let heroI = 0;
+      setInterval(() => {
+        heroImgs[heroI].classList.remove('active');
+        heroI = (heroI + 1) % heroImgs.length;
+        heroImgs[heroI].classList.add('active');
+      }, 7000);
+    }
+  }
 
   // ---------- the voice: house player over the real recording ----------
   (function(){
