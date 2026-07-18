@@ -155,6 +155,14 @@ addEventListener('DOMContentLoaded', () => {
     padding:10px;background:#171310;
     border:1px solid #29231e;
     box-shadow:0 24px 60px rgba(0,0,0,.6);
+    transition:border-color .3s ease,box-shadow .3s ease,transform .3s ease;
+  }
+  @media (prefers-reduced-motion: no-preference){
+    #card a:hover .mat,#card a:focus-visible .mat{
+      border-color:var(--accent);
+      box-shadow:0 28px 64px rgba(0,0,0,.6),0 8px 24px rgba(255,102,0,.12);
+      transform:translateY(-2px);
+    }
   }
   #card img{
     display:block;width:100%;height:150px;object-fit:contain;
