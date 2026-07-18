@@ -153,7 +153,7 @@ addEventListener('DOMContentLoaded', () => {
   #doors a .num{
     position:absolute;top:19px;right:22px;
     font-family:'Playfair Display',Georgia,serif;font-style:italic;
-    font-size:11px;letter-spacing:.05em;color:var(--faint);
+    font-size:11px;letter-spacing:.05em;color:var(--accent);
   }
 
   /* Ghosted preview: the room's own image, faint, behind its own name */
@@ -170,7 +170,7 @@ addEventListener('DOMContentLoaded', () => {
     font-size:9px;letter-spacing:.2em;color:var(--dim);
     transform:translateY(0);transition:color .3s ease,transform .3s ease;
   }
-  #doors a:hover{border-color:var(--dim)}
+  #doors a:hover{border-left-color:var(--accent)}
   #doors a:hover .sub,
   #doors a:focus-visible .sub{color:var(--ink);transform:translateY(-1px)}
   #doors a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
@@ -195,13 +195,13 @@ addEventListener('DOMContentLoaded', () => {
   #doors a:nth-child(5){--rest-a:.46}
 
   #doors a{
-    border-left-color:color-mix(in srgb, var(--dim) calc(var(--rest-a, 0) * 100%), transparent);
+    border-left-color:color-mix(in srgb, var(--accent) calc(var(--rest-a, 0) * 100%), transparent);
     transition:border-left-width .3s ease, border-left-color .4s ease;
   }
 
   /* Anticipation: the row nearest the pointer senses it before hover claims it */
   #doors a.nearing{
-    border-left-color:color-mix(in srgb, var(--dim) calc((var(--rest-a, 0) + .35) * 100%), transparent);
+    border-left-color:color-mix(in srgb, var(--accent) calc((var(--rest-a, 0) + .35) * 100%), transparent);
   }
 
   @media (prefers-reduced-motion: no-preference) {
