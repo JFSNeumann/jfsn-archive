@@ -148,7 +148,20 @@ addEventListener('DOMContentLoaded', () => {
     text-transform:uppercase;font-weight:300;
   }
   .highlight-devo{background:var(--accent);color:#fff;padding:0 4px;font-style:normal}
-  .highlight-dark{background:var(--accent);color:#fff;padding:0 4px;font-style:normal}
+  .highlight-dark{
+    background:var(--accent);color:#fff;padding:0 4px;font-style:normal;
+    display:inline-block;transform-origin:left center;
+  }
+  /* Ink-stamp: matches the homepage's title treatment — the box lands
+     once on load, like a stamp hitting paper. */
+  @media (prefers-reduced-motion: no-preference){
+    .highlight-dark{animation:ink-stamp .5s cubic-bezier(.2,1.6,.4,1) both;animation-delay:.5s}
+    @keyframes ink-stamp{
+      0%{transform:scaleX(0)}
+      60%{transform:scaleX(1.08)}
+      100%{transform:scaleX(1)}
+    }
+  }
 
   /* ---------- door ---------- */
   #door{

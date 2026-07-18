@@ -131,7 +131,20 @@ addEventListener('DOMContentLoaded', () => {
   /* Once the visitor has actually started scrolling, the cue has done its
      job — fade it rather than let it sink forever underneath them. */
   #door.scrolled .down{opacity:0}
-  .highlight-devo{background:var(--accent);color:#fff;padding:0 4px;font-style:normal}
+  .highlight-devo{
+    background:var(--accent);color:#fff;padding:0 4px;font-style:normal;
+    display:inline-block;transform-origin:left center;
+  }
+  /* Ink-stamp: matches the homepage's title treatment — the box lands
+     once on load, like a stamp hitting paper. */
+  @media (prefers-reduced-motion: no-preference){
+    .highlight-devo{animation:ink-stamp .5s cubic-bezier(.2,1.6,.4,1) both;animation-delay:1.25s}
+    @keyframes ink-stamp{
+      0%{transform:scaleX(0)}
+      60%{transform:scaleX(1.08)}
+      100%{transform:scaleX(1)}
+    }
+  }
 
   .prose{
     max-width:34em;margin:0 auto;

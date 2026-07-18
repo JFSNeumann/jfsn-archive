@@ -141,7 +141,20 @@ addEventListener('DOMContentLoaded', () => {
   @media (prefers-reduced-motion: reduce){
     #door .fact{opacity:1;animation:none}
   }
-  .highlight-dark{background:var(--accent);color:#fff;padding:0 4px;font-style:normal}
+  .highlight-dark{
+    background:var(--accent);color:#fff;padding:0 4px;font-style:normal;
+    display:inline-block;transform-origin:left center;
+  }
+  /* Ink-stamp: matches the homepage's title treatment — the box lands
+     once on load, like a stamp hitting paper. */
+  @media (prefers-reduced-motion: no-preference){
+    .highlight-dark{animation:ink-stamp .5s cubic-bezier(.2,1.6,.4,1) both;animation-delay:1.15s}
+    @keyframes ink-stamp{
+      0%{transform:scaleX(0)}
+      60%{transform:scaleX(1.08)}
+      100%{transform:scaleX(1)}
+    }
+  }
   .prose{
     max-width:34em;margin:0 auto;
     font-family:Georgia,'Times New Roman',serif;
