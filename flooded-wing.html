@@ -126,8 +126,11 @@ addEventListener('DOMContentLoaded', () => {
     font-family:Georgia,'Times New Roman',serif;font-size:clamp(17px,2.2vw,22px);
     line-height:2;color:var(--ink);max-width:34em;
   }
-  #door .down{margin-top:26px;color:var(--faint);font-size:18px;animation:sink 2.6s ease-in-out infinite}
+  #door .down{margin-top:26px;color:var(--faint);font-size:18px;animation:sink 2.6s ease-in-out infinite;transition:opacity .3s ease}
   @keyframes sink{0%,100%{transform:translateY(0)}50%{transform:translateY(10px)}}
+  /* Once the visitor has actually started scrolling, the cue has done its
+     job — fade it rather than let it sink forever underneath them. */
+  #door.scrolled .down{opacity:0}
   .highlight-devo{background:var(--accent);color:#fff;padding:0 4px;font-style:normal}
 
   .prose{
@@ -244,6 +247,13 @@ addEventListener('DOMContentLoaded', () => {
   #artifact img{
     width:100%;display:block;filter:grayscale(1);
     border:1px solid var(--frame);
+    transition:filter .6s ease;
+  }
+  /* The one real, physical object in this room — everything else here is
+     an empty frame or a diagram. Hover reveals its actual (unaltered)
+     color, since the grayscale is a CSS mood treatment, not the source. */
+  @media (hover:hover) and (prefers-reduced-motion: no-preference){
+    #artifact:hover img,#artifact img:focus-visible{filter:grayscale(0)}
   }
   #artifact figcaption{margin-top:16px}
 
@@ -263,7 +273,31 @@ addEventListener('DOMContentLoaded', () => {
     font-size:12px;letter-spacing:.14em;color:var(--faint);margin-top:16px;
   }
   #exit nav{display:flex;flex-direction:column;gap:16px;margin-top:20px}
-  #exit nav a{font-size:11px;letter-spacing:.22em}
+  /* Matches the homepage door-nav's exit-link language (#vault): the room
+     built to this moment — the exit choice shouldn't be the least
+     considered thing on the page. */
+  #exit nav a{
+    position:relative;display:inline-block;
+    font-size:11px;letter-spacing:.22em;color:var(--ink);
+    border:1px solid var(--frame);padding:14px 20px;
+    transition:all .3s ease;overflow:hidden;
+  }
+  #exit nav a::before{
+    content:'';position:absolute;inset:0;
+    background:var(--accent);opacity:0;z-index:-1;
+    transition:opacity .3s ease;
+  }
+  @media (prefers-reduced-motion: no-preference){
+    #exit nav a:hover{
+      border-color:var(--dim);transform:translateY(-2px);
+      box-shadow:0 4px 12px rgba(0,0,0,.08);
+    }
+    #exit nav a:hover::before{opacity:.04}
+    #exit nav a:focus-visible{
+      outline:2px solid var(--accent);outline-offset:4px;transform:translateY(-2px);
+    }
+    #exit nav a{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><line x1="10" y1="2" x2="10" y2="18" stroke="%23FF6600" stroke-width="1.5" stroke-linecap="round"/><polygon points="10,18 8,14 12,14" fill="%23FF6600"/></svg>') 10 10,auto}
+  }
 
   @media (prefers-reduced-motion: reduce){
     .fr,.js .fr,.js .fr.seen{animation:none;transition:none;transform:none;opacity:var(--o,1)}
@@ -578,6 +612,18 @@ addEventListener('DOMContentLoaded', () => {
       btn.style.transform = 'translateY(8px)';
     }
   }, {passive:true});
+})();
+</script>
+
+<script>
+// Scroll cue: fades once the visitor has actually moved past the door,
+// rather than sinking forever underneath them.
+(function(){
+  const door = document.getElementById('door');
+  if (!door) return;
+  function check(){ door.classList.toggle('scrolled', window.scrollY > 40); }
+  window.addEventListener('scroll', check, { passive: true });
+  check();
 })();
 </script>
 </body>

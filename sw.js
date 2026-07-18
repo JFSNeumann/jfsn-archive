@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1784330149'; // flooded-wing: hero much darker (90% overlay, 25% image)
+const CACHE_V  = 'jfsn-1784401948'; // flooded-wing: hero much darker (90% overlay, 25% image)
 const PRECACHE = [
   // The 14 live room pages (Museum v2 — the only site that exists today;
   // the old v1 archive, decade pages, and generated theme pages were

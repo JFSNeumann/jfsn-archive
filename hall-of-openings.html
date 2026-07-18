@@ -114,6 +114,16 @@ addEventListener('DOMContentLoaded', () => {
     object-position:center;
     display:block;
   }
+  /* A very subtle Ken-Burns drift on the lead evidence image — sets the
+     tone (something imagined, held just slightly unstill) before the grid
+     of 250 flagged composites even loads. */
+  @media (prefers-reduced-motion: no-preference){
+    #hero-image img{animation:hero-drift 22s ease-in-out infinite alternate}
+    @keyframes hero-drift{
+      0%{transform:scale(1.04) translate(0,0)}
+      100%{transform:scale(1.09) translate(-1%,-1%)}
+    }
+  }
 
   section{padding:0 clamp(20px,6vw,80px)}
 
@@ -188,6 +198,15 @@ addEventListener('DOMContentLoaded', () => {
     transition:opacity .9s ease,transform .9s ease;
   }
   .js .op.seen{opacity:1;transform:none}
+
+  /* Dense grid, one work at a time: hovering a composite dims its
+     neighbors within the same movement, so the eye anchors on one work
+     rather than the whole salon competing at once. Scoped per-.salon
+     (not the full 250-item page) so it stays legible, same :has()
+     pattern as the homepage door-nav's path-dimming. */
+  @media (hover:hover){
+    .salon:has(.op a:hover) .op:not(:has(a:hover)){opacity:.6}
+  }
 
   .op a{
     display:block;color:var(--ink);position:relative;
@@ -265,7 +284,31 @@ addEventListener('DOMContentLoaded', () => {
     #reveal .line1,#reveal .line2{transition:none;transform:none;opacity:1}
   }
   #reveal nav{display:flex;flex-direction:column;gap:16px;margin-top:24px}
-  #reveal nav a{font-size:11px;letter-spacing:.22em}
+  /* Matches the homepage door-nav's exit-link language (#vault): the
+     staged two-line reveal built to this moment — the exit choice
+     shouldn't be the least considered thing on the page. */
+  #reveal nav a{
+    position:relative;display:inline-block;
+    font-size:11px;letter-spacing:.22em;color:var(--ink);
+    border:1px solid var(--frame);padding:14px 20px;
+    transition:all .3s ease;overflow:hidden;
+  }
+  #reveal nav a::before{
+    content:'';position:absolute;inset:0;
+    background:var(--accent);opacity:0;z-index:-1;
+    transition:opacity .3s ease;
+  }
+  @media (prefers-reduced-motion: no-preference){
+    #reveal nav a:hover{
+      border-color:var(--dim);transform:translateY(-2px);
+      box-shadow:0 4px 12px rgba(0,0,0,.08);
+    }
+    #reveal nav a:hover::before{opacity:.04}
+    #reveal nav a:focus-visible{
+      outline:2px solid var(--accent);outline-offset:4px;transform:translateY(-2px);
+    }
+    #reveal nav a{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><line x1="10" y1="2" x2="10" y2="18" stroke="%23FF6600" stroke-width="1.5" stroke-linecap="round"/><polygon points="10,18 8,14 12,14" fill="%23FF6600"/></svg>') 10 10,auto}
+  }
   /* the doors hold back until both lines have landed */
   .js #reveal nav{opacity:0;transition:opacity 1.6s ease}
   .js #reveal nav.seen{opacity:1}
