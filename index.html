@@ -156,6 +156,19 @@ addEventListener('DOMContentLoaded', () => {
     font-size:11px;letter-spacing:.05em;color:var(--accent);
   }
 
+  /* Numerals draw in staggered, tied to the same reveal that fades in the
+     whole nav (#doors.is-visible, set by the reveal-up observer) — so the
+     "this is a path" signal arrives with the row, not before it. */
+  @media (prefers-reduced-motion: no-preference){
+    #doors a .num{opacity:0;transform:scale(.4);transition:opacity .5s ease,transform .5s ease}
+    #doors.is-visible a:nth-child(1) .num{transition-delay:.15s}
+    #doors.is-visible a:nth-child(2) .num{transition-delay:.25s}
+    #doors.is-visible a:nth-child(3) .num{transition-delay:.35s}
+    #doors.is-visible a:nth-child(4) .num{transition-delay:.45s}
+    #doors.is-visible a:nth-child(5) .num{transition-delay:.55s}
+    #doors.is-visible a .num{opacity:1;transform:scale(1)}
+  }
+
   /* Ghosted preview: the room's own image, faint, behind its own name */
   #doors a::after{
     content:'';position:absolute;inset:0;z-index:-1;
@@ -245,9 +258,12 @@ addEventListener('DOMContentLoaded', () => {
     #doors a:nth-child(5){animation-delay:.25s}
   }
 
-  /* Cursor: thin line showing passage intent */
+  /* Cursor: thin line showing passage intent — every link that leads
+     through a door on this page (the five rooms, and the parallel research
+     path), not just #doors, so it reads as a committed treatment rather
+     than something that flickers on and off between nav groups. */
   @media (prefers-reduced-motion: no-preference) {
-    #doors a{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><line x1="10" y1="2" x2="10" y2="18" stroke="%23FF6600" stroke-width="1.5" stroke-linecap="round"/><polygon points="10,18 8,14 12,14" fill="%23FF6600"/></svg>') 10 10,auto}
+    #doors a,#vault a{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><line x1="10" y1="2" x2="10" y2="18" stroke="%23FF6600" stroke-width="1.5" stroke-linecap="round"/><polygon points="10,18 8,14 12,14" fill="%23FF6600"/></svg>') 10 10,auto}
   }
 
   /* Threshold animation: border expands to full width as passage */
@@ -381,11 +397,28 @@ addEventListener('DOMContentLoaded', () => {
     .wing figcaption{margin-top:8px;font-size:9px;letter-spacing:.26em;
       color:var(--dim)}
   }
+  /* Flanking works only: an almost-imperceptible drift so "receding into
+     the room" is felt, not just implied by brightness/scale. The center
+     work (#work) never moves — it's the one constant, every visitor,
+     every visit. */
+  @media (min-width:1200px) and (prefers-reduced-motion: no-preference){
+    @keyframes wing-drift-l{0%,100%{transform:translateY(-7px) scaleX(-1)}50%{transform:translateY(-11px) scaleX(-1)}}
+    @keyframes wing-drift-r{0%,100%{transform:translateY(-7px) scaleX(-1)}50%{transform:translateY(-3px) scaleX(-1)}}
+    #wing-l img{animation:wing-drift-l 14s ease-in-out infinite}
+    #wing-r img{animation:wing-drift-r 16s ease-in-out infinite}
+  }
   /* short desktop windows: the poster scales as one unit — never crops */
   @media (min-width:1200px) and (max-height:820px){
     .threshold h1{font-size:min(6.2vw,78px)}
     #work img,.wing img{max-height:42vh}
     #who img{height:52px}
+  }
+
+  /* Below-the-fold reveal: the poster is static and identical every visit,
+     but everything past it can unfold on scroll — pacing, not spectacle. */
+  @media (prefers-reduced-motion: no-preference){
+    .reveal-up{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+    .reveal-up.is-visible{opacity:1;transform:translateY(0)}
   }
 
   /* Me overlay in bottom-right corner — desktop only */
@@ -429,12 +462,12 @@ addEventListener('DOMContentLoaded', () => {
   </section>
 
   <section class="beyond">
-    <p class="why" id="why">For decades he made pictures of museums showing his work —
+    <p class="why reveal-up" id="why">For decades he made pictures of museums showing his work —
     walls, crowds, openings that never happened. Every one of them is flagged
     as composite. This building is the one that exists:
     <em>1,084 works, fifty years, kept and open.</em></p>
 
-  <nav id="doors" aria-label="Rooms">
+  <nav id="doors" class="reveal-up" aria-label="Rooms">
     <a href="current.html" data-preview-id="art1005" style="--key:linear-gradient(#b23a3a,#d8c9a8,#5a7d8c,#c8b44a)"><span class="num" aria-hidden="true">I</span>THE CURRENT<span class="sub">FIFTY YEARS AS ONE RIVER — BEGIN HERE</span><span class="go">→</span></a>
     <a href="guernica-passage.html" data-preview-id="art0023" style="--key:#4a4e5f"><span class="num" aria-hidden="true">II</span>THE GUERNICA PASSAGE<span class="sub">232 WORKS · ONE STRUCTURE · THIRTY YEARS</span><span class="go">→</span></a>
     <a href="flooded-wing.html" data-preview-id="art0611" style="--key:#2e4451"><span class="num" aria-hidden="true">III</span>THE FLOODED WING<span class="sub">A ROOM FOR WHAT IS MISSING</span><span class="go">→</span></a>
@@ -443,7 +476,7 @@ addEventListener('DOMContentLoaded', () => {
   </nav>
 
   <!-- Vault Path Elevation (#7): THE RESEARCH PATH — parallel journey, equal hierarchy -->
-  <div id="research-path">
+  <div id="research-path" class="reveal-up">
     <h2>THE RESEARCH PATH</h2>
     <div class="caps" id="vault">
       <a href="archive.html">[ THE ARCHIVE — CATALOG, SEARCH, DATA → ]</a>
@@ -643,6 +676,29 @@ addEventListener('DOMContentLoaded', () => {
     };
     img.src = thumbUrl;
   });
+})();
+</script>
+
+<script>
+// Below-the-fold reveal: fade+rise each section once as it enters, then
+// stop watching it — a one-time unfold, not a repeating scroll gimmick.
+(function(){
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const els = document.querySelectorAll('.reveal-up');
+  if (!('IntersectionObserver' in window) || !els.length) return;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        io.unobserve(entry.target);
+        // Same subtle haptic vocabulary as the door hover/click (#10),
+        // extended to the scroll-reveal moments — a single faint pulse
+        // as each section arrives, mobile-only (no-op where unsupported).
+        if (navigator.vibrate) navigator.vibrate(8);
+      }
+    });
+  }, { threshold: 0.15 });
+  els.forEach(el => io.observe(el));
 })();
 </script>
 
