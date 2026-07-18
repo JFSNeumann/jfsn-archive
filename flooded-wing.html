@@ -147,11 +147,11 @@ addEventListener('DOMContentLoaded', () => {
      so absence reads as pictures, not a texture of tiles. */
   #field{max-width:1600px;margin:0 auto}
   .field-grid{
-    columns:clamp(26px,2.75vw,41px);
-    column-gap:16px;
+    columns:clamp(13px,1.375vw,20.5px);
+    column-gap:8px;
   }
   .fr{
-    break-inside:avoid;margin:0 0 16px;
+    break-inside:avoid;margin:0 0 8px;
     /* an empty frame must read AS a frame at room scale: a faint raised panel
        (a hairline on near-black vanishes). The certainty-fade past 500 still
        ghosts the far ones out via --o on the element. */
@@ -165,6 +165,14 @@ addEventListener('DOMContentLoaded', () => {
        leaving all 1,000 frames invisible. Absence at architectural scale comes
        from the sheer length of the scroll, not from a fade. */
     opacity:var(--o,1);
+    transition:opacity .25s ease,border-color .25s ease,transform .25s ease;
+  }
+  .fr:hover{
+    opacity:calc(var(--o,1) + .25);
+    border-color:var(--accent);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .fr:hover{transform:scale(1.08)}
   }
   a:focus-visible{outline:2px solid var(--accent);outline-offset:4px;color:var(--accent)}
   .milestone{
@@ -408,7 +416,7 @@ addEventListener('DOMContentLoaded', () => {
     const AR = ['2/3', '3/4', '3/4', '1/1', '1/1', '4/5', '4/3'];
     f.style.setProperty('--ar', AR[Math.floor(rnd() * AR.length)]);
     // certainty fades past the minimum count
-    const o = n <= CERTAIN ? 0.95 : Math.max(0.18, 0.95 - (n - CERTAIN) / (TOTAL - CERTAIN) * 0.8);
+    const o = n <= CERTAIN ? 0.75 : Math.max(0.14, 0.75 - (n - CERTAIN) / (TOTAL - CERTAIN) * 0.6);
     f.style.setProperty('--o', o.toFixed(2));
     grid.appendChild(f);
     if (milestones[n]) {
@@ -426,6 +434,41 @@ addEventListener('DOMContentLoaded', () => {
   // stalls under throttling / Low Power Mode) and cost a 1,000-node offsetTop
   // scan every 500ms. The certainty-fade lives in --o; the scale lives in the
   // scroll. Nothing to reveal.
+
+  // ---------- parallax drift: chunks and milestones move at slightly
+  // different rates as the field scrolls, so depth reads as architectural,
+  // not printed. Driven per-scroll-position (not an animation clock) so a
+  // throttled tab just freezes the offset instead of losing the frames —
+  // same constraint as the certainty-fade above.
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduceMotion) {
+    const grids = field.querySelectorAll('.field-grid');
+    const stones = field.querySelectorAll('.milestone');
+    let ticking = false;
+    function applyParallax() {
+      ticking = false;
+      const vh = window.innerHeight;
+      const clamp = (v, max) => Math.max(-max, Math.min(max, v));
+      grids.forEach(g => {
+        const r = g.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > vh) return;
+        const center = r.top + r.height / 2 - vh / 2;
+        g.style.transform = 'translateY(' + clamp(center * -0.03, 18).toFixed(1) + 'px)';
+      });
+      stones.forEach(m => {
+        const r = m.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > vh) return;
+        const center = r.top + r.height / 2 - vh / 2;
+        m.style.transform = 'translateY(' + clamp(center * -0.07, 24).toFixed(1) + 'px)';
+      });
+    }
+    function onScroll() {
+      if (!ticking) { ticking = true; requestAnimationFrame(applyParallax); }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    applyParallax();
+  }
 
   // ---------- the wall: 11 × 25 feet, true proportion ----------
   const gwall = document.getElementById('gwall');
@@ -458,19 +501,39 @@ addEventListener('DOMContentLoaded', () => {
   layoutWall();
   window.addEventListener('resize', layoutWall);
 
-  // drag-to-pan the strip with a mouse (touch scrolls natively)
-  let panning = false, panX = 0, panL = 0;
+  // drag-to-pan the strip with a mouse (touch scrolls natively), with a
+  // short momentum coast on release so it handles like a physical wall
+  // rather than a scrollbar.
+  let panning = false, panX = 0, panL = 0, panT = 0, velocity = 0, coastId = null;
   strip.addEventListener('pointerdown', e => {
     if (e.pointerType !== 'mouse') return;
-    panning = true; panX = e.clientX; panL = strip.scrollLeft;
+    if (coastId) { cancelAnimationFrame(coastId); coastId = null; }
+    panning = true; panX = e.clientX; panL = strip.scrollLeft; panT = performance.now();
+    velocity = 0;
     strip.classList.add('dragging');
     try { strip.setPointerCapture(e.pointerId); } catch (_) {}
   });
   strip.addEventListener('pointermove', e => {
-    if (panning) strip.scrollLeft = panL - (e.clientX - panX);
+    if (!panning) return;
+    const now = performance.now();
+    const dt = Math.max(1, now - panT);
+    const prevLeft = strip.scrollLeft;
+    strip.scrollLeft = panL - (e.clientX - panX);
+    velocity = (strip.scrollLeft - prevLeft) / dt;
+    panT = now;
   });
   ['pointerup', 'pointercancel'].forEach(ev =>
-    strip.addEventListener(ev, () => { panning = false; strip.classList.remove('dragging'); }));
+    strip.addEventListener(ev, () => {
+      panning = false; strip.classList.remove('dragging');
+      if (reduceMotion || Math.abs(velocity) < 0.02) return;
+      const coast = () => {
+        velocity *= 0.94;
+        strip.scrollLeft += velocity * 16;
+        if (Math.abs(velocity) > 0.02) coastId = requestAnimationFrame(coast);
+        else coastId = null;
+      };
+      coastId = requestAnimationFrame(coast);
+    }));
 
   // pan affordance: edge fades where the wall continues + a live feet readout
   const hint = document.getElementById('strip-hint');
