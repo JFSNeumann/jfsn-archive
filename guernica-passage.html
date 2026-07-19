@@ -329,6 +329,8 @@ addEventListener('DOMContentLoaded', () => {
   /* ---------- site footer ---------- */
   footer.site-footer{border-top:1px solid var(--faint);margin-top:8em;padding:4em clamp(20px,6vw,80px) 2em;text-align:center}
   footer.site-footer .stat{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);margin:2em 0}
+  footer.site-footer .room-breadcrumb{margin-bottom:2em}
+  footer.site-footer .room-breadcrumb span{color:var(--ink)}
   footer.site-footer a{font-size:10px;letter-spacing:.08em;text-transform:uppercase;display:inline-block;margin:0 1em;color:var(--dim);transition:color .3s ease}
   footer.site-footer a:hover,footer.site-footer a:focus-visible{color:var(--accent)}
   footer.site-footer a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
@@ -395,12 +397,17 @@ addEventListener('DOMContentLoaded', () => {
 </section>
 
 <footer class="site-footer">
+  <div class="caps room-breadcrumb">YOU ARE IN: <span>THE GUERNICA PASSAGE</span></div>
   <div class="stat">1,084 WORKS · 50 YEARS · 1974–PRESENT · CLEVELAND, OH</div>
-  <a href="/">[ THE MUSEUM → ]</a>
-  <a href="/archive.html">[ THE ARCHIVE → ]</a>
-  <a href="/about.html">[ ABOUT JEFF → ]</a>
-  <a href="/privacy.html">[ PRIVACY → ]</a>
-  <a href="/sitemap.html">[ SITEMAP → ]</a>
+  <nav aria-label="Site">
+    <a href="/">[ THE MUSEUM → ]</a>
+    <a href="/archive.html">[ THE ARCHIVE → ]</a>
+    <a href="/about.html">[ ABOUT JEFF → ]</a>
+    <a href="/privacy.html">[ PRIVACY → ]</a>
+    <a href="/sitemap.html">[ SITEMAP → ]</a>
+    <a href="mailto:jeff@jfsn.com">[ CONTACT → ]</a>
+    <a href="https://github.com/JFSNeumann/jfsn-archive">[ SOURCE ON GITHUB → ]</a>
+  </nav>
   <div class="stat">© <span id="footer-year"></span> JEFFREY F. S. NEUMANN</div>
 </footer>
 <script>document.getElementById('footer-year').textContent = new Date().getFullYear();</script>
