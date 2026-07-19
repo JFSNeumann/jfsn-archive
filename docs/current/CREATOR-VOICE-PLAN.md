@@ -43,3 +43,7 @@ docs/sources/oral-history/audio/2026-MM-DD-one-lost-work.m4a
 - "Next" / "boring" / "not now" ends it, instantly, no follow-up.
 - Never re-record to "improve" one. First takes are primary sources.
 - These three topics are the whole project. There is no recording #4 unless Jeff invents it.
+
+## If Jeff wants to keep going after the three
+
+**Reconciled 2026-07-19.** `docs/sources/oral-history/SUGGESTED-RECORDINGS.md` has a longer list — ten specific works with a starter question each, tiered by significance. It predates this plan's current form and was never cross-referenced from here, which read as two competing plans on the same audit. It isn't one: **this three-recording plan is still the actual ask.** That other list is an optional menu of topics to pull from *only if* Jeff is enjoying the process and wants more — never a second assignment, never presented as expected. If he asks "what else," point him there one topic at a time, same rules as above (one take, no script pressure, "next" ends it instantly).
