@@ -220,6 +220,69 @@ export const seriesHighlightRevert = ({ cards, autoplay = true }) => {
 }
 
 /**
+ * PATTERN: Work Arrival (Artwork Detail Page Reveal)
+ * When a visitor lands on an artwork detail page, the work reveals itself
+ * through staggered choreography: title slides+fades, metadata rows cascade in,
+ * the image scales up from 95%+fades, related works appear last.
+ * Creates a moment of discovery — the work is "presenting itself."
+ * Duration: 300ms title, 100ms per metadata row, 500ms image, 300ms related
+ * Easing: outQuad (smooth discovery, not bouncy)
+ * Reference: MOTION-SPEC.md § Phase 1 (Work Arrival)
+ */
+export const workArrival = ({
+  title,
+  metadataRows = [],
+  image,
+  relatedWorks,
+  autoplay = true
+}) => {
+  const timeline = anime.timeline({ autoplay });
+
+  // Title: fade in + slide down
+  if (title) {
+    timeline.add(title, {
+      opacity: [0, 1],
+      translateY: [-30, 0],
+      duration: 300,
+      ease: 'outQuad'
+    }, 0);
+  }
+
+  // Metadata rows: cascade in (100ms stagger)
+  if (metadataRows.length > 0) {
+    metadataRows.forEach((row, idx) => {
+      timeline.add(row, {
+        opacity: [0, 1],
+        duration: 280,
+        ease: 'outQuad'
+      }, 100 + idx * 100);
+    });
+  }
+
+  // Image: scale up + fade (alongside title, but longer)
+  if (image) {
+    timeline.add(image, {
+      opacity: [0, 1],
+      scale: [0.95, 1],
+      duration: 500,
+      ease: 'outQuad'
+    }, 0);
+  }
+
+  // Related works: appear last, slide up + fade
+  if (relatedWorks) {
+    timeline.add(relatedWorks, {
+      opacity: [0, 1],
+      translateY: [40, 0],
+      duration: 300,
+      ease: 'outQuad'
+    }, 800); // 300ms title + ~200ms buffer
+  }
+
+  return timeline;
+}
+
+/**
  * PATTERN: Chip Pulse (Filter Selection Feedback)
  * Quick bounce-scale pop when a filter chip is toggled on/off
  * Duration: 250ms (interaction easing, bounce-back)
