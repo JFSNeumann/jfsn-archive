@@ -1,6 +1,21 @@
 # JFSN Archive — Daily Workflow
 
-## Overview
+## 🎯 For Ingesting New Artworks (Photos → Live Archive)
+
+**Use the Intake Pipeline** — fully automated image processing + validation:
+
+```
+photos/HEIC/JPG  →  ingest.py (→ AVIF tiers)  →  edit JSON  →  intake_finish.py  →  live
+                    Phase 2.3                      (author)      Phase 2.4
+```
+
+**See:** `STEWARDSHIP-INTAKE.md` (Phase 2.1–2.4) and `INTAKE_QUICKSTART.md` for step-by-step.
+
+---
+
+## Overview (Legacy: AI-Generated Metadata)
+
+For archival/reference: the old catalog.py workflow (below) generates metadata *via API*. **Deprecated for new works** (Jan 2026+) since curator-authored metadata is standard.
 
 ```
 catalog.py          →  validate_catalog.py  →  build_catalog.py
