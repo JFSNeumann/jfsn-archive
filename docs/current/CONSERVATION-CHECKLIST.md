@@ -45,9 +45,8 @@
 
 ## 4. Runtime Integrity
 
-- [ ] `core.bundle.js` loads after `<!-- FOOTER:END -->` on all stamped pages (not clobbered by `stamp-nav.sh`)
-- [ ] `nav-early.bundle.js` and `anime.min.js` load in the SCRIPTS span on all pages
-- [ ] No page loads `micro-interactions.js` (removed in H1+M1) or `analytics.js` (removed in H1+M1)
+- [ ] No page loads a shared bundle or `_shared/*.js` file — confirmed dead code as of 2026-07-19 (`core.bundle.js`, `nav-early.bundle.js`, `anime.min.js`, `stamp-nav.sh`, and the SCRIPTS/NAV stamped-span system no longer exist; each page's script is inline in its own `<head>`/end-of-`<body>`)
+- [ ] No page loads `micro-interactions.js` or `analytics.js` (both removed)
 - [ ] Service worker (`sw.js`): confirm `CACHE_V` was bumped after any CSS rebuild (`npm run build:css`)
 - [ ] No script tag appears twice on any page
 - [ ] Lazy-loaded artwork images in archive grid load on scroll
