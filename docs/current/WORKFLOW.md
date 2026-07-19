@@ -153,6 +153,14 @@ and re-run `setup-hooks.sh` to update it.
 
 ---
 
+## Working History Collection — charter has dangling page references
+
+`docs/sources/working-history/WORKING-HISTORY-CHARTER-v1.0.md` governs `working-history.html` and is marked "approved, permanent... architectural decisions recorded here are closed" — i.e. it's meant to keep being consulted for future work on that collection, not just a dated snapshot. Per `CLAUDE.md`'s doc taxonomy, `docs/sources/` is only ever added to, never revised, so this note lives here instead of editing the charter itself.
+
+**As of 2026-07-19, the charter (and `docs/sources/oral-history/master-notes.md`) reference several pages as hand-authored siblings or next-step targets that no longer exist** — deleted in the 2026-07-16 pruning to 14 core pages: `start-here.html`, `why-i-made-things.html`, `imagined-museum.html`, `series-index.html`, `lost.html`. If you're expanding the Working History Collection and the charter tells you to add a card/link to one of these, don't — check the current 14-page list first (`DESIGN-SYSTEM.md` § "Architecture" has it) and find the equivalent live page, or ask Jeff whether the referenced page should come back.
+
+---
+
 ## Per-deploy hygiene
 
 - After meaningful CSS/HTML changes that returning visitors should see immediately, bump `CACHE_V` in `sw.js`. Convention: `jfsn-YYYYMMDD-<reason>` (e.g. `jfsn-20260603-drop-site-css`).
