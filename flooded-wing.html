@@ -50,16 +50,52 @@
 addEventListener('DOMContentLoaded', () => {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const v = document.createElement('div'); v.id = 'room-veil';
+  v.style.background = '#0a0d12';
   document.body.appendChild(v);
+
+  const roomColors = {
+    'index.html': '#0c0a09',
+    'archive.html': '#0c0a09',
+    'the-studio.html': '#0c0a09',
+    'flooded-wing.html': '#0a0d12',
+    'current.html': '#0c0a09',
+    'guernica-passage.html': '#0d0a08',
+    'hall-of-openings.html': '#0c0a09'
+  };
+
+  const getDestinationColor = (href) => {
+    for (const [pattern, color] of Object.entries(roomColors)) {
+      if (href.includes(pattern)) return color;
+    }
+    return '#0c0a09';
+  };
+
   document.addEventListener('click', e => {
     const a = e.target.closest('a');
     if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target === '_blank') return;
     const h = a.getAttribute('href') || '';
     if (!h || /^(https?:|#|mailto:)/.test(h)) return;
     e.preventDefault();
+
+    const destColor = getDestinationColor(h);
+    v.style.background = destColor;
     v.classList.add('on');
-    setTimeout(() => { location.href = a.href; }, 200);
+
+    if (typeof animeUtils !== 'undefined') {
+      const retreat = animeUtils.roomRetreat({
+        body: document.body,
+        veil: v,
+        newRoomColor: destColor,
+        autoplay: true
+      });
+      retreat.finished.then(() => {
+        location.href = a.href;
+      });
+    } else {
+      setTimeout(() => { location.href = a.href; }, 200);
+    }
   }, true);
+
   addEventListener('pageshow', e => {
     if (e.persisted) {
       v.classList.remove('on');
@@ -454,6 +490,54 @@ addEventListener('DOMContentLoaded', () => {
   <div class="stat">© <span id="footer-year"></span> JEFFREY F. S. NEUMANN</div>
 </footer>
 <script>document.getElementById('footer-year').textContent = new Date().getFullYear();</script>
+
+<script src="/dist/anime-utils.umd.js"></script>
+<script>
+// The Flooded Wing: Room Arrival Choreography (Spatial Theater)
+// Reference: docs/current/MOTION-SPEC.md § V (Room Approach pattern)
+(function() {
+  'use strict';
+
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.style.setProperty('--reduce-motion', '1');
+    return;
+  }
+
+  if (typeof animeUtils === 'undefined') {
+    console.warn('animeUtils not loaded; skipping choreography');
+    return;
+  }
+
+  const initChoreography = () => {
+    const veil = document.querySelector('#room-veil');
+    const title = document.querySelector('#door h1');
+    const subtitle = document.querySelector('#door .facts');
+    const header = document.querySelector('header.hud');
+
+    if (!title) {
+      console.warn('Title element not found; skipping choreography');
+      return;
+    }
+
+    const timeline = animeUtils.roomApproach({
+      body: document.body,
+      hero: '#door',
+      title: '#door h1',
+      subtitle: '#door .facts',
+      header: 'header.hud',
+      veil: veil || document.createElement('div'),
+      roomColor: '#0a0d12', // Flooded Wing cool black
+      autoplay: true
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    addEventListener('DOMContentLoaded', initChoreography);
+  } else {
+    initChoreography();
+  }
+})();
+</script>
 
 <script>
 (function(){

@@ -84,6 +84,129 @@ export const roomArrival = ({
 }
 
 /**
+ * PATTERN: Room Retreat (Spatial Exit Theater)
+ * Current room content fades + scales down as visitor leaves
+ * Veil fades in and transitions to new room color
+ * Total duration: 300ms
+ * Reference: MOTION-SPEC.md § V (WOW expansion)
+ */
+export const roomRetreat = ({
+  body,
+  veil,
+  newRoomColor = '#0c0a09',
+  autoplay = true
+}) => {
+  const timeline = anime.timeline({ autoplay })
+
+  timeline
+    // Body: fade out + scale down (300ms, closure easing)
+    .add(
+      {
+        targets: body,
+        opacity: [1, 0],
+        scale: [1, 0.92],
+        duration: 300,
+        easing: 'easeInQuad'
+      },
+      0
+    )
+    // Veil: fade in + color tint to new room (300ms, closure easing)
+    .add(
+      {
+        targets: veil,
+        opacity: [0, 1],
+        backgroundColor: newRoomColor,
+        duration: 300,
+        easing: 'easeInQuad'
+      },
+      0
+    )
+
+  return timeline
+}
+
+/**
+ * PATTERN: Room Approach (Spatial Entry Theater)
+ * New room scales up + fades in from behind veil
+ * Veil fades out, revealing the room
+ * Hero and content cascade in
+ * Total duration: ~1200ms
+ * Reference: MOTION-SPEC.md § V (WOW expansion)
+ */
+export const roomApproach = ({
+  body,
+  hero,
+  title,
+  subtitle,
+  header,
+  veil,
+  roomColor = '#0c0a09',
+  autoplay = true
+}) => {
+  const timeline = anime.timeline({ autoplay })
+
+  // Initial state: body is scaled down and behind veil
+  // Anime will scale it up and fade in as the veil pulls back
+
+  timeline
+    // Body: scale up + fade in (800ms, discovery easing, starts while veil is opaque)
+    .add(
+      {
+        targets: body,
+        opacity: [0.7, 1],
+        scale: [0.95, 1],
+        duration: 800,
+        easing: 'easeOutQuad'
+      },
+      0
+    )
+    // Title: enter (500ms, staggered 200ms in)
+    .add(
+      {
+        targets: title,
+        opacity: [0, 1],
+        scale: [0, 1.08, 1],
+        duration: 500,
+        easing: 'easeOutQuad'
+      },
+      200
+    )
+    // Veil: fade out, revealing the room (300ms, start at 300ms to clear space)
+    .add(
+      {
+        targets: veil,
+        opacity: [1, 0],
+        duration: 300,
+        easing: 'easeInQuad'
+      },
+      300
+    )
+    // Subtitle: fade in from below (400ms, staggered 800ms in)
+    .add(
+      {
+        targets: subtitle,
+        opacity: [0, 1],
+        translateY: [8, 0],
+        duration: 400,
+        easing: 'easeOutQuad'
+      },
+      800
+    )
+    // Header: fade in and stabilize (300ms, parallel with subtitle)
+    .add(
+      {
+        targets: header,
+        opacity: [0, 1],
+        duration: 300,
+        easing: 'easeOutQuad'
+      },
+      800
+    )
+
+  return timeline
+}
+
+/**
  * PATTERN: Door Passage (Threshold Ritual)
  * Clicked door border sweeps → Veil colors room → Siblings retreat
  * Total duration: 400ms

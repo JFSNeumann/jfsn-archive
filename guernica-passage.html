@@ -60,16 +60,57 @@
 addEventListener('DOMContentLoaded', () => {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const v = document.createElement('div'); v.id = 'room-veil';
+  v.style.background = '#0c0a09'; // default room color
   document.body.appendChild(v);
+
+  // Map href patterns to destination room colors (MOTION-SPEC.md § IV)
+  const roomColors = {
+    'index.html': '#0c0a09',      // neutral (museum home)
+    'archive.html': '#0c0a09',    // neutral
+    'the-studio.html': '#0c0a09', // neutral (homecoming)
+    'flooded-wing.html': '#0a0d12', // cool black
+    'current.html': '#0c0a09',    // neutral
+    'guernica-passage.html': '#0d0a08', // warm black
+    'hall-of-openings.html': '#0c0a09' // neutral
+  };
+
+  const getDestinationColor = (href) => {
+    for (const [pattern, color] of Object.entries(roomColors)) {
+      if (href.includes(pattern)) return color;
+    }
+    return '#0c0a09'; // default
+  };
+
   document.addEventListener('click', e => {
     const a = e.target.closest('a');
     if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target === '_blank') return;
     const h = a.getAttribute('href') || '';
     if (!h || /^(https?:|#|mailto:)/.test(h)) return;
     e.preventDefault();
+
+    // Run retreat choreography with destination room color
+    const destColor = getDestinationColor(h);
+    v.style.background = destColor;
     v.classList.add('on');
-    setTimeout(() => { location.href = a.href; }, 200);
+
+    // If anime utils are loaded, run roomRetreat choreography
+    if (typeof animeUtils !== 'undefined') {
+      const retreat = animeUtils.roomRetreat({
+        body: document.body,
+        veil: v,
+        newRoomColor: destColor,
+        autoplay: true
+      });
+      // Navigate after retreat completes (300ms)
+      retreat.finished.then(() => {
+        location.href = a.href;
+      });
+    } else {
+      // Fallback if anime utils not ready
+      setTimeout(() => { location.href = a.href; }, 200);
+    }
   }, true);
+
   addEventListener('pageshow', e => {
     if (e.persisted) {
       v.classList.remove('on');
@@ -572,7 +613,7 @@ addEventListener('DOMContentLoaded', () => {
   // Function to initialize choreography
   const initChoreography = () => {
     // Identify target elements
-    const heroImage = document.querySelector('#door::before');
+    const veil = document.querySelector('#room-veil');
     const title = document.querySelector('#door h1');
     const subtitle = document.querySelector('#door .fact');
     const header = document.querySelector('header.hud');
@@ -583,14 +624,16 @@ addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Build the room arrival timeline
-    // Reference: MOTION-SPEC.md § V
-    const timeline = animeUtils.roomArrival({
-      hero: '#door',           // Will animate the #door container
+    // Build the enhanced room approach timeline (spatial theater)
+    // Reference: MOTION-SPEC.md § V (WOW expansion, Room Approach pattern)
+    const timeline = animeUtils.roomApproach({
+      body: document.body,
+      hero: '#door',
       title: '#door h1',
       subtitle: '#door .fact',
       header: 'header.hud',
-      heroDelay: 0,
+      veil: veil || document.createElement('div'),
+      roomColor: '#0d0a08', // Guernica Passage warm black
       autoplay: true
     });
 
