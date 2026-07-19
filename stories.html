@@ -71,7 +71,6 @@ addEventListener('DOMContentLoaded', () => {
     position:fixed;top:0;left:0;right:0;z-index:10;
     display:flex;justify-content:space-between;align-items:baseline;
     padding:calc(env(safe-area-inset-top,0px) + 22px) 26px 14px;
-    background:linear-gradient(var(--room) 55%,rgba(12,10,9,0.82) 78%,transparent);
     pointer-events:none;
   }
   header.hud a{pointer-events:auto}
@@ -83,7 +82,7 @@ addEventListener('DOMContentLoaded', () => {
   main{padding-top:120px;padding-bottom:120px}
 
   #hero{
-    min-height:60vh;display:flex;flex-direction:column;
+    min-height:100vh;display:flex;flex-direction:column;
     justify-content:center;align-items:center;text-align:center;gap:24px;
     padding:0 clamp(20px,6vw,80px);
     position:relative;overflow:hidden;
@@ -104,7 +103,21 @@ addEventListener('DOMContentLoaded', () => {
   @media (max-width:640px){
     #hero h1{white-space:normal;font-size:clamp(28px,6vw,40px)}
   }
-  .highlight-devo{background:var(--accent);color:#fff;padding:0 4px;font-style:normal}
+  .highlight-devo{
+    background:var(--accent);color:#fff;padding:0 4px;font-style:normal;
+    display:inline-block;transform-origin:left center;
+  }
+  /* Ink-stamp: matches the homepage/room-page title treatment — the box
+     lands once on load, timed just after the hero's own ellipse fade-in
+     completes. */
+  @media (prefers-reduced-motion: no-preference){
+    .highlight-devo{animation:ink-stamp .5s cubic-bezier(.2,1.6,.4,1) both;animation-delay:1.6s}
+    @keyframes ink-stamp{
+      0%{transform:scaleX(0)}
+      60%{transform:scaleX(1.08)}
+      100%{transform:scaleX(1)}
+    }
+  }
   #hero .subtitle{color:var(--dim);font-size:clamp(16px,2vw,20px);max-width:28em;line-height:1.7;margin-top:12px;text-shadow:0 1px 10px rgba(0,0,0,.7)}
   /* Same elliptical fade as the other rooms' heroes: dark at center,
      fully transparent at the edge, scaling in from smaller on load. */
@@ -188,13 +201,6 @@ addEventListener('DOMContentLoaded', () => {
     to { opacity: 1; transform: translateY(0); }
   }
 
-  footer{
-    position:fixed;bottom:0;left:0;right:0;z-index:5;
-    padding:32px 26px calc(env(safe-area-inset-bottom,0px) + 32px);
-    background:linear-gradient(transparent, var(--room) 40%);
-    pointer-events:none;
-  }
-  footer a{pointer-events:auto}
 </style>
 </head>
 <body>
@@ -339,19 +345,7 @@ addEventListener('DOMContentLoaded', () => {
 
 </main>
 
-<footer class="site-footer">
-  <div style="margin: 2em 0;">
-    <a href="/">[ THE MUSEUM → ]</a>
-    <a href="/archive.html">[ THE ARCHIVE → ]</a>
-    <a href="/about.html">[ ABOUT JEFF → ]</a>
-    <a href="/privacy.html">[ PRIVACY → ]</a>
-    <a href="/sitemap.html">[ SITEMAP → ]</a>
-  </div>
-  <div>© <span id="footer-year">2026</span> JEFFREY F. S. NEUMANN</div>
-</footer>
-
 <script>
-document.getElementById('footer-year').textContent = new Date().getFullYear();
 if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
 
