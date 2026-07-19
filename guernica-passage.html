@@ -11,35 +11,34 @@
 <link rel="preload" href="/fonts/playfair-display-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script>document.documentElement.classList.add('js')</script>
 <style>
-  /* Spatial storytelling: THE GUERNICA PASSAGE arrives as a considered
-     still — structure settling into place, not rushing in. Matches the
-     entrance-choreography pattern shared by Flooded Wing / Hall of
-     Openings / The Studio (body fade, staggered HUD, staggered content),
-     previously missing here; #door .fact's existing fade is unchanged. */
+  /* Spatial storytelling: THE GUERNICA PASSAGE arrival choreography
+     is now powered by anime.js (MOTION-SPEC.md § V, Room Arrival pattern).
+     CSS keyframes disabled; anime.js timeline handles all entrance sequencing.
+     See: GUERNICA_PASSAGE_REDESIGN.md for implementation details.
+
+     Reduced-motion mode: all elements appear instantly with no animation. */
   @media (prefers-reduced-motion: no-preference) {
-    .js body{animation:guernica-enter .35s ease forwards}
-    @keyframes guernica-enter{
-      0%{opacity:0}
-      100%{opacity:1}
-    }
+    /* anime.js timeline controls entrance; no CSS keyframes needed */
+    .js body{opacity:1}
+    header.hud .who{opacity:1}
+    header.hud .room-name{opacity:1}
+    header.hud a.caps{opacity:1}
+    #counter{opacity:1}
+    #door h1{opacity:1;transform:none}
+    #intro{opacity:1}
+    #door .fact{opacity:1}
+  }
 
-    header.hud .who{animation:hud-fade-slow .35s ease .1s forwards;opacity:0}
-    header.hud .room-name{animation:hud-fade-slow .35s ease .15s forwards;opacity:0}
-    header.hud a.caps{animation:hud-fade-slow .35s ease .2s forwards;opacity:0}
-    #counter{animation:hud-fade-slow .35s ease .25s forwards;opacity:0}
-    @keyframes hud-fade-slow{
-      0%{opacity:0}
-      100%{opacity:1}
-    }
-
-    #door h1{animation:fadeInUp .8s ease .3s forwards;opacity:0}
-    @keyframes fadeInUp{
-      from{opacity:0;transform:translateY(12px)}
-      to{opacity:1;transform:none}
-    }
-
-    #intro{animation:content-fade-slow .45s ease .2s forwards;opacity:0}
-    @keyframes content-fade-slow{from{opacity:0}to{opacity:1}}
+  @media (prefers-reduced-motion: reduce) {
+    /* Instant appearance, no animation */
+    .js body{opacity:1}
+    header.hud .who{opacity:1}
+    header.hud .room-name{opacity:1}
+    header.hud a.caps{opacity:1}
+    #counter{opacity:1}
+    #door h1{opacity:1;transform:none}
+    #intro{opacity:1}
+    #door .fact{opacity:1}
   }
 
   #room-veil{position:fixed;inset:0;background:#0c0a09;opacity:0;pointer-events:none;transition:opacity .22s ease;z-index:99}
@@ -338,6 +337,7 @@ addEventListener('DOMContentLoaded', () => {
 </style>
 </head>
 <body>
+<script src="/dist/anime-utils.umd.js"></script>
 
 <header class="hud">
   <a class="who" href="index.html">JEFFREY&nbsp;F.&nbsp;S.&nbsp;NEUMANN</a>
@@ -546,6 +546,85 @@ addEventListener('DOMContentLoaded', () => {
     if (h !== lastH) { lastH = h; measure(); }        // catches missed resizes / late layout
     else if (scrollY !== lastY) { lastY = scrollY; update(); }
   }, 500);
+})();
+</script>
+
+<script>
+// ---------- Guernica Passage: Room Arrival Choreography ----------
+// Reference: docs/current/MOTION-SPEC.md § V (Room Arrival pattern)
+// Reference: docs/current/GUERNICA_PASSAGE_REDESIGN.md
+(function() {
+  'use strict';
+
+  // Skip if prefers-reduced-motion is enabled
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // Accessibility mode: show all elements immediately with no animation
+    document.documentElement.style.setProperty('--reduce-motion', '1');
+    return;
+  }
+
+  // Wait for DOM to be ready and anime utils to be loaded
+  if (typeof animeUtils === 'undefined') {
+    console.warn('animeUtils not loaded; skipping choreography');
+    return;
+  }
+
+  // Function to initialize choreography
+  const initChoreography = () => {
+    // Identify target elements
+    const heroImage = document.querySelector('#door::before');
+    const title = document.querySelector('#door h1');
+    const subtitle = document.querySelector('#door .fact');
+    const header = document.querySelector('header.hud');
+    const heroContent = document.querySelector('#hero-content');
+
+    if (!title) {
+      console.warn('Title element not found; skipping choreography');
+      return;
+    }
+
+    // Build the room arrival timeline
+    // Reference: MOTION-SPEC.md § V
+    const timeline = animeUtils.roomArrival({
+      hero: '#door',           // Will animate the #door container
+      title: '#door h1',
+      subtitle: '#door .fact',
+      header: 'header.hud',
+      heroDelay: 0,
+      autoplay: true
+    });
+
+    // Additional tweaks for Guernica Passage specifically:
+    // - Animate the hero content background (radial gradient effect)
+    if (heroContent) {
+      timeline.add({
+        targets: '#hero-content::before',
+        opacity: [0, 1],
+        scale: [0.5, 1],
+        duration: 1400,
+        easing: 'easeOutQuad'
+      }, 200);
+    }
+
+    // Ink-stamp highlight box: appears after subtitle is settled
+    const highlight = document.querySelector('.highlight-dark');
+    if (highlight) {
+      timeline.add({
+        targets: highlight,
+        opacity: [0, 1],
+        scale: [0, 1.08, 1],
+        duration: 500,
+        easing: 'easeOutQuad'
+      }, 1000); // Starts after subtitle (800ms + 200ms delay)
+    }
+  };
+
+  // Run immediately if DOM is ready, otherwise wait for DOMContentLoaded
+  if (document.readyState === 'loading') {
+    addEventListener('DOMContentLoaded', initChoreography);
+  } else {
+    initChoreography();
+  }
 })();
 </script>
 
