@@ -36,7 +36,7 @@ archive verify --json       # machine-readable output (for hooks / CI)
 archive verify --quiet      # no ANSI color
 
 npm run verify              # equivalent to `archive verify`
-python3 scripts/verify.py   # equivalent, no wrapper needed
+python3 tools/utils/verify.py   # equivalent, no wrapper needed
 ```
 
 **Exit codes:** `0` = no integrity FAILURES (PASS or WARNING); `1` = one or more
@@ -83,7 +83,7 @@ all sections) plus per-section levels, for any hook that consumes it.
 
 ## Design
 
-- One file, `scripts/verify.py`, Python standard library only — no dependencies.
+- One file, `tools/utils/verify.py`, Python standard library only — no dependencies.
 - A `Context` loads every data source once. Each checker is a small, independent
   function registered with `@checker("Section")` returning `Result`s. The runner
   executes **all** checkers even if one fails or errors.
@@ -95,7 +95,7 @@ all sections) plus per-section levels, for any hook that consumes it.
 ## Tests
 
 ```bash
-npm test                        # or: python3 scripts/test_verify.py
+npm test                        # or: python3 tools/utils/test_verify.py
 ```
 
 Builds synthetic archive fixtures in a temp dir and asserts each checker's

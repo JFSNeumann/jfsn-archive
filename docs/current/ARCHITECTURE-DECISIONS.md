@@ -122,7 +122,7 @@ This growth should be accommodated through extension of existing structure, not 
 
 ### How Growth Should Be Handled
 
-**New artworks** belong in the existing Works Archive. No new architecture required. The existing system of medium filters, decade pages, and theme pages will scale naturally.
+**New artworks** belong in the existing Works Archive. No new architecture required. `archive.html`'s single grid with client-side medium/decade/orientation filter chips is the whole discovery mechanism as of the 2026-07-16 pruning — the separate medium-filter pages, decade pages, and theme pages this line used to describe were deleted in that pass (in favor of one filterable grid over per-category static pages) and should not be recreated without Jeff reopening that scope.
 
 **New oral histories and essays** should be added to existing pages, extended as content grows. When a single page becomes unwieldy, pagination or excerpt cards can be added to the existing page without requiring a new folder or index.
 

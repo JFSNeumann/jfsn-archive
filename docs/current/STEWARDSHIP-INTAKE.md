@@ -9,7 +9,7 @@ provenance, uncertainty — entirely to the human.
 
 ## Phase 2.1 — Sidecar Scaffolder (implemented)
 
-`scripts/scaffold_sidecar.py` creates an empty, schema-correct metadata sidecar
+`tools/intake/scaffold_sidecar.py` (wired as `archive intake scaffold`) creates an empty, schema-correct metadata sidecar
 (`artworks/full/artNNNN.json`) for one or more newly-assigned artwork IDs. It
 writes **structure only**: the deterministic fields (`file`, `schema_version`,
 `featured`) and every curator-authored field present but intentionally empty. It
@@ -18,10 +18,10 @@ invents no metadata.
 ### Usage
 
 ```bash
-python3 scripts/scaffold_sidecar.py art1085              # one work
-python3 scripts/scaffold_sidecar.py art1085 art1086      # several
-python3 scripts/scaffold_sidecar.py 1085                 # bare number ok → art1085
-python3 scripts/scaffold_sidecar.py art1085 --force      # overwrite existing
+python3 tools/intake/scaffold_sidecar.py art1085              # one work
+python3 tools/intake/scaffold_sidecar.py art1085 art1086      # several
+python3 tools/intake/scaffold_sidecar.py 1085                 # bare number ok → art1085
+python3 tools/intake/scaffold_sidecar.py art1085 --force      # overwrite existing
 ```
 
 **Exit codes:** `0` = every requested sidecar freshly created (or forced);
@@ -90,7 +90,7 @@ refuse), valid-JSON output, absence of invented metadata, and the
 
 ## Phase 2.2 — Intake Status (implemented)
 
-`scripts/intake_status.py` answers one question, **strictly read-only**:
+`tools/intake/intake_status.py` (wired as `archive intake status`) answers one question, **strictly read-only**:
 
 > What work is waiting for the curator?
 
@@ -100,8 +100,8 @@ cataloged, in two groups, and modifies nothing.
 ### Usage
 
 ```bash
-python3 scripts/intake_status.py            # human-readable report
-python3 scripts/intake_status.py --json     # machine-readable
+python3 tools/intake/intake_status.py            # human-readable report
+python3 tools/intake/intake_status.py --json     # machine-readable
 ```
 
 Always exits `0` — it is observation, not a gate.
@@ -146,13 +146,13 @@ report is `Pending: 0 / Ready: 0`.
 
 ### Tests
 
-`python3 scripts/test_intake_status.py` (part of `npm test`) covers no-pending,
+`python3 tools/intake/test_intake_status.py` (part of `npm test`) covers no-pending,
 one/multiple pending, partial sidecars, malformed sidecars, missing sidecars,
 ready-for-finish, the `validate_catalog.py` interaction, and read-only behavior.
 
 ## Phase 2.3 — Intake Orchestration (implemented)
 
-`scripts/intake.py` (wired as `archive intake`) is a thin coordinator that
+`tools/intake/intake.py` (wired as `archive intake`) is a thin coordinator that
 prepares new artworks for authorship and then **deliberately stops**:
 
 1. verify prerequisites,
@@ -203,14 +203,14 @@ the state to check with `archive intake status`.
 
 ### Tests
 
-`python3 scripts/test_intake.py` (part of `npm test`) mocks ingest and covers
+`python3 tools/intake/test_intake.py` (part of `npm test`) mocks ingest and covers
 normal intake, multiple works, empty inbox, ingest failure, scaffold failure,
 existing-sidecar collision, completion messaging, and that no catalog/page/
 deploy work occurs.
 
 ## Phase 2.4 — Intake Finish (implemented)
 
-`scripts/intake_finish.py` (wired as `archive intake finish`) turns completed,
+`tools/intake/intake_finish.py` (wired as `archive intake finish`) turns completed,
 curator-authored metadata into a fully generated, verified archive state. It
 coordinates existing tools in a fixed order and stops the moment any stage
 fails. **It completes the Catalog Intake workflow.**
@@ -224,7 +224,7 @@ fails. **It completes the Catalog Intake workflow.**
 3. **Generate pages** for the newly completed works only —
    `gen-artwork-pages.py --id …`.
 4. **Update derived artifacts** — `build_changes.py` (changes.json).
-5. **Verify** — `scripts/verify.py`, the always-final gate.
+5. **Verify** — `tools/utils/verify.py`, the always-final gate.
 6. **Report** readiness.
 
 ### Usage
@@ -266,7 +266,7 @@ complete; **publication remains a human decision.**
 
 ### Tests
 
-`python3 scripts/test_intake_finish.py` (part of `npm test`) mocks every stage
+`python3 tools/intake/test_intake_finish.py` (part of `npm test`) mocks every stage
 and covers successful finish, multiple works, no completed works, validation
 blocking (pending and tool-rejection), build failure, page-generation failure,
 verify failure as the final gate, and the no-git/no-deploy guarantee.
