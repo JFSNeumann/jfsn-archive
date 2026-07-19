@@ -393,6 +393,35 @@ All patterns use anime.js timelines (`anime.timeline()`), not CSS keyframes.
 
 **Exceptions:** Infinite loops (scroll cues, spinners) may remain CSS if anime.js timeline loop becomes expensive.
 
+**⚠️ v4 API contract — every pattern in `src/main.js` must follow this exactly:**
+This project uses anime.js **v4**, whose `Timeline#add()` signature differs from
+the v3-style syntax that looks natural if you're recalling anime.js from memory
+or examples. Getting this wrong does not throw — it silently no-ops the
+animation, which is far more dangerous than a crash (the page still renders
+correctly via default CSS states, so nothing *looks* broken).
+
+```js
+// WRONG (v3-style — silently does nothing in v4, no error):
+timeline.add({ targets: el, opacity: [0,1], duration: 800, easing: 'easeOutQuad' })
+
+// CORRECT (v4 — targets is a separate argument, not a nested key):
+timeline.add(el, { opacity: [0,1], duration: 800, ease: 'outQuad' })
+```
+
+Property names also changed: `easing` → `ease` (and string values drop the
+`ease` prefix, e.g. `'easeOutQuad'` → `'outQuad'`), `complete` → `onComplete`,
+`update` → `onUpdate`. `Timeline` instances are thenable directly — there is
+no `.finished` property; `await timeline` or `timeline.then(...)`, not
+`timeline.finished.then(...)`.
+
+This exact mistake shipped silently in the 2026-07-19 choreography session
+and was only caught 2026-07-19 (later) while building Archive Discovery,
+by manually driving the anime.js engine's `update()` method — normal visual
+testing didn't catch it because the room pages' click handlers had a second,
+compounding bug (`retreat.finished.then(...)`) that fell through to a bare
+`location.href` navigation, masking the fact the choreography never played.
+See git commit `3145bf19` for the full fix and verification method.
+
 ### CSS Variables Sync
 Every animation that uses a color references `--room`, `--accent`, `--ink`, etc.
 
