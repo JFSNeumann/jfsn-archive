@@ -185,22 +185,35 @@ addEventListener('DOMContentLoaded', () => {
   @media (prefers-reduced-motion: no-preference){
     .card a:hover img,.card a:focus-visible img{
       border-color:var(--accent);
-      box-shadow:0 8px 24px rgba(255,102,0,.12);
+      box-shadow:0 12px 32px rgba(255,102,0,.16);
       transform:translateY(-2px);
     }
 
+    /* Touch: brief press confirmation before navigation */
+    .card a:active img{
+      transform:translateY(0);
+    }
+
     /* Metadata enters from below on hover */
-    .card figcaption{opacity:0;transform:translateY(8px);transition:opacity .35s ease .05s,transform .35s ease .05s}
+    .card figcaption{opacity:0;transform:translateY(8px);transition:opacity .4s ease .08s,transform .4s ease .08s}
     .card a:hover figcaption,.card a:focus-visible figcaption{opacity:1;transform:none}
 
     /* Title anchors, gains weight */
-    .card .t{transition:color .35s ease,font-weight .35s ease}
+    .card .t{transition:color .4s ease,font-weight .4s ease}
     .card a:hover .t,.card a:focus-visible .t{color:var(--accent);font-weight:500}
 
     /* Metadata metadata dims then reveals on hover */
-    .card .m,.card .x{opacity:.6;transition:opacity .35s ease .1s}
+    .card .m,.card .x{opacity:.6;transition:opacity .4s ease .12s}
     .card a:hover .m,.card a:focus-visible .m,
     .card a:hover .x,.card a:focus-visible .x{opacity:1}
+  }
+
+  /* Touch press feedback: scale and subtle background on tap */
+  @media (hover:none) and (pointer:coarse) and (prefers-reduced-motion: no-preference){
+    .card a:active{
+      background-color:color-mix(in srgb, var(--accent) 6%, transparent);
+      transform:scale(.98);
+    }
   }
 
   @media (prefers-reduced-motion: reduce){
