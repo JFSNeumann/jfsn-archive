@@ -42,7 +42,12 @@
   'use strict';
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!REDUCED) {
-    const bg = document.body.parentElement;
+    // document.documentElement (<html>), not document.body.parentElement —
+    // this script runs in <head>, before <body> exists yet, so .body would
+    // be null here and .parentElement on it would throw, silently aborting
+    // the rest of this script block (including the veil/click-handler
+    // registration below it).
+    const bg = document.documentElement;
     addEventListener('scroll', () => {
       const y = scrollY * -2.5;
       bg.style.setProperty('--parallax-y', `${y}px`);
@@ -371,7 +376,7 @@ addEventListener('DOMContentLoaded', () => {
 </style>
 </head>
 <body>
-<script src="/dist/anime-utils.umd.js"></script>
+<script src="/dist/anime-utils.umd.js" defer></script>
 
 <header class="hud">
   <a class="who" href="index.html">JEFFREY&nbsp;F.&nbsp;S.&nbsp;NEUMANN</a>
@@ -583,7 +588,7 @@ addEventListener('DOMContentLoaded', () => {
 })();
 </script>
 
-<script>
+<script defer>
 // ---------- Guernica Passage: Room Arrival Choreography ----------
 // Reference: docs/current/MOTION-SPEC.md § V (Room Arrival pattern)
 // Reference: docs/current/GUERNICA_PASSAGE_REDESIGN.md
@@ -597,12 +602,6 @@ addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-  // Wait for DOM to be ready and anime utils to be loaded
-  if (typeof animeUtils === 'undefined') {
-    console.warn('animeUtils not loaded; skipping choreography');
-    return;
-  }
-
   // Function to initialize choreography
   const initChoreography = () => {
     // Identify target elements
@@ -610,7 +609,6 @@ addEventListener('DOMContentLoaded', () => {
     const title = document.querySelector('#door h1');
     const subtitle = document.querySelector('#door .fact');
     const header = document.querySelector('header.hud');
-    const heroContent = document.querySelector('#hero-content');
 
     if (!title) {
       console.warn('Title element not found; skipping choreography');
@@ -630,36 +628,25 @@ addEventListener('DOMContentLoaded', () => {
       autoplay: true
     });
 
-    // Additional tweaks for Guernica Passage specifically:
-    // - Animate the hero content background (radial gradient effect)
-    if (heroContent) {
-      timeline.add({
-        targets: '#hero-content::before',
-        opacity: [0, 1],
-        scale: [0.5, 1],
-        duration: 1400,
-        easing: 'easeOutQuad'
-      }, 200);
-    }
-
-    // Ink-stamp highlight box: appears after subtitle is settled
-    const highlight = document.querySelector('.highlight-dark');
-    if (highlight) {
-      timeline.add({
-        targets: highlight,
-        opacity: [0, 1],
-        scale: [0, 1.08, 1],
-        duration: 500,
-        easing: 'easeOutQuad'
-      }, 1000); // Starts after subtitle (800ms + 200ms delay)
-    }
+    // Note: the hero-content radial gradient (#hero-content::before) and the
+    // ink-stamp highlight box (.highlight-dark) both already have their own
+    // working CSS keyframe animations (hero-fade-in, ink-stamp) defined
+    // above — no anime.js timeline entry needed for either.
   };
 
+  // Two deferred <script> tags are only guaranteed to run in document
+  // order in theory — observed in practice to sometimes race, so retry
+  // briefly rather than assuming animeUtils has finished executing yet.
+  function waitForAnimeUtils(retries) {
+    if (typeof animeUtils !== 'undefined') { initChoreography(); return; }
+    if (retries <= 0) { console.warn('animeUtils not loaded; skipping choreography'); return; }
+    setTimeout(() => waitForAnimeUtils(retries - 1), 20);
+  }
   // Run immediately if DOM is ready, otherwise wait for DOMContentLoaded
   if (document.readyState === 'loading') {
-    addEventListener('DOMContentLoaded', initChoreography);
+    addEventListener('DOMContentLoaded', () => waitForAnimeUtils(25));
   } else {
-    initChoreography();
+    waitForAnimeUtils(25);
   }
 })();
 </script>

@@ -469,8 +469,8 @@ addEventListener('DOMContentLoaded', () => {
 </footer>
 <script>document.getElementById('footer-year').textContent = new Date().getFullYear();</script>
 
-<script src="/dist/anime-utils.umd.js"></script>
-<script>
+<script src="/dist/anime-utils.umd.js" defer></script>
+<script defer>
 // The Studio: Room Arrival Choreography (Spatial Theater)
 // Reference: docs/current/MOTION-SPEC.md § V (Room Approach pattern)
 (function() {
@@ -478,11 +478,6 @@ addEventListener('DOMContentLoaded', () => {
 
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
     document.documentElement.style.setProperty('--reduce-motion', '1');
-    return;
-  }
-
-  if (typeof animeUtils === 'undefined') {
-    console.warn('animeUtils not loaded; skipping choreography');
     return;
   }
 
@@ -497,7 +492,7 @@ addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const timeline = animeUtils.roomApproach({
+    animeUtils.roomApproach({
       body: document.body,
       hero: '#door',
       title: '#door h1',
@@ -508,22 +503,23 @@ addEventListener('DOMContentLoaded', () => {
       autoplay: true
     });
 
-    const heroContent = document.querySelector('.hero-content::before');
-    if (heroContent) {
-      timeline.add({
-        targets: '.hero-content::before',
-        opacity: [0, 1],
-        scale: [0.5, 1],
-        duration: 1400,
-        easing: 'easeOutQuad'
-      }, 200);
-    }
+    // Note: .hero-content::before (the radial gradient behind the title)
+    // already has its own working CSS keyframe animation (hero-fade-in)
+    // defined above — no anime.js timeline entry needed.
   };
 
+  // Two deferred <script> tags are only guaranteed to run in document
+  // order in theory — observed in practice to sometimes race, so retry
+  // briefly rather than assuming animeUtils has finished executing yet.
+  function waitForAnimeUtils(retries) {
+    if (typeof animeUtils !== 'undefined') { initChoreography(); return; }
+    if (retries <= 0) { console.warn('animeUtils not loaded; skipping choreography'); return; }
+    setTimeout(() => waitForAnimeUtils(retries - 1), 20);
+  }
   if (document.readyState === 'loading') {
-    addEventListener('DOMContentLoaded', initChoreography);
+    addEventListener('DOMContentLoaded', () => waitForAnimeUtils(25));
   } else {
-    initChoreography();
+    waitForAnimeUtils(25);
   }
 })();
 </script>
