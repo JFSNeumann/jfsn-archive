@@ -78,7 +78,7 @@ wc -l _shared/micro-interactions.js     # JS line count
 - [ ] Are there known issues to fix? (from SESSION_KNOWN_ISSUES.md)
 - [ ] Did any issues surface in production? (check CLAUDE.md notes)
 - [ ] What's the current visual aesthetic? (homepage, archive, mobile)
-- [ ] What's the last cache version? (should be in PERF_BASELINE.md)
+- [ ] What's the last cache version? (`CACHE_V` in `sw.js` — check `git log -1 -- sw.js`, not PERF_BASELINE.md)
 
 ### Check Backups
 ```bash
@@ -90,65 +90,30 @@ wc -l _shared/micro-interactions.js     # JS line count
 
 ---
 
-## PHASE 4: PERFORMANCE BASELINE SETUP (2 min)
+## PHASE 4: PERFORMANCE BASELINE (as needed)
 
-### Open Performance Baseline
+**Corrected 2026-07-19:** `PERF_BASELINE.md` is a dated one-off session record (Session 95, 2026-06-25), not a running document — it was moved to `docs/archive/2026/PERF_BASELINE.md` and won't be updated by future sessions. There is no standing "performance baseline" to open and compare against at the start of every session; treat this phase as optional, only relevant to a session specifically doing performance work.
+
 ```bash
-cat /Documents/JFSN/PERF_BASELINE.md
+# For historical numbers from the last dedicated perf pass:
+cat docs/archive/2026/PERF_BASELINE.md
+
+# To capture a fresh baseline, use the standard measured to date:
+lighthouse <url> --throttling-method=devtools   # median of 3 runs
 ```
-
-### Note Previous Session Metrics
-| Metric | Previous Session | This Session | Delta |
-|--------|------------------|--------------|-------|
-| Homepage LCP | X.Xs | — | — |
-| Homepage Perf | X | — | — |
-| Archive LCP | X.Xs | — | — |
-| Archive Perf | X | — | — |
-
-✅ Baseline metrics noted for comparison at session end.
 
 ---
 
-## PHASE 5: FEATURE CHECKLIST SETUP (2 min)
+## PHASE 5: FEATURE CHECKLIST (as needed)
 
-### Open Feature Checklist
-```bash
-cat /Documents/JFSN/SESSION_FEATURE_CHECKLIST.md
-```
-
-### Create This Session's Checklist
-```bash
-cp /Documents/JFSN/SESSION_FEATURE_CHECKLIST.md \
-   /Documents/JFSN/SESSION_[N]_FEATURE_CHECKLIST.md
-```
-
-### Add This Session's Features
-Edit SESSION_[N]_FEATURE_CHECKLIST.md:
-```markdown
-## Session [N] Features to Verify
-
-- [ ] Feature A: Description
-  - [ ] Works on desktop
-  - [ ] Works on mobile
-  - [ ] Keyboard accessible
-  - [ ] WCAG AA contrast
-
-- [ ] Feature B: Description
-  - [ ] Works on desktop
-  - [ ] Works on mobile
-  - [ ] Keyboard accessible
-  - [ ] WCAG AA contrast
-```
-
-✅ Feature checklist ready for session.
+**Corrected 2026-07-19:** `SESSION_FEATURE_CHECKLIST.md` was a one-off checklist from Session 65 (2026-06-18) — it was moved to `docs/archive/2026/SESSION_FEATURE_CHECKLIST.md`. The "copy it to `SESSION_[N]_FEATURE_CHECKLIST.md` every session" ritual this phase used to prescribe was never actually followed after that session (verified: zero `SESSION_*_FEATURE_CHECKLIST.md` files exist anywhere in the repo besides the original). Don't treat this as a standing per-session step. If a session is shipping enough new features to warrant a dedicated verification pass, write one inline in that session's own notes instead of resurrecting this file-copy pattern.
 
 ---
 
 ## PHASE 6: VISUAL INSPECTION (3 min)
 
 ### Take Screenshots / Load Key Pages
-- [ ] Homepage (light mode) — headings, spacing, images OK?
-- [ ] Homepage (dark mode) — intentional aesthetic?
+- [ ] Homepage — headings, spacing, images OK? (permanently dark-themed, no light-mode toggle)
 - [ ] Archive page — grid spacing, headers, hierarchy OK?
 - [ ] Single artwork page — metadata, image, related works OK?
 - [ ] Mobile (390px) — responsive, readable, touch-friendly?
@@ -206,18 +171,14 @@ PHASE 3: Baseline & Context (3 min)
 - [ ] Production issues checked
 - [ ] Backups verified current
 
-PHASE 4: Performance Baseline Setup (2 min)
-- [ ] PERF_BASELINE.md opened
-- [ ] Previous metrics noted
-- [ ] Ready to capture new baseline
+PHASE 4: Performance Baseline (only if doing perf work this session)
+- [ ] docs/archive/2026/PERF_BASELINE.md checked for historical numbers, if relevant
 
-PHASE 5: Feature Checklist Setup (2 min)
-- [ ] SESSION_FEATURE_CHECKLIST.md created
-- [ ] This session's features defined
-- [ ] Checklist ready to use
+PHASE 5: Feature Checklist (only if shipping enough features to warrant one)
+- [ ] Inline verification notes written for this session, if warranted — no standing file to create
 
 PHASE 6: Visual Inspection (3 min)
-- [ ] Homepage looks good (light + dark)
+- [ ] Homepage looks good (the site is permanently dark-themed — there is no light-mode toggle)
 - [ ] Archive looks good
 - [ ] Artwork page looks good
 - [ ] Mobile looks good (390px)
