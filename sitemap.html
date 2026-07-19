@@ -152,17 +152,16 @@ addEventListener('DOMContentLoaded', () => {
   @media (max-width:640px){ header.hud .room-name{display:none} }
 
   footer.site-footer {
-    margin-top: 12vh;
-    padding-top: 4vh;
+    margin-top: 8em;
+    padding: 4em clamp(20px,6vw,80px) 2em;
     border-top: 1px solid var(--faint);
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--faint);
     text-align: center;
   }
-  footer.site-footer a { color: var(--dim); transition: color 0.25s; }
-  footer.site-footer a:hover { color: var(--accent); }
+  footer.site-footer .stat { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--faint); margin: 2em 0; }
+  footer.site-footer a { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; display: inline-block; margin: 0 1em; color: var(--dim); transition: color 0.3s ease; }
+  footer.site-footer a:hover, footer.site-footer a:focus-visible { color: var(--accent); }
+  footer.site-footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+  @media (max-width: 640px) { footer.site-footer a { display: block; margin: 0.5em 0; } }
 </style>
 </head>
 
@@ -262,14 +261,12 @@ addEventListener('DOMContentLoaded', () => {
   </div>
 
   <footer class="site-footer">
-    <div>1,084 WORKS · 50 YEARS · 1974–PRESENT · CLEVELAND, OH</div>
-    <div style="margin: 2em 0;">
-      <a href="/">[ THE MUSEUM → ]</a>
-      <a href="/archive.html">[ THE ARCHIVE → ]</a>
-      <a href="/about.html">[ ABOUT JEFF → ]</a>
-      <a href="/privacy.html">[ PRIVACY → ]</a>
-    </div>
-    <div>© <span id="footer-year">2026</span> JEFFREY F. S. NEUMANN</div>
+    <div class="stat">1,084 WORKS · 50 YEARS · 1974–PRESENT · CLEVELAND, OH</div>
+    <a href="/">[ THE MUSEUM → ]</a>
+    <a href="/archive.html">[ THE ARCHIVE → ]</a>
+    <a href="/about.html">[ ABOUT JEFF → ]</a>
+    <a href="/privacy.html">[ PRIVACY → ]</a>
+    <div class="stat">© <span id="footer-year"></span> JEFFREY F. S. NEUMANN</div>
   </footer>
 
 </main>
