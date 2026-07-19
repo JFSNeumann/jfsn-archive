@@ -7,27 +7,29 @@
 
 ## 1. Visitor Experience
 
-- [ ] Primary navigation functions on all page types (index, archive, artwork, stories, about, lost, series-index, start-here, favorites, wall, why-i-made-things)
-- [ ] No page returns a 404 or blank body
-- [ ] `#lost-section` text is visible after scroll (`.reveal-section` elements receive `.revealed` class)
-- [ ] Scroll-reveal animations trigger on natural scroll; confirm `core.bundle.js` IntersectionObserver is active
-- [ ] Artwork images load on archive grid and individual artwork pages
-- [ ] Homepage hero image loads; mosaic intro plays (or is correctly suppressed on mobile)
+- [ ] Primary navigation (`header.hud`'s exit link + room-to-room links) functions on all 14 core pages: `index`, `archive`, `current`, `guernica-passage`, `flooded-wing`, `the-studio`, `hall-of-openings`, `working-history`, `about`, `stories`, `artwork` (template, test via `?id=`), `404`, `privacy`, `sitemap`. `index.html` deliberately has no header — verify its five room-nav doors instead.
+- [ ] No page returns a 404 or blank body — this includes checking for dangling links to pages deleted in the 2026-07-16 pruning (decade pages, series pages, `api.html`, `curate.html`, `qa.html`, etc.); a link pointing at one of those is a bug, the deletion itself was not
+- [ ] `.reveal-el` elements receive their reveal state on scroll (`guernica-passage.html`, `the-studio.html`, `hall-of-openings.html`, `working-history.html` — the "reveal-on-walk" pattern, driven by scroll position + a heartbeat check, not IntersectionObserver)
+- [ ] Full-viewport hero sections (`#door`/`#hero`) show their scroll cue (`↓`, animates, fades past 40px scroll) on all 7 pages that have one: `flooded-wing`, `guernica-passage`, `the-studio`, `hall-of-openings`, `about`, `working-history`, `stories`
+- [ ] Room-veil transition (blackout fade between internal link clicks) fires correctly, and clears itself on browser back-button return (bfcache `pageshow` — verify the veil doesn't persist at `opacity:1` and block clicks; this was a real bug, fixed 2026-07-19)
+- [ ] Artwork images load on archive grid and individual artwork pages (`artwork.html?id=...`)
+- [ ] Homepage hero: center poster image loads; on desktop (≥1200px) the two flanking wing images crossfade through different featured works every ~11s (added 2026-07-19) — confirm they never show the same work as each other or as the center poster, and that the crossfade doesn't run under `prefers-reduced-motion` or below 1200px
 - [ ] Console is clean on index.html, archive.html, and one artwork page — no uncaught errors or warnings
-- [ ] Search overlay opens, returns results, and closes cleanly
+- [ ] Archive's inline search bar (`#search` in `archive.html`'s controls bar — not an overlay) filters the grid live, and `#sort` re-orders correctly
 
 ---
 
 ## 2. Accessibility
 
-- [ ] `#sse-input` has `aria-label` ("Search works, themes, year…")
-- [ ] `#nav-menu-btn` has `aria-expanded` (toggled by JS) and `aria-controls="mobile-menu-drawer"`
-- [ ] `#mobile-menu` has `aria-hidden="true"` when closed; `aria-hidden="false"` when open
-- [ ] `#cps-canvas` has `aria-hidden="true"`; parent `#cps-wrap` retains `role="img"` and its `aria-label`
-- [ ] Decorative images and SVGs carry `aria-hidden="true"` or empty `alt=""`
-- [ ] Tab order is logical on desktop; focus does not enter the closed mobile menu
-- [ ] Closing the mobile menu returns focus to `#nav-menu-btn`
-- [ ] Keyboard shortcut ⌘K opens search overlay
+*There is no mobile hamburger/drawer nav or ⌘K search overlay on this site — nav is the same text-bracket `header.hud` links on every viewport. Don't check for either; check the patterns actually in use below.*
+
+- [ ] `#search` (archive.html) has `aria-label="Search the archive"`
+- [ ] `#filters-toggle` (archive.html, mobile filter collapse) has `aria-expanded` (toggled by JS) and `aria-controls="filter-groups"`
+- [ ] Filter chips have `aria-pressed` reflecting active state
+- [ ] Decorative/atmospheric images carry `aria-hidden="true"` on their `<figure>` and `alt=""` on the `<img>` — e.g. index.html's wing images, whose content rotates and can't carry a stable description
+- [ ] `:focus-visible` styling is present and paired with `:hover` on every interactive element (cards, buttons, links, chips) — not styled hover-only
+- [ ] Tab order is logical; keyboard-only navigation can reach and activate every link and control reachable by mouse
+- [ ] Composite-work flag ("Photoshop composite — imagined placement") is in the visible DOM, not hidden behind a hover-only state — it must be reachable by screen readers and visible on touch
 
 ---
 
@@ -37,7 +39,7 @@
 - [ ] Composite works (250 total) display "Photoshop composite — imagined placement" on their artwork pages; non-composite works show no badge
 - [ ] Year display format is "1970s (est.)" — the `(est.)` suffix is present on all artwork pages
 - [ ] Stories content and oral-history text are intact and unaltered
-- [ ] Lost-works register (docs/lost-works-register.md) has not been modified unintentionally
+- [ ] Lost-works register (`docs/archive/2026/lost-works-register.md`) has not been modified unintentionally
 - [ ] No catalog.json fields (title, year, series, composite, year_precision) have changed without explicit intent
 - [ ] No fabricated provenance, exhibition claims, or composite-as-real imagery has been introduced
 
@@ -87,4 +89,4 @@ If all boxes are checked, proceed with `bash deploy-hostgator.sh`.
 
 ---
 
-*Last updated: 2026-07-02*
+*Last updated: 2026-07-19 — full accuracy pass; see DESIGN-SYSTEM.md's "Architecture" section for why the old shared-nav/bundle references were wrong*
