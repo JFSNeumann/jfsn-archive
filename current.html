@@ -336,6 +336,7 @@ addEventListener('DOMContentLoaded', () => {
   </div>
 </noscript>
 
+<script src="/dist/anime-utils.umd.js"></script>
 <script>
 (async function(){
   'use strict';
@@ -428,6 +429,7 @@ addEventListener('DOMContentLoaded', () => {
   const live = document.getElementById('live');
   let cardFor = -1;
 
+  const cardMat = card.querySelector('.mat');
   function showCard(i){
     if (i === cardFor) return;
     cardFor = i;
@@ -442,6 +444,11 @@ addEventListener('DOMContentLoaded', () => {
     cardLink.href = 'artwork.html?id=' + w.i;
     card.classList.add('on');
     live.textContent = w.t + ', ' + w.yd + ', ' + w.m;
+    // Each newly-focused work gets its own arrival morph, not just a fade —
+    // reinforces "one work at a time" as you move through the river.
+    if (!REDUCED && typeof animeUtils !== 'undefined') {
+      animeUtils.focusCardMorph({ mat: cardMat });
+    }
   }
   function hideCard(){
     cardFor = -1;
@@ -463,9 +470,14 @@ addEventListener('DOMContentLoaded', () => {
     const w = works[ci];
     const d = Math.floor(w.y / 10) * 10;
     if (d !== shownYear) {
+      const isFirst = shownYear === null;
       shownYear = d;
       yearNum.textContent = d + 's';
       yearEst.textContent = 'YEARS ARE DECADE ESTIMATES';
+      // Pulse the numeral on every decade crossing (not the initial paint).
+      if (!isFirst && !REDUCED && typeof animeUtils !== 'undefined') {
+        animeUtils.decadePulse({ element: yearNum });
+      }
     }
   }
 
@@ -618,8 +630,15 @@ addEventListener('DOMContentLoaded', () => {
 
     for (let i = i0; i <= i1; i++) {
       const w = works[i];
-      // elevation ease toward focus
-      const target = (i === focusI) ? 1 : (Math.abs(i - focusI) === 1 && focusI >= 0 ? 0.35 : 0);
+      // elevation ease toward focus — a smooth falloff cascade across the
+      // nearest works, not just the immediate neighbor, so attention reads
+      // as a wave moving through the river as you approach a work.
+      let target = 0;
+      if (focusI >= 0) {
+        const dist = Math.abs(i - focusI);
+        if (dist === 0) target = 1;
+        else if (dist <= 4) target = Math.max(0, 0.4 - dist * 0.09);
+      }
       focusAmt[i] += (target - focusAmt[i]) * 0.18;
 
       const x = i * STEP - scrollX;
@@ -643,17 +662,30 @@ addEventListener('DOMContentLoaded', () => {
     ctx.fillStyle = 'rgba(232,226,217,0.05)';
     ctx.fillRect(0, MIDY + BANDH / 2 + 8, W, 1);
 
-    // decade ticks + labels
-    ctx.font = '10px -apple-system, BlinkMacSystemFont, sans-serif';
-    ctx.fillStyle = '#7a7168';
+    // decade ticks + labels — glow as each threshold nears screen center,
+    // so crossing into a new decade reads as a passage, not just a tick.
     for (const d of decades) {
       const x = d.i * STEP - scrollX;
       if (x < -80 || x > W + 80) continue;
-      ctx.fillRect(x, MIDY + BANDH / 2 + 8, 1, 12);
+      const dist = Math.abs(x - W / 2);
+      const glowT = REDUCED ? 0 : Math.max(0, 1 - dist / 180);
+
+      ctx.fillStyle = glowT > 0.05 ? `rgba(255,102,0,${0.35 + glowT * 0.65})` : '#7a7168';
+      ctx.fillRect(x, MIDY + BANDH / 2 + 8, glowT > 0.3 ? 2 : 1, 12 + glowT * 10);
+
       ctx.save();
-      ctx.translate(x + 6, MIDY + BANDH / 2 + 30);
+      ctx.translate(x + 6, MIDY + BANDH / 2 + 30 - glowT * 4);
+      if (glowT > 0.05) {
+        ctx.shadowColor = 'rgba(255,102,0,0.8)';
+        ctx.shadowBlur = 8 * glowT;
+        ctx.fillStyle = `rgba(232,226,217,${0.5 + glowT * 0.5})`;
+      } else {
+        ctx.fillStyle = '#7a7168';
+      }
+      ctx.font = `${10 + glowT * 3}px -apple-system, BlinkMacSystemFont, sans-serif`;
       ctx.fillText(d.label.toUpperCase(), 0, 0);
       ctx.restore();
+      ctx.shadowBlur = 0;
     }
 
     // minimap viewport window
@@ -664,6 +696,18 @@ addEventListener('DOMContentLoaded', () => {
       mctx.fillRect(i / N * miniW, 5, Math.max(1, miniW / N), 12);
     }
     mctx.globalAlpha = 1;
+    // current-decade segment glows on the strip — the timeline itself
+    // tracks where you are, not just the viewport window rectangle.
+    if (shownYear !== null) {
+      const di = decades.findIndex(d => d.label === shownYear + 's');
+      if (di >= 0) {
+        const nextI = di + 1 < decades.length ? decades[di + 1].i : N;
+        const x0 = decades[di].i / N * miniW;
+        const x1 = nextI / N * miniW;
+        mctx.fillStyle = 'rgba(255,102,0,0.16)';
+        mctx.fillRect(x0, 0, Math.max(1, x1 - x0), miniH);
+      }
+    }
     // decade ticks on the minimap
     mctx.fillStyle = 'rgba(232,226,217,0.35)';
     for (const d of decades) {

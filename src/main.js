@@ -159,6 +159,30 @@ export const gridStagger = ({
 }
 
 /**
+ * PATTERN: Decade Pulse (Temporal Threshold Marker)
+ * Numeral scale-pulses when the visitor crosses into a new decade
+ * Duration: 600ms (single bounce, discovery-adjacent)
+ * Reference: MOTION-SPEC.md § V (WOW expansion, The Current)
+ */
+export const decadePulse = ({ element, autoplay = true }) => {
+  return anime.timeline({ autoplay })
+    .add(element, { scale: [1, 1.07, 1], duration: 600, ease: 'outElastic' }, 0)
+}
+
+/**
+ * PATTERN: Focus Card Morph (The Current — work card arrival)
+ * Each newly-focused work's card scales+fades in as a distinct arrival,
+ * not just a flat opacity fade — reinforces "one work at a time" as you
+ * move through the river.
+ * Duration: 320ms (discovery easing)
+ * Reference: MOTION-SPEC.md § V (WOW expansion, The Current)
+ */
+export const focusCardMorph = ({ mat, autoplay = true }) => {
+  return anime.timeline({ autoplay })
+    .add(mat, { scale: [0.92, 1], opacity: [0.35, 1], duration: 320, ease: 'outQuad' }, 0)
+}
+
+/**
  * PATTERN: Chip Pulse (Filter Selection Feedback)
  * Quick bounce-scale pop when a filter chip is toggled on/off
  * Duration: 250ms (interaction easing, bounce-back)
