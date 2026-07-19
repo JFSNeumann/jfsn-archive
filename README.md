@@ -14,7 +14,8 @@ A personal record of Jeffrey F. S. Neumann's work — not a gallery, shop, or br
 
 | Path | Contents |
 |------|----------|
-| `*.html`, `_shared/` | The site itself — pages and shared front-end partials |
+| `*.html` | The site itself — 14 core pages, each self-contained (own inline `<style>`/`<script>`, no shared stylesheet or nav partial — see `docs/current/DESIGN-SYSTEM.md` § "Architecture") |
+| `_shared/` | Confirmed dead code as of 2026-07-19 — zero pages reference any file in it. Not cleaned up yet; don't assume editing it has any live effect |
 | `artworks/` | Image assets plus the ingestion and AI-cataloging pipeline |
 | `config/` | Generated data (catalog, sitemap inputs, etc.) consumed by the site — not hand-edited |
 | `tools/` | Python utilities: page generators, intake workflow, verification |
