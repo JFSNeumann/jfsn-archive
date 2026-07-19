@@ -16,7 +16,7 @@
 | Primary owner | Jeffrey F. S. Neumann | jeff@jfsn.com | |
 | Domain holder (Gandi) | Jeffrey F. S. Neumann | jeff@jfsn.com | **Jeff owns and pays for the Gandi account directly** (invoice confirmed 2026-06-16) — there is no friend in the loop. This was a stale assumption in earlier docs; corrected here. Jeff (or whoever inherits Bitwarden access) can change DNS/nameservers directly. |
 | Backup family contact | Allison | _[FILL IN — phone/email]_ | Named throughout `docs/` as the designated custodian (`docs/archive/2026/FINAL-PRESERVATION-HANDOFF-2026-06-11.md` is addressed to her; Apple Digital Legacy already grants her Mac access). Contact details still need filling in here. |
-| Technical successor (optional) | _[FILL IN]_ | _[FILL IN]_ | Someone who can run `bash session-end.sh`, deploy, and maintain the archive if Jeff cannot. Genuinely undecided — not an oversight, an open question. |
+| Technical successor (optional) | _[FILL IN]_ | _[FILL IN]_ | Someone who can run `bash scripts/session-end.sh`, deploy, and maintain the archive if Jeff cannot. Genuinely undecided — not an oversight, an open question. |
 
 ---
 

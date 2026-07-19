@@ -6,6 +6,8 @@
 >
 > **If Jeff is unavailable:** stop here and read [`docs/governance/SUCCESSION.md`](docs/governance/SUCCESSION.md) first — the entry point for continuity, backups, hosting, and domain matters.
 >
+> **Before touching any catalog metadata (title, year, themes, series, description, materials, etc.):** read [`docs/governance/METADATA-STEWARDSHIP-CONSTITUTION.md`](docs/governance/METADATA-STEWARDSHIP-CONSTITUTION.md) — the governing framework for what AI may and may never do with archive metadata (§8), burden-of-proof rules for changes (§4), and confidence-level standards (§5). Effective 2026-07-12; found undiscoverable from this file until 2026-07-19 — treat that gap as the bug it was, not evidence the rules were optional.
+>
 > **The guiding question:** *"Will this help a future grandchild understand Jeff and his life better?"* Test every non-trivial change against it before testing anything else.
 
 This file is operational guidance for AI coding sessions on this repository — conventions, verification standards, and stewardship expectations. For what the repository *is* and how it's laid out, see [`README.md`](README.md). For design system and visual specifics, see [`docs/current/DESIGN-SYSTEM.md`](docs/current/DESIGN-SYSTEM.md).
