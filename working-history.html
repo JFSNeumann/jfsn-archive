@@ -106,6 +106,16 @@ addEventListener('DOMContentLoaded', () => {
     text-shadow:0 2px 18px rgba(0,0,0,.7);
   }
   #door .caps{text-shadow:0 1px 10px rgba(0,0,0,.7)}
+  #door .down{
+    position:absolute;bottom:6vh;left:50%;transform:translateX(-50%);
+    color:var(--dim);font-size:28px;text-shadow:0 1px 10px rgba(0,0,0,.7);
+    animation:sink 2.6s ease-in-out infinite;transition:opacity .3s ease;
+  }
+  @keyframes sink{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(12px)}}
+  #door.scrolled .down{opacity:0}
+  @media (prefers-reduced-motion: reduce){
+    #door .down{animation:none}
+  }
   .highlight-work{
     background:var(--accent);color:#fff;padding:0 4px;font-style:normal;
     display:inline-block;transform-origin:left center;
@@ -260,6 +270,7 @@ addEventListener('DOMContentLoaded', () => {
     <h1>The <span class="highlight-work">galleries</span> that were real.</h1>
     <div class="caps fact">EIGHT WEBSITES · 2000 – 2020 · PRESERVED AS THEY WERE</div>
   </div>
+  <div class="down">↓</div>
 </section>
 
 <section id="intro">
@@ -441,6 +452,17 @@ if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch((
       btn.style.transform = 'translateY(8px)';
     }
   }, {passive:true});
+})();
+</script>
+<script>
+// Scroll cue: fades once the visitor has actually moved past the door,
+// rather than sinking forever underneath them.
+(function(){
+  const door = document.getElementById('door');
+  if (!door) return;
+  function check(){ door.classList.toggle('scrolled', window.scrollY > 40); }
+  window.addEventListener('scroll', check, { passive: true });
+  check();
 })();
 </script>
 

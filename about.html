@@ -134,6 +134,16 @@ addEventListener('DOMContentLoaded', () => {
   @media (prefers-reduced-motion: reduce){
     #hero-content::before{transform:scale(1);opacity:1}
   }
+  #hero .down{
+    position:absolute;bottom:6vh;left:50%;transform:translateX(-50%);
+    color:var(--dim);font-size:28px;text-shadow:0 1px 10px rgba(0,0,0,.7);
+    animation:sink 2.6s ease-in-out infinite;transition:opacity .3s ease;
+  }
+  @keyframes sink{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(12px)}}
+  #hero.scrolled .down{opacity:0}
+  @media (prefers-reduced-motion: reduce){
+    #hero .down{animation:none}
+  }
   .highlight-devo{
     background:var(--accent);color:#fff;padding:0 4px;font-style:normal;
     display:inline-block;transform-origin:left center;
@@ -287,6 +297,7 @@ addEventListener('DOMContentLoaded', () => {
     <h1>Still <span class="highlight-devo">Mak</span>ing.</h1>
     <div class="caps subtitle">FIFTY YEARS OF UNBROKEN MAKING</div>
   </div>
+  <div class="down">↓</div>
 </section>
 
 <section class="content-block reveal-el" id="biography">
@@ -426,6 +437,17 @@ addEventListener('DOMContentLoaded', () => {
       btn.style.transform = 'translateY(8px)';
     }
   }, {passive:true});
+})();
+</script>
+<script>
+// Scroll cue: fades once the visitor has actually moved past the hero,
+// rather than sinking forever underneath them.
+(function(){
+  const hero = document.getElementById('hero');
+  if (!hero) return;
+  function check(){ hero.classList.toggle('scrolled', window.scrollY > 40); }
+  window.addEventListener('scroll', check, { passive: true });
+  check();
 })();
 </script>
 </body>

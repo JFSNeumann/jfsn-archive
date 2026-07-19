@@ -126,6 +126,16 @@ addEventListener('DOMContentLoaded', () => {
     }
   }
   #hero .subtitle{color:var(--dim);font-size:clamp(16px,2vw,20px);max-width:28em;line-height:1.7;margin-top:12px;text-shadow:0 1px 10px rgba(0,0,0,.7)}
+  #hero .down{
+    position:absolute;bottom:6vh;left:50%;transform:translateX(-50%);
+    color:var(--dim);font-size:28px;text-shadow:0 1px 10px rgba(0,0,0,.7);
+    animation:sink 2.6s ease-in-out infinite;transition:opacity .3s ease;
+  }
+  @keyframes sink{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(12px)}}
+  #hero.scrolled .down{opacity:0}
+  @media (prefers-reduced-motion: reduce){
+    #hero .down{animation:none}
+  }
   /* Same elliptical fade as the other rooms' heroes: dark at center,
      fully transparent at the edge, scaling in from smaller on load. */
   #hero-content{position:relative;display:flex;flex-direction:column;align-items:center;gap:24px}
@@ -225,6 +235,7 @@ addEventListener('DOMContentLoaded', () => {
       <h1>Specific things that <span class="highlight-devo">happened</span>.</h1>
       <p class="subtitle">Stories from fifty years of making — in Jeff's own words where possible. The parts of the record that don't fit in a catalog.</p>
     </div>
+    <div class="down">↓</div>
   </section>
 
   <div class="content-section">
@@ -384,6 +395,17 @@ addEventListener('scroll', () => {
       btn.style.transform = 'translateY(8px)';
     }
   }, {passive:true});
+})();
+</script>
+<script>
+// Scroll cue: fades once the visitor has actually moved past the hero,
+// rather than sinking forever underneath them.
+(function(){
+  const hero = document.getElementById('hero');
+  if (!hero) return;
+  function check(){ hero.classList.toggle('scrolled', window.scrollY > 40); }
+  window.addEventListener('scroll', check, { passive: true });
+  check();
 })();
 </script>
 

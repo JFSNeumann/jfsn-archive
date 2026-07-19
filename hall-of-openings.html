@@ -171,6 +171,16 @@ addEventListener('DOMContentLoaded', () => {
     font-size:clamp(14px,2vw,18px);letter-spacing:.08em;color:var(--ink);
     text-transform:uppercase;font-weight:300;
   }
+  #hero-image .down{
+    position:absolute;bottom:6vh;left:50%;transform:translateX(-50%);
+    color:var(--dim);font-size:28px;text-shadow:0 1px 10px rgba(0,0,0,.7);
+    z-index:2;animation:sink 2.6s ease-in-out infinite;transition:opacity .3s ease;
+  }
+  @keyframes sink{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(12px)}}
+  #hero-image.scrolled .down{opacity:0}
+  @media (prefers-reduced-motion: reduce){
+    #hero-image .down{animation:none}
+  }
   .highlight-devo{background:var(--accent);color:#fff;padding:0 4px;font-style:normal}
   .highlight-dark{
     background:var(--accent);color:#fff;padding:0 4px;font-style:normal;
@@ -376,6 +386,7 @@ addEventListener('DOMContentLoaded', () => {
     <h1>The Hall of <span class="highlight-dark">Open</span>ings</h1>
     <p class="hero-subtitle">250 Imagined Exhibitions — Every One Flagged</p>
   </div>
+  <div class="down">↓</div>
 </section>
 
 <!-- Museum-Style Label -->
@@ -571,6 +582,17 @@ addEventListener('DOMContentLoaded', () => {
       btn.style.transform = 'translateY(8px)';
     }
   }, {passive:true});
+})();
+</script>
+<script>
+// Scroll cue: fades once the visitor has actually moved past the hero,
+// rather than sinking forever underneath them.
+(function(){
+  const hero = document.getElementById('hero-image');
+  if (!hero) return;
+  function check(){ hero.classList.toggle('scrolled', window.scrollY > 40); }
+  window.addEventListener('scroll', check, { passive: true });
+  check();
 })();
 </script>
 </body>
