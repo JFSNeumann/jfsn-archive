@@ -5,6 +5,23 @@ This file describes what's currently true about the site. For ranked work, see `
 
 ---
 
+## 2026-07-19 (later) — Intake pipeline validated + documented, test setup complete ✅
+
+**Intake pipeline discovery & validation (automated artwork ingestion):**
+- Discovered + verified `tools/intake/` (Phase 2.3–2.4) — fully automated system for ingesting photos → AVIF + assigning IDs + scaffolding metadata sidecars + validation + catalog publishing
+- **Phase 2.3** (`artworks/ingest.py`): Drop HEIC/JPG photos into `artworks/inbox/`, auto-converts to AVIF (5 tiers: full/thumbs/mini/medium/micro), assigns sequential IDs, scaffolds empty JSON sidecars, records pixel dimensions
+- **Phase 2.4** (`tools/intake/intake_finish.py`): Validates curator-authored JSON sidecars, rebuilds catalogs, generates SEO pages, verifies archive — stops on first error
+- Created 3 test double-sided placeholders (art9901–art9903, 3'×4', 1200×1600px) to validate end-to-end: verified live in `catalog-lite.json` on jfsn.com
+- **Ready to ingest 40 real works** (20×3'×4' + 20×2'×3') in 4 batches of 10; workflow proven
+- Updated `WORKFLOW.md` to lead with intake pipeline; created `INTAKE_QUICKSTART.md` practical guide
+- **Commits:** `86d8b8d4`, `403f4f03`, `69cde874` (test setup), `e15ab7f0` (docs), `003694ed` (workflow)
+
+**Test pieces status:** Live at https://jfsn.com/artwork.html?id=art9901–9903 (marked [TEST] for easy cleanup)
+
+**Next phase:** Photography + batch ingestion of 40 real works per `INTAKE_QUICKSTART.md` protocol
+
+---
+
 ## 2026-07-19 — Archive interaction polish, sitewide scroll cues, room-veil bug fix, homepage wing crossfade, docs accuracy sweep ✅
 
 **Archive.html card + controls polish:** shadow depth increased (`0 8px 24px` → `0 12px 32px rgba(255,102,0,.16)`), touch `:active` press feedback added, timing standardized to `.4s`/`.3s`, room-nav switched to horizontal layout. Search/sort/chips/Load More all got matching hover/focus/active states (previously chips were the only polished control).
