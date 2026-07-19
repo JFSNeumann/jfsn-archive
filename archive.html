@@ -419,6 +419,7 @@ addEventListener('DOMContentLoaded', () => {
 </footer>
 <script>document.getElementById('footer-year').textContent = new Date().getFullYear();</script>
 
+<script src="/dist/anime-utils.umd.js"></script>
 <script>
 (async function(){
   'use strict';
@@ -450,6 +451,9 @@ addEventListener('DOMContentLoaded', () => {
         state[key].has(v) ? state[key].delete(v) : state[key].add(v);
         btn.classList.toggle('active');
         btn.setAttribute('aria-pressed', btn.classList.contains('active'));
+        if (!REDUCED && typeof animeUtils !== 'undefined') {
+          animeUtils.chipPulse({ chip: btn });
+        }
         shown = PAGE;
         render();
       });
@@ -483,7 +487,7 @@ addEventListener('DOMContentLoaded', () => {
 
   function cardHTML(w, idx){
     return `
-      <figure class="card">
+      <figure class="card" data-id="${esc(w.i)}">
         <a href="artwork.html?id=${w.i}">
           <img src="/artworks/thumbs/${w.i}.avif" srcset="/artworks/mini/${w.i}.avif 100w, /artworks/thumbs/${w.i}.avif 400w, /artworks/medium/${w.i}.avif 900w" sizes="min(45vw, 210px)" alt="${esc(w.t)}"${idx < 12 ? '' : ' loading="lazy"'} decoding="async"
                style="aspect-ratio:${w.o === 'h' ? '4/3' : w.o === 's' ? '1/1' : '2/3'}">
@@ -508,16 +512,41 @@ addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Count ticker: counts from the previously displayed number to the new
+  // one rather than snapping, so filtering reads as active discovery
+  // ("1,084 → 247") not just a number replacement.
+  let displayedCount = null;
+  function animateCount(target, suffix){
+    if (REDUCED || displayedCount === null) {
+      countLabel.textContent = target.toLocaleString('en-US') + suffix;
+      displayedCount = target;
+      return;
+    }
+    const start = displayedCount;
+    const delta = target - start;
+    displayedCount = target;
+    if (delta === 0) { countLabel.textContent = target.toLocaleString('en-US') + suffix; return; }
+    const dur = 500, t0 = performance.now();
+    function tick(now){
+      const p = Math.min(1, (now - t0) / dur);
+      const eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
+      const val = Math.round(start + delta * eased);
+      countLabel.textContent = val.toLocaleString('en-US') + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
   function renderMeta(list){
-    const newCountText = list.length.toLocaleString('en-US') +
-      (list.length === works.length ? ' WORKS' : ' OF ' + works.length.toLocaleString('en-US'));
+    const suffix = list.length === works.length ? ' WORKS' : ' OF ' + works.length.toLocaleString('en-US');
+    const newCountText = list.length.toLocaleString('en-US') + suffix;
     if (newCountText !== countLabel.textContent && countLabel.textContent !== '') {
       countLabel.classList.remove('tick');
       void countLabel.offsetWidth; // restart the flash if it's already mid-transition
       countLabel.classList.add('tick');
       requestAnimationFrame(() => requestAnimationFrame(() => countLabel.classList.remove('tick')));
     }
-    countLabel.textContent = newCountText;
+    animateCount(list.length, suffix);
     const anyActive = state.medium.size || state.decade.size || state.orientation.size || state.q;
     clearBtn.hidden = !anyActive;
     const nChips = state.medium.size + state.decade.size + state.orientation.size;
@@ -529,33 +558,85 @@ addEventListener('DOMContentLoaded', () => {
 
   // append: true for Load More (only the new slice is added, existing
   // cards untouched); false for search/filter/sort/clear (the result set
-  // itself changed, so the whole grid cross-fades to the new content).
+  // itself changed — cards that persist in the new list slide (FLIP) to
+  // their new grid position, cards leaving the result set simply drop out
+  // with the grid, and genuinely new cards cascade in staggered).
   function render(append){
     const list = filtered();
     renderMeta(list);
+    const useAnime = !REDUCED && typeof animeUtils !== 'undefined';
 
     if (append) {
       const prevShown = shown - PAGE < 0 ? 0 : shown - PAGE;
       const slice = list.slice(prevShown, shown);
       const frag = document.createElement('div');
       frag.innerHTML = slice.map((w, i) => cardHTML(w, prevShown + i)).join('');
-      markEntrance(frag);
+      const newCards = Array.from(frag.children);
+      if (useAnime) {
+        newCards.forEach(card => { card.style.opacity = '0'; });
+      } else {
+        markEntrance(frag);
+      }
       while (frag.firstChild) grid.appendChild(frag.firstChild);
       loadMore.hidden = shown >= list.length;
+      if (useAnime && newCards.length) {
+        animeUtils.gridStagger({ cards: newCards, staggerDelay: 40, capAt: 300 });
+      }
       return;
     }
 
     const slice = list.slice(0, shown);
-    const swap = () => {
+
+    if (!useAnime) {
       grid.innerHTML = slice.map((w, idx) => cardHTML(w, idx)).join('');
       markEntrance(grid);
       loadMore.hidden = shown >= list.length;
-    };
-    if (REDUCED) { swap(); return; }
+      return;
+    }
+
+    // FLIP: capture current card positions (First) before the swap
+    const oldRects = new Map();
+    grid.querySelectorAll('.card[data-id]').forEach(card => {
+      oldRects.set(card.dataset.id, card.getBoundingClientRect());
+    });
+
     grid.classList.add('replacing');
     setTimeout(() => {
-      swap();
-      requestAnimationFrame(() => grid.classList.remove('replacing'));
+      grid.innerHTML = slice.map((w, idx) => cardHTML(w, idx)).join('');
+      loadMore.hidden = shown >= list.length;
+      requestAnimationFrame(() => {
+        grid.classList.remove('replacing');
+
+        const moving = [];
+        const entering = [];
+        grid.querySelectorAll('.card[data-id]').forEach(card => {
+          const oldRect = oldRects.get(card.dataset.id);
+          if (oldRect) moving.push({ card, oldRect });
+          else entering.push(card);
+        });
+
+        // Last + Invert + Play: cards that persist slide from their old
+        // position to the new one, instead of just appearing there.
+        moving.forEach(({ card, oldRect }) => {
+          const newRect = card.getBoundingClientRect();
+          const dx = oldRect.left - newRect.left;
+          const dy = oldRect.top - newRect.top;
+          if (!dx && !dy) return;
+          card.style.transition = 'none';
+          card.style.transform = `translate(${dx}px, ${dy}px)`;
+          requestAnimationFrame(() => {
+            card.style.transition = 'transform 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            card.style.transform = 'translate(0, 0)';
+            setTimeout(() => { card.style.transition = ''; card.style.transform = ''; }, 380);
+          });
+        });
+
+        // Cards genuinely new to the result set cascade in staggered.
+        if (entering.length) {
+          entering.forEach(card => { card.style.opacity = '0'; });
+          animeUtils.gridStagger({ cards: entering, staggerDelay: 40, capAt: 300 });
+        }
+      });
     }, 150);
   }
 

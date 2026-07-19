@@ -1,23 +1,21 @@
 /**
  * JFSN Archive — Motion Utilities
- * Exports reusable choreography patterns powered by anime.js
+ * Exports reusable choreography patterns powered by anime.js v4
  * Reference: docs/current/MOTION-SPEC.md
+ *
+ * anime.js v4 API note: Timeline#add(targets, params, position) takes
+ * targets as a SEPARATE first argument, not a `targets` key inside params.
+ * Property names are `ease` (not `easing`), `onComplete` (not `complete`),
+ * `onUpdate` (not `update`). Timeline instances are thenable directly
+ * (no `.finished` property) — await the timeline itself.
  */
 
-import { Timeline, animate, easings } from 'animejs'
+import { createTimeline, stagger as animeStagger, eases } from 'animejs'
 
-// Create a simple anime object interface for consistency with the UMD build
 const anime = {
-  timeline: (config) => new Timeline(config),
-  animate: animate,
-  stagger: (value, config) => {
-    // Create a stagger function compatible with timeline
-    if (typeof value === 'number') {
-      return (target, index) => index * value + (config?.start || 0)
-    }
-    return value
-  },
-  easings: easings
+  timeline: (config) => createTimeline(config),
+  stagger: animeStagger,
+  eases
 }
 
 /**
@@ -37,48 +35,10 @@ export const roomArrival = ({
   const timeline = anime.timeline({ autoplay })
 
   timeline
-    // Hero: fade in with discovery easing (800ms)
-    .add(
-      {
-        targets: hero,
-        opacity: [0, 1],
-        duration: 800,
-        easing: 'easeOutQuad'
-      },
-      heroDelay
-    )
-    // Title: scale + opacity, ink-stamp style (500ms, delayed 200ms from hero start)
-    .add(
-      {
-        targets: title,
-        opacity: [0, 1],
-        scale: [0, 1.08, 1],
-        duration: 500,
-        easing: 'easeOutQuad'
-      },
-      heroDelay + 200
-    )
-    // Subtitle: fade up from below (400ms, delayed 800ms from hero start)
-    .add(
-      {
-        targets: subtitle,
-        opacity: [0, 1],
-        translateY: [8, 0],
-        duration: 400,
-        easing: 'easeOutQuad'
-      },
-      heroDelay + 800
-    )
-    // Header: fade in (300ms, parallel with subtitle)
-    .add(
-      {
-        targets: header,
-        opacity: [0, 1],
-        duration: 300,
-        easing: 'easeOutQuad'
-      },
-      heroDelay + 800
-    )
+    .add(hero, { opacity: [0, 1], duration: 800, ease: 'outQuad' }, heroDelay)
+    .add(title, { opacity: [0, 1], scale: [0, 1.08, 1], duration: 500, ease: 'outQuad' }, heroDelay + 200)
+    .add(subtitle, { opacity: [0, 1], translateY: [8, 0], duration: 400, ease: 'outQuad' }, heroDelay + 800)
+    .add(header, { opacity: [0, 1], duration: 300, ease: 'outQuad' }, heroDelay + 800)
 
   return timeline
 }
@@ -99,28 +59,8 @@ export const roomRetreat = ({
   const timeline = anime.timeline({ autoplay })
 
   timeline
-    // Body: fade out + scale down (300ms, closure easing)
-    .add(
-      {
-        targets: body,
-        opacity: [1, 0],
-        scale: [1, 0.92],
-        duration: 300,
-        easing: 'easeInQuad'
-      },
-      0
-    )
-    // Veil: fade in + color tint to new room (300ms, closure easing)
-    .add(
-      {
-        targets: veil,
-        opacity: [0, 1],
-        backgroundColor: newRoomColor,
-        duration: 300,
-        easing: 'easeInQuad'
-      },
-      0
-    )
+    .add(body, { opacity: [1, 0], scale: [1, 0.92], duration: 300, ease: 'inQuad' }, 0)
+    .add(veil, { opacity: [0, 1], backgroundColor: newRoomColor, duration: 300, ease: 'inQuad' }, 0)
 
   return timeline
 }
@@ -145,58 +85,11 @@ export const roomApproach = ({
   const timeline = anime.timeline({ autoplay })
 
   timeline
-    // Hero: fade in with discovery easing (800ms, starts immediately)
-    .add(
-      {
-        targets: hero,
-        opacity: [0, 1],
-        duration: 800,
-        easing: 'easeOutQuad'
-      },
-      0
-    )
-    // Title: scale + opacity, ink-stamp style (500ms, delayed 200ms)
-    .add(
-      {
-        targets: title,
-        opacity: [0, 1],
-        scale: [0, 1.08, 1],
-        duration: 500,
-        easing: 'easeOutQuad'
-      },
-      200
-    )
-    // Veil: fade out at 300ms, revealing the room behind it
-    .add(
-      {
-        targets: veil,
-        opacity: [1, 0],
-        duration: 300,
-        easing: 'easeInQuad'
-      },
-      300
-    )
-    // Subtitle: fade in from below (400ms, delayed 800ms)
-    .add(
-      {
-        targets: subtitle,
-        opacity: [0, 1],
-        translateY: [8, 0],
-        duration: 400,
-        easing: 'easeOutQuad'
-      },
-      800
-    )
-    // Header: fade in (300ms, parallel with subtitle)
-    .add(
-      {
-        targets: header,
-        opacity: [0, 1],
-        duration: 300,
-        easing: 'easeOutQuad'
-      },
-      800
-    )
+    .add(hero, { opacity: [0, 1], duration: 800, ease: 'outQuad' }, 0)
+    .add(title, { opacity: [0, 1], scale: [0, 1.08, 1], duration: 500, ease: 'outQuad' }, 200)
+    .add(veil, { opacity: [1, 0], duration: 300, ease: 'inQuad' }, 300)
+    .add(subtitle, { opacity: [0, 1], translateY: [8, 0], duration: 400, ease: 'outQuad' }, 800)
+    .add(header, { opacity: [0, 1], duration: 300, ease: 'outQuad' }, 800)
 
   return timeline
 }
@@ -217,54 +110,24 @@ export const doorPassage = ({
   const timeline = anime.timeline({ autoplay })
 
   timeline
-    // Clicked door: border expands left-to-right (400ms, discovery easing)
-    .add(
-      {
-        targets: clickedDoor,
-        borderLeftWidth: ['0px', '100%'],
-        opacity: [1, 0],
-        duration: 400,
-        easing: 'easeOutQuad'
-      },
-      0
-    )
-    // Door text: fade right (200ms, closure easing, staggered start)
-    .add(
-      {
-        targets: `${clickedDoor} .sub`,
-        opacity: [1, 0],
-        translateX: [0, 12],
-        duration: 200,
-        easing: 'easeInQuad'
-      },
-      150
-    )
-    // Veil: color transition to room color (300ms, closure easing, immediate)
-    .add(
-      {
-        targets: veil,
-        backgroundColor: [
-          'rgb(12, 10, 9)',
-          `rgb(${parseInt(roomColor.slice(1, 3), 16)}, ${parseInt(roomColor.slice(3, 5), 16)}, ${parseInt(roomColor.slice(5, 7), 16)})`
-        ],
-        opacity: [0, 1],
-        duration: 300,
-        easing: 'easeInQuad'
-      },
-      0
-    )
-    // Siblings: fade out + retreat (300ms each, staggered by 50ms)
-    .add(
-      {
-        targets: siblings,
-        opacity: [1, 0],
-        translateX: (el, i) => (i % 2 === 0 ? -10 : 10), // alternate left/right
-        duration: 300,
-        easing: 'easeInQuad',
-        delay: anime.stagger(50)
-      },
-      50
-    )
+    .add(clickedDoor, { borderLeftWidth: ['0px', '100%'], opacity: [1, 0], duration: 400, ease: 'outQuad' }, 0)
+    .add(`${clickedDoor} .sub`, { opacity: [1, 0], translateX: [0, 12], duration: 200, ease: 'inQuad' }, 150)
+    .add(veil, {
+      backgroundColor: [
+        'rgb(12, 10, 9)',
+        `rgb(${parseInt(roomColor.slice(1, 3), 16)}, ${parseInt(roomColor.slice(3, 5), 16)}, ${parseInt(roomColor.slice(5, 7), 16)})`
+      ],
+      opacity: [0, 1],
+      duration: 300,
+      ease: 'inQuad'
+    }, 0)
+    .add(siblings, {
+      opacity: [1, 0],
+      translateX: (el, i) => (i % 2 === 0 ? -10 : 10),
+      duration: 300,
+      ease: 'inQuad',
+      delay: anime.stagger(50)
+    }, 50)
 
   return timeline
 }
@@ -282,23 +145,28 @@ export const gridStagger = ({
   autoplay = true
 }) => {
   const timeline = anime.timeline({ autoplay })
+  const effectiveStagger = Math.min(staggerDelay, capAt / (cards.length || 1))
 
-  // If capAt is set, calculate effective stagger to not exceed cap
-  const effectiveStagger = Math.min(staggerDelay, capAt / cards.length)
-
-  timeline.add(
-    {
-      targets: cards,
-      opacity: [0, 1],
-      translateY: [8, 0],
-      duration: 350,
-      easing: 'easeOutQuad',
-      delay: anime.stagger(effectiveStagger, { start: 0 })
-    },
-    0
-  )
+  timeline.add(cards, {
+    opacity: [0, 1],
+    translateY: [8, 0],
+    duration: 350,
+    ease: 'outQuad',
+    delay: anime.stagger(effectiveStagger, { start: 0 })
+  }, 0)
 
   return timeline
+}
+
+/**
+ * PATTERN: Chip Pulse (Filter Selection Feedback)
+ * Quick bounce-scale pop when a filter chip is toggled on/off
+ * Duration: 250ms (interaction easing, bounce-back)
+ * Reference: MOTION-SPEC.md § V (WOW expansion, Archive Discovery)
+ */
+export const chipPulse = ({ chip, autoplay = true }) => {
+  return anime.timeline({ autoplay })
+    .add(chip, { scale: [1, 1.12, 1], duration: 250, ease: 'outElastic' }, 0)
 }
 
 /**
@@ -314,16 +182,12 @@ export const cardHoverLift = ({
   autoplay = false
 }) => {
   return anime.timeline({ autoplay })
-    .add(
-      {
-        targets: card,
-        translateY: -liftDistance,
-        boxShadow: '0 12px 32px rgba(255, 102, 0, 0.16)',
-        duration: duration,
-        easing: 'easeOutElastic'
-      },
-      0
-    )
+    .add(card, {
+      translateY: -liftDistance,
+      boxShadow: '0 12px 32px rgba(255, 102, 0, 0.16)',
+      duration,
+      ease: 'outElastic'
+    }, 0)
 }
 
 export const cardHoverSettle = ({
@@ -332,16 +196,12 @@ export const cardHoverSettle = ({
   autoplay = false
 }) => {
   return anime.timeline({ autoplay })
-    .add(
-      {
-        targets: card,
-        translateY: 0,
-        boxShadow: '0 2px 8px rgba(0, 0, 0, 0)',
-        duration: duration,
-        easing: 'easeOutQuad'
-      },
-      0
-    )
+    .add(card, {
+      translateY: 0,
+      boxShadow: '0 2px 8px rgba(0, 0, 0, 0)',
+      duration,
+      ease: 'outQuad'
+    }, 0)
 }
 
 /**
@@ -352,15 +212,7 @@ export const cardHoverSettle = ({
  */
 export const veilFade = ({ veil, fadeIn = true, autoplay = true }) => {
   return anime.timeline({ autoplay })
-    .add(
-      {
-        targets: veil,
-        opacity: fadeIn ? [0, 1] : [1, 0],
-        duration: 220,
-        easing: 'easeInQuad'
-      },
-      0
-    )
+    .add(veil, { opacity: fadeIn ? [0, 1] : [1, 0], duration: 220, ease: 'inQuad' }, 0)
 }
 
 /**
@@ -377,17 +229,13 @@ export const stackItemEnter = ({
   autoplay = true
 }) => {
   return anime.timeline({ autoplay })
-    .add(
-      {
-        targets: element,
-        opacity: [fromOpacity, 1],
-        scale: [fromScale, 0.85],
-        translateZ: [fromZ, 10],
-        duration: 320,
-        easing: 'easeOutQuad'
-      },
-      0
-    )
+    .add(element, {
+      opacity: [fromOpacity, 1],
+      scale: [fromScale, 0.85],
+      translateZ: [fromZ, 10],
+      duration: 320,
+      ease: 'outQuad'
+    }, 0)
 }
 
 export const stackItemExit = ({
@@ -399,18 +247,14 @@ export const stackItemExit = ({
   callback = null
 }) => {
   return anime.timeline({ autoplay })
-    .add(
-      {
-        targets: element,
-        opacity: [1, toOpacity],
-        scale: [0.85, toScale],
-        translateZ: [10, toZ],
-        duration: 240,
-        easing: 'easeInQuad',
-        complete: callback
-      },
-      0
-    )
+    .add(element, {
+      opacity: [1, toOpacity],
+      scale: [0.85, toScale],
+      translateZ: [10, toZ],
+      duration: 240,
+      ease: 'inQuad',
+      onComplete: callback
+    }, 0)
 }
 
 /**
@@ -421,15 +265,7 @@ export const stackItemExit = ({
  */
 export const scrollCuePulse = ({ element, autoplay = true }) => {
   return anime.timeline({ autoplay, loop: true })
-    .add(
-      {
-        targets: element,
-        translateY: [0, -8, 0],
-        duration: 2000,
-        easing: 'easeInOutQuad'
-      },
-      0
-    )
+    .add(element, { translateY: [0, -8, 0], duration: 2000, ease: 'inOutQuad' }, 0)
 }
 
 /**

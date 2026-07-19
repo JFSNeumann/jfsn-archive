@@ -95,7 +95,7 @@ addEventListener('DOMContentLoaded', () => {
         autoplay: true
       });
       // Navigate after retreat completes (300ms)
-      retreat.finished.then(() => {
+      retreat.then(() => {
         location.href = a.href;
       });
     } else {
