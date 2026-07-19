@@ -81,12 +81,14 @@ wc -l _shared/micro-interactions.js     # JS line count
 - [ ] What's the last cache version? (`CACHE_V` in `sw.js` — check `git log -1 -- sw.js`, not PERF_BASELINE.md)
 
 ### Check Backups
+
+**Both nightly LaunchAgents (JEFFS-4TB, B2) have gone silently broken multiple times** — unloaded from launchd entirely (2026-07-06, 2026-07-16), then a stale script-path bug in both plists found one job at a time on consecutive days (2026-07-17, 2026-07-18). A clean reading for one job has never guaranteed the sibling job is sound — always check both, every session, with the real command below rather than eyeballing it:
+
 ```bash
-# Verify B2 backup timestamp is recent
-# Verify rsync backup has today's date
-# Both should contain latest commit hash
+bash scripts/backup-health-check.sh
 ```
-✅ Backups are current and contain all commits.
+
+Exit 0 + "Both backup jobs healthy." = good. Any `✗` line names exactly what's wrong (job unloaded, plist pointing at a missing script, or the log hasn't been touched in >26h) — fix that specific thing, then re-run to confirm before moving on.
 
 ---
 
