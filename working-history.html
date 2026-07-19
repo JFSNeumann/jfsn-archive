@@ -91,10 +91,40 @@ addEventListener('DOMContentLoaded', () => {
   #door{
     min-height:100vh;display:flex;flex-direction:column;
     justify-content:center;align-items:center;text-align:center;gap:28px;
+    position:relative;overflow:hidden;
+  }
+  /* Hero-only full-opacity image, separate from body::before's sitewide
+     faint watermark (which stays subtle for the index list below) — same
+     treatment as The Studio, Hall of Openings, and About's heroes. */
+  #door::before{
+    content:'';position:absolute;inset:0;z-index:-2;
+    background-image:url('/artworks/medium/art0953.avif');
+    background-size:cover;background-position:center;
   }
   #door h1{
     font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
     font-size:clamp(38px,7vw,76px);line-height:1.15;max-width:15em;
+    text-shadow:0 2px 18px rgba(0,0,0,.7);
+  }
+  #door .caps{text-shadow:0 1px 10px rgba(0,0,0,.7)}
+  /* Same elliptical fade as the other rooms' heroes: dark at center,
+     fully transparent at the edge, scaling in from smaller on load. */
+  #hero-content{position:relative;display:flex;flex-direction:column;align-items:center;gap:28px}
+  #hero-content::before{
+    content:'';position:absolute;z-index:-1;
+    inset:-150% -18%;
+    background:radial-gradient(ellipse at center, rgba(12,10,9,.94) 0%, rgba(12,10,9,.7) 45%, transparent 75%);
+    transform:scale(.5);opacity:0;
+  }
+  @media (prefers-reduced-motion: no-preference){
+    #hero-content::before{animation:hero-fade-in 1.4s cubic-bezier(.2,.8,.3,1) .2s forwards}
+    @keyframes hero-fade-in{
+      0%{transform:scale(.5);opacity:0}
+      100%{transform:scale(1);opacity:1}
+    }
+  }
+  @media (prefers-reduced-motion: reduce){
+    #hero-content::before{transform:scale(1);opacity:1}
   }
   #door .fact{color:var(--dim)}
 
@@ -211,9 +241,11 @@ addEventListener('DOMContentLoaded', () => {
 </header>
 
 <section id="door">
-  <div class="caps">THE WORKING HISTORY</div>
-  <h1>The galleries that were real.</h1>
-  <div class="caps fact">EIGHT WEBSITES · 2000 – 2020 · PRESERVED AS THEY WERE</div>
+  <div id="hero-content">
+    <div class="caps">THE WORKING HISTORY</div>
+    <h1>The galleries that were real.</h1>
+    <div class="caps fact">EIGHT WEBSITES · 2000 – 2020 · PRESERVED AS THEY WERE</div>
+  </div>
 </section>
 
 <section id="intro">
