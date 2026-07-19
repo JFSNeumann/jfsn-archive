@@ -1,480 +1,282 @@
 # JFSN Archive — Design System
 
-**Living design documentation**  
-Last meaningfully updated: 2026-06-22  
-Framework: Tailwind CSS + vanilla HTML/CSS/JS  
-Philosophy: The work shown straight; the space around it staged (v2, 2026-06-24). Light, archival aesthetic. (See CLAUDE.md § "Design language v2" for the stance.)
+**Living design documentation**
+Last verified against live pages: 2026-07-19
+Framework: vanilla HTML/CSS/JS. Each page owns its own inline `<style>`/`<script>` — there is no shared stylesheet or component library (see "Architecture" below).
+Theme: dark "room" — near-black background, warm off-white text, italic serif headlines, single orange accent.
 
-> Tokens, typography, and visual rules are canonically defined in `CLAUDE.md` § "Design System (current — Stitch/Tailwind, light)". This document is the implementation-level reference (component specs, accessibility patterns, interaction behavior, JSON export for automation). Where the two overlap, CLAUDE.md wins.
-
----
-
-## Overview
-
-This design system documents the JFSN Archive visual language across 1,084 works and 31+ public pages.
-
-The archive welcomes a range of visitors — first-time arrivals coming for the work, family encountering personal history, researchers and collectors interested in a specific theme. The design serves *the work and its honest presentation*, not a user-type optimization. JFSN-MISSION.md is the authority on who this archive exists for and why.
-
-**Core principle:** The work is the primary object. Everything else supports discovery and understanding.
+> **This document replaces a prior version describing a light "bone-white"/Inter/Tailwind theme.** That theme is not present on any live page as of this rewrite — it was superseded at some point after 2026-06-22 by the dark theme documented here, without the doc being updated. If you find a page that still matches the old description, treat it as unmigrated, not as evidence the old doc was right.
+>
+> The prior version also claimed CLAUDE.md canonically defines tokens in a section called "Design System (current — Stitch/Tailwind, light)". **That section does not exist in CLAUDE.md** (verified 2026-07-19 — CLAUDE.md is 46 lines and contains no design-token content). This document is now the only design reference for the site; nothing to defer to.
 
 ---
 
-## Color System
+## Architecture — read this before editing anything
 
-Token definitions (Stitch light + Material Design light) live in `CLAUDE.md` § "Token reference (two configs in use)". This document does not duplicate them; reference CLAUDE.md when implementing.
+**There is no central design-system file.** `index.html`, `archive.html`, `the-studio.html`, `guernica-passage.html`, `hall-of-openings.html`, `flooded-wing.html`, `working-history.html`, `about.html`, `stories.html`, `current.html`, `artwork.html`, `404.html`, `privacy.html`, and `sitemap.html` each carry their own `<style>` and `<script>` blocks in `<head>`/end-of-`<body>`. The same CSS custom properties, the same `.caps` label rule, the same card-hover language, etc. are **redeclared per page**, not imported.
 
-### Contrast rule (load-bearing — repeated here because component specs depend on it)
+**Practical consequence:** a sitewide tweak (accent color, shadow depth, transition timing) means editing every page that uses it, one at a time. This document exists so those edits stay consistent instead of drifting page to page — it is a pattern reference, not a single source of truth the browser actually loads.
 
-- `#FF6600` (international-orange): **6.7:1** on dark backgrounds only. **FAILS** (2.79:1) on light bone-white.
-- `#B84700` (orange-ink): **5.07:1** on light backgrounds. Use for persistent text (labels, links, active states).
-- `#0B0B0B` (deep-ink): **18.73:1** on bone-white. Highest contrast.
-- `#575757` (archive-gray): **6.88:1** on bone-white. Good for secondary text.
+**`_shared/*.css` and `_shared/*.js` are dead code.** Verified 2026-07-19: `dark-mode.css`, `ui.css`, `enhancements.css`, `nav-active.js`, `page-transitions.css`, `section-tints.css`, `hover-preview.css`, `lazy-load.css`, `skeleton.css`, `toast.css`, `ux-improvements.css`, `senior-ux-touch-targets.css`, `archive-quick-filters.css`, `artwork-page-min.js` — none are referenced by any `<link>` or `<script>` tag on any page (`grep -o "_shared/[a-zA-Z0-9_.-]*" *.html` returns nothing). Do not assume editing a `_shared/` file changes anything live. If you need shared behavior, either edit each page or propose extracting a real shared file — don't edit `_shared/` expecting effect.
 
-**Operative rule:** Orange text on light backgrounds must use `orange-ink` (#B84700). Hover/active states, fills, and sections on dark backgrounds can use `international-orange` (#FF6600).
+**What *is* actually shared:**
+- `site.min.css` — built from `input.css` via `tailwind.config.js` (`npm run build:css`). Used sparingly; most page styling is inline, not Tailwind utility classes. Bump `CACHE_V` in `sw.js` after every rebuild.
+- `sw.js` — service worker, caching only, no visual effect.
+- `search.js` — search/filter logic used by archive.html's search bar.
+- `config/catalog-home.json`, `config/current.json`, `config/catalog-lite.json` — data, not design, but referenced by name below since several interaction patterns (wing crossfade, archive grid) depend on which one a page fetches.
 
-### Soft shadows
-Card shadow for UI elements only (NOT artwork thumbnails):
+**`artwork.html` is a client-rendered template**, not 1,084 static files — it reads `?id=` from the query string and populates itself via JS. There's no per-artwork HTML to hunt for.
+
+**`current.html`** is the scroll-river page — no `<section>`/hero structure, doesn't participate in most patterns below.
+
+---
+
+## Color Tokens
+
+Six CSS custom properties, redeclared identically at the top of every room page's `<style>`:
+
 ```css
-box-shadow: 0 0 20px rgba(0,0,0,0.05);  /* soft, diffused — never hard-edged */
+:root{
+  --room:#0c0a09;    /* page background — near-black, warm undertone */
+  --ink:#e8e2d9;     /* primary text — warm off-white */
+  --dim:#7a7168;     /* secondary text, inactive labels */
+  --faint:#3a332d;   /* dividers, disabled/faint borders */
+  --frame:#2b241e;   /* card/input/button borders */
+  --accent:#FF6600;  /* international orange — the one accent color, used everywhere */
+}
 ```
+
+No light-mode variant exists anywhere in the live site. `#B84700` ("orange-ink," a lower-contrast orange for light backgrounds) does not appear on any page — it was part of the retired light theme. Because the background is always dark, `--accent` (#FF6600) is used directly for hover states, active states, and highlighted text with no contrast-driven color swap needed (6.7:1 against `--room`).
+
+**Highlight-box pattern** (used on every room-page `<h1>`, one word or phrase per page):
+```css
+.highlight-devo{ /* or .highlight-dark, .highlight-work — name varies by page, styling identical */
+  background:var(--accent);color:#fff;padding:0 4px;font-style:normal;
+  display:inline-block;transform-origin:left center;
+}
+```
+Animates in once on load via an "ink-stamp" keyframe (`scaleX(0)→1.08→1`), landing like a stamp hitting paper. See "Motion" below.
 
 ---
 
 ## Typography
 
-### Font Stack
-- **Headings:** Playfair Display (400–700, serif)
-- **UI/labels:** Inter (400–600, sans-serif)
-- **Monospace:** `ui-monospace, 'SF Mono', Menlo, monospace` (metadata, IDs)
+**No Inter anywhere.** The old doc's "Inter for UI/labels" spec does not match any live page — checked via `grep -c Inter *.html` (zero real matches; the only hits were substring collisions inside `IntersectionObserver`/`setInterval`).
 
-### Scale
+Three font roles, consistent across all room pages:
 
-| Role | Font | Size | Weight | Line Height | Letter Spacing | Usage |
-|------|------|------|--------|-------------|----------------|-------|
-| Display Large | Playfair | 64px | 700 | 1 | -0.02em | Hero headlines |
-| Heading 1 | Playfair | 40px | 700 | 1.2 | -0.01em | Page titles |
-| Heading 2 | Playfair | 28px | 600 | 1.3 | 0 | Section headers |
-| Body Large | Inter | 18px | 400 | 1.6 | 0 | Rich text, essays |
-| Body Medium | Inter | 16px | 400 | 1.6 | 0 | Default body text |
-| Label Large | Inter | 13px | 600 | 1.3 | 0.08em | Card titles, eyebrows |
-| Label Medium | Inter | 11px | 600 | 1.3 | 0.08em | Metadata, filter labels |
-| Caption | Inter | 10px | 500 | 1.4 | 0.08em | Fine print, timestamps |
-| Monospace | SF Mono | 10px | 400 | 1.4 | 0.08em | Archive IDs (art1234) |
+| Role | Stack | Used for |
+|---|---|---|
+| Display serif | `'Playfair Display', Georgia, serif` — always `font-style:italic;font-weight:400` | `<h1>` hero titles, pull-quotes, artwork titles in cards |
+| Body serif | `Georgia, 'Times New Roman', serif` | Prose paragraphs, `.prose` blocks |
+| UI sans | `-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif` | `.caps` labels, buttons, nav, metadata |
 
-### Headings
-All caps, uppercase, except Playfair display headings (sentence case).
+`@font-face` self-hosts Playfair Display italic (`/fonts/playfair-display-italic-latin.woff2`) with `font-display:swap` and `<link rel="preload">` in `<head>`.
 
-### Links
-- **Style:** Underline (1px) on `<a>` tags
-- **Color:** `orange-ink` (#B84700) on light backgrounds
-- **Hover:** Underline animates in via `transform: scaleX(0→1)`
-- **Transition:** `0.2s ease`
-- **Reduced motion:** No transition
+**The `.caps` label** — the single most-repeated typographic pattern on the site, identical wherever it appears:
+```css
+.caps{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim)}
+```
+Used for room eyebrow labels ("THE ARCHIVE"), nav links, button text (`[ ENTER → ]` style), metadata rows.
+
+No fixed type-scale table exists — hero `<h1>` sizes are set per page with `clamp(38px,7vw,76px)` (fluid, not a discrete scale step).
 
 ---
 
-## Spacing & Sizing
+## Shape & Surface
 
-### Tailwind Scale (Standard)
-Used throughout: padding, margins, gaps, widths.
+**Square corners, sitewide, no exceptions except true circles.** Verified via `grep -c border-radius *.html`: zero on 12 of 14 pages; the two hits (`the-studio.html`, `flooded-wing.html`) are both `border-radius:50%` on 9×9px dot elements — full circles, not rounded rectangles. There is no card, button, input, or image anywhere with a partial border-radius.
 
-```
-px-2 / py-2        = 8px (x-small gaps, tight spacing)
-px-3 / py-3        = 12px (xs)
-px-4 / py-4        = 16px (sm — most common)
-px-6 / py-6        = 24px (md)
-px-8 / py-8        = 32px (lg)
-px-12 / py-12      = 48px (xl)
-px-16 / py-16      = 64px (2xl)
-px-20 / py-20      = 80px (3xl)
-```
-
-### Margin aliases
-- `mb-lg` = 24px bottom margin (between sections)
-- `mt-xl` = 48px top margin (major breaks)
-- `gap-gutter` = 20px (grid gaps on desktop, tighter on mobile)
-
-### Mobile vs Desktop
-- **Mobile margins:** `px-margin-mobile` = 16px (tight, readable on small screens)
-- **Desktop margins:** `px-margin-desktop` = 32px (breathing room)
-- **Max width:** `max-w-container-max` = 1440px (archive grid expansion point)
+**Borders:** always `1px solid var(--frame)` (`#2b241e`) at rest. No gradient dividers, no decorative `::after` rules on section boundaries.
 
 ---
 
-## Component Library
+## Shadow Scale
 
-### Cards (UI Elements)
+Three real tiers, drawn from actual values in use (not a designed scale imposed after the fact — this is what's there):
 
-#### Quote Card (Sidebar, callouts)
-```html
-<div class="quote-card">
-  <span style="display:block;font-weight:500;color:#0B0B0B;margin-bottom:6px;">Heading</span>
-  <p style="font-size:13px;line-height:1.65;color:#575757;margin:0;">Body text...</p>
-</div>
-```
-**Styling:**
-- Background: `#fcf9f3` (bone-white)
-- Border: `1px solid #8e7164` (warm-brown archival)
-- Padding: `16px`
-- Shadow: `0 0 20px rgba(0,0,0,0.05)` (soft)
-- Margin: `16px 0`
+| Tier | Value | Used for |
+|---|---|---|
+| **Small / controls** | `0 4px 12px rgba(0,0,0,.06)` hover; `0 4px 12px rgba(255,102,0,.12)` active/accent | Filter chips, small toggle buttons |
+| **Medium / cards & buttons** | `0 8px 24px rgba(255,102,0,.12)` to `0 12px 32px rgba(255,102,0,.16)` | Archive grid cards, Hall of Openings cards, Load More / room-nav buttons |
+| **Large / focal elements** | `0 28px 64px rgba(0,0,0,.6)` combined with `0 8px 24px rgba(255,102,0,.12)` | current.html's single focal work card — the one element on the site meant to read as physically lifted off the wall |
 
-#### Archive Card (Grid thumbnail)
-```html
-<a href="artwork.html?id=art1234" class="archive-card">
-  <div class="archive-card-img">
-    <img src="artworks/thumbs/art1234.avif" alt="Title" loading="lazy"/>
-  </div>
-  <div class="space-y-1">
-    <h4>Title</h4>
-    <span>1990s | Photography</span>
-  </div>
-</a>
-```
-**Styling:**
-- Image wrapper: relative, overflow hidden, border `#8e7164`, soft shadow (desktop only)
-- Image: full color always — no overlays, no filters, no mix-blend-mode. The saturation overlay that lived here was removed sitewide in Session 74.
-- Hover: image outline animates to `#e05900`, image scales to 1.03 and brightens slightly (`filter: brightness(1.04)`), title text turns `#e05900`
-
-### Links
-
-#### Bracket Links
-```html
-<a href="path" class="bracket-link">
-  <span>Text</span>
-  <span>[ Arrow → ]</span>
-</a>
-```
-**Styling:**
-- `display: flex; justify-content: space-between`
-- Text: `deep-ink` (#0B0B0B) default, `orange-ink` (#B84700) on hover
-- Underline: 1px on `<a>`, animates in on hover
-- No transform, no scale
-
-#### Nav Links
-```html
-<a href="path" class="nav-link">Text</a>
-```
-**Styling (with nav-active.js):**
-- Default: `text-deep-ink` (#0B0B0B)
-- Hover: `text-international-orange` (#FF6600)
-- Active: `aria-current="page"` + underline drawn via `::after` transform
-- Transition: `0.2s ease` (reduced-motion: none)
-
-### Forms
-
-#### Custom Checkbox (Archive filters)
-```html
-<input type="checkbox" class="custom-checkbox" value="collage"/>
-```
-**Styling:**
-- Size: 14×14px
-- Border: `1px solid #c4c7c7` (outline-variant)
-- Checked: `background:#000000; border:#000000`
-- Checked::after: white checkmark (rotated SVG path)
-- Focus: `outline: 2px solid #FF6600; outline-offset: 2px`
-
-#### Select Dropdown
-```html
-<select id="sort-select">
-  <option>Sort by...</option>
-</select>
-```
-**Styling:**
-- Font: Inter 13px
-- Border: `1px solid #c4c7c7`
-- Focus: `outline: 2px solid #FF6600; outline-offset: 2px`
-
-### Buttons
-
-#### CTA Buttons (Hero, primary actions)
-```html
-<a href="#" class="hero-cta-fill">[ Text → ]</a>
-```
-**Styling:**
-- Background: `#FF6600` (international-orange)
-- Text: white
-- Border: 2px solid `#FF6600`
-- Padding: `12px 20px`
-- Font: Inter 13px bold
-- Hover: opacity transition
-- Focus: outline `2px solid #0B0B0B`
-
-#### Secondary Buttons
-```html
-<a href="#" class="hero-cta-ghost">[ Text ]</a>
-```
-**Styling:**
-- Background: transparent
-- Border: 2px solid white
-- Text: white
-- Hover: invert colors
-
-### Breadcrumbs
-```html
-<div id="breadcrumb">
-  <a href="archive.html">Archive</a>
-  <span> › </span>
-  <a href="archive.html?series=Guernica">Guernica</a>
-</div>
-```
-**Styling:**
-- Font: Inter 12px, `#575757`
-- Separator: ` › ` in `#8e7164` (archival warm-brown)
-- Links: underline `1px solid #575757`, hover `#FF6600`
-- Margin: `16px 0`
-
-### Filter Chips
-```html
-<span class="filter-chip">
-  Collage
-  <button>×</button>
-</span>
-```
-**Styling:**
-- Background: `#ebe8e2` (surface-container-high)
-- Border: `1px solid #c4c7c7`
-- Padding: `4px 10px`
-- Font: Inter 11px uppercase, letter-spacing 0.08em
-- Close button: `#575757` hover `#FF6600`
-- Margin: `4px`
+Shadows are always `0` at rest (`box-shadow:0 2px 8px rgba(0,0,0,0)` — transparent, not `none`, so the transition has something to animate from) and grow on hover/focus, never present statically.
 
 ---
 
-## Interactions & Animations
+## Motion
 
-### Motion system (v2 — 2026-06-24) — single source of truth
+### Timing
+`.3s ease` is the dominant transition duration (58 occurrences across the codebase) — the default choice for hover/focus color, border, and shadow transitions. `.4s ease` is used for the card-hover "language" specifically (image border/shadow/lift + staggered metadata reveal) where a slightly slower, more deliberate feel was chosen deliberately (see Archive card polish, 2026-07-18). `.22s`–`.25s` shows up for veil/overlay opacity (room-veil, back-to-top button). There is no single canonical duration — pick `.3s` unless matching an existing nearby element.
 
-Per `CLAUDE.md` § "Design language v2", the site is moving to a higher-end, more expressive language: **more** parallax and motion, aimed *around and between* works. Motion uses a small FIXED set of named primitives so "more parallax" stays craft, not noise. `anime.js` is the choreography library.
+### The card-hover language
+The canonical interactive-card pattern, used on archive.html's grid, hall-of-openings.html's `.op` cards, and (in reduced form) current.html's focal card:
 
-**House easing**
-- Reveal / staged motion: `cubic-bezier(0.22, 1, 0.36, 1)`
-- UI / affordance: `cubic-bezier(0.4, 0, 0.2, 1)`
+```css
+.card img{
+  border:1px solid var(--frame);
+  transition:border-color .4s ease,box-shadow .4s ease,transform .4s ease;
+  box-shadow:0 2px 8px rgba(0,0,0,0);
+}
+.card a:hover img,.card a:focus-visible img{
+  border-color:var(--accent);
+  box-shadow:0 12px 32px rgba(255,102,0,.16);
+  transform:translateY(-2px);
+}
+/* Metadata enters from below on hover, staggered after the image */
+.card figcaption{opacity:0;transform:translateY(8px);transition:opacity .4s ease .08s,transform .4s ease .08s}
+.card a:hover figcaption,.card a:focus-visible figcaption{opacity:1;transform:none}
+.card .t{transition:color .4s ease,font-weight .4s ease}
+.card a:hover .t,.card a:focus-visible .t{color:var(--accent);font-weight:500}
+```
+Three-phase reveal: image lifts first, then caption fades up (.08s delay), then title gains color/weight. `:focus-visible` is paired with `:hover` throughout — keyboard and mouse get identical feedback, no separate focus-only styling to fall out of sync.
 
-**Durations**
-- Load choreography (one staged page reveal): 600–800ms
-- Continuity transition between works: 450–600ms
-- Hover / affordance feedback: 150–200ms
-
-**Parallax rates (scroll multiplier)**
-- Artwork plane: **1.0 — locked.** Always true scroll, never transformed.
-- Environment plate: 0.85–0.92
-- Scrim: 1.05–1.10
-- Display type: 1.10–1.15
-
-Depth is the *spread between layers*, never movement of the work itself.
-
-**Named primitives (use these; don't author one-offs)**
-1. **Depth-hero** — environment plate / scrim / Playfair type parallax within the rates above; artwork sits at 1.0×. Hero artwork may zoom-OUT 108%→100% over ~12–18s, pause-on-hover, resolving to the full work.
-2. **Continuity transition** — leaving a work toward another carries a shared element (thumbnail grows into the next hero), not a generic fade. Motion that teaches relationship.
-3. **River motion** — `chromatic.html` is the showpiece; push hardest there.
-4. **Load choreography** — exactly one staged reveal per page, not a cascade.
-
-**The artwork-plane rule (hard rail):** motion on a piece is allowed ONLY if it resolves to the work shown whole. Zoom-OUT settling on the full image = ok; zoom-IN ending cropped = not ok; pan/tilt/parallax on the artwork node = never.
-
-**Resilience (non-negotiable — both required):**
-- `prefers-reduced-motion: reduce` → all of the above collapses to clean static states (hero at 100%, no parallax/zoom, instant reveals).
-- JavaScript off → every work, title, year, medium still reachable and honest. Motion enhances; it never gates access to the record.
-
-> The older "Entrance Animations" notes below predate this system. Where they conflict, the v2 numbers win; the 50ms stagger is fine as a load-choreography detail.
-
-### Surface treatment (v2 — 2026-06-24) — single source of truth
-
-Part of the same v2 language as the motion system above: the surfaces *around* the work are flat and sharp, so the work is the only thing in the frame with depth. This is what "the space around it is staged" means at the level of the chrome.
-
-- **Dividers / borders:** flat 1px only — `#c4c7c7` (neutral) or `#8e7164` (archival). **No decorative gradient lines** (e.g. the orange→brown→orange section rule that accreted on the homepage). A section's own `border-b` is the divider; don't overlay a coloured `::after`.
-- **Corners:** square. **No `border-radius`** on cards, callouts, metadata blocks, or focus outlines.
-- **Gradients are functional, not decorative:** allowed only as scrims that keep text legible over imagery (hero caption overlays, the header fade). Never as section dividers, skeleton shimmer, or surface fills.
-- Static rules — unaffected by reduced-motion or JS-off.
-
-### Hover States
-- **Images:** Outline animates in orange, caption title turns orange
-- **Links:** Underline draws in (transform: scaleX)
-- **Buttons:** Opacity/color transition, no scale
-- **Cards:** Soft shadow may intensify (optional enhancement)
-
-### Focus States
-- **All interactive:** `outline: 2px solid #FF6600; outline-offset: 2px`
-- **Accessible:** Always visible, never removed
-
-### Transitions
-- **Standard:** `0.2s ease` (most interactions)
-- **Longer:** `0.3s ease` (drawer open/close, page transitions)
-- **Reduced motion:** All transitions disabled when `prefers-reduced-motion: reduce`
-
-### Animations
-
-#### Entrance Animations
-- **Fade-in:** opacity 0→1, 0.6s (when used; respect `prefers-reduced-motion`)
-- **Slide-up:** transform translateY(20px→0), 0.6s
-- **Stagger:** 50ms between items in grid/list
-- **Reduced motion:** No animation, instant appearance
-
-Per CLAUDE.md's "Design is open" stance: entrance motion, scroll-reveals, parallax, and transforms are all part of Jeff's craft and may be used per page — that restriction was retired in CLAUDE.md and the Don'ts list below has been corrected to match (2026-06-22). The only non-negotiable motion rule is `prefers-reduced-motion` support, always.
-
-#### Loading States
-- **Progress bar:** `#FF6600` width animation (archive-progress bar)
-- Skeleton/shimmer loading states are no longer categorically banned — see the Don'ts correction below. Use judgment per page.
-
-#### Drawer Animation (Mobile nav)
-- **Stagger entrance:** Each link fades in with 50ms delay
-- **Slide-in:** translateX(-100%→0), 0.25s ease
-- **Reduced motion:** No stagger, instant
-
-### Canvas Animations
-- **Chromatic River:** Hover reveals year, click expands
-- **River canvas (homepage):** Deferred to requestIdleCallback (after FCP)
-
----
-
-## Accessibility Guidelines
-
-### Contrast (WCAG AA Minimum)
-- Text on background: 4.5:1
-- Large text (18px+): 3:1
-- Graphical elements: 3:1
-- **Audit:** `#FF6600` on bone-white FAILS (2.79:1) — use `orange-ink` instead for persistent text
-
-### Keyboard Navigation
-- Tab order: logical, left-to-right, top-to-bottom
-- Focus visible: always, never hidden
-- Skip link: "Skip to content" available on all pages
-- Decade pages: ← / → arrow keys navigate between decades
-
-### Screen Readers
-- Images: descriptive `alt` text (work title, medium, year)
-- Links: context clear from text (not "click here")
-- Buttons: `aria-label` for icon-only buttons
-- Active nav: `aria-current="page"` on current section
-- Live regions: `aria-live="polite"` for filter updates
-
-### Color Independence
-- Don't convey information via color alone
-- Use text labels + icons + color together
-- Sufficient contrast ratios (see above)
-
-### Motion & Vestibular
-- **Respect `prefers-reduced-motion: reduce` — this is the actual non-negotiable rule, not a ban on any specific motion technique.** Parallax, auto-playing hero rotation, and other motion are allowed (per CLAUDE.md's "Design is open" stance) as long as a reduced-motion fallback exists.
-- Users should always have a way to stop or skip auto-playing motion that runs longer than ~5s (the hero rotation already supports pause-on-attention — see Session 79).
-
-### Touch Targets
-- Minimum 44×44px (mobile tap targets)
-- Icons: 20–24px with padding for spacing
-- Buttons: 44px height minimum
-
----
-
-## Usage Patterns & Do's/Don'ts
-
-### Do's ✅
-
-- **Color:** Use `orange-ink` (#B84700) for persistent text on light backgrounds
-- **Artwork first:** Minimize UI chrome, maximize image real estate
-- **Whitespace:** Generous margins between sections (24px–64px)
-- **Typography:** Use Playfair for headlines (elegant), Inter for body (readable)
-- **Borders:** Warm-brown archival (#8e7164) for intentional sections, neutral (#c4c7c7) for general UI
-- **Shadows:** Soft, diffused only — `0 0 20px rgba(0,0,0,0.05)` for cards
-- **Interactions:** Fade, slide, color shifts, scale/transform — all fair game on UI chrome; reduced-motion support required
-- **Animation:** Fade-in, stagger, scroll-reveal, parallax — Jeff's craft, used per page; reduced-motion support required
-- **Focus:** Always visible, high-contrast outline
-
-### Don'ts ❌ — corrected 2026-06-22 to match CLAUDE.md's actual current stance
-
-**This list previously banned several generic motion patterns (scroll-reveal, scale/transform on hover, sibling dim, skeleton loading) as a blanket restraint policy. CLAUDE.md explicitly retired that policy** ("Earlier versions of this file read 'default to removal' as minimalism and walked back legitimate motion work... That over-correction is retired"). The only non-negotiable category is **honest treatment of the artwork itself** — that's what actually belongs in a Don'ts list:
-
-- **Grayscale filter, recolor, or any color/saturation filter on the artwork image itself** (removed session 18 — keep full color, always)
-- **Mask-image gradient or crop-distort hiding parts of an artwork image**
-- **Tilting or transforming the artwork image itself** (transforms on surrounding UI chrome are fine; the work stays undistorted)
-- **Hiding a work's title/year/medium behind a hover-only state** — it vanishes on touch and is invisible to screen readers
-- **Hero text labels printed directly over artwork** (covers the work)
-- **Particle/canvas effects rendered over artwork** (dust, grain — obscures the work)
-- **Fabricated provenance, badges, DPI, accession numbers, or composites presented as real exhibitions** — see Archive Integrity below
-- **International-orange text** on light backgrounds (use orange-ink instead — this one's an accessibility/contrast rule, unrelated to the motion-restraint reversal above)
-
-**No longer banned (Jeff's craft, not a violation):** scroll-reveal, scale/transform on hover (on UI chrome, not the artwork), sibling dim, skeleton loading, parallax, auto-playing hero motion. Use judgment; the litmus in `CLAUDE.md` is the test, not this list.
-
-> **v2 narrowing (2026-06-24):** the "Surface treatment (v2)" rules above now make *decorative* gradients (gradient dividers, surface fills) and *rounded corners* on staged chrome things to avoid — not for artwork-honesty reasons, but because the v2 language wants flat, square surfaces around the work. Functional scrim gradients and loading skeletons on image-heavy pages remain fine.
-
-### Archive Integrity
-- **Dimensions:** Leave blank if unknown (don't guess)
-- **Year precision:** Always show decade estimates ("1990s (est.)")
-- **Composite flag:** Show "Photoshop composite — imagined placement" for ~250 works
-- **Provenance:** Never fabricate accession numbers, verification badges, or DPI
-
----
-
-## Performance & Constraints
-
-### Image Optimization
-- **Format:** AVIF (primary), with fallback consideration for older browsers
-- **Sizes:** Thumbs (400w), medium (900w), full (1200w+)
-- **Preload:** Hero images only (fetchpriority="high")
-- **Lazy loading:** All grid/archive images (`loading="lazy"`)
-
-### LCP
-- **Goal:** Web Vitals "good" range
-- **Live numbers move** — capture current Lighthouse mobile baseline at end of each performance pass; do not bake numbers into this document.
-- **Optimization pattern:** Hero image swap (preload lightweight, swap to full after LCP fires); `srcset` on top-3 homepage cards; self-host fonts to avoid render-blocking Google Fonts.
-
-### Cache & SW
-- **Service Worker:** Cache-first for AVIF, network-first for JSON/HTML/CSS/JS
-- **Cache version:** Bump `CACHE_V` in `sw.js` after CSS rebuild or major deployment
-- **TTL:** AVIF images cached for 1 year; HTML/CSS/JS always fresh
-
----
-
-## Design Tokens Export (for tools/automation)
-
-```json
-{
-  "colors": {
-    "bone-white": "#fcf9f3",
-    "deep-ink": "#0B0B0B",
-    "archive-gray": "#575757",
-    "orange-ink": "#B84700",
-    "international-orange": "#FF6600",
-    "outline-variant": "#c4c7c7",
-    "archival-outline": "#8e7164",
-    "archival-outline-soft": "#e3bfb1",
-    "surface-container-high": "#ebe8e2"
-  },
-  "typography": {
-    "font-family": {
-      "serif": "'Playfair Display', Georgia, serif",
-      "sans": "Inter, system-ui, sans-serif",
-      "mono": "ui-monospace, 'SF Mono', Menlo, monospace"
-    },
-    "scale": {
-      "display-lg": { "size": "64px", "weight": 700, "line-height": 1 },
-      "heading-1": { "size": "40px", "weight": 700, "line-height": 1.2 },
-      "body-md": { "size": "16px", "weight": 400, "line-height": 1.6 }
-    }
-  },
-  "spacing": {
-    "xs": "8px",
-    "sm": "16px",
-    "md": "24px",
-    "lg": "32px",
-    "xl": "48px",
-    "2xl": "64px"
-  },
-  "shadows": {
-    "card": "0 0 20px rgba(0,0,0,0.05)"
+**Touch press feedback** — gated to touch devices, absent from the old doc entirely:
+```css
+@media (hover:none) and (pointer:coarse){
+  .card a:active{
+    background-color:color-mix(in srgb, var(--accent) 6%, transparent);
+    transform:scale(.98);
   }
 }
 ```
+
+### `prefers-reduced-motion`
+Every animation/transition-heavy rule on the site is wrapped in `@media (prefers-reduced-motion: no-preference)`, with a paired `@media (prefers-reduced-motion: reduce)` block that snaps straight to the resting/revealed state (no animation, `opacity:1`, no transform). This is genuinely non-negotiable and consistently applied — verified across all room pages during the 2026-07 interaction-polish sessions.
+
+### Ink-stamp (title highlight entrance)
+```css
+@media (prefers-reduced-motion: no-preference){
+  .highlight-devo{animation:ink-stamp .5s cubic-bezier(.2,1.6,.4,1) both;animation-delay:.5s}
+  @keyframes ink-stamp{0%{transform:scaleX(0)}60%{transform:scaleX(1.08)}100%{transform:scaleX(1)}}
+}
+```
+
+### Wing crossfade (index.html only, desktop only)
+The homepage's two flanking "wall" images cycle through featured works from `config/catalog-home.json`, preloading the next image before a `.6s` opacity crossfade, staggered so both wings never fade at once. Guarded behind `matchMedia('(min-width:1200px)')` and `prefers-reduced-motion`. See `index.html`'s end-of-body script for the full implementation — this is the newest and most elaborate motion pattern on the site (added 2026-07-19), not yet generalized to any other page.
+
+---
+
+## Page Anatomy
+
+### `header.hud` — every room page except `index.html`
+```css
+header.hud{
+  position:absolute;top:0;left:0;right:0;z-index:10;
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding:calc(env(safe-area-inset-top,0px) + 22px) 26px 14px;
+  background:linear-gradient(var(--room) 55%,rgba(12,10,9,0.82) 78%,transparent);
+  pointer-events:none;
+}
+header.hud a{pointer-events:auto}
+```
+Left: site name link back to `index.html`. Center (optional): current room name. Right: `[ THE MUSEUM → ]` or `[ THE ARCHIVE → ]` exit link. `pointer-events:none` on the container with `auto` re-enabled on links only — lets hero content underneath still receive pointer events in the header's visual footprint.
+
+**`index.html` is the one deliberate exception** — no `header.hud`, no nav at all. It's built as "the poster": five fixed elements (title, creed, one artwork, signature, doors), identical every visit, no chrome. This is a documented intentional choice, not a missing feature (see `docs/current/session_2026_07_13_poster_hero.md` in memory / git history).
+
+### `#door` / `#hero` — full-viewport hero section
+Present on six room pages (`guernica-passage`, `the-studio`, `hall-of-openings` [as `#hero-image`], `about`, `working-history`, `stories`) plus `flooded-wing.html`. Pattern:
+```css
+#door{
+  min-height:100vh;display:flex;flex-direction:column;
+  justify-content:center;align-items:center;text-align:center;gap:28px;
+  position:relative;overflow:hidden;isolation:isolate;
+}
+#door::before{ /* full-bleed background image */ }
+#hero-content::before{ /* radial-gradient ellipse fade behind text, scales in on load */ }
+```
+Content sits inside a radial dark-ellipse vignette (`radial-gradient(ellipse at center, rgba(12,10,9,.94) 0%, ... transparent 75%)`) so the hero title stays legible over any background image without needing a flat scrim.
+
+**First content section after the hero needs `padding-top:8vh`.** This was a real, repeated bug (fixed 2026-07-19 across 6 pages): several pages had zero or near-zero top padding on the section right after the hero, so body text sat crammed against the photo. `about.html`'s `#biography{padding-top:8vh}` was the one page that had it right from the start — use `8vh` as the standard gap on any new hero-adjacent section.
+
+### Scroll cue (`.down` / `.threshold::after`)
+Every full-viewport hero has a bouncing `↓` pinned near the bottom, fading out once the visitor scrolls past ~40px:
+```css
+#door .down{
+  position:absolute;bottom:6vh;left:50%;transform:translateX(-50%);
+  color:var(--dim);font-size:28px;
+  animation:sink 2.6s ease-in-out infinite;transition:opacity .3s ease;
+}
+@keyframes sink{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(12px)}}
+#door.scrolled .down{opacity:0}
+```
+```js
+(function(){
+  const door = document.getElementById('door'); // or #hero, or #hero-image on hall-of-openings
+  if (!door) return;
+  function check(){ door.classList.toggle('scrolled', window.scrollY > 40); }
+  window.addEventListener('scroll', check, { passive: true });
+  check();
+})();
+```
+28px, `bottom:6vh` — standardized across all seven hero pages 2026-07-18/19 (previously only `flooded-wing.html` had one, at a smaller 18px).
+
+### Room-veil (page-transition blackout)
+```css
+#room-veil{position:fixed;inset:0;background:#0c0a09;opacity:0;pointer-events:none;transition:opacity .22s ease;z-index:99}
+#room-veil.on{opacity:1;pointer-events:auto}
+```
+```js
+document.addEventListener('click', e => {
+  const a = e.target.closest('a');
+  if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target === '_blank') return;
+  const h = a.getAttribute('href') || '';
+  if (!h || /^(https?:|#|mailto:)/.test(h)) return;
+  e.preventDefault();
+  v.classList.add('on');
+  setTimeout(() => { location.href = a.href; }, 200);
+}, true);
+```
+Present on 14 of 14 pages. **On `pageshow` with `event.persisted` (bfcache back-navigation), must explicitly reset both the class and inline `opacity`/`pointer-events`** — a real bug (fixed 2026-07-19) where the veil could persist at `opacity:1` after browser back-button navigation, silently blocking clicks until a manual refresh:
+```js
+addEventListener('pageshow', e => {
+  if (e.persisted) {
+    v.classList.remove('on');
+    v.style.opacity = '0';
+    v.style.pointerEvents = 'none';
+  }
+});
+```
+
+### Back-to-top button
+Present on 11 of 14 pages (injected via inline script, not markup):
+```js
+var btn = document.createElement('button');
+btn.id = 'btt-float';
+btn.style.cssText = 'position:fixed;bottom:28px;right:28px;width:44px;height:44px;...';
+window.addEventListener('scroll', function(){
+  if(window.scrollY > 300){ btn.style.opacity = '1'; btn.style.pointerEvents = 'auto'; }
+  else { btn.style.opacity = '0'; btn.style.pointerEvents = 'none'; }
+}, {passive:true});
+```
+
+---
+
+## Accessibility
+
+- `:focus-visible` is paired with `:hover` on every interactive element, not styled separately — verified across all room-page CSS. Standard outline: `outline:2px solid var(--accent);outline-offset:4px` (2px offset on smaller controls like chips).
+- `alt=""` + `aria-hidden="true"` on purely decorative/atmospheric images (e.g. index.html's wing images, once their content became a rotating crossfade rather than a fixed, describable work).
+- `loading="lazy"` on all grid/archive images; hero images use `fetchpriority="high"` + `loading="eager"` instead.
+- `aria-expanded` / `aria-controls` on the mobile filters toggle (archive.html); `aria-pressed` on filter chips.
+- Composite works carry a visible flag (`Photoshop composite — imagined placement`), not just a data attribute — this is an archive-integrity requirement, not a generic a11y one (see below).
+
+---
+
+## Archive Integrity (non-negotiable, unrelated to visual style)
+
+These rules exist independent of whatever the visual theme is and survived the light→dark rewrite unchanged:
+
+- Never filter, recolor, distort, mask, or tilt an artwork image.
+- Never hide a work's title/year/medium behind a hover-only state.
+- Years are always shown as decade estimates ("1990s (est.)"), never fabricated precision.
+- Composite works (~250) are always flagged in the UI, never presented as real installation photography.
+- Never fabricate provenance, accession numbers, or verification badges.
 
 ---
 
 ## Changelog
 
-**2026-06-22 (later same day)** — Corrected the Don'ts list, which still banned scroll-reveal/scale-transform-on-hover/sibling-dim/skeleton-loading/parallax as a blanket restraint policy — directly contradicting CLAUDE.md's "Design is open" reversal of exactly that policy. Rewrote Don'ts to contain only what's actually non-negotiable: honest treatment of the artwork itself (no filter/recolor/distort/tilt, no metadata hidden behind hover, no fabricated provenance) plus the orange-ink contrast rule. Also fixed the Motion & Vestibular section, which banned parallax outright instead of stating the real rule (respect `prefers-reduced-motion`).
+**2026-07-19** — Full rewrite. The previous version (light "bone-white"/Inter/Tailwind theme, "Stitch June-2026 adoption") did not match any live page — verified by grep across all 14 HTML files (zero `bone-white`, zero `#B84700`, zero real `Inter` usage; the dark `:root` tokens and Playfair/Georgia stack are what's actually there). The previous version's canonical-source claim (CLAUDE.md § "Design System (current — Stitch/Tailwind, light)") pointed to a section that does not exist in CLAUDE.md. Replaced entirely with patterns verified against live page source: color tokens, typography, shadow scale, card-hover language, page anatomy (header.hud, hero/door, scroll-cue, room-veil, back-to-top), and the `_shared/` dead-code finding. Added architecture note explaining there is no shared stylesheet — this was previously undocumented and caused confusion about where to edit for sitewide changes.
 
-**2026-06-22** — Doc-vs-reality sync. Removed the saturation-overlay spec from Archive Card (the overlay was removed sitewide in Session 74). Deleted "Polishing Opportunities" section (contradicted the Don'ts list above it; live items moved to IMPROVEMENTS.md). Removed duplicated token tables — CLAUDE.md is now the canonical source for tokens. Softened the "three personas" framing to match JFSN-MISSION.md (visitors welcomed, not user-types optimized). Removed stale LCP numbers; performance section now points to live measurement instead.
-
-**2026-06-17** — Initial formalization from CLAUDE.md. Added breadcrumb component, polishing opportunities, performance notes.
-
-**2026-06-14** — Stitch June-2026 adoption: soft shadows, warm-brown borders, orange-ink (accessible orange) added for persistent text.
-
-**2026-06-10** — Accessibility audit: discovered international-orange text contrast failure on light backgrounds, introduced orange-ink.
-
+**2026-06-22 through 2026-06-10 (superseded)** — Prior changelog entries described the light-theme era (Stitch adoption, orange-ink contrast fix, "Design language v2" motion/surface rules). That theme and its rules are no longer live; history preserved in git (`git log -- docs/current/DESIGN-SYSTEM.md`) rather than restated here.
