@@ -389,9 +389,101 @@ addEventListener('DOMContentLoaded', () => {
     const studying = document.getElementById('lightbox').classList.contains('on');
     if (e.key === 'Escape') closeLB();
     else if (studying) return; // arrows stay with the study view
-    else if (e.key === 'ArrowLeft' && idx > 0) prev.click();
-    else if (e.key === 'ArrowRight' && idx < works.length - 1) next.click();
+    else if (e.key === 'ArrowLeft' && idx > 0) { addToStack(w.i, w.t, img.src); prev.click(); }
+    else if (e.key === 'ArrowRight' && idx < works.length - 1) { addToStack(w.i, w.t, img.src); next.click(); }
   });
+
+  // Hook prev/next clicks to add current work to stack
+  prev.addEventListener('click', () => { addToStack(w.i, w.t, img.src); });
+  next.addEventListener('click', () => { addToStack(w.i, w.t, img.src); });
+
+  // ---------- Accumulation Stack: visual record of browsing through the archive ----------
+  const REDUCED_MOTION = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const MOBILE = window.innerWidth <= 900;
+  const MAX_STACK = 6;
+  const stack = document.getElementById('stack');
+  let stackWorks = [];
+
+  function cubic(t, p1x = 0.25, p1y = 0.46, p2x = 0.45, p2y = 0.94) {
+    const mt = 1 - t;
+    const mt2 = mt * mt;
+    const mt3 = mt2 * mt;
+    const t2 = t * t;
+    const t3 = t2 * t;
+    return mt3*0 + 3*mt2*t*p1y + 3*mt*t2*p2y + t3*1;
+  }
+
+  function animateStackWork(el, fromOpacity = 0, fromScale = 0.7, fromZ = 60) {
+    const duration = REDUCED_MOTION ? 0 : 320;
+    const start = performance.now();
+    const animate = (now) => {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = cubic(progress);
+      const opacity = fromOpacity + (1 - fromOpacity) * eased;
+      const scale = fromScale + (0.85 - fromScale) * eased;
+      const z = fromZ + (10 - fromZ) * eased;
+      el.style.opacity = opacity;
+      el.style.transform = `translate(-50%, -50%) translateZ(${z}px) scale(${scale})`;
+      if (progress < 1) requestAnimationFrame(animate);
+    };
+    requestAnimationFrame(animate);
+  }
+
+  function removeStackWork(el) {
+    const duration = REDUCED_MOTION ? 0 : 240;
+    const start = performance.now();
+    const animate = (now) => {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = cubic(1 - progress, 0.25, 0.46, 0.45, 0.94);
+      const opacity = eased;
+      const scale = 0.85 + (0.7 - 0.85) * (1 - eased);
+      const z = 10 + (60 - 10) * (1 - eased);
+      el.style.opacity = opacity;
+      el.style.transform = `translate(-50%, -50%) translateZ(${z}px) scale(${scale})`;
+      if (progress < 1) requestAnimationFrame(animate);
+      else el.remove();
+    };
+    requestAnimationFrame(animate);
+  }
+
+  function addToStack(workId, workTitle, workImg) {
+    if (MOBILE || REDUCED_MOTION) return;
+    const el = document.createElement('div');
+    el.className = 'stack-work';
+    el.innerHTML = `<img src="/artworks/thumbs/${workId}.avif" alt="${workTitle}" loading="lazy" decoding="async">`;
+    stack.appendChild(el);
+    animateStackWork(el);
+    stackWorks.push({ el, id: workId });
+    while (stackWorks.length > MAX_STACK) {
+      const oldest = stackWorks.shift();
+      removeStackWork(oldest.el);
+    }
+    try {
+      sessionStorage.setItem('stack', JSON.stringify(stackWorks.map(sw => sw.id)));
+    } catch (_) {}
+  }
+
+  // Restore stack from sessionStorage if present
+  try {
+    const saved = sessionStorage.getItem('stack');
+    if (saved && Array.isArray(JSON.parse(saved))) {
+      const ids = JSON.parse(saved);
+      ids.forEach((id, i) => {
+        if (id === w.i) return;
+        const el = document.createElement('div');
+        el.className = 'stack-work';
+        el.innerHTML = `<img src="/artworks/thumbs/${id}.avif" loading="lazy" decoding="async">`;
+        const depth = 10 + (MAX_STACK - i) * 8;
+        const scl = 0.75 + (i / MAX_STACK) * 0.1;
+        el.style.opacity = 0.6;
+        el.style.transform = `translate(-50%, -50%) translateZ(${depth}px) scale(${scl})`;
+        stack.appendChild(el);
+        stackWorks.push({ el, id });
+      });
+    }
+  } catch (_) {}
 
   // ---------- copy link ----------
   document.getElementById('copy-link').addEventListener('click', async () => {
@@ -553,132 +645,6 @@ addEventListener('DOMContentLoaded', () => {
     else if (e.key === '0') resetView();
   });
 
-  // ---------- Accumulation Stack: visual record of browsing through the archive ----------
-  // As you navigate prev/next, previous works accumulate in a depth-stacked display behind the focal work.
-  // Respects prefers-reduced-motion; stores stack state in sessionStorage for cross-tab consistency.
-  const REDUCED_MOTION = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const MOBILE = window.innerWidth <= 900;
-  const MAX_STACK = 6;
-  const stack = document.getElementById('stack');
-  let stackWorks = [];
-
-  function cubic(t, p1x = 0.25, p1y = 0.46, p2x = 0.45, p2y = 0.94) {
-    const mt = 1 - t;
-    const mt2 = mt * mt;
-    const mt3 = mt2 * mt;
-    const t2 = t * t;
-    const t3 = t2 * t;
-    return mt3*0 + 3*mt2*t*p1y + 3*mt*t2*p2y + t3*1;
-  }
-
-  function animateStackWork(el, fromOpacity = 0, fromScale = 0.7, fromZ = 60) {
-    const duration = REDUCED_MOTION ? 0 : 320;
-    const start = performance.now();
-    const animate = (now) => {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = cubic(progress);
-      const opacity = fromOpacity + (1 - fromOpacity) * eased;
-      const scale = fromScale + (0.85 - fromScale) * eased;
-      const z = fromZ + (10 - fromZ) * eased;
-      el.style.opacity = opacity;
-      el.style.transform = `translate(-50%, -50%) translateZ(${z}px) scale(${scale})`;
-      if (progress < 1) requestAnimationFrame(animate);
-    };
-    requestAnimationFrame(animate);
-  }
-
-  function removeStackWork(el) {
-    const duration = REDUCED_MOTION ? 0 : 240;
-    const start = performance.now();
-    const animate = (now) => {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = cubic(1 - progress, 0.25, 0.46, 0.45, 0.94);
-      const opacity = eased;
-      const scale = 0.85 + (0.7 - 0.85) * (1 - eased);
-      const z = 10 + (60 - 10) * (1 - eased);
-      el.style.opacity = opacity;
-      el.style.transform = `translate(-50%, -50%) translateZ(${z}px) scale(${scale})`;
-      if (progress < 1) requestAnimationFrame(animate);
-      else el.remove();
-    };
-    requestAnimationFrame(animate);
-  }
-
-  function addToStack(workId, workTitle, workImg) {
-    // Don't stack on mobile or if prefers-reduced-motion
-    if (MOBILE || REDUCED_MOTION) return;
-
-    // Create stack work element
-    const el = document.createElement('div');
-    el.className = 'stack-work';
-    el.innerHTML = `<img src="/artworks/thumbs/${workId}.avif" alt="${workTitle}" loading="lazy" decoding="async">`;
-    stack.appendChild(el);
-
-    // Animate in
-    animateStackWork(el);
-
-    // Keep track
-    stackWorks.push({ el, id: workId });
-
-    // Trim old works if stack is full
-    while (stackWorks.length > MAX_STACK) {
-      const oldest = stackWorks.shift();
-      removeStackWork(oldest.el);
-    }
-
-    // Store in sessionStorage for breadcrumb continuity
-    try {
-      sessionStorage.setItem('stack', JSON.stringify(stackWorks.map(sw => sw.id)));
-    } catch (_) {}
-  }
-
-  // Initialize stack from sessionStorage if present (user navigated via prev/next)
-  try {
-    const saved = sessionStorage.getItem('stack');
-    if (saved && Array.isArray(JSON.parse(saved))) {
-      const ids = JSON.parse(saved);
-      // Restore stack silently (no animation on page load)
-      ids.forEach((id, idx) => {
-        if (id === w.i) return; // don't stack the current work
-        const el = document.createElement('div');
-        el.className = 'stack-work';
-        el.innerHTML = `<img src="/artworks/thumbs/${id}.avif" loading="lazy" decoding="async">`;
-        // Position at depth based on order
-        const depth = 10 + (MAX_STACK - idx) * 8;
-        const scale = 0.75 + (idx / MAX_STACK) * 0.1;
-        el.style.opacity = 0.6;
-        el.style.transform = `translate(-50%, -50%) translateZ(${depth}px) scale(${scale})`;
-        stack.appendChild(el);
-        stackWorks.push({ el, id });
-      });
-    }
-  } catch (_) {}
-
-  // Hook into prev/next navigation to add current work to stack before leaving
-  const prevLink = document.getElementById('prev');
-  const nextLink = document.getElementById('next');
-  const origPrevHref = prevLink.href;
-  const origNextHref = nextLink.href;
-
-  [prevLink, nextLink].forEach(link => {
-    link.addEventListener('click', (e) => {
-      // Store current work in stack before navigating
-      addToStack(w.i, w.t, img.src);
-    });
-  });
-
-  // Keyboard navigation (← →)
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft' && w.prev) {
-      addToStack(w.i, w.t, img.src);
-      setTimeout(() => { location.href = '?id=' + w.prev; }, 50);
-    } else if (e.key === 'ArrowRight' && w.next) {
-      addToStack(w.i, w.t, img.src);
-      setTimeout(() => { location.href = '?id=' + w.next; }, 50);
-    }
-  });
 })();
 </script>
 </body>
