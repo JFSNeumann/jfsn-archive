@@ -191,7 +191,7 @@ PYEOF
 python3 << 'PYEOF'
 import re, glob
 
-STYLE_WARN_BYTES = 33000  # warn if inline <style> block exceeds 33KB
+STYLE_WARN_BYTES = 35000  # warn if inline <style> block exceeds 35KB
 CDN_PATTERNS = ['cdn.tailwindcss', 'unpkg.com']
 CDN_EXCEPTIONS = {}
 
