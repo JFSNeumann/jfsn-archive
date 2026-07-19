@@ -107,6 +107,21 @@ addEventListener('DOMContentLoaded', () => {
     text-shadow:0 2px 18px rgba(0,0,0,.7);
   }
   #door .caps{text-shadow:0 1px 10px rgba(0,0,0,.7)}
+  .highlight-work{
+    background:var(--accent);color:#fff;padding:0 4px;font-style:normal;
+    display:inline-block;transform-origin:left center;
+  }
+  /* Ink-stamp: matches the homepage/room-page title treatment — the box
+     lands once on load, timed just after the hero's own ellipse fade-in
+     completes. */
+  @media (prefers-reduced-motion: no-preference){
+    .highlight-work{animation:ink-stamp .5s cubic-bezier(.2,1.6,.4,1) both;animation-delay:1.6s}
+    @keyframes ink-stamp{
+      0%{transform:scaleX(0)}
+      60%{transform:scaleX(1.08)}
+      100%{transform:scaleX(1)}
+    }
+  }
   /* Same elliptical fade as the other rooms' heroes: dark at center,
      fully transparent at the edge, scaling in from smaller on load. */
   #hero-content{position:relative;display:flex;flex-direction:column;align-items:center;gap:28px}
@@ -243,7 +258,7 @@ addEventListener('DOMContentLoaded', () => {
 <section id="door">
   <div id="hero-content">
     <div class="caps">THE WORKING HISTORY</div>
-    <h1>The galleries that were real.</h1>
+    <h1>The <span class="highlight-work">galleries</span> that were real.</h1>
     <div class="caps fact">EIGHT WEBSITES · 2000 – 2020 · PRESERVED AS THEY WERE</div>
   </div>
 </section>
