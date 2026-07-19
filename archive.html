@@ -169,15 +169,19 @@ addEventListener('DOMContentLoaded', () => {
     #filter-groups{
       display:grid;grid-template-rows:0fr;margin-top:0;
       transition:grid-template-rows .22s ease-out,margin-top .22s ease-out;
+      opacity:1;
     }
     #filter-groups.open{grid-template-rows:1fr;margin-top:16px}
     #filter-groups-inner{overflow:hidden}
+    .fgroup{opacity:0}
+    .fgroup.drawer-visible{opacity:1}
     #count-label{flex-basis:100%;order:9}
     #search{font-size:16px}
   }
   @media (max-width:700px) and (prefers-reduced-motion: reduce){
     #filter-groups{display:none;transition:none}
     #filter-groups.open{display:block}
+    .fgroup{opacity:1}
   }
 
   /* ---------- grid ---------- */
@@ -409,6 +413,8 @@ addEventListener('DOMContentLoaded', () => {
 </footer>
 <script>document.getElementById('footer-year').textContent = new Date().getFullYear();</script>
 
+<script src="_shared/anime.min.js"></script>
+
 <script>
 (async function(){
   'use strict';
@@ -570,6 +576,65 @@ addEventListener('DOMContentLoaded', () => {
   });
 
   render(true); // initial load: append into the empty grid, no fade-from-nothing
+})();
+</script>
+
+<script>
+// Filter drawer animation with anime.js (mobile, max-width 700px)
+(function(){
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (matchMedia('(min-width: 701px)').matches) return;
+
+  const toggle = document.getElementById('filters-toggle');
+  const groups = document.getElementById('filter-groups');
+  const fgroups = document.querySelectorAll('.fgroup');
+  let isOpen = false;
+
+  toggle.addEventListener('click', () => {
+    isOpen = !isOpen;
+
+    if (isOpen) {
+      // Opening: fade in filter groups with stagger
+      fgroups.forEach((fg, i) => {
+        fg.classList.add('drawer-visible');
+        anime.set(fg, { opacity: 0 });
+        anime.to(fg, {
+          opacity: 1,
+          duration: 280,
+          delay: i * 40,
+          easing: 'easeOutQuad'
+        });
+      });
+      // Subtle button icon rotation or state change
+      anime.to(toggle, {
+        transform: 'rotate(180deg)',
+        duration: 300,
+        easing: 'easeOutQuad'
+      });
+    } else {
+      // Closing: fade out filter groups with reverse stagger
+      const delay = (fgroups.length - 1) * 40;
+      fgroups.forEach((fg, i) => {
+        anime.to(fg, {
+          opacity: 0,
+          duration: 240,
+          delay: (fgroups.length - 1 - i) * 40,
+          easing: 'easeInQuad',
+          complete: () => {
+            if (i === fgroups.length - 1) {
+              fgroups.forEach(f => f.classList.remove('drawer-visible'));
+            }
+          }
+        });
+      });
+      // Button returns to normal
+      anime.to(toggle, {
+        transform: 'rotate(0deg)',
+        duration: 300,
+        easing: 'easeOutQuad'
+      });
+    }
+  });
 })();
 </script>
 
