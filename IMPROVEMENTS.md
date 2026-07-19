@@ -1,5 +1,5 @@
 # JFSN — Improvement List
-**Updated:** 2026-07-18 (later)
+**Updated:** 2026-07-19 (intake pipeline complete)
 
 A living list. Add to it. Cross things off. This is the backlog.
 
@@ -7,7 +7,7 @@ A living list. Add to it. Cross things off. This is the backlog.
 
 ## 🔴 Do soon
 
-Nothing currently queued.
+- [ ] **Ingest 40 new artworks (art1085–art1124)** — **2026-07-19** — Automated intake pipeline validated (Phase 2.3: `python3 artworks/ingest.py`, Phase 2.4: `python3 tools/intake/intake_finish.py`). 20 pieces at 3'×4', 20 at 2'×3', all double-sided. Test setup complete (3 placeholders on jfsn.com verify the flow). Suggested workflow: batch 10 at a time, photograph + drop to inbox, auto-ingest, manually edit 10 JSON sidecars (title/year/materials/themes), finish & deploy. ~4 deploy cycles expected. [See intake_pipeline session memory for full details.](https://claude.ai/session/...) Delete test entries (art9901–art9903) before starting real ingestion.
 
 ---
 
