@@ -132,8 +132,12 @@ addEventListener('DOMContentLoaded', () => {
     font-family:Georgia,'Times New Roman',serif;font-size:clamp(17px,2.2vw,22px);
     line-height:2;color:var(--ink);max-width:34em;
   }
-  #door .down{margin-top:26px;color:var(--faint);font-size:18px;animation:sink 2.6s ease-in-out infinite;transition:opacity .3s ease}
-  @keyframes sink{0%,100%{transform:translateY(0)}50%{transform:translateY(10px)}}
+  #door .down{
+    position:absolute;bottom:6vh;left:50%;transform:translateX(-50%);
+    margin-top:0;color:var(--dim);font-size:28px;
+    animation:sink 2.6s ease-in-out infinite;transition:opacity .3s ease;
+  }
+  @keyframes sink{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(12px)}}
   /* Once the visitor has actually started scrolling, the cue has done its
      job — fade it rather than let it sink forever underneath them. */
   #door.scrolled .down{opacity:0}
