@@ -199,6 +199,27 @@ export const decadePassage = ({ marker, autoplay = true }) => {
 }
 
 /**
+ * PATTERN: Series Highlight (Archive Filtering)
+ * When you filter by series, matching cards stay at full opacity and cascade in
+ * (handled by existing gridStagger). Non-matching cards fade to 30% opacity,
+ * creating visual hierarchy: "these works are in conversation; others step back."
+ * On filter clear, everything returns to full opacity.
+ * Duration: 350ms (discovery easing, noticeable but not jarring)
+ * Reference: MOTION-SPEC.md § Phase 1 (Series Connectivity)
+ */
+export const seriesHighlight = ({ cards, autoplay = true }) => {
+  // cards should be array of non-matching card elements
+  return anime.timeline({ autoplay })
+    .add(cards, { opacity: 0.3, duration: 350, ease: 'outQuad' }, 0)
+}
+
+export const seriesHighlightRevert = ({ cards, autoplay = true }) => {
+  // Reverse: bring all cards back to full opacity when filter clears
+  return anime.timeline({ autoplay })
+    .add(cards, { opacity: 1, duration: 350, ease: 'outQuad' }, 0)
+}
+
+/**
  * PATTERN: Chip Pulse (Filter Selection Feedback)
  * Quick bounce-scale pop when a filter chip is toggled on/off
  * Duration: 250ms (interaction easing, bounce-back)
