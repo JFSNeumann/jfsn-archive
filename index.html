@@ -473,6 +473,12 @@ addEventListener('DOMContentLoaded', () => {
     .wing figcaption{margin-top:8px;font-size:9px;letter-spacing:.26em;
       color:var(--dim)}
   }
+  /* Wing crossfade: JS toggles opacity between held frames of different
+     works, swapping the src at the mid-fade blackout point (see script
+     near end of body). No-op unless the fade cycle is running. */
+  @media (min-width:1200px) and (prefers-reduced-motion: no-preference){
+    .wing img{transition:opacity .6s ease}
+  }
   /* Flanking works only: an almost-imperceptible drift so "receding into
      the room" is felt, not just implied by brightness/scale. The center
      work (#work) never moves — it's the one constant, every visitor,
@@ -536,11 +542,11 @@ addEventListener('DOMContentLoaded', () => {
         <img src="/artworks/full/art1010-hero-lcp.avif" srcset="/artworks/full/art1010-hero-lcp-m.avif 720w, /artworks/full/art1010-hero-lcp.avif 1920w" sizes="(max-width: 1199px) 86vw, 560px" alt="Untitled (Cassette Torso) — a collage with a cassette tape at the center of a torso form." width="900" height="792" decoding="async" fetchpriority="high">
         <figcaption class="caps">UNTITLED (CASSETTE TORSO) · 2020S (EST.) · COLLAGE</figcaption>
       </figure>
-      <figure class="wing" id="wing-l">
-        <img src="/artworks/full/art1010-hero-lcp.avif" alt="Untitled (Cassette Torso) — a collage with a cassette tape at the center of a torso form." width="900" height="792" decoding="async" loading="lazy" fetchpriority="low" style="transform:translateY(-7px) scaleX(-1);filter:brightness(0.3)">
+      <figure class="wing" id="wing-l" aria-hidden="true">
+        <img src="/artworks/full/art1010-hero-lcp.avif" data-current-id="art1010" alt="" width="900" height="792" decoding="async" loading="lazy" fetchpriority="low" style="transform:translateY(-7px) scaleX(-1);filter:brightness(0.3)">
       </figure>
-      <figure class="wing" id="wing-r">
-        <img src="/artworks/full/art1010-hero-lcp.avif" alt="Untitled (Cassette Torso) — a collage with a cassette tape at the center of a torso form." width="900" height="792" decoding="async" loading="lazy" fetchpriority="low" style="transform:translateY(-7px) scaleX(-1);filter:brightness(0.3)">
+      <figure class="wing" id="wing-r" aria-hidden="true">
+        <img src="/artworks/full/art1010-hero-lcp.avif" data-current-id="art1010" alt="" width="900" height="792" decoding="async" loading="lazy" fetchpriority="low" style="transform:translateY(-7px) scaleX(-1);filter:brightness(0.3)">
       </figure>
     </div>
 
@@ -840,6 +846,68 @@ addEventListener('DOMContentLoaded', () => {
   }
   window.addEventListener('scroll', check, { passive: true });
   check();
+})();
+</script>
+
+<script>
+// Wing crossfade: the two flanking "wall" images slowly cycle through
+// different featured works (never the center poster, never each other),
+// fading through a brief blackout at the swap — same treatment as a
+// gallery wall being re-hung, not a slideshow. Desktop-only (wings are
+// display:none below 1200px) and off entirely under reduced motion.
+(function(){
+  if (!matchMedia('(min-width:1200px)').matches) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const wingL = document.getElementById('wing-l');
+  const wingR = document.getElementById('wing-r');
+  if (!wingL || !wingR) return;
+  const imgL = wingL.querySelector('img');
+  const imgR = wingR.querySelector('img');
+  const CENTER_ID = 'art1010';
+  const FADE_MS = 600;
+
+  fetch('/config/catalog-home.json', { cache: 'force-cache' })
+    .then(r => r.json())
+    .then(works => {
+      const pool = works.map(w => w.file.replace('.avif', '')).filter(id => id !== CENTER_ID);
+      if (pool.length < 2) return;
+
+      let used = new Set();
+      function pick(exclude){
+        let choices = pool.filter(id => id !== exclude && !used.has(id));
+        if (!choices.length) { used.clear(); choices = pool.filter(id => id !== exclude); }
+        const id = choices[Math.floor(Math.random() * choices.length)];
+        used.add(id);
+        return id;
+      }
+
+      function cycle(img, exclude){
+        const id = pick(exclude);
+        const nextSrc = '/artworks/medium/' + id + '.avif';
+        const preload = new Image();
+        preload.onload = () => {
+          img.style.opacity = '0';
+          setTimeout(() => {
+            img.src = nextSrc;
+            img.dataset.currentId = id;
+            requestAnimationFrame(() => { img.style.opacity = '1'; });
+          }, FADE_MS);
+        };
+        preload.src = nextSrc;
+      }
+
+      // Staggered so both wings never fade at once — offset by half the
+      // interval, each on its own repeating loop.
+      setTimeout(() => {
+        cycle(imgL, imgR.dataset.currentId);
+        setInterval(() => cycle(imgL, imgR.dataset.currentId), 11000);
+      }, 4000);
+      setTimeout(() => {
+        cycle(imgR, imgL.dataset.currentId);
+        setInterval(() => cycle(imgR, imgL.dataset.currentId), 11000);
+      }, 9500);
+    })
+    .catch(() => {}); // fail silent: wings just stay on the static mirror
 })();
 </script>
 
