@@ -79,13 +79,13 @@ addEventListener('DOMContentLoaded', () => {
   header.hud .room-name{color:var(--faint)}
   @media (max-width:640px){ header.hud .room-name{display:none} }
 
-  main{padding-top:120px;padding-bottom:120px}
+  main{padding-bottom:120px}
 
   #hero{
     min-height:100vh;display:flex;flex-direction:column;
     justify-content:center;align-items:center;text-align:center;gap:24px;
     padding:0 clamp(20px,6vw,80px);
-    position:relative;overflow:hidden;
+    position:relative;overflow:hidden;isolation:isolate;
   }
   /* Hero-only full-opacity image, separate from body::before's sitewide
      15%-opacity parallax watermark (which stays as its own approved

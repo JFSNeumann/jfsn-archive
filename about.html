@@ -91,7 +91,7 @@ addEventListener('DOMContentLoaded', () => {
   #hero{
     min-height:100vh;display:flex;flex-direction:column;
     justify-content:center;align-items:center;text-align:center;gap:16px;
-    position:relative;overflow:hidden;
+    position:relative;overflow:hidden;isolation:isolate;
   }
   /* Hero-only full-opacity image, separate from body::before's sitewide
      faint watermark (which stays subtle for the long-form text sections

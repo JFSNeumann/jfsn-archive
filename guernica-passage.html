@@ -131,7 +131,7 @@ addEventListener('DOMContentLoaded', () => {
   #door{
     min-height:100vh;display:flex;flex-direction:column;
     justify-content:center;align-items:center;text-align:center;gap:28px;
-    position:relative;overflow:hidden;
+    position:relative;overflow:hidden;isolation:isolate;
   }
   /* Hero-only full-opacity image, separate from body::before's sitewide
      15%-opacity parallax watermark (which stays as its own approved
