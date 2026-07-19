@@ -1,7 +1,25 @@
 # JFSN Current State
-**Last updated:** 2026-07-16
+**Last updated:** 2026-07-19
 
 This file describes what's currently true about the site. For ranked work, see `IMPROVEMENTS.md`. For the design brief and architecture, see `CLAUDE.md`. For the session-by-session historical log, see `docs/sessions-archive.md` or `git log`.
+
+---
+
+## 2026-07-19 — Archive interaction polish, sitewide scroll cues, room-veil bug fix, homepage wing crossfade, docs accuracy sweep ✅
+
+**Archive.html card + controls polish:** shadow depth increased (`0 8px 24px` → `0 12px 32px rgba(255,102,0,.16)`), touch `:active` press feedback added, timing standardized to `.4s`/`.3s`, room-nav switched to horizontal layout. Search/sort/chips/Load More all got matching hover/focus/active states (previously chips were the only polished control).
+
+**Room-veil bug fixed:** browser back-button navigation from any room page could leave the page-transition blackout veil stuck at `opacity:1`, silently blocking clicks until a manual refresh. Root cause: the `pageshow`/bfcache handler removed the `.on` class but never reset the inline `opacity`/`pointer-events` that class had set. Fixed on `index.html` + 8 room pages.
+
+**Scroll cue added to 7 pages:** `flooded-wing.html` had one; `guernica-passage`, `the-studio`, `hall-of-openings`, `about`, `working-history`, `stories` did not. Same pattern now everywhere: 28px `↓`, pinned `bottom:6vh`, fades past 40px scroll.
+
+**Fixed zero/near-zero top padding after hero on 6 pages** — body text was sitting directly against the hero photo on `stories`, `the-studio`, `guernica-passage`, `working-history`, `hall-of-openings`, `flooded-wing`. Standardized to `8vh` (the value `about.html` already had correct).
+
+**Homepage (`index.html`):** "Museum" highlight-box now covers the full word (was only "Muse"). The two desktop wing images now crossfade through different works from `catalog-home.json` every ~11s (new — see DESIGN-SYSTEM.md § "Motion"), instead of being static mirrored/darkened copies of the center poster.
+
+**Fixed a live `/api.html` 404** — `archive.html` linked to a docs page deleted in the 2026-07-16 pruning; pointed the sentence at GitHub instead rather than resurrecting a deliberately-cut page.
+
+**Docs accuracy sweep across `docs/current/`:** `DESIGN-SYSTEM.md`, `STITCH.md`, `SESSION_PROMPT.md`, `CONSERVATION-CHECKLIST.md`, `WORKFLOW.md`, and this file were all found describing a retired architecture — a light "bone-white"/Inter theme, a `_shared/top-nav.html` + `stamp-nav.sh` nav-stamping system, decade pages, and several other deleted pages (`api.html`, `qa.html`, `curate.html`) — none of which match the live site (dark theme, fully inline per-page CSS/JS, 14 core pages). All rewritten against verified page source. See each file's own changelog for specifics.
 
 ---
 
@@ -274,10 +292,10 @@ All four outcomes are consistent with the Experience Philosophy. The goal is not
 Four redundant stores, listed in update order at end-session:
 1. GitHub (`origin/main`) — latest commit: `d4ad53b6` (markdown cleanup + orphan file deletion, 2026-07-16); tags `phase2a-freeze`, `phase2-fouc-freeze`, `phase2c-freeze` pushed
 2. Local Mac (working tree)
-3. JEFFS-4TB external drive (rsync, nightly LaunchAgent at 11 PM) — ✅ Verified working 2026-07-16: `diskutil verifyVolume` clean, manual write/delete test passed, kickstarted run completed with matching file counts (13,215/13,215). LaunchAgent was found unloaded from launchd (last real success 2026-07-08) and has been reloaded.
-4. Backblaze B2 cloud (LaunchAgent at 9 PM nightly) — ✅ Verified working 2026-07-16: kickstarted run completed clean (synced + 55 stale files deleted, mirroring local cleanup). LaunchAgent was found unloaded from launchd (last real success 2026-07-08) and has been reloaded.
+3. JEFFS-4TB external drive (rsync, nightly LaunchAgent at 11 PM, `scripts/backup.sh`)
+4. Backblaze B2 cloud (LaunchAgent at 9 PM nightly, `scripts/cloud-backup.sh`)
 
-**Action item:** Verify both JEFFS-4TB and B2 backup status at session start — specifically check `launchctl list | grep jfsn` returns both jobs, since they've been found unloaded (not just failing) more than once. See Session_start_procedures.md.
+**This has been a recurring failure point, not a one-time fix — re-verify both every session, not just once.** Both LaunchAgents were found fully unloaded from launchd twice (2026-07-06, 2026-07-16). Then, on 2026-07-17 and 2026-07-18, both plists were separately found to have the identical stale-script-path bug — discovered and fixed one job at a time on consecutive days (`cloud-backup` fixed 07-17, `backup` fixed 07-18) rather than both at once, because a clean `launchctl list` reading for one job doesn't confirm the sibling job is sound. Verified directly (not from memory) 2026-07-19: `launchctl list | grep jfsn` shows both `com.jfsn.backup` and `com.jfsn.cloud-backup` loaded, and both plists' `ProgramArguments` point at the correct current paths (`scripts/backup.sh`, `scripts/cloud-backup.sh`). **Action item unchanged:** check `launchctl list | grep jfsn` every session start — see `SESSION_START_PROCEDURES.md`.
 
 ---
 
@@ -290,19 +308,18 @@ Four redundant stores, listed in update order at end-session:
 ## Standing known issues
 
 - **`sw.js` CACHE_V auto-bump is partial** — `build_catalog.py` only bumps `CACHE_V` when catalog content changes. Manual bump required after HTML/CSS/JS edits that don't trigger a catalog rebuild. Check `git diff sw.js` before deploy.
-- **`index.html` has no `FOOTER:START` marker** — custom homepage footer, not stamped by `stamp-nav.sh`. Edit directly if footer changes.
-- **Decade pages (1970s–2020s.html) not in `stamp-nav.sh`** — different token system (Material Design). Edit directly for any nav/footer changes. They DO load `_shared/ui.css` and `_shared/ui.js`.
+- **There is no shared nav/footer partial and no `stamp-nav.sh` anymore** (both retired; see `DESIGN-SYSTEM.md` § "Architecture"). Every page's header/footer is edited directly, in that page. The two bullets that used to live here — an `index.html`-specific footer-stamping gap and a decade-pages exception — described that retired system; decade pages themselves were also deleted in the 2026-07-16 pruning to 14 core pages, so both bullets were removed rather than corrected.
 - **`about-portrait.jpg`** — only JPEG remaining in the asset pipeline; all artworks are AVIF. Low priority.
 - **No physical dimensions in catalog** — `build_dims.py` reads pixel dimensions (for masonry layout). Physical artwork dimensions (inches/cm) require Jeff to measure surviving works; no tooling exists.
 - **Grid/search/favorites year labels show bare decade** — only artwork detail pages + API carry the "(est.)" honesty label. See IMPROVEMENTS.md if this should be extended.
 
 ---
 
-## What's on the homepage (current as of 2026-06-21)
+## What's on the homepage (current as of 2026-07-19 — verified against live source, supersedes the 2026-06-21 "Selected Works grid" description below)
 
-The Selected Works grid uses CSS Columns masonry (4→3→2 cols responsive). Each card is a faithful image with an always-visible title/year/medium caption beneath it and a single link to the artwork page. Hover/focus shows a quiet orange outline (#e05900) — no scale, brightness, title color-shift, overlay, medium badge, color swatch, click ripple, 3D tilt, or quick-preview modal. The Session-77 `fc-*` interaction layer was cut in the 2026-06-21 simplicity pass.
+**index.html is "the poster," not a grid.** That description is fully superseded — the CSS-Columns Selected Works masonry it describes doesn't exist anywhere in the current homepage (verified: zero matches for "Selected Works" or "CSS Columns" in index.html). The homepage was rebuilt as a fixed, chrome-free single screen sometime around 2026-07-12/13 ("v2: THE MUSEUM THAT NEVER EXISTED," promoted to root): title, creed, one artwork poster, the artist's signature, and the five-room door nav — identical every visit, no header/nav bar at all. On desktop (≥1200px) the poster gained two flanking "wing" images that crossfade through different featured works (added 2026-07-19); everything else is still static.
 
-`archive.html` still carries that Session-77 interaction layer — flagged in IMPROVEMENTS.md as a candidate for the same consistency pass if/when Jeff asks.
+`archive.html` does **not** carry the old Session-77 `fc-*` interaction layer either (verified: zero `fc-` matches) — its card grid was rewritten with its own hover language (border/shadow/lift + staggered metadata reveal, polished 2026-07-18/19) unrelated to that older system. Whatever removed the `fc-*` classes wasn't logged here; don't trust the IMPROVEMENTS.md flag calling this a pending consistency pass — it's done, just not noted anywhere until now.
 
 ---
 
