@@ -117,7 +117,7 @@ Run `build_catalog.py` to apply. Featured works appear first on the homepage.
 | `api/v1/palette.json` | Palette color index with work IDs |
 | `api/.htaccess` | CORS headers for Apache/cPanel (auto-generated) |
 
-The endpoints are live and undocumented — `api.html` (the docs page) was deleted 2026-07-16 in the pruning to 14 core pages and has not been rebuilt; archive.html points visitors at the GitHub repo instead. Don't re-link `/api.html` without rebuilding it first.
+The endpoints are live and undocumented — `api.html` (the docs page) was deleted 2026-07-16 in the pruning to 14 core pages; archive.html points visitors at the GitHub repo instead. **Confirmed with Jeff 2026-07-19: staying that way** — no known external consumer justifies rebuilding a docs page speculatively. Don't re-link `/api.html` unless that changes.
 
 ---
 
@@ -149,7 +149,7 @@ and re-run `setup-hooks.sh` to update it.
 
 ## QA tool
 
-`qa.html` (visual review tool: missing year, empty motifs/materials/themes, short descriptions, uncataloged stubs, keyword drift) was deleted 2026-07-16 in the pruning to 14 core pages and has not been rebuilt. Run `artworks/validate_catalog.py` for the equivalent checks from the command line until/unless this is rebuilt.
+`qa.html` (visual review tool: missing year, empty motifs/materials/themes, short descriptions, uncataloged stubs, keyword drift) was deleted 2026-07-16 in the pruning to 14 core pages. Run `artworks/validate_catalog.py` for the equivalent checks from the command line. **Confirmed with Jeff 2026-07-19: staying that way** — cataloging is at 100% coverage (1,084/1,084), the tool's original job is done, and `validate_catalog.py` covers ongoing QA for any future additions. Worth rebuilding if a large new batch of works gets added and visual review becomes valuable again — not before.
 
 ---
 
