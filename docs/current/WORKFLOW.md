@@ -96,11 +96,9 @@ Run `build_catalog.py` to apply. Featured works appear first on the homepage.
 | File | Role | Consumed by |
 |---|---|---|
 | `featured.txt` | Controls homepage artwork selection | `build_catalog.py` |
-| `pending-themes.json` | Pre-seeds `year` and `themes` for uncataloged stubs | `build_catalog.py` |
-| `curate-session.json` | `curate.html` tool state (theme-by-theme curation) | `curate.html` only — **not** a build input |
 | `dims.json` | Pixel dimensions for masonry layout | Archive HTML pages |
 
-`pending-themes.json` and `curate-session.json` serve different purposes and do not conflict. `featured.txt` is the canonical source for homepage selection.
+`featured.txt` is the canonical source for homepage selection. (`pending-themes.json` and `curate-session.json` — the pre-seeding/theme-curation data files this table used to list — no longer exist on disk; their consumers, the theme-by-theme dating pass and the `curate.html` tool, both finished their job and were removed. Cataloging is at 100% coverage, 1,084/1,084 — see `CURRENT_STATE.md`.)
 
 ---
 
@@ -119,7 +117,7 @@ Run `build_catalog.py` to apply. Featured works appear first on the homepage.
 | `api/v1/palette.json` | Palette color index with work IDs |
 | `api/.htaccess` | CORS headers for Apache/cPanel (auto-generated) |
 
-Documentation page: `api.html` — upload alongside the other HTML files.
+The endpoints are live and undocumented — `api.html` (the docs page) was deleted 2026-07-16 in the pruning to 14 core pages and has not been rebuilt; archive.html points visitors at the GitHub repo instead. Don't re-link `/api.html` without rebuilding it first.
 
 ---
 
@@ -146,12 +144,12 @@ and re-run `setup-hooks.sh` to update it.
 | `artworks/build_dims.py` | Rebuild dims.json from thumbnails | After new thumbs are added |
 | `artworks/repass_existing.py` | Apply retroactive rule fixes | After schema rule changes |
 | `artworks/repass_descriptions.py` | Fix legacy description openers | ✅ Done — all migrations complete |
-| `artworks/repass_installation_view.py` | Migrate installation_view → photograph | Run once (6 records) |
+| ~~`artworks/repass_installation_view.py`~~ | Migrated installation_view → photograph | ✅ Done — script removed after running; catalog.json has zero remaining `installation_view` records (verified 2026-07-19) |
 | `artworks/vocab.py` | Single source of truth for controlled vocabularies | Edit to add/change vocab terms |
 
 ## QA tool
 
-Open `qa.html` locally (via `python3 server.py` then http://localhost:8000/qa.html) to visually review the archive for issues: missing year, empty motifs/materials/themes, short descriptions, uncataloged stubs, and keyword drift. Read-only — click any thumbnail to open the artwork page.
+`qa.html` (visual review tool: missing year, empty motifs/materials/themes, short descriptions, uncataloged stubs, keyword drift) was deleted 2026-07-16 in the pruning to 14 core pages and has not been rebuilt. Run `artworks/validate_catalog.py` for the equivalent checks from the command line until/unless this is rebuilt.
 
 ---
 
