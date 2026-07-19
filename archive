@@ -10,8 +10,8 @@
 #   archive intake scaffold   create empty sidecars for given artwork IDs
 #   archive intake finish     validate → build → generate → verify (no deploy)
 #
-# Each subcommand is a small, independent tool under scripts/. This wrapper
-# only routes; it holds no logic of its own.
+# Each subcommand is a small, independent tool under tools/intake/ or
+# tools/utils/. This wrapper only routes; it holds no logic of its own.
 # ─────────────────────────────────────────────────────────────────────────────
 set -euo pipefail
 
@@ -22,22 +22,22 @@ cmd="${1:-}"
 
 case "$cmd" in
   verify)
-    exec python3 "$HERE/scripts/verify.py" "$@"
+    exec python3 "$HERE/tools/utils/verify.py" "$@"
     ;;
   intake)
     sub="${1:-}"
     case "$sub" in
       status)
-        shift; exec python3 "$HERE/scripts/intake_status.py" "$@"
+        shift; exec python3 "$HERE/tools/intake/intake_status.py" "$@"
         ;;
       scaffold)
-        shift; exec python3 "$HERE/scripts/scaffold_sidecar.py" "$@"
+        shift; exec python3 "$HERE/tools/intake/scaffold_sidecar.py" "$@"
         ;;
       finish)
-        shift; exec python3 "$HERE/scripts/intake_finish.py" "$@"
+        shift; exec python3 "$HERE/tools/intake/intake_finish.py" "$@"
         ;;
       ""|--*)
-        exec python3 "$HERE/scripts/intake.py" "$@"
+        exec python3 "$HERE/tools/intake/intake.py" "$@"
         ;;
       *)
         echo "archive intake: unknown subcommand '$sub'" >&2
