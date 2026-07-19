@@ -131,13 +131,43 @@ addEventListener('DOMContentLoaded', () => {
   #door{
     min-height:100vh;display:flex;flex-direction:column;
     justify-content:center;align-items:center;text-align:center;gap:28px;
+    position:relative;overflow:hidden;
+  }
+  /* Hero-only full-opacity image, separate from body::before's sitewide
+     15%-opacity parallax watermark (which stays as its own approved
+     feature) — same treatment as the other rooms' heroes. */
+  #door::before{
+    content:'';position:absolute;inset:0;z-index:-2;
+    background-image:url('/artworks/guernica-hero.avif');
+    background-size:cover;background-position:center;
   }
   #door h1{
     font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
     font-size:clamp(38px,7vw,76px);line-height:1.15;max-width:14em;
+    text-shadow:0 2px 18px rgba(0,0,0,.7);
   }
+  #door .caps{text-shadow:0 1px 10px rgba(0,0,0,.7)}
   #door .fact{color:var(--dim);opacity:0;animation:fadeIn 0.8s ease 0.6s forwards}
   @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  /* Same elliptical fade as the other rooms' heroes: dark at center,
+     fully transparent at the edge, scaling in from smaller on load. */
+  #hero-content{position:relative;display:flex;flex-direction:column;align-items:center;gap:28px}
+  #hero-content::before{
+    content:'';position:absolute;z-index:-1;
+    inset:-150% -18%;
+    background:radial-gradient(ellipse at center, rgba(12,10,9,.94) 0%, rgba(12,10,9,.7) 45%, transparent 75%);
+    transform:scale(.5);opacity:0;
+  }
+  @media (prefers-reduced-motion: no-preference){
+    #hero-content::before{animation:hero-fade-in 1.4s cubic-bezier(.2,.8,.3,1) .2s forwards}
+    @keyframes hero-fade-in{
+      0%{transform:scale(.5);opacity:0}
+      100%{transform:scale(1);opacity:1}
+    }
+  }
+  @media (prefers-reduced-motion: reduce){
+    #hero-content::before{transform:scale(1);opacity:1}
+  }
   @media (prefers-reduced-motion: reduce){
     #door .fact{opacity:1;animation:none}
   }
@@ -292,9 +322,11 @@ addEventListener('DOMContentLoaded', () => {
 <div id="counter" aria-hidden="true"></div>
 
 <section id="door">
-  <div class="caps">THE GUERNICA PASSAGE</div>
-  <h1>One structure, <span class="highlight-dark">thirty</span> years.</h1>
-  <div class="caps fact">232 WORKS · 1990 – 2020</div>
+  <div id="hero-content">
+    <div class="caps">THE GUERNICA PASSAGE</div>
+    <h1>One structure, <span class="highlight-dark">thirty</span> years.</h1>
+    <div class="caps fact">232 WORKS · 1990 – 2020</div>
+  </div>
 </section>
 
 <section id="intro">
