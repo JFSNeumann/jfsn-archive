@@ -31,7 +31,13 @@ addEventListener('DOMContentLoaded', () => {
     v.classList.add('on');
     setTimeout(() => { location.href = a.href; }, 200);
   }, true);
-  addEventListener('pageshow', e => { if (e.persisted) v.classList.remove('on'); });
+  addEventListener('pageshow', e => {
+    if (e.persisted) {
+      v.classList.remove('on');
+      v.style.opacity = '0';
+      v.style.pointerEvents = 'none';
+    }
+  });
 });
 </script>
 <style>
