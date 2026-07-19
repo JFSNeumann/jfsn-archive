@@ -126,10 +126,9 @@ export const roomRetreat = ({
 }
 
 /**
- * PATTERN: Room Approach (Spatial Entry Theater)
- * New room scales up + fades in from behind veil
- * Veil fades out, revealing the room
- * Hero and content cascade in
+ * PATTERN: Room Approach (Spatial Entry Theater — Veil Reveal)
+ * Veil fades out, revealing the room's hero + content
+ * Hero and content cascade in behind the veil
  * Total duration: ~1200ms
  * Reference: MOTION-SPEC.md § V (WOW expansion)
  */
@@ -145,22 +144,18 @@ export const roomApproach = ({
 }) => {
   const timeline = anime.timeline({ autoplay })
 
-  // Initial state: body is scaled down and behind veil
-  // Anime will scale it up and fade in as the veil pulls back
-
   timeline
-    // Body: scale up + fade in (800ms, discovery easing, starts while veil is opaque)
+    // Hero: fade in with discovery easing (800ms, starts immediately)
     .add(
       {
-        targets: body,
-        opacity: [0.7, 1],
-        scale: [0.95, 1],
+        targets: hero,
+        opacity: [0, 1],
         duration: 800,
         easing: 'easeOutQuad'
       },
       0
     )
-    // Title: enter (500ms, staggered 200ms in)
+    // Title: scale + opacity, ink-stamp style (500ms, delayed 200ms)
     .add(
       {
         targets: title,
@@ -171,7 +166,7 @@ export const roomApproach = ({
       },
       200
     )
-    // Veil: fade out, revealing the room (300ms, start at 300ms to clear space)
+    // Veil: fade out at 300ms, revealing the room behind it
     .add(
       {
         targets: veil,
@@ -181,7 +176,7 @@ export const roomApproach = ({
       },
       300
     )
-    // Subtitle: fade in from below (400ms, staggered 800ms in)
+    // Subtitle: fade in from below (400ms, delayed 800ms)
     .add(
       {
         targets: subtitle,
@@ -192,7 +187,7 @@ export const roomApproach = ({
       },
       800
     )
-    // Header: fade in and stabilize (300ms, parallel with subtitle)
+    // Header: fade in (300ms, parallel with subtitle)
     .add(
       {
         targets: header,

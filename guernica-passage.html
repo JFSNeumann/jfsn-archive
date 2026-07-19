@@ -18,15 +18,8 @@
 
      Reduced-motion mode: all elements appear instantly with no animation. */
   @media (prefers-reduced-motion: no-preference) {
-    /* anime.js timeline controls entrance; no CSS keyframes needed */
-    .js body{opacity:1}
-    header.hud .who{opacity:1}
-    header.hud .room-name{opacity:1}
-    header.hud a.caps{opacity:1}
-    #counter{opacity:1}
-    #door h1{opacity:1;transform:none}
-    #intro{opacity:1}
-    #door .fact{opacity:1}
+    /* anime.js timeline controls entrance; CSS not needed for animation */
+    body, header.hud .who, header.hud .room-name, header.hud a.caps, #door h1, #intro, #door .fact { opacity: 1; transform: none; }
   }
 
   @media (prefers-reduced-motion: reduce) {
