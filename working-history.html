@@ -52,13 +52,6 @@ addEventListener('DOMContentLoaded', () => {
     -webkit-font-smoothing:antialiased;
     position:relative;
   }
-  body::before{
-    content:'';position:fixed;inset:0;
-    background-image:url('/assets/images/me-for-website.png');
-    background-size:cover;background-position:center;background-attachment:fixed;
-    background-color:var(--room);
-    opacity:0.15;z-index:-1;pointer-events:none;
-  }
   ::selection{background:var(--accent);color:#fff}
   a{color:var(--dim);text-decoration:none;transition:color .25s}
   a:hover{color:var(--accent)}
