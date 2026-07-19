@@ -3,40 +3,50 @@
 Use this every time you generate a new page or component in Stitch.
 Copy the template at the bottom, fill in the blanks, paste into Stitch.
 
+> **Rewritten 2026-07-19.** The previous version of this guide pasted a light "bone-white" design system (from the 2026-05-31 Stitch redesign) and a `stamp-nav.sh`/`NAV:START`-`NAV:END` nav workflow into every prompt. Neither matches the live site anymore — the site moved to a dark "room" theme and per-page inline nav sometime after that redesign, and `stamp-nav.sh` and its shared nav partial no longer exist (see `DESIGN-SYSTEM.md` § "Architecture"). Everything below is rewritten to match what's actually live, verified against page source rather than carried forward from the old doc.
+
 ---
 
 ## Why this exists
 
 Stitch exports need heavy rework if the prompt is vague:
 - Wrong colors (Stitch uses its own palette unless you paste exact hex codes)
-- Rounded corners, drop shadows, gradients (all banned in this design system)
+- Rounded corners (this site is square-cornered everywhere except true circles)
 - Promotional patterns: carousels, CTAs, testimonials, newsletter signups
 - Lorem Ipsum instead of real content (leads to wrong type sizing)
-- Nav not marked for stamp-nav.sh (requires manual search-and-replace)
+- A nav/footer that isn't hand-editable inline (there's no shared partial or stamping script to lean on — see Nav section below)
 
-A good prompt reduces rework from ~2 hours to ~20 minutes.
+A good prompt reduces rework significantly. **Also worth stating up front: nothing on the live site currently looks Stitch-generated** — the last several months of work (card hover language, room-veil transitions, scroll cues, the homepage wing crossfade) were all hand-built directly in each page's HTML/CSS/JS, not extracted from a Stitch export. Reach for this workflow only if generating a genuinely new page from scratch is faster than hand-building one in the established pattern — for most changes to existing pages, editing the page directly (per `DESIGN-SYSTEM.md`) is the right tool, not Stitch.
 
 ---
 
 ## Design system — paste this into every prompt
 
 ```
-Design system:
-- Background: #fcf9f3 (bone-white)
-- Text: #0B0B0B (deep-ink)
-- Accent: #FF6600 (international-orange) — hover/active/focus states, fills, borders. For persistent (always-visible, non-hover) orange TEXT on this light background — eyebrow labels, bracket links — use #B84700 (orange-ink) instead; #FF6600 text only passes contrast on dark backgrounds (session 46 fix, don't reintroduce)
-- Secondary text: #575757 (archive-gray)
-- Border: #c4c7c7 (outline-variant)
-- Footer background: #ebe8e2 (surface-container-high)
-- Mobile nav background: #F3F0EA (bone-white)
-- Headings: Playfair Display (400–700), italic where display
-- UI / labels: Inter (400–600), ALL CAPS, letter-spacing 0.1em
-- Body: Inter 16px / 18px
-- No rounded corners (border-radius: 0)
-- No heavy or hard-edged shadows (soft diffused shadow `0 0 20px rgba(0,0,0,0.05)` is OK on UI cards — NEVER on artwork thumbnails)
-- No gradients
-- Borders: 1px solid #c4c7c7
-- Artwork thumbnails: full color always — no grayscale, ever
+Design system (dark theme):
+- Background: #0c0a09 (--room, near-black, warm undertone)
+- Primary text: #e8e2d9 (--ink, warm off-white)
+- Secondary text: #7a7168 (--dim)
+- Faint/disabled text, dividers: #3a332d (--faint)
+- Borders (cards, inputs, buttons): #2b241e (--frame), 1px solid, at rest
+- Accent: #FF6600 (--accent, international-orange) — used directly for hover/active/
+  focus states AND persistent text on this dark background (6.7:1 contrast against
+  #0c0a09 — no separate lower-contrast "text-safe" orange is needed here, unlike on
+  a light background)
+- Headings: 'Playfair Display', Georgia, serif — italic, font-weight 400, NOT bold
+- Body/prose: Georgia, 'Times New Roman', serif
+- UI labels/buttons/nav ("caps" style): -apple-system,BlinkMacSystemFont,"Segoe UI",
+  Roboto,Helvetica,Arial,sans-serif — 10px, letter-spacing .26em, uppercase, color #7a7168
+- No Inter anywhere on this site — do not substitute it for the sans-serif role
+- No rounded corners (border-radius: 0) except true circles (border-radius: 50% on
+  small dot/marker elements only)
+- Shadows grow on hover from transparent, never present statically. Three tiers:
+  small/controls "0 4px 12px rgba(0,0,0,.06)", cards/buttons "0 8px 24px rgba(255,102,0,.12)"
+  to "0 12px 32px rgba(255,102,0,.16)", large/focal "0 28px 64px rgba(0,0,0,.6)"
+  combined with an accent glow
+- No gradients except functional scrims (a radial dark ellipse behind hero text for
+  legibility, or a fade at the header edge) — never as decorative section dividers
+- Artwork thumbnails: full color always — no grayscale, no filter, no mix-blend-mode, ever
 ```
 
 ---
@@ -44,18 +54,26 @@ Design system:
 ## Nav — always include this instruction
 
 ```
-Mark the top nav exactly like this so stamp-nav.sh can replace it:
-  <!-- NAV:START -->
-  [nav HTML]
-  <!-- NAV:END -->
+There is no shared nav partial or nav-stamping script on this site — every page
+hand-codes its own header. Match this exact pattern (header.hud):
 
-Top nav contains: JFSN wordmark (links to index.html) + 4 nav links
-(Archive · Series · About · Lost Works) + ⌘K search trigger.
+  <header class="hud">
+    <a class="who" href="index.html">JEFFREY&nbsp;F.&nbsp;S.&nbsp;NEUMANN</a>
+    <span class="caps room-name">[ROOM NAME, e.g. THE ARCHIVE]</span>  <!-- optional -->
+    <a class="caps" href="index.html">[ THE MUSEUM → ]</a>
+  </header>
 
-Mobile nav is a hamburger button (mobile only) that opens a slide-in
-drawer (#mobile-menu-drawer) — NOT a fixed bottom tab bar.
-Drawer links carry inline feather-style SVG icons (24-viewBox,
-1.8 stroke, currentColor — no icon fonts).
+Position: absolute, top:0, full width, gradient background fading from --room to
+transparent, pointer-events:none on the container with pointer-events:auto on the
+links (lets hero content underneath still receive clicks/hover).
+
+Nav is text-bracket links ("[ TEXT → ]" style) — identical on mobile and desktop,
+reflowing naturally. There is NO hamburger menu, NO slide-in drawer, NO ⌘K search
+trigger, NO icon system anywhere on this site. Do not generate any of those.
+
+Exception: if this page IS the homepage (index.html), it has NO header at all —
+it's built as a deliberately chrome-free "poster." Only omit the header if
+explicitly told this is a homepage replacement.
 ```
 
 ---
@@ -68,9 +86,11 @@ This is a personal archive, not a promotional platform.
 - No testimonials section
 - No pricing or tier mentions
 - No newsletter signup
-- No "hero" with a stock photo
+- No "hero" with a stock photo — only real archive works or real photographs
 - No engagement patterns
-- Descriptions are spare: year, medium, dimensions if known
+- Descriptions are spare: year (as a decade estimate, e.g. "1990s (est.)"), medium
+- Composite/imagined-placement works must show the flag "Photoshop composite —
+  imagined placement" visibly in the DOM, never hidden behind hover-only
 - The image is the primary object — UI recedes
 ```
 
@@ -79,15 +99,17 @@ This is a personal archive, not a promotional platform.
 ## Export instruction — always include this
 
 ```
-Export as a single HTML file.
-- Tailwind CDN: <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-- Tailwind config inline in a <script id="tailwind-config"> block
-- Page-specific CSS in a <style> block in <head>
-- No external component libraries (no Bootstrap, no DaisyUI, no Flowbite)
-- loading="lazy" on all artwork <img> tags
-- loading="eager" on hero images
-- Nav marked with NAV:START / NAV:END comments
-- Footer marked with FOOTER:START / FOOTER:END comments
+Export as a single HTML file, self-contained inline <style>/<script> in <head> and
+end-of-<body> — this matches how every other page on the site is built (no shared
+stylesheet is loaded; see design-system note above).
+- Tailwind CDN is fine for the Stitch draft, but the export must be de-CDN'd before
+  it goes live (see step 5 below) — this site's real pages don't load Tailwind CDN
+  or compile most of their styling through Tailwind at all; inline CSS is normal here
+- loading="lazy" on all artwork <img> tags except the first ~12 in a grid
+- loading="eager" + fetchpriority="high" on the LCP/hero image only
+- Respect prefers-reduced-motion on every transition/animation — pair a
+  @media (prefers-reduced-motion: no-preference) motion block with a
+  @media (prefers-reduced-motion: reduce) static fallback, always
 ```
 
 ---
@@ -97,39 +119,43 @@ Export as a single HTML file.
 Copy this, fill in the `[brackets]`, paste into Stitch:
 
 ```
-Design system:
-Background #fcf9f3 · text #0B0B0B · accent #FF6600 (hover/active only) ·
-secondary text #575757 · border #c4c7c7 · footer bg #ebe8e2 ·
-headings Playfair Display · UI Inter ALL CAPS 0.1em tracking ·
-no rounded corners · no shadows · no gradients.
+Design system: dark theme, background #0c0a09, primary text #e8e2d9, accent #FF6600
+(used directly, hover/active/persistent text alike — this is a dark background),
+borders #2b241e 1px solid · headings Playfair Display italic (not bold) · body
+Georgia serif · UI labels Georgia/system-sans 10px uppercase 0.26em tracking ·
+no rounded corners except true circles · no gradients except functional scrims.
 
 Page: [filename.html]
 Purpose: [One sentence — what this page does. Who uses it and why.]
 Real content example:
   [Paste 1–2 actual items from the archive, not Lorem Ipsum.
-   E.g. — Title: "XXXIII Días Installation View" · Year: 2000 · Medium: Photography]
+   E.g. — Title: "Untitled (Cassette Torso)" · Year: 2020s (est.) · Medium: Collage]
 
 Key interaction: [The one thing that makes this page worth visiting.
-  E.g. — "Orange outline appears on image hover. Title turns orange. UI recedes."
-  Or — "Horizontal scrub strip. Drag left/right to move through 50 years."]
+  E.g. — "Card image lifts on hover with an orange border and shadow; caption
+  fades up 0.08s later, title turns accent-colored." Match the existing archive
+  card-hover language in DESIGN-SYSTEM.md if this is a grid of works.]
 
 Do not include:
 - [List 3–5 things Stitch will add by default that you don't want]
-- No [carousels / testimonials / newsletter signup / pricing table / etc.]
+- No carousels / testimonials / newsletter signup / pricing table
+- No hamburger menu, slide-in drawer, or ⌘K search trigger
 - No grayscale on artwork thumbnails — always full color
 
-Mobile: [Describe mobile layout specifically — snap scroll? single column? hidden sidebar?]
+Mobile: [Describe mobile layout specifically — single column? hidden filters
+  behind a toggle (see archive.html's #filters-toggle pattern)?]
 Desktop: [Describe desktop layout — sidebar + main? full-bleed? grid?]
 
-Nav: Mark top nav <!-- NAV:START --> / <!-- NAV:END --> for stamp-nav.sh.
-Top nav has 4 items: Archive · Series · About · Lost Works.
-Mobile nav is a hamburger button → slide-in drawer (#mobile-menu-drawer), NOT a bottom bar.
+Nav: header.hud pattern — site name link + optional room-name label + one exit
+link, text-bracket style, same on every viewport. No shared nav file to stamp;
+this page hand-codes its own header, matching the pattern in every other room page.
 
-Content philosophy: personal archive, not promotional. No CTAs. No engagement patterns.
-The image is the primary object. UI recedes.
+Content philosophy: personal archive, not promotional. No CTAs. No engagement
+patterns. The image is the primary object. UI recedes.
 
-Export: single HTML, Tailwind CDN, tailwind.config inline, page CSS in <style> block,
-no external component libraries, loading="lazy" on artwork images.
+Export: single HTML file, inline <style>/<script>, no external component
+libraries, loading="lazy" on artwork images, prefers-reduced-motion respected
+on every transition.
 ```
 
 ---
@@ -138,30 +164,30 @@ no external component libraries, loading="lazy" on artwork images.
 
 1. **Extract** layout structure, spacing, grid columns, typography hierarchy
 2. **Extract** any interaction/animation code worth keeping
-3. **Do NOT use the export directly** — it has placeholder content, wrong SEO, no analytics
-4. **Apply** the extracted structure to a new HTML file using the real design system
-5. **Swap Tailwind CDN** — replace `<script src="https://cdn.tailwindcss.com...">` with `<link rel="stylesheet" href="site.min.css"/>` and remove the inline `tailwind.config` script
-6. **Add nav-active.js** — `<script src="_shared/nav-active.js" defer></script>` so the orange active nav link sets correctly
-7. Run `bash stamp-nav.sh` to stamp the canonical nav
-8. Test at 390px (iPhone 15 Pro) and 1440px
+3. **Do NOT use the export directly** — it will default to Stitch's own light palette and generic component patterns regardless of what was pasted into the prompt; treat it as a structural sketch, not a finished page
+4. **Apply** the extracted structure to a new HTML file using the real dark-theme tokens above, matching the inline `<style>`/`<script>` pattern every other page uses
+5. **Remove the Tailwind CDN script tag and inline `tailwind.config` block** entirely — write plain CSS matching the tokens above; don't wire this page into `site.min.css` unless you're intentionally adding new Tailwind utility classes sitewide (rare — most pages don't)
+6. **Do not add `_shared/nav-active.js` or run `stamp-nav.sh`** — neither exists. Hand-code the header per the Nav section above.
+7. Test the full interaction set: hover, `:focus-visible` keyboard nav, touch `:active` states, and `prefers-reduced-motion: reduce`
+8. Test at a small mobile width (~390px) and a wide desktop width (~1440px)
 
 ---
 
-## Pages already built — reference these for consistency
+## Pages that exist today — reference these for consistency
+
+The site was pruned to 14 core pages on 2026-07-16 (commit `41461e45`) — most of the page list this doc previously referenced (`collage.html`, `lost.html`, `series-index.html`, `wall.html`, `guernica.html`, `api.html`, `start-here.html`, `favorites.html`, and more) no longer exists and should not be recreated without Jeff explicitly reopening that scope. The current 14:
 
 | Page | Notes |
-|------|-------|
-| `collage.html` | Masonry grid, full color always |
-| `photography.html` | Same structure as collage |
-| `index.html` | Desktop + mobile: CSS Columns masonry Selected Works grid (4→3→2 cols). Image + always-visible caption + link — no hover overlays/badges/swatches (2026-06-21 simplicity pass) |
-| `archive.html` | Sidebar filters + main grid, mobile sticky filter ledger. Still carries Session-77 fc-* interaction layer — flagged in IMPROVEMENTS.md |
-| `about.html` | Multi-section: bio → contact → Lost Works bar → exhibition record |
-| `lost.html` | Essay + ghost grid — sparse, no CTAs, memorial tone |
-| `series-index.html` | Card grid, 8 series, Playfair Display titles |
-| `wall.html` | 1,084 mini tiles, all full color |
-| `guernica.html` | Static theme page — 232 works, full static grid |
-| `api.html` | Developer docs — expandable endpoint cards, code blocks, light bg |
-| `stories.html` | In nav. Long-form story/context entries. |
-| `start-here.html` | Orientation page — who Jeff is, major themes, how to explore. Stamped. |
-| `favorites.html` | 45 personally significant works from favorites.txt. Stamped. |
-| **DELETED** | `constellation.html`, `for-artists.html`, `mosaic.html`, `companion.html` (AI chat feature, removed 2026-06-22 with Netlify) — do not recreate. |
+|---|---|
+| `index.html` | The homepage "poster" — no header, five fixed elements, wing-image crossfade on desktop. See DESIGN-SYSTEM.md. |
+| `archive.html` | Search + filter chips + infinite-scroll-style grid with the canonical card-hover language. Best reference for any new grid/card page. |
+| `current.html` | Scroll-river page, structurally unique — not a useful Stitch-generation reference. |
+| `guernica-passage.html`, `flooded-wing.html`, `the-studio.html`, `hall-of-openings.html`, `working-history.html`, `about.html`, `stories.html` | The `#door`/`#hero` full-viewport hero pattern — background image, radial vignette, scroll cue, `header.hud`. Best reference for any new narrative/essay-style page. |
+| `artwork.html` | Client-rendered template (reads `?id=` from the query string) — not a static page, don't treat as one. |
+| `404.html`, `privacy.html`, `sitemap.html` | Plain text utility pages, no hero/card patterns — simplest possible reference if generating another utility page. |
+
+---
+
+## Changelog
+
+**2026-07-19** — Full rewrite. Replaced the light "bone-white" design system, the `stamp-nav.sh`/`NAV:START`-`NAV:END` nav workflow, the 4-item-nav-plus-⌘K spec, and the "pages already built" reference table (which listed mostly-deleted pages) with what's actually live, verified against page source. See `DESIGN-SYSTEM.md`'s 2026-07-19 rewrite for the fuller token/pattern reference this doc now derives from.
