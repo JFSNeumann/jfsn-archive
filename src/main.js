@@ -183,6 +183,22 @@ export const focusCardMorph = ({ mat, autoplay = true }) => {
 }
 
 /**
+ * PATTERN: Decade Passage (Temporal Threshold Marker)
+ * A subtle horizontal sweep/glow when crossing into a new decade (era boundary).
+ * Makes the passage of time legible through motion — not just "the numeral changed,"
+ * but "you've crossed into a new era."
+ * Duration: 500ms fade-in + 300ms hold + 500ms fade-out = 1300ms total
+ * Easing: outQuad (smooth discovery curve, not bouncy)
+ * Reference: MOTION-SPEC.md § Phase 1 (Temporal Choreography)
+ */
+export const decadePassage = ({ marker, autoplay = true }) => {
+  return anime.timeline({ autoplay })
+    .add(marker, { opacity: 0.15, duration: 500, ease: 'outQuad' }, 0)
+    .add(marker, { opacity: 0.15, duration: 300 }, 500)
+    .add(marker, { opacity: 0, duration: 500, ease: 'inQuad' }, 800)
+}
+
+/**
  * PATTERN: Chip Pulse (Filter Selection Feedback)
  * Quick bounce-scale pop when a filter chip is toggled on/off
  * Duration: 250ms (interaction easing, bounce-back)
