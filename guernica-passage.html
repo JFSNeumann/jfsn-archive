@@ -263,6 +263,14 @@ addEventListener('DOMContentLoaded', () => {
     color:#3d342b;font-variant-numeric:tabular-nums;
   }
   .waypoint .n{color:var(--dim)}
+  .waypoint .context{
+    font-family:Georgia,'Times New Roman',serif;
+    font-style:italic;font-size:clamp(16px,2vw,19px);
+    color:var(--dim);max-width:32em;line-height:1.7;
+    margin-top:8px;opacity:0;
+    transition:opacity 0.6s ease;
+  }
+  .waypoint .context.visible{opacity:1}
 
   /* ---------- the stream ---------- */
   .stream{max-width:860px;margin:0 auto}
@@ -473,6 +481,19 @@ addEventListener('DOMContentLoaded', () => {
   let lastDecade = -1;
   let count = 0;
 
+  // Decade evolution context — tells the story of the 30-year series
+  const decadeContext = {
+    1990: "One large painting. He used it as a direction, a structure to work against.",
+    2010: "The structure underneath stayed. Materials changed. The obsession continued.",
+    2020: "Fifty years of unbroken making. Still going."
+  };
+
+  const decadeLabels = {
+    1990: "THE BEGINNING",
+    2010: "MATURATION",
+    2020: "LEGACY"
+  };
+
   const byDecade = {};
   works.forEach(w => {
     const d = Math.floor(w.y / 10) * 10;
@@ -487,9 +508,11 @@ addEventListener('DOMContentLoaded', () => {
       if (d === 2010) frag.appendChild(buildInterruption());
       const wp = document.createElement('div');
       wp.className = 'waypoint';
+      wp.dataset.decade = d;
       wp.innerHTML = '<div class="decade">' + d + 's</div>' +
         '<div class="caps n">' + byDecade[d] + ' WORKS' +
-        (d === 1990 ? ' — WHERE IT BEGINS' : '') + '</div>';
+        (d === 1990 ? ' — WHERE IT BEGINS' : '') + '</div>' +
+        (decadeContext[d] ? '<div class="context">' + decadeContext[d] + '</div>' : '');
       frag.appendChild(wp);
       lastDecade = d;
     }
@@ -542,8 +565,10 @@ addEventListener('DOMContentLoaded', () => {
 
   // ---------- reveal + counter (scroll position + heartbeat, no IO) ----------
   const figures = [...passage.querySelectorAll('.work')];
+  const waypoints = [...passage.querySelectorAll('.waypoint')];
   const counter = document.getElementById('counter');
-  let byTop = [], ptr = 0, lastCount = -1;
+  let byTop = [], ptr = 0, lastCount = -1, lastDecadeLabel = '';
+  let waypointsSeen = new Set();
 
   function measure(){
     byTop = figures.map(f => [f.offsetTop, f]).sort((a, b) => a[0] - b[0]);
@@ -552,18 +577,59 @@ addEventListener('DOMContentLoaded', () => {
   }
   function update(){
     const limit = scrollY + innerHeight * 0.92;
+    const center = scrollY + innerHeight * 0.4;
+
     while (ptr < byTop.length && byTop[ptr][0] < limit) {
       byTop[ptr][1].classList.add('seen');
       ptr++;
     }
+
+    // Make context visible for waypoints that have entered the viewport
+    waypoints.forEach(wp => {
+      const wpTop = wp.offsetTop;
+      if (wpTop < center + innerHeight * 0.4 && !waypointsSeen.has(wp)) {
+        waypointsSeen.add(wp);
+        const ctx = wp.querySelector('.context');
+        if (ctx) ctx.classList.add('visible');
+      }
+    });
+
     // counter reads the last work whose top has passed the viewport centre
     let n = 0;
+    let currentDecade = null;
     for (let i = ptr - 1; i >= 0; i--) {
       if (byTop[i][0] < scrollY + innerHeight * 0.6) { n = +byTop[i][1].dataset.n; break; }
     }
-    if (n !== lastCount) {
+
+    // Find which decade the user is currently viewing
+    for (let i = ptr - 1; i >= 0; i--) {
+      const fig = byTop[i][1];
+      if (fig.dataset.n && byTop[i][0] < scrollY + innerHeight * 0.6) {
+        // Walk up to find the parent waypoint's decade
+        let parent = fig;
+        while (parent && !parent.dataset.decade) parent = parent.previousElementSibling;
+        if (!parent && fig.previousElementSibling) {
+          let temp = fig.previousElementSibling;
+          while (temp && !temp.dataset.decade) temp = temp.previousElementSibling;
+          parent = temp;
+        }
+        if (parent && parent.dataset.decade) {
+          currentDecade = parent.dataset.decade;
+          break;
+        }
+      }
+    }
+
+    // Update counter with decade label if available
+    if (n !== lastCount || currentDecade !== lastDecadeLabel) {
       lastCount = n;
-      counter.textContent = n > 0 ? 'WORK ' + n + ' OF ' + TOTAL : '';
+      lastDecadeLabel = currentDecade;
+      if (n > 0) {
+        const label = currentDecade && decadeLabels[currentDecade] ? ' · ' + decadeLabels[currentDecade] : '';
+        counter.textContent = 'WORK ' + n + ' OF ' + TOTAL + label;
+      } else {
+        counter.textContent = '';
+      }
     }
   }
   if (REDUCED) figures.forEach(f => f.classList.add('seen'));
