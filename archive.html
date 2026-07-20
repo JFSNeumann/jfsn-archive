@@ -440,9 +440,9 @@ addEventListener('DOMContentLoaded', () => {
   'use strict';
   const works = await fetch('config/current.json', {cache:'no-cache'}).then(r => r.json());
   const ORI_LABEL = { v: 'VERTICAL', h: 'HORIZONTAL', s: 'SQUARE' };
-  const MEDIA = [...new Set(works.map(w => w.m))].sort();
-  const DECADES = [...new Set(works.map(w => Math.floor(w.y / 10) * 10))].sort();
-  const ORIS = [...new Set(works.map(w => w.o))].filter(o => ORI_LABEL[o]);
+  const MEDIA = [...new Set(works.map(w => w.m))].filter(m => m !== null).sort();
+  const DECADES = [...new Set(works.map(w => w.y !== null ? Math.floor(w.y / 10) * 10 : null))].filter(d => d !== null).sort();
+  const ORIS = [...new Set(works.map(w => w.o))].filter(o => o !== null && ORI_LABEL[o]);
 
   const state = { medium: new Set(), decade: new Set(), orientation: new Set(), q: '', sort: 'year-desc' };
   const PAGE = 60;
