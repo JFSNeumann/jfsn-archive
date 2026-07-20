@@ -500,9 +500,9 @@ addEventListener('DOMContentLoaded', () => {
       console.log('state:', {medium: state.medium.size, decade: state.decade.size, orientation: state.orientation.size, q});
       console.log('First work:', works[0]);
     }
-    if (state.sort === 'year-desc') list.sort((a, b) => b.y - a.y || a.t.localeCompare(b.t));
-    else if (state.sort === 'year-asc') list.sort((a, b) => a.y - b.y || a.t.localeCompare(b.t));
-    else list.sort((a, b) => a.t.localeCompare(b.t));
+    if (state.sort === 'year-desc') list.sort((a, b) => b.y - a.y || (a.t || '').localeCompare(b.t || ''));
+    else if (state.sort === 'year-asc') list.sort((a, b) => a.y - b.y || (a.t || '').localeCompare(b.t || ''));
+    else list.sort((a, b) => (a.t || '').localeCompare(b.t || ''));
     return list;
   }
 
