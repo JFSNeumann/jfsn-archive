@@ -651,6 +651,68 @@ addEventListener('DOMContentLoaded', () => {
     if (h !== lastH) { lastH = h; measure(); }        // catches missed resizes / late layout
     else if (scrollY !== lastY) { lastY = scrollY; update(); }
   }, 500);
+
+  // ---------- PHASE 2: Intersection Observer for anime.js choreography ----------
+  if (typeof animeUtils !== 'undefined' && typeof animeUtils.anime !== 'undefined') {
+    const anime = animeUtils.anime;
+    const animatedWaypoints = new Set();
+    const animatedDecades = new Set();
+
+    const waypointObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && entry.target.classList.contains('waypoint')) {
+          const wp = entry.target;
+          const decade = wp.dataset.decade;
+
+          // Animate waypoint marker and count on first intersection
+          if (!animatedWaypoints.has(wp)) {
+            animatedWaypoints.add(wp);
+            const marker = wp.querySelector('.decade');
+            const count = wp.querySelector('.n');
+
+            if (marker && count) {
+              // Decade marker slides in
+              anime.timeline()
+                .add({targets: marker, opacity: [0, 1], scale: [0.8, 1], duration: 600, ease: 'easeOutQuad'}, 0)
+                .add({targets: count, opacity: [0, 1], duration: 500, ease: 'easeOutQuad'}, 100);
+            }
+          }
+
+          // Stagger works reveal for this decade (once per decade)
+          if (decade && !animatedDecades.has(decade)) {
+            animatedDecades.add(decade);
+
+            // Find all works between this waypoint and the next
+            let works = [];
+            let sibling = wp.nextElementSibling;
+            while (sibling && !sibling.classList.contains('waypoint')) {
+              if (sibling.classList.contains('work')) works.push(sibling);
+              sibling = sibling.nextElementSibling;
+            }
+
+            // Stagger work reveals (40ms between each)
+            if (works.length > 0) {
+              anime.timeline()
+                .add({
+                  targets: works,
+                  opacity: [0, 1],
+                  translateY: [26, 0],
+                  duration: 600,
+                  ease: 'easeOutQuad',
+                  delay: animeUtils.stagger(40, {start: 200})
+                }, 0);
+            }
+          }
+        }
+      });
+    }, {
+      rootMargin: '0px 0px -30% 0px', // Trigger when 30% from bottom of viewport
+      threshold: 0
+    });
+
+    // Observe all waypoints
+    document.querySelectorAll('.waypoint').forEach(wp => waypointObserver.observe(wp));
+  }
 })();
 </script>
 
