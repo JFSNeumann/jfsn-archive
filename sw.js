@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-20260720155620'; // Hotfix: current.json color codes to hex format
+const CACHE_V  = 'jfsn-20260720160845'; // Hotfix: artwork.html null field handling for reverse button
 const PRECACHE = [
   // The 14 live room pages (Museum v2 — the only site that exists today;
   // the old v1 archive, decade pages, and generated theme pages were
