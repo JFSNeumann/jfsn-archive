@@ -88,7 +88,7 @@ addEventListener('DOMContentLoaded', () => {
   /* ---------- vault hero ---------- */
   #vault-hero{
     position:relative;width:100%;overflow:hidden;
-    margin-top:0;padding:0;
+    margin-top:0;padding:0;border-bottom:1px solid var(--frame);
   }
   #vault-hero img{
     display:block;width:100%;height:auto;max-height:45vh;object-fit:cover;object-position:center 100px
@@ -103,7 +103,8 @@ addEventListener('DOMContentLoaded', () => {
   #door{
     display:flex;flex-direction:column;
     align-items:center;text-align:center;gap:24px;
-    padding-top:2vh;padding-bottom:8vh;
+    padding-top:4vh;padding-bottom:3vh;
+    border-bottom:1px solid var(--frame);
   }
   #door h1{
     font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
@@ -267,12 +268,28 @@ addEventListener('DOMContentLoaded', () => {
   }
 
   /* ---------- grid ---------- */
-  #grid-wrap{max-width:1660px;margin:0 auto;padding:46px clamp(20px,6vw,80px) 20vh}
+  #grid-wrap{
+    max-width:1800px;margin:0 auto;
+    padding:8vh clamp(20px,6vw,80px) 20vh;
+    border-top:1px solid var(--frame);
+  }
   #grid{
     display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+    grid-template-columns:repeat(3,1fr);
     gap:24px 18px;
     transition:opacity .15s ease;
+  }
+  @media (max-width:640px){
+    #grid{grid-template-columns:repeat(2,1fr);gap:16px 14px}
+  }
+  @media (min-width:641px) and (max-width:1024px){
+    #grid{grid-template-columns:repeat(3,1fr);gap:22px 16px}
+  }
+  @media (min-width:1025px) and (max-width:1440px){
+    #grid{grid-template-columns:repeat(4,1fr);gap:24px 18px}
+  }
+  @media (min-width:1441px){
+    #grid{grid-template-columns:repeat(5,1fr);gap:26px 20px}
   }
   #grid.replacing{opacity:.35}
   @media (prefers-reduced-motion: no-preference){
@@ -359,6 +376,19 @@ addEventListener('DOMContentLoaded', () => {
     .card .size-badge{opacity:0.8}
   }
 
+  .card .type-badge{
+    position:absolute;top:8px;left:8px;
+    background:rgba(0,0,0,.3);color:var(--ink);
+    font-size:10px;letter-spacing:.05em;
+    padding:3px 6px;border-radius:2px;
+    opacity:0.6;transition:opacity .3s ease;pointer-events:none;
+    backdrop-filter:blur(4px);
+  }
+  .card a:hover .type-badge,.card a:focus-visible .type-badge{opacity:1}
+  @media (hover:none) and (pointer:coarse){
+    .card .type-badge{opacity:0.9}
+  }
+
   #empty{
     display:none;text-align:center;padding:12vh clamp(20px,6vw,80px);
     margin-top:40px;border:1px solid var(--frame);background:rgba(255,102,0,.02);
@@ -401,7 +431,11 @@ addEventListener('DOMContentLoaded', () => {
   }
   #featured-new a:hover{color:var(--ink);text-decoration:underline}
 
-  #exit-note{padding:0 0 14vh;text-align:center}
+  #exit-note{
+    padding:8vh clamp(20px,6vw,80px) 14vh;
+    text-align:center;border-top:1px solid var(--frame);
+    margin-top:8vh;
+  }
   #exit-note nav{margin-top:18px;display:flex;flex-direction:column;gap:16px}
 
   /* Matches the homepage door-nav's #vault language, shared by both of
@@ -675,11 +709,13 @@ addEventListener('DOMContentLoaded', () => {
 
   function cardHTML(w, idx){
     const sizeLabel = w.d ? w.d : (w.o === 'h' ? 'Horizontal' : w.o === 's' ? 'Square' : 'Vertical');
+    const typeLabel = w.x ? '⚠️ Composite' : w.t.includes('photograph') || w.t.includes('photo') ? '📸 Photo' : w.m?.includes('acrylic') || w.m?.includes('paint') ? '🎨 Painting' : w.m?.includes('digital') || w.m?.includes('computer') ? '💻 Digital' : w.m?.includes('sculpture') || w.m?.includes('cast') ? '🗿 Sculpture' : '📄 Mixed';
     return `
       <figure class="card" data-id="${esc(w.i)}">
         <a href="artwork.html?id=${w.i}">
           <img src="/artworks/thumbs/${w.i}.avif" srcset="/artworks/mini/${w.i}.avif 100w, /artworks/thumbs/${w.i}.avif 400w, /artworks/medium/${w.i}.avif 900w" sizes="min(45vw, 210px)" alt="${esc(w.t)}"${idx < 12 ? '' : ' loading="lazy"'} decoding="async"
                style="aspect-ratio:${w.o === 'h' ? '4/3' : w.o === 's' ? '1/1' : '2/3'}">
+          <span class="type-badge">${typeLabel}</span>
           <span class="size-badge">${esc(sizeLabel)}</span>
           <figcaption>
             <div class="t serif">${esc(w.t)}</div>
