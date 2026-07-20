@@ -85,6 +85,20 @@ addEventListener('DOMContentLoaded', () => {
   }
   .prose em{color:var(--ink)}
 
+  /* ---------- vault hero ---------- */
+  #vault-hero{
+    position:relative;width:100%;overflow:hidden;
+    margin-top:0;padding:0;
+  }
+  #vault-hero img{
+    display:block;width:100%;height:auto;max-height:55vh;object-fit:cover;object-position:center
+  }
+  #vault-hero::after{
+    content:'';position:absolute;bottom:0;left:0;right:0;
+    height:240px;background:linear-gradient(to bottom,rgba(12,10,9,0) 0%,var(--room) 100%);
+    pointer-events:none;
+  }
+
   /* ---------- door ---------- */
   #door{
     min-height:66vh;display:flex;flex-direction:column;
@@ -379,6 +393,10 @@ addEventListener('DOMContentLoaded', () => {
   <a class="who" href="index.html">JEFFREY&nbsp;F.&nbsp;S.&nbsp;NEUMANN</a>
   <a class="caps" href="index.html">[ THE MUSEUM → ]</a>
 </header>
+
+<section id="vault-hero">
+  <img src="./assets/images/jfsn-vault-middle-50-percent.png" alt="The vault beneath the museum — archive storage with artworks on display racks" decoding="async">
+</section>
 
 <section id="door">
   <div class="caps">THE ARCHIVE</div>
