@@ -477,9 +477,13 @@ addEventListener('DOMContentLoaded', () => {
       wrap.appendChild(btn);
     }
   }
+  console.log('About to build chips. MEDIA:', MEDIA);
   buildChips('medium', MEDIA, v => v.toUpperCase());
+  console.log('Medium chips built');
   buildChips('decade', DECADES, v => v + 'S');
+  console.log('Decade chips built');
   buildChips('orientation', ORIS, v => ORI_LABEL[v]);
+  console.log('Orientation chips built');
 
   function filtered(){
     const q = state.q.trim().toLowerCase();
@@ -703,7 +707,9 @@ addEventListener('DOMContentLoaded', () => {
     this.setAttribute('aria-expanded', open);
   });
 
+  console.log('About to call render(true)');
   render(true); // initial load: append into the empty grid, no fade-from-nothing
+  console.log('render(true) completed');
 })();
 </script>
 
