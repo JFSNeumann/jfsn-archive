@@ -85,8 +85,13 @@ addEventListener('DOMContentLoaded', () => {
   .threshold::after{
     content:'↓';position:absolute;bottom:-48px;left:50%;transform:translateX(-50%);
     font-size:24px;color:var(--dim);opacity:0.6;
-    animation:bounce 2s infinite, pulse-glow 2s ease-in-out infinite;
+    animation:bounce 1.2s cubic-bezier(.68,.55,.27,1.55) infinite, pulse-glow 1.2s ease-in-out infinite;
     transition:opacity .3s ease;
+  }
+  @keyframes bounce{
+    0%{transform:translateX(-50%) translateY(0)}
+    50%{transform:translateX(-50%) translateY(-8px)}
+    100%{transform:translateX(-50%) translateY(0)}
   }
   /* Once the visitor has actually started scrolling, the cue has done its
      job — fade it rather than let it loop forever underneath them. */
@@ -247,18 +252,18 @@ addEventListener('DOMContentLoaded', () => {
     content:'';position:absolute;inset:0;z-index:-1;
     background-image:var(--preview-url);background-size:cover;background-position:center;
     filter:grayscale(55%);opacity:0;
-    transition:opacity .5s ease;
+    transition:opacity .5s ease,filter .5s ease;
   }
   #doors a:hover::after,
-  #doors a:focus-visible::after{opacity:.1}
+  #doors a:focus-visible::after{opacity:.1;filter:grayscale(25%)}
 
   #doors a .sub{
     font-size:9px;letter-spacing:.2em;color:var(--dim);
-    transform:translateY(0);transition:color .3s ease,transform .3s ease;
+    transform:translateY(0);transition:color .4s cubic-bezier(.34,.1,.68,1),transform .4s cubic-bezier(.34,.1,.68,1);
   }
   #doors a:hover{border-left-color:var(--accent)}
   #doors a:hover .sub,
-  #doors a:focus-visible .sub{color:var(--ink);transform:translateY(-1px)}
+  #doors a:focus-visible .sub{color:var(--ink);transform:translateY(-2px)}
   #doors a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 
   /* Arrow: the smallest possible gesture of yielding */
@@ -266,8 +271,15 @@ addEventListener('DOMContentLoaded', () => {
     display:inline-block;transform:translateX(0);
     transition:transform .3s ease;
   }
-  #doors a:hover .go,
-  #doors a:focus-visible .go{transform:translateX(3px)}
+  @media (prefers-reduced-motion: no-preference){
+    #doors a:hover .go,
+    #doors a:focus-visible .go{transform:translateX(3px);animation:arrowPulse .5s ease-out}
+  }
+  @keyframes arrowPulse{0%{transform:translateX(6px) scale(1.1)}50%{transform:translateX(3px) scale(1)}100%{transform:translateX(3px) scale(1)}}
+  @media (prefers-reduced-motion: reduce){
+    #doors a:hover .go,
+    #doors a:focus-visible .go{transform:translateX(3px)}
+  }
 
   /* Room personalities: rest-state echo + full hover expression.
      Border widths at rest are all 1px (fractional widths get snapped to a
@@ -312,10 +324,10 @@ addEventListener('DOMContentLoaded', () => {
     #doors a:nth-child(5):focus-visible{border-left-width:5px}
   }
 
-  /* Landing choreography: borders draw themselves from left to right */
+  /* Landing choreography: borders draw themselves from left to right with organic easing */
   @keyframes border-draw {
-    0%{border-left-width:0}
-    100%{border-left-width:1px}
+    0%{border-left-width:0;opacity:.3}
+    100%{border-left-width:1px;opacity:1}
   }
 
   /* Static fallback for reduced-motion: skip the draw-in, still show the
@@ -323,12 +335,12 @@ addEventListener('DOMContentLoaded', () => {
   #doors a{border-left-width:1px}
 
   @media (prefers-reduced-motion: no-preference) {
-    #doors a{animation:border-draw .8s ease-out backwards}
-    #doors a:nth-child(1){animation-delay:.05s}
-    #doors a:nth-child(2){animation-delay:.1s}
-    #doors a:nth-child(3){animation-delay:.15s}
-    #doors a:nth-child(4){animation-delay:.2s}
-    #doors a:nth-child(5){animation-delay:.25s}
+    #doors a{animation:border-draw .65s cubic-bezier(.34,.1,.68,1) backwards}
+    #doors a:nth-child(1){animation-delay:.08s}
+    #doors a:nth-child(2){animation-delay:.16s}
+    #doors a:nth-child(3){animation-delay:.24s}
+    #doors a:nth-child(4){animation-delay:.32s}
+    #doors a:nth-child(5){animation-delay:.4s}
   }
 
   /* Cursor: thin line showing passage intent — every link that leads
