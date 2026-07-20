@@ -438,9 +438,7 @@ addEventListener('DOMContentLoaded', () => {
 <script>
 (async function(){
   'use strict';
-  console.log('Archive script starting...');
   const works = await fetch('config/current.json', {cache:'no-cache'}).then(r => r.json());
-  console.log('Works loaded:', works?.length || 'error');
   const ORI_LABEL = { v: 'VERTICAL', h: 'HORIZONTAL', s: 'SQUARE' };
   const MEDIA = [...new Set(works.map(w => w.m))].filter(m => m !== null).sort();
   const DECADES = [...new Set(works.map(w => w.y !== null ? Math.floor(w.y / 10) * 10 : null))].filter(d => d !== null).sort();
@@ -477,13 +475,9 @@ addEventListener('DOMContentLoaded', () => {
       wrap.appendChild(btn);
     }
   }
-  console.log('About to build chips. MEDIA:', MEDIA);
   buildChips('medium', MEDIA, v => v.toUpperCase());
-  console.log('Medium chips built');
   buildChips('decade', DECADES, v => v + 'S');
-  console.log('Decade chips built');
   buildChips('orientation', ORIS, v => ORI_LABEL[v]);
-  console.log('Orientation chips built');
 
   function filtered(){
     const q = state.q.trim().toLowerCase();
@@ -494,12 +488,6 @@ addEventListener('DOMContentLoaded', () => {
       if (q && !w.t.toLowerCase().includes(q)) return false;
       return true;
     });
-    if (list.length === 0) {
-      console.log('DEBUG: filtered() returned 0 items');
-      console.log('works.length:', works.length);
-      console.log('state:', {medium: state.medium.size, decade: state.decade.size, orientation: state.orientation.size, q});
-      console.log('First work:', works[0]);
-    }
     if (state.sort === 'year-desc') list.sort((a, b) => b.y - a.y || (a.t || '').localeCompare(b.t || ''));
     else if (state.sort === 'year-asc') list.sort((a, b) => a.y - b.y || (a.t || '').localeCompare(b.t || ''));
     else list.sort((a, b) => (a.t || '').localeCompare(b.t || ''));
@@ -605,9 +593,7 @@ addEventListener('DOMContentLoaded', () => {
   // their new grid position, cards leaving the result set simply drop out
   // with the grid, and genuinely new cards cascade in staggered).
   function render(append){
-    try {
       const list = filtered();
-      console.log('render() called with append=', append, 'list.length=', list.length);
     renderMeta(list);
     const useAnime = !REDUCED && typeof animeUtils !== 'undefined';
 
@@ -683,9 +669,6 @@ addEventListener('DOMContentLoaded', () => {
         }
       });
     }, 150);
-    } catch (e) {
-      console.error('ERROR in render function:', e.message, e.stack);
-    }
   }
 
   let searchTimeout;
@@ -711,13 +694,7 @@ addEventListener('DOMContentLoaded', () => {
     this.setAttribute('aria-expanded', open);
   });
 
-  console.log('About to call render(true)');
-  try {
-    render(true); // initial load: append into the empty grid, no fade-from-nothing
-    console.log('render(true) completed');
-  } catch (e) {
-    console.error('ERROR in render():', e.message, e.stack);
-  }
+  render(true); // initial load: append into the empty grid, no fade-from-nothing
 })();
 </script>
 
