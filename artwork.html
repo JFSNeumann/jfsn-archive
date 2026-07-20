@@ -88,6 +88,14 @@ addEventListener('DOMContentLoaded', () => {
     display:block;max-width:100%;max-height:72vh;width:auto;height:auto;
     border:1px solid var(--frame);background:#171310;
     cursor:zoom-in;
+    opacity:0;animation:fadeInImage .6s ease-out forwards;
+  }
+  @keyframes fadeInImage{
+    from{opacity:0}
+    to{opacity:1}
+  }
+  @media (prefers-reduced-motion: reduce){
+    #stage img{animation:none;opacity:1}
   }
   #stage figcaption{margin-top:12px;text-align:center}
 
@@ -108,7 +116,14 @@ addEventListener('DOMContentLoaded', () => {
   }
 
   /* ---------- the label ---------- */
-  #label .no{color:var(--faint);margin-bottom:14px;display:block}
+  #label .no{color:var(--faint);margin-bottom:14px;display:block;opacity:0;animation:slideInFade .5s ease-out .1s forwards}
+  @keyframes slideInFade{
+    from{opacity:0;transform:translateY(-4px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+  @media (prefers-reduced-motion: reduce){
+    #label .no{animation:none;opacity:1}
+  }
   #label h1{
     font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
     font-size:clamp(26px,3.4vw,40px);line-height:1.25;
@@ -118,9 +133,31 @@ addEventListener('DOMContentLoaded', () => {
     display:flex;justify-content:space-between;gap:20px;
     padding:13px 0;border-bottom:1px solid var(--frame);
     font-size:13px;
+    opacity:0;animation:ledgerRowFade .4s ease-out forwards;
   }
-  #ledger .row .k{font-size:9px;letter-spacing:.22em;color:var(--faint);text-transform:uppercase;padding-top:3px}
-  #ledger .row .v{text-align:right;font-family:Georgia,'Times New Roman',serif;font-style:italic}
+  @keyframes ledgerRowFade{
+    from{opacity:0;transform:translateY(-2px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+  #ledger .row:nth-child(1){animation-delay:.15s}
+  #ledger .row:nth-child(2){animation-delay:.2s}
+  #ledger .row:nth-child(3){animation-delay:.25s}
+  #ledger .row:nth-child(4){animation-delay:.3s}
+  #ledger .row:nth-child(5){animation-delay:.35s}
+  #ledger .row:nth-child(n+6){animation-delay:.4s}
+  @media (prefers-reduced-motion: reduce){
+    #ledger .row{animation:none;opacity:1}
+  }
+  #ledger .row .k{font-size:9px;letter-spacing:.22em;color:var(--faint);text-transform:uppercase;padding-top:3px;transition:color .3s ease}
+  #ledger .row .v{text-align:right;font-family:Georgia,'Times New Roman',serif;font-style:italic;transition:color .3s ease}
+  @media (hover:hover){
+    #ledger .row:hover .k{color:var(--faint)}
+    #ledger .row:hover .v{color:var(--ink)}
+  }
+  @media (hover:none) and (pointer:coarse){
+    #ledger .row:active .k{color:var(--faint)}
+    #ledger .row:active .v{color:var(--ink)}
+  }
   #flag{
     display:none;margin-top:16px;font-size:9px;letter-spacing:.14em;
     color:var(--accent);text-transform:uppercase;
@@ -174,8 +211,17 @@ addEventListener('DOMContentLoaded', () => {
   #walk a{
     pointer-events:auto;font-size:10px;letter-spacing:.2em;
     background:var(--room);padding:8px 4px;color:var(--dim);
-    transition:color .25s ease,transform .25s ease;
-    display:inline-block;transform:translateY(0);
+    transition:color .25s ease,transform .25s ease,box-shadow .25s ease;
+    display:inline-block;transform:translateY(0);box-shadow:none;
+  }
+  @media (prefers-reduced-motion: no-preference){
+    #walk a:hover,#walk a:focus-visible{
+      transform:translateY(-3px);
+      box-shadow:0 8px 16px rgba(255,102,0,.08)
+    }
+  }
+  @media (prefers-reduced-motion: reduce){
+    #walk a:hover,#walk a:focus-visible{transform:translateY(0)}
   }
   #walk a:hover,
   #walk a:focus-visible{color:var(--ink)}
