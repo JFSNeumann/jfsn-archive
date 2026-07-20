@@ -10,11 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-<<<<<<< HEAD
 const CACHE_V  = 'jfsn-20260720140839'; // Phase 3: Interruption Symbolic Void
-=======
-const CACHE_V  = 'jfsn-20260720140839'; // Phase 3: Interruption Symbolic Void
->>>>>>> c2eb69ab1009dcf6ad78b214665691ba21afa18d
 const PRECACHE = [
   // The 14 live room pages (Museum v2 — the only site that exists today;
   // the old v1 archive, decade pages, and generated theme pages were
