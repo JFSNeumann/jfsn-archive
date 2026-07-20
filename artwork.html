@@ -368,17 +368,17 @@ addEventListener('DOMContentLoaded', () => {
   room.hidden = false;
   walk.hidden = false;
 
-  document.title = w.t + ' — Jeffrey F. S. Neumann';
+  document.title = (w.t || 'Work') + ' — Jeffrey F. S. Neumann';
   const img = document.getElementById('work-img');
   img.src = '/artworks/medium/' + w.i + '.avif';
-  img.alt = w.t;
+  img.alt = w.t || '';
   if (w.w && w.h) img.style.aspectRatio = w.w + '/' + w.h;
   document.getElementById('work-cap').textContent =
-    w.t.toUpperCase() + ' · ' + w.yd.toUpperCase() + ' · ' + w.m.toUpperCase();
-  document.getElementById('work-no').textContent = w.i.toUpperCase() + ' — ' + w.yd.toUpperCase();
-  document.getElementById('work-title').textContent = w.t;
-  document.getElementById('v-year').textContent = w.yd;
-  document.getElementById('v-medium').textContent = w.m;
+    (w.t || '—').toUpperCase() + ' · ' + (w.yd || '—').toUpperCase() + ' · ' + (w.m || '—').toUpperCase();
+  document.getElementById('work-no').textContent = w.i.toUpperCase() + ' — ' + (w.yd || '—').toUpperCase();
+  document.getElementById('work-title').textContent = w.t || '—';
+  document.getElementById('v-year').textContent = w.yd || '—';
+  document.getElementById('v-medium').textContent = w.m || '—';
   document.getElementById('v-ori').textContent = ORI_LABEL[w.o] || '—';
   document.getElementById('v-no').textContent = w.i.toUpperCase();
   if (w.x) document.getElementById('flag').classList.add('on');
