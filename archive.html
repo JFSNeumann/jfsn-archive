@@ -160,6 +160,9 @@ addEventListener('DOMContentLoaded', () => {
     color:var(--ink);padding:13px 14px 13px 42px;font-size:14px;font-family:inherit;
     cursor:text;transition:all .3s ease;border-radius:2px;
   }
+  @media (max-width:640px){
+    #search:focus{flex:1 1 calc(100% - 52px);max-width:100%}
+  }
   #search::placeholder{color:var(--faint);font-style:italic}
   #search:hover{background-color:rgba(255,102,0,.04);border-color:var(--dim)}
   #search:focus{outline:none;border-color:var(--accent);background-color:rgba(255,102,0,.08);box-shadow:0 0 0 3px rgba(255,102,0,.1)}
@@ -196,10 +199,14 @@ addEventListener('DOMContentLoaded', () => {
     padding:12px 14px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
     cursor:pointer;transition:all .2s ease;appearance:none;padding-right:28px;
     background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="%23b8a89a" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>');
-    background-repeat:no-repeat;background-position:right 10px center;font-weight:500;border-radius:2px;
+    background-repeat:no-repeat;background-position:right 10px center;font-weight:500;border-radius:2px;background-size:10px 6px;
   }
-  #sort:hover{background-color:rgba(255,102,0,.08);border-color:var(--accent);color:var(--ink);background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="%23FF6600" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>')}
-  #sort:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-color:var(--accent);background-color:rgba(255,102,0,.12);background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="%23FF6600" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>')}
+  @media (prefers-reduced-motion: no-preference){
+    #sort:hover,#sort:focus-visible{background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6" style="transform-origin:center;animation:sortArrowRotate .35s ease-out forwards"><path d="M1 1l4 4 4-4" stroke="%23FF6600" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>')}
+  }
+  @keyframes sortArrowRotate{from{transform:rotate(-15deg)}to{transform:rotate(0)}}
+  #sort:hover{background-color:rgba(255,102,0,.08);border-color:var(--accent);color:var(--ink)}
+  #sort:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-color:var(--accent);background-color:rgba(255,102,0,.12)}
   #sort option{background:var(--room);color:var(--ink)}
 
   #filter-groups{margin-top:16px}
@@ -238,7 +245,8 @@ addEventListener('DOMContentLoaded', () => {
     box-shadow:0 2px 6px rgba(0,0,0,0);
   }
   .chip:hover{color:var(--ink);border-color:var(--dim);box-shadow:0 4px 12px rgba(0,0,0,.06);transform:translateY(-1px)}
-  .chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px;color:var(--ink)}
+  .chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px;color:var(--ink);box-shadow:0 0 0 3px rgba(255,102,0,.2);animation:chipFocusPulse .6s ease-out}
+  @keyframes chipFocusPulse{0%{box-shadow:0 0 0 3px rgba(255,102,0,.3)}50%{box-shadow:0 0 0 6px rgba(255,102,0,.15)}100%{box-shadow:0 0 0 3px rgba(255,102,0,.2)}}
   .chip.active{color:var(--accent);border-color:var(--accent);box-shadow:0 4px 12px rgba(255,102,0,.12)}
   @media (hover:none) and (pointer:coarse){
     .chip:active{background-color:color-mix(in srgb, var(--accent) 4%, transparent);transform:scale(.96)}
@@ -360,6 +368,14 @@ addEventListener('DOMContentLoaded', () => {
     0%{opacity:.8;transform:scale(.98)}
     50%{opacity:.4}
     100%{opacity:1;transform:scale(1)}
+  }
+  @keyframes gridFadeIn{
+    from{opacity:0}
+    to{opacity:1}
+  }
+  #grid:not(.replacing){animation:gridFadeIn .5s ease-out}
+  @media (prefers-reduced-motion: reduce){
+    #grid:not(.replacing){animation:none}
   }
   @media (prefers-reduced-motion: no-preference){
     .card.card-enter{animation:card-in .35s ease backwards}
@@ -490,6 +506,14 @@ addEventListener('DOMContentLoaded', () => {
     color:var(--dim);cursor:pointer;background:rgba(255,102,0,.03);
     transition:color .3s ease,border-color .3s ease,box-shadow .3s ease,transform .3s ease,background-color .3s ease;
     box-shadow:0 2px 8px rgba(0,0,0,.04);
+    animation:loadMoreEnter .4s ease-out;
+  }
+  @keyframes loadMoreEnter{
+    from{opacity:0;transform:translateY(12px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+  @media (prefers-reduced-motion: reduce){
+    #load-more{animation:none}
   }
   #load-more:hover{color:var(--accent);border-color:var(--accent);box-shadow:0 12px 32px rgba(255,102,0,.16);transform:translateY(-2px);background-color:rgba(255,102,0,.08)}
   #load-more:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
