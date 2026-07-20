@@ -95,8 +95,12 @@ addEventListener('DOMContentLoaded', () => {
     -webkit-font-smoothing:antialiased;
   }
   ::selection{background:var(--accent);color:#0c0a09}
-  a{color:var(--dim);text-decoration:none;transition:color .25s}
-  a:hover{color:var(--accent);text-decoration:underline}
+  a{color:var(--dim);text-decoration:none;transition:color .25s;position:relative}
+  a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--accent);transition:width .3s ease}
+  a:hover{color:var(--accent)}
+  @media (prefers-reduced-motion: no-preference){
+    a:hover::after{width:100%}
+  }
   .caps{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim)}
   .serif{font-family:Georgia,'Times New Roman',serif}
 
@@ -201,11 +205,12 @@ addEventListener('DOMContentLoaded', () => {
        leaving all 1,000 frames invisible. Absence at architectural scale comes
        from the sheer length of the scroll, not from a fade. */
     opacity:var(--o,1);
-    transition:opacity .25s ease,border-color .25s ease,transform .25s ease;
+    transition:opacity .25s ease,border-color .25s ease,transform .25s ease,box-shadow .25s ease;
   }
   .fr:hover{
     opacity:calc(var(--o,1) + .25);
     border-color:var(--accent);
+    box-shadow:0 8px 20px rgba(0,0,0,.3);
   }
   @media (prefers-reduced-motion: no-preference) {
     .fr:hover{transform:scale(1.08)}
@@ -217,8 +222,20 @@ addEventListener('DOMContentLoaded', () => {
   .milestone .n{
     font-family:'Playfair Display',Georgia,serif;font-style:italic;
     font-size:clamp(20px,2.6vw,28px);color:var(--ink);
+    opacity:0;animation:milestoneReveal .6s ease-out forwards;
   }
-  .milestone .caps{display:block;margin-top:10px;color:var(--faint)}
+  @keyframes milestoneReveal{
+    from{opacity:0;transform:scale(.8)}
+    to{opacity:1;transform:scale(1)}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .milestone .n{animation:none;opacity:1}
+  }
+  .milestone .caps{display:block;margin-top:10px;color:var(--faint);opacity:0;animation:fadeIn .5s ease-out .2s forwards}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  @media (prefers-reduced-motion: reduce){
+    .milestone .caps{animation:none;opacity:1}
+  }
   .after-field{margin:140px auto 160px;text-align:center}
 
   /* ---------- the guernica wall ---------- */
