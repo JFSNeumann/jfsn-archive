@@ -109,6 +109,15 @@ addEventListener('DOMContentLoaded', () => {
     font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
     font-size:clamp(38px,7vw,76px);line-height:1.15;
   }
+  .vault-highlight{
+    background:var(--accent);color:#0c0a09;padding:0 8px;
+    animation:vault-pulse 2s ease-in-out;display:inline-block;
+  }
+  @keyframes vault-pulse{
+    0%{background-color:rgba(255,102,0,0);transform:scale(1)}
+    50%{background-color:var(--accent);transform:scale(1.05)}
+    100%{background-color:var(--accent);transform:scale(1)}
+  }
   #door .fact{color:var(--dim)}
 
   /* ---------- controls ---------- */
@@ -400,7 +409,7 @@ addEventListener('DOMContentLoaded', () => {
 
 <section id="door">
   <div class="caps">THE ARCHIVE</div>
-  <h1>The vault beneath the museum.</h1>
+  <h1>The <span class="vault-highlight">vault</span> beneath the museum.</h1>
   <div class="caps fact">1,084 WORKS · CATALOG, SEARCH, OPEN DATA</div>
   <p class="prose" style="margin-top:10px">Every room upstairs is a curated
   walk through this record. Down here is the whole of it, unfiltered except
