@@ -126,6 +126,20 @@ addEventListener('DOMContentLoaded', () => {
     font-size:clamp(16px,1.95vw,18px);line-height:2;
     margin-top:20px;max-width:60ch;
   }
+  .archive-stats{
+    display:flex;flex-wrap:wrap;gap:24px;justify-content:center;
+    margin-top:24px;font-size:11px;letter-spacing:.1em;
+  }
+  .stat-item{
+    text-align:center;
+  }
+  .stat-number{
+    display:block;font-size:18px;font-weight:700;color:var(--accent);
+    margin-bottom:4px;letter-spacing:0;
+  }
+  .stat-label{
+    color:var(--dim);text-transform:uppercase;
+  }
 
   /* ---------- controls ---------- */
   #controls{
@@ -177,6 +191,15 @@ addEventListener('DOMContentLoaded', () => {
     display:flex;align-items:center;gap:8px;transition:color .3s ease;
   }
   .fgroup .label:hover{color:var(--dim)}
+  .fgroup .label::before{
+    content:'';font-size:12px;flex-shrink:0;
+  }
+  .fgroup[data-key="medium"] .label::before{content:'🎨'}
+  .fgroup[data-key="decade"] .label::before{content:'📅'}
+  .fgroup[data-key="orientation"] .label::before{content:'📐'}
+  .fgroup[data-key="theme"] .label::before{content:'🎭'}
+  .fgroup[data-key="material"] .label::before{content:'🔧'}
+  .fgroup[data-key="reverse"] .label::before{content:'⚠️'}
   .fgroup .label::after{content:' ▼';font-size:8px;transition:transform .3s ease}
   .fgroup.collapsed .label::after{transform:rotate(-90deg)}
   .fgroup .active-badge{
@@ -319,12 +342,14 @@ addEventListener('DOMContentLoaded', () => {
   }
   /* Archive: Study Room Intimacy — leaning in to examine works */
   .card{color:var(--ink);position:relative}
-  .card a{position:relative;display:block;cursor:crosshair}
+  .card a{position:relative;display:block;cursor:crosshair;outline:none}
+  .card a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
   .card img{
     display:block;width:100%;height:auto;
     border:1px solid var(--frame);background:#171310;
     transition:border-color .35s ease,box-shadow .35s ease,transform .35s ease;
     box-shadow:0 4px 12px rgba(0,0,0,.12);
+    border-radius:3px;overflow:hidden;
   }
 
   /* Hover: frame expands, metadata layers, image elevated */
@@ -448,10 +473,13 @@ addEventListener('DOMContentLoaded', () => {
   #featured-new .caps{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;display:block;font-weight:500}
   #featured-new p{font-size:14px;margin:0 0 14px;color:var(--ink);line-height:1.5}
   #featured-new a{
-    display:inline-block;margin:0 8px;font-size:11px;letter-spacing:.1em;
-    text-transform:uppercase;color:var(--accent);cursor:pointer;transition:all .3s ease;font-weight:500;
+    display:inline-flex;align-items:center;gap:8px;margin:0 8px;font-size:11px;letter-spacing:.1em;
+    text-transform:uppercase;color:#0c0a09;background:var(--accent);cursor:pointer;
+    transition:all .3s ease;font-weight:600;
+    padding:10px 16px;border-radius:2px;
   }
-  #featured-new a:hover{color:var(--ink);text-decoration:underline}
+  #featured-new a::after{content:'→';font-size:10px}
+  #featured-new a:hover{background:rgba(255,102,0,1);box-shadow:0 8px 20px rgba(255,102,0,.2);transform:translateY(-2px)}
 
   #exit-note{
     padding:8vh clamp(20px,6vw,80px) 14vh;
@@ -529,6 +557,20 @@ addEventListener('DOMContentLoaded', () => {
   walk through this record. Down here is the whole of it, unfiltered except
   by what you ask for. <em>Years are decade estimates; composites are
   flagged</em> — the same honesty, without the choreography.</p>
+  <div class="archive-stats">
+    <div class="stat-item">
+      <span class="stat-number">1,084</span>
+      <span class="stat-label">Works</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">50</span>
+      <span class="stat-label">Years</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">1974</span>
+      <span class="stat-label">—Present</span>
+    </div>
+  </div>
 </section>
 
 <nav id="room-nav" style="text-align:center;padding:4vh clamp(20px,6vw,80px);display:flex;flex-direction:row;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap">
