@@ -1,5 +1,71 @@
 [
   {
+    "sha": "2fb8277",
+    "date": "2026-07-20",
+    "title": "Phase 3: Interruption Section — Symbolic Void",
+    "body": "Added radial-gradient background to the interruption section (undocumented 2000s)\nto represent the absence/emptiness of the lost large-scale Guernica work.\nThe gradient flows from lighter at center (#2b241e) to darker at edges (#0c0a09),\ncreating a minimalist \"void\" that lets the loss itself become the statement.\n\n- Wrapped interruption content in .interruption-inner div (z-index:1)\n- Added .interruption-void div (display:none for future use)\n- Enhanced section borders (2px #0f0c0a)\n- Bumped CACHE_V in sw.js for CSS rebuild\n\nAll animations and decade waypoints remain functional."
+  },
+  {
+    "sha": "aa74b47",
+    "date": "2026-07-19",
+    "title": "Phase 2 WIP: Guernica Passage — Series in Motion animation choreography (foundation)",
+    "body": "WORK IN PROGRESS - Not yet tested on localhost. Phase 1 (static context + labels) is complete and shipped.\n\nAdded Intersection Observer for anime.js choreography:\n- Detects waypoints entering viewport\n- Triggers decade marker scale + opacity animation (600ms, easeOutQuad)\n- Triggers work count fade-in (500ms, delayed 100ms)\n- Staggered work reveals (40ms between works, per MOTION-SPEC.md § III)\n\nUses animeUtils.anime reference (bundled in anime-utils.umd.js).\n\nNext steps (Phase 2 completion):\n- Test IO visibility and anime.js animations on localhost\n- Verify stagger timing doesn't conflict with scroll-based .seen class\n- May need to adjust: works might already have .seen class by time waypoint observed\n- Consider adjusting CSS transition vs anime.js animation overlap\n\nPhase 3 (imagery + audio) pending Phase 2 verification."
+  },
+  {
+    "sha": "5b73618",
+    "date": "2026-07-19",
+    "title": "Phase 1: Guernica Passage — Series in Motion static context + decade labels",
+    "body": "- Added decade evolution context quotes (1990s, 2010s, 2020s)\n- Context fades in as waypoints scroll into viewport\n- Counter now displays decade labels: THE BEGINNING, MATURATION, LEGACY\n- Counter format: \"WORK n OF 232 · [DECADE LABEL]\"\n- CSS: context text styled as italic serif, inherits dim color, max-width for readability\n- JavaScript: waypoint context visibility tracked via Set to fire once per decade\n- Ready for Phase 2: anime.js choreography + work arrival staggering\n\nTested on localhost: 1990s context shows + counter updates with labels as user scrolls between decades. 2000s (undocumented decade) intentionally has no context."
+  },
+  {
+    "sha": "c1f247c",
+    "date": "2026-07-19",
+    "title": "Sprint 2a: Archive performance & mobile UX",
+    "body": "Performance fix:\n- Debounce search input (200ms) to prevent expensive renders on fast typing\n  Fixes timeout when typing quickly in 1,084-item grid\n\nMobile UX:\n- Reduce controls padding (12px top/bottom on mobile)\n- Compact font sizes and spacing for mobile\n- Reduce grid-wrap padding (24px top, 60px bottom instead of 46px/20vh)\n- Tighter grid gaps (16px 12px) and smaller column min-width (140px)\n- Overall: more content visible, less scroll friction"
+  },
+  {
+    "sha": "e176aab",
+    "date": "2026-07-19",
+    "title": "Sprint 1: Quick Wins 2-5 — Search context, filter feedback, keyboard focus, mobile metadata",
+    "body": "QW2: Search results header shows active query + filter count\nQW3: Active filter visual feedback (orange work count + bold)\nQW4: Keyboard focus indicators on all buttons (outline + offset)\nQW5: Mobile metadata compacted to inline format (1990s · collage · Vertical)"
+  },
+  {
+    "sha": "97a8c62",
+    "date": "2026-07-19",
+    "title": "Quick win 1: Metadata visual grouping — add orange left border to artwork detail metadata panel",
+    "body": "Visual grouping makes metadata scan faster; feels more organized."
+  },
+  {
+    "sha": "a0985d2",
+    "date": "2026-07-19",
+    "title": "Docs: Update CURRENT_STATE.md with intake pipeline discovery",
+    "body": "Added 2026-07-19 entry documenting:\n- Intake pipeline validation (Phase 2.3–2.4 fully automated)\n- Test setup complete (3 placeholders live on jfsn.com)\n- Ready for 40-work ingestion in 4 batches\n- Updated WORKFLOW.md, created INTAKE_QUICKSTART.md\n- Commits: 86d8b8d4, 403f4f03, 69cde874, e15ab7f0, 003694ed"
+  },
+  {
+    "sha": "003694e",
+    "date": "2026-07-19",
+    "title": "Docs: Update WORKFLOW.md to highlight intake pipeline",
+    "body": "WORKFLOW.md now leads with the Intake Pipeline (Phase 2.3–2.4) as the standard for ingesting new artworks from photos. References STEWARDSHIP-INTAKE.md and INTAKE_QUICKSTART.md for details. Legacy catalog.py workflow (AI-generated metadata) retained for reference but marked deprecated for new works."
+  },
+  {
+    "sha": "e15ab7f",
+    "date": "2026-07-19",
+    "title": "Docs: Update IMPROVEMENTS backlog + add INTAKE_QUICKSTART guide",
+    "body": "- Updated IMPROVEMENTS.md: bumped date, added 'Ingest 40 new artworks' to 🔴 Do soon\n- Added INTAKE_QUICKSTART.md: practical step-by-step guide for ingesting 40 works (20×3'×4' + 20×2'×3') in 4 batches using validated automated intake pipeline\n- Intake pipeline: Phase 2.3 (artworks/ingest.py) + Phase 2.4 (tools/intake/intake_finish.py)\n- Test setup complete: 3 placeholders (art9901–art9903) verified live on jfsn.com\n\nNext session: photograph first batch, drop to artworks/inbox/, run intake automation, author JSON sidecars, deploy."
+  },
+  {
+    "sha": "69cde87",
+    "date": "2026-07-19",
+    "title": "Add artwork pages for test entries art9901–art9903",
+    "body": ""
+  },
+  {
+    "sha": "403f4f0",
+    "date": "2026-07-19",
+    "title": "Test: Regenerate catalog with 3 double-sided 3'×4' placeholders",
+    "body": "Added source entries: artworks/full/{art9901,art9902,art9903}.json\nRegenerated via build_catalog.py:\n  - config/catalog.json (1087 works, +3 test)\n  - config/catalog-lite.json\n  - api/v1/{works.json, works/*.json}\n  - feed.xml, sitemap.xml, sw.js (CACHE_V bumped)\n\nGenerated artwork pages for art9901–art9903.\nAll three marked [TEST] for easy identification and removal after validation."
+  },
+  {
     "sha": "86d8b8d",
     "date": "2026-07-19",
     "title": "Test: Add 3 double-sided 3'×4' placeholder artworks",
