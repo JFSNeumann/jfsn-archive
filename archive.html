@@ -605,8 +605,9 @@ addEventListener('DOMContentLoaded', () => {
   // their new grid position, cards leaving the result set simply drop out
   // with the grid, and genuinely new cards cascade in staggered).
   function render(append){
-    const list = filtered();
-    console.log('render() called with append=', append, 'list.length=', list.length);
+    try {
+      const list = filtered();
+      console.log('render() called with append=', append, 'list.length=', list.length);
     renderMeta(list);
     const useAnime = !REDUCED && typeof animeUtils !== 'undefined';
 
@@ -682,6 +683,9 @@ addEventListener('DOMContentLoaded', () => {
         }
       });
     }, 150);
+    } catch (e) {
+      console.error('ERROR in render function:', e.message, e.stack);
+    }
   }
 
   let searchTimeout;
@@ -708,8 +712,12 @@ addEventListener('DOMContentLoaded', () => {
   });
 
   console.log('About to call render(true)');
-  render(true); // initial load: append into the empty grid, no fade-from-nothing
-  console.log('render(true) completed');
+  try {
+    render(true); // initial load: append into the empty grid, no fade-from-nothing
+    console.log('render(true) completed');
+  } catch (e) {
+    console.error('ERROR in render():', e.message, e.stack);
+  }
 })();
 </script>
 
