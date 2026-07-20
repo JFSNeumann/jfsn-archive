@@ -398,6 +398,14 @@ addEventListener('DOMContentLoaded', () => {
           <span class="caps label">ORIENTATION</span>
           <div class="chips"></div>
         </div>
+        <div class="fgroup" data-key="theme">
+          <span class="caps label">THEME</span>
+          <div class="chips"></div>
+        </div>
+        <div class="fgroup" data-key="material">
+          <span class="caps label">MATERIAL</span>
+          <div class="chips"></div>
+        </div>
         <button id="clear-filters" class="caps" hidden>[ CLEAR ALL FILTERS ]</button>
       </div>
     </div>
@@ -459,12 +467,21 @@ addEventListener('DOMContentLoaded', () => {
 (async function(){
   'use strict';
   const works = await fetch('config/current.json', {cache:'no-cache'}).then(r => r.json());
+  const catalog = await fetch('config/catalog.json', {cache:'no-cache'}).then(r => r.json()).catch(() => []);
+  const themesData = await fetch('api/v1/themes.json', {cache:'no-cache'}).then(r => r.json()).catch(() => []);
+  const materialsData = await fetch('api/v1/materials.json', {cache:'no-cache'}).then(r => r.json()).catch(() => []);
+
+  // Map catalog by ID for quick lookup of themes/materials
+  const catalogMap = new Map(catalog.map(w => [w.file, w]));
+
   const ORI_LABEL = { v: 'VERTICAL', h: 'HORIZONTAL', s: 'SQUARE' };
   const MEDIA = [...new Set(works.map(w => w.m))].filter(m => m !== null).sort();
   const DECADES = [...new Set(works.map(w => w.y !== null ? Math.floor(w.y / 10) * 10 : null))].filter(d => d !== null).sort();
   const ORIS = [...new Set(works.map(w => w.o))].filter(o => o !== null && ORI_LABEL[o]);
+  const THEMES = themesData.length > 0 ? themesData.map(t => t.name || t).sort() : [];
+  const MATERIALS = materialsData.length > 0 ? materialsData.map(m => m.name || m).sort() : [];
 
-  const state = { medium: new Set(), decade: new Set(), orientation: new Set(), q: '', sort: 'year-desc' };
+  const state = { medium: new Set(), decade: new Set(), orientation: new Set(), theme: new Set(), material: new Set(), q: '', sort: 'year-desc' };
   const PAGE = 60;
   let shown = PAGE;
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -498,6 +515,8 @@ addEventListener('DOMContentLoaded', () => {
   buildChips('medium', MEDIA, v => v.toUpperCase());
   buildChips('decade', DECADES, v => v + 'S');
   buildChips('orientation', ORIS, v => ORI_LABEL[v]);
+  if (THEMES.length > 0) buildChips('theme', THEMES, v => v);
+  if (MATERIALS.length > 0) buildChips('material', MATERIALS, v => v);
 
   function filtered(){
     const q = state.q.trim().toLowerCase();
@@ -505,6 +524,12 @@ addEventListener('DOMContentLoaded', () => {
       if (state.medium.size && !state.medium.has(w.m)) return false;
       if (state.decade.size && !state.decade.has(Math.floor(w.y / 10) * 10)) return false;
       if (state.orientation.size && !state.orientation.has(w.o)) return false;
+
+      // Theme & material filtering via catalog lookup
+      const catEntry = catalogMap.get(w.i);
+      if (state.theme.size && (!catEntry || !catEntry.themes || !catEntry.themes.some(t => state.theme.has(t)))) return false;
+      if (state.material.size && (!catEntry || !catEntry.materials || !catEntry.materials.some(m => state.material.has(m)))) return false;
+
       if (q && !w.t.toLowerCase().includes(q)) return false;
       return true;
     });
@@ -582,9 +607,9 @@ addEventListener('DOMContentLoaded', () => {
       requestAnimationFrame(() => requestAnimationFrame(() => countLabel.classList.remove('tick')));
     }
     animateCount(list.length, suffix);
-    const anyActive = state.medium.size || state.decade.size || state.orientation.size || state.q;
+    const anyActive = state.medium.size || state.decade.size || state.orientation.size || state.theme.size || state.material.size || state.q;
     clearBtn.hidden = !anyActive;
-    const nChips = state.medium.size + state.decade.size + state.orientation.size;
+    const nChips = state.medium.size + state.decade.size + state.orientation.size + state.theme.size + state.material.size;
     const ft = document.getElementById('filters-toggle');
     ft.textContent = nChips ? '[ FILTERS · ' + nChips + ' ]' : '[ FILTERS ]';
     ft.classList.toggle('active', nChips > 0);
@@ -702,7 +727,7 @@ addEventListener('DOMContentLoaded', () => {
   });
   loadMore.addEventListener('click', () => { shown += PAGE; render(true); });
   function clearAll(){
-    state.medium.clear(); state.decade.clear(); state.orientation.clear();
+    state.medium.clear(); state.decade.clear(); state.orientation.clear(); state.theme.clear(); state.material.clear();
     state.q = ''; document.getElementById('search').value = '';
     document.querySelectorAll('.chip.active').forEach(c => { c.classList.remove('active'); c.setAttribute('aria-pressed', 'false'); });
     shown = PAGE; render();
