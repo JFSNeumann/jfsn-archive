@@ -438,7 +438,9 @@ addEventListener('DOMContentLoaded', () => {
 <script>
 (async function(){
   'use strict';
+  console.log('Archive script starting...');
   const works = await fetch('config/current.json', {cache:'no-cache'}).then(r => r.json());
+  console.log('Works loaded:', works?.length || 'error');
   const ORI_LABEL = { v: 'VERTICAL', h: 'HORIZONTAL', s: 'SQUARE' };
   const MEDIA = [...new Set(works.map(w => w.m))].filter(m => m !== null).sort();
   const DECADES = [...new Set(works.map(w => w.y !== null ? Math.floor(w.y / 10) * 10 : null))].filter(d => d !== null).sort();
@@ -600,6 +602,7 @@ addEventListener('DOMContentLoaded', () => {
   // with the grid, and genuinely new cards cascade in staggered).
   function render(append){
     const list = filtered();
+    console.log('render() called with append=', append, 'list.length=', list.length);
     renderMeta(list);
     const useAnime = !REDUCED && typeof animeUtils !== 'undefined';
 
