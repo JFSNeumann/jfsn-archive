@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-20260720161545'; // Style: reverse button orange for emphasis
+const CACHE_V  = 'jfsn-20260720161850'; // Add: reverse button hover effect (orange→white)
 const PRECACHE = [
   // The 14 live room pages (Museum v2 — the only site that exists today;
   // the old v1 archive, decade pages, and generated theme pages were
