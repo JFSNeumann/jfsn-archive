@@ -1,5 +1,161 @@
 [
   {
+    "sha": "c92955b",
+    "date": "2026-07-20",
+    "title": "Add double-sided caption link above artwork image",
+    "body": "Added 'DOUBLE SIDED' caption that appears above the image for double-sided works (w.b === 1). The caption is clickable and toggles the reverse view, synchronized with the existing '[ VIEW BACK SIDE → ]' button. Styled in orange (#FF6600) with white hover state for consistency with the site's interaction design."
+  },
+  {
+    "sha": "6af722d",
+    "date": "2026-07-20",
+    "title": "Bump CACHE_V",
+    "body": ""
+  },
+  {
+    "sha": "fe10882",
+    "date": "2026-07-20",
+    "title": "Fix: Increase CSS specificity for reverse button hover",
+    "body": "The general rule '#label nav button:hover' was overriding the specific\n'#view-reverse:hover' rule due to higher specificity. Changed to\n'#label nav #view-reverse:hover' to ensure white hover effect works."
+  },
+  {
+    "sha": "5c4fa04",
+    "date": "2026-07-20",
+    "title": "Bump CACHE_V",
+    "body": ""
+  },
+  {
+    "sha": "3a3e40c",
+    "date": "2026-07-20",
+    "title": "Fix: Reverse button hover effect not working (specificity issue)",
+    "body": "Moved orange color from inline style to CSS rule so :hover can override it. Inline styles had higher specificity and were blocking the hover effect. Added focus-visible state for keyboard navigation."
+  },
+  {
+    "sha": "18cf44b",
+    "date": "2026-07-20",
+    "title": "Bump CACHE_V",
+    "body": ""
+  },
+  {
+    "sha": "76a15eb",
+    "date": "2026-07-20",
+    "title": "Add hover effect: VIEW BACK SIDE button orange → white",
+    "body": "Added CSS transition and :hover rule to change the reverse button color from orange to white on mouseover, providing visual feedback and better interactivity."
+  },
+  {
+    "sha": "7622e9d",
+    "date": "2026-07-20",
+    "title": "Bump CACHE_V",
+    "body": ""
+  },
+  {
+    "sha": "8d978d1",
+    "date": "2026-07-20",
+    "title": "Style: Make 'VIEW BACK SIDE' button orange for emphasis",
+    "body": "Added color:#FF6600 (site accent color) to the reverse button inline style to make it stand out as an interactive highlight, consistent with other accent elements on the site."
+  },
+  {
+    "sha": "1dff88b",
+    "date": "2026-07-20",
+    "title": "Bump CACHE_V",
+    "body": ""
+  },
+  {
+    "sha": "d2883ef",
+    "date": "2026-07-20",
+    "title": "Update reverse button text: 'VIEW BACK SIDE' for clarity",
+    "body": "Changed button text from '[ VIEW REVERSE → ]' to '[ VIEW BACK SIDE → ]' for clearer, more direct language that matches the site's button pattern."
+  },
+  {
+    "sha": "d4dc85b",
+    "date": "2026-07-20",
+    "title": "Bump CACHE_V to invalidate service worker cache",
+    "body": ""
+  },
+  {
+    "sha": "c07985b",
+    "date": "2026-07-20",
+    "title": "Fix: Handle null fields in artwork.html for incomplete metadata",
+    "body": "New double-sided artworks (art1085, art1086) have null title, year, and work_type fields. The initialization code called .toUpperCase() on these nulls, throwing a TypeError that prevented the entire async function from completing. This blocked the reverse button display logic.\n\nAdded null coalescing operators to safely handle missing metadata and display '—' placeholders. Allows reverse button logic to complete and display properly.\n\nFixes reverse button not appearing on double-sided artworks with incomplete metadata."
+  },
+  {
+    "sha": "7e20b2b",
+    "date": "2026-07-20",
+    "title": "Fix: current.html visualization rendering — convert color names to hex codes",
+    "body": "The Current page uses canvas-based visualization that expects hex color codes (e.g., #FF0000), but build-current.py was passing color names from palette (\"red\", \"blue\", etc.). This caused the rendering code to fail silently when parsing colors at line 366.\n\nAdded COLOR_MAP in build-current.py to convert palette color names to standardized hex codes. Regenerated current.json with proper hex values. Bumped CACHE_V to invalidate service worker.\n\nFixes jfsn.com/current.html visualization not rendering."
+  },
+  {
+    "sha": "3d27d36",
+    "date": "2026-07-20",
+    "title": "Improvement: Enhance text readability across entire site",
+    "body": "Increased contrast ratios site-wide by adjusting CSS color variables:\n- --ink: #e8e2d9 → #f0e8dd (brighter main text)\n- --dim: #7a7168 → #b8a89a (much lighter secondary/navigation text)\n- --faint: #3a332d → #8a7a6c (lighter labels and captions)\n\nApplied to all 14 main pages. Changes improve accessibility and reduce\neye strain on navigation, labels, metadata, and secondary content while\nmaintaining design aesthetic."
+  },
+  {
+    "sha": "ea8e648",
+    "date": "2026-07-20",
+    "title": "Feature: Add featured section highlighting new double-sided works",
+    "body": "Added prominent callout in archive page showing links to the two new\ndouble-sided artworks (art1085 and art1086). Section appears after\nfilter controls with direct links to view each piece and toggle between\nfront/back images."
+  },
+  {
+    "sha": "0120e7a",
+    "date": "2026-07-20",
+    "title": "Clean up: Remove debug logging from archive.html",
+    "body": "All debug console.log statements removed now that the core bug is fixed.\nThe grid renders successfully with all 1,086 works displaying correctly."
+  },
+  {
+    "sha": "1250b07",
+    "date": "2026-07-20",
+    "title": "Fix: Handle null titles in sort comparators to prevent crash",
+    "body": "Root cause found: new double-sided artworks (art1085/art1086) have null\ntitles ('t': null). Sort comparators tried to call .localeCompare() on null,\nthrowing 'Cannot read properties of null' error and breaking the entire\ngrid rendering.\n\nFix: Use (a.t || '') and (b.t || '') to treat null titles as empty strings\nin all three sort modes (year-desc, year-asc, title). This allows artworks\nwith incomplete metadata to be safely included in results and sorted\nalongside complete works."
+  },
+  {
+    "sha": "4ad31e8",
+    "date": "2026-07-20",
+    "title": "Debug: Add try-catch blocks to capture errors in render and filtered functions",
+    "body": ""
+  },
+  {
+    "sha": "9cb22c9",
+    "date": "2026-07-20",
+    "title": "Debug: Add step-by-step logging to find where script execution stops",
+    "body": ""
+  },
+  {
+    "sha": "5561d98",
+    "date": "2026-07-20",
+    "title": "Debug: Add comprehensive logging to trace script execution and render flow",
+    "body": ""
+  },
+  {
+    "sha": "147d0d4",
+    "date": "2026-07-20",
+    "title": "Debug: Add logging to filtered() to diagnose zero-results issue",
+    "body": "Adding console.log calls to identify why filtered() returns 0 works\nwhen all works should be included with no filters active."
+  },
+  {
+    "sha": "8449ecb",
+    "date": "2026-07-20",
+    "title": "Fix: Filter null values from MEDIA/DECADES/ORIS to prevent .toUpperCase() errors",
+    "body": "The new double-sided artworks (art1085/art1086) have incomplete metadata with\nnull values for medium, year, and orientation. When archive.html tried to build\nfilter chips, it attempted .toUpperCase() on null values, throwing a TypeError\nand stopping the script. This left only partial UI rendered (\"No works match\nthese filters\"). Fix: filter out null values when building MEDIA, DECADES, and\nORIS arrays so only valid metadata values generate chips.\n\nThis resolves the archive page showing empty results. The 1,084 works now load\ncorrectly with all filter options (COLLAGE, PAINTING, PHOTOGRAPH, SCULPTURE)."
+  },
+  {
+    "sha": "fb8923f",
+    "date": "2026-07-20",
+    "title": "Hotfix: Bump CACHE_V to invalidate service worker cache",
+    "body": "The previous merge conflict fix didn't invalidate the browser cache because\nCACHE_V remained the same. Bumping to new timestamp so service worker cache\nexpires and browsers fetch fresh archive.html and current.json. This resolves\nthe \"No works match these filters\" issue where the page was serving stale\ndata from the cached version."
+  },
+  {
+    "sha": "cddd69d",
+    "date": "2026-07-20",
+    "title": "Fix: Resolve merge conflict in sw.js that broke archive grid rendering",
+    "body": "The sw.js file had unresolved git merge conflict markers (<<<<<<< HEAD\n...=======...>>>>>>>) that made the JavaScript invalid, causing the\nentire archive page script to fail silently. This left the grid showing\n\"No works match filters\" even though 1,084 works exist and no filters\nwere actually selected. Conflict markers removed; CACHE_V kept at\njfsn-20260720140839."
+  },
+  {
+    "sha": "c0399cc",
+    "date": "2026-07-20",
+    "title": "Remove test artworks (art9901-art9907), rebuild catalogs to 1086 records",
+    "body": "Clean up failed test ingestions:\n- Delete art9901-9903 (early test batch with sidecars)\n- Delete art9904-9907 (failed Ingest Batch 1)\n- Rebuild catalog.json, catalog-lite.json, current.json\n- Final count: 1086 records (1084 existing + 2 new double-sided)\n- Verify: art1085 and art1086 have b=1 flag in current.json"
+  },
+  {
     "sha": "b79c3a0",
     "date": "2026-07-20",
     "title": "Rebuild API and feed files",

@@ -75,6 +75,8 @@ def check_deps():
 def next_art_id():
     """Return the next art ID after the highest existing one in full/."""
     existing = sorted(FULL.glob("art*.avif"))
+    # Filter out _back variants; only consider main artwork files
+    existing = [f for f in existing if not f.stem.endswith("_back")]
     if not existing:
         return 1
     last = existing[-1].stem  # e.g. "art1084"

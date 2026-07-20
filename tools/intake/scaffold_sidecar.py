@@ -33,7 +33,8 @@ import sys
 from pathlib import Path
 
 # artworks/full/ is where sidecars live, relative to this script.
-FULL = Path(__file__).resolve().parent.parent / "artworks" / "full"
+# Path is: tools/intake/scaffold_sidecar.py → up 3 levels to project root
+FULL = Path(__file__).resolve().parents[2] / "artworks" / "full"
 
 # A well-formed artwork ID: "art" + at least four digits.
 _ID_RE = re.compile(r"^art(\d+)$")
