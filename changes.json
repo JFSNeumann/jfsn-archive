@@ -1,5 +1,11 @@
 [
   {
+    "sha": "01aa152",
+    "date": "2026-07-20",
+    "title": "Ingest 4 new double-sided artworks (art1087–art1088, batch 1)",
+    "body": "Added 2 artworks with front + back sides:\n- art1087: Untitled Study 1 (2020s, mixed media)\n- art1088: Untitled Study 2 (2020s, mixed media)\n\nFixed bugs in ingest pipeline:\n- ingest.py: ignore _back suffixes when finding next ID\n- scaffold_sidecar.py: correct parent path calculation (parents[2] not parent.parent)\n\nGenerated: all image tiers (full/medium/thumb/mini/micro) + JSON sidecars\nUpdated: dims.json, catalog.json, current.json (both marked with b=1 for double-sided)"
+  },
+  {
     "sha": "c92955b",
     "date": "2026-07-20",
     "title": "Add double-sided caption link above artwork image",
