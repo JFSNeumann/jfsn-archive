@@ -131,8 +131,11 @@ addEventListener('DOMContentLoaded', () => {
   #filter-groups{margin-top:16px}
   #filter-groups-inner{display:flex;flex-wrap:wrap;gap:26px}
   .fgroup{display:flex;flex-direction:column;gap:8px}
-  .fgroup .label{color:var(--faint)}
-  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .fgroup .label{color:var(--faint);cursor:pointer;user-select:none}
+  .fgroup .label::after{content:' ▼';font-size:8px;transition:transform .3s ease}
+  .fgroup.collapsed .label::after{transform:rotate(-90deg)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;max-height:1000px;overflow:hidden;transition:max-height .3s ease}
+  .fgroup.collapsed .chips{max-height:0}
   .chip{
     font-size:10px;letter-spacing:.1em;text-transform:uppercase;
     color:var(--dim);border:1px solid var(--frame);padding:6px 11px;
@@ -478,8 +481,8 @@ addEventListener('DOMContentLoaded', () => {
   const MEDIA = [...new Set(works.map(w => w.m))].filter(m => m !== null).sort();
   const DECADES = [...new Set(works.map(w => w.y !== null ? Math.floor(w.y / 10) * 10 : null))].filter(d => d !== null).sort();
   const ORIS = [...new Set(works.map(w => w.o))].filter(o => o !== null && ORI_LABEL[o]);
-  const THEMES = themesData.themes ? themesData.themes.map(t => t.name || t).sort() : [];
-  const MATERIALS = materialsData.materials ? materialsData.materials.map(m => m.name || m).sort() : [];
+  const THEMES = themesData.themes ? themesData.themes.sort((a, b) => b.count - a.count) : [];
+  const MATERIALS = materialsData.materials ? materialsData.materials.sort((a, b) => b.count - a.count) : [];
 
   const state = { medium: new Set(), decade: new Set(), orientation: new Set(), theme: new Set(), material: new Set(), q: '', sort: 'year-desc' };
   const PAGE = 60;
@@ -491,16 +494,18 @@ addEventListener('DOMContentLoaded', () => {
       .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
-  function buildChips(key, values, labelFn){
+  function buildChips(key, values, labelFn, countFn){
     const wrap = document.querySelector(`.fgroup[data-key="${key}"] .chips`);
     for (const v of values) {
       const btn = document.createElement('button');
       btn.className = 'chip';
       btn.setAttribute('aria-pressed', 'false');
       btn.textContent = labelFn(v);
-      btn.dataset.value = v;
+      if (countFn) btn.title = countFn(v);
+      btn.dataset.value = typeof v === 'string' ? v : v.name;
       btn.addEventListener('click', () => {
-        state[key].has(v) ? state[key].delete(v) : state[key].add(v);
+        const val = typeof v === 'string' ? v : v.name;
+        state[key].has(val) ? state[key].delete(val) : state[key].add(val);
         btn.classList.toggle('active');
         btn.setAttribute('aria-pressed', btn.classList.contains('active'));
         if (!REDUCED && typeof animeUtils !== 'undefined') {
@@ -515,8 +520,8 @@ addEventListener('DOMContentLoaded', () => {
   buildChips('medium', MEDIA, v => v.toUpperCase());
   buildChips('decade', DECADES, v => v + 'S');
   buildChips('orientation', ORIS, v => ORI_LABEL[v]);
-  if (THEMES.length > 0) buildChips('theme', THEMES, v => v);
-  if (MATERIALS.length > 0) buildChips('material', MATERIALS, v => v);
+  if (THEMES.length > 0) buildChips('theme', THEMES, v => v.name, v => `${v.count} work${v.count !== 1 ? 's' : ''}`);
+  if (MATERIALS.length > 0) buildChips('material', MATERIALS, v => v.name, v => `${v.count} work${v.count !== 1 ? 's' : ''}`);
 
   function filtered(){
     const q = state.q.trim().toLowerCase();
@@ -737,6 +742,19 @@ addEventListener('DOMContentLoaded', () => {
   document.getElementById('filters-toggle').addEventListener('click', function(){
     const open = document.getElementById('filter-groups').classList.toggle('open');
     this.setAttribute('aria-expanded', open);
+  });
+
+  // Collapse/expand filter sections
+  document.querySelectorAll('.fgroup .label').forEach(label => {
+    label.style.cursor = 'pointer';
+    label.title = 'Click to collapse/expand';
+    label.addEventListener('click', function(e){
+      e.preventDefault();
+      const fgroup = this.closest('.fgroup');
+      fgroup.classList.toggle('collapsed');
+      const chips = fgroup.querySelector('.chips');
+      if (chips) chips.style.maxHeight = fgroup.classList.contains('collapsed') ? '0' : '1000px';
+    });
   });
 
   render(true); // initial load: append into the empty grid, no fade-from-nothing
