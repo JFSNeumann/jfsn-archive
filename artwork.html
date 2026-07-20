@@ -186,6 +186,11 @@ addEventListener('DOMContentLoaded', () => {
     #walk .hint{display:none}
     header.hud{padding-left:16px;padding-right:16px;gap:12px}
     header.hud .who{letter-spacing:.14em}
+    #ledger .row{display:inline;padding:0;border:none}
+    #ledger .row .k{display:none}
+    #ledger .row .v{display:inline;margin-right:8px}
+    #ledger .row .v:after{content:' · ';color:var(--faint)}
+    #ledger .row:last-child .v:after{content:''}
   }
 
   /* ---------- lightbox ---------- */
