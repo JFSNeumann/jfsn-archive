@@ -147,12 +147,14 @@ addEventListener('DOMContentLoaded', () => {
      filter, rather than the number just silently changing underneath. */
   #count-label.tick{color:var(--accent);transition:none}
   #sort{
-    background:transparent;border:1px solid var(--frame);color:var(--dim);
-    padding:11px 12px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
-    cursor:pointer;transition:background-color .3s ease,border-color .3s ease,color .3s ease;
+    background:rgba(255,102,0,.03);border:2px solid var(--frame);color:var(--dim);
+    padding:12px 14px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    cursor:pointer;transition:all .3s ease;appearance:none;padding-right:28px;
+    background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="%23b8a89a" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>');
+    background-repeat:no-repeat;background-position:right 10px center;font-weight:500;
   }
-  #sort:hover{background-color:rgba(255,102,0,.02);border-color:var(--dim)}
-  #sort:focus{outline:none;border-color:var(--accent);background-color:rgba(255,102,0,.04)}
+  #sort:hover{background-color:rgba(255,102,0,.06);border-color:var(--dim);color:var(--ink)}
+  #sort:focus{outline:none;border-color:var(--accent);background-color:rgba(255,102,0,.1);box-shadow:0 0 0 3px rgba(255,102,0,.1)}
   #sort option{background:var(--room);color:var(--ink)}
 
   #filter-groups{margin-top:16px}
@@ -197,19 +199,28 @@ addEventListener('DOMContentLoaded', () => {
   #clear-filters[hidden]{display:none}
 
   /* Active filter pills */
-  #active-filters{min-height:0}
+  #active-filters{
+    min-height:0;padding:14px clamp(20px,6vw,80px);
+    margin-bottom:20px;background:rgba(255,102,0,.04);border:1px solid var(--frame);
+    border-top:3px solid var(--accent);
+  }
   #active-filters:empty{display:none}
+  #active-filters::before{
+    content:'Filtering by: ';font-size:10px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--faint);margin-right:12px;
+    font-weight:600;
+  }
   .filter-pill{
-    display:inline-flex;align-items:center;gap:6px;
+    display:inline-flex;align-items:center;gap:8px;
     font-size:10px;letter-spacing:.1em;text-transform:uppercase;
-    color:var(--ink);background:var(--accent);padding:6px 10px;
-    border-radius:3px;font-weight:600;
+    color:#0c0a09;background:var(--accent);padding:7px 12px;
+    border-radius:2px;font-weight:600;
     animation:pillEnter .3s ease-out;
   }
   .filter-pill button{
     background:none;border:none;color:inherit;cursor:pointer;
-    font-size:12px;font-weight:bold;padding:0;margin:0 -2px 0 2px;
-    opacity:.7;transition:opacity .2s;
+    font-size:12px;font-weight:bold;padding:0;margin:0 -2px 0 4px;
+    opacity:.6;transition:opacity .2s;
   }
   .filter-pill button:hover{opacity:1}
   @keyframes pillEnter{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
@@ -335,6 +346,19 @@ addEventListener('DOMContentLoaded', () => {
     display:block;margin-top:4px;font-size:8px;letter-spacing:.12em;
     color:var(--accent);text-transform:uppercase;
   }
+
+  .card .size-badge{
+    position:absolute;bottom:8px;right:8px;
+    background:rgba(255,102,0,.9);color:#0c0a09;
+    font-size:8px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;
+    padding:4px 8px;border-radius:2px;
+    opacity:0;transition:opacity .3s ease;pointer-events:none;
+  }
+  .card a:hover .size-badge,.card a:focus-visible .size-badge{opacity:1}
+  @media (hover:none) and (pointer:coarse){
+    .card .size-badge{opacity:0.8}
+  }
+
   #empty{
     display:none;text-align:center;padding:12vh clamp(20px,6vw,80px);
     margin-top:40px;border:1px solid var(--frame);background:rgba(255,102,0,.02);
@@ -511,7 +535,7 @@ addEventListener('DOMContentLoaded', () => {
 
 <section id="grid-wrap">
   <div id="results-header" class="caps" style="padding:20px clamp(20px,6vw,80px) 0;margin-top:-16px;margin-bottom:20px;border-bottom:1px solid var(--frame);color:var(--dim);font-size:10px;letter-spacing:.16em;display:none"></div>
-  <div id="active-filters" style="display:flex;flex-wrap:wrap;gap:8px;padding:0 clamp(20px,6vw,80px);margin-bottom:20px"></div>
+  <div id="active-filters"></div>
   <div id="grid"><noscript>
     <div style="text-align:center;padding:8vh 20px">
       <p class="prose">The vault's shelving is built by script from the open
@@ -650,11 +674,13 @@ addEventListener('DOMContentLoaded', () => {
   const clearBtn = document.getElementById('clear-filters');
 
   function cardHTML(w, idx){
+    const sizeLabel = w.d ? w.d : (w.o === 'h' ? 'Horizontal' : w.o === 's' ? 'Square' : 'Vertical');
     return `
       <figure class="card" data-id="${esc(w.i)}">
         <a href="artwork.html?id=${w.i}">
           <img src="/artworks/thumbs/${w.i}.avif" srcset="/artworks/mini/${w.i}.avif 100w, /artworks/thumbs/${w.i}.avif 400w, /artworks/medium/${w.i}.avif 900w" sizes="min(45vw, 210px)" alt="${esc(w.t)}"${idx < 12 ? '' : ' loading="lazy"'} decoding="async"
                style="aspect-ratio:${w.o === 'h' ? '4/3' : w.o === 's' ? '1/1' : '2/3'}">
+          <span class="size-badge">${esc(sizeLabel)}</span>
           <figcaption>
             <div class="t serif">${esc(w.t)}</div>
             <div class="m caps">${esc(w.yd)} · ${esc(w.m)}</div>
