@@ -279,7 +279,7 @@ addEventListener('DOMContentLoaded', () => {
     <div id="flag">Photoshop composite — imagined placement</div>
     <nav>
       <button id="view-full">[ VIEW FULL RESOLUTION → ]</button>
-      <button id="view-reverse" style="display:none" aria-label="Toggle between front and reverse sides of this double-sided work">[ VIEW REVERSE → ]</button>
+      <button id="view-reverse" style="display:none" aria-label="Toggle between front and back sides of this double-sided work">[ VIEW BACK SIDE → ]</button>
       <button id="copy-link">[ COPY LINK → ]<span id="copied">COPIED</span></button>
       <a id="series-door" href="guernica-passage.html">[ PART OF THE GUERNICA PASSAGE → ]</a>
       <a href="archive.html">[ ← BACK TO THE ARCHIVE ]</a>
@@ -521,7 +521,7 @@ addEventListener('DOMContentLoaded', () => {
     const suffix = isShowingReverse ? '_back' : '';
     img.src = '/artworks/medium/' + w.i + suffix + '.avif';
     img.alt = w.t + (isShowingReverse ? ' — reverse' : '');
-    viewReverseBtn.textContent = isShowingReverse ? '[ VIEW FRONT → ]' : '[ VIEW REVERSE → ]';
+    viewReverseBtn.textContent = isShowingReverse ? '[ VIEW FRONT → ]' : '[ VIEW BACK SIDE → ]';
   });
 
 
