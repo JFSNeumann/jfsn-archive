@@ -120,6 +120,12 @@ addEventListener('DOMContentLoaded', () => {
     100%{background-color:var(--accent);transform:scale(1)}
   }
   #door .fact{color:var(--dim)}
+  #door .prose{
+    background:rgba(255,102,0,.03);border:1px solid var(--frame);
+    padding:20px 28px;border-radius:2px;
+    font-size:clamp(16px,1.95vw,18px);line-height:2;
+    margin-top:20px;max-width:60ch;
+  }
 
   /* ---------- controls ---------- */
   #controls{
@@ -143,10 +149,15 @@ addEventListener('DOMContentLoaded', () => {
   #search::placeholder{color:var(--faint);font-style:italic}
   #search:hover{background-color:rgba(255,102,0,.04);border-color:var(--dim)}
   #search:focus{outline:none;border-color:var(--accent);background-color:rgba(255,102,0,.08);box-shadow:0 0 0 3px rgba(255,102,0,.1)}
-  #count-label{white-space:nowrap;transition:color .3s ease}
+  #count-label{
+    white-space:nowrap;transition:color .3s ease;
+    font-weight:600;font-size:11px;letter-spacing:.1em;
+    color:var(--ink);background:rgba(255,102,0,.04);
+    padding:8px 12px;border-radius:2px;border:1px solid var(--frame);
+  }
   /* A brief flash confirms the count actually responded to the keystroke/
      filter, rather than the number just silently changing underneath. */
-  #count-label.tick{color:var(--accent);transition:none}
+  #count-label.tick{color:var(--accent);transition:none;background:rgba(255,102,0,.1)}
   #sort{
     background:rgba(255,102,0,.03);border:2px solid var(--frame);color:var(--dim);
     padding:12px 14px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
@@ -207,17 +218,20 @@ addEventListener('DOMContentLoaded', () => {
   }
   #active-filters:empty{display:none}
   #active-filters::before{
-    content:'Filtering by: ';font-size:10px;letter-spacing:.1em;
-    text-transform:uppercase;color:var(--faint);margin-right:12px;
-    font-weight:600;
+    content:'BROWSING: ';font-size:10px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--accent);margin-right:8px;
+    font-weight:700;
   }
   .filter-pill{
     display:inline-flex;align-items:center;gap:8px;
-    font-size:10px;letter-spacing:.1em;text-transform:uppercase;
-    color:#0c0a09;background:var(--accent);padding:7px 12px;
-    border-radius:2px;font-weight:600;
+    font-size:10px;letter-spacing:.05em;text-transform:uppercase;
+    color:var(--ink);background:transparent;padding:0 8px;
+    border-radius:0;font-weight:500;
     animation:pillEnter .3s ease-out;
+    border-right:1px solid var(--frame);
   }
+  .filter-pill:last-child{border-right:none}
+  .filter-pill:first-child{padding-left:0}
   .filter-pill button{
     background:none;border:none;color:inherit;cursor:pointer;
     font-size:12px;font-weight:bold;padding:0;margin:0 -2px 0 4px;
@@ -291,7 +305,14 @@ addEventListener('DOMContentLoaded', () => {
   @media (min-width:1441px){
     #grid{grid-template-columns:repeat(5,1fr);gap:26px 20px}
   }
-  #grid.replacing{opacity:.35}
+  #grid.replacing{
+    opacity:.35;animation:gridUpdate .4s ease;
+  }
+  @keyframes gridUpdate{
+    0%{opacity:.8;transform:scale(.98)}
+    50%{opacity:.4}
+    100%{opacity:1;transform:scale(1)}
+  }
   @media (prefers-reduced-motion: no-preference){
     .card.card-enter{animation:card-in .35s ease backwards}
     @keyframes card-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
@@ -356,7 +377,8 @@ addEventListener('DOMContentLoaded', () => {
   .card figcaption{padding:9px 1px 0}
   .card .t{
     font-family:Georgia,'Times New Roman',serif;font-style:italic;
-    font-size:12.5px;line-height:1.35;
+    font-size:13.5px;line-height:1.5;font-weight:500;
+    color:var(--ink);letter-spacing:.3px;
   }
   .card .m{margin-top:4px;font-size:8.5px;letter-spacing:.12em}
   .card .x{
