@@ -488,6 +488,12 @@ addEventListener('DOMContentLoaded', () => {
       if (q && !w.t.toLowerCase().includes(q)) return false;
       return true;
     });
+    if (list.length === 0) {
+      console.log('DEBUG: filtered() returned 0 items');
+      console.log('works.length:', works.length);
+      console.log('state:', {medium: state.medium.size, decade: state.decade.size, orientation: state.orientation.size, q});
+      console.log('First work:', works[0]);
+    }
     if (state.sort === 'year-desc') list.sort((a, b) => b.y - a.y || a.t.localeCompare(b.t));
     else if (state.sort === 'year-asc') list.sort((a, b) => a.y - b.y || a.t.localeCompare(b.t));
     else list.sort((a, b) => a.t.localeCompare(b.t));
