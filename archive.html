@@ -129,15 +129,19 @@ addEventListener('DOMContentLoaded', () => {
     margin-top:60px;
   }
   #controls-inner{max-width:1500px;margin:0 auto}
-  #search-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
-  #search{
-    flex:1;min-width:200px;background:transparent;border:1px solid var(--frame);
-    color:var(--ink);padding:11px 14px;font-size:14px;font-family:inherit;
-    cursor:text;transition:background-color .3s ease,border-color .3s ease;
+  #search-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;position:relative}
+  #search-row::before{
+    content:'🔍';position:absolute;left:18px;top:50%;transform:translateY(-50%);
+    font-size:16px;pointer-events:none;color:var(--dim);
   }
-  #search::placeholder{color:var(--faint)}
-  #search:hover{background-color:rgba(255,102,0,.02)}
-  #search:focus{outline:none;border-color:var(--accent);background-color:rgba(255,102,0,.04)}
+  #search{
+    flex:1;min-width:200px;background:rgba(255,102,0,.02);border:2px solid var(--frame);
+    color:var(--ink);padding:13px 14px 13px 42px;font-size:14px;font-family:inherit;
+    cursor:text;transition:all .3s ease;border-radius:2px;
+  }
+  #search::placeholder{color:var(--faint);font-style:italic}
+  #search:hover{background-color:rgba(255,102,0,.04);border-color:var(--dim)}
+  #search:focus{outline:none;border-color:var(--accent);background-color:rgba(255,102,0,.08);box-shadow:0 0 0 3px rgba(255,102,0,.1)}
   #count-label{white-space:nowrap;transition:color .3s ease}
   /* A brief flash confirms the count actually responded to the keystroke/
      filter, rather than the number just silently changing underneath. */
@@ -154,9 +158,20 @@ addEventListener('DOMContentLoaded', () => {
   #filter-groups{margin-top:16px}
   #filter-groups-inner{display:flex;flex-wrap:wrap;gap:26px}
   .fgroup{display:flex;flex-direction:column;gap:8px}
-  .fgroup .label{color:var(--faint);cursor:pointer;user-select:none}
+  .fgroup .label{
+    color:var(--faint);cursor:pointer;user-select:none;
+    display:flex;align-items:center;gap:8px;transition:color .3s ease;
+  }
+  .fgroup .label:hover{color:var(--dim)}
   .fgroup .label::after{content:' ▼';font-size:8px;transition:transform .3s ease}
   .fgroup.collapsed .label::after{transform:rotate(-90deg)}
+  .fgroup .active-badge{
+    display:inline-flex;align-items:center;justify-content:center;
+    background:var(--accent);color:#0c0a09;font-size:9px;font-weight:600;
+    width:18px;height:18px;border-radius:50%;opacity:0;transition:opacity .3s ease;
+    flex-shrink:0;
+  }
+  .fgroup:has(.chip.active) .active-badge{opacity:1}
   .fgroup .chip-count{color:var(--dim);font-size:9px;opacity:0.8}
   .chips{display:flex;flex-wrap:wrap;gap:8px;max-height:1000px;overflow:hidden;transition:max-height .3s ease}
   .fgroup.collapsed .chips{max-height:0}
@@ -347,17 +362,20 @@ addEventListener('DOMContentLoaded', () => {
   #load-more[hidden]{display:none}
 
   #featured-new{
-    margin:20px clamp(20px,6vw,80px);padding:16px;
-    border:1px solid var(--frame);background:rgba(255,102,0,.04);
-    text-align:center;
+    margin:32px clamp(20px,6vw,80px);padding:24px 24px;
+    border:2px solid var(--frame);border-left:6px solid var(--accent);
+    background:linear-gradient(to right, rgba(255,102,0,.06), rgba(255,102,0,.02));
+    text-align:center;transition:all .3s ease;
   }
-  #featured-new .caps{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:8px;display:block}
-  #featured-new p{font-size:13px;margin:0 0 12px;color:var(--ink)}
+  #featured-new:hover{border-color:var(--accent);background:linear-gradient(to right, rgba(255,102,0,.1), rgba(255,102,0,.04));box-shadow:0 8px 24px rgba(255,102,0,.08)}
+  #featured-new::before{content:'✦';display:block;color:var(--accent);font-size:16px;margin-bottom:8px}
+  #featured-new .caps{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;display:block;font-weight:500}
+  #featured-new p{font-size:14px;margin:0 0 14px;color:var(--ink);line-height:1.5}
   #featured-new a{
     display:inline-block;margin:0 8px;font-size:11px;letter-spacing:.1em;
-    text-transform:uppercase;color:var(--accent);cursor:pointer;transition:color .3s ease;
+    text-transform:uppercase;color:var(--accent);cursor:pointer;transition:all .3s ease;font-weight:500;
   }
-  #featured-new a:hover{color:var(--ink)}
+  #featured-new a:hover{color:var(--ink);text-decoration:underline}
 
   #exit-note{padding:0 0 14vh;text-align:center}
   #exit-note nav{margin-top:18px;display:flex;flex-direction:column;gap:16px}
@@ -456,19 +474,19 @@ addEventListener('DOMContentLoaded', () => {
     <div id="filter-groups">
       <div id="filter-groups-inner">
         <div class="fgroup" data-key="medium">
-          <span class="caps label">MEDIUM</span>
+          <span class="caps label">MEDIUM<span class="active-badge">0</span></span>
           <div class="chips"></div>
         </div>
         <div class="fgroup" data-key="decade">
-          <span class="caps label">DECADE</span>
+          <span class="caps label">DECADE<span class="active-badge">0</span></span>
           <div class="chips"></div>
         </div>
         <div class="fgroup" data-key="orientation">
-          <span class="caps label">ORIENTATION</span>
+          <span class="caps label">ORIENTATION<span class="active-badge">0</span></span>
           <div class="chips"></div>
         </div>
         <div class="fgroup" data-key="reverse">
-          <span class="caps label">COLLECTION</span>
+          <span class="caps label">COLLECTION<span class="active-badge">0</span></span>
           <div class="chips"></div>
         </div>
         <div class="fgroup collapsed" data-key="theme">
@@ -683,7 +701,20 @@ addEventListener('DOMContentLoaded', () => {
     requestAnimationFrame(tick);
   }
 
+  function updateBadges(){
+    const fgroups = document.querySelectorAll('.fgroup');
+    fgroups.forEach(fgroup => {
+      const key = fgroup.dataset.key;
+      const badge = fgroup.querySelector('.active-badge');
+      if (badge) {
+        const count = state[key] ? state[key].size : 0;
+        badge.textContent = count;
+      }
+    });
+  }
+
   function renderMeta(list){
+    updateBadges();
     const suffix = list.length === works.length ? ' WORKS' : ' OF ' + works.length.toLocaleString('en-US');
     const newCountText = list.length.toLocaleString('en-US') + suffix;
     if (newCountText !== countLabel.textContent && countLabel.textContent !== '') {
