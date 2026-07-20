@@ -64,7 +64,7 @@ ARTIST_SHORT = _cfg.get("artist_short") or ARTIST_NAME
 # Stripped: description — search.js does not index it; no consumer reads it from
 #            catalog-lite.json (gen-artwork-pages.py reads catalog.json directly).
 #            Removing it cuts the gzipped wire payload from ~153KB to ~66KB (57%).
-LITE_FIELDS = {'file', 'title', 'work_type', 'year', 'themes', 'keywords', 'motifs', 'favorite', 'featured', 'series', 'orientation', 'composite', 'year_precision', 'year_display'}
+LITE_FIELDS = {'file', 'title', 'work_type', 'year', 'themes', 'keywords', 'motifs', 'favorite', 'featured', 'series', 'orientation', 'composite', 'year_precision', 'year_display', 'has_back'}
 
 # Title language that marks an image as a staged "imagined placement" composite
 # even when it isn't tagged Gallery/Studio (master-notes §22/§25).
@@ -116,13 +116,18 @@ skipped = []
 cataloged_ids = set()
 
 # Load records that have full sidecar JSON
+# Skip _back.json files — these are associated media for double-sided works, not independent records
 for p in sorted(FULL.glob("art*.json")):
+    art_id = p.stem  # e.g. "art0061"
+    if art_id.endswith("_back"):
+        continue  # Skip back-side metadata; only the primary artwork is cataloged
     try:
         rec = json.loads(p.read_text())
-        art_id = p.stem  # e.g. "art0061"
         rec['featured'] = art_id in featured_ids
         rec['favorite'] = art_id in favorite_ids
         rec['orientation'] = _orientation(art_id)
+        # Detect if this artwork has a reverse side
+        rec['has_back'] = (FULL / f"{art_id}_back.avif").exists()
         records.append(rec)
         cataloged_ids.add(art_id)
     except Exception as e:
@@ -130,6 +135,7 @@ for p in sorted(FULL.glob("art*.json")):
 
 # Add stub entries for every thumbnail that has no sidecar yet.
 # This makes all artworks visible in the archive before the AI batch runs.
+# Skip _back.avif files — these are associated media for double-sided works, not independent records.
 THUMBS   = Path(__file__).parent / "thumbs"
 PENDING  = Path(__file__).parent.parent / "pending-themes.json"
 pending  = {}
@@ -141,8 +147,12 @@ if PENDING.exists():
 
 for p in sorted(THUMBS.glob("art*.avif")):
     art_id = p.stem
+    if art_id.endswith("_back"):
+        continue  # Skip back-side images; only primary artwork is cataloged
     if art_id not in cataloged_ids:
         pdata = pending.get(art_id, {})
+        # Detect if this artwork has a reverse side
+        has_back = (FULL / f"{art_id}_back.avif").exists()
         records.append({
             'file':     art_id + '.avif',
             'title':    None,
@@ -158,6 +168,7 @@ for p in sorted(THUMBS.glob("art*.avif")):
             'description': None,
             'composition': None,
             'orientation': _orientation(art_id),
+            'has_back': has_back,
         })
 
 # Keep catalog in stable ID order

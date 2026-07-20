@@ -279,6 +279,7 @@ addEventListener('DOMContentLoaded', () => {
     <div id="flag">Photoshop composite — imagined placement</div>
     <nav>
       <button id="view-full">[ VIEW FULL RESOLUTION → ]</button>
+      <button id="view-reverse" style="display:none" aria-label="Toggle between front and reverse sides of this double-sided work">[ VIEW REVERSE → ]</button>
       <button id="copy-link">[ COPY LINK → ]<span id="copied">COPIED</span></button>
       <a id="series-door" href="guernica-passage.html">[ PART OF THE GUERNICA PASSAGE → ]</a>
       <a href="archive.html">[ ← BACK TO THE ARCHIVE ]</a>
@@ -499,6 +500,30 @@ addEventListener('DOMContentLoaded', () => {
       setTimeout(() => c.classList.remove('on'), 1600);
     } catch (_) {}
   });
+
+  // ---------- reverse image toggle (for double-sided works) ----------
+  const viewReverseBtn = document.getElementById('view-reverse');
+  let isShowingReverse = false;
+  // Check if this artwork has a reverse image (double-sided work)
+  // The 'b' flag is set to 1 if the artwork has a _back.avif variant
+  const reverseImageExists = (w && typeof w === 'object' && w.b === 1);
+
+  // Only show the toggle button if this is a double-sided work
+  if (reverseImageExists) {
+    viewReverseBtn.style.display = '';
+  } else {
+    viewReverseBtn.style.display = 'none';
+  }
+
+  viewReverseBtn.addEventListener('click', () => {
+    if (!reverseImageExists) return;
+    isShowingReverse = !isShowingReverse;
+    const suffix = isShowingReverse ? '_back' : '';
+    img.src = '/artworks/medium/' + w.i + suffix + '.avif';
+    img.alt = w.t + (isShowingReverse ? ' — reverse' : '');
+    viewReverseBtn.textContent = isShowingReverse ? '[ VIEW FRONT → ]' : '[ VIEW REVERSE → ]';
+  });
+
 
   // ---------- where this sits: a legible locator across fifty years ----------
   const strip = document.getElementById('strip');
