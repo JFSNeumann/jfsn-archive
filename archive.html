@@ -281,6 +281,19 @@ addEventListener('DOMContentLoaded', () => {
   }
   #load-more[hidden]{display:none}
 
+  #featured-new{
+    margin:20px clamp(20px,6vw,80px);padding:16px;
+    border:1px solid var(--frame);background:rgba(255,102,0,.04);
+    text-align:center;
+  }
+  #featured-new .caps{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:8px;display:block}
+  #featured-new p{font-size:13px;margin:0 0 12px;color:var(--ink)}
+  #featured-new a{
+    display:inline-block;margin:0 8px;font-size:11px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--accent);cursor:pointer;transition:color .3s ease;
+  }
+  #featured-new a:hover{color:var(--ink)}
+
   #exit-note{padding:0 0 14vh;text-align:center}
   #exit-note nav{margin-top:18px;display:flex;flex-direction:column;gap:16px}
 
@@ -389,6 +402,13 @@ addEventListener('DOMContentLoaded', () => {
       </div>
     </div>
   </div>
+</div>
+
+<div id="featured-new">
+  <span class="caps">✦ New Double-Sided Works</span>
+  <p>Two new artworks with reverse images now live in the archive.</p>
+  <a href="artwork.html?id=art1085">[ VIEW ART1085 → ]</a>
+  <a href="artwork.html?id=art1086">[ VIEW ART1086 → ]</a>
 </div>
 
 <section id="grid-wrap">
