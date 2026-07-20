@@ -161,13 +161,45 @@ addEventListener('DOMContentLoaded', () => {
   }
   #hero .subtitle{color:var(--dim)}
 
-  .content-block{padding:8vh clamp(20px,6vw,80px) 0}
+  .content-block{padding:8vh clamp(20px,6vw,80px) 0;position:relative}
+  .content-block::before{
+    content:'';position:absolute;top:0;left:clamp(20px,6vw,80px);right:clamp(20px,6vw,80px);
+    height:1px;background:linear-gradient(to right,transparent,var(--frame),transparent);
+    opacity:0;animation:dividerReveal .6s ease-out forwards;
+  }
+  .content-block:first-of-type::before{display:none}
+  @keyframes dividerReveal{
+    from{opacity:0}
+    to{opacity:1}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .content-block::before{animation:none;opacity:.3}
+  }
   .content-block h2{
     font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
     font-size:clamp(28px,4vw,44px);line-height:1.2;margin-bottom:3vh;color:var(--ink);
+    opacity:0;animation:headingReveal .6s ease-out forwards;
   }
-  .content-block .prose{margin-bottom:2.5vh}
+  @keyframes headingReveal{
+    from{opacity:0;transform:translateY(-8px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .content-block h2{animation:none;opacity:1}
+  }
+  .content-block .prose{margin-bottom:2.5vh;opacity:0;animation:proseReveal .5s ease-out forwards}
   .content-block .prose + .prose{margin-top:2.5vh}
+  @keyframes proseReveal{
+    from{opacity:0;transform:translateY(-4px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+  .content-block .prose:nth-of-type(1){animation-delay:.15s}
+  .content-block .prose:nth-of-type(2){animation-delay:.25s}
+  .content-block .prose:nth-of-type(3){animation-delay:.35s}
+  .content-block .prose:nth-of-type(n+4){animation-delay:.4s}
+  @media (prefers-reduced-motion: reduce){
+    .content-block .prose{animation:none;opacity:1}
+  }
 
   #portrait{
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;
@@ -176,7 +208,22 @@ addEventListener('DOMContentLoaded', () => {
   #portrait img{
     width:clamp(200px,50vw,300px);height:auto;
     border:1px solid var(--frame);
-    transition:border-color .3s ease,box-shadow .3s ease,transform .3s ease;
+    transition:border-color .3s ease,box-shadow .3s ease,transform .3s ease,filter .3s ease;
+    filter:brightness(1);
+  }
+  @media (hover:hover){
+    #portrait img:hover{
+      border-color:var(--accent);
+      filter:brightness(1.15);
+      box-shadow:0 0 20px rgba(255,102,0,.15);
+      transform:scale(1.02)
+    }
+  }
+  @media (hover:none) and (pointer:coarse){
+    #portrait img:active{
+      filter:brightness(1.1);
+      transform:scale(1.01)
+    }
   }
   /* The one real, uncomposited photo on this page — a small acknowledgment
      on hover, matching the artifact/plaque treatment used elsewhere. */
@@ -288,8 +335,14 @@ addEventListener('DOMContentLoaded', () => {
   footer.site-footer .stat{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);margin:2em 0}
   footer.site-footer .room-breadcrumb{margin-bottom:2em}
   footer.site-footer .room-breadcrumb span{color:var(--ink)}
-  footer.site-footer a{font-size:10px;letter-spacing:.08em;text-transform:uppercase;display:inline-block;margin:0 1em;color:var(--dim);transition:color .3s ease}
-  footer.site-footer a:hover,footer.site-footer a:focus-visible{color:var(--accent)}
+  footer.site-footer a{font-size:10px;letter-spacing:.08em;text-transform:uppercase;display:inline-block;margin:0 1em;color:var(--dim);transition:color .3s ease,transform .25s ease,box-shadow .25s ease}
+  @media (prefers-reduced-motion: no-preference){
+    footer.site-footer a:hover{color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 12px rgba(255,102,0,.08)}
+    footer.site-footer a:focus-visible{color:var(--accent);transform:translateY(-2px)}
+  }
+  @media (prefers-reduced-motion: reduce){
+    footer.site-footer a:hover,footer.site-footer a:focus-visible{color:var(--accent)}
+  }
   footer.site-footer a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   @media (max-width:640px){footer.site-footer a{display:block;margin:0.5em 0}}
 </style>
