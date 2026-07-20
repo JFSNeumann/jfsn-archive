@@ -251,6 +251,17 @@ addEventListener('DOMContentLoaded', () => {
   footer.site-footer a:hover,footer.site-footer a:focus-visible{color:var(--accent)}
   footer.site-footer a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   @media (max-width:640px){footer.site-footer a{display:block;margin:0.5em 0}}
+
+  /* ---------- double-sided indicator ---------- */
+  #double-sided-caption{
+    display:none;
+    text-align:center;margin-bottom:12px;
+    font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--accent);cursor:pointer;
+    transition:color .25s;
+  }
+  #double-sided-caption:hover,#double-sided-caption:focus-visible{color:#fff}
+  #double-sided-caption.on{display:block}
 </style>
 </head>
 <body>
@@ -264,6 +275,7 @@ addEventListener('DOMContentLoaded', () => {
   <div id="stage">
     <div id="stack" aria-hidden="true"></div>
     <figure>
+      <button id="double-sided-caption" aria-label="Toggle to view the reverse side">DOUBLE SIDED</button>
       <img id="work-img" alt="" decoding="async">
       <figcaption class="caps" id="work-cap"></figcaption>
     </figure>
@@ -505,26 +517,32 @@ addEventListener('DOMContentLoaded', () => {
 
   // ---------- reverse image toggle (for double-sided works) ----------
   const viewReverseBtn = document.getElementById('view-reverse');
+  const doubleSidedCaption = document.getElementById('double-sided-caption');
   let isShowingReverse = false;
   // Check if this artwork has a reverse image (double-sided work)
   // The 'b' flag is set to 1 if the artwork has a _back.avif variant
   const reverseImageExists = (w && typeof w === 'object' && w.b === 1);
 
-  // Only show the toggle button if this is a double-sided work
+  // Only show the toggle button and caption if this is a double-sided work
   if (reverseImageExists) {
     viewReverseBtn.style.display = '';
+    doubleSidedCaption.classList.add('on');
   } else {
     viewReverseBtn.style.display = 'none';
+    doubleSidedCaption.classList.remove('on');
   }
 
-  viewReverseBtn.addEventListener('click', () => {
+  function toggleReverse() {
     if (!reverseImageExists) return;
     isShowingReverse = !isShowingReverse;
     const suffix = isShowingReverse ? '_back' : '';
     img.src = '/artworks/medium/' + w.i + suffix + '.avif';
     img.alt = w.t + (isShowingReverse ? ' — reverse' : '');
     viewReverseBtn.textContent = isShowingReverse ? '[ VIEW FRONT → ]' : '[ VIEW BACK SIDE → ]';
-  });
+  }
+
+  viewReverseBtn.addEventListener('click', toggleReverse);
+  doubleSidedCaption.addEventListener('click', toggleReverse);
 
 
   // ---------- where this sits: a legible locator across fifty years ----------
