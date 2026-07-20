@@ -1,5 +1,29 @@
 [
   {
+    "sha": "d3ec0c6",
+    "date": "2026-07-20",
+    "title": "Add art1085 and art1086 processed AVIF image tiers (medium, micro)",
+    "body": ""
+  },
+  {
+    "sha": "23e88e7",
+    "date": "2026-07-20",
+    "title": "Add art1085 and art1086 double-sided artwork image files (AVIF)",
+    "body": ""
+  },
+  {
+    "sha": "0ce084e",
+    "date": "2026-07-20",
+    "title": "Phase 3: Add double-sided artwork support with reverse image toggle",
+    "body": "Core changes:\n1. artworks/build_catalog.py — Add has_back detection and exclusion of _back variants:\n   - Skip _back.json and _back.avif files from catalog generation (one record per physical artwork)\n   - Detect reverse images: rec['has_back'] = (FULL / f\"{art_id}_back.avif\").exists()\n   - Add 'has_back' to LITE_FIELDS for catalog-lite.json consumption\n\n2. artworks/build-current.py — New script to rebuild current.json with has_back flag:\n   - Transforms full catalog.json format into compressed format for artwork.html\n   - Adds 'b': 1 flag when artwork has reverse image\n   - Maintains backward compatibility with existing structure\n\n3. artwork.html — Add VIEW REVERSE toggle for double-sided works:\n   - New button: <button id=\"view-reverse\"> with aria-label for accessibility\n   - JavaScript reads 'b' flag from current.json to detect double-sided artworks\n   - Toggle switches img.src between front and _back variants\n   - Button text updates to show current view state (VIEW REVERSE / VIEW FRONT)\n   - Tab+Enter keyboard access, no global shortcuts\n\n4. config/catalog.json, catalog-lite.json — Rebuilt with has_back property\n5. config/current.json — Rebuilt from catalog with 1086 records (1084 + 2 new)\n6. sw.js — CACHE_V bumped to jfsn-20260720134237 for asset invalidation\n\nIngested double-sided artworks:\n- art1085: 01_front.jpg + 01_back.jpg\n- art1086: 02_front.jpg + 02_back.jpg\n\nFinal catalog: 1086 records (1084 existing + 2 new, 0 net test records removed)"
+  },
+  {
+    "sha": "c2eb69a",
+    "date": "2026-07-20",
+    "title": "Ingest Batch 1: 4 new artworks (art9904–art9907)",
+    "body": "Real ingestion begins: 2 artworks photographed front + back.\n- art9904: Artwork 1, back\n- art9905: Artwork 1, front\n- art9906: Artwork 2, back\n- art9907: Artwork 2, front\n\nProcessed: ingest.py → build_catalog.py\nUpdated: catalog-full.json, catalog-lite.json, dims.json, sitemap.xml, feed.xml\nCache bumped via CACHE_V\n\nArtwork AVIF files stored locally (artworks/full, thumbs, medium, micro).\n\nNext: Edit JSON sidecars (title/year/materials/themes), then deploy."
+  },
+  {
     "sha": "2fb8277",
     "date": "2026-07-20",
     "title": "Phase 3: Interruption Section — Symbolic Void",
