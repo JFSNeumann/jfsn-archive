@@ -1,5 +1,17 @@
 [
   {
+    "sha": "99e2327",
+    "date": "2026-07-20",
+    "title": "Add theme and material filters to archive",
+    "body": "Added two new filter groups:\n- Theme: multi-select filter by thematic tags (portraiture, color, etc)\n- Material: multi-select filter by materials used (ink, collage, acrylic, etc)\n\nFilters fetch themes.json and materials.json APIs, build chips dynamically, and filter the 1,088-work grid in real-time. Integrated with existing filter state, clearAll, and renderMeta functions. Filter count display updated to include new filters.\n\nMaintains existing archive features: search, sort, decade/medium/orientation filters, Load More, \"no results\" state."
+  },
+  {
+    "sha": "4d3e751",
+    "date": "2026-07-20",
+    "title": "Add metadata for art1085–art1086: titles, descriptions, themes",
+    "body": "art1085: \"Radiant Figure with Rainbow Collar\" — joyful portrait with vibrant collage, reverse shows intimate studies. Themes: color joy, portraiture, playfulness.\n\nart1086: \"Study: MIKE\" — portrait in contrasts (blue/orange), reverse explores duality. Themes: identity, duality, temperament.\n\nBoth: detailed descriptions, materials, palettes (hex), motifs, composition notes, thematic keywords. Catalogs regenerated."
+  },
+  {
     "sha": "81add52",
     "date": "2026-07-20",
     "title": "Edit metadata for art1087–art1088: titles, descriptions, materials, themes",
