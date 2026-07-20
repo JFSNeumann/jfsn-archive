@@ -665,6 +665,13 @@ _write_stable(API_V1 / "palette.json", json.dumps({
     "count": len(palette_data), "palette": palette_data,
 }, separators=(',', ':')), _GEN_TS)
 
+# materials.json
+materials_data = _facet_index("materials", "material")
+_write_stable(API_V1 / "materials.json", json.dumps({
+    "api_version": "1", "generated": now,
+    "count": len(materials_data), "materials": materials_data,
+}, separators=(',', ':')), _GEN_TS)
+
 # .htaccess — CORS + content-type for Apache (cPanel compatible)
 # Note: mod_security directives removed — IfModule guards are insufficient on
 # HostGator; SecFilter*/SecRuleEngine in .htaccess returns 500 regardless.
@@ -685,7 +692,7 @@ n_works = len(cataloged)
 print(f"\napi/v1/meta.json  — discovery endpoint")
 print(f"api/v1/works.json — {n_works} cataloged works")
 print(f"api/v1/works/     — {n_works} per-work files")
-print(f"api/v1/themes.json, series.json, motifs.json, palette.json")
+print(f"api/v1/themes.json, materials.json, series.json, motifs.json, palette.json")
 print(f"api/.htaccess     — CORS headers (Apache/cPanel)")
 
 # ── Patch hard-coded counts in search.js browseHTML() ────────────────────────
