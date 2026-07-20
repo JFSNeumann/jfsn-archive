@@ -319,6 +319,19 @@ addEventListener('DOMContentLoaded', () => {
   footer.site-footer a:hover,footer.site-footer a:focus-visible{color:var(--accent)}
   footer.site-footer a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   @media (max-width:640px){footer.site-footer a{display:block;margin:0.5em 0}}
+
+  /* Mobile archive UX: sticky controls, search emphasis, reduced padding */
+  @media (max-width:640px){
+    #controls{padding:12px 16px 14px;margin-top:40px}
+    #search-row{gap:10px}
+    #search{min-width:auto;padding:9px 12px;font-size:13px}
+    #sort{padding:9px 10px;font-size:9px}
+    #filter-groups-inner{gap:16px}
+    .fgroup .label{font-size:9px}
+    .chip{padding:5px 9px;font-size:9px}
+    #grid-wrap{padding-top:24px;padding-bottom:60px}
+    #grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:16px 12px}
+  }
 </style>
 </head>
 <body>
@@ -658,8 +671,11 @@ addEventListener('DOMContentLoaded', () => {
     }, 150);
   }
 
+  let searchTimeout;
   document.getElementById('search').addEventListener('input', e => {
-    state.q = e.target.value; shown = PAGE; render();
+    clearTimeout(searchTimeout);
+    state.q = e.target.value; shown = PAGE;
+    searchTimeout = setTimeout(render, 200); // Debounce: wait 200ms after user stops typing
   });
   document.getElementById('sort').addEventListener('change', e => {
     state.sort = e.target.value; render();
