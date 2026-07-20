@@ -260,15 +260,15 @@ addEventListener('DOMContentLoaded', () => {
     display:block;width:100%;height:auto;
     border:1px solid var(--frame);background:#171310;
     transition:border-color .35s ease,box-shadow .35s ease,transform .35s ease;
-    box-shadow:0 2px 8px rgba(0,0,0,0);
+    box-shadow:0 4px 12px rgba(0,0,0,.12);
   }
 
   /* Hover: frame expands, metadata layers, image elevated */
   @media (prefers-reduced-motion: no-preference){
     .card a:hover img,.card a:focus-visible img{
       border-color:var(--accent);
-      box-shadow:0 12px 32px rgba(255,102,0,.16);
-      transform:translateY(-2px);
+      box-shadow:0 16px 40px rgba(0,0,0,.2);
+      transform:translateY(-3px);
     }
 
     /* Touch: brief press confirmation before navigation */
@@ -304,6 +304,12 @@ addEventListener('DOMContentLoaded', () => {
     .card figcaption{opacity:1;transform:none}
   }
 
+  /* Mobile: show metadata at full opacity since hover doesn't exist */
+  @media (hover:none) and (pointer:coarse){
+    .card figcaption{opacity:1;transform:none}
+    .card .m,.card .x{opacity:1}
+  }
+
   .card figcaption{padding:9px 1px 0}
   .card .t{
     font-family:Georgia,'Times New Roman',serif;font-style:italic;
@@ -319,11 +325,11 @@ addEventListener('DOMContentLoaded', () => {
   #load-more{
     display:block;margin:70px auto 0;font-size:11px;letter-spacing:.2em;
     text-transform:uppercase;border:1px solid var(--frame);padding:14px 30px;
-    color:var(--dim);cursor:pointer;
-    transition:color .3s ease,border-color .3s ease,box-shadow .3s ease,transform .3s ease;
-    box-shadow:0 2px 8px rgba(0,0,0,0);
+    color:var(--dim);cursor:pointer;background:rgba(255,102,0,.03);
+    transition:color .3s ease,border-color .3s ease,box-shadow .3s ease,transform .3s ease,background-color .3s ease;
+    box-shadow:0 2px 8px rgba(0,0,0,.04);
   }
-  #load-more:hover{color:var(--accent);border-color:var(--accent);box-shadow:0 8px 24px rgba(255,102,0,.12);transform:translateY(-2px)}
+  #load-more:hover{color:var(--accent);border-color:var(--accent);box-shadow:0 12px 32px rgba(255,102,0,.16);transform:translateY(-2px);background-color:rgba(255,102,0,.08)}
   #load-more:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   @media (hover:none) and (pointer:coarse){
     #load-more:active{background-color:color-mix(in srgb, var(--accent) 6%, transparent);transform:scale(.98)}
