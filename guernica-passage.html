@@ -348,14 +348,26 @@ addEventListener('DOMContentLoaded', () => {
 
   /* ---------- the interruption ---------- */
   #interruption{
+    position:relative;
     min-height:100vh;display:flex;flex-direction:column;
     justify-content:center;align-items:center;text-align:center;gap:34px;
-    border-top:1px solid #1a1512;border-bottom:1px solid #1a1512;
+    border-top:2px solid #0f0c0a;border-bottom:2px solid #0f0c0a;
     margin:12vh 0;
+    overflow:hidden;
+    background:radial-gradient(circle at center, #2b241e 0%, #1a1512 40%, #0c0a09 100%);
+  }
+  #interruption .interruption-void{
+    display:none;
+  }
+  #interruption .interruption-inner{
+    position:relative;z-index:1;
+    display:flex;flex-direction:column;
+    justify-content:center;align-items:center;gap:34px;
   }
   #interruption .big{
     font-family:'Playfair Display',Georgia,serif;font-style:italic;
     font-size:clamp(26px,4.6vw,46px);line-height:1.35;max-width:16em;
+    color:var(--ink);
   }
   #interruption nav{margin-top:8px}
 
@@ -553,13 +565,16 @@ addEventListener('DOMContentLoaded', () => {
     const s = document.createElement('section');
     s.id = 'interruption';
     s.innerHTML =
-      '<div class="caps">SOMEWHERE IN THIS PERIOD — THE DECADE IS NOT DOCUMENTED</div>' +
-      '<p class="prose" style="max-width:30em">He made a full-scale interpretation of ' +
-      'Picasso&rsquo;s painting in his basement studio. Approximately 11 × 25 feet, ' +
-      'built on flexible material so it could be rolled and stored. No one else ever ' +
-      'saw it. Lost to water damage. Never photographed.</p>' +
-      '<div class="big">That work is not in this archive.</div>' +
-      '<nav><a class="caps" href="flooded-wing.html">[ STAND BEFORE ITS WALL → ]</a></nav>';
+      '<div class="interruption-void"></div>' +
+      '<div class="interruption-inner">' +
+        '<div class="caps">SOMEWHERE IN THIS PERIOD — THE DECADE IS NOT DOCUMENTED</div>' +
+        '<p class="prose" style="max-width:30em">He made a full-scale interpretation of ' +
+        'Picasso&rsquo;s painting in his basement studio. Approximately 11 × 25 feet, ' +
+        'built on flexible material so it could be rolled and stored. No one else ever ' +
+        'saw it. Lost to water damage. Never photographed.</p>' +
+        '<div class="big">That work is not in this archive.</div>' +
+        '<nav><a class="caps" href="flooded-wing.html">[ STAND BEFORE ITS WALL → ]</a></nav>' +
+      '</div>';
     return s;
   }
 
