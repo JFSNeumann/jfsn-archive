@@ -442,6 +442,10 @@ addEventListener('DOMContentLoaded', () => {
           <span class="caps label">ORIENTATION</span>
           <div class="chips"></div>
         </div>
+        <div class="fgroup" data-key="reverse">
+          <span class="caps label">COLLECTION</span>
+          <div class="chips"></div>
+        </div>
         <div class="fgroup collapsed" data-key="theme">
           <span class="caps label">THEME <span class="chip-count"></span></span>
           <div class="chips"></div>
@@ -457,10 +461,9 @@ addEventListener('DOMContentLoaded', () => {
 </div>
 
 <div id="featured-new">
-  <span class="caps">✦ New Double-Sided Works</span>
-  <p>Two new artworks with reverse images now live in the archive.</p>
-  <a href="artwork.html?id=art1085">[ VIEW ART1085 → ]</a>
-  <a href="artwork.html?id=art1086">[ VIEW ART1086 → ]</a>
+  <span class="caps">✦ Double-Sided Works Collection</span>
+  <p id="featured-new-text">Artworks with reverse images now documented and searchable.</p>
+  <a href="archive.html?reverse=true">[ EXPLORE DOUBLE-SIDED WORKS → ]</a>
 </div>
 
 <section id="grid-wrap">
@@ -526,10 +529,14 @@ addEventListener('DOMContentLoaded', () => {
   const THEMES = themesData.themes ? themesData.themes.sort((a, b) => b.count - a.count) : [];
   const MATERIALS = materialsData.materials ? materialsData.materials.sort((a, b) => b.count - a.count) : [];
 
-  const state = { medium: new Set(), decade: new Set(), orientation: new Set(), theme: new Set(), material: new Set(), q: '', sort: 'year-desc' };
+  const state = { medium: new Set(), decade: new Set(), orientation: new Set(), theme: new Set(), material: new Set(), reverse: new Set(), q: '', sort: 'year-desc' };
   const PAGE = 60;
   let shown = PAGE;
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Handle URL parameters (e.g., ?reverse=true) - will be applied after render
+  const urlParams = new URLSearchParams(window.location.search);
+  const hasReverseParam = urlParams.has('reverse');
 
   function esc(s){
     return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
@@ -562,9 +569,12 @@ addEventListener('DOMContentLoaded', () => {
     const chipCount = document.querySelector(`.fgroup[data-key="${key}"] .chip-count`);
     if (chipCount) chipCount.textContent = values.length > 0 ? ` (${values.length})` : '';
   }
+  const REVERSE_COUNT = works.filter(w => w.b === 1).length;
+
   buildChips('medium', MEDIA, v => v.toUpperCase());
   buildChips('decade', DECADES, v => v + 'S');
   buildChips('orientation', ORIS, v => ORI_LABEL[v]);
+  if (REVERSE_COUNT > 0) buildChips('reverse', [{ name: 'yes', count: REVERSE_COUNT }], v => 'REVERSE DOCUMENTED', v => `${v.count} work${v.count !== 1 ? 's' : ''}`);
   if (THEMES.length > 0) buildChips('theme', THEMES, v => v.name, v => `${v.count} work${v.count !== 1 ? 's' : ''}`);
   if (MATERIALS.length > 0) buildChips('material', MATERIALS, v => v.name, v => `${v.count} work${v.count !== 1 ? 's' : ''}`);
 
@@ -574,6 +584,7 @@ addEventListener('DOMContentLoaded', () => {
       if (state.medium.size && !state.medium.has(w.m)) return false;
       if (state.decade.size && !state.decade.has(Math.floor(w.y / 10) * 10)) return false;
       if (state.orientation.size && !state.orientation.has(w.o)) return false;
+      if (state.reverse.size && w.b !== 1) return false;
 
       // Theme & material filtering via catalog lookup
       const catEntry = catalogMap.get(w.i);
@@ -657,9 +668,9 @@ addEventListener('DOMContentLoaded', () => {
       requestAnimationFrame(() => requestAnimationFrame(() => countLabel.classList.remove('tick')));
     }
     animateCount(list.length, suffix);
-    const anyActive = state.medium.size || state.decade.size || state.orientation.size || state.theme.size || state.material.size || state.q;
+    const anyActive = state.medium.size || state.decade.size || state.orientation.size || state.theme.size || state.material.size || state.reverse.size || state.q;
     clearBtn.hidden = !anyActive;
-    const nChips = state.medium.size + state.decade.size + state.orientation.size + state.theme.size + state.material.size;
+    const nChips = state.medium.size + state.decade.size + state.orientation.size + state.theme.size + state.material.size + state.reverse.size;
     const ft = document.getElementById('filters-toggle');
     ft.textContent = nChips ? '[ FILTERS · ' + nChips + ' ]' : '[ FILTERS ]';
     ft.classList.toggle('active', nChips > 0);
@@ -689,9 +700,10 @@ addEventListener('DOMContentLoaded', () => {
       decade: v => v + 'S',
       orientation: v => ORI_LABEL[v],
       theme: v => v,
-      material: v => v
+      material: v => v,
+      reverse: v => 'DOUBLE-SIDED WORKS'
     };
-    const filterNames = { medium: 'MEDIUM', decade: 'DECADE', orientation: 'ORIENTATION', theme: 'THEME', material: 'MATERIAL' };
+    const filterNames = { medium: 'MEDIUM', decade: 'DECADE', orientation: 'ORIENTATION', theme: 'THEME', material: 'MATERIAL', reverse: 'COLLECTION' };
     for (const [key, set] of Object.entries(state)) {
       if (key === 'q' || key === 'sort') continue;
       for (const val of set) {
@@ -808,7 +820,7 @@ addEventListener('DOMContentLoaded', () => {
   });
   loadMore.addEventListener('click', () => { shown += PAGE; render(true); });
   function clearAll(){
-    state.medium.clear(); state.decade.clear(); state.orientation.clear(); state.theme.clear(); state.material.clear();
+    state.medium.clear(); state.decade.clear(); state.orientation.clear(); state.theme.clear(); state.material.clear(); state.reverse.clear();
     state.q = ''; document.getElementById('search').value = '';
     document.querySelectorAll('.chip.active').forEach(c => { c.classList.remove('active'); c.setAttribute('aria-pressed', 'false'); });
     shown = PAGE; render();
@@ -819,6 +831,16 @@ addEventListener('DOMContentLoaded', () => {
     const open = document.getElementById('filter-groups').classList.toggle('open');
     this.setAttribute('aria-expanded', open);
   });
+
+  // Update banner with dynamic count
+  function updateBanner(){
+    const reverseCount = works.filter(w => w.b === 1).length;
+    if (reverseCount > 0) {
+      const text = `${reverseCount} artworks with reverse images now documented.`;
+      document.getElementById('featured-new-text').textContent = text;
+    }
+  }
+  updateBanner();
 
   // Collapse/expand filter sections
   const isMobile = window.innerWidth <= 700;
@@ -876,6 +898,16 @@ addEventListener('DOMContentLoaded', () => {
     };
     setTimeout(dismiss, 6000);
     document.addEventListener('click', dismiss, { once: true });
+  }
+
+  // Apply reverse filter if URL parameter is present
+  if (hasReverseParam) {
+    state.reverse.add('yes');
+    const reverseChip = document.querySelector('.fgroup[data-key="reverse"] .chip');
+    if (reverseChip) {
+      reverseChip.classList.add('active');
+      reverseChip.setAttribute('aria-pressed', 'true');
+    }
   }
 
   render(true); // initial load: append into the empty grid, no fade-from-nothing
