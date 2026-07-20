@@ -134,6 +134,7 @@ addEventListener('DOMContentLoaded', () => {
   .fgroup .label{color:var(--faint);cursor:pointer;user-select:none}
   .fgroup .label::after{content:' ▼';font-size:8px;transition:transform .3s ease}
   .fgroup.collapsed .label::after{transform:rotate(-90deg)}
+  .fgroup .chip-count{color:var(--dim);font-size:9px;opacity:0.8}
   .chips{display:flex;flex-wrap:wrap;gap:8px;max-height:1000px;overflow:hidden;transition:max-height .3s ease}
   .fgroup.collapsed .chips{max-height:0}
   .chip{
@@ -185,6 +186,10 @@ addEventListener('DOMContentLoaded', () => {
     #filter-groups.open .fgroup{opacity:1;transform:none}
     #count-label{flex-basis:100%;order:9}
     #search{font-size:16px}
+  }
+  @media (max-width:700px){
+    /* Mobile: all sections collapse by default for cleaner UI */
+    .fgroup.collapsed .chips{max-height:0}
   }
   @media (max-width:700px) and (prefers-reduced-motion: reduce){
     #filters-toggle{transition:none}
@@ -401,12 +406,12 @@ addEventListener('DOMContentLoaded', () => {
           <span class="caps label">ORIENTATION</span>
           <div class="chips"></div>
         </div>
-        <div class="fgroup" data-key="theme">
-          <span class="caps label">THEME</span>
+        <div class="fgroup collapsed" data-key="theme">
+          <span class="caps label">THEME <span class="chip-count"></span></span>
           <div class="chips"></div>
         </div>
-        <div class="fgroup" data-key="material">
-          <span class="caps label">MATERIAL</span>
+        <div class="fgroup collapsed" data-key="material">
+          <span class="caps label">MATERIAL <span class="chip-count"></span></span>
           <div class="chips"></div>
         </div>
         <button id="clear-filters" class="caps" hidden>[ CLEAR ALL FILTERS ]</button>
@@ -516,6 +521,9 @@ addEventListener('DOMContentLoaded', () => {
       });
       wrap.appendChild(btn);
     }
+    // Show chip count in section label for collapsed sections
+    const chipCount = document.querySelector(`.fgroup[data-key="${key}"] .chip-count`);
+    if (chipCount) chipCount.textContent = values.length > 0 ? ` (${values.length})` : '';
   }
   buildChips('medium', MEDIA, v => v.toUpperCase());
   buildChips('decade', DECADES, v => v + 'S');
@@ -745,9 +753,20 @@ addEventListener('DOMContentLoaded', () => {
   });
 
   // Collapse/expand filter sections
+  const isMobile = window.innerWidth <= 700;
   document.querySelectorAll('.fgroup .label').forEach(label => {
     label.style.cursor = 'pointer';
     label.title = 'Click to collapse/expand';
+    const fgroup = label.closest('.fgroup');
+    const key = fgroup.dataset.key;
+
+    // Mobile: collapse all; Desktop: keep THEME/MATERIAL collapsed, rest open
+    if (isMobile) {
+      fgroup.classList.add('collapsed');
+    } else if (key !== 'theme' && key !== 'material') {
+      fgroup.classList.remove('collapsed');
+    }
+
     label.addEventListener('click', function(e){
       e.preventDefault();
       const fgroup = this.closest('.fgroup');
@@ -756,6 +775,40 @@ addEventListener('DOMContentLoaded', () => {
       if (chips) chips.style.maxHeight = fgroup.classList.contains('collapsed') ? '0' : '1000px';
     });
   });
+
+  // First-visit hint: "Explore filters" tooltip
+  if (!localStorage.getItem('jfsn-filters-hint-shown')) {
+    const hint = document.createElement('div');
+    hint.id = 'filters-hint';
+    hint.textContent = '💡 Click section headers to explore advanced filters';
+    hint.style.cssText = `
+      position: fixed; bottom: 20px; right: 20px; z-index: 1000;
+      background: var(--accent); color: #000; padding: 12px 16px;
+      font-size: 12px; letter-spacing: 0.1em; font-weight: 600;
+      border-radius: 4px; box-shadow: 0 4px 16px rgba(255,102,0,0.3);
+      animation: slideInHint 0.4s ease-out;
+      max-width: 200px;
+    `;
+    document.body.appendChild(hint);
+
+    // Add animation keyframes
+    if (!document.getElementById('hint-keyframes')) {
+      const style = document.createElement('style');
+      style.id = 'hint-keyframes';
+      style.textContent = `@keyframes slideInHint { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }`;
+      document.head.appendChild(style);
+    }
+
+    // Auto-dismiss after 6 seconds, or on any click
+    const dismiss = () => {
+      hint.style.opacity = '0';
+      hint.style.transition = 'opacity 0.3s ease-out';
+      setTimeout(() => hint.remove(), 300);
+      localStorage.setItem('jfsn-filters-hint-shown', 'true');
+    };
+    setTimeout(dismiss, 6000);
+    document.addEventListener('click', dismiss, { once: true });
+  }
 
   render(true); // initial load: append into the empty grid, no fade-from-nothing
 })();
