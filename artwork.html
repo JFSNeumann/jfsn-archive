@@ -136,8 +136,8 @@ addEventListener('DOMContentLoaded', () => {
   #series-door.on{display:block}
   #copied{color:var(--accent);margin-left:8px;opacity:0;transition:opacity .3s}
   #copied.on{opacity:1}
-  #view-reverse{transition:color .25s}
-  #view-reverse:hover{color:#fff}
+  #view-reverse{color:#FF6600;transition:color .25s}
+  #view-reverse:hover,#view-reverse:focus-visible{color:#fff}
 
   /* ---------- where this sits ---------- */
   #sits{margin-top:44px;cursor:pointer;display:block;color:inherit}
@@ -281,7 +281,7 @@ addEventListener('DOMContentLoaded', () => {
     <div id="flag">Photoshop composite — imagined placement</div>
     <nav>
       <button id="view-full">[ VIEW FULL RESOLUTION → ]</button>
-      <button id="view-reverse" style="display:none;color:#FF6600" aria-label="Toggle between front and back sides of this double-sided work">[ VIEW BACK SIDE → ]</button>
+      <button id="view-reverse" style="display:none" aria-label="Toggle between front and back sides of this double-sided work">[ VIEW BACK SIDE → ]</button>
       <button id="copy-link">[ COPY LINK → ]<span id="copied">COPIED</span></button>
       <a id="series-door" href="guernica-passage.html">[ PART OF THE GUERNICA PASSAGE → ]</a>
       <a href="archive.html">[ ← BACK TO THE ARCHIVE ]</a>
