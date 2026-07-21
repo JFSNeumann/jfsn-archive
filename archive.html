@@ -757,9 +757,11 @@ addEventListener('DOMContentLoaded', () => {
   const materialsData = await fetch('api/v1/materials.json', {cache:'no-cache'}).then(r => r.json()).catch(() => ({materials: []}));
 
   // Map catalog by ID for quick lookup of themes/materials
-  const catalogMap = new Map(catalog.map(w => [w.file, w]));
+  // current.json IDs are extensionless ("art0001"); catalog .file may carry
+  // ".avif" (older records) or not (newer). Normalize the key so w.i joins.
+  const catalogMap = new Map(catalog.map(w => [w.file.replace('.avif', ''), w]));
 
-  const ORI_LABEL = { v: 'VERTICAL', h: 'HORIZONTAL', s: 'SQUARE' };
+  const ORI_LABEL = { vertical: 'VERTICAL', horizontal: 'HORIZONTAL', square: 'SQUARE' };
   const MEDIA = [...new Set(works.map(w => w.m))].filter(m => m !== null).sort();
   const DECADES = [...new Set(works.map(w => w.y !== null ? Math.floor(w.y / 10) * 10 : null))].filter(d => d !== null).sort();
   const ORIS = [...new Set(works.map(w => w.o))].filter(o => o !== null && ORI_LABEL[o]);
@@ -850,7 +852,7 @@ addEventListener('DOMContentLoaded', () => {
       <figure class="card" data-id="${esc(w.i)}">
         <a href="artwork.html?id=${w.i}">
           <img src="/artworks/thumbs/${w.i}.avif" srcset="/artworks/mini/${w.i}.avif 100w, /artworks/thumbs/${w.i}.avif 400w, /artworks/medium/${w.i}.avif 900w" sizes="min(45vw, 210px)" alt="${esc(w.t)}"${idx < 12 ? '' : ' loading="lazy"'} decoding="async"
-               style="aspect-ratio:${w.o === 'h' ? '4/3' : w.o === 's' ? '1/1' : '2/3'}">
+               style="aspect-ratio:${w.o === 'horizontal' ? '4/3' : w.o === 'square' ? '1/1' : '2/3'}">
           <span class="type-badge">${typeLabel}</span>
           <span class="size-badge">${esc(sizeLabel)}</span>
           <figcaption>
