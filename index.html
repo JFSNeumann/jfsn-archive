@@ -157,14 +157,22 @@ addEventListener('DOMContentLoaded', () => {
   #work img{
     display:block;width:auto;height:auto;
     max-width:min(560px,86vw);max-height:42vh;
+    opacity:0;animation:featuredFadeIn .7s ease-out .35s forwards;
+  }
+  @keyframes featuredFadeIn{
+    from{opacity:0}
+    to{opacity:1}
+  }
+  @media (prefers-reduced-motion: reduce){
+    #work img{animation:none;opacity:1}
   }
   #work figcaption{margin-top:16px}
   /* The plaque is the one piece of real information on the poster — worth
      a small invitation to read it, not just decoration underneath the work. */
-  #work figcaption.caps{transition:color .3s ease}
+  #work figcaption.caps{transition:color .3s cubic-bezier(.34,.1,.68,1)}
   @media (hover:hover){
     #work:hover{transform:translateY(-4px);filter:drop-shadow(0 12px 24px rgba(255,102,0,.15))}
-    #work:hover figcaption.caps{color:var(--ink)}
+    #work:hover figcaption.caps{color:var(--accent);font-weight:600}
   }
 
   /* the flankers exist only on the wide desktop wall; everywhere else the
@@ -176,7 +184,17 @@ addEventListener('DOMContentLoaded', () => {
      Real ink (assets/images/Jeff Neumann.gif is the untouched source);
      rendered in the museum's warm tone on the dark wall. */
   #who{margin-top:clamp(24px,3.5vh,40px)}
-  #who img{display:block;height:clamp(44px,6vh,60px);width:auto}
+  #who img{
+    display:block;height:clamp(44px,6vh,60px);width:auto;
+    opacity:0;animation:signatureReveal .6s ease-out .55s forwards;
+  }
+  @keyframes signatureReveal{
+    from{opacity:0;transform:scale(.9)}
+    to{opacity:1;transform:scale(1)}
+  }
+  @media (prefers-reduced-motion: reduce){
+    #who img{animation:none;opacity:1}
+  }
 
   /* ── BEYOND THE THRESHOLD — the origin story, promoted to its own
      quiet centered screen, then the doors open. ── */
@@ -188,6 +206,17 @@ addEventListener('DOMContentLoaded', () => {
     max-width:32em;margin:0 auto;
     font-family:Georgia,'Times New Roman',serif;
     font-size:clamp(16px,1.9vw,20px);line-height:1.85;color:#b9b1a6;
+    opacity:0;animation:whyReveal .5s ease-out forwards;
+  }
+  @keyframes whyReveal{
+    from{opacity:0;transform:translateY(-4px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+  .why:nth-of-type(1){animation-delay:.2s}
+  .why:nth-of-type(2){animation-delay:.3s}
+  .why:nth-of-type(3){animation-delay:.4s}
+  @media (prefers-reduced-motion: reduce){
+    .why{animation:none;opacity:1}
   }
   .why em{color:var(--ink);font-style:normal}
 
@@ -334,8 +363,9 @@ addEventListener('DOMContentLoaded', () => {
      1px frame so the color echo above has something to tint */
   #doors a{border-left-width:1px}
 
+  @keyframes cardScale{from{transform:scale(.98)}to{transform:scale(1)}}
   @media (prefers-reduced-motion: no-preference) {
-    #doors a{animation:border-draw .65s cubic-bezier(.34,.1,.68,1) backwards}
+    #doors a{animation:border-draw .65s cubic-bezier(.34,.1,.68,1) backwards,cardScale .65s cubic-bezier(.34,.1,.68,1) backwards}
     #doors a:nth-child(1){animation-delay:.08s}
     #doors a:nth-child(2){animation-delay:.16s}
     #doors a:nth-child(3){animation-delay:.24s}
