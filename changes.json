@@ -1,5 +1,11 @@
 [
   {
+    "sha": "8e1768a",
+    "date": "2026-07-21",
+    "title": "Archive metadata batch 4 (art0034-0063)",
+    "body": "Metadata review of the next 28 physical artworks with filter gaps\n(art0034-0063), filling empty materials/themes with high-confidence,\nvisually-verified values:\n- Materials added on 23 works: paper (most common substrate across this\n  span), plus resin+tape (art0039), cardboard (art0044, art0063), tape\n  (art0046), paint (art0050), prisma paper (art0051, art0063), gold-leaf\n  (art0053).\n- Theme added: Targets -> art0056 (target/concentric-rings motifs present,\n  theme was empty).\n- art0037 (photograph) left unchanged — a chalk-drawn snowman is incidental\n  background detail in someone else's street mural, not JFSN's own\n  Mr. Snowmann series.\n- art0060, art0061, art0062 left unchanged — flat, digitally-composited\n  images (screen-rendered gradient bands, no physical texture), consistent\n  with the existing art0060 precedent and this session's art0030/art0031\n  decision.\nMedium/decade/orientation/reverse were already correct on all 28.\n\nVerified: 1088 physical works, zero _back records, all spot-checked\nreviewed works appear under their new filters, the 4 excluded works\nconfirmed untouched, exactly 24 sidecars changed (matches edits made).\nValidator still 40 errors, all pre-existing on art1085-1088."
+  },
+  {
     "sha": "b5e8f0e",
     "date": "2026-07-21",
     "title": "Archive metadata batch 3 (art0021-0033)",

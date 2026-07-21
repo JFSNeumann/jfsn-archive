@@ -18,7 +18,9 @@
     "concentric-rings",
     "chess-piece"
   ],
-  "materials": [],
+  "materials": [
+    "paper"
+  ],
   "composition": "central pinned page on target field",
   "themes": [
     "Targets",
