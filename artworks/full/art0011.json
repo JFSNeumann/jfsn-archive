@@ -8,7 +8,10 @@
     "metallic",
     "palimpsest"
   ],
-  "materials": [],
+  "materials": [
+    "gold-leaf",
+    "paper"
+  ],
   "motifs": [
     "compact-disc",
     "warplane-topdown",
@@ -26,7 +29,9 @@
   ],
   "schema_version": "1",
   "series": "Guernica",
-  "themes": [],
+  "themes": [
+    "Targets"
+  ],
   "title": "Untitled (Three Discs Descending)",
   "work_type": "collage",
   "year": 1990

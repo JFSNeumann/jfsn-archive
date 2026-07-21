@@ -1,5 +1,11 @@
 [
   {
+    "sha": "ede5801",
+    "date": "2026-07-21",
+    "title": "Archive metadata batch 1 (art0001-0010) + complete materials vocab + fix vocab.py config path",
+    "body": "Metadata review of the first 10 physical artworks (deterministic ID order),\nfilling empty filter metadata with high-confidence, visually-verified values:\n- Materials added (compact discs kept as motif, not material, per convention):\n  art0001 cardboard,paper; art0002 lace,tape,paper; art0003 sequins,paper;\n  art0005 prisma paper,sequins; art0007 paper; art0008 tape,paper;\n  art0009 prisma paper,gold-leaf; art0010 tape,paper.\n- Themes added: Targets -> art0005, art0006, art0007 (unmistakable bullseyes).\n- art0004 (photograph) and art0006 materials left unchanged (uncertain).\nMedium/decade/orientation/reverse were already correct on all 10.\n\nComplete the earlier silver-foil -> prisma paper rename in the controlled\nvocabulary (it had only been done in the data): update vocab.py fallback and\nconfig/artist-config.json, add \"mixed media\". Clears 160 out-of-vocab errors.\n\nFix vocab.py reading a nonexistent root artist-config.json — point it at\nconfig/artist-config.json so it actually loads the real vocabularies. This\nalso restores VALID_SERIES = {Guernica, None} (the missing config had left\nthe broken {None}-is-truthy fallback in place). Validator: 464 -> 40 errors;\nthe remaining 40 are all pre-existing schema-2 nonconformances on art1085-1088.\n\nVerified: 1088 physical works, zero _back records, all 9 reviewed works appear\nunder their new filters, no unrelated metadata changed. Not deployed."
+  },
+  {
     "sha": "e5d1c10",
     "date": "2026-07-21",
     "title": "Bump CACHE_V for archive.html filter plumbing fix",
