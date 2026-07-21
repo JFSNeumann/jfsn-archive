@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1784641080'; // Metadata batch 3 (art0021-0033)
+const CACHE_V  = 'jfsn-1784642245'; // Metadata batch 4 (art0034-0063)
 const PRECACHE = [
   // The 14 live room pages (Museum v2 — the only site that exists today;
   // the old v1 archive, decade pages, and generated theme pages were

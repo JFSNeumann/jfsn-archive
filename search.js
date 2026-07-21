@@ -425,7 +425,7 @@
   function browseHTML() {
     const series = [
       { label: 'Guernica Series',   href: 'guernica.html',     meta: '232 works' },
-      { label: 'Targets',           href: 'targets.html',      meta: '408 works' },
+      { label: 'Targets',           href: 'targets.html',      meta: '409 works' },
       { label: 'Mr. SNOWmann',      href: 'mr-snowmann.html',  meta: '72 works'  },
     ];
     const items = series.map(s =>

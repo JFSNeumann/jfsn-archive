@@ -1,5 +1,11 @@
 [
   {
+    "sha": "b5e8f0e",
+    "date": "2026-07-21",
+    "title": "Archive metadata batch 3 (art0021-0033)",
+    "body": "Metadata review of the next 10 physical artworks with filter gaps\n(art0021-0033, skipping art0026/0028/0029 which already had complete\nfilter metadata), filling empty materials/themes with high-confidence,\nvisually-verified values:\n- Materials added: art0022 gold-leaf,paper; art0023 gold-leaf,paper;\n  art0024 paper; art0025 paint,gold-leaf; art0027 gold-leaf; art0032 paper;\n  art0033 paper,gold-leaf.\n- Themes added: Targets -> art0021.\n- art0030 and art0031 materials left unchanged — both are flat, digitally\n  composited images (art0031's own description says \"digital collage\")\n  with no identifiable physical substrate. Matches existing precedent:\n  art0060, another digital-collage work, was likewise left materials-empty\n  by the original cataloguer.\nMedium/decade/orientation/reverse were already correct on all 10.\n\nVerified: 1088 physical works, zero _back records, all reviewed works\nappear under their new filters, art0030/art0031 confirmed untouched, no\nunrelated metadata changed. Validator still 40 errors, all pre-existing\non art1085-1088."
+  },
+  {
     "sha": "6de9fa3",
     "date": "2026-07-21",
     "title": "Archive metadata batch 2 (art0011-0020)",
