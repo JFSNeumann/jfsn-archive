@@ -118,12 +118,19 @@ addEventListener('DOMContentLoaded', () => {
     0%,100%{opacity:0.6}
     50%{opacity:0.9}
   }
+  @keyframes entranceGlow{
+    0%{opacity:0;text-shadow:0 0 20px rgba(255,102,0,.8), 0 0 40px rgba(255,102,0,.4)}
+    100%{opacity:1;text-shadow:0 0 0px rgba(255,102,0,0)}
+  }
   .threshold h1{
     font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
     font-size:clamp(38px,4.9vw,68px);line-height:1.12;letter-spacing:-.012em;
     color:var(--ink);max-width:7em;
     margin-top:50px;
     position:relative;
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .threshold h1{animation:entranceGlow .6s cubic-bezier(.34,.1,.68,1) forwards;animation-delay:.1s}
   }
   .creed{
     margin-top:clamp(16px,2.4vh,24px);
@@ -137,24 +144,10 @@ addEventListener('DOMContentLoaded', () => {
   /* Ink-stamp: the one moment on this permanent, unpersonalized poster that
      gets a first-load flourish — the box lands like a stamp hitting paper,
      once, then never moves again. */
-  /* Faceted clip-path crystal reveal - dramatic left-to-right effect */
-  @keyframes facetedReveal{
-    0%{opacity:0;clip-path:polygon(0% 20%,5% 0%,8% 25%,12% 5%,15% 30%,20% 8%,25% 35%,30% 10%,35% 40%,40% 12%,100% 0%,100% 100%,0% 100%)}
-    50%{opacity:0.7;clip-path:polygon(0% 10%,10% 0%,20% 8%,30% 2%,40% 10%,50% 3%,60% 12%,70% 4%,80% 10%,90% 5%,100% 0%,100% 100%,0% 100%)}
-    100%{opacity:1;clip-path:polygon(0% 0%,100% 0%,100% 100%,0% 100%)}
-  }
-  /* Light sweep left to right - brighter */
-  @keyframes lightSweep{
-    0%{background:linear-gradient(90deg,rgba(255,255,255,0) -20%,rgba(255,255,255,0) 30%);opacity:0}
-    35%{opacity:0.8}
-    50%{background:linear-gradient(90deg,rgba(255,255,255,0) -20%,rgba(255,255,255,.8) 50%,rgba(255,255,255,0) 100%);opacity:0.8}
-    65%{background:linear-gradient(90deg,rgba(255,255,255,0) 30%,rgba(255,255,255,.6) 70%,rgba(255,255,255,0) 120%);opacity:0.8}
-    100%{background:linear-gradient(90deg,rgba(255,255,255,0) 120%,rgba(255,255,255,0) 120%);opacity:0}
-  }
-
+  /* Ink-stamp: the one moment on this permanent, unpersonalized poster that
+     gets a first-load flourish — the box lands like a stamp hitting paper,
+     once, then never moves again. */
   @media (prefers-reduced-motion: no-preference){
-    .threshold h1{animation:facetedReveal .5s cubic-bezier(.25,.46,.45,.94) forwards;animation-delay:.1s}
-    .threshold h1::after{content:'';position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;animation:lightSweep .6s cubic-bezier(.25,.46,.45,.94) forwards;animation-delay:.1s}
     .highlight-devo{animation:ink-stamp .5s cubic-bezier(.2,1.6,.4,1) both;animation-delay:.15s}
     @keyframes ink-stamp{
       0%{transform:scaleX(0)}
