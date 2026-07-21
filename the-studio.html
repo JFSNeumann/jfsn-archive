@@ -415,7 +415,7 @@ addEventListener('DOMContentLoaded', () => {
 
 <section id="count-room">
   <div class="caps reveal-el">THE RECORD, TODAY</div>
-  <div class="n reveal-el"><span id="count">1,084</span></div>
+  <div class="n reveal-el"><span id="count">1,086</span></div>
   <div class="caps reveal-el">WORKS — PHOTOGRAPHED, DESCRIBED, BACKED UP · <em id="today-date"></em></div>
   <div class="caps reveal-el" style="color:var(--faint)">THE COUNT IS EXACT. ONLY THE YEARS ARE ESTIMATES.</div>
 </section>
@@ -455,7 +455,7 @@ addEventListener('DOMContentLoaded', () => {
 
 <footer class="site-footer">
   <div class="caps room-breadcrumb">YOU ARE IN: <span>THE STUDIO</span></div>
-  <div class="stat">1,084 WORKS · 50 YEARS · 1974–PRESENT · CLEVELAND, OH</div>
+  <div class="stat">1,086 WORKS · 50 YEARS · 1974–PRESENT · CLEVELAND, OH</div>
   <nav aria-label="Site">
     <a href="/">[ THE MUSEUM → ]</a>
     <a href="/archive.html">[ THE ARCHIVE → ]</a>
@@ -602,7 +602,7 @@ addEventListener('DOMContentLoaded', () => {
     document.getElementById('count').textContent = works.length.toLocaleString('en-US');
     riverWorks = works;           // The Current's color spine, reprised at rest
     drawRiver();
-  }).catch(() => {}); // static 1,084 stands if fetch fails
+  }).catch(() => {}); // static 1,086 stands if fetch fails
   window.addEventListener('resize', drawRiver);
 
   // Hover-to-reveal decade tooltip on the resting river band
@@ -645,7 +645,7 @@ addEventListener('DOMContentLoaded', () => {
   function countUp(){
     if (counted || !countEl) return;
     counted = true;
-    const n = (riverWorks && riverWorks.length) || 1084;
+    const n = (riverWorks && riverWorks.length) || 1086;
     const dur = 1200, t0 = performance.now();
     function tick(now){
       const p = Math.min(1, (now - t0) / dur);

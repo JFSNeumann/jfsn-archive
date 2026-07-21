@@ -286,15 +286,6 @@ addEventListener('DOMContentLoaded', () => {
   #philosophy::after{content:']';bottom:12px;right:12px}
   #philosophy .prose{font-size:clamp(15px,1.8vw,17px)}
 
-  #words .prose{opacity:0;transform:translateY(16px)}
-  .js #words .prose{transition:opacity 1s ease,transform 1s ease}
-  #words .prose:nth-of-type(1){animation:staggerQuote 1s ease 0.2s forwards}
-  #words .prose:nth-of-type(2){animation:staggerQuote 1s ease 0.6s forwards}
-  #words .prose:nth-of-type(3){animation:staggerQuote 1s ease 1s forwards}
-  @keyframes staggerQuote{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-  @media (prefers-reduced-motion: reduce){
-    #words .prose{opacity:1;transform:none;animation:none}
-  }
   #closing{
     min-height:40vh;display:flex;flex-direction:column;
     justify-content:center;align-items:center;text-align:center;gap:24px;
@@ -397,34 +388,58 @@ addEventListener('DOMContentLoaded', () => {
   <h2>Exhibition Record</h2>
   <div class="record">
     <div class="body">
-      <h3>Solo & Group Exhibitions</h3>
-      <div class="detail">Gallery showings spanning five decades. Work shown in Cleveland at independent galleries, artist-run spaces, and collaborative projects. Full record available in the archive.</div>
+      <h3>Cleveland Institute of Art</h3>
+      <div class="detail">Student Exhibition</div>
     </div>
-    <div class="year">1974–Present</div>
+    <div class="year">1978</div>
   </div>
   <div class="record">
     <div class="body">
-      <h3>Permanent Collections</h3>
-      <div class="detail">Works held in private and institutional collections, primarily in the Midwest. The archive documents acquisition dates and provenances where known.</div>
+      <h3>Cleveland Center for Contemporary Art</h3>
+      <div class="detail">Group Exhibition</div>
     </div>
-    <div class="year">Midwest</div>
+    <div class="year">2003</div>
+  </div>
+  <div class="record">
+    <div class="body">
+      <h3>Waterloo Arts</h3>
+      <div class="detail">Two-Person Exhibition</div>
+    </div>
+    <div class="year">2006</div>
+  </div>
+  <div class="record">
+    <div class="body">
+      <h3>Grumpy&rsquo;s Café</h3>
+      <div class="detail">Solo Exhibition</div>
+    </div>
+    <div class="year">2008</div>
+  </div>
+  <div class="record">
+    <div class="body">
+      <h3>78th Street Studios</h3>
+      <div class="detail">Group Exhibition</div>
+    </div>
+    <div class="year">2009</div>
+  </div>
+  <div class="record">
+    <div class="body">
+      <h3>Plain Arts Gallery</h3>
+      <div class="detail">Group Exhibition</div>
+    </div>
+    <div class="year">2012</div>
   </div>
 </section>
 
 <div id="philosophy" class="reveal-el">
-  <p class="prose"><em>This is a personal record, not a sales history.</em> Fifty years of unbroken making, kept so it isn&rsquo;t lost — the way five hundred pieces already were.</p>
+  <p class="prose"><em>This is a personal record, not a sales history.</em> Fifty years of making, kept so it isn&rsquo;t lost — the way five hundred pieces already were.</p>
 </div>
-
-<section class="content-block reveal-el" id="words">
-  <h2>In His Own Words</h2>
-  <p class="prose">"Making is attention. You look at a piece of found material long enough, you see what wants to happen. It doesn't matter if it's beautiful or broken. Matter reveals itself if you're patient."</p>
-  <p class="prose">"The best exhibitions were the ones nobody heard about. A corner of a studio. A storefront for three weeks. The ones that didn't need to justify themselves because they weren't trying to sell anything except the work speaking to the person in the room."</p>
-  <p class="prose">"I never waited for a gallery. I kept building my own."</p>
-</section>
 
 <section class="content-block reveal-el" id="stories-bridge" style="text-align:center;padding:8vh clamp(20px,6vw,80px) 0">
   <p class="prose" style="color:var(--dim);margin:0">
     <a href="/stories.html" style="color:var(--accent);font-weight:600">Read the full oral history →</a>
+  </p>
+  <p class="prose" style="color:var(--dim);margin:18px 0 0">
+    Questions about the archive or a particular work? <a href="mailto:jeff@jfsn.com" style="color:var(--accent);font-weight:600">Contact Jeffrey →</a>
   </p>
 </section>
 
@@ -442,7 +457,7 @@ addEventListener('DOMContentLoaded', () => {
 
 <footer class="site-footer">
   <div class="caps room-breadcrumb">YOU ARE IN: <span>ABOUT</span></div>
-  <div class="stat">1,084 WORKS · 50 YEARS · 1974–PRESENT · CLEVELAND, OH</div>
+  <div class="stat">1,086 WORKS · 50 YEARS · 1974–PRESENT · CLEVELAND, OH</div>
   <nav aria-label="Site">
     <a href="/">[ THE MUSEUM → ]</a>
     <a href="/archive.html">[ THE ARCHIVE → ]</a>

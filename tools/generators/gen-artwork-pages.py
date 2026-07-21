@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-gen-artwork-pages.py — regenerate all 1,084 static artwork pages.
+gen-artwork-pages.py — regenerate all static artwork pages.
 
 Each page in artworks/pages/ is a fully baked SEO page for Googlebot.
 Reads catalog.json + colors.json; writes artworks/pages/artNNNN.html.
 
 Usage:
-    python3 gen-artwork-pages.py              # all 1,084 pages
+    python3 gen-artwork-pages.py              # all pages
     python3 gen-artwork-pages.py --limit 5    # test run
     python3 gen-artwork-pages.py --id art0001 # single page
 """
@@ -18,9 +18,9 @@ import sys
 import urllib.parse
 from pathlib import Path
 
-ROOT     = Path(__file__).parent
-CATALOG  = ROOT / 'catalog.json'
-COLORS   = ROOT / 'colors.json'
+ROOT     = Path(__file__).resolve().parents[2]
+CATALOG  = ROOT / 'config' / 'catalog.json'
+COLORS   = ROOT / 'config' / 'colors.json'
 OUT_DIR  = ROOT / 'artworks' / 'pages'
 SITE_URL = 'https://jfsn.com'
 
@@ -407,7 +407,7 @@ def generate_page(work, idx, all_works, colors):
   <div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
     <div>
       <h3 class="font-headline-md text-headline-md tracking-tighter mb-6">JFSN</h3>
-      <p class="font-body-md text-archive-gray text-sm leading-relaxed">The personal archive of Jeffrey F. S. Neumann — 1,084 works spanning five decades. Collage, sculpture, photography.</p>
+      <p class="font-body-md text-archive-gray text-sm leading-relaxed">The personal archive of Jeffrey F. S. Neumann — {len(all_works):,} works spanning five decades. Collage, sculpture, photography.</p>
     </div>
     <div>
       <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">EXPLORE</h4>

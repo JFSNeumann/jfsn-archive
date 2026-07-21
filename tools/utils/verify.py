@@ -253,7 +253,7 @@ def check_schema_version(ctx: Context):
     if len(present) > 1:
         return [Result("Metadata Integrity", WARNING,
                        "Mixed schema_version values: "
-                       + ", ".join(f"{k}×{n}" for k, n in sorted(present.items())))]
+                       + ", ".join(f"{k}×{n}" for k, n in sorted(present.items(), key=lambda kv: str(kv[0]))))]
     only = next(iter(present))
     return [Result("Metadata Integrity", PASS,
                    f"schema_version uniform (v{only}) across catalog")]

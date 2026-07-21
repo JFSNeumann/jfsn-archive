@@ -59,7 +59,7 @@ Open each file and fill in:
 }
 ```
 
-**Examples already in repo:** `artworks/full/art0001.json` through `art1084.json`
+**Examples already in repo:** `artworks/full/art0001.json` through `art1086.json`
 
 ### **Step 5: Finish Intake (Validates, Builds, Verifies)**
 ```bash

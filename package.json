@@ -1,7 +1,7 @@
 {
   "name": "jfsn",
   "version": "1.0.0",
-  "description": "A static, open-source archive site for visual artists. No CMS, no database, no monthly fees. Built for [jfsn.com](https://jfsn.com) — 1,084 works spanning 50 years, live on a $5/month shared host.",
+  "description": "A static, open-source archive site for visual artists. No CMS, no database, no monthly fees. Built for [jfsn.com](https://jfsn.com) — 1,086 works spanning 50 years, live on a $5/month shared host.",
   "scripts": {
     "build:css": "npx tailwindcss -i input.css -o site.min.css --minify",
     "watch:css": "npx tailwindcss -i input.css -o site.min.css --watch",

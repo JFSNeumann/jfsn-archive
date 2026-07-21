@@ -351,19 +351,20 @@ addEventListener('DOMContentLoaded', () => {
     <a id="sits" href="current.html">
       <span class="caps sits-title">WHERE THIS SITS IN FIFTY YEARS</span>
       <span id="strip-wrap">
-        <canvas id="strip" aria-label="This work's position among all 1,084 works across fifty years. Opens The Current at this work."></canvas>
+        <canvas id="strip" aria-label="This work's position among all 1,086 works across fifty years. Opens The Current at this work."></canvas>
         <span id="here"><span class="yr" id="here-yr"></span></span>
       </span>
       <span id="decade-axis" aria-hidden="true"></span>
       <span class="caps sits-open">[ OPEN IN THE CURRENT&nbsp;→ ]</span>
     </a>
+    <p id="work-inquiry" style="margin-top:30px;font-size:13px;line-height:1.6;color:var(--dim)">Questions about this work or the archive? <a href="mailto:jeff@jfsn.com">Contact Jeffrey&nbsp;→</a></p>
   </div>
 </main>
 
 <div id="missing">
   <div class="line">This work isn&rsquo;t in the record under that number.</div>
   <p class="caps">THE LINK MAY BE MISTYPED — OR THE PIECE MAY BE ONE OF THOSE LOST</p>
-  <a class="caps" href="archive.html">[ THE ARCHIVE — ALL 1,084 WORKS → ]</a>
+  <a class="caps" href="archive.html">[ THE ARCHIVE — ALL 1,086 WORKS → ]</a>
 </div>
 
 <div id="walk" hidden>
@@ -374,7 +375,7 @@ addEventListener('DOMContentLoaded', () => {
 
 <footer class="site-footer">
   <div class="caps room-breadcrumb">YOU ARE IN: <span>THE ARCHIVE</span></div>
-  <div class="stat">1,084 WORKS · 50 YEARS · 1974–PRESENT · CLEVELAND, OH</div>
+  <div class="stat">1,086 WORKS · 50 YEARS · 1974–PRESENT · CLEVELAND, OH</div>
   <nav aria-label="Site">
     <a href="/">[ THE MUSEUM → ]</a>
     <a href="/archive.html">[ THE ARCHIVE → ]</a>
@@ -415,7 +416,10 @@ addEventListener('DOMContentLoaded', () => {
 <script>
 (async function(){
   'use strict';
-  const ORI_LABEL = { v: 'Vertical', h: 'Horizontal', s: 'Square' };
+  // current.json supplies full-word orientation (vertical/horizontal/square);
+  // short codes (v/h/s) kept for backward compatibility with any legacy source.
+  const ORI_LABEL = { v: 'Vertical', h: 'Horizontal', s: 'Square',
+    vertical: 'Vertical', horizontal: 'Horizontal', square: 'Square' };
   const works = await fetch('config/current.json', {cache:'no-cache'}).then(r => r.json());
   const id = new URLSearchParams(location.search).get('id');
   const idx = works.findIndex(w => w.i === id);
