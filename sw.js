@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-20260720212000'; // Round 15: Fix cascade — facetedReveal now properly applies to h1 (removed conflicting hero-in rule)
+const CACHE_V  = 'jfsn-20260720213000'; // Round 15: Much more dramatic faceted reveal animation — crystal shards progressively showing
 const PRECACHE = [
   // The 14 live room pages (Museum v2 — the only site that exists today;
   // the old v1 archive, decade pages, and generated theme pages were
