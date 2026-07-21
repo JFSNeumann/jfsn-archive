@@ -94,6 +94,12 @@ def generate_page(work, idx, all_works, colors):
     series  = work.get('series')
     comp    = work.get('composition') or ''
     bgcolor = colors.get(art_id, '#ebe8e2')
+    has_back = bool(work.get('has_back'))
+    # Image paths are always derived from art_id, not the raw 'file' field —
+    # some records (e.g. art1085/art1086) store 'file' without the .avif
+    # extension, which would otherwise break the <img src>.
+    front_img = f'{art_id}.avif'
+    back_img  = f'{art_id}_back.avif'
 
     # Prev / next (by catalog order)
     prev_work  = all_works[idx - 1] if idx > 0 else None
@@ -116,7 +122,7 @@ def generate_page(work, idx, all_works, colors):
         "@type": "VisualArtwork",
         "name": title,
         "url": f"{SITE_URL}/artworks/pages/{art_id}.html",
-        "image": f"{SITE_URL}/artworks/thumbs/{work['file']}",
+        "image": f"{SITE_URL}/artworks/thumbs/{front_img}",
         "creator": {
             "@type": "Person",
             "name": "Jeffrey F. S. Neumann",
@@ -221,6 +227,29 @@ def generate_page(work, idx, all_works, colors):
         if desc else ''
     )
 
+    # Reverse side: a native <details> disclosure needs no JavaScript to be
+    # discoverable or viewable. Closed <details> content isn't laid out, so
+    # loading="lazy" defers the fetch until a visitor actually opens it —
+    # single-sided works (the vast majority) emit none of this at all.
+    if has_back:
+        back_html = (
+            f'<details class="border-t border-deep-ink">'
+            f'<summary class="reverse-summary font-label-md text-label-md uppercase tracking-widest '
+            f'text-secondary hover:text-international-orange transition-colors cursor-pointer select-none p-sm">'
+            f'[ VIEW BACK SIDE → ]</summary>'
+            f'<div style="background-color:{bgcolor};">'
+            f'<img src="../full/{back_img}" alt="{e(title)} — reverse side" '
+            f'class="w-full h-auto object-contain" loading="lazy" width="1200" height="900"/>'
+            f'</div>'
+            f'</details>'
+            f'<script>(function(){{'
+            f'var d=document.currentScript.previousElementSibling,s=d.querySelector("summary");'
+            f'd.addEventListener("toggle",function(){{s.textContent=d.open?"[ VIEW FRONT → ]":"[ VIEW BACK SIDE → ]";}});'
+            f'}})();</script>'
+        )
+    else:
+        back_html = ''
+
     # Related works by same theme
     related_works_html = ''
     if themes:
@@ -240,7 +269,7 @@ def generate_page(work, idx, all_works, colors):
             for rel_work in related:
                 rel_id = rel_work['file'].replace('.avif', '')
                 rel_title = rel_work.get('title', 'Untitled')[:30]
-                thumb_file = rel_work['file']
+                thumb_file = f'{rel_id}.avif'
                 related_html += (
                     f'<a href="{rel_id}.html" class="group cursor-pointer">'
                     f'<img src="../../artworks/thumbs/{thumb_file}" alt="{e(rel_title)}" '
@@ -264,7 +293,7 @@ def generate_page(work, idx, all_works, colors):
 <meta property="og:type" content="website"/>
 <meta property="og:title" content="{e(title)} — Jeffrey F. S. Neumann"/>
 <meta property="og:description" content="{seo_desc}"/>
-<meta property="og:image" content="{SITE_URL}/artworks/thumbs/{e(work['file'])}"/>
+<meta property="og:image" content="{SITE_URL}/artworks/thumbs/{front_img}"/>
 <meta property="og:url" content="{SITE_URL}/artworks/pages/{art_id}.html"/>
 <link rel="icon" href="../../favicon.svg" type="image/svg+xml"/>
 <link rel="preload" as="font" type="font/woff2" href="/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2" crossorigin/>
@@ -357,18 +386,18 @@ def generate_page(work, idx, all_works, colors):
     <!-- Image -->
     <section class="md:col-span-8 border border-deep-ink">
       <div style="background-color:{bgcolor};">
-        <img src="../full/{e(work['file'])}"
+        <img src="../full/{front_img}"
              alt="{e(title)}"
              class="w-full h-auto object-contain vt-artwork-main"
              loading="eager"
              width="1200" height="900"
              data-dominant-color="{bgcolor}"/>
       </div>
-      <div class="p-sm border-t border-deep-ink flex justify-between items-center gap-2">
+      {back_html}<div class="p-sm border-t border-deep-ink flex justify-between items-center gap-2">
         <span class="font-label-md text-label-md text-secondary uppercase tracking-widest cursor-pointer hover:text-international-orange transition-colors" onclick="navigator.clipboard.writeText('{e(art_id.upper())}').then(()=>window.showToast('Copied: {e(art_id.upper())}!'))" title="Click to copy">{e(art_id.upper())}</span>
         <div class="flex gap-2 items-center">
           <button class="favorite-btn" data-art-id="{art_id}" onclick="window.toggleFavorite('{art_id}')" title="Add to favorites">Favorite</button>
-          <a href="../full/{e(work['file'])}"
+          <a href="../full/{front_img}"
              class="font-label-md text-label-md uppercase tracking-widest text-secondary hover:text-international-orange transition-colors"
              target="_blank" rel="noopener">
             Full resolution <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><line x1="20.4" y1="20.4" x2="16" y2="16"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
