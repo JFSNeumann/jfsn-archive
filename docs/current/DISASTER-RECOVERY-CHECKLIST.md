@@ -11,8 +11,8 @@
    - **From the 4TB drive (fastest, most complete):** copy `/Volumes/JEFFS-4TB/JFSN-backup/` → `~/Documents/JFSN/`. This includes git history.
    - **From B2:** log into backblaze.com (creds: Bitwarden) → create an app key → `rclone config` a remote named `b2` → `rclone copy b2:jfsn-archive ~/Documents/JFSN`. Then `git clone https://github.com/JFSNeumann/jfsn-archive.git /tmp/hist` and copy `/tmp/hist/.git` into the restored folder for history.
 3. Recreate `.ftp.env` from the printed handoff sheet (or HostGator cPanel → new FTP credentials).
-4. Verify: `bash audit-nav.sh` → 11/11; open `index.html` in a browser.
-5. Resume backups: plug in the 4TB → `bash backup.sh`; then `bash cloud-backup.sh`.
+4. Verify: `bash scripts/audit-nav.sh` → 11/11; open `index.html` in a browser.
+5. Resume backups: plug in the 4TB → `bash scripts/backup.sh`; then `bash scripts/cloud-backup.sh`.
 
 ## Scenario B — HostGator is gone (company, account, or access lost permanently)
 

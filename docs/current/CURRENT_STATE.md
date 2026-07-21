@@ -129,7 +129,7 @@ Future sessions begin with Creative Briefs, not engineering tasks.
 ## 2026-07-01 — Pending user actions (not engineering — requires physical action)
 
 - **macOS Full Disk Access for `/bin/bash`** — System Settings → Privacy & Security → Full Disk Access → add `/bin/bash`. Fixes B2 cloud backup LaunchAgent and rsync LaunchAgent (both silently failing without it).
-- **JEFFS-4TB corrupted APFS container superblock** — Disk Utility → JEFFS-4TB → First Aid. If First Aid fails, reformat and repopulate with `bash backup.sh`. B2 is the only verified off-site backup until this is resolved.
+- **JEFFS-4TB corrupted APFS container superblock** — Disk Utility → JEFFS-4TB → First Aid. If First Aid fails, reformat and repopulate with `bash scripts/backup.sh`. B2 is the only verified off-site backup until this is resolved.
 - **`_shared/ui.css.phase2c-backup`** — untracked leftover from Phase 2C. Safe to delete: `rm _shared/ui.css.phase2c-backup`.
 
 ---
@@ -191,7 +191,7 @@ that template intentionally supports.
   **User action required:** System Settings → Privacy & Security → Full Disk Access → add /bin/bash
 - JEFFS-4TB: corrupted APFS container superblock (`diskutil verifyVolume` returned exit 8 / "Container
   superblock is invalid"). rsync writes fail. B2 is the only off-site backup.
-  **User action required:** Open Disk Utility → JEFFS-4TB → First Aid. If it fails, reformat and repopulate with `bash backup.sh`.
+  **User action required:** Open Disk Utility → JEFFS-4TB → First Aid. If it fails, reformat and repopulate with `bash scripts/backup.sh`.
 
 ---
 
