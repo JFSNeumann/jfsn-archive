@@ -137,22 +137,23 @@ addEventListener('DOMContentLoaded', () => {
   /* Ink-stamp: the one moment on this permanent, unpersonalized poster that
      gets a first-load flourish — the box lands like a stamp hitting paper,
      once, then never moves again. */
-  /* Faceted clip-path crystal reveal */
+  /* Faceted clip-path crystal reveal - more dramatic */
   @keyframes facetedReveal{
-    0%{clip-path:polygon(0% 0%,0% 100%,100% 100%,100% 0%,5% 8%,10% 3%,15% 10%,20% 4%,25% 9%,30% 2%,35% 11%,40% 5%,45% 10%,50% 3%,55% 12%,60% 4%,65% 9%,70% 2%,75% 11%,80% 5%,85% 10%,90% 3%,95% 12%,100% 0%)}
-    100%{clip-path:polygon(0% 0%,0% 100%,100% 100%,100% 0%)}
+    0%{clip-path:polygon(0% 0%,2% 15%,8% 5%,12% 18%,18% 8%,25% 20%,32% 10%,38% 22%,45% 12%,52% 25%,60% 15%,68% 28%,75% 18%,82% 30%,90% 20%,98% 35%,100% 0%,100% 100%,0% 100%)}
+    100%{clip-path:polygon(0% 0%,0% 0%,0% 0%,0% 0%,0% 0%,0% 0%,0% 0%,0% 0%,0% 0%,0% 0%,0% 0%,0% 0%,0% 0%,0% 0%,0% 0%,0% 0%,100% 0%,100% 100%,0% 100%)}
   }
-  /* Light sweep left to right */
+  /* Light sweep left to right - brighter */
   @keyframes lightSweep{
-    0%{background:linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,0) 100%);opacity:0}
-    40%{opacity:1}
-    60%{background:linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.5) 50%,rgba(255,255,255,0) 100%);opacity:1}
-    100%{background:linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,0) 100%);opacity:0}
+    0%{background:linear-gradient(90deg,rgba(255,255,255,0) -20%,rgba(255,255,255,0) 30%);opacity:0}
+    35%{opacity:0.8}
+    50%{background:linear-gradient(90deg,rgba(255,255,255,0) -20%,rgba(255,255,255,.8) 50%,rgba(255,255,255,0) 100%);opacity:0.8}
+    65%{background:linear-gradient(90deg,rgba(255,255,255,0) 30%,rgba(255,255,255,.6) 70%,rgba(255,255,255,0) 120%);opacity:0.8}
+    100%{background:linear-gradient(90deg,rgba(255,255,255,0) 120%,rgba(255,255,255,0) 120%);opacity:0}
   }
 
   @media (prefers-reduced-motion: no-preference){
-    .threshold h1{animation:facetedReveal .4s cubic-bezier(.34,.1,.68,1) forwards;animation-delay:.15s}
-    .threshold h1::after{content:'';position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;animation:lightSweep .45s cubic-bezier(.34,.1,.68,1) forwards;animation-delay:.15s}
+    .threshold h1{animation:facetedReveal .5s cubic-bezier(.25,.46,.45,.94) forwards;animation-delay:.1s}
+    .threshold h1::after{content:'';position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;animation:lightSweep .6s cubic-bezier(.25,.46,.45,.94) forwards;animation-delay:.1s}
     .highlight-devo{animation:ink-stamp .5s cubic-bezier(.2,1.6,.4,1) both;animation-delay:.15s}
     @keyframes ink-stamp{
       0%{transform:scaleX(0)}

@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-20260720200000'; // Fix: theme/material filter chips now populate correctly
+const CACHE_V  = 'jfsn-20260720210500'; // Round 15: Enhanced hero animation with dramatic faceted clip-path + brighter light sweep
 const PRECACHE = [
   // The 14 live room pages (Museum v2 — the only site that exists today;
   // the old v1 archive, decade pages, and generated theme pages were
