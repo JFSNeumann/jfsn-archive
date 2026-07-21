@@ -8,10 +8,10 @@ Complete workflow for deploying changes to production (HostGator, the only host)
 
 ```bash
 # 1. Commit, push, and back up
-bash session-end.sh
+bash scripts/session-end.sh
 
 # 2. Deploy the live site
-bash deploy-hostgator.sh
+bash scripts/deploy-hostgator.sh
 ```
 
 `session-end.sh` (no `--deploy` flag) handles git commit + push + local 4TB backup only. It does **not** touch jfsn.com — that's a separate, deliberate step.
@@ -23,7 +23,7 @@ bash deploy-hostgator.sh
 ### 1. Verify your changes
 
 ```bash
-bash preview-verify.sh
+bash scripts/preview-verify.sh
 # Opens a local server, walks through a visual checklist of key pages
 ```
 
@@ -37,7 +37,7 @@ git status
 ### 3. Optional — run the full pre-deploy checklist
 
 ```bash
-bash pre-deploy-check.sh
+bash scripts/pre-deploy-check.sh
 # CSS rebuild check, nav audit, CACHE_V format, file-size sanity, uncommitted-changes check
 ```
 
@@ -48,7 +48,7 @@ bash pre-deploy-check.sh
 ### Step 1: Commit & local backup
 
 ```bash
-bash session-end.sh
+bash scripts/session-end.sh
 ```
 
 What it does:
@@ -61,7 +61,7 @@ What it does:
 ### Step 2: Deploy to HostGator (production — jfsn.com)
 
 ```bash
-bash deploy-hostgator.sh
+bash scripts/deploy-hostgator.sh
 ```
 
 This is the **primary deploy path** as of Session 70 (replaces the old JFSN.app desktop tool, which is no longer used). It:
@@ -91,7 +91,7 @@ curl -I https://jfsn.com/
 ## Automated Pre-Deploy Checklist
 
 ```bash
-bash pre-deploy-check.sh
+bash scripts/pre-deploy-check.sh
 ```
 
 Checks: CSS rebuilt, `audit-nav.sh` passes, CACHE_V format valid, no uncommitted changes, CSS file size sane. Fix anything it flags, re-run, then deploy.
@@ -106,7 +106,7 @@ Checks: CSS rebuilt, `audit-nav.sh` passes, CACHE_V format valid, no uncommitted
 3. Confirm `CACHE_V` was bumped: `grep CACHE_V sw.js`.
 
 ### "Pushed to GitHub but nothing changed live"
-GitHub ≠ production. HostGator does not auto-deploy on push. Run `bash deploy-hostgator.sh`.
+GitHub ≠ production. HostGator does not auto-deploy on push. Run `bash scripts/deploy-hostgator.sh`.
 
 ---
 
@@ -115,7 +115,7 @@ GitHub ≠ production. HostGator does not auto-deploy on push. Run `bash deploy-
 | Target | Type | URL | Auto? | Deploy command |
 |--------|------|-----|-------|-----------------|
 | GitHub | Repo | github.com/JFSNeumann/jfsn-archive | Manual `git push` (via `session-end.sh`) | — |
-| HostGator | **Production (the only host)** | jfsn.com | Manual | `bash deploy-hostgator.sh` |
+| HostGator | **Production (the only host)** | jfsn.com | Manual | `bash scripts/deploy-hostgator.sh` |
 
 ---
 

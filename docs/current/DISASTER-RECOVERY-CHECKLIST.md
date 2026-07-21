@@ -51,7 +51,7 @@ Any single survivor of {Mac, 4TB drive, B2 bucket} rebuilds everything (Scenario
 ## Scenario F — Defacement / unauthorized FTP access
 
 1. Don't investigate on the server; restore first. Change the FTP password in cPanel.
-2. Redeploy the whole site from the Mac: `bash deploy-hostgator.sh` (re-verified 2026-06-23 — `deploy.sh` no longer exists in the repo and JFSN.app is legacy/unused; this step would have failed if followed literally during an actual incident).
+2. Redeploy the whole site from the Mac: `bash scripts/deploy-hostgator.sh` (re-verified 2026-06-23 — `deploy.sh` no longer exists in the repo and JFSN.app is legacy/unused; this step would have failed if followed literally during an actual incident).
 3. Compare server vs. local if curious afterward (`lftp mirror --dry-run`).
 4. Context: the old FTP password was publicly exposed in 2026 (`docs/archive/2026/CREDENTIAL-EXPOSURE-REPORT.md`); if rotation never happened, assume that's the vector.
 

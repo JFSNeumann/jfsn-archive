@@ -85,7 +85,7 @@ A release is approved only when all of the following are true:
 - [ ] **Minor issues are recorded for future maintenance.** *(Minor: convention inconsistencies, non-blocking AT improvements, cosmetic edge cases.)*
 - [ ] **The visitor experience has not been unintentionally altered.** *(No layout shift, no animation regression, no navigation change the Experience Studio did not authorize.)*
 
-If all boxes are checked, proceed with `bash deploy-hostgator.sh`.
+If all boxes are checked, proceed with `bash scripts/deploy-hostgator.sh`.
 
 ---
 

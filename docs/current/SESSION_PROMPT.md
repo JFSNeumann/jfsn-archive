@@ -27,8 +27,8 @@ JFSN Archive — personal archive site for Jeffrey F. S. Neumann, 1,084 works. A
 
 ## Deploy
 
-- Close session: `bash session-end.sh` (git commit + push + 4TB rsync + Backblaze B2)
-- Deploy: `bash deploy-hostgator.sh` (the only deploy target — Netlify removed 2026-06-22)
+- Close session: `bash scripts/session-end.sh` (git commit + push + 4TB rsync + Backblaze B2)
+- Deploy: `bash scripts/deploy-hostgator.sh` (the only deploy target — Netlify removed 2026-06-22)
 - Hero AVIFs (`artNNNN-hero*.avif`) need a separate flat lftp upload to `/artworks/`
 - Footer/nav: there is no shared partial to edit — `_shared/top-nav.html`, `_shared/footer.html`, and `stamp-nav.sh` no longer exist (`stamp-nav.sh` lives in `docs/archive/2026/scripts/` as a retired tool). Edit each page's own header/footer markup directly.
 - CSS rebuild: `npm run build:css` after any new Tailwind utility, then bump `CACHE_V` in `sw.js`. `build_catalog.py` auto-bumps `CACHE_V` only when catalog content changes — check `git diff sw.js`.
