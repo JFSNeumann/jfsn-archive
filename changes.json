@@ -1,5 +1,11 @@
 [
   {
+    "sha": "6de9fa3",
+    "date": "2026-07-21",
+    "title": "Archive metadata batch 2 (art0011-0020)",
+    "body": "Metadata review of the next 10 physical artworks (deterministic ID order),\nfilling empty filter metadata with high-confidence, visually-verified values:\n- Materials added (compact discs kept as motif, not material, per convention):\n  art0011 gold-leaf,paper; art0012 paper; art0013 gold-leaf,tape,sequins,paper;\n  art0015 gold-leaf; art0016 prisma paper,paper; art0017 paper; art0018 paper;\n  art0019 paper; art0020 paper.\n- Themes added: Targets -> art0011.\n- art0014 (sculpture, reflective panels) left unchanged — substrate not\n  confidently identifiable from the photo.\n- art0013's dominant subject is a reproduced Egyptian hieroglyph with no\n  matching JFSN theme; left themeless rather than force-fit on its minor\n  target motif.\nMedium/decade/orientation/reverse were already correct on all 10.\n\nVerified: 1088 physical works, zero _back records, all reviewed works appear\nunder their new filters, art0014 confirmed untouched, no unrelated metadata\nchanged. Validator still 40 errors, all pre-existing on art1085-1088."
+  },
+  {
     "sha": "ede5801",
     "date": "2026-07-21",
     "title": "Archive metadata batch 1 (art0001-0010) + complete materials vocab + fix vocab.py config path",
