@@ -1,5 +1,269 @@
 [
   {
+    "sha": "6553c07",
+    "date": "2026-07-20",
+    "title": "Session end: Update IMPROVEMENTS.md with hero animation completion",
+    "body": ""
+  },
+  {
+    "sha": "8feb564",
+    "date": "2026-07-20",
+    "title": "Fix: Restore black text visibility on orange highlight box",
+    "body": "The background-clip: text was making all text transparent. Override\n-webkit-text-fill-color for .highlight-devo to show black text on orange."
+  },
+  {
+    "sha": "1219f0b",
+    "date": "2026-07-20",
+    "title": "Cache invalidation for final orange sweep animation",
+    "body": ""
+  },
+  {
+    "sha": "e0b8dfd",
+    "date": "2026-07-20",
+    "title": "Round 15 FINAL: Orange sweep animation constrained to letter shapes only",
+    "body": "Using background-clip: text to make the orange gradient visible ONLY within\nthe letter glyphs themselves, not outside them at all.\n\n- Gradient animates left-to-right across text\n- Orange only appears inside letter shapes (background-clip: text)\n- Text remains readable, normal color when animation completes\n- 0.8s duration, ease-out timing\n- 0.08s delay"
+  },
+  {
+    "sha": "36d4ffd",
+    "date": "2026-07-20",
+    "title": "Round 15: Orange sweep animation across white text only",
+    "body": "Orange gradient sweeps left-to-right across h1 on page load.\nUses mix-blend-mode: lighten so the orange only shows on white letters,\nnot on the dark background.\n\n- 60% width sweep stripe\n- Full opacity orange (255,160,0)\n- Lighten blend mode for text-only effect\n- 0.8s duration, ease-out timing\n- 0.08s delay"
+  },
+  {
+    "sha": "5faa4b5",
+    "date": "2026-07-20",
+    "title": "Round 15: Soft orange glow entrance animation on h1 title",
+    "body": "Text fades in with a warm orange glow that gently fades away, leaving clean text.\n- Keyframes: opacity 0→1, text-shadow orange glow→transparent\n- Duration: 0.6s with subtle easing\n- Delay: 0.1s for slight pause before entrance\n- Respects prefers-reduced-motion\n\nElegant, single-fire animation that draws attention without being jarring."
+  },
+  {
+    "sha": "fbbf6b3",
+    "date": "2026-07-20",
+    "title": "Round 15 ENHANCED: Much more dramatic faceted crystal reveal animation",
+    "body": "Made the clip-path effect far more visible:\n- 0%: Text starts with dramatic crystalline jagged top edges (only top 20-40% visible)\n- 50%: Intermediate state with smoother but still jagged edges\n- 100%: Text fully revealed with clean edges\n\nThis creates a much more obvious \"crystal shards progressively clearing\" effect\nthat's impossible to miss when the page loads. Still elegant, still fast (0.5s),\nbut now VISIBLE.\n\nAlso adds light sweep overlay that brightens as text reveals (screen blend-mode)."
+  },
+  {
+    "sha": "952a02f",
+    "date": "2026-07-20",
+    "title": "Round 15 FIX: Cascade issue — facetedReveal animation now properly applies to h1",
+    "body": "Problem: hero-in animation rule was overriding facetedReveal due to CSS cascade\nSolution:\n- Removed hero-in animation from .threshold h1 selector\n- Added opacity fade to facetedReveal keyframes for smooth entrance\n- facetedReveal now handles both clip-path reveal AND fade-in in one animation\n\nResult: h1 now shows dramatic crystal clip-path animation with left-to-right light sweep"
+  },
+  {
+    "sha": "2a52b72",
+    "date": "2026-07-20",
+    "title": "Round 15 ENHANCED: Dramatic faceted crystal reveal with brighter light sweep",
+    "body": "- Faceted clip-path now has larger, more visible jagged edges for crystal effect\n- Light sweep increased to 0.8 opacity for pronounced left-to-right highlight\n- Timing extended to 0.5s/0.6s for more visible animation sequence\n- Easing curve optimized for snappy reveal with elegant deceleration\n- Text remains fully readable and responsive"
+  },
+  {
+    "sha": "6f2b48e",
+    "date": "2026-07-20",
+    "title": "Round 15: Faceted clip-path crystal reveal with light sweep — elegant, readable animation",
+    "body": "Implements CSS-only faceted reveal: clip-path animates from jagged crystal edges to smooth letters (0.4s), plus light gradient sweep (left-to-right) with screen blend-mode. Fast & snappy timing, elegant & subtle. Text remains fully readable and responsive. Pure CSS performance."
+  },
+  {
+    "sha": "025078b",
+    "date": "2026-07-20",
+    "title": "Homepage Round 14: Five high-impact WOW-factor enhancements (3D tilt, depth shadow, ambient light boost, parallax tracking, border glow)",
+    "body": "Implements: (1) Featured work 3D perspective tilt (rotateX/Y) on threshold hover; (2) Dramatic depth-layer shadow expansion (20px 50px) on room card hover; (3) Enhanced ambient light with brighter gradient and larger radius for immersive gallery effect; (4) Pointer-tracking parallax shift on featured work responding to cursor movement; (5) Border accent glow bloom effect on room cards that expands on hover. All animations respect prefers-reduced-motion and use performance-optimized transforms."
+  },
+  {
+    "sha": "aef89bb",
+    "date": "2026-07-20",
+    "title": "Homepage Round 13: Five entrance & featured work enhancements (image fade-in, prose stagger, signature scale, card scale, caption lift)",
+    "body": "Implements: (1) Featured work image fade-in on threshold load; (2) Why/beyond section prose staggered entrance; (3) Jeff signature scale + fade entrance as final threshold beat; (4) Door card subtle scale-up with border-draw animation; (5) Featured work caption color lift to accent on hover with weight emphasis. All animations respect prefers-reduced-motion."
+  },
+  {
+    "sha": "7bc5017",
+    "date": "2026-07-20",
+    "title": "Round 12: Five interactive & accessibility enhancements (link underlines, milestone animations, frame depth, emphasis styling, focus glow)",
+    "body": "Implements across multiple pages: (1) Animated link underlines that grow from left on hover; (2) Milestone/counter scale + fade animations on flooded-wing; (3) Empty frame depth with shadow on hover; (4) Emphasized text styling with subtle background highlights; (5) Focus indicator glow enhancement for keyboard navigation. All animations respect prefers-reduced-motion."
+  },
+  {
+    "sha": "17f6011",
+    "date": "2026-07-20",
+    "title": "About Page Round 11: Five content & footer enhancements (heading fade-in, prose stagger, portrait glow, section dividers, footer link lift)",
+    "body": "Implements: (1) Content block headings fade + slide into view; (2) Prose paragraphs staggered fade-in for sequential reveal; (3) Portrait image brightness + glow on hover; (4) Section divider lines that fade in, creating visual rhythm; (5) Footer link hover lift with shadow. All animations respect prefers-reduced-motion."
+  },
+  {
+    "sha": "9c607d3",
+    "date": "2026-07-20",
+    "title": "Artwork Round 10: Five metadata & navigation enhancements (image fade-in, breadcrumb animation, ledger stagger, label/value separation, nav lift)",
+    "body": "Implements: (1) Work image fade-in on page load; (2) Work number/breadcrumb slide + fade entrance; (3) Metadata ledger rows staggered fade-in; (4) Enhanced label/value color separation on hover/active; (5) Prev/next navigation lift with shadow on hover. All animations respect prefers-reduced-motion."
+  },
+  {
+    "sha": "f57ede8",
+    "date": "2026-07-20",
+    "title": "Homepage Round 9: Five micro-interactions for room navigation (desaturate-to-saturate images, border-draw easing, arrow pulse, bounce timing, subtitle elevation)",
+    "body": "Implements: (1) Room card preview image desaturation-to-saturation on hover; (2) Border-draw cascade with organic cubic-bezier easing; (3) Arrow pulse/scale animation on hover; (4) Threshold scroll cue bounce timing shorter and snappier; (5) Subtitle color elevation with enhanced easing curve. All animations respect prefers-reduced-motion."
+  },
+  {
+    "sha": "7ef0869",
+    "date": "2026-07-20",
+    "title": "Archive Round 8: Five micro-interaction enhancements (search expand, grid fade-in, chip focus pulse, sort arrow rotation, load-more entrance)",
+    "body": "Implements: (1) Mobile search expansion on focus; (2) Grid fade-in on initial load; (3) Enhanced keyboard focus pulse on filter chips; (4) Sort dropdown arrow smooth rotation on hover/focus; (5) Load-more button fade+slide entrance animation. All animations respect prefers-reduced-motion."
+  },
+  {
+    "sha": "129766c",
+    "date": "2026-07-20",
+    "title": "Seventh round: count pulse, results header, filter badges, featured fade-in, load text.",
+    "body": "- Work count pulse: scale 1→1.05→1 with background flash on filter change (countPulse animation)\n- \"Showing X results\" header: animated slide-in showing \"SHOWING X OF 1,084 WORKS · filters\" (slideInFade)\n- Active filter group badges: pop animation (badgePop) on selection, show count as circle indicator\n- Featured banner entrance: staggered fade-in cascade (star .1s → title .2s → desc .3s → button .4s)\n- Load More text: changes to \"[ LOADING... ]\" during fetch, restores after 300ms"
+  },
+  {
+    "sha": "6814e3d",
+    "date": "2026-07-20",
+    "title": "Sixth round: filter pills, sort dropdown, load more spinner, metadata stagger, featured pulse.",
+    "body": "- Filter chip badges: orange pills with remove buttons for active filters and search query\n- Sort dropdown styling: orange accent on hover/focus with improved chevron visibility\n- Load More loading state: spinning animation (spinLoader) with 1.2s rotation\n- Card metadata entrance stagger: title/date/material cascade with 100ms intervals on hover\n- Featured banner accent bar: pulse animation on hover (6px→8px→6px)"
+  },
+  {
+    "sha": "cc8cb05",
+    "date": "2026-07-20",
+    "title": "Fifth round: search clear button, card border on hover, personalized no-results.",
+    "body": "- Search clear button: JavaScript event listener clears input and re-renders\n- Card border on hover: orange outline frame (2px, -1px offset) on :hover/:focus-visible\n- Empty state messaging: dynamically shows active filters (medium/decade/orientation/theme/material/search query) instead of generic \"no works match\" message"
+  },
+  {
+    "sha": "2045a23",
+    "date": "2026-07-20",
+    "title": "Archive refinement: card radius, filter icons, stats, CTA button, keyboard nav",
+    "body": "Five polish touches for refined museum-like presentation and better usability:\n\n1. Card corner radius & edge treatment:\n   - Add subtle border-radius: 3px to card images\n   - Add overflow: hidden for clean corners\n   - Makes cards feel like refined museum objects\n   - Softens the rectangular grid aesthetic\n\n2. Filter group icons:\n   - Add emoji icons to filter group labels via CSS ::before\n   - 🎨 Medium, 📅 Decade, 📐 Orientation, 🎭 Theme, 🔧 Material, ⚠️ Collection\n   - Icons appear before label text in filter headers\n   - Makes filters more visually scannable and approachable\n\n3. Archive statistics display:\n   - Add .archive-stats section in hero showing collection scale\n   - Display: \"1,084 WORKS | 50 YEARS | 1974—Present\"\n   - Stat items with large numbers (18px, orange accent) + labels\n   - Gives immediate context about collection scope\n\n4. Featured banner CTA enhancement:\n   - Style featured-new link as proper button with background\n   - Add orange background (#FF6600) with dark text\n   - Add arrow icon (→) after link text\n   - Better hover state: shadow + lift (translateY -2px)\n   - Makes CTA more compelling and clickable\n\n5. Keyboard navigation visual indicator:\n   - Add visible :focus-visible outline on card links\n   - 3px orange outline with 2px offset\n   - Makes keyboard navigation clear and accessible\n   - Essential for keyboard-only users"
+  },
+  {
+    "sha": "fa523ae",
+    "date": "2026-07-20",
+    "title": "Archive UX polish: intro hierarchy, count prominence, breadcrumb filters, feedback, titles",
+    "body": "Five focused refinements to improve archive usability and content discoverability:\n\n1. Archive intro visual hierarchy:\n   - Add background box to #door .prose with orange tint\n   - Better spacing, padding, and border treatment\n   - Increase font size (clamp 16-18px) and line-height (2)\n   - Max-width constraint (60ch) for readability\n   - Makes archive mission/description prominent before filtering\n\n2. Work count display enhancement:\n   - Enhance #count-label with visual weight\n   - Add background color (rgba(255,102,0,.04))\n   - Add border and rounded styling\n   - Bold font weight (600) and better spacing\n   - Shows collection scale more prominently\n   - \"Tick\" highlight now brighter on filter updates\n\n3. Breadcrumb filter path:\n   - Change filter pills from separate badges to breadcrumb-style path\n   - Replace \"Filtering by:\" with \"BROWSING:\" (orange, bold)\n   - Pills now show as path segments with vertical separators (|)\n   - Transparent background, smaller text, reduced visual noise\n   - Shows filter hierarchy: ALL > 1990s > Sculpture > Abstraction\n   - More intuitive navigation through filter state\n\n4. Search/filter visual feedback:\n   - Add gridUpdate animation when filters applied\n   - Brief scale animation (98% → 100%) with fade\n   - Shows users that filtering is working\n   - Subtle but perceptible feedback loop\n\n5. Card title contrast & readability:\n   - Increase font size: 12.5px → 13.5px\n   - Improve line-height: 1.35 → 1.5\n   - Add font-weight: 500 for better prominence\n   - Add letter-spacing (.3px) for elegance\n   - Ensure titles are scannable at a glance"
+  },
+  {
+    "sha": "8558d80",
+    "date": "2026-07-20",
+    "title": "Archive visual enhancements: work type badges, responsive grid, section rhythm",
+    "body": "Three major visual refinements to the archive browsing experience:\n\n1. Work type visual indicators:\n   - Add .type-badge to each card (upper left position)\n   - Show work type with emoji + label (⚠️ Composite, 📸 Photo, 🎨 Painting, etc.)\n   - Infer type from metadata: composites, photos, paintings, digital, sculpture, mixed\n   - Subtle styling: dark background with backdrop-filter blur, low opacity by default\n   - Appears on hover (desktop) or more visible on mobile\n   - Helps users scan and understand content type at a glance\n\n2. Grid responsive columns:\n   - Mobile (<640px): 2 columns with compact gap (16px × 14px)\n   - Tablet (640-1024px): 3 columns with balanced gap (22px × 16px)\n   - Desktop (1025-1440px): 4 columns (24px × 18px)\n   - Wide desktop (1441px+): 5 columns with larger gap (26px × 20px)\n   - Makes better use of available space at all viewport widths\n   - Improves card sizing and visual rhythm across devices\n\n3. Visual section rhythm:\n   - Add border-bottom to #vault-hero for visual closure\n   - Add border-bottom to #door section\n   - Add border-top to #grid-wrap with better spacing (8vh)\n   - Add border-top to #exit-note with margin (8vh)\n   - Better padding throughout (4vh, 8vh, 14vh)\n   - Creates visual breathing room and section separation\n   - Improves page scanability and visual hierarchy"
+  },
+  {
+    "sha": "6c592ce",
+    "date": "2026-07-20",
+    "title": "Archive UX refinements: sort control, size badges, filter context summary",
+    "body": "Three focused improvements to archive browsing experience:\n\n1. Sort dropdown visual hierarchy:\n   - Enhanced styling: stronger 2px border, orange background\n   - Add SVG dropdown arrow icon (data:image/svg+xml)\n   - Better padding (12px × 14px) and font weight\n   - Improved hover and focus states with box-shadow\n   - Makes sort control feel like a peer to search\n   - Users can now see sort is a distinct interactive control\n\n2. Work size/dimension badges on cards:\n   - Add .size-badge span to card markup\n   - Position on lower right (bottom-right corner)\n   - Shows dimension category (Horizontal/Square/Vertical) or explicit size\n   - Orange background with dark text for visibility\n   - Appears on hover (desktop) or always on mobile\n   - Helps users understand work scale at a glance\n   - Dimensions can be enhanced as data becomes available\n\n3. Filter context summary above grid:\n   - Enhance #active-filters styling with prominent visual treatment\n   - Add border-top in orange and background color (rgba(255,102,0,.04))\n   - Add \"Filtering by:\" label prefix via CSS ::before\n   - Improved padding and spacing\n   - Display existing filter pills with full context\n   - Makes active filter state always visible\n   - Users can quickly understand and manage applied filters"
+  },
+  {
+    "sha": "b303647",
+    "date": "2026-07-20",
+    "title": "Archive visual enhancements: search prominence, featured banner, filter badges",
+    "body": "Three major UI improvements to the archive experience:\n\n1. Search input visual prominence:\n   - Add search icon (🔍) with positioned overlay\n   - Increase padding and height for better visibility\n   - Stronger border (2px) and better focus styling\n   - Subtle orange background by default (rgba(255,102,0,.02))\n   - Focus state includes box-shadow for depth\n   - Makes search the obvious focal point of controls\n\n2. Featured collection banner styling:\n   - Add orange accent bar on left (6px solid border-left)\n   - Gradient background (right-to-left fade)\n   - Add decorative star icon (✦) at top\n   - Increased padding (24px) and margin\n   - Better typography: labels now orange + bold\n   - Hover state with enhanced gradient and shadow\n   - Signals this is a curated, promoted collection\n\n3. Active filter count indicators:\n   - Add circular badges to filter group labels\n   - Display count of active filters per group\n   - Badge appears only when filters are active\n   - Orange background with dark text for visibility\n   - Uses :has() selector for modern CSS\n   - JavaScript updates badge counts in real-time"
+  },
+  {
+    "sha": "fb75aa8",
+    "date": "2026-07-20",
+    "title": "UX improvements: link affordances, room navigation, empty state design",
+    "body": "Three interface improvements across the site:\n\n1. Link hover underlines (global, all 14 pages):\n   - Add text-decoration:underline on a:hover\n   - Improves affordance and discoverability of clickable text\n   - Especially helpful in prose sections and navigation\n\n2. Room navigation links styling enhancements:\n   - Add subtle background (rgba(255,102,0,.02)) by default\n   - Enhance hover state: orange border (#FF6600), orange text color\n   - Increase shadow depth on hover (0 8px 20px)\n   - More visual distinction as navigation destinations vs. regular links\n   - Better discoverability of room exploration options\n\n3. Empty state messaging design:\n   - Add border and subtle background (rgba(255,102,0,.02))\n   - Better spacing and visual hierarchy\n   - Style \"Clear Filters\" button with background and hover effects\n   - Shows users they can recover from no-results state\n   - Reduces confusion when filters return zero matches"
+  },
+  {
+    "sha": "cab8eee",
+    "date": "2026-07-20",
+    "title": "Design improvements: card depth, load-more affordance, mobile metadata visibility",
+    "body": "Three UX enhancements to the Archive:\n\n1. Load More button visual hierarchy:\n   - Add subtle background (rgba(255,102,0,.03)) for affordance\n   - Enhance hover background (rgba(255,102,0,.08))\n   - Increase shadow depth on hover (0 12px 32px)\n   - Improves discoverability of the load-more action\n\n2. Card depth & visual separation:\n   - Add default shadow to card images (0 4px 12px rgba(0,0,0,.12))\n   - Enhance hover shadow (0 16px 40px rgba(0,0,0,.2))\n   - Increase hover lift (translateY -3px)\n   - Creates more visual hierarchy and tactile feel\n\n3. Metadata visibility on mobile:\n   - Show figcaption at full opacity on touch devices\n   - Show .m and .x metadata at full opacity (no hover dependency)\n   - Ensures year/materials info is discoverable on mobile"
+  },
+  {
+    "sha": "a720ab1",
+    "date": "2026-07-20",
+    "title": "Design refinements: selection colors, scroll indicators, card hover states",
+    "body": "Three UX improvements across the site:\n\n1. Selection highlight consistency: Update ::selection{color} from white (#fff)\n   to black (#0c0a09) on all 13 pages for consistency with orange highlights\n\n2. Scroll indicator visibility: Add subtle opacity pulse animation (pulse-glow)\n   to all hero section scroll indicators (.down and .threshold::after) to better\n   guide first-time visitors to scroll and discover content below the fold\n\n3. Featured card hover depth: Enhance #work hover state with:\n   - Transform lift (translateY -4px)\n   - Drop-shadow with orange tint (rgba(255,102,0,.15))\n   - Smooth transition for both properties"
+  },
+  {
+    "sha": "dae29a2",
+    "date": "2026-07-20",
+    "title": "Update all hero section highlights: black text on orange backgrounds",
+    "body": "Change all .highlight-* classes from white text (#fff) to black (#0c0a09)\nfor better contrast and readability across all pages:\n- index.html (Museum)\n- about.html (Making)\n- hall-of-openings.html (Open)\n- working-history.html (galleries)\n- stories.html (happened)\n- 404.html (room)\n- flooded-wing.html\n- guernica-passage.html\n- the-studio.html"
+  },
+  {
+    "sha": "e44d1e6",
+    "date": "2026-07-20",
+    "title": "Update About page highlighting: \"Making\" full word + black text on orange",
+    "body": "- Change highlight from \"Mak\" to full \"Making\" word in h1\n- Update .highlight-devo text color from white (#fff) to black (#0c0a09) for better contrast"
+  },
+  {
+    "sha": "3626a68",
+    "date": "2026-07-20",
+    "title": "Add orange highlight and pulse animation to 'vault' in heading",
+    "body": "Wrap 'vault' in .vault-highlight span with orange background, dark text,\nand subtle pulse animation (2s ease-in-out). Animation scales 1 → 1.05 → 1\nwhile orange background remains constant. Emphasizes the 'vault' concept\nin 'The vault beneath the museum.'"
+  },
+  {
+    "sha": "56c2135",
+    "date": "2026-07-20",
+    "title": "Reduce vault hero image height and crop top",
+    "body": "Adjust hero image: max-height 55vh → 45vh, object-position center → center 100px\nto remove top 100px of image. Creates more compact hero threshold with better\nvisual proportion to following content."
+  },
+  {
+    "sha": "1753588",
+    "date": "2026-07-20",
+    "title": "Add filtered double-sided works collection view",
+    "body": "Implement reverse parameter (archive.html?reverse=true) to filter and display\nonly artworks with documented reverse images. Updates featured banner to show\ndynamic count of double-sided works (currently 4, scales to 40+). Adds COLLECTION\nfilter group to archive controls for manual filtering. Works marked with b:1 in\ncatalog are automatically identified and filterable."
+  },
+  {
+    "sha": "e36541b",
+    "date": "2026-07-20",
+    "title": "Further reduce spacing above Archive heading",
+    "body": "Reduce padding-top from 8vh to 2vh, bringing content approximately 200px\ncloser to vault image fade. Archive heading now directly follows photograph\nwith minimal breathing room for tight visual threshold effect."
+  },
+  {
+    "sha": "d17717e",
+    "date": "2026-07-20",
+    "title": "Move Archive heading closer to vault image fade",
+    "body": "Remove vertical centering from #door section (removed min-height:66vh and\njustify-content:center). Replace with padding-based layout (padding-top:8vh,\npadding-bottom:8vh). Content now flows naturally below image fade with\ntighter visual integration, approximately 200px closer to vault photograph."
+  },
+  {
+    "sha": "171225b",
+    "date": "2026-07-20",
+    "title": "Tighten spacing between vault image fade and Archive heading",
+    "body": "Reduce padding-top on #door from 14vh to 4vh, bringing THE ARCHIVE heading\nand description closer to the image fade (~200px reduction). Creates tighter\nvisual integration between vault threshold image and archive entry point."
+  },
+  {
+    "sha": "acf9abc",
+    "date": "2026-07-20",
+    "title": "Add museum vault hero image to Archive page",
+    "body": "Integrates approved middle-50% crop of museum storage photograph as\nthreshold image above Archive hero. 240px linear-gradient fade smoothly\ndissolves photograph into page black, creating cinematic threshold before\nTHE ARCHIVE heading. Responsive composition preserves storage racks and\nartwork visibility across desktop, tablet, and mobile breakpoints."
+  },
+  {
+    "sha": "3119b28",
+    "date": "2026-07-20",
+    "title": "Add active filter pills above grid",
+    "body": "Display selected filters as removable orange pills above the artwork grid.\n- Shows all active filters at a glance (medium, decade, orientation, theme, material)\n- Click × to remove individual filters without clearing all\n- Breadcrumb-style clarity showing filtering journey\n- Smooth enter animation for new pills\n- Syncs with filter panel (removing pill updates chip state)\n\nBest-in-class pattern used by Netlify, Figma, Shopify for filter transparency."
+  },
+  {
+    "sha": "ca8d2a0",
+    "date": "2026-07-20",
+    "title": "Optimize filter UX: smart defaults, discovery hints, responsive",
+    "body": "1. Smart default state: MEDIUM/DECADE/ORIENTATION open, THEME/MATERIAL closed\n   - Shows core filters without overwhelming users\n   - Advanced filters remain discoverable via headers\n\n2. Filter discovery indicators: Show chip count (20), (21) under collapsed headers\n   - Users know what's available without expanding\n   - Signals filter richness and makes hidden sections feel less hidden\n\n3. Responsive defaults: Mobile collapses all sections, desktop uses smart defaults\n   - Mobile: limited space, all collapsed improves UX\n   - Desktop: core filters visible, advanced collapsed\n\n4. Bonus: First-visit hint tooltip (6-7s)\n   - Orange banner: \"💡 Click section headers to explore advanced filters\"\n   - Teaches interaction without being intrusive\n   - Auto-dismisses after 6s or on first click\n   - Uses localStorage to show only once per browser"
+  },
+  {
+    "sha": "c416fbe",
+    "date": "2026-07-20",
+    "title": "Improve filter UX/UI: sorting, collapse/expand, tooltips",
+    "body": "1. Sort theme/material chips by work count (most popular first)\n2. Add collapse/expand for theme/material sections (click label)\n3. Show work count tooltips on each chip (e.g., \"42 works\")\n4. Update FILTERS button to show active filter count\n\nChips now display highest-impact filters first, sections are collapsible for less clutter, and tooltips help users preview filter impact."
+  },
+  {
+    "sha": "934cabe",
+    "date": "2026-07-20",
+    "title": "Bump CACHE_V to force service worker cache invalidation",
+    "body": "Force browser cache clear to ensure theme/material filter chips load correctly after hard refresh."
+  },
+  {
+    "sha": "e6b78a9",
+    "date": "2026-07-20",
+    "title": "Fix theme/material filter data extraction",
+    "body": "The themes.json and materials.json APIs return objects with 'themes' and 'materials' properties, but the code was trying to access them as arrays directly. Fixed by:\n- Extracting themesData.themes and materialsData.materials\n- Setting proper defaults on fetch errors\n\nNow theme and material filter chips populate correctly."
+  },
+  {
+    "sha": "26179f8",
+    "date": "2026-07-20",
+    "title": "Update changes.json after catalog rebuild",
+    "body": ""
+  },
+  {
+    "sha": "bb65728",
+    "date": "2026-07-20",
+    "title": "Add materials.json generation to catalog build",
+    "body": "Updated build_catalog.py to generate api/v1/materials.json, matching the pattern used for themes.json. Materials are extracted from the 'materials' field in artwork sidecars and indexed with work counts and IDs for archive filtering.\n\n21 material types now available for the materials filter (paper, ink, collage, acrylic, etc.).\n\nCACHE_V bumped automatically in sw.js."
+  },
+  {
     "sha": "99e2327",
     "date": "2026-07-20",
     "title": "Add theme and material filters to archive",
