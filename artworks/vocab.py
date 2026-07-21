@@ -8,7 +8,7 @@ Hardcoded fallbacks are provided so scripts never break if the config is missing
 import json
 from pathlib import Path
 
-_CFG_PATH = Path(__file__).parent.parent / "artist-config.json"
+_CFG_PATH = Path(__file__).parent.parent / "config" / "artist-config.json"
 
 def _load_config() -> dict:
     if _CFG_PATH.exists():
@@ -37,8 +37,8 @@ VALID_MOTIFS = _cfg.get("motifs") or [
 ]
 
 VALID_MATERIALS = _cfg.get("materials") or [
-    "paper", "paint", "ink", "silver-foil", "gold-leaf", "cardboard", "plastic", "lace",
-    "resin", "cassette", "ribbon", "keyboard", "sequins", "tape", "canvas",
+    "paper", "paint", "ink", "prisma paper", "gold-leaf", "cardboard", "plastic", "lace",
+    "resin", "cassette", "ribbon", "keyboard", "sequins", "tape", "canvas", "mixed media",
 ]
 
 VALID_THEMES = [t["name"] for t in _cfg.get("themes", [])] or [

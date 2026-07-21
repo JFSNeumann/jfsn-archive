@@ -1,5 +1,23 @@
 [
   {
+    "sha": "e5d1c10",
+    "date": "2026-07-21",
+    "title": "Bump CACHE_V for archive.html filter plumbing fix",
+    "body": ""
+  },
+  {
+    "sha": "7308263",
+    "date": "2026-07-21",
+    "title": "Fix archive.html filter plumbing: Orientation/Theme/Material now work for all works",
+    "body": "Three consumer-side bugs silently broke 3 of 6 Archive filters for the\n~1,084 historical works (verified live: Orientation rendered 0 chips,\nTheme/Material returned 0 results):\n\n- catalogMap keyed on `.file` (\"art0001.avif\") but joined against\n  current.json `w.i` (\"art0001\") — matched only 4/1088. Strip .avif so\n  the theme/material lookup joins for every work.\n- ORI_LABEL keyed v/h/s but current.json orientation is\n  vertical/horizontal/square — no orientation chips built. Use full-word keys.\n- Card aspect-ratio checked w.o==='h'/'s' (never true) so every horizontal\n  and square work rendered with a vertical 2/3 box. Match the real values.\n\nVerified end-to-end on the patched file in a real browser: all six filters\nreturn correct counts (Orientation 426/573/87, Theme \"Torsos & Faces\" 172,\nMaterial paint 572 / prisma paper 156), and every rendered card under a\nmaterial filter genuinely carries that material."
+  },
+  {
+    "sha": "bd5e3da",
+    "date": "2026-07-21",
+    "title": "Consolidate materials filters: Paint, Mixed media; rename Silver-foil → Prisma paper",
+    "body": "Materials simplified from 21 to 16:\n- Paint: consolidated acrylic, acrylic paint, watercolor → Paint (572 works)\n- Mixed media: consolidated mixed fabric, mixed media, collage paper (4 works)\n- Silver-foil → Prisma paper (156 works)\n\nUpdated 654 sidecar JSON files and regenerated catalog + API indexes.\nCACHE_V bumped."
+  },
+  {
     "sha": "6553c07",
     "date": "2026-07-20",
     "title": "Session end: Update IMPROVEMENTS.md with hero animation completion",
