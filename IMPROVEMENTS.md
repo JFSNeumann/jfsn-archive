@@ -1,5 +1,5 @@
 # JFSN — Improvement List
-**Updated:** 2026-07-19 (intake pipeline complete)
+**Updated:** 2026-07-21 (archival-integrity remediation + catalog count restored to 1,086)
 
 A living list. Add to it. Cross things off. This is the backlog.
 
@@ -37,6 +37,8 @@ Nothing currently queued.
 ## ✅ Completed
 
 History lives in `git log` — `git log --oneline --all` for the full record. A few recent highlights for orientation:
+
+- **2026-07-21** — **Archival-Integrity Remediation: Catalog restored to 1,086 works.** Fixed catalog count discrepancy (inconsistent references: 1,084 vs. 1,086 vs. 1,088). Removed pixel-identical duplicates art1087/art1088 (re-ingestion artifacts of art1085/art1086). Restored completeness of art1085/art1086 by syncing dims.json across config and root. Rebuilt catalog, current, API indexes to exactly 1,086 records. About page editorial: replaced vague "Exhibition Record" with creator-verified six-exhibition list (1978–2012), removed unsupported "Permanent Collections" section, removed three unverified "In His Own Words" quotations, added inquiry contact line. Fixed artwork.html orientation display to handle both full-word (vertical/horizontal/square) and short-code (v/h/s) values. Fixed verify.py schema_version crash on mixed int/str types. Updated all 1,084 static page references from 1,084 → 1,086. Regenerated all 1,086 artwork pages with dynamic footer count. Updated sitemap, privacy, about, archive, current, index meta descriptions/counts. Removed "OPEN DATA" wording from archive hero. Commits `ae6803fa` (1,134 files), `7c7e00e4` (education curriculum: added industrial design and graphic design to CIA focus). Deployed and live. 18 pre-existing metadata-quality errors on art1085/art1086 preserved for separate stewardship pass.
 
 - **2026-07-20 (continuation session)** — **H1 Hero Animation: Orange sweep constrained to letter shapes only.** Orange gradient sweeps left-to-right on page load using `background-clip: text` to confine it to glyph shapes; never appears outside letters or on background. Took 8 iterations (clip-path polygons, scaleX transforms, text-shadow, drop-shadow filters, feGaussianBlur, pseudo-element overlays with blend modes) before landing on background-clip:text as the solution. Black text preserved on "Museum" highlight box via `-webkit-text-fill-color` override. Commit `8feb564d`; deployed and live. Key learning: subtle CSS animations are nearly impossible to verify in static screenshots — user needed to watch in real-time on the live site, which proved the animation was working all along (previous 7 approaches were technically correct but visually imperceptible in frozen frames).
 
