@@ -102,13 +102,14 @@ addEventListener('DOMContentLoaded', () => {
      changes. Desktop pointer only; off entirely under reduced motion. */
   #ambient-light{
     position:absolute;inset:0;z-index:0;pointer-events:none;
-    opacity:0;transition:opacity .4s ease;
-    background:radial-gradient(360px circle at var(--mx,50%) var(--my,50%), rgba(255,102,0,.07), transparent 70%);
+    opacity:0;transition:opacity .3s ease;
+    background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%), rgba(255,102,0,.15), rgba(255,102,0,.04) 60%, transparent 80%);
   }
   @media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
     .threshold:hover #ambient-light{opacity:1}
   }
   .threshold>*{position:relative}
+  .threshold{perspective:1200px}
   @keyframes bounce{
     0%,100%{transform:translateX(-50%) translateY(0)}
     50%{transform:translateX(-50%) translateY(-8px)}
@@ -153,7 +154,10 @@ addEventListener('DOMContentLoaded', () => {
     #work,.wing{animation:hero-in .7s ease-out both;animation-delay:.3s}
   }
 
-  #work{margin-top:clamp(28px,4vh,44px);transition:transform .3s ease,filter .3s ease}
+  #work{margin-top:clamp(28px,4vh,44px);transition:transform .4s cubic-bezier(.34,.1,.68,1),filter .3s ease;transform-style:preserve-3d}
+  @media (hover:hover) and (prefers-reduced-motion: no-preference){
+    .threshold:hover #work{transform:rotateX(6deg) rotateY(-4deg) translateZ(20px)}
+  }
   #work img{
     display:block;width:auto;height:auto;
     max-width:min(560px,86vw);max-height:42vh;
@@ -323,7 +327,7 @@ addEventListener('DOMContentLoaded', () => {
 
   #doors a{
     border-left-color:color-mix(in srgb, var(--accent) calc(var(--rest-a, 0) * 100%), transparent);
-    transition:border-left-width .3s ease, border-left-color .4s ease;
+    transition:border-left-width .3s ease, border-left-color .4s ease, box-shadow .4s ease;
   }
 
   /* Anticipation: the row nearest the pointer senses it before hover claims it */
@@ -331,26 +335,33 @@ addEventListener('DOMContentLoaded', () => {
     border-left-color:color-mix(in srgb, var(--accent) calc((var(--rest-a, 0) + .35) * 100%), transparent);
   }
 
+  /* Border glow bloom: subtle outer glow expands on hover */
+  @media (hover:hover) and (prefers-reduced-motion: no-preference){
+    #doors a:hover,#doors a:focus-visible{
+      box-shadow:inset 1px 0 0 var(--accent), 0 0 20px rgba(255,102,0,.3);
+    }
+  }
+
   @media (prefers-reduced-motion: no-preference) {
     /* THE CURRENT (1st): thick left border = energy */
-    #doors a:nth-child(1):hover{border-left-width:6px}
-    #doors a:nth-child(1):focus-visible{border-left-width:6px}
+    #doors a:nth-child(1):hover{border-left-width:6px;box-shadow:0 20px 50px rgba(255,102,0,.2)}
+    #doors a:nth-child(1):focus-visible{border-left-width:6px;box-shadow:0 20px 50px rgba(255,102,0,.15)}
 
     /* THE GUERNICA PASSAGE (2nd): medium = focused weight */
-    #doors a:nth-child(2):hover{border-left-width:3px}
-    #doors a:nth-child(2):focus-visible{border-left-width:3px}
+    #doors a:nth-child(2):hover{border-left-width:3px;box-shadow:0 20px 50px rgba(255,102,0,.15)}
+    #doors a:nth-child(2):focus-visible{border-left-width:3px;box-shadow:0 20px 50px rgba(255,102,0,.12)}
 
     /* THE FLOODED WING (3rd): thin = withdrawn quiet */
-    #doors a:nth-child(3):hover{border-left-width:1px}
-    #doors a:nth-child(3):focus-visible{border-left-width:1px}
+    #doors a:nth-child(3):hover{border-left-width:1px;box-shadow:0 20px 50px rgba(255,102,0,.12)}
+    #doors a:nth-child(3):focus-visible{border-left-width:1px;box-shadow:0 20px 50px rgba(255,102,0,.1)}
 
     /* THE HALL OF OPENINGS (4th): thick-plus = multiplicity */
-    #doors a:nth-child(4):hover{border-left-width:4px}
-    #doors a:nth-child(4):focus-visible{border-left-width:4px}
+    #doors a:nth-child(4):hover{border-left-width:4px;box-shadow:0 20px 50px rgba(255,102,0,.18)}
+    #doors a:nth-child(4):focus-visible{border-left-width:4px;box-shadow:0 20px 50px rgba(255,102,0,.14)}
 
     /* THE STUDIO (5th): thickest = warmth + welcome */
-    #doors a:nth-child(5):hover{border-left-width:5px}
-    #doors a:nth-child(5):focus-visible{border-left-width:5px}
+    #doors a:nth-child(5):hover{border-left-width:5px;box-shadow:0 20px 50px rgba(255,102,0,.2)}
+    #doors a:nth-child(5):focus-visible{border-left-width:5px;box-shadow:0 20px 50px rgba(255,102,0,.16)}
   }
 
   /* Landing choreography: borders draw themselves from left to right with organic easing */
@@ -894,10 +905,17 @@ addEventListener('DOMContentLoaded', () => {
   const glow = document.getElementById('ambient-light');
   if (!threshold || !glow) return;
   let raf = null, mx = 0, my = 0;
+  const work = document.getElementById('work');
   function apply(){
     raf = null;
     glow.style.setProperty('--mx', mx + 'px');
     glow.style.setProperty('--my', my + 'px');
+    if (work) {
+      const r = threshold.getBoundingClientRect();
+      const cx = r.width / 2, cy = r.height / 2;
+      const dx = (mx - cx) * 0.02, dy = (my - cy) * 0.02;
+      work.style.transform = `translate(${dx}px, ${dy}px)`;
+    }
   }
   threshold.addEventListener('mousemove', (e) => {
     const r = threshold.getBoundingClientRect();
