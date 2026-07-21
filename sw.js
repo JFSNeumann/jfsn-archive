@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-20260720230000'; // Round 15: Soft orange glow entrance animation on h1 title
+const CACHE_V  = 'jfsn-20260721000000'; // Round 15: Orange sweep animation across white text only (lighten blend mode)
 const PRECACHE = [
   // The 14 live room pages (Museum v2 — the only site that exists today;
   // the old v1 archive, decade pages, and generated theme pages were
