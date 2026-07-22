@@ -1,5 +1,5 @@
 # JFSN — Improvement List
-**Updated:** 2026-07-22 (Flooded Wing → Six Feet Away threshold + art0518 creator-voice pilot, both shipped, deployed, verified live)
+**Updated:** 2026-07-22 (Archive return-state restoration shipped; earlier: Flooded Wing → Six Feet Away threshold + art0518 creator-voice pilot)
 
 A living list. Add to it. Cross things off. This is the backlog.
 
@@ -38,6 +38,8 @@ Nothing currently queued.
 ## ✅ Completed
 
 History lives in `git log` — `git log --oneline --all` for the full record. A few recent highlights for orientation:
+
+- **2026-07-22 (archive return-state restoration)** — **Archive browsing continuity preserved on return.** When a visitor opens an artwork from the archive and then clicks "[ ← BACK TO THE ARCHIVE ]", they now return to their exact prior browsing position (scroll, filters, sort, pagination) instead of the top of the page. Single-file fix to `archive.html` (115 lines): save state on exit via pagehide listener → sessionStorage; restore only on return from artwork (referrer guard prevents stale restoration after deep-link filters). Scroll targets the opened work's card (via data-id match), fallback to saved Y if filtered out. UI controls synced (search input, sort dropdown, chip active states). Tested live jfsn.com with collage filter + scroll → art0379 → back link: filter restored, scroll restored, first card in view. Commit `b878055d`, deployed 2026-07-22 14:03 EDT.
 
 - **2026-07-22** — **Two relationship-focused interventions, both piloted narrowly and shipped after explicit approval: the Flooded Wing → Six Feet Away threshold, and a single-work creator-voice pilot on art0518.** Both grew out of a first-time-visitor journey review (desktop + mobile) that found the site's thematic connections were already strong (a work's page already links to its place in the fifty-year river; the Guernica Passage already links to the lost Guernica-scale wall in the Flooded Wing) but flagged two gaps: (1) Jeff's richest loss testimony (`stories.html#six-feet-away`) was reachable from the main visitor path only via a buried text link, and (2) individual artwork pages show machine description only — no creator voice exists anywhere on the public site, though the oral history holds it for specific works.
   **Threshold (commit `04d35a0d`):** added one link-block to `flooded-wing.html`, placed immediately after the curbside "discarded work" photograph and before the exit — "IN HIS OWN WORDS / [his verbatim first line] / SIX FEET AWAY →" into `stories.html#six-feet-away`. Reuses the room's own quote styling (Playfair italic in `--ink`, not recolored like a link) so it reads as testimony, not navigation. `stories.html` already linked back to the room, so the connection is now bidirectional. Verified live, desktop + mobile.
