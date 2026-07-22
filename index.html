@@ -1009,10 +1009,20 @@ addEventListener('DOMContentLoaded', () => {
     remaining.forEach(el => io.observe(el));
   }
   initReveal();
-  // Re-check on any page show, including bfcache restore — scroll
-  // position may already be set by the time this fires, so the
-  // synchronous check above is what actually fixes back-navigation.
-  addEventListener('pageshow', initReveal);
+  // Re-check on any page show, including bfcache restore.
+  addEventListener('pageshow', () => {
+    initReveal();
+    // Belt-and-suspenders: the browser's own scroll-position restoration
+    // after a back/forward navigation isn't guaranteed to have happened
+    // yet at the moment `pageshow` fires, and isn't guaranteed to produce
+    // an IntersectionObserver callback either — confirmed by testing that
+    // a freshly restored page can land at the correct restored scrollY
+    // with the observer never firing. These two delayed re-checks are
+    // plain, observer-free polling (cheap: a few getBoundingClientRect
+    // calls) so a late scroll restoration still gets caught.
+    setTimeout(initReveal, 50);
+    setTimeout(initReveal, 300);
+  });
 })();
 </script>
 
