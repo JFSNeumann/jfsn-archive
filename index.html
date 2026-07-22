@@ -101,7 +101,7 @@ addEventListener('DOMContentLoaded', () => {
      to presence, not stored personalization; the poster itself never
      changes. Desktop pointer only; off entirely under reduced motion. */
   #ambient-light{
-    position:absolute;inset:0;z-index:0;pointer-events:none;
+    position:absolute;top:0;bottom:0;left:50%;width:100vw;transform:translateX(-50%);z-index:0;pointer-events:none;
     opacity:0;transition:opacity .3s ease;
     background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%), rgba(255,102,0,.15), rgba(255,102,0,.04) 60%, transparent 80%);
   }
@@ -1006,12 +1006,16 @@ addEventListener('DOMContentLoaded', () => {
   const threshold = document.querySelector('.threshold');
   const glow = document.getElementById('ambient-light');
   if (!threshold || !glow) return;
-  let raf = null, mx = 0, my = 0;
+  let raf = null, mx = 0, my = 0, gx = 0, gy = 0;
   const work = document.getElementById('work');
   function apply(){
     raf = null;
-    glow.style.setProperty('--mx', mx + 'px');
-    glow.style.setProperty('--my', my + 'px');
+    // #ambient-light spans the full viewport width (not just the
+    // max-width:1180px .threshold box), so the glow reaches screen edges
+    // on wide desktops instead of clipping at the content column — its
+    // coordinates are viewport-relative, distinct from mx/my below.
+    glow.style.setProperty('--mx', gx + 'px');
+    glow.style.setProperty('--my', gy + 'px');
     if (work) {
       const r = threshold.getBoundingClientRect();
       const cx = r.width / 2, cy = r.height / 2;
@@ -1022,6 +1026,7 @@ addEventListener('DOMContentLoaded', () => {
   threshold.addEventListener('mousemove', (e) => {
     const r = threshold.getBoundingClientRect();
     mx = e.clientX - r.left; my = e.clientY - r.top;
+    gx = e.clientX; gy = e.clientY - r.top;
     if (!raf) raf = requestAnimationFrame(apply);
   });
 })();
