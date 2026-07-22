@@ -365,6 +365,11 @@ addEventListener('DOMContentLoaded', () => {
   <div class="stat">© <span id="footer-year"></span> JEFFREY F. S. NEUMANN</div>
 </footer>
 
+<style>
+/* Gallery cards visible by default (reveal-on-scroll handled via .seen class) */
+a.rec { opacity: 1; }
+</style>
+
 <script>
 document.getElementById('footer-year').textContent = new Date().getFullYear();
 if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
