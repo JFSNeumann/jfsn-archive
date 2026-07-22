@@ -371,11 +371,10 @@ if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch((
 </script>
 
 <script>
-console.log('GALLERY SCRIPT STARTING');
+console.log('GALLERY SCRIPT STARTING - DIRECT EXECUTION');
 try {
-(function(){
   'use strict';
-  console.log('GALLERY IIFE EXECUTING');
+  console.log('GALLERY DIRECT CODE EXECUTING');
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // The eight built galleries, chronological. Data mirrors the working-history
@@ -460,7 +459,6 @@ try {
     if (h !== lastH){ lastH = h; measure(); }
     else if (scrollY !== lastY){ lastY = scrollY; show(); }
   }, 500);
-})();
 } catch(e) {
   console.error('GALLERY ERROR:', e.message, e.stack);
   document.body.innerHTML += '<p style="color:red;padding:20px">Gallery Error: ' + e.message + '</p>';
