@@ -3,7 +3,7 @@
 **Project:** Jeffrey F. S. Neumann Archive  
 **Purpose:** Preserve memories, stories, and context that exist only in Jeff's mind. This document is a primary source, not a summary. Do not rewrite it into polished prose.  
 **Last updated:** 2026-07-22  
-**Sessions captured:** 2026-06-08, 2026-06-09, 2026-06-09 (session 2), 2026-06-09 (session 3 — analysis + drafts), 2026-06-09 (session 4 — site implementation + checkpoint), 2026-06-10 (analysis, §§20–24), 2026-06-11 (creator corrections, §25), 2026-07-05 (Mr. SNOWmann correction, §28), 2026-07-18 (Creator Decision Recordings, first session, §29), 2026-07-22 (implementation — Six Feet Away threshold, §30; no new testimony)
+**Sessions captured:** 2026-06-08, 2026-06-09, 2026-06-09 (session 2), 2026-06-09 (session 3 — analysis + drafts), 2026-06-09 (session 4 — site implementation + checkpoint), 2026-06-10 (analysis, §§20–24), 2026-06-11 (creator corrections, §25), 2026-07-05 (Mr. SNOWmann correction, §28), 2026-07-18 (Creator Decision Recordings, first session, §29), 2026-07-22 (implementation — Six Feet Away threshold, §30; no new testimony), 2026-07-22 (preservation audit — image visibility fixes, §31; no new testimony)
 
 ---
 
@@ -911,3 +911,29 @@ The oral-history record's standing concern is that testimony existing only in Je
 ### Status
 
 Approved by Jeff and deployed live to jfsn.com (commit `04d35a0d`, single file `flooded-wing.html`). No catalog data, metadata, or testimony was modified.
+
+---
+
+## 31. Preservation Audit — Image Visibility Fixes — 2026-07-22
+
+**Source:** Not an oral history session. **No new testimony was captured from Jeff.** This is a technical preservation record, kept here for completeness of the archive's own maintenance history.
+
+### What was fixed
+
+Two gallery pages had invisible images due to CSS conflicts and JavaScript issues:
+
+1. **working-history.html** — 8 gallery cards (with images) existed in DOM but had `opacity: 0` computed style, rendering them invisible to visitors. Root cause: reveal-on-scroll CSS pattern defaults to `opacity: 0`, animated to `opacity: 1` only when `.seen` class is added via JavaScript. The gallery existed but its visibility was hidden. Fix: Added CSS rule `a.rec { opacity: 1; }` to override the default, making all 8 gallery images visible. Deployed commit `b878055d`.
+
+2. **the-studio.html** — 4 hero images (art0504, art1009, art1008, art1011) had `opacity: 0` computed style, rendering them invisible. Root cause: CSS specificity conflict — `.hero-img{opacity:0}` rule at line 151 was overriding earlier opacity-override attempts. Fix: Added CSS rule with `!important` qualifier: `.hero-img { opacity: 1 !important; }` to force all hero images to full opacity regardless of state. Deployed commit `f22ef321`.
+
+### Why this matters for preservation
+
+Both pages' gallery structures and images existed in the codebase and were being served to visitors, but were invisible due to CSS conflicts — a failure of visual verification that would have gone unnoticed during code review alone. Both fixes restore visibility without modifying any other content, metadata, or HTML structure. The images were never lost; they were hidden.
+
+### Status
+
+Both fixes deployed live to jfsn.com. Smoke tests passed. Service worker cache invalidated (`CACHE_V` bumped). No catalog data, metadata, or testimony was modified. No new oral history captured.
+
+**Commits:**
+- `b878055d` — working-history.html CSS fix (same session context, prior to context boundary)
+- `f22ef321` — the-studio.html CSS fix (latest session)
