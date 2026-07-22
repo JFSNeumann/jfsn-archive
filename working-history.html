@@ -371,9 +371,11 @@ if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch((
 </script>
 
 <script>
+console.log('GALLERY SCRIPT STARTING');
 try {
 (function(){
   'use strict';
+  console.log('GALLERY IIFE EXECUTING');
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // The eight built galleries, chronological. Data mirrors the working-history
@@ -428,7 +430,9 @@ try {
       '<span class="enter">[ ENTER THE SITE ↗ ]</span>';
     frag.appendChild(a);
   }
+  console.log('GALLERY: About to append', n, 'links to index');
   index.appendChild(frag);
+  console.log('GALLERY: Successfully appended gallery links');
 
   // reveal-on-walk (scroll position + heartbeat; no IO, no RAF trust)
   const targets = [...document.querySelectorAll('.reveal-el')];
