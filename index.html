@@ -128,6 +128,7 @@ addEventListener('DOMContentLoaded', () => {
     max-width:7em;
     margin-top:50px;
     position:relative;
+    display:block;
   }
   @media (prefers-reduced-motion: no-preference){
     .threshold h1{
@@ -137,6 +138,7 @@ addEventListener('DOMContentLoaded', () => {
       -webkit-background-clip:text;
       -webkit-text-fill-color:transparent;
       color:transparent;
+      display:block;
       overflow:hidden;
       animation:textSweep .8s ease-out forwards;
       animation-delay:.08s;
@@ -972,21 +974,28 @@ addEventListener('DOMContentLoaded', () => {
 // stop watching it — a one-time unfold, not a repeating scroll gimmick.
 (function(){
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const els = document.querySelectorAll('.reveal-up');
-  if (!('IntersectionObserver' in window) || !els.length) return;
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        io.unobserve(entry.target);
-        // Same subtle haptic vocabulary as the door hover/click (#10),
-        // extended to the scroll-reveal moments — a single faint pulse
-        // as each section arrives, mobile-only (no-op where unsupported).
-        if (navigator.vibrate) navigator.vibrate(8);
-      }
-    });
-  }, { threshold: 0.15 });
-  els.forEach(el => io.observe(el));
+  function initReveal() {
+    const els = document.querySelectorAll('.reveal-up');
+    if (!('IntersectionObserver' in window) || !els.length) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+          // Same subtle haptic vocabulary as the door hover/click (#10),
+          // extended to the scroll-reveal moments — a single faint pulse
+          // as each section arrives, mobile-only (no-op where unsupported).
+          if (navigator.vibrate) navigator.vibrate(8);
+        }
+      });
+    }, { threshold: 0.15 });
+    els.forEach(el => io.observe(el));
+  }
+  initReveal();
+  // Re-init observer on back-button navigation (bfcache restore)
+  addEventListener('pageshow', e => {
+    if (e.persisted) initReveal();
+  });
 })();
 </script>
 
