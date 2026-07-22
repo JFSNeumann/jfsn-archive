@@ -371,6 +371,7 @@ if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch((
 </script>
 
 <script>
+try {
 (function(){
   'use strict';
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -456,6 +457,10 @@ if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch((
     else if (scrollY !== lastY){ lastY = scrollY; show(); }
   }, 500);
 })();
+} catch(e) {
+  console.error('GALLERY ERROR:', e.message, e.stack);
+  document.body.innerHTML += '<p style="color:red;padding:20px">Gallery Error: ' + e.message + '</p>';
+}
 </script>
 
 <script>
