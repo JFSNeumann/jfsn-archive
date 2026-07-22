@@ -971,58 +971,41 @@ addEventListener('DOMContentLoaded', () => {
 // Below-the-fold reveal: fade+rise each section once as it enters, then
 // stop watching it — a one-time unfold, not a repeating scroll gimmick.
 //
-// Elements already at or above the current viewport bottom (visible, or
-// already scrolled past — the common case right after a bfcache-restored
-// back-navigation, which can land with scroll position already past the
-// hero) are revealed synchronously and immediately, not via the async
-// IntersectionObserver callback. This avoids a race where a restored
-// scroll position and a freshly re-created observer disagree about
-// what's already on screen. The observer still handles the normal
-// scroll-to-reveal case for whatever's left below the fold.
+// This animation is for first-time discovery only. On any navigation
+// that isn't a fresh, first-time visit — a reload, or a back/forward —
+// every .reveal-up section is shown immediately, full stop, no
+// geometry checks, no observer, no timers. Earlier attempts tried to
+// detect "is this element already on screen after a restored scroll
+// position" and reveal it instantly in that case, but that still raced
+// the browser's own scroll restoration (which can land after the
+// check runs) and produced a real, visible blank gap after using the
+// back button. Removing the race entirely — rather than tightening
+// its timing — is what actually closes it.
 (function(){
-  function revealAlreadyVisible(els) {
-    const vh = window.innerHeight;
-    els.forEach(el => {
-      if (!el.classList.contains('is-visible') && el.getBoundingClientRect().top < vh) {
-        el.classList.add('is-visible');
+  const els = document.querySelectorAll('.reveal-up');
+  if (!els.length) return;
+  const navType = performance.getEntriesByType('navigation')[0]?.type;
+  if (navType && navType !== 'navigate') {
+    els.forEach(el => el.classList.add('is-visible'));
+    return;
+  }
+  if (!('IntersectionObserver' in window)) {
+    els.forEach(el => el.classList.add('is-visible'));
+    return;
+  }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        io.unobserve(entry.target);
+        // Same subtle haptic vocabulary as the door hover/click (#10),
+        // extended to the scroll-reveal moments — a single faint pulse
+        // as each section arrives, mobile-only (no-op where unsupported).
+        if (navigator.vibrate) navigator.vibrate(8);
       }
     });
-  }
-  function initReveal() {
-    const els = Array.from(document.querySelectorAll('.reveal-up'));
-    if (!els.length) return;
-    revealAlreadyVisible(els);
-    const remaining = els.filter(el => !el.classList.contains('is-visible'));
-    if (!('IntersectionObserver' in window) || !remaining.length) return;
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          io.unobserve(entry.target);
-          // Same subtle haptic vocabulary as the door hover/click (#10),
-          // extended to the scroll-reveal moments — a single faint pulse
-          // as each section arrives, mobile-only (no-op where unsupported).
-          if (navigator.vibrate) navigator.vibrate(8);
-        }
-      });
-    }, { threshold: 0.15 });
-    remaining.forEach(el => io.observe(el));
-  }
-  initReveal();
-  // Re-check on any page show, including bfcache restore.
-  addEventListener('pageshow', () => {
-    initReveal();
-    // Belt-and-suspenders: the browser's own scroll-position restoration
-    // after a back/forward navigation isn't guaranteed to have happened
-    // yet at the moment `pageshow` fires, and isn't guaranteed to produce
-    // an IntersectionObserver callback either — confirmed by testing that
-    // a freshly restored page can land at the correct restored scrollY
-    // with the observer never firing. These two delayed re-checks are
-    // plain, observer-free polling (cheap: a few getBoundingClientRect
-    // calls) so a late scroll restoration still gets caught.
-    setTimeout(initReveal, 50);
-    setTimeout(initReveal, 300);
-  });
+  }, { threshold: 0.15 });
+  els.forEach(el => io.observe(el));
 })();
 </script>
 
