@@ -129,6 +129,7 @@ addEventListener('DOMContentLoaded', () => {
     margin-top:50px;
     position:relative;
     display:block;
+    color:var(--ink);
   }
   @media (prefers-reduced-motion: no-preference){
     .threshold h1{
@@ -138,14 +139,10 @@ addEventListener('DOMContentLoaded', () => {
       -webkit-background-clip:text;
       -webkit-text-fill-color:transparent;
       color:transparent;
-      display:block;
       overflow:hidden;
       animation:textSweep .8s ease-out forwards;
       animation-delay:.08s;
     }
-  }
-  .threshold h1{
-    color:var(--ink);
   }
   .creed{
     margin-top:clamp(16px,2.4vh,24px);
@@ -654,9 +651,10 @@ addEventListener('DOMContentLoaded', () => {
 
   /* Below-the-fold reveal: the poster is static and identical every visit,
      but everything past it can unfold on scroll — pacing, not spectacle. */
+  .reveal-up{opacity:0;transform:translateY(16px)}
+  .reveal-up.is-visible{opacity:1;transform:translateY(0)}
   @media (prefers-reduced-motion: no-preference){
-    .reveal-up{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
-    .reveal-up.is-visible{opacity:1;transform:translateY(0)}
+    .reveal-up{transition:opacity .6s ease,transform .6s ease}
   }
 
   /* Me overlay in bottom-right corner — desktop only */
@@ -973,7 +971,6 @@ addEventListener('DOMContentLoaded', () => {
 // Below-the-fold reveal: fade+rise each section once as it enters, then
 // stop watching it — a one-time unfold, not a repeating scroll gimmick.
 (function(){
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   function initReveal() {
     const els = document.querySelectorAll('.reveal-up');
     if (!('IntersectionObserver' in window) || !els.length) return;
