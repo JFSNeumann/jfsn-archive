@@ -93,7 +93,25 @@ types). In practice, most stewardship sessions need:
 
 ---
 
-## PHASE 6: LIVING BACKLOG
+## PHASE 6: DOCUMENTATION REVIEW
+
+**If this session shipped operational/procedural changes, update the corresponding docs/current/ file now.**
+
+Operational changes include:
+- Backup/deploy processes → update `DEPLOY.md` + `SESSION_START_PROCEDURES.md`
+- Archive features or workflows → update `IMPROVEMENTS.md` + any feature docs
+- Content management procedures → update `WORKFLOW.md`
+- Catalog or metadata systems → update relevant governance file
+
+For any file you touch:
+- Update the `Last Updated` date to today (YYYY-MM-DD format)
+- Add a brief note of what changed (e.g., "Added backup-health-check.sh step, 2026-07-19")
+
+**Why:** Stale docs create confusion and false confidence. If a procedure changed, the doc that describes it must change too, in the same session. This is not optional cleanup — it's operational integrity.
+
+---
+
+## PHASE 7: LIVING BACKLOG
 
 If the session closed out or surfaced a backlog item, update `IMPROVEMENTS.md` directly —
 add to `✅ Completed` with commit hashes, or add/adjust an open item. This is the source of
@@ -102,7 +120,7 @@ happened (see `git log` for the record if unsure what shipped).
 
 ---
 
-## PHASE 7: FINAL CHECK
+## PHASE 8: FINAL CHECK
 
 ```bash
 echo "=== GIT ===" && git status --short && git log --oneline -3
@@ -122,5 +140,5 @@ normal stewardship session.
 
 ---
 
-**Last Updated:** 2026-07-17
+**Last Updated:** 2026-07-22
 **Status:** Active SOP, reflects post-migration stewardship-mode sessions

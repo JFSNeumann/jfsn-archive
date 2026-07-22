@@ -32,6 +32,8 @@ This file is operational guidance for AI coding sessions on this repository — 
 
 Fixing a demonstrated defect (a crash, a missing state, a broken transition) is process — verify it and fix it directly, no permission needed. Adding a new interaction concept the site doesn't already have (a new motion, a new affordance, a new choreography) is design — Jeff's to direct. **As of 2026-07-21 the design phase is open** (see [`docs/governance/DESIGN-REOPENED.md`](docs/governance/DESIGN-REOPENED.md), which supersedes the 2026-07-08 closure recorded in [`docs/governance/STEWARDSHIP-DECLARATION.md`](docs/governance/STEWARDSHIP-DECLARATION.md)): a design addition may proceed on Jeff's direction alone, no special evidence trigger required. Still confirm with Jeff before implementing a proposed *addition* rather than a *correction* — his direction is what authorizes it, so make sure it's actually been given, not just inferred from having been asked to propose or critique.
 
+**Documentation rule:** When this session ships operational or procedural changes (backup/deploy workflow, archive features, content systems, catalog procedures), update the corresponding `docs/current/` file in the same session. Set `Last Updated` to today. Stale operational docs are a bug that erodes confidence and creates confusion for the next session. See `SESSION_END_PROCEDURES.md` § Phase 6 for the checklist.
+
 ## Documentation architecture
 
 `docs/` is organized into four categories, each with one rule — see [`docs/README.md`](docs/README.md) for the full map:
