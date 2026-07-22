@@ -371,6 +371,16 @@ if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch((
 </script>
 
 <script>
+if (document.readyState !== 'loading') {
+  console.log('GALLERY: DOM already ready, running immediately');
+  runGallery();
+} else {
+  console.log('GALLERY: Waiting for DOMContentLoaded');
+  document.addEventListener('DOMContentLoaded', runGallery);
+}
+
+function runGallery(){
+console.log('GALLERY: Starting gallery population');
 (function(){
   'use strict';
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -456,6 +466,7 @@ if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch((
     else if (scrollY !== lastY){ lastY = scrollY; show(); }
   }, 500);
 })();
+}
 </script>
 
 <script>
