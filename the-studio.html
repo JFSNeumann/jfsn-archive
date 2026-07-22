@@ -17,8 +17,6 @@
 
   #room-veil{position:fixed;inset:0;background:#0c0a09;opacity:0;pointer-events:none;transition:opacity .22s ease;z-index:99}
   #room-veil.on{opacity:1;pointer-events:auto}
-  /* Studio hero images visible by default (reveal-on-scroll handled via .seen class) */
-  .hero-img { opacity: 1; }
 </style>
 <script>
 addEventListener('DOMContentLoaded', () => {
@@ -156,6 +154,7 @@ addEventListener('DOMContentLoaded', () => {
     transition:opacity 1.8s ease;
   }
   .hero-img.active{opacity:1}
+  .hero-img { opacity: 1 !important; }
   @media (prefers-reduced-motion: no-preference){
     .hero-img{animation:hero-kb 24s ease-in-out infinite alternate}
     @keyframes hero-kb{
