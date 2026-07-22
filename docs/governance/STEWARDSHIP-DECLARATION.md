@@ -1,5 +1,7 @@
 # Declaration of Permanent Stewardship
 
+> **Superseded 2026-07-21:** the design-phase closure below no longer governs. See [`DESIGN-REOPENED.md`](DESIGN-REOPENED.md). This page is kept intact as the historical record of 2026-07-08 through 2026-07-21 — its text is not altered below this notice.
+
 *The closing of the design phase of the JFSN Archive.*
 *One page. Signed. Dated. Not to be rewritten.*
 

@@ -88,10 +88,22 @@ addEventListener('DOMContentLoaded', () => {
   /* ---------- the work ---------- */
   #stage{display:flex;justify-content:center;position:relative;perspective:1200px}
   #stage figure{max-width:100%;position:relative;z-index:5}
+  /* Wall, not void: the same soft radial-glow language already used behind
+     the room heroes (e.g. .hero-content::before), reused here — a warm
+     halo the size of the piece, not a spotlight, so the work reads as hung
+     on a wall rather than floating on flat black. Built from --dim, not
+     --frame: --frame (#2b241e) sits too close to the room background
+     (#0c0a09) to read as a glow at all once composited — --dim (#b8a89a)
+     is the actual visible version of the same warm palette. */
+  #stage::before{
+    content:'';position:absolute;inset:-15% -10%;z-index:0;pointer-events:none;
+    background:radial-gradient(ellipse 63% 60% at center, rgba(184,168,154,.36) 0%, rgba(184,168,154,.15) 46%, transparent 74%);
+  }
   #stage img{
     display:block;max-width:100%;max-height:72vh;width:auto;height:auto;
     border:1px solid var(--frame);background:#171310;
     cursor:zoom-in;
+    box-shadow:0 30px 60px -14px rgba(0,0,0,.75), 0 12px 20px -8px rgba(0,0,0,.5);
     opacity:0;animation:fadeInImage .6s ease-out forwards;
   }
   @keyframes fadeInImage{
@@ -182,7 +194,11 @@ addEventListener('DOMContentLoaded', () => {
 
   /* ---------- where this sits ---------- */
   #sits{margin-top:44px;cursor:pointer;display:block;color:inherit}
-  #sits .sits-title{display:block;margin-bottom:14px;color:var(--faint)}
+  /* 30px, not 14px: the "you are here" marker's year label pokes up
+     22px above the strip (7px line + 15px label) — anything less and it
+     collides with this title's own text when the marker lands near the
+     left edge. */
+  #sits .sits-title{display:block;margin-bottom:30px;color:var(--faint)}
   #sits .sits-open{display:block;margin-top:14px;text-align:right;color:var(--dim);transition:color .2s}
   #sits:hover .sits-open,#sits:focus-visible .sits-open{color:var(--accent)}
   #sits:focus-visible{outline:2px solid var(--accent);outline-offset:6px}
@@ -617,10 +633,30 @@ addEventListener('DOMContentLoaded', () => {
   here.style.left = (frac * 100) + '%';
   document.getElementById('here-yr').textContent = thisDecade + 's';
 
-  // the decade axis beneath the band, this work's decade lit
+  // the decade axis beneath the band, this work's decade lit.
+  // Decades with few works sit close together in index-space (e.g. the
+  // 1970s/1980s), which can crowd their labels to the point of overlap —
+  // enforce a minimum on-screen gap so consecutive labels stay legible.
   const axis = document.getElementById('decade-axis');
-  axis.innerHTML = decades.map(dd => {
-    const left = dd.i / (works.length - 1) * 100;
+  // Pixel-based, not a fixed percentage — the sidebar column (and so this
+  // axis) can be anywhere from 280px to 380px wide, and a percentage gap
+  // that clears labels at one width still lets them collide at another.
+  const axisW = axis.clientWidth || axis.parentElement.clientWidth || 320;
+  const MIN_GAP_PX = 34; // widest label ("1970s"/"2020s") plus a few px breathing room
+  const MIN_GAP_PCT = MIN_GAP_PX / axisW * 100;
+  let lastLeft = -Infinity;
+  const positioned = decades.map(dd => {
+    let left = dd.i / (works.length - 1) * 100;
+    if (left - lastLeft < MIN_GAP_PCT) left = lastLeft + MIN_GAP_PCT;
+    lastLeft = left;
+    return { dd, left };
+  });
+  // If crowding pushed the tail past 100%, compress everything back to fit.
+  const overflow = positioned[positioned.length - 1].left - 100;
+  if (overflow > 0) {
+    positioned.forEach((p, i) => { p.left -= overflow * (i / (positioned.length - 1)); });
+  }
+  axis.innerHTML = positioned.map(({ dd, left }) => {
     const on = dd.d === thisDecade ? ' class="on"' : '';
     return '<span' + on + ' style="left:' + left.toFixed(2) + '%">' + dd.d + 's</span>';
   }).join('');

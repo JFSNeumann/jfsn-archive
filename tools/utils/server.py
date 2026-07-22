@@ -8,7 +8,7 @@ import json, os
 from http.server import SimpleHTTPRequestHandler, HTTPServer
 from pathlib import Path
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).parent.parent.parent  # tools/utils/server.py -> repo root
 PORT = int(os.environ.get('PORT', 3900))
 
 class Handler(SimpleHTTPRequestHandler):
