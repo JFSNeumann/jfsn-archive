@@ -970,10 +970,30 @@ addEventListener('DOMContentLoaded', () => {
 <script>
 // Below-the-fold reveal: fade+rise each section once as it enters, then
 // stop watching it — a one-time unfold, not a repeating scroll gimmick.
+//
+// Elements already at or above the current viewport bottom (visible, or
+// already scrolled past — the common case right after a bfcache-restored
+// back-navigation, which can land with scroll position already past the
+// hero) are revealed synchronously and immediately, not via the async
+// IntersectionObserver callback. This avoids a race where a restored
+// scroll position and a freshly re-created observer disagree about
+// what's already on screen. The observer still handles the normal
+// scroll-to-reveal case for whatever's left below the fold.
 (function(){
+  function revealAlreadyVisible(els) {
+    const vh = window.innerHeight;
+    els.forEach(el => {
+      if (!el.classList.contains('is-visible') && el.getBoundingClientRect().top < vh) {
+        el.classList.add('is-visible');
+      }
+    });
+  }
   function initReveal() {
-    const els = document.querySelectorAll('.reveal-up');
-    if (!('IntersectionObserver' in window) || !els.length) return;
+    const els = Array.from(document.querySelectorAll('.reveal-up'));
+    if (!els.length) return;
+    revealAlreadyVisible(els);
+    const remaining = els.filter(el => !el.classList.contains('is-visible'));
+    if (!('IntersectionObserver' in window) || !remaining.length) return;
     const io = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -986,13 +1006,13 @@ addEventListener('DOMContentLoaded', () => {
         }
       });
     }, { threshold: 0.15 });
-    els.forEach(el => io.observe(el));
+    remaining.forEach(el => io.observe(el));
   }
   initReveal();
-  // Re-init observer on back-button navigation (bfcache restore)
-  addEventListener('pageshow', e => {
-    if (e.persisted) initReveal();
-  });
+  // Re-check on any page show, including bfcache restore — scroll
+  // position may already be set by the time this fires, so the
+  // synchronous check above is what actually fixes back-navigation.
+  addEventListener('pageshow', initReveal);
 })();
 </script>
 
