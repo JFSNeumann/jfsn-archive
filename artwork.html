@@ -174,6 +174,22 @@ addEventListener('DOMContentLoaded', () => {
     #ledger .row:active .k{color:var(--faint)}
     #ledger .row:active .v{color:var(--ink)}
   }
+  /* PILOT (art0518 only): the maker's voice beside the object. Reuses the
+     site's "maker speaks" language — Playfair italic + a caps eyebrow/attr,
+     the same idiom as the room quotes and the Flooded Wing threshold — but at
+     intimate scale, so it whispers next to a single work rather than declaring.
+     No border/box/accent-bar: deliberately unlike the metadata ledger. */
+  #creator-voice{margin-top:34px}
+  #creator-voice .cv-eyebrow{display:block;color:var(--faint);margin-bottom:16px}
+  #creator-voice .cv-line{
+    font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
+    font-size:28px;line-height:1.25;color:var(--ink);margin:0;
+  }
+  #creator-voice .cv-context{
+    font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
+    font-size:17px;line-height:1.4;color:var(--dim);margin:10px 0 0;
+  }
+  #creator-voice .cv-attr{display:block;color:var(--faint);margin-top:16px}
   #flag{
     display:none;margin-top:16px;font-size:9px;letter-spacing:.14em;
     color:var(--accent);text-transform:uppercase;
@@ -356,6 +372,16 @@ addEventListener('DOMContentLoaded', () => {
       <div class="row"><span class="k">ORIENTATION</span><span class="v" id="v-ori"></span></div>
       <div class="row"><span class="k">ARCHIVE NO.</span><span class="v" id="v-no"></span></div>
     </div>
+    <!-- PILOT (art0518 only): the archive briefly lets the maker speak beside
+         the object. Verbatim testimony from the oral-history record (§29,
+         2026-07-18); shown only for art0518 via the reveal below. His words
+         only — the work is titled "Buy Me," so his answer needs no framing. -->
+    <div id="creator-voice" hidden>
+      <span class="caps cv-eyebrow">In his own words</span>
+      <p class="cv-line">&ldquo;desperate=)&rdquo;</p>
+      <p class="cv-context">&ldquo;not selling anything / trying to&rdquo;</p>
+      <span class="caps cv-attr">Jeffrey F. S. Neumann, 2026</span>
+    </div>
     <div id="flag">Photoshop composite — imagined placement</div>
     <nav>
       <button id="view-full">[ VIEW FULL RESOLUTION → ]</button>
@@ -467,6 +493,8 @@ addEventListener('DOMContentLoaded', () => {
   document.getElementById('v-no').textContent = w.i.toUpperCase();
   if (w.x) document.getElementById('flag').classList.add('on');
   if (w.g) document.getElementById('series-door').classList.add('on');
+  // PILOT — creator voice for this one work only (see #creator-voice above).
+  if (w.i === 'art0518') document.getElementById('creator-voice').hidden = false;
 
   // ---------- prev / next walk (chronological, same order as The Current) ----------
   const prev = document.getElementById('prev');

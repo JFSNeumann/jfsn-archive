@@ -43,6 +43,23 @@ MEDIUM_LABELS = {
     'painting':   'Painting',
 }
 
+# ── Verified creator testimony ────────────────────────────────────────────────
+# Primary-source oral-history testimony tied to a specific work, kept here as an
+# explicit per-work record rather than a catalog-schema field: testimony is
+# primary source, not descriptive metadata, and this is a single, securely
+# attributed pilot (oral history master-notes §29, 2026-07-18), not a system.
+# The dynamic artwork.html carries the same entry for art0518; this keeps the
+# durable static page in parity (readable with JavaScript disabled).
+# Add entries only with secure, unhedged attribution. Verbatim — the "=)" and
+# the slash are Jeff's own typed register and must not be normalized.
+CREATOR_VOICE = {
+    'art0518': {
+        'voice':   'desperate=)',
+        'context': 'not selling anything / trying to',
+        'attr':    'Jeffrey F. S. Neumann, 2026',
+    },
+}
+
 # Orientation is derived from image proportions (dims.json) — a stand-in for
 # physical dimensions until those are measured. Links to the archive filter.
 ORIENT_LABELS = {
@@ -226,6 +243,29 @@ def generate_page(work, idx, all_works, colors):
         f'<p class="font-body-md text-body-md text-secondary leading-relaxed mt-md">{e(desc)}</p>'
         if desc else ''
     )
+
+    # Creator voice — pilot, art0518 only (see CREATOR_VOICE). Placed after the
+    # record (metadata rows + description) so the durable page reads
+    # object → record → creator, matching the dynamic artwork.html.
+    # Fully self-contained inline styles (on-palette: deep-ink #0B0B0B for the
+    # voice, secondary #5e5e5e for eyebrow/attribution, Playfair italic for the
+    # spoken lines). These durable SEO pages don't compile the design-system's
+    # text-size/colour utilities, so inline styling is what actually renders —
+    # and it stays readable with JavaScript disabled, needing no CSS rebuild.
+    cv = CREATOR_VOICE.get(art_id)
+    if cv:
+        _cap = 'font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#5e5e5e'
+        _serif = "font-family:'Playfair Display',Georgia,serif;font-style:italic"
+        creator_voice_html = (
+            f'<div style="margin-top:28px">'
+            f'<p style="{_cap};margin:0 0 14px">In his own words</p>'
+            f'<p style="{_serif};font-size:24px;line-height:1.25;color:#0B0B0B;margin:0">&ldquo;{e(cv["voice"])}&rdquo;</p>'
+            f'<p style="{_serif};font-size:16px;line-height:1.4;color:#5e5e5e;margin:8px 0 0">&ldquo;{e(cv["context"])}&rdquo;</p>'
+            f'<p style="{_cap};margin:14px 0 0">{e(cv["attr"])}</p>'
+            f'</div>'
+        )
+    else:
+        creator_voice_html = ''
 
     # Reverse side: a native <details> disclosure needs no JavaScript to be
     # discoverable or viewable. Closed <details> content isn't laid out, so
@@ -416,6 +456,7 @@ def generate_page(work, idx, all_works, colors):
         {rows}
       </div>
       {desc_html}
+      {creator_voice_html}
     </aside>
 
   </div>
