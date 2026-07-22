@@ -37,13 +37,13 @@ PRECACHE_FILES=(
   _shared/ui.css
   _shared/ui.js
   _shared/nav-active.js
-  _shared/anime.min.js
+  dist/anime-utils.umd.js
 )
 
 # Check if any precached static asset changed in staging area
 CHANGED=false
 for f in "${PRECACHE_FILES[@]}"; do
-  if git diff --cached "$f" 2>/dev/null | grep -q .; then
+  if ! git diff --cached --quiet -- "$f" 2>/dev/null; then
     CHANGED=true
     break
   fi

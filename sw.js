@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-20260722124559'; // Metadata batch 5 (art0064-0087)
+const CACHE_V  = 'jfsn-1784725741'; // Metadata batch 5 (art0064-0087)
 const PRECACHE = [
   // The 14 live room pages (Museum v2 — the only site that exists today;
   // the old v1 archive, decade pages, and generated theme pages were
@@ -35,6 +35,7 @@ const PRECACHE = [
   '/_shared/nav-active.js',
   '/_shared/artwork-page-min.js',
   '/_shared/ui.css',
+  '/dist/anime-utils.umd.js',
   // Data the rooms and catalog pages fetch at runtime.
   '/config/current.json',
   '/config/guernica.json',
