@@ -777,6 +777,26 @@ addEventListener('DOMContentLoaded', () => {
   function pulseFavicon() {
     if (favicon) favicon.setAttribute('href', pulseFaviconHref);
   }
+  // Clear the click-departure classes (below: 'threshold-active' on the
+  // clicked door, 'room-exit' on its siblings). Both end their animation
+  // with `forwards` fill-mode landing on opacity:0 — a permanent freeze
+  // by design, since normally the page navigates away within 400ms of
+  // the class being added and this state is never seen again. But on
+  // some back-navigations the browser hands back a DOM that still has
+  // these classes attached (confirmed via direct hit-testing: the door
+  // links sit under the cursor with class="threshold-active" and
+  // opacity:0, even though Performance Navigation Timing reports this
+  // as an ordinary 'reload' — not something e.persisted catches). Not
+  // gated on e.persisted: this must run on every pageshow, since the
+  // scenario that needs it doesn't set that flag.
+  function clearDepartureClasses() {
+    doorsNav.querySelectorAll('a.threshold-active, a.room-exit').forEach(a => {
+      a.classList.remove('threshold-active', 'room-exit');
+      a.style.animationDelay = '';
+    });
+  }
+  clearDepartureClasses();
+  addEventListener('pageshow', clearDepartureClasses);
   addEventListener('pageshow', e => {
     if (e.persisted && favicon && originalFaviconHref) favicon.setAttribute('href', originalFaviconHref);
   });
