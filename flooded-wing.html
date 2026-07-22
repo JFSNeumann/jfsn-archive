@@ -314,6 +314,32 @@ addEventListener('DOMContentLoaded', () => {
   }
   #artifact figcaption{margin-top:16px}
 
+  /* ---------- the threshold into testimony ----------
+     Quiet enough not to interrupt the room, present enough to be found.
+     The whole block is one link; his verbatim line stays in --ink (it is not
+     recoloured like a hyperlink — testimony, not a control), and only the
+     small "Six Feet Away →" handle warms to signal the way through. */
+  #testimony{margin:150px auto 40px;max-width:34em;text-align:center}
+  #testimony .testimony-link{
+    display:block;color:inherit;
+    padding:26px clamp(20px,6vw,60px);
+  }
+  #testimony .testimony-link::after{display:none} /* no growing underline here */
+  #testimony .eyebrow{display:block;color:var(--faint);margin-bottom:26px}
+  #testimony blockquote{
+    font-family:'Playfair Display',Georgia,serif;font-style:italic;
+    font-size:clamp(22px,3.4vw,34px);line-height:1.32;color:var(--ink);
+    margin:0 0 22px;
+  }
+  #testimony .enter{
+    display:inline-block;color:var(--dim);transition:color .3s ease;
+  }
+  @media (hover:hover){
+    #testimony .testimony-link:hover .enter{color:var(--accent)}
+  }
+  #testimony .testimony-link:focus-visible{outline:2px solid var(--accent);outline-offset:6px}
+  #testimony .testimony-link:focus-visible .enter{color:var(--accent)}
+
   /* ---------- the exit ---------- */
   #exit{
     min-height:90vh;display:flex;flex-direction:column;
@@ -456,6 +482,17 @@ addEventListener('DOMContentLoaded', () => {
     <img src="/assets/images/artwork-in-trash-can.jpg" alt="A discarded artwork standing in a trash can, photographed in black and white." loading="lazy">
     <figcaption class="caps">DISCARDED WORK, PHOTOGRAPHED BEFORE THE GARBAGE TRUCK CAME</figcaption>
   </figure>
+</section>
+
+<!-- The room has shown what was lost. Here it quietly hands the visitor to
+     the man who stood on the sidewalk and watched it go — his own account,
+     verbatim, in Stories. Not a nav element: his voice is the threshold. -->
+<section id="testimony">
+  <a class="testimony-link" href="stories.html#six-feet-away">
+    <span class="caps eyebrow">In his own words</span>
+    <blockquote>&ldquo;Saw it out front waiting for the garbage men to take them all away.&rdquo;</blockquote>
+    <span class="caps enter">Six Feet Away&nbsp;&rarr;</span>
+  </a>
 </section>
 
 <section id="exit">
