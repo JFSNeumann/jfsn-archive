@@ -15,7 +15,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-OUT = ROOT / "changes.json"
+OUT = ROOT / "config" / "changes.json"
 
 # Delimiter unlikely to appear in a commit message
 SEP = "<<<CHANGE-ENTRY>>>"

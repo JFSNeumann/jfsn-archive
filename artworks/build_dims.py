@@ -6,7 +6,7 @@ Run this whenever new artworks are added to artworks/thumbs/:
 
     python3 artworks/build_dims.py
 
-Output: dims.json at the site root — used by archive.html and series.html
+Output: config/dims.json — read by build_catalog.py and tools/utils/verify.py
 for CSS Grid masonry span calculation.
 
 Format: {"art0001": [400, 800], "art0002": [400, 535], ...}
@@ -17,7 +17,7 @@ import json, re, subprocess
 from pathlib import Path
 
 THUMBS = Path(__file__).parent / "thumbs"
-OUT    = Path(__file__).parent.parent / "dims.json"
+OUT    = Path(__file__).parent.parent / "config" / "dims.json"
 
 
 def get_dims(path: Path):

@@ -51,7 +51,7 @@ MEDIUM = HERE / "medium"
 THUMBS = HERE / "thumbs"
 MINI   = HERE / "mini"
 MICRO  = HERE / "micro"
-DIMS   = HERE.parent / "dims.json"
+DIMS   = HERE.parent / "config" / "dims.json"
 
 # ─────────────────────────────────────────────────────────────────────────────
 

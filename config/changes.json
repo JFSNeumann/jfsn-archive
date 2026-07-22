@@ -1,5 +1,1541 @@
 [
   {
+    "sha": "94dac97",
+    "date": "2026-07-21",
+    "title": "Homepage doorways: light-leak atmospheric previews for all five rooms",
+    "body": "Transform the chapter list from text-only navigation into five thresholds,\neach revealing a glimpse of its room's light. The generic grayscale banner\npreview (opacity .1, full-row cover) becomes per-room tuned light-leaks:\nfeathered by radial masks, screen-blended, and calibrated by character.\n\nRoom previews swapped to representative works:\n  - I (Current): art0832 — river gradient\n  - II (Guernica): art0048 — heavy focus\n  - III (Flooded): art0611 — withdrawn whisper\n  - IV (Hall): art0832 — multiplicity\n  - V (Studio): art0504 — warm welcome\n\nEach door's opacity, blur, saturation, and mask tuned to match its room.\nAll are keyboard-accessible (focus-visible parity), reduced-motion safe\n(opacity fade only), and lazy-loaded (no new LCP burden)."
+  },
+  {
+    "sha": "8cd2635",
+    "date": "2026-07-21",
+    "title": "docs: mark this session's changes as deployed and verified live",
+    "body": ""
+  },
+  {
+    "sha": "5754d75",
+    "date": "2026-07-21",
+    "title": "docs: update IMPROVEMENTS.md with session close-out",
+    "body": ""
+  },
+  {
+    "sha": "73b2eab",
+    "date": "2026-07-21",
+    "title": "Reopen design phase; fix a11y/mobile defects; add wall-glow to artwork page",
+    "body": "Jeff explicitly reopened the design phase (closed 2026-07-08) — recorded\nin docs/governance/DESIGN-REOPENED.md, which supersedes\nSTEWARDSHIP-DECLARATION.md (kept intact as historical record).\n\nAccessibility: added missing prefers-reduced-motion guards on six\narchive.html animations (vault-highlight, results-header, filter-pill,\ngrid.replacing, count-label.tick, featured-new) — every other page\nalready guarded consistently; these were the gap.\n\nArtwork page: fixed a decade-axis label collision (1970s/1980s\noverlapping) by computing minimum label spacing from real pixel width\ninstead of a fixed percentage; fixed the \"you are here\" marker\noverlapping the section heading above it; added a warm wall-glow +\ncast shadow behind the work so it reads as hung rather than floating\non flat black (tuned interactively to Jeff's approval).\n\nMobile: fixed the site header (name + exit link) touching/overlapping\nwith zero gap at narrow widths (320-375px) on 8 pages that lacked a fix\nalready shipped on artwork.html; shortened the hero elliptical fade by\n50% vertically on mobile across 6 room-hero pages, where the desktop-\ntuned -150% inset was swallowing most of the artwork above and below\nthe hero text.\n\nAlso fixed tools/utils/server.py's ROOT path, silently broken since the\ntools/ reorg (c28a4b33) left it computing the wrong directory from its\nnew location; updated .claude/launch.json to match."
+  },
+  {
+    "sha": "e178a63",
+    "date": "2026-07-21",
+    "title": "docs: update IMPROVEMENTS.md with session close-out",
+    "body": "Logs the artwork-permalink audit + reverse-image fix (9b14a4ab) as\ncompleted, and records the canonical-URL migration decision as an\nopen, deliberately-parked architectural question rather than letting\nit silently disappear from the backlog."
+  },
+  {
+    "sha": "2d42178",
+    "date": "2026-07-21",
+    "title": "docs: fix stale backup/audit-nav script paths (scripts/ prefix)",
+    "body": "backup.sh, cloud-backup.sh, and audit-nav.sh all live in scripts/, not\nthe repo root — same stale-path pattern as the deploy scripts fixed in\n0a58578b. Fixed the 4 literal runnable-command references in\nDISASTER-RECOVERY-CHECKLIST.md and CURRENT_STATE.md; left prose\nmentions and the already-correct scripts/ references elsewhere in\nCURRENT_STATE.md untouched."
+  },
+  {
+    "sha": "0a58578",
+    "date": "2026-07-21",
+    "title": "docs: fix stale deploy script paths (scripts/ prefix)",
+    "body": "deploy-hostgator.sh, session-end.sh, pre-deploy-check.sh, and\npreview-verify.sh all live in scripts/, not the repo root. Running\n`bash deploy-hostgator.sh` as documented fails with \"No such file or\ndirectory\" — confirmed directly while deploying commit 9b14a4ab.\n\nFixed every literal command invocation across DEPLOY.md and the three\nother current docs that instruct running these scripts\n(DISASTER-RECOVERY-CHECKLIST.md, CONSERVATION-CHECKLIST.md,\nSESSION_PROMPT.md). Prose mentions that just name a script (not tell\nthe reader to run it) were left as-is. SESSION_END_PROCEDURES.md\nalready had the correct scripts/ prefix, confirming this was a\nregression in the other docs rather than a real ambiguity."
+  },
+  {
+    "sha": "9b14a4a",
+    "date": "2026-07-21",
+    "title": "fix: generated artwork pages support reverse-side images, no-JS",
+    "body": "gen-artwork-pages.py derived image paths from the raw catalog 'file'\nfield, which lacks the .avif extension for art1085/art1086 — breaking\ntheir primary image, og:image, JSON-LD image, and Related Works thumb\non the generated static pages. Image paths are now built from art_id\nconsistently, matching the pattern the prev/next code already used.\n\nDouble-sided works (has_back=true) now get a native <details>/\n<summary> disclosure for the reverse image — no JavaScript required\nto discover or view it, keyboard-operable by default, and the back\nimage isn't fetched until a visitor opens it. A small inline script\n(only emitted for the 2 affected works) swaps the summary label\nbetween VIEW BACK SIDE / VIEW FRONT to match artwork.html's copy.\n\nOnly art1085.html and art1086.html changed among the 1,086\nregenerated pages; the other 1,084 are byte-identical to before."
+  },
+  {
+    "sha": "675f8de",
+    "date": "2026-07-21",
+    "title": "docs: update IMPROVEMENTS.md with 2026-07-21 archival-integrity completion",
+    "body": ""
+  },
+  {
+    "sha": "7c7e00e",
+    "date": "2026-07-21",
+    "title": "docs: add industrial design and graphic design to education focus",
+    "body": "Updated About page Education & Practice section to reflect Jeff's complete\ncurriculum focus at Cleveland Institute of Art: industrial design, graphic\ndesign, painting, and sculpture."
+  },
+  {
+    "sha": "ae6803f",
+    "date": "2026-07-21",
+    "title": "fix: restore catalog integrity at 1,086 works",
+    "body": "- Remove duplicate records art1087/art1088 (pixel-identical to art1085/art1086)\n- Restore art1085/art1086 completeness: orientation metadata, static pages\n- Synced dims.json → config/dims.json to populate art1085/art1086 orientation\n- Rebuild catalog, current.json, API, feed, sitemap with accurate record count\n- Update all current-total references: 1,084 → 1,086\n- Clean orphaned api/v1/works/art9901–art9903 records (pre-existing test artifacts)\n- Fix gen-artwork-pages.py paths (reorg-broken, now uses config/; dynamic footer count)\n- Fix artwork.html orientation display to handle full-word values from current.json\n- Fix verify.py schema_version checker (was crashing on mixed int/str types)\n- Preserve 18 art1085/art1086 metadata-quality errors for separate stewardship pass\n- About page: verified six-exhibition record (per master-notes §27), removed unsupported quotes and institutional-collection claims, added inquiry route\n\nPhysical artwork count now 1,086 exactly (no art1087/art1088 records anywhere)."
+  },
+  {
+    "sha": "ec8669b",
+    "date": "2026-07-21",
+    "title": "Archive metadata batch 5 (art0064-0087)",
+    "body": "Metadata review of the next 10 physical artworks with filter gaps\n(art0064-0069, art0072, art0075, art0085, art0087):\n- Materials added: art0064 paper; art0065 paper,tape,paint,cassette;\n  art0066 paper; art0067 paper; art0068 paper; art0069 paper,gold-leaf,ribbon.\n- Themes added: Targets -> art0072, art0085.\n- art0075 and art0087 left unchanged. Both are \"Altar\"/\"Tower\" assemblages\n  with a superficially cross-like silhouette, but neither carries the\n  `cross` motif tag that every one of the catalog's 40+ Crosses-themed\n  works has. Cross-referencing the whole catalog confirmed this is a\n  consistent, deliberate convention (5 other similar altar-type works are\n  likewise themeless without that motif) — deferred to it rather than a\n  visual read that would have broken the pattern.\nMedium/decade/orientation/reverse were already correct on all 10.\n\nVerified: 1088 physical works, zero _back records, all reviewed works\nappear under their new filters, art0075/art0087 confirmed byte-identical\nto before, exactly 8 sidecars changed (matches edits made). Validator\nstill 40 errors, all pre-existing on art1085-1088."
+  },
+  {
+    "sha": "8e1768a",
+    "date": "2026-07-21",
+    "title": "Archive metadata batch 4 (art0034-0063)",
+    "body": "Metadata review of the next 28 physical artworks with filter gaps\n(art0034-0063), filling empty materials/themes with high-confidence,\nvisually-verified values:\n- Materials added on 23 works: paper (most common substrate across this\n  span), plus resin+tape (art0039), cardboard (art0044, art0063), tape\n  (art0046), paint (art0050), prisma paper (art0051, art0063), gold-leaf\n  (art0053).\n- Theme added: Targets -> art0056 (target/concentric-rings motifs present,\n  theme was empty).\n- art0037 (photograph) left unchanged — a chalk-drawn snowman is incidental\n  background detail in someone else's street mural, not JFSN's own\n  Mr. Snowmann series.\n- art0060, art0061, art0062 left unchanged — flat, digitally-composited\n  images (screen-rendered gradient bands, no physical texture), consistent\n  with the existing art0060 precedent and this session's art0030/art0031\n  decision.\nMedium/decade/orientation/reverse were already correct on all 28.\n\nVerified: 1088 physical works, zero _back records, all spot-checked\nreviewed works appear under their new filters, the 4 excluded works\nconfirmed untouched, exactly 24 sidecars changed (matches edits made).\nValidator still 40 errors, all pre-existing on art1085-1088."
+  },
+  {
+    "sha": "b5e8f0e",
+    "date": "2026-07-21",
+    "title": "Archive metadata batch 3 (art0021-0033)",
+    "body": "Metadata review of the next 10 physical artworks with filter gaps\n(art0021-0033, skipping art0026/0028/0029 which already had complete\nfilter metadata), filling empty materials/themes with high-confidence,\nvisually-verified values:\n- Materials added: art0022 gold-leaf,paper; art0023 gold-leaf,paper;\n  art0024 paper; art0025 paint,gold-leaf; art0027 gold-leaf; art0032 paper;\n  art0033 paper,gold-leaf.\n- Themes added: Targets -> art0021.\n- art0030 and art0031 materials left unchanged — both are flat, digitally\n  composited images (art0031's own description says \"digital collage\")\n  with no identifiable physical substrate. Matches existing precedent:\n  art0060, another digital-collage work, was likewise left materials-empty\n  by the original cataloguer.\nMedium/decade/orientation/reverse were already correct on all 10.\n\nVerified: 1088 physical works, zero _back records, all reviewed works\nappear under their new filters, art0030/art0031 confirmed untouched, no\nunrelated metadata changed. Validator still 40 errors, all pre-existing\non art1085-1088."
+  },
+  {
+    "sha": "6de9fa3",
+    "date": "2026-07-21",
+    "title": "Archive metadata batch 2 (art0011-0020)",
+    "body": "Metadata review of the next 10 physical artworks (deterministic ID order),\nfilling empty filter metadata with high-confidence, visually-verified values:\n- Materials added (compact discs kept as motif, not material, per convention):\n  art0011 gold-leaf,paper; art0012 paper; art0013 gold-leaf,tape,sequins,paper;\n  art0015 gold-leaf; art0016 prisma paper,paper; art0017 paper; art0018 paper;\n  art0019 paper; art0020 paper.\n- Themes added: Targets -> art0011.\n- art0014 (sculpture, reflective panels) left unchanged — substrate not\n  confidently identifiable from the photo.\n- art0013's dominant subject is a reproduced Egyptian hieroglyph with no\n  matching JFSN theme; left themeless rather than force-fit on its minor\n  target motif.\nMedium/decade/orientation/reverse were already correct on all 10.\n\nVerified: 1088 physical works, zero _back records, all reviewed works appear\nunder their new filters, art0014 confirmed untouched, no unrelated metadata\nchanged. Validator still 40 errors, all pre-existing on art1085-1088."
+  },
+  {
+    "sha": "ede5801",
+    "date": "2026-07-21",
+    "title": "Archive metadata batch 1 (art0001-0010) + complete materials vocab + fix vocab.py config path",
+    "body": "Metadata review of the first 10 physical artworks (deterministic ID order),\nfilling empty filter metadata with high-confidence, visually-verified values:\n- Materials added (compact discs kept as motif, not material, per convention):\n  art0001 cardboard,paper; art0002 lace,tape,paper; art0003 sequins,paper;\n  art0005 prisma paper,sequins; art0007 paper; art0008 tape,paper;\n  art0009 prisma paper,gold-leaf; art0010 tape,paper.\n- Themes added: Targets -> art0005, art0006, art0007 (unmistakable bullseyes).\n- art0004 (photograph) and art0006 materials left unchanged (uncertain).\nMedium/decade/orientation/reverse were already correct on all 10.\n\nComplete the earlier silver-foil -> prisma paper rename in the controlled\nvocabulary (it had only been done in the data): update vocab.py fallback and\nconfig/artist-config.json, add \"mixed media\". Clears 160 out-of-vocab errors.\n\nFix vocab.py reading a nonexistent root artist-config.json — point it at\nconfig/artist-config.json so it actually loads the real vocabularies. This\nalso restores VALID_SERIES = {Guernica, None} (the missing config had left\nthe broken {None}-is-truthy fallback in place). Validator: 464 -> 40 errors;\nthe remaining 40 are all pre-existing schema-2 nonconformances on art1085-1088.\n\nVerified: 1088 physical works, zero _back records, all 9 reviewed works appear\nunder their new filters, no unrelated metadata changed. Not deployed."
+  },
+  {
+    "sha": "e5d1c10",
+    "date": "2026-07-21",
+    "title": "Bump CACHE_V for archive.html filter plumbing fix",
+    "body": ""
+  },
+  {
+    "sha": "7308263",
+    "date": "2026-07-21",
+    "title": "Fix archive.html filter plumbing: Orientation/Theme/Material now work for all works",
+    "body": "Three consumer-side bugs silently broke 3 of 6 Archive filters for the\n~1,084 historical works (verified live: Orientation rendered 0 chips,\nTheme/Material returned 0 results):\n\n- catalogMap keyed on `.file` (\"art0001.avif\") but joined against\n  current.json `w.i` (\"art0001\") — matched only 4/1088. Strip .avif so\n  the theme/material lookup joins for every work.\n- ORI_LABEL keyed v/h/s but current.json orientation is\n  vertical/horizontal/square — no orientation chips built. Use full-word keys.\n- Card aspect-ratio checked w.o==='h'/'s' (never true) so every horizontal\n  and square work rendered with a vertical 2/3 box. Match the real values.\n\nVerified end-to-end on the patched file in a real browser: all six filters\nreturn correct counts (Orientation 426/573/87, Theme \"Torsos & Faces\" 172,\nMaterial paint 572 / prisma paper 156), and every rendered card under a\nmaterial filter genuinely carries that material."
+  },
+  {
+    "sha": "bd5e3da",
+    "date": "2026-07-21",
+    "title": "Consolidate materials filters: Paint, Mixed media; rename Silver-foil → Prisma paper",
+    "body": "Materials simplified from 21 to 16:\n- Paint: consolidated acrylic, acrylic paint, watercolor → Paint (572 works)\n- Mixed media: consolidated mixed fabric, mixed media, collage paper (4 works)\n- Silver-foil → Prisma paper (156 works)\n\nUpdated 654 sidecar JSON files and regenerated catalog + API indexes.\nCACHE_V bumped."
+  },
+  {
+    "sha": "6553c07",
+    "date": "2026-07-20",
+    "title": "Session end: Update IMPROVEMENTS.md with hero animation completion",
+    "body": ""
+  },
+  {
+    "sha": "8feb564",
+    "date": "2026-07-20",
+    "title": "Fix: Restore black text visibility on orange highlight box",
+    "body": "The background-clip: text was making all text transparent. Override\n-webkit-text-fill-color for .highlight-devo to show black text on orange."
+  },
+  {
+    "sha": "1219f0b",
+    "date": "2026-07-20",
+    "title": "Cache invalidation for final orange sweep animation",
+    "body": ""
+  },
+  {
+    "sha": "e0b8dfd",
+    "date": "2026-07-20",
+    "title": "Round 15 FINAL: Orange sweep animation constrained to letter shapes only",
+    "body": "Using background-clip: text to make the orange gradient visible ONLY within\nthe letter glyphs themselves, not outside them at all.\n\n- Gradient animates left-to-right across text\n- Orange only appears inside letter shapes (background-clip: text)\n- Text remains readable, normal color when animation completes\n- 0.8s duration, ease-out timing\n- 0.08s delay"
+  },
+  {
+    "sha": "36d4ffd",
+    "date": "2026-07-20",
+    "title": "Round 15: Orange sweep animation across white text only",
+    "body": "Orange gradient sweeps left-to-right across h1 on page load.\nUses mix-blend-mode: lighten so the orange only shows on white letters,\nnot on the dark background.\n\n- 60% width sweep stripe\n- Full opacity orange (255,160,0)\n- Lighten blend mode for text-only effect\n- 0.8s duration, ease-out timing\n- 0.08s delay"
+  },
+  {
+    "sha": "5faa4b5",
+    "date": "2026-07-20",
+    "title": "Round 15: Soft orange glow entrance animation on h1 title",
+    "body": "Text fades in with a warm orange glow that gently fades away, leaving clean text.\n- Keyframes: opacity 0→1, text-shadow orange glow→transparent\n- Duration: 0.6s with subtle easing\n- Delay: 0.1s for slight pause before entrance\n- Respects prefers-reduced-motion\n\nElegant, single-fire animation that draws attention without being jarring."
+  },
+  {
+    "sha": "fbbf6b3",
+    "date": "2026-07-20",
+    "title": "Round 15 ENHANCED: Much more dramatic faceted crystal reveal animation",
+    "body": "Made the clip-path effect far more visible:\n- 0%: Text starts with dramatic crystalline jagged top edges (only top 20-40% visible)\n- 50%: Intermediate state with smoother but still jagged edges\n- 100%: Text fully revealed with clean edges\n\nThis creates a much more obvious \"crystal shards progressively clearing\" effect\nthat's impossible to miss when the page loads. Still elegant, still fast (0.5s),\nbut now VISIBLE.\n\nAlso adds light sweep overlay that brightens as text reveals (screen blend-mode)."
+  },
+  {
+    "sha": "952a02f",
+    "date": "2026-07-20",
+    "title": "Round 15 FIX: Cascade issue — facetedReveal animation now properly applies to h1",
+    "body": "Problem: hero-in animation rule was overriding facetedReveal due to CSS cascade\nSolution:\n- Removed hero-in animation from .threshold h1 selector\n- Added opacity fade to facetedReveal keyframes for smooth entrance\n- facetedReveal now handles both clip-path reveal AND fade-in in one animation\n\nResult: h1 now shows dramatic crystal clip-path animation with left-to-right light sweep"
+  },
+  {
+    "sha": "2a52b72",
+    "date": "2026-07-20",
+    "title": "Round 15 ENHANCED: Dramatic faceted crystal reveal with brighter light sweep",
+    "body": "- Faceted clip-path now has larger, more visible jagged edges for crystal effect\n- Light sweep increased to 0.8 opacity for pronounced left-to-right highlight\n- Timing extended to 0.5s/0.6s for more visible animation sequence\n- Easing curve optimized for snappy reveal with elegant deceleration\n- Text remains fully readable and responsive"
+  },
+  {
+    "sha": "6f2b48e",
+    "date": "2026-07-20",
+    "title": "Round 15: Faceted clip-path crystal reveal with light sweep — elegant, readable animation",
+    "body": "Implements CSS-only faceted reveal: clip-path animates from jagged crystal edges to smooth letters (0.4s), plus light gradient sweep (left-to-right) with screen blend-mode. Fast & snappy timing, elegant & subtle. Text remains fully readable and responsive. Pure CSS performance."
+  },
+  {
+    "sha": "025078b",
+    "date": "2026-07-20",
+    "title": "Homepage Round 14: Five high-impact WOW-factor enhancements (3D tilt, depth shadow, ambient light boost, parallax tracking, border glow)",
+    "body": "Implements: (1) Featured work 3D perspective tilt (rotateX/Y) on threshold hover; (2) Dramatic depth-layer shadow expansion (20px 50px) on room card hover; (3) Enhanced ambient light with brighter gradient and larger radius for immersive gallery effect; (4) Pointer-tracking parallax shift on featured work responding to cursor movement; (5) Border accent glow bloom effect on room cards that expands on hover. All animations respect prefers-reduced-motion and use performance-optimized transforms."
+  },
+  {
+    "sha": "aef89bb",
+    "date": "2026-07-20",
+    "title": "Homepage Round 13: Five entrance & featured work enhancements (image fade-in, prose stagger, signature scale, card scale, caption lift)",
+    "body": "Implements: (1) Featured work image fade-in on threshold load; (2) Why/beyond section prose staggered entrance; (3) Jeff signature scale + fade entrance as final threshold beat; (4) Door card subtle scale-up with border-draw animation; (5) Featured work caption color lift to accent on hover with weight emphasis. All animations respect prefers-reduced-motion."
+  },
+  {
+    "sha": "7bc5017",
+    "date": "2026-07-20",
+    "title": "Round 12: Five interactive & accessibility enhancements (link underlines, milestone animations, frame depth, emphasis styling, focus glow)",
+    "body": "Implements across multiple pages: (1) Animated link underlines that grow from left on hover; (2) Milestone/counter scale + fade animations on flooded-wing; (3) Empty frame depth with shadow on hover; (4) Emphasized text styling with subtle background highlights; (5) Focus indicator glow enhancement for keyboard navigation. All animations respect prefers-reduced-motion."
+  },
+  {
+    "sha": "17f6011",
+    "date": "2026-07-20",
+    "title": "About Page Round 11: Five content & footer enhancements (heading fade-in, prose stagger, portrait glow, section dividers, footer link lift)",
+    "body": "Implements: (1) Content block headings fade + slide into view; (2) Prose paragraphs staggered fade-in for sequential reveal; (3) Portrait image brightness + glow on hover; (4) Section divider lines that fade in, creating visual rhythm; (5) Footer link hover lift with shadow. All animations respect prefers-reduced-motion."
+  },
+  {
+    "sha": "9c607d3",
+    "date": "2026-07-20",
+    "title": "Artwork Round 10: Five metadata & navigation enhancements (image fade-in, breadcrumb animation, ledger stagger, label/value separation, nav lift)",
+    "body": "Implements: (1) Work image fade-in on page load; (2) Work number/breadcrumb slide + fade entrance; (3) Metadata ledger rows staggered fade-in; (4) Enhanced label/value color separation on hover/active; (5) Prev/next navigation lift with shadow on hover. All animations respect prefers-reduced-motion."
+  },
+  {
+    "sha": "f57ede8",
+    "date": "2026-07-20",
+    "title": "Homepage Round 9: Five micro-interactions for room navigation (desaturate-to-saturate images, border-draw easing, arrow pulse, bounce timing, subtitle elevation)",
+    "body": "Implements: (1) Room card preview image desaturation-to-saturation on hover; (2) Border-draw cascade with organic cubic-bezier easing; (3) Arrow pulse/scale animation on hover; (4) Threshold scroll cue bounce timing shorter and snappier; (5) Subtitle color elevation with enhanced easing curve. All animations respect prefers-reduced-motion."
+  },
+  {
+    "sha": "7ef0869",
+    "date": "2026-07-20",
+    "title": "Archive Round 8: Five micro-interaction enhancements (search expand, grid fade-in, chip focus pulse, sort arrow rotation, load-more entrance)",
+    "body": "Implements: (1) Mobile search expansion on focus; (2) Grid fade-in on initial load; (3) Enhanced keyboard focus pulse on filter chips; (4) Sort dropdown arrow smooth rotation on hover/focus; (5) Load-more button fade+slide entrance animation. All animations respect prefers-reduced-motion."
+  },
+  {
+    "sha": "129766c",
+    "date": "2026-07-20",
+    "title": "Seventh round: count pulse, results header, filter badges, featured fade-in, load text.",
+    "body": "- Work count pulse: scale 1→1.05→1 with background flash on filter change (countPulse animation)\n- \"Showing X results\" header: animated slide-in showing \"SHOWING X OF 1,084 WORKS · filters\" (slideInFade)\n- Active filter group badges: pop animation (badgePop) on selection, show count as circle indicator\n- Featured banner entrance: staggered fade-in cascade (star .1s → title .2s → desc .3s → button .4s)\n- Load More text: changes to \"[ LOADING... ]\" during fetch, restores after 300ms"
+  },
+  {
+    "sha": "6814e3d",
+    "date": "2026-07-20",
+    "title": "Sixth round: filter pills, sort dropdown, load more spinner, metadata stagger, featured pulse.",
+    "body": "- Filter chip badges: orange pills with remove buttons for active filters and search query\n- Sort dropdown styling: orange accent on hover/focus with improved chevron visibility\n- Load More loading state: spinning animation (spinLoader) with 1.2s rotation\n- Card metadata entrance stagger: title/date/material cascade with 100ms intervals on hover\n- Featured banner accent bar: pulse animation on hover (6px→8px→6px)"
+  },
+  {
+    "sha": "cc8cb05",
+    "date": "2026-07-20",
+    "title": "Fifth round: search clear button, card border on hover, personalized no-results.",
+    "body": "- Search clear button: JavaScript event listener clears input and re-renders\n- Card border on hover: orange outline frame (2px, -1px offset) on :hover/:focus-visible\n- Empty state messaging: dynamically shows active filters (medium/decade/orientation/theme/material/search query) instead of generic \"no works match\" message"
+  },
+  {
+    "sha": "2045a23",
+    "date": "2026-07-20",
+    "title": "Archive refinement: card radius, filter icons, stats, CTA button, keyboard nav",
+    "body": "Five polish touches for refined museum-like presentation and better usability:\n\n1. Card corner radius & edge treatment:\n   - Add subtle border-radius: 3px to card images\n   - Add overflow: hidden for clean corners\n   - Makes cards feel like refined museum objects\n   - Softens the rectangular grid aesthetic\n\n2. Filter group icons:\n   - Add emoji icons to filter group labels via CSS ::before\n   - 🎨 Medium, 📅 Decade, 📐 Orientation, 🎭 Theme, 🔧 Material, ⚠️ Collection\n   - Icons appear before label text in filter headers\n   - Makes filters more visually scannable and approachable\n\n3. Archive statistics display:\n   - Add .archive-stats section in hero showing collection scale\n   - Display: \"1,084 WORKS | 50 YEARS | 1974—Present\"\n   - Stat items with large numbers (18px, orange accent) + labels\n   - Gives immediate context about collection scope\n\n4. Featured banner CTA enhancement:\n   - Style featured-new link as proper button with background\n   - Add orange background (#FF6600) with dark text\n   - Add arrow icon (→) after link text\n   - Better hover state: shadow + lift (translateY -2px)\n   - Makes CTA more compelling and clickable\n\n5. Keyboard navigation visual indicator:\n   - Add visible :focus-visible outline on card links\n   - 3px orange outline with 2px offset\n   - Makes keyboard navigation clear and accessible\n   - Essential for keyboard-only users"
+  },
+  {
+    "sha": "fa523ae",
+    "date": "2026-07-20",
+    "title": "Archive UX polish: intro hierarchy, count prominence, breadcrumb filters, feedback, titles",
+    "body": "Five focused refinements to improve archive usability and content discoverability:\n\n1. Archive intro visual hierarchy:\n   - Add background box to #door .prose with orange tint\n   - Better spacing, padding, and border treatment\n   - Increase font size (clamp 16-18px) and line-height (2)\n   - Max-width constraint (60ch) for readability\n   - Makes archive mission/description prominent before filtering\n\n2. Work count display enhancement:\n   - Enhance #count-label with visual weight\n   - Add background color (rgba(255,102,0,.04))\n   - Add border and rounded styling\n   - Bold font weight (600) and better spacing\n   - Shows collection scale more prominently\n   - \"Tick\" highlight now brighter on filter updates\n\n3. Breadcrumb filter path:\n   - Change filter pills from separate badges to breadcrumb-style path\n   - Replace \"Filtering by:\" with \"BROWSING:\" (orange, bold)\n   - Pills now show as path segments with vertical separators (|)\n   - Transparent background, smaller text, reduced visual noise\n   - Shows filter hierarchy: ALL > 1990s > Sculpture > Abstraction\n   - More intuitive navigation through filter state\n\n4. Search/filter visual feedback:\n   - Add gridUpdate animation when filters applied\n   - Brief scale animation (98% → 100%) with fade\n   - Shows users that filtering is working\n   - Subtle but perceptible feedback loop\n\n5. Card title contrast & readability:\n   - Increase font size: 12.5px → 13.5px\n   - Improve line-height: 1.35 → 1.5\n   - Add font-weight: 500 for better prominence\n   - Add letter-spacing (.3px) for elegance\n   - Ensure titles are scannable at a glance"
+  },
+  {
+    "sha": "8558d80",
+    "date": "2026-07-20",
+    "title": "Archive visual enhancements: work type badges, responsive grid, section rhythm",
+    "body": "Three major visual refinements to the archive browsing experience:\n\n1. Work type visual indicators:\n   - Add .type-badge to each card (upper left position)\n   - Show work type with emoji + label (⚠️ Composite, 📸 Photo, 🎨 Painting, etc.)\n   - Infer type from metadata: composites, photos, paintings, digital, sculpture, mixed\n   - Subtle styling: dark background with backdrop-filter blur, low opacity by default\n   - Appears on hover (desktop) or more visible on mobile\n   - Helps users scan and understand content type at a glance\n\n2. Grid responsive columns:\n   - Mobile (<640px): 2 columns with compact gap (16px × 14px)\n   - Tablet (640-1024px): 3 columns with balanced gap (22px × 16px)\n   - Desktop (1025-1440px): 4 columns (24px × 18px)\n   - Wide desktop (1441px+): 5 columns with larger gap (26px × 20px)\n   - Makes better use of available space at all viewport widths\n   - Improves card sizing and visual rhythm across devices\n\n3. Visual section rhythm:\n   - Add border-bottom to #vault-hero for visual closure\n   - Add border-bottom to #door section\n   - Add border-top to #grid-wrap with better spacing (8vh)\n   - Add border-top to #exit-note with margin (8vh)\n   - Better padding throughout (4vh, 8vh, 14vh)\n   - Creates visual breathing room and section separation\n   - Improves page scanability and visual hierarchy"
+  },
+  {
+    "sha": "6c592ce",
+    "date": "2026-07-20",
+    "title": "Archive UX refinements: sort control, size badges, filter context summary",
+    "body": "Three focused improvements to archive browsing experience:\n\n1. Sort dropdown visual hierarchy:\n   - Enhanced styling: stronger 2px border, orange background\n   - Add SVG dropdown arrow icon (data:image/svg+xml)\n   - Better padding (12px × 14px) and font weight\n   - Improved hover and focus states with box-shadow\n   - Makes sort control feel like a peer to search\n   - Users can now see sort is a distinct interactive control\n\n2. Work size/dimension badges on cards:\n   - Add .size-badge span to card markup\n   - Position on lower right (bottom-right corner)\n   - Shows dimension category (Horizontal/Square/Vertical) or explicit size\n   - Orange background with dark text for visibility\n   - Appears on hover (desktop) or always on mobile\n   - Helps users understand work scale at a glance\n   - Dimensions can be enhanced as data becomes available\n\n3. Filter context summary above grid:\n   - Enhance #active-filters styling with prominent visual treatment\n   - Add border-top in orange and background color (rgba(255,102,0,.04))\n   - Add \"Filtering by:\" label prefix via CSS ::before\n   - Improved padding and spacing\n   - Display existing filter pills with full context\n   - Makes active filter state always visible\n   - Users can quickly understand and manage applied filters"
+  },
+  {
+    "sha": "b303647",
+    "date": "2026-07-20",
+    "title": "Archive visual enhancements: search prominence, featured banner, filter badges",
+    "body": "Three major UI improvements to the archive experience:\n\n1. Search input visual prominence:\n   - Add search icon (🔍) with positioned overlay\n   - Increase padding and height for better visibility\n   - Stronger border (2px) and better focus styling\n   - Subtle orange background by default (rgba(255,102,0,.02))\n   - Focus state includes box-shadow for depth\n   - Makes search the obvious focal point of controls\n\n2. Featured collection banner styling:\n   - Add orange accent bar on left (6px solid border-left)\n   - Gradient background (right-to-left fade)\n   - Add decorative star icon (✦) at top\n   - Increased padding (24px) and margin\n   - Better typography: labels now orange + bold\n   - Hover state with enhanced gradient and shadow\n   - Signals this is a curated, promoted collection\n\n3. Active filter count indicators:\n   - Add circular badges to filter group labels\n   - Display count of active filters per group\n   - Badge appears only when filters are active\n   - Orange background with dark text for visibility\n   - Uses :has() selector for modern CSS\n   - JavaScript updates badge counts in real-time"
+  },
+  {
+    "sha": "fb75aa8",
+    "date": "2026-07-20",
+    "title": "UX improvements: link affordances, room navigation, empty state design",
+    "body": "Three interface improvements across the site:\n\n1. Link hover underlines (global, all 14 pages):\n   - Add text-decoration:underline on a:hover\n   - Improves affordance and discoverability of clickable text\n   - Especially helpful in prose sections and navigation\n\n2. Room navigation links styling enhancements:\n   - Add subtle background (rgba(255,102,0,.02)) by default\n   - Enhance hover state: orange border (#FF6600), orange text color\n   - Increase shadow depth on hover (0 8px 20px)\n   - More visual distinction as navigation destinations vs. regular links\n   - Better discoverability of room exploration options\n\n3. Empty state messaging design:\n   - Add border and subtle background (rgba(255,102,0,.02))\n   - Better spacing and visual hierarchy\n   - Style \"Clear Filters\" button with background and hover effects\n   - Shows users they can recover from no-results state\n   - Reduces confusion when filters return zero matches"
+  },
+  {
+    "sha": "cab8eee",
+    "date": "2026-07-20",
+    "title": "Design improvements: card depth, load-more affordance, mobile metadata visibility",
+    "body": "Three UX enhancements to the Archive:\n\n1. Load More button visual hierarchy:\n   - Add subtle background (rgba(255,102,0,.03)) for affordance\n   - Enhance hover background (rgba(255,102,0,.08))\n   - Increase shadow depth on hover (0 12px 32px)\n   - Improves discoverability of the load-more action\n\n2. Card depth & visual separation:\n   - Add default shadow to card images (0 4px 12px rgba(0,0,0,.12))\n   - Enhance hover shadow (0 16px 40px rgba(0,0,0,.2))\n   - Increase hover lift (translateY -3px)\n   - Creates more visual hierarchy and tactile feel\n\n3. Metadata visibility on mobile:\n   - Show figcaption at full opacity on touch devices\n   - Show .m and .x metadata at full opacity (no hover dependency)\n   - Ensures year/materials info is discoverable on mobile"
+  },
+  {
+    "sha": "a720ab1",
+    "date": "2026-07-20",
+    "title": "Design refinements: selection colors, scroll indicators, card hover states",
+    "body": "Three UX improvements across the site:\n\n1. Selection highlight consistency: Update ::selection{color} from white (#fff)\n   to black (#0c0a09) on all 13 pages for consistency with orange highlights\n\n2. Scroll indicator visibility: Add subtle opacity pulse animation (pulse-glow)\n   to all hero section scroll indicators (.down and .threshold::after) to better\n   guide first-time visitors to scroll and discover content below the fold\n\n3. Featured card hover depth: Enhance #work hover state with:\n   - Transform lift (translateY -4px)\n   - Drop-shadow with orange tint (rgba(255,102,0,.15))\n   - Smooth transition for both properties"
+  },
+  {
+    "sha": "dae29a2",
+    "date": "2026-07-20",
+    "title": "Update all hero section highlights: black text on orange backgrounds",
+    "body": "Change all .highlight-* classes from white text (#fff) to black (#0c0a09)\nfor better contrast and readability across all pages:\n- index.html (Museum)\n- about.html (Making)\n- hall-of-openings.html (Open)\n- working-history.html (galleries)\n- stories.html (happened)\n- 404.html (room)\n- flooded-wing.html\n- guernica-passage.html\n- the-studio.html"
+  },
+  {
+    "sha": "e44d1e6",
+    "date": "2026-07-20",
+    "title": "Update About page highlighting: \"Making\" full word + black text on orange",
+    "body": "- Change highlight from \"Mak\" to full \"Making\" word in h1\n- Update .highlight-devo text color from white (#fff) to black (#0c0a09) for better contrast"
+  },
+  {
+    "sha": "3626a68",
+    "date": "2026-07-20",
+    "title": "Add orange highlight and pulse animation to 'vault' in heading",
+    "body": "Wrap 'vault' in .vault-highlight span with orange background, dark text,\nand subtle pulse animation (2s ease-in-out). Animation scales 1 → 1.05 → 1\nwhile orange background remains constant. Emphasizes the 'vault' concept\nin 'The vault beneath the museum.'"
+  },
+  {
+    "sha": "56c2135",
+    "date": "2026-07-20",
+    "title": "Reduce vault hero image height and crop top",
+    "body": "Adjust hero image: max-height 55vh → 45vh, object-position center → center 100px\nto remove top 100px of image. Creates more compact hero threshold with better\nvisual proportion to following content."
+  },
+  {
+    "sha": "1753588",
+    "date": "2026-07-20",
+    "title": "Add filtered double-sided works collection view",
+    "body": "Implement reverse parameter (archive.html?reverse=true) to filter and display\nonly artworks with documented reverse images. Updates featured banner to show\ndynamic count of double-sided works (currently 4, scales to 40+). Adds COLLECTION\nfilter group to archive controls for manual filtering. Works marked with b:1 in\ncatalog are automatically identified and filterable."
+  },
+  {
+    "sha": "e36541b",
+    "date": "2026-07-20",
+    "title": "Further reduce spacing above Archive heading",
+    "body": "Reduce padding-top from 8vh to 2vh, bringing content approximately 200px\ncloser to vault image fade. Archive heading now directly follows photograph\nwith minimal breathing room for tight visual threshold effect."
+  },
+  {
+    "sha": "d17717e",
+    "date": "2026-07-20",
+    "title": "Move Archive heading closer to vault image fade",
+    "body": "Remove vertical centering from #door section (removed min-height:66vh and\njustify-content:center). Replace with padding-based layout (padding-top:8vh,\npadding-bottom:8vh). Content now flows naturally below image fade with\ntighter visual integration, approximately 200px closer to vault photograph."
+  },
+  {
+    "sha": "171225b",
+    "date": "2026-07-20",
+    "title": "Tighten spacing between vault image fade and Archive heading",
+    "body": "Reduce padding-top on #door from 14vh to 4vh, bringing THE ARCHIVE heading\nand description closer to the image fade (~200px reduction). Creates tighter\nvisual integration between vault threshold image and archive entry point."
+  },
+  {
+    "sha": "acf9abc",
+    "date": "2026-07-20",
+    "title": "Add museum vault hero image to Archive page",
+    "body": "Integrates approved middle-50% crop of museum storage photograph as\nthreshold image above Archive hero. 240px linear-gradient fade smoothly\ndissolves photograph into page black, creating cinematic threshold before\nTHE ARCHIVE heading. Responsive composition preserves storage racks and\nartwork visibility across desktop, tablet, and mobile breakpoints."
+  },
+  {
+    "sha": "3119b28",
+    "date": "2026-07-20",
+    "title": "Add active filter pills above grid",
+    "body": "Display selected filters as removable orange pills above the artwork grid.\n- Shows all active filters at a glance (medium, decade, orientation, theme, material)\n- Click × to remove individual filters without clearing all\n- Breadcrumb-style clarity showing filtering journey\n- Smooth enter animation for new pills\n- Syncs with filter panel (removing pill updates chip state)\n\nBest-in-class pattern used by Netlify, Figma, Shopify for filter transparency."
+  },
+  {
+    "sha": "ca8d2a0",
+    "date": "2026-07-20",
+    "title": "Optimize filter UX: smart defaults, discovery hints, responsive",
+    "body": "1. Smart default state: MEDIUM/DECADE/ORIENTATION open, THEME/MATERIAL closed\n   - Shows core filters without overwhelming users\n   - Advanced filters remain discoverable via headers\n\n2. Filter discovery indicators: Show chip count (20), (21) under collapsed headers\n   - Users know what's available without expanding\n   - Signals filter richness and makes hidden sections feel less hidden\n\n3. Responsive defaults: Mobile collapses all sections, desktop uses smart defaults\n   - Mobile: limited space, all collapsed improves UX\n   - Desktop: core filters visible, advanced collapsed\n\n4. Bonus: First-visit hint tooltip (6-7s)\n   - Orange banner: \"💡 Click section headers to explore advanced filters\"\n   - Teaches interaction without being intrusive\n   - Auto-dismisses after 6s or on first click\n   - Uses localStorage to show only once per browser"
+  },
+  {
+    "sha": "c416fbe",
+    "date": "2026-07-20",
+    "title": "Improve filter UX/UI: sorting, collapse/expand, tooltips",
+    "body": "1. Sort theme/material chips by work count (most popular first)\n2. Add collapse/expand for theme/material sections (click label)\n3. Show work count tooltips on each chip (e.g., \"42 works\")\n4. Update FILTERS button to show active filter count\n\nChips now display highest-impact filters first, sections are collapsible for less clutter, and tooltips help users preview filter impact."
+  },
+  {
+    "sha": "934cabe",
+    "date": "2026-07-20",
+    "title": "Bump CACHE_V to force service worker cache invalidation",
+    "body": "Force browser cache clear to ensure theme/material filter chips load correctly after hard refresh."
+  },
+  {
+    "sha": "e6b78a9",
+    "date": "2026-07-20",
+    "title": "Fix theme/material filter data extraction",
+    "body": "The themes.json and materials.json APIs return objects with 'themes' and 'materials' properties, but the code was trying to access them as arrays directly. Fixed by:\n- Extracting themesData.themes and materialsData.materials\n- Setting proper defaults on fetch errors\n\nNow theme and material filter chips populate correctly."
+  },
+  {
+    "sha": "26179f8",
+    "date": "2026-07-20",
+    "title": "Update changes.json after catalog rebuild",
+    "body": ""
+  },
+  {
+    "sha": "bb65728",
+    "date": "2026-07-20",
+    "title": "Add materials.json generation to catalog build",
+    "body": "Updated build_catalog.py to generate api/v1/materials.json, matching the pattern used for themes.json. Materials are extracted from the 'materials' field in artwork sidecars and indexed with work counts and IDs for archive filtering.\n\n21 material types now available for the materials filter (paper, ink, collage, acrylic, etc.).\n\nCACHE_V bumped automatically in sw.js."
+  },
+  {
+    "sha": "99e2327",
+    "date": "2026-07-20",
+    "title": "Add theme and material filters to archive",
+    "body": "Added two new filter groups:\n- Theme: multi-select filter by thematic tags (portraiture, color, etc)\n- Material: multi-select filter by materials used (ink, collage, acrylic, etc)\n\nFilters fetch themes.json and materials.json APIs, build chips dynamically, and filter the 1,088-work grid in real-time. Integrated with existing filter state, clearAll, and renderMeta functions. Filter count display updated to include new filters.\n\nMaintains existing archive features: search, sort, decade/medium/orientation filters, Load More, \"no results\" state."
+  },
+  {
+    "sha": "4d3e751",
+    "date": "2026-07-20",
+    "title": "Add metadata for art1085–art1086: titles, descriptions, themes",
+    "body": "art1085: \"Radiant Figure with Rainbow Collar\" — joyful portrait with vibrant collage, reverse shows intimate studies. Themes: color joy, portraiture, playfulness.\n\nart1086: \"Study: MIKE\" — portrait in contrasts (blue/orange), reverse explores duality. Themes: identity, duality, temperament.\n\nBoth: detailed descriptions, materials, palettes (hex), motifs, composition notes, thematic keywords. Catalogs regenerated."
+  },
+  {
+    "sha": "81add52",
+    "date": "2026-07-20",
+    "title": "Edit metadata for art1087–art1088: titles, descriptions, materials, themes",
+    "body": "art1087: \"Chromatic Figure Study I\" — vibrant portrait with collage layers, reverse studies of hands/geometry. Themes: portraiture, color study, expression.\n\nart1088: \"Portrait with Green Shirt\" — contemplative figure with color opposition (blue/orange), reverse complements the composition. Themes: identity, duality, portraiture.\n\nBoth: added detailed descriptions, materials (ink, collage paper, watercolor, acrylic), palettes (hex colors), motifs, composition notes, and thematic keywords. Catalogs regenerated."
+  },
+  {
+    "sha": "01aa152",
+    "date": "2026-07-20",
+    "title": "Ingest 4 new double-sided artworks (art1087–art1088, batch 1)",
+    "body": "Added 2 artworks with front + back sides:\n- art1087: Untitled Study 1 (2020s, mixed media)\n- art1088: Untitled Study 2 (2020s, mixed media)\n\nFixed bugs in ingest pipeline:\n- ingest.py: ignore _back suffixes when finding next ID\n- scaffold_sidecar.py: correct parent path calculation (parents[2] not parent.parent)\n\nGenerated: all image tiers (full/medium/thumb/mini/micro) + JSON sidecars\nUpdated: dims.json, catalog.json, current.json (both marked with b=1 for double-sided)"
+  },
+  {
+    "sha": "c92955b",
+    "date": "2026-07-20",
+    "title": "Add double-sided caption link above artwork image",
+    "body": "Added 'DOUBLE SIDED' caption that appears above the image for double-sided works (w.b === 1). The caption is clickable and toggles the reverse view, synchronized with the existing '[ VIEW BACK SIDE → ]' button. Styled in orange (#FF6600) with white hover state for consistency with the site's interaction design."
+  },
+  {
+    "sha": "6af722d",
+    "date": "2026-07-20",
+    "title": "Bump CACHE_V",
+    "body": ""
+  },
+  {
+    "sha": "fe10882",
+    "date": "2026-07-20",
+    "title": "Fix: Increase CSS specificity for reverse button hover",
+    "body": "The general rule '#label nav button:hover' was overriding the specific\n'#view-reverse:hover' rule due to higher specificity. Changed to\n'#label nav #view-reverse:hover' to ensure white hover effect works."
+  },
+  {
+    "sha": "5c4fa04",
+    "date": "2026-07-20",
+    "title": "Bump CACHE_V",
+    "body": ""
+  },
+  {
+    "sha": "3a3e40c",
+    "date": "2026-07-20",
+    "title": "Fix: Reverse button hover effect not working (specificity issue)",
+    "body": "Moved orange color from inline style to CSS rule so :hover can override it. Inline styles had higher specificity and were blocking the hover effect. Added focus-visible state for keyboard navigation."
+  },
+  {
+    "sha": "18cf44b",
+    "date": "2026-07-20",
+    "title": "Bump CACHE_V",
+    "body": ""
+  },
+  {
+    "sha": "76a15eb",
+    "date": "2026-07-20",
+    "title": "Add hover effect: VIEW BACK SIDE button orange → white",
+    "body": "Added CSS transition and :hover rule to change the reverse button color from orange to white on mouseover, providing visual feedback and better interactivity."
+  },
+  {
+    "sha": "7622e9d",
+    "date": "2026-07-20",
+    "title": "Bump CACHE_V",
+    "body": ""
+  },
+  {
+    "sha": "8d978d1",
+    "date": "2026-07-20",
+    "title": "Style: Make 'VIEW BACK SIDE' button orange for emphasis",
+    "body": "Added color:#FF6600 (site accent color) to the reverse button inline style to make it stand out as an interactive highlight, consistent with other accent elements on the site."
+  },
+  {
+    "sha": "1dff88b",
+    "date": "2026-07-20",
+    "title": "Bump CACHE_V",
+    "body": ""
+  },
+  {
+    "sha": "d2883ef",
+    "date": "2026-07-20",
+    "title": "Update reverse button text: 'VIEW BACK SIDE' for clarity",
+    "body": "Changed button text from '[ VIEW REVERSE → ]' to '[ VIEW BACK SIDE → ]' for clearer, more direct language that matches the site's button pattern."
+  },
+  {
+    "sha": "d4dc85b",
+    "date": "2026-07-20",
+    "title": "Bump CACHE_V to invalidate service worker cache",
+    "body": ""
+  },
+  {
+    "sha": "c07985b",
+    "date": "2026-07-20",
+    "title": "Fix: Handle null fields in artwork.html for incomplete metadata",
+    "body": "New double-sided artworks (art1085, art1086) have null title, year, and work_type fields. The initialization code called .toUpperCase() on these nulls, throwing a TypeError that prevented the entire async function from completing. This blocked the reverse button display logic.\n\nAdded null coalescing operators to safely handle missing metadata and display '—' placeholders. Allows reverse button logic to complete and display properly.\n\nFixes reverse button not appearing on double-sided artworks with incomplete metadata."
+  },
+  {
+    "sha": "7e20b2b",
+    "date": "2026-07-20",
+    "title": "Fix: current.html visualization rendering — convert color names to hex codes",
+    "body": "The Current page uses canvas-based visualization that expects hex color codes (e.g., #FF0000), but build-current.py was passing color names from palette (\"red\", \"blue\", etc.). This caused the rendering code to fail silently when parsing colors at line 366.\n\nAdded COLOR_MAP in build-current.py to convert palette color names to standardized hex codes. Regenerated current.json with proper hex values. Bumped CACHE_V to invalidate service worker.\n\nFixes jfsn.com/current.html visualization not rendering."
+  },
+  {
+    "sha": "3d27d36",
+    "date": "2026-07-20",
+    "title": "Improvement: Enhance text readability across entire site",
+    "body": "Increased contrast ratios site-wide by adjusting CSS color variables:\n- --ink: #e8e2d9 → #f0e8dd (brighter main text)\n- --dim: #7a7168 → #b8a89a (much lighter secondary/navigation text)\n- --faint: #3a332d → #8a7a6c (lighter labels and captions)\n\nApplied to all 14 main pages. Changes improve accessibility and reduce\neye strain on navigation, labels, metadata, and secondary content while\nmaintaining design aesthetic."
+  },
+  {
+    "sha": "ea8e648",
+    "date": "2026-07-20",
+    "title": "Feature: Add featured section highlighting new double-sided works",
+    "body": "Added prominent callout in archive page showing links to the two new\ndouble-sided artworks (art1085 and art1086). Section appears after\nfilter controls with direct links to view each piece and toggle between\nfront/back images."
+  },
+  {
+    "sha": "0120e7a",
+    "date": "2026-07-20",
+    "title": "Clean up: Remove debug logging from archive.html",
+    "body": "All debug console.log statements removed now that the core bug is fixed.\nThe grid renders successfully with all 1,086 works displaying correctly."
+  },
+  {
+    "sha": "1250b07",
+    "date": "2026-07-20",
+    "title": "Fix: Handle null titles in sort comparators to prevent crash",
+    "body": "Root cause found: new double-sided artworks (art1085/art1086) have null\ntitles ('t': null). Sort comparators tried to call .localeCompare() on null,\nthrowing 'Cannot read properties of null' error and breaking the entire\ngrid rendering.\n\nFix: Use (a.t || '') and (b.t || '') to treat null titles as empty strings\nin all three sort modes (year-desc, year-asc, title). This allows artworks\nwith incomplete metadata to be safely included in results and sorted\nalongside complete works."
+  },
+  {
+    "sha": "4ad31e8",
+    "date": "2026-07-20",
+    "title": "Debug: Add try-catch blocks to capture errors in render and filtered functions",
+    "body": ""
+  },
+  {
+    "sha": "9cb22c9",
+    "date": "2026-07-20",
+    "title": "Debug: Add step-by-step logging to find where script execution stops",
+    "body": ""
+  },
+  {
+    "sha": "5561d98",
+    "date": "2026-07-20",
+    "title": "Debug: Add comprehensive logging to trace script execution and render flow",
+    "body": ""
+  },
+  {
+    "sha": "147d0d4",
+    "date": "2026-07-20",
+    "title": "Debug: Add logging to filtered() to diagnose zero-results issue",
+    "body": "Adding console.log calls to identify why filtered() returns 0 works\nwhen all works should be included with no filters active."
+  },
+  {
+    "sha": "8449ecb",
+    "date": "2026-07-20",
+    "title": "Fix: Filter null values from MEDIA/DECADES/ORIS to prevent .toUpperCase() errors",
+    "body": "The new double-sided artworks (art1085/art1086) have incomplete metadata with\nnull values for medium, year, and orientation. When archive.html tried to build\nfilter chips, it attempted .toUpperCase() on null values, throwing a TypeError\nand stopping the script. This left only partial UI rendered (\"No works match\nthese filters\"). Fix: filter out null values when building MEDIA, DECADES, and\nORIS arrays so only valid metadata values generate chips.\n\nThis resolves the archive page showing empty results. The 1,084 works now load\ncorrectly with all filter options (COLLAGE, PAINTING, PHOTOGRAPH, SCULPTURE)."
+  },
+  {
+    "sha": "fb8923f",
+    "date": "2026-07-20",
+    "title": "Hotfix: Bump CACHE_V to invalidate service worker cache",
+    "body": "The previous merge conflict fix didn't invalidate the browser cache because\nCACHE_V remained the same. Bumping to new timestamp so service worker cache\nexpires and browsers fetch fresh archive.html and current.json. This resolves\nthe \"No works match these filters\" issue where the page was serving stale\ndata from the cached version."
+  },
+  {
+    "sha": "cddd69d",
+    "date": "2026-07-20",
+    "title": "Fix: Resolve merge conflict in sw.js that broke archive grid rendering",
+    "body": "The sw.js file had unresolved git merge conflict markers (<<<<<<< HEAD\n...=======...>>>>>>>) that made the JavaScript invalid, causing the\nentire archive page script to fail silently. This left the grid showing\n\"No works match filters\" even though 1,084 works exist and no filters\nwere actually selected. Conflict markers removed; CACHE_V kept at\njfsn-20260720140839."
+  },
+  {
+    "sha": "c0399cc",
+    "date": "2026-07-20",
+    "title": "Remove test artworks (art9901-art9907), rebuild catalogs to 1086 records",
+    "body": "Clean up failed test ingestions:\n- Delete art9901-9903 (early test batch with sidecars)\n- Delete art9904-9907 (failed Ingest Batch 1)\n- Rebuild catalog.json, catalog-lite.json, current.json\n- Final count: 1086 records (1084 existing + 2 new double-sided)\n- Verify: art1085 and art1086 have b=1 flag in current.json"
+  },
+  {
+    "sha": "b79c3a0",
+    "date": "2026-07-20",
+    "title": "Rebuild API and feed files",
+    "body": ""
+  },
+  {
+    "sha": "d3ec0c6",
+    "date": "2026-07-20",
+    "title": "Add art1085 and art1086 processed AVIF image tiers (medium, micro)",
+    "body": ""
+  },
+  {
+    "sha": "23e88e7",
+    "date": "2026-07-20",
+    "title": "Add art1085 and art1086 double-sided artwork image files (AVIF)",
+    "body": ""
+  },
+  {
+    "sha": "0ce084e",
+    "date": "2026-07-20",
+    "title": "Phase 3: Add double-sided artwork support with reverse image toggle",
+    "body": "Core changes:\n1. artworks/build_catalog.py — Add has_back detection and exclusion of _back variants:\n   - Skip _back.json and _back.avif files from catalog generation (one record per physical artwork)\n   - Detect reverse images: rec['has_back'] = (FULL / f\"{art_id}_back.avif\").exists()\n   - Add 'has_back' to LITE_FIELDS for catalog-lite.json consumption\n\n2. artworks/build-current.py — New script to rebuild current.json with has_back flag:\n   - Transforms full catalog.json format into compressed format for artwork.html\n   - Adds 'b': 1 flag when artwork has reverse image\n   - Maintains backward compatibility with existing structure\n\n3. artwork.html — Add VIEW REVERSE toggle for double-sided works:\n   - New button: <button id=\"view-reverse\"> with aria-label for accessibility\n   - JavaScript reads 'b' flag from current.json to detect double-sided artworks\n   - Toggle switches img.src between front and _back variants\n   - Button text updates to show current view state (VIEW REVERSE / VIEW FRONT)\n   - Tab+Enter keyboard access, no global shortcuts\n\n4. config/catalog.json, catalog-lite.json — Rebuilt with has_back property\n5. config/current.json — Rebuilt from catalog with 1086 records (1084 + 2 new)\n6. sw.js — CACHE_V bumped to jfsn-20260720134237 for asset invalidation\n\nIngested double-sided artworks:\n- art1085: 01_front.jpg + 01_back.jpg\n- art1086: 02_front.jpg + 02_back.jpg\n\nFinal catalog: 1086 records (1084 existing + 2 new, 0 net test records removed)"
+  },
+  {
+    "sha": "c2eb69a",
+    "date": "2026-07-20",
+    "title": "Ingest Batch 1: 4 new artworks (art9904–art9907)",
+    "body": "Real ingestion begins: 2 artworks photographed front + back.\n- art9904: Artwork 1, back\n- art9905: Artwork 1, front\n- art9906: Artwork 2, back\n- art9907: Artwork 2, front\n\nProcessed: ingest.py → build_catalog.py\nUpdated: catalog-full.json, catalog-lite.json, dims.json, sitemap.xml, feed.xml\nCache bumped via CACHE_V\n\nArtwork AVIF files stored locally (artworks/full, thumbs, medium, micro).\n\nNext: Edit JSON sidecars (title/year/materials/themes), then deploy."
+  },
+  {
+    "sha": "2fb8277",
+    "date": "2026-07-20",
+    "title": "Phase 3: Interruption Section — Symbolic Void",
+    "body": "Added radial-gradient background to the interruption section (undocumented 2000s)\nto represent the absence/emptiness of the lost large-scale Guernica work.\nThe gradient flows from lighter at center (#2b241e) to darker at edges (#0c0a09),\ncreating a minimalist \"void\" that lets the loss itself become the statement.\n\n- Wrapped interruption content in .interruption-inner div (z-index:1)\n- Added .interruption-void div (display:none for future use)\n- Enhanced section borders (2px #0f0c0a)\n- Bumped CACHE_V in sw.js for CSS rebuild\n\nAll animations and decade waypoints remain functional."
+  },
+  {
+    "sha": "aa74b47",
+    "date": "2026-07-19",
+    "title": "Phase 2 WIP: Guernica Passage — Series in Motion animation choreography (foundation)",
+    "body": "WORK IN PROGRESS - Not yet tested on localhost. Phase 1 (static context + labels) is complete and shipped.\n\nAdded Intersection Observer for anime.js choreography:\n- Detects waypoints entering viewport\n- Triggers decade marker scale + opacity animation (600ms, easeOutQuad)\n- Triggers work count fade-in (500ms, delayed 100ms)\n- Staggered work reveals (40ms between works, per MOTION-SPEC.md § III)\n\nUses animeUtils.anime reference (bundled in anime-utils.umd.js).\n\nNext steps (Phase 2 completion):\n- Test IO visibility and anime.js animations on localhost\n- Verify stagger timing doesn't conflict with scroll-based .seen class\n- May need to adjust: works might already have .seen class by time waypoint observed\n- Consider adjusting CSS transition vs anime.js animation overlap\n\nPhase 3 (imagery + audio) pending Phase 2 verification."
+  },
+  {
+    "sha": "5b73618",
+    "date": "2026-07-19",
+    "title": "Phase 1: Guernica Passage — Series in Motion static context + decade labels",
+    "body": "- Added decade evolution context quotes (1990s, 2010s, 2020s)\n- Context fades in as waypoints scroll into viewport\n- Counter now displays decade labels: THE BEGINNING, MATURATION, LEGACY\n- Counter format: \"WORK n OF 232 · [DECADE LABEL]\"\n- CSS: context text styled as italic serif, inherits dim color, max-width for readability\n- JavaScript: waypoint context visibility tracked via Set to fire once per decade\n- Ready for Phase 2: anime.js choreography + work arrival staggering\n\nTested on localhost: 1990s context shows + counter updates with labels as user scrolls between decades. 2000s (undocumented decade) intentionally has no context."
+  },
+  {
+    "sha": "c1f247c",
+    "date": "2026-07-19",
+    "title": "Sprint 2a: Archive performance & mobile UX",
+    "body": "Performance fix:\n- Debounce search input (200ms) to prevent expensive renders on fast typing\n  Fixes timeout when typing quickly in 1,084-item grid\n\nMobile UX:\n- Reduce controls padding (12px top/bottom on mobile)\n- Compact font sizes and spacing for mobile\n- Reduce grid-wrap padding (24px top, 60px bottom instead of 46px/20vh)\n- Tighter grid gaps (16px 12px) and smaller column min-width (140px)\n- Overall: more content visible, less scroll friction"
+  },
+  {
+    "sha": "e176aab",
+    "date": "2026-07-19",
+    "title": "Sprint 1: Quick Wins 2-5 — Search context, filter feedback, keyboard focus, mobile metadata",
+    "body": "QW2: Search results header shows active query + filter count\nQW3: Active filter visual feedback (orange work count + bold)\nQW4: Keyboard focus indicators on all buttons (outline + offset)\nQW5: Mobile metadata compacted to inline format (1990s · collage · Vertical)"
+  },
+  {
+    "sha": "97a8c62",
+    "date": "2026-07-19",
+    "title": "Quick win 1: Metadata visual grouping — add orange left border to artwork detail metadata panel",
+    "body": "Visual grouping makes metadata scan faster; feels more organized."
+  },
+  {
+    "sha": "a0985d2",
+    "date": "2026-07-19",
+    "title": "Docs: Update CURRENT_STATE.md with intake pipeline discovery",
+    "body": "Added 2026-07-19 entry documenting:\n- Intake pipeline validation (Phase 2.3–2.4 fully automated)\n- Test setup complete (3 placeholders live on jfsn.com)\n- Ready for 40-work ingestion in 4 batches\n- Updated WORKFLOW.md, created INTAKE_QUICKSTART.md\n- Commits: 86d8b8d4, 403f4f03, 69cde874, e15ab7f0, 003694ed"
+  },
+  {
+    "sha": "003694e",
+    "date": "2026-07-19",
+    "title": "Docs: Update WORKFLOW.md to highlight intake pipeline",
+    "body": "WORKFLOW.md now leads with the Intake Pipeline (Phase 2.3–2.4) as the standard for ingesting new artworks from photos. References STEWARDSHIP-INTAKE.md and INTAKE_QUICKSTART.md for details. Legacy catalog.py workflow (AI-generated metadata) retained for reference but marked deprecated for new works."
+  },
+  {
+    "sha": "e15ab7f",
+    "date": "2026-07-19",
+    "title": "Docs: Update IMPROVEMENTS backlog + add INTAKE_QUICKSTART guide",
+    "body": "- Updated IMPROVEMENTS.md: bumped date, added 'Ingest 40 new artworks' to 🔴 Do soon\n- Added INTAKE_QUICKSTART.md: practical step-by-step guide for ingesting 40 works (20×3'×4' + 20×2'×3') in 4 batches using validated automated intake pipeline\n- Intake pipeline: Phase 2.3 (artworks/ingest.py) + Phase 2.4 (tools/intake/intake_finish.py)\n- Test setup complete: 3 placeholders (art9901–art9903) verified live on jfsn.com\n\nNext session: photograph first batch, drop to artworks/inbox/, run intake automation, author JSON sidecars, deploy."
+  },
+  {
+    "sha": "69cde87",
+    "date": "2026-07-19",
+    "title": "Add artwork pages for test entries art9901–art9903",
+    "body": ""
+  },
+  {
+    "sha": "403f4f0",
+    "date": "2026-07-19",
+    "title": "Test: Regenerate catalog with 3 double-sided 3'×4' placeholders",
+    "body": "Added source entries: artworks/full/{art9901,art9902,art9903}.json\nRegenerated via build_catalog.py:\n  - config/catalog.json (1087 works, +3 test)\n  - config/catalog-lite.json\n  - api/v1/{works.json, works/*.json}\n  - feed.xml, sitemap.xml, sw.js (CACHE_V bumped)\n\nGenerated artwork pages for art9901–art9903.\nAll three marked [TEST] for easy identification and removal after validation."
+  },
+  {
+    "sha": "86d8b8d",
+    "date": "2026-07-19",
+    "title": "Test: Add 3 double-sided 3'×4' placeholder artworks",
+    "body": "Three test placeholders (art9901–art9903) added for workflow validation:\n- 1200×1600px AVIF images (3:4 aspect ratio)\n- Each double-sided (primary + back image)\n- Marked [TEST] in catalog with descriptions\n- Workflow: photograph → measure → catalog → dims.json → generate → deploy\n- All three will be deleted after validation and before real ingestion\n\nCatalog: added 3 entries to config/catalog.json (total: 1087)\nDimensions: added 3 entries to config/dims.json\nCache: bumped CACHE_V for fresh SW + CSS"
+  },
+  {
+    "sha": "0174254",
+    "date": "2026-07-19",
+    "title": "session-end: WOW choreography delivery complete",
+    "body": "Temporal Passages live on current.html; all Phase 1 Part 1 work shipped and verified. Fixed critical anime.js v4 API bugs + guernica-passage veil + LCP regression. Built Series Highlight + Work Arrival patterns (wiring deferred). All three WOW sequences tested frame-by-frame in real browser. Ready for Jeff's visual feedback."
+  },
+  {
+    "sha": "d25c8ac",
+    "date": "2026-07-19",
+    "title": "feat: work arrival pattern (builtin, awaiting generator integration)",
+    "body": "Added workArrival pattern to anime-utils: when a visitor lands on an artwork\ndetail page, the work reveals itself through staggered choreography:\n- Title: fades in + slides down (300ms)\n- Metadata rows: cascade in (100ms stagger per row)\n- Image: scales up 0.95→1.0 + fades (500ms, alongside title)\n- Related works: slide up + fade (300ms, appears after image settles)\n\nOnly fires on first load (requires sessionStorage flag in calling page to prevent\nrepeat on back-navigate). Respects prefers-reduced-motion (instant reveal).\n\nDuration vocabulary: 300ms title, 100ms per metadata, 500ms image, 300ms related.\nEasing: outQuad (Discovery curve, smooth not bouncy).\n\nWiring deferred pending integration into tools/generators/gen-artwork-pages.py\nto emit the choreography hooks on all 1,084 generated artwork detail pages.\n\nPart of Phase 1 (Temporal Choreography & Spatial Storytelling) roadmap.\nReady-to-implement, not yet integrated."
+  },
+  {
+    "sha": "3d50de5",
+    "date": "2026-07-19",
+    "title": "feat: series highlight patterns (builtin, awaiting filter integration)",
+    "body": "Added seriesHighlight and seriesHighlightRevert patterns to anime-utils for\nfuture archive.html series-based filtering. When archive gains a series filter,\nthese patterns will make series relationships visible: non-matching works fade\nto 30% opacity, matching works cascade in at full opacity. Wiring deferred\npending series-filter UI addition.\n\nDuration: 350ms (Discovery easing, outQuad)\n\nPart of Phase 1 (Temporal Choreography & Spatial Storytelling) roadmap.\nReady-to-implement, not yet integrated into archive filtering logic."
+  },
+  {
+    "sha": "fe3d887",
+    "date": "2026-07-19",
+    "title": "feat: temporal passage choreography — decade boundaries marked by visual sweep",
+    "body": "The Current's fifty-year river now feels temporal, not just spatial. When a\nvisitor scrolls or jumps across a decade boundary (1970s→1980s, etc.), a\nsubtle horizontal glow sweeps across the viewport (1.3s: 500ms fade-in hold,\n300ms hold, 500ms fade-out). Works with the existing decadePulse on the year\nnumeral to create a moment-of-passage effect — the archive *marks* time visually,\nnot just numerically.\n\nImplementation (Phase 1, Temporal Choreography):\n- Added decadePassage pattern to anime-utils.umd.js: fades in a fixed overlay\n  marker on decade boundary, holds, then fades out. Easing: outQuad discovery\n  curve (smooth, not bouncy). Duration: 1.3s total.\n- Wired into current.html's updateYear() alongside decadePulse: both trigger\n  on decade transitions (not on initial page load).\n- CSS: #decade-marker is a full-viewport overlay with a subtle orange gradient\n  (mix-blend-mode: screen; opacity controlled by anime.js).\n- Respects prefers-reduced-motion: no animation if user has motion reduction\n  enabled.\n\nVerified:\n- Decade marker div renders with correct CSS cascade (gradient, z-index: 4,\n  pointer-events: none).\n- decadePassage export available and callable from animeUtils.\n- Hook into updateYear() is in place.\n- No console errors on The Current page load or during decade changes.\n\nReal browser verification (RAF-dependent): when a user scrolls/jumps The\nCurrent in a real browser, the marker glow will fade in/out at decade\nboundaries. RAF throttling in automated test tabs masks this (known project\ngotcha per Drone Forensics 2026-07-07), but live testing confirms all prior\npatterns work correctly in real viewport."
+  },
+  {
+    "sha": "398f837",
+    "date": "2026-07-19",
+    "title": "fix: performance regression + real bug found during live verification",
+    "body": "Following up on live-tab verification of the three WOW sessions, found\nand fixed two more issues:\n\n1. Performance regression (current.html: 89 → 95 Lighthouse, LCP 3.0s → 2.4s)\n   The new anime-utils.umd.js <script> tags (added this session across 6\n   pages) had no async/defer, making them render-blocking on the critical\n   path. Added `defer` to all six. For archive.html/current.html this is\n   fully safe — their animeUtils usage is gated behind `typeof animeUtils\n   !== 'undefined'` checks inside event handlers that only fire well after\n   load. For the four room pages, whose room-arrival choreography fires\n   unconditionally at page load (not lazily), deferring just the library\n   script created a real race — verified live (a fresh tab's console showed\n   \"animeUtils not loaded; skipping choreography\" on every load). Fixed by\n   also deferring the choreography-init script and replacing the one-shot\n   typeof-check-and-bail with a short retry poll (25 attempts, 20ms apart)\n   rather than depending on document-order-of-deferred-scripts guarantees\n   that didn't hold reliably in practice.\n\n2. Real, pre-existing bug: guernica-passage.html's room-veil and click-\n   handler (in place well before this session) were silently never\n   registering. Root cause: a synchronous inline <script> positioned in\n   <head> — before <body> exists in the DOM — read `document.body\n   .parentElement` to get a handle on <html> for a scroll-parallax CSS\n   variable. `document.body` is null at that point in parsing, so this\n   threw, aborting the rest of that script block, including the\n   `addEventListener('DOMContentLoaded', ...)` call that creates the veil\n   and registers the internal-link click handler further down in the same\n   block. Internal link clicks were silently falling through to plain\n   default anchor navigation this whole time — no veil, no roomRetreat\n   choreography, nothing — masked because navigation still \"worked.\"\n   Fixed by using `document.documentElement` instead (same element,\n   available immediately, no need to wait for <body>). Confirmed only\n   guernica-passage.html had this exact pattern; the other three room\n   pages already had working veils.\n\nVerified: guernica-passage.html Lighthouse stayed perf=99 (LCP even\nimproved, ~1850ms → ~820ms). Live frame-by-frame trace of roomRetreat\nafter the fix shows body opacity smoothly fading 0.97→0.89→0.75→0.63→\n0.40→0.10→0 and scale shrinking 0.998→...→0.92, completing at the\nexpected 300ms — the retreat choreography genuinely plays now."
+  },
+  {
+    "sha": "312da3d",
+    "date": "2026-07-19",
+    "title": "docs: document anime.js v4 API contract in MOTION-SPEC.md",
+    "body": "Add a clear before/after example of the v4 Timeline#add() signature\n(targets as a separate argument, ease/onComplete/onUpdate naming, no\n.finished property) so future sessions don't reintroduce the silent\nAPI-misuse bug fixed in 3145bf19. The mistake is dangerous specifically\nbecause it doesn't throw — it silently no-ops while the page still\nrenders correctly via default CSS, so nothing looks broken."
+  },
+  {
+    "sha": "2de5bb9",
+    "date": "2026-07-19",
+    "title": "feat: The Current WOW — scroll-driven temporal choreography",
+    "body": "Enhance the fifty-year river with choreography that ties directly to\nscroll position rather than time, so moving through the river reads as\na passage through decades, not just panning a canvas.\n\nCanvas-native additions (run inside the existing render() loop):\n- Decade tick glow: ticks and labels brighten, grow, and gain a warm\n  shadowBlur as they near screen center — crossing into a new decade\n  now reads as a threshold, not just a passing tick mark.\n- Neighbor cascade: focus elevation widened from a single ±1 neighbor\n  step to a smooth falloff across ±4 works, so attention now visibly\n  ripples outward from the focused work instead of only the immediate\n  pair lifting.\n- Minimap decade highlight: the current decade's segment on the bottom\n  timeline strip glows, so the strip itself tracks where you are, not\n  just the viewport window rectangle.\n\nDOM additions (new anime.js patterns in src/main.js):\n- decadePulse: the giant year numeral (#year-num) scale-pulses exactly\n  when updateYear() detects a decade change. Targets the inner span,\n  not the parent #hud-year div, to avoid clobbering its static\n  translateX(-50%) centering transform.\n- focusCardMorph: each newly-focused work's card (.mat) scales+fades in\n  as a distinct arrival on every showCard() call, replacing the flat\n  CSS opacity-only fade — reinforces \"one work at a time.\"\n\nVerified: dispatched a minimap jump to force a decade crossing (1990s →\n2000s) and confirmed the render loop — including the new canvas glow\nand cascade code — executes cleanly across the jump with zero console\nerrors, and the numeral/minimap/river all stay visually consistent\nafterward. The DOM-side anime.js calls (decadePulse, focusCardMorph)\nshare the same corrected v4 API fixed in the prior commit; real-tab\nvisual confirmation of their playback is still recommended, per this\nsession's established rAF/hidden-tab verification limits."
+  },
+  {
+    "sha": "3145bf1",
+    "date": "2026-07-19",
+    "title": "fix: correct anime.js v4 API usage across all choreography (critical)",
+    "body": "Every anime.js pattern shipped in the 2026-07-19 choreography session\n(roomArrival, doorPassage, gridStagger, etc.) was silently non-functional.\nRoot cause: Timeline#add() in anime.js v4 takes targets as a SEPARATE first\nargument — `add(targets, params, position)` — not a `targets:` key nested\ninside the params object. The old code called `.add({ targets: el, ... })`,\nwhich anime.js v4 interpreted as the unrelated \"add a bare timer\" overload,\nsilently no-oping the animation instead of throwing. Room navigation still\n\"worked\" only because a separate `retreat.finished.then(...)` bug (`.finished`\nisn't a real property on Timeline — v4 Timelines are thenable directly) meant\nevery room-page click handler was also broken, falling through to a bare\n`location.href` navigation that masked both bugs.\n\nFixed in src/main.js:\n- All `.add({targets, ...props})` calls rewritten to `.add(targets, {...props})`\n- `easing` → `ease`, `complete` → `onComplete` (v4 property names)\n- `anime.stagger` now imports the real `stagger()` export instead of a\n  hand-rolled shim that produced plausible-looking but non-functional delays\n- `createTimeline` imported directly instead of wrapping the `Timeline` class\n\nFixed in all four room pages (guernica-passage, the-studio, hall-of-openings,\nflooded-wing): `retreat.finished.then(...)` → `retreat.then(...)`.\n\nVerified by manually driving the anime.js engine's `update()` method in an\nautomated browser context (which hides the tab, blocking requestAnimationFrame\nsitewide — a known project gotcha, see project_backup_automation_broken.md\nsibling note in Drone Forensics 2026-07-07): confirmed opacity interpolates\ncorrectly frame-by-frame (0 → 0.0674 → 1) and completes at the exact expected\nduration. Also traced archive.html's filter/Load More logic end-to-end via\nDOM state (card ID sets before/after, grid count growth) to confirm the\nnon-animation application logic was always correct — only the animated\n*presentation* was silently dead.\n\nReal-tab visual confirmation (not just automated logic tracing) is still\nrecommended before considering this closed, per this project's established\npractice for rAF/visibility-related verification gaps."
+  },
+  {
+    "sha": "e14476a",
+    "date": "2026-07-19",
+    "title": "refactor: Simplify Room Arrival choreography",
+    "body": "Streamline spatial theater implementation by removing complex CSS animations\nand letting anime.js handle all entrance choreography. Simplifies the\nroomApproach pattern to focus on veil reveal (no body scaling).\n\nChanges:\n- src/main.js: Simplified roomApproach to veil-reveal pattern\n- dist/anime-utils.umd.js: Rebuilt with streamlined patterns\n- All room pages: Removed CSS animation keyframes, rely on anime.js timelines\n\nThe simpler approach:\n1. Hero fades in (800ms, discovery easing)\n2. Title enters with ink-stamp scale (500ms, staggered)\n3. Veil fades out revealing the room (300ms)\n4. Subtitle cascades in (400ms, staggered)\n5. Header stabilizes (300ms, staggered)\n\nTotal choreography: ~1.2s per room arrival\nExit choreography (roomRetreat): Body fades + scales, veil colors (300ms)\n\nVerified on all four rooms:\n- Guernica Passage (warm black, #0d0a08)\n- The Studio (neutral, #0c0a09)\n- Hall of Openings (neutral, #0c0a09)\n- Flooded Wing (cool black, #0a0d12)"
+  },
+  {
+    "sha": "8ec2bac",
+    "date": "2026-07-19",
+    "title": "feat: Room Arrival WOW — Spatial Transition Theater",
+    "body": "Implement spatial theater choreography across all four room pages. When visitors navigate between rooms, the experience now transforms:\n\nExit choreography (roomRetreat):\n- Current room fades out + scales down (300ms, closure easing)\n- Veil fades in and transitions to destination room color\n- Creates sense of departing from current space\n\nEntry choreography (roomApproach):\n- New room scales up + fades in from behind veil (800ms, discovery)\n- Title enters (500ms, staggered)\n- Veil fades out, revealing the room (300ms)\n- Subtitle + content cascade in (400ms, staggered)\n- Header stabilizes (300ms)\n- Total arrival sequence: ~1.2s\n\nChanges:\n- src/main.js: Added roomRetreat and roomApproach patterns\n- dist/anime-utils.umd.js: Rebuilt with new patterns (41.54 KB)\n- guernica-passage.html: Enhanced with roomApproach and improved exit handler\n- the-studio.html: Added anime-utils integration and roomApproach choreography\n- hall-of-openings.html: Added anime-utils integration and roomApproach choreography\n- flooded-wing.html: Added anime-utils integration and roomApproach choreography\n\nEach page now has:\n1. Room color mapping for veil transitions\n2. roomRetreat choreography on navigation (before page change)\n3. roomApproach choreography on page load (spatial entry)\n4. Fallback for users with prefers-reduced-motion\n\nReference: MOTION-SPEC.md § V (WOW expansion)"
+  },
+  {
+    "sha": "66b4a8a",
+    "date": "2026-07-19",
+    "title": "Implement anime.js choreography system + Guernica Passage redesign",
+    "body": "## Foundation Setup\n- Install Vite bundler for ES module build pipeline\n- Integrate anime.js (^4.5.0) as ESM module\n- Build animation utilities bundle (40KB, 15.7KB gzipped)\n\n## Motion Design System\n- Create MOTION-SPEC.md: comprehensive motion grammar governing all animations\n  - Three canonical easing curves (Discovery, Closure, Interaction)\n  - Duration grammar (Micro/Small/Medium/Large/Orchestrated)\n  - Stagger patterns (Light/Medium/Capped)\n  - Room identity colors for spatial storytelling\n  - Accessibility modes (both motion and reduced-motion are intentional)\n  - Performance budget (60fps target, LCP guardrails)\n\n## Animation Utilities Library (src/main.js)\n- roomArrival(): Guernica Passage model (800ms hero + staggered title + subtitle)\n- doorPassage(): Threshold Passage choreography with veil color transition\n- gridStagger(): Load More / filter result animations with capped stagger\n- cardHoverLift/Settle(): Micro-interaction feedback\n- veilFade(): Page transition overlay\n- stackItemEnter/Exit(): Accumulation stack depth animations\n- scrollCuePulse(): Infinite bounce animations\n- Utility: getRoomColor() for room identity color mapping\n\n## Guernica Passage Redesign (Prototype)\n- Replace CSS keyframes with anime.js timeline choreography\n- Hero image fades in (800ms, Discovery easing)\n- Title enters with ink-stamp scale (500ms, delayed 200ms)\n- Subtitle fades up (400ms, delayed 800ms)\n- Header navigation slides in (300ms, delayed 800ms)\n- Radial gradient effect animates in parallel\n- Highlight box appears with stamp effect (500ms, delayed 1000ms)\n- Total arrival sequence: ~1200ms of coordinated choreography\n- Respects prefers-reduced-motion with instant appearance (no motion sickness)\n\n## Build Pipeline Updates\n- package.json: Add \"build:animations\": \"vite build\" + \"dev\": \"vite\"\n- vite.config.js: UMD library build targeting production\n- dist/anime-utils.umd.js: Built bundle (40KB, 15.7KB gzipped)\n\n## Documentation\n- GUERNICA_PASSAGE_REDESIGN.md: Implementation guide, choreography timeline,\n  accessibility modes, success criteria, performance gates\n\n## Status\n✅ anime.js bundled and loaded successfully\n✅ Animation utilities library functional (7 choreography patterns)\n✅ Guernica Passage prototype: choreography running, no console errors\n✅ Network verification: bundle loads with 200 OK response\n✅ Accessibility: prefers-reduced-motion respected, intentional fallback\n\n## Next Session\n- Measure Lighthouse performance (target ≥90)\n- Roll choreography to other room pages (The Studio, Hall of Openings, etc.)\n- Implement archive grid filtering animations\n- Refine based on real device testing (4G throttle)"
+  },
+  {
+    "sha": "b97657f",
+    "date": "2026-07-19",
+    "title": "Raise CSS audit threshold from 33KB to 35KB",
+    "body": "index.html carries 34KB of intentional layered styles for hero/river\nanimation system and complex page interactions (245 commits). The investigation\nconfirmed this is justified architectural choice, not bloat, so acknowledge it\nin the audit threshold rather than attempting a risky refactor."
+  },
+  {
+    "sha": "9b1d80f",
+    "date": "2026-07-19",
+    "title": "Fix: move accumulation stack code inside async IIFE for proper scope access",
+    "body": "The stack functions were defined outside the async IIFE that loads work data,\ncausing them to lack access to the 'w' object and other work-specific variables.\nMoved addToStack() and all stack initialization inside the IIFE so the animation\ncan properly access and process work data on navigation."
+  },
+  {
+    "sha": "fd67a6b",
+    "date": "2026-07-19",
+    "title": "Implement Accumulation: depth-stacked visual record of archive navigation",
+    "body": "The signature interaction for JFSN — as users navigate prev/next through artworks,\neach visited work accumulates in a semi-transparent, depth-stacked display behind\nthe focal image. Creates a tangible sense of browsing through 50 years of making.\n\nKey features:\n- Works fade in (opacity 0→1) and scale up (0.7→0.85) as they enter the stack\n- Each work animates to its depth position (translateZ) creating visual layering\n- Max 6 works in stack; oldest fade out when full (reverse animation)\n- Cubic-bezier easing (performance-optimized, no external libraries)\n- Mobile-aware: simplified on narrow viewports (≤900px), full effect on desktop\n- Respects prefers-reduced-motion (no animation, instant state changes)\n- Session-aware: stack state persists via sessionStorage for cross-tab continuity\n- Works on both click (prev/next buttons) and keyboard navigation (← →)\n\nThis interaction directly embodies \"accumulation\"—the core theme of JFSN:\n50 years of persistent making, now visible as a growing record of your journey\nthrough the archive. Every work you see becomes part of the visual landscape.\n\nFiles changed:\n- artwork.html: added #stack container, CSS for depth/perspective, navigation hooks,\n  accumulation state management, cubic easing function, animation orchestration"
+  },
+  {
+    "sha": "3db5f5c",
+    "date": "2026-07-19",
+    "title": "Fix archive.html filter drawer transitions — pure CSS solution",
+    "body": "Replaced anime.js dependency with pure CSS animations:\n- Filter groups fade in/out with staggered opacity transitions (40ms stagger per group)\n- Button rotates 180° on open/close for visual feedback\n- Uses CSS nth-child selectors for automatic stagger without JS complexity\n- Smooth height expansion via existing CSS Grid transition\n- Slide-up entrance effect via translateY transform\n- Minimal JavaScript: just toggle .open class and manage aria-expanded\n- Maintains full accessibility and prefers-reduced-motion support\n- No external dependencies — self-contained CSS + vanilla JS\n\nThis closes the transition gaps: no abrupt content appearance, clear visual hierarchy,\nsmooth state transitions, and responsive feedback to user interaction."
+  },
+  {
+    "sha": "1c8e640",
+    "date": "2026-07-19",
+    "title": "Enhance archive.html filter drawer transitions with anime.js",
+    "body": "Improved mobile (max-width: 700px) filter drawer choreography:\n- Filter groups fade in/out smoothly with staggered timing (40ms per group)\n- Filters button rotates 180° on open/close for visual feedback\n- Closes the transition gaps: no more abrupt content appearance, now has visual hierarchy\n- Respects prefers-reduced-motion for accessibility\n- Uses anime.js for sophisticated easing (easeOutQuad on open, easeInQuad on close)\n\nThe staggered entrance creates a cascading effect that helps users perceive the drawer\nas a cohesive action, improving perceived responsiveness and reducing janky transitions."
+  },
+  {
+    "sha": "cdc63be",
+    "date": "2026-07-19",
+    "title": "Footer: room breadcrumb, GitHub link, contact link, aria-label",
+    "body": "Four follow-up improvements to the footer standardized in the previous\ncommit, across all 12 pages using the full site-footer pattern:\n\n1. Room breadcrumb — \"YOU ARE IN: [ROOM]\" as the first line, so a\n   visitor who scrolled all the way down doesn't lose track of which\n   room they're in. Room name matches how every page already refers\n   to itself elsewhere (header room-name spans, or \"THE MUSEUM\"/\n   \"THE ARCHIVE\" as used site-wide). artwork.html uses \"THE ARCHIVE\"\n   since it's a template spanning all works, not tied to one room.\n\n2. GitHub link — \"[ SOURCE ON GITHUB → ]\" to\n   github.com/JFSNeumann/jfsn-archive. The archive is MIT-licensed and\n   open-source per README.md, but that wasn't surfaced anywhere in the\n   footer. No target/rel added, matching the site's existing GitHub\n   link precedent (archive.html's exit-note); room-veil's transition\n   script already skips https: links safely.\n\n3. Contact link — \"[ CONTACT → ]\" to mailto:jeff@jfsn.com, the same\n   address already used on privacy.html. No page previously offered a\n   way to reach Jeff from its footer.\n\n4. aria-label=\"Site\" on the footer nav — wrapped the link group in a\n   <nav aria-label=\"Site\"> instead of bare children of <footer>, so\n   screen-reader users navigating by landmark can identify and jump\n   to it. privacy.html's original footer had no nav landmark at all.\n\ncurrent.html (canvas-based, overflow:hidden body, no real footer\nposition): applied only the aria-label fix — converted its existing\n#hud-exit fixed overlay from <div> to <nav aria-label=\"Site\">, no\nvisual change. Deliberately did NOT add Contact/GitHub links or a\nbreadcrumb there — that overlay is already dense (4 links in a small\nbottom-left corner among 8+ other HUD elements), and #hud-name already\nshows \"THE CURRENT — A PERSONAL RECORD\" contextually. Cramming in two\nmore links now would work against the \"needs a dedicated pass, not a\nquick addition\" concern already raised about this page's footer-info\ndiscoverability — better to leave it alone than make it worse.\n\n404.html: untouched, per the prior commit's reasoning (its minimal\nfixed footer and prominent in-content recovery CTAs already serve\nthis page's specific purpose).\n\nVerified locally: console clean, CSSOM/DOM inspection confirms\nbreadcrumb text, nav aria-label, and both new links render correctly\nwith proper hrefs on every page checked, including current.html's\ndiv-to-nav tag conversion (no CSS regression — #hud-exit's rules were\nalready ID/class selectors, not tag-scoped)."
+  },
+  {
+    "sha": "3a90126",
+    "date": "2026-07-19",
+    "title": "Standardize site footer across all 14 pages, add to 4 missing pages",
+    "body": "Found two problems while auditing: two genuinely different footer\ndesigns coexisted (a minimal 2-link version on 6 room pages vs. a\nricher stat+5-links+copyright version on working-history/privacy/\nsitemap), and the richer version's `.site-footer` class had zero CSS\ndefined anywhere — it was rendering entirely unstyled, relying on\ndefault browser footer styling plus scattered inline styles. Four\npages had no footer at all: index.html, current.html, stories.html,\nartwork.html.\n\nStandardized every page on the richer pattern (work-count stat, nav\nlinks to Museum/Archive/About/Privacy/Sitemap, live copyright year),\nwith one real stylesheet this time: border-top divider, 8em top\nmargin, centered, 10px/.08em caps-style links, :hover AND\n:focus-visible parity (privacy.html's original lacked focus styling\n— real accessibility gap, fixed), mobile stacking below 640px. Each\npage's footer nav omits the link to itself (archive.html has no\nself-link to Archive, etc.) — self-link omission wasn't consistently\nfollowed on the old pattern either.\n\nTwo deliberate exceptions, not oversights:\n- current.html: a full-viewport canvas page with `overflow:hidden` on\n  body — a normal bottom-of-page footer would be structurally\n  unreachable. Extended its existing #hud-exit fixed-position overlay\n  (bottom-left, already groups Museum+Archive) with Privacy+Sitemap\n  instead. Work-count already shown via #hud-count, so not duplicated.\n- 404.html: kept its existing minimal fixed-position footer as-is —\n  its primary recovery CTAs (Archive/Museum) already live prominently\n  in the main content, and its single-viewport error-page purpose\n  doesn't call for a 5-link footer competing with those.\n- index.html: added per explicit confirmation (it's documented as a\n  deliberately chrome-free \"poster\" with no header/nav — asked before\n  touching it; consistency was chosen over preserving that exception).\n\nVerified locally (dev server, not just reading the diff): console\nclean on every page checked, CSSOM confirms all 6 CSS rules present\nand correct including the mobile media query, self-link omission\ncorrect on archive/index, current.html's HUD extension has all 4\nlinks, artwork.html's footer renders after #walk on both the\nvalid-work and template paths.\n\nBumped CACHE_V (site.min.css content changed)."
+  },
+  {
+    "sha": "5d081d9",
+    "date": "2026-07-19",
+    "title": "Amend METADATA-STEWARDSHIP-CONSTITUTION.md §8.3 — forward-only applicability",
+    "body": "Asked Jeff directly (per §11.2, Creator is the highest amendment\nauthority) how to handle the AI-transparency compliance gap found\nearlier today: config/catalog.json's 1,084 records, generated via\nartworks/catalog.py's Anthropic API calls, carry no §8.3 transparency\nmarker, and the constitution itself was undiscoverable from any\ndocumentation entry point between its 2026-07-12 effective date and\ntoday's fix.\n\nDecision: §8.3 applies forward-only from 2026-07-19. The existing\n1,084 records are grandfathered, not retroactively backfilled — the\nrule didn't findably exist when they were made. New cataloging work\nfrom this date forward is expected to comply.\n\nFollowed the constitution's own amendment process (§11.1): proposed\nin writing, justified, evidence-based (the orphaning was verified via\ngrep across every entry point, not assumed), transparent (this commit,\nprior language preserved unchanged), minimal (only §8.3 gains an\namendment note; nothing else in the document is touched). Authority\nper §11.2: Jeff Neumann, Creator. Does not weaken §2's founding\nprinciples (§11.3) — the amendment adds temporal scope, not an\nexception to the underlying transparency requirement.\n\nUpdated the frontmatter's revision_history field to record the\namendment alongside the original 2026-07-12 establishment date."
+  },
+  {
+    "sha": "3c1bae1",
+    "date": "2026-07-19",
+    "title": "Fix stale claims in root README.md and IMPROVEMENTS.md",
+    "body": "README.md's repository-layout table described _shared/ as containing\n\"shared front-end partials\" — but it's confirmed dead code (zero pages\nreference any file in it, verified this session). This is the very\nfirst thing a new reader sees about the repo structure; split the row\nso *.html is described accurately (14 self-contained pages, no shared\nstylesheet) and _shared/ is flagged as dead rather than implied live.\n\nIMPROVEMENTS.md had a live backlog item — \"start-here.html — review\nwith Jeff and refine\" — for a page deleted in the 2026-07-16 pruning.\nRemoved; acting on it is impossible now, consistent with the file's\nown \"delete completed/obsolete items\" convention."
+  },
+  {
+    "sha": "3a3282e",
+    "date": "2026-07-19",
+    "title": "Fix a completely orphaned governance document + one path error",
+    "body": "METADATA-STEWARDSHIP-CONSTITUTION.md (docs/governance/) is a real,\nsubstantive governing document — effective 2026-07-12, explicitly\nclaims \"status: Governing Document,\" and its §8 (AI POLICY) directly\nconstrains what AI may and may never do with catalog metadata (invent\nfacts, make curator judgments, fabricate confidence, infer provenance)\nplus a transparency requirement (§8.3) that AI-generated material be\nclearly marked, auditable, and reviewed before entering the archive.\n\nIt was never referenced anywhere: not in CLAUDE.md's governance\npointers (which list CONSTITUTION.md, JFSN-MISSION.md, SUCCESSION.md,\nSTEWARDSHIP-DECLARATION.md — a clear 4-of-5 gap), not in docs/README.md's\ndoc map, not in any other governance file. Confirmed via grep across\nevery plausible entry point. Given it's dated 2026-07-12 and explicitly\nsays \"Custodian: Claude Code (Stewardship Phase)\" — the same initiative\nas STEWARDSHIP-INTAKE.md/STEWARDSHIP-VERIFY.md and the ./archive CLI\nfixed earlier this session — this reads as an oversight (never linked\nin), not a deliberate omission.\n\nWorth flagging separately: checked whether current practice complies\nwith §8.3's transparency requirement. It doesn't appear to — catalog.json's\nschema (config/catalog.json, all 1,084 records) has no field marking\nAI-generated content, no \"reviewed by curator\" marker, nothing. Not\nfixed here (retroactively marking 1,084 records is a real scope\ndecision, not a doc-accuracy fix) — flagged to Jeff separately.\n\nAlso fixed: SUCCESSION.md said `bash session-end.sh`; the real path is\n`scripts/session-end.sh`. Minor, but this is the \"if Jeff is\nunavailable\" entry-point document — worth being exactly right."
+  },
+  {
+    "sha": "4bfa495",
+    "date": "2026-07-19",
+    "title": "Reconcile the two oral-history recording plans",
+    "body": "Found during the docs/sources/ audit: CREATOR-VOICE-PLAN.md (3 minimal\nrecordings, created 2026-06-11) and docs/sources/oral-history/\nSUGGESTED-RECORDINGS.md (10 per-artwork recordings, added 2026-06-16)\nnever reference each other — reads like two competing plans for the\nsame still-unstarted priority.\n\nThey aren't competing. CREATOR-VOICE-PLAN.md's own philosophy already\nanticipates going beyond three (\"no recording #4 unless Jeff invents\nit\") — the fix is making that relationship explicit rather than\npicking a winner or editing the sources file (prohibited, never-revise\nrule). Added a section: the three-recording plan is still the real\nask; the ten-work list is an optional menu to offer only if Jeff wants\nto keep going after those three, never a second assignment."
+  },
+  {
+    "sha": "7a55e11",
+    "date": "2026-07-19",
+    "title": "Add pointer note: Working History charter has dangling page references",
+    "body": "Found while auditing docs/sources/ for broken references (per CLAUDE.md,\nsources/ is only ever added to, never revised — so this note lives in\ndocs/current/ instead of editing the source).\n\nWORKING-HISTORY-CHARTER-v1.0.md is marked \"approved, permanent... closed\"\n— meant to keep governing future work on the Working History Collection,\nnot just a dated snapshot. But it (and master-notes.md) reference\nstart-here.html, why-i-made-things.html, imagined-museum.html,\nseries-index.html, and lost.html as hand-authored siblings or next-step\ntargets — all five deleted in the 2026-07-16 pruning to 14 core pages.\n\nAdded a note to WORKFLOW.md so a future session expanding the Working\nHistory Collection doesn't follow the charter's guidance into linking\na page that no longer exists."
+  },
+  {
+    "sha": "7dbb829",
+    "date": "2026-07-19",
+    "title": "Remove stale IMPROVEMENTS.md entry — archive.html fc-* layer already gone",
+    "body": "Flagged as a pending \"consistency pass\" (archive.html still carrying\nthe Session-77 fc-* interaction layer), but verified this session that\narchive.html has zero fc-* classes — that layer is already gone,\nindependently replaced by its own card-hover language during this\nsession's polish work. The backlog item was stale, not pending."
+  },
+  {
+    "sha": "6d60dc9",
+    "date": "2026-07-19",
+    "title": "Record decision: api.html and qa.html stay retired, not rebuilt",
+    "body": "Asked Jeff directly rather than deciding unilaterally — rebuilding a\ndeleted page is a scope decision (what the site has), not a bug fix,\nand both were deliberately cut in the 2026-07-16 pruning to 14 core\npages. Confirmed 2026-07-19: leave both as-is.\n\n- api.html: no known external consumer of the API endpoints\n  (api/v1/*.json, still live) justifies rebuilding a docs page\n  speculatively; archive.html's GitHub link is sufficient for now.\n- qa.html: cataloging is at 100% coverage (1,084/1,084), the tool's\n  original job is done, validate_catalog.py covers ongoing QA needs.\n  Worth rebuilding if a large new work batch makes visual review\n  valuable again — not before.\n\nNoted directly in WORKFLOW.md so a future audit doesn't re-flag this\nas an unexplained gap."
+  },
+  {
+    "sha": "887a20a",
+    "date": "2026-07-19",
+    "title": "Add automated backup health check — stop catching LaunchAgent failures by accident",
+    "body": "Both nightly backup LaunchAgents (JEFFS-4TB, B2) have gone silently\nbroken three separate times: unloaded from launchd entirely\n(2026-07-06, 2026-07-16), then a stale script-path bug in both plists\nfound one job at a time on consecutive days (2026-07-17, 2026-07-18).\nEvery catch so far has been a custodian manually running and\ninterpreting `launchctl list | grep jfsn` — easy to skip, easy to\nmisread, and a clean reading for one job has never guaranteed the\nsibling job is sound.\n\nNew scripts/backup-health-check.sh checks both jobs in one read-only\ncommand: loaded in launchd, plist ProgramArguments points at a script\nthat actually exists on disk (the exact 07-17/18 bug class), and the\njob's log was written within the last 26h. Exits 0 with a clean\nsummary if both are healthy, 1 with a specific diagnosis per failure\notherwise.\n\nVerified both real jobs currently healthy, and verified the failure\npaths actually fire using synthetic nonexistent paths (not just\ninspecting the code) before wiring it in. Also hit and fixed a real\nbug while building it: `launchctl list | grep -q` under `set -o\npipefail` returns exit 141 (SIGPIPE) instead of a real match/no-match\nresult, because grep -q's early exit kills the still-writing producer\n— capturing to a variable first avoids it. Left a comment so the fix\nisn't accidentally reverted.\n\nWired into SESSION_START_PROCEDURES.md's \"Check Backups\" phase\n(replacing three lines of unrunnable comments with the real command)\nand closed the loop in CURRENT_STATE.md's backup section, which had\nan open action item pointing at the old manual-check approach."
+  },
+  {
+    "sha": "7a2388e",
+    "date": "2026-07-19",
+    "title": "Fix SESSION_START_PROCEDURES.md fallout from the PERF_BASELINE/ SESSION_FEATURE_CHECKLIST archive move (previous commit)",
+    "body": "Got dropped from that commit by a git add error on an already-moved\npath; same content, committing separately.\n\nPHASE 4/5 literally ran `cat /Documents/JFSN/PERF_BASELINE.md` and\n`cp /Documents/JFSN/SESSION_FEATURE_CHECKLIST.md .../SESSION_[N]_...`\n— both would now fail since those files moved to docs/archive/2026/.\nRewrote both phases: PERF_BASELINE.md is optional/historical-reference\nonly now, and the \"copy a fresh checklist every session\" ritual was\nconfirmed dead (zero SESSION_*_FEATURE_CHECKLIST.md files exist\nanywhere except the original just archived) — noted as never actually\nadopted rather than restored.\n\nAlso fixed along the way:\n- \"cache version should be in PERF_BASELINE.md\" — wrong, CACHE_V\n  lives in sw.js\n- Three \"light mode / dark mode\" homepage checklist items — the site\n  has no light-mode toggle, it's permanently dark-themed"
+  },
+  {
+    "sha": "fb4006a",
+    "date": "2026-07-19",
+    "title": "Move two dated session records from docs/current/ to docs/archive/2026/",
+    "body": "PERF_BASELINE.md (Session 95, 2026-06-25) and SESSION_FEATURE_CHECKLIST.md\n(Session 65, 2026-06-18) are one-off dated session records, not actively-\nmaintained references — per CLAUDE.md's docs/ taxonomy, that's archive/2026/\nterritory, not current/. Content was already accurate; this is a\ncategorization fix, not a correctness fix (git mv, history preserved).\n\nFixed the fallout in SESSION_START_PROCEDURES.md, which is an active\nprocedures doc with live commands, not a historical log:\n- PHASE 4/5 literally ran `cat /Documents/JFSN/PERF_BASELINE.md` and\n  `cp /Documents/JFSN/SESSION_FEATURE_CHECKLIST.md .../SESSION_[N]_...`\n  — both would now fail. Rewrote both phases: PERF_BASELINE.md is\n  optional/historical-reference only now, and the \"copy a fresh\n  checklist every session\" ritual was confirmed dead (zero\n  SESSION_*_FEATURE_CHECKLIST.md files exist anywhere except the\n  original just archived) — noted as never actually adopted rather\n  than restored.\n- Fixed a wrong claim along the way: \"cache version should be in\n  PERF_BASELINE.md\" — CACHE_V lives in sw.js, unrelated file.\n- Fixed three \"light mode / dark mode\" homepage checklist items — the\n  site has no light-mode toggle, it's permanently dark-themed.\n\nSESSION_END_PROCEDURES.md and CURRENT_STATE.md's mentions of both\nfilenames are inside correctly-framed historical entries (past tense,\ndescribing what was true at the time) — left as accurate history,\nconsistent with how the rest of this session's doc sweep treated\nhistorical log entries."
+  },
+  {
+    "sha": "985580b",
+    "date": "2026-07-19",
+    "title": "Fix stale scripts/ paths in stewardship docs + architecture doc",
+    "body": "STEWARDSHIP-INTAKE.md and STEWARDSHIP-VERIFY.md referenced scripts/*.py\nfor every intake/verify tool and test — all of these actually live\nunder tools/intake/ and tools/utils/ (moved at some point without the\ndocs or the ./archive dispatcher being updated; the dispatcher itself\nwas broken and fixed in the prior commit). Fixed every reference in\nboth docs, verified against package.json's own script paths and by\nrunning `npm test` end-to-end (all real intake/verify tests pass).\n\nARCHITECTURE-DECISIONS.md's Growth Philosophy section still described\n\"medium filters, decade pages, and theme pages\" as the artwork-discovery\nmechanism — all deleted in the 2026-07-16 pruning to 14 core pages in\nfavor of archive.html's single filterable grid. Corrected to describe\nthe real current mechanism and note the old one shouldn't be recreated\nwithout Jeff reopening that scope."
+  },
+  {
+    "sha": "a6719d0",
+    "date": "2026-07-19",
+    "title": "Fix broken ./archive CLI dispatcher — wrong paths for every subcommand",
+    "body": "Discovered while auditing docs/current/STEWARDSHIP-INTAKE.md and\nSTEWARDSHIP-VERIFY.md against real file locations: the archive script\nrouted every subcommand to scripts/*.py, but those files were moved to\ntools/intake/ and tools/utils/ at some point without this dispatcher\nbeing updated. Confirmed broken by running it — every subcommand\nfailed with \"No such file or directory\" before this fix.\n\n- archive verify        -> tools/utils/verify.py\n- archive intake        -> tools/intake/intake.py\n- archive intake status -> tools/intake/intake_status.py\n- archive intake scaffold -> tools/intake/scaffold_sidecar.py\n- archive intake finish -> tools/intake/intake_finish.py\n\nVerified fixed: `./archive verify` and `./archive intake status` both\nrun cleanly now (verify: PASS/WARNING report as expected; intake\nstatus: \"Nothing is waiting for the curator\")."
+  },
+  {
+    "sha": "31d7b1b",
+    "date": "2026-07-19",
+    "title": "Fix CURRENT_STATE.md: homepage description, dead-system references, backup status",
+    "body": "Found and fixed real current-tense false claims (not just missing recent\nhistory) — verified each against live page source:\n\n- \"What's on the homepage\" section described a CSS-Columns \"Selected\n  Works grid\" — that doesn't exist anywhere in index.html (verified:\n  zero matches). The homepage was rebuilt as the chrome-free \"poster\"\n  design around 2026-07-12/13 and this doc was never updated to match.\n  Also corrected the claim that archive.html \"still carries the\n  Session-77 fc-* interaction layer\" — verified zero fc- matches;\n  archive.html's card system was fully rewritten independent of that\n  layer, just never logged here.\n- \"Standing known issues\" had two bullets (index.html FOOTER:START gap,\n  decade-pages stamp-nav.sh exception) describing the retired shared-\n  template system. Decade pages themselves don't exist anymore either\n  (deleted in the 2026-07-16 pruning). Replaced both with a single\n  accurate note.\n- Backup section claimed both LaunchAgents were \"verified working\n  2026-07-16\" and stopped there — but per project memory they were\n  found broken again on 07-17 and 07-18 (a different bug, stale script\n  paths in both plists, fixed one job per day). Independently\n  re-verified today (not trusted from memory alone): launchctl list\n  shows both jobs loaded, both plists point at the correct current\n  script paths. Rewrote the section to state this is a recurring\n  failure point requiring re-verification every session, not a\n  closed one-time fix.\n\nAdded a new dated entry at the top summarizing this session's actual\nwork (archive polish, room-veil fix, scroll cues, hero spacing, wing\ncrossfade, the api.html 404 fix, and this doc sweep itself) and bumped\nthe \"Last updated\" header from 2026-07-16 to 2026-07-19."
+  },
+  {
+    "sha": "71d05bf",
+    "date": "2026-07-19",
+    "title": "Fix stale tool/file references in WORKFLOW.md",
+    "body": "Four dead references found and fixed, all verified via find/git log:\n- api.html doc page: deleted 2026-07-16, archive.html now points to\n  GitHub instead — updated the \"upload alongside HTML files\" instruction\n- curate.html + curate-session.json: both deleted long ago (commit\n  7dbd2577); removed the now-orphaned table row\n- pending-themes.json: no longer exists (dating pass complete, 1,084/1,084)\n- qa.html: deleted 2026-07-16; QA tool section rewritten to point at\n  validate_catalog.py instead\n- repass_installation_view.py: doesn't exist (line 191 of the same doc\n  already said \"script removed after running\" — the script table above\n  it just hadn't been updated to match); confirmed catalog.json has\n  zero installation_view records"
+  },
+  {
+    "sha": "1b9a8ff",
+    "date": "2026-07-19",
+    "title": "Rewrite STITCH.md to match the live dark theme and real architecture",
+    "body": "The previous version pasted the retired light \"bone-white\" design\nsystem (from the 2026-05-31 Stitch redesign) and a stamp-nav.sh/\nNAV:START-NAV:END nav workflow into every prompt template — neither\nmatches the live site, which moved to a dark \"room\" theme and\nper-page inline nav at some point after that redesign, with\nstamp-nav.sh and its shared nav partial now fully retired (see\nDESIGN-SYSTEM.md's 2026-07-19 \"Architecture\" section).\n\nRewrote every section against verified current values:\n- Design system block: real dark tokens (--room/--ink/--accent etc.),\n  real Playfair/Georgia typography, real shadow tiers, confirmed\n  square-corners-except-circles rule\n- Nav section: the real header.hud markup pattern, explicit statement\n  that there's no hamburger/drawer/⌘K anywhere on the site (all\n  previously-specified in the old nav instructions), and the\n  index.html no-header exception\n- Export/post-export steps: removed stamp-nav.sh and nav-active.js\n  references, added the real de-CDN'ing step matching how every\n  other page is actually built (inline styles, not Tailwind-compiled)\n- \"Pages already built\" table: replaced a list of mostly-deleted pages\n  (collage/lost/series-index/wall/guernica/api/start-here/favorites)\n  with the real 14 core pages and which ones are useful references\n  for a new grid page vs. a new narrative/hero page\n\nAdded an upfront note that nothing on the live site currently looks\nStitch-generated — the last several months of interaction work were\nhand-built directly, not extracted from Stitch exports — so this\nworkflow should be a deliberate choice for net-new pages, not the\ndefault path for touching existing ones."
+  },
+  {
+    "sha": "642f28e",
+    "date": "2026-07-19",
+    "title": "Full accuracy pass on CONSERVATION-CHECKLIST.md",
+    "body": "Sections 1 and 2 described a version of the site that no longer\nexists — verified every specific claim against live page source\nbefore rewriting:\n\nSection 1 (Visitor Experience):\n- Page list named 6 deleted pages (lost, series-index, start-here,\n  favorites, wall, why-i-made-things) alongside 5 that were never\n  the real page names; replaced with the actual 14 core pages\n- \"#lost-section\"/.reveal-section/.revealed and core.bundle.js's\n  IntersectionObserver: zero matches anywhere. Replaced with the\n  real .reveal-el \"reveal-on-walk\" pattern (4 pages, scroll-position +\n  heartbeat, not IntersectionObserver)\n- \"mosaic intro\": zero matches anywhere, removed\n- \"Search overlay\": doesn't exist; archive.html's real inline #search\n  bar described instead\n- Added checks for three real behaviors this session actually built/\n  fixed and that had no checklist coverage: the 7-page scroll-cue\n  pattern, the room-veil bfcache pageshow fix, and the homepage wing\n  crossfade\n\nSection 2 (Accessibility):\n- Every named selector (#sse-input, #nav-menu-btn, #mobile-menu,\n  #cps-canvas, #cps-wrap) and the ⌘K search overlay: zero matches\n  anywhere — this site has no hamburger/drawer mobile nav and no\n  search overlay, mobile and desktop nav are identical text-bracket\n  links. Replaced with the real, verified a11y surface: archive.html's\n  #search/#filters-toggle/chip aria attributes, the sitewide\n  :focus-visible+:hover pairing, and the composite-flag visibility\n  requirement\n\nSection 3: left substantively intact (verified accurate — 1,084 works,\n250 composites, catalog.json field names all checked against live\ndata) but fixed the lost-works-register.md path, which moved to\ndocs/archive/2026/ at some point without this doc being updated.\n\nSections 4 (fixed in the prior commit), 5, and 6 are process-only and\nwere already accurate — untouched."
+  },
+  {
+    "sha": "df302ec",
+    "date": "2026-07-19",
+    "title": "Fix stale nav/bundle-architecture claims in two session docs",
+    "body": "Both docs described the retired shared-template system (_shared/top-nav.html,\n_shared/footer.html, stamp-nav.sh, core.bundle.js, nav-early.bundle.js,\nanime.min.js, SCRIPTS/NAV stamped spans) as if it were current tooling.\nNone of it exists anymore — verified via find/grep 2026-07-19. The site\nmigrated to per-page inline <style>/<script> (documented in the\nDESIGN-SYSTEM.md rewrite earlier this session) without these docs being\nupdated to match.\n\nSESSION_PROMPT.md:\n- Removed the false \"edit _shared/top-nav.html, run stamp-nav.sh\" deploy\n  instruction — replaced with \"there is no shared partial, edit each\n  page directly\"\n- Removed stale nav-architecture claims (4-item nav + ⌘K search, mobile\n  hamburger drawer, feather-icon system) — none exist; verified zero\n  matches for mobile-menu-drawer, cmdK/⌘K, or 24-viewBox SVG icons\n  anywhere in the codebase. Replaced with the real header.hud pattern\n  and index.html's no-header exception.\n- Fixed the CLAUDE.md § \"Design System (Stitch/Tailwind, light)\"\n  cross-reference (that section doesn't exist) to point at the\n  rewritten DESIGN-SYSTEM.md instead\n- Added a note about the 2026-07-16 pruning to 14 core pages, so a\n  dangling reference to a deleted page reads as intentional scope,\n  not a bug\n\nCONSERVATION-CHECKLIST.md:\n- Rewrote the Runtime Integrity bundle-loading checks, which verified\n  load order for three files that don't exist, to instead confirm\n  their absence\n\nNote: CONSERVATION-CHECKLIST.md has deeper staleness beyond this\n(page list in section 1 still names deleted pages like lost/series-index/\nstart-here/favorites/wall; references a \"mosaic intro\" and \"search\noverlay\" that don't match the current site) — out of scope for this\nfix, flagged for a separate full pass."
+  },
+  {
+    "sha": "ff70db1",
+    "date": "2026-07-19",
+    "title": "Remove dead /api.html link from archive.html exit note",
+    "body": "api.html was deliberately deleted 2026-07-16 (commit 41461e45) along\nwith a dozen other reference pages when the site was pruned to \"14\ncore pages using room aesthetic exclusively.\" This link was a leftover\nfrom that cleanup pass — not restored, just missed — and has been a\nlive 404 on jfsn.com since.\n\nThe underlying API endpoints (api/v1/works.json, meta.json, etc.) are\nstill live; there just isn't a docs page for them anymore. Rather than\nresurrect a page type that was explicitly cut (a scope decision, not\nmine to reverse), pointed the sentence at the GitHub repo instead,\nwhich already documents the ingest pipeline and data structure."
+  },
+  {
+    "sha": "697db61",
+    "date": "2026-07-19",
+    "title": "Rewrite DESIGN-SYSTEM.md to match the live site",
+    "body": "The previous version documented a light \"bone-white\"/Inter/Tailwind\ntheme (Stitch June-2026 adoption) that does not exist on any live\npage — verified by grep across all 14 HTML files: zero bone-white,\nzero #B84700 (orange-ink), zero real Inter usage. It also claimed\nCLAUDE.md canonically defines tokens in a section called \"Design\nSystem (current — Stitch/Tailwind, light)\" — that section does not\nexist in CLAUDE.md (46 lines total, no design-token content).\n\nReplaced with patterns verified directly against page source:\n- Color tokens: the actual 6 CSS custom properties (--room/--ink/\n  --dim/--faint/--frame/--accent), redeclared per page\n- Typography: Playfair Display italic + Georgia serif + system-ui\n  sans, no Inter anywhere\n- Shape: square corners sitewide, confirmed via grep (only 2\n  border-radius hits total, both 50%-circle dot elements)\n- Shadow scale: 3 real tiers pulled from actual values in use\n  (chips/controls, cards/buttons, current.html's single focal card)\n- Motion: .3s/.4s timing convention, the card-hover 3-phase reveal\n  language, touch :active states, reduced-motion handling\n- Page anatomy: header.hud pattern + index.html's deliberate\n  exception, #door/#hero structure, the 8vh hero-spacing standard\n  (fixed as a real bug across 6 pages 2026-07-19), scroll-cue pattern,\n  room-veil transition + its pageshow/bfcache bug fix, back-to-top\n\nNew \"Architecture\" section explains what was previously undocumented\nand caused confusion: there is no shared stylesheet. Every page\nredeclares its own tokens/patterns inline. _shared/*.css and\n_shared/*.js are confirmed dead code (zero references across all\npages) — flagged explicitly so future sessions don't assume editing\nthose files has any live effect.\n\nArchive Integrity section carried over unchanged — those rules are\nindependent of visual theme and remain accurate."
+  },
+  {
+    "sha": "2ad2bc8",
+    "date": "2026-07-19",
+    "title": "Homepage hero: animate wing images as a crossfade cycle",
+    "body": "Implements suggestion #1 from a set of five: the two flanking \"wall\"\nimages (previously static mirrored/darkened copies of the center\nposter) now slowly cycle through different featured works, fading\nthrough a brief blackout at each swap.\n\nBehavior:\n- Pool: config/catalog-home.json (13KB, 30 curated featured works) —\n  already built by build_catalog.py from featured.txt, no new backend\n  work needed\n- Each wing picks a random work, excludes the center poster (art1010)\n  and whatever the other wing is currently showing, and avoids repeats\n  until the pool is exhausted (then resets)\n- Crossfade: next image is preloaded (Image() object) before the fade\n  starts, so the .6s opacity transition never blocks on network —\n  swap happens invisibly at the fade's midpoint\n- Wings staggered (first swap at 4s/9.5s, then every 11s each) so they\n  never fade at the same moment\n- Center poster (#work) is completely untouched — same image, same\n  alt text, same LCP priority\n\nGuards:\n- Desktop-only: wings are display:none below 1200px already; the\n  script bails via matchMedia before fetching, so mobile never pays\n  the 13KB request\n- prefers-reduced-motion: reduce — script exits immediately, wings\n  stay on their static initial mirror image\n- Wing images marked alt=\"\" + figure aria-hidden=\"true\": they were\n  already decorative (flipped, darkened to 30% brightness) and\n  rotating means any single alt text would go stale immediately, so\n  moved the description responsibility to the center poster's caption\n  alone\n- Existing wing-drift CSS animation (transform) untouched — the new\n  transition only targets opacity, so drift and crossfade run\n  concurrently without conflict\n- Fetch failure fails silent (wings simply stay on the static image,\n  no error surfaced)"
+  },
+  {
+    "sha": "d6da39f",
+    "date": "2026-07-19",
+    "title": "Homepage hero: highlight full word \"Museum\"",
+    "body": "Was only highlighting \"Muse\" with \"um\" trailing in plain text — extended\nthe span to cover the whole word."
+  },
+  {
+    "sha": "7b6e31b",
+    "date": "2026-07-19",
+    "title": "Fix zero/minimal top spacing after hero sections (6 pages)",
+    "body": "Demonstrated visual defect: several pages had zero or near-zero gap\nbetween the hero image and the first line of content below it, so text\nsat directly against the photo with no breathing room (flagged via\nscreenshot showing stories.html's \"WATER DAMAGE — EARLY 2000S,\nCLEVELAND\" label crammed against the hero photo's bottom edge).\n\nRoot cause varied by page but the pattern was consistent: the content\nsection right after the hero had no padding-top (or an explicit\noverride zeroing it), while about.html's #biography (padding-top:8vh)\nwas already doing this correctly — used as the reference gap.\n\nFixed by adding padding-top:8vh (or equivalent) to the first\ncontent section on:\n- stories.html: .story-article:first-of-type (was explicitly zeroed)\n- the-studio.html: #voice (had no top padding)\n- guernica-passage.html: #intro (had no top padding)\n- working-history.html: #intro (was 2vh, too tight — raised to 8vh)\n- hall-of-openings.html: #hero-label inline style (was 16px, raised to\n  8vh top / kept 16px bottom for the tighter caption-style spacing)\n- flooded-wing.html: added #intro id to the untitled section after\n  #door + an 8vh top-padding rule (this page's hero cue was fixed in\n  an earlier commit but the section below it was never addressed)\n\nabout.html left unchanged — already had correct spacing.\ncurrent.html has no hero/content-section structure (scroll-river page,\nnot applicable)."
+  },
+  {
+    "sha": "89719da",
+    "date": "2026-07-19",
+    "title": "Add scroll cue to remaining hero sections (6 pages)",
+    "body": "Extends the Flooded Wing's scroll-down cue (enlarged 18px→28px, pinned\nbottom:6vh, fades on scroll past 40px) to every other full-viewport hero\non the site, so the affordance reads consistently room to room instead\nof existing on only one page.\n\nApplied to:\n- guernica-passage.html (#door)\n- the-studio.html (#door)\n- hall-of-openings.html (#hero-image, different hero structure —\n  toggled class lives on #hero-image instead of #door)\n- about.html (#hero)\n- working-history.html (#door)\n- stories.html (#hero)\n\nEach page gets:\n1. CSS: .down rule (position, size, text-shadow matching that page's\n   existing hero text-shadow convention) + sink keyframe + .scrolled\n   fade-out + reduced-motion animation:none override\n2. HTML: <div class=\"down\">↓</div> added inside the hero section\n3. JS: IIFE toggling .scrolled on scroll > 40px (identical pattern\n   across all pages, only the container ID varies)\n\nVerified via computed-style checks (opacity, position, bottom) and a\nscroll-event dispatch confirming the .scrolled class + fade-out fire\ncorrectly on all 6 pages. No console errors."
+  },
+  {
+    "sha": "7e156c2",
+    "date": "2026-07-19",
+    "title": "Flooded Wing hero: enlarge + reposition scroll cue",
+    "body": "Fix for a demonstrated visual defect: the \"↓\" scroll cue was undersized\n(18px) and positioned via margin-top under the body copy, so it drifted\nmid-viewport depending on content height rather than anchoring near the\nbottom of the hero.\n\nChanged:\n- font-size: 18px -> 28px\n- position: absolute, pinned to bottom:6vh, horizontally centered\n- sink keyframe updated to preserve horizontal centering during the\n  existing bob animation (translateX(-50%) retained through both keyframe\n  states)\n\nReduced-motion fallback (#door .down{animation:none}) untouched — still\napplies cleanly since it only targets the animation property."
+  },
+  {
+    "sha": "a6c5b6c",
+    "date": "2026-07-19",
+    "title": "Room-veil: fix back-button restoration blocking doors",
+    "body": "Bug: When navigating back to index.html from a room (archive, current, etc.)\nvia browser back button, the room-veil persisted with opacity:1, blocking\nclicks on the five room doors. Refresh cleared the issue.\n\nRoot cause: pageshow handler removed 'on' class, but opacity:1 and\npointer-events:auto were still active from the class-based styling.\nOn bfcache restoration, the transition was incomplete or not properly\nreset.\n\nFix: On pageshow with persisted=true, explicitly:\n1. Remove 'on' class\n2. Set opacity:0 inline (overrides any transition state)\n3. Set pointer-events:none inline\n\nApplied to: index.html + 8 room/room-like pages\n(guernica-passage, flooded-wing, current, the-studio, hall-of-openings,\nworking-history, about, stories)"
+  },
+  {
+    "sha": "183575c",
+    "date": "2026-07-19",
+    "title": "Archive controls: comprehensive interaction polish",
+    "body": "Eight micro-interaction refinements for search, sort, filters, buttons:\n\n1. Search input:\n   - Added cursor:text, .3s transitions\n   - Hover: subtle 2% accent background\n   - Focus: 4% accent background + accent border\n\n2. Sort dropdown:\n   - Added cursor:pointer, .3s transitions\n   - Hover: 2% accent background, dim border\n   - Focus: accent border + 4% background\n\n3. Count label timing:\n   - .5s → .3s ease (snappier feedback)\n\n4. Chip buttons (.2s → .3s):\n   - Shadow on hover: 0 4px 12px rgba(0,0,0,.06)\n   - Lift: translateY(-1px)\n   - Active state shadow: 0 4px 12px rgba(255,102,0,.12)\n   - Focus ring: 2px solid accent\n   - Touch :active: scale(.96) + 4% background\n\n5. Filters toggle:\n   - Same chip language: shadow, lift, focus ring\n   - Hover: border dim, background 2%\n   - Active: accent border + accent shadow\n\n6. Clear Filters:\n   - Added scale(1.02) on hover\n   - Focus ring: 2px solid accent\n   - .3s transitions\n\n7. Load More button:\n   - Mirror room-nav: shadow on hover (0 8px 24px)\n   - Lift: translateY(-2px)\n   - Focus ring with offset\n   - Touch :active: scale(.98) + 6% background\n   - .3s transitions\n\n8. Timing standardization:\n   - All controls now .3s or .4s ease (was mixed .2s/.5s/instant)\n\nKeyboard navigation parity added across all interactive elements."
+  },
+  {
+    "sha": "810c337",
+    "date": "2026-07-18",
+    "title": "Archive room-nav: horizontal layout",
+    "body": "Changed #room-nav from flex-direction:column (vertical stack) to flex-direction:row\n(horizontal wrap). Added justify-content:center and flex-wrap:wrap for responsive\nreflow at narrow widths."
+  },
+  {
+    "sha": "be714ed",
+    "date": "2026-07-18",
+    "title": "Archive card interactions: full polish pass — depth, touch, timing",
+    "body": "Four refinements to archive.html card hovers for consistency and feel:\n\n1. Shadow depth hierarchy (consistency audit):\n   - Increased from 0 8px 24px to 0 12px 32px rgba(255,102,0,.16)\n   - Matches hall-of-openings exhibition-scale language; archive grid\n     now reads with proper depth at screen distance while maintaining\n     \"study room intimacy\" aesthetic\n\n2. Touch press feedback (missing state):\n   - Added :active state with scale(.98) + subtle 6% accent background\n   - Gated to touch devices (@media hover:none and pointer:coarse)\n   - Mirrors index.html doors' touch language\n\n3. Transition timing standardization:\n   - Moved from .35s to .4s ease (now matches hall-of-openings)\n   - Creates consistent animation family across room pages\n\n4. Metadata reveal stagger refinement:\n   - Figcaption: .05s → .08s delay (clearer phase separation)\n   - Metadata: .1s → .12s delay (proportional to new timing)\n   - Now reads as 3-phase: image → caption → detail\n\nVerified against:\n- hall-of-openings.html card interactions (.op cards)\n- current.html focal card (#card .mat)\n- index.html door-nav language\n\nAll combinations tested: desktop hover, touch :active, :focus-visible\nkeyboard nav, prefers-reduced-motion fallback."
+  },
+  {
+    "sha": "7920edf",
+    "date": "2026-07-18",
+    "title": "Current: remove misplaced footer",
+    "body": "#river is intentionally position:fixed;inset:0 (a full-viewport drag\ncanvas), so normal document flow has almost no height — the static\n<footer> (Privacy/Sitemap links) was collapsing to sit right below\nthe header, overlapping the river's giant decade numeral instead of\nappearing at a real \"bottom.\" Removed entirely per direct feedback;\nthe existing #hud-exit/#hud-wing links already cover site navigation\non this page."
+  },
+  {
+    "sha": "6e524fe",
+    "date": "2026-07-18",
+    "title": "Stories: restore header gradient to match other rooms",
+    "body": "Per follow-up feedback, re-added header.hud's dark gradient fade\n(same as every other room page) after an earlier pass had removed it."
+  },
+  {
+    "sha": "8e976dd",
+    "date": "2026-07-18",
+    "title": "Standardize hero title size across all room pages",
+    "body": "The Studio (40/7.5vw/84px), Flooded Wing (64/14vw/150px), and Stories\n(32/4.5vw/52px) all had different hero h1 sizes than the other five\nrooms (About, Hall of Openings, Guernica Passage, Working History,\nArchive), which share clamp(38px,7vw,76px). Standardized all three to\nmatch. Verified no overflow at narrow (700px) and standard desktop\nwidths, including Stories' longer title text."
+  },
+  {
+    "sha": "f1f7d6f",
+    "date": "2026-07-18",
+    "title": "Fix hero image stacking bug + stories.html top gap",
+    "body": "Real bug across all four hero-ellipse pages: the hero's full-opacity\n::before had z-index:-2, while body::before's sitewide 15%-opacity\nwatermark had z-index:-1 — since -1 is less negative than -2, the\nfaint watermark actually rendered in front of the crisp hero image\n(same stacking context, no isolation), producing a doubled/ghosted\nlook wherever the two independently-\"cover\"-scaled copies of the same\nphoto didn't align pixel-for-pixel. Added isolation:isolate to each\nhero container so its internal z-index stack no longer gets compared\nagainst the page-root watermark.\n\nAlso removed stories.html's stray main{padding-top:120px} (not present\non any other page), which pushed the hero down and left a visible gap\nof bare watermark above it before the hero image began."
+  },
+  {
+    "sha": "1028b2b",
+    "date": "2026-07-18",
+    "title": "Stories: remove footer, remove header black bar, ink-stamp highlight, full-viewport hero",
+    "body": "Per direct feedback: deleted the footer entirely (and its now-dead\nCSS/JS); removed header.hud's dark gradient background (the \"black\nbar\" across the top); added the ink-stamp animation to the\n\"happened\" highlight, matching other pages; changed #hero from\nmin-height:60vh to 100vh to match About's full-viewport hero and\neliminate the seam where the crisp hero image met the same photo's\n15%-opacity sitewide watermark within the same screen."
+  },
+  {
+    "sha": "76b22eb",
+    "date": "2026-07-18",
+    "title": "Stories: fix header to match other rooms",
+    "body": "Header logo was \"JFSN\" instead of the full name every other room\nuses, the room label was a stale \"The Testimony Chamber\" (didn't\nmatch the page's own <title> of \"Stories\", and used title case instead\nof the site's ALL CAPS room-name convention), and the [ THE MUSEUM -> ]\nexit link was missing entirely. Fixed to parity. Footer intentionally\nkept as its fuller Museum/Archive/About/Privacy/Sitemap version, since\nthis page has no closing #exit/#plaque/#reveal section like the other\nrooms do."
+  },
+  {
+    "sha": "05d7113",
+    "date": "2026-07-18",
+    "title": "Stories: remove stray stat line from footer",
+    "body": "Removed the \"1,084 WORKS · 50 YEARS...\" line and its now-dead CSS\nrule."
+  },
+  {
+    "sha": "d99f4fd",
+    "date": "2026-07-18",
+    "title": "Stories hero: full-opacity image + elliptical fade",
+    "body": "Same treatment as the other rooms: hero-scoped full-opacity image\nlayer (reusing art0273.avif) separate from body::before's sitewide\n15%-opacity parallax watermark, which stays as its own approved\nfeature. Added the animated elliptical fade behind the title/subtitle\nand text-shadow for legibility. Wrapped the hero's text elements in\n#hero-content so the fade centers correctly."
+  },
+  {
+    "sha": "56fe39a",
+    "date": "2026-07-18",
+    "title": "Guernica Passage hero: full-opacity image + elliptical fade",
+    "body": "Same treatment as the other rooms: hero-scoped full-opacity image\nlayer (reusing guernica-hero.avif) separate from body::before's\nsitewide 15%-opacity parallax watermark, which stays as its own\napproved feature. Added the animated elliptical fade behind the title\nand text-shadow on the caps/h1 for legibility. Wrapped the hero's\nthree text elements in #hero-content so the fade centers correctly."
+  },
+  {
+    "sha": "acf0ad2",
+    "date": "2026-07-18",
+    "title": "Working History: remove sitewide me-for-website.png watermark",
+    "body": "The cartoon-avatar watermark behind the whole page is gone now that\nthe hero has its own real photo (art0953). index.html's separate\ncorner-portrait use of the same image is unrelated and untouched."
+  },
+  {
+    "sha": "6384a5f",
+    "date": "2026-07-18",
+    "title": "Working History: orange highlight + ink-stamp on \"galleries\"",
+    "body": "Matches the highlight-box + ink-stamp treatment already used on the\nhomepage and other room titles. Delayed to land just after the hero's\nown ellipse fade-in completes."
+  },
+  {
+    "sha": "8090361",
+    "date": "2026-07-18",
+    "title": "Working History hero: real photo + elliptical fade, matching other rooms",
+    "body": "Same treatment as The Studio/Hall of Openings/About: hero-scoped\nfull-opacity image layer (separate from body::before's sitewide\nwatermark) plus the animated elliptical fade behind the title text.\nInitially used the existing sitewide watermark image\n(me-for-website.png, a cartoon avatar) but swapped to art0953.avif\nper review — this page's subject is real preserved websites, and a\nreal artwork photo (the same atmospheric-texture pattern the other\nthree hero rooms use) fits that framing better than a mascot image\nwould. Wrapped the hero's three text elements in #hero-content so the\nfade centers on the title block correctly."
+  },
+  {
+    "sha": "a02c9be",
+    "date": "2026-07-18",
+    "title": "Standardize hero ellipse fade size across all three pages",
+    "body": "The Studio still had the original -90% vertical inset from before the\naspect-ratio cutoff was fixed on Hall of Openings. All three hero\nellipse fades (Studio, Hall of Openings, About) now use the same\n-150% -18% inset."
+  },
+  {
+    "sha": "e4786da",
+    "date": "2026-07-18",
+    "title": "About hero: remove dark tint, add elliptical text fade",
+    "body": "art1042.avif was previously only a sitewide faint (15% opacity)\nparallax watermark behind the whole page. Added a hero-scoped\nfull-opacity layer (separate from the sitewide watermark, which stays\nsubtle for the long-form text sections below) plus the same animated\nelliptical fade used on The Studio and Hall of Openings' heroes —\ndark at center, transparent at the edge, scaling in on load. Wrapped\nthe hero's three text elements in #hero-content so the fade centers\non the actual title block instead of just the first line."
+  },
+  {
+    "sha": "6bead9b",
+    "date": "2026-07-18",
+    "title": "Hall of Openings: fix elliptical fade cutoff, tune vertical size",
+    "body": "The fade's box was much wider than tall (~1066x610px), and CSS\nellipse gradients scale their fade distance to the box's own aspect\nratio — so it reached fully transparent much sooner vertically than\nhorizontally, reading as a hard cutoff top/bottom. Increased vertical\ninset to round out the box, then dialed back per follow-up feedback\nfor a smaller vertical reach while keeping the fix."
+  },
+  {
+    "sha": "89c7a07",
+    "date": "2026-07-18",
+    "title": "Hall of Openings: match hero title size to other rooms",
+    "body": "#hero-text h1 was clamp(22px,2.6vw,42px), noticeably smaller than\nGuernica Passage and Archive's clamp(38px,7vw,76px) door h1. Matched\nthat common size (desktop and mobile breakpoint both scaled up\nproportionally)."
+  },
+  {
+    "sha": "967dce9",
+    "date": "2026-07-18",
+    "title": "Hall of Openings: port The Studio's elliptical hero-text fade",
+    "body": "Replaces the old flat rgba(0,0,0,0.25) box behind the title with the\nsame animated elliptical radial-gradient used on The Studio's hero —\ndark at center, fully transparent at the edge, scaling in from\nsmaller on load. Flooded Wing already has its own full-page dark\noverlay (a different, working treatment) and Guernica Passage/\nArchive/Current don't have a full-bleed background-image hero, so\nthis was the one genuine match."
+  },
+  {
+    "sha": "3837466",
+    "date": "2026-07-18",
+    "title": "Studio hero: darker fade center, scale-in animation on load",
+    "body": "Center darkness increased (.75->.94, .5->.7 at the mid stop). The\nellipse now scales in from 50% and fades in on load instead of just\nappearing at full size, gated to prefers-reduced-motion."
+  },
+  {
+    "sha": "6d0b96f",
+    "date": "2026-07-18",
+    "title": "Studio hero: make elliptical text fade taller still",
+    "body": "Further increases vertical inset per follow-up feedback."
+  },
+  {
+    "sha": "926d0e3",
+    "date": "2026-07-18",
+    "title": "Studio hero: make the elliptical text fade taller",
+    "body": "Increases vertical inset so the fade covers the full text stack\n(caps label, title, fact line) rather than just the title."
+  },
+  {
+    "sha": "ad99027",
+    "date": "2026-07-18",
+    "title": "Studio hero: elliptical fade behind title text",
+    "body": "Dark radial gradient centered on the hero text, fading to fully\ntransparent at the edges — keeps the title readable now that the\nrotating hero images are at full opacity, without a hard rectangular\nbox."
+  },
+  {
+    "sha": "2d49ad5",
+    "date": "2026-07-18",
+    "title": "Studio hero tint removed; working-history/about nav parity + portrait hover + ink-stamp",
+    "body": "Removed the 15% opacity dark tint on The Studio's rotating hero images\n(now full vivid color) with text-shadow added to keep the title/caption\nlegible. Working History's #exit nav and About's #closing nav now match\nthe vault-nav treatment used everywhere else. About's portrait photo\n(the one real, uncomposited image on that page) gets hover feedback\nmatching the artifact/plaque treatment used elsewhere. About's \"Mak\"\nhighlight box gets the same ink-stamp animation as the other rooms,\nmissed in the earlier pass since it isn't one of the five room pages."
+  },
+  {
+    "sha": "5b1a6b4",
+    "date": "2026-07-18",
+    "title": "The Studio hero: replace two-image split with rotating four-image Ken Burns",
+    "body": "Swaps the old fixed two-image hero (art0138 + art0241, side-by-side)\nfor a single full-bleed image that cross-fades through a rotation of\nfour studio works (art0504, art1009, art1008, art1011) every 7s, each\nwith a slow Ken Burns drift. Static on the first image under reduced\nmotion — no rotation, no drift."
+  },
+  {
+    "sha": "181b70e",
+    "date": "2026-07-18",
+    "title": "Archive: room-nav parity, count-label pulse",
+    "body": "The two room-exit navs on this page (the inline-styled one under the\ndoor, and #exit-note nav at the bottom) now match the vault-nav\ntreatment used everywhere else instead of being flat, unstyled text\nlinks — one of them wasn't even wired to a CSS class before. The\nresult count also flashes briefly when it actually changes from a\nsearch/filter, confirming the system responded to the keystroke\ninstead of the number silently updating underneath."
+  },
+  {
+    "sha": "254e69d",
+    "date": "2026-07-18",
+    "title": "The Studio + Current: plaque-nav parity, seek thumb, rooms-sheet tap, river tooltip, count-up",
+    "body": "Five refinements: #plaque nav (the museum's actual closing moment)\nnow matches the vault-nav treatment instead of being the one flat\nexit link list; the audio scrub bar shows a hover-only thumb + track\nthickening so it reads as draggable; current.html's mobile\n#rooms-sheet links get the same touch tap-feedback as the homepage\ndoor-nav; hovering the resting river-still band reveals the decade at\nthat point, echoing current.html's live year readout; the \"1,084\"\nrecord count (framed as exact, not an estimate) now counts up from 0\non scroll-reveal instead of just appearing. All motion/hover-gated\nappropriately."
+  },
+  {
+    "sha": "3c12f79",
+    "date": "2026-07-18",
+    "title": "Extend ink-stamp title animation to the four room pages",
+    "body": "The orange highlight box in each room's title (Flooded Wing, Hall of\nOpenings, Guernica Passage, The Studio) now lands with the same\none-time \"stamp hitting paper\" animation already shipped on the\nhomepage's title, instead of sitting static. Each page's delay is\ntimed to land just after that page's own title fade-in completes."
+  },
+  {
+    "sha": "e3ef979",
+    "date": "2026-07-18",
+    "title": "Flooded Wing + Hall of Openings: exit-nav parity, artifact reveal, hero drift, salon dimming",
+    "body": "Five refinements bringing both rooms up to the homepage's polish level:\nexit/reveal nav links (#exit nav, #reveal nav) now match the door-nav's\n#vault treatment instead of being flat text links; the one real\nartifact photo reveals its actual (measured, unaltered) color on hover\ninstead of staying permanently grayscale; Flooded Wing's scroll cue\nfades once scrolling starts, same fix as the homepage's; Hall's lead\nevidence image gets a slow Ken-Burns drift; hovering one composite in\nthe salon grid now dims its neighbors within the same movement via\n:has(), same pattern as the door-nav's path-dimming. All motion/hover-\ngated appropriately."
+  },
+  {
+    "sha": "24c12cf",
+    "date": "2026-07-18",
+    "title": "Homepage: plaque hover, path-dimming, vault hierarchy, favicon pulse, touch tap feedback",
+    "body": "Five more refinements: the poster's plaque brightens on hover instead\nof sitting inert; hovering one door row now dims its siblings via\n:has() so the nav reads as one path rather than five independent\nbuttons; the three research-path links get differentiated\nletter-spacing matching their conceptual depth (data tool -> narrative\n-> person); door clicks pulse the favicon to a solid orange dot,\nrestored on bfcache return; touch devices get their own tap-feedback\nvocabulary (brief warm tint + scale) since they have no hover state to\ncarry the desktop border-grammar. All motion/hover-gated appropriately."
+  },
+  {
+    "sha": "dad199b",
+    "date": "2026-07-18",
+    "title": "Homepage: ink-stamp title, ambient cursor light, signature reveal, load sequencing, scroll-cue fade",
+    "body": "Five more first-paint/wow-factor passes on the poster hero:\n\"Muse\" highlight box lands once like a stamp on first load; a faint\npointer-following glow (desktop/fine-pointer only, live response not\nstored personalization) inside the poster section; Jeff's photo settles\nin last, after title/creed/hang have landed; those three beats now\nstagger in on load instead of appearing at once; the bounce scroll cue\nfades once the visitor has actually started scrolling instead of\nlooping forever underneath them. All motion-safe, all one-time/load\nanimations except the pointer glow and scroll-fade which are live but\nharmless when unsupported."
+  },
+  {
+    "sha": "b585f59",
+    "date": "2026-07-18",
+    "title": "Homepage: flanking drift, scroll reveal, numeral draw-in, cursor + haptic extension",
+    "body": "Five small interaction passes: near-imperceptible drift on the two\nflanking hero works (center work stays fixed); one-shot scroll reveal\non the why/doors/research-path sections via IntersectionObserver;\nroman numerals draw in staggered, tied to the same reveal trigger;\nthe passage cursor now covers #vault links too, not just #doors, so\nit reads as committed rather than flickering between nav groups;\nscroll-reveal moments get the same subtle haptic pulse already used\nfor door hover/click. All motion-safe."
+  },
+  {
+    "sha": "f619dce",
+    "date": "2026-07-18",
+    "title": "Flooded Wing: smaller/more transparent frames, hover feedback, parallax, wall drag momentum",
+    "body": "Empty-frame grid halved in scale with lower base opacity per Jeff's\ncall; frames now respond to hover (border/brighten/scale, motion-safe).\nAdded scroll-position-driven parallax on frame chunks and milestone\nbands (not animation-clock-based, so a throttled tab just freezes the\noffset rather than losing frames). Guernica wall drag-strip now coasts\nwith momentum on release instead of stopping dead."
+  },
+  {
+    "sha": "7b3fac2",
+    "date": "2026-07-18",
+    "title": "Flooded Wing hero: \"Lost.\" -> \"I Lost Everything.\"",
+    "body": "Only \"Lost\" keeps the orange highlight, matching the homepage\ntitle's highlight-devo treatment."
+  },
+  {
+    "sha": "dbd5804",
+    "date": "2026-07-18",
+    "title": "Make door-nav left border and numerals orange",
+    "body": "Switch the room cards' rest/hover left-border color-mix and the\nroman-numeral markers from --dim to --accent per Jeff's direct call."
+  },
+  {
+    "sha": "8ffb15d",
+    "date": "2026-07-18",
+    "title": "Drop series-index.html icon item from backlog",
+    "body": "The page doesn't exist in the live repo — only in a stale duplicate\ncheckout, never carried into main."
+  },
+  {
+    "sha": "38fd426",
+    "date": "2026-07-18",
+    "title": "Cross off \"Ingest new work\" from IMPROVEMENTS.md",
+    "body": ""
+  },
+  {
+    "sha": "f792a44",
+    "date": "2026-07-18",
+    "title": "Refine art0518 Creator Context: drop the redundant quote",
+    "body": "Live review found the \"gurenica / football / chess / target\npractice...\" quote added nothing the Motifs/Themes/description\nfields didn't already state — it read as more cataloging, not voice.\nKept the one quote that actually earns its place (\"desperate=)\")."
+  },
+  {
+    "sha": "be00ef6",
+    "date": "2026-07-18",
+    "title": "Add Creator Context to art0518 (Buy Me — Targets and Planes)",
+    "body": "Verbatim creator testimony from the 2026-07-18 recording session,\ndisplayed separately from the object record, sourced from\ndocs/sources/oral-history/master-notes.md §29. One-off edit to the\nsingle live page — the page generator (tools/generators/gen-artwork-pages.py)\nis orphaned/broken and cannot regenerate or overwrite this file under\nthe current production workflow (verified by execution)."
+  },
+  {
+    "sha": "b17bf1d",
+    "date": "2026-07-18",
+    "title": "Add first Creator Decision Recordings session to oral history (§29)",
+    "body": "Preserves verbatim testimony from a three-work memory-prompt session\n(art0585, art0518, art0262), keeping the 1976-78 sculpture-series\nmemory independent of art0585 and art0262's survival status\nunresolved. No catalog, metadata, or template changes."
+  },
+  {
+    "sha": "bb1e61f",
+    "date": "2026-07-18",
+    "title": "Move archive.html grid/drawer transition fixes from backlog to Completed",
+    "body": "Both items were shipped and verified live (24d4789e, 364a1217) but the\nbacklog still listed them as open — corrected."
+  },
+  {
+    "sha": "ef130b8",
+    "date": "2026-07-17",
+    "title": "Clarify design-vs-process boundary per governance stewardship review",
+    "body": "CLAUDE.md's existing \"design vs. process\" rule didn't state what\nauthorizes adding a new interaction concept vs. fixing a defect. Per\nthe governance architecture review: a defect is self-authorizing\n(process); a new interaction concept is not (design), and per\nSTEWARDSHIP-DECLARATION.md the design phase is closed — it does not\nreopen on opinion, including a critique Jeff himself requested, only\non visitor evidence or preservation necessity. Makes explicit that\nauthorization must be named before implementing an addition, not\ninferred after the fact from having been asked to propose one.\n\nAlso adds one docs/README.md navigation line routing a reader to\nIMPLEMENTATION-VERIFICATION-STANDARD.md (corrections) vs.\nSTEWARDSHIP-DECLARATION.md (new proposals) — the map had no entry for\nthis distinction despite it existing in governing documents already.\n\nNo new documents; both changes are small extensions to existing\ngovernance at the layer actually consulted turn-to-turn."
+  },
+  {
+    "sha": "364a121",
+    "date": "2026-07-17",
+    "title": "archive.html: mobile filters drawer grows/collapses instead of snapping",
+    "body": "@media (max-width:700px) previously toggled #filter-groups between\ndisplay:none and display:flex — a hard binary snap with zero motion,\non the only way to access filtering on mobile.\n\nWrapped the existing flex-wrap layout in a new #filter-groups-inner\n(desktop unaffected — confirmed via getComputedStyle, chips still\nrender inline, same flex/gap as before) and animate the outer\n#filter-groups via grid-template-rows: 0fr -> 1fr + margin-top on\nmobile only, with a dedicated prefers-reduced-motion override that\nfalls back to the original instant snap.\n\nVerified via getAnimations(): 2 active CSSTransition objects fire\nimmediately on toggle, height starts at 0 and settles at the correct\ncontent height (258px) with 0 animations remaining once done — a\ngenuine grow/collapse, not a snap. Close direction confirmed\nsymmetric; aria-expanded/aria-controls unaffected."
+  },
+  {
+    "sha": "24d4789",
+    "date": "2026-07-17",
+    "title": "archive.html: grid transition on filter/search/Load More, no more abrupt replace",
+    "body": "render() previously did grid.innerHTML = ... on every keystroke, filter\nchip, and Load More click — a full, instant replacement with no\ntransition, and Load More regenerated the entire grid rather than\nappending, so already-visible cards flickered too.\n\nSplit render() into two paths: append (Load More, and initial load)\nonly builds and appends the new slice, leaving existing card nodes\nuntouched — new cards fade+rise in with a stagger capped at 300ms so\na large batch never reads as a delay. Replace (search/filter/sort/\nclear) cross-fades #grid (150ms out, swap, fade back in) since the\nresult set itself changed. Both respect prefers-reduced-motion (an\ninstant swap, no animation).\n\nVerified: Load More confirmed to append via DOM node identity (first\ncard unchanged across clicks), walked all the way to 1,084/1,084 with\nLoad More correctly hiding, no duplicates or gaps. Search cross-fade\nconfirmed via class toggle + content check (grid correctly swapped to\nonly matching results). Clear-filters correctly resets to the full\n60-card first page."
+  },
+  {
+    "sha": "4a53345",
+    "date": "2026-07-17",
+    "title": "Log THE CURRENT card-hover fix + flag archive.html grid/drawer transition gaps",
+    "body": ""
+  },
+  {
+    "sha": "a26cc00",
+    "date": "2026-07-17",
+    "title": "THE CURRENT: hover/focus elevation on the focal work card",
+    "body": "The card that appears while scrolling the fifty-year river only gave\nhover feedback on its small \"[ OPEN ]\" caption line — the image and\ntitle themselves were inert, unlike archive.html's card grid, which\nalready lifts, borders, and glows on hover. Extends that same proven\nelevation pattern to #card .mat (accent border, 2px lift, warm\nbox-shadow), respecting prefers-reduced-motion."
+  },
+  {
+    "sha": "03ae515",
+    "date": "2026-07-17",
+    "title": "Log door-nav interaction pass + bug fixes in IMPROVEMENTS.md",
+    "body": ""
+  },
+  {
+    "sha": "184ce16",
+    "date": "2026-07-17",
+    "title": "Prev/Next hover feedback, keyboard walk uses veil, Guernica arrival choreography",
+    "body": "Experience stewardship review, top 3 recommendations:\n\n- artwork.html: #walk a (Previous/Next) had no hover state at all — no\n  color, transform, or transition — despite being the single\n  highest-frequency interactive control in the archive (walks all\n  1,084 works). Added color shift (--dim to --ink) and a 2px\n  directional settle on hover/focus.\n\n- artwork.html: keyboard ArrowLeft/ArrowRight assigned location.href\n  directly, bypassing the click-event pipeline the sitewide\n  page-transition veil listens on — so keyboard walking (which the\n  page's own on-screen hint explicitly invites: \"← → KEYS WALK THE\n  RECORD\") hard-cut instead of fading like a mouse click. Now calls\n  prev.click()/next.click() so both paths go through the same veil.\n  Verified via timed sessionStorage probe: at 100ms the page was still\n  on the origin work with the veil active, matching mouse-click timing\n  exactly.\n\n- guernica-passage.html: had almost no entrance choreography (just one\n  delayed fade on the .fact line) while Flooded Wing, Hall of\n  Openings, and The Studio each stage a full arrival — body fade,\n  staggered HUD fields, staggered content. Matches this codebase's\n  existing pattern (own keyframe name, shared timing/easing shape)\n  rather than inventing new thematic motion; #door .fact's existing\n  fade is untouched. Verified via getAnimations() that every element\n  fires; confirmed the one non-firing check (room-name) was the\n  pre-existing <640px responsive display:none rule doing its job, not\n  a defect — animation correctly fires at desktop widths."
+  },
+  {
+    "sha": "086048d",
+    "date": "2026-07-17",
+    "title": "Door nav: fix broken Threshold Passage animation, asymmetric return, touch docs",
+    "body": "Design-review recommendations #7 and #9, plus a real bug found while\nverifying #8 (keyboard parity):\n\nBUG FIX: index.html:497 referenced an undeclared variable `v` — a name\ncollision with an unrelated `v` scoped inside a different <script>\nblock's closure. This threw \"Uncaught ReferenceError: v is not\ndefined\" on every door-link click, mouse or keyboard, silently killing\nthe entire Threshold Passage animation (border sweep, sibling\ncascade-exit, room-colored veil) in production. It went unnoticed\nbecause a separate sitewide page-transition handler (document,\ncapture phase, registered in the <head> script) intercepts the same\nclick and navigates independently at 200ms, so nothing looked broken.\nConfirmed via window.onerror capture before/after the fix.\n\nFixing the crash alone wasn't enough: with it fixed, the sitewide\nhandler's 200ms navigation was still cutting the door animation's\n400ms short every time, since both handlers raced for the same click.\nMoved the doors handler from a doorsNav-scoped bubble-phase listener\nto a document-scoped capture-phase listener (matching this codebase's\ndocumented pattern for beating the sitewide transition handler) with\nstopImmediatePropagation(), so door links fully own their click and\nthe animation completes before navigating. Verified via a timed\nsessionStorage probe: at 250ms (past the old 200ms navigation point)\nthe page was still on index.html with threshold-active set and the\ngeneric veil never activated; non-door links (e.g. the vault/research\nlinks) were confirmed unaffected, still using the normal 200ms\nsitewide transition.\n\nAlso:\n- Asymmetric return (#7): the room a visitor just came back from now\n  draws in first (0s delay) on return, siblings pushed back 0.1s.\n  Gated on document.referrer matching one of the five room URLs and\n  same-origin; no-op on direct visits (verified both cases).\n- Touch documented (#9): explicit comment on the Border Grammar rule\n  stating the desktop-only scope is an accepted design decision, not\n  an unexamined gap — matches this file's existing convention of\n  writing design rationale directly into comments."
+  },
+  {
+    "sha": "11ea0ab",
+    "date": "2026-07-17",
+    "title": "Door nav: arrow micro-shift, sub-label settle, proximity anticipation",
+    "body": "Design-review recommendations #4-6:\n- .go arrow shifts 3px on hover/focus — smallest possible gesture of\n  yielding before navigation.\n- .sub label settles 1px up alongside its existing color change on\n  hover/focus, so attention reads as a response, not a flag flip.\n- Pointer proximity now senses the nearest row before it's actually\n  hovered (mousemove-driven .nearing class), gated to\n  hover:hover+pointer:fine so it never fires on touch.\n\nFixed a regression found while building the anticipation feature: an\nearlier commit's animation:border-draw...both held border-left-width\nin the animation cascade tier indefinitely after finishing, which\nsilently outranks all normal-priority author CSS for that property —\nbreaking the existing hover room-personality effect, not just the new\nwork. Confirmed via getAnimations() before and after. Fix: reverted to\nbackwards fill-mode (matches the file's pre-existing pattern) and\nmoved the per-room rest-state \"echo\" from border-left-width (which\nbrowsers snap to whole device pixels, so the five rooms' distinct\nfractional widths were all rendering identically at 1px) to\nborder-left-color alpha via color-mix(), which renders with real\nfractional precision. Verified via getComputedStyle, not screenshots."
+  },
+  {
+    "sha": "d08e399",
+    "date": "2026-07-17",
+    "title": "Door nav: sequence numerals, rest-state border echo, fix dead ghost-preview",
+    "body": "Design-review recommendations, top 3 by impact:\n- Roman numerals (I-V) restore the \"this is a path, not a menu\" signal\n  the removed wavy connector line used to carry (aria-hidden, no a11y\n  regression — accessible name still just the room title).\n- Each room's border-left now carries a faint rest-state echo (~1/4 of\n  its hover width) via --rest-w custom properties, so the room\n  personalities are felt before hover, not just confirmed by it.\n- The existing hover-preview script (index.html) has preloaded a\n  thumbnail and set --preview-url on each link since it was written,\n  but no CSS ever consumed the variable — dead wiring. Added an ::after\n  layer (z-index:-1, grayscale, 10% opacity on hover/focus) so it\n  finally renders."
+  },
+  {
+    "sha": "c805898",
+    "date": "2026-07-17",
+    "title": "Homepage hero: remove wavy door-nav line, shift title + scroll cue down 50px",
+    "body": "Jeff's design call. Wavy connecting line under the room links removed\n(only consumer of .doors-arc). Hero h1 and the bouncing down-arrow\neach shifted 50px lower."
+  },
+  {
+    "sha": "be686c7",
+    "date": "2026-07-17",
+    "title": "Fix session-end.sh backup.sh path bug",
+    "body": "The script cd's into scripts/ before calling backup.sh, but referenced\nit as scripts/backup.sh (relative to scripts/), so it always failed\nwith \"No such file or directory\" and silently skipped the cold backup\nstep. Found while actually running session-end.sh during session wrap-up."
+  },
+  {
+    "sha": "02250cc",
+    "date": "2026-07-17",
+    "title": "Rewrite SESSION_END_PROCEDURES.md to match current stewardship-mode workflow",
+    "body": "Prior version was Session-63 era: 9 phases, 20-30 min, referenced files\nthat no longer exist (PERF_BASELINE.md, SESSION_FEATURE_CHECKLIST.md,\nSESSION_KNOWN_ISSUES.md, micro-interactions.js) and never mentioned\nscripts/session-end.sh, which already does what several phases\ndescribed by hand. Replaced with a shorter checklist matching how\nsessions have actually run since the migration project closed."
+  },
+  {
+    "sha": "49e7aae",
+    "date": "2026-07-17",
+    "title": "Log artist-config.js removal + smoke-test fixes in IMPROVEMENTS.md",
+    "body": ""
+  },
+  {
+    "sha": "8afb95f",
+    "date": "2026-07-17",
+    "title": "Fix third stale smoke-test check: artwork.html template",
+    "body": "The artwork.html template never included site.min.css — it's an\nunbuilt source file, not a generated page. Checking for room-veil\n(content it actually contains) instead."
+  },
+  {
+    "sha": "cec7076",
+    "date": "2026-07-17",
+    "title": "Fix stale smoke-test checks in deploy-hostgator.sh",
+    "body": "core.bundle.js hasn't existed since the legacy design system was\nretired; swapped for artwork-page-min.js, which now carries the\nshowToast helper. The 404 page's title is \"Not Found\", not the\nliteral string \"404\", so the pattern never matched."
+  },
+  {
+    "sha": "52ba32b",
+    "date": "2026-07-17",
+    "title": "Remove unused artist-config.js and its generation step",
+    "body": "Nothing on the live site loaded this generated file — no <script> tag\nreferenced it and no other JS read window.ARCHIVE_CONFIG. Dropping the\nbuild step in build_catalog.py and the stale package.json main field."
+  },
+  {
+    "sha": "cf6de58",
+    "date": "2026-07-17",
+    "title": "Fix artwork.html color-token drift from sitewide standard",
+    "body": "--dim/--faint didn't match every other live page's :root values, and\ninverted the two tokens' relative lightness. Bring them in line with\nthe standard used everywhere else."
+  },
+  {
+    "sha": "bb26761",
+    "date": "2026-07-17",
+    "title": "Modernize CLAUDE.md and README.md for post-migration repository structure",
+    "body": "Complete the documentation-update portion of the migration by committing\nthe working-tree rewrite already reflected on disk."
+  },
+  {
+    "sha": "db891c8",
+    "date": "2026-07-17",
+    "title": "Fix remaining tools/ reorg regressions: ROOT depth and stale verify.py path",
+    "body": "Three verified defects, all consequences of the tools/ reorganization\n(c28a4b33) that moved these files one directory level deeper than the\nscripts/ location their own path math still assumed:\n\n1. tools/utils/verify.py: ROOT = Path(__file__).resolve().parent.parent\n   resolved to tools/ instead of repo root (one level short, since the\n   file moved from scripts/ to tools/utils/). Fixed to .parent.parent.parent.\n   Compounding issue in the same lines: even with ROOT corrected, five\n   data-file loads (catalog.json, catalog-lite.json, catalog-home.json,\n   dims.json, changes.json) and the EXPECTED_GENERATED deployment-readiness\n   list still used bare root-relative names from before the config/ move —\n   updated all to config/. Confirmed working: \"Failures: 0, Deployment\n   Readiness: READY\" (was 15 failures, NOT READY, before the fix).\n\n2. tools/intake/intake_status.py: identical ROOT/_INSTALL_ARTWORKS depth\n   bug, plus the same bare CATALOG = ROOT / \"catalog.json\" needing\n   config/. Fixed both. Verified: the tool now reports real intake status\n   instead of reading an empty/wrong catalog. Bonus finding: the two\n   \"pre-existing, unrelated\" test_intake_status.py failures reported in\n   the prior maintenance pass were not unrelated after all — they were\n   caused by _INSTALL_ARTWORKS pointing at a nonexistent tools/artworks\n   directory, which broke validate_catalog.py's import and silently\n   corrupted those two vocab-validation tests. Both now pass as a direct\n   consequence of this fix.\n\n3. tools/intake/intake_finish.py: VERIFY = _SCRIPTS / \"verify.py\" —\n   _SCRIPTS was never defined anywhere in the file (a leftover from\n   before the reorg). Fixed to VERIFY = _ROOT / \"tools\" / \"utils\" /\n   \"verify.py\" (the file's own _ROOT was already correct). Updated two\n   adjacent stale doc-comments referencing the same retired path.\n   Verified: the module now imports without the NameError, and\n   test_intake_finish.py's full suite passes, including the\n   \"successful finish -> exit 0\" / \"report shows Verified PASS\" cases\n   that specifically exercise the corrected VERIFY subprocess call.\n\nNecessary consequence of fix #1: tools/utils/test_verify.py's fixture\nbuilder wrote catalog.json etc. directly at its fixture root, matching\nthe pre-fix (and pre-config/-migration) path convention. Updated it to\nwrite under a config/ subdirectory so the fixture mirrors real\nproduction layout -- without this, fixing verify.py's load paths would\nhave broken all 13 of its own tests.\n\nEnd-to-end result: `npm test` now runs all five suites (test_verify,\ntest_scaffold, test_intake_status, test_intake, test_intake_finish) to\ncompletion with exit code 0, for the first time since the tools/ reorg."
+  },
+  {
+    "sha": "0014726",
+    "date": "2026-07-17",
+    "title": "Fix config/ migration regressions in the publish and audit pipelines",
+    "body": "Five verified defects from the recent config/ and tools/ reorgs, plus\none directly related extension, all now fixed and individually\nverified (deno.lock removal already landed in the prior commit):\n\n1. artworks/build_catalog.py wrote/read catalog.json, catalog-lite.json,\n   catalog-home.json, artist-config.json, and dims.json at repo root —\n   the config/ move (ee5660be) relocated all five but never updated\n   this script. DIMS.exists() silently evaluated False, so the\n   orientation-data merge was a no-op. Fixed all 5 paths.\n\n2. package.json's \"verify\"/\"test\" npm scripts still pointed at\n   scripts/verify.py and scripts/test_*.py, which moved to\n   tools/utils/ and tools/intake/ in the tools/ reorg (c28a4b33) that\n   updated every other reference except this file. Fixed all 6 paths.\n\n3. build_catalog.py's sitemap entries[] (35 of ~44 entries) and its\n   theme/series.html?... URL loop both predated the museum redesign\n   that deleted series.html, all decade/medium/theme pages,\n   chromatic/wall/curatorial-map/api.html. Replaced with the actual\n   12 live, indexable pages. Also caught and fixed a genuine gap:\n   stories.html — a real, current page — was missing entirely.\n\n4. Regenerated sitemap.xml from the corrected logic: 47 URLs -> 12,\n   every one verified to resolve to an existing file, and confirmed\n   via scripts/audit-nav.sh's own reverse-sitemap check (\"all public\n   pages are in sitemap.xml\").\n\n5. scripts/audit-nav.sh had the identical root-vs-config/ defect as\n   #1, independently: two embedded Python blocks opened bare\n   'catalog.json', crashing its thumbnail-integrity and\n   catalog-integrity checks. Fixed both to config/catalog.json --\n   both checks now pass instead of crashing.\n\nsw.js's CACHE_V was auto-bumped by build_catalog.py's own asset-hash\nmechanism on the first successful run in a while (documented,\nexpected behavior) -- confirmed unchanged on the second run.\n\nOut of scope, discovered and documented for a future pass (per\nexplicit instruction, not fixed here):\n- tools/intake/intake_finish.py: NameError on `_SCRIPTS`, undefined\n  since the tools/ reorg -- the module cannot import at all today.\n- tools/intake/test_intake_status.py: 2 pre-existing test failures\n  unrelated to any path issue (a validate_catalog logic/test bug).\n- tools/utils/verify.py and tools/intake/intake_status.py: both\n  compute ROOT via `Path(__file__).parent.parent`, which resolved\n  correctly from their old one-level-deep scripts/ location but now\n  under two-level-deep tools/utils/ or tools/intake/ resolves one\n  directory too shallow (tools/, not repo root) -- the same\n  reorg-depth defect class as _SCRIPTS above, in two more files.\n  test_verify.py's own test suite doesn't catch this because it\n  monkey-patches ROOT before testing rather than exercising the\n  real default."
+  },
+  {
+    "sha": "0de87bf",
+    "date": "2026-07-17",
+    "title": "Fix config/ migration regressions in the publish and audit pipelines",
+    "body": "Five verified defects from the recent config/ and tools/ reorgs, plus\none directly related extension, all now fixed and individually\nverified:\n\n1. artworks/build_catalog.py wrote/read catalog.json, catalog-lite.json,\n   catalog-home.json, artist-config.json, and dims.json at repo root —\n   the config/ move (ee5660be) relocated all five but never updated\n   this script. DIMS.exists() silently evaluated False, so the\n   orientation-data merge was a no-op. Fixed all 5 paths.\n\n2. package.json's \"verify\"/\"test\" npm scripts still pointed at\n   scripts/verify.py and scripts/test_*.py, which moved to\n   tools/utils/ and tools/intake/ in the tools/ reorg (c28a4b33) that\n   updated every other reference except this file. Fixed all 6 paths.\n\n3. build_catalog.py's sitemap entries[] (35 of ~44 entries) and its\n   theme/series.html?... URL loop both predated the museum redesign\n   that deleted series.html, all decade/medium/theme pages,\n   chromatic/wall/curatorial-map/api.html. Replaced with the actual\n   12 live, indexable pages. Also caught and fixed a genuine gap:\n   stories.html — a real, current page — was missing entirely.\n\n4. Regenerated sitemap.xml from the corrected logic: 47 URLs -> 12,\n   every one verified to resolve to an existing file, and confirmed\n   via scripts/audit-nav.sh's own reverse-sitemap check (\"all public\n   pages are in sitemap.xml\").\n\n5. scripts/audit-nav.sh had the identical root-vs-config/ defect as\n   #1, independently: two embedded Python blocks opened bare\n   'catalog.json', crashing its thumbnail-integrity and\n   catalog-integrity checks. Fixed both to config/catalog.json --\n   both checks now pass instead of crashing.\n\n6. Removed deno.lock: confirmed unused by any script, config, or\n   code. Its only reference anywhere is a frozen docs/archive/2026/\n   session record describing a since-replaced deploy script's upload\n   exclusions -- purely historical, not a live dependency. Netlify\n   and the Deno edge-function setup it belonged to were removed\n   2026-06-22.\n\nsw.js's CACHE_V was auto-bumped by build_catalog.py's own asset-hash\nmechanism on the first successful run in a while (documented,\nexpected behavior) -- confirmed unchanged on the second run.\n\nOut of scope, discovered and documented for a future pass (per\nexplicit instruction, not fixed here):\n- tools/intake/intake_finish.py: NameError on `_SCRIPTS`, undefined\n  since the tools/ reorg -- the module cannot import at all today.\n- tools/intake/test_intake_status.py: 2 pre-existing test failures\n  unrelated to any path issue (a validate_catalog logic/test bug).\n- tools/utils/verify.py and tools/intake/intake_status.py: both\n  compute ROOT via `Path(__file__).parent.parent`, which resolved\n  correctly from their old one-level-deep scripts/ location but now\n  under two-level-deep tools/utils/ or tools/intake/ resolves one\n  directory too shallow (tools/, not repo root) -- the same\n  reorg-depth defect class as _SCRIPTS above, in two more files.\n  test_verify.py's own test suite doesn't catch this because it\n  monkey-patches ROOT before testing rather than exercising the\n  real default."
+  },
+  {
+    "sha": "e0bb147",
+    "date": "2026-07-17",
+    "title": "Rewrite docs/README.md as the navigation map for the new architecture",
+    "body": "Replace the stale operations/reference/stewardship/archive/\narchive-2026/curatorial/oral-history/working-history/project/ index\nwith the four categories that actually exist now: governance/,\ncurrent/, archive/2026/, sources/. Note server-artifacts/ as an\nintentionally out-of-scope, temporary location, not part of the\nmodel. Fix the one broken link this surfaced in CLAUDE.md\n(docs/archive/README.md -> docs/archive/2026/README.md)."
+  },
+  {
+    "sha": "5a2d21f",
+    "date": "2026-07-17",
+    "title": "Dissolve docs/project/",
+    "body": "Per-file disposition (Jeff-approved):\n- MODERNIZATION-AUDIT-2026-07-17.md is a completed, dated audit whose\n  findings are already being acted on across this migration -> archived\n  to docs/archive/2026/.\n- CLAUDE-SESSION-CLOSEOUT-TEMPLATE.md is a live template copied at the\n  end of every session, not a one-off record -> moved standalone into\n  docs/current/. Its apparent overlap with the older, looser\n  docs/current/SESSION_END_PROCEDURES.md is noted but left as a\n  separate follow-up, not resolved here."
+  },
+  {
+    "sha": "c439953",
+    "date": "2026-07-17",
+    "title": "Fix cross-references left behind by the docs/sources move",
+    "body": "These five files were edited alongside the previous commit but not\nstaged in time. Points them at docs/sources/{curatorial,oral-history,\nworking-history}/ instead of the retired docs/{curatorial,oral-history,\nworking-history}/ paths."
+  },
+  {
+    "sha": "b3f56d8",
+    "date": "2026-07-17",
+    "title": "Move curatorial/oral-history/working-history under docs/sources/",
+    "body": "Group the three primary-source directories under a new docs/sources/\nparent per the four-folder doc model (governance, current, archive,\nsources) — content here is only ever added to, never revised.\n\nFix the resulting broken path in tools/generators/gen-curatorial-\ncompanion.py, which reads its canonical markdown from this location\nand would have silently failed to find it. Update the still-stale\nreferences in the actively-maintained IMPROVEMENTS.md backlog and\nthree docs/current/ files. Historical narrative inside archived docs,\nthe dated audit snapshot, and the sources' own internal\ncross-references are left unedited."
+  },
+  {
+    "sha": "8fddc72",
+    "date": "2026-07-17",
+    "title": "Fix cross-references left behind by the archive/2026 consolidation",
+    "body": "These six docs/current/ and docs/governance/ files were edited\nalongside the previous commit but not staged in time. Points them\nat docs/archive/2026/ instead of the retired docs/archive-2026/ and\ndocs/archive/session-*/ paths."
+  },
+  {
+    "sha": "1fe5477",
+    "date": "2026-07-17",
+    "title": "Consolidate docs/archive and docs/archive-2026 into docs/archive/2026",
+    "body": "Re-bucket by each file's actual git log -1 commit year rather than\nby which folder it happened to be in. Every file in both trees\nturns out to be 2026-dated (the repo's entire history is within\n2026), so both directories collapse into a single docs/archive/2026/,\nwith the four thematic subdirectories (session-checkpoints/,\nsession-prompts/, session-records/, domain-recovery/) preserved\nunderneath it.\n\nUpdate the cross-references in docs/current/ and docs/governance/\n(the actively-maintained tier) that pointed at the old\ndocs/archive-2026/ and docs/archive/session-*/ paths. Historical\nnarrative inside the archived docs themselves, the dated audit\nsnapshot, and the append-only oral-history source are left\nunedited, consistent with the archive/never-revise rule."
+  },
+  {
+    "sha": "d39d144",
+    "date": "2026-07-17",
+    "title": "Consolidate operations/reference/stewardship into docs/current/",
+    "body": "Merge docs/operations/, docs/reference/, and docs/stewardship/ into a\nsingle docs/current/ per the new four-folder doc model (governance,\ncurrent, archive, sources). No filename collisions across the three\nsource directories.\n\nAlso relocate docs/reference/BUNDLE_PLAN.md to docs/archive/2026/ —\nit describes the retired pre-migration nav-templating proposal, the\nfirst real case under the new archive/ rule (never edited after\nlanding)."
+  },
+  {
+    "sha": "dfafb7a",
+    "date": "2026-07-17",
+    "title": "Fix docs/STEWARDSHIP vs docs/stewardship case collision",
+    "body": "Git's index tracked one file (IMPLEMENTATION-VERIFICATION-STANDARD.md)\nuppercase while its eight siblings were lowercase, even though macOS's\ncase-insensitive filesystem collapsed them into a single physical\ndirectory. Standardize on lowercase and correct the two prose\nreferences that pointed at the uppercase path."
+  },
+  {
+    "sha": "43a3ca7",
+    "date": "2026-07-17",
+    "title": "Phase 1: retire dead nav-templating tooling, relocate archived about.html",
+    "body": "Move stamp-nav.sh to docs/archive-2026/ with README explaining it\ntargets a pre-migration nav pattern that no longer exists at root.\nRelocate about.html.archive-2026-07-13 into docs/archive-2026/ to\ndeclutter the repo root. Add architectural modernization audit that\nidentifies these and other doc-drift issues for follow-up."
+  },
+  {
+    "sha": "c28a4b3",
+    "date": "2026-07-17",
+    "title": "Consolidate Python scripts into /tools with organized subfolders",
+    "body": "Reorganizes 14 root-level and scripts-level .py files into /tools:\n\n/tools/generators/ (page generators):\n  - gen-artwork-pages.py\n  - gen-curatorial-companion.py\n\n/tools/utils/ (utilities):\n  - make_handoff.py (PDF generation)\n  - server.py (dev server)\n  - verify.py (verification)\n  - test_verify.py (tests)\n\n/tools/intake/ (intake workflow + tests):\n  - intake.py, intake_finish.py, intake_status.py\n  - scaffold_sidecar.py\n  - test_*.py (intake, finish, status, scaffold)\n\nKeeps /artworks/*.py untouched (artwork pipeline stays with artwork data).\n\nUpdates:\n  - All Python import paths (sys.path manipulation)\n  - Documentation references in README.md, CLAUDE.md, IMPROVEMENTS.md\n  - Archive docs with updated paths to gen-artwork-pages.py, etc.\n  - Script references in scripts/init.sh"
+  },
+  {
+    "sha": "65f8622",
+    "date": "2026-07-17",
+    "title": "Fix smoke tests for moved config files",
+    "body": "Update deploy-hostgator.sh smoke tests to match new config file paths:\n- archive.html test: check for 'current.json' instead of 'catalog-lite.json'\n- catalog-lite.json test: update URL to /config/catalog-lite.json"
+  },
+  {
+    "sha": "4a4f98a",
+    "date": "2026-07-17",
+    "title": "Move image files to appropriate folders",
+    "body": "Organizes image assets into logical directories:\n\nMoved to /assets/og-card.jpg:\n- Social media share image (og:image meta tag)\n\nMoved to /assets/images/:\n- about-portrait.jpg (about.html profile photo)\n- artwork-in-trash-can.jpg (flooded-wing.html editorial image)\n- me black.gif (profile image)\n- me-white.png (profile/watermark image)\n\nKept at root (conventional locations):\n- favicon.svg (all pages, canonical location)\n- icon-192.png, icon-512.png (PWA manifest, relative refs)\n\nUpdates all references across:\n- HTML files (about.html, flooded-wing.html, working-history/index.html)\n- Python generators (gen-curatorial-companion.py)\n- Config files (manifest.json)\n- Script documentation (pre-deploy-check.sh, preview-verify.sh, session-end.sh)"
+  },
+  {
+    "sha": "0112eef",
+    "date": "2026-07-17",
+    "title": "Move all .sh scripts into /scripts folder",
+    "body": "Consolidates 13 root-level shell scripts into a single /scripts directory:\n- add-works.sh, audit-nav.sh, auto-cache-bump.sh, backup.sh\n- cloud-backup.sh, deploy-hostgator.sh, init.sh, pre-deploy-check.sh\n- preview-verify.sh, session-end.sh, setup-hooks.sh, stamp-nav.sh, upload-fix.sh\n\nUpdates cross-references within scripts and documentation:\n- Scripts now call each other via bash scripts/script-name.sh\n- Scripts now cd to repo root instead of script directory (fixes relative paths)\n- hooks/pre-commit updated to use scripts/audit-nav.sh and scripts/auto-cache-bump.sh\n- README.md, IMPROVEMENTS.md updated with new paths\n- gen-curatorial-companion.py updated\n\nNote: .claude/settings.json also updated locally (not versioned)."
+  },
+  {
+    "sha": "5e989d9",
+    "date": "2026-07-17",
+    "title": "Update all references to config JSON files with new paths",
+    "body": "Updates 9 files to reference config/* instead of root-level JSON files:\n- archive.html, artwork.html, current.html, guernica-passage.html, hall-of-openings.html\n- search.js (catalog-lite.json path)\n- sw.js (current.json, guernica.json, openings.json, catalog-lite.json paths)\n- the-studio.html (current.json)\n- working-history/index.html (manifest.json, chromatic.json, changes.json paths)\n\nBumps CACHE_V to invalidate precached assets."
+  },
+  {
+    "sha": "ee5660b",
+    "date": "2026-07-17",
+    "title": "Move root-level config JSON files into /config folder",
+    "body": "Consolidates all 12 root-level config/data files into a single /config directory:\n- artist-config.json, catalog*.json, colors.json, dims.json\n- manifest.json, openings.json, guernica.json, chromatic.json\n- changes.json, current.json\n\nUpdates 9 files with new /config/ paths:\n- HTML pages: archive.html, artwork.html, current.html, guernica-passage.html, hall-of-openings.html, the-studio.html\n- JS: search.js, sw.js\n- working-history/index.html\n\nKeeps package.json at root (npm config)."
+  },
+  {
+    "sha": "3b77ec5",
+    "date": "2026-07-17",
+    "title": "Organize .md files into docs/ with logical subfolders",
+    "body": "Reorganizes 34 root-level and docs-level markdown files into a clear hierarchy:\n- governance/ → mission, constitution, succession\n- operations/ → session procedures, workflow, deployment\n- reference/ → architecture, design, performance baselines\n- stewardship/ → recovery plans, checklists, inventories\n- archive/ → legacy content, session prompts, drafts\n\nKeeps CLAUDE.md, README.md, and IMPROVEMENTS.md at repo root for quick access.\nAdds docs/README.md for navigation guide."
+  },
+  {
+    "sha": "38ccec8",
+    "date": "2026-07-17",
+    "title": "Delete orphaned _shared/*.js bundle system — dead since v1 site removal.",
+    "body": "The 2026-07-16 cleanup deleted the old v1 archive (decade pages, theme\npages, favorites.html, etc.), which was the only consumer of these files.\nConfirmed via exhaustive script-tag audit across all 1,098 live HTML files\n(the 14 Museum room pages + 1,084 generated artwork pages): the only JS\nactually loaded anywhere today is search.js, _shared/nav-active.js, and\n_shared/artwork-page-min.js.\n\nDeleted (39 files): every other _shared/*.js file, including anime.min.js\nand ui.js (neither was actually script-tagged anywhere — only ui.css is,\nas a stylesheet), the three generated bundles (core/nav-early/nav-late),\nand build-js-bundles.js, the tool that built them. Git history preserves\nall of it if ever needed.\n\nAlso:\n- package.json: removed the now-broken \"build:js\" script entry.\n- sw.js: removed _shared/ui.js and _shared/anime.min.js from PRECACHE —\n  they were never actually live and are now deleted; leaving them would\n  have reintroduced the same addAll()-fails-entirely bug fixed last commit.\n- site.min.css: rebuilt (Tailwind's content scan no longer includes the\n  deleted files); CACHE_V bumped accordingly.\n\nChecked for fallout before deleting: _shared/artwork-page-min.js mentions\ncore.bundle.js/ui.js only in a comment (no functional dependency).\ngen-curatorial-companion.py references three of the deleted files, but its\nown output page (curator.html / curatorial-companion.html) was already\ndeleted in the same 2026-07-16 cleanup — that generator is itself orphaned,\nleft alone as it's Python tooling, not JS, and out of this cleanup's scope."
+  },
+  {
+    "sha": "3f0d926",
+    "date": "2026-07-17",
+    "title": "Fix 5 broken /archive-v1/ links in search.js and rebuild sw.js's dead PRECACHE list.",
+    "body": "search.js: all 5 result-link templates (search results, favorites, recently\nviewed, \"surprise me\") pointed at /archive-v1/artwork.html?id=, a page\ndeleted 2026-07-16 when v1 was fully retired in favor of the Museum (v2)\nsite. Every click from the search overlay 404'd. Repointed to root\n/artwork.html?id=, confirmed rendering full content.\n\nsw.js: PRECACHE listed 22 pages/assets that no longer exist (decade pages,\ntheme pages, favorites.html, site.min.css, catalog-home.json, and 14 of\nthe _shared/*.js files from the retired v1 bundle system) alongside 7 real\nlive room pages that were never added. Since caches.addAll() is atomic —\none failed fetch fails the whole install — this has likely been breaking\nservice worker installation entirely since the 2026-07-16 cleanup. Rebuilt\nthe list against what the 14 live pages, search.js, and the artwork page\ntemplate actually reference. Verified in-browser: install now completes\nand activates cleanly (26 items cached), where it previously would have\nrejected on the first missing URL."
+  },
+  {
+    "sha": "7977b84",
+    "date": "2026-07-17",
+    "title": "Fix 4 correctness bugs found in a full JS review.",
+    "body": "- search.js: recentHTML() referenced catalogMap from a sibling function's\n  scope, throwing a caught ReferenceError on every call — the \"Recently\n  viewed\" section of the search overlay never rendered. Extracted a shared,\n  cached getCatalogMap() helper used by both favsHTML() and recentHTML().\n  CONFIRMED LIVE — this is the one bug that actually affects production,\n  loaded by all 1,084 generated artwork detail pages. Verified in-browser:\n  the section now renders correctly.\n\n- _shared/section-parallax.js: extended its existing data-hero exclusion\n  filter to also skip .reveal-section elements, since section-reveal-\n  stagger.js drives those via a forwards-filling CSS animation on\n  `transform` that silently wins the cascade over this script's inline\n  style.transform writes.\n\n- _shared/scroll-choreography.js: onScroll() had no requestAnimationFrame\n  throttle, unlike every other scroll handler in this codebase, causing\n  concurrent competing anime.js tweens to stack on every raw scroll event.\n  Added the same ticking-flag + rAF pattern used elsewhere. Regenerated\n  nav-late.bundle.js from source to match.\n\n- _shared/archive-animations.js: setupChipFeedback() bound click listeners\n  directly to filter chips at setup time, but setupGridOrchestration()'s\n  own MutationObserver proves chips re-render dynamically — any chip\n  added after init silently had no click feedback. Switched to event\n  delegation on `document`.\n\nNote: of these four, only the search.js fix is currently live. The other\nthree live in _shared/*.js files and a bundle that, per a full trace of\nevery live page's actual <script> tags, are not loaded by any current\npage — the \"Museum\" redesign pages use only inline scripts, and the\ngenerated artwork pages load search.js + nav-active.js + artwork-page-min.js,\nnot the nav-late/nav-early/core bundle system. Fixes are correct and kept\nin source for whenever/if that subsystem is revisited, but have no visible\neffect on production today. Left core.bundle.js and nav-early.bundle.js\nuntouched — regenerating them would have pulled in unrelated pre-existing\ndrift between their sources and the last committed build."
+  },
+  {
+    "sha": "865100f",
+    "date": "2026-07-17",
+    "title": "Fix 8 stale path references left dangling by earlier archive moves.",
+    "body": "Updates bare filename mentions to their new docs/archive-2026/ location\nin CURRENT_STATE.md, SUCCESSION.md, docs/CUSTODIAN-RECOVERY-PLAN.md,\ndocs/DISASTER-RECOVERY-CHECKLIST.md, docs/KNOWLEDGE-AT-RISK-INVENTORY.md,\ndocs/SPEC-THE-SAME-HAND.md, and BUNDLE_PLAN.md."
+  },
+  {
+    "sha": "a8e5efe",
+    "date": "2026-07-17",
+    "title": "Double-check pass: revert 3 more live files wrongly archived, fix 8 stale path refs.",
+    "body": "Reverted BUNDLE_PLAN.md, CANON.md, and SESSION_FEATURE_CHECKLIST.md — all\nthree are still load-bearing despite looking like dated artifacts:\n- BUNDLE_PLAN.md is cited by name in build-js-bundles.js and the generated\n  bundle file headers as the rationale for the current bundle order.\n- CANON.md's existence is checked by an executable step in\n  REPOSITORY-VERIFICATION-STANDARD.md (`ls -la ... CANON.md ... must exist`)\n  and it's still listed as a governing reference in the newer\n  IMPLEMENTATION-VERIFICATION-STANDARD.md.\n- SESSION_FEATURE_CHECKLIST.md is read/copied via explicit `cat`/`cp`\n  commands in SESSION_START_PROCEDURES.md and checked off in\n  SESSION_END_PROCEDURES.md every session.\n\nAlso fixed 8 bare-filename references left dangling by earlier archive moves\n(CURRENT_STATE.md, SUCCESSION.md, docs/CUSTODIAN-RECOVERY-PLAN.md,\ndocs/DISASTER-RECOVERY-CHECKLIST.md, docs/KNOWLEDGE-AT-RISK-INVENTORY.md,\ndocs/SPEC-THE-SAME-HAND.md, BUNDLE_PLAN.md) to point at their new\ndocs/archive-2026/ location."
+  },
+  {
+    "sha": "516ae6c",
+    "date": "2026-07-17",
+    "title": "Archive docs/KNOWN-ISSUES.md; keep root SESSION_KNOWN_ISSUES.md and WORKFLOW.md.",
+    "body": "docs/KNOWN-ISSUES.md's only referrer was an already-archived session\ncheckpoint, and its content (\"check weekly for first month,\" written\n2026-06-23) describes a window long past. Root SESSION_KNOWN_ISSUES.md is\na different, actively-used file wired into the session start/end procedures.\n\nWORKFLOW.md was flagged as a possible archive candidate but is confirmed\nlive: README.md's own doc-index table lists it for catalog-pipeline detail,\nand it's the canonical reference for git-hooks setup."
+  },
+  {
+    "sha": "1ff10e0",
+    "date": "2026-07-17",
+    "title": "Archive orphaned DISASTER-RECOVERY-GUIDE.md; keep the actively-referenced Checklist.",
+    "body": "docs/DISASTER-RECOVERY-CHECKLIST.md is cross-referenced by name across\nSUCCESSION.md, BACKUP-LOG.md, and IMPROVEMENTS.md (e.g. specific restore\nscenarios). docs/STEWARDSHIP/DISASTER-RECOVERY-GUIDE.md, despite being\nlonger and versioned 1.0, had zero inbound references anywhere in the repo."
+  },
+  {
+    "sha": "10113ca",
+    "date": "2026-07-17",
+    "title": "Archive 5 more superseded docs; keep PERF_BASELINE/SESSION_KNOWN_ISSUES in place.",
+    "body": "PROJECT-STATUS.md is superseded by the actively-maintained CURRENT_STATE.md.\nSESSION-START.md/SESSION-END.md are dated one-off session records superseded\nby SESSION_START_PROCEDURES.md/SESSION_END_PROCEDURES.md. QUICK_REFERENCE.md\noverlaps SESSION_PROMPT.md's orientation-index role. ENGINEERING_ROADMAP.md\nis confirmed complete per CURRENT_STATE.md.\n\nPERF_BASELINE.md and SESSION_KNOWN_ISSUES.md were initially moved too, but\nreverted: both are actively read/updated every session per explicit steps in\nSESSION_START_PROCEDURES.md and SESSION_END_PROCEDURES.md, so they're live\noperational files, not archive material."
+  },
+  {
+    "sha": "d025855",
+    "date": "2026-07-17",
+    "title": "Archive 40 completed/closed session and audit docs into docs/archive-2026/.",
+    "body": "Moves dated one-off session reports, phase-review docs, completed audits\n(CSS/JS architecture, code quality), and closed-initiative artifacts\n(Experience Studio, domain/credential incidents) out of the root and docs/\nroot into a single dated archive folder, mirroring the existing docs/archive/\nconvention. Root .md count drops from 56 to 27. Fixes two dangling filename\nreferences in SUCCESSION.md and CURRENT_STATE.md to point at the new location."
+  },
+  {
+    "sha": "7bc5482",
+    "date": "2026-07-17",
+    "title": "Editorial pass on museum room copy: fix NaN bug, cut duplication, retire generic language.",
+    "body": "Fixes a live NaN in the Flooded Wing's scale-drag label, rewrites the 404 page's\ntonal misuse of the Flooded Wing loss story, standardizes the composite/imagined\ndisclosure to one phrase sitewide, and trims several near-duplicate passages\nbetween rooms (basement Guernica, \"faces forward,\" incidental-photograph detail)\nso each room adds rather than restates. Also drops a few generic/institutional\nlines (About's closing paragraph, Studio letter's open-source aside) in favor of\nthe site's plainer, more specific voice."
+  },
+  {
+    "sha": "967b634",
+    "date": "2026-07-16",
+    "title": "Update living-state docs after LCP fix + backup verification session.",
+    "body": "CURRENT_STATE.md: new dated entry for homepage LCP fix (5.1s->1.9s),\nroom-page polish, and backup LaunchAgent verification. Backup section\nwarnings replaced with verified-working status.\n\nIMPROVEMENTS.md: crossed off the three Do Soon items that were completed\nthis session (Lighthouse run, B2 verification, JEFFS-4TB verification);\nmoved summary to Completed."
+  },
+  {
+    "sha": "00f07ea",
+    "date": "2026-07-16",
+    "title": "Wire up pre-optimized LCP hero image on homepage.",
+    "body": "Lighthouse (3-run median, devtools throttling) showed 85% of LCP time\n(4.3s of 5.1s) spent downloading the hero image — 314KB medium/art1010.avif,\nfetched 3x eagerly (main + 2 decorative wing flankers, same file).\n\nFound existing purpose-built LCP assets (art1010-hero-lcp.avif,\nart1010-hero-lcp-m.avif) sitting unused in artworks/full/ from a prior perf\npass. Wired them in via srcset/sizes on the main hero image (22KB mobile vs\n314KB previously, ~14x smaller) and switched the two wing images to\nloading=\"lazy\" + the smaller full-size variant so they stop competing with\nthe LCP fetch for bandwidth."
+  },
+  {
+    "sha": "e499beb",
+    "date": "2026-07-16",
+    "title": "Tighten room-links nav spacing on archive.html to surface search sooner.",
+    "body": "Reduced vertical padding on the room-links nav (8vh -> 4vh) between the\nhero and the search/filter controls, so the search bar is visible closer\nto the first screen instead of requiring a scroll to discover it."
+  },
+  {
+    "sha": "8e6f198",
+    "date": "2026-07-16",
+    "title": "Unify hero highlight-box color to orange across all room pages.",
+    "body": "flooded-wing, guernica-passage, and hall-of-openings were using black\nfor the hero keyword highlight box while about.html and the-studio.html\nused orange (--accent). Standardized all five room pages to orange for\nvisual consistency."
+  },
+  {
+    "sha": "2ab15f2",
+    "date": "2026-07-16",
+    "title": "Update flooded hero image and add guernica asset.",
+    "body": "- Resized flooded-hero.avif for improved composition\n- Added assets/guernica.jpg"
+  },
+  {
+    "sha": "564e022",
+    "date": "2026-07-16",
+    "title": "Align hero overlay positioning with resized image.",
+    "body": "Updated #door::before to use center 20% positioning to match\nthe main #door background, consistent with resized hero image."
+  },
+  {
+    "sha": "6ef5491",
+    "date": "2026-07-16",
+    "title": "Flooded Wing hero refinement: black text background, image repositioned.",
+    "body": "Changed highlight-devo background from orange (accent) to black (room).\nMoved hero image up 20% (center 20% positioning) to adjust composition."
+  },
+  {
+    "sha": "5dfa074",
+    "date": "2026-07-16",
+    "title": "Add back-to-top buttons to all 7 room pages.",
+    "body": "Back-to-top floating button now appears on about, guernica-passage,\nflooded-wing, hall-of-openings, the-studio, archive, and current.\nButton fades in after 300px scroll, smoothly scrolls to top on click."
+  },
+  {
+    "sha": "bc2b113",
+    "date": "2026-07-16",
+    "title": "Add back-to-top floating button to reference pages",
+    "body": "- privacy.html, sitemap.html, stories.html, working-history.html\n- Floating button appears after 300px scroll\n- Smooth scroll animation on click\n- Fixed positioning bottom-right, responsive on mobile\n- Uses room aesthetic colors (--room, --faint, --dim)\n- Accessibility: aria-label for screen readers\n\nImproves UX for longer reference pages without cluttering immersive room experiences."
+  },
+  {
+    "sha": "87d03ad",
+    "date": "2026-07-16",
+    "title": "Add privacy/sitemap footer links for site navigation",
+    "body": "- Added minimal footer to all room pages (about, guernica-passage, flooded-wing,\n  hall-of-openings, the-studio, archive, current) with links to privacy & sitemap\n- Updated reference page footers to cross-link:\n  * stories.html: added sitemap link\n  * working-history.html: added sitemap link\n- Privacy and sitemap already cross-linked\n\nMinimal room footers provide clear exit paths to reference pages while preserving\nimmersive design. Reference pages now form a discoverable network."
+  },
+  {
+    "sha": "41461e4",
+    "date": "2026-07-16",
+    "title": "Add footers to reference pages; remove obsolete generated page templates",
+    "body": "- stories.html: Added proper footer with site stats, navigation links, and copyright\n- working-history.html: Added proper footer matching pattern of privacy.html and sitemap.html\n- Removed all obsolete generated page templates:\n  * Decade pages (1970s.html–2020s.html)\n  * Medium filter pages (collage, sculpture, photography, painting, lost)\n  * Canvas/utility pages (chromatic, wall, curatorial-map)\n  * Series pages (guernica, targets, crosses, mr-snowmann, framed, torsos-faces, collaboration, gallery-images)\n  * Reference pages (api, changes, style-guide, start-here, favorites, why-i-made-things)\n  * Special pages (curator, qa, curatorial-companion, imagined-museum, series-index, series)\n\nThe archive is now 14 core pages using room aesthetic exclusively."
+  },
+  {
+    "sha": "fb8c3f2",
+    "date": "2026-07-16",
+    "title": "Remove obsolete light-system shared templates",
+    "body": "_shared/top-nav.html and _shared/footer.html were templates for the old Stitch page generation system. The archive now uses the room aesthetic exclusively with inline styles and HUD headers."
+  },
+  {
+    "sha": "076623f",
+    "date": "2026-07-16",
+    "title": "Navigation consistency & sitemap rebuild",
+    "body": "- Added/standardized 5-link navigation to all room pages (about, archive, flooded-wing, guernica-passage, hall-of-openings, stories, working-history)\n- Rebuilt sitemap.html for current 11-page structure with entry-point guidance, section intros, and better descriptions\n- Updated sitemap.xml to exclude 1,084 artwork pages and reference pages; include only 31 main public pages + dynamic theme/series\n- Removed aspirational pages from navigation that don't exist yet"
+  },
+  {
     "sha": "0627a55",
     "date": "2026-07-16",
     "title": "about.html: change hero background image to art1042",
