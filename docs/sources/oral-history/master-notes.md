@@ -2,8 +2,8 @@
 
 **Project:** Jeffrey F. S. Neumann Archive  
 **Purpose:** Preserve memories, stories, and context that exist only in Jeff's mind. This document is a primary source, not a summary. Do not rewrite it into polished prose.  
-**Last updated:** 2026-07-18  
-**Sessions captured:** 2026-06-08, 2026-06-09, 2026-06-09 (session 2), 2026-06-09 (session 3 — analysis + drafts), 2026-06-09 (session 4 — site implementation + checkpoint), 2026-06-10 (analysis, §§20–24), 2026-06-11 (creator corrections, §25), 2026-07-05 (Mr. SNOWmann correction, §28), 2026-07-18 (Creator Decision Recordings, first session, §29)
+**Last updated:** 2026-07-22  
+**Sessions captured:** 2026-06-08, 2026-06-09, 2026-06-09 (session 2), 2026-06-09 (session 3 — analysis + drafts), 2026-06-09 (session 4 — site implementation + checkpoint), 2026-06-10 (analysis, §§20–24), 2026-06-11 (creator corrections, §25), 2026-07-05 (Mr. SNOWmann correction, §28), 2026-07-18 (Creator Decision Recordings, first session, §29), 2026-07-22 (implementation — Six Feet Away threshold, §30; no new testimony)
 
 ---
 
@@ -885,3 +885,29 @@ Clarification, asked whether he meant the physical artwork may no longer exist d
 ### Session note
 
 No production files were modified as part of this session: `config/catalog.json`, artwork metadata, HTML, and templates are untouched. This entry is the sole output.
+
+---
+
+## 30. Site Implementation — The Flooded Wing → Six Feet Away Threshold — 2026-07-22
+
+**Source:** Not an oral history session. **No new testimony was captured from Jeff.** This is an implementation record, kept here so the site and the oral history stay in sync (same purpose as §18). It documents a change to how *existing* §6 testimony is reached — nothing about the testimony itself is new, revised, or interpreted.
+
+### What changed
+
+A first-time-visitor walkthrough found that the §6 "Six Feet Away" account — Jeff's verbatim memory of the water-damage loss, among the most compressed emotional records in the archive (§16) — lived only on `stories.html`, reachable from the main visitor path solely by a text link at the bottom of `about.html`. The `flooded-wing.html` room expresses the same loss through scale and absence (empty frames; the unphotographed 25-foot wall) but did not hand the visitor to Jeff's firsthand words.
+
+One restrained threshold was added to `flooded-wing.html`, placed immediately after the curbside photograph ("DISCARDED WORK, PHOTOGRAPHED BEFORE THE GARBAGE TRUCK CAME") and before the exit:
+
+> IN HIS OWN WORDS
+> *"Saw it out front waiting for the garbage men to take them all away."*
+> SIX FEET AWAY →  → `stories.html#six-feet-away`
+
+The quoted line is verbatim §6 testimony (also §16), used unaltered — his own words serve as the threshold. `stories.html` already linked back to the Flooded Wing, so the connection is now bidirectional.
+
+### Why it is recorded here
+
+The oral-history record's standing concern is that testimony existing only in Jeff's memory can be lost (§§20, 23). A parallel, smaller risk is that captured testimony goes *undiscovered*. This change moves the archive's single most affecting piece of loss testimony onto the path a visitor actually walks, without promoting it or altering a word. No question was posed to Jeff; no answer was received; the priority list in §25 (audio recordings, lost-works register, favorite notes, family context) is unchanged and unaddressed by this session.
+
+### Status
+
+Approved by Jeff and deployed live to jfsn.com (commit `04d35a0d`, single file `flooded-wing.html`). No catalog data, metadata, or testimony was modified.
