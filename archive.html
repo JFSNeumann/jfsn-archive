@@ -1226,7 +1226,99 @@ addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', dismiss, { once: true });
   }
 
-  // Apply reverse filter if URL parameter is present
+  // Save archive context (filters, pagination, scroll) when leaving the page
+  function saveContext() {
+    try {
+      const context = {
+        v: 1,
+        medium: Array.from(state.medium),
+        decade: Array.from(state.decade),
+        orientation: Array.from(state.orientation),
+        theme: Array.from(state.theme),
+        material: Array.from(state.material),
+        reverse: Array.from(state.reverse),
+        q: state.q,
+        sort: state.sort,
+        shown: shown,
+        y: window.scrollY
+      };
+      sessionStorage.setItem('jfsn-archive-return', JSON.stringify(context));
+    } catch (e) {
+      // sessionStorage quota or unavailable; silently skip
+    }
+  }
+  addEventListener('pagehide', saveContext);
+
+  // Restore archive context only when returning from an artwork page
+  function shouldRestore() {
+    // Only restore if: (1) referrer is artwork.html on this origin, (2) no URL filter params
+    try {
+      const ref = new URL(document.referrer || '', window.location.origin);
+      if (ref.origin !== window.location.origin) return false;
+      if (!/artwork\.html/.test(ref.pathname)) return false;
+    } catch {
+      return false;
+    }
+    // If this archive.html has filter params (?reverse=true), they win; don't restore saved state
+    if (window.location.search) return false;
+    return true;
+  }
+
+  function restoreContext() {
+    if (!shouldRestore()) return null;
+    try {
+      const blob = sessionStorage.getItem('jfsn-archive-return');
+      if (!blob) return null;
+      const ctx = JSON.parse(blob);
+      if (ctx.v !== 1) return null; // version mismatch or corrupt
+
+      // Rehydrate state Sets from saved arrays
+      state.medium = new Set(ctx.medium || []);
+      state.decade = new Set(ctx.decade || []);
+      state.orientation = new Set(ctx.orientation || []);
+      state.theme = new Set(ctx.theme || []);
+      state.material = new Set(ctx.material || []);
+      state.reverse = new Set(ctx.reverse || []);
+      state.q = ctx.q || '';
+      state.sort = ctx.sort || 'year-desc';
+      shown = Math.max(ctx.shown || PAGE, PAGE); // ensure shown is at least PAGE
+
+      // Sync UI: search input
+      const searchInput = document.getElementById('search');
+      if (searchInput) searchInput.value = state.q;
+
+      // Sync UI: sort dropdown
+      const sortSelect = document.getElementById('sort');
+      if (sortSelect) sortSelect.value = state.sort;
+
+      // Sync UI: reset all chips first, then activate restored ones
+      document.querySelectorAll('.chip.active').forEach(c => {
+        c.classList.remove('active');
+        c.setAttribute('aria-pressed', 'false');
+      });
+      ['medium', 'decade', 'orientation', 'theme', 'material', 'reverse'].forEach(key => {
+        state[key].forEach(val => {
+          const chip = document.querySelector(`.fgroup[data-key="${key}"] .chip[data-value="${val}"]`);
+          if (chip) {
+            chip.classList.add('active');
+            chip.setAttribute('aria-pressed', 'true');
+          }
+        });
+      });
+
+      // Extract the opened card's ID from referrer for scroll targeting
+      try {
+        const ref = new URL(document.referrer, window.location.origin);
+        ctx.openedCardId = ref.searchParams.get('id');
+      } catch {}
+
+      return ctx;
+    } catch (e) {
+      return null; // parse error or other issue; silently skip
+    }
+  }
+
+  // Apply reverse filter if URL parameter is present (wins over restoration)
   if (hasReverseParam) {
     state.reverse.add('yes');
     const reverseChip = document.querySelector('.fgroup[data-key="reverse"] .chip');
@@ -1236,7 +1328,28 @@ addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  render(true); // initial load: append into the empty grid, no fade-from-nothing
+  // Restore context from return path, or do normal init
+  const restored = restoreContext();
+  if (restored) {
+    render(); // full re-render with restored state, not append
+
+    // Scroll to the work that was opened, or fall back to saved position
+    if (restored.openedCardId) {
+      const openedCard = grid.querySelector(`.card[data-id="${restored.openedCardId}"]`);
+      if (openedCard) {
+        // Card is in the current result set; scroll it into view
+        openedCard.scrollIntoView({ block: 'center', behavior: 'auto' });
+      } else {
+        // Card not in result set (e.g. filtered out); fall back to saved scroll
+        window.scrollTo(0, restored.y || 0);
+      }
+    } else {
+      // No card to target; scroll to saved position
+      window.scrollTo(0, restored.y || 0);
+    }
+  } else {
+    render(true); // initial load: append into the empty grid, no fade-from-nothing
+  }
 })();
 </script>
 
