@@ -244,6 +244,7 @@ addEventListener('DOMContentLoaded', () => {
   .fgroup[data-key="decade"] .label::before{content:'📅'}
   .fgroup[data-key="orientation"] .label::before{content:'📐'}
   .fgroup[data-key="theme"] .label::before{content:'🎭'}
+  .fgroup[data-key="motif"] .label::before{content:'👁️'}
   .fgroup[data-key="material"] .label::before{content:'🔧'}
   .fgroup[data-key="reverse"] .label::before{content:'⚠️'}
   .fgroup .label::after{content:' ▼';font-size:8px;transition:transform .3s ease;margin-left:auto}
@@ -711,6 +712,10 @@ addEventListener('DOMContentLoaded', () => {
           <span class="caps label">THEME <span class="chip-count"></span></span>
           <div class="chips"></div>
         </div>
+        <div class="fgroup collapsed" data-key="motif">
+          <span class="caps label">VISUAL ELEMENTS <span class="chip-count"></span></span>
+          <div class="chips"></div>
+        </div>
         <div class="fgroup collapsed" data-key="material">
           <span class="caps label">MATERIAL <span class="chip-count"></span></span>
           <div class="chips"></div>
@@ -779,6 +784,7 @@ addEventListener('DOMContentLoaded', () => {
   const catalog = await fetch('config/catalog.json', {cache:'no-cache'}).then(r => r.json()).catch(() => []);
   const themesData = await fetch('api/v1/themes.json', {cache:'no-cache'}).then(r => r.json()).catch(() => ({themes: []}));
   const materialsData = await fetch('api/v1/materials.json', {cache:'no-cache'}).then(r => r.json()).catch(() => ({materials: []}));
+  const motifsData = await fetch('api/v1/motifs.json', {cache:'no-cache'}).then(r => r.json()).catch(() => ({motifs: []}));
 
   // Map catalog by ID for quick lookup of themes/materials
   // current.json IDs are extensionless ("art0001"); catalog .file may carry
@@ -791,8 +797,9 @@ addEventListener('DOMContentLoaded', () => {
   const ORIS = [...new Set(works.map(w => w.o))].filter(o => o !== null && ORI_LABEL[o]);
   const THEMES = themesData.themes ? themesData.themes.sort((a, b) => b.count - a.count) : [];
   const MATERIALS = materialsData.materials ? materialsData.materials.sort((a, b) => b.count - a.count) : [];
+  const MOTIFS = motifsData.motifs ? motifsData.motifs.filter(m => m.count >= 150).sort((a, b) => b.count - a.count) : [];
 
-  const state = { medium: new Set(), decade: new Set(), orientation: new Set(), theme: new Set(), material: new Set(), reverse: new Set(), q: '', sort: 'year-desc' };
+  const state = { medium: new Set(), decade: new Set(), orientation: new Set(), theme: new Set(), material: new Set(), motif: new Set(), reverse: new Set(), q: '', sort: 'year-desc' };
   const PAGE = 60;
   let shown = PAGE;
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -839,6 +846,7 @@ addEventListener('DOMContentLoaded', () => {
   buildChips('orientation', ORIS, v => ORI_LABEL[v]);
   if (REVERSE_COUNT > 0) buildChips('reverse', [{ name: 'yes', count: REVERSE_COUNT }], v => 'REVERSE DOCUMENTED', v => `${v.count} work${v.count !== 1 ? 's' : ''}`);
   if (THEMES.length > 0) buildChips('theme', THEMES, v => v.name, v => `${v.count} work${v.count !== 1 ? 's' : ''}`);
+  if (MOTIFS.length > 0) buildChips('motif', MOTIFS, v => v.name.replace(/-/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '), v => `${v.count} work${v.count !== 1 ? 's' : ''}`);
   if (MATERIALS.length > 0) buildChips('material', MATERIALS, v => v.name, v => `${v.count} work${v.count !== 1 ? 's' : ''}`);
 
   function filtered(){
@@ -849,9 +857,10 @@ addEventListener('DOMContentLoaded', () => {
       if (state.orientation.size && !state.orientation.has(w.o)) return false;
       if (state.reverse.size && w.b !== 1) return false;
 
-      // Theme & material filtering via catalog lookup
+      // Theme, motif & material filtering via catalog lookup
       const catEntry = catalogMap.get(w.i);
       if (state.theme.size && (!catEntry || !catEntry.themes || !catEntry.themes.some(t => state.theme.has(t)))) return false;
+      if (state.motif.size && (!catEntry || !catEntry.motifs || !catEntry.motifs.some(m => state.motif.has(m)))) return false;
       if (state.material.size && (!catEntry || !catEntry.materials || !catEntry.materials.some(m => state.material.has(m)))) return false;
 
       if (q && !w.t.toLowerCase().includes(q)) return false;
@@ -948,9 +957,9 @@ addEventListener('DOMContentLoaded', () => {
       requestAnimationFrame(() => requestAnimationFrame(() => countLabel.classList.remove('tick')));
     }
     animateCount(list.length, suffix);
-    const anyActive = state.medium.size || state.decade.size || state.orientation.size || state.theme.size || state.material.size || state.reverse.size || state.q;
+    const anyActive = state.medium.size || state.decade.size || state.orientation.size || state.theme.size || state.motif.size || state.material.size || state.reverse.size || state.q;
     clearBtn.hidden = !anyActive;
-    const nChips = state.medium.size + state.decade.size + state.orientation.size + state.theme.size + state.material.size + state.reverse.size;
+    const nChips = state.medium.size + state.decade.size + state.orientation.size + state.theme.size + state.motif.size + state.material.size + state.reverse.size;
     const ft = document.getElementById('filters-toggle');
     ft.textContent = nChips ? '[ FILTERS · ' + nChips + ' ]' : '[ FILTERS ]';
     ft.classList.toggle('active', nChips > 0);
@@ -961,6 +970,7 @@ addEventListener('DOMContentLoaded', () => {
       if (state.decade.size) parts.push(state.decade.size + ' decade' + (state.decade.size > 1 ? 's' : ''));
       if (state.orientation.size) parts.push(state.orientation.size + ' orientation' + (state.orientation.size > 1 ? 's' : ''));
       if (state.theme.size) parts.push(state.theme.size + ' theme' + (state.theme.size > 1 ? 's' : ''));
+      if (state.motif.size) parts.push(state.motif.size + ' visual element' + (state.motif.size > 1 ? 's' : ''));
       if (state.material.size) parts.push(state.material.size + ' material' + (state.material.size > 1 ? 's' : ''));
       if (state.q) parts.push('"' + state.q + '"');
       if (state.reverse.size) parts.push('double-sided works');
@@ -996,10 +1006,11 @@ addEventListener('DOMContentLoaded', () => {
       decade: v => v + 'S',
       orientation: v => ORI_LABEL[v],
       theme: v => v,
+      motif: v => v.replace(/-/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '),
       material: v => v,
       reverse: v => 'DOUBLE-SIDED WORKS'
     };
-    const filterNames = { medium: 'MEDIUM', decade: 'DECADE', orientation: 'ORIENTATION', theme: 'THEME', material: 'MATERIAL', reverse: 'COLLECTION' };
+    const filterNames = { medium: 'MEDIUM', decade: 'DECADE', orientation: 'ORIENTATION', theme: 'THEME', motif: 'VISUAL ELEMENT', material: 'MATERIAL', reverse: 'COLLECTION' };
 
     // Add search query pill if present
     if (state.q) {
@@ -1146,7 +1157,7 @@ addEventListener('DOMContentLoaded', () => {
     }, 300);
   });
   function clearAll(){
-    state.medium.clear(); state.decade.clear(); state.orientation.clear(); state.theme.clear(); state.material.clear(); state.reverse.clear();
+    state.medium.clear(); state.decade.clear(); state.orientation.clear(); state.theme.clear(); state.motif.clear(); state.material.clear(); state.reverse.clear();
     state.q = ''; document.getElementById('search').value = '';
     document.querySelectorAll('.chip.active').forEach(c => { c.classList.remove('active'); c.setAttribute('aria-pressed', 'false'); });
     shown = PAGE; render();
@@ -1176,10 +1187,10 @@ addEventListener('DOMContentLoaded', () => {
     const fgroup = label.closest('.fgroup');
     const key = fgroup.dataset.key;
 
-    // Mobile: collapse all; Desktop: keep THEME/MATERIAL collapsed, rest open
+    // Mobile: collapse all; Desktop: keep THEME/MOTIF/MATERIAL collapsed, rest open
     if (isMobile) {
       fgroup.classList.add('collapsed');
-    } else if (key !== 'theme' && key !== 'material') {
+    } else if (key !== 'theme' && key !== 'motif' && key !== 'material') {
       fgroup.classList.remove('collapsed');
     }
 
@@ -1235,6 +1246,7 @@ addEventListener('DOMContentLoaded', () => {
         decade: Array.from(state.decade),
         orientation: Array.from(state.orientation),
         theme: Array.from(state.theme),
+        motif: Array.from(state.motif),
         material: Array.from(state.material),
         reverse: Array.from(state.reverse),
         q: state.q,
@@ -1277,6 +1289,7 @@ addEventListener('DOMContentLoaded', () => {
       state.decade = new Set(ctx.decade || []);
       state.orientation = new Set(ctx.orientation || []);
       state.theme = new Set(ctx.theme || []);
+      state.motif = new Set(ctx.motif || []);
       state.material = new Set(ctx.material || []);
       state.reverse = new Set(ctx.reverse || []);
       state.q = ctx.q || '';
@@ -1296,7 +1309,7 @@ addEventListener('DOMContentLoaded', () => {
         c.classList.remove('active');
         c.setAttribute('aria-pressed', 'false');
       });
-      ['medium', 'decade', 'orientation', 'theme', 'material', 'reverse'].forEach(key => {
+      ['medium', 'decade', 'orientation', 'theme', 'motif', 'material', 'reverse'].forEach(key => {
         state[key].forEach(val => {
           const chip = document.querySelector(`.fgroup[data-key="${key}"] .chip[data-value="${val}"]`);
           if (chip) {
