@@ -156,11 +156,12 @@ addEventListener('DOMContentLoaded', () => {
   }
 
   /* Hero Archive CTA: the catalog is the functional core of this site —
-     surfaced immediately below the creed, not buried past the five rooms
+     surfaced right below the fold (first thing after the scroll-cue
+     arrow, before the "why" paragraph), not buried past the five rooms
      and a small-text research-path row at the very bottom of the page. */
   #hero-archive-cta{
     display:inline-flex;flex-direction:column;align-items:center;gap:5px;
-    margin-top:clamp(20px,3vh,30px);
+    margin-bottom:clamp(24px,4vh,40px);
     padding:13px 26px;
     border:1px solid var(--accent);
     color:var(--ink);
@@ -203,7 +204,6 @@ addEventListener('DOMContentLoaded', () => {
   @media (prefers-reduced-motion: no-preference){
     @keyframes hero-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
     .creed{animation:hero-in .7s ease-out both;animation-delay:.15s}
-    #hero-archive-cta{animation:hero-in .7s ease-out both;animation-delay:.22s}
     #work,.wing{animation:hero-in .7s ease-out both;animation-delay:.3s}
   }
 
@@ -727,11 +727,6 @@ addEventListener('DOMContentLoaded', () => {
     <h1>The <span class="highlight-devo">Museum</span> <br>That Never Existed.</h1>
     <p class="creed" id="creed">A personal record, not a gallery.</p>
 
-    <a href="archive.html" id="hero-archive-cta">
-      <span class="main">Enter the Archive</span>
-      <span class="sub">1,086 works · catalog, search, data</span>
-    </a>
-
     <!-- the hang: on wide desktop, the figure across fifty years — a 1990s
          CD torso and a 1970s figure flank the lit 2020s work, receding into
          the room. Below 1200px only the center work shows (single poster).
@@ -753,6 +748,11 @@ addEventListener('DOMContentLoaded', () => {
   </section>
 
   <section class="beyond">
+    <a href="archive.html" id="hero-archive-cta" class="reveal-up">
+      <span class="main">Enter the Archive</span>
+      <span class="sub">1,086 works · catalog, search, data</span>
+    </a>
+
     <p class="why reveal-up" id="why">For decades he made pictures of museums showing his work —
     walls, crowds, openings that never happened. Every one of them is flagged
     as composite. This building is the one that exists:
