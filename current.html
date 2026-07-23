@@ -479,6 +479,8 @@ addEventListener('DOMContentLoaded', () => {
     cardFor = i;
     const w = works[i];
     cardImg.src = '/artworks/thumbs/' + w.i + '.avif';
+    cardImg.srcset = '/artworks/thumbs/' + w.i + '.avif 400w, /artworks/medium/' + w.i + '.avif 900w';
+    cardImg.sizes = '(max-width: 640px) 280px, 340px';
     cardImg.alt = w.t;
     cardImg.style.setProperty('--matc', w.fill);
     cardImg.style.background = 'rgb(20,17,14)';
