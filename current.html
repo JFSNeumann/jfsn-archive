@@ -121,8 +121,13 @@ addEventListener('DOMContentLoaded', () => {
   }
   #hud-hint{
     left:50%;bottom:calc(env(safe-area-inset-bottom, 0px) + 66px);transform:translateX(-50%);
-    font-size:10px;letter-spacing:.26em;color:var(--dim);
-    transition:opacity 1.2s ease;white-space:nowrap;
+    text-align:center;transition:opacity 1.2s ease;
+  }
+  #hud-hint .hint-primary{
+    font-size:11px;letter-spacing:.14em;color:var(--dim);white-space:nowrap;
+  }
+  #hud-hint .hint-secondary{
+    margin-top:7px;font-size:9px;letter-spacing:.24em;color:var(--faint);white-space:nowrap;
   }
   #hud-hint.gone{opacity:0}
   #hud-end{
@@ -150,7 +155,7 @@ addEventListener('DOMContentLoaded', () => {
 
   /* ---------- work card ---------- */
   #card{
-    position:fixed;z-index:6;width:216px;
+    position:fixed;z-index:6;width:232px;
     transform:translate(-50%,0);
     opacity:0;pointer-events:none;
     transition:opacity .28s ease;
@@ -171,7 +176,7 @@ addEventListener('DOMContentLoaded', () => {
     }
   }
   #card img{
-    display:block;width:100%;height:150px;object-fit:contain;
+    display:block;width:100%;height:160px;object-fit:contain;
     background:var(--matc,#111);
   }
   #card .cap{padding:12px 2px 4px}
@@ -270,8 +275,10 @@ addEventListener('DOMContentLoaded', () => {
   @media (max-width:640px){
     #hud-name .what{display:none}
     #hud-count{display:none}
-    #card{width:180px}
-    #card img{height:120px}
+    #card{width:196px}
+    #card img{height:132px}
+    #hud-hint{width:88vw;max-width:340px}
+    #hud-hint .hint-primary{white-space:normal;font-size:10px;line-height:1.5}
     #hud-exit,#hud-wing{display:none}
     #hud-rooms{display:block}
   }
@@ -302,7 +309,10 @@ addEventListener('DOMContentLoaded', () => {
 </div>
 <div class="hud" id="hud-count">1,086 WORKS<br>1970s – 2020s</div>
 <div class="hud" id="hud-year" aria-hidden="true"><span id="year-num">1970</span><span class="est" id="year-est">DECADE, ESTIMATED</span></div>
-<div class="hud" id="hud-hint">DRAG&nbsp;&nbsp;·&nbsp;&nbsp;SCROLL&nbsp;&nbsp;·&nbsp;&nbsp;← →</div>
+<div class="hud" id="hud-hint">
+  <div class="hint-primary">MOVE ACROSS THE RIVER TO REVEAL THE WORKS</div>
+  <div class="hint-secondary">DRAG&nbsp;&nbsp;·&nbsp;&nbsp;SCROLL&nbsp;&nbsp;·&nbsp;&nbsp;← →</div>
+</div>
 <div class="hud" id="hud-end">THE RIVER ENDS AT TODAY&nbsp;&nbsp;—&nbsp;&nbsp;<a href="the-studio.html">[ THE STUDIO → ]</a></div>
 <nav class="hud" id="hud-exit" aria-label="Site"><a href="index.html">[ THE MUSEUM → ]</a><br><a href="archive.html">[ THE ARCHIVE → ]</a><br><a href="privacy.html">[ PRIVACY → ]</a><br><a href="sitemap.html">[ SITEMAP → ]</a></nav>
 <div class="hud" id="hud-wing"><a href="guernica-passage.html">[ THE GUERNICA PASSAGE → ]</a><br><a href="flooded-wing.html">[ THE FLOODED WING → ]</a></div>
@@ -425,6 +435,7 @@ addEventListener('DOMContentLoaded', () => {
   let focusAmt = new Float32Array(N); // per-sliver elevation ease
   let entrance = REDUCED ? 1 : 0;     // 0→1 entrance sweep
   let hinted = false;
+  let demoIndex = -1, demoTimer = null; // first-arrival demonstration (see cancelDemo/scheduleDemo)
   const maxScroll = () => Math.max(0, WORLD - W);
 
   // ---------- card ----------
@@ -475,7 +486,10 @@ addEventListener('DOMContentLoaded', () => {
   const decadeMarker = document.getElementById('decade-marker');
   let shownYear = null;
   function updateYear(){
-    const ci = Math.min(N - 1, Math.max(0, Math.round((scrollX + W/2) / STEP)));
+    // While a work is focused, the numeral tracks THAT work's decade (not
+    // just the viewport center) — bar, card, and decade stay in lockstep.
+    const ci = focusI >= 0 ? focusI
+      : Math.min(N - 1, Math.max(0, Math.round((scrollX + W/2) / STEP)));
     const w = works[ci];
     const d = Math.floor(w.y / 10) * 10;
     if (d !== shownYear) {
@@ -519,8 +533,38 @@ addEventListener('DOMContentLoaded', () => {
     document.getElementById('hud-hint').classList.add('gone');
   }
 
+  // ---------- first-arrival demonstration ----------
+  // Runs once, only if the visitor hasn't already touched the river: a
+  // single bar near the initial view raises and its work appears, then
+  // returns to rest — reusing the exact same focus/card machinery as a
+  // real hover, so it introduces no new motion beyond what hovering
+  // already does. Cancels the instant the visitor does anything.
+  function cancelDemo(){
+    if (demoTimer) { clearTimeout(demoTimer); demoTimer = null; }
+    if (demoIndex >= 0) {
+      if (focusI === demoIndex) focusI = -1;
+      demoIndex = -1;
+    }
+  }
+  function scheduleDemo(){
+    if (REDUCED || hinted) return;
+    const startAt = Math.max(0, Math.min(N - 1, Math.floor((W * 0.4) / STEP)));
+    demoTimer = setTimeout(() => {
+      demoTimer = null;
+      if (hinted || pointerIn || dragging) return; // visitor already engaged
+      demoIndex = startAt;
+      focusI = demoIndex;
+      demoTimer = setTimeout(() => {
+        demoTimer = null;
+        if (focusI === demoIndex) focusI = -1;
+        demoIndex = -1;
+      }, 1500);
+    }, 900);
+  }
+
   canvas.addEventListener('pointerdown', e => {
     try { canvas.setPointerCapture(e.pointerId); } catch (_) {}
+    cancelDemo();
     beginDrag(e.clientX);
     pointerX = e.clientX; pointerY = e.clientY; pointerIn = true;
   });
@@ -549,16 +593,17 @@ addEventListener('DOMContentLoaded', () => {
 
   canvas.addEventListener('wheel', e => {
     e.preventDefault();
+    cancelDemo();
     scrollX = clampScroll(scrollX + e.deltaX + e.deltaY);
     vx = 0;
     dismissHint();
   }, { passive: false });
 
   window.addEventListener('keydown', e => {
-    if (e.key === 'ArrowRight') { vx = 34; dismissHint(); }
-    else if (e.key === 'ArrowLeft') { vx = -34; dismissHint(); }
-    else if (e.key === 'Home') { scrollX = 0; vx = 0; }
-    else if (e.key === 'End') { scrollX = maxScroll(); vx = 0; }
+    if (e.key === 'ArrowRight') { cancelDemo(); vx = 34; dismissHint(); }
+    else if (e.key === 'ArrowLeft') { cancelDemo(); vx = -34; dismissHint(); }
+    else if (e.key === 'Home') { cancelDemo(); scrollX = 0; vx = 0; }
+    else if (e.key === 'End') { cancelDemo(); scrollX = maxScroll(); vx = 0; }
     else if (e.key === 'Enter' && focusI >= 0) {
       window.location.href = 'artwork.html?id=' + works[focusI].i;
     }
@@ -566,6 +611,7 @@ addEventListener('DOMContentLoaded', () => {
 
   // minimap: click/drag to jump
   function miniJump(e){
+    cancelDemo();
     const r = mini.getBoundingClientRect();
     const f = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
     scrollX = clampScroll(f * WORLD - W / 2);
@@ -773,7 +819,7 @@ addEventListener('DOMContentLoaded', () => {
   }
 
   const threshold = document.getElementById('threshold');
-  const enter = () => threshold.classList.add('gone');
+  const enter = () => { threshold.classList.add('gone'); scheduleDemo(); };
   setTimeout(enter, REDUCED ? 400 : 2600);
   threshold.addEventListener('pointerdown', enter);
   window.addEventListener('keydown', enter, { once: true });
