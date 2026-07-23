@@ -235,18 +235,10 @@ addEventListener('DOMContentLoaded', () => {
   .fgroup .label{
     color:var(--faint);cursor:pointer;user-select:none;
     display:flex;align-items:center;gap:8px;transition:color .3s ease;
+    width:100%;text-align:left;font:inherit;
   }
   .fgroup .label:hover{color:var(--dim)}
-  .fgroup .label::before{
-    content:'';font-size:12px;flex-shrink:0;
-  }
-  .fgroup[data-key="medium"] .label::before{content:'🎨'}
-  .fgroup[data-key="decade"] .label::before{content:'📅'}
-  .fgroup[data-key="orientation"] .label::before{content:'📐'}
-  .fgroup[data-key="theme"] .label::before{content:'🎭'}
-  .fgroup[data-key="motif"] .label::before{content:'👁️'}
-  .fgroup[data-key="material"] .label::before{content:'🔧'}
-  .fgroup[data-key="reverse"] .label::before{content:'⚠️'}
+  .fgroup .label:focus-visible{outline:2px solid var(--accent);outline-offset:2px;color:var(--dim)}
   .fgroup .label::after{content:' ▼';font-size:8px;transition:transform .3s ease;margin-left:auto}
   .fgroup.collapsed .label::after{transform:rotate(-90deg)}
   .fgroup .active-badge{
@@ -319,6 +311,12 @@ addEventListener('DOMContentLoaded', () => {
   @media (prefers-reduced-motion: reduce){
     .filter-pill{animation:none}
   }
+  #active-filters-clear{
+    color:var(--dim);font-size:11px;letter-spacing:.1em;
+    cursor:pointer;vertical-align:middle;transition:color .3s ease;
+  }
+  #active-filters-clear:hover{color:var(--accent)}
+  #active-filters-clear:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
   /* on phones the chips collapse behind one toggle — the bar was eating 46% of the viewport */
   #filters-toggle{
@@ -682,43 +680,43 @@ addEventListener('DOMContentLoaded', () => {
     <div id="search-row">
       <input id="search" type="search" placeholder="Search titles, motifs, keywords…" aria-label="Search the archive" autocomplete="off">
       <button id="search-clear" type="button" aria-label="Clear search">✕</button>
+      <button id="filters-toggle" aria-expanded="false" aria-controls="filter-groups">[ FILTERS ]</button>
       <select id="sort" aria-label="Sort">
         <option value="year-desc">NEWEST FIRST</option>
         <option value="year-asc">OLDEST FIRST</option>
         <option value="title">TITLE, A–Z</option>
       </select>
-      <button id="filters-toggle" aria-expanded="false" aria-controls="filter-groups">[ FILTERS ]</button>
       <span class="caps" id="count-label"></span>
     </div>
     <div id="filter-groups">
       <div id="filter-groups-inner">
         <div class="fgroup" data-key="medium">
-          <span class="caps label">MEDIUM<span class="active-badge">0</span></span>
-          <div class="chips"></div>
+          <button type="button" class="caps label" aria-expanded="true" aria-controls="chips-medium">MEDIUM<span class="active-badge">0</span></button>
+          <div class="chips" id="chips-medium"></div>
         </div>
         <div class="fgroup" data-key="decade">
-          <span class="caps label">DECADE<span class="active-badge">0</span></span>
-          <div class="chips"></div>
+          <button type="button" class="caps label" aria-expanded="true" aria-controls="chips-decade">DECADE<span class="active-badge">0</span></button>
+          <div class="chips" id="chips-decade"></div>
         </div>
-        <div class="fgroup" data-key="orientation">
-          <span class="caps label">ORIENTATION<span class="active-badge">0</span></span>
-          <div class="chips"></div>
+        <div class="fgroup collapsed" data-key="orientation">
+          <button type="button" class="caps label" aria-expanded="false" aria-controls="chips-orientation">ORIENTATION<span class="active-badge">0</span></button>
+          <div class="chips" id="chips-orientation"></div>
         </div>
-        <div class="fgroup" data-key="reverse">
-          <span class="caps label">COLLECTION<span class="active-badge">0</span></span>
-          <div class="chips"></div>
+        <div class="fgroup collapsed" data-key="reverse">
+          <button type="button" class="caps label" aria-expanded="false" aria-controls="chips-reverse">COLLECTION<span class="active-badge">0</span></button>
+          <div class="chips" id="chips-reverse"></div>
         </div>
         <div class="fgroup collapsed" data-key="theme">
-          <span class="caps label">THEME <span class="chip-count"></span></span>
-          <div class="chips"></div>
+          <button type="button" class="caps label" aria-expanded="false" aria-controls="chips-theme">THEME <span class="chip-count"></span></button>
+          <div class="chips" id="chips-theme"></div>
         </div>
         <div class="fgroup collapsed" data-key="motif">
-          <span class="caps label">VISUAL ELEMENTS <span class="chip-count"></span></span>
-          <div class="chips"></div>
+          <button type="button" class="caps label" aria-expanded="false" aria-controls="chips-motif">VISUAL ELEMENTS <span class="chip-count"></span></button>
+          <div class="chips" id="chips-motif"></div>
         </div>
         <div class="fgroup collapsed" data-key="material">
-          <span class="caps label">MATERIAL <span class="chip-count"></span></span>
-          <div class="chips"></div>
+          <button type="button" class="caps label" aria-expanded="false" aria-controls="chips-material">MATERIAL <span class="chip-count"></span></button>
+          <div class="chips" id="chips-material"></div>
         </div>
         <button id="clear-filters" class="caps" hidden>[ CLEAR ALL FILTERS ]</button>
       </div>
@@ -1045,6 +1043,18 @@ addEventListener('DOMContentLoaded', () => {
         activePillsContainer.appendChild(pill);
       }
     }
+
+    // Colocate a Clear All control with the pills it clears, so the
+    // summary reads as one unmistakable unit near the results.
+    if (activePillsContainer.children.length) {
+      const clearAllInline = document.createElement('button');
+      clearAllInline.type = 'button';
+      clearAllInline.id = 'active-filters-clear';
+      clearAllInline.className = 'caps';
+      clearAllInline.textContent = '[ CLEAR ALL ]';
+      clearAllInline.addEventListener('click', clearAll);
+      activePillsContainer.appendChild(clearAllInline);
+    }
   }
 
   // append: true for Load More (only the new slice is added, existing
@@ -1164,10 +1174,10 @@ addEventListener('DOMContentLoaded', () => {
   }
   clearBtn.addEventListener('click', clearAll);
   document.getElementById('empty-clear').addEventListener('click', clearAll);
-  document.getElementById('filters-toggle').addEventListener('click', function(){
-    const open = document.getElementById('filter-groups').classList.toggle('open');
-    this.setAttribute('aria-expanded', open);
-  });
+  // Mobile open/close handler for #filters-toggle lives in the dedicated
+  // "Filter drawer" script below (it also drives the toggle's rotate
+  // animation) — a second listener here used to double-toggle the drawer
+  // and cancel itself out, so the mobile filters panel never opened.
 
   // Update banner with dynamic count
   function updateBanner(){
@@ -1181,26 +1191,34 @@ addEventListener('DOMContentLoaded', () => {
 
   // Collapse/expand filter sections
   const isMobile = window.innerWidth <= 700;
+  // Medium and Decade are the highest-value discovery dimensions and stay
+  // visible on desktop; everything else (including the niche Orientation
+  // and Collection groups) starts tucked behind disclosure.
+  const SECONDARY_GROUPS = ['orientation', 'reverse', 'theme', 'motif', 'material'];
   document.querySelectorAll('.fgroup .label').forEach(label => {
-    label.style.cursor = 'pointer';
-    label.title = 'Click to collapse/expand';
     const fgroup = label.closest('.fgroup');
     const key = fgroup.dataset.key;
 
-    // Mobile: collapse all; Desktop: keep THEME/MOTIF/MATERIAL collapsed, rest open
-    if (isMobile) {
-      fgroup.classList.add('collapsed');
-    } else if (key !== 'theme' && key !== 'motif' && key !== 'material') {
-      fgroup.classList.remove('collapsed');
-    }
+    const startCollapsed = isMobile || SECONDARY_GROUPS.includes(key);
+    fgroup.classList.toggle('collapsed', startCollapsed);
+    label.setAttribute('aria-expanded', String(!startCollapsed));
 
-    label.addEventListener('click', function(e){
-      e.preventDefault();
+    label.addEventListener('click', function(){
       const fgroup = this.closest('.fgroup');
-      fgroup.classList.toggle('collapsed');
+      const nowCollapsed = fgroup.classList.toggle('collapsed');
+      this.setAttribute('aria-expanded', String(!nowCollapsed));
       const chips = fgroup.querySelector('.chips');
-      if (chips) chips.style.maxHeight = fgroup.classList.contains('collapsed') ? '0' : '1000px';
+      if (chips) chips.style.maxHeight = nowCollapsed ? '0' : '1000px';
     });
+  });
+
+  // "/" focuses search, unless the user is already typing somewhere else
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== '/' || e.metaKey || e.ctrlKey || e.altKey) return;
+    const t = e.target;
+    if (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable) return;
+    e.preventDefault();
+    document.getElementById('search').focus();
   });
 
   // First-visit hint: "Explore filters" tooltip
