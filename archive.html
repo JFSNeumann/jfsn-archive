@@ -231,6 +231,18 @@ addEventListener('DOMContentLoaded', () => {
 
   #filter-groups{margin-top:16px}
   #filter-groups-inner{display:flex;flex-wrap:wrap;gap:26px}
+  /* Secondary filters (Orientation, Collection, Theme, Visual Elements,
+     Material) are lower-value discovery dimensions — a single compact
+     row keeps them from each claiming their own line before any artwork
+     appears. An open secondary group takes the full row width so its
+     chips land on their own line, directly under the compact toggles,
+     instead of squeezing between sibling labels. */
+  #secondary-filters{
+    display:flex;flex-wrap:wrap;align-items:flex-start;
+    gap:8px 22px;margin-top:14px;padding-top:14px;
+    border-top:1px solid var(--frame);
+  }
+  #secondary-filters .fgroup:not(.collapsed){flex-basis:100%}
   .fgroup{display:flex;flex-direction:column;gap:8px}
   .fgroup .label{
     color:var(--faint);cursor:pointer;user-select:none;
@@ -250,7 +262,11 @@ addEventListener('DOMContentLoaded', () => {
   .fgroup:has(.chip.active) .active-badge{opacity:1;animation:badgePop .3s ease-out}
   .fgroup .chip-count{color:var(--dim);font-size:9px;opacity:0.8}
   .chips{display:flex;flex-wrap:wrap;gap:8px;max-height:1000px;overflow:hidden;transition:max-height .3s ease}
-  .fgroup.collapsed .chips{max-height:0}
+  /* width:0 (not just max-height:0) matters here: a collapsed chips row's
+     full, un-clipped content width was still counted toward its .fgroup's
+     intrinsic flex-item size, forcing each collapsed group onto its own
+     wrapped line even with plenty of horizontal room to spare. */
+  .fgroup.collapsed .chips{max-height:0;width:0}
   .chip{
     font-size:10px;letter-spacing:.1em;text-transform:uppercase;
     color:var(--dim);border:1px solid var(--frame);padding:6px 11px;
@@ -338,7 +354,7 @@ addEventListener('DOMContentLoaded', () => {
       opacity:0;pointer-events:none;
     }
     #filter-groups.open{grid-template-rows:1fr;margin-top:16px;opacity:1;pointer-events:auto}
-    #filter-groups-inner{overflow:hidden}
+    #filter-groups-inner,#secondary-filters{overflow:hidden}
     .fgroup{opacity:0;transform:translateY(-8px);transition:opacity .28s ease-out,transform .28s ease-out}
     .fgroup:nth-child(1){transition-delay:.04s}
     .fgroup:nth-child(2){transition-delay:.08s}
@@ -698,6 +714,8 @@ addEventListener('DOMContentLoaded', () => {
           <button type="button" class="caps label" aria-expanded="true" aria-controls="chips-decade">DECADE<span class="active-badge">0</span></button>
           <div class="chips" id="chips-decade"></div>
         </div>
+      </div>
+      <div id="secondary-filters">
         <div class="fgroup collapsed" data-key="orientation">
           <button type="button" class="caps label" aria-expanded="false" aria-controls="chips-orientation">ORIENTATION<span class="active-badge">0</span></button>
           <div class="chips" id="chips-orientation"></div>
