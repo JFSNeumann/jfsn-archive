@@ -339,6 +339,7 @@ addEventListener('DOMContentLoaded', () => {
     background-image:var(--preview-url);background-size:cover;background-position:center;
     filter:grayscale(55%);opacity:0;
     transition:opacity .5s ease,filter .5s ease;
+    image-rendering:crisp-edges;image-rendering:-webkit-optimize-contrast;
   }
   #doors a:hover::after,
   #doors a:focus-visible::after{opacity:.1;filter:grayscale(25%)}
