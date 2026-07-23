@@ -83,6 +83,7 @@ addEventListener('DOMContentLoaded', () => {
     a::after{transition:none}
   }
   a:focus-visible{outline:2px solid var(--accent);outline-offset:4px;color:var(--accent);box-shadow:0 0 0 4px rgba(255,102,0,.2)}
+  button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;color:var(--accent)}
   .caps{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim)}
   .serif{font-family:Georgia,'Times New Roman',serif}
 
@@ -489,7 +490,7 @@ addEventListener('DOMContentLoaded', () => {
 <section id="closing">
   <div class="caps">KEEPING THE RECORD</div>
   <div class="line">The work continues. The archive is open.</div>
-  <nav style="display:flex;flex-direction:column;gap:12px">
+  <nav aria-label="Rooms" style="display:flex;flex-direction:column;gap:12px">
     <a href="index.html">[ THE MUSEUM → ]</a>
     <a href="archive.html">[ THE ARCHIVE → ]</a>
     <a href="guernica-passage.html">[ THE GUERNICA PASSAGE → ]</a>

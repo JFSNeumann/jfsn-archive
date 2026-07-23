@@ -707,7 +707,7 @@ addEventListener('DOMContentLoaded', () => {
   </div>
 </section>
 
-<nav id="room-nav" style="text-align:center;padding:4vh clamp(20px,6vw,80px);display:flex;flex-direction:row;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap">
+<nav id="room-nav" aria-label="Rooms" style="text-align:center;padding:4vh clamp(20px,6vw,80px);display:flex;flex-direction:row;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap">
   <a href="index.html">[ THE MUSEUM → ]</a>
   <a href="guernica-passage.html">[ THE GUERNICA PASSAGE → ]</a>
   <a href="flooded-wing.html">[ THE FLOODED WING → ]</a>
@@ -727,6 +727,7 @@ addEventListener('DOMContentLoaded', () => {
         <option value="title">TITLE, A–Z</option>
       </select>
       <span class="caps" id="count-label"></span>
+      <div class="sr-only" aria-live="polite" id="results-announce"></div>
     </div>
     <div id="filter-groups">
       <div id="filter-groups-inner">
@@ -954,15 +955,17 @@ addEventListener('DOMContentLoaded', () => {
   // ("1,086 → 247") not just a number replacement.
   let displayedCount = null;
   function animateCount(target, suffix){
+    const announce = document.getElementById('results-announce');
     if (REDUCED || displayedCount === null) {
       countLabel.textContent = target.toLocaleString('en-US') + suffix;
+      if (announce) announce.textContent = target.toLocaleString('en-US') + ' ' + suffix.toLowerCase();
       displayedCount = target;
       return;
     }
     const start = displayedCount;
     const delta = target - start;
     displayedCount = target;
-    if (delta === 0) { countLabel.textContent = target.toLocaleString('en-US') + suffix; return; }
+    if (delta === 0) { countLabel.textContent = target.toLocaleString('en-US') + suffix; if (announce) announce.textContent = target.toLocaleString('en-US') + ' ' + suffix.toLowerCase(); return; }
     const dur = 500, t0 = performance.now();
     function tick(now){
       const p = Math.min(1, (now - t0) / dur);
