@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Stories — Jeffrey F. S. Neumann</title>
 <meta name="description" content="Oral history stories from Jeff Neumann's life and practice — specific things that happened, in his own words where possible.">
+<meta property="og:title" content="Stories — Jeffrey F. S. Neumann">
+<meta property="og:description" content="Oral history stories from Jeff Neumann's life and practice — specific things that happened, in his own words where possible.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://jfsn.com/stories.html">
+<meta property="og:locale" content="en_US">
 <meta name="theme-color" content="#0c0a09">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/playfair-display-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -240,6 +245,15 @@ addEventListener('DOMContentLoaded', () => {
   footer.site-footer a:hover,footer.site-footer a:focus-visible{color:var(--accent)}
   footer.site-footer a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   @media (max-width:640px){footer.site-footer a{display:block;margin:0.5em 0}}
+
+  /* ---------- print styles ---------- */
+  @media print {
+    body { background: white; color: black; }
+    a { color: black; text-decoration: underline; }
+    header.hud { display: none; }
+    footer { page-break-before: always; border-top: 2px solid black; }
+    * { box-shadow: none !important; text-shadow: none !important; }
+  }
 </style>
 </head>
 <body>

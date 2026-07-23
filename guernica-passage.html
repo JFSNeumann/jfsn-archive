@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The Guernica Passage — Jeffrey F. S. Neumann</title>
 <meta name="description" content="232 works, 1990–2020. One structure, thirty years, walked in order.">
+<meta property="og:title" content="The Guernica Passage — Jeffrey F. S. Neumann">
+<meta property="og:description" content="232 works, 1990–2020. One structure, thirty years, walked in order.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://jfsn.com/guernica-passage.html">
+<meta property="og:image" content="https://jfsn.com/artworks/guernica.avif">
+<meta property="og:locale" content="en_US">
 <!-- AUDIO:GUERNICA — reserved for Jeff on the series, e.g. "Nice and big." Do not fabricate a voice. -->
 <meta name="theme-color" content="#0c0a09">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -406,6 +412,16 @@ addEventListener('DOMContentLoaded', () => {
   footer.site-footer a:hover,footer.site-footer a:focus-visible{color:var(--accent)}
   footer.site-footer a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   @media (max-width:640px){footer.site-footer a{display:block;margin:0.5em 0}}
+
+  /* ---------- print styles ---------- */
+  @media print {
+    body { background: white; color: black; }
+    a { color: black; text-decoration: underline; }
+    header.hud { display: none; }
+    canvas { display: none; }
+    footer { page-break-before: always; border-top: 2px solid black; }
+    * { box-shadow: none !important; text-shadow: none !important; }
+  }
 </style>
 </head>
 <body>
@@ -452,7 +468,7 @@ addEventListener('DOMContentLoaded', () => {
     <p class="prose">This passage is hung by script from the open catalog
     data. Without JavaScript the walk can&rsquo;t be built — but the works
     themselves need nothing built:</p>
-    <p style="margin-top:24px"><a class="caps" href="/guernica.html">[ ALL 232 GUERNICA WORKS IN THE CATALOG → ]</a></p>
+    <p style="margin-top:24px"><a class="caps" href="/archive.html">[ ALL 232 GUERNICA WORKS IN THE CATALOG → ]</a></p>
   </div>
 </noscript></div>
 

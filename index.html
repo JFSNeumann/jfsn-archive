@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The Museum That Never Existed — Jeffrey F. S. Neumann</title>
 <meta name="description" content="A personal record, not a gallery. 1,086 works, fifty years, one building.">
+<meta property="og:title" content="The Museum That Never Existed — Jeffrey F. S. Neumann">
+<meta property="og:description" content="A personal record, not a gallery. 1,086 works, fifty years, one building.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://jfsn.com/">
+<meta property="og:image" content="https://jfsn.com/artworks/full/art1010-hero-lcp.avif">
+<meta property="og:locale" content="en_US">
 <!-- AUDIO:THRESHOLD — reserved for Jeff's voice at the door. Do not fabricate a voice. -->
 <meta name="theme-color" content="#0c0a09">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -714,6 +720,18 @@ addEventListener('DOMContentLoaded', () => {
   footer.site-footer a:hover,footer.site-footer a:focus-visible{color:var(--accent)}
   footer.site-footer a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   @media (max-width:640px){footer.site-footer a{display:block;margin:0.5em 0}}
+
+  /* ---------- print styles ---------- */
+  @media print {
+    body { background: white; color: black; }
+    a { color: black; text-decoration: underline; }
+    .threshold { min-height: auto; page-break-after: avoid; }
+    .threshold::after { display: none; }
+    #ambient-light { display: none; }
+    main { max-width: 100%; }
+    footer { page-break-before: always; border-top: 2px solid black; }
+    * { box-shadow: none !important; text-shadow: none !important; }
+  }
 </style>
 </head>
 <body>

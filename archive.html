@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The Archive — Jeffrey F. S. Neumann</title>
 <meta name="description" content="All 1,086 works. Search and browse the full catalog — the vault beneath the museum.">
+<meta property="og:title" content="The Archive — Jeffrey F. S. Neumann">
+<meta property="og:description" content="All 1,086 works. Search and browse the full catalog — the vault beneath the museum.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://jfsn.com/archive.html">
+<meta property="og:image" content="https://jfsn.com/assets/images/jfsn-vault-middle-50-percent.avif">
+<meta property="og:locale" content="en_US">
 <meta name="theme-color" content="#0c0a09">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/playfair-display-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -645,6 +651,18 @@ addEventListener('DOMContentLoaded', () => {
     .chip{padding:5px 9px;font-size:9px}
     #grid-wrap{padding-top:24px;padding-bottom:60px}
     #grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:16px 12px}
+  }
+
+  /* ---------- print styles ---------- */
+  @media print {
+    body { background: white; color: black; }
+    a { color: black; text-decoration: underline; }
+    header.hud { display: none; }
+    #controls { display: none; }
+    #grid { grid-template-columns: repeat(2, 1fr); }
+    footer { page-break-before: always; border-top: 2px solid black; }
+    * { box-shadow: none !important; text-shadow: none !important; }
+    .artwork-card { page-break-inside: avoid; }
   }
 </style>
 </head>
