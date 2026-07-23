@@ -613,13 +613,13 @@ addEventListener('DOMContentLoaded', () => {
     transition:opacity .3s ease;
   }
 
-  /* Three different depths, not three identical buttons: the archive is a
-     data tool (tightest tracking, most neutral), working history is
+  /* Two different depths, not two identical buttons: working history is
      narrative (a touch more air), about is the person (the widest,
-     warmest tracking — the most human of the three). */
-  #vault a:nth-child(1){letter-spacing:.18em}
-  #vault a:nth-child(2){letter-spacing:.22em}
-  #vault a:nth-child(3){letter-spacing:.26em;color:var(--dim)}
+     warmest tracking — the more human of the two). The archive's own
+     link here was removed once it got a prominent CTA of its own below
+     the hero — no need for a third, most-neutral tier in this row now. */
+  #vault a:nth-child(1){letter-spacing:.22em}
+  #vault a:nth-child(2){letter-spacing:.26em;color:var(--dim)}
 
   @media (prefers-reduced-motion: no-preference) {
     #vault a:hover::before{opacity:.04}
@@ -770,7 +770,6 @@ addEventListener('DOMContentLoaded', () => {
   <div id="research-path" class="reveal-up">
     <h2>THE RESEARCH PATH</h2>
     <div class="caps" id="vault">
-      <a href="archive.html">[ THE ARCHIVE — CATALOG, SEARCH, DATA → ]</a>
       <a href="working-history.html">[ THE WORKING HISTORY — THE GALLERIES HE BUILT → ]</a>
       <a href="about.html">[ ABOUT JEFF — THE MAKER → ]</a>
     </div>
