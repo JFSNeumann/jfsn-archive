@@ -139,7 +139,7 @@ set ftp:ssl-allow/all yes
 set ssl:verify-certificate no
 open -u $FTP_USER,$FTP_PASS $FTP_HOST
 set ftp:passive-mode on
-mirror --reverse --delete --exclude-glob=.git/* --exclude-glob=.DS_Store --exclude-glob=node_modules/* --exclude-glob=qa.html --exclude-glob=curate.html --exclude-glob=dedupe.html --exclude-glob=curate-session.json --exclude-glob=*.md --exclude-glob=docs/* --exclude-glob=JFSN-Archive-Handoff-Allison.pdf .
+mirror --reverse --delete --exclude-glob=.git/* --exclude-glob=.DS_Store --exclude-glob=node_modules/* --exclude-glob=qa.html --exclude-glob=curate.html --exclude-glob=dedupe.html --exclude-glob=curate-session.json --exclude-glob=*.md --exclude-glob=docs/* --exclude-glob=JFSN-Archive-Handoff-Allison.pdf --exclude-glob=archive .
 quit
 FTPSCRIPT
 
@@ -152,7 +152,7 @@ set ftp:ssl-allow/all yes
 set ssl:verify-certificate no
 open -u $FTP_USER:$FTP_PASS $FTP_HOST
 set ftp:passive-mode on
-mirror --reverse --delete --exclude-glob=.git/* --exclude-glob=.DS_Store --exclude-glob=node_modules/* --exclude-glob=qa.html --exclude-glob=curate.html --exclude-glob=dedupe.html --exclude-glob=curate-session.json --exclude-glob=*.md --exclude-glob=docs/* --exclude-glob=JFSN-Archive-Handoff-Allison.pdf .
+mirror --reverse --delete --exclude-glob=.git/* --exclude-glob=.DS_Store --exclude-glob=node_modules/* --exclude-glob=qa.html --exclude-glob=curate.html --exclude-glob=dedupe.html --exclude-glob=curate-session.json --exclude-glob=*.md --exclude-glob=docs/* --exclude-glob=JFSN-Archive-Handoff-Allison.pdf --exclude-glob=archive .
 quit
 "); then
   echo ""
