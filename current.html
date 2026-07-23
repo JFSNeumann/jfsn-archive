@@ -155,45 +155,51 @@ addEventListener('DOMContentLoaded', () => {
 
   /* ---------- work card ---------- */
   #card{
-    position:fixed;z-index:6;width:232px;
+    position:fixed;z-index:6;width:340px;
     transform:translate(-50%,0);
     opacity:0;pointer-events:none;
     transition:opacity .28s ease;
   }
   #card.on{opacity:1;pointer-events:auto}
-  #card a{display:block;text-decoration:none;color:var(--ink)}
+  #card a{display:block;text-decoration:none;color:var(--ink);position:relative}
+  /* A soft dark halo — not a colored glow — separates the card from the
+     giant year numeral and river behind it, without adding new motion. */
+  #card::before{
+    content:'';position:absolute;inset:-30px;z-index:-1;pointer-events:none;
+    background:radial-gradient(closest-side,rgba(0,0,0,.55),rgba(0,0,0,0) 72%);
+  }
   #card .mat{
-    padding:10px;background:#171310;
+    padding:14px;background:#171310;
     border:1px solid #29231e;
-    box-shadow:0 24px 60px rgba(0,0,0,.6);
+    box-shadow:0 32px 80px rgba(0,0,0,.7);
     transition:border-color .3s ease,box-shadow .3s ease,transform .3s ease;
   }
   @media (prefers-reduced-motion: no-preference){
     #card a:hover .mat,#card a:focus-visible .mat{
       border-color:var(--accent);
-      box-shadow:0 28px 64px rgba(0,0,0,.6),0 8px 24px rgba(255,102,0,.12);
+      box-shadow:0 36px 88px rgba(0,0,0,.7),0 8px 24px rgba(255,102,0,.14);
       transform:translateY(-2px);
     }
   }
   #card img{
-    display:block;width:100%;height:160px;object-fit:contain;
+    display:block;width:100%;height:235px;object-fit:contain;
     background:var(--matc,#111);
   }
-  #card .cap{padding:12px 2px 4px}
+  #card .cap{padding:14px 3px 4px}
   #card .t{
     font-family:Georgia,'Times New Roman',serif;font-style:italic;
-    font-size:14px;line-height:1.35;
+    font-size:17px;line-height:1.35;
   }
   #card .m{
-    margin-top:5px;font-size:10px;letter-spacing:.16em;color:var(--dim);
+    margin-top:6px;font-size:11px;letter-spacing:.16em;color:var(--dim);
     text-transform:uppercase;
   }
   #card .x{
-    margin-top:6px;font-size:9px;letter-spacing:.14em;color:var(--accent);
+    margin-top:7px;font-size:10px;letter-spacing:.14em;color:var(--accent);
     text-transform:uppercase;
   }
   #card .open{
-    margin-top:8px;font-size:10px;letter-spacing:.18em;color:var(--dim);
+    margin-top:10px;font-size:11px;letter-spacing:.18em;color:var(--dim);
     text-transform:uppercase;transition:color .2s;
   }
   #card a:hover .open{color:var(--accent)}
@@ -275,8 +281,8 @@ addEventListener('DOMContentLoaded', () => {
   @media (max-width:640px){
     #hud-name .what{display:none}
     #hud-count{display:none}
-    #card{width:196px}
-    #card img{height:132px}
+    #card{width:280px}
+    #card img{height:190px}
     #hud-hint{width:88vw;max-width:340px}
     #hud-hint .hint-primary{white-space:normal;font-size:10px;line-height:1.5}
     #hud-exit,#hud-wing{display:none}
