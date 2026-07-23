@@ -368,7 +368,7 @@ addEventListener('DOMContentLoaded', () => {
     <div id="stack" aria-hidden="true"></div>
     <figure>
       <button id="double-sided-caption" aria-label="Toggle to view the reverse side">DOUBLE SIDED</button>
-      <img id="work-img" alt="" decoding="async">
+      <img id="work-img" alt="Artwork image" decoding="async">
       <figcaption class="caps" id="work-cap"></figcaption>
     </figure>
   </div>
@@ -442,7 +442,7 @@ addEventListener('DOMContentLoaded', () => {
 <script>document.getElementById('footer-year').textContent = new Date().getFullYear();</script>
 
 <div id="lightbox" role="dialog" aria-label="Full resolution view">
-  <img id="lb-img" alt="">
+  <img id="lb-img" alt="Full resolution artwork image">
   <button id="lb-close" class="caps">[ CLOSE ✕ ]</button>
   <div id="lb-bar" role="toolbar" aria-label="Study controls">
     <button id="lb-zoom-out" title="Zoom out (−)">[ − ]</button>
@@ -602,7 +602,7 @@ addEventListener('DOMContentLoaded', () => {
         if (id === w.i) return;
         const el = document.createElement('div');
         el.className = 'stack-work';
-        el.innerHTML = `<img src="/artworks/thumbs/${id}.avif" loading="lazy" decoding="async">`;
+        el.innerHTML = `<img src="/artworks/thumbs/${id}.avif" alt="Recently viewed artwork" loading="lazy" decoding="async">`;
         const depth = 10 + (MAX_STACK - i) * 8;
         const scl = 0.75 + (i / MAX_STACK) * 0.1;
         el.style.opacity = 0.6;
