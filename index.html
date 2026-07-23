@@ -759,11 +759,11 @@ addEventListener('DOMContentLoaded', () => {
     <em>1,086 works, fifty years, kept and open.</em></p>
 
   <nav id="doors" class="reveal-up" aria-label="Rooms">
-    <a href="current.html" data-preview-id="art0014" style="--key:linear-gradient(#b23a3a,#d8c9a8,#5a7d8c,#c8b44a)"><span class="num" aria-hidden="true">I</span>THE CURRENT<span class="sub">FIFTY YEARS AS ONE RIVER — BEGIN HERE</span><span class="go">→</span></a>
-    <a href="guernica-passage.html" data-preview-id="art1041" style="--key:#4a4e5f"><span class="num" aria-hidden="true">II</span>THE GUERNICA PASSAGE<span class="sub">232 WORKS · ONE STRUCTURE · THIRTY YEARS</span><span class="go">→</span></a>
-    <a href="flooded-wing.html" data-preview-id="art0296" style="--key:#2e4451"><span class="num" aria-hidden="true">III</span>THE FLOODED WING<span class="sub">A ROOM FOR WHAT IS MISSING</span><span class="go">→</span></a>
-    <a href="hall-of-openings.html" data-preview-id="art0047" style="--key:rgba(255,102,0,.8)"><span class="num" aria-hidden="true">IV</span>THE HALL OF OPENINGS<span class="sub">250 IMAGINED EXHIBITIONS — EVERY ONE FLAGGED</span><span class="go">→</span></a>
-    <a href="the-studio.html" data-preview-id="art0026" style="--key:#d8cfb8"><span class="num" aria-hidden="true">V</span>THE STUDIO<span class="sub">THE LAST ROOM — WHERE IT STANDS NOW</span><span class="go">→</span></a>
+    <a href="current.html" data-preview-image="/artworks/current.png" style="--key:linear-gradient(#b23a3a,#d8c9a8,#5a7d8c,#c8b44a)"><span class="num" aria-hidden="true">I</span>THE CURRENT<span class="sub">FIFTY YEARS AS ONE RIVER — BEGIN HERE</span><span class="go">→</span></a>
+    <a href="guernica-passage.html" data-preview-image="/artworks/guernica.png" style="--key:#4a4e5f"><span class="num" aria-hidden="true">II</span>THE GUERNICA PASSAGE<span class="sub">232 WORKS · ONE STRUCTURE · THIRTY YEARS</span><span class="go">→</span></a>
+    <a href="flooded-wing.html" data-preview-image="/artworks/flooded.png" style="--key:#2e4451"><span class="num" aria-hidden="true">III</span>THE FLOODED WING<span class="sub">A ROOM FOR WHAT IS MISSING</span><span class="go">→</span></a>
+    <a href="hall-of-openings.html" data-preview-image="/artworks/hall.png" style="--key:rgba(255,102,0,.8)"><span class="num" aria-hidden="true">IV</span>THE HALL OF OPENINGS<span class="sub">250 IMAGINED EXHIBITIONS — EVERY ONE FLAGGED</span><span class="go">→</span></a>
+    <a href="the-studio.html" data-preview-image="/artworks/studio.png" style="--key:#d8cfb8"><span class="num" aria-hidden="true">V</span>THE STUDIO<span class="sub">THE LAST ROOM — WHERE IT STANDS NOW</span><span class="go">→</span></a>
   </nav>
 
   <!-- Vault Path Elevation (#7): THE RESEARCH PATH — parallel journey, equal hierarchy -->
@@ -992,31 +992,42 @@ addEventListener('DOMContentLoaded', () => {
   if (!doorsNav) return;
 
   // Pre-load thumbnail images and set as background for ::after pseudo-element
-  const links = doorsNav.querySelectorAll('a[data-preview-id]');
+  const links = doorsNav.querySelectorAll('a[data-preview-id], a[data-preview-image]');
   links.forEach(function(link) {
-    const artId = link.dataset.previewId;
-    if (!artId) return;
+    let previewUrl = null;
 
-    // Build thumbnail URL (mini size: ~200px)
-    const thumbUrl = '/artworks/mini/' + artId + '.avif';
+    // Prefer custom preview image if available
+    if (link.dataset.previewImage) {
+      previewUrl = link.dataset.previewImage;
+    } else {
+      // Fall back to artwork thumbnail
+      const artId = link.dataset.previewId;
+      if (!artId) return;
+      previewUrl = '/artworks/mini/' + artId + '.avif';
+    }
 
     // Create a hidden image to preload and verify it exists
     const img = new Image();
     img.onload = function() {
       // Once loaded, set as background-image on the ::after pseudo-element
       // We use CSS variable to pass data to pseudo-element
-      link.style.setProperty('--preview-url', 'url(' + thumbUrl + ')');
+      link.style.setProperty('--preview-url', 'url(' + previewUrl + ')');
     };
     img.onerror = function() {
-      // Fallback: try JPG if AVIF fails
-      const jpgUrl = '/artworks/mini/' + artId + '.jpg';
-      const imgJpg = new Image();
-      imgJpg.onload = function() {
-        link.style.setProperty('--preview-url', 'url(' + jpgUrl + ')');
-      };
-      imgJpg.src = jpgUrl;
+      // If custom PNG fails, try artwork thumbnail fallback (AVIF then JPG)
+      if (link.dataset.previewImage) {
+        const artId = link.dataset.previewId;
+        if (artId) {
+          const jpgUrl = '/artworks/mini/' + artId + '.jpg';
+          const imgJpg = new Image();
+          imgJpg.onload = function() {
+            link.style.setProperty('--preview-url', 'url(' + jpgUrl + ')');
+          };
+          imgJpg.src = jpgUrl;
+        }
+      }
     };
-    img.src = thumbUrl;
+    img.src = previewUrl;
   });
 })();
 </script>
