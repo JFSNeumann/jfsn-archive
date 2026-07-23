@@ -25,7 +25,7 @@ After running:
     python3 artworks/build_catalog.py       # picks up new stubs automatically
 """
 
-import argparse, json, os, shutil, subprocess, sys, tempfile
+import argparse, json, os, re, shutil, subprocess, sys, tempfile
 from pathlib import Path
 
 # ── quality settings ─────────────────────────────────────────────────────────
@@ -83,6 +83,51 @@ def next_art_id():
     return int(last[3:]) + 1
 
 
+def _recover_id_from_done(base_name: str, allow_historical: bool = False) -> str:
+    """Recover artwork ID from done/ for a given base filename.
+
+    Returns:
+      - "art####" if marker found and validated (partial failure recovery)
+      - "art####" if allow_historical=True and completed file exists (orphan back recovery)
+      - "AMBIGUOUS" if multiple matches found
+      - None if no match found
+    """
+    # Check for markers first (partial failure recovery)
+    marker_pattern = re.compile(rf"^\.{re.escape(base_name)}__(\w+)\.marker$")
+    markers = []
+    if DONE.exists():
+        for marker_file in DONE.glob(f".{base_name}__*.marker"):
+            match = marker_pattern.match(marker_file.name)
+            if match:
+                art_id = match.group(1)
+                # Validate: check if full derivative exists
+                if (FULL / f"{art_id}.avif").exists():
+                    markers.append(art_id)
+
+    if markers:
+        if len(markers) > 1:
+            return "AMBIGUOUS"
+        return markers[0]
+
+    # Fallback to historical completed files only if allow_historical=True
+    if allow_historical:
+        pattern = re.compile(rf"^{re.escape(base_name)}__(\w+)\..*$")
+        completed = []
+        if DONE.exists():
+            for done_file in DONE.glob(f"{base_name}__*"):
+                match = pattern.match(done_file.name)
+                if match:
+                    art_id = match.group(1)
+                    completed.append(art_id)
+
+        if completed:
+            if len(completed) > 1:
+                return "AMBIGUOUS"
+            return completed[0]
+
+    return None
+
+
 def resize_fit(img, width):
     """Resize image to given width, maintaining aspect ratio. Never upscales."""
     from PIL import Image
@@ -138,14 +183,24 @@ def load_image(src: Path):
     return img
 
 
-def process(src: Path, art_id: str, dry_run: bool) -> dict:
-    """Convert one source file → full/medium/thumb/mini AVIFs. Returns dims entry."""
-    full_out   = FULL   / f"{art_id}.avif"
-    medium_out = MEDIUM / f"{art_id}.avif"
-    thumb_out  = THUMBS / f"{art_id}.avif"
-    mini_out   = MINI   / f"{art_id}.avif"
-    micro_out  = MICRO  / f"{art_id}.avif"
-    done_out  = DONE   / src.name
+def process(src: Path, art_id: str, dry_run: bool, is_back: bool = False) -> dict:
+    """Convert one source file → full/medium/thumb/mini/micro AVIFs. Returns dims entry.
+
+    For back images: art_id is the front's ID; file is saved as art_id_back.avif.
+    """
+    if is_back:
+        suffix_back = "_back"
+        full_out   = FULL   / f"{art_id}{suffix_back}.avif"
+        medium_out = MEDIUM / f"{art_id}{suffix_back}.avif"
+        thumb_out  = THUMBS / f"{art_id}{suffix_back}.avif"
+        mini_out   = MINI   / f"{art_id}{suffix_back}.avif"
+        micro_out  = MICRO  / f"{art_id}{suffix_back}.avif"
+    else:
+        full_out   = FULL   / f"{art_id}.avif"
+        medium_out = MEDIUM / f"{art_id}.avif"
+        thumb_out  = THUMBS / f"{art_id}.avif"
+        mini_out   = MINI   / f"{art_id}.avif"
+        micro_out  = MICRO  / f"{art_id}.avif"
 
     if dry_run:
         # Still load to get dimensions
@@ -153,10 +208,17 @@ def process(src: Path, art_id: str, dry_run: bool) -> dict:
         w, h = img.size
         tw = THUMB_W
         th = round(h * THUMB_W / w)
-        print(f"  {art_id}  {src.name}  ({w}×{h} → thumb {tw}×{th})  [dry-run]")
+        side = " (back)" if is_back else ""
+        print(f"  {art_id}  {src.name}  ({w}×{h} → thumb {tw}×{th}){side}  [dry-run]")
         return {art_id: [tw, th]}
 
     print(f"  {art_id}  {src.name}", end="", flush=True)
+
+    # Create marker BEFORE processing (durability checkpoint for ID assignment)
+    if not is_back:
+        DONE.mkdir(parents=True, exist_ok=True)
+        marker = DONE / f".{src.stem}__{art_id}.marker"
+        marker.touch()
 
     img  = load_image(src)
     img  = sharpen(img)
@@ -186,9 +248,18 @@ def process(src: Path, art_id: str, dry_run: bool) -> dict:
     save_avif(micro, micro_out, Q_MICRO)
     print(" ✓micro", end="", flush=True)
 
-    # Move original to done/
+    # Move original to done/ with embedded ID
     DONE.mkdir(parents=True, exist_ok=True)
+    if is_back:
+        done_out = DONE / src.name
+    else:
+        done_out = DONE / f"{src.stem}__{art_id}{src.suffix}"
     shutil.move(str(src), str(done_out))
+
+    # Clean up marker after successful move
+    if not is_back:
+        marker.unlink(missing_ok=True)
+
     print(f"  →done")
 
     tw, th = thumb.size
@@ -219,39 +290,89 @@ def main():
 
     # Ensure output dirs exist
     if not args.dry_run:
-        for d in (FULL, MEDIUM, THUMBS, MINI):
+        for d in (FULL, MEDIUM, THUMBS, MINI, MICRO):
             d.mkdir(parents=True, exist_ok=True)
 
     # Collect inbox files
     INBOX.mkdir(parents=True, exist_ok=True)
-    sources = sorted(
+    all_sources = sorted(
         f for f in INBOX.iterdir()
         if f.is_file() and f.suffix.lower() in INBOX_EXTS
     )
 
-    if not sources:
+    if not all_sources:
+        print(f"No images found in {INBOX}/")
+        print("Drop HEIC, JPG, PNG, etc. into artworks/inbox/ and re-run.")
+        return
+
+    # Separate fronts and backs
+    fronts = [f for f in all_sources if not f.stem.endswith("_back")]
+    backs = [f for f in all_sources if f.stem.endswith("_back")]
+
+    if not fronts and not backs:
         print(f"No images found in {INBOX}/")
         print("Drop HEIC, JPG, PNG, etc. into artworks/inbox/ and re-run.")
         return
 
     next_id = next_art_id()
-    print(f"Found {len(sources)} file(s). Starting at art{next_id:04d}.")
+    total_files = len(fronts) + len(backs)
+    print(f"Found {total_files} file(s) ({len(fronts)} front(s), {len(backs)} back(s)). Starting at art{next_id:04d}.")
     if args.dry_run:
         print("(dry-run — no files will be written)\n")
 
     new_dims = {}
-    for i, src in enumerate(sources):
-        art_id = f"art{next_id + i:04d}"
+    source_to_id = {}
+
+    # Process fronts first
+    for i, src in enumerate(fronts):
+        # Check for partial failure recovery
+        recovered_id = _recover_id_from_done(src.stem, allow_historical=False)
+        if recovered_id == "AMBIGUOUS":
+            print(f"\n  ✗ {src.name}: Multiple partial failures found — ambiguous recovery. Remove stale markers and retry.")
+            continue
+        elif recovered_id:
+            art_id = recovered_id
+            print(f"\n  [recovering] {art_id}  {src.name}")
+        else:
+            art_id = f"art{next_id + i:04d}"
+
         try:
-            entry = process(src, art_id, dry_run=args.dry_run)
+            entry = process(src, art_id, dry_run=args.dry_run, is_back=False)
             new_dims.update(entry)
+            source_to_id[src.stem] = art_id
+        except Exception as e:
+            print(f"\n  ✗ {src.name}: {e}")
+
+    # Process backs second (using source_to_id map or recovering from done/)
+    for src in backs:
+        back_stem = src.stem  # e.g., "photo_back"
+        base_name = back_stem[:-5] if back_stem.endswith("_back") else back_stem
+
+        # First check current batch mapping
+        if base_name in source_to_id:
+            art_id = source_to_id[base_name]
+        else:
+            # Try recovery for orphan back (front was processed in prior run)
+            recovered_id = _recover_id_from_done(base_name, allow_historical=True)
+            if recovered_id == "AMBIGUOUS":
+                print(f"\n  ✗ {src.name}: Ambiguous ID recovery — multiple matches found. Manual intervention needed.")
+                continue
+            elif recovered_id:
+                art_id = recovered_id
+            else:
+                print(f"\n  ✗ {src.name}: No matching front found (expected {base_name}) and no recovery possible. Skipping.")
+                continue
+
+        try:
+            entry = process(src, art_id, dry_run=args.dry_run, is_back=True)
+            # Back dims don't update dims.json (only fronts do)
         except Exception as e:
             print(f"\n  ✗ {src.name}: {e}")
 
     update_dims(new_dims, dry_run=args.dry_run)
 
     if not args.dry_run:
-        print(f"\nDone. Added {len(new_dims)} artwork(s).")
+        print(f"\nDone. Added {len(new_dims)} artwork derivative(s).")
         print("Next steps:")
         print("  python3 artworks/build_catalog.py   # picks up new stubs")
         print("  ./deploy.sh                          # or run after cataloging")
