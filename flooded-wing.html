@@ -102,10 +102,14 @@ addEventListener('DOMContentLoaded', () => {
   }
   ::selection{background:var(--accent);color:#0c0a09}
   a{color:var(--dim);text-decoration:none;transition:color .25s;position:relative}
-  a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--accent);transition:width .3s ease}
+  a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--accent)}
   a:hover{color:var(--accent)}
+  a:hover::after{width:100%}
   @media (prefers-reduced-motion: no-preference){
-    a:hover::after{width:100%}
+    a::after{transition:width .3s ease}
+  }
+  @media (prefers-reduced-motion: reduce){
+    a::after{transition:none}
   }
   .caps{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim)}
   .serif{font-family:Georgia,'Times New Roman',serif}

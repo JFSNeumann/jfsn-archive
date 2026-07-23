@@ -91,13 +91,17 @@ addEventListener('DOMContentLoaded', () => {
   .threshold::after{
     content:'↓';position:absolute;bottom:-48px;left:50%;transform:translateX(-50%);
     font-size:24px;color:var(--dim);opacity:0.6;
-    animation:bounce 1.2s cubic-bezier(.68,.55,.27,1.55) infinite, pulse-glow 1.2s ease-in-out infinite;
     transition:opacity .3s ease;
   }
-  @keyframes bounce{
-    0%{transform:translateX(-50%) translateY(0)}
-    50%{transform:translateX(-50%) translateY(-8px)}
-    100%{transform:translateX(-50%) translateY(0)}
+  @media (prefers-reduced-motion: no-preference){
+    .threshold::after{
+      animation:bounce 1.2s cubic-bezier(.68,.55,.27,1.55) infinite, pulse-glow 1.2s ease-in-out infinite;
+    }
+    @keyframes bounce{
+      0%{transform:translateX(-50%) translateY(0)}
+      50%{transform:translateX(-50%) translateY(-8px)}
+      100%{transform:translateX(-50%) translateY(0)}
+    }
   }
   /* Once the visitor has actually started scrolling, the cue has done its
      job — fade it rather than let it loop forever underneath them. */
@@ -116,10 +120,6 @@ addEventListener('DOMContentLoaded', () => {
   }
   .threshold>*{position:relative}
   .threshold{perspective:1200px}
-  @keyframes bounce{
-    0%,100%{transform:translateX(-50%) translateY(0)}
-    50%{transform:translateX(-50%) translateY(-8px)}
-  }
   @keyframes pulse-glow{
     0%,100%{opacity:0.6}
     50%{opacity:0.9}
@@ -193,9 +193,6 @@ addEventListener('DOMContentLoaded', () => {
   /* Ink-stamp: the one moment on this permanent, unpersonalized poster that
      gets a first-load flourish — the box lands like a stamp hitting paper,
      once, then never moves again. */
-  /* Ink-stamp: the one moment on this permanent, unpersonalized poster that
-     gets a first-load flourish — the box lands like a stamp hitting paper,
-     once, then never moves again. */
   @media (prefers-reduced-motion: no-preference){
     .highlight-devo{animation:ink-stamp .5s cubic-bezier(.2,1.6,.4,1) both;animation-delay:.15s}
     @keyframes ink-stamp{
@@ -242,22 +239,6 @@ addEventListener('DOMContentLoaded', () => {
      entrance is the single-work poster, untouched. */
   #hang{display:contents}
   .wing{display:none}
-
-  /* the cornerstone — the founder signs at the base, in his own hand.
-     Real ink (assets/images/Jeff Neumann.gif is the untouched source);
-     rendered in the museum's warm tone on the dark wall. */
-  #who{margin-top:clamp(24px,3.5vh,40px)}
-  #who img{
-    display:block;height:clamp(44px,6vh,60px);width:auto;
-    opacity:0;animation:signatureReveal .6s ease-out .55s forwards;
-  }
-  @keyframes signatureReveal{
-    from{opacity:0;transform:scale(.9)}
-    to{opacity:1;transform:scale(1)}
-  }
-  @media (prefers-reduced-motion: reduce){
-    #who img{animation:none;opacity:1}
-  }
 
   /* ── BEYOND THE THRESHOLD — the origin story, promoted to its own
      quiet centered screen, then the doors open. ── */
@@ -642,8 +623,6 @@ addEventListener('DOMContentLoaded', () => {
     #work{margin-top:6vh}
     #work img{max-height:52vh;max-width:none}
     #work figcaption{margin-top:14px;font-size:9px}
-    #who{margin-top:4.5vh}
-    #who img{height:64px}
 
     /* the hang: one figure across fifty years. Three works at unified scale
        and brightness, seamlessly joined to form one continuous wall. */
@@ -682,7 +661,6 @@ addEventListener('DOMContentLoaded', () => {
   @media (min-width:1200px) and (max-height:820px){
     .threshold h1{font-size:min(6.2vw,78px)}
     #work img,.wing img{max-height:42vh}
-    #who img{height:52px}
   }
 
   /* Below-the-fold reveal: the poster is static and identical every visit,
@@ -745,10 +723,11 @@ addEventListener('DOMContentLoaded', () => {
     <h1>The <span class="highlight-devo">Museum</span> <br>That Never Existed.</h1>
     <p class="creed" id="creed">A personal record, not a gallery.</p>
 
-    <!-- the hang: on wide desktop, the figure across fifty years — a 1990s
-         CD torso and a 1970s figure flank the lit 2020s work, receding into
-         the room. Below 1200px only the center work shows (single poster).
-         All three real, shown straight, with honest plaques. -->
+    <!-- the hang: on wide desktop, three works at unified scale and brightness
+         form one continuous wall. The center work (#work) is static; the flanking
+         wings (#wing-l, #wing-r) are randomized from catalog-home.json and fade
+         between different works on a loop. Below 1200px only the center work shows.
+         Wings are aria-hidden (decorative), scaled by 0.3 brightness. -->
     <div id="hang">
       <figure id="work">
         <img src="/artworks/full/art1010-hero-lcp.avif" srcset="/artworks/full/art1010-hero-lcp-m.avif 720w, /artworks/full/art1010-hero-lcp.avif 1920w" sizes="(max-width: 1199px) 86vw, 560px" alt="Untitled (Cassette Torso) — a collage with a cassette tape at the center of a torso form." width="900" height="792" decoding="async" fetchpriority="high">

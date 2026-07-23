@@ -65,10 +65,14 @@ addEventListener('DOMContentLoaded', () => {
   }
   ::selection{background:var(--accent);color:#0c0a09}
   a{color:var(--dim);text-decoration:none;transition:color .25s;position:relative}
-  a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--accent);transition:width .3s ease}
+  a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--accent)}
   a:hover{color:var(--accent)}
+  a:hover::after{width:100%}
   @media (prefers-reduced-motion: no-preference){
-    a:hover::after{width:100%}
+    a::after{transition:width .3s ease}
+  }
+  @media (prefers-reduced-motion: reduce){
+    a::after{transition:none}
   }
   a:focus-visible{outline:2px solid var(--accent);outline-offset:4px;color:var(--accent);box-shadow:0 0 0 4px rgba(255,102,0,.2)}
   button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;color:var(--accent)}
@@ -559,12 +563,13 @@ addEventListener('DOMContentLoaded', () => {
   }
   @media (prefers-reduced-motion: reduce){
     #load-more{animation:none}
+    #load-more.loading{animation:none}
   }
   #load-more:hover{color:var(--accent);border-color:var(--accent);box-shadow:0 12px 32px rgba(255,102,0,.16);transform:translateY(-2px);background-color:rgba(255,102,0,.08)}
   #load-more:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   #load-more:disabled{opacity:.6;cursor:not-allowed;transform:none}
   #load-more.loading{color:var(--accent);background:rgba(255,102,0,.06);pointer-events:none;animation:spinLoader 1.2s linear infinite}
-  @keyframes spinLoader{0%{transform:rotate(0deg)};100%{transform:rotate(360deg)}}
+  @keyframes spinLoader{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
   @media (hover:none) and (pointer:coarse){
     #load-more:active{background-color:color-mix(in srgb, var(--accent) 6%, transparent);transform:scale(.98)}
     #load-more.loading{transform:scale(1)}
@@ -772,9 +777,9 @@ addEventListener('DOMContentLoaded', () => {
   <div id="grid"><noscript>
     <div style="text-align:center;padding:8vh 20px">
       <p class="prose">The vault's shelving is built by script from the open
-      catalog data. Without JavaScript, the same 1,086 works are in the
-      original catalog:</p>
-      <p style="margin-top:24px"><a class="caps" href="/archive.html">[ THE V1 ARCHIVE GRID → ]</a></p>
+      catalog data. Without JavaScript, each of the 1,086 works has a permanent
+      static page:</p>
+      <p style="margin-top:24px"><a class="caps" href="/artworks/pages/art0001.html">[ BROWSE STATIC CATALOG → ]</a></p>
     </div>
   </noscript></div>
   <div id="empty">

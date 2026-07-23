@@ -344,6 +344,16 @@ addEventListener('DOMContentLoaded', () => {
   }
   #double-sided-caption:hover,#double-sided-caption:focus-visible{color:#fff}
   #double-sided-caption.on{display:block}
+
+  /* ---------- print styles ---------- */
+  @media print {
+    body { background: white; color: black; }
+    a { color: black; text-decoration: underline; }
+    main { max-width: 100%; }
+    header.hud { display: none; }
+    footer { page-break-before: always; border-top: 2px solid black; }
+    * { box-shadow: none !important; text-shadow: none !important; }
+  }
 </style>
 </head>
 <body>
