@@ -195,7 +195,12 @@ addEventListener('DOMContentLoaded', () => {
      feature) — same treatment as the other rooms' heroes. */
   #door::before{
     content:'';position:absolute;inset:0;z-index:-2;
-    background-image:url('/artworks/guernica-hero.avif');
+    /* Flat wash under the ellipse (below) so text keeps a contrast floor
+       even over this image's light regions (sky, horse's head, dove) —
+       the radial gradient alone fades to transparent at the edges and
+       was tuned against darker source images; same technique already
+       used on flooded-wing.html's hero. */
+    background:linear-gradient(rgba(12,10,9,.45),rgba(12,10,9,.45)),url('/artworks/guernica-hero.avif');
     background-size:cover;background-position:center;
   }
   #door h1{

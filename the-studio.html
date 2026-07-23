@@ -150,6 +150,16 @@ addEventListener('DOMContentLoaded', () => {
   .hero-images{
     position:absolute;inset:0;z-index:-1;overflow:hidden;
   }
+  /* Flat wash over the rotating photos so text keeps a contrast floor
+     regardless of which saturated/high-key work is currently showing —
+     the ellipse gradient behind the text alone fades to transparent at
+     the edges and was tuned against darker source images; same technique
+     already used on flooded-wing.html's hero. */
+  .hero-images::after{
+    content:'';position:absolute;inset:0;
+    background:rgba(12,10,9,.45);
+    pointer-events:none;
+  }
   /* One image at a time, cross-fading through a rotation of four studio
      works — replaces the old fixed two-image split. Deliberately no
      parallax on the container itself (kept from the original hero call);
