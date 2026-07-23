@@ -139,22 +139,36 @@ addEventListener('DOMContentLoaded', () => {
   }
   #hero-image img{
     position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
+    /* Extended 20% taller (a replaced <img> needs explicit width/height —
+       top/bottom offsets alone don't stretch it) so scroll-parallax
+       (composed into the Ken-Burns keyframes below) never peeks a gap;
+       overflow:hidden on #hero-image clips the excess. */
+    top:-20%;left:0;width:100%;height:140%;
     object-fit:cover;
     object-position:center;
     display:block;
+    /* Scroll-parallax baseline when reduced-motion is on and the drift
+       animation is suppressed — the var still tracks scroll. */
+    transform:translateY(var(--hero-parallax-y,0));
   }
   /* A very subtle Ken-Burns drift on the lead evidence image — sets the
      tone (something imagined, held just slightly unstill) before the grid
-     of 250 flagged composites even loads. */
+     of 250 flagged composites even loads. The scroll-parallax offset is
+     composed in as the leading translate so both effects coexist. */
   @media (prefers-reduced-motion: no-preference){
     #hero-image img{animation:hero-drift 22s ease-in-out infinite alternate}
     @keyframes hero-drift{
-      0%{transform:scale(1.04) translate(0,0)}
-      100%{transform:scale(1.09) translate(-1%,-1%)}
+      0%{transform:translateY(var(--hero-parallax-y,0)) scale(1.04) translate(0,0)}
+      100%{transform:translateY(var(--hero-parallax-y,0)) scale(1.09) translate(-1%,-1%)}
     }
+    /* Focus-pull: the lead evidence image (already a soft, blurred
+       composite) carries a little extra blur at rest and eases toward
+       its own native softness once the visitor engages and scrolls —
+       the imagined exhibition almost coming into focus, never fully.
+       One-time slow transition, not a per-frame blur, so it stays cheap.
+       Reduced-motion users skip the added blur entirely (rule below). */
+    #hero-image img{filter:blur(3px);transition:filter 1.6s ease}
+    #hero-image.scrolled img{filter:blur(0)}
   }
 
   section{padding:0 clamp(20px,6vw,80px)}
@@ -697,13 +711,24 @@ addEventListener('DOMContentLoaded', () => {
 })();
 </script>
 <script>
-// Scroll cue: fades once the visitor has actually moved past the hero,
-// rather than sinking forever underneath them.
+// Scroll cue + hero parallax: fades the cue once the visitor has moved
+// past the hero, and drives the slower-than-scroll parallax offset on the
+// hero image (composed into its Ken-Burns keyframes via --hero-parallax-y).
 (function(){
   const hero = document.getElementById('hero-image');
   if (!hero) return;
-  function check(){ hero.classList.toggle('scrolled', window.scrollY > 40); }
-  window.addEventListener('scroll', check, { passive: true });
+  const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const root = document.documentElement;
+  let ticking = false;
+  function check(){
+    hero.classList.toggle('scrolled', window.scrollY > 40);
+    if (!REDUCED) root.style.setProperty('--hero-parallax-y', `${window.scrollY * 0.4}px`);
+  }
+  window.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { check(); ticking = false; });
+  }, { passive: true });
   check();
 })();
 </script>

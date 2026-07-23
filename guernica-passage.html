@@ -54,9 +54,19 @@
     // the rest of this script block (including the veil/click-handler
     // registration below it).
     const bg = document.documentElement;
+    let ticking = false;
     addEventListener('scroll', () => {
-      const y = scrollY * -2.5;
-      bg.style.setProperty('--parallax-y', `${y}px`);
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = scrollY;
+        // sitewide 15%-opacity watermark (existing, aggressive drift)
+        bg.style.setProperty('--parallax-y', `${y * -2.5}px`);
+        // hero image: classic slower-than-scroll parallax (~40% rate),
+        // moving down to counteract the section scrolling up past it
+        bg.style.setProperty('--hero-parallax-y', `${y * 0.4}px`);
+        ticking = false;
+      });
     }, { passive: true });
   }
 })();
@@ -194,7 +204,11 @@ addEventListener('DOMContentLoaded', () => {
      15%-opacity parallax watermark (which stays as its own approved
      feature) — same treatment as the other rooms' heroes. */
   #door::before{
-    content:'';position:absolute;inset:0;z-index:-2;
+    content:'';position:absolute;
+    /* Extended 20% above/below the section's own bounds so the scroll-
+       parallax translate below never peeks a gap at the top/bottom edge
+       — #door's overflow:hidden clips the excess. */
+    top:-20%;bottom:-20%;left:0;right:0;z-index:-2;
     /* Flat wash under the ellipse (below) so text keeps a contrast floor
        even over this image's light regions (sky, horse's head, dove) —
        the radial gradient alone fades to transparent at the edges and
@@ -202,6 +216,21 @@ addEventListener('DOMContentLoaded', () => {
        used on flooded-wing.html's hero. */
     background:linear-gradient(rgba(12,10,9,.45),rgba(12,10,9,.45)),url('/artworks/guernica-hero.avif');
     background-size:cover;background-position:center;
+    transform:translateY(var(--hero-parallax-y,0));
+    will-change:transform;
+  }
+  /* One-time shudder on arrival — not a loop, not decoration: the
+     structure the room is named for takes a single held breath before
+     settling. Runs once, after the ellipse has finished fading in. */
+  @media (prefers-reduced-motion: no-preference){
+    #door::before{animation:guernica-shudder .7s ease-out 1.1s both}
+    @keyframes guernica-shudder{
+      0%{transform:translateY(var(--hero-parallax-y,0)) translate(0,0) rotate(0)}
+      20%{transform:translateY(var(--hero-parallax-y,0)) translate(-2px,1px) rotate(-.15deg)}
+      45%{transform:translateY(var(--hero-parallax-y,0)) translate(2px,-1px) rotate(.12deg)}
+      70%{transform:translateY(var(--hero-parallax-y,0)) translate(-1px,1px) rotate(-.06deg)}
+      100%{transform:translateY(var(--hero-parallax-y,0)) translate(0,0) rotate(0)}
+    }
   }
   #door h1{
     font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;

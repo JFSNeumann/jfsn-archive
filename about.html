@@ -127,9 +127,14 @@ addEventListener('DOMContentLoaded', () => {
      below) — same "remove the dark tint, just here" treatment as The
      Studio and Hall of Openings' heroes. */
   #hero::before{
-    content:'';position:absolute;inset:0;z-index:-2;
+    content:'';position:absolute;
+    /* Extended 20% above/below so the scroll-parallax translate never
+       peeks a gap at an edge — #hero's overflow:hidden clips the excess. */
+    top:-20%;bottom:-20%;left:0;right:0;z-index:-2;
     background-image:url('/artworks/medium/art1042.avif');
     background-size:cover;background-position:center;
+    transform:translateY(var(--hero-parallax-y,0));
+    will-change:transform;
   }
   #hero h1{
     font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
@@ -178,9 +183,16 @@ addEventListener('DOMContentLoaded', () => {
     background:var(--accent);color:#0c0a09;padding:0 4px;font-style:normal;
     display:inline-block;transform-origin:left center;
   }
-  /* Ink-stamp: matches the homepage's title treatment — the box lands
-     once on load, like a stamp hitting paper. */
+  /* Two-beat entrance: the headline settles up into place first (0–.7s),
+     then the orange box stamps onto "Making" (from .5s) — the word lands
+     last, like a hand pressing the final mark. Reinforces "Still Making"
+     as an active, present-tense statement rather than a static title. */
   @media (prefers-reduced-motion: no-preference){
+    #hero h1{animation:headline-settle .7s cubic-bezier(.2,.8,.3,1) both}
+    @keyframes headline-settle{
+      0%{opacity:0;transform:translateY(16px)}
+      100%{opacity:1;transform:translateY(0)}
+    }
     .highlight-devo{animation:ink-stamp .5s cubic-bezier(.2,1.6,.4,1) both;animation-delay:.5s}
     @keyframes ink-stamp{
       0%{transform:scaleX(0)}
@@ -503,9 +515,18 @@ addEventListener('DOMContentLoaded', () => {
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!REDUCED) {
     const bg = document.body.parentElement;
+    let ticking = false;
     addEventListener('scroll', () => {
-      const y = scrollY * -1.2;
-      bg.style.setProperty('--parallax-y', `${y}px`);
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = scrollY;
+        // sitewide faint watermark (existing)
+        bg.style.setProperty('--parallax-y', `${y * -1.2}px`);
+        // hero image: slower-than-scroll parallax (~40% rate)
+        bg.style.setProperty('--hero-parallax-y', `${y * 0.4}px`);
+        ticking = false;
+      });
     }, { passive: true });
   }
 })();

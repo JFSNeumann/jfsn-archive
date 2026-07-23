@@ -160,22 +160,41 @@ addEventListener('DOMContentLoaded', () => {
     background:rgba(12,10,9,.45);
     pointer-events:none;
   }
+  /* Ambient light: a warm glow that follows the pointer across the hero,
+     like a work-lamp moving over the bench — reinforces "the work
+     continues" as a live, present-tense room. Same treatment as the
+     homepage poster; desktop pointer only, off under reduced motion.
+     Sits above the image/wash (z-index:0) and below the title (z-index:1). */
+  #ambient-light{
+    position:absolute;inset:0;z-index:0;pointer-events:none;
+    opacity:0;transition:opacity .3s ease;
+    background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%), rgba(255,102,0,.15), rgba(255,102,0,.04) 60%, transparent 80%);
+  }
+  @media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+    #door:hover #ambient-light{opacity:1}
+  }
   /* One image at a time, cross-fading through a rotation of four studio
      works — replaces the old fixed two-image split. Deliberately no
      parallax on the container itself (kept from the original hero call);
      the motion lives entirely in the slow Ken-Burns drift per image. */
   .hero-img{
-    position:absolute;inset:0;width:100%;height:100%;
+    position:absolute;
+    /* Extended 20% taller (a replaced <img> needs explicit width/height —
+       top/bottom offsets alone don't stretch it) so scroll-parallax
+       (composed into the Ken-Burns keyframes below) never peeks a gap;
+       .hero-images' overflow:hidden clips the excess. */
+    top:-20%;left:0;width:100%;height:140%;
     object-fit:cover;opacity:0;
     transition:opacity 1.8s ease;
+    transform:translateY(var(--hero-parallax-y,0));
   }
   .hero-img.active{opacity:1}
   .hero-img { opacity: 1 !important; }
   @media (prefers-reduced-motion: no-preference){
     .hero-img{animation:hero-kb 24s ease-in-out infinite alternate}
     @keyframes hero-kb{
-      0%{transform:scale(1.04) translate(0,0)}
-      100%{transform:scale(1.1) translate(-1.5%,-1.5%)}
+      0%{transform:translateY(var(--hero-parallax-y,0)) scale(1.04) translate(0,0)}
+      100%{transform:translateY(var(--hero-parallax-y,0)) scale(1.1) translate(-1.5%,-1.5%)}
     }
   }
   .hero-content{
@@ -419,6 +438,7 @@ addEventListener('DOMContentLoaded', () => {
     <img src="/artworks/medium/art1008.avif" alt="Studio work" loading="lazy" class="hero-img">
     <img src="/artworks/medium/art1011.avif" alt="Studio work" loading="lazy" class="hero-img">
   </div>
+  <div id="ambient-light" aria-hidden="true"></div>
   <div class="hero-content">
     <div class="caps">THE STUDIO</div>
     <h1>The <span class="highlight-work">work</span> continues.</h1>
@@ -581,6 +601,35 @@ addEventListener('DOMContentLoaded', () => {
         heroImgs[heroI].classList.add('active');
       }, 7000);
     }
+  }
+
+  // ---------- ambient light: warm pointer glow over the hero ----------
+  // Desktop fine-pointer only; the glow itself only shows on #door:hover
+  // (CSS), this just tracks position. rAF-throttled.
+  if (!REDUCED && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const door = document.getElementById('door');
+    const glow = document.getElementById('ambient-light');
+    if (door && glow) {
+      let raf = null, mx = 0, my = 0;
+      const apply = () => { raf = null; glow.style.setProperty('--mx', mx + 'px'); glow.style.setProperty('--my', my + 'px'); };
+      door.addEventListener('pointermove', e => {
+        const r = door.getBoundingClientRect();
+        mx = e.clientX - r.left; my = e.clientY - r.top;
+        if (!raf) raf = requestAnimationFrame(apply);
+      }, { passive: true });
+    }
+  }
+
+  // ---------- hero parallax: slower-than-scroll drift on the rotating photos
+  // (composed into their Ken-Burns keyframes via --hero-parallax-y) ----------
+  if (!REDUCED) {
+    const root = document.documentElement;
+    let ticking = false;
+    addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => { root.style.setProperty('--hero-parallax-y', `${scrollY * 0.4}px`); ticking = false; });
+    }, { passive: true });
   }
 
   // ---------- the voice: house player over the real recording ----------
