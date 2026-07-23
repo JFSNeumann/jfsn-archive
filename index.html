@@ -336,7 +336,7 @@ addEventListener('DOMContentLoaded', () => {
   /* Ghosted preview: the room's own image, faint, behind its own name */
   #doors a::after{
     content:'';position:absolute;inset:0;z-index:-1;
-    background-image:var(--preview-url);background-size:cover;background-position:center;
+    background-image:var(--preview-url);background-size:contain;background-position:center;background-repeat:no-repeat;
     filter:grayscale(55%);opacity:0;
     transition:opacity .5s ease,filter .5s ease;
     image-rendering:crisp-edges;image-rendering:-webkit-optimize-contrast;
