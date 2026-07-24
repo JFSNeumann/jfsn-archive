@@ -699,7 +699,7 @@ addEventListener('DOMContentLoaded', () => {
   @media (min-width:1200px){
     .tv-hero-overlay{
       display:block;position:absolute;bottom:20px;left:20px;z-index:998;
-      width:clamp(120px,14vw,190px);aspect-ratio:570/380;
+      width:clamp(240px,28vw,380px);aspect-ratio:570/380;
       pointer-events:none;user-select:none;
     }
   }
@@ -1282,16 +1282,41 @@ addEventListener('DOMContentLoaded', () => {
     noiseCtx.putImageData(noiseImgData, 0, 0);
   }
 
-  // A small curated set, drawn from the site's own hero-pool of featured
-  // works (see artworks/featured-hero.txt). Tiny 80px-wide micro crops —
-  // already deployed, nothing new to ship.
-  var ART_IDS = ['art1010','art1008','art1009','art0392','art1041','art0250','art0779','art0663','art1020'];
+  // Pool of ~54 artworks sampled across full archive (every ~20 works, art0010–art1080)
+  // for rapid tuning-through effect. Lazy-loading: preload first 5, then load on demand.
+  var POOL_IDS = [];
+  for (var i = 10; i <= 1080; i += 20) {
+    POOL_IDS.push('art' + String(i).padStart(4, '0'));
+  }
+
   var artImages = {};
-  ART_IDS.forEach(function(id){
-    var im = new Image();
-    im.src = '/artworks/micro/' + id + '.avif';
-    im.onload = function(){ artImages[id] = im; };
-  });
+  var nextToPreload = 0;
+
+  // Preload first 5 images on init
+  function preloadBatch(){
+    for (var i = 0; i < 5 && nextToPreload < POOL_IDS.length; i++) {
+      var id = POOL_IDS[nextToPreload];
+      (function(imgId){
+        var im = new Image();
+        im.src = '/artworks/micro/' + imgId + '.avif';
+        im.onload = function(){ artImages[imgId] = im; };
+      })(id);
+      nextToPreload++;
+    }
+  }
+
+  function preloadNextImage(){
+    if (nextToPreload >= POOL_IDS.length) return;
+    var id = POOL_IDS[nextToPreload];
+    (function(imgId){
+      var im = new Image();
+      im.src = '/artworks/micro/' + imgId + '.avif';
+      im.onload = function(){ artImages[imgId] = im; };
+    })(id);
+    nextToPreload++;
+  }
+
+  preloadBatch();
 
   function drawCover(destCtx, img, cw, ch){
     var ir = img.naturalWidth / img.naturalHeight;
@@ -1306,19 +1331,20 @@ addEventListener('DOMContentLoaded', () => {
   var broadcast = null, nextBroadcastAt = 0, lastArtId = null;
 
   function scheduleNext(now){
-    nextBroadcastAt = now + 8000 + Math.random() * 10000; // 8-18s, irregular
+    preloadNextImage(); // lazy-load the next image
+    nextBroadcastAt = now + 1000 + Math.random() * 2000; // 1-3s static gap, rapid tuning effect
   }
 
   function maybeStartBroadcast(now){
     if (broadcast || reduced || now < nextBroadcastAt) return;
-    var pool = ART_IDS.filter(function(id){ return artImages[id] && id !== lastArtId; });
-    if (!pool.length) pool = ART_IDS.filter(function(id){ return artImages[id]; });
+    var pool = POOL_IDS.filter(function(id){ return artImages[id] && id !== lastArtId; });
+    if (!pool.length) pool = POOL_IDS.filter(function(id){ return artImages[id]; });
     if (!pool.length) { nextBroadcastAt = now + 3000; return; } // nothing loaded yet — retry soon
     var id = pool[(Math.random() * pool.length) | 0];
     lastArtId = id;
-    var fadeIn = 350 + Math.random() * 250;
-    var hold = 2000 + Math.random() * 2000;
-    var fadeOut = 300 + Math.random() * 300;
+    var fadeIn = 600 + Math.random() * 400; // 600-1000ms tune-in
+    var hold = 300 + Math.random() * 300; // 300-600ms brief hold
+    var fadeOut = 300 + Math.random() * 300; // 300-600ms break-up
     broadcast = {
       img: artImages[id], start: now,
       fadeIn: fadeIn, hold: hold, fadeOut: fadeOut, total: fadeIn + hold + fadeOut,
