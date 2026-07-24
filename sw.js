@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1785283200'; // Global MENU — new /_shared/site-menu.js on every page
+const CACHE_V  = 'jfsn-1784901076'; // Global MENU — new /_shared/site-menu.js on every page
 const PRECACHE = [
   // The 14 live room pages (Museum v2 — the only site that exists today;
   // the old v1 archive, decade pages, and generated theme pages were

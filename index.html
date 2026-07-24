@@ -692,14 +692,46 @@ addEventListener('DOMContentLoaded', () => {
   }
 
   /* TV prop in bottom-left corner — desktop only, mirrors the Jeff overlay.
-     Static for now (no animation); the screen stays dark from the PNG itself. */
+     The screen (a masked box precisely fit to the CRT glass in tv.png —
+     see canvas-noise script below) carries a small animated "no signal"
+     static loop; everything else about the prop is static. */
   .tv-hero-overlay{display:none}
   @media (min-width:1200px){
     .tv-hero-overlay{
       display:block;position:absolute;bottom:20px;left:20px;z-index:998;
-      width:clamp(120px,14vw,190px);height:auto;
+      width:clamp(120px,14vw,190px);aspect-ratio:570/380;
       pointer-events:none;user-select:none;
     }
+  }
+  .tv-img{display:block;width:100%;height:100%}
+  /* Screen mask: bounds measured directly from tv.png's pixel data (bright
+     chrome-ring inner edge + zoomed corner crops), inset with margin so the
+     rounded shape can never reach the bezel. Percentages are relative to the
+     TV prop's own box, so the mask scales exactly with it at every width. */
+  .tv-screen-mask{
+    position:absolute;left:25.44%;top:33.95%;width:36.14%;height:42.11%;
+    border-radius:12%/15%;overflow:hidden;background:#000;
+  }
+  .tv-static{display:block;width:100%;height:100%}
+  .tv-screen-mask::before{
+    content:'';position:absolute;inset:0;pointer-events:none;
+    background:repeating-linear-gradient(to bottom,rgba(0,0,0,.35) 0,rgba(0,0,0,.35) 1px,transparent 1px,transparent 3px);
+    mix-blend-mode:multiply;
+    animation:tv-flicker 5.3s infinite;
+  }
+  .tv-screen-mask::after{
+    content:'';position:absolute;left:0;right:0;top:-24%;height:14%;pointer-events:none;
+    background:linear-gradient(to bottom,transparent,rgba(255,255,255,.16),transparent);
+    animation:tv-roll 13s linear infinite;
+  }
+  @keyframes tv-flicker{
+    0%,100%{opacity:.85} 45%{opacity:1} 50%{opacity:.6} 52%{opacity:.95} 78%{opacity:.8}
+  }
+  @keyframes tv-roll{
+    0%{top:-24%} 6%{top:124%} 100%{top:124%}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .tv-screen-mask::before,.tv-screen-mask::after{animation:none}
   }
 
   /* ---------- site footer ---------- */
@@ -755,7 +787,12 @@ addEventListener('DOMContentLoaded', () => {
     </div>
 
     <img src="/assets/images/me-for-website.avif" alt="Jeff" class="me-hero-overlay" width="100" height="160" decoding="async">
-    <img src="/assets/images/tv.png" alt="" aria-hidden="true" class="tv-hero-overlay" width="570" height="380" decoding="async" loading="lazy">
+    <div class="tv-hero-overlay" aria-hidden="true">
+      <img src="/assets/images/tv.png" alt="" class="tv-img" width="570" height="380" decoding="async" loading="lazy">
+      <div class="tv-screen-mask">
+        <canvas class="tv-static"></canvas>
+      </div>
+    </div>
   </section>
 
   <section class="beyond">
@@ -1194,6 +1231,83 @@ addEventListener('DOMContentLoaded', () => {
       }, 9500);
     })
     .catch(() => {}); // fail silent: wings just stay on the static mirror
+})();
+</script>
+
+<script>
+// TV screen static — fine-grained black/white analog "no signal" snow,
+// procedurally generated on a small canvas clipped to the CRT glass mask
+// above. Canvas resolution is matched to the mask's actual rendered pixel
+// size (times devicePixelRatio, capped) so grain reads as roughly 1 real
+// pixel per speck — the sharpest, most film-grain-like result at this prop's
+// small on-screen size, rather than a blurred upscale or a blocky downscale.
+(function(){
+  var canvas = document.querySelector('.tv-static');
+  if (!canvas || !canvas.getContext) return;
+  var ctx = canvas.getContext('2d', { alpha: false });
+  var imgData, data;
+
+  function sizeCanvas(){
+    var rect = canvas.getBoundingClientRect();
+    if (!rect.width || !rect.height) return false;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w = Math.max(1, Math.round(rect.width * dpr));
+    var h = Math.max(1, Math.round(rect.height * dpr));
+    if (canvas.width === w && canvas.height === h) return true;
+    canvas.width = w; canvas.height = h;
+    imgData = ctx.createImageData(w, h);
+    data = imgData.data;
+    return true;
+  }
+
+  function paintNoise(){
+    if (!data) return;
+    for (var i = 0; i < data.length; i += 4) {
+      var v = (Math.random() * 255) | 0;
+      if (v < 235) v = (v * 0.5) | 0; // dark-biased so it reads as a lit CRT tube, not flat gray
+      data[i] = data[i + 1] = data[i + 2] = v;
+      data[i + 3] = 255;
+    }
+    ctx.putImageData(imgData, 0, 0);
+  }
+
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var running = false, rafId = null, lastTs = 0;
+  var FRAME_MS = 1000 / 14; // ~14fps: enough for convincing snow, cheap to run
+
+  function tick(ts){
+    if (!running) return;
+    if (ts - lastTs >= FRAME_MS) { paintNoise(); lastTs = ts; }
+    rafId = requestAnimationFrame(tick);
+  }
+  function start(){
+    if (running || reduced || document.hidden) return;
+    running = true;
+    rafId = requestAnimationFrame(tick);
+  }
+  function stop(){
+    running = false;
+    if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+  }
+
+  if (sizeCanvas()) {
+    paintNoise(); // always show at least one frame, even under reduced-motion
+    start();
+  }
+
+  document.addEventListener('visibilitychange', function(){
+    if (document.hidden) stop(); else start();
+  });
+  // Redundant resume signal alongside visibilitychange: start() is a no-op
+  // if already running, so this only matters as a safety net for edge cases
+  // where a hidden->visible transition doesn't fire its own event.
+  window.addEventListener('focus', start);
+
+  var resizeT;
+  window.addEventListener('resize', function(){
+    clearTimeout(resizeT);
+    resizeT = setTimeout(function(){ if (sizeCanvas()) paintNoise(); }, 200);
+  }, { passive: true });
 })();
 </script>
 
