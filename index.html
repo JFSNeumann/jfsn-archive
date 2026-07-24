@@ -630,8 +630,8 @@ addEventListener('DOMContentLoaded', () => {
        and brightness, seamlessly joined to form one continuous wall. */
     #hang{display:flex;align-items:center;justify-content:center;
       gap:0;width:100%}
-    .wing{display:block;margin:0}
-    #work{order:0}
+    .wing{display:block;margin:0;min-width:0}
+    #work{order:0;min-width:0}
     #wing-l{order:-1}
     #wing-r{order:1}
     /* all three works hang at equal scale and unified brightness,
@@ -639,7 +639,7 @@ addEventListener('DOMContentLoaded', () => {
     #work img{max-height:52vh}
     .wing{margin-top:45px}
     .wing img{display:block;width:auto;height:auto;
-      max-height:52vh}
+      max-height:52vh;max-width:100%}
     .wing figcaption{margin-top:8px;font-size:9px;letter-spacing:.26em;
       color:var(--dim)}
   }
