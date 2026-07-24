@@ -1241,11 +1241,20 @@ addEventListener('DOMContentLoaded', () => {
 // size (times devicePixelRatio, capped) so grain reads as roughly 1 real
 // pixel per speck — the sharpest, most film-grain-like result at this prop's
 // small on-screen size, rather than a blurred upscale or a blocky downscale.
+//
+// Every 8-18s a curated artwork briefly "tunes in" through the static, like
+// a weak broadcast signal, then breaks up again. The noise texture is drawn
+// on an offscreen canvas and composited over the artwork with globalAlpha —
+// it never drops out, only thins — so static and scanlines stay visibly on
+// top of the image at every point; the image itself never reads as clean.
 (function(){
   var canvas = document.querySelector('.tv-static');
   if (!canvas || !canvas.getContext) return;
   var ctx = canvas.getContext('2d', { alpha: false });
-  var imgData, data;
+
+  var noiseCanvas = document.createElement('canvas');
+  var noiseCtx = noiseCanvas.getContext('2d', { alpha: false });
+  var noiseImgData, noiseData;
 
   function sizeCanvas(){
     var rect = canvas.getBoundingClientRect();
@@ -1255,29 +1264,116 @@ addEventListener('DOMContentLoaded', () => {
     var h = Math.max(1, Math.round(rect.height * dpr));
     if (canvas.width === w && canvas.height === h) return true;
     canvas.width = w; canvas.height = h;
-    imgData = ctx.createImageData(w, h);
-    data = imgData.data;
+    noiseCanvas.width = w; noiseCanvas.height = h;
+    noiseImgData = noiseCtx.createImageData(w, h);
+    noiseData = noiseImgData.data;
     return true;
   }
 
-  function paintNoise(){
-    if (!data) return;
-    for (var i = 0; i < data.length; i += 4) {
+  function generateNoise(){
+    if (!noiseData) return;
+    var d = noiseData;
+    for (var i = 0; i < d.length; i += 4) {
       var v = (Math.random() * 255) | 0;
       if (v < 235) v = (v * 0.5) | 0; // dark-biased so it reads as a lit CRT tube, not flat gray
-      data[i] = data[i + 1] = data[i + 2] = v;
-      data[i + 3] = 255;
+      d[i] = d[i + 1] = d[i + 2] = v;
+      d[i + 3] = 255;
     }
-    ctx.putImageData(imgData, 0, 0);
+    noiseCtx.putImageData(noiseImgData, 0, 0);
+  }
+
+  // A small curated set, drawn from the site's own hero-pool of featured
+  // works (see artworks/featured-hero.txt). Tiny 80px-wide micro crops —
+  // already deployed, nothing new to ship.
+  var ART_IDS = ['art1010','art1008','art1009','art0392','art1041','art0250','art0779','art0663','art1020'];
+  var artImages = {};
+  ART_IDS.forEach(function(id){
+    var im = new Image();
+    im.src = '/artworks/micro/' + id + '.avif';
+    im.onload = function(){ artImages[id] = im; };
+  });
+
+  function drawCover(destCtx, img, cw, ch){
+    var ir = img.naturalWidth / img.naturalHeight;
+    var cr = cw / ch;
+    var sx, sy, sw, sh;
+    if (ir > cr) { sh = img.naturalHeight; sw = sh * cr; sx = (img.naturalWidth - sw) / 2; sy = 0; }
+    else { sw = img.naturalWidth; sh = sw / cr; sx = 0; sy = (img.naturalHeight - sh) / 2; }
+    destCtx.drawImage(img, sx, sy, sw, sh, 0, 0, cw, ch);
   }
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var broadcast = null, nextBroadcastAt = 0, lastArtId = null;
+
+  function scheduleNext(now){
+    nextBroadcastAt = now + 8000 + Math.random() * 10000; // 8-18s, irregular
+  }
+
+  function maybeStartBroadcast(now){
+    if (broadcast || reduced || now < nextBroadcastAt) return;
+    var pool = ART_IDS.filter(function(id){ return artImages[id] && id !== lastArtId; });
+    if (!pool.length) pool = ART_IDS.filter(function(id){ return artImages[id]; });
+    if (!pool.length) { nextBroadcastAt = now + 3000; return; } // nothing loaded yet — retry soon
+    var id = pool[(Math.random() * pool.length) | 0];
+    lastArtId = id;
+    var fadeIn = 350 + Math.random() * 250;
+    var hold = 2000 + Math.random() * 2000;
+    var fadeOut = 300 + Math.random() * 300;
+    broadcast = {
+      img: artImages[id], start: now,
+      fadeIn: fadeIn, hold: hold, fadeOut: fadeOut, total: fadeIn + hold + fadeOut,
+      jitter: 0.85, dropoutUntil: 0
+    };
+  }
+
+  // Signal strength 0..1 for the current instant: an envelope (tune-in /
+  // hold / break-up) with a smoothed random wobble and occasional brief
+  // interference dropouts layered on top, so it never reads as a clean
+  // fade — closer to an unstable analog signal than a slideshow transition.
+  function broadcastStrength(now){
+    var b = broadcast, t = now - b.start, base;
+    if (t < b.fadeIn) base = Math.pow(t / b.fadeIn, 0.6);
+    else if (t < b.fadeIn + b.hold) base = 1;
+    else if (t < b.total) base = 1 - Math.pow((t - b.fadeIn - b.hold) / b.fadeOut, 0.8);
+    else return null;
+
+    var target = 0.7 + Math.random() * 0.3;
+    b.jitter += (target - b.jitter) * 0.25;
+
+    if (now > b.dropoutUntil && Math.random() < 0.02) b.dropoutUntil = now + 80 + Math.random() * 160;
+    var dropoutMul = now < b.dropoutUntil ? 0.15 : 1;
+
+    return Math.max(0, Math.min(1, base * b.jitter * dropoutMul));
+  }
+
+  function renderFrame(now){
+    var w = canvas.width, h = canvas.height, strength = null;
+    if (broadcast) {
+      strength = broadcastStrength(now);
+      if (strength === null) { broadcast = null; scheduleNext(now); }
+    }
+    if (broadcast && broadcast.img.complete && broadcast.img.naturalWidth) {
+      ctx.globalAlpha = Math.max(0, Math.min(1, 0.12 + strength * 0.40)); // restrained cap: never near-clean
+      drawCover(ctx, broadcast.img, w, h);
+      ctx.globalAlpha = 1;
+    } else {
+      ctx.fillStyle = '#000';
+      ctx.fillRect(0, 0, w, h);
+    }
+    generateNoise();
+    // Static only ever thins, never clears — floor keeps grain/scanlines
+    // visibly dominant even at peak signal strength.
+    ctx.globalAlpha = strength !== null ? Math.max(0.5, 1 - strength * 0.45) : 1;
+    ctx.drawImage(noiseCanvas, 0, 0);
+    ctx.globalAlpha = 1;
+  }
+
   var running = false, rafId = null, lastTs = 0;
   var FRAME_MS = 1000 / 14; // ~14fps: enough for convincing snow, cheap to run
 
   function tick(ts){
     if (!running) return;
-    if (ts - lastTs >= FRAME_MS) { paintNoise(); lastTs = ts; }
+    if (ts - lastTs >= FRAME_MS) { maybeStartBroadcast(ts); renderFrame(ts); lastTs = ts; }
     rafId = requestAnimationFrame(tick);
   }
   function start(){
@@ -1290,8 +1386,9 @@ addEventListener('DOMContentLoaded', () => {
     if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
   }
 
+  scheduleNext(performance.now());
   if (sizeCanvas()) {
-    paintNoise(); // always show at least one frame, even under reduced-motion
+    renderFrame(performance.now()); // always show at least one frame, even under reduced-motion
     start();
   }
 
@@ -1306,7 +1403,7 @@ addEventListener('DOMContentLoaded', () => {
   var resizeT;
   window.addEventListener('resize', function(){
     clearTimeout(resizeT);
-    resizeT = setTimeout(function(){ if (sizeCanvas()) paintNoise(); }, 200);
+    resizeT = setTimeout(function(){ if (sizeCanvas()) renderFrame(performance.now()); }, 200);
   }, { passive: true });
 })();
 </script>
