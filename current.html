@@ -112,7 +112,8 @@ addEventListener('DOMContentLoaded', () => {
     margin-top:6px;font-size:11px;letter-spacing:.18em;color:var(--dim);
   }
   #hud-count{
-    top:calc(env(safe-area-inset-top, 0px) + 22px);right:26px;text-align:right;
+    /* Sits just below the global MENU button, which owns the top-right corner. */
+    top:calc(env(safe-area-inset-top, 0px) + 70px);right:26px;text-align:right;
     font-size:11px;letter-spacing:.18em;color:var(--dim);
   }
   #hud-year{
@@ -253,42 +254,9 @@ addEventListener('DOMContentLoaded', () => {
     position:absolute;width:1px;height:1px;overflow:hidden;
     clip:rect(0 0 0 0);white-space:nowrap;
   }
-  /* ---------- mobile rooms sheet ---------- */
-  #hud-rooms{
-    display:none;
-    right:26px;bottom:calc(env(safe-area-inset-bottom, 0px) + 62px);
-    font-size:10px;letter-spacing:.2em;
-  }
-  #hud-rooms button{
-    font:inherit;letter-spacing:inherit;color:var(--dim);
-    background:none;border:none;padding:0;cursor:pointer;
-  }
-  #hud-rooms button:hover,#hud-rooms.open button{color:var(--accent)}
-  #rooms-sheet{
-    position:fixed;left:0;right:0;bottom:0;z-index:8;
-    background:rgba(12,10,9,0.97);backdrop-filter:blur(10px);
-    border-top:1px solid var(--frame);
-    padding:22px 26px calc(env(safe-area-inset-bottom, 0px) + 26px);
-    transform:translateY(100%);transition:transform .3s ease;
-    display:flex;flex-direction:column;gap:16px;
-  }
-  #rooms-sheet.open{transform:translateY(0)}
-  #rooms-sheet a{
-    font-size:12px;letter-spacing:.2em;color:var(--ink);
-    text-decoration:none;
-    display:block;padding:4px 6px;margin:-4px -6px;
-    transition:background-color .15s ease,transform .15s ease;
-  }
-  /* Same touch-feedback vocabulary as the homepage door-nav: this sheet is
-     mobile-only (see the max-width:640px block below), so it needs its
-     own tap response since there's no hover state to carry it. */
-  @media (hover:none) and (pointer:coarse){
-    #rooms-sheet a:active{
-      background-color:color-mix(in srgb, var(--accent) 6%, transparent);
-      transform:scale(.98);
-    }
-  }
-  #rooms-sheet .sub{display:block;margin-top:3px;font-size:10px;letter-spacing:.14em;color:var(--dim)}
+  /* The former mobile ROOMS sheet was removed: the global MENU (site-menu.js)
+     now provides the full navigation on every viewport, and it is more
+     complete than the four-link sheet this replaced. */
   @media (max-width:640px){
     #hud-name .what{display:none}
     #hud-count{display:none}
@@ -297,10 +265,6 @@ addEventListener('DOMContentLoaded', () => {
     #hud-hint{width:88vw;max-width:340px}
     #hud-hint .hint-primary{white-space:normal;font-size:10px;line-height:1.5}
     #hud-exit,#hud-wing{display:none}
-    #hud-rooms{display:block}
-  }
-  @media (min-width:641px){
-    #rooms-sheet{display:none}
   }
   @media (prefers-reduced-motion: reduce){
     #threshold .who,#threshold .line{animation:none;opacity:1}
@@ -345,13 +309,6 @@ addEventListener('DOMContentLoaded', () => {
 <div class="hud" id="hud-end">THE RIVER ENDS AT TODAY&nbsp;&nbsp;—&nbsp;&nbsp;<a href="the-studio.html">[ THE STUDIO → ]</a></div>
 <nav class="hud" id="hud-exit" aria-label="Site"><a href="index.html">[ THE MUSEUM → ]</a><br><a href="archive.html">[ THE ARCHIVE → ]</a><br><a href="privacy.html">[ PRIVACY → ]</a><br><a href="sitemap.html">[ SITEMAP → ]</a></nav>
 <nav class="hud" id="hud-wing" aria-label="Rooms"><a href="guernica-passage.html">[ THE GUERNICA PASSAGE → ]</a><br><a href="flooded-wing.html">[ THE FLOODED WING → ]</a></nav>
-<div class="hud" id="hud-rooms"><button id="rooms-toggle" aria-expanded="false" aria-controls="rooms-sheet">[ ROOMS ]</button></div>
-<div id="rooms-sheet" aria-hidden="true">
-  <a href="index.html">[ THE MUSEUM → ]<span class="sub">RETURN TO THE FRONT DOOR</span></a>
-  <a href="archive.html">[ THE ARCHIVE → ]<span class="sub">CATALOG, SEARCH, BROWSE, CATALOG DATA</span></a>
-  <a href="guernica-passage.html">[ THE GUERNICA PASSAGE → ]<span class="sub">232 WORKS · ONE STRUCTURE</span></a>
-  <a href="flooded-wing.html">[ THE FLOODED WING → ]<span class="sub">A ROOM FOR WHAT IS MISSING</span></a>
-</div>
 
 <div id="card">
   <a id="card-link" href="#">
@@ -835,20 +792,6 @@ addEventListener('DOMContentLoaded', () => {
     if (performance.now() - lastTick > 600) render(performance.now());
   }, 400);
 
-  // ---------- mobile rooms sheet ----------
-  const roomsToggle = document.getElementById('rooms-toggle');
-  const roomsSheet = document.getElementById('rooms-sheet');
-  const hudRooms = document.getElementById('hud-rooms');
-  if (roomsToggle) {
-    roomsToggle.addEventListener('click', () => {
-      const open = roomsSheet.classList.toggle('open');
-      hudRooms.classList.toggle('open', open);
-      roomsToggle.setAttribute('aria-expanded', open);
-      roomsSheet.setAttribute('aria-hidden', !open);
-      roomsToggle.textContent = open ? '[ CLOSE ]' : '[ ROOMS ]';
-    });
-  }
-
   const threshold = document.getElementById('threshold');
   const enter = () => { threshold.classList.add('gone'); scheduleDemo(); };
   setTimeout(enter, REDUCED ? 400 : 2600);
@@ -880,5 +823,6 @@ addEventListener('DOMContentLoaded', () => {
   }, {passive:true});
 })();
 </script>
+<script src="/_shared/site-menu.js" defer></script>
 </body>
 </html>
