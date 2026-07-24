@@ -20,6 +20,13 @@
   RewriteRule ^websites\.html$ /about.html [R=301,L]
   RewriteRule ^for-artists\.html$ /about.html [R=301,L]
 
+  # Old archive/portfolio/career pages (removed/replaced 2026-05-26)
+  RewriteRule ^art\.html$ /archive.html [R=301,L]
+  RewriteRule ^portfolio\.html$ /working-history.html [R=301,L]
+  RewriteRule ^design\.html$ /working-history.html [R=301,L]
+  RewriteRule ^contact\.html$ /about.html [R=301,L]
+  RewriteRule ^ai\.html$ /working-history.html [R=301,L]
+
   # ------------------------------------------
   # Share artwork images with /old/ subfolder
   # Requests from the old site for images are
