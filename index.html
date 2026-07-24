@@ -1270,14 +1270,38 @@ addEventListener('DOMContentLoaded', () => {
     return true;
   }
 
+  // Slow-drifting grain profile so the static's density/brightness never
+  // reads as the same texture twice — an organic wander, not a per-frame
+  // reseed, so it still feels like one continuous signal.
+  var grainThreshold = 235, grainMul = 0.5;
+  function driftGrain(){
+    grainThreshold += (200 + Math.random() * 50 - grainThreshold) * 0.02;
+    grainMul += (0.35 + Math.random() * 0.35 - grainMul) * 0.02;
+  }
+
   function generateNoise(){
     if (!noiseData) return;
-    var d = noiseData;
+    driftGrain();
+    var d = noiseData, threshold = grainThreshold, mul = grainMul;
     for (var i = 0; i < d.length; i += 4) {
       var v = (Math.random() * 255) | 0;
-      if (v < 235) v = (v * 0.5) | 0; // dark-biased so it reads as a lit CRT tube, not flat gray
+      if (v < threshold) v = (v * mul) | 0; // dark-biased so it reads as a lit CRT tube, not flat gray
       d[i] = d[i + 1] = d[i + 2] = v;
       d[i + 3] = 255;
+    }
+    // Rare brief interference band: a lighter horizontal strip, like a
+    // rolling sync glitch, for occasional texture variety.
+    if (Math.random() < 0.01) {
+      var w = canvas.width, h = canvas.height;
+      var bandY = (Math.random() * h) | 0;
+      var bandH = Math.max(1, (h * (0.02 + Math.random() * 0.05)) | 0);
+      for (var y = bandY; y < Math.min(h, bandY + bandH); y++) {
+        for (var x = 0; x < w; x++) {
+          var idx = (y * w + x) * 4;
+          var bv = 150 + ((Math.random() * 105) | 0);
+          d[idx] = d[idx + 1] = d[idx + 2] = bv;
+        }
+      }
     }
     noiseCtx.putImageData(noiseImgData, 0, 0);
   }
@@ -1332,7 +1356,7 @@ addEventListener('DOMContentLoaded', () => {
 
   function scheduleNext(now){
     preloadNextImage(); // lazy-load the next image
-    nextBroadcastAt = now + 200 + Math.random() * 1000; // 0.2-1.2s static gap, much less static, high variance
+    nextBroadcastAt = now + 100 + Math.random() * 400; // 0.1-0.5s static gap, brief burst between works
   }
 
   function maybeStartBroadcast(now){
@@ -1343,7 +1367,7 @@ addEventListener('DOMContentLoaded', () => {
     var id = pool[(Math.random() * pool.length) | 0];
     lastArtId = id;
     var fadeIn = 400 + Math.random() * 800; // 400-1200ms tune-in, wider spread
-    var hold = 250 + Math.random() * 1350; // 250-1600ms hold, much wider spread
+    var hold = 2500 + Math.random() * 3000; // 2.5-5.5s hold, artwork stays on screen much longer
     var fadeOut = 200 + Math.random() * 500; // 200-700ms break-up, wider spread
     broadcast = {
       img: artImages[id], start: now,
@@ -1379,7 +1403,7 @@ addEventListener('DOMContentLoaded', () => {
       if (strength === null) { broadcast = null; scheduleNext(now); }
     }
     if (broadcast && broadcast.img.complete && broadcast.img.naturalWidth) {
-      ctx.globalAlpha = Math.max(0, Math.min(1, 0.12 + strength * 0.40)); // restrained cap: never near-clean
+      ctx.globalAlpha = Math.max(0, Math.min(1, 0.15 + strength * 0.50)); // restrained cap: never fully clean
       drawCover(ctx, broadcast.img, w, h);
       ctx.globalAlpha = 1;
     } else {
@@ -1387,9 +1411,9 @@ addEventListener('DOMContentLoaded', () => {
       ctx.fillRect(0, 0, w, h);
     }
     generateNoise();
-    // Static only ever thins, never clears — floor keeps grain/scanlines
-    // visibly dominant even at peak signal strength.
-    ctx.globalAlpha = strength !== null ? Math.max(0.5, 1 - strength * 0.45) : 1;
+    // Static thins noticeably at peak signal but never fully clears —
+    // floor keeps a trace of grain/scanlines even at peak strength.
+    ctx.globalAlpha = strength !== null ? Math.max(0.28, 1 - strength * 0.62) : 1;
     ctx.drawImage(noiseCanvas, 0, 0);
     ctx.globalAlpha = 1;
   }
