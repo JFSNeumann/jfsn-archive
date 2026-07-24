@@ -691,6 +691,17 @@ addEventListener('DOMContentLoaded', () => {
     @keyframes signature-in{to{opacity:1;transform:translateY(0)}}
   }
 
+  /* TV prop in bottom-left corner — desktop only, mirrors the Jeff overlay.
+     Static for now (no animation); the screen stays dark from the PNG itself. */
+  .tv-hero-overlay{display:none}
+  @media (min-width:1200px){
+    .tv-hero-overlay{
+      display:block;position:absolute;bottom:20px;left:20px;z-index:998;
+      width:clamp(120px,14vw,190px);height:auto;
+      pointer-events:none;user-select:none;
+    }
+  }
+
   /* ---------- site footer ---------- */
   footer.site-footer{border-top:1px solid var(--faint);margin-top:8em;padding:4em clamp(20px,6vw,80px) 2em;text-align:center}
   footer.site-footer .stat{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);margin:2em 0}
@@ -744,6 +755,7 @@ addEventListener('DOMContentLoaded', () => {
     </div>
 
     <img src="/assets/images/me-for-website.avif" alt="Jeff" class="me-hero-overlay" width="100" height="160" decoding="async">
+    <img src="/assets/images/tv.png" alt="" aria-hidden="true" class="tv-hero-overlay" width="570" height="380" decoding="async" loading="lazy">
   </section>
 
   <section class="beyond">
