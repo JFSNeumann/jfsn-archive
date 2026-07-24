@@ -659,6 +659,12 @@ addEventListener('DOMContentLoaded', () => {
     #wing-l img{animation:wing-drift-l 14s ease-in-out infinite}
     #wing-r img{animation:wing-drift-r 16s ease-in-out infinite}
   }
+  /* Wing glow effects: 5 distinct color signatures per artwork */
+  #wing-r img.glow-1{filter:drop-shadow(0 0 20px #ff006e) drop-shadow(8px 8px 0px #00f5ff)}
+  #wing-r img.glow-2{filter:drop-shadow(0 0 30px #9d00ff) drop-shadow(0 0 15px #39ff14)}
+  #wing-r img.glow-3{filter:drop-shadow(0 0 25px #ff6b35) drop-shadow(0 0 15px #f7931e) drop-shadow(-10px 10px 0 #ff006e)}
+  #wing-r img.glow-4{filter:drop-shadow(0 0 28px #00d4ff) drop-shadow(-12px 0 0 #ff0080) drop-shadow(12px 0 0 #ffaa00)}
+  #wing-r img.glow-5{filter:drop-shadow(0 0 20px #ff1493) drop-shadow(0 0 10px #00ffe0) drop-shadow(0 0 30px rgba(255,20,147,0.5))}
   /* short desktop windows: the poster scales as one unit — never crops */
   @media (min-width:1200px) and (max-height:820px){
     .threshold h1{font-size:min(6.2vw,78px)}
@@ -1204,6 +1210,23 @@ addEventListener('DOMContentLoaded', () => {
         return id;
       }
 
+      function hashId(id){
+        let hash = 0;
+        for (let i = 0; i < id.length; i++){
+          hash = ((hash << 5) - hash) + id.charCodeAt(i);
+          hash = hash & hash; // Convert to 32bit int
+        }
+        return Math.abs(hash) % 5 + 1; // 1-5
+      }
+
+      function applyGlow(img){
+        const id = img.dataset.currentId;
+        if (!id) return;
+        const glowClass = 'glow-' + hashId(id);
+        img.className = img.className.replace(/glow-\d/, '');
+        img.classList.add(glowClass);
+      }
+
       function cycle(img, exclude){
         const id = pick(exclude);
         const nextSrc = '/artworks/medium/' + id + '.avif';
@@ -1213,6 +1236,7 @@ addEventListener('DOMContentLoaded', () => {
           setTimeout(() => {
             img.src = nextSrc;
             img.dataset.currentId = id;
+            applyGlow(img);
             requestAnimationFrame(() => { img.style.opacity = '1'; });
           }, FADE_MS);
         };
@@ -1227,6 +1251,7 @@ addEventListener('DOMContentLoaded', () => {
       }, 4000);
       setTimeout(() => {
         cycle(imgR, imgL.dataset.currentId);
+        applyGlow(imgR); // Apply initial glow
         setInterval(() => cycle(imgR, imgL.dataset.currentId), 11000);
       }, 9500);
     })
