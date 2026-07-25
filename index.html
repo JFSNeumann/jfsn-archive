@@ -823,6 +823,7 @@ addEventListener('DOMContentLoaded', () => {
 </main>
 
 <footer class="site-footer">
+  <canvas id="footer-river" role="img" aria-label="The archive: 1,086 works across fifty years, arranged by decade. Each color represents a unique artwork." style="display:block;width:100%;height:20px;margin-bottom:24px;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);"></canvas>
   <div class="caps room-breadcrumb">YOU ARE IN: <span>THE MUSEUM</span></div>
   <div class="stat">1,086 WORKS · 50 YEARS · 1974–PRESENT · CLEVELAND, OH</div>
   <nav aria-label="Site">
@@ -836,6 +837,46 @@ addEventListener('DOMContentLoaded', () => {
   <div class="stat">© <span id="footer-year"></span> JEFFREY F. S. NEUMANN</div>
 </footer>
 <script>document.getElementById('footer-year').textContent = new Date().getFullYear();</script>
+
+<script>
+// Footer river: static color-strip visualization of all 1,086 works
+(function(){
+  const canvas = document.getElementById('footer-river');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  fetch('/config/current.json', {cache:'no-cache'})
+    .then(r => r.json())
+    .then(works => {
+      function draw(){
+        const DPR = Math.min(window.devicePixelRatio || 1, 2);
+        const W = canvas.offsetWidth;
+        const H = 20;
+
+        canvas.width = W * DPR;
+        canvas.height = H * DPR;
+        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+
+        const barW = W / works.length;
+
+        works.forEach((w, i) => {
+          const n = parseInt(w.c.slice(1), 16);
+          let r = n >> 16 & 255, g = n >> 8 & 255, b = n & 255;
+          // lift near-black works just enough to read
+          const lum = (0.2126*r + 0.7152*g + 0.0722*b) / 255;
+          if (lum < 0.07) { r += 26; g += 24; b += 22; }
+
+          ctx.fillStyle = `rgb(${r},${g},${b})`;
+          ctx.fillRect(i * barW, 0, barW + 1, H);
+        });
+      }
+
+      draw();
+      window.addEventListener('resize', draw, {passive:true});
+    })
+    .catch(() => {}); // fail silent
+})();
+</script>
 
 <script>
 /* Threshold animation on click (#1): transforms "clicking" into "entering" */
