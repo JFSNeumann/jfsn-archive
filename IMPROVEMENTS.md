@@ -1,5 +1,5 @@
 # JFSN — Improvement List
-**Updated:** 2026-07-25 (Audio player Phase 1 + Phase 2: oral history integration)
+**Updated:** 2026-07-25 (Audio discovery Phase 3: archive filter, timeline highlights, related works)
 
 A living list. Add to it. Cross things off. This is the backlog.
 
@@ -38,6 +38,8 @@ Nothing currently queued.
 ## ✅ Completed
 
 History lives in `git log` — `git log --oneline --all` for the full record. A few recent highlights for orientation:
+
+- **2026-07-25 (audio discovery Phase 3)** — **Three discovery features for audio-enabled artworks.** (1) **Archive filter** (`8a0c936c`): New "HAS AUDIO" filter in archive.html showing 2 audio works; integrates with existing chip UI and filtering system. (2) **Timeline highlights** (`a3e1fd68`): Orange accent markers above audio works in The Current's river visualization (main canvas + minimap); visual distinction as works flow through timeline. (3) **Related audio works** (`433efae9`): "Other Works with Audio" section on artwork pages showing up to 6 related pieces in grid layout with thumbnails/title/year/material; hidden if viewing non-audio work. All features auto-scale as more audio recordings are added to config. Deployed live jfsn.com, smoke tests passed.
 
 - **2026-07-25 (audio player Phase 1 + Phase 2)** — **Built native HTML5 audio player component + wired to config metadata.** (1) **Phase 1** (`479cb5e7`): Minimal, accessible player component (play/pause, timeline scrubbing, volume, keyboard shortcuts: Space/Arrow keys). Built `_shared/audio-player.js` (~170 lines) and `_shared/audio-player.css` (~140 lines). Added to artwork.html with hardcoded `/audio/who-i-am.m4a`. Keyboard accessible, touch-friendly, respects `prefers-reduced-motion`. (2) **Phase 2** (`f40a5398`): Made player data-driven. Added audio metadata fields to config/current.json (`audio`: filename, `audio_title`: display name). Updated artwork.html JS to read config and show/hide player dynamically — appears only on artworks with audio metadata (currently art0379 = who-i-am.m4a). Fixed CSS bug where HTML `hidden` attribute wasn't hiding the player (`display: flex` override). CACHE_V bumped for CSS rebuild. (3) **Live verification:** art0379 shows player with correct 33.8s duration; art1086 (no audio) hides player. Commits deployed to HostGator, all smoke tests passed.
 
