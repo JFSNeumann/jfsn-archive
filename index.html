@@ -325,84 +325,42 @@ addEventListener('DOMContentLoaded', () => {
   /* Ghosted preview: the room's own image, faint, behind its own name */
   #doors a::after{
     content:'';position:absolute;inset:0;z-index:-1;
-    background-image:var(--preview-url);background-size:cover;background-position:center;
-    filter:grayscale(55%);opacity:0;
-    transition:opacity .5s ease,filter .5s ease;
+    background-image:var(--preview-url);background-size:100% 500%;background-position:0 0%;
+    opacity:0;
+    transition:opacity .5s ease;
   }
   #doors a:hover::after,
-  #doors a:focus-visible::after{opacity:.1;filter:grayscale(25%)}
+  #doors a:focus-visible::after{opacity:.1}
 
-  /* DOORWAY LIGHT LEAKS: per-room atmospheric previews
-     The generic ::after above fills the whole row as a rectangular grayscale
-     cover. Here it becomes each room's own light: the preview image bled large
-     and soft off the inner/right edge, feathered by a radial mask (no rectangle),
-     and screen-blended so colour leaks out of dark while shadows stay black.
-     Each door's tone/opacity/mask is tuned to the room's character. */
+  /* DOORWAY LIGHT LEAKS: per-room composite image bands
+     The composite image (jfsn-hover-composite.avif) contains five equal horizontal bands
+     in order: Current, Guernica, Flooded, Hall, Studio. Each link shows its band via
+     background-position offsets at 100% width × 500% height. */
 
-  /* I — THE CURRENT: river flow, warm-to-cool gradient */
+  /* I — THE CURRENT */
   #doors a:nth-child(1)::after{
-    inset:-50% -22% -50% 26%;
-    background-size:cover;background-position:center right;
-    filter:blur(11px) saturate(1.15);
-    -webkit-mask-image:radial-gradient(140% 88% at 88% 50%, #000 0%, rgba(0,0,0,.38) 44%, transparent 75%);
-    mask-image:radial-gradient(140% 88% at 88% 50%, #000 0%, rgba(0,0,0,.38) 44%, transparent 75%);
-    mix-blend-mode:screen;
-    transition:opacity .6s ease;
+    background-position:0 0%;
   }
-  #doors a:nth-child(1):hover::after,
-  #doors a:nth-child(1):focus-visible::after{opacity:.18;filter:blur(11px) saturate(1.15)}
 
-  /* II — THE GUERNICA PASSAGE: heavy, focused, cool blacks */
+  /* II — THE GUERNICA PASSAGE */
   #doors a:nth-child(2)::after{
-    inset:-55% -18% -55% 30%;
-    background-size:cover;background-position:right center;
-    filter:blur(12px) saturate(.95) brightness(0.92);
-    -webkit-mask-image:radial-gradient(125% 96% at 90% 50%, #000 0%, rgba(0,0,0,.45) 40%, transparent 74%);
-    mask-image:radial-gradient(125% 96% at 90% 50%, #000 0%, rgba(0,0,0,.45) 40%, transparent 74%);
-    mix-blend-mode:screen;
-    transition:opacity .6s ease;
+    background-position:0 25%;
   }
-  #doors a:nth-child(2):hover::after,
-  #doors a:nth-child(2):focus-visible::after{opacity:.12;filter:blur(12px) saturate(.95) brightness(0.92)}
 
-  /* III — THE FLOODED WING: withdrawn, nearly imperceptible */
+  /* III — THE FLOODED WING */
   #doors a:nth-child(3)::after{
-    inset:-60% -15% -60% 35%;
-    background-size:cover;background-position:right center;
-    filter:blur(16px) saturate(.8) brightness(0.88) opacity(0.7);
-    -webkit-mask-image:radial-gradient(135% 100% at 92% 50%, #000 0%, rgba(0,0,0,.32) 45%, transparent 78%);
-    mask-image:radial-gradient(135% 100% at 92% 50%, #000 0%, rgba(0,0,0,.32) 45%, transparent 78%);
-    mix-blend-mode:screen;
-    transition:opacity .7s ease;
+    background-position:0 50%;
   }
-  #doors a:nth-child(3):hover::after,
-  #doors a:nth-child(3):focus-visible::after{opacity:.08;filter:blur(16px) saturate(.8) brightness(0.88) opacity(0.7)}
 
-  /* IV — THE HALL OF OPENINGS: multiplicity, active but restrained */
+  /* IV — THE HALL OF OPENINGS */
   #doors a:nth-child(4)::after{
-    inset:-48% -20% -48% 27%;
-    background-size:cover;background-position:center right;
-    filter:blur(10px) saturate(1.05) brightness(1.02);
-    -webkit-mask-image:radial-gradient(132% 90% at 89% 50%, #000 0%, rgba(0,0,0,.4) 42%, transparent 75%);
-    mask-image:radial-gradient(132% 90% at 89% 50%, #000 0%, rgba(0,0,0,.4) 42%, transparent 75%);
-    mix-blend-mode:screen;
-    transition:opacity .6s ease;
+    background-position:0 75%;
   }
-  #doors a:nth-child(4):hover::after,
-  #doors a:nth-child(4):focus-visible::after{opacity:.15;filter:blur(10px) saturate(1.05) brightness(1.02)}
 
-  /* V — THE STUDIO: warm, welcoming, brightest threshold */
+  /* V — THE STUDIO */
   #doors a:nth-child(5)::after{
-    inset:-55% -20% -55% 28%;
-    background-size:cover;background-position:right center;
-    filter:blur(9px) saturate(1.1);
-    -webkit-mask-image:radial-gradient(130% 95% at 92% 50%, #000 0%, rgba(0,0,0,.42) 42%, transparent 76%);
-    mask-image:radial-gradient(130% 95% at 92% 50%, #000 0%, rgba(0,0,0,.42) 42%, transparent 76%);
-    mix-blend-mode:screen;
-    transition:opacity .6s ease;
+    background-position:0 100%;
   }
-  #doors a:nth-child(5):hover::after,
-  #doors a:nth-child(5):focus-visible::after{opacity:.2;filter:blur(9px) saturate(1.1)}
 
   #doors a .sub{
     font-size:9px;letter-spacing:.2em;color:var(--dim);
@@ -813,11 +771,11 @@ addEventListener('DOMContentLoaded', () => {
     <em>1,086 works, fifty years, kept and open.</em></p>
 
   <nav id="doors" class="reveal-up" aria-label="Rooms">
-    <a href="current.html" data-preview-image="/artworks/current.avif" style="--key:linear-gradient(#b23a3a,#d8c9a8,#5a7d8c,#c8b44a)"><span class="num" aria-hidden="true">I</span>THE CURRENT<span class="sub">FIFTY YEARS AS ONE RIVER — BEGIN HERE</span><span class="go">→</span></a>
-    <a href="guernica-passage.html" data-preview-image="/artworks/guernica.avif" style="--key:#4a4e5f"><span class="num" aria-hidden="true">II</span>THE GUERNICA PASSAGE<span class="sub">232 WORKS · ONE STRUCTURE · THIRTY YEARS</span><span class="go">→</span></a>
-    <a href="flooded-wing.html" data-preview-image="/artworks/flooded.avif" style="--key:#2e4451"><span class="num" aria-hidden="true">III</span>THE FLOODED WING<span class="sub">A ROOM FOR WHAT IS MISSING</span><span class="go">→</span></a>
-    <a href="hall-of-openings.html" data-preview-image="/artworks/hall.avif" style="--key:rgba(255,102,0,.8)"><span class="num" aria-hidden="true">IV</span>THE HALL OF OPENINGS<span class="sub">250 IMAGINED EXHIBITIONS — EVERY ONE FLAGGED</span><span class="go">→</span></a>
-    <a href="the-studio.html" data-preview-image="/artworks/studio.avif" style="--key:#d8cfb8"><span class="num" aria-hidden="true">V</span>THE STUDIO<span class="sub">THE LAST ROOM — WHERE IT STANDS NOW</span><span class="go">→</span></a>
+    <a href="current.html" data-preview-image="/assets/images/jfsn-hover-composite.avif" style="--key:linear-gradient(#b23a3a,#d8c9a8,#5a7d8c,#c8b44a)"><span class="num" aria-hidden="true">I</span>THE CURRENT<span class="sub">FIFTY YEARS AS ONE RIVER — BEGIN HERE</span><span class="go">→</span></a>
+    <a href="guernica-passage.html" data-preview-image="/assets/images/jfsn-hover-composite.avif" style="--key:#4a4e5f"><span class="num" aria-hidden="true">II</span>THE GUERNICA PASSAGE<span class="sub">232 WORKS · ONE STRUCTURE · THIRTY YEARS</span><span class="go">→</span></a>
+    <a href="flooded-wing.html" data-preview-image="/assets/images/jfsn-hover-composite.avif" style="--key:#2e4451"><span class="num" aria-hidden="true">III</span>THE FLOODED WING<span class="sub">A ROOM FOR WHAT IS MISSING</span><span class="go">→</span></a>
+    <a href="hall-of-openings.html" data-preview-image="/assets/images/jfsn-hover-composite.avif" style="--key:rgba(255,102,0,.8)"><span class="num" aria-hidden="true">IV</span>THE HALL OF OPENINGS<span class="sub">250 IMAGINED EXHIBITIONS — EVERY ONE FLAGGED</span><span class="go">→</span></a>
+    <a href="the-studio.html" data-preview-image="/assets/images/jfsn-hover-composite.avif" style="--key:#d8cfb8"><span class="num" aria-hidden="true">V</span>THE STUDIO<span class="sub">THE LAST ROOM — WHERE IT STANDS NOW</span><span class="go">→</span></a>
   </nav>
 
   <!-- Vault Path Elevation (#7): THE RESEARCH PATH — parallel journey, equal hierarchy -->
