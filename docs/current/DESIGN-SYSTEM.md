@@ -1,7 +1,7 @@
 # JFSN Archive — Design System
 
 **Living design documentation**
-Last verified against live pages: 2026-07-19
+Last verified against live pages: 2026-07-24
 Framework: vanilla HTML/CSS/JS. Each page owns its own inline `<style>`/`<script>` — there is no shared stylesheet or component library (see "Architecture" below).
 Theme: dark "room" — near-black background, warm off-white text, italic serif headlines, single orange accent.
 
@@ -253,6 +253,73 @@ window.addEventListener('scroll', function(){
 
 ---
 
+## Interactive Hover Patterns
+
+### Doors Preview System (index.html)
+The five room-navigation links display ghosted previews from a single composite image (`jfsn-hover-composite.avif`, 1600×1040) on hover and keyboard focus:
+
+```css
+#doors a::after{
+  content:'';position:absolute;inset:0;z-index:-1;
+  background-image:var(--preview-url);
+  background-size:100% 500%;  /* Five bands at full width; height = 5× container */
+  background-position:0 0%;   /* Overridden per link below */
+  opacity:0;
+  transition:opacity .5s ease;
+}
+
+/* Each link reveals its band via background-position offset */
+#doors a:nth-child(1)::after{background-position:0 0%;} /* Current: 18% opacity */
+#doors a:nth-child(2)::after{background-position:0 25%;} /* Guernica: 12% opacity */
+#doors a:nth-child(3)::after{background-position:0 50%;} /* Flooded: 8% opacity (withdrawn) */
+#doors a:nth-child(4)::after{background-position:0 75%;} /* Hall: 15% opacity */
+#doors a:nth-child(5)::after{background-position:0 100%;} /* Studio: 20% opacity (brightest) */
+```
+
+**Per-room opacity on hover:** Each room's preview has distinct intensity reflecting its character — warmest/energy (Current 18%) to most withdrawn/imperceptible (Flooded 8%). Achieved via per-child `:hover/:focus-visible` opacity overrides, not uniform opacity.
+
+**No filters/masks/blend-modes:** Previous design used blur, grayscale, radial masks, and screen blend-mode to create atmospheric "light leaks." Current approach prioritizes simplicity and clarity: single composite asset, pure opacity fade, sharp band transitions.
+
+### Link Underlines (Global)
+All `a:hover` links display orange underlines with improved readability:
+
+```css
+a:hover{
+  color:var(--accent);
+  text-decoration:underline;
+  text-decoration-color:var(--accent);
+  text-decoration-thickness:1px;    /* Thin line, not default */
+  text-underline-offset:3px;        /* Lifts underline away from descenders */
+}
+```
+
+Rationale: Default 2–3px thickness plus zero offset makes underlines interfere with text readability. `1px` thickness + `3px` offset preserves the orange accent cue while keeping text legible.
+
+### Image Hover Fade Masks (index.html, desktop only)
+Center and wing hero images apply directional fade masks on hover, creating a "fading to the edge" effect:
+
+```css
+/* Center work fades right edge on hover */
+#work:hover img{
+  -webkit-mask-image:linear-gradient(to right, #000 0%, #000 70%, transparent 100%);
+  mask-image:linear-gradient(to right, #000 0%, #000 70%, transparent 100%);
+}
+
+/* Left wing fades right-to-left; right wing fades left-to-right */
+#wing-l:hover img{
+  -webkit-mask-image:linear-gradient(to left, #000 0%, #000 70%, transparent 100%);
+  mask-image:linear-gradient(to left, #000 0%, #000 70%, transparent 100%);
+}
+#wing-r:hover img{
+  -webkit-mask-image:linear-gradient(to right, #000 0%, #000 70%, transparent 100%);
+  mask-image:linear-gradient(to right, #000 0%, #000 70%, transparent 100%);
+}
+```
+
+Replaces previous blur/filter approach with clean mask-based transparency. Gated to `@media (min-width:1200px) and (hover:hover)` — no effect on mobile or under `prefers-reduced-motion`.
+
+---
+
 ## Accessibility
 
 - `:focus-visible` is paired with `:hover` on every interactive element, not styled separately — verified across all room-page CSS. Standard outline: `outline:2px solid var(--accent);outline-offset:4px` (2px offset on smaller controls like chips).
@@ -276,6 +343,8 @@ These rules exist independent of whatever the visual theme is and survived the l
 ---
 
 ## Changelog
+
+**2026-07-24** — Added "Interactive Hover Patterns" section documenting: (1) Doors preview composite system (single image, per-room opacity tuning, no masks/filters); (2) Link underline readability improvements (1px thickness, 3px offset); (3) Image hover fade masks (directional mask-image gradients replacing blur). Updated Last Verified date to 2026-07-24.
 
 **2026-07-19** — Full rewrite. The previous version (light "bone-white"/Inter/Tailwind theme, "Stitch June-2026 adoption") did not match any live page — verified by grep across all 14 HTML files (zero `bone-white`, zero `#B84700`, zero real `Inter` usage; the dark `:root` tokens and Playfair/Georgia stack are what's actually there). The previous version's canonical-source claim (CLAUDE.md § "Design System (current — Stitch/Tailwind, light)") pointed to a section that does not exist in CLAUDE.md. Replaced entirely with patterns verified against live page source: color tokens, typography, shadow scale, card-hover language, page anatomy (header.hud, hero/door, scroll-cue, room-veil, back-to-top), and the `_shared/` dead-code finding. Added architecture note explaining there is no shared stylesheet — this was previously undocumented and caused confusion about where to edit for sitewide changes.
 
