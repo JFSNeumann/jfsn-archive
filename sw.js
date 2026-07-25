@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1784984756'; // Mobile UX improvements: search placeholder, filter reflow, grid breakpoint, menu feedback, sticky header
+const CACHE_V  = 'jfsn-1785091200'; // Large-screen audit: expand containers at 2400px+, increase artwork/grid/controls max-width, boost typography ceiling, taller hero
 const PRECACHE = [
   // The 14 live room pages (Museum v2 — the only site that exists today;
   // the old v1 archive, decade pages, and generated theme pages were

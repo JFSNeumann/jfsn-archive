@@ -106,7 +106,7 @@ addEventListener('DOMContentLoaded', () => {
   .prose{
     max-width:clamp(34em,90vw,60em);margin:0 auto;
     font-family:Georgia,'Times New Roman',serif;
-    font-size:clamp(16px,1.9vw,19px);line-height:1.9;color:#b9b1a6;
+    font-size:clamp(16px,1.9vw,22px);line-height:1.9;color:#b9b1a6;
   }
   .prose em{color:var(--ink)}
 
@@ -117,6 +117,9 @@ addEventListener('DOMContentLoaded', () => {
   }
   #vault-hero img{
     display:block;width:100%;height:auto;max-height:45vh;object-fit:cover;object-position:center 100px
+  }
+  @media (min-width:2400px){
+    #vault-hero img{max-height:50vh}
   }
   #vault-hero::after{
     content:'';position:absolute;bottom:0;left:0;right:0;
@@ -178,6 +181,9 @@ addEventListener('DOMContentLoaded', () => {
     margin-top:60px;
   }
   #controls-inner{max-width:1500px;margin:0 auto}
+  @media (min-width:2400px){
+    #controls-inner{max-width:2200px}
+  }
   #search-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;position:relative}
   #search-row::before{
     content:'🔍';position:absolute;left:18px;top:50%;transform:translateY(-50%);
@@ -396,6 +402,9 @@ addEventListener('DOMContentLoaded', () => {
     max-width:1800px;margin:0 auto;
     padding:8vh clamp(20px,6vw,80px) 20vh;
     border-top:1px solid var(--frame);
+  }
+  @media (min-width:2400px){
+    #grid-wrap{max-width:2300px}
   }
   #grid{
     display:grid;
