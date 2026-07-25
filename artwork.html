@@ -116,6 +116,9 @@ addEventListener('DOMContentLoaded', () => {
     box-shadow:0 30px 60px -14px rgba(0,0,0,.75), 0 12px 20px -8px rgba(0,0,0,.5);
     opacity:0;animation:fadeInImage .6s ease-out forwards;
   }
+  @media (max-width:1024px){
+    #stage img{max-height:80vh}
+  }
   @keyframes fadeInImage{
     from{opacity:0}
     to{opacity:1}
@@ -285,6 +288,12 @@ addEventListener('DOMContentLoaded', () => {
     #ledger .row .v{display:inline;margin-right:8px}
     #ledger .row .v:after{content:' · ';color:var(--faint)}
     #ledger .row:last-child .v:after{content:''}
+  }
+  @media (min-width:641px) and (max-width:900px){
+    #ledger .row{display:flex;justify-content:space-between;gap:20px;padding:13px 0;border-bottom:1px solid var(--frame)}
+    #ledger .row .k{display:block;font-size:9px;letter-spacing:.22em;color:var(--faint);text-transform:uppercase;padding-top:3px}
+    #ledger .row .v{display:block;text-align:right;font-family:Georgia,'Times New Roman',serif;font-style:italic}
+    #ledger .row .v:after{content:'';display:none}
   }
 
   /* ---------- lightbox ---------- */
