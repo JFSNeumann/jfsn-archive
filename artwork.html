@@ -89,7 +89,10 @@ addEventListener('DOMContentLoaded', () => {
     display:grid;grid-template-columns:1fr minmax(280px,380px);
     gap:clamp(30px,5vw,70px);align-items:center;
     padding:calc(env(safe-area-inset-top,0px) + 90px) clamp(20px,6vw,80px) 120px;
-    max-width:1500px;margin:0 auto;
+    max-width:1700px;margin:0 auto;
+  }
+  @media (max-width:1600px){
+    main{max-width:1500px}
   }
   @media (max-width:900px){
     main{grid-template-columns:1fr;gap:40px;align-items:start}

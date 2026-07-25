@@ -104,7 +104,7 @@ addEventListener('DOMContentLoaded', () => {
 
   section{padding:0 clamp(20px,6vw,80px)}
   .prose{
-    max-width:34em;margin:0 auto;
+    max-width:clamp(34em,90vw,60em);margin:0 auto;
     font-family:Georgia,'Times New Roman',serif;
     font-size:clamp(16px,1.9vw,19px);line-height:1.9;color:#b9b1a6;
   }
@@ -412,8 +412,11 @@ addEventListener('DOMContentLoaded', () => {
   @media (min-width:1025px) and (max-width:1440px){
     #grid{grid-template-columns:repeat(4,1fr);gap:24px 18px}
   }
-  @media (min-width:1441px){
+  @media (min-width:1441px) and (max-width:1799px){
     #grid{grid-template-columns:repeat(5,1fr);gap:26px 20px}
+  }
+  @media (min-width:1800px){
+    #grid{grid-template-columns:repeat(4,1fr);gap:26px 20px}
   }
   #grid.replacing{
     opacity:.35;animation:gridUpdate .4s ease;
@@ -476,6 +479,11 @@ addEventListener('DOMContentLoaded', () => {
     .card .m,.card .x{opacity:.6;transition:opacity .4s ease .12s}
     .card a:hover .m,.card a:focus-visible .m,
     .card a:hover .x,.card a:focus-visible .x{opacity:1}
+  }
+
+  /* Desktop: show metadata by default, keep hover animations */
+  @media (hover:hover) and (pointer:fine) and (min-width:1441px){
+    .card figcaption{opacity:1;transform:none}
   }
 
   /* Touch press feedback: scale and subtle background on tap */
