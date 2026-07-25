@@ -19,6 +19,7 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/playfair-display-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/_shared/footer-river.css">
+<link rel="stylesheet" href="/_shared/audio-player.css">
 <script>document.documentElement.classList.add('js')</script>
 <style>
   /* room-to-room continuity: fade in on arrival, veil out on internal doors */
@@ -396,6 +397,25 @@ addEventListener('DOMContentLoaded', () => {
       <img id="work-img" alt="Artwork image" decoding="async">
       <figcaption class="caps" id="work-cap"></figcaption>
     </figure>
+  </div>
+
+  <div id="audio-player" data-title="Artist Statement">
+    <div class="audio-controls">
+      <button type="button" data-action="play" aria-label="Play">▶</button>
+      <div class="audio-timeline">
+        <input type="range" data-action="timeline" min="0" max="100" value="0" aria-label="Audio timeline">
+        <div class="audio-time">
+          <span class="audio-time-current">0:00</span>
+          <span>/</span>
+          <span class="audio-time-total">0:00</span>
+        </div>
+      </div>
+    </div>
+    <div class="audio-volume">
+      <span class="audio-volume-label">🔊</span>
+      <input type="range" data-action="volume" min="0" max="1" step="0.05" value="1" aria-label="Volume">
+    </div>
+    <audio src="/audio/who-i-am.m4a" preload="metadata"></audio>
   </div>
 
   <div id="label">
@@ -892,5 +912,6 @@ addEventListener('DOMContentLoaded', () => {
 })();
 </script>
 <script src="/_shared/footer-river-interact.js" defer></script>
+<script src="/_shared/audio-player.js" defer></script>
 </body>
 </html>
