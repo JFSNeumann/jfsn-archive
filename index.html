@@ -665,10 +665,16 @@ addEventListener('DOMContentLoaded', () => {
 
   /* Me overlay in bottom-right corner — desktop only */
   .me-hero-overlay{display:none}
+  /* Snowmann overlay in bottom-right corner — desktop only */
+  .snowmann-hero-overlay{display:none}
   .threshold{position:relative}
   @media (min-width:1200px){
     .me-hero-overlay{
       display:block !important;position:absolute;bottom:20px;right:20px;z-index:999;
+    }
+    .snowmann-hero-overlay{
+      display:block !important;position:absolute;bottom:20px;right:120px;z-index:998;
+      width:clamp(80px,10vw,140px);height:auto;
     }
   }
   /* Signature: the last thing to arrive, like a painter signing the
@@ -783,6 +789,7 @@ addEventListener('DOMContentLoaded', () => {
         <canvas class="tv-static"></canvas>
       </div>
     </div>
+    <img src="/assets/images/mr-snowmann.png" alt="" class="snowmann-hero-overlay" width="291" height="426" decoding="async" loading="lazy" aria-hidden="true">
   </section>
 
   <section class="beyond">
