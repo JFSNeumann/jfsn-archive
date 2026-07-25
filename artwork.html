@@ -553,6 +553,17 @@ addEventListener('DOMContentLoaded', () => {
   // PILOT — creator voice for this one work only (see #creator-voice above).
   if (w.i === 'art0518') document.getElementById('creator-voice').hidden = false;
 
+  // Audio player: show/hide based on config metadata
+  const audioPlayer = document.getElementById('audio-player');
+  if (w.audio) {
+    const audioEl = audioPlayer.querySelector('audio');
+    audioEl.src = '/audio/' + w.audio;
+    audioPlayer.dataset.title = w.audio_title || 'Artist Statement';
+    audioPlayer.hidden = false;
+  } else {
+    audioPlayer.hidden = true;
+  }
+
   // ---------- prev / next walk (chronological, same order as The Current) ----------
   const prev = document.getElementById('prev');
   const next = document.getElementById('next');

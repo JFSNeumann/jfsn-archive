@@ -12,6 +12,10 @@
   font-size: 13px;
 }
 
+#audio-player[hidden] {
+  display: none !important;
+}
+
 /* Controls row */
 #audio-player .audio-controls {
   display: flex;
