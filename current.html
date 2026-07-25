@@ -698,6 +698,12 @@ addEventListener('DOMContentLoaded', () => {
       ctx.fillStyle = w.fill;
       ctx.fillRect(x, y, SW, h);
 
+      // audio marker — subtle highlight line for works with audio
+      if (w.audio && ent > 0.1) {
+        ctx.fillStyle = `rgba(255,102,0,${0.6 * ent})`;
+        ctx.fillRect(x, y - 2.5, SW, 2);
+      }
+
       // reflection
       ctx.globalAlpha = 0.10 * ent;
       ctx.fillRect(x, MIDY + h / 2 + wave + 12, SW, h * 0.4);
@@ -740,6 +746,12 @@ addEventListener('DOMContentLoaded', () => {
       mctx.fillStyle = works[i].fill;
       mctx.globalAlpha = 0.5;
       mctx.fillRect(i / N * miniW, 5, Math.max(1, miniW / N), 12);
+      // audio marker on minimap
+      if (works[i].audio) {
+        mctx.fillStyle = 'rgba(255,102,0,0.8)';
+        mctx.globalAlpha = 0.8;
+        mctx.fillRect(i / N * miniW, 3.5, Math.max(1, miniW / N), 1.5);
+      }
     }
     mctx.globalAlpha = 1;
     // current-decade segment glows on the strip — the timeline itself
