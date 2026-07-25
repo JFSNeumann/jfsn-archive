@@ -768,6 +768,10 @@ addEventListener('DOMContentLoaded', () => {
           <button type="button" class="caps label" aria-expanded="false" aria-controls="chips-orientation">ORIENTATION<span class="active-badge">0</span></button>
           <div class="chips" id="chips-orientation"></div>
         </div>
+        <div class="fgroup collapsed" data-key="audio">
+          <button type="button" class="caps label" aria-expanded="false" aria-controls="chips-audio">AUDIO<span class="active-badge">0</span></button>
+          <div class="chips" id="chips-audio"></div>
+        </div>
         <div class="fgroup collapsed" data-key="reverse">
           <button type="button" class="caps label" aria-expanded="false" aria-controls="chips-reverse">COLLECTION<span class="active-badge">0</span></button>
           <div class="chips" id="chips-reverse"></div>
@@ -865,7 +869,7 @@ addEventListener('DOMContentLoaded', () => {
   const MATERIALS = materialsData.materials ? materialsData.materials.sort((a, b) => b.count - a.count) : [];
   const MOTIFS = motifsData.motifs ? motifsData.motifs.filter(m => m.count >= 150).sort((a, b) => b.count - a.count) : [];
 
-  const state = { medium: new Set(), decade: new Set(), orientation: new Set(), theme: new Set(), material: new Set(), motif: new Set(), reverse: new Set(), q: '', sort: 'year-desc' };
+  const state = { medium: new Set(), decade: new Set(), orientation: new Set(), audio: new Set(), theme: new Set(), material: new Set(), motif: new Set(), reverse: new Set(), q: '', sort: 'year-desc' };
   const PAGE = 60;
   let shown = PAGE;
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -910,6 +914,8 @@ addEventListener('DOMContentLoaded', () => {
   buildChips('medium', MEDIA, v => v.toUpperCase());
   buildChips('decade', DECADES, v => v + 'S');
   buildChips('orientation', ORIS, v => ORI_LABEL[v]);
+  const AUDIO_COUNT = works.filter(w => w.audio).length;
+  if (AUDIO_COUNT > 0) buildChips('audio', [{ name: 'yes', count: AUDIO_COUNT }], v => 'HAS AUDIO', v => `${v.count} work${v.count !== 1 ? 's' : ''}`);
   if (REVERSE_COUNT > 0) buildChips('reverse', [{ name: 'yes', count: REVERSE_COUNT }], v => 'REVERSE DOCUMENTED', v => `${v.count} work${v.count !== 1 ? 's' : ''}`);
   if (THEMES.length > 0) buildChips('theme', THEMES, v => v.name, v => `${v.count} work${v.count !== 1 ? 's' : ''}`);
   if (MOTIFS.length > 0) buildChips('motif', MOTIFS, v => v.name.replace(/-/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '), v => `${v.count} work${v.count !== 1 ? 's' : ''}`);
@@ -922,6 +928,7 @@ addEventListener('DOMContentLoaded', () => {
       if (state.decade.size && !state.decade.has(Math.floor(w.y / 10) * 10)) return false;
       if (state.orientation.size && !state.orientation.has(w.o)) return false;
       if (state.reverse.size && w.b !== 1) return false;
+      if (state.audio.size && !w.audio) return false;
 
       // Theme, motif & material filtering via catalog lookup
       const catEntry = catalogMap.get(w.i);
