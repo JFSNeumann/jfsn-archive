@@ -1234,6 +1234,16 @@ addEventListener('DOMContentLoaded', () => {
         preload.src = nextSrc;
       }
 
+      // Initialize wings with random images on load (not the center image)
+      const initialL = pick(CENTER_ID);
+      const initialR = pick(initialL);  // Different from left wing
+      imgL.src = '/artworks/medium/' + initialL + '.avif';
+      imgL.dataset.currentId = initialL;
+      applyGlow(imgL);
+      imgR.src = '/artworks/medium/' + initialR + '.avif';
+      imgR.dataset.currentId = initialR;
+      applyGlow(imgR);
+
       // Staggered so both wings never fade at once — offset by half the
       // interval, each on its own repeating loop.
       setTimeout(() => {
@@ -1242,7 +1252,6 @@ addEventListener('DOMContentLoaded', () => {
       }, 4000);
       setTimeout(() => {
         cycle(imgR, imgL.dataset.currentId);
-        applyGlow(imgR); // Apply initial glow
         setInterval(() => cycle(imgR, imgL.dataset.currentId), 11000);
       }, 9500);
     })
