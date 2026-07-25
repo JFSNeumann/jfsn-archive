@@ -1,5 +1,5 @@
 # JFSN — Improvement List
-**Updated:** 2026-07-24 (Wing hero polish: layout, brightness, glow effects + TV broadcast work)
+**Updated:** 2026-07-25 (Audio player Phase 1 + Phase 2: oral history integration)
 
 A living list. Add to it. Cross things off. This is the backlog.
 
@@ -38,6 +38,8 @@ Nothing currently queued.
 ## ✅ Completed
 
 History lives in `git log` — `git log --oneline --all` for the full record. A few recent highlights for orientation:
+
+- **2026-07-25 (audio player Phase 1 + Phase 2)** — **Built native HTML5 audio player component + wired to config metadata.** (1) **Phase 1** (`479cb5e7`): Minimal, accessible player component (play/pause, timeline scrubbing, volume, keyboard shortcuts: Space/Arrow keys). Built `_shared/audio-player.js` (~170 lines) and `_shared/audio-player.css` (~140 lines). Added to artwork.html with hardcoded `/audio/who-i-am.m4a`. Keyboard accessible, touch-friendly, respects `prefers-reduced-motion`. (2) **Phase 2** (`f40a5398`): Made player data-driven. Added audio metadata fields to config/current.json (`audio`: filename, `audio_title`: display name). Updated artwork.html JS to read config and show/hide player dynamically — appears only on artworks with audio metadata (currently art0379 = who-i-am.m4a). Fixed CSS bug where HTML `hidden` attribute wasn't hiding the player (`display: flex` override). CACHE_V bumped for CSS rebuild. (3) **Live verification:** art0379 shows player with correct 33.8s duration; art1086 (no audio) hides player. Commits deployed to HostGator, all smoke tests passed.
 
 - **2026-07-24 (wing hero polish)** — **Four fixes to homepage wing images: overflow, positioning, brightness, glow effects.** (1) **Overflow fix** (`bd76b161`): flexbox `min-width:0` on items + `max-width:100%` on images prevented wide-aspect works from clipping off-screen. Root: flexbox default `min-width: auto` on replaced elements. (2) **Positioning spread** (`aac7b096`): `#hang justify-content:center` → `space-between` pushes wings to viewport edges; center work anchors true middle. (3) **Brightness boost** (`d5f822bd`): removed `filter:brightness(0.3)` from wings, now 100% luminance. (4) **Dynamic glow effects** (`f0ca67b5`): 5 colorful drop-shadow signatures per artwork ID (deterministic hash), e.g., art0010 always gets magenta+cyan, art0030 always gets purple+lime. Wings now visually "signed" as they rotate. All four live, verified, CACHE_V bumped. The earlier wing-crossfade overflow bug is now fixed (was flagged 2026-07-24 as awaiting direction; resolved same session).
 
