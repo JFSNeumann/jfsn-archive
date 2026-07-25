@@ -318,6 +318,25 @@ Center and wing hero images apply directional fade masks on hover, creating a "f
 
 Replaces previous blur/filter approach with clean mask-based transparency. Gated to `@media (min-width:1200px) and (hover:hover)` — no effect on mobile or under `prefers-reduced-motion`.
 
+### Footer River (all pages)
+Every page footer features a static canvas visualization of the entire archive—all 1,086 works rendered as thin vertical bars, each colored by the work's primary color. Located at the top of `footer.site-footer`, above navigation and metadata.
+
+```html
+<canvas id="footer-river" role="img" aria-label="The archive: 1,086 works..."></canvas>
+```
+
+**Implementation:**
+- Fetches `/config/current.json` on page load
+- Extracts color from each work's `.c` (color) field
+- Lifts near-black works (+26/+24/+22 RGB) for legibility against dark background
+- Renders to full footer width; bars scale responsively
+- Redraws on window resize
+- Responsive height: 20px with subtle borders
+- Accessible: aria-label describes the visualization for screen readers
+- Fails gracefully if JSON fetch unavailable
+
+**Purpose:** Provides visual closure and summary of the archive—a compressed view of 50 years and 1,086 works. Consistent signature across all 14 pages.
+
 ---
 
 ## Accessibility
@@ -344,7 +363,7 @@ These rules exist independent of whatever the visual theme is and survived the l
 
 ## Changelog
 
-**2026-07-24** — Added "Interactive Hover Patterns" section documenting: (1) Doors preview composite system (single image, per-room opacity tuning, no masks/filters); (2) Link underline readability improvements (1px thickness, 3px offset); (3) Image hover fade masks (directional mask-image gradients replacing blur). Updated Last Verified date to 2026-07-24.
+**2026-07-24** — Added "Interactive Hover Patterns" section documenting: (1) Doors preview composite system (single image, per-room opacity tuning, no masks/filters); (2) Link underline readability improvements (1px thickness, 3px offset); (3) Image hover fade masks (directional mask-image gradients replacing blur). Added "Footer River" section documenting canvas-based archive visualization (all 1,086 works as color strip) applied to all 14 pages. Updated Last Verified date to 2026-07-24.
 
 **2026-07-19** — Full rewrite. The previous version (light "bone-white"/Inter/Tailwind theme, "Stitch June-2026 adoption") did not match any live page — verified by grep across all 14 HTML files (zero `bone-white`, zero `#B84700`, zero real `Inter` usage; the dark `:root` tokens and Playfair/Georgia stack are what's actually there). The previous version's canonical-source claim (CLAUDE.md § "Design System (current — Stitch/Tailwind, light)") pointed to a section that does not exist in CLAUDE.md. Replaced entirely with patterns verified against live page source: color tokens, typography, shadow scale, card-hover language, page anatomy (header.hud, hero/door, scroll-cue, room-veil, back-to-top), and the `_shared/` dead-code finding. Added architecture note explaining there is no shared stylesheet — this was previously undocumented and caused confusion about where to edit for sitewide changes.
 

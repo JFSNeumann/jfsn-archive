@@ -1,15 +1,15 @@
 # Session 2026-07-24: Doors Composite Polish + Interactive Refinements
 
 **Date:** July 24, 2026  
-**Focus:** Simplify doors preview system, improve interaction clarity, add hero layering  
-**Commits:** 5 (4cbed3ad through dccb87ea)  
+**Focus:** Simplify doors preview system, improve interaction clarity, add hero layering, footer river visualization  
+**Commits:** 8 (4cbed3ad through 52f62141)  
 **Status:** ✅ Deployed and verified live
 
 ---
 
 ## Summary
 
-Replaced complex per-room "atmospheric light leak" hover effects on the five door links with a single composite image approach, eliminating masks, filters, and blend-modes in favor of clean opacity tuning. Added refinements to link underlines and image hover fades. Deployed all changes to jfsn.com with full smoke-test pass.
+Replaced complex per-room "atmospheric light leak" hover effects on the five door links with a single composite image approach, eliminating masks, filters, and blend-modes in favor of clean opacity tuning. Added refinements to link underlines and image hover fades. Initialized wing images with random works on each page load. Created a footer river visualization—all 1,086 works as a responsive color strip—and deployed it across all 14 pages. Deployed all changes to jfsn.com with full smoke-test pass.
 
 ---
 
@@ -81,6 +81,58 @@ Replaced complex per-room "atmospheric light leak" hover effects on the five doo
 ---
 
 ### 5. `dccb87ea` — Add mr-snowmann overlay to hero bottom-right
+
+**What:** Positioned decorative snowmann image on the bottom-right of the hero section, creating asymmetrical layering with existing TV (left) and Jeff photo (far right).
+
+**How:**
+- Added `<img class="snowmann-hero-overlay" src="/assets/images/mr-snowmann.png">`
+- Desktop-only (`@media (min-width:1200px)`)
+- Positioned: `bottom:20px;right:120px;z-index:998`
+- Responsive width: `clamp(80px, 10vw, 140px)`
+
+**Result:** Hero now has three decorative elements: TV (bottom-left), snowmann (bottom-right center), Jeff (far bottom-right), creating visual depth and character.
+
+---
+
+### 6. `bc27bd62` — Initialize wing images with random works on load
+
+**What:** Replaced static art1010 initialization with random image selection for both wing images.
+
+**How:**
+- Left wing picks first random image from pool (excluding center)
+- Right wing picks different image (excluding center and left)
+- Glow effects applied immediately on load
+- Maintains staggered cycling after initial 4s/9.5s delays
+
+**Result:** Each page load shows different works on wings, improving visual variety and discovery.
+
+---
+
+### 7. `d35bcb5f` — Add footer river visualization: 1,086 works as color strip
+
+**What:** Created canvas-based footer visualization showing all 1,086 works as thin vertical bars, each colored by the work's primary color.
+
+**Implementation:**
+- Fetches `/config/current.json` on page load
+- Extracts color from each work (lifted near-blacks for legibility)
+- Responsive width, 20px height with subtle borders
+- Redraws on window resize
+- Fails gracefully if JSON unavailable
+
+**Result:** Added to index.html footer only. Beautiful visual summary of archive at bottom of homepage.
+
+---
+
+### 8. `52f62141` — Apply footer river visualization to all pages
+
+**What:** Deployed footer river to all 13 remaining HTML files for consistent visual signature across entire site.
+
+**How:**
+- Updated: archive.html, artwork.html, about.html, current.html, flooded-wing.html, guernica-passage.html, hall-of-openings.html, privacy.html, sitemap.html, stories.html, the-studio.html, working-history.html, 404.html
+- Same canvas element and rendering script as index.html
+- All footers now display the 1,086-work color strip
+
+**Result:** Every visitor, on every page, sees the archive visualized at the bottom. Creates consistent, meaningful visual closure across the site.
 
 **What:** Positioned decorative snowmann image on the bottom-right of the hero section, creating asymmetrical layering with existing TV (left) and Jeff photo (far right).
 
