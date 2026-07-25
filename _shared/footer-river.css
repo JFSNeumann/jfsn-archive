@@ -1,0 +1,91 @@
+/* footer-river.css — Footer Chromatic River preview styling */
+
+.footer-preview {
+  position: fixed;
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.92) translateY(4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  width: clamp(160px, 22vw, 240px);
+}
+
+.footer-preview.show {
+  pointer-events: auto;
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.footer-preview-link {
+  display: block;
+  color: inherit;
+}
+
+.footer-preview-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #171310;
+  border: 1px solid #29231e;
+  border-bottom: none;
+}
+
+.footer-preview-cap {
+  padding: 12px;
+  background: #171310;
+  border: 1px solid #29231e;
+  border-top: none;
+}
+
+.footer-preview-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-size: 14px;
+  line-height: 1.35;
+  color: #f0e8dd;
+  margin-bottom: 6px;
+}
+
+.footer-preview-meta {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: #b8a89a;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.footer-preview-id {
+  font-family: ui-monospace, monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: #8a7a6c;
+  padding-top: 4px;
+  border-top: 1px solid #29231e;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-preview {
+    transition: none;
+    opacity: 0;
+  }
+
+  .footer-preview.show {
+    opacity: 1;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .footer-preview {
+    width: clamp(140px, 20vw, 180px);
+  }
+}
+
+/* Screenreader-only live region */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
