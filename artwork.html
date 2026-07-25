@@ -455,6 +455,13 @@ addEventListener('DOMContentLoaded', () => {
       <span class="caps sits-open">[ OPEN IN THE CURRENT&nbsp;→ ]</span>
     </a>
     <p id="work-inquiry" style="margin-top:30px;font-size:13px;line-height:1.6;color:var(--dim)">Questions about this work or the archive? <a href="mailto:jeff@jfsn.com">Contact Jeffrey&nbsp;→</a></p>
+
+    <!-- Related Audio Works -->
+    <div id="related-audio" hidden style="margin-top:60px;padding-top:30px;border-top:1px solid var(--frame)">
+      <span class="caps" style="color:var(--faint);font-size:10px;letter-spacing:.1em">AUDIO ARCHIVE</span>
+      <h2 style="font-family:Georgia,'Times New Roman',serif;font-size:18px;font-style:italic;margin:12px 0 20px;color:var(--ink)">Other Works with Audio</h2>
+      <div id="related-audio-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:24px"></div>
+    </div>
   </div>
 </main>
 
@@ -562,6 +569,25 @@ addEventListener('DOMContentLoaded', () => {
     audioPlayer.hidden = false;
   } else {
     audioPlayer.hidden = true;
+  }
+
+  // Related audio works: show other artworks with audio
+  const relatedAudioDiv = document.getElementById('related-audio');
+  const relatedList = document.getElementById('related-audio-list');
+  const audioWorks = works.filter(x => x.audio && x.i !== w.i);
+  if (audioWorks.length > 0) {
+    relatedAudioDiv.hidden = false;
+    relatedList.innerHTML = audioWorks.slice(0, 6).map(x => `
+      <a href="artwork.html?id=${x.i}" style="text-decoration:none;color:inherit;transition:color .3s">
+        <div style="aspect-ratio:3/4;overflow:hidden;background:var(--frame);margin-bottom:12px;border:1px solid var(--frame);display:flex;align-items:center;justify-content:center;min-height:0">
+          <img src="/artworks/medium/${x.i}.avif" alt="${x.t}" style="width:100%;height:100%;object-fit:cover" loading="lazy">
+        </div>
+        <div style="font-family:Georgia,'Times New Roman',serif;font-size:13px;font-style:italic;line-height:1.4;color:var(--ink);margin-bottom:6px">${x.t || '—'}</div>
+        <div style="font-size:10px;letter-spacing:.05em;color:var(--dim)">${x.yd || '—'} · ${x.m || '—'}</div>
+      </a>
+    `).join('');
+  } else {
+    relatedAudioDiv.hidden = true;
   }
 
   // ---------- prev / next walk (chronological, same order as The Current) ----------
