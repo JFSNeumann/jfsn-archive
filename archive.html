@@ -98,7 +98,7 @@ addEventListener('DOMContentLoaded', () => {
     /* At narrow widths the full name + exit link can otherwise touch or
        overlap with zero gap (confirmed at 320–375px) — same fix already
        applied on artwork.html. */
-    header.hud{padding-left:16px;padding-right:16px;gap:12px}
+    header.hud{padding-left:16px;padding-right:16px;gap:12px;position:sticky;top:0;z-index:50}
     header.hud .who{letter-spacing:.14em}
   }
 
@@ -189,7 +189,9 @@ addEventListener('DOMContentLoaded', () => {
     cursor:text;transition:all .3s ease;border-radius:2px;
   }
   @media (max-width:640px){
-    #search:focus{flex:1 1 calc(100% - 52px);max-width:100%}
+    #search-row{flex-direction:column;align-items:stretch}
+    #search{flex:1;min-width:auto}
+    #search:focus{flex:1}
   }
   #search::placeholder{color:var(--faint);font-style:italic}
   #search:hover{background-color:rgba(255,102,0,.04);border-color:var(--dim)}
@@ -721,7 +723,7 @@ addEventListener('DOMContentLoaded', () => {
 <div id="controls">
   <div id="controls-inner">
     <div id="search-row">
-      <input id="search" type="search" placeholder="Search titles, motifs, keywords…" aria-label="Search the archive" autocomplete="off">
+      <input id="search" type="search" placeholder="Search titles, motifs…" aria-label="Search the archive" autocomplete="off">
       <button id="search-clear" type="button" aria-label="Clear search">✕</button>
       <button id="filters-toggle" aria-expanded="false" aria-controls="filter-groups">[ FILTERS ]</button>
       <select id="sort" aria-label="Sort">

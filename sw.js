@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1784952755'; // Doors hover composite image: single 1600×1040 AVIF replaces 5 individual previews
+const CACHE_V  = 'jfsn-1784984756'; // Mobile UX improvements: search placeholder, filter reflow, grid breakpoint, menu feedback, sticky header
 const PRECACHE = [
   // The 14 live room pages (Museum v2 — the only site that exists today;
   // the old v1 archive, decade pages, and generated theme pages were

@@ -68,6 +68,7 @@
       'border:0;color:var(--ink,#f0e8dd);font:inherit;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;',
       'cursor:pointer;-webkit-tap-highlight-color:transparent;transition:color .2s ease,opacity .2s ease}',
     '#site-menu-btn:hover,#site-menu-btn:focus-visible{color:var(--accent,#FF6600)}',
+    '#site-menu-btn:active{opacity:0.7;transform:scale(0.98)}',
     '#site-menu-btn:focus-visible{outline:2px solid var(--accent,#FF6600);outline-offset:3px}',
     '#site-menu-btn .sm-ham{font-size:15px;line-height:1;letter-spacing:0}',
     '#site-menu-btn[aria-expanded="true"]{opacity:0;pointer-events:none}',
