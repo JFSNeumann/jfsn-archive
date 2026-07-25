@@ -98,8 +98,8 @@
     link.href = 'artwork.html?id=' + w.i;
 
     const img = preview.querySelector('.footer-preview-img');
-    img.src = '/artworks/thumbs/' + w.i + '.avif';
-    img.srcset = '/artworks/thumbs/' + w.i + '.avif 400w, /artworks/medium/' + w.i + '.avif 900w';
+    img.src = '/artworks/medium/' + w.i + '.avif';
+    img.srcset = '/artworks/medium/' + w.i + '.avif 400w, /artworks/medium/' + w.i + '.avif 900w';
     img.sizes = '(max-width: 640px) 160px, 220px';
     img.alt = w.t;
 
