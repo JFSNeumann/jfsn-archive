@@ -67,16 +67,17 @@
       100%{transform:translateY(0) rotateZ(0deg)}
     }
     /* Propeller rotation */
-    #prop-fr, #prop-fl, #prop-rear, #prop-rear2{
+    #prop-fr, #prop-fl, #prop-br, #prop-bl{
       animation:propeller-spin 0.4s linear 2.5s infinite;
-      transform-origin:0 0;
+      transform-origin:center;
+      transform-box:fill-box;
     }
     @keyframes propeller-spin{
-      0%{transform:translate(0, 0) rotateZ(0deg)}
-      100%{transform:translate(0, 0) rotateZ(360deg)}
+      0%{transform:rotateZ(0deg)}
+      100%{transform:rotateZ(360deg)}
     }
     /* Indicator LED pulse */
-    #drone circle:last-child{
+    #drone-body circle:last-child{
       animation:led-pulse 1.4s ease-in-out 2.5s infinite;
     }
     @keyframes led-pulse{
@@ -332,62 +333,71 @@ addEventListener('DOMContentLoaded', () => {
 <canvas id="minimap" aria-hidden="true"></canvas>
 
 <!-- Drone animation: flies left-to-right above the river, surveying the archive -->
-<svg id="drone" viewBox="0 0 48 48" aria-hidden="true" style="position:fixed;width:48px;height:48px;left:-60px;top:15%;z-index:5;pointer-events:none">
+<svg id="drone" viewBox="0 0 80 80" aria-hidden="true" style="position:fixed;width:80px;height:80px;left:-100px;top:12%;z-index:5;pointer-events:none;filter:drop-shadow(0 2px 8px rgba(255,102,0,0.3))">
   <defs>
-    <filter id="drone-glow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+    <radialGradient id="prop-blur" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:rgba(255,102,0,0.9)"/>
+      <stop offset="60%" style="stop-color:rgba(255,102,0,0.4)"/>
+      <stop offset="100%" style="stop-color:rgba(255,102,0,0)"/>
+    </radialGradient>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+      <feOffset dx="0" dy="1" result="offsetblur"/>
       <feMerge>
-        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="offsetblur"/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
-    <radialGradient id="propeller-gradient" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" style="stop-color:rgba(255,102,0,0.8)"/>
-      <stop offset="100%" style="stop-color:rgba(255,102,0,0.2)"/>
-    </radialGradient>
   </defs>
 
-  <!-- gimbal/camera mount -->
-  <g id="drone-body">
-    <!-- central fuselage -->
-    <ellipse cx="24" cy="24" rx="7" ry="5.5" fill="rgba(232,226,217,0.85)" stroke="rgba(232,226,217,0.5)" stroke-width="0.5"/>
+  <!-- Main drone body -->
+  <g id="drone-body" filter="url(#shadow)">
+    <!-- Central battery/fuselage -->
+    <rect x="32" y="30" width="16" height="20" rx="3" fill="rgba(50,50,50,0.9)" stroke="rgba(232,226,217,0.6)" stroke-width="0.8"/>
 
-    <!-- camera lens -->
-    <circle cx="24" cy="22" r="2.5" fill="rgba(255,102,0,0.9)"/>
-    <circle cx="24" cy="22" r="1.8" fill="rgba(255,102,0,0.4)"/>
+    <!-- Top plate -->
+    <rect x="30" y="28" width="20" height="3" rx="1" fill="rgba(232,226,217,0.7)"/>
 
-    <!-- gimbal arms (cross-shaped motor mounts) -->
-    <line x1="10" y1="24" x2="14" y2="24" stroke="rgba(200,190,180,0.7)" stroke-width="1.2" stroke-linecap="round"/>
-    <line x1="34" y1="24" x2="38" y2="24" stroke="rgba(200,190,180,0.7)" stroke-width="1.2" stroke-linecap="round"/>
-    <line x1="24" y1="10" x2="24" y2="14" stroke="rgba(200,190,180,0.7)" stroke-width="1.2" stroke-linecap="round"/>
-    <line x1="24" y1="34" x2="24" y2="38" stroke="rgba(200,190,180,0.7)" stroke-width="1.2" stroke-linecap="round"/>
+    <!-- Landing gear -->
+    <line x1="36" y1="50" x2="36" y2="58" stroke="rgba(200,190,180,0.6)" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="44" y1="50" x2="44" y2="58" stroke="rgba(200,190,180,0.6)" stroke-width="1.2" stroke-linecap="round"/>
+    <circle cx="36" cy="58.5" r="1" fill="rgba(232,226,217,0.5)"/>
+    <circle cx="44" cy="58.5" r="1" fill="rgba(232,226,217,0.5)"/>
 
-    <!-- propeller rings (glow effect) -->
-    <circle cx="14" cy="24" r="7" fill="none" stroke="url(#propeller-gradient)" stroke-width="0.8" opacity="0.6" filter="url(#drone-glow)"/>
-    <circle cx="34" cy="24" r="7" fill="none" stroke="url(#propeller-gradient)" stroke-width="0.8" opacity="0.6" filter="url(#drone-glow)"/>
-    <circle cx="24" cy="14" r="7" fill="none" stroke="url(#propeller-gradient)" stroke-width="0.8" opacity="0.6" filter="url(#drone-glow)"/>
-    <circle cx="24" cy="34" r="7" fill="none" stroke="url(#propeller-gradient)" stroke-width="0.8" opacity="0.6" filter="url(#drone-glow)"/>
+    <!-- Camera gimbal mount -->
+    <ellipse cx="40" cy="50" rx="5" ry="6" fill="none" stroke="rgba(200,190,180,0.5)" stroke-width="1"/>
+    <circle cx="40" cy="52" r="3" fill="rgba(255,102,0,0.9)"/>
+    <circle cx="40" cy="52" r="2" fill="rgba(255,102,0,0.4)"/>
 
-    <!-- propeller blades (rotating) -->
-    <g id="prop-fr" transform="translate(14, 24)">
-      <line x1="0" y1="-5" x2="0" y2="5" stroke="rgba(255,102,0,0.7)" stroke-width="1.2" stroke-linecap="round"/>
-      <line x1="-5" y1="0" x2="5" y2="0" stroke="rgba(255,102,0,0.4)" stroke-width="0.8" stroke-linecap="round"/>
-    </g>
-    <g id="prop-fl" transform="translate(34, 24)">
-      <line x1="0" y1="-5" x2="0" y2="5" stroke="rgba(255,102,0,0.7)" stroke-width="1.2" stroke-linecap="round"/>
-      <line x1="-5" y1="0" x2="5" y2="0" stroke="rgba(255,102,0,0.4)" stroke-width="0.8" stroke-linecap="round"/>
-    </g>
-    <g id="prop-rear" transform="translate(24, 14)">
-      <line x1="0" y1="-5" x2="0" y2="5" stroke="rgba(255,102,0,0.7)" stroke-width="1.2" stroke-linecap="round"/>
-      <line x1="-5" y1="0" x2="5" y2="0" stroke="rgba(255,102,0,0.4)" stroke-width="0.8" stroke-linecap="round"/>
-    </g>
-    <g id="prop-rear2" transform="translate(24, 34)">
-      <line x1="0" y1="-5" x2="0" y2="5" stroke="rgba(255,102,0,0.7)" stroke-width="1.2" stroke-linecap="round"/>
-      <line x1="-5" y1="0" x2="5" y2="0" stroke="rgba(255,102,0,0.4)" stroke-width="0.8" stroke-linecap="round"/>
-    </g>
+    <!-- Motor arms (X configuration) -->
+    <!-- Front-Right -->
+    <line x1="44" y1="30" x2="62" y2="12" stroke="rgba(200,190,180,0.8)" stroke-width="1.5" stroke-linecap="round"/>
+    <!-- Front-Left -->
+    <line x1="36" y1="30" x2="18" y2="12" stroke="rgba(200,190,180,0.8)" stroke-width="1.5" stroke-linecap="round"/>
+    <!-- Back-Right -->
+    <line x1="44" y1="48" x2="62" y2="66" stroke="rgba(200,190,180,0.8)" stroke-width="1.5" stroke-linecap="round"/>
+    <!-- Back-Left -->
+    <line x1="36" y1="48" x2="18" y2="66" stroke="rgba(200,190,180,0.8)" stroke-width="1.5" stroke-linecap="round"/>
 
-    <!-- indicator LED (pulsing) -->
-    <circle cx="24" cy="29" r="1.2" fill="rgba(255,102,0,0.6)"/>
+    <!-- Motors and propellers -->
+    <!-- Front-Right motor -->
+    <circle cx="62" cy="12" r="4" fill="rgba(100,100,100,0.9)" stroke="rgba(232,226,217,0.5)" stroke-width="0.8"/>
+    <circle id="prop-fr" cx="62" cy="12" r="11" fill="url(#prop-blur)" opacity="0.7"/>
+
+    <!-- Front-Left motor -->
+    <circle cx="18" cy="12" r="4" fill="rgba(100,100,100,0.9)" stroke="rgba(232,226,217,0.5)" stroke-width="0.8"/>
+    <circle id="prop-fl" cx="18" cy="12" r="11" fill="url(#prop-blur)" opacity="0.7"/>
+
+    <!-- Back-Right motor -->
+    <circle cx="62" cy="66" r="4" fill="rgba(100,100,100,0.9)" stroke="rgba(232,226,217,0.5)" stroke-width="0.8"/>
+    <circle id="prop-br" cx="62" cy="66" r="11" fill="url(#prop-blur)" opacity="0.7"/>
+
+    <!-- Back-Left motor -->
+    <circle cx="18" cy="66" r="4" fill="rgba(100,100,100,0.9)" stroke="rgba(232,226,217,0.5)" stroke-width="0.8"/>
+    <circle id="prop-bl" cx="18" cy="66" r="11" fill="url(#prop-blur)" opacity="0.7"/>
+
+    <!-- Status LED -->
+    <circle cx="48" cy="32" r="1.2" fill="rgba(255,102,0,0.8)"/>
   </g>
 </svg>
 
