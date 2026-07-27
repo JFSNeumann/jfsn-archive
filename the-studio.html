@@ -445,6 +445,7 @@ addEventListener('DOMContentLoaded', () => {
     <img src="/artworks/medium/art1008.avif" alt="Studio work" loading="lazy" class="hero-img">
     <img src="/artworks/medium/art1011.avif" alt="Studio work" loading="lazy" class="hero-img">
   </div>
+  <canvas id="paint-splatter" aria-hidden="true" style="position:absolute;inset:0;z-index:1;pointer-events:none;width:100%;height:100%"></canvas>
   <div id="ambient-light" aria-hidden="true"></div>
   <div class="hero-content">
     <div class="caps">THE STUDIO</div>
@@ -598,17 +599,176 @@ addEventListener('DOMContentLoaded', () => {
   'use strict';
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // ---------- hero: rotate through four studio works, cross-fading ----------
-  // Static under reduced motion — the first image (art0504) just stays put.
+  // ---------- hero: paint attack system ----------
+  // Faster, randomized rotation with procedurally generated orange paint splatters
   if (!REDUCED) {
     const heroImgs = document.querySelectorAll('#hero-images .hero-img');
-    if (heroImgs.length > 1) {
+    const heroImages = document.getElementById('hero-images');
+    const paintCanvas = document.getElementById('paint-splatter');
+    if (heroImgs.length > 1 && paintCanvas) {
+      const ctx = paintCanvas.getContext('2d');
       let heroI = 0;
-      setInterval(() => {
-        heroImgs[heroI].classList.remove('active');
-        heroI = (heroI + 1) % heroImgs.length;
-        heroImgs[heroI].classList.add('active');
-      }, 7000);
+      let sequence = Array.from({length: heroImgs.length}, (_, i) => i);
+      let seqPtr = 0;
+
+      // Fisher-Yates shuffle
+      const shuffle = arr => {
+        for (let i = arr.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+      };
+
+      // Generate procedural paint splatters with controlled variation
+      const generatePaint = (imgIndex, w, h) => {
+        ctx.clearRect(0, 0, w, h);
+
+        // Hybrid randomness: seeded for consistency, real random for variation
+        const baseSeed = imgIndex * 137;
+        const seededRand = (s) => Math.sin(baseSeed + s * 12.9898) * 43758.5453 % 1;
+        const r = (min, max) => min + (seededRand(Math.random()) * 0.5 + Math.random() * 0.5) * (max - min);
+
+        // Vary paint characteristics per artwork (controlled variation)
+        const personality = seededRand(0); // 0-1 personality seed for this artwork
+        const impactCount = Math.floor(r(personality > 0.7 ? 1 : 2, personality > 0.3 ? 4 : 6));
+        const hasEdge = personality < 0.5; // 50% chance of off-edge impact
+        const intensity = 0.5 + personality * 0.5;
+
+        ctx.globalAlpha = 0.8;
+        ctx.fillStyle = '#FF6600';
+
+        for (let i = 0; i < impactCount; i++) {
+          let x, y;
+
+          // Occasional off-screen edge impact
+          if (hasEdge && i === 0) {
+            const edge = Math.floor(r(0, 4));
+            const offset = r(-80, -20);
+            const along = r(0, edge % 2 === 0 ? w : h);
+            switch(edge) {
+              case 0: x = along; y = offset; break;
+              case 1: x = w + Math.abs(offset); y = along; break;
+              case 2: x = along; y = h + Math.abs(offset); break;
+              case 3: x = offset; y = along; break;
+            }
+          } else {
+            // Surface impacts with some compositional clustering
+            const clusterX = r(w * 0.2, w * 0.8);
+            const clusterY = r(h * 0.2, h * 0.8);
+            x = clusterX + r(-w * 0.15, w * 0.15);
+            y = clusterY + r(-h * 0.15, h * 0.15);
+            x = Math.max(0, Math.min(w, x));
+            y = Math.max(0, Math.min(h, y));
+          }
+
+          const baseRadius = r(25, 120) * intensity;
+          const xRadius = baseRadius * r(0.5, 1.4);
+          const yRadius = baseRadius * r(0.4, 1.3);
+          const rotation = r(0, Math.PI * 2);
+
+          // Main splat blob with irregular edges
+          ctx.beginPath();
+          ctx.ellipse(x, y, xRadius, yRadius, rotation, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Add texture to splat with overlapping smaller blobs
+          ctx.globalAlpha = 0.5;
+          for (let t = 0; t < Math.floor(r(2, 5)); t++) {
+            const tAngle = r(0, Math.PI * 2);
+            const tDist = baseRadius * r(0.2, 0.8);
+            const tx = x + Math.cos(tAngle) * tDist;
+            const ty = y + Math.sin(tAngle) * tDist;
+            ctx.beginPath();
+            ctx.ellipse(tx, ty, xRadius * r(0.3, 0.8), yRadius * r(0.3, 0.8),
+                        r(0, Math.PI * 2), 0, Math.PI * 2);
+            ctx.fill();
+          }
+
+          // Satellite droplets with splashing physics
+          ctx.globalAlpha = 0.7;
+          const dropletCount = Math.floor(r(3, 12) * intensity);
+          for (let d = 0; d < dropletCount; d++) {
+            const angle = r(0, Math.PI * 2);
+            const dist = baseRadius + r(20, 140);
+            const dx = x + Math.cos(angle) * dist;
+            const dy = y + Math.sin(angle) * dist;
+            const dropSize = r(2, 28);
+            const dropAlpha = r(0.2, 0.95);
+
+            ctx.globalAlpha = dropAlpha;
+            ctx.beginPath();
+            ctx.ellipse(dx, dy, dropSize * r(0.4, 1.3), dropSize * r(0.3, 1.2),
+                        r(0, Math.PI * 2), 0, Math.PI * 2);
+            ctx.fill();
+          }
+
+          ctx.globalAlpha = 0.3;
+        }
+
+        // Final fine mist/edge effect
+        ctx.globalAlpha = 0.15;
+        for (let m = 0; m < Math.floor(r(4, 12)); m++) {
+          const mx = r(0, w);
+          const my = r(0, h);
+          const msize = r(1, 8);
+          ctx.beginPath();
+          ctx.arc(mx, my, msize, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      };
+
+      const rotate = () => {
+        // Transition out: fade + clear paint
+        const oldImg = heroImgs[heroI];
+        oldImg.style.opacity = '0';
+
+        setTimeout(() => {
+          // New image appears clean
+          seqPtr = (seqPtr + 1) % sequence.length;
+          if (seqPtr === 0) sequence = shuffle([...Array.from({length: heroImgs.length}, (_, i) => i)]);
+
+          heroI = sequence[seqPtr];
+          oldImg.classList.remove('active');
+          heroImgs[heroI].classList.add('active');
+          heroImgs[heroI].style.opacity = '1';
+
+          // Generate and apply paint effect
+          const w = heroImages.offsetWidth;
+          const h = heroImages.offsetHeight;
+          paintCanvas.width = w;
+          paintCanvas.height = h;
+          generatePaint(heroI, w, h);
+
+          // Paint fades over time
+          const paintStart = performance.now();
+          const paintDuration = 1400;
+          const fadeStart = 800;
+
+          const paintFade = (now) => {
+            const elapsed = now - paintStart;
+            if (elapsed < paintDuration) {
+              if (elapsed > fadeStart) {
+                ctx.globalAlpha = 1 - ((elapsed - fadeStart) / (paintDuration - fadeStart));
+              }
+              requestAnimationFrame(paintFade);
+            } else {
+              ctx.clearRect(0, 0, w, h);
+            }
+          };
+          requestAnimationFrame(paintFade);
+        }, 400);
+      };
+
+      // Initial paint
+      const w = heroImages.offsetWidth;
+      const h = heroImages.offsetHeight;
+      paintCanvas.width = w;
+      paintCanvas.height = h;
+      generatePaint(heroI, w, h);
+
+      // Rotate every 2.6 seconds (faster than before)
+      setInterval(rotate, 2600);
     }
   }
 
