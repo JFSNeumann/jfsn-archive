@@ -708,15 +708,27 @@ addEventListener('DOMContentLoaded', () => {
       };
 
       let rotationTimeout = null;
+      let isRotating = false;
 
-      const rotate = () => {
+      const scheduleRotation = () => {
+        if (isRotating) return;
+        const interval = 3000 + Math.random() * 1000; // 3-4 seconds
+        rotationTimeout = setTimeout(performRotation, interval);
+      };
+
+      const performRotation = () => {
+        if (isRotating) return;
+        isRotating = true;
+
         // Transition out: fade + clear paint
         const oldImg = heroImgs[heroI];
         oldImg.style.opacity = '0';
 
         setTimeout(() => {
           // Pick random next image (avoiding immediate repeat)
-          heroI = nextRandom();
+          const newI = nextRandom();
+          heroI = newI;
+
           oldImg.classList.remove('active');
           heroImgs[heroI].classList.add('active');
           heroImgs[heroI].style.opacity = '1';
@@ -741,14 +753,13 @@ addEventListener('DOMContentLoaded', () => {
               }
               requestAnimationFrame(paintFade);
             } else {
+              ctx.globalAlpha = 1;
               ctx.clearRect(0, 0, w, h);
+              isRotating = false;
+              scheduleRotation(); // Schedule the next rotation
             }
           };
           requestAnimationFrame(paintFade);
-
-          // Schedule next rotation
-          const interval = 3000 + Math.random() * 1000; // 3-4 seconds
-          rotationTimeout = setTimeout(rotate, interval);
         }, 400);
       };
 
@@ -760,8 +771,7 @@ addEventListener('DOMContentLoaded', () => {
       generatePaint(heroI, w, h);
 
       // Schedule first rotation
-      const interval = 3000 + Math.random() * 1000; // 3-4 seconds
-      rotationTimeout = setTimeout(rotate, interval);
+      scheduleRotation();
     }
   }
 
