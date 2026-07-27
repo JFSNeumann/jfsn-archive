@@ -608,16 +608,14 @@ addEventListener('DOMContentLoaded', () => {
     if (heroImgs.length > 1 && paintCanvas) {
       const ctx = paintCanvas.getContext('2d');
       let heroI = 0;
-      let sequence = Array.from({length: heroImgs.length}, (_, i) => i);
-      let seqPtr = 0;
 
-      // Fisher-Yates shuffle
-      const shuffle = arr => {
-        for (let i = arr.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [arr[i], arr[j]] = [arr[j], arr[i]];
+      // Random selection avoiding immediate repeats
+      const nextRandom = () => {
+        let next = Math.floor(Math.random() * heroImgs.length);
+        while (next === heroI && heroImgs.length > 1) {
+          next = Math.floor(Math.random() * heroImgs.length);
         }
-        return arr;
+        return next;
       };
 
       // Generate procedural paint splatters with controlled variation
@@ -724,11 +722,8 @@ addEventListener('DOMContentLoaded', () => {
         oldImg.style.opacity = '0';
 
         setTimeout(() => {
-          // New image appears clean
-          seqPtr = (seqPtr + 1) % sequence.length;
-          if (seqPtr === 0) sequence = shuffle([...Array.from({length: heroImgs.length}, (_, i) => i)]);
-
-          heroI = sequence[seqPtr];
+          // Pick random next image (avoiding immediate repeat)
+          heroI = nextRandom();
           oldImg.classList.remove('active');
           heroImgs[heroI].classList.add('active');
           heroImgs[heroI].style.opacity = '1';
@@ -767,8 +762,19 @@ addEventListener('DOMContentLoaded', () => {
       paintCanvas.height = h;
       generatePaint(heroI, w, h);
 
-      // Rotate every 2.6 seconds (faster than before)
-      setInterval(rotate, 2600);
+      // Rotate every 3-4 seconds with randomized interval
+      const scheduleNextRotation = () => {
+        const interval = 3000 + Math.random() * 1000; // 3-4 seconds
+        setTimeout(rotate, interval);
+      };
+      scheduleNextRotation();
+
+      // After each rotation, schedule the next one
+      const originalRotate = rotate;
+      rotate = function() {
+        originalRotate.call(this);
+        scheduleNextRotation();
+      };
     }
   }
 
