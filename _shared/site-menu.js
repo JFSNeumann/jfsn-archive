@@ -62,6 +62,26 @@
 
   /* ---- styles ---- */
   var CSS = [
+    '#butterfly-nav{position:fixed;z-index:9998;pointer-events:none;opacity:0;width:64px;height:72px;will-change:transform,opacity}',
+    '#site-menu-overlay.sm-open #butterfly-nav{animation:butterfly-flight 1.6s cubic-bezier(.34,.1,.68,.55) forwards}',
+    '@keyframes butterfly-flight{',
+      '0%{opacity:1;right:0%;top:calc(env(safe-area-inset-top,0px) + 80px);transform:scaleX(-1) rotate(10deg)}',
+      '28%{opacity:1;right:6%;top:calc(env(safe-area-inset-top,0px) + 120px);transform:scaleX(1) rotate(-8deg)}',
+      '52%{opacity:1;right:4%;top:calc(env(safe-area-inset-top,0px) + 75px);transform:scaleX(-1) rotate(6deg)}',
+      '76%{opacity:1;right:5.5%;top:calc(env(safe-area-inset-top,0px) + 130px);transform:scaleX(1) rotate(2deg)}',
+      '100%{opacity:0.18;right:5.5%;top:calc(env(safe-area-inset-top,0px) + 130px);transform:scaleX(1) rotate(0deg)}',
+    '}',
+    '@media(max-width:640px){',
+      '#butterfly-nav{width:48px;height:54px}',
+      '@keyframes butterfly-flight{',
+        '0%{opacity:1;right:0%;top:calc(env(safe-area-inset-top,0px) + 70px);transform:scaleX(-1) rotate(12deg)}',
+        '30%{opacity:1;right:5%;top:calc(env(safe-area-inset-top,0px) + 100px);transform:scaleX(1) rotate(-6deg)}',
+        '60%{opacity:1;right:4%;top:calc(env(safe-area-inset-top,0px) + 65px);transform:scaleX(-1) rotate(4deg)}',
+        '85%{opacity:1;right:4.5%;top:calc(env(safe-area-inset-top,0px) + 115px);transform:scaleX(1) rotate(1deg)}',
+        '100%{opacity:0.16;right:4.5%;top:calc(env(safe-area-inset-top,0px) + 115px);transform:scaleX(1) rotate(0deg)}',
+      '}',
+    '}',
+    '@media(prefers-reduced-motion:reduce){#site-menu-overlay.sm-open #butterfly-nav{animation:none;opacity:0}}',
     '#site-menu-btn{position:fixed;z-index:9999;top:calc(env(safe-area-inset-top,0px) + 14px);right:18px;',
       'display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 14px;',
       'background:color-mix(in srgb,var(--room,#0c0a09) 66%,transparent);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);',
@@ -174,6 +194,7 @@
   overlay.id = 'site-menu-overlay';
   overlay.innerHTML =
     '<div id="site-menu-backdrop"></div>' +
+    '<div id="butterfly-nav" aria-hidden="true"></div>' +
     '<nav id="site-menu-drawer" role="dialog" aria-modal="true" aria-label="Site menu">' +
       '<div class="sm-head">' +
         '<button id="site-menu-close" type="button" aria-label="Close site menu">CLOSE <span class="sm-x" aria-hidden="true">×</span></button>' +
@@ -183,6 +204,14 @@
 
   document.body.appendChild(btn);
   document.body.appendChild(overlay);
+
+  /* Load butterfly image */
+  var butterfly = overlay.querySelector('#butterfly-nav');
+  var img = document.createElement('img');
+  img.src = '/assets/images/jfsn-butterfly-2.png';
+  img.alt = '';
+  img.style.cssText = 'width:100%;height:100%;object-fit:contain';
+  butterfly.appendChild(img);
 
   /* ---- behavior ---- */
   var drawer   = overlay.querySelector('#site-menu-drawer');
