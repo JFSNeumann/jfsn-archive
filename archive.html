@@ -884,9 +884,9 @@ addEventListener('DOMContentLoaded', () => {
       btn.setAttribute('aria-pressed', 'false');
       btn.textContent = labelFn(v);
       if (countFn) btn.title = countFn(v);
-      btn.dataset.value = typeof v === 'string' ? v : v.name;
+      btn.dataset.value = (typeof v === 'string' || typeof v === 'number') ? v : v.name;
       btn.addEventListener('click', () => {
-        const val = typeof v === 'string' ? v : v.name;
+        const val = (typeof v === 'string' || typeof v === 'number') ? v : v.name;
         state[key].has(val) ? state[key].delete(val) : state[key].add(val);
         btn.classList.toggle('active');
         btn.setAttribute('aria-pressed', btn.classList.contains('active'));
@@ -1025,9 +1025,9 @@ addEventListener('DOMContentLoaded', () => {
       requestAnimationFrame(() => requestAnimationFrame(() => countLabel.classList.remove('tick')));
     }
     animateCount(list.length, suffix);
-    const anyActive = state.medium.size || state.decade.size || state.orientation.size || state.theme.size || state.motif.size || state.material.size || state.reverse.size || state.q;
+    const anyActive = state.medium.size || state.decade.size || state.orientation.size || state.audio.size || state.theme.size || state.motif.size || state.material.size || state.reverse.size || state.q;
     clearBtn.hidden = !anyActive;
-    const nChips = state.medium.size + state.decade.size + state.orientation.size + state.theme.size + state.motif.size + state.material.size + state.reverse.size;
+    const nChips = state.medium.size + state.decade.size + state.orientation.size + state.audio.size + state.theme.size + state.motif.size + state.material.size + state.reverse.size;
     const ft = document.getElementById('filters-toggle');
     ft.textContent = nChips ? '[ FILTERS · ' + nChips + ' ]' : '[ FILTERS ]';
     ft.classList.toggle('active', nChips > 0);
@@ -1037,6 +1037,7 @@ addEventListener('DOMContentLoaded', () => {
       if (state.medium.size) parts.push(state.medium.size + ' medium' + (state.medium.size > 1 ? 's' : ''));
       if (state.decade.size) parts.push(state.decade.size + ' decade' + (state.decade.size > 1 ? 's' : ''));
       if (state.orientation.size) parts.push(state.orientation.size + ' orientation' + (state.orientation.size > 1 ? 's' : ''));
+      if (state.audio.size) parts.push('audio filter');
       if (state.theme.size) parts.push(state.theme.size + ' theme' + (state.theme.size > 1 ? 's' : ''));
       if (state.motif.size) parts.push(state.motif.size + ' visual element' + (state.motif.size > 1 ? 's' : ''));
       if (state.material.size) parts.push(state.material.size + ' material' + (state.material.size > 1 ? 's' : ''));
@@ -1073,6 +1074,7 @@ addEventListener('DOMContentLoaded', () => {
       medium: v => v.toUpperCase(),
       decade: v => v + 'S',
       orientation: v => ORI_LABEL[v],
+      audio: v => 'HAS AUDIO',
       theme: v => v,
       motif: v => v.replace(/-/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '),
       material: v => v,
@@ -1237,7 +1239,7 @@ addEventListener('DOMContentLoaded', () => {
     }, 300);
   });
   function clearAll(){
-    state.medium.clear(); state.decade.clear(); state.orientation.clear(); state.theme.clear(); state.motif.clear(); state.material.clear(); state.reverse.clear();
+    state.medium.clear(); state.decade.clear(); state.orientation.clear(); state.audio.clear(); state.theme.clear(); state.motif.clear(); state.material.clear(); state.reverse.clear();
     state.q = ''; document.getElementById('search').value = '';
     document.querySelectorAll('.chip.active').forEach(c => { c.classList.remove('active'); c.setAttribute('aria-pressed', 'false'); });
     shown = PAGE; render();
@@ -1264,7 +1266,7 @@ addEventListener('DOMContentLoaded', () => {
   // Medium and Decade are the highest-value discovery dimensions and stay
   // visible on desktop; everything else (including the niche Orientation
   // and Collection groups) starts tucked behind disclosure.
-  const SECONDARY_GROUPS = ['orientation', 'reverse', 'theme', 'motif', 'material'];
+  const SECONDARY_GROUPS = ['orientation', 'audio', 'reverse', 'theme', 'motif', 'material'];
   document.querySelectorAll('.fgroup .label').forEach(label => {
     const fgroup = label.closest('.fgroup');
     const key = fgroup.dataset.key;
@@ -1333,6 +1335,7 @@ addEventListener('DOMContentLoaded', () => {
         medium: Array.from(state.medium),
         decade: Array.from(state.decade),
         orientation: Array.from(state.orientation),
+        audio: Array.from(state.audio),
         theme: Array.from(state.theme),
         motif: Array.from(state.motif),
         material: Array.from(state.material),
@@ -1376,6 +1379,7 @@ addEventListener('DOMContentLoaded', () => {
       state.medium = new Set(ctx.medium || []);
       state.decade = new Set(ctx.decade || []);
       state.orientation = new Set(ctx.orientation || []);
+      state.audio = new Set(ctx.audio || []);
       state.theme = new Set(ctx.theme || []);
       state.motif = new Set(ctx.motif || []);
       state.material = new Set(ctx.material || []);
@@ -1397,7 +1401,7 @@ addEventListener('DOMContentLoaded', () => {
         c.classList.remove('active');
         c.setAttribute('aria-pressed', 'false');
       });
-      ['medium', 'decade', 'orientation', 'theme', 'motif', 'material', 'reverse'].forEach(key => {
+      ['medium', 'decade', 'orientation', 'audio', 'theme', 'motif', 'material', 'reverse'].forEach(key => {
         state[key].forEach(val => {
           const chip = document.querySelector(`.fgroup[data-key="${key}"] .chip[data-value="${val}"]`);
           if (chip) {
