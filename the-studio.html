@@ -716,6 +716,8 @@ addEventListener('DOMContentLoaded', () => {
         }
       };
 
+      let rotationTimeout = null;
+
       const rotate = () => {
         // Transition out: fade + clear paint
         const oldImg = heroImgs[heroI];
@@ -752,6 +754,10 @@ addEventListener('DOMContentLoaded', () => {
             }
           };
           requestAnimationFrame(paintFade);
+
+          // Schedule next rotation
+          const interval = 3000 + Math.random() * 1000; // 3-4 seconds
+          rotationTimeout = setTimeout(rotate, interval);
         }, 400);
       };
 
@@ -762,19 +768,9 @@ addEventListener('DOMContentLoaded', () => {
       paintCanvas.height = h;
       generatePaint(heroI, w, h);
 
-      // Rotate every 3-4 seconds with randomized interval
-      const scheduleNextRotation = () => {
-        const interval = 3000 + Math.random() * 1000; // 3-4 seconds
-        setTimeout(rotate, interval);
-      };
-      scheduleNextRotation();
-
-      // After each rotation, schedule the next one
-      const originalRotate = rotate;
-      rotate = function() {
-        originalRotate.call(this);
-        scheduleNextRotation();
-      };
+      // Schedule first rotation
+      const interval = 3000 + Math.random() * 1000; // 3-4 seconds
+      rotationTimeout = setTimeout(rotate, interval);
     }
   }
 
