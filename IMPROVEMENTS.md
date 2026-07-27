@@ -1,5 +1,5 @@
 # JFSN — Improvement List
-**Updated:** 2026-07-25 (Audio discovery Phase 3: archive filter, timeline highlights, related works)
+**Updated:** 2026-07-27 (Site-wide text-link underline unification)
 
 A living list. Add to it. Cross things off. This is the backlog.
 
@@ -38,6 +38,8 @@ Nothing currently queued.
 ## ✅ Completed
 
 History lives in `git log` — `git log --oneline --all` for the full record. A few recent highlights for orientation:
+
+- **2026-07-27 (text-link underline unification)** — **Generalized the animated text-link underline into a single shared rule, applied site-wide.** Investigated about.html's inline/editorial links (e.g. "Read the full oral history →") as the canonical JFSN link interaction — a 1px accent bar growing in from the left on hover/focus — and found only 4 of 14 pages (about, archive, artwork, flooded-wing) actually used it; the other 8 fell back to a plain browser underline (a leftover from the 2026-07-23 partial color-only fix, see below). Extracted the rule into `_shared/text-links.css`, linked from all 14 production pages, removing each page's duplicated local copy — fixing two real inconsistencies along the way (artwork.html had `prefers-reduced-motion` gated backwards, silently breaking the hover underline for reduced-motion users; several pages were missing the `:focus-visible` box-shadow). Added targeted `::after{content:none}` exclusions for image/card links (`.card a`, `.op a`, `.work a`, `#related-audio-list a`, the Chromatic River preview, index.html's CTA button) so the treatment stays scoped to prose, not thumbnails or buttons. Caught and fixed a real pseudo-element conflict in the process: index.html's 5 room-door tiles reuse `::after` for their own ghosted-preview-image effect, which the shared rule's `width:0/height:1px` would have silently collapsed into a 1px sliver — fixed with an explicit override, verified via computed style. `current.html` untouched (all its links are HUD/room-nav/artwork-card). Commit `273356b6`, deployed live, all smoke tests passed.
 
 - **2026-07-25 (audio discovery Phase 3)** — **Three discovery features for audio-enabled artworks.** (1) **Archive filter** (`8a0c936c`): New "HAS AUDIO" filter in archive.html showing 2 audio works; integrates with existing chip UI and filtering system. (2) **Timeline highlights** (`a3e1fd68`): Orange accent markers above audio works in The Current's river visualization (main canvas + minimap); visual distinction as works flow through timeline. (3) **Related audio works** (`433efae9`): "Other Works with Audio" section on artwork pages showing up to 6 related pieces in grid layout with thumbnails/title/year/material; hidden if viewing non-audio work. All features auto-scale as more audio recordings are added to config. Deployed live jfsn.com, smoke tests passed.
 
