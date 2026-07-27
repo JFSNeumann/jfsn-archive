@@ -1,5 +1,5 @@
 # JFSN — Improvement List
-**Updated:** 2026-07-27 (Site-wide text-link underline unification)
+**Updated:** 2026-07-27 (Archive Filter Audit & Full Correctness Fix)
 
 A living list. Add to it. Cross things off. This is the backlog.
 
@@ -38,6 +38,8 @@ Nothing currently queued.
 ## ✅ Completed
 
 History lives in `git log` — `git log --oneline --all` for the full record. A few recent highlights for orientation:
+
+- **2026-07-27 (archive filter audit & correctness fix)** — **Complete audit + minimal repair of archive.html filter system.** Two bugs found and fixed: (1) DECADE filter returned zero results due to type mismatch in buildChips() — numeric decade values (1970, 2000, etc.) were being treated as objects with missing `.name` properties, causing `state.add(undefined)`. Fixed: added `|| typeof v === 'number'` to value-extraction logic. (2) AUDIO filter missing from 8 shared management paths despite being in filtered() + HTML markup — absent from collapse-groups, visibility checks, chip count, empty-result message, filter labels, clearAll(), and save/restore. Fixed: systematic audit of all filter-state manipulation paths, targeted 8 additions across archive.html. Verification: 44 individual filter values tested for exact match (100% pass), 30 multi-value combination tests (100% pass), 10 state/UX operations (100% pass), zero regressions on responsive/JS/smoke tests. Commit `359a9a02`, deployed and live, all smoke tests passed.
 
 - **2026-07-27 (text-link underline unification)** — **Generalized the animated text-link underline into a single shared rule, applied site-wide.** Investigated about.html's inline/editorial links (e.g. "Read the full oral history →") as the canonical JFSN link interaction — a 1px accent bar growing in from the left on hover/focus — and found only 4 of 14 pages (about, archive, artwork, flooded-wing) actually used it; the other 8 fell back to a plain browser underline (a leftover from the 2026-07-23 partial color-only fix, see below). Extracted the rule into `_shared/text-links.css`, linked from all 14 production pages, removing each page's duplicated local copy — fixing two real inconsistencies along the way (artwork.html had `prefers-reduced-motion` gated backwards, silently breaking the hover underline for reduced-motion users; several pages were missing the `:focus-visible` box-shadow). Added targeted `::after{content:none}` exclusions for image/card links (`.card a`, `.op a`, `.work a`, `#related-audio-list a`, the Chromatic River preview, index.html's CTA button) so the treatment stays scoped to prose, not thumbnails or buttons. Caught and fixed a real pseudo-element conflict in the process: index.html's 5 room-door tiles reuse `::after` for their own ghosted-preview-image effect, which the shared rule's `width:0/height:1px` would have silently collapsed into a 1px sliver — fixed with an explicit override, verified via computed style. `current.html` untouched (all its links are HUD/room-nav/artwork-card). Commit `273356b6`, deployed live, all smoke tests passed.
 
