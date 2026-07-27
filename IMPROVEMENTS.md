@@ -1,5 +1,5 @@
 # JFSN — Improvement List
-**Updated:** 2026-07-27 (Artwork Positioning & Butterfly Animation)
+**Updated:** 2026-07-27 (Decade Display Redesign)
 
 A living list. Add to it. Cross things off. This is the backlog.
 
@@ -38,6 +38,8 @@ Nothing currently queued.
 ## ✅ Completed
 
 History lives in `git log` — `git log --oneline --all` for the full record. A few recent highlights for orientation:
+
+- **2026-07-27 (decade display redesign)** — **Changed footer decade presentation from six labels to ONE large active decade.** Replaced horizontal row of all six decade labels (1970s–2020s) with single, monumental decade numeral centered in artwork.html sidebar footer. Decade scales responsively (`clamp(80px, 18vw, 180px)`) from mobile to desktop. Color `#241e19` (very dark brown) reads subtle against black background but remains readable. "YEARS ARE DECADE ESTIMATES" subtitle kept small and secondary below. Smooth transitions (0.4s ease) when navigating between artworks from different decades. Respects `prefers-reduced-motion`. Systemic change in shared artwork.html template — applies across all 1,086 artwork pages without duplication. CSS redesigned `#decade-axis` as flex container; JavaScript simplified to update single `#decade-numeral` element instead of generating positioned spans for all decades. Verified responsive across desktop/tablet/mobile and across multiple decades (art0010: 1970s, art0200: 1990s, art0379: 2020s). Commit `7a9adbda`, deployed and live, all smoke tests passed.
 
 - **2026-07-27 (artwork positioning & butterfly animation)** — **Two interactive enhancements shipped.** (1) **Artwork repositioning** (`33184c4b`): Changed `main` grid's `align-items` from `center` to `start` on artwork.html, eliminating the large dead zone above the artwork that was created by vertical centering. Artwork now claims the top-left of the viewport immediately after header padding. Verified across portrait/landscape/square orientations and desktop/tablet/mobile viewports — aspect ratios preserved, PREVIOUS/NEXT controls unaffected. (2) **Butterfly navigation animation** (`c25eebee`): Added erratic flight animation to site menu entrance. When drawer opens, butterfly emerges from right edge, flies through sidebar with unpredictable motion for 1.6 seconds, then settles faintly mid-drawer at ~18% opacity. Size: 64×72px desktop / 48×54px mobile. Image loaded from `/assets/images/jfsn-butterfly-2.png`. Respects `prefers-reduced-motion` media query; never obstructs CLOSE button. Both features deployed and live at jfsn.com, all smoke tests passed.
 
