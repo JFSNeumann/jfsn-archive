@@ -1,5 +1,5 @@
 # JFSN — Improvement List
-**Updated:** 2026-07-27 (Archive Filter Audit & Full Correctness Fix)
+**Updated:** 2026-07-27 (Artwork Positioning & Butterfly Animation)
 
 A living list. Add to it. Cross things off. This is the backlog.
 
@@ -38,6 +38,8 @@ Nothing currently queued.
 ## ✅ Completed
 
 History lives in `git log` — `git log --oneline --all` for the full record. A few recent highlights for orientation:
+
+- **2026-07-27 (artwork positioning & butterfly animation)** — **Two interactive enhancements shipped.** (1) **Artwork repositioning** (`33184c4b`): Changed `main` grid's `align-items` from `center` to `start` on artwork.html, eliminating the large dead zone above the artwork that was created by vertical centering. Artwork now claims the top-left of the viewport immediately after header padding. Verified across portrait/landscape/square orientations and desktop/tablet/mobile viewports — aspect ratios preserved, PREVIOUS/NEXT controls unaffected. (2) **Butterfly navigation animation** (`c25eebee`): Added erratic flight animation to site menu entrance. When drawer opens, butterfly emerges from right edge, flies through sidebar with unpredictable motion for 1.6 seconds, then settles faintly mid-drawer at ~18% opacity. Size: 64×72px desktop / 48×54px mobile. Image loaded from `/assets/images/jfsn-butterfly-2.png`. Respects `prefers-reduced-motion` media query; never obstructs CLOSE button. Both features deployed and live at jfsn.com, all smoke tests passed.
 
 - **2026-07-27 (archive filter audit & correctness fix)** — **Complete audit + minimal repair of archive.html filter system.** Two bugs found and fixed: (1) DECADE filter returned zero results due to type mismatch in buildChips() — numeric decade values (1970, 2000, etc.) were being treated as objects with missing `.name` properties, causing `state.add(undefined)`. Fixed: added `|| typeof v === 'number'` to value-extraction logic. (2) AUDIO filter missing from 8 shared management paths despite being in filtered() + HTML markup — absent from collapse-groups, visibility checks, chip count, empty-result message, filter labels, clearAll(), and save/restore. Fixed: systematic audit of all filter-state manipulation paths, targeted 8 additions across archive.html. Verification: 44 individual filter values tested for exact match (100% pass), 30 multi-value combination tests (100% pass), 10 state/UX operations (100% pass), zero regressions on responsive/JS/smoke tests. Commit `359a9a02`, deployed and live, all smoke tests passed.
 
