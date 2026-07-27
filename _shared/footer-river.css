@@ -21,6 +21,13 @@
   color: inherit;
 }
 
+/* Chromatic River preview card — excluded from the site-wide text-link
+   underline (see _shared/text-links.css); this is an image/media control,
+   not prose. */
+.footer-preview-link::after {
+  content: none;
+}
+
 .footer-preview-img {
   display: block;
   width: 100%;

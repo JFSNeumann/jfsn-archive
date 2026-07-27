@@ -1,0 +1,45 @@
+/* text-links.css — canonical JFSN text-link interaction: animated underline
+   Source of truth: about.html's default `a` treatment (the inline/editorial
+   links near the bottom of the page, e.g. "Read the full oral history →").
+   A thin accent bar grows in from the left on hover/focus; color shifts to
+   accent at the same time. Applies to ordinary text links (nav, footer,
+   inline/editorial, page-to-page). Requires --room/--ink/--dim/--accent
+   custom properties, already defined on every production page.
+
+   Components with their own specialized interaction (artwork cards, the
+   Chromatic River, HUD controls, buttons) are expected to either override
+   enough of this base rule to be visually unaffected, or explicitly
+   neutralize the pseudo-element with `a::after{content:none}` colocated
+   with their own CSS. Do not add page-specific link exceptions here. */
+
+a{
+  color:var(--dim);
+  text-decoration:none;
+  transition:color .25s;
+  position:relative;
+}
+a::after{
+  content:'';
+  position:absolute;
+  bottom:-2px;
+  left:0;
+  width:0;
+  height:1px;
+  background:var(--accent);
+}
+a:hover{color:var(--accent)}
+/* Focus-visible grows the same bar as hover (in addition to the outline
+   below) so keyboard users get the identical affordance as pointer users. */
+a:hover::after,a:focus-visible::after{width:100%}
+a:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:4px;
+  color:var(--accent);
+  box-shadow:0 0 0 4px rgba(255,102,0,.2);
+}
+@media (prefers-reduced-motion: no-preference){
+  a::after{transition:width .3s ease}
+}
+@media (prefers-reduced-motion: reduce){
+  a::after{transition:none}
+}

@@ -19,6 +19,7 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/playfair-display-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/_shared/footer-river.css">
+<link rel="stylesheet" href="/_shared/text-links.css">
 <script>document.documentElement.classList.add('js')</script>
 <style>
   /* room-to-room continuity: fade in on arrival, veil out on internal doors */
@@ -69,17 +70,6 @@ addEventListener('DOMContentLoaded', () => {
     -webkit-font-smoothing:antialiased;
   }
   ::selection{background:var(--accent);color:#0c0a09}
-  a{color:var(--dim);text-decoration:none;transition:color .25s;position:relative}
-  a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--accent)}
-  a:hover{color:var(--accent)}
-  a:hover::after{width:100%}
-  @media (prefers-reduced-motion: no-preference){
-    a::after{transition:width .3s ease}
-  }
-  @media (prefers-reduced-motion: reduce){
-    a::after{transition:none}
-  }
-  a:focus-visible{outline:2px solid var(--accent);outline-offset:4px;color:var(--accent);box-shadow:0 0 0 4px rgba(255,102,0,.2)}
   button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;color:var(--accent)}
   .caps{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim)}
   .serif{font-family:Georgia,'Times New Roman',serif}
@@ -452,6 +442,9 @@ addEventListener('DOMContentLoaded', () => {
   /* Archive: Study Room Intimacy — leaning in to examine works */
   .card{color:var(--ink);position:relative}
   .card a{position:relative;display:block;cursor:crosshair;outline:none}
+  /* Card link is a thumbnail, not prose — excluded from the site-wide
+     text-link underline (see _shared/text-links.css). */
+  .card a::after{content:none}
   .card a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
   .card img{
     display:block;width:100%;height:auto;
