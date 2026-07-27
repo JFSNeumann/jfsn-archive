@@ -247,12 +247,18 @@ addEventListener('DOMContentLoaded', () => {
     position:absolute;top:-15px;transform:translateX(-50%);white-space:nowrap;
     font-size:8px;letter-spacing:.16em;color:var(--accent);
   }
-  #decade-axis{display:block;position:relative;height:14px;margin-top:6px}
-  #decade-axis span{
-    position:absolute;transform:translateX(-50%);
-    font-size:8px;letter-spacing:.12em;color:var(--faint);
+  #decade-axis{display:block;position:relative;margin-top:20px;text-align:center;min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  #decade-axis .decade-numeral{
+    font-size:clamp(80px,18vw,180px);font-weight:100;line-height:1;
+    color:#241e19;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;
+    transition:opacity .4s ease,transform .4s ease;
+    margin:0;
   }
-  #decade-axis span.on{color:var(--dim)}
+  #decade-axis .decade-label{
+    display:block;text-align:center;font-size:10px;letter-spacing:.22em;
+    color:var(--faint);margin-top:12px;font-weight:400;
+    transition:opacity .4s ease;
+  }
 
   /* ---------- prev / next ---------- */
   #walk{
@@ -448,7 +454,10 @@ addEventListener('DOMContentLoaded', () => {
         <canvas id="strip" aria-label="This work's position among all 1,086 works across fifty years. Opens The Current at this work."></canvas>
         <span id="here"><span class="yr" id="here-yr"></span></span>
       </span>
-      <span id="decade-axis" aria-hidden="true"></span>
+      <div id="decade-axis" aria-hidden="true">
+        <div class="decade-numeral" id="decade-numeral">1970s</div>
+        <div class="decade-label">YEARS ARE DECADE ESTIMATES</div>
+      </div>
       <span class="caps sits-open">[ OPEN IN THE CURRENT&nbsp;→ ]</span>
     </a>
     <p id="work-inquiry" style="margin-top:30px;font-size:13px;line-height:1.6;color:var(--dim)">Questions about this work or the archive? <a href="mailto:jeff@jfsn.com">Contact Jeffrey&nbsp;→</a></p>
@@ -752,33 +761,12 @@ addEventListener('DOMContentLoaded', () => {
   here.style.left = (frac * 100) + '%';
   document.getElementById('here-yr').textContent = thisDecade + 's';
 
-  // the decade axis beneath the band, this work's decade lit.
-  // Decades with few works sit close together in index-space (e.g. the
-  // 1970s/1980s), which can crowd their labels to the point of overlap —
-  // enforce a minimum on-screen gap so consecutive labels stay legible.
-  const axis = document.getElementById('decade-axis');
-  // Pixel-based, not a fixed percentage — the sidebar column (and so this
-  // axis) can be anywhere from 280px to 380px wide, and a percentage gap
-  // that clears labels at one width still lets them collide at another.
-  const axisW = axis.clientWidth || axis.parentElement.clientWidth || 320;
-  const MIN_GAP_PX = 34; // widest label ("1970s"/"2020s") plus a few px breathing room
-  const MIN_GAP_PCT = MIN_GAP_PX / axisW * 100;
-  let lastLeft = -Infinity;
-  const positioned = decades.map(dd => {
-    let left = dd.i / (works.length - 1) * 100;
-    if (left - lastLeft < MIN_GAP_PCT) left = lastLeft + MIN_GAP_PCT;
-    lastLeft = left;
-    return { dd, left };
-  });
-  // If crowding pushed the tail past 100%, compress everything back to fit.
-  const overflow = positioned[positioned.length - 1].left - 100;
-  if (overflow > 0) {
-    positioned.forEach((p, i) => { p.left -= overflow * (i / (positioned.length - 1)); });
+  // the decade display — ONE LARGE active decade, centered and monumental.
+  // Shows the decade this work belongs to, with "YEARS ARE DECADE ESTIMATES" beneath.
+  const decadeNum = document.getElementById('decade-numeral');
+  if (decadeNum) {
+    decadeNum.textContent = thisDecade + 's';
   }
-  axis.innerHTML = positioned.map(({ dd, left }) => {
-    const on = dd.d === thisDecade ? ' class="on"' : '';
-    return '<span' + on + ' style="left:' + left.toFixed(2) + '%">' + dd.d + 's</span>';
-  }).join('');
 
   function drawStrip(){
     const W = strip.clientWidth || strip.parentElement.clientWidth;
