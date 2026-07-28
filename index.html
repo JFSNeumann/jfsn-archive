@@ -671,6 +671,13 @@ addEventListener('DOMContentLoaded', () => {
     .reveal-up{transition:opacity .6s ease,transform .6s ease}
   }
 
+  /* TV caption entrance animation on page load */
+  .tv-hero-overlay figcaption{opacity:0;transform:translateY(16px)}
+  @media (prefers-reduced-motion: no-preference){
+    .tv-hero-overlay figcaption{animation:slideUp .6s ease .4s forwards}
+    @keyframes slideUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+  }
+
   /* Me overlay in bottom-right corner — desktop only */
   .me-hero-overlay{display:none}
   /* Snowmann overlay in bottom-right corner — desktop only */
@@ -797,7 +804,7 @@ addEventListener('DOMContentLoaded', () => {
       <div class="tv-screen-mask">
         <canvas class="tv-static"></canvas>
       </div>
-      <figcaption class="caps reveal-up">TV FACING CORNER · 1978 · SCULPTURE</figcaption>
+      <figcaption class="caps">TV FACING CORNER · 1978 · SCULPTURE</figcaption>
     </figure>
     <img src="/assets/images/mr-snowmann.png" alt="Snowmann figure decoration" class="snowmann-hero-overlay" width="291" height="426" decoding="async" loading="lazy" aria-hidden="true">
   </section>
