@@ -769,10 +769,86 @@ addEventListener('DOMContentLoaded', () => {
         runCycle();
       };
 
+      // Track active timeouts so we can pause/resume
+      let paintTimeout = null;
+      let swapTimeout = null;
+      let isScrollPaused = false;
+      let scrollResumeTimeout = null;
+
       const runCycle = () => {
-        setTimeout(paintCurrent, PAINT_DELAY_MS);
-        setTimeout(swapToNext, CYCLE_MS);
+        if (paintTimeout) clearTimeout(paintTimeout);
+        if (swapTimeout) clearTimeout(swapTimeout);
+        paintTimeout = setTimeout(paintCurrent, PAINT_DELAY_MS);
+        swapTimeout = setTimeout(swapToNext, CYCLE_MS);
       };
+
+      // Manual advance: arrow keys and swipe
+      const advanceToNext = () => {
+        if (paintTimeout) clearTimeout(paintTimeout);
+        if (swapTimeout) clearTimeout(swapTimeout);
+        if (scrollResumeTimeout) clearTimeout(scrollResumeTimeout);
+        isScrollPaused = false;
+        swapToNext();
+      };
+
+      const advanceToPrev = () => {
+        if (paintTimeout) clearTimeout(paintTimeout);
+        if (swapTimeout) clearTimeout(swapTimeout);
+        if (scrollResumeTimeout) clearTimeout(scrollResumeTimeout);
+        isScrollPaused = false;
+
+        const oldImg = heroImgs[heroI];
+        heroI = (heroI - 1 + heroImgs.length) % heroImgs.length;
+        oldImg.classList.remove('active');
+        heroImgs[heroI].classList.add('active');
+        ctx.clearRect(0, 0, paintCanvas.width, paintCanvas.height);
+
+        // Reset progress bar
+        progressBar.style.width = '0%';
+        progressBar.style.transition = 'none';
+        setTimeout(() => {
+          progressBar.style.transition = `width ${CYCLE_MS}ms linear`;
+          progressBar.style.width = '100%';
+        }, 10);
+
+        paintCurrent();
+        runCycle();
+      };
+
+      // Keyboard: arrow left/right for manual navigation
+      document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight') advanceToNext();
+        else if (e.key === 'ArrowLeft') advanceToPrev();
+      });
+
+      // Touch/swipe for mobile: simple left/right swipe
+      let touchStartX = 0;
+      heroImages.addEventListener('touchstart', e => {
+        touchStartX = e.touches[0].clientX;
+      }, { passive: true });
+
+      heroImages.addEventListener('touchend', e => {
+        const touchEndX = e.changedTouches[0].clientX;
+        const diff = touchStartX - touchEndX;
+        if (Math.abs(diff) > 50) { // 50px threshold
+          if (diff > 0) advanceToNext(); // swipe left = next
+          else advanceToPrev(); // swipe right = prev
+        }
+      }, { passive: true });
+
+      // Scroll pause: pause the cycle while scrolling, resume 500ms after scroll stops
+      document.addEventListener('scroll', () => {
+        if (!isScrollPaused) {
+          isScrollPaused = true;
+          if (paintTimeout) clearTimeout(paintTimeout);
+          if (swapTimeout) clearTimeout(swapTimeout);
+        }
+        if (scrollResumeTimeout) clearTimeout(scrollResumeTimeout);
+        scrollResumeTimeout = setTimeout(() => {
+          isScrollPaused = false;
+          runCycle();
+        }, 500);
+      }, { passive: true });
 
       // Initial paint, then start the recurring cycle
       paintCurrent();
