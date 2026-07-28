@@ -190,7 +190,7 @@ addEventListener('DOMContentLoaded', () => {
     #search{flex:1;min-width:auto}
     #search:focus{flex:1}
   }
-  #search::placeholder{color:var(--faint);font-style:italic}
+  #search::placeholder{color:var(--dim);font-style:italic}
   #search:hover{background-color:rgba(255,102,0,.04);border-color:var(--dim)}
   #search:focus{outline:none;border-color:var(--accent);background-color:rgba(255,102,0,.08);box-shadow:0 0 0 3px rgba(255,102,0,.1)}
   #search-clear{
@@ -258,7 +258,7 @@ addEventListener('DOMContentLoaded', () => {
   #secondary-filters .fgroup:not(.collapsed){flex-basis:100%}
   .fgroup{display:flex;flex-direction:column;gap:8px}
   .fgroup .label{
-    color:var(--faint);cursor:pointer;user-select:none;
+    color:var(--dim);cursor:pointer;user-select:none;
     display:flex;align-items:center;gap:8px;transition:color .3s ease;
     width:100%;text-align:left;font:inherit;
   }
