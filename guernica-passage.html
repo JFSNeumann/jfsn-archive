@@ -264,6 +264,11 @@ addEventListener('DOMContentLoaded', () => {
     background:radial-gradient(ellipse at center, rgba(12,10,9,.94) 0%, rgba(12,10,9,.7) 45%, transparent 75%);
     transform:scale(.5);opacity:0;
   }
+
+  /* Airplane passage: three aircraft traveling through the hero space */
+  #airplane-passage{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+  .airplane-container{position:absolute;background:var(--accent);pointer-events:none;display:flex;align-items:center;justify-content:center}
+  .airplane-container img{display:block;width:auto;height:100%;mix-blend-mode:darken}
   /* Mobile: the -150% vertical inset (tuned for wide desktop heroes) reads
      as an oversized dark ellipse swallowing most of a narrow, tall
      viewport — halved here so it hugs the hero text instead. */
@@ -489,6 +494,17 @@ addEventListener('DOMContentLoaded', () => {
     <div class="caps">THE GUERNICA PASSAGE</div>
     <h1>One structure, <span class="highlight-dark">thirty</span> years.</h1>
     <div class="caps fact">232 WORKS · 1990 – 2020</div>
+  </div>
+  <div id="airplane-passage">
+    <div class="airplane-container" id="plane-1-container">
+      <img class="airplane" src="/assets/images/airplane.gif" alt="" aria-hidden="true">
+    </div>
+    <div class="airplane-container" id="plane-2-container">
+      <img class="airplane" src="/assets/images/airplane.gif" alt="" aria-hidden="true">
+    </div>
+    <div class="airplane-container" id="plane-3-container">
+      <img class="airplane" src="/assets/images/airplane.gif" alt="" aria-hidden="true">
+    </div>
   </div>
   <div class="down">↓</div>
 </section>
@@ -872,6 +888,101 @@ addEventListener('DOMContentLoaded', () => {
     addEventListener('DOMContentLoaded', () => waitForAnimeUtils(25));
   } else {
     waitForAnimeUtils(25);
+  }
+})();
+</script>
+
+<script defer>
+// ---------- Guernica Passage: Airplane Passage Animation ----------
+// Three warplanes traverse the hero space after the main entrance concludes.
+// Choreography: varied scales, timing, and speeds create an asynchronous passage.
+// Respect prefers-reduced-motion by not running animation.
+(function() {
+  'use strict';
+
+  // Skip if prefers-reduced-motion is enabled
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const passage = document.getElementById('airplane-passage');
+    if (passage) passage.style.display = 'none';
+    return;
+  }
+
+  // Calculate responsive sizing based on viewport
+  const getAirplaneSizes = () => {
+    const vw = Math.min(window.innerWidth || 800, 1200);
+    return {
+      plane1: { scale: Math.round(vw * 0.15) || 120, delay: 200, duration: 5200 },
+      plane2: { scale: Math.round(vw * 0.07) || 56, delay: 600, duration: 5400 },
+      plane3: { scale: Math.round(vw * 0.10) || 80, delay: 400, duration: 5800 }
+    };
+  };
+
+  const animateAirplanes = () => {
+    if (typeof animeUtils === 'undefined' || typeof animeUtils.anime === 'undefined') {
+      setTimeout(animateAirplanes, 50);
+      return;
+    }
+
+    const anime = animeUtils.anime;
+    const door = document.getElementById('door');
+    const passage = document.getElementById('airplane-passage');
+    if (!door || !passage) return;
+
+    const sizes = getAirplaneSizes();
+    const viewportHeight = window.innerHeight;
+
+    // Airplane configurations: position, scale, timing
+    const configs = [
+      {
+        id: 'plane-1-container',
+        leftPercent: 50,
+        ...sizes.plane1
+      },
+      {
+        id: 'plane-2-container',
+        leftPercent: 18,
+        ...sizes.plane2
+      },
+      {
+        id: 'plane-3-container',
+        leftPercent: 72,
+        ...sizes.plane3
+      }
+    ];
+
+    // Build animation timeline: start after hero entrance (~2000ms)
+    const timeline = anime.timeline({ autoplay: false });
+
+    configs.forEach(config => {
+      const container = document.getElementById(config.id);
+      if (!container) return;
+
+      // Set initial position and size
+      container.style.width = config.scale + 'px';
+      container.style.height = config.scale + 'px';
+      container.style.left = 'calc(' + config.leftPercent + '% - ' + (config.scale / 2) + 'px)';
+      container.style.top = '0px';
+
+      const startY = (-config.scale - 20);
+      const endY = viewportHeight + 100;
+
+      // Animate from top (above viewport) to bottom (below viewport) using translateY
+      timeline.add({
+        targets: container,
+        translateY: [startY, endY],
+        duration: config.duration,
+        easing: 'linear'
+      }, 2000 + config.delay);
+    });
+
+    timeline.play();
+  };
+
+  // Wait for DOM and anime.js to be ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', animateAirplanes);
+  } else {
+    animateAirplanes();
   }
 })();
 </script>
