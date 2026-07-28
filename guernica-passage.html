@@ -912,8 +912,8 @@ addEventListener('DOMContentLoaded', () => {
     const vw = Math.min(window.innerWidth || 800, 1200);
     return {
       plane1: { scale: Math.round(vw * 0.30) || 240, delay: 200, duration: 5200 },
-      plane2: { scale: Math.round(vw * 0.14) || 112, delay: 600, duration: 5400 },
-      plane3: { scale: Math.round(vw * 0.20) || 160, delay: 400, duration: 5800 }
+      plane2: { scale: Math.round(vw * 0.14) || 112, delay: 1400, duration: 5400 },
+      plane3: { scale: Math.round(vw * 0.20) || 160, delay: 1000, duration: 5800 }
     };
   };
 
@@ -962,6 +962,7 @@ addEventListener('DOMContentLoaded', () => {
       container.style.height = config.scale + 'px';
       container.style.left = 'calc(' + config.leftPercent + '% - ' + (config.scale / 2) + 'px)';
       container.style.top = '0px';
+      container.style.opacity = '0.9';
 
       const startY = (-config.scale - 20);
       const endY = viewportHeight + 100;
