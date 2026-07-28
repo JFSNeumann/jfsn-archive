@@ -439,11 +439,27 @@ addEventListener('DOMContentLoaded', () => {
 </header>
 
 <section id="door">
+  <!-- Desktop (>900px) gets the full-resolution tier via a media-query
+       <source>; the browser picks before it ever requests a byte, so
+       there's no wasted medium-tier fetch and no JS/layout involved.
+       Mobile/tablet keep the lighter medium tier. -->
   <div class="hero-images" id="hero-images">
-    <img src="/artworks/medium/art0504.avif" alt="Studio work" loading="eager" class="hero-img active">
-    <img src="/artworks/medium/art1009.avif" alt="Studio work" loading="lazy" class="hero-img">
-    <img src="/artworks/medium/art1008.avif" alt="Studio work" loading="lazy" class="hero-img">
-    <img src="/artworks/medium/art1011.avif" alt="Studio work" loading="lazy" class="hero-img">
+    <picture>
+      <source media="(min-width:901px)" srcset="/artworks/full/art0504.avif">
+      <img src="/artworks/medium/art0504.avif" alt="Studio work" loading="eager" class="hero-img active">
+    </picture>
+    <picture>
+      <source media="(min-width:901px)" srcset="/artworks/full/art1009.avif">
+      <img src="/artworks/medium/art1009.avif" alt="Studio work" loading="lazy" class="hero-img">
+    </picture>
+    <picture>
+      <source media="(min-width:901px)" srcset="/artworks/full/art1008.avif">
+      <img src="/artworks/medium/art1008.avif" alt="Studio work" loading="lazy" class="hero-img">
+    </picture>
+    <picture>
+      <source media="(min-width:901px)" srcset="/artworks/full/art1011.avif">
+      <img src="/artworks/medium/art1011.avif" alt="Studio work" loading="lazy" class="hero-img">
+    </picture>
   </div>
   <canvas id="paint-splatter" aria-hidden="true" style="position:absolute;inset:0;z-index:1;pointer-events:none;width:100%;height:100%"></canvas>
   <div id="ambient-light" aria-hidden="true"></div>
@@ -708,11 +724,11 @@ addEventListener('DOMContentLoaded', () => {
         }
       };
 
-      // Fixed 3s cycle per hero image. The paint splatter lands exactly
+      // Fixed 4s cycle per hero image. The paint splatter lands exactly
       // 1s before the NEXT image swaps in — an impact right before the
       // artwork changes, not a fade tied to the image that's leaving.
-      const CYCLE_MS = 3000;
-      const PAINT_DELAY_MS = 2000; // 1s before the next swap
+      const CYCLE_MS = 4000;
+      const PAINT_DELAY_MS = 3000; // 1s before the next swap
       const IMPACT_HOLD_MS = 160; // class removed after this; CSS eases the rest
 
       const paintCurrent = () => {
