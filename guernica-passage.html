@@ -967,11 +967,12 @@ addEventListener('DOMContentLoaded', () => {
       const endY = viewportHeight + 100;
 
       // Animate from top (above viewport) to bottom (below viewport) using translateY
-      timeline.add({
-        targets: container,
+      // anime.js v4 API: timeline.add(targets, properties, position) — targets is
+      // a separate argument, not a "targets" key inside the properties object.
+      timeline.add(container, {
         translateY: [startY, endY],
         duration: config.duration,
-        easing: 'linear'
+        ease: 'linear'
       }, 2000 + config.delay);
     });
 
