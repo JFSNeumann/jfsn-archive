@@ -950,7 +950,8 @@ addEventListener('DOMContentLoaded', () => {
       }
     ];
 
-    // Build animation timeline: start after hero entrance (~2000ms)
+    // Build animation timeline: start ~2s earlier than before, closer to the
+    // tail end of the hero entrance rather than waiting for it to fully settle
     const timeline = anime.timeline({ autoplay: false });
 
     configs.forEach(config => {
@@ -982,7 +983,7 @@ addEventListener('DOMContentLoaded', () => {
         opacity: [0.9, 0.2],
         duration: config.duration,
         ease: 'inOutQuad'
-      }, 2000 + config.delay);
+      }, config.delay);
     });
 
     timeline.play();
