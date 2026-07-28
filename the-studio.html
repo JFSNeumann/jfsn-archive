@@ -248,8 +248,15 @@ addEventListener('DOMContentLoaded', () => {
   @keyframes fadeIn{from{opacity:0}to{opacity:1}}
   #door .down{
     position:absolute;bottom:6vh;left:50%;transform:translateX(-50%);
-    color:var(--dim);font-size:28px;text-shadow:0 1px 10px rgba(0,0,0,.7);
+    display:flex;flex-direction:column;align-items:center;gap:8px;
     animation:sink 2.6s ease-in-out infinite;transition:opacity .3s ease;
+  }
+  #door .scroll-label{
+    font-size:11px;letter-spacing:.15em;text-transform:uppercase;
+    color:var(--dim);text-shadow:0 1px 10px rgba(0,0,0,.7);
+  }
+  #door .scroll-arrow{
+    color:var(--dim);font-size:28px;text-shadow:0 1px 10px rgba(0,0,0,.7);
   }
   @keyframes sink{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(12px)}}
   #door.scrolled .down{opacity:0}
@@ -481,7 +488,10 @@ addEventListener('DOMContentLoaded', () => {
     <h1>The <span class="highlight-work">work</span> continues.</h1>
     <div class="caps fact">THE LAST ROOM — THE ONLY ONE THAT FACES FORWARD</div>
   </div>
-  <div class="down">↓</div>
+  <div class="down" aria-label="Scroll down to explore">
+    <div class="scroll-label">Scroll down</div>
+    <div class="scroll-arrow">↓</div>
+  </div>
 </section>
 
 <section id="voice" class="reveal-el">
