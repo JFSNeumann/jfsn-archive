@@ -709,13 +709,13 @@ addEventListener('DOMContentLoaded', () => {
 
           // Satellite droplets with splashing physics
           ctx.globalAlpha = 0.75;
-          const dropletCount = Math.floor(r(8, 20) * intensity * sizeScale);
+          const dropletCount = Math.floor(r(4, 10) * intensity * sizeScale);
           for (let d = 0; d < dropletCount; d++) {
             const angle = r(0, Math.PI * 2);
-            const dist = baseRadius + r(40, 240) * sizeScale;
+            const dist = baseRadius + r(20, 120) * sizeScale;
             const dx = x + Math.cos(angle) * dist;
             const dy = y + Math.sin(angle) * dist;
-            const dropSize = r(12, 60) * sizeScale;
+            const dropSize = r(3, 8) * sizeScale;
             const dropAlpha = r(0.4, 1.0);
 
             ctx.globalAlpha = dropAlpha;
