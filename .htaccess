@@ -16,6 +16,9 @@
   # Legacy URL redirects — old pages that moved
   # timeline-fixed.html & timeline.html deliberately retired (2026-06-24); no replacement
   RewriteRule ^timeline-fixed\.html$ - [R=410,L]
+  # curator.html & companion.html were deleted (editorial tools / Netlify feature); gone for good
+  RewriteRule ^curator\.html$ - [R=410,L]
+  RewriteRule ^companion\.html$ - [R=410,L]
   # for-artists.html was deleted session 9; redirect legacy service pages to about
   RewriteRule ^services\.html$ /about.html [R=301,L]
   RewriteRule ^websites\.html$ /about.html [R=301,L]

@@ -99,7 +99,7 @@ TIERS = ["full", "medium", "thumbs", "mini", "micro"]
 
 # Suffix pattern for legitimate NON-catalog image variants (hero/mobile/lcp
 # renders). These are expected assets, not orphans.
-VARIANT_RE = re.compile(r"-(hero|hero-m|hero-lcp|hero-lcp-m|mobile|mobile-m|m)$")
+VARIANT_RE = re.compile(r"-(hero|hero-m|hero-lcp|hero-lcp-m|mobile|mobile-m|m)$|_back$")
 
 # Required fields that must be present AND non-empty on every master entry.
 # Deliberately excludes human-authored fields (themes/materials/motifs/
