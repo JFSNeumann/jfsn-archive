@@ -627,7 +627,7 @@ addEventListener('DOMContentLoaded', () => {
 
         // Hybrid randomness: seeded for consistency, real random for variation
         const baseSeed = imgIndex * 137;
-        const seededRand = (s) => Math.sin(baseSeed + s * 12.9898) * 43758.5453 % 1;
+        const seededRand = (s) => (Math.sin(baseSeed + s * 12.9898) * 43758.5453 % 1 + 1) % 1;
         const r = (min, max) => min + (seededRand(Math.random()) * 0.5 + Math.random() * 0.5) * (max - min);
 
         // Always 3 impact groups
@@ -707,71 +707,38 @@ addEventListener('DOMContentLoaded', () => {
         }
       };
 
-      let rotationTimeout = null;
-      let isRotating = false;
+      // Fixed 3s cycle per hero image. The paint splatter lands exactly
+      // 1s before the NEXT image swaps in — an impact right before the
+      // artwork changes, not a fade tied to the image that's leaving.
+      const CYCLE_MS = 3000;
+      const PAINT_DELAY_MS = 2000; // 1s before the next swap
 
-      const scheduleRotation = () => {
-        if (isRotating) return;
-        const interval = 3000 + Math.random() * 1000; // 3-4 seconds
-        rotationTimeout = setTimeout(performRotation, interval);
+      const paintCurrent = () => {
+        const w = heroImages.offsetWidth;
+        const h = heroImages.offsetHeight;
+        paintCanvas.width = w;
+        paintCanvas.height = h;
+        ctx.globalAlpha = 1;
+        generatePaint(heroI, w, h);
       };
 
-      const performRotation = () => {
-        if (isRotating) return;
-        isRotating = true;
-
-        // Transition out: fade + clear paint
+      const swapToNext = () => {
         const oldImg = heroImgs[heroI];
-        oldImg.style.opacity = '0';
-
-        setTimeout(() => {
-          // Pick random next image (avoiding immediate repeat)
-          const newI = nextRandom();
-          heroI = newI;
-
-          oldImg.classList.remove('active');
-          heroImgs[heroI].classList.add('active');
-          heroImgs[heroI].style.opacity = '1';
-
-          // Generate and apply paint effect
-          const w = heroImages.offsetWidth;
-          const h = heroImages.offsetHeight;
-          paintCanvas.width = w;
-          paintCanvas.height = h;
-          generatePaint(heroI, w, h);
-
-          // Paint fades over time
-          const paintStart = performance.now();
-          const paintDuration = 1400;
-          const fadeStart = 800;
-
-          const paintFade = (now) => {
-            const elapsed = now - paintStart;
-            if (elapsed < paintDuration) {
-              if (elapsed > fadeStart) {
-                ctx.globalAlpha = 1 - ((elapsed - fadeStart) / (paintDuration - fadeStart));
-              }
-              requestAnimationFrame(paintFade);
-            } else {
-              ctx.globalAlpha = 1;
-              ctx.clearRect(0, 0, w, h);
-              isRotating = false;
-              scheduleRotation(); // Schedule the next rotation
-            }
-          };
-          requestAnimationFrame(paintFade);
-        }, 400);
+        heroI = nextRandom();
+        oldImg.classList.remove('active');
+        heroImgs[heroI].classList.add('active');
+        ctx.clearRect(0, 0, paintCanvas.width, paintCanvas.height);
+        runCycle();
       };
 
-      // Initial paint
-      const w = heroImages.offsetWidth;
-      const h = heroImages.offsetHeight;
-      paintCanvas.width = w;
-      paintCanvas.height = h;
-      generatePaint(heroI, w, h);
+      const runCycle = () => {
+        setTimeout(paintCurrent, PAINT_DELAY_MS);
+        setTimeout(swapToNext, CYCLE_MS);
+      };
 
-      // Schedule first rotation
-      scheduleRotation();
+      // Initial paint, then start the recurring cycle
+      paintCurrent();
+      runCycle();
     }
   }
 

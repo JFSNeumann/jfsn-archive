@@ -549,8 +549,13 @@ addEventListener('DOMContentLoaded', () => {
   walk.hidden = false;
 
   document.title = (w.t || 'Work') + ' — Jeffrey F. S. Neumann';
+  // Desktop gets full resolution for the main viewing image; mobile/tablet
+  // keep the lighter medium tier. Thumbnails elsewhere on this page stay
+  // medium regardless of viewport — a grid of full-res images is wasted cost.
+  const IMG_TIER = window.innerWidth > 900 ? 'full' : 'medium';
   const img = document.getElementById('work-img');
-  img.src = '/artworks/medium/' + w.i + '.avif';
+  img.onerror = () => { img.onerror = null; img.src = '/artworks/medium/' + w.i + '.avif'; };
+  img.src = '/artworks/' + IMG_TIER + '/' + w.i + '.avif';
   img.alt = w.t || '';
   if (w.w && w.h) img.style.aspectRatio = w.w + '/' + w.h;
   document.getElementById('work-cap').textContent =
@@ -734,7 +739,8 @@ addEventListener('DOMContentLoaded', () => {
     if (!reverseImageExists) return;
     isShowingReverse = !isShowingReverse;
     const suffix = isShowingReverse ? '_back' : '';
-    img.src = '/artworks/medium/' + w.i + suffix + '.avif';
+    img.onerror = () => { img.onerror = null; img.src = '/artworks/medium/' + w.i + suffix + '.avif'; };
+    img.src = '/artworks/' + IMG_TIER + '/' + w.i + suffix + '.avif';
     img.alt = w.t + (isShowingReverse ? ' — reverse' : '');
     viewReverseBtn.textContent = isShowingReverse ? '[ VIEW FRONT → ]' : '[ VIEW BACK SIDE → ]';
   }
