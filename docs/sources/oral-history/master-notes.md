@@ -937,3 +937,53 @@ Both fixes deployed live to jfsn.com. Smoke tests passed. Service worker cache i
 **Commits:**
 - `b878055d` — working-history.html CSS fix (same session context, prior to context boundary)
 - `f22ef321` — the-studio.html CSS fix (latest session)
+
+---
+
+## 32. Stage Design — Devo / WHK Auditorium, Cleveland — 1977 (Creator Testimony)
+
+**Source:** Creator testimony, 2026-07-28. This documents temporary creative work outside the 1,086-object catalog: a stage environment designed and executed for a live performance. No surviving artwork objects; one surviving photograph (artist-supplied).
+
+### The work
+
+Jeff got the job to design and build a stage environment for a Devo performance at WHK Auditorium in Cleveland. He designed the entire stage concept and creative direction, executing the physical environment with the help of art-school friends.
+
+**Payment:** $500.
+
+**Timeline:** Approximately 24 hours to conceive, design, build, and install.
+
+**Scale of execution:** Jeff directed friends/art-school buddies who helped construct and operate the environment. Friends operated handheld lighting during the performance.
+
+### The environment — elements as described
+
+- Tall structures on both sides of the stage (which Jeff called "Tokyo towers"), built from found objects
+- The entire back wall of the stage covered with old window screens
+- Props acquired from the Salvation Army store across the street from the venue, including floor lamps
+- The overall intention: to feel "wild & crazy"
+- Built from found/scavenged materials
+
+### How the work came about
+
+Jeff got the job through a record-store owner and promoter he had met. The promoter's name may have been "Johnny Dromet?" — Jeff is uncertain of the exact spelling; preserve the uncertainty exactly.
+
+### Photographic documentation
+
+A surviving photograph (supplied by artist) appears to show part of the environment, possibly one of the "Tokyo towers." Do not claim identification more strongly than the evidence allows.
+
+### Unresolved — what remains unknown
+
+- **Exact identity/spelling of the promoter's name** — preserved as uncertain: "Johnny Dromet?"
+- **Identities of the assisting friends**
+- **Complete appearance, layout, and configuration of the environment**
+- **Whether additional photographs or documentation survive**
+- **Specific concert date** (likely December 3, 1977, based on independent concert history; not Jeff's direct recollection)
+
+### Creator context — significance for the archive
+
+This episode documents temporary creative work by Jeff that did not result in a surviving catalogable physical artwork and therefore falls entirely outside the 1,086-object catalog. It demonstrates creative direction, environmental design, collaboration, and rapid-turnaround installation work — a mode of creative practice distinct from studio work.
+
+**Do not infer from this single documented episode** that Jeff had a larger undocumented career in stage design, installation, or performance work. This is one specific commission preserved because the memory survived.
+
+### Archivist note
+
+This work is categorically distinct from the catalog. It is preserved here as creator testimony about non-catalog creative work. The Devo stage environment is documented by both creator testimony and a surviving photograph, though the physical environment itself does not survive. This contrasts with two other major non-catalog works: §12 (the CIA sculpture, sold and untrackable; exists only in memory) and §19 (the Guernica-scale painting, lost to water damage; exists only in memory). None of these three resulted in works the archive can house. The distinction matters: the 1,086-work count is accurate and complete for surviving catalog objects. This testimony preserves evidence of creative effort that lies outside that count.
