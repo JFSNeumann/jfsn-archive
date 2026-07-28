@@ -973,11 +973,15 @@ addEventListener('DOMContentLoaded', () => {
       // to begin the tween, reading as a "pop" instead of a clean entrance.
       container.style.transform = 'translateY(' + startY + 'px)';
 
-      // Animate from top (above viewport) to bottom (below viewport) using translateY
+      // Animate from top (above viewport) to bottom (below viewport) using translateY.
+      // opacity holds at 0.9 for the first three quarters of the pass, then eases
+      // down to 0.5 in the final quarter — a fade felt as each plane nears the
+      // bottom edge, not a fade spread evenly across the whole descent.
       // anime.js v4 API: timeline.add(targets, properties, position) — targets is
       // a separate argument, not a "targets" key inside the properties object.
       timeline.add(container, {
         translateY: [startY, endY],
+        opacity: [0.9, 0.9, 0.9, 0.9, 0.5],
         duration: config.duration,
         ease: 'inOutQuad'
       }, 2000 + config.delay);
