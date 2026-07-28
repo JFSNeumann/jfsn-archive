@@ -165,24 +165,17 @@ addEventListener('DOMContentLoaded', () => {
   }
   #door .down{
     position:absolute;bottom:6vh;left:50%;transform:translateX(-50%);
-    margin-top:0;color:var(--dim);font-size:28px;
+    display:flex;flex-direction:column;align-items:center;gap:8px;
     animation:sink 2.6s ease-in-out infinite;transition:opacity .3s ease;
   }
-  @keyframes sink{0%,100%{transform:translateX(-50%) translateY(0)}
-  #hero .scroll-label, #door .scroll-label {
+  #door .scroll-label{
     font-size:11px;letter-spacing:.15em;text-transform:uppercase;
     color:var(--dim);text-shadow:0 1px 10px rgba(0,0,0,.7);
   }
-  #hero .scroll-arrow, #door .scroll-arrow {
+  #door .scroll-arrow{
     color:var(--dim);font-size:28px;text-shadow:0 1px 10px rgba(0,0,0,.7);
   }
-  .scroll-label {
-    font-size:11px;letter-spacing:.15em;text-transform:uppercase;
-    color:var(--dim);text-shadow:0 1px 10px rgba(0,0,0,.7);
-  }
-  .scroll-arrow {
-    color:var(--dim);font-size:28px;text-shadow:0 1px 10px rgba(0,0,0,.7);
-  }50%{transform:translateX(-50%) translateY(12px)}}
+  @keyframes sink{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(12px)}}
   /* Once the visitor has actually started scrolling, the cue has done its
      job — fade it rather than let it sink forever underneath them. */
   #door.scrolled .down{opacity:0}
@@ -454,9 +447,9 @@ addEventListener('DOMContentLoaded', () => {
     No catalog.
   </div>
   <div class="down" aria-label="Scroll down to explore">
-    <div class="scroll-label">Scroll down</div>
-    <div class="scroll-arrow">↓</div>
-  </div>
+  <div class="scroll-label">Scroll down</div>
+  <div class="scroll-arrow">↓</div>
+</div>
 </section>
 
 <section id="intro">

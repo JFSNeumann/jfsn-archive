@@ -227,23 +227,17 @@ addEventListener('DOMContentLoaded', () => {
   }
   #hero-image .down{
     position:absolute;bottom:6vh;left:50%;transform:translateX(-50%);
-    display:flex;flex-direction:column;align-items:center;gap:8px;animation:sink 2.6s ease-in-out infinite, pulse-glow 2s ease-in-out infinite;transition:opacity .3s ease;
+    display:flex;flex-direction:column;align-items:center;gap:8px;
+    z-index:2;animation:sink 2.6s ease-in-out infinite, pulse-glow 2s ease-in-out infinite;transition:opacity .3s ease;
   }
-  @keyframes sink{0%,100%{transform:translateX(-50%) translateY(0)}
-  #hero .scroll-label, #door .scroll-label {
+  #hero-image .scroll-label{
     font-size:11px;letter-spacing:.15em;text-transform:uppercase;
     color:var(--dim);text-shadow:0 1px 10px rgba(0,0,0,.7);
   }
-  #hero .scroll-arrow, #door .scroll-arrow {
+  #hero-image .scroll-arrow{
     color:var(--dim);font-size:28px;text-shadow:0 1px 10px rgba(0,0,0,.7);
   }
-  .scroll-label {
-    font-size:11px;letter-spacing:.15em;text-transform:uppercase;
-    color:var(--dim);text-shadow:0 1px 10px rgba(0,0,0,.7);
-  }
-  .scroll-arrow {
-    color:var(--dim);font-size:28px;text-shadow:0 1px 10px rgba(0,0,0,.7);
-  }50%{transform:translateX(-50%) translateY(12px)}}
+  @keyframes sink{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(12px)}}
   @keyframes pulse-glow{0%,100%{opacity:0.6}50%{opacity:0.9}}
   #hero-image.scrolled .down{opacity:0}
   @media (prefers-reduced-motion: reduce){
@@ -486,9 +480,9 @@ addEventListener('DOMContentLoaded', () => {
     <p class="hero-subtitle">250 Imagined Exhibitions — Every One Flagged</p>
   </div>
   <div class="down" aria-label="Scroll down to explore">
-    <div class="scroll-label">Scroll down</div>
-    <div class="scroll-arrow">↓</div>
-  </div>
+  <div class="scroll-label">Scroll down</div>
+  <div class="scroll-arrow">↓</div>
+</div>
 </section>
 
 <!-- Museum-Style Label -->
