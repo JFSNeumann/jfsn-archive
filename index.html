@@ -78,6 +78,10 @@ addEventListener('DOMContentLoaded', () => {
 
   main{display:block}
 
+  /* Skip-to-main-content link for keyboard users */
+  #skip-link{position:absolute;top:-40px;left:0;background:var(--accent);color:#0c0a09;padding:8px 16px;text-decoration:none;z-index:100;font-weight:600}
+  #skip-link:focus{top:0}
+
   button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;color:var(--accent)}
 
   /* ── THE POSTER — the permanent entrance, complete as a still ──
@@ -758,8 +762,9 @@ addEventListener('DOMContentLoaded', () => {
 </style>
 </head>
 <body>
+<a href="#main" id="skip-link">Skip to main content</a>
 
-<main>
+<main id="main">
   <!-- THE POSTER — the permanent entrance. Five things, one hand, one work,
        one wall. Identical for every visitor, every visit. Nothing here moves,
        greets, or personalizes; the door is the same door every time. -->
