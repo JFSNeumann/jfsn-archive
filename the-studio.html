@@ -643,50 +643,58 @@ addEventListener('DOMContentLoaded', () => {
       };
 
       // Generate procedural paint splatters with controlled variation
-      const generatePaint = (imgIndex, w, h) => {
+      const generatePaint = (imgIndex, w, h, impactIndex = null) => {
         if (!w || !h) {
           w = window.innerWidth;
           h = window.innerHeight;
         }
-        ctx.clearRect(0, 0, w, h);
+
+        // Responsive size scaling: smaller on tablet/mobile
+        let sizeScale = 1;
+        if (w < 768) sizeScale = 0.4; // mobile: 40% of desktop
+        else if (w < 1024) sizeScale = 0.65; // tablet: 65% of desktop
 
         // Hybrid randomness: seeded for consistency, real random for variation
         const baseSeed = imgIndex * 137;
         const seededRand = (s) => (Math.sin(baseSeed + s * 12.9898) * 43758.5453 % 1 + 1) % 1;
         const r = (min, max) => min + (seededRand(Math.random()) * 0.5 + Math.random() * 0.5) * (max - min);
 
-        // Always 3 impact groups
-        const impactCount = 3;
+        // Only clear if drawing a new full set
+        if (impactIndex === null) {
+          ctx.clearRect(0, 0, w, h);
+        }
+
+        // Draw specific impact group, or all 3 if impactIndex is null
+        const impactIndices = impactIndex !== null ? [impactIndex] : [0, 1, 2];
         const intensity = 0.7 + seededRand(0) * 0.3; // 0.7-1.0
 
-        ctx.globalAlpha = 0.85;
         ctx.fillStyle = PAINT_COLORS[imgIndex % PAINT_COLORS.length];
 
-        for (let i = 0; i < impactCount; i++) {
-          let x, y;
+        // Space impacts across the hero: top, middle, bottom
+        const positions = [
+          { x: r(w * 0.1, w * 0.4), y: r(h * 0.1, h * 0.3) },  // top-left area
+          { x: r(w * 0.5, w * 0.9), y: r(h * 0.4, h * 0.6) },  // right-center area
+          { x: r(w * 0.2, w * 0.7), y: r(h * 0.65, h * 0.9) }  // bottom area
+        ];
 
-          // Space impacts across the hero: top, middle, bottom
-          const positions = [
-            { x: r(w * 0.1, w * 0.4), y: r(h * 0.1, h * 0.3) },  // top-left area
-            { x: r(w * 0.5, w * 0.9), y: r(h * 0.4, h * 0.6) },  // right-center area
-            { x: r(w * 0.2, w * 0.7), y: r(h * 0.65, h * 0.9) }  // bottom area
-          ];
+        for (const i of impactIndices) {
           const pos = positions[i];
-          x = pos.x;
-          y = pos.y;
+          const x = pos.x;
+          const y = pos.y;
 
-          // MUCH LARGER paint splatters - 150-300px base radius
-          const baseRadius = r(150, 300) * intensity;
+          // 50% smaller base radius: 75-150px (was 150-300px)
+          const baseRadius = r(75, 150) * intensity * sizeScale;
           const xRadius = baseRadius * r(0.8, 1.6);
           const yRadius = baseRadius * r(0.7, 1.5);
           const rotation = r(0, Math.PI * 2);
 
-          // Main splat blob - BOLD and VISIBLE
+          // Main splat blob
+          ctx.globalAlpha = 0.85;
           ctx.beginPath();
           ctx.ellipse(x, y, xRadius, yRadius, rotation, 0, Math.PI * 2);
           ctx.fill();
 
-          // Add texture to splat with overlapping smaller blobs
+          // Add texture with overlapping smaller blobs
           ctx.globalAlpha = 0.6;
           for (let t = 0; t < Math.floor(r(3, 8)); t++) {
             const tAngle = r(0, Math.PI * 2);
@@ -699,15 +707,15 @@ addEventListener('DOMContentLoaded', () => {
             ctx.fill();
           }
 
-          // Satellite droplets with splashing physics - LARGER and MORE VISIBLE
+          // Satellite droplets with splashing physics
           ctx.globalAlpha = 0.75;
-          const dropletCount = Math.floor(r(8, 20) * intensity);
+          const dropletCount = Math.floor(r(8, 20) * intensity * sizeScale);
           for (let d = 0; d < dropletCount; d++) {
             const angle = r(0, Math.PI * 2);
-            const dist = baseRadius + r(40, 240);
+            const dist = baseRadius + r(40, 240) * sizeScale;
             const dx = x + Math.cos(angle) * dist;
             const dy = y + Math.sin(angle) * dist;
-            const dropSize = r(12, 60);  // Much larger drops
+            const dropSize = r(12, 60) * sizeScale;
             const dropAlpha = r(0.4, 1.0);
 
             ctx.globalAlpha = dropAlpha;
@@ -716,19 +724,19 @@ addEventListener('DOMContentLoaded', () => {
                         r(0, Math.PI * 2), 0, Math.PI * 2);
             ctx.fill();
           }
-
-          ctx.globalAlpha = 0.85;
         }
 
-        // Final fine mist/edge effect
-        ctx.globalAlpha = 0.15;
-        for (let m = 0; m < Math.floor(r(4, 12)); m++) {
-          const mx = r(0, w);
-          const my = r(0, h);
-          const msize = r(1, 8);
-          ctx.beginPath();
-          ctx.arc(mx, my, msize, 0, Math.PI * 2);
-          ctx.fill();
+        // Fine mist/edge effect (only draw once for new full set)
+        if (impactIndex === null) {
+          ctx.globalAlpha = 0.15;
+          for (let m = 0; m < Math.floor(r(4, 12)); m++) {
+            const mx = r(0, w);
+            const my = r(0, h);
+            const msize = r(1, 8) * sizeScale;
+            ctx.beginPath();
+            ctx.arc(mx, my, msize, 0, Math.PI * 2);
+            ctx.fill();
+          }
         }
       };
 
@@ -748,7 +756,14 @@ addEventListener('DOMContentLoaded', () => {
         paintCanvas.width = w;
         paintCanvas.height = h;
         ctx.globalAlpha = 1;
-        generatePaint(heroI, w, h);
+
+        // Clear canvas for fresh paint sequence
+        ctx.clearRect(0, 0, w, h);
+
+        // Stagger splatter groups: each appears 150ms apart
+        generatePaint(heroI, w, h, 0); // Draw first group immediately
+        setTimeout(() => generatePaint(heroI, w, h, 1), 150); // Second group
+        setTimeout(() => generatePaint(heroI, w, h, 2), 300); // Third group
       };
 
       const swapToNext = () => {
