@@ -835,6 +835,7 @@ addEventListener('DOMContentLoaded', () => {
   }
   function rotateBy(deg){ view.rot = (view.rot + deg + 360) % 360; applyView(); }
 
+  let lbLastFocused = null;
   function openLB(){
     lbImg.src = '/artworks/full/' + w.i + '.avif';
     lbImg.onerror = () => { lbImg.onerror = null; lbImg.src = '/artworks/medium/' + w.i + '.avif'; };
@@ -842,12 +843,23 @@ addEventListener('DOMContentLoaded', () => {
     resetView();
     lb.classList.add('on');
     document.body.style.overflow = 'hidden';
+    lbLastFocused = document.activeElement;
+    document.getElementById('lb-close').focus();
   }
   function closeLB(){
     lb.classList.remove('on');
     resetView();
     document.body.style.overflow = '';
+    if (lbLastFocused && lbLastFocused.focus) lbLastFocused.focus();
   }
+  lb.addEventListener('keydown', e => {
+    if (!lb.classList.contains('on') || e.key !== 'Tab') return;
+    const focusable = lb.querySelectorAll('button');
+    if (focusable.length === 0) return;
+    const first = focusable[0], last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
   img.addEventListener('click', openLB);
   document.getElementById('view-full').addEventListener('click', openLB);
   document.getElementById('lb-close').addEventListener('click', closeLB);

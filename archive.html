@@ -1478,6 +1478,24 @@ addEventListener('DOMContentLoaded', () => {
     const isOpen = groups.classList.toggle('open');
     toggle.classList.toggle('open', isOpen);
     toggle.setAttribute('aria-expanded', isOpen);
+    if (isOpen) {
+      const firstButton = groups.querySelector('button');
+      if (firstButton) firstButton.focus();
+    }
+  });
+
+  groups.addEventListener('keydown', e => {
+    if (e.key !== 'Tab' || !groups.classList.contains('open')) return;
+    const buttons = groups.querySelectorAll('button');
+    if (buttons.length === 0) return;
+    const first = buttons[0], last = buttons[buttons.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      toggle.focus();
+    }
   });
 })();
 </script>
