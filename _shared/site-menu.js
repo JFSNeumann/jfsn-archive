@@ -208,7 +208,7 @@
   /* Load butterfly image */
   var butterfly = overlay.querySelector('#butterfly-nav');
   var img = document.createElement('img');
-  img.src = '/assets/images/jfsn-butterfly-2.png';
+  img.src = '/_shared/butterfly-mark.png';
   img.alt = '';
   img.style.cssText = 'width:100%;height:100%;object-fit:contain';
   butterfly.appendChild(img);
