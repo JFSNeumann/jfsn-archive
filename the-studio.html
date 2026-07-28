@@ -682,8 +682,8 @@ addEventListener('DOMContentLoaded', () => {
           const x = pos.x;
           const y = pos.y;
 
-          // 50% smaller base radius: 37-75px (was 75-150px)
-          const baseRadius = r(37, 75) * intensity * sizeScale;
+          // 70% smaller: 11-23px (37-75 * 0.3)
+          const baseRadius = r(11, 23) * intensity * sizeScale;
           const xRadius = baseRadius * r(0.8, 1.6);
           const yRadius = baseRadius * r(0.7, 1.5);
           const rotation = r(0, Math.PI * 2);
@@ -760,10 +760,10 @@ addEventListener('DOMContentLoaded', () => {
         // Clear canvas for fresh paint sequence
         ctx.clearRect(0, 0, w, h);
 
-        // Stagger splatter groups: each appears 350ms apart (one at a time)
+        // Stagger splatter groups: each appears 600ms apart (slow, one at a time)
         generatePaint(heroI, w, h, 0); // Draw first group immediately
-        setTimeout(() => generatePaint(heroI, w, h, 1), 350); // Second group
-        setTimeout(() => generatePaint(heroI, w, h, 2), 700); // Third group
+        setTimeout(() => generatePaint(heroI, w, h, 1), 600); // Second group
+        setTimeout(() => generatePaint(heroI, w, h, 2), 1200); // Third group
       };
 
       const swapToNext = () => {
