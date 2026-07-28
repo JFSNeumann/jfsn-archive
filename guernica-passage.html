@@ -907,13 +907,13 @@ addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-  // Calculate responsive sizing based on viewport
+  // Calculate responsive sizing based on viewport (2x scale)
   const getAirplaneSizes = () => {
     const vw = Math.min(window.innerWidth || 800, 1200);
     return {
-      plane1: { scale: Math.round(vw * 0.15) || 120, delay: 200, duration: 5200 },
-      plane2: { scale: Math.round(vw * 0.07) || 56, delay: 600, duration: 5400 },
-      plane3: { scale: Math.round(vw * 0.10) || 80, delay: 400, duration: 5800 }
+      plane1: { scale: Math.round(vw * 0.30) || 240, delay: 200, duration: 5200 },
+      plane2: { scale: Math.round(vw * 0.14) || 112, delay: 600, duration: 5400 },
+      plane3: { scale: Math.round(vw * 0.20) || 160, delay: 400, duration: 5800 }
     };
   };
 
@@ -965,6 +965,12 @@ addEventListener('DOMContentLoaded', () => {
 
       const startY = (-config.scale - 20);
       const endY = viewportHeight + 100;
+
+      // Prime the off-screen start position immediately, before the timeline
+      // reaches this segment — otherwise the container sits visible at top:0
+      // (no transform) until its scheduled start time, then jumps off-screen
+      // to begin the tween, reading as a "pop" instead of a clean entrance.
+      container.style.transform = 'translateY(' + startY + 'px)';
 
       // Animate from top (above viewport) to bottom (below viewport) using translateY
       // anime.js v4 API: timeline.add(targets, properties, position) — targets is
