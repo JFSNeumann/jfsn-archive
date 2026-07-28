@@ -132,7 +132,7 @@ addEventListener('DOMContentLoaded', () => {
   }
   .highlight-devo{
     background:var(--accent);color:#0c0a09;padding:0 4px;font-style:normal;
-    display:inline-block;transform-origin:left center;
+    display:inline-block;position:relative;transform-origin:left center;
   }
   /* Ink-stamp: matches the homepage/room-page title treatment — the box
      lands once on load, timed just after the hero's own ellipse fade-in
@@ -144,6 +144,32 @@ addEventListener('DOMContentLoaded', () => {
       60%{transform:scaleX(1.08)}
       100%{transform:scaleX(1)}
     }
+  }
+  /* EXPERIMENT: two extra ink-stamp fragments above "happened.", isolated
+     and easy to remove — see .devo-chip rules + their two @keyframes below.
+     Decorative only, aria-hidden, no effect on the highlight's own text or
+     its ink-stamp animation above. */
+  .devo-chip{position:absolute;background:var(--accent);pointer-events:none}
+  .devo-chip-b{width:62%;height:.72em;left:19%;bottom:calc(100% - 3px)}
+  .devo-chip-a{width:32%;height:.72em;left:34%;bottom:calc(100% + .72em - 6px)}
+  @media (prefers-reduced-motion: no-preference){
+    .devo-chip-b{animation:chip-settle-b .4s cubic-bezier(.3,1.4,.4,1) both;animation-delay:2.2s}
+    .devo-chip-a{animation:chip-eject-a .5s cubic-bezier(.25,1.6,.35,1) both;animation-delay:2.45s}
+    @keyframes chip-settle-b{
+      0%{transform:translateY(18px) scaleY(.4);opacity:0}
+      50%{transform:translateY(-4px) scaleY(1.15);opacity:1}
+      70%{transform:translateY(2px) scaleY(.95)}
+      100%{transform:translateY(0) scaleY(1)}
+    }
+    @keyframes chip-eject-a{
+      0%{transform:translate(-6px,10px) rotate(-4deg) scale(.7);opacity:0}
+      45%{transform:translate(4px,-14px) rotate(6deg) scale(1.08);opacity:1}
+      70%{transform:translate(-2px,3px) rotate(-2deg) scale(.97)}
+      100%{transform:translate(0,0) rotate(-2deg) scale(1)}
+    }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .devo-chip-b,.devo-chip-a{opacity:1;transform:none}
   }
   #hero .subtitle{color:var(--dim);font-size:clamp(16px,2vw,20px);max-width:28em;line-height:1.7;margin-top:12px;text-shadow:0 1px 10px rgba(0,0,0,.7)}
   #hero .down{
@@ -276,7 +302,7 @@ addEventListener('DOMContentLoaded', () => {
 
   <section id="hero">
     <div id="hero-content">
-      <h1>Specific things that <span class="highlight-devo">happened</span>.</h1>
+      <h1>Specific things that <span class="highlight-devo">happened<span class="devo-chip devo-chip-b" aria-hidden="true"></span><span class="devo-chip devo-chip-a" aria-hidden="true"></span></span>.</h1>
       <p class="subtitle">Stories from fifty years of making — in Jeff's own words where possible. The parts of the record that don't fit in a catalog.</p>
     </div>
     <div class="down">↓</div>
