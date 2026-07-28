@@ -183,27 +183,28 @@ addEventListener('DOMContentLoaded', () => {
   }
   /* One image at a time, cross-fading through a rotation of four studio
      works — replaces the old fixed two-image split. Deliberately no
-     parallax on the container itself (kept from the original hero call);
-     the motion lives entirely in the slow Ken-Burns drift per image. */
+     parallax on the container itself (kept from the original hero call).
+     The motion is a quick "impact punch" (see .impact below, triggered by
+     the paint-attack script) rather than a continuous drift — with images
+     swapping every 3s, a slow Ken-Burns never had time to read as motion. */
   .hero-img{
     position:absolute;
     /* Extended 20% taller (a replaced <img> needs explicit width/height —
-       top/bottom offsets alone don't stretch it) so scroll-parallax
-       (composed into the Ken-Burns keyframes below) never peeks a gap;
-       .hero-images' overflow:hidden clips the excess. */
+       top/bottom offsets alone don't stretch it) so scroll-parallax and
+       the impact-punch scale never peek a gap; .hero-images' overflow:hidden
+       clips the excess. */
     top:-20%;left:0;width:100%;height:140%;
     object-fit:cover;opacity:0;
-    transition:opacity 1.8s ease;
+    transition:opacity 1.8s ease, transform .5s cubic-bezier(.2,1.6,.3,1);
     transform:translateY(var(--hero-parallax-y,0));
   }
   .hero-img.active{opacity:1}
-  @media (prefers-reduced-motion: no-preference){
-    .hero-img{animation:hero-kb 24s ease-in-out infinite alternate}
-    @keyframes hero-kb{
-      0%{transform:translateY(var(--hero-parallax-y,0)) scale(1.04) translate(0,0)}
-      100%{transform:translateY(var(--hero-parallax-y,0)) scale(1.1) translate(-1.5%,-1.5%)}
-    }
-  }
+  /* Impact punch: added the instant paint lands (1s before the next swap),
+     removed ~160ms later — the overshoot curve above eases it back down,
+     so the artwork visibly flinches from the hit and settles before the
+     image changes. Off entirely under reduced motion (JS never adds the
+     class in that case). */
+  .hero-img.impact{transform:translateY(var(--hero-parallax-y,0)) scale(1.035)}
   .hero-content{
     display:flex;flex-direction:column;justify-content:center;
     align-items:center;gap:28px;position:relative;z-index:1;
@@ -712,6 +713,7 @@ addEventListener('DOMContentLoaded', () => {
       // artwork changes, not a fade tied to the image that's leaving.
       const CYCLE_MS = 3000;
       const PAINT_DELAY_MS = 2000; // 1s before the next swap
+      const IMPACT_HOLD_MS = 160; // class removed after this; CSS eases the rest
 
       const paintCurrent = () => {
         const w = heroImages.offsetWidth;
@@ -720,6 +722,11 @@ addEventListener('DOMContentLoaded', () => {
         paintCanvas.height = h;
         ctx.globalAlpha = 1;
         generatePaint(heroI, w, h);
+
+        // Impact punch: the artwork flinches the instant paint lands
+        const activeImg = heroImgs[heroI];
+        activeImg.classList.add('impact');
+        setTimeout(() => activeImg.classList.remove('impact'), IMPACT_HOLD_MS);
       };
 
       const swapToNext = () => {
