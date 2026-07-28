@@ -682,8 +682,8 @@ addEventListener('DOMContentLoaded', () => {
           const x = pos.x;
           const y = pos.y;
 
-          // 85% smaller: 5-11px (11-23 * 0.5)
-          const baseRadius = r(5, 11) * intensity * sizeScale;
+          // 90% smaller: 2-5px (5-11 * 0.5)
+          const baseRadius = r(2, 5) * intensity * sizeScale;
           const xRadius = baseRadius * r(0.8, 1.6);
           const yRadius = baseRadius * r(0.7, 1.5);
           const rotation = r(0, Math.PI * 2);
@@ -709,13 +709,13 @@ addEventListener('DOMContentLoaded', () => {
 
           // Satellite droplets with splashing physics
           ctx.globalAlpha = 0.75;
-          const dropletCount = Math.floor(r(4, 10) * intensity * sizeScale);
+          const dropletCount = Math.floor(r(2, 5) * intensity * sizeScale);
           for (let d = 0; d < dropletCount; d++) {
             const angle = r(0, Math.PI * 2);
-            const dist = baseRadius + r(20, 120) * sizeScale;
+            const dist = baseRadius + r(10, 60) * sizeScale;
             const dx = x + Math.cos(angle) * dist;
             const dy = y + Math.sin(angle) * dist;
-            const dropSize = r(3, 8) * sizeScale;
+            const dropSize = r(1, 3) * sizeScale;
             const dropAlpha = r(0.4, 1.0);
 
             ctx.globalAlpha = dropAlpha;
