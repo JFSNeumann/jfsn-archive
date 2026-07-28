@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1784992119'; // Audio player Phase 2: config integration + CSS hidden fix
+const CACHE_V  = 'jfsn-1785246192'; // The Studio: hero rotation with Ken Burns zoom, staggered paint splatters, manual nav, scroll pause
 const PRECACHE = [
   // The 14 live room pages (Museum v2 — the only site that exists today;
   // the old v1 archive, decade pages, and generated theme pages were
