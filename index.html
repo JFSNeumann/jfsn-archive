@@ -672,11 +672,16 @@ addEventListener('DOMContentLoaded', () => {
   }
 
   /* TV caption entrance animation on page load */
-  .tv-hero-overlay figcaption{opacity:0;transform:translateY(16px)}
-  @media (prefers-reduced-motion: no-preference){
-    .tv-hero-overlay figcaption{animation:slideUp .6s ease .4s forwards}
-    @keyframes slideUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+  @media (min-width:1200px){
+    .tv-hero-overlay figcaption{
+      position:absolute;bottom:-30px;left:0;width:100%;text-align:center;
+      opacity:0;transform:translateY(16px);margin:0
+    }
+    @media (prefers-reduced-motion: no-preference){
+      .tv-hero-overlay figcaption{animation:slideUp .6s ease .4s forwards}
+    }
   }
+  @keyframes slideUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 
   /* Me overlay in bottom-right corner — desktop only */
   .me-hero-overlay{display:none}
