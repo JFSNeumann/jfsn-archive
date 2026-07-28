@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1796238680'; // Bump: flooded-hero.avif updated Jul 16 (was cached from old version)
+const CACHE_V  = 'jfsn-1796279040'; // Bump: site.min.css rebuilt Jul 28
 const PRECACHE = [
   // The 14 live room pages (Museum v2 — the only site that exists today;
   // the old v1 archive, decade pages, and generated theme pages were
