@@ -169,7 +169,7 @@ addEventListener('DOMContentLoaded', () => {
      already used on flooded-wing.html's hero. */
   .hero-images::after{
     content:'';position:absolute;inset:0;
-    background:rgba(12,10,9,.45);
+    background:rgba(12,10,9,.3);
     pointer-events:none;
   }
   /* Ambient light: a warm glow that follows the pointer across the hero,
@@ -219,7 +219,7 @@ addEventListener('DOMContentLoaded', () => {
   .hero-content::before{
     content:'';position:absolute;z-index:-1;
     inset:-150% -18%;
-    background:radial-gradient(ellipse at center, rgba(12,10,9,.94) 0%, rgba(12,10,9,.7) 45%, transparent 75%);
+    background:radial-gradient(ellipse at center, rgba(12,10,9,.6) 0%, rgba(12,10,9,.4) 45%, transparent 75%);
     transform:scale(.5);opacity:0;
   }
   /* Mobile: the -150% vertical inset (tuned for wide desktop heroes) reads
