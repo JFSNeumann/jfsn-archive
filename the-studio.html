@@ -289,27 +289,42 @@ addEventListener('DOMContentLoaded', () => {
   .hero-nav-prev{left:20px}
   .hero-nav-next{right:20px}
   @media (max-width:640px){
-    .hero-nav-arrow{width:36px;height:36px;font-size:20px;opacity:0.7}
-    .hero-nav-prev{left:10px}
-    .hero-nav-next{right:10px}
+    /* Arrows overlapped the hero title at narrow widths, and swipe
+       already covers manual nav on touch devices — hide rather than
+       fight for the same vertical band as the text. */
+    .hero-nav-arrow{display:none}
   }
   @media (prefers-reduced-motion:reduce){
     .hero-nav-arrow{transition:none}
   }
-  /* Position dots: which of the rotating works is showing */
+  /* Position dots: which of the rotating works is showing. The visible
+     dot is 8px, but the button itself is sized to a 44px tap target
+     (WCAG 2.5.5 / Apple HIG minimum) with the dot centered inside via
+     ::before — an 8x8 hit area is unusable on a real phone. */
   #hero-dots{
-    position:absolute;bottom:22px;left:50%;transform:translateX(-50%);
-    display:flex;gap:10px;z-index:3;
+    position:absolute;
+    bottom:calc(22px + env(safe-area-inset-bottom, 0px));
+    left:50%;transform:translateX(-50%);
+    display:flex;z-index:3;
   }
   #hero-dots button{
-    width:8px;height:8px;border-radius:50%;padding:0;border:none;
-    background:rgba(255,255,255,.35);cursor:pointer;
+    position:relative;width:44px;height:44px;padding:0;border:none;
+    background:transparent;cursor:pointer;
+  }
+  #hero-dots button::before{
+    content:'';position:absolute;top:50%;left:50%;
+    width:8px;height:8px;border-radius:50%;
+    transform:translate(-50%,-50%);
+    background:rgba(255,255,255,.35);
     transition:background .2s ease,transform .2s ease;
   }
-  #hero-dots button.active{background:var(--accent);transform:scale(1.25)}
-  #hero-dots button:hover,#hero-dots button:focus-visible{background:rgba(255,255,255,.7)}
+  #hero-dots button.active::before{background:var(--accent);transform:translate(-50%,-50%) scale(1.25)}
+  #hero-dots button:hover::before,#hero-dots button:focus-visible::before{background:rgba(255,255,255,.7)}
   @media (max-width:640px){
-    #hero-dots{bottom:14px}
+    /* Full 44px targets don't fit between "Scroll down" and the edge
+       here — 28px is still 3.5x the old 8px hit area and clears both. */
+    #hero-dots{bottom:calc(3px + env(safe-area-inset-bottom, 0px))}
+    #hero-dots button{width:28px;height:28px}
   }
   .highlight-work{
     background:var(--accent);color:#0c0a09;padding:0 4px;font-style:normal;
