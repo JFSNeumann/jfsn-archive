@@ -188,7 +188,7 @@ addEventListener('DOMContentLoaded', () => {
   /* One image at a time, cross-fading through a rotation of four studio
      works — replaces the old fixed two-image split. Deliberately no
      parallax on the container itself (kept from the original hero call).
-     Slow Ken Burns zoom during the entire 4.5s cycle. */
+     Slow Ken Burns zoom during the entire cycle. */
   @keyframes ken-burns {
     from { transform: translateY(var(--hero-parallax-y,0)) scale(1); }
     to { transform: translateY(var(--hero-parallax-y,0)) scale(1.08); }
@@ -206,7 +206,7 @@ addEventListener('DOMContentLoaded', () => {
   }
   .hero-img.active{
     opacity:1;
-    animation:ken-burns 4.5s cubic-bezier(.25,.46,.45,.94) forwards;
+    animation:ken-burns 7.2s cubic-bezier(.25,.46,.45,.94) forwards;
   }
   .hero-content{
     display:flex;flex-direction:column;justify-content:center;
@@ -789,11 +789,15 @@ addEventListener('DOMContentLoaded', () => {
         }
       };
 
-      // Fixed 4.5s cycle per hero image. The paint splatter lands exactly
-      // 1.5s before the NEXT image swaps in — decorative paint with the
+      // The paint splatter finishes landing HOLD_MS before the NEXT image
+      // swaps in — decorative paint with the
       // Ken Burns zoom that's tied to the image's entire display time.
-      const CYCLE_MS = 4500;
-      const PAINT_DELAY_MS = 3000; // 1.5s before the next swap
+      // Splatter groups land at PAINT_DELAY_MS, +600ms, +1200ms (last group
+      // done at PAINT_DELAY_MS+1200). Swap happens HOLD_MS after that, so
+      // the fully-painted image stays on screen for HOLD_MS before the cut.
+      const PAINT_DELAY_MS = 3000;
+      const HOLD_MS = 3000;
+      const CYCLE_MS = PAINT_DELAY_MS + 1200 + HOLD_MS;
 
       // Paint color per artwork: tinted orange that feels owned by each piece
       const PAINT_COLORS = ['#FF6600', '#FF8833', '#FF5500', '#FF7700'];
