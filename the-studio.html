@@ -260,11 +260,41 @@ addEventListener('DOMContentLoaded', () => {
   }
   @keyframes sink{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(12px)}}
   #door.scrolled .down{opacity:0}
-  /* Progress indicator: thin bar at bottom of hero showing time until next swap */
+  /* Progress indicator: thin bar at bottom of hero showing time until next swap.
+     A static full-width track makes the moving fill read as "progress
+     toward something" rather than an unexplained glow (was a single
+     gradient-to-transparent bar with no visible track — easy to miss). */
+  #hero-progress-track{
+    position:absolute;bottom:0;left:0;right:0;height:3px;
+    background:rgba(255,255,255,.12);pointer-events:none;z-index:2;overflow:hidden;
+  }
   #hero-progress{
-    position:absolute;bottom:0;left:0;right:0;height:2px;
-    background:linear-gradient(90deg, var(--accent) 0%, transparent 100%);
-    opacity:0.6;pointer-events:none;z-index:2;
+    position:absolute;top:0;left:0;bottom:0;width:0%;
+    background:var(--accent);opacity:0.9;
+  }
+  /* Manual nav arrows: low-key by default, step up on hover/focus so the
+     hero reads as browsable without competing with the title. */
+  .hero-nav-arrow{
+    position:absolute;top:50%;transform:translateY(-50%);
+    width:44px;height:44px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(12,10,9,.35);border:1px solid rgba(255,255,255,.25);
+    color:var(--ink);font-size:26px;line-height:1;cursor:pointer;
+    opacity:0.55;transition:opacity .2s ease,background .2s ease;
+    z-index:3;
+  }
+  .hero-nav-arrow:hover,.hero-nav-arrow:focus-visible{
+    opacity:1;background:rgba(12,10,9,.6);
+  }
+  .hero-nav-prev{left:20px}
+  .hero-nav-next{right:20px}
+  @media (max-width:640px){
+    .hero-nav-arrow{width:36px;height:36px;font-size:20px;opacity:0.7}
+    .hero-nav-prev{left:10px}
+    .hero-nav-next{right:10px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .hero-nav-arrow{transition:none}
   }
   .highlight-work{
     background:var(--accent);color:#0c0a09;padding:0 4px;font-style:normal;
@@ -482,7 +512,10 @@ addEventListener('DOMContentLoaded', () => {
   <canvas id="paint-splatter" aria-hidden="true" style="position:absolute;inset:0;z-index:1;pointer-events:none;width:100%;height:100%"></canvas>
   <div id="ambient-light" aria-hidden="true"></div>
   <!-- Progress indicator: thin bar showing time until next image swap -->
-  <div id="hero-progress" aria-hidden="true"></div>
+  <div id="hero-progress-track" aria-hidden="true"><div id="hero-progress"></div></div>
+  <!-- Manual nav: prev/next arrows, discoverable alternative to keyboard/swipe -->
+  <button type="button" id="hero-prev" class="hero-nav-arrow hero-nav-prev" aria-label="Previous studio image">&#8249;</button>
+  <button type="button" id="hero-next" class="hero-nav-arrow hero-nav-next" aria-label="Next studio image">&#8250;</button>
   <div class="hero-content">
     <div class="caps">THE STUDIO</div>
     <h1>The <span class="highlight-work">work</span> continues.</h1>
@@ -698,8 +731,8 @@ addEventListener('DOMContentLoaded', () => {
           const x = pos.x;
           const y = pos.y;
 
-          // Base radius: 12-30px
-          const baseRadius = r(12, 30) * intensity * sizeScale;
+          // Base radius: 6-15px (50% of original 12-30px)
+          const baseRadius = r(6, 15) * intensity * sizeScale;
           const xRadius = baseRadius * r(0.8, 1.6);
           const yRadius = baseRadius * r(0.7, 1.5);
           const rotation = r(0, Math.PI * 2);
@@ -728,10 +761,10 @@ addEventListener('DOMContentLoaded', () => {
           const dropletCount = Math.floor(r(8, 20) * intensity * sizeScale);
           for (let d = 0; d < dropletCount; d++) {
             const angle = r(0, Math.PI * 2);
-            const dist = baseRadius + r(40, 240) * sizeScale;
+            const dist = baseRadius + r(20, 120) * sizeScale;
             const dx = x + Math.cos(angle) * dist;
             const dy = y + Math.sin(angle) * dist;
-            const dropSize = r(12, 60) * sizeScale;
+            const dropSize = r(6, 30) * sizeScale;
             const dropAlpha = r(0.4, 1.0);
 
             ctx.globalAlpha = dropAlpha;
@@ -748,7 +781,7 @@ addEventListener('DOMContentLoaded', () => {
           for (let m = 0; m < Math.floor(r(4, 12)); m++) {
             const mx = r(0, w);
             const my = r(0, h);
-            const msize = r(1, 8) * sizeScale;
+            const msize = r(0.5, 4) * sizeScale;
             ctx.beginPath();
             ctx.arc(mx, my, msize, 0, Math.PI * 2);
             ctx.fill();
@@ -851,6 +884,12 @@ addEventListener('DOMContentLoaded', () => {
         if (e.key === 'ArrowRight') advanceToNext();
         else if (e.key === 'ArrowLeft') advanceToPrev();
       });
+
+      // Visible prev/next buttons: same paths as keyboard/swipe, just discoverable
+      const prevBtn = document.getElementById('hero-prev');
+      const nextBtn = document.getElementById('hero-next');
+      if (prevBtn) prevBtn.addEventListener('click', advanceToPrev);
+      if (nextBtn) nextBtn.addEventListener('click', advanceToNext);
 
       // Touch/swipe for mobile: simple left/right swipe
       let touchStartX = 0;
