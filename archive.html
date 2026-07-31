@@ -117,16 +117,25 @@ addEventListener('DOMContentLoaded', () => {
   @media (min-width:2400px){
     #vault-hero img{max-height:50vh}
   }
+  @media (max-width:640px){
+    /* height:auto made this render very short on mobile (the source is a
+       wide 2000x750 image — ~141-160px tall at phone widths). Two things
+       darken it from either end: header.hud's own gradient backdrop sits
+       on top (its solid portion scales with the header's real height,
+       which includes env(safe-area-inset-top) — 0 in every test tool
+       available here, but 47-59px on a real notched/Dynamic-Island
+       iPhone, so the header can run 115-125px tall there vs ~49px here)
+       and #vault-hero::after fades the bottom. On a short image those two
+       layers combined can cover nearly all of it — invisible in this
+       tool, real on device. 320px gives real headroom for both. */
+    #vault-hero img{height:320px;max-height:none}
+  }
   #vault-hero::after{
     content:'';position:absolute;bottom:0;left:0;right:0;
-    /* Percentage, not a fixed 240px: this image's wide aspect ratio
-       (2000x750) renders very short on narrow viewports (~141px on a
-       375px phone) — a fixed 240px band is taller than the entire
-       image there, so overflow:hidden clipped it to cover the whole
-       thing at 41-100% opacity, blacking out nearly all of it. 60%
-       keeps roughly the same proportion (and look) the fixed value
-       gave on desktop's much taller rendered height. */
-    height:60%;background:linear-gradient(to bottom,rgba(12,10,9,0) 0%,var(--room) 100%);
+    /* Percentage of #vault-hero's own (now reliably tall enough) height,
+       not a fixed px value — see the mobile img height override above,
+       which this depends on to not re-collapse to near-nothing. */
+    height:30%;background:linear-gradient(to bottom,rgba(12,10,9,0) 0%,var(--room) 100%);
     pointer-events:none;
   }
 
