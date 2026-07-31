@@ -93,7 +93,16 @@ addEventListener('DOMContentLoaded', () => {
     /* At narrow widths the full name + exit link can otherwise touch or
        overlap with zero gap (confirmed at 320–375px) — same fix already
        applied on artwork.html. */
-    header.hud{padding-left:16px;padding-right:16px;gap:12px}
+    header.hud{
+      padding-left:16px;padding-right:16px;gap:12px;
+      /* Drop the added 22px/14px vertical padding — keep only the raw
+         safe-area-inset-top so the header clears the notch/Dynamic
+         Island but doesn't reserve extra space beyond that. Shrinks the
+         header substantially without risking text rendering under the
+         notch (which removing the safe-area term entirely would do). */
+      padding-top:env(safe-area-inset-top,0px);
+      padding-bottom:0;
+    }
     header.hud .who{letter-spacing:.14em}
     header.hud .room-name{display:none}
   }
