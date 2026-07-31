@@ -80,7 +80,7 @@ addEventListener('DOMContentLoaded', () => {
   button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 
   header.hud{
-    position:absolute;top:0;left:0;right:0;z-index:10;
+    position:fixed;top:0;left:0;right:0;z-index:10;
     display:flex;justify-content:space-between;align-items:baseline;
     padding:calc(env(safe-area-inset-top,0px) + 22px) 26px 14px;
     background:linear-gradient(var(--room) 55%,rgba(12,10,9,0.82) 78%,transparent);
@@ -115,60 +115,35 @@ addEventListener('DOMContentLoaded', () => {
   }
   .prose em{color:var(--ink)}
 
-  /* ---------- vault hero ---------- */
+  /* ---------- door (full-viewport hero, image + title overlaid — same
+     pattern as every other room: guernica-passage.html, the-studio.html.
+     Previously #vault-hero was a short, capped-height (max-height:45vh)
+     banner followed by a SEPARATE #door section with its own solid black
+     background sized to its text content — meaning the first screen a
+     visitor saw was ~45% image / ~55%+ plain black page background. No
+     fade/gradient tuning inside the old short hero could ever fix that:
+     the "too much black" was the separate #door section itself, not the
+     hero. Restructured so #vault-hero is the full-bleed background layer
+     of a single min-height:100vh #door, matching guernica exactly. */
+  #door{
+    min-height:100vh;position:relative;overflow:hidden;
+    display:flex;flex-direction:column;
+    justify-content:center;align-items:center;text-align:center;gap:24px;
+    border-bottom:1px solid var(--frame);
+  }
   #vault-hero{
-    position:relative;width:100%;overflow:hidden;
-    margin-top:0;padding:0;border-bottom:1px solid var(--frame);
+    position:absolute;inset:0;z-index:-1;overflow:hidden;
   }
   #vault-hero img{
-    display:block;width:100%;height:auto;max-height:45vh;object-fit:cover;object-position:center 100px
+    display:block;width:100%;height:100%;object-fit:cover;object-position:center 30%;
   }
-  @media (min-width:2400px){
-    #vault-hero img{max-height:50vh}
-  }
-  @media (max-width:640px){
-    /* height:auto made this render very short on mobile (the source is a
-       wide 2000x750 image — ~141-160px tall at phone widths). Two things
-       darken it from either end: header.hud's own gradient backdrop sits
-       on top (its solid portion scales with the header's real height,
-       which includes env(safe-area-inset-top) — 0 in every test tool
-       available here, but 47-59px on a real notched/Dynamic-Island
-       iPhone, so the header can run 115-125px tall there vs ~49px here)
-       and #vault-hero::after fades the bottom. On a short image those two
-       layers combined can cover nearly all of it — invisible in this
-       tool, real on device. 320px gives real headroom for both. */
-    #vault-hero img{height:320px;max-height:none}
-  }
-  #vault-hero::after{
-    content:'';position:absolute;bottom:0;left:0;right:0;
-    /* Percentage of #vault-hero's own (now reliably tall enough) height,
-       not a fixed px value — see the mobile img height override above,
-       which this depends on to not re-collapse to near-nothing. */
-    height:30%;background:linear-gradient(to bottom,rgba(12,10,9,0) 0%,var(--room) 100%);
-    pointer-events:none;
-  }
-  /* Every other room hero washes its image with a dark overlay so it
-     transitions smoothly out of the black header instead of cutting hard
-     from solid black to full brightness (see guernica-passage.html's
-     #door::before: rgba(12,10,9,.45) flat, full-image, not a gradient).
-     A top-to-transparent GRADIENT (the previous version of this rule)
-     reads as "still fading in" for its whole height — 96px on mobile's
-     320px hero — because the top portion stays visibly darker than the
-     rest right up until it hits transparent. A flat, full-height wash
-     has no such ramp: the artwork is at its (tinted) final brightness
-     everywhere, immediately below the header, matching guernica exactly. */
+  /* Flat, full-image wash — not a top-to-transparent gradient (which reads
+     as "still fading in" for its whole height) — matches
+     guernica-passage.html's #door::before exactly. */
   #vault-hero::before{
     content:'';position:absolute;inset:0;z-index:1;
     background:rgba(12,10,9,.45);
     pointer-events:none;
-  }
-
-  /* ---------- door ---------- */
-  #door{
-    display:flex;flex-direction:column;
-    align-items:center;text-align:center;gap:24px;
-    padding-top:4vh;padding-bottom:3vh;
-    border-bottom:1px solid var(--frame);
   }
   #door h1{
     font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
@@ -747,11 +722,10 @@ addEventListener('DOMContentLoaded', () => {
 </header>
 
 <main>
-<section id="vault-hero">
-  <img src="./assets/images/jfsn-vault-middle-50-percent.avif" alt="The vault beneath the museum — archive storage with artworks on display racks" width="1280" height="720" decoding="async">
-</section>
-
 <section id="door" style="scroll-margin-top:60px">
+  <div id="vault-hero">
+    <img src="./assets/images/jfsn-vault-middle-50-percent.avif" alt="The vault beneath the museum — archive storage with artworks on display racks" width="1280" height="720" decoding="async">
+  </div>
   <div class="caps">THE ARCHIVE</div>
   <h1>The <span class="vault-highlight">vault</span> beneath the museum.</h1>
   <div class="caps fact">1,086 WORKS · SEARCH, BROWSE, CATALOG DATA</div>
