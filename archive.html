@@ -138,14 +138,19 @@ addEventListener('DOMContentLoaded', () => {
     height:30%;background:linear-gradient(to bottom,rgba(12,10,9,0) 0%,var(--room) 100%);
     pointer-events:none;
   }
-  /* Every other room hero washes its image with a dark overlay/top fade
-     so it transitions smoothly out of the black header instead of
-     cutting hard from solid black to full brightness (see e.g.
-     guernica-passage.html's #door::before). vault-hero was missing this
-     — mirrors the ::after fade above, anchored to the top instead. */
+  /* Every other room hero washes its image with a dark overlay so it
+     transitions smoothly out of the black header instead of cutting hard
+     from solid black to full brightness (see guernica-passage.html's
+     #door::before: rgba(12,10,9,.45) flat, full-image, not a gradient).
+     A top-to-transparent GRADIENT (the previous version of this rule)
+     reads as "still fading in" for its whole height — 96px on mobile's
+     320px hero — because the top portion stays visibly darker than the
+     rest right up until it hits transparent. A flat, full-height wash
+     has no such ramp: the artwork is at its (tinted) final brightness
+     everywhere, immediately below the header, matching guernica exactly. */
   #vault-hero::before{
-    content:'';position:absolute;top:0;left:0;right:0;z-index:1;
-    height:30%;background:linear-gradient(to bottom,var(--room) 0%,rgba(12,10,9,0) 100%);
+    content:'';position:absolute;inset:0;z-index:1;
+    background:rgba(12,10,9,.45);
     pointer-events:none;
   }
 
