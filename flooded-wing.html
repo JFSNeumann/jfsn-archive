@@ -138,15 +138,20 @@ addEventListener('DOMContentLoaded', () => {
   #intro{padding-top:8vh}
 
   /* ---------- the door ---------- */
+  /* flooded-hero.avif has been content-replaced under this same filename
+     3 times (unlike the 1,086 archive images, which are immutable —
+     see .htaccess's 1-year image cache). The ?v= query bumps the URL so
+     browsers that already cached an older version re-fetch. Bump the
+     date whenever this specific file's content changes again. */
   #door{
     min-height:100vh;display:flex;flex-direction:column;
     justify-content:center;align-items:center;text-align:center;gap:30px;
     position:relative;
-    background:linear-gradient(rgba(12,10,9,0.90),rgba(12,10,9,0.90)),url('/artworks/flooded-hero.avif') center 20%/cover no-repeat fixed;
+    background:linear-gradient(rgba(12,10,9,0.90),rgba(12,10,9,0.90)),url('/artworks/flooded-hero.avif?v=20260728') center 20%/cover no-repeat fixed;
     overflow:hidden;
   }
   #door::before{
-    content:'';position:absolute;inset:0;background:url('/artworks/flooded-hero.avif') center 20%/cover no-repeat;opacity:0.25;z-index:0;pointer-events:none;
+    content:'';position:absolute;inset:0;background:url('/artworks/flooded-hero.avif?v=20260728') center 20%/cover no-repeat;opacity:0.25;z-index:0;pointer-events:none;
     mask-image:linear-gradient(180deg,rgba(0,0,0,1) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%);
     -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,1) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%);
   }

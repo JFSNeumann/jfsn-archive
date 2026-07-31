@@ -163,7 +163,7 @@ addEventListener('DOMContentLoaded', () => {
   }
   body::before{
     content:'';position:fixed;inset:0;
-    background-image:url('/artworks/guernica-hero.avif');
+    background-image:url('/artworks/guernica-hero.avif?v=20260716');
     background-size:cover;background-position:center;
     background-color:var(--room);
     opacity:0.15;z-index:-1;pointer-events:none;
@@ -203,6 +203,12 @@ addEventListener('DOMContentLoaded', () => {
   section{padding:0 clamp(20px,6vw,80px)}
 
   /* ---------- door ---------- */
+  /* guernica-hero.avif can be content-replaced under this same filename
+     (unlike the 1,086 archive images, which are immutable — see
+     .htaccess's 1-year image cache). The ?v= query on both references
+     below bumps the URL so browsers that already cached an older
+     version re-fetch. Bump the date whenever this file's content
+     changes again. */
   #door{
     min-height:100vh;display:flex;flex-direction:column;
     justify-content:center;align-items:center;text-align:center;gap:28px;
@@ -222,7 +228,7 @@ addEventListener('DOMContentLoaded', () => {
        the radial gradient alone fades to transparent at the edges and
        was tuned against darker source images; same technique already
        used on flooded-wing.html's hero. */
-    background:linear-gradient(rgba(12,10,9,.45),rgba(12,10,9,.45)),url('/artworks/guernica-hero.avif');
+    background:linear-gradient(rgba(12,10,9,.45),rgba(12,10,9,.45)),url('/artworks/guernica-hero.avif?v=20260716');
     background-size:cover;background-position:center;
     transform:translateY(var(--hero-parallax-y,0));
     will-change:transform;
