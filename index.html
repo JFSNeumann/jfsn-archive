@@ -704,6 +704,17 @@ addEventListener('DOMContentLoaded', () => {
       filter:drop-shadow(0 8px 14px rgba(0,0,0,.45));
       transition:transform .25s ease;
     }
+    .snowmann-hero-caption{
+      position:absolute;top:100%;left:50%;transform:translate(-50%,-4px);
+      margin-top:6px;white-space:nowrap;
+      font-size:9px;letter-spacing:.26em;color:var(--dim);
+      opacity:0;transition:opacity .25s ease,transform .25s ease;
+      pointer-events:none;
+    }
+    .snowmann-hero-link:hover .snowmann-hero-caption,
+    .snowmann-hero-link:focus-visible .snowmann-hero-caption{
+      opacity:1;transform:translate(-50%,0);
+    }
     @media (hover:hover){
       .snowmann-hero-link:hover .snowmann-hero-overlay{transform:scale(1.06)}
     }
@@ -832,6 +843,7 @@ addEventListener('DOMContentLoaded', () => {
     </figure>
     <a href="archive.html?theme=Mr.+Snowmann" class="snowmann-hero-link" aria-label="View all Mr. Snowmann works in the archive">
       <img src="/assets/images/mr-snowmann.png" alt="Mr. Snowmann figure — view all works in this theme" class="snowmann-hero-overlay" width="291" height="426" decoding="async" loading="lazy">
+      <span class="snowmann-hero-caption caps" aria-hidden="true">MR. SNOWMANN</span>
     </a>
   </section>
 
