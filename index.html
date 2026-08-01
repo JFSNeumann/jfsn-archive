@@ -222,6 +222,8 @@ addEventListener('DOMContentLoaded', () => {
   }
 
   #work{margin-top:clamp(28px,4vh,44px);transition:filter .3s ease;transform-style:preserve-3d}
+  .wing-link{display:block;text-decoration:none;color:inherit}
+  .wing-link:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   #work img{
     display:block;width:auto;height:auto;
     max-width:min(560px,86vw);max-height:42vh;
@@ -621,7 +623,7 @@ addEventListener('DOMContentLoaded', () => {
     .wing img{display:block;width:auto;height:auto;
       max-height:52vh;max-width:100%}
     .wing figcaption{margin-top:8px;font-size:9px;letter-spacing:.26em;
-      color:var(--dim)}
+      color:var(--dim);min-height:1em}
   }
   /* Wing crossfade: JS toggles opacity between held frames of different
      works, swapping the src at the mid-fade blackout point (see script
@@ -695,6 +697,7 @@ addEventListener('DOMContentLoaded', () => {
     .snowmann-hero-overlay{
       display:block !important;position:absolute;bottom:20px;right:120px;z-index:998;
       width:clamp(80px,10vw,140px);height:auto;
+      filter:drop-shadow(0 8px 14px rgba(0,0,0,.45));
     }
   }
   /* Signature: the last thing to arrive, like a painter signing the
@@ -792,14 +795,22 @@ addEventListener('DOMContentLoaded', () => {
          Wings are aria-hidden (decorative), scaled by 0.3 brightness. -->
     <div id="hang">
       <figure id="work">
-        <img src="/artworks/medium/art1010.avif" alt="Untitled (Cassette Torso) — a collage with a cassette tape at the center of a torso form." width="900" height="792" decoding="async" fetchpriority="high">
-        <figcaption class="caps">UNTITLED (CASSETTE TORSO) · 2020S (EST.) · COLLAGE</figcaption>
+        <a href="artwork.html?id=art1010" class="wing-link">
+          <img src="/artworks/medium/art1010.avif" alt="View &quot;Untitled (Cassette Torso)&quot; in the archive — a collage with a cassette tape at the center of a torso form." width="900" height="792" decoding="async" fetchpriority="high">
+          <figcaption class="caps">UNTITLED (CASSETTE TORSO) · 2020S (EST.) · COLLAGE</figcaption>
+        </a>
       </figure>
-      <figure class="wing" id="wing-l" aria-hidden="true">
-        <img src="/artworks/medium/art1010.avif" data-current-id="art1010" alt="Featured artwork from the archive (left wall)" width="900" height="792" decoding="async" loading="lazy" fetchpriority="low" style="transform:translateY(-7px) scaleX(-1)">
+      <figure class="wing" id="wing-l">
+        <a href="artwork.html?id=art1010" class="wing-link">
+          <img src="/artworks/medium/art1010.avif" data-current-id="art1010" alt="Featured artwork from the archive (left wall)" width="900" height="792" decoding="async" loading="lazy" fetchpriority="low" style="transform:translateY(-7px) scaleX(-1)">
+          <figcaption class="caps"></figcaption>
+        </a>
       </figure>
-      <figure class="wing" id="wing-r" aria-hidden="true">
-        <img src="/artworks/medium/art1010.avif" data-current-id="art1010" alt="Featured artwork from the archive (right wall)" width="900" height="792" decoding="async" loading="lazy" fetchpriority="low" style="transform:translateY(-7px) scaleX(-1)">
+      <figure class="wing" id="wing-r">
+        <a href="artwork.html?id=art1010" class="wing-link">
+          <img src="/artworks/medium/art1010.avif" data-current-id="art1010" alt="Featured artwork from the archive (right wall)" width="900" height="792" decoding="async" loading="lazy" fetchpriority="low" style="transform:translateY(-7px) scaleX(-1)">
+          <figcaption class="caps"></figcaption>
+        </a>
       </figure>
     </div>
 
@@ -1244,8 +1255,12 @@ addEventListener('DOMContentLoaded', () => {
   const wingL = document.getElementById('wing-l');
   const wingR = document.getElementById('wing-r');
   if (!wingL || !wingR) return;
+  const linkL = wingL.querySelector('.wing-link');
+  const linkR = wingR.querySelector('.wing-link');
   const imgL = wingL.querySelector('img');
   const imgR = wingR.querySelector('img');
+  const capL = wingL.querySelector('figcaption');
+  const capR = wingR.querySelector('figcaption');
   const CENTER_ID = 'art1010';
   const FADE_MS = 600;
 
@@ -1254,6 +1269,22 @@ addEventListener('DOMContentLoaded', () => {
     .then(works => {
       const pool = works.map(w => w.file.replace('.avif', '')).filter(id => id !== CENTER_ID);
       if (pool.length < 2) return;
+
+      const byId = new Map(works.map(w => [w.file.replace('.avif', ''), w]));
+      function describe(id){
+        const w = byId.get(id);
+        if (!w) return '';
+        return [w.title, w.year_display, w.work_type].filter(Boolean).join(' · ').toUpperCase();
+      }
+      function updateLink(link, caption, id){
+        link.href = 'artwork.html?id=' + id;
+        caption.textContent = describe(id);
+        const w = byId.get(id);
+        const img = link.querySelector('img');
+        if (img && w && w.title) img.alt = 'View "' + w.title + '" in the archive';
+      }
+      updateLink(linkL, capL, 'art1010');
+      updateLink(linkR, capR, 'art1010');
 
       let used = new Set();
       function pick(exclude){
@@ -1281,7 +1312,7 @@ addEventListener('DOMContentLoaded', () => {
         img.classList.add(glowClass);
       }
 
-      function cycle(img, exclude){
+      function cycle(img, link, caption, exclude){
         const id = pick(exclude);
         const nextSrc = '/artworks/medium/' + id + '.avif';
         const preload = new Image();
@@ -1291,6 +1322,7 @@ addEventListener('DOMContentLoaded', () => {
             img.src = nextSrc;
             img.dataset.currentId = id;
             applyGlow(img);
+            updateLink(link, caption, id);
             requestAnimationFrame(() => { img.style.opacity = '1'; });
           }, FADE_MS);
         };
@@ -1303,19 +1335,21 @@ addEventListener('DOMContentLoaded', () => {
       imgL.src = '/artworks/medium/' + initialL + '.avif';
       imgL.dataset.currentId = initialL;
       applyGlow(imgL);
+      updateLink(linkL, capL, initialL);
       imgR.src = '/artworks/medium/' + initialR + '.avif';
       imgR.dataset.currentId = initialR;
       applyGlow(imgR);
+      updateLink(linkR, capR, initialR);
 
       // Staggered so both wings never fade at once — offset by half the
       // interval, each on its own repeating loop.
       setTimeout(() => {
-        cycle(imgL, imgR.dataset.currentId);
-        setInterval(() => cycle(imgL, imgR.dataset.currentId), 11000);
+        cycle(imgL, linkL, capL, imgR.dataset.currentId);
+        setInterval(() => cycle(imgL, linkL, capL, imgR.dataset.currentId), 11000);
       }, 4000);
       setTimeout(() => {
-        cycle(imgR, imgL.dataset.currentId);
-        setInterval(() => cycle(imgR, imgL.dataset.currentId), 11000);
+        cycle(imgR, linkR, capR, imgL.dataset.currentId);
+        setInterval(() => cycle(imgR, linkR, capR, imgL.dataset.currentId), 11000);
       }, 9500);
     })
     .catch(() => {}); // fail silent: wings just stay on the static mirror
