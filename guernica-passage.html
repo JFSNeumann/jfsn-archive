@@ -473,7 +473,7 @@ addEventListener('DOMContentLoaded', () => {
      archive.html — this page's exit nav was plain text links before;
      upgraded here for site-wide consistency. */
   #exit nav a{
-    position:relative;display:inline-flex;align-items:baseline;gap:7px;
+    position:relative;display:inline-block;
     font-size:11px;letter-spacing:.22em;color:var(--ink);
     border:1px solid var(--frame);padding:14px 20px;
     transition:all .3s ease;overflow:hidden;
@@ -485,6 +485,8 @@ addEventListener('DOMContentLoaded', () => {
     transition:opacity .3s ease;
   }
   #exit nav .br,#exit nav .arrow{display:inline-block}
+  #exit nav .br-l{margin-right:7px}
+  #exit nav .arrow{margin:0 7px}
   @media (prefers-reduced-motion: no-preference){
     #exit nav .br,#exit nav .arrow{transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
     #exit nav a:hover .br-l,#exit nav a:focus-visible .br-l{transform:translateX(-4px)}

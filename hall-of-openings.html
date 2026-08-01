@@ -407,7 +407,7 @@ addEventListener('DOMContentLoaded', () => {
      staged two-line reveal built to this moment — the exit choice
      shouldn't be the least considered thing on the page. */
   #reveal nav a{
-    position:relative;display:inline-flex;align-items:baseline;gap:7px;
+    position:relative;display:inline-block;
     font-size:11px;letter-spacing:.22em;color:var(--ink);
     border:1px solid var(--frame);padding:14px 20px;
     transition:all .3s ease;overflow:hidden;
@@ -421,6 +421,8 @@ addEventListener('DOMContentLoaded', () => {
      archive.html, index.html #vault, guernica-passage.html, flooded-wing.html,
      the-studio.html. */
   #reveal nav .br,#reveal nav .arrow{display:inline-block}
+  #reveal nav .br-l{margin-right:7px}
+  #reveal nav .arrow{margin:0 7px}
   @media (prefers-reduced-motion: no-preference){
     #reveal nav .br,#reveal nav .arrow{transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
     #reveal nav a:hover .br-l,#reveal nav a:focus-visible .br-l{transform:translateX(-4px)}

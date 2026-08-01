@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1796328000'; // Bump: hall-of-openings.html reveal nav parting-bracket hover Aug 1
+const CACHE_V  = 'jfsn-1796329500'; // Bump: mobile fix — room-nav buttons no longer flex (fixes bracket detach on wrap) Aug 1
 const PRECACHE = [
   // The 14 live room pages (Museum v2 — the only site that exists today;
   // the old v1 archive, decade pages, and generated theme pages were

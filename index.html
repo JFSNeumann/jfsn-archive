@@ -559,7 +559,7 @@ addEventListener('DOMContentLoaded', () => {
 
   /* Vault link interactions (#7): parallel to doors language */
   #vault a{
-    position:relative;display:inline-flex;align-items:baseline;gap:7px;
+    position:relative;display:inline-block;
     font-size:10px;letter-spacing:.22em;color:var(--ink);
     border:1px solid var(--frame);padding:14px 20px;
     transition:all .3s ease;
@@ -587,6 +587,8 @@ addEventListener('DOMContentLoaded', () => {
   /* Brackets and arrow move independently on hover — matches about.html
      and archive.html's room-exit navs. */
   #vault .br,#vault .arrow{display:inline-block}
+  #vault .br-l{margin-right:7px}
+  #vault .arrow{margin:0 7px}
   @media (prefers-reduced-motion: no-preference){
     #vault .br,#vault .arrow{transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
     #vault a:hover .br-l,#vault a:focus-visible .br-l{transform:translateX(-4px)}

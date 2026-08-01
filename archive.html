@@ -667,7 +667,7 @@ addEventListener('DOMContentLoaded', () => {
      this page's room-exit navs (the one under the door, and the one at
      the very end) rather than leaving either as flat text links. */
   #room-nav a,#exit-note nav a{
-    position:relative;display:inline-flex;align-items:baseline;gap:7px;
+    position:relative;display:inline-block;
     font-size:11px;letter-spacing:.2em;color:var(--ink);
     border:1px solid var(--frame);padding:14px 20px;
     transition:all .3s ease;overflow:hidden;background:rgba(255,102,0,.02);
@@ -680,6 +680,8 @@ addEventListener('DOMContentLoaded', () => {
   /* Brackets and arrow move independently on hover — the button's own
      literal "[ X → ]" syntax becomes the affordance, matching about.html. */
   #room-nav .br,#room-nav .arrow,#exit-note nav .br,#exit-note nav .arrow{display:inline-block}
+  #room-nav .br-l,#exit-note nav .br-l{margin-right:7px}
+  #room-nav .arrow,#exit-note nav .arrow{margin:0 7px}
   @media (prefers-reduced-motion: no-preference){
     #room-nav .br,#room-nav .arrow,#exit-note nav .br,#exit-note nav .arrow{
       transition:transform .4s cubic-bezier(.34,1.56,.64,1);

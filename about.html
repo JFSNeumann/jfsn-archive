@@ -339,7 +339,7 @@ addEventListener('DOMContentLoaded', () => {
   /* Matches the homepage door-nav's #vault language, same as the other
      rooms — the exit choice shouldn't be the least considered thing here. */
   #closing a{
-    position:relative;display:inline-flex;align-items:baseline;gap:7px;
+    position:relative;display:inline-block;
     font-size:11px;letter-spacing:.22em;color:var(--ink);
     border:1px solid var(--frame);padding:14px 20px;
     transition:all .3s ease;overflow:hidden;
@@ -352,6 +352,8 @@ addEventListener('DOMContentLoaded', () => {
   /* Brackets and arrow move independently on hover — the button's own
      literal "[ X → ]" syntax become the affordance, not a borrowed one. */
   #closing .br,#closing .arrow{display:inline-block}
+  #closing .br-l{margin-right:7px}
+  #closing .arrow{margin:0 7px}
   @media (prefers-reduced-motion: no-preference){
     #closing .br,#closing .arrow{
       transition:transform .4s cubic-bezier(.34,1.56,.64,1);

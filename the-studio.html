@@ -464,7 +464,7 @@ addEventListener('DOMContentLoaded', () => {
      actual ending — "the museum never existed, the record does" — and
      shouldn't be the one room where the closing moment is left flat. */
   #plaque nav a{
-    position:relative;display:inline-flex;align-items:baseline;gap:7px;
+    position:relative;display:inline-block;
     font-size:11px;letter-spacing:.22em;color:var(--ink);
     border:1px solid var(--frame);padding:14px 20px;
     transition:all .3s ease;overflow:hidden;
@@ -477,6 +477,8 @@ addEventListener('DOMContentLoaded', () => {
   /* Brackets and arrow move independently on hover — matches about.html,
      archive.html, index.html #vault, guernica-passage.html, flooded-wing.html. */
   #plaque nav .br,#plaque nav .arrow{display:inline-block}
+  #plaque nav .br-l{margin-right:7px}
+  #plaque nav .arrow{margin:0 7px}
   @media (prefers-reduced-motion: no-preference){
     #plaque nav .br,#plaque nav .arrow{transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
     #plaque nav a:hover .br-l,#plaque nav a:focus-visible .br-l{transform:translateX(-4px)}
