@@ -13,9 +13,11 @@ from reportlab.lib.colors import HexColor
 import os, re, sys
 
 def _load_ftp_creds():
-    """Read FTP credentials from .ftp.env — never hardcode them in this file.
-    This script lives in a public GitHub repo; the generated PDF is print-only."""
-    env_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '.ftp.env')
+    """Read the FTP username from .ftp.env — never hardcode it in this file.
+    This script lives in a public GitHub repo. The password itself is never
+    embedded in the generated PDF (see 'FTP password' row in page1's rows)."""
+    _repo_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    env_path = os.path.join(_repo_root, '.ftp.env')
     creds = {}
     try:
         for line in open(env_path):
@@ -49,7 +51,7 @@ LABEL_FONT  = 'Helvetica'
 LABEL_BOLD  = 'Helvetica-Bold'
 
 OUT = 'JFSN-Archive-Handoff-Allison.pdf'
-DATE = 'JUNE 2026'
+DATE = 'AUGUST 2026'
 
 def bg(c):
     c.setFillColor(BG)
@@ -161,7 +163,7 @@ def page1(c):
         ('Hosting company',  'HostGator'),
         ('Account email',    'jfsneumann@gmail.com'),
         ('FTP username',     _FTP['FTP_USER']),
-        ('FTP password',     _FTP['FTP_PASS']),
+        ('FTP password',     '— write by hand, or see Bitwarden —'),
         ('GitHub',           'github.com/JFSNeumann/jfsn-archive'),
         ('Code on Mac',      '/Users/jeffreyneumann/Documents/JFSN/'),
         ('HostGator support','1-866-96-GATOR'),
@@ -214,7 +216,7 @@ def page2(c):
     y -= 18
     c.setFont(LABEL_FONT, 8)
     c.setFillColor(GRAY)
-    c.drawString(mx, y, f'Done — {DATE[:4].capitalize()} 2026. Allison is set as Legacy Contact on the Apple ID. She holds the access key in her iPhone.')
+    c.drawString(mx, y, 'Done — June 2026. Allison is set as Legacy Contact on the Apple ID. She holds the access key in her iPhone.')
 
     y -= 14
     note_text = ("Apple’s Digital Legacy gives Allison full access after Jeff passes — "
