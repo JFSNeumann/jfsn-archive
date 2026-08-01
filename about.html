@@ -339,7 +339,7 @@ addEventListener('DOMContentLoaded', () => {
   /* Matches the homepage door-nav's #vault language, same as the other
      rooms — the exit choice shouldn't be the least considered thing here. */
   #closing a{
-    position:relative;display:inline-block;
+    position:relative;display:inline-flex;align-items:baseline;gap:7px;
     font-size:11px;letter-spacing:.22em;color:var(--ink);
     border:1px solid var(--frame);padding:14px 20px;
     transition:all .3s ease;overflow:hidden;
@@ -348,6 +348,17 @@ addEventListener('DOMContentLoaded', () => {
     content:'';position:absolute;inset:0;
     background:var(--accent);opacity:0;z-index:-1;
     transition:opacity .3s ease;
+  }
+  /* Brackets and arrow move independently on hover — the button's own
+     literal "[ X → ]" syntax become the affordance, not a borrowed one. */
+  #closing .br,#closing .arrow{display:inline-block}
+  @media (prefers-reduced-motion: no-preference){
+    #closing .br,#closing .arrow{
+      transition:transform .4s cubic-bezier(.34,1.56,.64,1);
+    }
+    #closing a:hover .br-l,#closing a:focus-visible .br-l{transform:translateX(-4px)}
+    #closing a:hover .br-r,#closing a:focus-visible .br-r{transform:translateX(4px)}
+    #closing a:hover .arrow,#closing a:focus-visible .arrow{transform:translateX(6px)}
   }
   @media (prefers-reduced-motion: no-preference){
     #closing a:hover{
@@ -504,11 +515,11 @@ addEventListener('DOMContentLoaded', () => {
   <div class="caps">KEEPING THE RECORD</div>
   <div class="line">The work continues. The archive is open.</div>
   <nav aria-label="Rooms" style="display:flex;flex-direction:column;gap:12px">
-    <a href="index.html">[ THE MUSEUM → ]</a>
-    <a href="archive.html">[ THE ARCHIVE → ]</a>
-    <a href="guernica-passage.html">[ THE GUERNICA PASSAGE → ]</a>
-    <a href="flooded-wing.html">[ THE FLOODED WING → ]</a>
-    <a href="current.html">[ THE CURRENT → ]</a>
+    <a href="index.html"><span class="br br-l">[</span><span class="lbl">THE MUSEUM</span><span class="arrow">→</span><span class="br br-r">]</span></a>
+    <a href="archive.html"><span class="br br-l">[</span><span class="lbl">THE ARCHIVE</span><span class="arrow">→</span><span class="br br-r">]</span></a>
+    <a href="guernica-passage.html"><span class="br br-l">[</span><span class="lbl">THE GUERNICA PASSAGE</span><span class="arrow">→</span><span class="br br-r">]</span></a>
+    <a href="flooded-wing.html"><span class="br br-l">[</span><span class="lbl">THE FLOODED WING</span><span class="arrow">→</span><span class="br br-r">]</span></a>
+    <a href="current.html"><span class="br br-l">[</span><span class="lbl">THE CURRENT</span><span class="arrow">→</span><span class="br br-r">]</span></a>
   </nav>
 </section>
 </main>
