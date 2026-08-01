@@ -145,6 +145,19 @@ addEventListener('DOMContentLoaded', () => {
     background:rgba(12,10,9,.45);
     pointer-events:none;
   }
+  /* Bottom fade into the room's black, same technique as flooded-wing.html's
+     #door::before mask and the-studio's/guernica's room-veil transitions —
+     transparent through 70%, easing to solid var(--room) by 100%, so the
+     hero settles into the page instead of ending on a hard edge. Placed as
+     a second pseudo-element on #vault-hero (not a separate #door::after)
+     so it inherits #vault-hero's already-correct z-index:-1 stacking
+     below the text content, rather than needing every text child promoted
+     to its own z-index to stay above a new #door-level layer. */
+  #vault-hero::after{
+    content:'';position:absolute;inset:0;z-index:1;
+    background:linear-gradient(180deg,transparent 0%,transparent 70%,rgba(12,10,9,.6) 85%,var(--room) 100%);
+    pointer-events:none;
+  }
   #door h1{
     font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:400;
     font-size:clamp(38px,7vw,76px);line-height:1.15;
