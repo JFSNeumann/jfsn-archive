@@ -408,6 +408,23 @@ addEventListener('DOMContentLoaded', () => {
     footer { page-break-before: always; border-top: 2px solid black; }
     * { box-shadow: none !important; text-shadow: none !important; }
   }
+
+  /* Back-to-top hover: same spring-overshoot motion as the closing-nav
+     brackets, so the two hover moments on this page read as one system. */
+  #btt-float span{display:inline-block}
+  @media (prefers-reduced-motion: no-preference){
+    #btt-float span{transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
+    #btt-float:hover span,#btt-float:focus-visible span{transform:translateY(-3px)}
+  }
+  #btt-float{
+    border:1px solid var(--faint);
+    transition:border-color .25s ease,box-shadow .25s ease,color .25s ease,opacity .22s ease,transform .22s ease;
+  }
+  #btt-float:hover,#btt-float:focus-visible{
+    border-color:var(--accent);color:var(--accent);
+    box-shadow:0 0 14px rgba(255,102,0,.35);
+  }
+  #btt-float:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 </style>
 </head>
 <body>
@@ -602,8 +619,8 @@ addEventListener('DOMContentLoaded', () => {
   var btn = document.createElement('button');
   btn.id = 'btt-float';
   btn.setAttribute('aria-label', 'Back to top');
-  btn.textContent = '↑';
-  btn.style.cssText = 'position:fixed;bottom:28px;right:28px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:var(--room);border:1px solid var(--faint);cursor:pointer;font-size:16px;color:var(--dim);z-index:400;opacity:0;transform:translateY(8px);transition:opacity .22s ease,transform .22s ease,color .25s;pointer-events:none;@media(max-width:640px){bottom:16px}';
+  btn.innerHTML = '<span aria-hidden="true">↑</span>';
+  btn.style.cssText = 'position:fixed;bottom:28px;right:28px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:var(--room);cursor:pointer;font-size:16px;color:var(--dim);z-index:400;opacity:0;transform:translateY(8px);pointer-events:none;@media(max-width:640px){bottom:16px}';
   document.body.appendChild(btn);
   btn.addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
   window.addEventListener('scroll', function(){
