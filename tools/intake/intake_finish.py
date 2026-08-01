@@ -11,10 +11,11 @@
 #     1. validate authored sidecars      (artworks/validate_catalog.py)
 #     2. STOP if validation fails
 #     3. rebuild catalogs                (artworks/build_catalog.py)
-#     4. generate pages for new works    (gen-artwork-pages.py --id …)
-#     5. update derived artifacts        (artworks/build_changes.py)
-#     6. run the archive verifier        (tools/utils/verify.py)  ← the final gate
-#     7. present a readiness report
+#     4. rebuild current.json            (artworks/build-current.py)
+#     5. generate pages for new works    (gen-artwork-pages.py --id …)
+#     6. update derived artifacts        (artworks/build_changes.py)
+#     7. run the archive verifier        (tools/utils/verify.py)  ← the final gate
+#     8. present a readiness report
 #
 #     Automate execution. Never automate authorship.
 #     The curator decides what the archive says. This command decides only
@@ -41,13 +42,15 @@ import intake_status  # noqa: E402
 # The existing tools this command coordinates (paths, not reimplementations).
 VALIDATE = _ROOT / "artworks" / "validate_catalog.py"
 BUILD_CATALOG = _ROOT / "artworks" / "build_catalog.py"
+BUILD_CURRENT = _ROOT / "artworks" / "build-current.py"
 GEN_PAGES = _ROOT / "tools" / "generators" / "gen-artwork-pages.py"
 BUILD_CHANGES = _ROOT / "artworks" / "build_changes.py"
 VERIFY = _ROOT / "tools" / "utils" / "verify.py"
 
-# What build_catalog.py regenerates — listed for the report, not recomputed here.
+# What build_catalog.py / build-current.py regenerate — listed for the report,
+# not recomputed here.
 REBUILT = ["catalog.json", "catalog-lite.json", "catalog-home.json",
-           "API (api/v1/*)", "sitemap.xml"]
+           "API (api/v1/*)", "sitemap.xml", "current.json"]
 
 
 # ── stage seams (each returns (returncode, combined_output)) ─────────────────
@@ -63,6 +66,10 @@ def run_validate(from_id: str) -> tuple[int, str]:
 
 def run_build_catalog() -> tuple[int, str]:
     return _run([sys.executable, str(BUILD_CATALOG)])
+
+
+def run_build_current() -> tuple[int, str]:
+    return _run([sys.executable, str(BUILD_CURRENT)])
 
 
 def run_gen_pages(ids: list[str]) -> tuple[int, str]:
@@ -132,6 +139,17 @@ def finish() -> int:
     if rc != 0:
         return _stop("Rebuild catalogs", out,
                      "build_catalog.py failed before completing.")
+
+    # Rebuild config/current.json — archive.html's client-side filters (search,
+    # decade/medium/reverse counts, the footer river) read this file directly,
+    # not catalog.json. Skipping it here previously let it drift stale after
+    # every intake batch (e.g. a corrected title or a new double-sided work
+    # wouldn't show on the live archive page until someone thought to run
+    # build-current.py by hand).
+    rc, out = run_build_current()
+    if rc != 0:
+        return _stop("Rebuild current.json", out,
+                     "build-current.py failed before completing.")
 
     # Generate pages for the newly completed works only. _back ids are associated
     # media for double-sided works, not independent catalog records (build_catalog.py

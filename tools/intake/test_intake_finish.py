@@ -4,10 +4,11 @@
 #
 #   python3 scripts/test_intake_finish.py
 #
-# Every stage seam (validate / build / gen-pages / changes / verify) and the
-# intake_status scan are substituted, so the real heavy tools never run. Asserts
-# the fixed sequence, that validation blocks publication, that verify is always
-# the final gate, and that NO git/deploy work is even referenced.
+# Every stage seam (validate / build / current / gen-pages / changes / verify)
+# and the intake_status scan are substituted, so the real heavy tools never
+# run. Asserts the fixed sequence, that validation blocks publication, that
+# verify is always the final gate, and that NO git/deploy work is even
+# referenced.
 # ─────────────────────────────────────────────────────────────────────────────
 
 import io
@@ -46,6 +47,10 @@ class Recorder:
         self.calls.append("build")
         return self._rc("build"), "build output"
 
+    def build_current(self):
+        self.calls.append("current")
+        return self._rc("current"), "current output"
+
     def gen_pages(self, ids):
         self.calls.append("gen")
         return self._rc("gen"), "gen output"
@@ -62,6 +67,7 @@ class Recorder:
 def install(rec: Recorder, pending=None, ready=None):
     fin.run_validate = rec.validate
     fin.run_build_catalog = rec.build_catalog
+    fin.run_build_current = rec.build_current
     fin.run_gen_pages = rec.gen_pages
     fin.run_build_changes = rec.build_changes
     fin.run_verify = rec.verify
@@ -81,7 +87,7 @@ def test_successful_finish():
     rc, out, _ = run()
     check("successful finish -> exit 0", rc == 0)
     check("fixed sequence executed",
-          rec.calls == ["validate", "build", "gen", "changes", "verify"])
+          rec.calls == ["validate", "build", "current", "gen", "changes", "verify"])
     check("report shows READY", "READY" in out and "NOT READY" not in out)
     check("report shows Verified PASS", "Verified:\n  PASS" in out)
     check("no commit/deploy performed (stated)", "No commit or deployment" in out)
@@ -131,8 +137,18 @@ def test_build_failure():
     install(rec, ready=["art1085"])
     rc, out, err = run()
     check("build failure -> exit 1", rc == 1)
-    check("stops after build, no page gen", rec.calls == ["validate", "build"])
+    check("stops after build, no current/page gen", rec.calls == ["validate", "build"])
     check("build failure names stage", "Rebuild catalogs" in err)
+
+
+def test_build_current_failure():
+    rec = Recorder(fail_at="current")
+    install(rec, ready=["art1085"])
+    rc, out, err = run()
+    check("current failure -> exit 1", rc == 1)
+    check("stops after current, no page gen",
+          rec.calls == ["validate", "build", "current"])
+    check("current failure names stage", "Rebuild current.json" in err)
 
 
 def test_page_generation_failure():
@@ -140,7 +156,8 @@ def test_page_generation_failure():
     install(rec, ready=["art1085"])
     rc, out, err = run()
     check("page-gen failure -> exit 1", rc == 1)
-    check("stops after gen, no changes", rec.calls == ["validate", "build", "gen"])
+    check("stops after gen, no changes",
+          rec.calls == ["validate", "build", "current", "gen"])
 
 
 def test_verify_failure_is_final_gate():
@@ -149,7 +166,7 @@ def test_verify_failure_is_final_gate():
     rc, out, _ = run()
     check("verify failure -> exit 1", rc == 1)
     check("all stages ran; verify is last",
-          rec.calls == ["validate", "build", "gen", "changes", "verify"])
+          rec.calls == ["validate", "build", "current", "gen", "changes", "verify"])
     check("report shows NOT READY", "NOT READY" in out)
     check("report shows Verified FAIL", "Verified:\n  FAIL" in out)
 
@@ -165,15 +182,17 @@ def test_no_git_or_deploy_referenced():
 
 def main():
     print("intake_finish.py — verification tests\n")
-    saved = (fin.run_validate, fin.run_build_catalog, fin.run_gen_pages,
-             fin.run_build_changes, fin.run_verify, intake_status.scan)
+    saved = (fin.run_validate, fin.run_build_catalog, fin.run_build_current,
+             fin.run_gen_pages, fin.run_build_changes, fin.run_verify,
+             intake_status.scan)
     try:
         for name, fn in sorted(globals().items()):
             if name.startswith("test_") and callable(fn):
                 fn()
     finally:
-        (fin.run_validate, fin.run_build_catalog, fin.run_gen_pages,
-         fin.run_build_changes, fin.run_verify, intake_status.scan) = saved
+        (fin.run_validate, fin.run_build_catalog, fin.run_build_current,
+         fin.run_gen_pages, fin.run_build_changes, fin.run_verify,
+         intake_status.scan) = saved
     print()
     if _failures:
         print(f"{len(_failures)} test(s) FAILED: {', '.join(_failures)}")
