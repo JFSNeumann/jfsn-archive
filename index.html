@@ -1478,7 +1478,7 @@ addEventListener('DOMContentLoaded', () => {
 
   function scheduleNext(now){
     preloadNextImage(); // lazy-load the next image
-    nextBroadcastAt = now + 100 + Math.random() * 400; // 0.1-0.5s static gap, brief burst between works
+    nextBroadcastAt = now + 60 + Math.random() * 140; // 0.06-0.2s static gap, brief burst between works
   }
 
   function maybeStartBroadcast(now){
@@ -1488,8 +1488,8 @@ addEventListener('DOMContentLoaded', () => {
     if (!pool.length) { nextBroadcastAt = now + 3000; return; } // nothing loaded yet — retry soon
     var id = pool[(Math.random() * pool.length) | 0];
     lastArtId = id;
-    var fadeIn = 400 + Math.random() * 800; // 400-1200ms tune-in, wider spread
-    var hold = 2500 + Math.random() * 3000; // 2.5-5.5s hold, artwork stays on screen much longer
+    var fadeIn = 300 + Math.random() * 500; // 300-800ms tune-in, quicker to clear image
+    var hold = 5000 + Math.random() * 4000; // 5-9s hold, artwork stays on screen much longer
     var fadeOut = 200 + Math.random() * 500; // 200-700ms break-up, wider spread
     broadcast = {
       img: artImages[id], start: now,
@@ -1525,7 +1525,7 @@ addEventListener('DOMContentLoaded', () => {
       if (strength === null) { broadcast = null; scheduleNext(now); }
     }
     if (broadcast && broadcast.img.complete && broadcast.img.naturalWidth) {
-      ctx.globalAlpha = Math.max(0, Math.min(1, 0.15 + strength * 0.50)); // restrained cap: never fully clean
+      ctx.globalAlpha = Math.max(0, Math.min(1, 0.25 + strength * 0.75)); // clearer at peak signal
       drawCover(ctx, broadcast.img, w, h);
       ctx.globalAlpha = 1;
     } else {
@@ -1535,7 +1535,7 @@ addEventListener('DOMContentLoaded', () => {
     generateNoise();
     // Static thins noticeably at peak signal but never fully clears —
     // floor keeps a trace of grain/scanlines even at peak strength.
-    ctx.globalAlpha = strength !== null ? Math.max(0.28, 1 - strength * 0.62) : 1;
+    ctx.globalAlpha = strength !== null ? Math.max(0.12, 1 - strength * 0.85) : 1;
     ctx.drawImage(noiseCanvas, 0, 0);
     ctx.globalAlpha = 1;
   }
