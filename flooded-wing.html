@@ -385,7 +385,7 @@ addEventListener('DOMContentLoaded', () => {
      built to this moment — the exit choice shouldn't be the least
      considered thing on the page. */
   #exit nav a{
-    position:relative;display:inline-block;
+    position:relative;display:inline-flex;align-items:baseline;gap:7px;
     font-size:11px;letter-spacing:.22em;color:var(--ink);
     border:1px solid var(--frame);padding:14px 20px;
     transition:all .3s ease;overflow:hidden;
@@ -394,6 +394,15 @@ addEventListener('DOMContentLoaded', () => {
     content:'';position:absolute;inset:0;
     background:var(--accent);opacity:0;z-index:-1;
     transition:opacity .3s ease;
+  }
+  /* Brackets and arrow move independently on hover — matches about.html,
+     archive.html, index.html #vault, and guernica-passage.html. */
+  #exit nav .br,#exit nav .arrow{display:inline-block}
+  @media (prefers-reduced-motion: no-preference){
+    #exit nav .br,#exit nav .arrow{transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
+    #exit nav a:hover .br-l,#exit nav a:focus-visible .br-l{transform:translateX(-4px)}
+    #exit nav a:hover .br-r,#exit nav a:focus-visible .br-r{transform:translateX(4px)}
+    #exit nav a:hover .arrow,#exit nav a:focus-visible .arrow{transform:translateX(6px)}
   }
   @media (prefers-reduced-motion: no-preference){
     #exit nav a:hover{
@@ -541,11 +550,11 @@ addEventListener('DOMContentLoaded', () => {
   part because of that loss. Every surviving piece is photographed, described,
   and backed up — so the work doesn&rsquo;t disappear twice.</p>
   <nav>
-    <a href="index.html">[ THE MUSEUM → ]</a>
-    <a href="archive.html">[ THE ARCHIVE → ]</a>
-    <a href="guernica-passage.html">[ THE GUERNICA PASSAGE → ]</a>
-    <a href="current.html">[ THE CURRENT → ]</a>
-    <a href="the-studio.html">[ THE STUDIO → ]</a>
+    <a href="index.html"><span class="br br-l">[</span><span class="lbl">THE MUSEUM</span><span class="arrow">→</span><span class="br br-r">]</span></a>
+    <a href="archive.html"><span class="br br-l">[</span><span class="lbl">THE ARCHIVE</span><span class="arrow">→</span><span class="br br-r">]</span></a>
+    <a href="guernica-passage.html"><span class="br br-l">[</span><span class="lbl">THE GUERNICA PASSAGE</span><span class="arrow">→</span><span class="br br-r">]</span></a>
+    <a href="current.html"><span class="br br-l">[</span><span class="lbl">THE CURRENT</span><span class="arrow">→</span><span class="br br-r">]</span></a>
+    <a href="the-studio.html"><span class="br br-l">[</span><span class="lbl">THE STUDIO</span><span class="arrow">→</span><span class="br br-r">]</span></a>
   </nav>
 </section>
 

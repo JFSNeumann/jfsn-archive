@@ -10,7 +10,7 @@
 
    To invalidate all caches: bump CACHE_V below, then deploy. */
 
-const CACHE_V  = 'jfsn-1796324000'; // Bump: guernica-passage.html exit nav upgraded to bordered buttons + bracket hover Aug 1
+const CACHE_V  = 'jfsn-1796325400'; // Bump: flooded-wing.html exit nav parting-bracket hover Aug 1
 const PRECACHE = [
   // The 14 live room pages (Museum v2 — the only site that exists today;
   // the old v1 archive, decade pages, and generated theme pages were
