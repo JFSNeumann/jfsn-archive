@@ -464,7 +464,7 @@ addEventListener('DOMContentLoaded', () => {
      actual ending — "the museum never existed, the record does" — and
      shouldn't be the one room where the closing moment is left flat. */
   #plaque nav a{
-    position:relative;display:inline-block;
+    position:relative;display:inline-flex;align-items:baseline;gap:7px;
     font-size:11px;letter-spacing:.22em;color:var(--ink);
     border:1px solid var(--frame);padding:14px 20px;
     transition:all .3s ease;overflow:hidden;
@@ -473,6 +473,15 @@ addEventListener('DOMContentLoaded', () => {
     content:'';position:absolute;inset:0;
     background:var(--accent);opacity:0;z-index:-1;
     transition:opacity .3s ease;
+  }
+  /* Brackets and arrow move independently on hover — matches about.html,
+     archive.html, index.html #vault, guernica-passage.html, flooded-wing.html. */
+  #plaque nav .br,#plaque nav .arrow{display:inline-block}
+  @media (prefers-reduced-motion: no-preference){
+    #plaque nav .br,#plaque nav .arrow{transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
+    #plaque nav a:hover .br-l,#plaque nav a:focus-visible .br-l{transform:translateX(-4px)}
+    #plaque nav a:hover .br-r,#plaque nav a:focus-visible .br-r{transform:translateX(4px)}
+    #plaque nav a:hover .arrow,#plaque nav a:focus-visible .arrow{transform:translateX(6px)}
   }
   @media (prefers-reduced-motion: no-preference){
     #plaque nav a:hover{
@@ -619,9 +628,9 @@ addEventListener('DOMContentLoaded', () => {
   </div>
   <div class="line reveal-el">The museum never existed.<br>The record <em>does</em>.</div>
   <nav class="reveal-el">
-    <a href="current.html">[ BEGIN AGAIN — THE CURRENT → ]</a>
-    <a href="index.html">[ THE MUSEUM → ]</a>
-    <a href="archive.html">[ THE ARCHIVE → ]</a>
+    <a href="current.html"><span class="br br-l">[</span><span class="lbl">BEGIN AGAIN — THE CURRENT</span><span class="arrow">→</span><span class="br br-r">]</span></a>
+    <a href="index.html"><span class="br br-l">[</span><span class="lbl">THE MUSEUM</span><span class="arrow">→</span><span class="br br-r">]</span></a>
+    <a href="archive.html"><span class="br br-l">[</span><span class="lbl">THE ARCHIVE</span><span class="arrow">→</span><span class="br br-r">]</span></a>
   </nav>
 </section>
 
