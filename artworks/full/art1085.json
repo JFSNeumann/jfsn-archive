@@ -1,47 +1,16 @@
 {
-  "file": "art1085",
-  "title": "Radiant Figure with Rainbow Collar",
-  "year": 2020,
-  "year_display": "2020s (est.)",
-  "work_type": "mixed media",
-  "orientation": "vertical",
-  "description": "A joyful portrait study combining expressive line work with vibrant layered collage. Primary colors dominate—reds, blues, yellows, greens—applied with gestural confidence. The reverse presents intimate studies: hands, circular motifs, and compositional sketches rendered in economical ink.",
-  "palette": [
-    "#FF6600",
-    "#1E90FF",
-    "#FFD700",
-    "#00AA00",
-    "#FF1744"
-  ],
-  "motifs": [
-    "figure",
-    "hands",
-    "geometry",
-    "collar"
-  ],
-  "materials": [
-    "ink",
-    "mixed media",
-    "paint"
-  ],
-  "composition": [
-    "central figure",
-    "layered background",
-    "botanical elements"
-  ],
-  "themes": [
-    "portraiture",
-    "color joy",
-    "figurative",
-    "playfulness"
-  ],
-  "series": "",
-  "back_side": true,
+  "file": "art1085.avif",
+  "schema_version": "1",
   "featured": false,
-  "favorite": false,
-  "photoshop_composite": false,
-  "schema_version": 2,
-  "has_back": true,
-  "year_precision": "estimated",
-  "composite": false
+  "title": "Grumpy Grandpa II",
+  "year": 2020,
+  "work_type": "collage",
+  "description": "Green-ground figure in sunglasses wears a rainbow-striped poncho hung with two compact discs, the title inscribed by hand at the base. The reverse carries a traced hand and a simple ring, left sparse.",
+  "palette": ["green", "white", "red", "yellow", "blue"],
+  "motifs": ["compact-disc", "ribbon-stripe"],
+  "materials": ["paper", "paint", "tape", "gold-leaf"],
+  "composition": "central standing figure on green ground, rainbow bands across chest",
+  "themes": ["Torsos & Faces"],
+  "series": null,
+  "keywords": ["grandpa", "sunglasses", "striped-poncho", "compact-disc"]
 }

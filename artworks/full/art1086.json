@@ -1,47 +1,16 @@
 {
-  "file": "art1086",
+  "file": "art1086.avif",
+  "schema_version": "1",
+  "featured": false,
   "title": "Study: MIKE",
   "year": 2020,
-  "year_display": "2020s (est.)",
-  "work_type": "mixed media",
-  "orientation": "vertical",
-  "description": "A portrait in contrasts: deep ultramarine and burnt orange create psychological tension around a simplified face rendered with sunglasses and essential marks. The reverse reinterprets the figure in cooler tones—suggesting alternate temperaments or multiple identities within one form.",
-  "palette": [
-    "#0047AB",
-    "#FF8C00",
-    "#228B22",
-    "#FFB6C1",
-    "#F0F8FF"
-  ],
-  "motifs": [
-    "figure",
-    "portrait",
-    "opposition",
-    "text"
-  ],
-  "materials": [
-    "ink",
-    "mixed media",
-    "paint"
-  ],
-  "composition": [
-    "frontal figure",
-    "color field contrast",
-    "central axis"
-  ],
-  "themes": [
-    "portraiture",
-    "identity",
-    "duality",
-    "temperament"
-  ],
-  "series": "",
-  "back_side": true,
-  "featured": false,
-  "favorite": false,
-  "photoshop_composite": false,
-  "schema_version": 2,
-  "has_back": true,
-  "year_precision": "estimated",
-  "composite": false
+  "work_type": "collage",
+  "description": "Blue-ground portrait in sunglasses, a heart glowing at the chest and \"MIKE\" lettered across orange shorts below. The reverse shows the figure again in a green shirt with outstretched arms, flanked by two compact discs and a paper crown.",
+  "palette": ["blue", "orange", "white", "green", "red"],
+  "motifs": ["compact-disc", "crown"],
+  "materials": ["paper", "paint", "ink", "gold-leaf"],
+  "composition": "central standing figure on blue ground, heart at chest",
+  "themes": ["Torsos & Faces"],
+  "series": null,
+  "keywords": ["mike", "sunglasses", "heart", "crown"]
 }

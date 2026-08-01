@@ -133,8 +133,11 @@ def finish() -> int:
         return _stop("Rebuild catalogs", out,
                      "build_catalog.py failed before completing.")
 
-    # Generate pages for the newly completed works only.
-    rc, out = run_gen_pages(ready)
+    # Generate pages for the newly completed works only. _back ids are associated
+    # media for double-sided works, not independent catalog records (build_catalog.py
+    # skips them too) — they have no page to generate.
+    page_ids = [wid for wid in ready if not wid.endswith("_back")]
+    rc, out = run_gen_pages(page_ids)
     if rc != 0:
         return _stop("Generate artwork pages", out,
                      "gen-artwork-pages.py failed. Catalogs were rebuilt; "
@@ -150,11 +153,11 @@ def finish() -> int:
     vrc, vout = run_verify()
     verified_pass = (vrc == 0)
 
-    _report(ready, verified_pass, vout)
+    _report(ready, page_ids, verified_pass, vout)
     return 0 if verified_pass else 1
 
 
-def _report(validated: list[str], verified_pass: bool, verify_output: str):
+def _report(validated: list[str], page_ids: list[str], verified_pass: bool, verify_output: str):
     print("\nCatalog Finish Complete\n")
 
     print("Validated:")
@@ -166,7 +169,7 @@ def _report(validated: list[str], verified_pass: bool, verify_output: str):
         print(f"  {f}")
 
     print("\nGenerated:")
-    print(f"  artwork pages ({', '.join(validated)})")
+    print(f"  artwork pages ({', '.join(page_ids)})")
 
     print("\nVerified:")
     print(f"  {'PASS' if verified_pass else 'FAIL'}")

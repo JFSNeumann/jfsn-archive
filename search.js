@@ -426,7 +426,7 @@
     const series = [
       { label: 'Guernica Series',   href: 'guernica.html',     meta: '232 works' },
       { label: 'Targets',           href: 'targets.html',      meta: '411 works' },
-      { label: 'Mr. SNOWmann',      href: 'mr-snowmann.html',  meta: '72 works'  },
+      { label: 'Mr. SNOWmann',      href: 'mr-snowmann.html',  meta: '73 works'  },
     ];
     const items = series.map(s =>
       `<a class="sse-item" role="option" aria-selected="false" data-href="${s.href}" href="${s.href}">
