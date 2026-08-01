@@ -688,16 +688,24 @@ addEventListener('DOMContentLoaded', () => {
   /* Me overlay in bottom-right corner — desktop only */
   .me-hero-overlay{display:none}
   /* Snowmann overlay in bottom-right corner — desktop only */
-  .snowmann-hero-overlay{display:none}
+  .snowmann-hero-link{display:none}
   .threshold{position:relative}
   @media (min-width:1200px){
     .me-hero-overlay{
       display:block !important;position:absolute;bottom:20px;right:20px;z-index:999;
     }
-    .snowmann-hero-overlay{
+    .snowmann-hero-link{
       display:block !important;position:absolute;bottom:20px;right:120px;z-index:998;
-      width:clamp(80px,10vw,140px);height:auto;
+      width:clamp(80px,10vw,140px);
+    }
+    .snowmann-hero-link:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+    .snowmann-hero-overlay{
+      display:block;width:100%;height:auto;
       filter:drop-shadow(0 8px 14px rgba(0,0,0,.45));
+      transition:transform .25s ease;
+    }
+    @media (hover:hover){
+      .snowmann-hero-link:hover .snowmann-hero-overlay{transform:scale(1.06)}
     }
   }
   /* Signature: the last thing to arrive, like a painter signing the
@@ -822,7 +830,9 @@ addEventListener('DOMContentLoaded', () => {
       </div>
       <figcaption class="caps">TV FACING CORNER · 1978 · SCULPTURE</figcaption>
     </figure>
-    <img src="/assets/images/mr-snowmann.png" alt="Snowmann figure decoration" class="snowmann-hero-overlay" width="291" height="426" decoding="async" loading="lazy" aria-hidden="true">
+    <a href="archive.html?theme=Mr.+Snowmann" class="snowmann-hero-link" aria-label="View all Mr. Snowmann works in the archive">
+      <img src="/assets/images/mr-snowmann.png" alt="Mr. Snowmann figure — view all works in this theme" class="snowmann-hero-overlay" width="291" height="426" decoding="async" loading="lazy">
+    </a>
   </section>
 
   <section class="beyond">

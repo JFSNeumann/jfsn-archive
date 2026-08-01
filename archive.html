@@ -910,6 +910,7 @@ addEventListener('DOMContentLoaded', () => {
   // Handle URL parameters (e.g., ?reverse=true) - will be applied after render
   const urlParams = new URLSearchParams(window.location.search);
   const hasReverseParam = urlParams.has('reverse');
+  const themeParam = urlParams.get('theme');
 
   function esc(s){
     return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
@@ -1470,6 +1471,16 @@ addEventListener('DOMContentLoaded', () => {
     if (reverseChip) {
       reverseChip.classList.add('active');
       reverseChip.setAttribute('aria-pressed', 'true');
+    }
+  }
+
+  // Apply theme filter if URL parameter is present (e.g. ?theme=Mr.+Snowmann)
+  if (themeParam) {
+    state.theme.add(themeParam);
+    const themeChip = document.querySelector(`.fgroup[data-key="theme"] .chip[data-value="${themeParam}"]`);
+    if (themeChip) {
+      themeChip.classList.add('active');
+      themeChip.setAttribute('aria-pressed', 'true');
     }
   }
 
