@@ -368,9 +368,7 @@ def generate_page(work, idx, all_works, colors):
     <a href="../../index.html" class="font-headline-md text-headline-md tracking-tighter text-ink">JFSN</a>
     <nav class="hidden md:flex gap-6" aria-label="Primary">
       <a class="font-nav-link text-nav-link text-ink hover:text-international-orange transition-colors duration-200" href="../../archive.html">Archive</a>
-      <a class="font-nav-link text-nav-link text-ink hover:text-international-orange transition-colors duration-200" href="../../series-index.html">Series</a>
       <a class="font-nav-link text-nav-link text-ink hover:text-international-orange transition-colors duration-200" href="../../about.html">About</a>
-      <a class="font-nav-link text-nav-link text-ink hover:text-international-orange transition-colors duration-200" href="../../lost.html">Lost Works</a>
     </nav>
   </div>
   <div class="flex items-center gap-4">
@@ -388,9 +386,7 @@ def generate_page(work, idx, all_works, colors):
     </div>
     <div style="flex:1;overflow-y:auto;padding:8px 0;">
       <a href="../../archive.html"      style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#f0e8dd;text-decoration:none;border-bottom:1px solid #2b241e;">Archive</a>
-      <a href="../../series-index.html" style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#f0e8dd;text-decoration:none;border-bottom:1px solid #2b241e;">Series</a>
-      <a href="../../about.html"        style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#f0e8dd;text-decoration:none;border-bottom:1px solid #2b241e;">About</a>
-      <a href="../../lost.html"         style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#f0e8dd;text-decoration:none;">Lost Works</a>
+      <a href="../../about.html"        style="display:block;padding:16px 24px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#f0e8dd;text-decoration:none;">About</a>
     </div>
   </nav>
 </div>
@@ -474,7 +470,7 @@ def generate_page(work, idx, all_works, colors):
 
 <!-- FOOTER:START -->
 <footer class="bg-surface-container-high py-16 px-margin-desktop border-t border-outline-variant">
-  <div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+  <div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
     <div>
       <h3 class="font-headline-md text-headline-md tracking-tighter mb-6">JFSN</h3>
       <p class="font-body-md text-archive-gray text-sm leading-relaxed">The personal archive of Jeffrey F. S. Neumann — {len(all_works):,} works spanning five decades. Collage, sculpture, photography.</p>
@@ -483,15 +479,6 @@ def generate_page(work, idx, all_works, colors):
       <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">EXPLORE</h4>
       <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
         <li><a class="hover:text-international-orange transition-colors" href="../../archive.html">Complete Archive</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="../../series-index.html">Series Index</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="../../lost.html">Lost Works</a></li>
-      </ul>
-    </div>
-    <div>
-      <h4 class="font-label-caps text-label-caps mb-6 text-deep-ink">RESOURCES</h4>
-      <ul class="space-y-3 font-nav-link text-nav-link text-archive-gray">
-        <li><a class="hover:text-international-orange transition-colors" href="../../chromatic.html">Chromatic River</a></li>
-        <li><a class="hover:text-international-orange transition-colors" href="../../wall.html">The Wall</a></li>
       </ul>
     </div>
     <div>
@@ -517,10 +504,6 @@ def generate_page(work, idx, all_works, colors):
   <a href="../../archive.html" class="flex flex-col items-center justify-center text-orange-ink">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="3.5" width="17" height="5"/><path d="M5 8.5V20.5h14V8.5"/><line x1="10" y1="12.5" x2="14" y2="12.5"/></svg>
     <span class="font-label-md text-[10px] uppercase">Archive</span>
-  </a>
-  <a href="../../series-index.html" class="flex flex-col items-center justify-center text-secondary">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="9" y="9" width="11.5" height="11.5"/><path d="M5.8 17.2V5.8h11.4"/><path d="M3 14V3h11"/></svg>
-    <span class="font-label-md text-[10px] uppercase">Series</span>
   </a>
   <a href="../../about.html" class="flex flex-col items-center justify-center text-secondary">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
