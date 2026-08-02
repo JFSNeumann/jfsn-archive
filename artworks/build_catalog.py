@@ -180,12 +180,32 @@ records.sort(key=lambda r: r.get('file', ''))
 # composite: Gallery/Studio/installation imagery = Photoshop "imagined placements",
 #   NOT real single works or real exhibitions (master-notes §22/§25). Broadest sweep:
 #   Gallery theme OR Studio theme OR placement-language title.
+#
+# Amended 2026-08-02 (Jeff, creator): the blanket "everything is an estimate"
+# rule above was right for the corpus but wrong for the handful of works Jeff
+# signed and dated himself. Those dates are not guesses — they are written on
+# the work in his hand, and calling them "(est.)" understated what the archive
+# can prove. A sidecar may now declare year_precision "exact"; anything that
+# does not is still an estimate, so the default is unchanged and nothing can
+# become "exact" by accident.
+#
+# Setting it requires meeting §4.1 of the METADATA-STEWARDSHIP-CONSTITUTION —
+# primary-source evidence, which here means a legible date on the work itself,
+# confirmed by Jeff. It is deliberately not inferred from the catalog
+# description: those are machine-written and demonstrably unreliable about
+# exactly this (art0379's description reads the signature as 11/30/2022; the
+# work plainly says 1/30/2022).
 for r in records:
     y = r.get('year')
+    authored_precision = r.get('year_precision')  # curator-authored, if present
     if y not in (None, '') and str(y).isdigit():
         decade = (int(y) // 10) * 10
-        r['year_precision'] = 'estimated'
-        r['year_display'] = f'{decade}s (est.)'
+        if authored_precision == 'exact':
+            r['year_precision'] = 'exact'
+            r['year_display'] = str(int(y))
+        else:
+            r['year_precision'] = 'estimated'
+            r['year_display'] = f'{decade}s (est.)'
     th = r.get('themes') or []
     r['composite'] = ('Gallery' in th) or ('Studio' in th) or bool(PLACEMENT_RE.search(r.get('title') or ''))
 
