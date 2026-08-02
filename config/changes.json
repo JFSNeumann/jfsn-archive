@@ -1,5 +1,23 @@
 [
   {
+    "sha": "32c9c9f",
+    "date": "2026-08-02",
+    "title": "Correct the archival review's top finding — masters do exist",
+    "body": "The review ranked \"no preservation master exists\" as its #1, unrecoverable\nfinding. Jeff corrected it the same day: he holds master files outside the\nrepository. The claim was wrong and is now fixed in the verdict, in §II.1,\nin the priority order, and in the docs/README pointer.\n\nKept as a visible correction rather than a silent rewrite. A review that\nquietly edits away its own errors is worth less than one that shows them,\nand the error is instructive: everything the repository can see supports the\nwrong conclusion, since only 6 of 1,087 originals are on disk and the full\ntier is gitignored.\n\nThat leaves a real but much smaller finding. Nothing in the repository or the\nsuccession documents records where the masters are, so a custodian working\nfrom the repo alone would repeat this mistake with no one available to\ncorrect them. Added a checklist item to record their location in\nSUCCESSION.md, plus a note in docs/README.md.\n\nTop priority is now the machine-written metadata disclosure. Recording more\nvoice moved to #2 — it is the only item with a closing window."
+  },
+  {
+    "sha": "ff47d4d",
+    "date": "2026-08-02",
+    "title": "Add full-archive review with open recommendation checklist",
+    "body": "Review of all 14 core pages, the 1,087 artwork pages, the catalog and\npublic API, the build scripts, and the preservation layout.\n\nFiled under docs/current/ rather than docs/archive/2026/ because the\nrecommendations are open and should stay accurate as they are worked\nthrough — archive/ is never edited after landing. Move it there once the\nchecklist is complete.\n\nTop finding: the ~424MB full-resolution master set is the archive's only\nunrecoverable asset. Originals survive for just 6 of 1,087 works, so the\nlossy AVIF derivative IS the master, and it lives in three places that are\nall effectively one person's accounts. It is gitignored, so the public\nredundancy is the 900x1800 medium tier — a derivative of a derivative.\n\nSecond finding: nothing on any page or in the API discloses that titles and\ndescriptions were machine-generated. art0001 is titled \"Blue Ground\" on the\nhomepage; the ground is red, its own description says red, and its own\nextracted dominant color is #ff003c. The wrong title propagates into\nschema.org JSON-LD for harvesting.\n\nThe review was commissioned under a hypothetical premise (assume the creator\nis gone and the record is permanent) used to force ranking by what is\nrecoverable vs. what is not. That premise is stated and defused at the top of\nthe file so no future reader — successor or family — mistakes it for a record\nof a real event."
+  },
+  {
+    "sha": "81e74cf",
+    "date": "2026-08-02",
+    "title": "Restore the artist's voice recording, destroyed by a regeneration tonight",
+    "body": "config/current.json is a GENERATED file, but commit f40a5398 hand-wrote the\naudio metadata directly into it rather than into a source the generator reads.\nThat made erasure inevitable on the next rebuild. Running build-current.py\nearlier tonight (commit 9f2df206) did exactly that and the loss shipped to\nproduction: the audio player on art0379 has been dead on jfsn.com since.\n\nThis matters more than its size suggests. who-i-am.m4a is 33.8 seconds and is\nthe only recording of Jeff's voice in the entire archive — the least\nreproducible material here.\n\nFix moves the source of truth to the sidecar (artworks/full/art0379.json),\nwhere every other authored field already lives, so the chain\nsidecar -> build_catalog.py -> catalog.json -> build-current.py -> current.json\nnow carries it and regeneration can no longer erase it. Verified by rebuilding\ntwice and confirming it survives, then loading artwork.html?id=art0379 in a\nbrowser: player visible, src resolves, duration 33.856s, readyState 4, no error.\n\nSide effect, deliberate: audio now also appears in api/v1, so anyone consuming\nthe open data can tell the recording exists at all. It previously did not.\n\nNote for follow-up, not changed here: the player renders no visible label, so a\nsighted visitor sees an unlabeled play button. data-title is populated and is\nannounced to screen readers only. Also art1069 still references\nneon-city-nocturne.m4a, which does not exist on disk."
+  },
+  {
     "sha": "cbe2c8e",
     "date": "2026-08-01",
     "title": "Stop embedding the live FTP password in the Allison handoff PDF",

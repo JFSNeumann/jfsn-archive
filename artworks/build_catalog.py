@@ -575,6 +575,32 @@ meta = {
     },
     "license": "CC BY 4.0 — https://creativecommons.org/licenses/by/4.0/",
     "citation": f"Jeffrey F. S. Neumann Archive. {SITE_URL}/api/v1/meta.json",
+    # Anyone consuming this data will otherwise assume the artist wrote the
+    # titles and descriptions. He did not. Stated here because the citation
+    # line above actively invites scholarly reuse.
+    "metadata_provenance": {
+        "titles_and_descriptions": (
+            "Machine-generated from photographs of the works by a vision-language "
+            "model, not authored by the artist. Reviewed unevenly. Treat as finding "
+            "aids, not as the artist's words or as curatorial authority. Known to "
+            "contain errors — see 'known_issues'."
+        ),
+        "years": (
+            "Decade estimates, not documented dates. Every record carries "
+            "year_precision 'estimated', including works that are visibly signed "
+            "and dated."
+        ),
+        "composite_flag": (
+            "composite: true marks a Photoshop composite depicting an imagined "
+            "installation. These are artworks, not documentation — the exhibitions "
+            "they show never happened. 250 of 1087 records."
+        ),
+        "artist_own_words": f"{SITE_URL}/stories.html — verbatim, dated oral history",
+        "known_issues": (
+            "Machine-written titles can contradict their own descriptions, including "
+            "on colour. Corrections are made only on the artist's confirmation."
+        ),
+    },
 }
 _write_stable(API_V1 / "meta.json", json.dumps(meta, indent=2), _GEN_TS)
 

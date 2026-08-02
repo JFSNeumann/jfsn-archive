@@ -1,7 +1,7 @@
 {
   "api_version": "1",
   "schema_version": "1",
-  "generated": "2026-08-01T20:15:17Z",
+  "generated": "2026-08-02T14:32:13Z",
   "artist": "Jeffrey F. S. Neumann",
   "archive_url": "https://jfsn.com",
   "counts": {
@@ -18,5 +18,12 @@
     "work": "https://jfsn.com/api/v1/works/{id}.json"
   },
   "license": "CC BY 4.0 \u2014 https://creativecommons.org/licenses/by/4.0/",
-  "citation": "Jeffrey F. S. Neumann Archive. https://jfsn.com/api/v1/meta.json"
+  "citation": "Jeffrey F. S. Neumann Archive. https://jfsn.com/api/v1/meta.json",
+  "metadata_provenance": {
+    "titles_and_descriptions": "Machine-generated from photographs of the works by a vision-language model, not authored by the artist. Reviewed unevenly. Treat as finding aids, not as the artist's words or as curatorial authority. Known to contain errors \u2014 see 'known_issues'.",
+    "years": "Decade estimates, not documented dates. Every record carries year_precision 'estimated', including works that are visibly signed and dated.",
+    "composite_flag": "composite: true marks a Photoshop composite depicting an imagined installation. These are artworks, not documentation \u2014 the exhibitions they show never happened. 250 of 1087 records.",
+    "artist_own_words": "https://jfsn.com/stories.html \u2014 verbatim, dated oral history",
+    "known_issues": "Machine-written titles can contradict their own descriptions, including on colour. Corrections are made only on the artist's confirmation."
+  }
 }
