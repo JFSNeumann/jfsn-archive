@@ -182,6 +182,8 @@ and re-run `setup-hooks.sh` to update it.
   - Accepted by both validators (`hooks/pre-commit`, `archive verify`): `jfsn-` followed by 8–14 digits, optionally `-<reason>`.
   - **Only the value changing matters** — any unique string busts the cache. The format rule exists for legibility, not correctness. Reconciled 2026-08-02, when the two generators and two validators were found to disagree and `verify` had been emitting a permanent, meaningless note as a result.
 - When adding new top-level pages, add them to `entries[]` in `artworks/build_catalog.py` so they end up in `sitemap.xml`.
+- **The 1,087 individual artwork pages are in the sitemap as of 2026-08-02** (1,099 URLs total). They had been deliberately excluded on the reasoning that `archive.html` + filters provided discovery — but that path is entirely JavaScript, so a crawler found one link into the whole collection. `build_catalog.py` now adds them automatically at priority 0.6 with per-file `lastmod`; nothing to maintain by hand.
+- **The work count is stamped automatically.** It was hardcoded in ~70 places and went stale every time a work was added. `build_catalog.py` now writes the true count into the stat lines, hero figures, counter elements, aria-labels and meta descriptions on every rebuild. Narrative prose deliberately carries no digit ("over a thousand") so it never needs stamping. The patterns are anchored to work-context on purpose — a bare `\d{1,3},\d{3}` regex would rewrite the 73 `rgb(255,102,0)` values in the CSS.
 
 ---
 
@@ -202,7 +204,9 @@ and re-run `setup-hooks.sh` to update it.
   "series":         null,
   "keywords":       ["lace-cross-arrangement", "cardinal-disc-placement"],
   "featured":       false,
-  "schema_version": "1"
+  "schema_version": "1",
+  "year_precision":  "exact"   // OPTIONAL — omit for the normal case
+  // "audio" / "audio_title"   // OPTIONAL — see Audio, below
 }
 ```
 
@@ -216,3 +220,34 @@ and re-run `setup-hooks.sh` to update it.
   _(installation_view deprecated — the migration script already ran and was removed; catalog.json has zero remaining occurrences as of 2026-06-23. If it ever reappears, fix by hand: work_type "photograph" + theme "Gallery" or "Studio")_
 
 For photograph records: `motifs`, `materials`, `composition` are optional. Use theme "Gallery" for exhibition views, "Studio" for studio shots.
+
+
+---
+
+## Two optional sidecar fields (added 2026-08-02)
+
+### `year_precision: "exact"`
+
+Every year is a decade-bucket estimate by default, and `build_catalog.py` stamps
+`year_precision: "estimated"` accordingly — that blanket rule is creator-confirmed and
+still correct for the corpus. A sidecar may now override it with `"exact"`, which also
+makes `year_display` show the plain year instead of `"2020s (est.)"`.
+
+**Only set this when the work itself carries a legible date and Jeff has confirmed it.**
+That is §4.1 of the METADATA-STEWARDSHIP-CONSTITUTION — primary-source evidence — and
+§8.2 forbids AI removing uncertainty markers on inferred data. Do **not** source it from
+the catalog description: those are machine-written and demonstrably wrong about exactly
+this (art0379's description reads the signature as 11/30/2022; the work says 1/30/2022).
+
+Currently 3 of 1,087: `art0379`, `art0937`, `art0083`.
+
+### `audio` / `audio_title`
+
+Attaches a recording to a work. **The sidecar is the source of truth** — it flows
+sidecar → `build_catalog.py` → `catalog.json` → `build-current.py` → `current.json`, and
+into `api/v1`. It was previously hand-written straight into `config/current.json`, which
+is generated, so the first rebuild silently erased the only recording of Jeff's voice.
+Never put authored data in a generated file.
+
+Preservation copies of recordings live in `docs/sources/oral-history/audio/` and are
+logged in `master-notes.md`.

@@ -1,5 +1,5 @@
 # JFSN — Improvement List
-**Updated:** 2026-07-27 (Decade Display Redesign)
+**Updated:** 2026-08-02 (Archival review — provenance disclosure, discoverability, accessibility)
 
 A living list. Add to it. Cross things off. This is the backlog.
 
@@ -7,7 +7,7 @@ A living list. Add to it. Cross things off. This is the backlog.
 
 ## 🔴 Do soon
 
-- [ ] **Ingest 40 new artworks (art1085–art1124)** — **2026-07-19** — Automated intake pipeline validated (Phase 2.3: `python3 artworks/ingest.py`, Phase 2.4: `python3 tools/intake/intake_finish.py`). 20 pieces at 3'×4', 20 at 2'×3', all double-sided. Test setup complete (3 placeholders on jfsn.com verify the flow). Suggested workflow: batch 10 at a time, photograph + drop to inbox, auto-ingest, manually edit 10 JSON sidecars (title/year/materials/themes), finish & deploy. ~4 deploy cycles expected. [See intake_pipeline session memory for full details.](https://claude.ai/session/...) Delete test entries (art9901–art9903) before starting real ingestion.
+- [ ] **Ingest 40 new artworks (art1085–art1124)** — *in progress: art1085–art1087 done as of 2026-08-02 (art1087 is the first genuine double-sided work through the pipeline). Test placeholders art9901–art9903 are gone.* — **2026-07-19** — Automated intake pipeline validated (Phase 2.3: `python3 artworks/ingest.py`, Phase 2.4: `python3 tools/intake/intake_finish.py`). 20 pieces at 3'×4', 20 at 2'×3', all double-sided. Test setup complete (3 placeholders on jfsn.com verify the flow). Suggested workflow: batch 10 at a time, photograph + drop to inbox, auto-ingest, manually edit 10 JSON sidecars (title/year/materials/themes), finish & deploy. ~4 deploy cycles expected. [See intake_pipeline session memory for full details.](https://claude.ai/session/...) Delete test entries (art9901–art9903) before starting real ingestion.
 
 ---
 
@@ -35,6 +35,22 @@ Nothing currently queued.
 ---
 
 ## ✅ Completed
+
+### 2026-08-02 — Archival review and the fixes it drove
+Full review filed at `docs/current/ARCHIVAL-REVIEW-2026-08-01.md` (open checklist lives there).
+
+- [x] **Description text was invisible on all 1,087 artwork pages** — `7e4e628d`. Pages hardcode `<html class="dark">` but never loaded `_shared/dark-mode.css`; the catalog description rendered #0B0B0B on #1a1a1a, **1.13:1 contrast, for every visitor**. Now 8.77:1. Guard added to `audit-nav.sh` so a page can't enable dark mode without the stylesheet again.
+- [x] **Machine-written metadata now disclosed** — `164482da`, `7e4e628d`. archive.html, all 1,087 artwork pages, and `api/v1/meta.json` (`metadata_provenance`). Nothing previously told a reader who wrote the titles and descriptions.
+- [x] **art0001 retitled** *Untitled (Figure, Red Ground)* — the ground is red; the title said Blue. art1085 retitled to its inscribed *Grumpy Grandpa II*.
+- [x] **All 1,087 works added to sitemap.xml** — `c993a481`, 12 → 1,099 URLs. The catalog was effectively unfindable by search.
+- [x] **Work count auto-stamped** — `f2f1dffa`. Was hardcoded "1,086" in 70 places; figures now stamped every rebuild, prose says "over a thousand".
+- [x] **Voice recording restored and filed** — `81e74cf2`, `bf16c469`. Regeneration had destroyed the only recording's wiring; source of truth moved to the sidecar and it's logged as master-notes §33.
+- [x] **Birth year + Person authority record** — `1850e9c3`. 1955, Cleveland; all 1,087 works reference it by `@id`.
+- [x] **Exact dates for the three hand-dated works** — art0379, art0937, art0083 (2000 → **2013**). Sidecars may now set `year_precision: "exact"`.
+- [x] **Filter tap targets meet WCAG 2.5.8 AA** — section headers were 10.5–16px with no padding, now 24px.
+- [x] **`archive verify` reports 0 warnings** (was 4 permanent) — three were broken checks, one was a real duplicate image.
+- [x] **privacy.html analytics claim corrected** — it said "no third-party analytics of any kind" while GoatCounter runs on every artwork page.
+
 
 History lives in `git log` — `git log --oneline --all` for the full record. A few recent highlights for orientation:
 
