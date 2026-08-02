@@ -518,6 +518,45 @@ if INDEX.exists():
     INDEX.write_text(stamped)
     print(f"index.html        — cache stamp updated (?v={build_ts})")
 
+# ── Stamp the live work count into the pages ─────────────────────────────────
+# The count appeared as a hardcoded literal in ~70 places across 14 pages and
+# went stale the moment a work was added — it read 1,086 while the catalog held
+# 1,087. Stamping it here means it is correct by construction on every rebuild,
+# which is exactly when it can change.
+#
+# Every pattern is anchored to work-context ("N WORKS", "N works", or a known
+# counter element). It must never match a bare comma-number: the CSS carries 87
+# instances of rgb(255,102,0) and friends, and a naive \d{1,3},\d{3} would
+# rewrite them into colours that don't exist. That is the whole reason this is a
+# list of narrow patterns rather than one convenient regex.
+#
+# Narrative prose deliberately does NOT carry a figure — it says "over a
+# thousand" (or omits the number) so it reads as written English and never
+# needs stamping. Only real figures are stamped.
+_count_str = f"{len(records):,}"
+_COUNT_PATTERNS = [
+    # "1,086 WORKS" / "1,086 works" / "1,086 Works" — keeps the original casing.
+    (re.compile(r"\b\d{1,3},\d{3}(?=\s+(?:WORKS|works|Works)\b)"), _count_str),
+    # Dedicated counter elements whose entire content is the number.
+    (re.compile(r'(<span class="stat-number">)\d{1,3},\d{3}(</span>)'),
+     rf"\g<1>{_count_str}\g<2>"),
+    (re.compile(r'(<span id="count">)\d{1,3},\d{3}(</span>)'),
+     rf"\g<1>{_count_str}\g<2>"),
+]
+_stamped_pages = 0
+for _page in sorted(ROOT.glob("*.html")):
+    _orig = _page.read_text(encoding="utf-8")
+    _new = _orig
+    for _pat, _repl in _COUNT_PATTERNS:
+        _new = _pat.sub(_repl, _new)
+    if _new != _orig:
+        _page.write_text(_new, encoding="utf-8")
+        _stamped_pages += 1
+if _stamped_pages:
+    print(f"work count        — stamped {_count_str} into {_stamped_pages} page(s)")
+else:
+    print(f"work count        — already {_count_str} everywhere")
+
 # ── Auto-bump sw.js CACHE_V whenever catalog OR a watched static asset changed ─
 # Watched assets: compiled CSS, shared JS/CSS, search.js, and every top-level
 # HTML page. Hash is cached in artworks/.asset_hash so a no-op run (nothing
