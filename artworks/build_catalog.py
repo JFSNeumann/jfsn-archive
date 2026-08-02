@@ -234,8 +234,8 @@ if skipped:
 
 # ── sitemap.xml ──────────────────────────────────────────────────────────────
 # Intentionally excluded from sitemap:
-#   artwork.html   — dynamic (?id=artNNNN)
-#   artworks/pages/*.html — 1,084 individual artwork pages (use archive + filter for discovery)
+#   artwork.html   — dynamic (?id=artNNNN); the durable equivalent is
+#                    artworks/pages/artNNNN.html, which IS listed below
 #   404.html       — error page, not indexable
 # When adding a new public page: add it to entries[] AND run audit-nav.sh to verify
 # (its reverse-sitemap check reports any public page missing from this list).
@@ -257,18 +257,41 @@ entries = [
     (SITE_URL + '/privacy.html',            '0.3', 'yearly'),
     (SITE_URL + '/sitemap.html',            '0.7', 'monthly'),
 ]
-# Excluded: 1,084 individual artwork pages — discovery via archive.html + filters instead
-# for r in records:
-#     art_id = r['file'].replace('.avif', '')
-#     entries.append((f"{SITE_URL}/artworks/pages/{art_id}.html", '0.8', 'monthly'))
+# Every individual artwork page. These are the archive — excluding them left
+# fifty years of work effectively invisible to search.
+#
+# They were previously omitted on the reasoning "discovery via archive.html +
+# filters instead". That path is built entirely in JavaScript: a crawler that
+# does not execute JS finds exactly one link into the whole collection (the
+# static-catalog link on archive.html) and would have to walk a 1,087-deep
+# prev/next chain from there — which crawlers abandon. So the stated
+# alternative did not actually provide discovery.
+#
+# Priority 0.6, below the rooms, because they are numerous and individually
+# less important than the curated entry points — not because they are
+# optional. Lastmod is per-file mtime so a corrected record re-announces
+# itself rather than the whole catalog looking freshly changed every build.
+_ART_PAGES = ROOT / "artworks" / "pages"
+for r in records:
+    art_id = r['file'].replace('.avif', '')
+    page = _ART_PAGES / f"{art_id}.html"
+    if not page.exists():
+        continue  # never advertise a URL that would 404
+    mtime = datetime.date.fromtimestamp(page.stat().st_mtime).isoformat()
+    entries.append((f"{SITE_URL}/artworks/pages/{art_id}.html", '0.6', 'yearly', mtime))
 
 lines = ['<?xml version="1.0" encoding="UTF-8"?>',
          '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-for loc, prio, freq in entries:
+for entry in entries:
+    # Room/reference entries are (loc, prio, freq) and use today's date.
+    # Artwork pages carry a 4th element, their own mtime, so that correcting a
+    # single record doesn't announce all 1,087 as modified today.
+    loc, prio, freq = entry[0], entry[1], entry[2]
+    lastmod = entry[3] if len(entry) > 3 else today
     lines += [
         '  <url>',
         f'    <loc>{loc}</loc>',
-        f'    <lastmod>{today}</lastmod>',
+        f'    <lastmod>{lastmod}</lastmod>',
         f'    <changefreq>{freq}</changefreq>',
         f'    <priority>{prio}</priority>',
         '  </url>',

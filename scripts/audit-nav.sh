@@ -350,3 +350,61 @@ if missing:
 else:
     print('✅  Sitemap coverage: all public pages are in sitemap.xml.')
 PYEOF
+
+# ── Theme coherence — a page that goes dark must be able to render dark ───────
+# Guards a failure that has now shipped to production twice: content present in
+# the DOM but visually unreadable, invisible to code review, tests, and
+# `archive verify` alike.
+#
+#   2026-07-22 (master-notes §31) — gallery/hero images stuck at opacity:0.
+#   2026-08-02 — all 1,087 generated artwork pages set <html class="dark"> and
+#     ran the theme-init script, but never linked _shared/dark-mode.css. The
+#     catalog description rendered #0B0B0B on #1a1a1a: 1.13:1 contrast,
+#     effectively invisible, live, for every visitor.
+#
+# The rule is narrow and cheap: if a page opts into dark mode — by hardcoding
+# class="dark" or by running the theme-init script that adds it — it must also
+# load the stylesheet that makes dark mode legible. No browser, no dependency.
+python3 << 'PYEOF'
+import glob, os, re
+
+def opts_into_dark(html):
+    return ('jfsn-theme' in html) or re.search(r'<html[^>]*class="[^"]*\bdark\b', html)
+
+# Must match an actual <link> element, not the mere substring. The generator
+# template explains this very bug in an HTML comment that names the file, so a
+# substring test passes on a page whose <link> has been deleted — verified: the
+# first version of this check did exactly that and cleared a page it should
+# have failed. Comments are stripped before looking.
+LINK_RE = re.compile(r'<link\b[^>]*\bhref\s*=\s*["\'][^"\']*dark-mode\.css', re.I)
+COMMENT_RE = re.compile(r'<!--.*?-->', re.S)
+
+def loads_dark_css(html):
+    return bool(LINK_RE.search(COMMENT_RE.sub('', html)))
+
+# One generated artwork page stands in for all of them: they come from a single
+# template, so checking every one costs 1,087 file reads to learn one fact.
+sample_art = sorted(glob.glob('artworks/pages/art*.html'))[:1]
+targets = sorted(glob.glob('*.html')) + sorted(glob.glob('*/index.html')) + sample_art
+
+offenders = []
+for path in targets:
+    try:
+        html = open(path, encoding='utf-8').read()
+    except OSError:
+        continue
+    if opts_into_dark(html) and not loads_dark_css(html):
+        label = path
+        if path.startswith('artworks/pages/'):
+            label = f'{path}  (generated — fix tools/generators/gen-artwork-pages.py)'
+        offenders.append(label)
+
+if offenders:
+    print(f'\n⚠  {len(offenders)} page(s) enable dark mode without loading dark-mode.css:')
+    for o in offenders:
+        print(f'  ⚠  {o}')
+    print('     Text will render dark-on-dark. Link _shared/dark-mode.css, or')
+    print('     stop setting class="dark" / running the theme-init script.')
+else:
+    print('✅  Theme coherence: every dark-mode page loads dark-mode.css.')
+PYEOF
