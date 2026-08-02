@@ -118,6 +118,32 @@ fabricating them is trustworthy.
 
 ## II. Where it fails, ranked by consequence
 
+### 0. The description text was invisible on all 1,087 artwork pages — FIXED
+
+**Found and fixed 2026-08-01, commit `7e4e628d`.** Added after the original
+review, and had it been found during it, it would have ranked first.
+
+Every generated artwork page ships `<html class="dark">` hardcoded, and the
+shared theme-init script only ever *adds* that class, never removes it — so the
+pages were dark for every visitor regardless of system preference. None of them
+loaded `_shared/dark-mode.css`.
+
+The catalog description, the primary textual content of every record, therefore
+rendered `#0B0B0B` on `#1a1a1a`: **contrast 1.13:1, effectively invisible,
+live, for everyone.** The work title was similarly unreadable.
+
+The irony is worth recording. This review spent its length worrying about the
+accuracy and provenance of descriptions that no visitor could actually read.
+
+`dark-mode.css` already contained attribute selectors written for exactly this
+inline-styled markup; it was simply never linked from the generator template.
+One line. Description went to 8.77:1, title to 15.27:1.
+
+**Lesson for future custodians:** every check in the original review read the
+*source* — catalog JSON, HTML, build scripts. None of it rendered a page and
+measured what a human eye would receive. Text present in the markup is not the
+same as text a reader can see. Check the rendered result, not the record.
+
 ### 1. Preservation masters exist, but the repository cannot see them
 
 **Corrected 2026-08-01, same day.** The original version of this review ranked this
@@ -173,10 +199,10 @@ stay. What is missing is one honest paragraph saying who wrote them.
       Ground)*, on Jeff's explicit instruction, which makes it Confirmed under
       §5.1. §8.2 bars AI from authoring titles, so the alternatives were put to
       him rather than chosen.
-- [ ] **Remaining:** the disclosure is absent from the 1,087 individual artwork
-      pages — which is where descriptions are actually read, and where search
-      traffic lands. A reader arriving from Google at a single work never passes
-      through `archive.html` and so never sees it.
+- [x] Disclosure carried onto all 1,087 artwork pages — done 2026-08-01,
+      commit `7e4e628d`. Worded "most catalog text" rather than asserting the
+      provenance of the record in view, since a few records are curator-authored
+      and no per-record flag distinguishes them.
 - [ ] The 12 other known title/description colour contradictions are uncorrected.
       Each needs Jeff's confirmation individually; they cannot be batch-fixed by
       AI under §8.2.
