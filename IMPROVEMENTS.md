@@ -1,5 +1,5 @@
 # JFSN — Improvement List
-**Updated:** 2026-08-02 (Archival review — provenance disclosure, discoverability, accessibility)
+**Updated:** 2026-08-02 (working-history invisible-links fix, audio label, exactness pass)
 
 A living list. Add to it. Cross things off. This is the backlog.
 
@@ -30,11 +30,65 @@ A living list. Add to it. Cross things off. This is the backlog.
 
 ## 🟢 Nice to have, low urgency
 
-Nothing currently queued.
+- [ ] **`audit-nav.sh` emits 66 warnings that nobody acts on** — **2026-08-02.**
+  `no FOOTER:START`, `missing search.js`, `missing nav-active.js`, repeated across
+  13 of the 14 core pages. Confirmed pre-existing against a clean HEAD worktree, so
+  this is not fallout from recent work. Under the standing rule that a permanent
+  warning is a broken check, it has to go one way or the other: either the check is
+  stale after the NAV/SCRIPTS span refactor and should be corrected, or 13 pages are
+  genuinely missing something and should be fixed. Right now it just trains everyone
+  to skim past the output — which is exactly how the 1.13:1 invisible-description bug
+  survived `verify`, `npm test`, and review. One related instance was already found
+  and fixed this session: `SESSION_END_PROCEDURES.md` Phase 3 grepped the homepage
+  for `site.min.css`, which can never match, since only the 1,087 generated pages
+  reference it.
+
+- [ ] **Six "soft" title/colour mismatches, Jeff's call** — **2026-08-02.** Five works
+  titled "Blue" whose descriptions call the ground turquoise (`art0491`, `art0492`,
+  `art0495`, `art0503`, `art0516`), plus `art0123` "Hot Pink" against a magenta
+  palette. Hard contradictions (the `art0001` class, where the title's colour appears
+  nowhere in the evidence) are now **zero**. These six are naming granularity, not
+  error, and are fine left alone. §8.2 bars AI from retitling, so they only change if
+  Jeff says so.
 
 ---
 
 ## ✅ Completed
+
+### 2026-08-02 — Five invisible links, a labelled recording, and an exactness pass
+Commit `750af9081`. Deployed and verified live ✅
+
+- **`working-history.html`: five links were invisible on jfsn.com.** A second
+  `<script>` block used curly quotes instead of straight ones (38 of them) — a syntax
+  error, so it never parsed and never ran for any visitor. Its `try/catch` was
+  decorative: a parse error fires before any code in the block executes. That block
+  held the reveal-on-scroll logic, so `#records` (professional record PDF, video
+  archive, design studies) and `#presence` (LinkedIn PDF, Showspace) sat at
+  `opacity: 0` permanently. The eight gallery cards survived only via an
+  `a.rec { opacity: 1 }` rescue rule, still rendering 16px low. Fixed by deleting the
+  corrupted 94-line duplicate, moving the reveal into the block that parses, and
+  gating the hidden state behind `.js` so no-JS visitors and future script failures
+  get visible content. Proven with `node --check` rather than browser observation —
+  the preview pane's `innerHeight: 0` produced a convincing false positive on
+  `about.html`, which is fine and was left alone.
+- **Audio player now has a visible label** (Jeff's direction): a
+  `RECORDING — THE ARTIST'S VOICE` kicker plus the recording's title from
+  `audio_title`, and a labelled `role="region"`. Previously a bare play triangle,
+  with `data-title` reaching screen readers only.
+- **Exactness pass** (Jeff's direction): every hard number in prose across all 14
+  pages checked against the data. 250 composites, 232 Guernica works, eight preserved
+  websites, 34 seconds of audio — all verify exactly. One contradiction fixed: three
+  meta tags plus `sitemap.html` said the eight sites ran "2000–2020" while the eighth
+  (`sebastian-v2`) is 2021, which the page's own hero already stated.
+- **`og:image` was 404 on seven pages** — every social preview card broken.
+  Repointed from `art1010-hero-lcp.avif` (never existed) to
+  `artworks/medium/art1010.avif`. `audit-nav.sh` warnings 76 → 66.
+- **`SUCCESSION.md` now records the photographic masters** — a separate external hard
+  drive, outside the repo and outside the nightly backup chain, per Jeff. Format left
+  marked unrecorded rather than guessed; entry notes plainly that no copy outside his
+  possession is recorded. Closes the last preservation gap from the archival review.
+- **Declined, deliberately:** `about.html`'s "Still making. Still in Cleveland."
+  stays — Jeff is alive and the sentence is true. Do not re-flag it.
 
 ### 2026-08-02 — Archival review and the fixes it drove
 Full review filed at `docs/current/ARCHIVAL-REVIEW-2026-08-01.md` (open checklist lives there).

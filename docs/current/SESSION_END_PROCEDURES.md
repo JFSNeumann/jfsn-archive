@@ -52,10 +52,16 @@ edits, script/tooling changes, memory updates).
 ## PHASE 3: SANITY-CHECK THE LIVE SITE (only if you deployed)
 
 ```bash
-curl -I https://jfsn.com/                              # 200?
-curl -s https://jfsn.com/ | grep -o site.min.css        # CSS served?
-curl -s https://jfsn.com/sw.js | grep CACHE_V           # cache version bumped, if CSS/JS changed?
+curl -I https://jfsn.com/                                          # 200?
+curl -s -o /dev/null -w '%{http_code}\n' https://jfsn.com/site.min.css   # CSS served?
+curl -s https://jfsn.com/sw.js | grep CACHE_V                      # cache version bumped, if CSS/JS changed?
 ```
+
+**Note (corrected 2026-08-02):** the CSS line used to read
+`curl -s https://jfsn.com/ | grep -o site.min.css`, which **could never match** —
+the 14 core pages carry their CSS inline and link only `_shared/*.css`. Only the
+1,087 generated artwork pages reference `site.min.css`. A check that cannot pass
+teaches you to ignore its output, so it now requests the asset directly.
 
 For a visual/design change, actually load the page in a browser (light + dark, mobile
 width) rather than trusting curl alone — see `feedback_mandatory_visual_verification_gate`
@@ -140,5 +146,5 @@ normal stewardship session.
 
 ---
 
-**Last Updated:** 2026-07-22
+**Last Updated:** 2026-08-02
 **Status:** Active SOP, reflects post-migration stewardship-mode sessions
