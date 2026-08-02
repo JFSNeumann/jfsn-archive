@@ -319,6 +319,14 @@ addEventListener('DOMContentLoaded', () => {
     color:var(--dim);cursor:pointer;user-select:none;
     display:flex;align-items:center;gap:8px;transition:color .3s ease;
     width:100%;text-align:left;font:inherit;
+    /* These carried no padding, so their height was just the 9px text's line
+       box — 10.5px for THEME/VISUAL ELEMENTS/MATERIAL, 16px for the rest.
+       WCAG 2.5.8 (AA) requires 24x24. They are also the archive's primary
+       control for advanced filtering (the hint toast tells visitors to click
+       them), so the smallest targets on the page were the ones people are
+       directed to. min-height rather than padding: it cannot regress if the
+       font size changes, and align-items:center above keeps the ▼ centred. */
+    min-height:24px;
   }
   .fgroup .label:hover{color:var(--dim)}
   .fgroup .label:focus-visible{outline:2px solid var(--accent);outline-offset:2px;color:var(--dim)}
@@ -343,6 +351,11 @@ addEventListener('DOMContentLoaded', () => {
     color:var(--dim);border:1px solid var(--frame);padding:6px 11px;
     cursor:pointer;transition:color .3s ease,border-color .3s ease,box-shadow .3s ease,transform .3s ease;
     box-shadow:0 2px 6px rgba(0,0,0,0);
+    /* 22.5px on mobile once the smaller padding/font override applies — 1.5px
+       under the 24px AA minimum. Centring keeps the label optically placed
+       once min-height exceeds the text's own line box. */
+    min-height:24px;
+    display:inline-flex;align-items:center;justify-content:center;
   }
   .chip:hover{color:var(--ink);border-color:var(--dim);box-shadow:0 4px 12px rgba(0,0,0,.06);transform:translateY(-1px)}
   .chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px;color:var(--ink);box-shadow:0 0 0 3px rgba(255,102,0,.2);animation:chipFocusPulse .6s ease-out}
