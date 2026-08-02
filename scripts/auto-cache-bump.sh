@@ -53,8 +53,14 @@ if ! $CHANGED; then
   exit 0
 fi
 
-# A precached asset changed — bump cache version
-NEW_CACHE_V="jfsn-$(date +%s)"
+# A precached asset changed — bump cache version.
+# Uses the same jfsn-YYYYMMDDHHMMSS stamp as build_catalog.py's auto-bump so the
+# two generators can't disagree. It also sorts lexicographically, which matters:
+# build_catalog.py only overwrites CACHE_V when its new value compares greater
+# than the current one, and a unix epoch ("17…") sorts below a calendar stamp
+# ("2026…"), so an epoch written here would be silently ignored by the next
+# rebuild. Readable date, correct ordering, one convention.
+NEW_CACHE_V="jfsn-$(date +%Y%m%d%H%M%S)"
 SW_FILE="sw.js"
 
 if [[ ! -f "$SW_FILE" ]]; then

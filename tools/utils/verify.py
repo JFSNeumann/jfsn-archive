@@ -470,8 +470,28 @@ def check_perartwork_consistency(ctx: Context):
                        f"{len(miss)} work(s) have no artworks/full/*.json — "
                        f"e.g. {', '.join(sorted(miss)[:6])}")]
     # Field-level agreement on the fields the projection carries.
+    #
+    # Only *authored* fields belong here. "orientation" was checked until
+    # 2026-08-02 and produced 139 permanent warnings, because build_catalog.py
+    # sets rec['orientation'] = _orientation(art_id) unconditionally — the
+    # sidecar value is discarded and the catalog value is computed from
+    # dims.json. Comparing the two therefore compared a discarded input against
+    # a derived output and could never agree for any sidecar using the older
+    # portrait/landscape vocabulary instead of vertical/horizontal.
+    #
+    # That is a defective check, not defective data: the catalog is correct.
+    # It was left standing long enough that `archive verify` always warned,
+    # which is how a reader learns to skip the warnings — the same habit that
+    # let 1,087 pages ship with unreadable text. A check that cannot pass is
+    # worse than no check.
+    #
+    # Dropping it did leave a real gap: nothing verified that the *derived*
+    # orientation matches the dimensions it is derived from (check_dimensions
+    # only asserts dims.json holds positive integers). check_orientation_derived
+    # below now covers that — the useful half of what this check was reaching
+    # for, against the source that actually determines the value.
     mismatches = []
-    check_fields = ("title", "year", "work_type", "orientation", "file")
+    check_fields = ("title", "year", "work_type", "file")
     for wid in ctx.ids:
         try:
             with files[wid].open(encoding="utf-8") as fh:
@@ -587,17 +607,74 @@ def check_expected_files(ctx: Context):
                    f"All {len(EXPECTED_GENERATED)} expected generated files present")]
 
 
+@checker("Catalog Consistency")
+def check_orientation_derived(ctx: Context):
+    """Catalog orientation must agree with the dimensions it is derived from.
+
+    build_catalog.py computes orientation from dims.json and discards whatever
+    the sidecar said, so the only meaningful test is catalog-vs-dims. This
+    mirrors _orientation() there exactly, including the 1.1 tolerance that
+    makes near-squares 'square'. It catches a stale dims.json, a re-cropped
+    image whose dimensions changed, and any drift between the two files.
+
+    Added 2026-08-02, replacing a sidecar-vs-catalog comparison on the same
+    field that could never pass (see check_catalog_consistency).
+    """
+    def derive(wh):
+        if not wh or len(wh) < 2 or not wh[0] or not wh[1]:
+            return None
+        w, h = wh[0], wh[1]
+        if h > w * 1.1:
+            return "vertical"
+        if w > h * 1.1:
+            return "horizontal"
+        return "square"
+
+    wrong = []
+    for wid in ctx.ids:
+        expected = derive(ctx.dims.get(wid))
+        if expected is None:
+            continue  # missing/!malformed dims is check_dimensions' job
+        actual = ctx.by_id[wid].get("orientation")
+        if actual != expected:
+            wrong.append(f"{wid}={actual!r} but dims imply {expected!r}")
+    if wrong:
+        return [Result("Catalog Consistency", WARNING,
+                       f"{len(wrong)} work(s) whose orientation disagrees with "
+                       f"dims.json — e.g. {', '.join(wrong[:4])}")]
+    return [Result("Catalog Consistency", PASS,
+                   f"All {len(ctx.ids)} orientations agree with dims.json")]
+
+
 @checker("Repository Health")
 def check_cache_version(ctx: Context):
-    """Service-worker CACHE_V should follow the jfsn-TIMESTAMP convention."""
+    """Service-worker CACHE_V should follow the jfsn-TIMESTAMP convention.
+
+    Until 2026-08-02 this required exactly 10 digits (a unix epoch), which
+    build_catalog.py's own auto-bump could never satisfy — it writes
+    jfsn-YYYYMMDDHHMMSS (14 digits). Since that runs on every catalog rebuild,
+    the value was almost always one this check rejected, so `archive verify`
+    carried a permanent note that meant nothing. Three formats were in use at
+    once: 14-digit from build_catalog.py, 10-digit epoch from
+    scripts/auto-cache-bump.sh, and the jfsn-YYYYMMDD-<reason> form documented
+    in WORKFLOW.md.
+
+    All three are now accepted. The requirement that actually matters is that
+    the value *changes* — any unique string busts the cache; the bump-happened
+    check is enforced separately by hooks/pre-commit. This only guards the
+    naming convention, so it should be permissive about shape and strict about
+    prefix.
+    """
     sw = ROOT / "sw.js"
     if not sw.exists():
         return [Result("Repository Health", FAIL, "sw.js missing")]
-    if re.search(r"CACHE_V\s*=\s*'jfsn-\d{10}'", sw.read_text(encoding="utf-8")):
+    if re.search(r"CACHE_V\s*=\s*'jfsn-\d{8,14}(?:-[a-z0-9][a-z0-9-]*)?'",
+                 sw.read_text(encoding="utf-8")):
         return [Result("Repository Health", PASS,
                        "sw.js CACHE_V follows jfsn-TIMESTAMP convention")]
     return [Result("Repository Health", WARNING,
-                   "sw.js CACHE_V not in expected jfsn-TIMESTAMP format")]
+                   "sw.js CACHE_V not in expected jfsn-TIMESTAMP format "
+                   "(expected jfsn-<8-14 digits>[-reason])")]
 
 
 @checker("Repository Health")

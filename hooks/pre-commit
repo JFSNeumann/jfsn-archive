@@ -85,7 +85,12 @@ done
 if [ "$PRECACHE_CHANGED" -eq 1 ]; then
   CURRENT_CACHE_V=$(grep "const CACHE_V" sw.js | head -1 | sed "s/.*'\(.*\)'.*/\1/")
   HEAD_CACHE_V=$(git show HEAD:sw.js 2>/dev/null | grep "const CACHE_V" | head -1 | sed "s/.*'\(.*\)'.*/\1/" || echo "")
-  if echo "$CURRENT_CACHE_V" | grep -q "^jfsn-[0-9]\{10\}$" && [ "$CURRENT_CACHE_V" != "$HEAD_CACHE_V" ]; then
+  # Accepts every format in use: jfsn-YYYYMMDDHHMMSS (build_catalog.py's
+  # auto-bump), jfsn-<epoch> (auto-cache-bump.sh), and jfsn-YYYYMMDD-<reason>
+  # (WORKFLOW.md). The 10-digit-only rule this replaced rejected the value
+  # build_catalog.py writes on every rebuild. What matters is that it CHANGED,
+  # which the second condition tests.
+  if echo "$CURRENT_CACHE_V" | grep -Eq "^jfsn-[0-9]{8,14}(-[a-z0-9][a-z0-9-]*)?$" && [ "$CURRENT_CACHE_V" != "$HEAD_CACHE_V" ]; then
     echo -e "${GREEN}✓ CACHE_V bumped${NC}"
   else
     echo -e "${RED}✗ CACHE_V not bumped after a precached asset changed${NC}"

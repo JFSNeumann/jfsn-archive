@@ -178,7 +178,9 @@ and re-run `setup-hooks.sh` to update it.
 
 ## Per-deploy hygiene
 
-- After meaningful CSS/HTML changes that returning visitors should see immediately, bump `CACHE_V` in `sw.js`. Convention: `jfsn-YYYYMMDD-<reason>` (e.g. `jfsn-20260603-drop-site-css`).
+- After meaningful CSS/HTML changes that returning visitors should see immediately, bump `CACHE_V` in `sw.js`. In practice you rarely do this by hand: `build_catalog.py` auto-bumps it to `jfsn-YYYYMMDDHHMMSS` whenever the catalog or a watched asset changes, and `scripts/auto-cache-bump.sh` writes the same format. Setting it manually is fine too — `jfsn-YYYYMMDD-<reason>` (e.g. `jfsn-20260603-drop-site-css`) is accepted and is more legible in `git log`.
+  - Accepted by both validators (`hooks/pre-commit`, `archive verify`): `jfsn-` followed by 8–14 digits, optionally `-<reason>`.
+  - **Only the value changing matters** — any unique string busts the cache. The format rule exists for legibility, not correctness. Reconciled 2026-08-02, when the two generators and two validators were found to disagree and `verify` had been emitting a permanent, meaningless note as a result.
 - When adding new top-level pages, add them to `entries[]` in `artworks/build_catalog.py` so they end up in `sitemap.xml`.
 
 ---
