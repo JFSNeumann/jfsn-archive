@@ -31,9 +31,13 @@ This is a serious, unusually honest archive, and it is better than most artist e
 will ever produce. Its intellectual framing is genuinely distinguished. Its principal
 weakness is not design or presentation — those are finished.
 
-**The weakness is that the artwork itself has no preservation master, and that the
-archive does not tell the reader who wrote its words.** Both are fixable without
-adding a single feature.
+**The weakness is that the archive does not tell the reader who wrote its words.**
+That is fixable without adding a single feature.
+
+*(An earlier version of this verdict also claimed the artwork had no preservation
+master. Jeff corrected that the same day — masters exist outside the repository. See
+§II.1 for what remains of that finding, which is now a documentation gap rather than a
+preservation risk.)*
 
 ---
 
@@ -114,26 +118,31 @@ fabricating them is trustworthy.
 
 ## II. Where it fails, ranked by consequence
 
-### 1. There is no preservation master — the only unrecoverable finding
+### 1. Preservation masters exist, but the repository cannot see them
 
-The highest-resolution surviving copy of nearly every work is a **lossy AVIF delivery
-encode**: 1400×2800, averaging 381 KB, 424 MB for the collection. AVIF is a web
-format, not a preservation format.
+**Corrected 2026-08-01, same day.** The original version of this review ranked this
+first and claimed no preservation master existed. **That was wrong.** Jeff confirms he
+holds master files outside the repository. The finding below is what survives that
+correction, and it is a much smaller problem.
 
-Only **6 original camera files survive**, all from recent intake. For roughly 1,081
-works the original photograph is gone, and the compressed derivative *is* the master.
+What the repository *can* see: the highest-resolution copy tracked anywhere in this
+project is a **lossy AVIF delivery encode** — 1400×2800, averaging 381 KB, 424 MB for
+the collection — and it is gitignored, so the public redundancy on GitHub is the
+`medium` tier at 900×1800. Only 6 original camera files are present on disk, all from
+recent intake.
 
-That 424 MB master set exists in three places, none institutional: this Mac, the
-HostGator server, and Backblaze. It is deliberately gitignored. The public redundancy
-on GitHub is the `medium` tier — 900×1800, a derivative of a derivative. A future
-curator forking the repository receives a study image, not a reproduction.
+So a future custodian working only from this repository would reach exactly the wrong
+conclusion I reached: that the originals are gone. That is the real remaining issue —
+not the masters' existence, but the fact that **nothing in the repository records
+where they are.** The succession documents cover hosting, domain, and accounts; they
+do not point at the masters.
 
-The entire master set is 424 MB. That is smaller than a single modern video file. The
-disproportion between the value of the asset and the cost of protecting it is the most
-striking thing in this review.
+This is a documentation task, not a preservation emergency.
 
-- [ ] Two additional copies minimum, at least one outside a personal vendor account
-- [ ] Consider institutional deposit (university or regional archive, Cleveland)
+- [ ] Record the masters' location and format in
+      [`docs/governance/SUCCESSION.md`](../governance/SUCCESSION.md) — enough that
+      someone who has never spoken to Jeff can find them
+- [ ] Note in that entry whether any copy lives outside Jeff's own accounts
 
 ### 2. Nothing discloses that titles and descriptions are machine-written
 
@@ -215,13 +224,14 @@ Every page says 1,086. The catalog holds 1,087.
 
 ## III. Priority order
 
-1. Get the 424 MB master set into durable, independent custody
-2. Disclosure paragraph on machine-written metadata + fix `art0001`'s title
+1. Disclosure paragraph on machine-written metadata + fix `art0001`'s title
+2. Record more voice while that is possible — the one item with a closing window
 3. Uncomment `build_catalog.py:263` (sitemap)
-4. Mark signed works as exact-dated
-5. Label the recording; fix `art1069`; record more voice
-6. Birth year + `Person` structured data
-7. Regenerate the work count
+4. Record the masters' location in `SUCCESSION.md`
+5. Mark signed works as exact-dated
+6. Label the recording; fix `art1069`
+7. Birth year + `Person` structured data
+8. Regenerate the work count
 
 ---
 
