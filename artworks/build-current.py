@@ -86,6 +86,16 @@ for rec in records:
     if rec.get('has_back'):
         item['b'] = 1  # back-side indicator for reverse image support
 
+    # Audio: the artist's own recorded voice — the least reproducible material
+    # in the archive. This was originally hand-written straight into
+    # config/current.json (commit f40a5398), which this script overwrites, so
+    # the first regeneration silently erased it. Source of truth is now the
+    # sidecar, like every other authored field.
+    if rec.get('audio'):
+        item['audio'] = rec['audio']
+        if rec.get('audio_title'):
+            item['audio_title'] = rec['audio_title']
+
     current.append(item)
 
 # Sort by year descending (newest first), then by ID descending

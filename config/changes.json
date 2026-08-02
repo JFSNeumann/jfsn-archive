@@ -1,5 +1,53 @@
 [
   {
+    "sha": "cbe2c8e",
+    "date": "2026-08-01",
+    "title": "Stop embedding the live FTP password in the Allison handoff PDF",
+    "body": "make_handoff.py printed the actual FTP password in cleartext on page 1,\ninconsistent with every other credential in the document (Apple passcodes,\nBitwarden master password all say \"write by hand\"). Found while reviewing\nthe generated PDF. Replaced with the same \"write by hand\" treatment.\n\nAlso fixed two related bugs surfaced while making that change:\n- _load_ftp_creds() resolved .ftp.env relative to the script's own\n  directory (tools/utils/), but the file actually lives at the repo root —\n  regenerating the PDF failed outright until this was corrected.\n- page 2's \"Done — {month} 2026\" line for the Apple Legacy Contact setup\n  derived its month by slicing DATE[:4], which produced \"Augu\" once DATE\n  became \"AUGUST 2026\" instead of \"JUNE 2026\". That date describes when\n  Apple setup was completed (a fixed historical fact), not when the\n  document itself was last generated, so it's now a literal 'June 2026'\n  decoupled from DATE.\n\nRegenerated the PDF locally (not tracked in this repo — it's a personal\ndocument, not a site artifact) with corrected FTP-password handling,\nDATE bumped to August 2026, and the domain-registrar/cloud-backup/\nrecovery-guide rows that were already in this script but missing from\nthe previously-printed copy."
+  },
+  {
+    "sha": "1551ab6",
+    "date": "2026-08-01",
+    "title": "Correct privacy.html's inaccurate analytics claim",
+    "body": "The page said \"no third-party analytics of any kind,\" but GoatCounter is\nlive on all 1,087 artwork pages (found while reviewing the page for\nimprovements). Replaced with an accurate description of what GoatCounter\nactually collects (aggregate page views/referrer/browser/country, no\ncookies, no fingerprinting, no personal data). Bumped \"Last updated\" and\nadded the changelog note the page's own \"Changes\" section promises for\nmeaningful edits."
+  },
+  {
+    "sha": "9699df7",
+    "date": "2026-08-01",
+    "title": "Remove dead Series/Lost Works/Chromatic River/Wall links from artwork-page template; regenerate all 1,087 pages",
+    "body": "tools/generators/gen-artwork-pages.py's shared header/footer/mobile-nav\ntemplate still linked to four pages deleted in the 2026-07-16 pruning to\n14 core pages: series-index.html, lost.html, chromatic.html, wall.html.\nFound while tracing a similar dead link on working-history/index.html\n(previous commit) — that one was an isolated copy, but this one is baked\ninto the generator, so it was live on every one of the 1,087 generated\nartwork pages (desktop nav, mobile drawer, footer EXPLORE/RESOURCES\nlists, and the mobile bottom tab bar).\n\nRemoved all four references. Collapsed the footer from 4 columns to 3\n(EXPLORE/RESOURCES merged into one, since RESOURCES had no live links\nleft) and the mobile bottom tab bar from 4 icons to 3 (Home/Archive/\nAbout). Regenerated all pages via `python3 tools/generators/\ngen-artwork-pages.py` (no --id scoping — full-catalog run).\n\nVerified: archive verify clean (0 failures, same 2 pre-existing warnings\nunrelated to this change), full npm test suite passes, spot-checked\nart0001.html visually (footer renders 3 clean columns, no dead links)."
+  },
+  {
+    "sha": "a9dbe29",
+    "date": "2026-08-01",
+    "title": "Fix broken mobile-nav image path + dead link; add scroll cue to archive hero",
+    "body": "working-history/index.html mobile menu: the portrait image referenced\n\"me black.gif\" as if it lived in working-history/, but the file actually\nlives at assets/images/me black.gif — a pre-existing broken relative path,\njust never noticed since it's a small image inside the mobile drawer.\nFixed the path and removed the \"Series\" nav link (desktop + mobile), which\npointed at series-index.html, deleted in the 2026-07-16 pruning to 14 core\npages — no live replacement page exists for it.\n\narchive.html: added a \"SCROLL ↓\" cue to the hero, reusing index.html's\nexisting .threshold::after fade-on-scroll pattern (bounce animation,\nfades past scrollY 40) as a real element instead of a pseudo-element so\nit can carry both the label and arrow."
+  },
+  {
+    "sha": "0468c19",
+    "date": "2026-08-01",
+    "title": "Remove 5 unreferenced image files found in unused-asset audit",
+    "body": "assets/images/jfsn-signature.png, me-white.png, ME3.GIF, Jeff Neumann.gif,\nand assets/guernica.jpg (a byte-identical duplicate of the actively-used\nartworks/guernica-hero.jpg) — zero references in any HTML/CSS/JS. Verified\nindividually (not just via the initial audit agent, which had some false\npositives on this pass) before removing.\n\nartworks/_hero-orig-backup/ was also flagged unreferenced but left alone —\nit looks like a deliberate manual backup, not dead weight."
+  },
+  {
+    "sha": "81ddf2c",
+    "date": "2026-08-01",
+    "title": "Remove 3 orphaned docs/current/ files with zero references",
+    "body": "CLAUDE-SESSION-CLOSEOUT-TEMPLATE.md, FINE-ART-2000-DISCOVERY.md, and\nSTEWARDSHIP-VERIFY.md are not linked from docs/README.md, CLAUDE.md, or\nany other doc, script, or page — found during an unused-file audit."
+  },
+  {
+    "sha": "9f2df20",
+    "date": "2026-08-01",
+    "title": "Fix stale config/current.json + wire build-current.py into intake finish",
+    "body": "archive.html's reverse-works banner, search, and filters read\nconfig/current.json directly, not catalog.json — but build-current.py\nwasn't part of the archive intake finish sequence, so it silently went\nstale on every intake batch. It still had art1085's old AI-generated\ntitle and was missing art1087 entirely, which is why the \"double-sided\nworks\" banner on the live site was stuck at 2 instead of 3 after\ntonight's earlier deploy.\n\nRan build-current.py to fix the live data now, and added it as a fixed\nstage in intake_finish.py (after build_catalog, before page generation)\nso this can't happen again. Updated test_intake_finish.py's stage mocks\nand sequence assertions to match."
+  },
+  {
+    "sha": "c5a653e",
+    "date": "2026-08-01",
+    "title": "Ingest art1087 (double-sided); correct art1085 title to inscribed name",
+    "body": "art1087 \"Sebastian and the Snowman\" — new double-sided work, front traces\ngrandson Sebastian with a snowman, back traces hands with a warplane.\n\nart1085 was titled \"Radiant Figure with Rainbow Collar\" by the old\nAI-generated pipeline, but the piece itself is inscribed \"GRUMPY GRANDPA\nII\" — corrected to the artist's own title. Also brought art1085/art1086\nsidecars up to current schema (valid palette/motif/theme vocab, schema_version\n\"1\") and authored their previously-missing _back sidecars.\n\nFixed a bug in tools/intake/intake_finish.py: it was passing _back sidecar\nids to gen-artwork-pages.py, but _back records have no independent catalog\nentry or page by design (build_catalog.py already excludes them) — scoped\npage generation to front ids only."
+  },
+  {
     "sha": "477f313",
     "date": "2026-08-01",
     "title": "Fix mobile bug: room-nav brackets detached from wrapped labels",
