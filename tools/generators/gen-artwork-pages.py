@@ -140,10 +140,18 @@ def generate_page(work, idx, all_works, colors):
         "name": title,
         "url": f"{SITE_URL}/artworks/pages/{art_id}.html",
         "image": f"{SITE_URL}/artworks/thumbs/{front_img}",
+        # @id points at the authority record in about.html, so all 1,087 pages
+        # resolve to one person rather than 1,087 look-alike Person nodes that
+        # a consumer has to guess are the same human. birthDate is carried here
+        # too (year only — a full DOB is identity-verification data and stays
+        # out of the public record) so a work found in isolation still dates
+        # its maker.
         "creator": {
             "@type": "Person",
+            "@id": f"{SITE_URL}/about.html#jeffrey-f-s-neumann",
             "name": "Jeffrey F. S. Neumann",
             "url": f"{SITE_URL}/about.html",
+            "birthDate": "1955",
             "jobTitle": "Artist",
             "address": {
                 "@type": "PostalAddress",
