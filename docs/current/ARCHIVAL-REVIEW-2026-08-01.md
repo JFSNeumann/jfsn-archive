@@ -166,8 +166,20 @@ archive's weakest data presented with its strongest authority.
 **The descriptions themselves are good** — accurate, specific, useful. They should
 stay. What is missing is one honest paragraph saying who wrote them.
 
-- [ ] Disclosure paragraph on `archive.html` and in `api/v1/meta.json`
-- [ ] Correct `art0001`'s title
+- [x] Disclosure paragraph on `archive.html` and in `api/v1/meta.json` — done
+      2026-08-01, commit `164482da`. `meta.json` gained a `metadata_provenance`
+      block covering titles, years, the composite flag, and known error classes.
+- [x] Correct `art0001`'s title — done 2026-08-01. Now *Untitled (Figure, Red
+      Ground)*, on Jeff's explicit instruction, which makes it Confirmed under
+      §5.1. §8.2 bars AI from authoring titles, so the alternatives were put to
+      him rather than chosen.
+- [ ] **Remaining:** the disclosure is absent from the 1,087 individual artwork
+      pages — which is where descriptions are actually read, and where search
+      traffic lands. A reader arriving from Google at a single work never passes
+      through `archive.html` and so never sees it.
+- [ ] The 12 other known title/description colour contradictions are uncorrected.
+      Each needs Jeff's confirmation individually; they cannot be batch-fixed by
+      AI under §8.2.
 
 ### 3. The record is nearly invisible to search engines
 
@@ -224,10 +236,10 @@ Every page says 1,086. The catalog holds 1,087.
 
 ## III. Priority order
 
-1. Disclosure paragraph on machine-written metadata + fix `art0001`'s title
+1. ~~Disclosure paragraph + fix `art0001`'s title~~ — **done 2026-08-01** (`164482da`)
 2. Record more voice while that is possible — the one item with a closing window
-3. Uncomment `build_catalog.py:263` (sitemap)
-4. Record the masters' location in `SUCCESSION.md`
+3. Carry the disclosure onto the 1,087 artwork pages, where descriptions are read
+4. Uncomment `build_catalog.py:263` (sitemap)
 5. Mark signed works as exact-dated
 6. Label the recording; fix `art1069`
 7. Birth year + `Person` structured data
