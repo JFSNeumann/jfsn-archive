@@ -280,3 +280,28 @@ transitions. They are finished, coherent, and better than the work they present 
 any right to expect. Every remaining hour belongs to the artwork and its metadata,
 not to the interface. **Resist the temptation to redesign a thing that is already
 done.**
+
+---
+
+## Standing decision — the preserved working-history sites are not to be edited
+
+**Decided by Jeff, 2026-08-02.**
+
+The archived sites under `working-history/websites/` are published as they were
+written, and that includes personal detail. The mr-snowmann site states his full
+date of birth in his own words. It is live, and it stays live.
+
+**Do not redact, alter, or exclude these pages.** They are preserved artifacts.
+Editing a historical document to change a fact it contains is the one thing this
+archive exists not to do, and a redaction would be indistinguishable from
+falsification to anyone reading it later.
+
+This is recorded because it is a predictable trap: a future accessibility,
+privacy, or SEO audit will find a full date of birth on a public page, read it
+as an exposure, and "fix" it. That fix would destroy an artifact to solve a
+problem the creator has already considered and declined. **Ask Jeff. Do not
+tidy it.**
+
+Note that the same pages are useful primary sources — they carry a BFA year
+(1978) and a first-person account of when he began making work seriously, both
+in his own words and both predating the current archive.
