@@ -49,6 +49,28 @@
 
 ---
 
+## Photographic masters (NOT in the four stores above)
+
+The four stores above replicate the *repository*. The highest-resolution copy tracked
+anywhere inside it is a lossy AVIF delivery encode (1400×2800, ~424 MB for the
+collection), and `artworks/full/` is gitignored — so the public redundancy on GitHub is
+the `medium` tier at 900×1800. A custodian reading only this repository would reasonably
+conclude the originals were gone. **They are not.**
+
+- **Where:** a separate external hard drive, held by Jeff, outside this repository and
+  outside the nightly backup chain. Confirmed by Jeff, 2026-08-02.
+- **Format:** _[NOT RECORDED — Jeff has not specified; ask him]_
+- **Physical location of that drive:** _[FILL IN]_
+- **Copy outside Jeff's own possession:** none recorded. The masters are therefore a
+  single-copy store, unlike the repository, which has four.
+
+Recorded because the absence of any pointer to the masters was the one preservation gap
+the 2026-08-01 archival review left open. Jeff considers the matter settled; this entry
+exists so a future custodian knows the originals exist and roughly where to look, not to
+reopen it.
+
+---
+
 ## Hosting
 
 - **HostGator (jfsn.com primary)** — cPanel/Pure-FTPd

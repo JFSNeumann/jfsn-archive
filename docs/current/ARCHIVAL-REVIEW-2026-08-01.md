@@ -165,10 +165,15 @@ do not point at the masters.
 
 This is a documentation task, not a preservation emergency.
 
-- [ ] Record the masters' location and format in
-      [`docs/governance/SUCCESSION.md`](../governance/SUCCESSION.md) — enough that
-      someone who has never spoken to Jeff can find them
-- [ ] Note in that entry whether any copy lives outside Jeff's own accounts
+- [x] Record the masters' location and format in
+      [`docs/governance/SUCCESSION.md`](../governance/SUCCESSION.md) — done
+      2026-08-02. Jeff: the masters are on a separate external hard drive,
+      outside the repository and outside the nightly backup chain. Format not
+      specified and not inferred; left marked as unrecorded rather than guessed.
+- [x] Note in that entry whether any copy lives outside Jeff's own accounts —
+      done. None recorded, so the masters are a single-copy store while the
+      repository has four. Jeff considers the matter closed; the entry states
+      the position without reopening it.
 
 ### 2. Nothing discloses that titles and descriptions are machine-written
 
@@ -203,9 +208,17 @@ stay. What is missing is one honest paragraph saying who wrote them.
       commit `7e4e628d`. Worded "most catalog text" rather than asserting the
       provenance of the record in view, since a few records are curator-authored
       and no per-record flag distinguishes them.
-- [ ] The 12 other known title/description colour contradictions are uncorrected.
-      Each needs Jeff's confirmation individually; they cannot be batch-fixed by
-      AI under §8.2.
+- [x] The "12 other title/description colour contradictions" were re-measured
+      2026-08-02. The original one-off scan was not kept, so it was rebuilt and
+      run in two passes. **Hard contradictions — a title colour whose family
+      appears nowhere in the description or palette, the `art0001` class of
+      error — now number zero.** Six soft mismatches remain, all naming
+      granularity rather than error: five works titled "Blue" whose grounds the
+      description calls turquoise (`art0491`, `art0492`, `art0495`, `art0503`,
+      `art0516`), and `art0123` titled "Hot Pink" against a magenta palette.
+      Calling a turquoise ground blue is not wrong the way calling a red ground
+      blue was wrong. Left as they are; §8.2 bars AI from retitling, and the
+      options were put to Jeff rather than chosen.
 
 ### 3. The record is nearly invisible to search engines
 
@@ -219,7 +232,8 @@ sequence from a single buried entry point — precisely what crawlers abandon.
 A historian searching for this work will most likely not find it. The fix is
 uncommenting three lines that are already written.
 
-- [ ] Uncomment `build_catalog.py:263`
+- [x] Uncomment `build_catalog.py:263` — done 2026-08-01. Verified 2026-08-02:
+      `sitemap.xml` now carries 1,099 `<loc>` entries.
 
 ### 4. Every date is "estimated," including the certain ones
 
@@ -229,7 +243,13 @@ knows it in writing, and still reports the date as a guess. Understating certain
 a smaller sin than overstating it, but it is still an inaccuracy and it makes the
 dating apparatus less useful than the evidence permits.
 
-- [ ] Mark visibly-signed works as exact, starting with those whose descriptions say so
+- [x] Mark visibly-signed works as exact — done 2026-08-01 (`44e219a08`) for the
+      three works dated in Jeff's own hand (`art0083`, `art0379`, `art0937`),
+      each verified against the artwork at full resolution rather than against
+      the catalog description. 1,084 of 1,087 remain estimated, which is
+      correct: the years are decade buckets. Note the method — `art0379`'s
+      machine-written description claims the signature reads 11/30/2022; the
+      work reads 1/30/2022. The description was not treated as evidence.
 
 ### 5. The voice is 34 seconds, and unlabeled
 
@@ -238,9 +258,18 @@ One recording, `who-i-am.m4a`, 33.8 seconds. It renders as an unlabeled play but
 sees a bare triangle with no indication it is the artist speaking. Separately,
 `art1069` points at `neon-city-nocturne.m4a`, which does not exist on disk.
 
-- [ ] Visible label on the player (design call — Jeff's to direct)
-- [ ] Resolve or remove the `art1069` pointer
-- [ ] **Record more voice while that is possible** — this is the highest-value action available
+- [x] Visible label on the player — done 2026-08-02 on Jeff's direction. The
+      player now carries a `RECORDING — THE ARTIST'S VOICE` kicker plus the
+      recording's title, stamped from the catalog's `audio_title`, and is a
+      labelled `role="region"`. A sighted visitor no longer sees a bare triangle.
+- [x] Resolve or remove the `art1069` pointer — verified resolved 2026-08-02.
+      `neon-city-nocturne.m4a` no longer appears in the sidecar, `catalog.json`,
+      or `current.json`. The only live audio reference is `art0379`, whose file
+      exists.
+- [ ] **Record more voice while that is possible** — still the highest-value
+      action available. Raised with Jeff 2026-08-02; his answer was "maybe
+      tomorrow." Not to be pushed. The pipeline is proven and will accept a new
+      recording whenever he wants to make one.
 
 ### 6. No biographical anchor
 
@@ -249,14 +278,68 @@ the homepage or about page — only inside individual artwork records. A researc
 cannot establish from this archive when its subject lived. And `about.html` reads
 *"Still making. Still in Cleveland."* — present tense a permanent record cannot hold.
 
-- [ ] Birth year + one `Person` JSON-LD block
-- [ ] Revisit present-tense phrasing in `about.html`
+- [x] Birth year + one `Person` JSON-LD block — done 2026-08-01 (`1850e9c3a`).
+      Verified 2026-08-02: `about.html` carries `"birthDate": "1955"` in a
+      `Person` block, year only, with the reasoning recorded inline.
+- [x] Revisit present-tense phrasing in `about.html` — **raised and declined by
+      Jeff, 2026-08-02.** "Still making. Still in Cleveland." stays. His reason:
+      he is alive, and the sentence is true. Do not re-flag this; a future
+      audit reading it as stale would be correcting a fact rather than an error.
 
 ### 7. Work count stale in 70 places
 
 Every page says 1,086. The catalog holds 1,087.
 
-- [ ] Regenerate the count sitewide
+- [x] Regenerate the count sitewide — done 2026-08-01 (`f2f1dffac`); the figure
+      is now stamped by `build_catalog.py` on every rebuild rather than
+      hand-maintained. Verified 2026-08-02: no file anywhere still reads 1,086.
+
+### 8. Five links were invisible on `working-history.html` — FIXED
+
+**Found and fixed 2026-08-02.** The same class of defect as §II.0, found the same
+way: by measuring what a reader actually receives rather than reading the source.
+
+`working-history.html` carried a second `<script>` block whose string literals used
+curly quotes (`'`) instead of straight ones — 38 of them. That is a JavaScript
+**syntax error**, so the block never parsed and never executed, for any visitor,
+ever. The `try { … } catch` wrapped around it could not help: a parse error is
+raised before any code in the block runs, so the catch never fires. Its error
+handler, which would have painted a red banner, was unreachable by construction.
+
+That dead block held the reveal-on-scroll logic. With it gone:
+
+- `#records` (professional record PDF, video archive, design studies) and
+  `#presence` (LinkedIn PDF, Showspace) sat at **`opacity: 0` permanently** —
+  five outbound links, live, that no sighted visitor could see.
+- The eight gallery cards survived only because someone had patched around the
+  symptom with an `a.rec { opacity: 1 }` rescue rule. They still rendered
+  permanently 16px low, their reveal never completing.
+
+Fixed by deleting the corrupted 94-line duplicate, moving the reveal logic into the
+block that does parse, and **gating the hidden state behind `.js`** — so a no-JS
+visitor, or any future script failure, now receives full-opacity content instead of
+an invisible page. `a.rec { opacity: 1 }` was removed as no longer needed.
+
+Two lessons worth keeping:
+
+1. **A `try/catch` around a whole script block is not a safety net.** It cannot
+   catch the failure mode most likely to kill the block outright.
+2. **A workaround that treats the symptom hides the cause.** The rescue rule and
+   the hand-copied duplicate of `RECORDS` both made the page look fine enough that
+   nobody asked why they were needed. The answer had been sitting in the file the
+   whole time.
+
+Also fixed in passing: `og:image` on seven pages pointed at
+`artworks/full/art1010-hero-lcp.avif`, which returns **404** on jfsn.com — every
+social-media preview card for those pages was broken. Repointed to
+`artworks/medium/art1010.avif`, which exists and was already in use elsewhere.
+
+**Still open, noted not fixed:** `scripts/audit-nav.sh` emits 66 warnings, present
+before this session's work and unrelated to it — `no FOOTER:START`, `missing
+search.js`, `missing nav-active.js`, across 13 of the 14 core pages. Under the
+standing rule that a permanent warning is a broken check, this needs resolving one
+way or the other: either the check is stale after the nav/script-span refactor, or
+13 pages are genuinely missing something. It should not be left humming.
 
 ---
 

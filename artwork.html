@@ -9,13 +9,13 @@
 <meta property="og:description" content="A single work from the archive, shown whole and described honestly.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://jfsn.com/artwork.html">
-<meta property="og:image" content="https://jfsn.com/artworks/full/art1010-hero-lcp.avif">
+<meta property="og:image" content="https://jfsn.com/artworks/medium/art1010.avif">
 <meta property="og:locale" content="en_US">
 <link rel="canonical" href="https://jfsn.com/artwork.html">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Work — Jeffrey F. S. Neumann">
 <meta name="twitter:description" content="A single work from the archive, shown whole and described honestly.">
-<meta name="twitter:image" content="https://jfsn.com/artworks/full/art1010-hero-lcp.avif">
+<meta name="twitter:image" content="https://jfsn.com/artworks/medium/art1010.avif">
 <meta name="theme-color" content="#0c0a09">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/playfair-display-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -407,7 +407,14 @@ addEventListener('DOMContentLoaded', () => {
     </figure>
   </div>
 
-  <div id="audio-player" data-title="Artist Statement">
+  <!-- The player carries a visible label, not just an aria one: without it a
+       sighted visitor sees a bare play triangle with no indication that the
+       voice is Jeff's. #audio-label is stamped from the work's audio_title. -->
+  <div id="audio-player" data-title="Artist Statement" role="region" aria-labelledby="audio-label">
+    <p class="audio-label">
+      <span class="audio-label-kicker">Recording — the artist's voice</span>
+      <span class="audio-label-title" id="audio-label">Artist Statement: Who I Am</span>
+    </p>
     <div class="audio-controls">
       <button type="button" data-action="play" aria-label="Play">▶</button>
       <div class="audio-timeline">
@@ -581,7 +588,9 @@ addEventListener('DOMContentLoaded', () => {
   if (w.audio) {
     const audioEl = audioPlayer.querySelector('audio');
     audioEl.src = '/audio/' + w.audio;
-    audioPlayer.dataset.title = w.audio_title || 'Artist Statement';
+    const audioTitle = w.audio_title || 'Artist Statement';
+    audioPlayer.dataset.title = audioTitle;
+    document.getElementById('audio-label').textContent = audioTitle;
     audioPlayer.hidden = false;
   } else {
     audioPlayer.hidden = true;

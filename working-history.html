@@ -4,17 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The Working History — Jeffrey F. S. Neumann</title>
-<meta name="description" content="The galleries that were real. Eight websites Jeff built to show his work, 2000–2020, preserved as they were.">
+<meta name="description" content="The galleries that were real. Eight websites Jeff built to show his work, 2000–2021, preserved as they were.">
 <meta property="og:title" content="The Working History — Jeffrey F. S. Neumann">
-<meta property="og:description" content="The galleries that were real. Eight websites Jeff built to show his work, 2000–2020, preserved as they were.">
+<meta property="og:description" content="The galleries that were real. Eight websites Jeff built to show his work, 2000–2021, preserved as they were.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://jfsn.com/working-history.html">
-<meta property="og:image" content="https://jfsn.com/artworks/full/art1010-hero-lcp.avif">
+<meta property="og:image" content="https://jfsn.com/artworks/medium/art1010.avif">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Working History — Jeffrey F. S. Neumann">
-<meta name="twitter:description" content="The galleries that were real. Eight websites Jeff built to show his work, 2000–2020, preserved as they were.">
-<meta name="twitter:image" content="https://jfsn.com/artworks/full/art1010-hero-lcp.avif">
+<meta name="twitter:description" content="The galleries that were real. Eight websites Jeff built to show his work, 2000–2021, preserved as they were.">
+<meta name="twitter:image" content="https://jfsn.com/artworks/medium/art1010.avif">
 <meta name="theme-color" content="#0c0a09">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/playfair-display-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -282,7 +282,10 @@ addEventListener('DOMContentLoaded', () => {
     #exit nav a{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><line x1="10" y1="2" x2="10" y2="18" stroke="%23FF6600" stroke-width="1.5" stroke-linecap="round"/><polygon points="10,18 8,14 12,14" fill="%23FF6600"/></svg>') 10 10,auto}
   }
 
-  .reveal-el{opacity:0;transform:translateY(16px)}
+  /* The hidden state is gated behind .js so that no-JS visitors — and any
+     future script failure — get the content at full opacity rather than an
+     invisible page. Matches the pattern in the-studio.html. */
+  .js .reveal-el{opacity:0;transform:translateY(16px)}
   .js .reveal-el{transition:opacity 1s ease,transform 1s ease}
   .reveal-el.seen{opacity:1;transform:none}
   @media (prefers-reduced-motion: reduce){
@@ -393,9 +396,6 @@ addEventListener('DOMContentLoaded', () => {
 </footer>
 
 <style>
-/* Gallery cards visible by default (reveal-on-scroll handled via .seen class) */
-a.rec { opacity: 1; }
-
 /* ---------- print styles ---------- */
 @media print {
   body { background: white; color: black; }
@@ -437,73 +437,20 @@ if(index){
   }
   index.appendChild(frag);
 }
-</script>
 
-<script>
-try {
+// reveal-on-walk (scroll position + heartbeat; no IntersectionObserver, no rAF
+// trust). This lives in the same block that builds the gallery so the two
+// cannot drift apart again — a corrupted duplicate of this logic sat in a
+// separate <script> for months, failed to parse, and left #records and
+// #presence at opacity 0 on the live site.
 (function(){
   'use strict';
-  const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // The eight built galleries, chronological. Data mirrors the working-history
-  // index verbatim; each record doors OUT to the preserved site as an artifact.
-  const RECORDS = [
-    ['c. 2000', 'Untitled Fine Art Website', 'SITE001',
-      'Personal art website in hand-authored HTML tables, no CSS framework — the earliest surviving presentation of the digital work.',
-      '/working-history/websites/fine-art-2000/', 'site001'],
-    ['2014', 'JFSN Portfolio', 'SITE004',
-      'Professional portfolio built on custom jQuery; the earliest confirmed node in the portfolio lineage.',
-      '/working-history/websites/jfsn-2014/', 'site004'],
-    ['2015', 'mR_sNOWmann', 'SITE002',
-      'A print-sales site for a recurring street character — an Adobe Muse export, with dated photographs of a physical practice.',
-      '/working-history/websites/mr-snowmann/', 'site002'],
-    ['2016', 'JFSN Portfolio', 'SITE005',
-      'An Adobe Muse portfolio with responsive mobile and tablet variants, documenting four named client projects.',
-      '/working-history/websites/jfsn-2016/', 'site005'],
-    ['2018', 'JFSN Portfolio — Designer Edition', 'SITE006',
-      'The largest record in the collection: the only site spanning all three threads at once — professional design, family collaboration, fine art.',
-      '/working-history/websites/jfsn-2018/', 'site006'],
-    [‘2018–20’, ‘Sebastian Website’, ‘SITE003’,
-      ‘A family collaboration site documenting a grandson\’s creative output alongside grandfather-and-grandson pieces.’,
-      ‘/working-history/websites/sebastian-v1/’, ‘site003’],
-    [‘2020’, ‘JFSN Portfolio’, ‘SITE008’,
-      ‘A Bootstrap portfolio preserved in its unfinished state — complete navigation and content, personalization left incomplete.’,
-      ‘/working-history/websites/jfsn-2020/’, ‘site008’],
-    [‘2021’, ‘Sebastian Website — Adobe Portfolio’, ‘SITE007’,
-      ‘A gallery-style presentation of the grandson\’s work on Adobe Portfolio, captured by mirror rather than server export.’,
-      ‘/working-history/websites/sebastian-v2/’, ‘site007’],
-  ];
-
-  const index = document.getElementById('index');
-  const frag = document.createDocumentFragment();
-  let n = 0;
-  for (const [yr, title, rn, desc, href, shot] of RECORDS){
-    n++;
-    const a = document.createElement('a');
-    a.className = 'rec reveal-el';
-    a.href = href;
-    a.target = '_blank';
-    a.rel = 'noopener';
-    a.innerHTML =
-      '<span class="yr">' + yr + '</span>' +
-      '<img class="thumb" src="/assets/images/working-history/' + shot + '.avif" ' +
-        'alt="Preserved screenshot of the ' + title + ' website, as it appeared when built." ' +
-        (n <= 3 ? '' : 'loading="lazy" ') + 'decoding="async">' +
-      '<span class="body">' +
-        '<span class="t">' + title + '</span>' +
-        '<span class="d">' + desc + '</span>' +
-        '<span class="rn">RECORD ' + rn + '</span>' +
-      '</span>' +
-      '<span class="enter">[ ENTER THE SITE ↗ ]</span>';
-    frag.appendChild(a);
-  }
-  console.log('GALLERY: About to append', n, 'links to index');
-  index.appendChild(frag);
-  console.log('GALLERY: Successfully appended gallery links');
-
-  // reveal-on-walk (scroll position + heartbeat; no IO, no RAF trust)
   const targets = [...document.querySelectorAll('.reveal-el')];
-  if (REDUCED){ targets.forEach(el => el.classList.add('seen')); return; }
+  if (!targets.length) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches){
+    targets.forEach(el => el.classList.add('seen'));
+    return;
+  }
   let byTop = [], ptr = 0;
   function measure(){
     byTop = targets.map(el => [el.getBoundingClientRect().top + scrollY, el]).sort((a,b)=>a[0]-b[0]);
@@ -528,11 +475,8 @@ try {
     else if (scrollY !== lastY){ lastY = scrollY; show(); }
   }, 500);
 })();
-} catch(e) {
-  console.error('GALLERY ERROR:', e.message, e.stack);
-  document.body.innerHTML += '<p style="color:red;padding:20px">Gallery Error: ' + e.message + '</p>';
-}
 </script>
+
 
 <script>
 // Back-to-top button
