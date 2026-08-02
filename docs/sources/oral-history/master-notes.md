@@ -3,7 +3,7 @@
 **Project:** Jeffrey F. S. Neumann Archive  
 **Purpose:** Preserve memories, stories, and context that exist only in Jeff's mind. This document is a primary source, not a summary. Do not rewrite it into polished prose.  
 **Last updated:** 2026-07-22  
-**Sessions captured:** 2026-06-08, 2026-06-09, 2026-06-09 (session 2), 2026-06-09 (session 3 — analysis + drafts), 2026-06-09 (session 4 — site implementation + checkpoint), 2026-06-10 (analysis, §§20–24), 2026-06-11 (creator corrections, §25), 2026-07-05 (Mr. SNOWmann correction, §28), 2026-07-18 (Creator Decision Recordings, first session, §29), 2026-07-22 (implementation — Six Feet Away threshold, §30; no new testimony), 2026-07-22 (preservation audit — image visibility fixes, §31; no new testimony)
+**Sessions captured:** 2026-06-08, 2026-06-09, 2026-06-09 (session 2), 2026-06-09 (session 3 — analysis + drafts), 2026-06-09 (session 4 — site implementation + checkpoint), 2026-06-10 (analysis, §§20–24), 2026-06-11 (creator corrections, §25), 2026-07-05 (Mr. SNOWmann correction, §28), 2026-07-18 (Creator Decision Recordings, first session, §29), 2026-07-22 (implementation — Six Feet Away threshold, §30; no new testimony), 2026-07-22 (preservation audit — image visibility fixes, §31; no new testimony), §32 (Devo/WHK stage design — creator testimony; session date not recorded in that section), 2026-08-02 (audio recording filed — "Who I Am", recorded 2026-06-16, §33)
 
 ---
 
@@ -987,3 +987,37 @@ This episode documents temporary creative work by Jeff that did not result in a 
 ### Archivist note
 
 This work is categorically distinct from the catalog. It is preserved here as creator testimony about non-catalog creative work. The Devo stage environment is documented by both creator testimony and a surviving photograph, though the physical environment itself does not survive. This contrasts with two other major non-catalog works: §12 (the CIA sculpture, sold and untrackable; exists only in memory) and §19 (the Guernica-scale painting, lost to water damage; exists only in memory). None of these three resulted in works the archive can house. The distinction matters: the 1,086-work count is accurate and complete for surviving catalog objects. This testimony preserves evidence of creative effort that lies outside that count.
+
+---
+
+## 33. Audio Recording Filed — "Who I Am" — recorded 2026-06-16, filed 2026-08-02
+
+**Source:** An audio recording of Jeff's voice. **The recording itself is the record.** Its content is deliberately not transcribed, summarised, or characterised here — no one filing it has represented what he says in it, and §8 of the METADATA-STEWARDSHIP-CONSTITUTION forbids paraphrasing creator testimony. To know what is on it, listen to it.
+
+### Why this entry exists
+
+The recording was made 2026-06-16 and published on the site attached to art0379, but it was **never logged in this record** and existed in only one location (`/audio/`, the web-serving directory). An oral-history source that appears nowhere in the oral-history notes is a source a future custodian may never learn exists. This entry closes that gap. Filed 2026-08-02, at Jeff's direction.
+
+### The object
+
+| | |
+|---|---|
+| **Preservation copy** | `docs/sources/oral-history/audio/2026-06-16-who-i-am.m4a` |
+| **Web copy** | `audio/who-i-am.m4a` (identical; serves the site) |
+| **SHA-256** | `7609b003fdaeb2cd5dfc17973ffd391b674adef8811f64b81f094fc07aa4c310` |
+| **Duration** | 33.792 seconds |
+| **Format** | AAC, mono, 48 kHz, 301,670 bytes |
+| **Recorded** | 2026-06-16 (file timestamp 09:11) |
+| **Published as** | "Artist Statement: Who I Am", on the art0379 page |
+
+Both copies were verified bit-identical at filing. The checksum is recorded so any future custodian can confirm the file has not silently degraded or been re-encoded — audio is the archive's most fragile material and the least verifiable by eye.
+
+### Standing as evidence
+
+This is **the only recording of Jeff's voice in the archive.** Thirty-four seconds. Every other primary source here is typed.
+
+Its existence resolves nothing about the three recordings planned in `docs/current/CREATOR-VOICE-PLAN.md` (Why I Make Things · What I Hope My Grandchildren Understand · One Lost Work I Remember). Whether this recording covers the first of those has **not** been established, and should not be assumed by anyone reading this entry — it was published under a different title and no one has asked Jeff the question. As of 2026-08-02 all three planned recordings remain open.
+
+### Archivist note
+
+On 2026-06-12 Jeff declined audio for the exhibition-record corrections (§27, "change these - no audio"). That declination was specific to typed corrections of dates and is **not** a general refusal to be recorded — he recorded this file four days later, and on 2026-08-02 asked to record more. Future custodians should not read §27 as standing consent or refusal either way. Ask him.
