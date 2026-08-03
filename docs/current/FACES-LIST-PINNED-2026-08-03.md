@@ -81,8 +81,15 @@ Not 268. In this order:
 
 - How many of the 237 contain a person who *can* be named, versus found material, strangers, or
   Jeff's own drawn faces. Only a visual pass answers this, and it has not been done.
-- Whether the 43 works themed *Torsos & Faces* that carry **no** face motif were missed by the
-  detector. If so the real pool is larger than 268, not smaller.
+- ~~Whether the 43 works themed *Torsos & Faces* that carry **no** face motif were missed by the
+  detector.~~ **Checked 2026-08-03 by looking at all 43. The detector did not miss them — the
+  pool is not larger than 268.** They divide into street-art photographs (other people's
+  stencils, stickers and tags — `art0004`, `art0026`, `art0048`, `art0070`, `art0092`,
+  `art0103`, `art0119`, `art0128`), and abstract or constructed figures — CD-eye faces, torso
+  assemblages, drawn legs, sculptural totems — which are real works containing nobody to name.
+  Two exceptions worth Jeff's eye: **art0050 "Dad, Two Footballs"** (named in the title, no
+  visible photographic face) and **art0240**, which is a genuine photograph of Jeff at work and
+  is separately the subject of `COMPOSITE-FLAG-FALSE-POSITIVES-2026-08-03.md`.
 - Whether any face is a fragment too small to recognise. `master-notes.md` §6 flags this as the
   reason the question is urgent: *fragments defeat recognition*, and that recognition dies with
   the person who watched it happen.
