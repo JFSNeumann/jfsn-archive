@@ -190,18 +190,28 @@ smoke_check() {
   local pattern="$2"
   local label="$3"
   local body http_code attempt response
-  # ONE fetch, not two. This previously issued separate curl calls for the body
-  # and the status code and judged them as a single result. When the body call
-  # hit --max-time on the homepage — 69KB, the largest file checked, fetched
-  # cold right after upload — $body came back empty while the status call
-  # succeeded against a now-warm file, reporting "HTTP 200, pattern not found"
-  # on a page that was live and correct. It cried wolf on three consecutive
-  # deploys. A check that reports a failure nobody believes is worse than none.
+  # Matching is done with bash's own [[ == ]], NOT a pipe into grep -q.
+  #
+  # This check reported "✗ Homepage — pattern not found" on four consecutive
+  # deploys while the page was live and correct. The cause was `set -o pipefail`
+  # (line 15) meeting `echo "$body" | grep -q "$pattern"`: grep -q exits the
+  # instant it matches, closing the pipe while echo is still writing; echo takes
+  # SIGPIPE and exits 141; pipefail propagates that as the pipeline's status, so
+  # the condition read false even though the pattern HAD matched.
+  #
+  # Only the homepage tripped it because it is by far the largest file checked
+  # (69KB). Every smaller file finishes writing before grep exits, so no SIGPIPE
+  # — which is exactly why nine of ten checks passed and the same one failed
+  # every time. The failure was never about the network or the upload.
+  #
+  # [[ == ]] is a bash builtin: no subprocess, no pipe, no signal. The fetch is
+  # also a single curl now (status appended via -w) rather than two calls that
+  # could disagree with each other.
   for attempt in $(seq 1 "$SMOKE_RETRIES"); do
-    response=$(curl -sS --max-time 30 -w '\n%{http_code}' "$url" 2>/dev/null)
+    response=$(curl -sS --max-time 30 -w '\n%{http_code}' "$url" 2>/dev/null || true)
     http_code="${response##*$'\n'}"
     body="${response%$'\n'*}"
-    if [ "$http_code" = "200" ] && printf '%s' "$body" | grep -qF "$pattern"; then
+    if [ "$http_code" = "200" ] && [[ "$body" == *"$pattern"* ]]; then
       echo -e "${GREEN}✓ $label${NC}"
       return 0
     fi

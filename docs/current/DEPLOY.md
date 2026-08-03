@@ -132,23 +132,40 @@ GitHub ≠ production. HostGator does not auto-deploy on push. Run `bash scripts
 
 ---
 
-## Smoke-test note — homepage false alarm fixed 2026-08-02
+## Smoke-test note — homepage false alarm, fixed 2026-08-02
 
-For three consecutive deploys the smoke test reported the homepage as
+For four consecutive deploys the smoke test reported
 `✗ Homepage — pattern not found: Jeffrey F. S. Neumann` while the page was live
-and correct (HTTP 200, pattern present three times, verified by `curl`).
+and correct (HTTP 200, 69,443 bytes, pattern present three times).
 
-Cause: `smoke_check()` issued **two separate curl calls** — one for the body, one
-for the status code — and judged them as a single result. When the body call hit
-`--max-time 10` on the homepage (69KB, by far the largest file checked, fetched
-cold immediately after upload), `$body` came back empty while the status call
-succeeded against a now-warm file. That produced "HTTP 200 + pattern missing" on
-a healthy page, and the retries could not help because each attempt repeated the
-same split fetch.
+**Cause:** `set -o pipefail` (line 15) meeting `echo "$body" | grep -q "$pattern"`.
+`grep -q` exits the moment it matches, closing the pipe while `echo` is still
+writing; `echo` takes SIGPIPE and exits 141; `pipefail` makes that the pipeline's
+status, so the condition read false **even though the pattern had matched**.
 
-Fixed: one fetch, with the status code appended to the body via `-w`, and the
-timeout raised to 30s. Verified by deliberately breaking it — a bogus pattern
-still fails, and a missing URL still reports HTTP 404.
+Only the homepage tripped it because it is by far the largest file checked. Every
+smaller file finishes writing before `grep` exits, so no SIGPIPE — which is exactly
+why nine of ten checks passed and the same one failed every time. The failure was
+never about the network, the upload, or HostGator syncing.
 
-**Consequence for future sessions:** the smoke test is trustworthy again. If it
-reports a failure now, check the site rather than assuming the checker is wrong.
+**A wrong diagnosis was committed first** (`9231a0066`) claiming the cause was two
+separate curl calls racing each other. That was incorrect and did not fix anything;
+the first test appeared to pass only because it omitted `set -euo pipefail`, the very
+condition that causes the bug. Recorded here because the mistake is instructive: a fix
+verified under conditions that differ from production is not verified.
+
+**Fix:** match with bash's `[[ "$body" == *"$pattern"* ]]` — a builtin, so no
+subprocess, no pipe, no signal. The fetch is also a single curl (status appended via
+`-w`) instead of two calls that could disagree.
+
+**Verified by deliberate failure, under `set -euo pipefail`:**
+
+| case | result |
+|---|---|
+| 69KB homepage, correct pattern | PASS |
+| 69KB homepage, bogus pattern | FAIL — pattern not found |
+| missing URL | FAIL — HTTP 404 |
+| small file (`sw.js`), correct pattern | PASS |
+
+**Consequence:** the smoke test is trustworthy again. If it reports a failure now,
+check the site — do not assume the checker is wrong.
