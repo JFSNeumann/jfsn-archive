@@ -167,7 +167,11 @@ asked the right question in his lifetime and it is unanswered.
 State*). All three works in the lost-works
 register carry measurements; the surviving collection does not.
 
-**4. Who is in the work?** 268 works contain photographic faces; 31 were made with
+**4. Who is in the work?** *(List pinned 2026-08-03 — see `FACES-LIST-PINNED-2026-08-03.md`.
+The 268 figure is the machine-detected `photographic-face` motif, not a count of identifiable
+people: 31 are composites, and spot-checking the images showed the label is unreliable in both
+directions. Working list is the 30 non-composite Collaboration works plus ~7 works that name
+their subject in Jeff's or a grandchild's own hand.)* 268 works contain photographic faces; 31 were made with
 grandchildren. None identified. The children were too young to recover their own hands later.
 
 **5. What format are the masters, and where is that drive?** The repository is a format
