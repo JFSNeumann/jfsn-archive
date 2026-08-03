@@ -1,5 +1,19 @@
 # JFSN — Improvement List
-**Updated:** 2026-08-02 (working-history invisible-links fix, audio label, exactness pass)
+**Updated:** 2026-08-02 (PROJECT-STATUS-2026 adopted — this list is now subordinate to it)
+
+> **Read [`docs/current/PROJECT-STATUS-2026.md`](docs/current/PROJECT-STATUS-2026.md) first.**
+> Adopted 2026-08-02, it closes six investigations and is the archive's official position:
+> what is finished, what is settled and must not be reopened, what remains, and the
+> definition of when this project is complete. Where this backlog and PROJECT-STATUS
+> disagree, PROJECT-STATUS governs.
+>
+> Three priorities remain, two of which only Jeff can do: the physical pass (where the
+> works are, how large, what they are built from), naming the people in the 268 face works
+> and 31 collaborations, and one sentence disclosing who wrote the site's interpretive
+> prose. Everything else below can be done by any custodian at any time.
+>
+> **Auditing is closed.** Six reviews in two days reached diminishing returns and began
+> correcting one another. Further examination should come from outside this system.
 
 A living list. Add to it. Cross things off. This is the backlog.
 
