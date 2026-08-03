@@ -26,7 +26,7 @@ Its most irreplaceable holding is a small quantity of first-person testimony —
 recorded voice and roughly 264 words of strictly verbatim speech.
 
 **What it is not.** It is not a custodial archive. It holds no physical works, records the
-location of none, and knows the dimensions of one of 1,087. It is not a chronology: 99.0% of
+location of none, and knows the physical dimensions of none of the 1,087. It is not a chronology: 99.0% of
 works carry a bare decade estimate, and the entire fifty-year sequence rests on six distinct
 year values. It is not an authored account by its subject: the catalog's titles and
 descriptions were written by software, and the interpretive prose across the site was
@@ -65,7 +65,13 @@ established.
 `year_precision: exact`, each verified against the object at full resolution rather than
 against its catalog description. Fourteen distinct year values exist across the corpus.
 
-**Physical description.** One work of 1,087 carries dimensions. `materials` is populated for
+**Physical description.** **Zero works of 1,087 carry a physical dimension.** *(Corrected
+2026-08-03. This document previously said one. That figure traced to a machine-written
+description of `Design: Electrical Gulf Cart` — "a dimensional annotation of 19 inches width" —
+which is the width of the golf cart drawn in the artwork, annotated by Jeff inside the 1976
+rendering, not the size of the object. `config/dims.json` holds pixel dimensions of the image
+files; `verify.py`'s `check_dimensions` only asserts those are positive integers. No field for
+physical size exists in the schema.)* `materials` is populated for
 880 works but was inferred from photographs, not from knowledge of substrate or adhesive; 242
 works are recorded as containing tape of unknown type. There is no field for condition,
 location, ownership, or physical survival.
@@ -157,7 +163,8 @@ archive's own highest confidence tier that survives him — physical examination
 conservation-critical facts — substrate, adhesive — are unrecorded. §24.1 of the oral history
 asked the right question in his lifetime and it is unanswered.
 
-**3. How large are the works?** One record of 1,087. All three works in the lost-works
+**3. How large are the works?** Zero records of 1,087 (corrected 2026-08-03; see *Current
+State*). All three works in the lost-works
 register carry measurements; the surviving collection does not.
 
 **4. Who is in the work?** 268 works contain photographic faces; 31 were made with
