@@ -1,5 +1,11 @@
 [
   {
+    "sha": "cdda7f5",
+    "date": "2026-08-03",
+    "title": "Stop calling the real studio a fabrication: 250 composites -> 163",
+    "body": "Jeff, 2026-08-03: \"the studio photos are all real, fix it.\"\n\nbuild_catalog.py flagged a work composite if its theme was Gallery OR Studio, so\nall 87 photographs of his actual basement studio were published as \"composite —\nimagined placement\", which the API defines as depicting exhibitions that never\nhappened. Among them, art0240 — the one photograph of Jeff at work.\n\nStudio-themed works are now exempt from the flag entirely rather than merely\ndropping the theme clause: PLACEMENT_RE matches \"panorama\" and \"installation\" and\nwould otherwise have re-flagged 21 of them by title. Gallery is untouched; its\n149 still flag, and that disclosure stands.\n\nCorrected in all four places the flag is published:\n\n- catalog.json + API: 163 of 1,087.\n- The 1,087 static pages: exactly 87 changed, one line each. art0001.html is\n  byte-identical, confirming the diff was surgical.\n- api/v1/meta.json: the count is now computed from the data instead of restated\n  by hand. The hardcoded \"250 of 1087\" is exactly what outlived the rule that\n  produced it.\n- hall-of-openings.html: nearly shipped broken. The page renders labels from the\n  static openings.json, not the catalog, so the catalog fix left all 87 studio\n  views still captioned \"imagined placement\" directly beneath a section heading\n  reading \"The real place, pictured.\" Caught by reading the rendered page rather\n  than trusting the catalog fix. They now read \"Photograph — the real studio\",\n  and the footer no longer claims every work in the hall is flagged.\n\nVerified: 250 hall items = 163 imagined + 87 real, matching the catalog. art0240\nclean, art0381 (Gallery) still flagged. archive verify PASS, 0 failures, no\nconsole errors. sitemap.xml diff is lastmod only — 1,099 URLs before and after."
+  },
+  {
     "sha": "2897eb2",
     "date": "2026-08-03",
     "title": "Report: the composite flag has false positives (not fixed)",

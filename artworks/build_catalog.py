@@ -112,6 +112,44 @@ def _orientation(art_id):
         return 'horizontal'
     return 'square'
 
+# photo_method: which studio shots are stitched panoramas.
+#
+# Recorded 2026-08-03 at Jeff's request, after the composite-flag correction
+# established that all 87 Studio-themed works are real photographs. Both a
+# single exposure and a stitch are real; the archive simply did not record
+# which was which.
+#
+# MEASURED, NOT ASSERTED. The test is the aspect ratio of the actual image
+# file, from dims.json. It is deliberately not read from the title: titles are
+# machine-written and get this wrong in both directions. art0206 ("Untitled
+# (Studio Workspace) 1") is plainly a stitch — curved ceiling, bowed floor —
+# and says nothing about panoramas; art0259 ("Untitled (Studio Panorama
+# Diptych)") is not a photograph at all but a made object, two bands of studio
+# photographs mounted on backing with grommet rows, and is 0.99:1.
+#
+# At >= 3.0 the rule selects exactly 11 works. All 11 were checked against the
+# images and every one shows the barrel distortion of a multi-exposure stitch;
+# the widest non-panorama studio work sits at 2.17, so the threshold is not
+# near a boundary. Rerun and re-check if new studio work is ingested.
+#
+# §8.3 provenance: derived by measurement, not by model inference; the rule is
+# this code, the evidence is dims.json, and a human confirmed all 11 visually
+# before it was committed.
+PANORAMA_MIN_AR = 3.0
+
+def _photo_method(art_id, themes, work_type):
+    # Photographs only. A sculpture or collage that happens to be Studio-themed
+    # is a made object that was photographed — "single-exposure" would be a
+    # claim about the object, which is false. The first cut of this rule gave
+    # the field to 5 sculptures and 4 collages, including art0259, which is not
+    # a photograph at all but bands of studio photographs mounted on backing.
+    if work_type != 'photograph' or 'Studio' not in (themes or []):
+        return None
+    wh = _dims.get(art_id)
+    if not wh or len(wh) < 2 or not wh[0] or not wh[1]:
+        return None
+    return 'stitched-panorama' if wh[0] / wh[1] >= PANORAMA_MIN_AR else 'single-exposure'
+
 records = []
 skipped = []
 cataloged_ids = set()
@@ -127,6 +165,9 @@ for p in sorted(FULL.glob("art*.json")):
         rec['featured'] = art_id in featured_ids
         rec['favorite'] = art_id in favorite_ids
         rec['orientation'] = _orientation(art_id)
+        _pm = _photo_method(art_id, rec.get('themes'), rec.get('work_type'))
+        if _pm:
+            rec['photo_method'] = _pm
         # Detect if this artwork has a reverse side
         rec['has_back'] = (FULL / f"{art_id}_back.avif").exists()
         records.append(rec)
@@ -697,6 +738,18 @@ meta = {
             f"they show never happened. {sum(1 for _r in records if _r.get('composite'))} "
             f"of {len(records)} records. Photographs of the artist's real studio are "
             "NOT flagged — that room existed and the work was made in it."
+        ),
+        "photo_method": (
+            "photo_method appears on Studio-themed photographs only and records how the "
+            "image was made: 'stitched-panorama' or 'single-exposure'. "
+            f"{sum(1 for _r in records if _r.get('photo_method') == 'stitched-panorama')} "
+            "panoramas, "
+            f"{sum(1 for _r in records if _r.get('photo_method') == 'single-exposure')} "
+            "single exposures. Derived by measuring the aspect ratio of the image file, "
+            "not inferred from the title — titles get this wrong in both directions. "
+            "Absent on every other work, including made objects photographed in the "
+            "studio: a sculpture is not a single exposure. Recorded 2026-08-03 at the "
+            "artist's request; all panoramas were confirmed against the images."
         ),
         "artist_own_words": f"{SITE_URL}/stories.html — verbatim, dated oral history",
         "known_issues": (
