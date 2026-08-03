@@ -107,7 +107,20 @@ PASS, 0 failures. No console errors.
 as a whole, which is still 250 items. Rewriting Jeff's curatorial prose was out of scope for a
 factual correction.
 
-**Still open, and Jeff's to answer if he ever wants to:** which studio images are single
-exposures and which are stitched panoramas. Both are real photographs of a real room, so nothing
-on the site is now false either way — but the archive does not record the distinction. No field
-was invented for it, per the standing rule that an empty field preserves nothing.
+**~~Still open~~ — closed the same day.** Jeff asked for the panorama distinction to be recorded.
+`photo_method` now appears on Studio-themed **photographs only**: 11 `stitched-panorama`, 67
+`single-exposure`.
+
+It is derived by measuring the aspect ratio of the image file, not read from the title, because
+the machine-written titles are wrong in both directions — `art0206` is a plain stitch whose title
+never says so, and `art0259` "Studio Panorama Diptych" is not a photograph at all but two bands of
+studio photographs mounted on backing with grommet rows. At ≥ 3.0 the rule selects exactly 11,
+all confirmed against the images; the widest non-panorama studio work is 2.17, so the threshold
+is nowhere near a boundary.
+
+Restricted to `work_type: photograph` after a first cut handed the field to five sculptures and
+four collages. A sculpture that happens to be Studio-themed is a made object that was
+photographed — "single-exposure" would be a claim about the object, and false.
+
+The field is not surfaced in the interface. That would be a design addition and is Jeff's call.
+Commit `92bcf03bb`.
