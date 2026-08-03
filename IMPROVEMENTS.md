@@ -7,10 +7,11 @@
 > definition of when this project is complete. Where this backlog and PROJECT-STATUS
 > disagree, PROJECT-STATUS governs.
 >
-> Three priorities remain, two of which only Jeff can do: the physical pass (where the
-> works are, how large, what they are built from), naming the people in the 268 face works
-> and 31 collaborations, and one sentence disclosing who wrote the site's interpretive
-> prose. Everything else below can be done by any custodian at any time.
+> Two priorities remain, and only Jeff can do either: the physical pass (where the works
+> are, how large, what they are built from), and naming the people in the 268 face works
+> and 31 collaborations. The third — one sentence disclosing who wrote the site's
+> interpretive prose — shipped 2026-08-03 (`82dbf6a88`). Everything else below can be done
+> by any custodian at any time.
 >
 > **Auditing is closed.** Six reviews in two days reached diminishing returns and began
 > correcting one another. Further examination should come from outside this system.
@@ -103,6 +104,17 @@ Commit `750af9081`. Deployed and verified live ✅
   possession is recorded. Closes the last preservation gap from the archival review.
 - **Declined, deliberately:** `about.html`'s "Still making. Still in Cleveland."
   stays — Jeff is alive and the sentence is true. Do not re-flag it.
+
+### 2026-08-03 — The interpretive-prose disclosure (Priority 3 of 3)
+- [x] **The site now says who wrote its interpretive prose** — `82dbf6a88`. Catalog titles and
+  descriptions were disclosed as machine-written back on 2026-08-02, but the *interpretive*
+  layer — the biography, the room texts, the framing around the quotes — was not, and it is the
+  layer with the most authority. A signed first-person paragraph now sits in the `#philosophy`
+  block on `about.html`, alongside "a personal record, not a sales history." Jeff chose the
+  wording from three options on 2026-08-03. This closes the last of the three remaining
+  priorities that was not Jeff-only. Verified in Chrome at 1280×720 and 375×812 before commit
+  (contrast 8.93:1, reveal fires, no overflow); live markup confirmed byte-identical to the
+  verified local copy after deploy.
 
 ### 2026-08-02 — Archival review and the fixes it drove
 Full review filed at `docs/current/ARCHIVAL-REVIEW-2026-08-01.md` (open checklist lives there).

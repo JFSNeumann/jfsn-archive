@@ -1,7 +1,8 @@
 # PROJECT-STATUS-2026
 
 **The official status of the JFSN Archive**
-**Adopted:** 2026-08-02 · **Supersedes:** all audit and trustee reports listed in *Lessons Learned*
+**Adopted:** 2026-08-02 · **Last updated:** 2026-08-03 (Priority 3 shipped) ·
+**Supersedes:** all audit and trustee reports listed in *Lessons Learned*
 
 This document closes six investigations conducted between 2026-08-01 and 2026-08-02. It is
 not another opinion. Where those reports disagreed, this document decides. Where they agreed
@@ -29,9 +30,9 @@ location of none, and knows the dimensions of one of 1,087. It is not a chronolo
 works carry a bare decade estimate, and the entire fifty-year sequence rests on six distinct
 year values. It is not an authored account by its subject: the catalog's titles and
 descriptions were written by software, and the interpretive prose across the site was
-substantially drafted by AI under Jeff's direction — a fact the site does not currently
-disclose. It is not, and has never been, examined by any party outside the system that built
-it.
+substantially drafted by AI under Jeff's direction — a fact the site has disclosed on
+`about.html`, in his name, since 2026-08-03. It is not, and has never been, examined by any
+party outside the system that built it.
 
 **What is complete.** The design phase. The photographic capture of the surviving collection.
 The composite disclosure regime. The technical foundation for long-term survival — static
@@ -40,12 +41,12 @@ redundant stores verified nightly, an owned domain. The accessibility work. The 
 record, verified against the creator's testimony after forensics showed the original table
 had no source. The governance corpus. These should be treated as finished and not reopened.
 
-**What remains.** Three things, and they are the same three regardless of who is asked: the
-physical facts of the collection (where the works are, how large they are, what they are
-built from), the identification of the people in the work (268 works with faces, 31 made with
-grandchildren), and a single sentence disclosing who wrote the archive's interpretive prose.
-Only Jeff can supply the first two. Everything else on every prior list can be done by any
-custodian, at any time, including after his death.
+**What remains.** Two things, both of which only Jeff can supply: the physical facts of the
+collection (where the works are, how large they are, what they are built from), and the
+identification of the people in the work (268 works with faces, 31 made with grandchildren).
+The third — a single sentence disclosing who wrote the archive's interpretive prose — was
+shipped on 2026-08-03 and is recorded under *Remaining Priorities* below. Everything else on
+every prior list can be done by any custodian, at any time, including after his death.
 
 ---
 
@@ -221,21 +222,30 @@ them it is theirs.
 **If never done.** A quarter of the archive becomes permanently anonymous. This is the loss
 that will be felt most and complained about least, because nobody will know what is missing.
 
-### 3. Disclosing who wrote the interpretive prose
+### 3. Disclosing who wrote the interpretive prose — ✅ DONE 2026-08-03
 
-**Why it matters.** This archive's standing rests on volunteered honesty — composites flagged,
+**Why it mattered.** This archive's standing rests on volunteered honesty — composites flagged,
 machine authorship of catalog text declared, its own shipped regressions published, its
-exhibition record corrected after forensics. There is one gap in that regime and it sits in
+exhibition record corrected after forensics. There was one gap in that regime and it sat in
 the layer with the most authority: the essays that tell a reader how to understand the work.
-The commit history preserves the evidence permanently, so this is not about concealment. It is
-about who says it first.
+The commit history preserves the evidence permanently, so this was never about concealment. It
+was about who says it first.
 
-**Who can do it.** Jeff must authorize it and ideally phrase it. Any custodian could add it
-later from the git record.
+**Resolved.** Jeff authorized the disclosure on 2026-08-03 and it shipped the same day to the
+`#philosophy` block on `about.html`, in first person and signed:
 
-**If never done.** It will be found, because the evidence is durable and public. Disclosed by
-him it is the strongest thing on the site. Discovered by someone else it retroactively taints
-every honest thing above it.
+> *I directed this archive but I didn't write most of it.* The essays here were drafted with AI
+> to my instruction, and I approved them. Where you see quotation marks, those are my words.
+>
+> — Jeffrey F. S. Neumann · The catalog titles and descriptions were written by software; see
+> The Archive.
+
+He chose the wording from three drafted options and did not rephrase it — so the disclosure is
+his authorization in the archivist's words, which is itself the condition the sentence
+describes. Recorded here rather than smoothed over. Commit `82dbf6a88`.
+
+**Still open, and smaller.** `materials` and `palette` were derived the same machine way and
+are not yet covered by any disclosure. That remains on the custodian list below.
 
 ### 4. More recorded voice
 
@@ -286,7 +296,7 @@ Not being pursued. Each is deferred for a stated reason, not by neglect.
 
 - Where the works are, how large, what they are made of
 - Who is in the 268 face works and the 31 collaborations
-- Authorization and wording of the interpretive-prose disclosure
+- ~~Authorization and wording of the interpretive-prose disclosure~~ — done 2026-08-03
 - Any further voice recording
 - Which street marks are his
 - What the masters' format is and where that drive is
@@ -305,7 +315,8 @@ Not being pursued. Each is deferred for a stated reason, not by neglect.
 - Resolving or deleting the 66 standing `audit-nav.sh` warnings — a permanent warning is a
   broken check
 - Establishing format redundancy for the image corpus
-- Adding the disclosure from the git record if Jeff never does
+- ~~Adding the disclosure from the git record if Jeff never does~~ — moot; Jeff disclosed it
+  himself, 2026-08-03
 
 ### Requires neither
 
@@ -372,8 +383,11 @@ The JFSN project is complete when the following are true. Not perfect. Complete.
    Priority 1.**
 3. The people in the work are named by the only person who can name them. **Not met. Priority 2.**
 4. A reader can tell, without reading a commit log, which words in the archive are Jeff's, which
-   are software's, and which are the archivist's. **Partially met — catalog text is disclosed;
-   interpretive prose is not. Priority 3.**
+   are software's, and which are the archivist's. **Substantially met as of 2026-08-03 —
+   catalog text and interpretive prose are both disclosed, and quoted text is identified as
+   Jeff's own words. Two residuals, neither a priority: `materials` and `palette` are not yet
+   covered, and the disclosure treats "software's" and "the archivist's" as one category rather
+   than two.**
 5. The succession documents identify who holds the archive, who holds the works, and who pays
    the domain. **Partially met.**
 
