@@ -189,11 +189,19 @@ smoke_check() {
   local url="$1"
   local pattern="$2"
   local label="$3"
-  local body http_code attempt
+  local body http_code attempt response
+  # ONE fetch, not two. This previously issued separate curl calls for the body
+  # and the status code and judged them as a single result. When the body call
+  # hit --max-time on the homepage — 69KB, the largest file checked, fetched
+  # cold right after upload — $body came back empty while the status call
+  # succeeded against a now-warm file, reporting "HTTP 200, pattern not found"
+  # on a page that was live and correct. It cried wolf on three consecutive
+  # deploys. A check that reports a failure nobody believes is worse than none.
   for attempt in $(seq 1 "$SMOKE_RETRIES"); do
-    body=$(curl -s --max-time 10 "$url")
-    http_code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "$url")
-    if [ "$http_code" = "200" ] && echo "$body" | grep -q "$pattern"; then
+    response=$(curl -sS --max-time 30 -w '\n%{http_code}' "$url" 2>/dev/null)
+    http_code="${response##*$'\n'}"
+    body="${response%$'\n'*}"
+    if [ "$http_code" = "200" ] && printf '%s' "$body" | grep -qF "$pattern"; then
       echo -e "${GREEN}✓ $label${NC}"
       return 0
     fi

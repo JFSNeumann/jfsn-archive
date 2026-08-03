@@ -129,3 +129,26 @@ GitHub ≠ production. HostGator does not auto-deploy on push. Run `bash scripts
 ---
 
 **Questions?** See `CLAUDE.md` or `SESSION_START_PROCEDURES.md` for more context.
+
+---
+
+## Smoke-test note — homepage false alarm fixed 2026-08-02
+
+For three consecutive deploys the smoke test reported the homepage as
+`✗ Homepage — pattern not found: Jeffrey F. S. Neumann` while the page was live
+and correct (HTTP 200, pattern present three times, verified by `curl`).
+
+Cause: `smoke_check()` issued **two separate curl calls** — one for the body, one
+for the status code — and judged them as a single result. When the body call hit
+`--max-time 10` on the homepage (69KB, by far the largest file checked, fetched
+cold immediately after upload), `$body` came back empty while the status call
+succeeded against a now-warm file. That produced "HTTP 200 + pattern missing" on
+a healthy page, and the retries could not help because each attempt repeated the
+same split fetch.
+
+Fixed: one fetch, with the status code appended to the body via `-w`, and the
+timeout raised to 30s. Verified by deliberately breaking it — a bogus pattern
+still fails, and a missing URL still reports HTTP 404.
+
+**Consequence for future sessions:** the smoke test is trustworthy again. If it
+reports a failure now, check the site rather than assuming the checker is wrong.
