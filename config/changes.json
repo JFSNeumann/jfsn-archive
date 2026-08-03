@@ -1,5 +1,17 @@
 [
   {
+    "sha": "0303a4d",
+    "date": "2026-08-03",
+    "title": "Close the panorama-recording note in the composite writeup",
+    "body": "Updates the \"still open\" section to record that photo_method shipped the\nsame day (92bcf03bb) — 11 stitched-panorama, 67 single-exposure, gated to\nwork_type photograph."
+  },
+  {
+    "sha": "92bcf03",
+    "date": "2026-08-03",
+    "title": "Record which studio shots are stitched panoramas",
+    "body": "Jeff asked for the distinction the composite fix left unrecorded. Adds\nphoto_method to Studio-themed photographs: 11 stitched-panorama, 67\nsingle-exposure.\n\nMEASURED, NOT ASSERTED. The test is the aspect ratio of the image file from\ndims.json, deliberately not the title, because machine-written titles get this\nwrong in both directions:\n\n- art0206 \"Untitled (Studio Workspace) 1\" says nothing about panoramas and is\n  plainly a stitch — curved ceiling, bowed floor, warped edges.\n- art0259 \"Untitled (Studio Panorama Diptych)\" is not a photograph at all. It is\n  a made object: two bands of studio photographs mounted on dark backing with\n  grommet rows, 0.99:1.\n\nAt >= 3.0 the rule selects exactly 11 works, all confirmed against the images —\nevery one shows the barrel distortion of a multi-exposure stitch. The widest\nnon-panorama studio work is 2.17, so the threshold sits nowhere near a boundary.\n\nRestricted to work_type photograph after the first cut handed the field to 5\nsculptures and 4 collages. A sculpture that happens to be Studio-themed is a\nmade object that was photographed; calling it \"single-exposure\" would be a claim\nabout the object, and false.\n\n§8.3 provenance: derived by measurement rather than model inference, the rule is\nthe code, the evidence is dims.json, a human confirmed all 11 visually, and the\nfield is documented in api/v1/meta.json with its counts computed rather than\ntyped.\n\nData and API only — the 1,087 static pages are unchanged. Surfacing this in the\ninterface would be a design addition and is Jeff's call, not assumed here."
+  },
+  {
     "sha": "cdda7f5",
     "date": "2026-08-03",
     "title": "Stop calling the real studio a fabrication: 250 composites -> 163",
