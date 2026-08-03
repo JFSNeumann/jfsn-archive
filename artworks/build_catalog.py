@@ -67,7 +67,8 @@ ARTIST_SHORT = _cfg.get("artist_short") or ARTIST_NAME
 LITE_FIELDS = {'file', 'title', 'work_type', 'year', 'themes', 'keywords', 'motifs', 'favorite', 'featured', 'series', 'orientation', 'composite', 'year_precision', 'year_display', 'has_back'}
 
 # Title language that marks an image as a staged "imagined placement" composite
-# even when it isn't tagged Gallery/Studio (master-notes §22/§25).
+# even when it isn't tagged Gallery (master-notes §22/§25). Does not apply to
+# Studio-themed works — see the composite note below.
 PLACEMENT_RE = re.compile(
     r'installation|panorama|gallery|exhibit|crowd|booth|art fair|'
     r'wall installation|wall with works|on the wall', re.I)
@@ -177,9 +178,21 @@ records.sort(key=lambda r: r.get('file', ''))
 # ── Provenance fields (session 36) ───────────────────────────────────────────
 # year_precision: every year is a decade-bucket estimate (creator-confirmed —
 #   even the 9 non-round ones are guesses, not known dates). Display as "1990s (est.)".
-# composite: Gallery/Studio/installation imagery = Photoshop "imagined placements",
-#   NOT real single works or real exhibitions (master-notes §22/§25). Broadest sweep:
-#   Gallery theme OR Studio theme OR placement-language title.
+# composite: Gallery/installation imagery = Photoshop "imagined placements",
+#   NOT real single works or real exhibitions (master-notes §22/§25).
+#
+# Corrected 2026-08-03 (Jeff, creator): "the studio photos are all real."
+#   The rule previously swept in the Studio theme as well, flagging all 87
+#   Studio-themed works as fabrications. They are photographs of his actual
+#   basement studio — and art0240 is a photograph of Jeff himself at work, whose
+#   page told every reader it was an "imagined placement". Studio-themed works
+#   are now exempt from the flag entirely, including by title: PLACEMENT_RE
+#   matches "panorama" and "installation", which would otherwise have re-flagged
+#   21 of them (the studio panoramas are stitched from real exposures of a real
+#   room, which is a photographic composite, not an imagined one). 250 → 163.
+#
+#   The Gallery theme is unchanged and still flags; those are the invented shows,
+#   and that disclosure is the archive's principal curatorial act.
 #
 # Amended 2026-08-02 (Jeff, creator): the blanket "everything is an estimate"
 # rule above was right for the corpus but wrong for the handful of works Jeff
@@ -207,7 +220,9 @@ for r in records:
             r['year_precision'] = 'estimated'
             r['year_display'] = f'{decade}s (est.)'
     th = r.get('themes') or []
-    r['composite'] = ('Gallery' in th) or ('Studio' in th) or bool(PLACEMENT_RE.search(r.get('title') or ''))
+    r['composite'] = ('Studio' not in th) and (
+        ('Gallery' in th) or bool(PLACEMENT_RE.search(r.get('title') or ''))
+    )
 
 _n_comp = sum(1 for r in records if r.get('composite'))
 print(f"provenance        — {_n_comp} composites flagged; {len(records)} years marked estimated")
@@ -672,10 +687,16 @@ meta = {
             "year_precision 'estimated', including works that are visibly signed "
             "and dated."
         ),
+        # Counted from the data, never restated by hand. The previous hardcoded
+        # "250 of 1087" outlived the rule that produced it: when the Studio theme
+        # was correctly dropped from the flag on 2026-08-03, 250 became wrong
+        # everywhere it had been typed out. See COMPOSITE-FLAG-FALSE-POSITIVES-2026-08-03.md.
         "composite_flag": (
             "composite: true marks a Photoshop composite depicting an imagined "
             "installation. These are artworks, not documentation — the exhibitions "
-            "they show never happened. 250 of 1087 records."
+            f"they show never happened. {sum(1 for _r in records if _r.get('composite'))} "
+            f"of {len(records)} records. Photographs of the artist's real studio are "
+            "NOT flagged — that room existed and the work was made in it."
         ),
         "artist_own_words": f"{SITE_URL}/stories.html — verbatim, dated oral history",
         "known_issues": (

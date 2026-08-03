@@ -20,8 +20,11 @@ Where evidence is insufficient to settle a question, that is stated rather than 
 of one artist's fifty-year practice: 1,087 works, each with a permanent static page that
 renders without JavaScript, an open data set under CC BY 4.0, a versioned public API, and a
 body of governance documents written for people who will never meet its subject. Its most
-distinctive holding is 250 photographic composites depicting exhibitions that never occurred,
+distinctive holding is 163 photographic composites depicting exhibitions that never occurred,
 every one flagged as fiction in the interface, the catalog, and the machine-readable data.
+*(Corrected 2026-08-03 from 250. The build script also swept in the Studio theme, so all 87
+photographs of Jeff's real basement studio were published as fabrications — including the one
+photograph of him at work. Jeff: "the studio photos are all real." Fixed.)*
 Its most irreplaceable holding is a small quantity of first-person testimony — 34 seconds of
 recorded voice and roughly 264 words of strictly verbatim speech.
 

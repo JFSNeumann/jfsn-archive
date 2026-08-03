@@ -4,20 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The Hall of Openings — Jeffrey F. S. Neumann</title>
-<meta name="description" content="250 Photoshop composites — work placed by the maker's hand into rooms that never held it. Every one flagged. Read together, one body of work.">
+<meta name="description" content="163 Photoshop composites — work placed by the maker's hand into rooms that never held it. Every one flagged. Read together, one body of work.">
 <meta property="og:title" content="The Hall of Openings — Jeffrey F. S. Neumann">
-<meta property="og:description" content="250 Photoshop composites — work placed by the maker's hand into rooms that never held it. Every one flagged. Read together, one body of work.">
+<meta property="og:description" content="163 Photoshop composites — work placed by the maker's hand into rooms that never held it. Every one flagged. Read together, one body of work.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://jfsn.com/hall-of-openings.html">
 <meta property="og:image" content="https://jfsn.com/artworks/hall.avif">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Hall of Openings — Jeffrey F. S. Neumann">
-<meta name="twitter:description" content="250 Photoshop composites — work placed by the maker's hand into rooms that never held it. Every one flagged. Read together, one body of work.">
+<meta name="twitter:description" content="163 Photoshop composites — work placed by the maker's hand into rooms that never held it. Every one flagged. Read together, one body of work.">
 <meta name="twitter:image" content="https://jfsn.com/artworks/hall.avif">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Hall of Openings — Jeffrey F. S. Neumann">
-<meta name="twitter:description" content="250 Photoshop composites — work placed by the maker's hand into rooms that never held it. Every one flagged. Read together, one body of work.">
+<meta name="twitter:description" content="163 Photoshop composites — work placed by the maker's hand into rooms that never held it. Every one flagged. Read together, one body of work.">
 <meta name="twitter:image" content="https://jfsn.com/artworks/hall.avif">
 <!-- AUDIO:OPENINGS — reserved for Jeff on the composites (confirmed plainly, 2026). Do not fabricate a voice. -->
 <meta name="theme-color" content="#0c0a09">
@@ -489,7 +489,7 @@ addEventListener('DOMContentLoaded', () => {
   >
   <div id="hero-text">
     <h1>The Hall of <span style="white-space:nowrap"><span class="highlight-dark">Open</span>ings</span></h1>
-    <p class="hero-subtitle">250 Imagined Exhibitions — Every One Flagged</p>
+    <p class="hero-subtitle">163 Imagined Exhibitions — Every One Flagged</p>
   </div>
   <div class="down" aria-label="Scroll down to explore">
   <div class="scroll-label">Scroll down</div>
@@ -507,7 +507,7 @@ addEventListener('DOMContentLoaded', () => {
 </section>
 
 <section style="max-width: 34em; margin: 60px auto 0;">
-  <p class="prose" style="font-family: Georgia, 'Times New Roman', serif; font-size: clamp(16px, 1.9vw, 19px); line-height: 1.9; color: #b9b1a6;">Jeff Neumann&rsquo;s work appeared in six exhibitions over fifty years of making. He imagined 250 rooms—<em>walls, crowds, galleries that never held his work</em>. All are flagged as composites.</p>
+  <p class="prose" style="font-family: Georgia, 'Times New Roman', serif; font-size: clamp(16px, 1.9vw, 19px); line-height: 1.9; color: #b9b1a6;">Jeff Neumann&rsquo;s work appeared in six exhibitions over fifty years of making. He imagined 163 rooms—<em>walls, crowds, galleries that never held his work</em>. All are flagged as composites. The 87 studio views gathered here are not among them: that basement room is real, and the work was made in it.</p>
 </section>
 
 <!-- Browse CTA -->
@@ -518,7 +518,7 @@ addEventListener('DOMContentLoaded', () => {
 <div id="hall"><noscript>
   <div style="text-align:center;padding:10vh 20px">
     <p class="prose">The hall is hung by script from the open catalog data.
-    Without JavaScript the hang can&rsquo;t be built — the 250 flagged
+    Without JavaScript the hang can&rsquo;t be built — the 163 flagged
     composites are all in the archive.</p>
   </div>
 </noscript></div>
@@ -547,7 +547,7 @@ addEventListener('DOMContentLoaded', () => {
   </nav>
 </section>
 
-<div id="exit-note" class="caps">EVERY WORK IN THIS HALL IS FLAGGED IN THE CATALOG — NOTHING HERE IS PRESENTED AS A REAL EXHIBITION</div>
+<div id="exit-note" class="caps">EVERY IMAGINED ROOM IN THIS HALL IS FLAGGED IN THE CATALOG — NOTHING HERE IS PRESENTED AS A REAL EXHIBITION. THE 87 STUDIO VIEWS ARE PHOTOGRAPHS OF A REAL ROOM.</div>
 
 </main>
 <footer class="site-footer">
@@ -664,7 +664,14 @@ addEventListener('DOMContentLoaded', () => {
           '<figcaption>' +
             '<div class="t serif">' + esc(w.t) + '</div>' +
             '<div class="caps" style="font-size:8px;margin-top:4px">' + esc(w.yd) + '</div>' +
-            '<span class="x">Photoshop composite — imagined placement</span>' +
+            /* The studio views are photographs of a real room. Labelling them
+               "imagined placement" was wrong — corrected 2026-08-03 on Jeff's
+               word ("the studio photos are all real"). The catalog no longer
+               flags them either; this page renders from openings.json, so it
+               had to be fixed here too. */
+            (w.s === 'stu'
+              ? '<span class="x">Photograph — the real studio</span>'
+              : '<span class="x">Photoshop composite — imagined placement</span>') +
           '</figcaption>' +
         '</a>';
       salon.appendChild(fig);

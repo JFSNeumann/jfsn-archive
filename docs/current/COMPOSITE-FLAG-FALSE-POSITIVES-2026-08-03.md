@@ -1,8 +1,9 @@
 # The composite flag has false positives
 
 **Found:** 2026-08-03, incidentally, while checking the 43 *Torsos & Faces* works for Priority 2.
-**Status:** reported, **not fixed.** No catalog data was changed. This needs Jeff's decision.
-**Severity:** high in truth terms. It affects the archive's single most defensible disclosure.
+**Status: ✅ FIXED AND DEPLOYED 2026-08-03**, on Jeff's decision: *"the studio photos are all
+real, fix it."* 250 → 163 composites. See *Resolution* at the foot of this document.
+**Severity:** high in truth terms. It affected the archive's single most defensible disclosure.
 
 ---
 
@@ -80,4 +81,33 @@ Separate the concepts rather than widening the regex:
 - Leave plain studio documentation unflagged.
 - Re-derive the published count from the data instead of restating 250 by hand.
 
-Not done. No data changed. Awaiting Jeff.
+---
+
+## Resolution — 2026-08-03
+
+Jeff's decision: **"the studio photos are all real, fix it."** All 87 are now unflagged.
+
+**What changed.** `build_catalog.py` exempts Studio-themed works from the flag entirely — not
+just by dropping the theme clause, because `PLACEMENT_RE` matches *panorama* and *installation*
+and would have re-flagged 21 of them by title. Gallery is untouched: its 149 still flag, and
+that disclosure stands. **250 → 163.**
+
+**Where it reached.** The flag is published in four places and every one had to be corrected:
+
+1. `config/catalog.json` and the API — 163 of 1,087.
+2. The 1,087 static artwork pages — exactly 87 changed, one line each. `art0001.html` byte-identical, confirming the diff was surgical.
+3. `api/v1/meta.json` — the count is now **computed from the data**, never restated by hand. The old hardcoded "250 of 1087" is precisely what outlived the rule that produced it.
+4. `hall-of-openings.html` — **this one nearly shipped broken.** The page renders its labels from the static `config/openings.json`, not from the catalog, so fixing the catalog left all 87 studio views still captioned *"Photoshop composite — imagined placement"* while the section above them read *"The real place, pictured."* Caught by reading the rendered page rather than trusting the catalog fix. Studio items now caption *"Photograph — the real studio."*
+
+**Verified.** 250 items in the hall = 163 imagined + 87 real, matching the catalog exactly.
+`art0240` no longer claims imagined placement; `art0381` (Gallery) still does. `archive verify`
+PASS, 0 failures. No console errors.
+
+**Left alone deliberately.** The coda's phrase *"these 250 works"* refers to the hall's contents
+as a whole, which is still 250 items. Rewriting Jeff's curatorial prose was out of scope for a
+factual correction.
+
+**Still open, and Jeff's to answer if he ever wants to:** which studio images are single
+exposures and which are stitched panoramas. Both are real photographs of a real room, so nothing
+on the site is now false either way — but the archive does not record the distinction. No field
+was invented for it, per the standing rule that an empty field preserves nothing.
