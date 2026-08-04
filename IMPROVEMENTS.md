@@ -1,5 +1,5 @@
 # JFSN — Improvement List
-**Updated:** 2026-08-02 (PROJECT-STATUS-2026 adopted — this list is now subordinate to it)
+**Updated:** 2026-08-03 (composite-flag fix, faces list pinned, physical-dimensions work started)
 
 > **Read [`docs/current/PROJECT-STATUS-2026.md`](docs/current/PROJECT-STATUS-2026.md) first.**
 > Adopted 2026-08-02, it closes six investigations and is the archive's official position:
@@ -8,10 +8,13 @@
 > disagree, PROJECT-STATUS governs.
 >
 > Two priorities remain, and only Jeff can do either: the physical pass (where the works
-> are, how large, what they are built from), and naming the people in the 268 face works
-> and 31 collaborations. The third — one sentence disclosing who wrote the site's
-> interpretive prose — shipped 2026-08-03 (`82dbf6a88`). Everything else below can be done
-> by any custodian at any time.
+> are, how large, what they are built from — now actively underway via CD-reference
+> scaling for the 75% of originals that are destroyed, see `DIMENSIONS-CD-REFERENCE.md`),
+> and naming the people. **The working list for that second one is ~37 works, not 268** —
+> 268 was a motif count, not a count of people; see `FACES-LIST-PINNED-2026-08-03.md`. The
+> third priority — one sentence disclosing who wrote the site's interpretive prose —
+> shipped 2026-08-03 (`82dbf6a88`). Everything else below can be done by any custodian at
+> any time.
 >
 > **Auditing is closed.** Six reviews in two days reached diminishing returns and began
 > correcting one another. Further examination should come from outside this system.
@@ -104,6 +107,41 @@ Commit `750af9081`. Deployed and verified live ✅
   possession is recorded. Closes the last preservation gap from the archival review.
 - **Declined, deliberately:** `about.html`'s "Still making. Still in Cleveland."
   stays — Jeff is alive and the sentence is true. Do not re-flag it.
+
+### 2026-08-03 — Composite-flag fix, faces list pinned, physical dimensions started
+- [x] **The archive was calling Jeff's real studio a fabrication** — `cdda7f55c`. All 87
+  Studio-themed works (real photographs of the actual basement studio, including the one
+  photo of Jeff at work, art0240) were flagged `composite: true`, which the API defined as
+  "depicts an exhibition that never happened." Jeff: *"the studio photos are all real, fix
+  it."* 250 → 163 composites; Gallery's 149 untouched. The flag lives in four places
+  (catalog, 1,087 static pages, the API, and `config/openings.json`, which
+  `hall-of-openings.html` renders from and which the catalog fix alone does not reach —
+  nearly shipped broken). Full writeup: `COMPOSITE-FLAG-FALSE-POSITIVES-2026-08-03.md`.
+- [x] **Recorded which studio shots are stitched panoramas** — `92bcf03bb`. New
+  `photo_method` field on Studio-themed photographs only (11 `stitched-panorama`, 67
+  `single-exposure`), measured by aspect ratio, gated to `work_type: photograph` after a
+  first cut wrongly tagged 5 sculptures and 4 collages.
+- [x] **Pinned the faces list: it's ~37 works, not 268** — `0f36ec8d2`. 268 is the
+  `photographic-face` motif count, not a count of identifiable people — 31 are composites,
+  many are painted/schematic faces with nobody in them. 7 works name their subject in the
+  object itself (art0187 "SEBASTIAN", art0209's studio-door sign "Only Sebastian and
+  grandpa aloud."). The 43 *Torsos & Faces* works without the motif were checked visually;
+  the detector missed nothing. Writeup: `FACES-LIST-PINNED-2026-08-03.md`.
+- [x] **Removed an orphaned, unverified dimensions pilot** — `119bc0e16`. `art0053.json`
+  carried a `dimensions_estimated`/`dimensions_source` pair from a May 2026 UI pilot that
+  was never extended, never rendered, and undocumented — fails the §8.3 transparency bar.
+- [ ] **Physical dimensions via CD-reference scaling — started, ongoing.** `1644d6663` +
+  `119fd628d`. Jeff: 75% of physical originals are destroyed, so measuring them is not an
+  option; a real object of known size (almost always a CD, 4.72in/120mm) photographed in
+  the piece is the only remaining path for most of the corpus. 6 of 542 non-composite
+  CD-motif works estimated so far, each visually confirmed before any number was written.
+  **Confirmed NOT usable as references, no matter how consistent they look:** targets,
+  concentric-rings, warplanes, drones — these are xeroxed elements taped onto the work at
+  arbitrary reproduction scales, not physical objects with a fixed size. Full method,
+  every correction made along the way (a color-based filter nearly rejected a real blue CD;
+  removing it produced 20–40 false circle detections per busy piece from xeroxed motifs
+  which are not a detection problem but a category exclusion; a Python list-multiplication
+  bug briefly doubled one estimate, caught before shipping): `DIMENSIONS-CD-REFERENCE.md`.
 
 ### 2026-08-03 — The interpretive-prose disclosure (Priority 3 of 3)
 - [x] **The site now says who wrote its interpretive prose** — `82dbf6a88`. Catalog titles and
