@@ -105,7 +105,7 @@ code being obviously wrong to read. Corrected to explicit, unambiguous per-work 
 before any number was committed. This is exactly the class of error this archive has been
 built to catch in other people's shortcuts — it does not get a pass for being mine.
 
-## Confirmed so far (8 of 1,087)
+## Confirmed so far (12 of 1,087)
 
 | work | estimate | reference | confidence |
 |---|---|---|---|
@@ -117,8 +117,12 @@ built to catch in other people's shortcuts — it does not get a pass for being 
 | art0287 | approx. 19 × 25 in | 1 disc, 3 readings averaged | medium |
 | art0690 | approx. 55 × 94 in | 14 discs (two 7-disc rows), ~7% between rows | high |
 | art0066 | approx. 32 × 42 in | 2 discs, 1.6% spread; target motifs in the same piece explicitly excluded | high |
+| art0673 | approx. 46 × 51 in | 8 of 16 discs (cross formation), 9.3% spread | high |
+| art0674 | approx. 44 × 50 in | 7-disc row, 4.3% spread | high |
+| art0623 | approx. 27 × 39 in | 5 discs, identical radius, 0% spread | high |
+| art0367 | approx. 55 × 42 in | 5 discs, 4.8% spread | high |
 
-All eight sizes land in a broadly similar family, with art0690 the largest so far (55 × 94 in) —
+All twelve sizes land in a broadly similar family, with art0690 the largest so far (55 × 94 in) —
 plausible given it's built almost entirely from a dense CD lattice, but the largest single
 outlier to date and worth someone's second look if the method is ever audited.
 
@@ -129,16 +133,32 @@ outlier to date and worth someone's second look if the method is ever audited.
   time-boxed rather than force a low-confidence number.
 - **art0401** — has real CDs, but a full-resolution crop didn't line up with where they appeared
   in a smaller preview; needs a cleaner crop pass, not attempted further this round.
+- **art0355** — its detected circles are the piece's own concentric-ring target motifs. Correctly
+  excluded on category (see *Never a reference: xeroxed elements*), not attempted further.
+- **art0249** — mixes real CDs with checkerboard-target circles and large ambiguous discs; not
+  confidently sorted without more work than this pass had time for.
 
-### What this round confirmed about automated detection at scale
+### What this project has learned about automated detection at scale
 
-Circle detection on busy, CD-dense works (60–90 raw detections per image) produces what looks
-like tight radius agreement but frequently isn't: adjacent radii across a near-continuous noise
-distribution can cluster within 5–8% of each other by chance, not because they're the same
-physical object measured multiple times. **A large agreeing-circle count is not by itself
-evidence of a real, consistent-size reference — it still has to be looked at.** art0690 and
-art0066 were both measured by direct manual crop-and-grid rather than trusting the automated
-list, after the automated candidates for this batch turned out to be unusable noise.
+Circle detection behaves differently depending on how busy the piece is, and both failure modes
+matter:
+
+- **On busy, CD-dense works (60–90 raw detections per image),** what looks like tight radius
+  agreement frequently isn't: adjacent radii across a near-continuous noise distribution can
+  cluster within 5–8% of each other by chance, not because they're the same physical object
+  measured multiple times. art0690 and art0066 were measured by direct manual crop-and-grid
+  after the automated candidates for those works turned out to be unusable noise.
+- **On cleaner, lower-detection-count works (≤20 raw detections),** the automated list has
+  proven trustworthy once cross-checked against the image — art0673, art0674, art0623, and
+  art0367 were all confirmed this way, faster than a full manual re-measurement. Large-radius
+  outliers in these same images (fabric folds, foil bunting, shadow) were still false positives
+  and were excluded by eye, same as always.
+
+**Working rule going forward:** prioritize low-total-detection candidates first — they're both
+faster to confirm and less prone to false agreement — and fall back to manual crop-and-grid
+measurement only when a promising piece turns out to be too busy for the automated list to be
+trusted. A large agreeing-circle count is still never evidence by itself; it always has to be
+looked at.
 
 ## What every estimate explicitly is not
 
