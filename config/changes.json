@@ -1,5 +1,11 @@
 [
   {
+    "sha": "60fdfd7",
+    "date": "2026-08-03",
+    "title": "Add 2 more verified dimension estimates: art0690, art0066 (8 of 542)",
+    "body": "Continuing the CD-reference project. Both measured by direct manual\ncrop-and-grid, not automated detection -- the automated candidate list for\nthis batch turned out to be mostly unusable.\n\n- art0690: 14 discs measured directly, two clean rows of 7 along the top and\n  bottom margins, ~7% spread between the rows. approx. 55 x 94 in -- the\n  largest estimate so far, plausible given the piece is built almost entirely\n  from a dense CD lattice, but flagged as worth a second look if this method\n  is ever audited.\n- art0066: 2 discs, 1.6% spread. The piece's own title is \"Untitled (Page on\n  Targets)\" and its description separately names concentric target circles in\n  red/black/pink/blue -- those were excluded on category, per\n  DIMENSIONS-CD-REFERENCE.md, not because they were hard to measure.\n\nTwo candidates checked and explicitly set aside rather than forced: art0255\n(large tan/gold discs with no clear metallic sheen -- could be wood, could be\nworn CDs, genuinely ambiguous) and art0401 (has real CDs but a full-res crop\ndidn't line up with a smaller preview; needs a cleaner pass).\n\nAlso recorded a methodology finding: on busy, CD-dense works (60-90 raw\ncircle detections per image), automated \"tight radius agreement\" can appear\nby chance across a near-continuous noise distribution, not because circles\nare the same physical object measured repeatedly. A large agreeing-circle\ncount is not itself evidence -- it still has to be looked at. Both estimates\nin this batch were measured manually after the automated list for this batch\nproved unusable."
+  },
+  {
     "sha": "8aee0d4",
     "date": "2026-08-03",
     "title": "Session-end: bring IMPROVEMENTS.md current with today's work",
