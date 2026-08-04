@@ -1,5 +1,11 @@
 [
   {
+    "sha": "412bc67",
+    "date": "2026-08-04",
+    "title": "Add CD-referenced size estimates for art0111 and art0364",
+    "body": "art0111 — approx. 45 x 34 in. Three CDs measured independently (291.4, 291.4,\n295.8 px diameter), agreeing within 1.5%.\n\nart0364 — approx. 14 x 31 in. Four CDs in a 2x2 grid (428.2, 427.8, 430.8,\n423.6 px), agreeing within 1.7%.\n\nBoth measured by isolating each disc in a tight native-resolution crop and\nrunning Hough on that crop alone, rather than trusting the whole-image\ndetection pass. Two things that pass caught here:\n\n- A naive gold-pixel scan on art0111 returned 95px instead of 291px, because\n  the white centre label breaks the contiguous run of gold and the\n  largest-contiguous-run heuristic picked one side lobe. Measuring the hub\n  instead of the disc would have made the piece ~3x too big.\n- art0364's whole-image pass returned seven circles, three of which were\n  artefacts clustered at the image centre where the horizontal colour bands\n  meet. Only the four at the visually confirmed grid positions were used.\n\nSet aside, not estimated: art0850 (every disc overlapped, no clean edge-to-edge\nread available) and art0573 (the rounded forms are not discs)."
+  },
+  {
     "sha": "15f2470",
     "date": "2026-08-03",
     "title": "Add 1 more verified dimension estimate: art0438 (13 of 542)",
