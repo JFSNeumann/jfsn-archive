@@ -105,7 +105,7 @@ code being obviously wrong to read. Corrected to explicit, unambiguous per-work 
 before any number was committed. This is exactly the class of error this archive has been
 built to catch in other people's shortcuts — it does not get a pass for being mine.
 
-## Confirmed so far (12 of 1,087)
+## Confirmed so far (13 of 1,087)
 
 | work | estimate | reference | confidence |
 |---|---|---|---|
@@ -121,8 +121,9 @@ built to catch in other people's shortcuts — it does not get a pass for being 
 | art0674 | approx. 44 × 50 in | 7-disc row, 4.3% spread | high |
 | art0623 | approx. 27 × 39 in | 5 discs, identical radius, 0% spread | high |
 | art0367 | approx. 55 × 42 in | 5 discs, 4.8% spread | high |
+| art0438 | approx. 52 × 39 in | 2 discs, measured manually (automated candidates were noise), 4.0% spread | high |
 
-All twelve sizes land in a broadly similar family, with art0690 the largest so far (55 × 94 in) —
+All thirteen sizes land in a broadly similar family, with art0690 the largest so far (55 × 94 in) —
 plausible given it's built almost entirely from a dense CD lattice, but the largest single
 outlier to date and worth someone's second look if the method is ever audited.
 
@@ -137,6 +138,15 @@ outlier to date and worth someone's second look if the method is ever audited.
   excluded on category (see *Never a reference: xeroxed elements*), not attempted further.
 - **art0249** — mixes real CDs with checkerboard-target circles and large ambiguous discs; not
   confidently sorted without more work than this pass had time for.
+- **art0961, art0706** — each depicts two separately framed works photographed side by side.
+  A single "canvas size" wouldn't clearly belong to either one. Same exclusion reason both times.
+- **art0033** — a real CD is visible, but it sits embedded within/behind a printed dartboard-style
+  target graphic, and the boundary between the disc's own edge and the printed rings around it
+  isn't confidently readable. Set aside rather than guess where one stops and the other starts.
+- **art0939** — mixes real vinyl records with printed target motifs; not disambiguated this round.
+- **art0731** — small round objects that may be beads or marbles rather than CDs; too small and
+  ambiguous to confirm either way from the available resolution.
+- **art0332** — its circular elements read as a printed decorative pattern, not real discs.
 
 ### What this project has learned about automated detection at scale
 
@@ -177,10 +187,11 @@ looked at.
 - Some discs are physically cut in half by the artist, or overlapped by other collage elements,
   per Jeff. These may still be measurable from a visible arc or a straight cut edge, but need
   more careful per-work geometry than a full, unobstructed disc does. Not yet attempted.
-- `art0706` ("Diptych with Targets and Chess 2") surfaced a possible second gap in the composite
-  disclosure: it depicts two separately framed works photographed side by side, themed "Framed"
-  rather than "Gallery," so it was not caught by the composite-flag correction. Not investigated
-  further here — flagged for a future session.
+- `art0706` ("Diptych with Targets and Chess 2") and `art0961` both surfaced the same possible
+  gap in the composite disclosure: each depicts two separately framed works photographed side by
+  side, themed "Framed" rather than "Gallery," so neither was caught by the composite-flag
+  correction. Two independent instances now — worth a real look in a future session, not just a
+  one-off. Not investigated further here.
 
 **Not pursuing:** a better shape/reflectivity classifier to distinguish real discs from xeroxed
 motifs automatically. Confirmed not worth building — see *Never a reference: xeroxed elements*

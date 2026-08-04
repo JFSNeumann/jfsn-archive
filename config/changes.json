@@ -1,5 +1,17 @@
 [
   {
+    "sha": "675f59c",
+    "date": "2026-08-03",
+    "title": "Update DIMENSIONS-CD-REFERENCE.md: 12 confirmed, refined working rule",
+    "body": "Table now lists all 12 estimates. Added the two additional set-aside cases\n(art0355, art0249) and the refined finding: low-detection-count works\n(<=20 raw circles) can trust automated detection once cross-checked, while\nbusy works (60-90 detections) cannot. Working rule going forward:\nprioritize low-count candidates first."
+  },
+  {
+    "sha": "b4263a0",
+    "date": "2026-08-03",
+    "title": "Add 4 more verified dimension estimates (12 of 542)",
+    "body": "art0673, art0674, art0623, art0367 -- continuing the CD-reference project.\n\nThis round targeted works with fewer total raw circle detections (<=20),\nafter last round found that busy, CD-dense pieces (60-90 detections) produce\nfalse \"tight agreement\" by chance across a near-continuous noise\ndistribution. On these cleaner pieces the automated detections proved\ntrustworthy once cross-checked against the image:\n\n- art0673: 8 of 16 discs in a cross formation, 9.3% spread. Large-radius\n  detections in the same image are fabric-fold/shadow false positives,\n  excluded.\n- art0674: 7-disc top row, 4.3% spread.\n- art0623: 5 discs in a vertical column, IDENTICAL radius (170.8px, 0%\n  spread), spread across nearly the full canvas height.\n- art0367: 5 of the scattered discs, 4.8% spread. The piece's foil/iridescent\n  bunting elements produced large false-positive detections, excluded.\n\nTwo more checked and set aside rather than forced: art0355 (its detected\ncircles are the piece's own concentric-ring targets -- excluded on category,\ncorrectly) and art0249 (mixes real CDs with checkerboard-target circles and\nlarge ambiguous discs, not confidently sorted without more work).\n\nEvery estimate was cross-checked against the actual image before being\ntrusted -- automated detection is still a candidate generator, never a\ndecision-maker, per DIMENSIONS-CD-REFERENCE.md."
+  },
+  {
     "sha": "60fdfd7",
     "date": "2026-08-03",
     "title": "Add 2 more verified dimension estimates: art0690, art0066 (8 of 542)",
