@@ -1,5 +1,11 @@
 [
   {
+    "sha": "15f2470",
+    "date": "2026-08-03",
+    "title": "Add 1 more verified dimension estimate: art0438 (13 of 542)",
+    "body": "art0438: 2 discs measured manually (top-right and bottom-left), 260px and\n250px native diameter, 4.0% spread. approx. 52 x 39 in.\n\nThe automated candidate list for this round again produced false \"tight\nagreement\" -- this time among large background-pattern circles rather than\nthe actual CDs I could see in the image. Same failure shape as art0690/\nart0066 last round. Measured directly by crop-and-grid instead of trusting\nthe detector.\n\nThe piece's own description separately names \"a ruler\" -- not used, per the\nstanding lesson from art0469 that machine-described rulers have proven\nunreliable without visible markings.\n\nSix more checked and set aside rather than forced:\n\n- art0961 -- like art0706, depicts two separately framed works side by side.\n  A single canvas size wouldn't clearly belong to either one. Now two\n  independent instances of this pattern; noted as worth a real look, not just\n  a one-off, in the Remaining Work section.\n- art0033 -- a real CD is visible but sits embedded within/behind a printed\n  dartboard-style target graphic; the boundary between the disc's own edge\n  and the printed rings around it isn't confidently readable.\n- art0939 -- mixes real vinyl records with printed target motifs, not\n  disambiguated this round.\n- art0731 -- small round objects that may be beads or marbles, not clearly\n  CDs at the available resolution.\n- art0332 -- circular elements read as a printed decorative pattern, not\n  real discs."
+  },
+  {
     "sha": "675f59c",
     "date": "2026-08-03",
     "title": "Update DIMENSIONS-CD-REFERENCE.md: 12 confirmed, refined working rule",
