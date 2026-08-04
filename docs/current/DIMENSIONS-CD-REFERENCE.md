@@ -105,7 +105,7 @@ code being obviously wrong to read. Corrected to explicit, unambiguous per-work 
 before any number was committed. This is exactly the class of error this archive has been
 built to catch in other people's shortcuts — it does not get a pass for being mine.
 
-## Confirmed so far (6 of 1,087)
+## Confirmed so far (8 of 1,087)
 
 | work | estimate | reference | confidence |
 |---|---|---|---|
@@ -115,9 +115,30 @@ built to catch in other people's shortcuts — it does not get a pass for being 
 | art0064 | approx. 29 × 40 in | 2 discs, 8.9% spread | medium |
 | art0424 | approx. 51 × 67 in | 1 disc (2nd excluded, cropped) | medium |
 | art0287 | approx. 19 × 25 in | 1 disc, 3 readings averaged | medium |
+| art0690 | approx. 55 × 94 in | 14 discs (two 7-disc rows), ~7% between rows | high |
+| art0066 | approx. 32 × 42 in | 2 discs, 1.6% spread; target motifs in the same piece explicitly excluded | high |
 
-All six sizes land in the same rough family — no absurd outliers — which is itself a weak
-sanity check on the method, not proof of accuracy.
+All eight sizes land in a broadly similar family, with art0690 the largest so far (55 × 94 in) —
+plausible given it's built almost entirely from a dense CD lattice, but the largest single
+outlier to date and worth someone's second look if the method is ever audited.
+
+### Checked, not confidently pinned down (not written to the catalog)
+
+- **art0255** — a tall, CD-dense "totem" piece. Some circular objects read ambiguously (large
+  tan/gold discs with no clear metallic sheen or paper hub — could be wood, could be worn CDs);
+  time-boxed rather than force a low-confidence number.
+- **art0401** — has real CDs, but a full-resolution crop didn't line up with where they appeared
+  in a smaller preview; needs a cleaner crop pass, not attempted further this round.
+
+### What this round confirmed about automated detection at scale
+
+Circle detection on busy, CD-dense works (60–90 raw detections per image) produces what looks
+like tight radius agreement but frequently isn't: adjacent radii across a near-continuous noise
+distribution can cluster within 5–8% of each other by chance, not because they're the same
+physical object measured multiple times. **A large agreeing-circle count is not by itself
+evidence of a real, consistent-size reference — it still has to be looked at.** art0690 and
+art0066 were both measured by direct manual crop-and-grid rather than trusting the automated
+list, after the automated candidates for this batch turned out to be unusable noise.
 
 ## What every estimate explicitly is not
 

@@ -1,5 +1,17 @@
 [
   {
+    "sha": "8aee0d4",
+    "date": "2026-08-03",
+    "title": "Session-end: bring IMPROVEMENTS.md current with today's work",
+    "body": "Header banner still said 268 face works and didn't mention the physical\ndimensions work; both corrected. Added a changelog entry for everything\nshipped 2026-08-03 after the interpretive-prose disclosure: the composite-flag\nfix (250->163), photo_method, the faces list pinned to ~37 real candidates,\nthe orphaned dimensions pilot removed, and the CD-reference dimensions work\nnow underway (6 of 542 done).\n\nLeft the 2026-08-02 \"exactness pass\" entry's \"250 composites\" figure\nunedited -- it accurately reports what was true and verified that day; the\nnew entry above it carries the corrected 2026-08-03 figure with the reason\nfor the change. Rewriting a dated log entry to match a later correction\nwould misrepresent what was actually known at the time."
+  },
+  {
+    "sha": "119fd62",
+    "date": "2026-08-03",
+    "title": "Correct: recurring motifs are xerox copies, not paint -- and it's not just targets",
+    "body": "Two rounds of correction from Jeff, before either shipped:\n\n1. \"the targets aren't painted, they're xerox copies, in different sizes\" --\n   the first version of this doc called target/concentric-ring motifs\n   \"painted.\" Wrong mechanism. They're photocopies, each reproduced at\n   whatever scale that copy happened to be run at -- which is actually a\n   stronger reason they can never be a size reference than \"he painted them\n   freehand\" would have been.\n\n2. \"many things are xerox copies at different sizes and taped onto artwork --\n   example, airplanes, targets, drones, etc.\" -- broader than targets alone.\n   Warplanes (238+225 instances) and drones are confirmed xeroxed elements\n   too. Added a dedicated \"Never a reference: xeroxed elements\" section\n   naming all three explicitly, with the general rule: a recognizable printed\n   image taped onto the surface is presumed a xerox at an arbitrary scale\n   until there's a specific reason to think otherwise. A recurring visual\n   motif is evidence of a recurring photocopied original, not a recurring\n   size.\n\napi/v1/meta.json's dimensions_estimated disclosure updated to match -- it\npreviously named only \"target/concentric-rings\" as the thing to watch for by\nshape; now states the real category (photocopied, not physical) and names\nwarplanes/drones alongside targets.\n\nNone of the 6 estimates already shipped relied on a xeroxed element, so no\ndata changed -- this is a documentation and disclosure-text correction only,\nverified before either wrong version was committed."
+  },
+  {
     "sha": "1644d66",
     "date": "2026-08-03",
     "title": "Add first 6 verified physical-dimension estimates (CD reference)",
