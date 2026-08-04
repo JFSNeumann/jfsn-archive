@@ -751,6 +751,24 @@ meta = {
             "studio: a sculpture is not a single exposure. Recorded 2026-08-03 at the "
             "artist's request; all panoramas were confirmed against the images."
         ),
+        "dimensions_estimated": (
+            "75% of the physical works no longer exist, so measuring them is not "
+            "possible for most of the archive. Where a real object of known size — "
+            "almost always a compact disc, 4.72in / 120mm diameter — appears intact and "
+            "unobscured in the photograph, its pixel size can be used to estimate the "
+            "size of the whole piece. This is NOT a scan or a physical measurement: it "
+            "is an estimate from a photograph, and is only as accurate as the photo's "
+            "framing and the object's real size. "
+            f"{sum(1 for _r in records if _r.get('dimensions_estimated'))} of "
+            f"{len(records)} records carry an estimate so far, each added only after a "
+            "human looked at the specific image and confirmed the reference object is "
+            "real, unobscured, and not a painted circle (this archive's target/"
+            "concentric-rings motifs are easy to mistake for a real disc by shape "
+            "alone). dimensions_source on each record names the object, the "
+            "measurement, and the date. First estimates added 2026-08-03 at the "
+            "artist's request, after the archive discovered it had zero recorded "
+            "physical dimensions — see docs/current/DIMENSIONS-CD-REFERENCE.md."
+        ),
         "artist_own_words": f"{SITE_URL}/stories.html — verbatim, dated oral history",
         "known_issues": (
             "Machine-written titles can contradict their own descriptions, including "

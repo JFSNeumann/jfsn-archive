@@ -1,7 +1,7 @@
 {
   "api_version": "1",
   "schema_version": "1",
-  "generated": "2026-08-03T23:16:29Z",
+  "generated": "2026-08-04T00:48:43Z",
   "artist": "Jeffrey F. S. Neumann",
   "archive_url": "https://jfsn.com",
   "counts": {
@@ -24,6 +24,7 @@
     "years": "Decade estimates, not documented dates. Every record carries year_precision 'estimated', including works that are visibly signed and dated.",
     "composite_flag": "composite: true marks a Photoshop composite depicting an imagined installation. These are artworks, not documentation \u2014 the exhibitions they show never happened. 163 of 1087 records. Photographs of the artist's real studio are NOT flagged \u2014 that room existed and the work was made in it.",
     "photo_method": "photo_method appears on Studio-themed photographs only and records how the image was made: 'stitched-panorama' or 'single-exposure'. 11 panoramas, 67 single exposures. Derived by measuring the aspect ratio of the image file, not inferred from the title \u2014 titles get this wrong in both directions. Absent on every other work, including made objects photographed in the studio: a sculpture is not a single exposure. Recorded 2026-08-03 at the artist's request; all panoramas were confirmed against the images.",
+    "dimensions_estimated": "75% of the physical works no longer exist, so measuring them is not possible for most of the archive. Where a real object of known size \u2014 almost always a compact disc, 4.72in / 120mm diameter \u2014 appears intact and unobscured in the photograph, its pixel size can be used to estimate the size of the whole piece. This is NOT a scan or a physical measurement: it is an estimate from a photograph, and is only as accurate as the photo's framing and the object's real size. 6 of 1087 records carry an estimate so far, each added only after a human looked at the specific image and confirmed the reference object is real, unobscured, and not a painted circle (this archive's target/concentric-rings motifs are easy to mistake for a real disc by shape alone). dimensions_source on each record names the object, the measurement, and the date. First estimates added 2026-08-03 at the artist's request, after the archive discovered it had zero recorded physical dimensions \u2014 see docs/current/DIMENSIONS-CD-REFERENCE.md.",
     "artist_own_words": "https://jfsn.com/stories.html \u2014 verbatim, dated oral history",
     "known_issues": "Machine-written titles can contradict their own descriptions, including on colour. Corrections are made only on the artist's confirmation."
   }

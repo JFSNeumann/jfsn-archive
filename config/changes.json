@@ -1,5 +1,11 @@
 [
   {
+    "sha": "119bc0e",
+    "date": "2026-08-03",
+    "title": "Remove the orphaned dimensions pilot on art0053",
+    "body": "While checking on the physical-dimensions field: art0053.json carried\ndimensions_estimated (\"approx. 27 x 45 in\") and dimensions_source\n(\"cd-reference\") from a May 29 commit that piloted a dimensions UI tier on\nthis one work, then never extended it to any other record.\n\nNothing renders it — not the static pages, not artwork.html, not\ngen-artwork-pages.py. It reached the public API only because the API dumps\nthe full sidecar. Undocumented method, unknown author, no confidence marker,\nnever reviewed: it fails the transparency bar §8.3 sets for exactly this kind\nof derived value.\n\nThis also means yesterday's \"zero of 1,087 works carry a physical dimension\"\nin PROJECT-STATUS-2026 was not quite exactly true -- one orphaned, unrendered,\nunverified value existed in the raw API. Functionally still zero; now actually\nzero.\n\nReference-object scaling itself is not being abandoned. Jeff: 75% of the\nphysical originals are destroyed, so measuring them is not an option for most\nof the corpus, and estimating from a known object photographed in the piece\n(a CD, a ruler, a hole punch) may be the only path to any size data for that\nmajority. Scoping that separately; not applied to the catalog here."
+  },
+  {
     "sha": "0303a4d",
     "date": "2026-08-03",
     "title": "Close the panorama-recording note in the composite writeup",
