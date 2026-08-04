@@ -354,11 +354,13 @@ async function renderNavigation(workId, pageNum, work) {
 
   if (pageNum > 1) {
     const prevId = `art${String(pageNum - 1).padStart(4, '0')}`;
-    prevEl.href = `D-record-page.html?id=${prevId}`;
     try {
       const res = await fetch(`${API_BASE}/${prevId}.json`);
       if (res.ok) {
         const data = await res.json();
+        const isComposite = data.work.composite;
+        const pageFile = isComposite ? 'F-record-composite.html' : 'D-record-page.html';
+        prevEl.href = `${pageFile}?id=${prevId}`;
         document.getElementById('nav-prev-dir').textContent = `← Plate ${pageNum - 1}`;
         document.getElementById('nav-prev-title').textContent = data.work.title;
         const prevImg = data.work.file;
@@ -374,11 +376,13 @@ async function renderNavigation(workId, pageNum, work) {
 
   if (pageNum < TOTAL_WORKS) {
     const nextId = `art${String(pageNum + 1).padStart(4, '0')}`;
-    nextEl.href = `D-record-page.html?id=${nextId}`;
     try {
       const res = await fetch(`${API_BASE}/${nextId}.json`);
       if (res.ok) {
         const data = await res.json();
+        const isComposite = data.work.composite;
+        const pageFile = isComposite ? 'F-record-composite.html' : 'D-record-page.html';
+        nextEl.href = `${pageFile}?id=${nextId}`;
         document.getElementById('nav-next-dir').textContent = `Plate ${pageNum + 1} →`;
         document.getElementById('nav-next-title').textContent = data.work.title;
         if (data.work.file) nextEl.addEventListener('click', () => {
