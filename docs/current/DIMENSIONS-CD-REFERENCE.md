@@ -180,6 +180,25 @@ looked at.
 - Not surfaced in the site's interface. That is a design decision and is Jeff's to make, not
   assumed here.
 
+## The contact-sheet method (adopted 2026-08-04)
+
+Measuring one work at a time cost 3–5 image inspections each — far too slow for 542 candidates.
+Replaced with: draw the detected circles onto each image, tile 25 works into one contact sheet,
+and accept/reject 25 at a glance. Roughly 25x cheaper, and it makes the common failure obvious —
+a circle sitting on busy collage rather than on a disc is visible instantly at thumbnail size.
+
+Survivors then get one zoomed montage showing each candidate disc with its fitted circle drawn
+on, at high magnification. That second pass is what catches the near-misses: a circle that looks
+right at thumbnail scale but visibly overshoots the disc edge when enlarged. Two of seven
+finalists were rejected at exactly that step (`art0248`, `art0671`), and both would have produced
+an undersized estimate.
+
+**A bug this caught in the tooling itself.** The first sheet run stored the cluster's mean
+*radius* in a field named `mean_d` and then divided it by 4.72 as though it were a diameter —
+making every implied size exactly 2x too large. It surfaced only because the numbers were
+absurd on their face: an 11-foot-tall collage. Sanity-checking the output against plausible
+physical size is a real check, not a formality.
+
 ## Remaining work
 
 - 542 non-composite works carry the `compact-disc` motif; 6 are done. The rest require the same

@@ -1,5 +1,11 @@
 [
   {
+    "sha": "1ec0fe0",
+    "date": "2026-08-04",
+    "title": "Add CD-referenced size estimate for art0200 (57 x 59 in)",
+    "body": "Eight CDs mounted in a single row, measuring 224.0-226.4px diameter — 1.07%\nspread across eight independent objects, the tightest agreement of any work\nmeasured so far. Mean 225.8px = 47.83px/in against 2748x2800 native.\n\nTwo detections were excluded as outliers, not CDs: r=69.2 and r=161.2, both\noff the row's y-band and matching the vertical pole elements.\n\nSet aside rather than estimated:\n- art0110 — whole-image detection produced 250+ circles (the xeroxed warplane\n  outlines are circle-rich), and hand-placed coordinates gave a 153% spread,\n  meaning I was missing disc centres rather than measuring them. Four readings\n  did cluster within 3.9%, but taking that cluster would be fitting noise from\n  coordinates already shown to be wrong. An overlay confirmed the fitted circle\n  was visibly undersized against the true disc edge, and a brightness-threshold\n  retry failed because the mottled grey ground is as bright as the silver disc.\n  Needs a better isolation method, not a looser standard.\n- art0573 — the rounded forms are not discs."
+  },
+  {
     "sha": "412bc67",
     "date": "2026-08-04",
     "title": "Add CD-referenced size estimates for art0111 and art0364",
