@@ -1,7 +1,7 @@
 # Physical dimensions from CD-reference scaling
 
-**Last Updated:** 2026-08-03
-**Status:** active, ongoing. 6 works estimated so far, out of a candidate pool that is
+**Last Updated:** 2026-08-04
+**Status:** active, ongoing. 21 works estimated so far, out of a candidate pool that is
 larger than initially scoped (see *What changed the scope* below).
 
 ---
@@ -105,7 +105,7 @@ code being obviously wrong to read. Corrected to explicit, unambiguous per-work 
 before any number was committed. This is exactly the class of error this archive has been
 built to catch in other people's shortcuts — it does not get a pass for being mine.
 
-## Confirmed so far (13 of 1,087)
+## Confirmed so far (21 of 1,087)
 
 | work | estimate | reference | confidence |
 |---|---|---|---|
@@ -122,6 +122,14 @@ built to catch in other people's shortcuts — it does not get a pass for being 
 | art0623 | approx. 27 × 39 in | 5 discs, identical radius, 0% spread | high |
 | art0367 | approx. 55 × 42 in | 5 discs, 4.8% spread | high |
 | art0438 | approx. 52 × 39 in | 2 discs, measured manually (automated candidates were noise), 4.0% spread | high |
+| art0111 | approx. 45 × 34 in | 3 discs, 1.5% spread | high |
+| art0364 | approx. 14 × 31 in | 4 discs in a 2×2 grid, 1.7% spread | high |
+| art0200 | approx. 57 × 59 in | 8 discs in one row, 1.07% spread — tightest measured | high |
+| art0666 | approx. 19 × 30 in | 3 discs, 1.3% spread, fit confirmed at zoom | high |
+| art0361 | approx. 37 × 29 in | 3 discs, 1.6% spread, fit confirmed at zoom | high |
+| art0476 | approx. 39 × 67 in | 3 discs, 2.9% spread, fit confirmed at zoom | high |
+| art0583 | approx. 40 × 55 in | 3 discs, 4.8% spread, fit confirmed at zoom | medium |
+| art0633 | approx. 22 × 32 in | 2 discs, 0% spread, fit confirmed at zoom | high |
 
 All thirteen sizes land in a broadly similar family, with art0690 the largest so far (55 × 94 in) —
 plausible given it's built almost entirely from a dense CD lattice, but the largest single
@@ -198,6 +206,19 @@ an undersized estimate.
 making every implied size exactly 2x too large. It surfaced only because the numbers were
 absurd on their face: an 11-foot-tall collage. Sanity-checking the output against plausible
 physical size is a real check, not a formality.
+
+
+## Rejected after inspection, and why
+
+Kept as a record so a future pass does not re-litigate them:
+
+| work | reason |
+|---|---|
+| art0248 | circle visibly overshoots the disc edge at zoom; a better-fitting inner arc exists |
+| art0671 | circle overshoots slightly on one side; borderline, excluded on the conservative standard |
+| art0850 | every disc overlapped by other objects — no clean edge-to-edge read available |
+| art0573 | the rounded forms are not discs |
+| art0110 | xeroxed warplane outlines produced 250+ candidate circles; hand-placed coordinates gave a 153% spread, meaning centres were being missed rather than measured. Four readings did cluster within 3.9%, but taking that cluster would be fitting noise from coordinates already shown to be wrong |
 
 ## Remaining work
 
