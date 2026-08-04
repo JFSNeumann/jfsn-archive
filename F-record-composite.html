@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Loading… — Jeffrey F. S. Neumann</title>
+<style>
+@view-transition{navigation:auto}
+:root{
+  --paper:#f4f1ea; --ink:#111010; --red:#c8102e; --grey:#6d6a64; --faint:#a8a49c;
+  --rule:rgba(17,16,16,.26);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;line-height:1.5;
+  background-image:repeating-linear-gradient(0deg,rgba(17,16,16,.016) 0 1px,transparent 1px 3px);
+}
+.mono{font-family:ui-monospace,'SF Mono',Menlo,monospace;
+  font-size:9.5px;letter-spacing:.2em;text-transform:uppercase}
+a{color:inherit}
+
+.runhead{
+  border-bottom:1px solid var(--ink);padding:14px clamp(16px,3.4vw,48px);
+  display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap
+}
+.runhead .who{font-style:italic;font-size:15px}
+.runhead .nav{display:flex;gap:22px;color:var(--grey)}
+.runhead .nav a:hover{color:var(--red)}
+
+.plate-wrap{
+  max-width:1360px;margin:0 auto;padding:clamp(26px,4.6vw,64px) clamp(16px,3.4vw,48px) 0;
+  display:grid;gap:clamp(26px,4vw,64px);grid-template-columns:1fr
+}
+@media(min-width:940px){.plate-wrap{grid-template-columns:minmax(0,1.45fr) minmax(300px,.85fr);align-items:start}}
+
+/* ── the composite plate: structurally different, not merely stamped ── */
+.plate{position:relative}
+.plate .mount{
+  background:#fff;
+  /* dashed rule, not solid: in a catalogue a broken rule has always meant
+     "not a documentary plate". The difference is legible before you read a word. */
+  border:1.5px dashed var(--red);
+  padding:clamp(14px,2.4vw,36px);
+  box-shadow:0 2px 0 rgba(200,16,46,.18),0 26px 60px rgba(17,16,16,.11)
+}
+.plate .mount img{display:block;width:100%;height:auto;view-transition-name:plate-img}
+.plate .plate-no{
+  position:absolute;top:-11px;left:clamp(14px,2.4vw,36px);
+  background:var(--paper);padding:0 9px;color:var(--red)
+}
+/* the band sits ON the mount, above the image — impossible to crop away mentally */
+.band{
+  background:var(--red);color:var(--paper);
+  padding:9px 13px;margin-bottom:clamp(12px,1.8vw,20px);
+  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline
+}
+.band .lead{font-family:ui-monospace,Menlo,monospace;font-size:10px;
+  letter-spacing:.2em;text-transform:uppercase;font-weight:600}
+.band .say{font-style:italic;font-size:13.5px;line-height:1.3}
+.plate .sig{margin-top:11px;display:flex;justify-content:space-between;gap:14px;
+  color:var(--grey);flex-wrap:wrap}
+.plate .sig b{color:var(--ink);font-weight:400}
+
+/* ── ledger ── */
+.ledger{position:sticky;top:22px}
+.ledger h1{
+  font-size:clamp(25px,3.3vw,40px);line-height:1.08;font-weight:400;
+  letter-spacing:-.018em;margin-bottom:2px
+}
+/* the title is machine-written and asserts something untrue.
+   The record corrects it immediately, in the artist's favour. */
+.retitle{
+  border-left:3px solid var(--red);padding:7px 0 7px 12px;margin:10px 0 20px;
+  font-size:13.5px;line-height:1.5;color:var(--grey)
+}
+.retitle b{color:var(--ink);font-weight:400;font-style:italic}
+.ledger .yr{font-style:italic;color:var(--grey);font-size:17px;margin-bottom:20px;display:block}
+
+dl.rows{border-top:1px solid var(--ink)}
+dl.rows div{
+  display:grid;grid-template-columns:96px 1fr;gap:14px;
+  padding:9px 0;border-bottom:1px solid var(--rule);align-items:baseline
+}
+dl.rows dt{color:var(--grey)}
+dl.rows dd{font-size:14.5px;line-height:1.45}
+dl.rows div.never dd{color:var(--red);font-style:italic}
+dl.rows div.never dd small{display:block;color:var(--grey);font-style:normal;
+  font-size:11px;margin-top:3px;line-height:1.45}
+dl.rows div.absent dd{color:var(--red);font-style:italic;font-size:13.5px}
+dl.rows div.absent dd small{display:block;color:var(--grey);font-style:normal;
+  font-size:11px;margin-top:3px;line-height:1.45}
+
+.pos{margin:26px 0 0;display:flex;align-items:center;gap:16px}
+.pos .txt{color:var(--grey);line-height:1.8}
+.pos .txt b{display:block;color:var(--ink);font-size:15px;
+  font-family:'Iowan Old Style',Georgia,serif;letter-spacing:0;text-transform:none}
+.ring-bg{fill:none;stroke:rgba(17,16,16,.18);stroke-width:1.5}
+.ring-fg{fill:none;stroke:var(--red);stroke-width:3}
+.ring-tick{stroke:rgba(17,16,16,.3);stroke-width:1}
+.ring-hub{fill:var(--paper);stroke:rgba(17,16,16,.3);stroke-width:1}
+
+/* ── the count: context that makes the flag land ── */
+.tally{
+  margin:26px 0 0;border:1px solid var(--ink);padding:14px 15px;background:#fff
+}
+.tally h4{color:var(--red);margin-bottom:9px}
+.tally .n{display:flex;justify-content:space-between;padding:5px 0;
+  border-bottom:1px solid var(--rule);font-size:13.5px;align-items:baseline}
+.tally .n:last-child{border:0}
+.tally .n b{font-size:19px;font-weight:400}
+.tally .n .r{color:var(--red)}
+
+.body{
+  max-width:1360px;margin:0 auto;padding:clamp(34px,5vw,70px) clamp(16px,3.4vw,48px) 0;
+  display:grid;gap:clamp(22px,3.4vw,52px);grid-template-columns:1fr
+}
+@media(min-width:940px){.body{grid-template-columns:minmax(0,1.45fr) minmax(300px,.85fr)}}
+.desc{border-top:3px solid var(--ink);padding-top:16px}
+.desc h3{margin-bottom:10px;color:var(--red)}
+.desc .warn{
+  font-style:italic;font-size:13.5px;color:var(--grey);
+  border-bottom:1px solid var(--rule);padding-bottom:11px;margin-bottom:13px
+}
+.desc p{font-size:16.5px;line-height:1.62;max-width:62ch}
+.prov{border-top:1px solid var(--ink);padding-top:16px;align-self:start}
+.prov p{font-size:12.5px;line-height:1.65;color:var(--grey)}
+.prov b{color:var(--ink);font-weight:400;font-style:italic}
+.prov a{color:var(--red)}
+
+nav.plates{
+  max-width:1360px;margin:clamp(44px,6vw,86px) auto 0;
+  padding:0 clamp(16px,3.4vw,48px) clamp(56px,8vw,110px);
+  display:grid;gap:14px;grid-template-columns:1fr
+}
+@media(min-width:700px){nav.plates{grid-template-columns:1fr 1fr;gap:26px}}
+nav.plates a{display:flex;gap:14px;align-items:center;text-decoration:none;
+  border-top:1px solid var(--ink);padding-top:13px;transition:border-color .3s}
+nav.plates a:hover{border-color:var(--red)}
+nav.plates a:hover .t{color:var(--red)}
+nav.plates .dir{color:var(--grey);flex:0 0 auto}
+nav.plates .t{font-style:italic;font-size:16px;line-height:1.25;transition:color .3s}
+nav.plates a.next{text-align:right;justify-content:flex-end;flex-direction:row-reverse}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}
+  @view-transition{navigation:none}}
+</style>
+</head>
+<body>
+
+<header class="runhead">
+  <span class="who">Jeffrey F. S. Neumann <span class="mono" style="color:var(--grey)">· The Museum That Never Existed</span></span>
+  <span class="nav mono"><a href="E-scale-test.html">Catalogue</a><a href="#">Stories</a><a href="#">About</a></span>
+</header>
+
+<main class="plate-wrap">
+
+  <figure class="plate" id="plate">
+    <span class="plate-no mono" id="plate-no">Plate — · Composite</span>
+    <div class="mount">
+      <div class="band">
+        <span class="lead">Constructed image</span>
+        <span class="say" id="band-message"></span>
+      </div>
+      <img id="plate-img" alt="" loading="eager">
+    </div>
+    <div class="sig mono">
+      <span>Assembled by the artist · not documentation</span>
+      <span id="plate-id"></span>
+    </div>
+  </figure>
+
+  <div class="ledger">
+    <h1 id="work-title">—</h1>
+    <div class="retitle">
+      The title was <b>written by software</b> and describes what the image
+      depicts, not what it is. There was no installation. Read it as the name of
+      a picture, not a record of an event.
+    </div>
+    <span class="yr" id="work-year">—</span>
+
+    <dl class="rows" id="ledger-rows">
+    </dl>
+
+    <div class="pos" id="pos" style="display:none">
+      <svg width="74" height="74" viewBox="0 0 74 74" role="img" id="ring-svg" aria-label="">
+        <circle class="ring-bg" cx="37" cy="37" r="31"></circle>
+        <circle class="ring-bg" cx="37" cy="37" r="23" style="stroke-dasharray:2 4"></circle>
+        <circle class="ring-fg" cx="37" cy="37" r="31" id="ring-fg" transform="rotate(-90 37 37)"></circle>
+        <line class="ring-tick" x1="37" y1="2" x2="37" y2="9"></line>
+        <circle class="ring-hub" cx="37" cy="37" r="5.5"></circle>
+      </svg>
+      <div class="txt mono">
+        <b id="pos-text"></b>
+        Position in the catalogue
+      </div>
+    </div>
+
+    <div class="tally">
+      <h4 class="mono">The count</h4>
+      <div class="n"><span>Exhibitions imagined</span><b class="r">250</b></div>
+      <div class="n"><span>Exhibitions that happened</span><b>6</b></div>
+      <div class="n"><span>Across</span><b>50 years</b></div>
+    </div>
+  </div>
+</main>
+
+<section class="body">
+  <div class="desc">
+    <h3 class="mono">Description</h3>
+    <p class="warn">What follows describes the picture. Every room, wall, and crowd in it was constructed.</p>
+    <p id="work-desc"></p>
+  </div>
+  <aside class="prov">
+    <p><b>Why these are kept.</b> For decades he photographed and composited museums showing his work. He did not hide them and neither does this archive. They are among the most distinctive things he made, and every one of the 250 is flagged here, in the catalogue data, and in the public API.</p>
+    <p style="margin-top:12px"><b>On this text.</b> Most catalogue descriptions and titles were written by software from photographs — not by Jeff. His own words are in <a href="#">Stories</a>.</p>
+  </aside>
+</section>
+
+<nav class="plates">
+  <a href="#" id="nav-prev" class="prev">
+    <span class="dir mono" id="nav-prev-dir">← Plate —</span>
+    <span class="t" id="nav-prev-title"></span>
+  </a>
+  <a href="#" id="nav-next" class="next">
+    <span class="dir mono" id="nav-next-dir">Plate — →</span>
+    <span class="t" id="nav-next-title"></span>
+  </a>
+</nav>
+
+<script>
+const API_BASE = 'https://jfsn.com/api/v1/works';
+const TOTAL_WORKS = 1087;
+const RING_CIRCUMFERENCE = 2 * Math.PI * 31;
+
+async function loadWork() {
+  const params = new URLSearchParams(window.location.search);
+  const workId = params.get('id');
+
+  if (!workId) {
+    document.body.innerHTML = '<p style="padding:40px">No work specified. Use ?id=artNNNN to load a work.</p>';
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_BASE}/${workId}.json`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    const work = data.work;
+
+    if (!work.composite) {
+      throw new Error('This work is not a composite. Use D-record-page.html instead.');
+    }
+
+    renderWork(workId, work);
+  } catch (e) {
+    document.body.innerHTML = `<p style="padding:40px">Error loading work: ${e.message}</p>`;
+  }
+}
+
+function renderWork(workId, work) {
+  const pageNum = parseInt(workId.slice(3));
+
+  document.title = `${work.title} — a composite — Jeffrey F. S. Neumann`;
+  document.getElementById('plate-no').textContent = `Plate ${pageNum} · Composite`;
+  document.getElementById('plate-id').textContent = workId.toUpperCase();
+
+  const img = document.getElementById('plate-img');
+  img.src = `../artworks/medium/${workId}.avif`;
+  img.alt = work.title;
+  img.style.viewTransitionName = 'plate-img';
+
+  document.getElementById('band-message').textContent =
+    work.series ? `This ${work.series.toLowerCase()} never happened. He built the room.`
+    : 'This exhibition never happened. He built the room.';
+
+  document.getElementById('work-title').textContent = work.title;
+  document.getElementById('work-year').textContent = work.year_display;
+
+  renderLedger(workId, work);
+  renderPosition(pageNum);
+  renderDescription(work);
+  renderNavigation(workId, pageNum, work);
+}
+
+function renderLedger(workId, work) {
+  const rows = document.getElementById('ledger-rows');
+  rows.innerHTML = '';
+
+  rows.innerHTML += `<div><dt class="mono">Medium</dt><dd>Photographic composite</dd></div>`;
+
+  rows.innerHTML += `<div class="never"><dt class="mono">Exhibition</dt>
+    <dd>Never occurred
+      <small>No show of this work took place. The wall, the room, and the hang were assembled.</small>
+    </dd></div>`;
+
+  if (work.description) {
+    rows.innerHTML += `<div><dt class="mono">Depicts</dt><dd>${work.description.split('.')[0] || work.description}</dd></div>`;
+  }
+
+  if (work.series) {
+    rows.innerHTML += `<div><dt class="mono">Series</dt><dd>${work.series}</dd></div>`;
+  }
+
+  if (work.themes && work.themes.length) {
+    const themeLabels = work.themes.map(t =>
+      t.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
+    );
+    rows.innerHTML += `<div><dt class="mono">Themes</dt><dd>${themeLabels.join(' · ')}</dd></div>`;
+  }
+
+  rows.innerHTML += `<div class="absent"><dt class="mono">Dimensions</dt>
+    <dd>Not recorded
+      <small>One work in 1,087 carries measurements.</small>
+    </dd></div>`;
+
+  rows.innerHTML += `<div class="absent"><dt class="mono">Location</dt>
+    <dd>Not recorded
+      <small>The physical whereabouts of this work is not held in any record.</small>
+    </dd></div>`;
+
+  rows.innerHTML += `<div><dt class="mono">Archive no.</dt><dd>${workId.toUpperCase()}</dd></div>`;
+}
+
+function renderPosition(pageNum) {
+  const posEl = document.getElementById('pos');
+  const ringFg = document.getElementById('ring-fg');
+  const posTxt = document.getElementById('pos-text');
+  const ringSvg = document.getElementById('ring-svg');
+
+  const percentage = (pageNum / TOTAL_WORKS);
+  const dashLength = percentage * RING_CIRCUMFERENCE;
+  ringFg.setAttribute('stroke-dasharray', `${dashLength.toFixed(1)} ${RING_CIRCUMFERENCE.toFixed(1)}`);
+
+  posTxt.innerHTML = `${pageNum} <span style="color:var(--faint)">/ ${TOTAL_WORKS}</span>`;
+  ringSvg.setAttribute('aria-label', `Work ${pageNum} of ${TOTAL_WORKS} in the catalogue`);
+
+  posEl.style.display = 'flex';
+}
+
+function renderDescription(work) {
+  document.getElementById('work-desc').textContent = work.description || '';
+}
+
+async function renderNavigation(workId, pageNum, work) {
+  const prevEl = document.getElementById('nav-prev');
+  const nextEl = document.getElementById('nav-next');
+
+  if (pageNum > 1) {
+    const prevId = `art${String(pageNum - 1).padStart(4, '0')}`;
+    try {
+      const res = await fetch(`${API_BASE}/${prevId}.json`);
+      if (res.ok) {
+        const data = await res.json();
+        const isComposite = data.work.composite;
+        const pageFile = isComposite ? 'F-record-composite.html' : 'D-record-page.html';
+        prevEl.href = `${pageFile}?id=${prevId}`;
+        document.getElementById('nav-prev-dir').textContent = `← Plate ${pageNum - 1}`;
+        document.getElementById('nav-prev-title').textContent = data.work.title;
+      }
+    } catch (e) {}
+  } else {
+    prevEl.style.display = 'none';
+  }
+
+  if (pageNum < TOTAL_WORKS) {
+    const nextId = `art${String(pageNum + 1).padStart(4, '0')}`;
+    try {
+      const res = await fetch(`${API_BASE}/${nextId}.json`);
+      if (res.ok) {
+        const data = await res.json();
+        const isComposite = data.work.composite;
+        const pageFile = isComposite ? 'F-record-composite.html' : 'D-record-page.html';
+        nextEl.href = `${pageFile}?id=${nextId}`;
+        document.getElementById('nav-next-dir').textContent = `Plate ${pageNum + 1} →`;
+        document.getElementById('nav-next-title').textContent = data.work.title;
+      }
+    } catch (e) {}
+  } else {
+    nextEl.style.display = 'none';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadWork);
+</script>
