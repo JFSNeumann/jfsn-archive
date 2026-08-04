@@ -31,6 +31,24 @@ CD works, start building verified estimates."*
 3. `scale = diameter_px / 4.72` gives pixels-per-inch.
 4. Apply that scale to the full native image dimensions to get an implied canvas size.
 
+## Never a reference: xeroxed elements
+
+Jeff: *"many things are xerox copies at different sizes and taped onto artwork — example,
+airplanes, targets, drones, etc."* A recurring visual motif in this corpus is not evidence of a
+recurring *size* — it's evidence of a recurring photocopied original, reproduced at whatever
+scale that particular copy happened to be run at. Confirmed xeroxed and **never usable as a
+size reference, no matter how consistent it looks across works:**
+
+- targets / concentric-rings
+- warplanes (top-down and side profile)
+- drones
+
+Treat any other frequently-repeated graphic element the same way by default — confirmed
+physical objects with a real, fixed manufactured size (a CD, a real hammer, a real hole punch)
+are the only valid reference class. If it's a recognizable printed image glued or taped onto
+the surface rather than a physical object photographed in place, assume it's a xerox at an
+arbitrary scale until there's a specific reason to think otherwise.
+
 ## What must be true before a number gets written
 
 **Every candidate is visually confirmed by a human before anything enters a sidecar.** Automated
@@ -50,22 +68,31 @@ rule:
 
 ## What changed the scope
 
-Dropping the color filter to fix the above created a worse problem: painted target and
-concentric-ring motifs are extremely common in this corpus (580–459 instances) and are, to a
-shape detector, indistinguishable from a real disc — a single busy work can produce 20–40 raw
-circle detections, nearly all of them false. Color was the wrong filter, but no filter is not
-the fix either.
+Dropping the color filter to fix the above surfaced a lot of noise: target and concentric-ring
+motifs are extremely common in this corpus (580–459 instances) and are, to a shape detector,
+indistinguishable from a real disc — a single busy work can produce 20–40 raw circle detections.
+Color was the wrong filter to reject real CDs with, but it briefly looked like the fix needed to
+be a better shape/reflectivity classifier instead.
 
-**The correct signal is reflectivity, not hue.** A real CD has a metallic sheen — strong local
-brightness variance and specular highlights. A painted circle is flat and matte. The detection
-script's `v_std` (brightness standard deviation within the ring) already captures this and was
-the more reliable half of the original filter; hue was the part that needed removing, not
-`v_std`. Re-tuning the automated first pass to score on sheen rather than color is the next
-technical step, not yet done.
+**It doesn't. Jeff: "forget these / all different sizes" — the targets aren't painted, they're
+xerox copies, in different sizes."** And it's broader than targets: *"many things are xerox
+copies at different sizes and taped onto artwork — example, airplanes, targets, drones, etc."*
+Several of this corpus's most recurring visual elements — targets, concentric rings, the
+top-down and side-profile warplanes (238 and 225 instances), whatever else reads as a repeated
+graphic motif — are photocopies taped onto the work, each copy at whatever reproduction scale it
+happened to be run at. Unlike a manufactured CD (always 4.72 in, because a CD is a manufacturing
+standard, not a reproduction of one), none of these has a fixed real-world size to anchor a scale
+to — two copies of the same warplane silhouette can be different sizes from each other, even
+printed from the same original. The failure mode was never "the script can't tell a disc from a
+target" — a xeroxed motif categorically cannot be a size reference, full stop, no matter how
+confidently it's detected, and this applies to every recurring taped-on graphic element in the
+corpus, not only the ones that happen to be circular.
 
-Until that re-tuning happens, **every candidate is being confirmed by looking at the actual
-image**, not by trusting either the color filter or the raw circle count. This is slow. It is
-also the only version of this that is honest.
+Which means the fix was never a smarter detector. **Visual confirmation that a candidate is a
+real, fixed-size manufactured object is the correct filter, and it's already the process.** The
+automated circle detection is a rough first pass to generate candidates worth looking at; it was
+never meant to decide anything on its own, and there's no reflectivity re-tuning worth building
+to make it decide more.
 
 ## A caught arithmetic bug, for the record
 
@@ -113,5 +140,12 @@ sanity check on the method, not proof of accuracy.
   disclosure: it depicts two separately framed works photographed side by side, themed "Framed"
   rather than "Gallery," so it was not caught by the composite-flag correction. Not investigated
   further here — flagged for a future session.
-- Re-scoring the automated first pass on reflectivity (`v_std`) rather than hue, to cut down how
-  much of the 542 has to be checked by eye rather than pre-filtered by the script.
+
+**Not pursuing:** a better shape/reflectivity classifier to distinguish real discs from xeroxed
+motifs automatically. Confirmed not worth building — see *Never a reference: xeroxed elements*
+and *What changed the scope* above. Xeroxed elements are excluded on category (no fixed
+real-world size — each copy can be reproduced at a different scale), not on how well they can be
+told apart from a CD by shape or sheen, and the category isn't limited to circular ones —
+warplanes and drones fail the same way. Human visual confirmation of "is this a real,
+manufactured object, not a taped-on photocopy" remains correct and sufficient; there is no
+smarter detector that removes the need for it.
