@@ -1021,3 +1021,27 @@ Its existence resolves nothing about the three recordings planned in `docs/curre
 ### Archivist note
 
 On 2026-06-12 Jeff declined audio for the exhibition-record corrections (§27, "change these - no audio"). That declination was specific to typed corrections of dates and is **not** a general refusal to be recorded — he recorded this file four days later, and on 2026-08-02 asked to record more. Future custodians should not read §27 as standing consent or refusal either way. Ask him.
+
+---
+
+## 34. Creator Confirmation — The Paper Snowmen Series Is Real Memory — 2026-08-06
+
+**Source:** Direct confirmation from Jeff, 2026-08-06, given in a JFSN_2027 (design-tree) working session, not a formal oral-history sitting in this archive. Recorded here rather than in that session's own history because it is new testimony about a specific lost work, and per this document's own rule (§ purpose, top of file) testimony belongs here regardless of which working session it was given in.
+
+### What was asked and answered
+
+`docs/archive/2026/lost-works-register.md` entry 3, "The paper snowmen series," describes a group of spray-painted paper snowman sculptures, roughly 6 feet tall, possibly made for a Christmas art show in the early 1980s. That entry was added 2026-06-11 under the register's stated rule that entries come from Jeff's testimony only — but a search of this document, `session-checkpoint-2026-06-09.md`, `SUGGESTED-RECORDINGS.md`, and the original oral-history PDF on 2026-08-06 found no prior record of this specific work anywhere. (Every other "snowman" mention in this archive is about "Mr. SNOWmann," the unrelated 2D street-art/photographic theme documented in §28 — a different body of work entirely.)
+
+Asked directly whether the paper snowmen sculpture series is a real memory, Jeff's answer:
+
+> real
+
+### What this resolves, and what it doesn't
+
+- **Confirms** the paper snowmen series existed and is genuine memory, not an error or fabrication introduced when the register entry was written.
+- **Does not add** any new detail beyond what the register already states. The specifics already on record (spray-painted paper, ~6 feet tall, early 1980s, possibly a Christmas art show, "maybe" on the show detail) were not re-confirmed individually here — only the work's existence was asked about and answered. Treat the register's existing hedges ("uncertain — Jeff said 'maybe'") as still standing; this entry does not upgrade their confidence.
+- **Does not explain** why this testimony wasn't already present in this document as of 2026-06-11, when the register entry citing it was created. That gap is itself unresolved and worth asking about directly in a future sitting if it matters to anyone — not guessed at here.
+
+### Archivist note
+
+This confirmation came through a single word in a design-session chat, not a recorded or transcribed interview answer. It is real testimony and is recorded as such, but it is a thinner form of evidence than this document's other entries — most of which quote a fuller exchange. A future custodian who wants the fuller story (what the snowmen actually looked like, what happened to them, why this wasn't captured earlier) should ask Jeff directly rather than treat this entry as complete.
